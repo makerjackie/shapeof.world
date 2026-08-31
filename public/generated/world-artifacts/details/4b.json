@@ -92,9 +92,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "strange-attractors",
       "state": "public",
       "title": "状态轨迹形成奇异吸引子",
@@ -115,9 +115,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "strange-attractors",
       "state": "public",
       "title": "状态轨迹形成奇异吸引子",
@@ -187,15 +187,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "text": "状态轨迹形成奇异吸引子 State trajectories form strange attractors 这些图形到底是怎么画出来的？ How are these shapes actually drawn? 六套方程各自规定「下一刻往哪走」；光点跟着跑，久了留下双翼、螺旋与空心球壳。 Six equation families each say where the state goes next; points follow the rules and leave wings, spirals, and hollow shells. 混沌 Chaos",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
         "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-        "releaseId": "oss-d6b00616",
+        "releaseId": "oss-c434f6ee",
         "id": "strange-attractors",
         "state": "public",
         "title": "状态轨迹形成奇异吸引子",
@@ -217,9 +217,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "strange-attractors",
       "renderer": "strange-attractors",
       "runtime": "particle-2d",
@@ -236,9 +236,9 @@
         "en": "Six equation families each say where the state goes next; points follow the rules and leave wings, spirals, and hollow shells."
       }
     },
-    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
     "contentRevision": "c520d9d4fd73f57bb229409525f19b64b8cc9e185d2b635d6a20a152cc720369",
-    "releaseId": "oss-d6b00616",
+    "releaseId": "oss-c434f6ee",
     "navigation": {
       "previousWorldId": "kakeya-needle",
       "nextWorldId": "fluid-sim",

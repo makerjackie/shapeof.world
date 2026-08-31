@@ -342,7 +342,14 @@ img, svg, canvas { display: block; }
   letter-spacing: -0.02em;
 }
 
-.wordmark svg, .experience-brand svg, .footer-mark svg { width: 25px; height: 25px; }
+.wordmark svg, .experience-brand svg, .footer-mark svg,
+.wordmark .brand-mark, .experience-brand .brand-mark, .footer-mark .brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex: none;
+}
 .site-nav { display: flex; align-items: center; gap: 22px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
 .site-header-actions { display: flex; align-items: center; gap: 18px; }
 .site-search-trigger {
@@ -1141,9 +1148,16 @@ html[lang^='zh'] .story-hero h1 {
 }
 .story-specimen { position: relative; min-height: min(700px, calc(100vh - 72px)); overflow: hidden; }
 .story-specimen::after { position: absolute; inset: 0; content: ''; background: linear-gradient(90deg,var(--paper),transparent 24%), linear-gradient(0deg,rgba(241,236,223,.68),transparent 30%); pointer-events: none; }
-.story-specimen img { width: 118%; height: 100%; object-fit: cover; object-position: 60% center; mix-blend-mode: multiply; filter: saturate(.8) contrast(1.04); }
+.story-specimen > img { width: 118%; height: 100%; object-fit: cover; object-position: 60% center; mix-blend-mode: multiply; filter: saturate(.8) contrast(1.04); }
 .story-specimen > span { position: absolute; z-index: 2; right: 36px; bottom: 34px; display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 15px; }
-.story-specimen > span svg { width: 24px; height: 24px; }
+.story-specimen > span svg,
+.story-specimen > span .brand-mark {
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  object-fit: cover;
+  flex: none;
+}
 .story-scroll { position: absolute; z-index: 4; bottom: 34px; left: 7.5vw; display: flex; align-items: center; gap: 9px; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; }
 .story-scroll svg { width: 15px; }
 .story-manifesto { padding: 135px 12vw 115px; color: #eee9de; background: #142f28; }
@@ -1529,7 +1543,8 @@ html[lang^='zh'] .story-hero h1 {
   .experience-progress { display: none; }
   .experience-brand { font-size: 17px; }
   .experience-brand { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; }
-  .experience-brand svg { width: 21px; height: 21px; }
+  .experience-brand svg,
+  .experience-brand .brand-mark { width: 22px; height: 22px; }
   .experience-header-actions .experience-info-button,
   .experience-header-actions .header-back { min-width: 44px; min-height: 44px; justify-content: center; font-size: 0; }
   .experience-header-actions .locale-toggle { min-width: 44px; min-height: 44px; justify-content: center; }
@@ -1672,10 +1687,12 @@ html[lang^='zh'] .story-hero h1 {
   color: #fff8ee;
   opacity: 1;
 }
-.experience-header .experience-brand svg {
+.experience-header .experience-brand svg,
+.experience-header .experience-brand .brand-mark {
   width: 22px;
   height: 22px;
   flex: none;
+  border-radius: 5px;
 }
 .experience-header .experience-brand span {
   max-width: 12em;
@@ -2550,7 +2567,7 @@ html[lang^='zh'] .story-hero h1 {
 }
 .story-hero-copy h1 { animation-delay: 0.12s; }
 .story-hero-copy > p:last-child { animation-delay: 0.26s; }
-.story-specimen img {
+.story-specimen > img {
   animation: story-specimen-in 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 @keyframes story-rise {

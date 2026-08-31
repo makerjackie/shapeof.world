@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { CompassRose } from '@phosphor-icons/react'
-
+import { BrandMark } from '~/components/BrandMark'
 import { LocaleToggle } from '~/components/LocaleToggle'
 import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 import { useI18n } from '~/i18n'
@@ -10,7 +9,7 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="footer-mark">
-        <CompassRose aria-hidden="true" weight="thin" />
+        <BrandMark />
         <span>{t('brand.name')}</span>
       </div>
       <p>{t('footer.tagline')}</p>

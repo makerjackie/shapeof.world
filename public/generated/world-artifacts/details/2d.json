@@ -76,9 +76,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "kakeya-needle",
       "state": "public",
       "title": "卡库亚针问题的最小转向区域",
@@ -99,9 +99,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "kakeya-needle",
       "state": "public",
       "title": "卡库亚针问题的最小转向区域",
@@ -153,15 +153,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "text": "卡库亚针问题的最小转向区域 The minimum turning region in the Kakeya needle problem 桌上有一根针要掉头，最少需要多大一块地方？ A needle on a table needs to turn around—how little room does it need? 最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。 The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line. 几何直觉 Geometric intuition",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
         "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-        "releaseId": "oss-d6b00616",
+        "releaseId": "oss-c434f6ee",
         "id": "kakeya-needle",
         "state": "public",
         "title": "卡库亚针问题的最小转向区域",
@@ -183,9 +183,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "kakeya-needle",
       "renderer": "kakeya-needle",
       "runtime": "diagram-2d",
@@ -202,9 +202,9 @@
         "en": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line."
       }
     },
-    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
     "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
-    "releaseId": "oss-d6b00616",
+    "releaseId": "oss-c434f6ee",
     "navigation": {
       "previousWorldId": "clifford-dust",
       "nextWorldId": "strange-attractors",

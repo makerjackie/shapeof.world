@@ -1,7 +1,8 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { CompassRose, GithubLogo, UsersThree, X } from '@phosphor-icons/react'
+import { GithubLogo, UsersThree, X } from '@phosphor-icons/react'
 
+import { BrandMark } from '~/components/BrandMark'
 import { LocaleToggle } from '~/components/LocaleToggle'
 import { SiteSearchButton } from '~/components/SiteSearch'
 import { SOURCE_REPOSITORY_URL } from '~/lib/site'
@@ -36,7 +37,7 @@ export function SiteHeader({ inverse = false }: { inverse?: boolean }) {
   return (
     <header className={inverse ? 'site-header site-header--inverse' : 'site-header'}>
       <Link to="/" className="wordmark" aria-label={t('nav.home')}>
-        <CompassRose aria-hidden="true" weight="thin" />
+        <BrandMark />
         <span>{t('brand.name')}</span>
       </Link>
       <div className="site-header-actions">

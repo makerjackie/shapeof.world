@@ -183,7 +183,7 @@ pnpm check
 - 第三方代码、数据、模型、图片、字体和音频继续遵循各自许可证。见 [OSS_NOTICES.md](./OSS_NOTICES.md) 与 [DATA_SOURCES.md](./DATA_SOURCES.md)
 - “Shape of the World / 世界的形状”、Logo 和应用身份不随代码或内容许可开放。见 [TRADEMARKS.md](./TRADEMARKS.md)
 
-罗盘标记来自 Phosphor Icons 的 [`CompassRose`](https://phosphoricons.com/)（MIT）。见 [LICENSE-phosphor-icons.txt](./public/assets/oss-source/LICENSE-phosphor-icons.txt)。
+产品 Logo 是 App 光球。见 [NOTICE.md](./public/assets/brand/NOTICE.md)。界面里仍使用 Phosphor Icons（MIT）。见 [LICENSE-phosphor-icons.txt](./public/assets/oss-source/LICENSE-phosphor-icons.txt)。
 
 完整条款：[LICENSING.md](./LICENSING.md)、[COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md)、[PROJECT_OWNED_CONTENT.md](./PROJECT_OWNED_CONTENT.md)。以上是便于理解的摘要，不替代正式文本，也不构成法律意见。
 

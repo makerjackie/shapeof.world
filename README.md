@@ -183,7 +183,7 @@ That command type-checks, tests, and builds.
 - Third-party code, data, models, images, fonts, and audio keep their own licenses. See [OSS_NOTICES.md](./OSS_NOTICES.md) and [DATA_SOURCES.md](./DATA_SOURCES.md)
 - “Shape of the World / 世界的形状”, the logo, and the app identity are not licensed with the code or content. See [TRADEMARKS.md](./TRADEMARKS.md)
 
-The compass mark is Phosphor Icons’ [`CompassRose`](https://phosphoricons.com/) (MIT). See [LICENSE-phosphor-icons.txt](./public/assets/oss-source/LICENSE-phosphor-icons.txt).
+The product logo is the app orb. See [NOTICE.md](./public/assets/brand/NOTICE.md). Phosphor Icons remain in the interface under MIT. See [LICENSE-phosphor-icons.txt](./public/assets/oss-source/LICENSE-phosphor-icons.txt).
 
 Full terms: [LICENSING.md](./LICENSING.md), [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md), [PROJECT_OWNED_CONTENT.md](./PROJECT_OWNED_CONTENT.md). This summary is for orientation only and is not legal advice.
 

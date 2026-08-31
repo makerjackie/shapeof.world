@@ -73,9 +73,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "snow-crystal",
       "state": "public",
       "title": "温度与湿度决定雪晶形状",
@@ -96,9 +96,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "snow-crystal",
       "state": "public",
       "title": "温度与湿度决定雪晶形状",
@@ -147,15 +147,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "text": "温度与湿度决定雪晶形状 Temperature and humidity shape snow crystals 同一片云里，为什么雪花有时像板，有时像针？ In the same cloud, why is a snowflake sometimes a plate and sometimes a needle? 拨动温度与湿度，看同一套六角对称在薄板、枝晶与细针之间切换习性。 Scrub temperature and humidity and watch the same six-fold symmetry switch habits among plates, dendrites, and needles. 大气与冰晶 Atmosphere and ice",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
         "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-        "releaseId": "oss-d6b00616",
+        "releaseId": "oss-c434f6ee",
         "id": "snow-crystal",
         "state": "public",
         "title": "温度与湿度决定雪晶形状",
@@ -177,9 +177,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "snow-crystal",
       "renderer": "snow-crystal",
       "runtime": "diagram-2d",
@@ -196,9 +196,9 @@
         "en": "Scrub temperature and humidity and watch the same six-fold symmetry switch habits among plates, dendrites, and needles."
       }
     },
-    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
     "contentRevision": "c8ec53b9093a574f7ace276441c69c9302f5c6c098ee0407991d3d7d438fad5f",
-    "releaseId": "oss-d6b00616",
+    "releaseId": "oss-c434f6ee",
     "navigation": {
       "previousWorldId": "lightning-lab",
       "nextWorldId": "boids-flocking",

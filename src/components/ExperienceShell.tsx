@@ -4,7 +4,6 @@ import {
   ArrowRight,
   BookmarkSimple,
   ChatCircleDots,
-  CompassRose,
   CornersIn,
   CornersOut,
   DiceFive,
@@ -16,6 +15,7 @@ import {
   X,
 } from '@phosphor-icons/react'
 
+import { BrandMark } from '~/components/BrandMark'
 import { LocaleToggle } from '~/components/LocaleToggle'
 import { SiteBgmToggle } from '~/components/SiteBgmToggle'
 import { ExperienceCapabilitiesProvider, useExperienceCapabilities } from '~/components/experiences/ExperienceCapabilities'
@@ -623,7 +623,7 @@ function ExperienceShellView({
           title={t('experience.back')}
           viewTransition
         >
-          <CompassRose aria-hidden="true" weight="thin" />
+          <BrandMark />
           <span>{t('brand.name')}</span>
         </Link>
 

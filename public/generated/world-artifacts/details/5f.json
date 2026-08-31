@@ -71,9 +71,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "clifford-dust",
       "state": "public",
       "title": "四个参数迭代生成 Clifford 吸引子",
@@ -94,9 +94,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "clifford-dust",
       "state": "public",
       "title": "四个参数迭代生成 Clifford 吸引子",
@@ -141,15 +141,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "text": "四个参数迭代生成 Clifford 吸引子 Four parameters generate a Clifford attractor 为什么四个数字反复迭代，会落成一片星云？ Why does iterating four numbers settle into a nebula? Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。 Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black. 数学 Mathematics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
         "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-        "releaseId": "oss-d6b00616",
+        "releaseId": "oss-c434f6ee",
         "id": "clifford-dust",
         "state": "public",
         "title": "四个参数迭代生成 Clifford 吸引子",
@@ -171,9 +171,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "clifford-dust",
       "renderer": "clifford-dust",
       "runtime": "particle-2d",
@@ -190,9 +190,9 @@
         "en": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black."
       }
     },
-    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
     "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
-    "releaseId": "oss-d6b00616",
+    "releaseId": "oss-c434f6ee",
     "navigation": {
       "previousWorldId": "newton-fractal",
       "nextWorldId": "kakeya-needle",

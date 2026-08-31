@@ -71,9 +71,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "phyllotaxis",
       "state": "public",
       "title": "植物的螺旋",
@@ -94,9 +94,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "phyllotaxis",
       "state": "public",
       "title": "植物的螺旋",
@@ -143,15 +143,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "text": "植物的螺旋 Spirals in plants 向日葵为什么把种子排成螺线？ Why do sunflowers arrange their seeds in spirals? 向日葵为什么把种子排成螺线？ Why do sunflowers arrange their seeds in spirals? 形态发生 Morphogenesis",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
         "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-        "releaseId": "oss-d6b00616",
+        "releaseId": "oss-c434f6ee",
         "id": "phyllotaxis",
         "state": "public",
         "title": "植物的螺旋",
@@ -173,9 +173,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
       "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-      "releaseId": "oss-d6b00616",
+      "releaseId": "oss-c434f6ee",
       "id": "phyllotaxis",
       "renderer": "phyllotaxis",
       "runtime": "diagram-2d",
@@ -192,9 +192,9 @@
         "en": "Why do sunflowers arrange their seeds in spirals?"
       }
     },
-    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
+    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
     "contentRevision": "5e96a6b0e5c30d2c2fe8dbed4417a2da1671907ea8957ef2fd554294452f65c6",
-    "releaseId": "oss-d6b00616",
+    "releaseId": "oss-c434f6ee",
     "navigation": {
       "previousWorldId": "boids-flocking",
       "nextWorldId": "moon-voyage",
