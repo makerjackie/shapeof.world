@@ -1,0 +1,5 @@
+# Pre-approve native build scripts needed to install and deploy this edition.
+allowBuilds:
+  esbuild: true
+  workerd: true
+  sharp: true

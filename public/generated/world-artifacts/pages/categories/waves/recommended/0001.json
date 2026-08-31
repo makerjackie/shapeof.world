@@ -1,0 +1,58 @@
+[
+  {
+    "id": "double-slit",
+    "index": "04",
+    "poster": "/assets/posters/double-slit.webp",
+    "posterMobile": "/assets/posters/mobile/double-slit.webp",
+    "posterDesktop": "/assets/posters/desktop/double-slit.webp",
+    "title": "单粒子逐个穿过双缝形成干涉条纹",
+    "posterTitle": "一颗粒子会和「自己」发生干涉吗？",
+    "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+    "posterPosition": "50% 50%",
+    "question": "为什么单个粒子也会形成干涉条纹？",
+    "topicLabel": "量子物理",
+    "primaryCategoryId": "waves",
+    "renderer": "double-slit",
+    "runtime": "particle-2d",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#b15cff",
+    "translations": {
+      "en": {
+        "title": "Single particles build an interference pattern at a double slit",
+        "posterTitle": "Will a particle interfere with \"itself\"?",
+        "posterHook": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
+        "question": "Why do single particles also form interference fringes?",
+        "topicLabel": "Quantum physics"
+      }
+    }
+  },
+  {
+    "id": "fourier",
+    "index": "22",
+    "poster": "/assets/posters/fourier.webp",
+    "posterMobile": "/assets/posters/mobile/fourier.webp",
+    "posterDesktop": "/assets/posters/desktop/fourier.webp",
+    "title": "旋转圆叠加出方波与周期曲线",
+    "posterTitle": "傅里叶级数把周期信号分解为正弦波",
+    "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+    "posterPosition": "50% 50%",
+    "question": "一串旋转的圆，为什么能画出任何曲线？",
+    "topicLabel": "数学",
+    "primaryCategoryId": "waves",
+    "renderer": "fourier",
+    "runtime": "diagram-2d",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#b15cff",
+    "translations": {
+      "en": {
+        "title": "Rotating circles combine into square waves and periodic curves",
+        "posterTitle": "Fourier series decompose periodic signals into sine waves",
+        "posterHook": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot.",
+        "question": "Why can a series of rotating circles draw any curves?",
+        "topicLabel": "Mathematics"
+      }
+    }
+  }
+]

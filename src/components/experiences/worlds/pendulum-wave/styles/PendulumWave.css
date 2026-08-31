@@ -1,0 +1,503 @@
+/* ============================================================
+   PendulumWave · 摆波
+   主体：博物馆摆波机 · 故事：GuideTour · 自由：铭牌 / 顶中读数 / Freebar
+   ============================================================ */
+.pwave-experience {
+  --pwave-gold: #e8c27a;
+  --pwave-warm: #f2d7a2;
+  --pwave-ink: #f6f1e8;
+  --world-accent: var(--pwave-gold);
+  --freebar-accent: var(--pwave-gold);
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(22, 16, 12, 0.62),
+    rgba(8, 6, 10, 0.60)
+  );
+  --experience-panel-border: rgba(232, 194, 122, 0.22);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  --pw-ease: cubic-bezier(.2, .8, .2, 1);
+  --pw-dur: 180ms;
+  color: var(--pwave-ink);
+  background: #06050a;
+  isolation: isolate;
+}
+
+.pwave-experience::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4, 3, 8, 0.18), transparent 22%, transparent 78%, rgba(4, 3, 8, 0.18)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 16%, transparent 76%, rgba(0, 0, 0, 0.4));
+  content: '';
+  pointer-events: none;
+}
+
+.pwave-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.pwave-experience .guide-replay {
+  display: none !important;
+}
+
+/* —— 顶中节拍读数 —— */
+.pwave-topline {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: 50%;
+  display: grid;
+  width: min(248px, 52vw);
+  gap: 6px;
+  justify-items: center;
+  text-align: center;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.88);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.pwave-topline-name {
+  display: none;
+  color: rgba(246, 241, 232, 0.78);
+  font-family: var(--serif);
+  font-size: clamp(15px, 4.2vw, 18px);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+}
+
+.pwave-topline-phase {
+  color: var(--pwave-warm);
+  font-family: var(--serif);
+  font-size: clamp(13px, 1.25vw, 16px);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: color var(--pw-dur) ease, opacity var(--pw-dur) ease, letter-spacing var(--pw-dur) ease;
+}
+
+.pwave-topline-bar {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pwave-topline-bar b {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(232, 194, 122, 0.25), var(--pwave-gold));
+  box-shadow: 0 0 12px rgba(232, 194, 122, 0.35);
+  transition: width 0.2s ease;
+}
+
+.pwave-topline-time {
+  color: rgba(246, 241, 232, 0.36);
+  font-size: 10px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+/* —— 点题铭牌 · 顶左 · 自由模式 —— */
+.pwave-plaque {
+  position: absolute;
+  z-index: 5;
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  max-width: min(300px, 34vw);
+  margin: 0;
+  text-shadow: 0 3px 28px rgba(0, 0, 0, 0.92);
+  pointer-events: none;
+}
+
+.pwave-plaque > span {
+  display: block;
+  color: var(--pwave-gold);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  opacity: .9;
+}
+
+.pwave-plaque h1 {
+  margin: 6px 0 4px;
+  color: #fff8ee;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.6vw, 34px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.pwave-plaque p {
+  margin: 0;
+  max-width: 18em;
+  color: rgba(246, 241, 232, 0.52);
+  font-family: var(--serif);
+  font-size: clamp(12px, 1.1vw, 14px);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: .01em;
+}
+
+/* —— 自由底栏 · 暖金主题 · 布局 only；材质走 --experience-panel-* —— */
+.pwave-freebar {
+  z-index: 12;
+}
+
+.pwave-freebar .experience-freebar-main {
+  width: min(720px, 100%);
+}
+
+.pwave-freebar .experience-freebar-primary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+}
+
+.pwave-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.pwave-tray-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.pwave-field-rail {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px 12px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.pwave-field-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.pwave-field-rail .pwave-freebar-field {
+  flex: 0 0 auto;
+  min-width: 150px;
+  width: min(200px, 48vw);
+}
+
+.pwave-tray-tools {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (min-width: 721px) {
+  .pwave-field-rail .pwave-freebar-field {
+    flex: 1 1 180px;
+    width: auto;
+  }
+}
+
+/* play chrome: shared .experience-freebar-play */
+
+.pwave-count-field {
+  flex: 1 1 180px;
+  min-width: min(180px, 100%);
+}
+
+.pwave-freebar-field {
+  display: grid;
+  grid-template-columns: auto minmax(100px, 1fr) auto;
+  gap: 6px 10px;
+  align-items: center;
+  flex: 1 1 180px;
+  min-width: min(180px, 100%);
+  color: rgba(246, 241, 232, 0.72);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.pwave-freebar-field span {
+  color: rgba(232, 194, 122, 0.82);
+  white-space: nowrap;
+}
+
+.pwave-freebar-field b {
+  min-width: 2.6ch;
+  color: var(--pwave-gold);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+  transition: color var(--pw-dur) ease, text-shadow var(--pw-dur) ease;
+}
+
+.pwave-freebar-field:focus-within b {
+  color: #ffe6b0;
+  text-shadow: 0 0 12px rgba(232, 194, 122, .4);
+}
+
+.pwave-count,
+.pwave-cycle,
+.pwave-amplitude {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  accent-color: var(--pwave-gold);
+}
+
+.pwave-count::-webkit-slider-runnable-track,
+.pwave-cycle::-webkit-slider-runnable-track,
+.pwave-amplitude::-webkit-slider-runnable-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(232, 194, 122, 0.28), rgba(242, 215, 162, 0.9));
+}
+
+.pwave-count::-webkit-slider-thumb,
+.pwave-cycle::-webkit-slider-thumb,
+.pwave-amplitude::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  margin-top: -6px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid rgba(255, 248, 230, 0.95);
+  border-radius: 50%;
+  background: #141018;
+  box-shadow:
+    0 0 0 3px rgba(232, 194, 122, 0.14),
+    0 0 14px rgba(232, 194, 122, 0.38);
+  transition: transform var(--pw-dur) var(--pw-ease), box-shadow var(--pw-dur) ease;
+}
+
+.pwave-count:hover::-webkit-slider-thumb,
+.pwave-cycle:hover::-webkit-slider-thumb,
+.pwave-amplitude:hover::-webkit-slider-thumb {
+  transform: scale(1.1) translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(232, 194, 122, 0.22),
+    0 0 20px rgba(232, 194, 122, 0.55);
+}
+
+.pwave-count:active::-webkit-slider-thumb,
+.pwave-cycle:active::-webkit-slider-thumb,
+.pwave-amplitude:active::-webkit-slider-thumb {
+  transform: scale(0.97);
+}
+
+.pwave-count::-moz-range-track,
+.pwave-cycle::-moz-range-track,
+.pwave-amplitude::-moz-range-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(232, 194, 122, 0.28), rgba(242, 215, 162, 0.9));
+}
+
+.pwave-count::-moz-range-thumb,
+.pwave-cycle::-moz-range-thumb,
+.pwave-amplitude::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 248, 230, 0.95);
+  border-radius: 50%;
+  background: #141018;
+  box-shadow:
+    0 0 0 3px rgba(232, 194, 122, 0.14),
+    0 0 14px rgba(232, 194, 122, 0.38);
+  transition: transform var(--pw-dur) var(--pw-ease), box-shadow var(--pw-dur) ease;
+}
+
+.pwave-count:hover::-moz-range-thumb,
+.pwave-cycle:hover::-moz-range-thumb,
+.pwave-amplitude:hover::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+.pwave-count:focus-visible,
+.pwave-cycle:focus-visible,
+.pwave-amplitude:focus-visible {
+  outline: 2px solid rgba(232, 194, 122, 0.55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.pwave-freebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 100%;
+}
+
+.pwave-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 14px;
+  color: rgba(246, 241, 232, 0.92);
+  border: 1px solid rgba(232, 194, 122, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color var(--pw-dur) ease,
+    background var(--pw-dur) ease,
+    color var(--pw-dur) ease,
+    transform var(--pw-dur) var(--pw-ease),
+    box-shadow var(--pw-dur) ease;
+}
+
+.pwave-chip svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--pw-dur) var(--pw-ease);
+}
+
+.pwave-chip:hover {
+  border-color: rgba(232, 194, 122, 0.55);
+  background: rgba(232, 194, 122, 0.12);
+  color: var(--pwave-warm);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.pwave-chip:hover svg {
+  transform: scale(1.06);
+}
+
+.pwave-chip:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+.pwave-chip:focus-visible {
+  outline: 2px solid rgba(232, 194, 122, 0.55);
+  outline-offset: 2px;
+}
+
+/* story chrome: shared .experience-freebar-story */
+
+/* 故事模式：隐藏自由壳层（topline 保留作节拍） */
+.pwave-experience.is-story .pwave-plaque,
+.pwave-experience.is-story .pwave-freebar {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .experience-stage:has(.experience-freebar[data-freebar-open='true']) .pwave-topline[data-freebar-clearance='true'] {
+    bottom: auto !important;
+  }
+
+  .pwave-topline {
+    width: min(200px, 54vw);
+    top: calc(var(--experience-safe-top, 78px) + 2px);
+  }
+
+  .pwave-topline-name {
+    display: block;
+  }
+
+  .pwave-topline-phase {
+    font-size: 12px;
+  }
+
+  .pwave-topline-time {
+    font-size: 9px;
+  }
+
+  /* 手机：顶中已有标题，隐藏左上铭牌避免重复 */
+  .pwave-plaque {
+    display: none;
+  }
+
+  .pwave-freebar-main { width: 100%; }
+
+  .pwave-freebar-field {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .experience-freebar-primary > .pwave-freebar-field {
+    flex: 1 1 150px;
+    min-width: min(150px, 100%);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    gap: 2px 8px;
+  }
+
+  .experience-freebar-primary > .pwave-freebar-field > span {
+    grid-column: 1;
+    grid-row: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .experience-freebar-primary > .pwave-freebar-field > b {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .experience-freebar-primary > .pwave-freebar-field > input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .pwave-freebar-actions {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
+
+  .pwave-chip {
+    min-height: 36px;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 720px) and (max-height: 640px) {
+  .pwave-topline-time {
+    display: none;
+  }
+
+  .pwave-freebar-main {
+    max-height: min(34vh, 210px);
+    padding: 8px 12px;
+  }
+}
+

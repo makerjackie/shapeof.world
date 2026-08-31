@@ -1,0 +1,244 @@
+{
+  "kakeya-needle": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "kakeya-needle",
+      "publication": "public",
+      "index": "17",
+      "title": "卡库亚针问题的最小转向区域",
+      "poster": "/assets/posters/kakeya-needle.webp",
+      "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+      "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+      "posterTitle": "单位线段可以在任意小面积内转向",
+      "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+      "posterSource": "三尖内摆线 · 挂谷集 · 王虹–Zahl",
+      "posterPosition": "50% 46%",
+      "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+      "hook": "先看针贴着弯曲轨道滑完 180°，再把要求升级成「每个方向都要有一根完整针」——面积竟能几乎为零；但王虹证明：它再小，也瘪不成一条线。",
+      "payoff": "「每个方向都能躺下一根完整针」的区域叫挂谷集。弯曲的三尖轨道是一个漂亮例子；还可以切成细条再拼，面积想多小有多小。真正的挂谷猜想问另一面：它能不能瘪成更低维的一堆线？王虹与 Zahl（2025）证明三维情形：不能。我们演示的是含义，不是 127 页证明。",
+      "topicLabel": "几何直觉",
+      "translations": {
+        "en": {
+          "title": "The minimum turning region in the Kakeya needle problem",
+          "posterTitle": "A unit segment can turn inside a region of arbitrarily small area",
+          "posterHook": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
+          "posterSource": "Deltoid · Kakeya sets · Wang–Zahl",
+          "question": "A needle on a table needs to turn around—how little room does it need?",
+          "hook": "First watch the needle slide 180° along a curved track, then raise the bar to “a full needle in every direction”—the area can go almost to zero, yet Wang proved it can never flatten into lines.",
+          "payoff": "A region that can hold a full unit needle in every direction is a Kakeya set. The three-cusped track is a beautiful example; thinner strips can make the area as small as you like. The real conjecture asks the flip side—can it collapse into a lower-dimensional bundle of lines? Wang and Zahl (2025) proved the three-dimensional case: no. This world shows what that means, not the 127-page proof.",
+          "topicLabel": "Geometric intuition"
+        }
+      },
+      "primaryCategoryId": "beautiful-math",
+      "runtime": "diagram-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "kakeya-needle",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "modeled",
+      "accent": "#8fd0ff",
+      "related": [],
+      "sources": [
+        {
+          "label": "Wikipedia — 挂谷问题",
+          "labelEn": "Wikipedia — Kakeya set",
+          "url": "https://en.wikipedia.org/wiki/Kakeya_set"
+        },
+        {
+          "label": "Wikipedia — 三尖内摆线（deltoid）",
+          "labelEn": "Wikipedia — Deltoid curve",
+          "url": "https://en.wikipedia.org/wiki/Deltoid_curve"
+        },
+        {
+          "label": "Wang & Zahl（2025）— 三维挂谷集猜想的 127 页证明",
+          "labelEn": "Wang & Zahl (2025) — Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions",
+          "url": "https://arxiv.org/abs/2502.17655"
+        },
+        {
+          "label": "Quanta Magazine — 王虹获 2026 年菲尔兹奖",
+          "labelEn": "Quanta Magazine — Hong Wang wins the 2026 Fields Medal",
+          "url": "https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "claude-opus-5"
+      },
+      "presentation": "full-bleed",
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+      "releaseId": "oss-6ff3221d",
+      "id": "kakeya-needle",
+      "state": "public",
+      "title": "卡库亚针问题的最小转向区域",
+      "titleEn": "The minimum turning region in the Kakeya needle problem",
+      "poster": "/assets/posters/kakeya-needle.webp",
+      "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+      "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+      "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+      "posterHookEn": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
+      "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+      "questionEn": "A needle on a table needs to turn around—how little room does it need?",
+      "topicLabel": "几何直觉",
+      "topicLabelEn": "Geometric intuition",
+      "primaryCategoryId": "beautiful-math",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#8fd0ff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+      "releaseId": "oss-6ff3221d",
+      "id": "kakeya-needle",
+      "state": "public",
+      "title": "卡库亚针问题的最小转向区域",
+      "titleEn": "The minimum turning region in the Kakeya needle problem",
+      "poster": "/assets/posters/kakeya-needle.webp",
+      "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+      "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+      "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+      "posterHookEn": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
+      "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+      "questionEn": "A needle on a table needs to turn around—how little room does it need?",
+      "topicLabel": "几何直觉",
+      "topicLabelEn": "Geometric intuition",
+      "primaryCategoryId": "beautiful-math",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#8fd0ff",
+      "hook": "先看针贴着弯曲轨道滑完 180°，再把要求升级成「每个方向都要有一根完整针」——面积竟能几乎为零；但王虹证明：它再小，也瘪不成一条线。",
+      "hookEn": "First watch the needle slide 180° along a curved track, then raise the bar to “a full needle in every direction”—the area can go almost to zero, yet Wang proved it can never flatten into lines.",
+      "payoff": "「每个方向都能躺下一根完整针」的区域叫挂谷集。弯曲的三尖轨道是一个漂亮例子；还可以切成细条再拼，面积想多小有多小。真正的挂谷猜想问另一面：它能不能瘪成更低维的一堆线？王虹与 Zahl（2025）证明三维情形：不能。我们演示的是含义，不是 127 页证明。",
+      "payoffEn": "A region that can hold a full unit needle in every direction is a Kakeya set. The three-cusped track is a beautiful example; thinner strips can make the area as small as you like. The real conjecture asks the flip side—can it collapse into a lower-dimensional bundle of lines? Wang and Zahl (2025) proved the three-dimensional case: no. This world shows what that means, not the 127-page proof.",
+      "related": [],
+      "sources": [
+        {
+          "label": "Wikipedia — 挂谷问题",
+          "labelEn": "Wikipedia — Kakeya set",
+          "url": "https://en.wikipedia.org/wiki/Kakeya_set"
+        },
+        {
+          "label": "Wikipedia — 三尖内摆线（deltoid）",
+          "labelEn": "Wikipedia — Deltoid curve",
+          "url": "https://en.wikipedia.org/wiki/Deltoid_curve"
+        },
+        {
+          "label": "Wang & Zahl（2025）— 三维挂谷集猜想的 127 页证明",
+          "labelEn": "Wang & Zahl (2025) — Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions",
+          "url": "https://arxiv.org/abs/2502.17655"
+        },
+        {
+          "label": "Quanta Magazine — 王虹获 2026 年菲尔兹奖",
+          "labelEn": "Quanta Magazine — Hong Wang wins the 2026 Fields Medal",
+          "url": "https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "kakeya-needle",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+      "releaseId": "oss-6ff3221d",
+      "text": "卡库亚针问题的最小转向区域 The minimum turning region in the Kakeya needle problem 桌上有一根针要掉头，最少需要多大一块地方？ A needle on a table needs to turn around—how little room does it need? 最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。 The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line. 几何直觉 Geometric intuition",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+        "releaseId": "oss-6ff3221d",
+        "id": "kakeya-needle",
+        "state": "public",
+        "title": "卡库亚针问题的最小转向区域",
+        "titleEn": "The minimum turning region in the Kakeya needle problem",
+        "poster": "/assets/posters/kakeya-needle.webp",
+        "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+        "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+        "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+        "posterHookEn": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
+        "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+        "questionEn": "A needle on a table needs to turn around—how little room does it need?",
+        "topicLabel": "几何直觉",
+        "topicLabelEn": "Geometric intuition",
+        "primaryCategoryId": "beautiful-math",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#8fd0ff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+      "releaseId": "oss-6ff3221d",
+      "id": "kakeya-needle",
+      "renderer": "kakeya-needle",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "卡库亚针问题的最小转向区域",
+        "en": "The minimum turning region in the Kakeya needle problem"
+      },
+      "summary": {
+        "zh": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+        "en": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "7e2a080eb0c3c9b64a7c972dbc24af5a93fe5956c989dba73a731cecf635e156",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "clifford-dust",
+      "nextWorldId": "strange-attractors",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

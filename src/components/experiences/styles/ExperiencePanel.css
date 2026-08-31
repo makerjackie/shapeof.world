@@ -1,0 +1,51 @@
+/**
+ * ExperiencePanel · GuideTour / Freebar 的共享材质 seam
+ *
+ * 两种模式互斥，但属于同一个底部操作区域。背景、透明度、描边、模糊和
+ * 阴影必须来自同一组 token；世界只需在体验根节点换肤一次。
+ *
+ * 产品心智：相对沉浸的烟熏玻璃底棚，不是挡舞台的不透明参数台。
+ * 默认应能透过面板看到主体颜色；可读性靠 blur + 细边框 + 轻文字阴影，
+ * 而不是把 alpha 拉到 0.85+ 做成黑板。
+ *
+ * 旧的 --freebar-* 材质 token 仅作为迁移兼容层。新代码只写
+ * --experience-panel-*，禁止分别覆盖 .guide-card 与
+ * .experience-freebar-main 的背景。
+ */
+.guide-card,
+.experience-freebar-main {
+  border-radius: var(
+    --experience-panel-radius,
+    var(--freebar-radius, 16px)
+  );
+  border-color: var(
+    --experience-panel-border,
+    var(--freebar-border, rgba(255, 255, 255, 0.14))
+  );
+  /* 更透的烟熏玻璃：舞台颜色明显透上来；可读性靠 blur + 细边框 */
+  background: var(
+    --experience-panel-surface,
+    var(
+      --freebar-surface,
+      linear-gradient(
+        180deg,
+        rgba(10, 14, 22, 0.38),
+        rgba(6, 10, 17, 0.32)
+      )
+    )
+  );
+  box-shadow: var(
+    --experience-panel-shadow,
+    var(
+      --freebar-shadow,
+      0 16px 48px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08)
+    )
+  );
+  backdrop-filter:
+    blur(var(--experience-panel-blur, var(--freebar-blur, 24px)))
+    saturate(var(--experience-panel-saturation, var(--freebar-saturation, 1.25)));
+  -webkit-backdrop-filter:
+    blur(var(--experience-panel-blur, var(--freebar-blur, 24px)))
+    saturate(var(--experience-panel-saturation, var(--freebar-saturation, 1.25)));
+}

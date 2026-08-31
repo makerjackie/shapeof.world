@@ -1,0 +1,232 @@
+{
+  "double-pendulum": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "double-pendulum",
+      "publication": "public",
+      "index": "06",
+      "title": "相差 0.1° 的双摆轨迹",
+      "poster": "/assets/posters/double-pendulum.webp",
+      "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
+      "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
+      "posterTitle": "差 0.1° 的两次放手，为什么结局完全不同？",
+      "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+      "posterSource": "Canvas 2D · RK4 双摆 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "两次几乎相同的放手，为什么走出完全不同的路？",
+      "hook": "释放双摆，旁边的影子摆初始角只偏 0.1°。盯住分离角：它起初纹丝不动，然后突然爆炸。",
+      "payoff": "混沌：方程完全确定，但初值误差被指数放大（李雅普诺夫指数 > 0），长期行为必然不可预测——确定性不等于可预测。",
+      "topicLabel": "混沌",
+      "translations": {
+        "en": {
+          "title": "Double-pendulum paths starting 0.1° apart",
+          "posterTitle": "Why are the two letting gos with a difference of 0.1° completely different endings?",
+          "posterHook": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
+          "posterSource": "Canvas 2D · RK4 Double Pendulum · Local Build",
+          "question": "Two almost identical letting gos, why take completely different paths?",
+          "hook": "When the double pendulum is released, the initial angle of the shadow pendulum next to it is only 0.1°. Keep an eye on the separation angle: it's motionless at first, then suddenly explodes.",
+          "payoff": "Chaos: The equation is completely determined, but the initial value error is exponentially amplified (Lyapunov index > 0), and the long-term behavior is necessarily unpredictable - certainty does not equal predictability.",
+          "topicLabel": "Chaos"
+        }
+      },
+      "primaryCategoryId": "chaos-boundary",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "particle-2d",
+      "difficulty": "standard",
+      "lane": "flow",
+      "renderer": "double-pendulum",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "related": [
+        "gravity-assist",
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "双摆（Wikipedia）",
+          "labelEn": "Double pendulum (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/双摆"
+        },
+        {
+          "label": "混沌理论（Wikipedia）",
+          "labelEn": "Chaos Theory (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/混沌理论"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-pendulum",
+      "state": "public",
+      "title": "相差 0.1° 的双摆轨迹",
+      "titleEn": "Double-pendulum paths starting 0.1° apart",
+      "poster": "/assets/posters/double-pendulum.webp",
+      "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
+      "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
+      "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+      "posterHookEn": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
+      "question": "两次几乎相同的放手，为什么走出完全不同的路？",
+      "questionEn": "Two almost identical letting gos, why take completely different paths?",
+      "topicLabel": "混沌",
+      "topicLabelEn": "Chaos",
+      "primaryCategoryId": "chaos-boundary",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ff922b"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-pendulum",
+      "state": "public",
+      "title": "相差 0.1° 的双摆轨迹",
+      "titleEn": "Double-pendulum paths starting 0.1° apart",
+      "poster": "/assets/posters/double-pendulum.webp",
+      "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
+      "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
+      "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+      "posterHookEn": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
+      "question": "两次几乎相同的放手，为什么走出完全不同的路？",
+      "questionEn": "Two almost identical letting gos, why take completely different paths?",
+      "topicLabel": "混沌",
+      "topicLabelEn": "Chaos",
+      "primaryCategoryId": "chaos-boundary",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "hook": "释放双摆，旁边的影子摆初始角只偏 0.1°。盯住分离角：它起初纹丝不动，然后突然爆炸。",
+      "hookEn": "When the double pendulum is released, the initial angle of the shadow pendulum next to it is only 0.1°. Keep an eye on the separation angle: it's motionless at first, then suddenly explodes.",
+      "payoff": "混沌：方程完全确定，但初值误差被指数放大（李雅普诺夫指数 > 0），长期行为必然不可预测——确定性不等于可预测。",
+      "payoffEn": "Chaos: The equation is completely determined, but the initial value error is exponentially amplified (Lyapunov index > 0), and the long-term behavior is necessarily unpredictable - certainty does not equal predictability.",
+      "related": [
+        "gravity-assist",
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "双摆（Wikipedia）",
+          "labelEn": "Double pendulum (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/双摆"
+        },
+        {
+          "label": "混沌理论（Wikipedia）",
+          "labelEn": "Chaos Theory (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/混沌理论"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "double-pendulum",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+      "releaseId": "oss-6ff3221d",
+      "text": "相差 0.1° 的双摆轨迹 Double-pendulum paths starting 0.1° apart 两次几乎相同的放手，为什么走出完全不同的路？ Two almost identical letting gos, why take completely different paths? 拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。 Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum. 混沌 Chaos",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+        "releaseId": "oss-6ff3221d",
+        "id": "double-pendulum",
+        "state": "public",
+        "title": "相差 0.1° 的双摆轨迹",
+        "titleEn": "Double-pendulum paths starting 0.1° apart",
+        "poster": "/assets/posters/double-pendulum.webp",
+        "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
+        "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
+        "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+        "posterHookEn": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
+        "question": "两次几乎相同的放手，为什么走出完全不同的路？",
+        "questionEn": "Two almost identical letting gos, why take completely different paths?",
+        "topicLabel": "混沌",
+        "topicLabelEn": "Chaos",
+        "primaryCategoryId": "chaos-boundary",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#ff922b"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-pendulum",
+      "renderer": "double-pendulum",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "相差 0.1° 的双摆轨迹",
+        "en": "Double-pendulum paths starting 0.1° apart"
+      },
+      "summary": {
+        "zh": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+        "en": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "pendulum-wave",
+      "nextWorldId": "firefly-sync",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

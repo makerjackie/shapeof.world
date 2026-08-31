@@ -1,0 +1,343 @@
+/* ============================================================
+   moon-voyage · 真实比例奔月之旅
+   根容器 .oss-experience.mv-experience；HUD 与铭牌只读、非交互。
+   ============================================================ */
+
+.mv-experience {
+  --mv-ice: #9fdcff;
+  --mv-gold: #ffd27a;
+  /* GuideTour / Freebar 共用同一块深夜玻璃（仅在此换肤一次）。 */
+  --world-accent: var(--mv-ice);
+  --freebar-accent: var(--mv-ice);
+  --experience-panel-surface:
+    linear-gradient(165deg, rgba(16, 26, 44, 0.6), rgba(5, 9, 18, 0.62));
+  --experience-panel-border: rgba(159, 220, 255, 0.2);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.52),
+    inset 0 1px 0 rgba(210, 235, 255, 0.1);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.25;
+  --experience-panel-radius: 16px;
+  --guide-stage-kicker: #1d719f;
+  --guide-stage-ink: #10253a;
+  --guide-stage-body: rgba(16, 37, 58, 0.76);
+  --guide-stage-text-shadow: 0 2px 18px rgba(255, 255, 255, 0.82);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #04070f;
+}
+
+.mv-canvas {
+  position: absolute !important;
+  inset: 0;
+  outline: none;
+}
+
+/* —— 点题铭牌（顶左，非交互，故事模式不渲染） —— */
+.mv-plaque {
+  position: absolute;
+  z-index: 8;
+  top: var(--experience-safe-top, 78px);
+  left: 22px;
+  display: flex;
+  max-width: min(420px, 62vw);
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+}
+
+.mv-plaque strong {
+  color: #f2f7ff;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.mv-plaque span {
+  color: rgba(210, 228, 250, 0.72);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* —— 被动任务 HUD（底左，只读，避让 Freebar） —— */
+.mv-hud {
+  position: absolute;
+  z-index: 7;
+  bottom: calc(var(--experience-freebar-height, 64px) + 14px);
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+.mv-hud-top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.mv-hud-top strong {
+  color: #eef5ff;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+}
+
+.mv-hud-top em {
+  color: var(--mv-ice);
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0.06em;
+}
+
+.mv-hud-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  color: rgba(205, 222, 244, 0.78);
+  font-size: 11.5px;
+}
+
+/* 抵达倒计时：呼应铭牌「去月球要几天？」，用主题冰蓝略作强调 */
+.mv-hud-eta {
+  color: var(--mv-ice);
+}
+
+/* —— Freebar 业务控件 —— */
+.mv-experience .mv-ignite-btn {
+  display: inline-flex;
+  height: 40px;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  color: #08131f;
+  background: linear-gradient(160deg, #bfe6ff, #7ec4f5);
+  box-shadow:
+    0 6px 22px rgba(110, 190, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.mv-experience .mv-ignite-btn:hover {
+  filter: brightness(1.06);
+}
+
+.mv-experience .mv-ignite-btn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.mv-experience .mv-speed-seg {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid var(--experience-panel-border);
+  border-radius: 12px;
+}
+
+.mv-experience .mv-speed-seg button {
+  min-width: 52px;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 0;
+  border-right: 1px solid rgba(159, 220, 255, 0.14);
+  color: rgba(214, 232, 252, 0.82);
+  background: transparent;
+  cursor: pointer;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mv-experience .mv-speed-seg button:last-child {
+  border-right: 0;
+}
+
+.mv-experience .mv-speed-seg button.is-active {
+  color: #0a1622;
+  background: var(--mv-ice);
+}
+
+.mv-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.mv-chip-divider {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: rgba(159, 220, 255, 0.18);
+}
+
+/* 天体方位标签（wide/top 大尺度机位）：小圆点 + 名称，CSS 偏移避开球体 */
+.mv-body-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px 2px 6px;
+  border-radius: 999px;
+  background: rgba(6, 10, 20, 0.55);
+  backdrop-filter: blur(4px);
+  font-size: 10.5px;
+  font-weight: 550;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+  transform: translateY(-26px);
+  animation: mv-body-label-in 0.6s ease both;
+}
+
+.mv-body-label::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentcolor;
+  box-shadow: 0 0 6px currentcolor;
+}
+
+.mv-body-label-earth {
+  border: 1px solid rgba(126, 196, 245, 0.4);
+  color: #9fdcff;
+}
+
+.mv-body-label-moon {
+  border: 1px solid rgba(216, 219, 224, 0.35);
+  color: #d8dbe0;
+  transform: translateY(-22px);
+}
+
+.mv-body-label-ghost {
+  border: 1px dashed rgba(170, 205, 255, 0.5);
+  color: #aacdff;
+  transform: translateY(-30px);
+}
+
+.mv-body-label-ghost::before {
+  background: transparent;
+  border: 1px solid currentcolor;
+  box-shadow: none;
+}
+
+@keyframes mv-body-label-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 轨道事件双语标签（drei Html）：小胶囊、非交互、随距离淡出 */
+.mv-event-label-wrap {
+  pointer-events: none;
+}
+
+.mv-event-label {
+  display: inline-block;
+  padding: 3px 9px;
+  border: 1px solid rgba(255, 210, 122, 0.35);
+  border-radius: 999px;
+  color: #ffe3ae;
+  background: rgba(8, 12, 22, 0.62);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  font-weight: 550;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.25s linear;
+}
+
+.mv-secondary button {
+  display: inline-flex;
+  height: 34px;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 11px;
+  border: 1px solid rgba(159, 220, 255, 0.16);
+  border-radius: 10px;
+  color: rgba(214, 232, 252, 0.82);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.mv-secondary button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.mv-secondary button.is-active {
+  border-color: rgba(159, 220, 255, 0.55);
+  color: #eaf5ff;
+  background: rgba(159, 220, 255, 0.16);
+}
+
+.mv-secondary button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.mv-finished-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .mv-plaque {
+    left: 14px;
+    max-width: 70vw;
+  }
+
+  .mv-plaque strong {
+    font-size: 13.5px;
+  }
+
+  .mv-plaque span {
+    font-size: 11px;
+  }
+
+  .mv-hud {
+    left: 14px;
+    gap: 2px;
+  }
+
+  .mv-hud-top strong {
+    font-size: 12px;
+  }
+
+  .mv-hud-row {
+    font-size: 10.5px;
+    gap: 2px 10px;
+  }
+
+  /* 手机：芯片组沿用 Freebar 横滑轨（.experience-freebar-chips 默认 nowrap + 横滚），不另立规则 */
+  .mv-experience .mv-speed-seg button {
+    min-width: 46px;
+    height: 38px;
+    min-height: 38px;
+    font-size: 12px;
+  }
+}
+

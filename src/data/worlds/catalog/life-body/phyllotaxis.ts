@@ -1,0 +1,66 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'phyllotaxis',
+    publication: 'public',
+    index: '103',
+    title: '植物的螺旋',
+    poster: '/assets/posters/phyllotaxis.webp',
+    posterMobile: '/assets/posters/mobile/phyllotaxis.webp',
+    posterDesktop: '/assets/posters/desktop/phyllotaxis.webp',
+    posterTitle: '向日葵种子排列成螺旋',
+    posterHook: '向日葵为什么把种子排成螺线？',
+    posterSource: 'Canvas 2D · Vogel 叶序模型 · 本地构建',
+    posterPosition: '50% 48%',
+    question: '向日葵为什么把种子排成螺线？',
+    hook: '从中心一颗颗长出种子：每颗只多转一个固定角 θ。拨动 θ，看 700 多颗种子从挤成辐条，到突然铺成 13+21 条斐波那契螺线。',
+    payoff: '黄金角 θ*≈137.508° 最难被有理数逼近，新种子总是落在最大空隙；螺线臂数因此是相邻斐波那契数。真实植物还受基因与挤压影响，本页是理想化的 Vogel 模型。',
+    topicLabel: '形态发生',
+    translations: {
+      en: {
+        title: 'Spirals in plants',
+        posterTitle: 'Sunflower seeds arrange themselves in spirals',
+        posterHook: 'Why do sunflowers arrange their seeds in spirals?',
+        posterSource: 'Canvas 2D · Vogel phyllotaxis model · Local build',
+        question: 'Why do sunflowers arrange their seeds in spirals?',
+        hook: 'Seeds grow outward one by one, each turning by a fixed angle θ. Scrub θ and watch 700+ seeds crowd into spokes—then suddenly open into 13+21 Fibonacci spirals.',
+        payoff: 'The golden angle θ*≈137.508° is hardest to approximate with rationals, so each new seed lands in the largest gap; spiral counts become neighboring Fibonacci numbers. Real plants also feel genes and packing forces—this page is an idealized Vogel model.',
+        topicLabel: 'Morphogenesis',
+      },
+    },
+    primaryCategoryId: 'life-body',
+    runtime: 'diagram-2d',
+    difficulty: 'intro',
+    lane: 'structure',
+    renderer: 'phyllotaxis',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 300,
+    evidence: 'modeled',
+    accent: '#e8b84a',
+    related: [],
+    sources: [
+      {
+        label: 'Wikipedia — 叶序',
+        labelEn: 'Wikipedia — Phyllotaxis',
+        url: 'https://en.wikipedia.org/wiki/Phyllotaxis',
+      },
+      {
+        label: 'Vogel, H. (1979) A better way to construct the sunflower head',
+        labelEn: 'Vogel, H. (1979) A better way to construct the sunflower head',
+        url: 'https://doi.org/10.1016/0025-5564(79)90080-4',
+      },
+      {
+        label: 'Wikipedia — 黄金角',
+        labelEn: 'Wikipedia — Golden angle',
+        url: 'https://en.wikipedia.org/wiki/Golden_angle',
+      }
+    ],
+    provenance: { origin: 'ai-prototype', initialModel: 'grok-4.5' },
+    presentation: 'full-bleed',
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

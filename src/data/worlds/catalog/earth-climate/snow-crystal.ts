@@ -1,0 +1,66 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'snow-crystal',
+    publication: 'public',
+    index: '106',
+    title: '温度与湿度决定雪晶形状',
+    poster: '/assets/posters/snow-crystal.webp',
+    posterMobile: '/assets/posters/mobile/snow-crystal.webp',
+    posterDesktop: '/assets/posters/desktop/snow-crystal.webp',
+    posterTitle: '雪花会长成薄片或针状晶体',
+    posterHook: '拨动温度与湿度，看同一套六角对称在薄板、枝晶与细针之间切换习性。',
+    posterSource: 'Canvas 2D · 风格化六角生长 · 本地构建',
+    posterPosition: '50% 48%',
+    question: '同一片云里，为什么雪花有时像板，有时像针？',
+    hook: '看着六条主臂一起生长，拨动温度与水汽，看中谷图启发下的习性如何改写晶体轮廓。',
+    payoff: '冰的晶格是六角对称的。温度决定更爱铺板还是拉长成针/柱，湿度决定侧枝是否疯长。这是风格化演示，不是实验室测得的精确晶体，但习性分区与真实观察同向。',
+    topicLabel: '大气与冰晶',
+    translations: {
+      en: {
+        title: 'Temperature and humidity shape snow crystals',
+        posterTitle: 'Snow crystals grow as plates or needles',
+        posterHook: 'Scrub temperature and humidity and watch the same six-fold symmetry switch habits among plates, dendrites, and needles.',
+        posterSource: 'Canvas 2D · Stylized hexagonal growth · Local build',
+        question: 'In the same cloud, why is a snowflake sometimes a plate and sometimes a needle?',
+        hook: 'Watch six primary arms grow together, then scrub temperature and moisture to see Nakaya-inspired habits reshape the crystal.',
+        payoff: 'Ice’s lattice is six-fold. Temperature steers plate versus needle/column growth; humidity decides whether side branches flourish. This is a stylized demo, not lab-measured crystal physics—but the habit map points the same way as real observations.',
+        topicLabel: 'Atmosphere and ice',
+      },
+    },
+    primaryCategoryId: 'earth-climate',
+    runtime: 'diagram-2d',
+    difficulty: 'intro',
+    lane: 'structure',
+    renderer: 'snow-crystal',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'modeled',
+    accent: '#a8d8ff',
+    related: ['phyllotaxis'],
+    sources: [
+      {
+        label: '中谷宇吉郎 — 雪晶习性图（综述）',
+        labelEn: 'Ukichiro Nakaya — snow crystal habit diagram (overview)',
+        url: 'https://en.wikipedia.org/wiki/Ukichiro_Nakaya',
+      },
+      {
+        label: 'SnowCrystals.com — 雪晶分类',
+        labelEn: 'SnowCrystals.com — snow crystal morphology',
+        url: 'https://www.snowcrystals.com/',
+      },
+      {
+        label: 'Wikipedia — 雪花',
+        labelEn: 'Wikipedia — Snowflake',
+        url: 'https://en.wikipedia.org/wiki/Snowflake',
+      }
+    ],
+    provenance: { origin: 'ai-prototype', initialModel: 'grok-4.5' },
+    presentation: 'full-bleed',
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

@@ -1,0 +1,471 @@
+{
+  "formula-bloom": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "formula-bloom",
+      "publication": "public",
+      "index": "03",
+      "title": "一条迭代公式控制一万个点的运动",
+      "poster": "/assets/posters/formula-bloom.webp",
+      "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+      "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+      "posterTitle": "参数变化让点云形成周期与混沌运动",
+      "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+      "posterSource": "Canvas 2D · 参数点场 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "一串三角公式，怎么长成一只会游的白影？",
+      "hook": "每个点只是 sin、cos 和距离；合在一起却像一条发光的脊骨在深海里游过。",
+      "payoff": "参数方程把时间与索引映射到平面；嵌套的周期函数让形状在闭合与开放之间缓慢变形——这就是「公式粒子」生成艺术的核心。",
+      "topicLabel": "数学",
+      "translations": {
+        "en": {
+          "title": "One iterative formula controls the motion of ten thousand points",
+          "posterTitle": "Parameter changes produce periodic and chaotic point-cloud motion",
+          "posterHook": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
+          "posterSource": "Canvas 2D · Parametric point field · Local build",
+          "question": "How do nested trig formulas grow into a swimming white shadow?",
+          "hook": "Each point is only sin, cos, and distance; together they look like a glowing spine drifting through deep water.",
+          "payoff": "Parametric equations map time and index onto the plane; nested periodic functions slowly morph the form between closed and open shapes — the core of formula-particle generative art.",
+          "topicLabel": "Mathematics"
+        }
+      },
+      "primaryCategoryId": "essence-of-math",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "grok-4.5"
+      },
+      "runtime": "particle-2d",
+      "difficulty": "intro",
+      "lane": "flow",
+      "renderer": "formula-bloom",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "modeled",
+      "accent": "#e8e8e8",
+      "related": [
+        "clifford-dust"
+      ],
+      "sources": [
+        {
+          "label": "参数方程（Wikipedia）",
+          "labelEn": "Parametric equation (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Parametric_equation"
+        },
+        {
+          "label": "@yuruyurau #つぶやきProcessing",
+          "labelEn": "@yuruyurau #つぶやきProcessing",
+          "url": "https://x.com/yuruyurau/status/2080977918914969636"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+      "releaseId": "oss-6ff3221d",
+      "id": "formula-bloom",
+      "state": "public",
+      "title": "一条迭代公式控制一万个点的运动",
+      "titleEn": "One iterative formula controls the motion of ten thousand points",
+      "poster": "/assets/posters/formula-bloom.webp",
+      "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+      "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+      "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+      "posterHookEn": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
+      "question": "一串三角公式，怎么长成一只会游的白影？",
+      "questionEn": "How do nested trig formulas grow into a swimming white shadow?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "essence-of-math",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#e8e8e8"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+      "releaseId": "oss-6ff3221d",
+      "id": "formula-bloom",
+      "state": "public",
+      "title": "一条迭代公式控制一万个点的运动",
+      "titleEn": "One iterative formula controls the motion of ten thousand points",
+      "poster": "/assets/posters/formula-bloom.webp",
+      "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+      "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+      "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+      "posterHookEn": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
+      "question": "一串三角公式，怎么长成一只会游的白影？",
+      "questionEn": "How do nested trig formulas grow into a swimming white shadow?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "essence-of-math",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#e8e8e8",
+      "hook": "每个点只是 sin、cos 和距离；合在一起却像一条发光的脊骨在深海里游过。",
+      "hookEn": "Each point is only sin, cos, and distance; together they look like a glowing spine drifting through deep water.",
+      "payoff": "参数方程把时间与索引映射到平面；嵌套的周期函数让形状在闭合与开放之间缓慢变形——这就是「公式粒子」生成艺术的核心。",
+      "payoffEn": "Parametric equations map time and index onto the plane; nested periodic functions slowly morph the form between closed and open shapes — the core of formula-particle generative art.",
+      "related": [
+        "clifford-dust"
+      ],
+      "sources": [
+        {
+          "label": "参数方程（Wikipedia）",
+          "labelEn": "Parametric equation (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Parametric_equation"
+        },
+        {
+          "label": "@yuruyurau #つぶやきProcessing",
+          "labelEn": "@yuruyurau #つぶやきProcessing",
+          "url": "https://x.com/yuruyurau/status/2080977918914969636"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "formula-bloom",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+      "releaseId": "oss-6ff3221d",
+      "text": "一条迭代公式控制一万个点的运动 One iterative formula controls the motion of ten thousand points 一串三角公式，怎么长成一只会游的白影？ How do nested trig formulas grow into a swimming white shadow? 纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。 On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine. 数学 Mathematics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+        "releaseId": "oss-6ff3221d",
+        "id": "formula-bloom",
+        "state": "public",
+        "title": "一条迭代公式控制一万个点的运动",
+        "titleEn": "One iterative formula controls the motion of ten thousand points",
+        "poster": "/assets/posters/formula-bloom.webp",
+        "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+        "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+        "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+        "posterHookEn": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
+        "question": "一串三角公式，怎么长成一只会游的白影？",
+        "questionEn": "How do nested trig formulas grow into a swimming white shadow?",
+        "topicLabel": "数学",
+        "topicLabelEn": "Mathematics",
+        "primaryCategoryId": "essence-of-math",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#e8e8e8"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+      "releaseId": "oss-6ff3221d",
+      "id": "formula-bloom",
+      "renderer": "formula-bloom",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "一条迭代公式控制一万个点的运动",
+        "en": "One iterative formula controls the motion of ten thousand points"
+      },
+      "summary": {
+        "zh": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+        "en": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "883ee15b2593e4d6abc886933cdaa7990160601cae7bb1f686c2a5eca756b7de",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "black-hole-flyby",
+      "nextWorldId": "double-slit",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  },
+  "ferrofluid": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "ferrofluid",
+      "publication": "public",
+      "index": "23",
+      "title": "铁磁流体",
+      "poster": "/assets/posters/ferrofluid.webp",
+      "posterMobile": "/assets/posters/mobile/ferrofluid.webp",
+      "posterDesktop": "/assets/posters/desktop/ferrofluid.webp",
+      "posterTitle": "磁铁一靠近，黑色液体为什么长出尖刺？",
+      "posterHook": "磁铁一靠近，黑色液体就长出尖刺。",
+      "posterSource": "WebGL · 实时液面着色 · 本地构建",
+      "posterPosition": "58% 50%",
+      "question": "磁铁一靠近，黑色液体为什么会长出尖刺？",
+      "hook": "拖着磁铁掠过液面，看镜面般的黑色液体竖起一片尖峰，又在磁铁离开后慢慢融回平滑。",
+      "payoff": "铁磁流体里悬浮着极小的磁性颗粒。磁场足够强时，它会把液面向上拉；重力和表面张力又想把液面压平，两边相持时便排出一簇簇尖峰。",
+      "topicLabel": "磁性材料",
+      "translations": {
+        "en": {
+          "title": "Ferrofluid",
+          "posterTitle": "Why does black liquid grow spikes when a magnet comes close?",
+          "posterHook": "Bring a magnet close, and black liquid grows a crown of spikes.",
+          "posterSource": "WebGL · Real-time surface shading · Local build",
+          "question": "Why does black liquid grow spikes when a magnet comes close?",
+          "hook": "Sweep a magnet over the mirror-black surface. A field of peaks rises to follow it, then melts smooth again as the magnet moves away.",
+          "payoff": "Ferrofluid suspends tiny magnetic particles in a liquid. A strong enough field pulls the surface upward while gravity and surface tension pull it flat; their balance organizes the surface into peaks.",
+          "topicLabel": "Magnetic materials"
+        }
+      },
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "difficulty": "intro",
+      "lane": "flow",
+      "renderer": "ferrofluid",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 240,
+      "evidence": "modeled",
+      "accent": "#efb661",
+      "related": [
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines"
+      ],
+      "sources": [
+        {
+          "label": "MIT OpenCourseWare — 磁场中的铁磁流体尖峰",
+          "labelEn": "MIT OpenCourseWare — Ferrofluid peak pattern in a magnetic field",
+          "url": "https://ocw.mit.edu/courses/6-642-continuum-electromechanics-fall-2008/resources/6-642f08-th/"
+        },
+        {
+          "label": "MIT News — 铁磁流体在磁场中的形态",
+          "labelEn": "MIT News — Ferrofluid morphing under magnetic fields",
+          "url": "https://news.mit.edu/2003/ferrofluid-0205"
+        },
+        {
+          "label": "NASA — Stephen Papell 与铁磁流体的诞生",
+          "labelEn": "NASA — Stephen Papell and the birth of ferrofluid",
+          "url": "https://www.nasa.gov/history/novel-rocket-fuel-spawned-ferrofluid-industry/"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "gpt-5.6-sol"
+      },
+      "presentation": "full-bleed",
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+      "releaseId": "oss-6ff3221d",
+      "id": "ferrofluid",
+      "state": "public",
+      "title": "铁磁流体",
+      "titleEn": "Ferrofluid",
+      "poster": "/assets/posters/ferrofluid.webp",
+      "posterMobile": "/assets/posters/mobile/ferrofluid.webp",
+      "posterDesktop": "/assets/posters/desktop/ferrofluid.webp",
+      "posterHook": "磁铁一靠近，黑色液体就长出尖刺。",
+      "posterHookEn": "Bring a magnet close, and black liquid grows a crown of spikes.",
+      "question": "磁铁一靠近，黑色液体为什么会长出尖刺？",
+      "questionEn": "Why does black liquid grow spikes when a magnet comes close?",
+      "topicLabel": "磁性材料",
+      "topicLabelEn": "Magnetic materials",
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#efb661"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+      "releaseId": "oss-6ff3221d",
+      "id": "ferrofluid",
+      "state": "public",
+      "title": "铁磁流体",
+      "titleEn": "Ferrofluid",
+      "poster": "/assets/posters/ferrofluid.webp",
+      "posterMobile": "/assets/posters/mobile/ferrofluid.webp",
+      "posterDesktop": "/assets/posters/desktop/ferrofluid.webp",
+      "posterHook": "磁铁一靠近，黑色液体就长出尖刺。",
+      "posterHookEn": "Bring a magnet close, and black liquid grows a crown of spikes.",
+      "question": "磁铁一靠近，黑色液体为什么会长出尖刺？",
+      "questionEn": "Why does black liquid grow spikes when a magnet comes close?",
+      "topicLabel": "磁性材料",
+      "topicLabelEn": "Magnetic materials",
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#efb661",
+      "hook": "拖着磁铁掠过液面，看镜面般的黑色液体竖起一片尖峰，又在磁铁离开后慢慢融回平滑。",
+      "hookEn": "Sweep a magnet over the mirror-black surface. A field of peaks rises to follow it, then melts smooth again as the magnet moves away.",
+      "payoff": "铁磁流体里悬浮着极小的磁性颗粒。磁场足够强时，它会把液面向上拉；重力和表面张力又想把液面压平，两边相持时便排出一簇簇尖峰。",
+      "payoffEn": "Ferrofluid suspends tiny magnetic particles in a liquid. A strong enough field pulls the surface upward while gravity and surface tension pull it flat; their balance organizes the surface into peaks.",
+      "related": [
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines"
+      ],
+      "sources": [
+        {
+          "label": "MIT OpenCourseWare — 磁场中的铁磁流体尖峰",
+          "labelEn": "MIT OpenCourseWare — Ferrofluid peak pattern in a magnetic field",
+          "url": "https://ocw.mit.edu/courses/6-642-continuum-electromechanics-fall-2008/resources/6-642f08-th/"
+        },
+        {
+          "label": "MIT News — 铁磁流体在磁场中的形态",
+          "labelEn": "MIT News — Ferrofluid morphing under magnetic fields",
+          "url": "https://news.mit.edu/2003/ferrofluid-0205"
+        },
+        {
+          "label": "NASA — Stephen Papell 与铁磁流体的诞生",
+          "labelEn": "NASA — Stephen Papell and the birth of ferrofluid",
+          "url": "https://www.nasa.gov/history/novel-rocket-fuel-spawned-ferrofluid-industry/"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "ferrofluid",
+      "duration": 240,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+      "releaseId": "oss-6ff3221d",
+      "text": "铁磁流体 Ferrofluid 磁铁一靠近，黑色液体为什么会长出尖刺？ Why does black liquid grow spikes when a magnet comes close? 磁铁一靠近，黑色液体就长出尖刺。 Bring a magnet close, and black liquid grows a crown of spikes. 磁性材料 Magnetic materials",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+        "releaseId": "oss-6ff3221d",
+        "id": "ferrofluid",
+        "state": "public",
+        "title": "铁磁流体",
+        "titleEn": "Ferrofluid",
+        "poster": "/assets/posters/ferrofluid.webp",
+        "posterMobile": "/assets/posters/mobile/ferrofluid.webp",
+        "posterDesktop": "/assets/posters/desktop/ferrofluid.webp",
+        "posterHook": "磁铁一靠近，黑色液体就长出尖刺。",
+        "posterHookEn": "Bring a magnet close, and black liquid grows a crown of spikes.",
+        "question": "磁铁一靠近，黑色液体为什么会长出尖刺？",
+        "questionEn": "Why does black liquid grow spikes when a magnet comes close?",
+        "topicLabel": "磁性材料",
+        "topicLabelEn": "Magnetic materials",
+        "primaryCategoryId": "materials-lab",
+        "runtime": "scene-3d",
+        "evidence": "modeled",
+        "accent": "#efb661"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+      "releaseId": "oss-6ff3221d",
+      "id": "ferrofluid",
+      "renderer": "ferrofluid",
+      "runtime": "scene-3d",
+      "capabilities": [
+        "webgl",
+        "three"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "铁磁流体",
+        "en": "Ferrofluid"
+      },
+      "summary": {
+        "zh": "磁铁一靠近，黑色液体就长出尖刺。",
+        "en": "Bring a magnet close, and black liquid grows a crown of spikes."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "332623a1dd3c79884ed77a3c74de37e87c18b656b0a35e9c5836eab4396f146e",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "fourier",
+      "nextWorldId": "soap-bubble",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

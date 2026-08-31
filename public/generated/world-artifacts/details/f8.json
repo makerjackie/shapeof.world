@@ -1,0 +1,220 @@
+{
+  "neural-playground": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "neural-playground",
+      "publication": "public",
+      "index": "09",
+      "title": "神经网络通过调整权重学习分类",
+      "poster": "/assets/posters/neural-playground.webp",
+      "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+      "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+      "posterTitle": "神经网络用误差反向调整权重",
+      "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+      "posterSource": "纯 JavaScript 反向传播 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "神经网络是怎样从数据中学会分类的？",
+      "hook": "在这个迷你 TensorFlow Playground 里，你可以选数据集、改网络结构、调超参数，然后看损失下降、决策边界成形。",
+      "payoff": "神经网络通过反向传播不断调整权重，把复杂边界一点点逼近真实数据；层数和神经元越多，表达能力越强，但也需要更合适的激活函数和学习率。",
+      "topicLabel": "深度学习",
+      "translations": {
+        "en": {
+          "title": "A neural network learns classification by adjusting weights",
+          "posterTitle": "A neural network uses error to update its weights",
+          "posterHook": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
+          "posterSource": "Pure JavaScript backpropagation · Local build",
+          "question": "How do neural networks learn to classify from data?",
+          "hook": "In this mini TensorFlow Playground, you can select the data set, change the network structure, adjust the hyperparameters, and then watch the loss decrease and the decision boundary take shape.",
+          "payoff": "Neural networks continuously adjust weights through backpropagation to bring complex boundaries closer to real data; the more layers and neurons, the stronger the expression ability, but more appropriate activation functions and learning rates are also required.",
+          "topicLabel": "deep learning"
+        }
+      },
+      "primaryCategoryId": "ai-learning",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "diagram-2d",
+      "difficulty": "advanced",
+      "lane": "structure",
+      "renderer": "neural-playground",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 600,
+      "evidence": "modeled",
+      "accent": "#4dabf7",
+      "related": [
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "TensorFlow Playground 灵感",
+          "labelEn": "TensorFlow Playground inspiration",
+          "url": "https://playground.tensorflow.org"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+      "releaseId": "oss-6ff3221d",
+      "id": "neural-playground",
+      "state": "public",
+      "title": "神经网络通过调整权重学习分类",
+      "titleEn": "A neural network learns classification by adjusting weights",
+      "poster": "/assets/posters/neural-playground.webp",
+      "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+      "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+      "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+      "posterHookEn": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
+      "question": "神经网络是怎样从数据中学会分类的？",
+      "questionEn": "How do neural networks learn to classify from data?",
+      "topicLabel": "深度学习",
+      "topicLabelEn": "deep learning",
+      "primaryCategoryId": "ai-learning",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#4dabf7"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+      "releaseId": "oss-6ff3221d",
+      "id": "neural-playground",
+      "state": "public",
+      "title": "神经网络通过调整权重学习分类",
+      "titleEn": "A neural network learns classification by adjusting weights",
+      "poster": "/assets/posters/neural-playground.webp",
+      "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+      "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+      "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+      "posterHookEn": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
+      "question": "神经网络是怎样从数据中学会分类的？",
+      "questionEn": "How do neural networks learn to classify from data?",
+      "topicLabel": "深度学习",
+      "topicLabelEn": "deep learning",
+      "primaryCategoryId": "ai-learning",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#4dabf7",
+      "hook": "在这个迷你 TensorFlow Playground 里，你可以选数据集、改网络结构、调超参数，然后看损失下降、决策边界成形。",
+      "hookEn": "In this mini TensorFlow Playground, you can select the data set, change the network structure, adjust the hyperparameters, and then watch the loss decrease and the decision boundary take shape.",
+      "payoff": "神经网络通过反向传播不断调整权重，把复杂边界一点点逼近真实数据；层数和神经元越多，表达能力越强，但也需要更合适的激活函数和学习率。",
+      "payoffEn": "Neural networks continuously adjust weights through backpropagation to bring complex boundaries closer to real data; the more layers and neurons, the stronger the expression ability, but more appropriate activation functions and learning rates are also required.",
+      "related": [
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "TensorFlow Playground 灵感",
+          "labelEn": "TensorFlow Playground inspiration",
+          "url": "https://playground.tensorflow.org"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "neural-playground",
+      "duration": 600,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+      "releaseId": "oss-6ff3221d",
+      "text": "神经网络通过调整权重学习分类 A neural network learns classification by adjusting weights 神经网络是怎样从数据中学会分类的？ How do neural networks learn to classify from data? 换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。 Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data. 深度学习 deep learning",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+        "releaseId": "oss-6ff3221d",
+        "id": "neural-playground",
+        "state": "public",
+        "title": "神经网络通过调整权重学习分类",
+        "titleEn": "A neural network learns classification by adjusting weights",
+        "poster": "/assets/posters/neural-playground.webp",
+        "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+        "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+        "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+        "posterHookEn": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
+        "question": "神经网络是怎样从数据中学会分类的？",
+        "questionEn": "How do neural networks learn to classify from data?",
+        "topicLabel": "深度学习",
+        "topicLabelEn": "deep learning",
+        "primaryCategoryId": "ai-learning",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#4dabf7"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+      "releaseId": "oss-6ff3221d",
+      "id": "neural-playground",
+      "renderer": "neural-playground",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "神经网络通过调整权重学习分类",
+        "en": "A neural network learns classification by adjusting weights"
+      },
+      "summary": {
+        "zh": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+        "en": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "chemical-garden",
+      "nextWorldId": "robot-ik",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

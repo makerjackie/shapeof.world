@@ -1,0 +1,238 @@
+{
+  "lightning-lab": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "lightning-lab",
+      "publication": "public",
+      "index": "27",
+      "title": "闪电沿分叉通道逐步前进",
+      "poster": "/assets/posters/lightning-lab.webp",
+      "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
+      "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
+      "posterTitle": "闪电沿分叉通道形成锯齿路径",
+      "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+      "posterSource": "Canvas 2D · 中点位移分形 · 本地构建",
+      "posterPosition": "50% 42%",
+      "question": "闪电为什么是锯齿形的？",
+      "hook": "在暴风雨夜空中点击任意处召唤闪电，用中点位移分形生成锯齿通道，看先导一步步向下试探、回击向上冲、分叉四处竞争。",
+      "payoff": "闪电的锯齿来自阶梯先导：负电荷以约 50 米一步向地面跳跃，每步落点由局部电场随机决定。接通地面后，回击沿通道向上，释放数亿伏电压。分叉是多条通道同时竞争的结果。",
+      "topicLabel": "大气与电",
+      "translations": {
+        "en": {
+          "title": "Lightning advances through a branching channel",
+          "posterTitle": "Lightning forms a jagged path through branching channels",
+          "posterHook": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
+          "posterSource": "Canvas 2D · Midpoint displacement fractal · Local build",
+          "question": "Why is lightning shaped like a jagged line?",
+          "hook": "Tap anywhere in a stormy night sky to summon lightning generated with midpoint-displacement fractals — watch the leader step downward, the return stroke surge upward, and branches compete for the ground.",
+          "payoff": "Lightning zigzags because of the stepped leader: negative charge jumps toward the ground in steps of about 50 metres, each landing point decided by the local electric field. Once connected, the return stroke races upward, releasing hundreds of millions of volts. Branches are multiple channels competing at once.",
+          "topicLabel": "Atmosphere and electricity"
+        }
+      },
+      "primaryCategoryId": "earth-climate",
+      "runtime": "diagram-2d",
+      "difficulty": "intro",
+      "lane": "flow",
+      "renderer": "lightning-lab",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 300,
+      "evidence": "modeled",
+      "accent": "#7ba4ff",
+      "related": [
+        "snow-crystal"
+      ],
+      "sources": [
+        {
+          "label": "NOAA — 闪电是如何形成的",
+          "labelEn": "NOAA — How lightning forms",
+          "url": "https://www.noaa.gov/jetstream/lightning"
+        },
+        {
+          "label": "Wikipedia — 闪电",
+          "labelEn": "Wikipedia — Lightning",
+          "url": "https://en.wikipedia.org/wiki/Lightning"
+        },
+        {
+          "label": "中点位移分形（Fournier–Fussell–Carpenter）",
+          "labelEn": "Midpoint displacement fractal (Fournier–Fussell–Carpenter)",
+          "url": "https://en.wikipedia.org/wiki/Fractional_Brownian_motion"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "presentation": "full-bleed",
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+      "releaseId": "oss-6ff3221d",
+      "id": "lightning-lab",
+      "state": "public",
+      "title": "闪电沿分叉通道逐步前进",
+      "titleEn": "Lightning advances through a branching channel",
+      "poster": "/assets/posters/lightning-lab.webp",
+      "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
+      "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
+      "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+      "posterHookEn": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
+      "question": "闪电为什么是锯齿形的？",
+      "questionEn": "Why is lightning shaped like a jagged line?",
+      "topicLabel": "大气与电",
+      "topicLabelEn": "Atmosphere and electricity",
+      "primaryCategoryId": "earth-climate",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#7ba4ff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+      "releaseId": "oss-6ff3221d",
+      "id": "lightning-lab",
+      "state": "public",
+      "title": "闪电沿分叉通道逐步前进",
+      "titleEn": "Lightning advances through a branching channel",
+      "poster": "/assets/posters/lightning-lab.webp",
+      "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
+      "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
+      "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+      "posterHookEn": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
+      "question": "闪电为什么是锯齿形的？",
+      "questionEn": "Why is lightning shaped like a jagged line?",
+      "topicLabel": "大气与电",
+      "topicLabelEn": "Atmosphere and electricity",
+      "primaryCategoryId": "earth-climate",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#7ba4ff",
+      "hook": "在暴风雨夜空中点击任意处召唤闪电，用中点位移分形生成锯齿通道，看先导一步步向下试探、回击向上冲、分叉四处竞争。",
+      "hookEn": "Tap anywhere in a stormy night sky to summon lightning generated with midpoint-displacement fractals — watch the leader step downward, the return stroke surge upward, and branches compete for the ground.",
+      "payoff": "闪电的锯齿来自阶梯先导：负电荷以约 50 米一步向地面跳跃，每步落点由局部电场随机决定。接通地面后，回击沿通道向上，释放数亿伏电压。分叉是多条通道同时竞争的结果。",
+      "payoffEn": "Lightning zigzags because of the stepped leader: negative charge jumps toward the ground in steps of about 50 metres, each landing point decided by the local electric field. Once connected, the return stroke races upward, releasing hundreds of millions of volts. Branches are multiple channels competing at once.",
+      "related": [
+        "snow-crystal"
+      ],
+      "sources": [
+        {
+          "label": "NOAA — 闪电是如何形成的",
+          "labelEn": "NOAA — How lightning forms",
+          "url": "https://www.noaa.gov/jetstream/lightning"
+        },
+        {
+          "label": "Wikipedia — 闪电",
+          "labelEn": "Wikipedia — Lightning",
+          "url": "https://en.wikipedia.org/wiki/Lightning"
+        },
+        {
+          "label": "中点位移分形（Fournier–Fussell–Carpenter）",
+          "labelEn": "Midpoint displacement fractal (Fournier–Fussell–Carpenter)",
+          "url": "https://en.wikipedia.org/wiki/Fractional_Brownian_motion"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "lightning-lab",
+      "duration": 300,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+      "releaseId": "oss-6ff3221d",
+      "text": "闪电沿分叉通道逐步前进 Lightning advances through a branching channel 闪电为什么是锯齿形的？ Why is lightning shaped like a jagged line? 点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。 Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up. 大气与电 Atmosphere and electricity",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+        "releaseId": "oss-6ff3221d",
+        "id": "lightning-lab",
+        "state": "public",
+        "title": "闪电沿分叉通道逐步前进",
+        "titleEn": "Lightning advances through a branching channel",
+        "poster": "/assets/posters/lightning-lab.webp",
+        "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
+        "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
+        "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+        "posterHookEn": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
+        "question": "闪电为什么是锯齿形的？",
+        "questionEn": "Why is lightning shaped like a jagged line?",
+        "topicLabel": "大气与电",
+        "topicLabelEn": "Atmosphere and electricity",
+        "primaryCategoryId": "earth-climate",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#7ba4ff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+      "releaseId": "oss-6ff3221d",
+      "id": "lightning-lab",
+      "renderer": "lightning-lab",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "闪电沿分叉通道逐步前进",
+        "en": "Lightning advances through a branching channel"
+      },
+      "summary": {
+        "zh": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+        "en": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "pinhole-canopy",
+      "nextWorldId": "snow-crystal",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

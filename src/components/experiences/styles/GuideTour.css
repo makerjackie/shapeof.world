@@ -1,0 +1,917 @@
+/* ============================================================
+   GuideTour · 世界的非阻塞分步引导
+   ============================================================ */
+.guide-tour {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  font-family: inherit;
+}
+.guide-spotlight {
+  position: absolute;
+  border: 2px solid color-mix(in srgb, var(--world-accent, #fff) 78%, white);
+  border-radius: 14px;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.08), 0 0 28px color-mix(in srgb, var(--world-accent, #fff) 42%, transparent);
+  pointer-events: none;
+  animation: guide-pulse 1.8s ease-in-out infinite;
+}
+@keyframes guide-pulse {
+  0%, 100% { opacity: 0.68; }
+  50% { opacity: 1; }
+}
+.guide-card {
+  position: fixed;
+  right: auto;
+  bottom: 20px;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  width: min(640px, calc(100vw - 48px));
+  max-width: none;
+  max-height: min(34vh, 300px);
+  overflow: hidden;
+  padding: 14px 16px 12px;
+  border-width: 1px;
+  border-style: solid;
+  /* 材质由 ExperiencePanel.css 与 Freebar 共同提供。 */
+  pointer-events: auto;
+  transform: translateX(-50%);
+  animation: guide-card-in 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+/* 避免 target 把字幕吸到屏幕上方，打断「底栏字幕轨」心智 */
+.guide-card.is-target-low {
+  top: auto;
+  bottom: 20px;
+}
+/* 右下角紧凑面板：满屏 3D / 需要大片沉静画面时用 */
+.guide-card.is-corner {
+  top: auto !important;
+  right: clamp(16px, 2.5vw, 28px);
+  bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  left: auto;
+  width: min(320px, calc(100vw - 28px));
+  max-height: min(26vh, 220px);
+  padding: 10px 12px 10px;
+  border-radius: 14px;
+  transform: none;
+}
+.guide-card.is-corner .guide-title {
+  margin-bottom: 4px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.guide-card.is-corner .guide-body {
+  margin-bottom: 8px;
+  max-height: 4.8em;
+  overflow: auto;
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+.guide-card.is-corner .guide-btn {
+  min-height: 32px;
+  min-width: 0;
+  padding: 0 10px;
+  font-size: 11px;
+}
+.guide-card.is-corner .guide-btn.is-primary {
+  min-width: 0;
+}
+.guide-card.is-corner .guide-skip {
+  font-size: 10px;
+}
+
+/* 舞台旁白：文字进入主体周围的安全区，底部只保留推进故事所需的轻控制轨。 */
+.guide-stage-copy {
+  position: fixed;
+  z-index: 2;
+  top: var(--guide-stage-top, var(--guide-stage-auto-top, calc(var(--experience-safe-top, 78px) + 42px)));
+  bottom: var(--guide-stage-bottom, var(--guide-stage-auto-bottom, auto));
+  right: var(--guide-stage-right, var(--guide-stage-auto-right, auto));
+  left: var(--guide-stage-left, var(--guide-stage-auto-left, clamp(24px, 6vw, 92px)));
+  width: min(var(--guide-stage-width, var(--guide-stage-frame-width, 380px)), calc(100vw - 48px));
+  pointer-events: none;
+  text-align: var(--guide-stage-align, var(--guide-stage-auto-align, left));
+  text-shadow: var(--guide-stage-text-shadow, 0 3px 24px rgba(0, 0, 0, 0.82));
+  translate: var(--guide-stage-translate, var(--guide-stage-auto-translate, none));
+  animation-name: guide-stage-in;
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation-fill-mode: both;
+}
+.guide-stage-copy[data-stage-position='top-left'] {
+  --guide-stage-auto-top: calc(var(--experience-safe-top, 78px) + 42px);
+  --guide-stage-auto-bottom: auto;
+  --guide-stage-auto-right: auto;
+  --guide-stage-auto-left: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-align: left;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position='top-center'] {
+  --guide-stage-auto-top: calc(var(--experience-safe-top, 78px) + 42px);
+  --guide-stage-auto-bottom: auto;
+  --guide-stage-auto-right: auto;
+  --guide-stage-auto-left: 50%;
+  --guide-stage-auto-align: center;
+  --guide-stage-auto-translate: -50% 0;
+}
+.guide-stage-copy[data-stage-position='top-right'] {
+  --guide-stage-auto-top: calc(var(--experience-safe-top, 78px) + 42px);
+  --guide-stage-auto-bottom: auto;
+  --guide-stage-auto-right: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-left: auto;
+  --guide-stage-auto-align: right;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position='center-left'] {
+  --guide-stage-auto-top: 32vh;
+  --guide-stage-auto-bottom: auto;
+  --guide-stage-auto-right: auto;
+  --guide-stage-auto-left: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-align: left;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position='center-right'] {
+  --guide-stage-auto-top: 32vh;
+  --guide-stage-auto-bottom: auto;
+  --guide-stage-auto-right: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-left: auto;
+  --guide-stage-auto-align: right;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position='bottom-left'] {
+  --guide-stage-auto-top: auto;
+  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-right: auto;
+  --guide-stage-auto-left: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-align: left;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position='bottom-center'] {
+  --guide-stage-auto-top: auto;
+  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-right: auto;
+  --guide-stage-auto-left: 50%;
+  --guide-stage-auto-align: center;
+  --guide-stage-auto-translate: -50% 0;
+}
+.guide-stage-copy[data-stage-position='bottom-right'] {
+  --guide-stage-auto-top: auto;
+  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-right: clamp(24px, 6vw, 92px);
+  --guide-stage-auto-left: auto;
+  --guide-stage-auto-align: right;
+  --guide-stage-auto-translate: none;
+}
+.guide-stage-copy[data-stage-position$='right'] .guide-stage-title,
+.guide-stage-copy[data-stage-position$='right'] .guide-stage-body {
+  margin-left: auto;
+}
+.guide-stage-copy[data-stage-position$='center'] .guide-stage-title,
+.guide-stage-copy[data-stage-position$='center'] .guide-stage-body {
+  margin-right: auto;
+  margin-left: auto;
+}
+.guide-stage-copy[data-stage-motion='fade'] { animation-name: guide-stage-fade; }
+.guide-stage-copy[data-stage-motion='drift-left'] { animation-name: guide-stage-drift-left; }
+.guide-stage-copy[data-stage-motion='drift-right'] { animation-name: guide-stage-drift-right; }
+.guide-stage-copy[data-stage-motion='scale'] { animation-name: guide-stage-scale; }
+.guide-stage-copy[data-stage-width='narrow'] { --guide-stage-frame-width: 300px; }
+.guide-stage-copy[data-stage-width='normal'] { --guide-stage-frame-width: 380px; }
+.guide-stage-copy[data-stage-width='wide'] { --guide-stage-frame-width: 480px; }
+.guide-stage-copy[data-stage-tone='dark'] {
+  --guide-stage-ink: #101923;
+  --guide-stage-body: rgba(16, 25, 35, 0.76);
+  --guide-stage-kicker: color-mix(in srgb, var(--world-accent, #0b6b78) 82%, #101923);
+  --guide-stage-text-shadow: 0 2px 18px rgba(255, 255, 255, 0.72);
+}
+.guide-stage-copy[data-stage-tone='light'] {
+  --guide-stage-ink: #f7f4ed;
+  --guide-stage-body: rgba(247, 244, 237, 0.74);
+  --guide-stage-kicker: color-mix(in srgb, var(--world-accent, #ffd166) 74%, white);
+  --guide-stage-text-shadow: 0 3px 24px rgba(0, 0, 0, 0.84);
+}
+.guide-stage-kicker {
+  display: block;
+  margin-bottom: 13px;
+  color: var(--guide-stage-kicker, var(--world-accent, #ffd166));
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.guide-stage-title {
+  display: block;
+  max-width: 9ch;
+  color: var(--guide-stage-ink, #f6f2e9);
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: clamp(34px, 4.5vw, 70px);
+  font-weight: 400;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+/*
+ * Chinese stage titles must not be capped by a character count. Let the
+ * authored stage frame control wrapping and keep ordinary titles to one or
+ * two balanced lines; hero-scale titles should be short enough for
+ * `monumental`, not forced into a vertical stack.
+ */
+.guide-stage-copy:lang(zh) .guide-stage-title {
+  max-width: none;
+  font-size: clamp(24px, 2.6vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.guide-stage-body {
+  max-width: 34em;
+  margin: 20px 0 0;
+  color: var(--guide-stage-body, rgba(246, 242, 233, 0.72));
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+.guide-stage-copy[data-stage-treatment='caption'] .guide-stage-kicker {
+  margin-bottom: 8px;
+}
+.guide-stage-copy[data-stage-treatment='caption'] .guide-stage-title {
+  max-width: 16ch;
+  font-family: inherit;
+  font-size: clamp(22px, 2.4vw, 36px);
+  font-weight: 540;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+.guide-stage-copy[data-stage-treatment='caption'] .guide-stage-body {
+  margin-top: 12px;
+  line-height: 1.62;
+}
+.guide-stage-copy[data-stage-treatment='monumental'] .guide-stage-title {
+  max-width: 7ch;
+  font-size: clamp(48px, 7vw, 104px);
+  line-height: 0.9;
+}
+/* Monumental Chinese stays poster-like without becoming a vertical stack. */
+.guide-stage-copy:lang(zh)[data-stage-treatment='monumental'] .guide-stage-title {
+  max-width: 10em;
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.guide-stage-copy:lang(zh)[data-stage-width='narrow'][data-stage-treatment='monumental'] .guide-stage-title {
+  font-size: clamp(38px, 4.6vw, 58px);
+}
+.guide-stage-copy:lang(zh)[data-stage-width='wide'][data-stage-treatment='monumental'] .guide-stage-title {
+  font-size: clamp(42px, 5.5vw, 78px);
+}
+.guide-stage-copy[data-stage-treatment='monumental'] .guide-stage-body {
+  max-width: 28em;
+}
+.guide-stage-copy[data-stage-treatment='annotation'] .guide-stage-kicker {
+  margin-bottom: 7px;
+}
+.guide-stage-copy[data-stage-treatment='annotation'] .guide-stage-title {
+  max-width: 18ch;
+  font-family: inherit;
+  font-size: clamp(18px, 1.7vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.guide-stage-copy[data-stage-treatment='annotation'] .guide-stage-body {
+  max-width: 30em;
+  margin-top: 10px;
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+.guide-stage-cue {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--guide-stage-kicker, var(--world-accent, #ffd166));
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.72;
+  animation: guide-stage-cue 2.2s ease-in-out infinite;
+}
+.guide-stage-cue svg { width: 14px; height: 14px; }
+.guide-stage-cue[data-direction='up'] { top: -10px; left: 50%; transform: translate(-50%, -100%); }
+.guide-stage-cue[data-direction='down'] { bottom: -10px; left: 50%; transform: translate(-50%, 100%); }
+.guide-stage-cue[data-direction='left'] { top: 50%; left: -10px; transform: translate(-100%, -50%); }
+.guide-stage-cue[data-direction='right'] { top: 50%; right: -10px; transform: translate(100%, -50%); }
+/* 舞台故事的手动推进不是按钮向导，而是一条可点击的滚动提示。 */
+.guide-stage-nav {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: min(420px, calc(100vw - 40px));
+  min-height: 44px;
+  padding: 4px 6px;
+  color: rgba(255, 255, 255, 0.58);
+  pointer-events: auto;
+  transform: translateX(-50%);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.88);
+  animation: guide-stage-nav-in 360ms ease-out both;
+}
+.guide-stage-position {
+  display: inline-flex;
+  flex: 1 1 126px;
+  align-items: center;
+  gap: 8px;
+  min-width: 112px;
+  max-width: 150px;
+  color: color-mix(in srgb, var(--world-accent, #ffd166) 72%, white);
+  font-size: 9px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.13em;
+}
+.guide-stage-progress {
+  position: relative;
+  display: block;
+  height: 1px;
+  flex: 1;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+}
+.guide-stage-progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--guide-progress, 0%);
+  background: var(--world-accent, #ffd166);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--world-accent, #ffd166) 70%, transparent);
+  transition: width 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.guide-stage-continue,
+.guide-stage-exit {
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+.guide-stage-continue {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.guide-stage-continue-mobile {
+  display: none;
+}
+.guide-stage-scroll-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid color-mix(in srgb, var(--world-accent, #ffd166) 58%, transparent);
+  border-radius: 50%;
+  color: var(--world-accent, #ffd166);
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  animation: guide-scroll-breathe 2.4s ease-in-out infinite;
+}
+.guide-stage-scroll-mark svg {
+  width: 15px;
+  height: 15px;
+}
+.guide-stage-continue:hover {
+  color: #fff;
+}
+.guide-stage-continue:hover .guide-stage-scroll-mark {
+  border-color: var(--world-accent, #ffd166);
+  background: color-mix(in srgb, var(--world-accent, #ffd166) 11%, transparent);
+  transform: translateY(2px);
+}
+.guide-stage-exit {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.36);
+  transition: color 180ms ease, background 180ms ease;
+}
+.guide-stage-exit:hover {
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.08);
+}
+.guide-stage-exit svg {
+  width: 15px;
+  height: 15px;
+}
+@keyframes guide-stage-nav-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes guide-scroll-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* 自动播放仍保留轻量进度轨，手动故事使用上面的滚动提示。 */
+.guide-tour.is-stage .guide-card {
+  bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  width: min(256px, calc(100vw - 48px));
+  max-height: none;
+  padding: 8px 12px;
+}
+.guide-tour.is-stage .guide-card-head {
+  margin-bottom: 2px;
+}
+@keyframes guide-stage-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes guide-stage-fade {
+  from { opacity: 0; filter: blur(7px); }
+  to { opacity: 1; filter: blur(0); }
+}
+@keyframes guide-stage-drift-left {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes guide-stage-drift-right {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes guide-stage-scale {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes guide-stage-cue {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
+}
+
+/* 自动播放电影字幕：更轻、不抢主体 */
+.guide-card.is-cinema {
+  top: auto !important;
+  bottom: max(18px, env(safe-area-inset-bottom, 0px));
+  max-height: min(24vh, 200px);
+  padding: 10px 12px 10px;
+}
+.guide-card.is-cinema:not(.is-corner) {
+  left: 50%;
+  width: min(480px, calc(100vw - 40px));
+  transform: translateX(-50%);
+}
+.guide-card.is-cinema.is-corner {
+  right: clamp(16px, 2.5vw, 28px);
+  left: auto;
+  width: min(300px, calc(100vw - 28px));
+  transform: none;
+}
+.guide-card.is-cinema .guide-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+.guide-card.is-cinema .guide-body {
+  margin-bottom: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0.88;
+}
+.guide-cinema-hint {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+@keyframes guide-card-in {
+  from { opacity: 0; transform: translate(-50%, 10px) scale(0.97); }
+  to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+.guide-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.guide-step-badge {
+  flex: 0 0 auto;
+  color: var(--world-accent, #ffd166);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+.guide-progress {
+  position: relative;
+  display: block;
+  height: 1px;
+  flex: 1;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+}
+.guide-progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--guide-progress, 0%);
+  background: var(--world-accent, #ffd166);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--world-accent, #ffd166) 70%, transparent);
+  transition: width .45s cubic-bezier(.2, .8, .2, 1);
+}
+.guide-close {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: rgba(255, 255, 255, 0.55);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.guide-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+.guide-title {
+  display: block;
+  flex: 0 0 auto;
+  color: #f4f0e8;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+/* 步骤切换：字幕内容做一次轻的升起过渡，镜头感来自画面，不来自卡片跳动 */
+.guide-step-content {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  animation: guide-step-in 340ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes guide-step-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.guide-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 0 10px;
+  overflow: auto;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.guide-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  padding-top: 2px;
+}
+.guide-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 34px;
+  min-width: 5.75rem;
+  justify-content: center;
+  padding: 0 13px;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.guide-btn:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+.guide-btn:disabled,
+.guide-btn[aria-disabled='true'] {
+  opacity: 0.28;
+  cursor: default;
+  pointer-events: none;
+}
+.guide-btn.is-primary {
+  color: #0d1117;
+  border-color: var(--world-accent, #ffd166);
+  background: var(--world-accent, #ffd166);
+  font-weight: 600;
+  min-width: 6.25rem;
+}
+.guide-btn-prev {
+  order: 1;
+}
+.guide-btn-next,
+.guide-actions .guide-await {
+  order: 2;
+}
+.guide-skip {
+  order: 3;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.4);
+  border: none;
+  background: transparent;
+  font-size: 11px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.guide-skip:hover { color: rgba(255, 255, 255, 0.7); }
+.guide-btn-replay-step {
+  order: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+}
+.guide-btn-replay-step:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.guide-await {
+  color: var(--world-accent, #ffd166);
+  font-size: 12px;
+  animation: guide-await-blink 1.4s ease-in-out infinite;
+}
+@keyframes guide-await-blink {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+.guide-replay {
+  position: fixed;
+  z-index: 12;
+  right: 18px;
+  top: 78px;
+  bottom: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 13px;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(4, 8, 14, 0.6);
+  backdrop-filter: blur(12px);
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.guide-replay svg {
+  color: var(--world-accent, #ffd166);
+}
+.guide-replay:hover {
+  color: #fff;
+  border-color: var(--world-accent, #ffd166);
+}
+.guide-replay.is-nudging {
+  animation: guide-nudge 2.2s ease-in-out infinite;
+  border-color: var(--world-accent, #ffd166);
+  color: #fff;
+}
+@keyframes guide-nudge {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--world-accent, #ffd166) 45%, transparent); }
+  50% { box-shadow: 0 0 18px 4px color-mix(in srgb, var(--world-accent, #ffd166) 40%, transparent); }
+}
+
+@media (max-width: 720px) {
+  /* 手机：引导统一贴底全宽（参数坞也在底，模式互斥不叠） */
+  .guide-card,
+  .guide-card:not(.is-corner),
+  .guide-card.is-corner {
+    top: auto !important;
+    right: 12px;
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+    left: 12px;
+    width: auto;
+    max-width: none;
+    max-height: min(30vh, 240px);
+    padding: 11px 12px 10px;
+    border-radius: 14px;
+    transform: none !important;
+  }
+  .guide-card.is-target-low {
+    top: auto;
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+  }
+  .guide-card.is-cinema {
+    max-height: min(24vh, 180px);
+  }
+  .guide-stage-copy {
+    top: var(--guide-stage-mobile-top, var(--guide-stage-top, var(--guide-stage-mobile-auto-top, calc(var(--experience-safe-top, 78px) + 24px))));
+    bottom: var(--guide-stage-mobile-bottom, var(--guide-stage-bottom, var(--guide-stage-mobile-auto-bottom, auto)));
+    right: var(--guide-stage-mobile-right, var(--guide-stage-right, var(--guide-stage-mobile-auto-right, 16px)));
+    left: var(--guide-stage-mobile-left, var(--guide-stage-left, var(--guide-stage-mobile-auto-left, 16px)));
+    width: min(var(--guide-stage-mobile-width, var(--guide-stage-width, var(--guide-stage-frame-width, 300px))), calc(100vw - 32px));
+    text-align: var(--guide-stage-mobile-align, var(--guide-stage-align, var(--guide-stage-mobile-auto-align, left)));
+    translate: var(--guide-stage-mobile-translate, var(--guide-stage-translate, var(--guide-stage-mobile-auto-translate, none)));
+  }
+  .guide-stage-copy[data-stage-mobile-position='top-left'] {
+    --guide-stage-mobile-auto-top: calc(var(--experience-safe-top, 78px) + 24px);
+    --guide-stage-mobile-auto-bottom: auto;
+    --guide-stage-mobile-auto-right: auto;
+    --guide-stage-mobile-auto-left: 16px;
+    --guide-stage-mobile-auto-align: left;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position='top-center'] {
+    --guide-stage-mobile-auto-top: calc(var(--experience-safe-top, 78px) + 24px);
+    --guide-stage-mobile-auto-bottom: auto;
+    --guide-stage-mobile-auto-right: auto;
+    --guide-stage-mobile-auto-left: 50%;
+    --guide-stage-mobile-auto-align: center;
+    --guide-stage-mobile-auto-translate: -50% 0;
+  }
+  .guide-stage-copy[data-stage-mobile-position='top-right'] {
+    --guide-stage-mobile-auto-top: calc(var(--experience-safe-top, 78px) + 24px);
+    --guide-stage-mobile-auto-bottom: auto;
+    --guide-stage-mobile-auto-right: 16px;
+    --guide-stage-mobile-auto-left: auto;
+    --guide-stage-mobile-auto-align: right;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position='center-left'] {
+    --guide-stage-mobile-auto-top: 38%;
+    --guide-stage-mobile-auto-bottom: auto;
+    --guide-stage-mobile-auto-right: auto;
+    --guide-stage-mobile-auto-left: 16px;
+    --guide-stage-mobile-auto-align: left;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position='center-right'] {
+    --guide-stage-mobile-auto-top: 38%;
+    --guide-stage-mobile-auto-bottom: auto;
+    --guide-stage-mobile-auto-right: 16px;
+    --guide-stage-mobile-auto-left: auto;
+    --guide-stage-mobile-auto-align: right;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position='bottom-left'] {
+    --guide-stage-mobile-auto-top: auto;
+    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-right: auto;
+    --guide-stage-mobile-auto-left: 16px;
+    --guide-stage-mobile-auto-align: left;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position='bottom-center'] {
+    --guide-stage-mobile-auto-top: auto;
+    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-right: auto;
+    --guide-stage-mobile-auto-left: 50%;
+    --guide-stage-mobile-auto-align: center;
+    --guide-stage-mobile-auto-translate: -50% 0;
+  }
+  .guide-stage-copy[data-stage-mobile-position='bottom-right'] {
+    --guide-stage-mobile-auto-top: auto;
+    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-right: 16px;
+    --guide-stage-mobile-auto-left: auto;
+    --guide-stage-mobile-auto-align: right;
+    --guide-stage-mobile-auto-translate: none;
+  }
+  .guide-stage-copy[data-stage-mobile-position$='left'] .guide-stage-title,
+  .guide-stage-copy[data-stage-mobile-position$='left'] .guide-stage-body {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .guide-stage-copy[data-stage-mobile-position$='right'] .guide-stage-title,
+  .guide-stage-copy[data-stage-mobile-position$='right'] .guide-stage-body {
+    margin-right: 0;
+    margin-left: auto;
+  }
+  .guide-stage-copy[data-stage-mobile-position$='center'] .guide-stage-title,
+  .guide-stage-copy[data-stage-mobile-position$='center'] .guide-stage-body {
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .guide-stage-kicker {
+    margin-bottom: 10px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+  .guide-stage-title {
+    max-width: 8ch;
+    font-size: clamp(34px, 10vw, 54px);
+  }
+  .guide-stage-body {
+    max-width: 30em;
+    margin-top: 14px;
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+  .guide-tour.is-stage .guide-card {
+    top: auto !important;
+    right: 12px;
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+    left: 50%;
+    width: min(240px, calc(100vw - 48px));
+    padding: 8px 10px;
+    transform: translateX(-50%) !important;
+  }
+  .guide-stage-nav {
+    bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
+    gap: 11px;
+    width: min(344px, calc(100vw - 24px));
+    min-height: 46px;
+    padding: 3px 4px;
+    touch-action: none;
+  }
+  .guide-stage-continue-desktop {
+    display: none;
+  }
+  .guide-stage-continue-mobile {
+    display: inline;
+  }
+  .guide-stage-scroll-mark .guide-stage-continue-mobile {
+    display: block;
+  }
+  .guide-stage-position {
+    flex-basis: 104px;
+    min-width: 92px;
+    max-width: 116px;
+    gap: 6px;
+  }
+  .guide-stage-continue {
+    gap: 8px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+  .guide-stage-scroll-mark {
+    width: 34px;
+    height: 34px;
+  }
+  @keyframes guide-card-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .guide-card-head { margin-bottom: 4px; }
+  .guide-title { margin-bottom: 3px; font-size: 13.5px; }
+  .guide-body {
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    /* 手机正文最多约两行视觉高度可滚，按钮始终露在外面 */
+    max-height: 4.6em;
+  }
+  .guide-actions {
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+  .guide-btn {
+    min-height: 40px;
+    min-width: 0;
+    flex: 1 1 auto;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .guide-btn.is-primary {
+    flex: 1.35 1 auto;
+    min-width: 0;
+  }
+  /* 手机用右上角 X 关闭即可，少占底栏 */
+  .guide-skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .guide-close { width: 28px; height: 28px; }
+  .guide-step-badge { font-size: 10px; }
+  .guide-replay {
+    top: 60px;
+    right: 10px;
+    bottom: auto;
+    min-height: 31px;
+    padding: 0 10px;
+  }
+}
+

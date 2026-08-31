@@ -1,0 +1,805 @@
+{
+  "worldCounts": {
+    "compiled": 1,
+    "modeled": 28,
+    "verified": 1
+  },
+  "worlds": [
+    {
+      "id": "moon-voyage",
+      "title": "四天抵达月球",
+      "titleEn": "Four Days to the Moon",
+      "topicLabel": "载人航天",
+      "topicLabelEn": "human spaceflight",
+      "evidence": "compiled",
+      "accent": "#9fdcff",
+      "sources": [
+        {
+          "label": "NASA Visible Earth — Blue Marble（地球白昼贴图）",
+          "labelEn": "NASA Visible Earth — Blue Marble",
+          "url": "https://visibleearth.nasa.gov/collection/1484/blue-marble"
+        },
+        {
+          "label": "NASA Earth Observatory — Black Marble 2016（地球夜光）",
+          "labelEn": "NASA Earth Observatory — Black Marble 2016",
+          "url": "https://earthobservatory.nasa.gov/features/NightLights"
+        },
+        {
+          "label": "NASA SVS #4720 — CGI Moon Kit（LROC 月球贴图）",
+          "labelEn": "NASA SVS #4720 — CGI Moon Kit (LROC lunar texture)",
+          "url": "https://svs.gsfc.nasa.gov/4720"
+        },
+        {
+          "label": "NASA — Apollo 11 Flight Journal（任务时间线）",
+          "labelEn": "NASA — Apollo 11 Flight Journal (mission timeline)",
+          "url": "https://history.nasa.gov/afj/ap11fj/index.html"
+        },
+        {
+          "label": "模型边界：圆轨道月球、忽略地球自转、任务面取月球轨道面（省略真实停泊轨道 28.5° 倾角）；上升段为锚定 Saturn V 关键点的程序化剖面，TLI/转移/LOI 段为真实圆锥曲线",
+          "labelEn": "Model limits: circular lunar orbit, no Earth rotation, mission plane = lunar orbital plane (real 28.5° parking-orbit inclination omitted); scripted ascent anchored to Saturn V milestones, with true conics for TLI, transfer and LOI",
+          "url": "https://history.nasa.gov/SP-4206/sp4206.htm"
+        }
+      ]
+    },
+    {
+      "id": "black-hole-flyby",
+      "title": "掠过黑洞时看见的扭曲星空",
+      "titleEn": "The distorted sky seen on a black-hole flyby",
+      "topicLabel": "引力",
+      "topicLabelEn": "Gravity",
+      "evidence": "modeled",
+      "accent": "#e9ae62",
+      "sources": [
+        {
+          "label": "Eric Bruneton Black Hole Shader（BSD-3-Clause）",
+          "labelEn": "Eric Bruneton Black Hole Shader（BSD-3-Clause）",
+          "url": "https://github.com/ebruneton/black_hole_shader"
+        },
+        {
+          "label": "Gaia DR2 星表（ESA）",
+          "labelEn": "Gaia DR2 star catalog (ESA)",
+          "url": "https://www.cosmos.esa.int/web/gaia/dr2"
+        }
+      ]
+    },
+    {
+      "id": "formula-bloom",
+      "title": "一条迭代公式控制一万个点的运动",
+      "titleEn": "One iterative formula controls the motion of ten thousand points",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "evidence": "modeled",
+      "accent": "#e8e8e8",
+      "sources": [
+        {
+          "label": "参数方程（Wikipedia）",
+          "labelEn": "Parametric equation (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Parametric_equation"
+        },
+        {
+          "label": "@yuruyurau #つぶやきProcessing",
+          "labelEn": "@yuruyurau #つぶやきProcessing",
+          "url": "https://x.com/yuruyurau/status/2080977918914969636"
+        }
+      ]
+    },
+    {
+      "id": "double-slit",
+      "title": "单粒子逐个穿过双缝形成干涉条纹",
+      "titleEn": "Single particles build an interference pattern at a double slit",
+      "topicLabel": "量子物理",
+      "topicLabelEn": "Quantum physics",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "sources": [
+        {
+          "label": "双缝实验（Wikipedia）",
+          "labelEn": "Double slit experiment (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/雙縫實驗"
+        }
+      ]
+    },
+    {
+      "id": "pendulum-wave",
+      "title": "一齐放开，一排摆自己走出波浪",
+      "titleEn": "Release them together and watch a row of pendulums walk themselves into waves",
+      "topicLabel": "振动与波",
+      "topicLabelEn": "Vibration and waves",
+      "evidence": "modeled",
+      "accent": "#f0c36a",
+      "sources": [
+        {
+          "label": "OpenStax University Physics — 单摆周期",
+          "labelEn": "OpenStax University Physics — Simple pendulum period",
+          "url": "https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums"
+        },
+        {
+          "label": "Harvard Natural Sciences Lecture Demonstrations — 摆波",
+          "labelEn": "Harvard Natural Sciences Lecture Demonstrations — Pendulum wave",
+          "url": "https://sciencedemonstrations.fas.harvard.edu/presentations/pendulum-wave"
+        },
+        {
+          "label": "Wikipedia — 单摆",
+          "labelEn": "Wikipedia — Pendulum",
+          "url": "https://en.wikipedia.org/wiki/Pendulum"
+        }
+      ]
+    },
+    {
+      "id": "double-pendulum",
+      "title": "相差 0.1° 的双摆轨迹",
+      "titleEn": "Double-pendulum paths starting 0.1° apart",
+      "topicLabel": "混沌",
+      "topicLabelEn": "Chaos",
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "sources": [
+        {
+          "label": "双摆（Wikipedia）",
+          "labelEn": "Double pendulum (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/双摆"
+        },
+        {
+          "label": "混沌理论（Wikipedia）",
+          "labelEn": "Chaos Theory (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/混沌理论"
+        }
+      ]
+    },
+    {
+      "id": "firefly-sync",
+      "title": "萤火虫群体同步闪烁",
+      "titleEn": "Collective synchronization in flashing fireflies",
+      "topicLabel": "群体节律",
+      "topicLabelEn": "Collective rhythms",
+      "evidence": "modeled",
+      "accent": "#d8ff79",
+      "sources": [
+        {
+          "label": "Nicky Case — Fireflies（交互说明，CC0）",
+          "labelEn": "Nicky Case — Fireflies (interactive explainer, CC0)",
+          "url": "https://ncase.me/fireflies/"
+        },
+        {
+          "label": "ncase/fireflies 源码（CC0）",
+          "labelEn": "ncase/fireflies source (CC0)",
+          "url": "https://github.com/ncase/fireflies"
+        },
+        {
+          "label": "Poly Haven — Jacaranda Tree（CC0）",
+          "labelEn": "Poly Haven — Jacaranda Tree (CC0)",
+          "url": "https://polyhaven.com/a/jacaranda_tree"
+        },
+        {
+          "label": "Science — 同步闪光如何减少求偶时的视觉杂音",
+          "labelEn": "Science — How synchronous flashes reduce visual clutter during courtship",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20616271/"
+        },
+        {
+          "label": "American Naturalist — 东南亚萤火虫同步闪光的功能解释",
+          "labelEn": "The American Naturalist — A functional interpretation of synchronous flashing",
+          "url": "https://doi.org/10.1086/283291"
+        },
+        {
+          "label": "Nature — 同步闪光萤火虫的求偶行为模型",
+          "labelEn": "Nature — A mating model for synchronously flashing fireflies",
+          "url": "https://doi.org/10.1038/245268a0"
+        }
+      ]
+    },
+    {
+      "id": "chemical-garden",
+      "title": "金属盐在溶液中长成矿物花园",
+      "titleEn": "Metal salts grow into a mineral garden in solution",
+      "topicLabel": "化学自组织 · 沉淀与渗透",
+      "topicLabelEn": "Chemical self-organization · Precipitation and osmosis",
+      "evidence": "modeled",
+      "accent": "#63ddbd",
+      "sources": [
+        {
+          "label": "Barge 等 2015 · 从化学花园到 Chemobrionics（Chemical Reviews）",
+          "labelEn": "Barge et al. 2015 · From Chemical Gardens to Chemobrionics (Chemical Reviews)",
+          "url": "https://doi.org/10.1021/acs.chemrev.5b00014"
+        },
+        {
+          "label": "Pantaleone 等 2009 · 化学花园中的压力振荡（Physical Review E）",
+          "labelEn": "Pantaleone et al. 2009 · Pressure Oscillations in a Chemical Garden (Physical Review E)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19518550/"
+        },
+        {
+          "label": "Nakouzi 与 Steinbock 2016 · 远离平衡的沉淀反应自组织（Science Advances）",
+          "labelEn": "Nakouzi & Steinbock 2016 · Self-organization in precipitation reactions far from equilibrium (Science Advances)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4991932/"
+        },
+        {
+          "label": "英国皇家化学学会 · 化学花园实验、颜色与安全边界",
+          "labelEn": "Royal Society of Chemistry · Chemical garden experiment, colors, and safety boundaries",
+          "url": "https://edu.rsc.org/experiments/making-a-crystal-garden/416.article"
+        },
+        {
+          "label": "模型边界：程序化管道只保留膜形成、渗透增压、破裂、浮力与界面沉淀的定性因果；不提供现实配方，请勿按画面混合化学品",
+          "labelEn": "Model boundary: procedural tubes preserve the qualitative sequence of membrane formation, osmotic pressurization, rupture, buoyancy, and interfacial precipitation; no real recipe is provided, and chemicals must not be mixed by following the screen",
+          "url": "https://pubs.acs.org/doi/10.1021/acs.chemrev.5b00014"
+        }
+      ]
+    },
+    {
+      "id": "neural-playground",
+      "title": "神经网络通过调整权重学习分类",
+      "titleEn": "A neural network learns classification by adjusting weights",
+      "topicLabel": "深度学习",
+      "topicLabelEn": "deep learning",
+      "evidence": "modeled",
+      "accent": "#4dabf7",
+      "sources": [
+        {
+          "label": "TensorFlow Playground 灵感",
+          "labelEn": "TensorFlow Playground inspiration",
+          "url": "https://playground.tensorflow.org"
+        }
+      ]
+    },
+    {
+      "id": "robot-ik",
+      "title": "逆运动学根据末端位置计算机械臂关节",
+      "titleEn": "Inverse kinematics solves robot joints from an end position",
+      "topicLabel": "机械与装置",
+      "topicLabelEn": "Machines and mechanisms",
+      "evidence": "verified",
+      "accent": "#f2b267",
+      "sources": [
+        {
+          "label": "Aristidou & Lasenby — 《FABRIK：一种快速、准确的逆运动学求解器》(2011, Graphical Models)",
+          "labelEn": "Aristidou & Lasenby — \"FABRIK: A fast, accurate solver for the Inverse Kinematics problem\" (2011, Graphical Models)",
+          "url": "https://doi.org/10.1016/j.gmod.2011.03.001"
+        },
+        {
+          "label": "Buss — 《Introduction to Inverse Kinematics with Jacobian Transpose, Pseudoinverse and Damped Least Squares methods》(2004)",
+          "labelEn": "Buss — \"Introduction to Inverse Kinematics with Jacobian Transpose, Pseudoinverse and Damped Least Squares methods\" (2004)",
+          "url": "https://mathweb.ucsd.edu/~sbuss/ResearchWeb/ikmethods/iksurvey.pdf"
+        },
+        {
+          "label": "Wang & Chen — 循环坐标下降法（CCD）原始论文 (IEEE TRA, 1991)",
+          "labelEn": "Wang & Chen — the original Cyclic Coordinate Descent (CCD) paper (IEEE TRA, 1991)",
+          "url": "https://doi.org/10.1109/70.88179"
+        },
+        {
+          "label": "模型边界 — 平面 2D 机械臂：关节为理想铰链，不含动力学、重力、摩擦、减速箱间隙与自碰撞；基座限位 ±100°（落地臂不穿地板），其余关节 ±150°，限位在每次前向传递后钳制（FABRIK 原论文建议的约束扩展），逼近真实限位而非精确约束求解；雅可比转置的步长增益为手调稳定值（原论文中 α 即为用户给定标量）；画面单位约等于厘米，慢放播放的每一帧都是求解器真实的迭代序列",
+          "labelEn": "Model boundary — a planar 2D arm: joints are ideal hinges with no dynamics, gravity, friction, gearbox backlash or self-collision; the base joint is limited to ±100° (a floor-mounted arm cannot pass through the floor) and the rest to ±150°, clamped after each forward pass (the constraint extension suggested in the original FABRIK paper), an approximation of true limited joints rather than exact constrained optimisation; the Jacobian-transpose gain is hand-tuned for stability (alpha is a user-supplied scalar in the source paper); on-screen units read as centimetres, and every slow-motion frame is the solver’s real iteration sequence",
+          "url": "https://en.wikipedia.org/wiki/Inverse_kinematics"
+        }
+      ]
+    },
+    {
+      "id": "solar-system",
+      "title": "此刻，整座太阳系",
+      "titleEn": "The solar system, right now",
+      "topicLabel": "太阳系",
+      "topicLabelEn": "solar system",
+      "evidence": "modeled",
+      "accent": "#f1b24f",
+      "sources": []
+    },
+    {
+      "id": "three-body",
+      "title": "三颗星，能跳出这么多完美的舞吗？",
+      "titleEn": "Can three stars dance in so many perfect patterns?",
+      "topicLabel": "周期轨道",
+      "topicLabelEn": "Periodic orbits",
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "sources": [
+        {
+          "label": "Šuvakov 与 Dmitrašinović：三类牛顿平面三体周期轨道（2013）",
+          "labelEn": "Šuvakov & Dmitrašinović: three classes of Newtonian planar three-body periodic orbits (2013)",
+          "url": "https://arxiv.org/abs/1303.0181",
+          "note": "本页「名解」：蝴蝶、蛾、蜻蜓、阴阳等平面零角动量周期轨道的命名与初值。",
+          "noteEn": "Named tab: names and initial conditions for planar zero-angular-momentum orbits such as butterfly, moth, dragonfly, and yin-yang."
+        },
+        {
+          "label": "李晓明、廖世俊：六百余族等质量平面三体周期轨道（2017）",
+          "labelEn": "Li & Liao: more than six hundred families of equal-mass planar three-body periodic orbits (2017)",
+          "url": "https://arxiv.org/abs/1705.00527",
+          "note": "本页「等质量 · 695」：平面等质量碰撞无关周期族的发表初值。",
+          "noteEn": "Equal mass · 695 tab: published initial conditions for planar equal-mass collisionless families."
+        },
+        {
+          "label": "李晓明、井义鹏、廖世俊：1349 族不等质量平面三体周期轨道（2018）",
+          "labelEn": "Li, Jing & Liao: 1,349 families of unequal-mass planar three-body periodic orbits (2018)",
+          "url": "https://arxiv.org/abs/1709.04775",
+          "note": "本页「不等质量 · 1349」：m₃ ≠ 1 的平面周期族。",
+          "noteEn": "Unequal mass · 1,349 tab: planar families with m₃ ≠ 1."
+        },
+        {
+          "label": "李晓明、廖世俊：10059 条三维三体周期轨道（2025）",
+          "labelEn": "Li & Liao: 10,059 three-dimensional periodic orbits of the three-body problem (2025)",
+          "url": "https://arxiv.org/abs/2508.08568",
+          "note": "本页「三维空间」：第三颗星有离面坐标 z₀，前两颗有相反的 v_z。从 10059 条里收录稳定解、三重奏解和各质量最短轨道。",
+          "noteEn": "Spatial 3D tab: the third mass starts at z₀, and the first two have opposite v_z. This page includes stable, piano-trio, and shortest-per-mass orbits from the 10,059."
+        },
+        {
+          "label": "Chenciner 与 Montgomery：等质量三体的 8 字周期解（2000）",
+          "labelEn": "Chenciner & Montgomery: figure-eight periodic solution for three equal masses (2000)",
+          "url": "https://annals.math.princeton.edu/articles/12364",
+          "note": "本页「8 字舞」：摩尔 1993 年数值发现，这篇给出数学证明。三颗等质量恒星沿同一条 ∞ 错开追逐。",
+          "noteEn": "Figure-eight: Moore found it numerically in 1993; this paper proved it. Three equal masses chase one another on the same infinity loop."
+        },
+        {
+          "label": "庞加莱《三体问题与动力学方程》（1890）",
+          "labelEn": "Poincaré, On the Three-Body Problem and the Equations of Dynamics (1890)",
+          "url": "https://henripoincarepapers.univ-nantes.fr/chp/hp-pdf/hp1890am.pdf",
+          "note": "「不可解」指一般三体没有封闭通解，不是说没有特解。后面这些周期轨道就是特解。",
+          "noteEn": "“Unsolvable” means the general problem has no closed-form formula, not that no solutions exist. The periodic orbits on this page are special solutions."
+        }
+      ]
+    },
+    {
+      "id": "gravity-assist",
+      "title": "引力助推改变飞船的速度",
+      "titleEn": "A gravity assist changes a spacecraft’s speed",
+      "topicLabel": "轨道力学",
+      "topicLabelEn": "Orbital mechanics",
+      "evidence": "modeled",
+      "accent": "#51cf66",
+      "sources": [
+        {
+          "label": "引力弹弓效应（Wikipedia）",
+          "labelEn": "Gravitational slingshot effect (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/重力助推"
+        },
+        {
+          "label": "拉格朗日点（Wikipedia）",
+          "labelEn": "Lagrange points (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/拉格朗日点"
+        },
+        {
+          "label": "NASA — Pioneer 11（木星飞掠高度）",
+          "labelEn": "NASA — Pioneer 11 (Jupiter flyby altitude)",
+          "url": "https://science.nasa.gov/mission/pioneer-11/"
+        },
+        {
+          "label": "NASA — Voyager 2（木星飞掠高度）",
+          "labelEn": "NASA — Voyager 2 (Jupiter flyby altitude)",
+          "url": "https://science.nasa.gov/mission/voyager/voyager-2/"
+        }
+      ]
+    },
+    {
+      "id": "mandelbrot-zoom",
+      "title": "曼德勃罗集边界的无限细节",
+      "titleEn": "Infinite detail along the Mandelbrot set boundary",
+      "topicLabel": "分形",
+      "topicLabelEn": "Fractals",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "sources": [
+        {
+          "label": "曼德博集合（Wikipedia）",
+          "labelEn": "Mandelbrot set (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/曼德博集合"
+        },
+        {
+          "label": "Mandelbulb 3D / 社区着色器参考",
+          "labelEn": "Mandelbulb community & shader references",
+          "url": "https://www.mandelbulb.com/"
+        },
+        {
+          "label": "Wikipedia — Escape-time fractal",
+          "labelEn": "Wikipedia — Escape-time fractal",
+          "url": "https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set"
+        }
+      ]
+    },
+    {
+      "id": "newton-fractal",
+      "title": "猜错起点，答案会跳到另一边",
+      "titleEn": "Guess from the wrong start, and the answer jumps to another side",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "sources": [
+        {
+          "label": "Newton fractal（Wikipedia）",
+          "labelEn": "Newton fractal（Wikipedia）",
+          "url": "https://en.wikipedia.org/wiki/Newton_fractal"
+        }
+      ]
+    },
+    {
+      "id": "clifford-dust",
+      "title": "四个参数迭代生成 Clifford 吸引子",
+      "titleEn": "Four parameters generate a Clifford attractor",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "evidence": "modeled",
+      "accent": "#f0d9a8",
+      "sources": [
+        {
+          "label": "Clifford attractor",
+          "labelEn": "Clifford attractor",
+          "url": "https://en.wikipedia.org/wiki/List_of_chaotic_maps"
+        },
+        {
+          "label": "奇怪吸引子（Wikipedia）",
+          "labelEn": "Attractor (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Attractor"
+        }
+      ]
+    },
+    {
+      "id": "kakeya-needle",
+      "title": "卡库亚针问题的最小转向区域",
+      "titleEn": "The minimum turning region in the Kakeya needle problem",
+      "topicLabel": "几何直觉",
+      "topicLabelEn": "Geometric intuition",
+      "evidence": "modeled",
+      "accent": "#8fd0ff",
+      "sources": [
+        {
+          "label": "Wikipedia — 挂谷问题",
+          "labelEn": "Wikipedia — Kakeya set",
+          "url": "https://en.wikipedia.org/wiki/Kakeya_set"
+        },
+        {
+          "label": "Wikipedia — 三尖内摆线（deltoid）",
+          "labelEn": "Wikipedia — Deltoid curve",
+          "url": "https://en.wikipedia.org/wiki/Deltoid_curve"
+        },
+        {
+          "label": "Wang & Zahl（2025）— 三维挂谷集猜想的 127 页证明",
+          "labelEn": "Wang & Zahl (2025) — Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions",
+          "url": "https://arxiv.org/abs/2502.17655"
+        },
+        {
+          "label": "Quanta Magazine — 王虹获 2026 年菲尔兹奖",
+          "labelEn": "Quanta Magazine — Hong Wang wins the 2026 Fields Medal",
+          "url": "https://www.quantamagazine.org/hong-wang-wins-2026-fields-medal-the-third-woman-ever-20260723/"
+        }
+      ]
+    },
+    {
+      "id": "strange-attractors",
+      "title": "状态轨迹形成奇异吸引子",
+      "titleEn": "State trajectories form strange attractors",
+      "topicLabel": "混沌",
+      "topicLabelEn": "Chaos",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "sources": [
+        {
+          "label": "奇异吸引子（Wikipedia）",
+          "labelEn": "Strange attractor (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/吸引子#奇异吸引子"
+        },
+        {
+          "label": "洛伦兹《确定性非周期流》（1963）",
+          "labelEn": "Lorenz, “Deterministic Nonperiodic Flow” (1963)",
+          "url": "https://journals.ametsoc.org/abstract/journals/atsc/20/2/1520-0469_1963_020_0130_dnf_2_0_co_2.xml"
+        },
+        {
+          "label": "罗斯勒《连续混沌方程》（1976）",
+          "labelEn": "Rössler, “An Equation for Continuous Chaos” (1976)",
+          "url": "https://doi.org/10.1016/0375-9601(76)90101-8"
+        },
+        {
+          "label": "Sprott《奇异吸引子：在混沌中创造图案》",
+          "labelEn": "Sprott, “Strange Attractors: Creating Patterns in Chaos”",
+          "url": "https://sprott.physics.wisc.edu/fractals/booktext/SABOOK.HTM"
+        },
+        {
+          "label": "Thomas《从反馈回路理解确定性混沌》（1999）",
+          "labelEn": "Thomas, “Deterministic Chaos Seen in Terms of Feedback Circuits” (1999)",
+          "url": "https://doi.org/10.1142/S0218127499001027"
+        },
+        {
+          "label": "AMS《为 3D 打印建立动力系统模型》· 朗福德命名考证",
+          "labelEn": "AMS, “Modeling Dynamical Systems for 3D Printing” · Langford attribution",
+          "url": "https://www.ams.org/notices/202011/rnoti-p1692.pdf"
+        },
+        {
+          "label": "Nik 等《Dadras–Momeni 混沌系统》（2016）",
+          "labelEn": "Nik et al., “The Chaotic Dadras–Momeni System” (2016)",
+          "url": "https://doi.org/10.1093/imamci/dnu050"
+        }
+      ]
+    },
+    {
+      "id": "fluid-sim",
+      "title": "涡旋从流体扰动中产生并消散",
+      "titleEn": "Vortices form and dissipate after a fluid is disturbed",
+      "topicLabel": "水流与漩涡",
+      "topicLabelEn": "Flow and vortices",
+      "evidence": "modeled",
+      "accent": "#4dd0e1",
+      "sources": [
+        {
+          "label": "Navier-Stokes 方程（Wikipedia）",
+          "labelEn": "Navier-Stokes equations (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/纳维-斯托克斯方程"
+        }
+      ]
+    },
+    {
+      "id": "electric-field",
+      "title": "电场线勾出看不见的力",
+      "titleEn": "Field lines trace the shape of an invisible electric force",
+      "topicLabel": "电磁学",
+      "topicLabelEn": "Electromagnetism",
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "sources": [
+        {
+          "label": "电场线（Wikipedia）",
+          "labelEn": "Field line (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/电场线"
+        },
+        {
+          "label": "Falstad — 2-D Electrostatics Applet（经典开源演示）",
+          "labelEn": "Falstad — 2-D Electrostatics Applet (classic open demo)",
+          "url": "https://www.falstad.com/vector3de/"
+        },
+        {
+          "label": "Wikipedia — 库仑定律 / 叠加原理",
+          "labelEn": "Wikipedia — Coulomb's law / superposition",
+          "url": "https://en.wikipedia.org/wiki/Coulomb%27s_law"
+        }
+      ]
+    },
+    {
+      "id": "magnetic-lines",
+      "title": "看不见的磁力线",
+      "titleEn": "Invisible magnetic lines",
+      "topicLabel": "电磁",
+      "topicLabelEn": "Electromagnetism",
+      "evidence": "modeled",
+      "accent": "#6ee7f2",
+      "sources": [
+        {
+          "label": "OpenStax University Physics — 磁偶极与磁力线",
+          "labelEn": "OpenStax University Physics — Magnetic dipoles and field lines",
+          "url": "https://openstax.org/books/university-physics-volume-2/pages/11-3-magnetic-fields-and-lines"
+        },
+        {
+          "label": "HyperPhysics — 条形磁铁场线",
+          "labelEn": "HyperPhysics — Bar magnet field lines",
+          "url": "http://hyperphysics.phy-astr.gsu.edu/hbase/magnetic/magbar.html"
+        },
+        {
+          "label": "Wikipedia — 磁场线",
+          "labelEn": "Wikipedia — Magnetic field lines",
+          "url": "https://en.wikipedia.org/wiki/Magnetic_field#Field_lines_and_flux"
+        }
+      ]
+    },
+    {
+      "id": "fourier",
+      "title": "旋转圆叠加出方波与周期曲线",
+      "titleEn": "Rotating circles combine into square waves and periodic curves",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "sources": [
+        {
+          "label": "傅里叶级数（Wikipedia）",
+          "labelEn": "Fourier series (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/傅里叶级数"
+        }
+      ]
+    },
+    {
+      "id": "ferrofluid",
+      "title": "铁磁流体",
+      "titleEn": "Ferrofluid",
+      "topicLabel": "磁性材料",
+      "topicLabelEn": "Magnetic materials",
+      "evidence": "modeled",
+      "accent": "#efb661",
+      "sources": [
+        {
+          "label": "MIT OpenCourseWare — 磁场中的铁磁流体尖峰",
+          "labelEn": "MIT OpenCourseWare — Ferrofluid peak pattern in a magnetic field",
+          "url": "https://ocw.mit.edu/courses/6-642-continuum-electromechanics-fall-2008/resources/6-642f08-th/"
+        },
+        {
+          "label": "MIT News — 铁磁流体在磁场中的形态",
+          "labelEn": "MIT News — Ferrofluid morphing under magnetic fields",
+          "url": "https://news.mit.edu/2003/ferrofluid-0205"
+        },
+        {
+          "label": "NASA — Stephen Papell 与铁磁流体的诞生",
+          "labelEn": "NASA — Stephen Papell and the birth of ferrofluid",
+          "url": "https://www.nasa.gov/history/novel-rocket-fuel-spawned-ferrofluid-industry/"
+        }
+      ]
+    },
+    {
+      "id": "soap-bubble",
+      "title": "薄膜干涉形成肥皂泡彩色条纹",
+      "titleEn": "Thin-film interference colors a soap bubble",
+      "topicLabel": "光学材料",
+      "topicLabelEn": "Optical materials",
+      "evidence": "modeled",
+      "accent": "#9ad0ff",
+      "sources": [
+        {
+          "label": "pompa-iridiscencia（SantiagoGR11 · 薄膜干涉物理着色器）",
+          "labelEn": "pompa-iridiscencia (SantiagoGR11 · physical thin-film interference shader)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia"
+        },
+        {
+          "label": "在线演示 · pompa iridiscencia",
+          "labelEn": "Live demo · pompa iridiscencia",
+          "url": "https://santiagogr11.github.io/pompa-iridiscencia/"
+        },
+        {
+          "label": "薄膜干涉（Wikipedia）",
+          "labelEn": "Thin-film interference (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Thin-film_interference"
+        },
+        {
+          "label": "肥皂膜（Wikipedia）",
+          "labelEn": "Soap film (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Soap_film"
+        },
+        {
+          "label": "原项目许可证（MIT）",
+          "labelEn": "Upstream license (MIT)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia/blob/main/LICENSE"
+        }
+      ]
+    },
+    {
+      "id": "pool-caustics",
+      "title": "泳池焦散光纹",
+      "titleEn": "Caustic light patterns in a pool",
+      "topicLabel": "光与水",
+      "topicLabelEn": "Light and water",
+      "evidence": "modeled",
+      "accent": "#fff0a6",
+      "sources": [
+        {
+          "label": "Nature — 泳池光纹中的焦散交汇结构",
+          "labelEn": "Nature — Fine structure in swimming-pool caustic junctions",
+          "url": "https://doi.org/10.1038/267034a0"
+        },
+        {
+          "label": "Heritage Science — 达·芬奇手稿中的焦散光路",
+          "labelEn": "Heritage Science — Caustic ray paths in Leonardo da Vinci's notebooks",
+          "url": "https://doi.org/10.1186/s40494-022-00713-6"
+        },
+        {
+          "label": "OpenStax Physics — 折射与斯涅尔定律",
+          "labelEn": "OpenStax Physics — Refraction and Snell's law",
+          "url": "https://openstax.org/books/physics/pages/16-2-refraction"
+        }
+      ]
+    },
+    {
+      "id": "pinhole-canopy",
+      "title": "缩小一片叶隙，让树荫落满一百个太阳",
+      "titleEn": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
+      "topicLabel": "几何光学",
+      "topicLabelEn": "Geometrical optics",
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "sources": [
+        {
+          "label": "NASA Science — 日食观测指南",
+          "labelEn": "NASA Science — Solar Eclipse Guide",
+          "url": "https://science.nasa.gov/feature/solar-eclipse-guide/"
+        },
+        {
+          "label": "NASA 今日天文图 — 日食树影",
+          "labelEn": "NASA Astronomy Picture of the Day — The Eclipse Tree",
+          "url": "https://apod.nasa.gov/apod/ap001225.html"
+        }
+      ]
+    },
+    {
+      "id": "lightning-lab",
+      "title": "闪电沿分叉通道逐步前进",
+      "titleEn": "Lightning advances through a branching channel",
+      "topicLabel": "大气与电",
+      "topicLabelEn": "Atmosphere and electricity",
+      "evidence": "modeled",
+      "accent": "#7ba4ff",
+      "sources": [
+        {
+          "label": "NOAA — 闪电是如何形成的",
+          "labelEn": "NOAA — How lightning forms",
+          "url": "https://www.noaa.gov/jetstream/lightning"
+        },
+        {
+          "label": "Wikipedia — 闪电",
+          "labelEn": "Wikipedia — Lightning",
+          "url": "https://en.wikipedia.org/wiki/Lightning"
+        },
+        {
+          "label": "中点位移分形（Fournier–Fussell–Carpenter）",
+          "labelEn": "Midpoint displacement fractal (Fournier–Fussell–Carpenter)",
+          "url": "https://en.wikipedia.org/wiki/Fractional_Brownian_motion"
+        }
+      ]
+    },
+    {
+      "id": "snow-crystal",
+      "title": "温度与湿度决定雪晶形状",
+      "titleEn": "Temperature and humidity shape snow crystals",
+      "topicLabel": "大气与冰晶",
+      "topicLabelEn": "Atmosphere and ice",
+      "evidence": "modeled",
+      "accent": "#a8d8ff",
+      "sources": [
+        {
+          "label": "中谷宇吉郎 — 雪晶习性图（综述）",
+          "labelEn": "Ukichiro Nakaya — snow crystal habit diagram (overview)",
+          "url": "https://en.wikipedia.org/wiki/Ukichiro_Nakaya"
+        },
+        {
+          "label": "SnowCrystals.com — 雪晶分类",
+          "labelEn": "SnowCrystals.com — snow crystal morphology",
+          "url": "https://www.snowcrystals.com/"
+        },
+        {
+          "label": "Wikipedia — 雪花",
+          "labelEn": "Wikipedia — Snowflake",
+          "url": "https://en.wikipedia.org/wiki/Snowflake"
+        }
+      ]
+    },
+    {
+      "id": "boids-flocking",
+      "title": "鸟群依靠三条局部规则形成统一运动",
+      "titleEn": "Three local rules produce coordinated flocking",
+      "topicLabel": "群体运动",
+      "topicLabelEn": "Collective motion",
+      "evidence": "modeled",
+      "accent": "#4dd0e1",
+      "sources": [
+        {
+          "label": "Craig Reynolds — Boids (1987)",
+          "labelEn": "Craig Reynolds — Boids (1987)",
+          "url": "https://www.red3d.com/cwr/boids/"
+        },
+        {
+          "label": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "labelEn": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "url": "https://www.red3d.com/cwr/papers/1987/boids.html"
+        },
+        {
+          "label": "OpenProcessing · Boids 社区实现",
+          "labelEn": "OpenProcessing · Boids community demos",
+          "url": "https://openprocessing.org/browse/#/search/boids"
+        }
+      ]
+    },
+    {
+      "id": "phyllotaxis",
+      "title": "植物的螺旋",
+      "titleEn": "Spirals in plants",
+      "topicLabel": "形态发生",
+      "topicLabelEn": "Morphogenesis",
+      "evidence": "modeled",
+      "accent": "#e8b84a",
+      "sources": [
+        {
+          "label": "Wikipedia — 叶序",
+          "labelEn": "Wikipedia — Phyllotaxis",
+          "url": "https://en.wikipedia.org/wiki/Phyllotaxis"
+        },
+        {
+          "label": "Vogel, H. (1979) A better way to construct the sunflower head",
+          "labelEn": "Vogel, H. (1979) A better way to construct the sunflower head",
+          "url": "https://doi.org/10.1016/0025-5564(79)90080-4"
+        },
+        {
+          "label": "Wikipedia — 黄金角",
+          "labelEn": "Wikipedia — Golden angle",
+          "url": "https://en.wikipedia.org/wiki/Golden_angle"
+        }
+      ]
+    }
+  ]
+}

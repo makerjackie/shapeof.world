@@ -1,0 +1,220 @@
+{
+  "fourier": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "fourier",
+      "publication": "public",
+      "index": "22",
+      "title": "旋转圆叠加出方波与周期曲线",
+      "poster": "/assets/posters/fourier.webp",
+      "posterMobile": "/assets/posters/mobile/fourier.webp",
+      "posterDesktop": "/assets/posters/desktop/fourier.webp",
+      "posterTitle": "傅里叶级数把周期信号分解为正弦波",
+      "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+      "posterSource": "Canvas 2D · 实时 DFT · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "一串旋转的圆，为什么能画出任何曲线？",
+      "hook": "每个圆是一个正弦分量，首尾相接就能叠加出任意周期曲线。调项数、换波形、甚至手绘一条曲线看它现场分解。",
+      "payoff": "傅里叶级数：任何周期信号都能分解为整数倍频率的正弦波之和。项数越多越逼近，但跳变处约 9% 的吉布斯过冲永远不会消失。",
+      "topicLabel": "数学",
+      "translations": {
+        "en": {
+          "title": "Rotating circles combine into square waves and periodic curves",
+          "posterTitle": "Fourier series decompose periodic signals into sine waves",
+          "posterHook": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot.",
+          "posterSource": "Canvas 2D · Real-time DFT · Local build",
+          "question": "Why can a series of rotating circles draw any curves?",
+          "hook": "Each circle is a sinusoidal component, and any periodic curve can be superimposed end to end. Adjust the number of terms, change the waveform, and even draw a curve by hand to see it decompose on the spot.",
+          "payoff": "Fourier series: Any periodic signal can be decomposed into the sum of sine waves with integer multiples of frequency. The approximation gets better with more terms, but the ~9% Gibbs overshoot at the jump never goes away.",
+          "topicLabel": "Mathematics"
+        }
+      },
+      "primaryCategoryId": "waves",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "diagram-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "fourier",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 420,
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "related": [
+        "neural-playground"
+      ],
+      "sources": [
+        {
+          "label": "傅里叶级数（Wikipedia）",
+          "labelEn": "Fourier series (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/傅里叶级数"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+      "releaseId": "oss-6ff3221d",
+      "id": "fourier",
+      "state": "public",
+      "title": "旋转圆叠加出方波与周期曲线",
+      "titleEn": "Rotating circles combine into square waves and periodic curves",
+      "poster": "/assets/posters/fourier.webp",
+      "posterMobile": "/assets/posters/mobile/fourier.webp",
+      "posterDesktop": "/assets/posters/desktop/fourier.webp",
+      "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+      "posterHookEn": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot.",
+      "question": "一串旋转的圆，为什么能画出任何曲线？",
+      "questionEn": "Why can a series of rotating circles draw any curves?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "waves",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+      "releaseId": "oss-6ff3221d",
+      "id": "fourier",
+      "state": "public",
+      "title": "旋转圆叠加出方波与周期曲线",
+      "titleEn": "Rotating circles combine into square waves and periodic curves",
+      "poster": "/assets/posters/fourier.webp",
+      "posterMobile": "/assets/posters/mobile/fourier.webp",
+      "posterDesktop": "/assets/posters/desktop/fourier.webp",
+      "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+      "posterHookEn": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot.",
+      "question": "一串旋转的圆，为什么能画出任何曲线？",
+      "questionEn": "Why can a series of rotating circles draw any curves?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "waves",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "hook": "每个圆是一个正弦分量，首尾相接就能叠加出任意周期曲线。调项数、换波形、甚至手绘一条曲线看它现场分解。",
+      "hookEn": "Each circle is a sinusoidal component, and any periodic curve can be superimposed end to end. Adjust the number of terms, change the waveform, and even draw a curve by hand to see it decompose on the spot.",
+      "payoff": "傅里叶级数：任何周期信号都能分解为整数倍频率的正弦波之和。项数越多越逼近，但跳变处约 9% 的吉布斯过冲永远不会消失。",
+      "payoffEn": "Fourier series: Any periodic signal can be decomposed into the sum of sine waves with integer multiples of frequency. The approximation gets better with more terms, but the ~9% Gibbs overshoot at the jump never goes away.",
+      "related": [
+        "neural-playground"
+      ],
+      "sources": [
+        {
+          "label": "傅里叶级数（Wikipedia）",
+          "labelEn": "Fourier series (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/傅里叶级数"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "fourier",
+      "duration": 420,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+      "releaseId": "oss-6ff3221d",
+      "text": "旋转圆叠加出方波与周期曲线 Rotating circles combine into square waves and periodic curves 一串旋转的圆，为什么能画出任何曲线？ Why can a series of rotating circles draw any curves? 增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。 Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot. 数学 Mathematics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+        "releaseId": "oss-6ff3221d",
+        "id": "fourier",
+        "state": "public",
+        "title": "旋转圆叠加出方波与周期曲线",
+        "titleEn": "Rotating circles combine into square waves and periodic curves",
+        "poster": "/assets/posters/fourier.webp",
+        "posterMobile": "/assets/posters/mobile/fourier.webp",
+        "posterDesktop": "/assets/posters/desktop/fourier.webp",
+        "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+        "posterHookEn": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot.",
+        "question": "一串旋转的圆，为什么能画出任何曲线？",
+        "questionEn": "Why can a series of rotating circles draw any curves?",
+        "topicLabel": "数学",
+        "topicLabelEn": "Mathematics",
+        "primaryCategoryId": "waves",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#b15cff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+      "releaseId": "oss-6ff3221d",
+      "id": "fourier",
+      "renderer": "fourier",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "旋转圆叠加出方波与周期曲线",
+        "en": "Rotating circles combine into square waves and periodic curves"
+      },
+      "summary": {
+        "zh": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
+        "en": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "magnetic-lines",
+      "nextWorldId": "ferrofluid",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

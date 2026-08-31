@@ -1,0 +1,414 @@
+/* ============================================================
+   Fourier · 傅里叶级数（圆链画曲线）
+   ============================================================ */
+.fourier-experience {
+  --f-yellow: #ffd166;
+  --f-cyan: #4dd0e1;
+  --f-purple: #b15cff;
+  --f-red: #ff6b6b;
+  --world-accent: var(--f-yellow);
+}
+.fourier-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fourier-question {
+  position: absolute;
+  z-index: 10;
+  top: max(76px, var(--experience-safe-top, 78px));
+  left: 22px;
+  max-width: 330px;
+  pointer-events: none;
+}
+.fourier-question h1 {
+  margin: 0;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: clamp(19px, 2.4vw, 28px);
+  font-weight: 500;
+  color: #f4f0e8;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
+.fourier-question p {
+  margin: 8px 0 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.fourier-why-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  color: var(--f-cyan);
+  border: 1px solid rgba(77, 208, 225, 0.45);
+  border-radius: 999px;
+  background: rgba(77, 208, 225, 0.08);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s, border-color 0.2s;
+}
+.fourier-why-btn:hover {
+  background: rgba(77, 208, 225, 0.2);
+  border-color: var(--f-cyan);
+}
+
+.fourier-readout {
+  position: absolute;
+  z-index: 10;
+  top: 76px;
+  right: 22px;
+  width: 200px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(16px);
+  display: grid;
+  gap: 10px;
+}
+.fourier-readout-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.fourier-readout-row small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+}
+.fourier-readout-row strong {
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.fourier-readout-row .is-yellow { color: var(--f-yellow); }
+.fourier-readout-row .is-cyan { color: var(--f-cyan); }
+.fourier-error-bar {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.fourier-error-bar > div {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--f-cyan), var(--f-yellow), var(--f-red));
+  transition: width 0.3s;
+}
+.fourier-success {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--f-cyan);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.fourier-success svg {
+  flex: none;
+  color: var(--f-yellow);
+}
+
+.fourier-draw-hint {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 42%;
+  transform: translate(-30%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px dashed rgba(255, 209, 102, 0.55);
+  border-radius: 14px;
+  background: rgba(30, 24, 8, 0.5);
+  backdrop-filter: blur(10px);
+  color: var(--f-yellow);
+  font-size: 13px;
+  pointer-events: none;
+  animation: fourier-hint-float 2.4s ease-in-out infinite;
+}
+@keyframes fourier-hint-float {
+  0%, 100% { transform: translate(-30%, -50%); }
+  50% { transform: translate(-30%, calc(-50% - 8px)); }
+}
+
+.fourier-controls {
+  position: absolute;
+  z-index: 11;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: min(940px, calc(100% - 32px));
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(4, 8, 14, 0.68);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+}
+.fourier-transport {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.fourier-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #f4f0e8;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+.fourier-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.fourier-icon-btn:active { transform: scale(0.94); }
+
+.fourier-param {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+.fourier-param label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.fourier-param label strong.is-yellow {
+  color: var(--f-yellow);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.fourier-param-terms {
+  flex: 1 1 220px;
+  min-width: min(200px, 100%);
+  max-width: 360px;
+  border-left: none;
+  padding-left: 0;
+}
+.fourier-param-hint {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.fourier-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.fourier-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.fourier-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.fourier-chip-rail > * {
+  flex: 0 0 auto;
+}
+
+.fourier-waves {
+  display: flex;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.fourier-waves::-webkit-scrollbar {
+  display: none;
+}
+
+.fourier-waves > * {
+  flex: 0 0 auto;
+}
+.fourier-waves button {
+  min-height: 32px;
+  padding: 0 13px;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.fourier-waves button:hover {
+  border-color: rgba(255, 209, 102, 0.6);
+  color: var(--f-yellow);
+}
+.fourier-waves button.is-active {
+  color: #0d1117;
+  border-color: var(--f-yellow);
+  background: var(--f-yellow);
+  font-weight: 600;
+}
+
+.fourier-experience input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
+  cursor: pointer;
+}
+.fourier-experience input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #0a0f16;
+  background: var(--f-yellow);
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.65);
+}
+.fourier-experience input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #0a0f16;
+  background: var(--f-yellow);
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.65);
+}
+
+.fourier-why {
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(2, 4, 8, 0.6);
+  backdrop-filter: blur(8px);
+}
+.fourier-why-card {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(640px, 100%);
+  overflow-y: auto;
+  padding: 28px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(6, 10, 17, 0.94);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+}
+.fourier-why-card h2 {
+  margin: 0 0 14px;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: #f4f0e8;
+}
+.fourier-why-card p {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.fourier-why-card .is-purple { color: var(--f-purple); }
+.fourier-why-card .is-red { color: var(--f-red); }
+.fourier-why-card small {
+  display: block;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.fourier-why-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.fourier-why-close:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 720px) {
+  .fourier-question {
+    top: var(--experience-safe-top, 78px);
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+  .fourier-question p { display: none; }
+  .fourier-readout {
+    top: auto;
+    bottom: 190px;
+    right: 12px;
+    width: 150px;
+    padding: 10px 12px;
+    gap: 7px;
+  }
+  .fourier-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+    bottom: 12px;
+  }
+  .fourier-param-terms {
+    flex-basis: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0 0;
+  }
+  .fourier-draw-hint {
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    width: max-content;
+    max-width: calc(100% - 40px);
+  }
+}
+
+/* Play chrome comes from shared .experience-freebar-play */

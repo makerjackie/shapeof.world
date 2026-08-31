@@ -1,0 +1,370 @@
+/* ============================================================
+   GravityAssist · 引力弹弓 + 拉格朗日点
+   ============================================================ */
+.ga-experience {
+  --g-yellow: #ffd166;
+  --g-cyan: #4dd0e1;
+  --g-purple: #b15cff;
+  --g-red: #ff6b6b;
+  --g-green: #51cf66;
+  --world-accent: var(--g-yellow);
+}
+.ga-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ga-question {
+  position: absolute;
+  z-index: 10;
+  top: max(76px, var(--experience-safe-top, 78px));
+  left: 22px;
+  max-width: 330px;
+  pointer-events: none;
+}
+.ga-question h1 {
+  margin: 0;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: clamp(19px, 2.4vw, 28px);
+  font-weight: 500;
+  color: #f4f0e8;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.65);
+}
+.ga-question p {
+  margin: 8px 0 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ga-why-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  color: var(--g-cyan);
+  border: 1px solid rgba(77, 208, 225, 0.45);
+  border-radius: 999px;
+  background: rgba(77, 208, 225, 0.08);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background 0.2s, border-color 0.2s;
+}
+.ga-why-btn:hover {
+  background: rgba(77, 208, 225, 0.2);
+  border-color: var(--g-cyan);
+}
+
+.ga-readout {
+  position: absolute;
+  z-index: 10;
+  top: 76px;
+  right: 22px;
+  width: 230px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(16px);
+  display: grid;
+  gap: 10px;
+}
+.ga-readout-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ga-readout-row small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.ga-readout-row strong {
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.ga-readout-row .is-cyan { color: var(--g-cyan); }
+.ga-readout-row .is-green { color: var(--g-green); }
+.ga-readout-row .is-red { color: var(--g-red); }
+/* 最近高度是关键读数：标签与长数值分行，窄面板不再溢出 */
+.ga-alt-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2px;
+}
+.ga-alt-row strong {
+  text-align: left;
+}
+.ga-critical {
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 107, 107, 0.1);
+}
+.ga-critical strong {
+  display: block;
+  color: var(--g-red);
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.ga-critical span {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.ga-success {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--g-green);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.ga-success svg {
+  flex: none;
+  color: var(--g-yellow);
+}
+
+.ga-controls {
+  position: absolute;
+  z-index: 11;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: min(940px, calc(100% - 32px));
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(4, 8, 14, 0.68);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+}
+/* 模式 / 掠过侧 / 拉格朗日点切换 = 共享 .experience-freebar-seg（Freebar.css），私有框线已退役 */
+.ga-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.ga-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ga-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.ga-chip-rail > * {
+  flex: 0 0 auto;
+}
+
+.ga-chip-rail .ga-param {
+  flex: 1 0 min(160px, 70vw);
+  min-width: min(160px, 70vw);
+  max-width: 280px;
+}
+
+.ga-param {
+  min-width: 0;
+  flex: 1 1 180px;
+  max-width: 280px;
+}
+.ga-l-points {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.ga-l-points button {
+  min-height: 34px;
+  min-width: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ga-l-points button.is-active {
+  color: #0d1117;
+  border-color: var(--g-yellow, #ffd166);
+  background: var(--g-yellow, #ffd166);
+}
+.ga-param label {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.ga-param label strong.is-yellow {
+  color: var(--g-yellow);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.ga-param strong.is-yellow {
+  color: var(--g-yellow);
+}
+.ga-param strong.is-red {
+  color: var(--g-red);
+}
+.ga-experience input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
+  cursor: pointer;
+}
+.ga-experience input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #0a0f16;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.ga-experience input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #0a0f16;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* 主操作「发射」：颜色走共享 is-accent（实心主题色），尺寸字阶与全站一致，不再私有放大 */
+
+/* Reset chrome comes from shared .experience-freebar-reset */
+
+.ga-why {
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(2, 4, 8, 0.6);
+  backdrop-filter: blur(8px);
+}
+.ga-why-card {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(640px, 100%);
+  overflow-y: auto;
+  padding: 28px 30px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  background: rgba(6, 10, 17, 0.94);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+}
+.ga-why-card h2 {
+  margin: 0 0 14px;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: #f4f0e8;
+}
+.ga-why-card p {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.ga-why-card p strong { color: #f4f0e8; }
+.ga-why-card .is-purple { color: var(--g-purple); }
+.ga-why-card .is-red { color: var(--g-red); }
+.ga-why-card .is-cyan { color: var(--g-cyan); }
+.ga-why-card small {
+  display: block;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.ga-why-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+.ga-why-close:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+@media (max-width: 720px) {
+  .ga-question {
+    top: var(--experience-safe-top, 78px);
+    left: 16px;
+    right: 16px;
+    max-width: none;
+  }
+  .ga-question p { display: none; }
+  .ga-readout {
+    top: auto;
+    bottom: 220px;
+    right: 12px;
+    width: 176px;
+    padding: 10px 12px;
+    gap: 7px;
+  }
+  .ga-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 14px;
+    bottom: 12px;
+  }
+
+  /* The shared chip defaults are intentionally broad; keep this tray a real
+     one-row touch rail instead of allowing centered children to spill out. */
+  .ga-freebar .experience-freebar-secondary .ga-chip-rail {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    touch-action: pan-x;
+  }
+
+  .ga-freebar .experience-freebar-secondary .ga-chip-rail > * {
+    flex: 0 0 auto;
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "fallbackTrackId": "hidden-shapes",
+  "cdnOrigin": "https://music-cdn.shapeof.world",
+  "pageOrigin": "https://music.shapeof.world",
+  "tracks": {
+    "hidden-shapes": {
+      "code": "GLO-B01",
+      "title": {
+        "zh": "世界的形状",
+        "en": "Shape of the World"
+      },
+      "role": "main-theme",
+      "category": "global",
+      "bpm": 130,
+      "version": "v3"
+    },
+    "invisible-halo": {
+      "code": "COS-A01",
+      "title": {
+        "zh": "看不见的晕",
+        "en": "Invisible Halo"
+      },
+      "role": "flagship",
+      "category": "cosmos",
+      "bpm": 68,
+      "version": "v1"
+    },
+    "event-horizon": {
+      "code": "COS-A02",
+      "title": {
+        "zh": "事件视界",
+        "en": "Event Horizon"
+      },
+      "role": "world-theme",
+      "category": "cosmos",
+      "bpm": 52,
+      "version": "v1"
+    },
+    "spacetime-ripple": {
+      "code": "COS-A03",
+      "title": {
+        "zh": "时空涟漪",
+        "en": "Spacetime Ripple"
+      },
+      "role": "world-theme",
+      "category": "cosmos",
+      "bpm": 64,
+      "version": "v1"
+    },
+    "orbital-garden": {
+      "code": "COS-B01",
+      "title": {
+        "zh": "轨道花园",
+        "en": "Orbital Garden"
+      },
+      "role": "world-theme",
+      "category": "cosmos",
+      "bpm": 88,
+      "version": "v1"
+    },
+    "sine-lattice": {
+      "code": "MAT-A01",
+      "title": {
+        "zh": "正弦网格",
+        "en": "Sine Lattice"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 66,
+      "version": "v2"
+    },
+    "complex-bloom": {
+      "code": "MAT-B01",
+      "title": {
+        "zh": "复平面绽放",
+        "en": "Complex Bloom"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 80,
+      "version": "v1"
+    },
+    "series-unfolding": {
+      "code": "MAT-B02",
+      "title": {
+        "zh": "级数展开",
+        "en": "Series Unfolding"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 78,
+      "version": "v1"
+    },
+    "needle-set": {
+      "code": "MAT-B03",
+      "title": {
+        "zh": "针集",
+        "en": "Needle Set"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 84,
+      "version": "v1"
+    },
+    "prime-spiral": {
+      "code": "MAT-B04",
+      "title": {
+        "zh": "素数螺旋",
+        "en": "Prime Spiral"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 90,
+      "version": "v1"
+    },
+    "chaos-onset": {
+      "code": "MAT-C01",
+      "title": {
+        "zh": "混沌初现",
+        "en": "Chaos Onset"
+      },
+      "role": "world-theme",
+      "category": "math-signals",
+      "bpm": 112,
+      "version": "v1"
+    },
+    "two-paths": {
+      "code": "PHY-A01",
+      "title": {
+        "zh": "两条路径",
+        "en": "Two Paths"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 58,
+      "version": "v1"
+    },
+    "field-lines": {
+      "code": "PHY-A02",
+      "title": {
+        "zh": "场线",
+        "en": "Field Lines"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 62,
+      "version": "v1"
+    },
+    "double-swing": {
+      "code": "PHY-B01",
+      "title": {
+        "zh": "双摆",
+        "en": "Double Swing"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 92,
+      "version": "v1"
+    },
+    "spectrum-arc": {
+      "code": "PHY-B02",
+      "title": {
+        "zh": "光谱弧",
+        "en": "Spectrum Arc"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 76,
+      "version": "v1"
+    },
+    "three-bodies": {
+      "code": "PHY-C01",
+      "title": {
+        "zh": "三体",
+        "en": "Three Bodies"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 118,
+      "version": "v1"
+    },
+    "ring-wake": {
+      "code": "PHY-C02",
+      "title": {
+        "zh": "涡环尾迹",
+        "en": "Ring Wake"
+      },
+      "role": "world-theme",
+      "category": "physics",
+      "bpm": 110,
+      "version": "v1"
+    },
+    "charge-split": {
+      "code": "EAR-C01",
+      "title": {
+        "zh": "电荷分裂",
+        "en": "Charge Split"
+      },
+      "role": "world-theme",
+      "category": "earth-climate",
+      "bpm": 126,
+      "version": "v1"
+    },
+    "pulse-chamber": {
+      "code": "LIF-B01",
+      "title": {
+        "zh": "搏动室",
+        "en": "Pulse Chamber"
+      },
+      "role": "world-theme",
+      "category": "life-body",
+      "bpm": 72,
+      "version": "v1"
+    },
+    "sync-flash": {
+      "code": "LIF-C01",
+      "title": {
+        "zh": "同步闪光",
+        "en": "Sync Flash"
+      },
+      "role": "world-theme",
+      "category": "life-body",
+      "bpm": 102,
+      "version": "v1"
+    },
+    "lattice-grow": {
+      "code": "CHE-B01",
+      "title": {
+        "zh": "晶格生长",
+        "en": "Lattice Grow"
+      },
+      "role": "world-theme",
+      "category": "chem-materials",
+      "bpm": 80,
+      "version": "v1"
+    },
+    "oscillating-well": {
+      "code": "CHE-C01",
+      "title": {
+        "zh": "振荡的井",
+        "en": "Oscillating Well"
+      },
+      "role": "world-theme",
+      "category": "chem-materials",
+      "bpm": 108,
+      "version": "v1"
+    },
+    "downhill-loss": {
+      "code": "AIM-B01",
+      "title": {
+        "zh": "下山的损失",
+        "en": "Downhill Loss"
+      },
+      "role": "world-theme",
+      "category": "ai-ml",
+      "bpm": 82,
+      "version": "v1"
+    },
+    "flock-rule": {
+      "code": "CMP-B01",
+      "title": {
+        "zh": "群飞规则",
+        "en": "Flock Rule"
+      },
+      "role": "world-theme",
+      "category": "computing-engineering",
+      "bpm": 94,
+      "version": "v1"
+    }
+  },
+  "categoryPools": {},
+  "overrides": {
+    "moon-voyage": "spacetime-ripple",
+    "black-hole-flyby": "invisible-halo",
+    "formula-bloom": "prime-spiral",
+    "double-slit": "two-paths",
+    "pendulum-wave": "double-swing",
+    "double-pendulum": "double-swing",
+    "firefly-sync": "sync-flash",
+    "chemical-garden": "lattice-grow",
+    "neural-playground": "downhill-loss",
+    "robot-ik": "flock-rule",
+    "solar-system": "orbital-garden",
+    "three-body": "three-bodies",
+    "gravity-assist": "event-horizon",
+    "mandelbrot-zoom": "complex-bloom",
+    "newton-fractal": "complex-bloom",
+    "clifford-dust": "series-unfolding",
+    "kakeya-needle": "needle-set",
+    "strange-attractors": "chaos-onset",
+    "fluid-sim": "ring-wake",
+    "electric-field": "field-lines",
+    "magnetic-lines": "field-lines",
+    "fourier": "sine-lattice",
+    "ferrofluid": "oscillating-well",
+    "soap-bubble": "oscillating-well",
+    "pool-caustics": "spectrum-arc",
+    "pinhole-canopy": "field-lines",
+    "lightning-lab": "charge-split",
+    "snow-crystal": "charge-split",
+    "boids-flocking": "flock-rule",
+    "phyllotaxis": "pulse-chamber"
+  }
+}

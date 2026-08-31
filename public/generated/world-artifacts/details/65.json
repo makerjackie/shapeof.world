@@ -1,0 +1,228 @@
+{
+  "pinhole-canopy": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "pinhole-canopy",
+      "publication": "public",
+      "index": "26",
+      "title": "缩小一片叶隙，让树荫落满一百个太阳",
+      "poster": "/assets/posters/pinhole-canopy.webp",
+      "posterMobile": "/assets/posters/mobile/pinhole-canopy.webp",
+      "posterDesktop": "/assets/posters/desktop/pinhole-canopy.webp",
+      "posterTitle": "树荫下，为什么落着一地小太阳？",
+      "posterHook": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
+      "posterSource": "Canvas 2D · 小孔投影模型 · 本地构建",
+      "posterPosition": "50% 63%",
+      "question": "树荫下，为什么落着一地小太阳？",
+      "hook": "控制叶隙直径和日食遮挡比例，让树叶之间的天然针孔把太阳的形状投到整片地面。",
+      "payoff": "每一道足够小的叶隙都是一台针孔相机：它把太阳倒立成像，所以日偏食时，平日的圆形光斑会一起变成月牙。",
+      "topicLabel": "几何光学",
+      "translations": {
+        "en": {
+          "title": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
+          "posterTitle": "Why is the shade beneath a tree filled with tiny Suns?",
+          "posterHook": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents.",
+          "posterSource": "Canvas 2D · Pinhole-projection model · Local build",
+          "question": "Why is the shade beneath a tree filled with tiny Suns?",
+          "hook": "Control leaf-gap diameter and eclipse coverage, turning the canopy’s natural pinholes into a field of projected solar images.",
+          "payoff": "Every sufficiently small leaf gap is a pinhole camera that forms an inverted image of the Sun. During a partial eclipse, ordinary round patches all become crescents.",
+          "topicLabel": "Geometrical optics"
+        }
+      },
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "difficulty": "intro",
+      "lane": "structure",
+      "renderer": "pinhole-canopy",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 300,
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "related": [
+        "double-slit",
+        "pool-caustics"
+      ],
+      "sources": [
+        {
+          "label": "NASA Science — 日食观测指南",
+          "labelEn": "NASA Science — Solar Eclipse Guide",
+          "url": "https://science.nasa.gov/feature/solar-eclipse-guide/"
+        },
+        {
+          "label": "NASA 今日天文图 — 日食树影",
+          "labelEn": "NASA Astronomy Picture of the Day — The Eclipse Tree",
+          "url": "https://apod.nasa.gov/apod/ap001225.html"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "poster"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+      "releaseId": "oss-6ff3221d",
+      "id": "pinhole-canopy",
+      "state": "public",
+      "title": "缩小一片叶隙，让树荫落满一百个太阳",
+      "titleEn": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
+      "poster": "/assets/posters/pinhole-canopy.webp",
+      "posterMobile": "/assets/posters/mobile/pinhole-canopy.webp",
+      "posterDesktop": "/assets/posters/desktop/pinhole-canopy.webp",
+      "posterHook": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
+      "posterHookEn": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents.",
+      "question": "树荫下，为什么落着一地小太阳？",
+      "questionEn": "Why is the shade beneath a tree filled with tiny Suns?",
+      "topicLabel": "几何光学",
+      "topicLabelEn": "Geometrical optics",
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ffd166"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+      "releaseId": "oss-6ff3221d",
+      "id": "pinhole-canopy",
+      "state": "public",
+      "title": "缩小一片叶隙，让树荫落满一百个太阳",
+      "titleEn": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
+      "poster": "/assets/posters/pinhole-canopy.webp",
+      "posterMobile": "/assets/posters/mobile/pinhole-canopy.webp",
+      "posterDesktop": "/assets/posters/desktop/pinhole-canopy.webp",
+      "posterHook": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
+      "posterHookEn": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents.",
+      "question": "树荫下，为什么落着一地小太阳？",
+      "questionEn": "Why is the shade beneath a tree filled with tiny Suns?",
+      "topicLabel": "几何光学",
+      "topicLabelEn": "Geometrical optics",
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "hook": "控制叶隙直径和日食遮挡比例，让树叶之间的天然针孔把太阳的形状投到整片地面。",
+      "hookEn": "Control leaf-gap diameter and eclipse coverage, turning the canopy’s natural pinholes into a field of projected solar images.",
+      "payoff": "每一道足够小的叶隙都是一台针孔相机：它把太阳倒立成像，所以日偏食时，平日的圆形光斑会一起变成月牙。",
+      "payoffEn": "Every sufficiently small leaf gap is a pinhole camera that forms an inverted image of the Sun. During a partial eclipse, ordinary round patches all become crescents.",
+      "related": [
+        "double-slit",
+        "pool-caustics"
+      ],
+      "sources": [
+        {
+          "label": "NASA Science — 日食观测指南",
+          "labelEn": "NASA Science — Solar Eclipse Guide",
+          "url": "https://science.nasa.gov/feature/solar-eclipse-guide/"
+        },
+        {
+          "label": "NASA 今日天文图 — 日食树影",
+          "labelEn": "NASA Astronomy Picture of the Day — The Eclipse Tree",
+          "url": "https://apod.nasa.gov/apod/ap001225.html"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "pinhole-canopy",
+      "duration": 300,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+      "releaseId": "oss-6ff3221d",
+      "text": "缩小一片叶隙，让树荫落满一百个太阳 Narrow one leaf gap and scatter a hundred tiny Suns across the ground 树荫下，为什么落着一地小太阳？ Why is the shade beneath a tree filled with tiny Suns? 让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。 Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents. 几何光学 Geometrical optics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+        "releaseId": "oss-6ff3221d",
+        "id": "pinhole-canopy",
+        "state": "public",
+        "title": "缩小一片叶隙，让树荫落满一百个太阳",
+        "titleEn": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
+        "poster": "/assets/posters/pinhole-canopy.webp",
+        "posterMobile": "/assets/posters/mobile/pinhole-canopy.webp",
+        "posterDesktop": "/assets/posters/desktop/pinhole-canopy.webp",
+        "posterHook": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
+        "posterHookEn": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents.",
+        "question": "树荫下，为什么落着一地小太阳？",
+        "questionEn": "Why is the shade beneath a tree filled with tiny Suns?",
+        "topicLabel": "几何光学",
+        "topicLabelEn": "Geometrical optics",
+        "primaryCategoryId": "light-magic",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#ffd166"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+      "releaseId": "oss-6ff3221d",
+      "id": "pinhole-canopy",
+      "renderer": "pinhole-canopy",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "缩小一片叶隙，让树荫落满一百个太阳",
+        "en": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground"
+      },
+      "summary": {
+        "zh": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
+        "en": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "pool-caustics",
+      "nextWorldId": "lightning-lab",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

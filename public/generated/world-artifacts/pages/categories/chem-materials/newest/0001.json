@@ -1,0 +1,30 @@
+[
+  {
+    "id": "chemical-garden",
+    "index": "08",
+    "poster": "/assets/posters/chemical-garden.webp",
+    "posterMobile": "/assets/posters/mobile/chemical-garden.webp",
+    "posterDesktop": "/assets/posters/desktop/chemical-garden.webp",
+    "title": "金属盐在溶液中长成矿物花园",
+    "posterTitle": "金属盐落下，矿物花园开始生长",
+    "posterHook": "沉淀膜在渗透压下膨胀、破裂，有时反复重封，把无生命的盐长成彩色中空管。",
+    "posterPosition": "50% 50%",
+    "question": "一颗金属盐落进溶液，为什么会像植物一样向上生长？",
+    "topicLabel": "化学自组织 · 沉淀与渗透",
+    "primaryCategoryId": "chem-materials",
+    "renderer": "chemical-garden",
+    "runtime": "scene-3d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#63ddbd",
+    "translations": {
+      "en": {
+        "title": "Metal salts grow into a mineral garden in solution",
+        "posterTitle": "Drop a Metal Salt. Watch a Mineral Garden Grow.",
+        "posterHook": "Osmotic pressure swells and ruptures a precipitate membrane; sometimes it reseals, growing lifeless salt into colored hollow tubes.",
+        "question": "Why can a metal salt dropped into solution grow upward like a plant?",
+        "topicLabel": "Chemical self-organization · Precipitation and osmosis"
+      }
+    }
+  }
+]

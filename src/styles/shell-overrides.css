@@ -1,0 +1,709 @@
+/* Experience shell next-world preview and responsive discovery helpers. */
+html.experience-shell-active,
+body.experience-shell-active {
+  background: #080a0a;
+}
+
+.experience-discovery-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.experience-random-link {
+  flex: 0 0 44px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(5, 8, 10, 0.48);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.experience-random-link:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.experience-random-link:focus-visible {
+  outline: 2px solid var(--world-accent, #e8c27a);
+  outline-offset: 2px;
+}
+
+.experience-random-link > svg {
+  width: 20px;
+  height: 20px;
+}
+
+.experience-next-link {
+  --next-world-accent: #e8c27a;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 18px;
+  width: auto;
+  max-width: min(310px, 34vw);
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  padding: 4px 11px 4px 5px;
+  overflow: hidden;
+  color: rgba(255, 250, 240, 0.94);
+  border: 1px solid color-mix(in srgb, var(--next-world-accent) 62%, rgba(255, 255, 255, 0.28));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--next-world-accent) 12%, rgba(5, 8, 10, 0.78));
+  box-shadow:
+    0 8px 26px rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.08);
+  opacity: 1;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.82);
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.experience-next-link:hover {
+  border-color: color-mix(in srgb, var(--next-world-accent) 82%, white);
+  background: color-mix(in srgb, var(--next-world-accent) 18%, rgba(5, 8, 10, 0.82));
+  transform: translateY(-1px);
+}
+
+.experience-next-link:focus-visible {
+  outline: 2px solid var(--next-world-accent);
+  outline-offset: 2px;
+}
+
+.experience-next-thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--next-world-accent) 54%, rgba(255, 255, 255, 0.24));
+  border-radius: 50%;
+  opacity: 0.82;
+}
+
+.experience-next-link > .experience-next-copy {
+  display: flex;
+  min-width: 0;
+  max-width: 210px;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.experience-next-copy small,
+.experience-next-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.experience-next-copy small {
+  color: color-mix(in srgb, var(--next-world-accent) 74%, white);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.experience-next-copy strong {
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.experience-next-title-short {
+  display: none;
+}
+
+.experience-next-link > svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--next-world-accent);
+}
+
+.experience-mobile-toolbar {
+  display: none;
+}
+
+/* Immersive restore lives in the header DOM, but the control is not a first-row tool. */
+.experience-header-actions > .experience-overlay-toggle {
+  display: none;
+}
+
+.experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-overlay-toggle {
+  display: inline-flex;
+}
+
+.experience-more-layer {
+  position: fixed;
+  z-index: 70;
+  inset: 0;
+  display: grid;
+  align-items: end;
+  color: #f8f4ec;
+}
+
+.experience-more-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(2, 4, 5, 0.58);
+  backdrop-filter: blur(8px);
+  cursor: default;
+  animation: experience-more-fade 180ms ease-out both;
+}
+
+.experience-more-sheet {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 520px);
+  max-height: min(70dvh, 440px);
+  margin-inline: auto;
+  padding:
+    12px
+    max(16px, env(safe-area-inset-right, 0px))
+    max(16px, env(safe-area-inset-bottom, 0px))
+    max(16px, env(safe-area-inset-left, 0px));
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background:
+    radial-gradient(circle at 82% 0%, color-mix(in srgb, var(--world-accent) 13%, transparent), transparent 36%),
+    rgba(9, 12, 13, 0.96);
+  box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.44);
+  overscroll-behavior: contain;
+  animation: experience-more-rise 240ms cubic-bezier(.2, .8, .2, 1) both;
+}
+
+.experience-more-heading {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.experience-more-heading h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.experience-more-heading button {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  padding: 0;
+  color: rgba(248, 244, 236, 0.76);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.experience-more-heading button svg {
+  width: 19px;
+  height: 19px;
+}
+
+.experience-more-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.experience-more-action {
+  display: flex;
+  min-width: 0;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  color: rgba(248, 244, 236, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+}
+
+.experience-more-action:hover,
+.experience-more-action:focus-visible,
+.experience-more-action[aria-pressed='true'] {
+  color: #fffaf0;
+  border-color: color-mix(in srgb, var(--world-accent) 58%, rgba(255, 255, 255, 0.22));
+  background: color-mix(in srgb, var(--world-accent) 10%, rgba(255, 255, 255, 0.06));
+}
+
+.experience-more-action:focus-visible,
+.experience-more-heading button:focus-visible {
+  outline: 2px solid var(--world-accent, #e8c27a);
+  outline-offset: 2px;
+}
+
+.experience-more-action svg {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 auto;
+}
+
+.experience-more-action span {
+  min-width: 0;
+}
+
+.experience-more-random {
+  grid-column: 1 / -1;
+  justify-content: center;
+}
+
+.experience-more-locale .locale-toggle {
+  width: 21px;
+  min-width: 21px;
+  height: 21px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+}
+
+@media (min-width: 721px) {
+  .experience-more-action.experience-more-phone-only {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .experience-next-link {
+    max-width: 190px;
+  }
+}
+
+/* Keep the discovery controls out of the crowded first row on small tablets
+ * as well as phones. The actual controls stay unchanged; only their shared
+ * navigation band moves below the toolbar. */
+@media (min-width: 721px) and (max-width: 820px) {
+  .experience-page,
+  .experience-stage {
+    --experience-header-h: 56px;
+    --experience-safe-top: calc(
+      56px + env(safe-area-inset-top, 0px) + 54px
+    );
+  }
+
+  .experience-header {
+    height: calc(56px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .experience-discovery-nav {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 14px;
+  }
+
+  .experience-page[data-panel-open='true'] .experience-discovery-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .experience-page,
+  .experience-stage {
+    --experience-header-h: 60px;
+    --experience-safe-top: calc(
+      60px + env(safe-area-inset-top, 0px) + 54px
+    );
+  }
+
+  .experience-header {
+    height: calc(60px + env(safe-area-inset-top, 0px));
+    padding:
+      env(safe-area-inset-top, 0px)
+      max(8px, env(safe-area-inset-right, 0px))
+      0
+      max(8px, env(safe-area-inset-left, 0px));
+  }
+
+  .experience-header .experience-brand span {
+    display: none;
+  }
+
+  /* 桌面工具在手机端改由 compact toolbar 承接；资料/问问/沉浸进入更多。 */
+  .experience-header-actions .locale-toggle {
+    display: none;
+  }
+
+  .experience-header-actions > .site-bgm-toggle,
+  .experience-header-actions > .experience-info-button,
+  .experience-header-actions > .experience-ask-button,
+  .experience-header-actions > .experience-overlay-toggle {
+    display: none;
+  }
+
+  .experience-header-actions > .experience-more-button {
+    display: inline-flex;
+  }
+
+  /* 沉浸态退回专用恢复/播放/声音角标，不显示分享或更多。 */
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions > .site-bgm-toggle,
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-overlay-toggle,
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-cinema-toggle {
+    display: inline-flex;
+  }
+
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-share-button,
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-more-button {
+    display: none;
+  }
+
+  /* 「下一世界」使用独立导航带；点题铭牌从它下方的内容安全区开始。 */
+  .experience-discovery-nav {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 8px;
+  }
+
+  /* 随机探索进入「更多」；第二行只留下有编辑连续性的下一世界。 */
+  .experience-discovery-nav .experience-random-link {
+    display: none;
+  }
+
+  /* 故事正在讲述时，下一世界暂隐，让字幕和主画面独占顶部。 */
+  .experience-page:has(.guide-tour) .experience-discovery-nav {
+    display: none;
+  }
+
+  /* 故事与 Freebar 互斥：GuideTour 在场时不显示自由探索底栏。 */
+  .experience-page:has(.guide-tour) .experience-freebar {
+    display: none !important;
+  }
+
+  .experience-page:has(.guide-tour),
+  .experience-page:has(.guide-tour) .experience-stage {
+    --experience-safe-top: calc(
+      60px + env(safe-area-inset-top, 0px) + 10px
+    );
+  }
+
+  .experience-next-link {
+    grid-template-columns: 28px minmax(0, 1fr) 16px;
+    width: auto;
+    max-width: min(54vw, 220px);
+    min-height: 40px;
+    min-width: 0;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+  }
+
+  .experience-next-thumb {
+    display: block;
+    width: 28px;
+    height: 28px;
+  }
+
+  .experience-next-copy small {
+    font-size: 9px;
+  }
+
+  .experience-next-copy strong {
+    font-size: 11.5px;
+  }
+
+  .experience-next-title-full {
+    display: block;
+  }
+
+  .experience-next-title-short {
+    display: none;
+  }
+
+  .experience-next-link > svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ⓘ 抽屉 / AI 对话 / 分享卡打开时，悬浮卡暂时退场，不与面板争顶右 */
+  .experience-page[data-panel-open='true'] .experience-discovery-nav {
+    display: none;
+  }
+
+  /* Shared mobile chip strip: one row, edge bleed, and a visible scroll affordance. */
+  .chip-scroller {
+    --chip-scroller-bleed: 7.5vw;
+    --chip-scroller-fade: 28px;
+    flex-wrap: nowrap;
+    width: calc(100% + var(--chip-scroller-bleed));
+    max-width: none;
+    margin-inline-end: calc(-1 * var(--chip-scroller-bleed));
+    padding-top: 2px;
+    padding-right: calc(var(--chip-scroller-bleed) + var(--chip-scroller-fade));
+    padding-bottom: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--chip-scroller-fade)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - var(--chip-scroller-fade)),
+      transparent 100%
+    );
+    scroll-padding-inline: 2px calc(var(--chip-scroller-bleed) + var(--chip-scroller-fade));
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .chip-scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip-scroller > * {
+    flex: 0 0 auto;
+    scroll-margin-inline: 2px;
+    scroll-snap-align: start;
+    white-space: nowrap;
+  }
+
+  .chip-scroller > :focus-visible {
+    outline: 2px solid var(--category-accent, var(--model-accent, var(--ink, #19231f)));
+    outline-offset: 2px;
+  }
+
+}
+
+@keyframes experience-more-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes experience-more-rise {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 359px) {
+  /* 超窄屏：悬浮卡退回「短标题」形态，去掉引导小字，不占满舞台 */
+  .experience-next-link {
+    max-width: 62vw;
+    border-color: color-mix(in srgb, var(--next-world-accent) 82%, white);
+    background: color-mix(in srgb, var(--next-world-accent) 18%, rgba(5, 8, 10, 0.86));
+  }
+
+  .experience-next-copy small {
+    display: none;
+  }
+
+  .experience-next-title-full {
+    display: none;
+  }
+
+  .experience-next-title-short {
+    display: block;
+  }
+}
+
+/* The original mobile toolbar composes navigation and primary utilities as one
+ * compact row. The current action sheet remains the secondary-action surface. */
+@media (max-width: 720px) {
+  .experience-page,
+  .experience-stage {
+    --experience-header-h: 64px;
+    --experience-safe-top: calc(64px + env(safe-area-inset-top, 0px) + 10px);
+  }
+
+  .experience-header {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 4px;
+    height: calc(64px + env(safe-area-inset-top, 0px));
+  }
+
+  .experience-header .experience-brand {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .experience-header .experience-brand:hover,
+  .experience-header .experience-brand:focus-visible {
+    background: transparent;
+  }
+
+  .experience-header-actions--desktop,
+  .experience-discovery-nav {
+    display: none;
+  }
+
+  .experience-mobile-toolbar {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  .experience-mobile-next-link {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 16px;
+    min-width: 0;
+    max-width: 220px;
+    height: 54px;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 9px 4px 5px;
+    overflow: hidden;
+    color: rgba(246, 247, 248, 0.94);
+    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgba(210, 215, 222, 0.22));
+    border-radius: 18px;
+    background: color-mix(in srgb, var(--next-world-accent) 7%, rgba(16, 18, 22, 0.76));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.84);
+    backdrop-filter: blur(14px) saturate(0.75);
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+
+  .experience-mobile-next-link:hover,
+  .experience-mobile-next-link:focus-visible {
+    border-color: color-mix(in srgb, var(--next-world-accent) 42%, rgba(232, 235, 240, 0.38));
+    background: color-mix(in srgb, var(--next-world-accent) 10%, rgba(24, 27, 32, 0.86));
+  }
+
+  .experience-mobile-next-link:focus-visible,
+  .experience-mobile-toolbar .experience-header-icon:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--next-world-accent) 42%, rgba(244, 246, 249, 0.88));
+    outline-offset: 2px;
+  }
+
+  .experience-mobile-next-thumb {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgba(225, 229, 235, 0.2));
+    border-radius: 50%;
+    filter: saturate(0.55);
+    opacity: 0.82;
+  }
+
+  .experience-mobile-next-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+  }
+
+  .experience-mobile-next-copy small,
+  .experience-mobile-next-copy strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .experience-mobile-next-copy small {
+    color: color-mix(in srgb, var(--next-world-accent) 36%, rgba(220, 224, 230, 0.62));
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .experience-mobile-next-copy strong {
+    color: rgba(248, 249, 250, 0.94);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .experience-mobile-next-arrow {
+    color: color-mix(in srgb, var(--next-world-accent) 54%, rgba(232, 235, 240, 0.78));
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .experience-mobile-toolbar > .experience-header-icon {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    color: rgba(224, 228, 233, 0.78);
+    background: transparent;
+    opacity: 1;
+  }
+
+  .experience-mobile-toolbar > .experience-header-icon:hover,
+  .experience-mobile-toolbar > .experience-header-icon:focus-visible,
+  .experience-mobile-toolbar > .experience-header-icon[aria-pressed='true'],
+  .experience-mobile-toolbar > .experience-header-icon[aria-expanded='true'] {
+    color: rgba(250, 251, 252, 0.96);
+    background: rgba(125, 132, 141, 0.16);
+  }
+
+  .experience-mobile-more-button svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .experience-page:has(.guide-tour),
+  .experience-page:has(.guide-tour) .experience-stage {
+    --experience-safe-top: calc(64px + env(safe-area-inset-top, 0px) + 10px);
+  }
+
+  .experience-page[data-overlays-hidden='true'] .experience-mobile-toolbar {
+    display: none;
+  }
+
+  .experience-page[data-overlays-hidden='true'] .experience-header-actions--desktop {
+    display: flex;
+  }
+}
+
+@media (max-width: 359px) {
+  .experience-header {
+    gap: 2px;
+    padding-right: max(4px, env(safe-area-inset-right, 0px));
+    padding-left: max(4px, env(safe-area-inset-left, 0px));
+  }
+
+  .experience-mobile-toolbar {
+    gap: 0;
+  }
+
+  .experience-mobile-next-link {
+    grid-template-columns: 28px minmax(0, 1fr) 14px;
+    gap: 5px;
+    padding-right: 6px;
+  }
+
+  .experience-mobile-next-copy small {
+    display: none;
+  }
+
+  .experience-mobile-next-copy strong {
+    font-size: 12px;
+  }
+
+  .experience-mobile-next-arrow {
+    font-size: 15px;
+  }
+}

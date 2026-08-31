@@ -1,0 +1,1141 @@
+/* Neural Playground */
+.neural-playground-experience{--neural-accent: #4dabf7;
+  --neural-orange: #ffa94d;
+  --neural-miss: #ff6b6b;
+  --neural-mono: 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
+  --neural-border: rgba(148, 184, 255, 0.14);
+  --neural-glass: rgba(7, 11, 20, 0.62);
+  background: #020409;
+  --world-accent: var(--neural-accent);
+  --freebar-accent: var(--neural-accent);
+  --experience-panel-surface: linear-gradient(180deg, rgba(10, 16, 28, 0.62), rgba(2, 4, 9, 0.60));
+  --experience-panel-border: rgba(77, 171, 247, 0.22);
+  --experience-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+}
+
+.neural-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.neural-nebula {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 45% at 72% 18%, rgba(77, 171, 247, 0.1), transparent 62%),
+    radial-gradient(45% 40% at 18% 82%, rgba(154, 107, 255, 0.08), transparent 60%),
+    radial-gradient(38% 32% at 45% 55%, rgba(255, 169, 77, 0.05), transparent 66%);
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.6);
+}
+
+.neural-plaque {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  max-width: min(340px, 36vw);
+  pointer-events: none;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+
+.neural-plaque h1 {
+  margin: 0;
+  color: #eef4ff;
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 700;
+}
+
+.neural-plaque p {
+  margin: 6px 0 0;
+  color: rgba(220, 232, 255, 0.72);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* 右上角读数：避开底栏 freebar，避免与按钮叠层 */
+.neural-readout {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  right: max(16px, env(safe-area-inset-right, 0px));
+  left: auto;
+  bottom: auto;
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(148, 184, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(6, 10, 18, 0.78);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.neural-readout small {
+  display: block;
+  color: rgba(200, 220, 255, 0.5);
+  font-size: 10px;
+}
+
+.neural-readout strong {
+  color: #dcecff;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* freebar layout only; material from --experience-panel-* */
+.neural-freebar-shell .experience-freebar-main,
+.neural-freebar {
+  width: min(720px, 100%);
+  max-height: none;
+  overflow: visible;
+}
+
+.neural-freebar-shell .experience-freebar-primary {
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.neural-freebar-datasets {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  justify-content: flex-start;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.neural-freebar-datasets::-webkit-scrollbar {
+  display: none;
+}
+
+.neural-freebar-datasets button {
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 0 12px;
+  color: rgba(230, 240, 255, 0.88);
+  border: 1px solid rgba(148, 184, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.neural-freebar-datasets button.is-active {
+  color: #061018;
+  border-color: var(--neural-accent);
+  background: var(--neural-accent);
+  font-weight: 600;
+}
+
+.neural-freebar-tools {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.neural-freebar-tools button.is-active {
+  border-color: rgba(77, 171, 247, 0.55);
+  background: rgba(77, 171, 247, 0.16);
+}
+
+/* 高级参数：默认关闭，从 freebar 打开；避开右上读数与底栏 */
+.neural-panel {
+  position: absolute;
+  z-index: 9;
+  top: calc(var(--experience-safe-top, 78px) + 56px);
+  right: max(16px, env(safe-area-inset-right, 0px));
+  bottom: max(108px, calc(env(safe-area-inset-bottom, 0px) + 96px));
+  left: auto;
+  display: flex;
+  flex-direction: column;
+  width: min(340px, calc(100vw - 28px));
+  max-height: none;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--neural-border);
+  border-radius: 18px;
+  background: rgba(7, 11, 20, 0.92);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+}
+
+.neural-panel-toggle {
+  display: none;
+}
+
+.neural-panel-body {
+  flex: 1;
+  min-height: 0;
+  padding: 18px 18px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 184, 255, 0.22) transparent;
+}
+
+.neural-panel-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.neural-panel-body::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgba(148, 184, 255, 0.18);
+}
+
+.neural-panel-header span {
+  color: #eef4ff;
+  letter-spacing: 0.05em;
+}
+
+.neural-panel-header small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(190, 212, 255, 0.45);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.neural-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.neural-panel-close {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  place-items: center;
+  color: rgba(230, 240, 255, 0.8);
+  border: 1px solid rgba(148, 184, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+}
+
+.neural-panel-close:hover {
+  border-color: rgba(148, 184, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* 面板内次要按钮：横排不重叠 */
+.neural-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.neural-buttons button {
+  display: inline-flex;
+  min-height: 34px;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 12px;
+  color: rgba(236, 244, 255, 0.9);
+  border: 1px solid rgba(148, 184, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.neural-buttons button:hover:not(:disabled) {
+  border-color: rgba(148, 184, 255, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.neural-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 面板分节 */
+.neural-section {
+  margin-bottom: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(148, 184, 255, 0.09);
+}
+
+.neural-section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  color: rgba(214, 230, 255, 0.82);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.neural-section-label svg {
+  width: 13px;
+  height: 13px;
+  color: var(--neural-accent);
+}
+
+.neural-section-note {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 芯片按钮（预设 / 特征 / 隐藏层）—— 禁止浏览器默认白底 */
+.neural-presets > button,
+.neural-features > button,
+.neural-layer-actions > button,
+.neural-chip-rail > button,
+.neural-chip {
+  min-height: 30px;
+  padding: 0 12px;
+  color: rgba(236, 244, 255, 0.88);
+  border: 1px solid rgba(148, 184, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.neural-features > button,
+.neural-features .neural-chip {
+  font-family: var(--neural-mono);
+  font-size: 10.5px;
+}
+
+.neural-presets > button:hover,
+.neural-features > button:hover,
+.neural-layer-actions > button:hover,
+.neural-chip:hover {
+  color: #fff;
+  border-color: rgba(148, 184, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.neural-presets > button.is-active,
+.neural-features > button.is-active,
+.neural-layer-actions > button.is-active,
+.neural-chip.is-active {
+  color: #06101f;
+  border-color: transparent;
+  background: var(--neural-accent);
+  box-shadow: 0 0 14px rgba(77, 171, 247, 0.35);
+  font-weight: 600;
+}
+
+/* 数据集选择 */
+.neural-datasets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.neural-dataset {
+  display: flex;
+  min-height: 74px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 4px 7px;
+  color: rgba(255, 255, 255, 0.62);
+  border: 1px solid var(--neural-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.neural-dataset:hover {
+  color: #fff;
+  border-color: rgba(148, 184, 255, 0.38);
+}
+
+.neural-dataset.is-active {
+  color: #eaf3ff;
+  border-color: var(--neural-accent);
+  background: rgba(77, 171, 247, 0.12);
+  box-shadow: 0 0 14px rgba(77, 171, 247, 0.22), inset 0 0 12px rgba(77, 171, 247, 0.08);
+}
+
+.neural-dataset-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: rgba(3, 6, 13, 0.7);
+}
+
+.neural-regen svg {
+  width: 22px;
+  height: 22px;
+  color: rgba(148, 184, 255, 0.8);
+}
+
+/* 自定义滑块 */
+.neural-slider-block {
+  margin-top: 12px;
+}
+
+.neural-slider-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.neural-slider-row span {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+}
+
+.neural-slider-row strong {
+  color: #e8f1ff;
+  font-family: var(--neural-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.neural-slider {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.neural-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(77, 171, 247, 0.55), rgba(77, 171, 247, 0.14));
+}
+
+.neural-slider::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border: 2px solid var(--neural-accent);
+  border-radius: 50%;
+  background: #eaf3ff;
+  box-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
+  -webkit-appearance: none;
+  transition: transform 120ms ease;
+}
+
+.neural-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.neural-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(77, 171, 247, 0.55), rgba(77, 171, 247, 0.14));
+}
+
+.neural-slider::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--neural-accent);
+  border-radius: 50%;
+  background: #eaf3ff;
+  box-shadow: 0 0 10px rgba(77, 171, 247, 0.8);
+}
+
+/* 分段选择器 */
+.neural-seg {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--neural-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.neural-seg button {
+  flex: 1;
+  min-height: 32px;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--neural-mono);
+  font-size: 11px;
+  transition: color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.neural-seg button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.neural-seg button.is-active {
+  color: #06101f;
+  background: var(--neural-accent);
+  box-shadow: 0 0 14px rgba(77, 171, 247, 0.4);
+  font-weight: 600;
+}
+
+/* 隐藏层编辑 */
+.neural-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.neural-layer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--neural-border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.neural-layer-name {
+  min-width: 44px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+}
+
+.neural-step-btn {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  place-items: center;
+  color: #dcebff;
+  border: 1px solid rgba(148, 184, 255, 0.25);
+  border-radius: 7px;
+  background: rgba(77, 171, 247, 0.08);
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease;
+}
+
+.neural-step-btn:hover:not(:disabled) {
+  border-color: var(--neural-accent);
+  background: rgba(77, 171, 247, 0.2);
+}
+
+.neural-step-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.neural-step-btn svg {
+  width: 11px;
+  height: 11px;
+}
+
+.neural-layer-size {
+  width: 18px;
+  color: #f2f7ff;
+  font-family: var(--neural-mono);
+  font-size: 13px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.neural-layer-dots {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.neural-layer-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--neural-accent);
+  box-shadow: 0 0 5px rgba(77, 171, 247, 0.7);
+}
+
+.neural-layer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.neural-layer-actions button {
+  display: inline-flex;
+  min-height: 32px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--neural-border);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 11px;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+
+.neural-layer-actions button:hover:not(:disabled) {
+  color: #fff;
+  border-color: rgba(148, 184, 255, 0.4);
+}
+
+.neural-layer-actions button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.neural-layer-actions svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* 主区域：预留底栏 freebar 高度，避免统计条与按钮叠层 */
+.neural-main {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding:
+    calc(var(--experience-safe-top, 78px) + 8px)
+    20px
+    max(132px, calc(env(safe-area-inset-bottom, 0px) + 118px))
+    20px;
+}
+
+.neural-stage {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.neural-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--neural-border);
+  border-radius: 18px;
+  background: var(--neural-glass);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+}
+
+.neural-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 10px;
+}
+
+.neural-card-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: rgba(234, 242, 255, 0.92);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.neural-card-header h3 svg {
+  width: 14px;
+  height: 14px;
+  color: var(--neural-accent);
+}
+
+.neural-hint {
+  overflow: hidden;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.38);
+  font-family: var(--neural-mono);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.neural-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.neural-legend + .neural-hint {
+  margin-left: 0;
+}
+
+.neural-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.neural-legend i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.neural-leg-dot.is-blue {
+  background: var(--neural-accent);
+  box-shadow: 0 0 5px rgba(77, 171, 247, 0.8);
+}
+
+.neural-leg-dot.is-orange {
+  background: var(--neural-orange);
+  box-shadow: 0 0 5px rgba(255, 169, 77, 0.8);
+}
+
+.neural-leg-ring {
+  box-sizing: border-box;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  background: rgba(4, 8, 16, 0.6);
+}
+
+.neural-leg-miss {
+  box-sizing: border-box;
+  border: 1.5px solid var(--neural-miss);
+  box-shadow: 0 0 5px rgba(255, 107, 107, 0.6);
+}
+
+.neural-leg-line {
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.neural-leg-line.is-train {
+  background: #6fb6ff;
+  box-shadow: 0 0 6px rgba(111, 182, 255, 0.8);
+}
+
+.neural-leg-line.is-test {
+  background: var(--neural-orange);
+  box-shadow: 0 0 6px rgba(255, 169, 77, 0.8);
+}
+
+.neural-probe {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 8px;
+  padding: 7px 10px;
+  border: 1px solid rgba(148, 184, 255, 0.12);
+  border-radius: 10px;
+  background: rgba(77, 171, 247, 0.06);
+}
+
+.neural-probe-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--neural-mono);
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.neural-probe-chip.is-orange {
+  color: #241304;
+  background: var(--neural-orange);
+}
+
+.neural-probe-chip.is-blue {
+  color: #06121f;
+  background: var(--neural-accent);
+}
+
+.neural-probe-detail {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.neural-canvas-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  margin: 0 10px 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  background: rgba(3, 6, 14, 0.6);
+}
+
+.neural-canvas-wrap canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.neural-boundary-canvas {
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.neural-graph-canvas {
+  cursor: pointer;
+}
+
+/* 底部：读数 + 损失曲线（高度收紧，给 freebar 让路） */
+.neural-bottom {
+  display: flex;
+  flex-shrink: 0;
+  min-width: 0;
+  gap: 12px;
+  height: 128px;
+}
+
+.neural-stats {
+  display: grid;
+  flex: 1.2;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.neural-stat {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 13px;
+  border: 1px solid var(--neural-border);
+  border-radius: 14px;
+  background: var(--neural-glass);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+}
+
+.neural-stat small {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.neural-stat strong {
+  overflow: hidden;
+  max-width: 100%;
+  color: #f2f7ff;
+  font-family: var(--neural-mono);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.neural-loss-card {
+  flex: 1;
+}
+
+@media (max-width: 1250px) and (min-width: 901px) {
+  .neural-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .neural-stat strong {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .neural-plaque {
+    max-width: min(260px, calc(100vw - 140px));
+  }
+
+  .neural-readout {
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .neural-readout strong {
+    font-size: 12px;
+  }
+
+  .neural-freebar-shell .experience-freebar-main,
+  .neural-freebar {
+    width: 100%;
+  }
+
+  .neural-main {
+    gap: 10px;
+    padding:
+      calc(var(--experience-safe-top, 78px) + 44px)
+      10px
+      max(160px, calc(env(safe-area-inset-bottom, 0px) + 148px))
+      10px;
+  }
+
+  .neural-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .neural-card-header {
+    gap: 8px;
+    padding: 10px 12px 8px;
+  }
+
+  .neural-hint {
+    display: none;
+  }
+
+  .neural-legend {
+    gap: 8px;
+    font-size: 9px;
+  }
+
+  .neural-probe {
+    margin: 0 12px 6px;
+    padding: 6px 8px;
+  }
+
+  .neural-probe-detail {
+    display: none;
+  }
+
+  .neural-bottom {
+    height: auto;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .neural-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .neural-stat {
+    padding: 8px 10px;
+  }
+
+  .neural-stat strong {
+    font-size: 13px;
+  }
+
+  .neural-loss-card {
+    height: 118px;
+    flex: none;
+  }
+
+  .neural-credit {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  /* 给标题让出独立的内容带，避免压住第一张决策边界卡片。 */
+  .neural-plaque {
+    max-width: min(230px, calc(100vw - 140px));
+  }
+
+  .neural-plaque p {
+    display: none;
+  }
+
+  .neural-main {
+    padding-top: calc(var(--experience-safe-top, 78px) + 92px);
+  }
+}
+
+.experience-page[data-overlays-hidden='true'] .tides-hud,
+.experience-page[data-overlays-hidden='true'] .eclipses-hud,
+.experience-page[data-overlays-hidden='true'] .neural-hud {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+/* play chrome: shared .experience-freebar-play */
+/* 样板托盘：Tab 行（含重置/故事）+ 一行横滑内容 + 可选滑杆行 */
+.neural-freebar-shell .experience-freebar-secondary {
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.neural-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.neural-tray-head {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.neural-tool-tabs {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.neural-tray-tools {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 一行横滑轨：数据集+预设 / 特征+层 / 激活+速度 */
+.neural-chip-rail,
+.neural-train-rail,
+.neural-freebar-datasets,
+.neural-presets,
+.neural-features {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 1px 2px;
+}
+
+.neural-chip-rail::-webkit-scrollbar,
+.neural-train-rail::-webkit-scrollbar,
+.neural-freebar-datasets::-webkit-scrollbar,
+.neural-presets::-webkit-scrollbar,
+.neural-features::-webkit-scrollbar {
+  display: none;
+}
+
+.neural-chip-rail > *,
+.neural-train-rail > *,
+.neural-freebar-datasets > *,
+.neural-presets > *,
+.neural-features > * {
+  flex: 0 0 auto;
+}
+
+.neural-train-rail .neural-seg {
+  flex: 0 0 auto;
+}
+
+.neural-tray-field {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.neural-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.neural-layers {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.neural-layer-row {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+/*
+ * The shared chip baseline intentionally makes semantic groups compact, but
+ * its broad selectors otherwise win over this world's rails and leave the
+ * overflow visible. Keep each active tool group as a real touch rail.
+ */
+.neural-freebar-shell .experience-freebar-secondary {
+  touch-action: pan-x pan-y;
+}
+
+.neural-freebar-shell .experience-freebar-secondary .neural-chip-rail,
+.neural-freebar-shell .experience-freebar-secondary .neural-train-rail {
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  touch-action: pan-x;
+}
+
+.neural-freebar-shell .experience-freebar-secondary .neural-chip-rail > *,
+.neural-freebar-shell .experience-freebar-secondary .neural-train-rail > * {
+  flex: 0 0 auto;
+}
+
+@media (min-width: 721px) {
+  .neural-chip-rail,
+  .neural-train-rail {
+    justify-content: center;
+  }
+
+  .neural-tool-tabs {
+    flex: 0 1 auto;
+  }
+
+  .neural-tray-head {
+    justify-content: center;
+    gap: 12px;
+  }
+}

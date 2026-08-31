@@ -1,0 +1,1213 @@
+/**
+ * Freebar 共享基线（全站 · FREEBAR_STANDARD）
+ * 1) 结构：主行 + 可选托盘；桌面/手机共享状态与语义，允许响应式重排
+ * 2) 触控：主行末尾 disclosure 明确收展；滑块有可见 track 与中性白 thumb
+ * 3) 材质：与 GuideTour 共用 ExperiencePanel；本文件只负责几何和控件
+ * 4) 重播：FilmStrip +「故事」药丸，不是灯泡、下划线弱链或金底 CTA
+ * 5) 词汇：字段 / 操作组 / 提示统一使用 experience-freebar-* 类名
+ *
+ * 现行细则见 apps/docs/internal/shapeof-world/FREEBAR_STANDARD.md
+ */
+
+/* Story and free exploration stay mutually exclusive. App runtime has no
+   ExperienceShell, so hide the bar whenever GuideTour is mounted. */
+:has(.guide-tour) .experience-freebar {
+  display: none !important;
+}
+
+/* —— 统一 freebar 壳 —— */
+.experience-freebar {
+  position: absolute;
+  z-index: 8;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  padding:
+    6px
+    max(14px, env(safe-area-inset-right, 0px))
+    max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px))
+    max(14px, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  background: transparent;
+  pointer-events: none;
+}
+
+.experience-freebar > * {
+  pointer-events: auto;
+}
+
+.experience-freebar-main {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  /* 胶囊永远收紧包住内容，不是通栏大板；宽度由主行决定，托盘不撑宽 */
+  width: fit-content;
+  max-width: calc(100vw - 24px);
+  margin: 0 auto;
+  box-sizing: border-box;
+  /*
+   * Desktop exposes secondary content by default. Do not hide an unresolved
+   * overstuffed layout behind an inner scrollbar: the world must group it
+   * compactly (usually with FreebarTabs).
+   */
+  max-height: none;
+  overflow: visible;
+  /* 紧一点：底棚控制层，不是参数控制台 */
+  padding: 8px 10px;
+  color: var(--freebar-ink, rgba(248, 244, 236, 0.92));
+  border-width: 1px;
+  border-style: solid;
+  /* 背景、透明度、描边、模糊与阴影由 ExperiencePanel.css 统一。 */
+  text-shadow: var(--freebar-text-shadow, 0 1px 10px rgba(0, 0, 0, 0.45));
+  scrollbar-width: thin;
+}
+
+/*
+ * 统一播放 / 暂停：固定 40×40 图标钮（手机 38），世界不得再压成 28–34 小方块。
+ * 世界可换 --freebar-accent 着色，但几何保持一致。
+ */
+.experience-freebar-play,
+.experience-freebar .experience-freebar-play,
+.experience-freebar-primary > .experience-freebar-play,
+.experience-freebar-main > .experience-freebar-play,
+.experience-freebar button.experience-freebar-play {
+  display: grid !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+  max-width: 40px !important;
+  flex: 0 0 auto !important;
+  place-items: center;
+  gap: 0;
+  padding: 0 !important;
+  color: #12141a !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: var(--freebar-accent, var(--world-accent, #e8c27a)) !important;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--freebar-accent, var(--world-accent, #e8c27a)) 34%, transparent);
+  font-size: 0 !important;
+  line-height: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.experience-freebar-play:hover,
+.experience-freebar .experience-freebar-play:hover,
+.experience-freebar-primary > .experience-freebar-play:hover,
+.experience-freebar-main > .experience-freebar-play:hover,
+.experience-freebar button.experience-freebar-play:hover {
+  color: #12141a !important;
+  border: 0 !important;
+  background: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 86%,
+    white
+  ) !important;
+}
+
+.experience-freebar-play svg,
+.experience-freebar button.experience-freebar-play svg {
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 auto;
+}
+
+/* Play triangle is asymmetric — nudge right so it reads centered. */
+.experience-freebar-play[data-playing='false'] svg {
+  transform: translateX(0.5px);
+}
+
+/*
+ * 主行永远贴住胶囊底部：展开时参数托盘只向上长，播放/滑杆不会跳位。
+ * DOM 顺序仍然把主行放在托盘前，方便无 CSS/读屏按核心操作优先阅读；
+ * 视觉顺序由 flex order 调整。
+ */
+.experience-freebar-primary {
+  display: flex;
+  order: 3;
+  flex: 0 0 auto;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+/*
+ * L1 实体 / 工具轨：项目数量不占普通按钮预算，但自身必须保持一条可横扫的紧凑轨道。
+ * 它不换行、不把胶囊撑成按钮墙；鼠标滚轮/触控都可自然横移。
+ */
+.experience-freebar-rail {
+  display: flex;
+  min-width: 0;
+  max-width: min(72vw, 760px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex: 0 1 auto;
+  flex-wrap: nowrap !important;
+  gap: 8px;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.experience-freebar-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.experience-freebar-rail > * {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 720px) {
+  .experience-freebar-rail {
+    max-width: calc(100vw - 64px);
+  }
+}
+
+/*
+ * 展开 / 折叠：桌面 = 图标 +「展开/折叠」文字；手机 = 仅图标。
+ * 始终在主行末尾；世界不得用私有 CSS 拆掉文字或改成另一套按钮。
+ */
+.experience-freebar-summary {
+  display: inline-flex !important;
+  min-height: 36px;
+  padding: 0 14px;
+  align-items: center;
+  gap: 6px;
+  color: rgba(248, 244, 236, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  cursor: pointer;
+  font-size: 12px !important;
+  font-weight: 500;
+  list-style: none;
+  white-space: nowrap;
+  width: auto !important;
+  height: auto !important;
+}
+
+.experience-freebar-summary:hover {
+  color: rgba(248, 244, 236, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.experience-freebar-summary svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex: 0 0 auto;
+  color: rgba(255, 255, 255, 0.78);
+  transform: rotate(180deg);
+  transition: transform 160ms ease;
+}
+
+.experience-freebar-summary[aria-expanded='true'] svg {
+  transform: rotate(0);
+}
+
+/* 桌面文案由 React 只渲染一个「展开」或「折叠」；手机再隐藏该 span。 */
+.experience-freebar-summary-more,
+.experience-freebar-summary-less {
+  display: inline !important;
+  font-size: 12px !important;
+  line-height: 1;
+}
+
+/*
+ * 「故事」与「重置」统一形态：图标 + 文字的中性药丸，全站一致。
+ * 禁止世界私有 CSS 压成只有 logo 的方钮 / 圆钮。
+ */
+.experience-freebar-story,
+.experience-freebar-reset,
+.experience-freebar button.experience-freebar-story,
+.experience-freebar button.experience-freebar-reset {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 36px !important;
+  max-width: none !important;
+  padding: 0 14px !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px !important;
+  color: rgba(248, 244, 236, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+
+.experience-freebar-story svg,
+.experience-freebar-reset svg,
+.experience-freebar button.experience-freebar-story svg,
+.experience-freebar button.experience-freebar-reset svg {
+  width: 15px !important;
+  height: 15px !important;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.experience-freebar-story span,
+.experience-freebar-reset span,
+.experience-freebar button.experience-freebar-story span,
+.experience-freebar button.experience-freebar-reset span {
+  display: inline !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  color: inherit !important;
+  max-width: none !important;
+  overflow: visible !important;
+  clip: auto !important;
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* 手机：故事 / 重置仅图标，省宽；aria-label 与 span 仍保留可访问性 */
+@media (max-width: 720px) {
+  .experience-freebar-story,
+  .experience-freebar-reset,
+  .experience-freebar button.experience-freebar-story,
+  .experience-freebar button.experience-freebar-reset {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    gap: 0 !important;
+  }
+
+  .experience-freebar-story span,
+  .experience-freebar-reset span,
+  .experience-freebar button.experience-freebar-story span,
+  .experience-freebar button.experience-freebar-reset span {
+    /* visually hidden but kept for a11y / SSR text parity */
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+}
+
+.experience-freebar-story:hover,
+.experience-freebar-reset:hover,
+.experience-freebar button.experience-freebar-story:hover,
+.experience-freebar button.experience-freebar-reset:hover {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/*
+ * 托盘：垂直 padding 必须是 0 —— max-height 0 时 padding 会漏出一条「幽灵高度」，
+ * 与主行的间距由父栏 gap 承担、底部空间由栏身 padding 承担。
+ * min-height: 0 是因为 flex 项目的自动最小高度会压过 max-height，导致托盘收不到 0。
+ */
+.experience-freebar-secondary {
+  display: flex;
+  order: 2;
+  max-height: none;
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  padding: 0 2px;
+  overflow: visible;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  justify-content: center;
+  overscroll-behavior: auto;
+  touch-action: auto;
+  scrollbar-gutter: auto;
+  scrollbar-width: none;
+  transition: max-height 240ms cubic-bezier(0.32, 0.72, 0.35, 1);
+}
+
+.experience-freebar-secondary::-webkit-scrollbar {
+  display: none;
+}
+
+/* —— 标准字段：名称 + 滑杆 + 数值 —— */
+.experience-freebar-field {
+  display: grid;
+  grid-template-columns: auto minmax(96px, 1fr) auto;
+  gap: 4px 10px;
+  align-items: center;
+  /* 桌面自然宽度：滑杆至少要有 280px 才拧得动 */
+  flex: 0 1 280px;
+  min-width: 200px;
+  max-width: 340px;
+}
+
+/* 标签行：名称 + 数值 */
+.experience-freebar .experience-freebar-field > div {
+  display: contents;
+}
+
+.experience-freebar .experience-freebar-field > div > span,
+.experience-freebar .experience-freebar-field > span:first-child {
+  color: rgba(248, 244, 236, 0.58);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.experience-freebar .experience-freebar-field strong {
+  color: var(--freebar-accent, var(--world-accent, #e8c27a));
+  font-family: var(--mono, monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* 变化中的数值必须等宽，否则读数跳一下整个栏都在抖 */
+.experience-freebar [class*='field'] strong,
+.experience-freebar [class*='field'] b {
+  font-family: var(--mono, monospace);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 字段内提示、刻度：整行 */
+.experience-freebar .experience-freebar-field > small,
+.experience-freebar .experience-freebar-field [class*='hint'],
+.experience-freebar .experience-freebar-field [class*='ticks'],
+.experience-freebar .experience-freebar-field [class*='note'] {
+  grid-column: 1 / -1;
+  color: rgba(248, 244, 236, 0.45);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* 字段内第二组按钮（站点/预设）：整行横滑 */
+.experience-freebar .experience-freebar-field > .experience-freebar-actions,
+.experience-freebar .experience-freebar-field [class*='sites'],
+.experience-freebar .experience-freebar-field [class*='presets'],
+.experience-freebar .experience-freebar-field [role='group'] {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: 100%;
+}
+
+.experience-freebar .experience-freebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 auto;
+}
+
+/*
+ * 控件组只是语义容器：禁止带边框/背景/整行拉伸成空心大条。
+ * 按钮自然宽度、居中折行；分段控件（.experience-freebar-seg）是唯一允许带框的组。
+ */
+.experience-freebar-main .experience-freebar-actions,
+.experience-freebar-main [role='group']:not(.experience-freebar-seg):not(.experience-freebar-tabs):not(.experience-freebar-rail),
+.experience-freebar-main [class*='-chips']:not(.experience-freebar-seg):not(.experience-freebar-rail),
+.experience-freebar-main [class*='-modes']:not(.experience-freebar-seg):not(.experience-freebar-rail),
+.experience-freebar-main [class*='-presets'],
+.experience-freebar-main [class*='-sites'] {
+  width: auto;
+  max-width: 100%;
+  padding: 0;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+/*
+ * 分段控件：2～3 项的模式/视角切换的标准形态（>3 个实体才走 rail）。
+ * 一个薄框胶囊；选中项是主题色淡底 + 主题色文字（次色），不做实心。
+ */
+.experience-freebar-seg {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 3px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.experience-freebar-seg button {
+  display: inline-flex;
+  min-height: 32px;
+  padding: 0 14px;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.72);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.experience-freebar-seg button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.experience-freebar-seg button.is-active {
+  /* 次色（选中态）= 主题色淡底 + 主题色文字；主色（实心主题色）只给唯一主操作 */
+  color: var(--freebar-accent, var(--world-accent, #e8c27a));
+  background: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 16%,
+    transparent
+  );
+  font-weight: 600;
+}
+
+/*
+ * 复杂托盘的分类 rail。只有调用方已经完成语义分组时才使用；
+ * 简单托盘直接渲染参数，不出现一行空耗高度的 Tab。
+ */
+.experience-freebar-tabs {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex: 0 0 auto;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+
+.experience-freebar-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.experience-freebar-tabs button {
+  position: relative;
+  display: inline-flex;
+  min-width: max-content;
+  min-height: 36px;
+  flex: 1 0 auto;
+  padding: 0 14px;
+  align-items: center;
+  justify-content: center;
+  color: rgba(248, 244, 236, 0.5);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.experience-freebar-tabs button::after {
+  position: absolute;
+  right: 14px;
+  bottom: 0;
+  left: 14px;
+  height: 2px;
+  border-radius: 999px 999px 0 0;
+  background: transparent;
+  content: '';
+}
+
+.experience-freebar-tabs button.is-active {
+  color: var(--freebar-accent, var(--world-accent, #e8c27a));
+  font-weight: 600;
+}
+
+.experience-freebar-tabs button.is-active::after {
+  background: currentColor;
+}
+
+.experience-freebar-tabs button:focus-visible {
+  z-index: 1;
+  outline: 2px solid color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 70%,
+    white
+  );
+  outline-offset: -3px;
+}
+
+/*
+ * Freebar 内所有可点按钮的默认胶囊。
+ * 任何嵌套层的裸 <button>（如手写「清空」）都必须吃到这套，
+ * 禁止掉回浏览器原生白底 + 浅色字（白底白字）。
+ * Tab / 分段控件 / 播放钮在后面用更高优先级覆盖。
+ */
+.experience-freebar button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.experience-freebar button:not(.experience-freebar-play):not(.experience-freebar-summary):not(.experience-freebar-tabs button),
+.experience-freebar .experience-freebar-actions button,
+.experience-freebar-main > button:not(.experience-freebar-play):not(.experience-freebar-summary),
+.experience-freebar-primary > button:not(.experience-freebar-play):not(.experience-freebar-summary),
+.experience-freebar-secondary button:not(.experience-freebar-play):not(.experience-freebar-summary),
+.experience-freebar-secondary .experience-freebar-reset,
+.experience-freebar-secondary .experience-freebar-story,
+/* Nested chips / presets / tool groups (not only direct children). */
+.experience-freebar [class*='chips'] > button,
+.experience-freebar [class*='presets'] > button,
+.experience-freebar [class*='-tools'] > button,
+.experience-freebar [class*='-actions'] > button,
+.experience-freebar [class*='-wrap'] > button,
+.experience-freebar [role='group']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 14px;
+  color: rgba(248, 244, 236, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.experience-freebar button:not(.experience-freebar-play):not(.experience-freebar-summary):hover,
+.experience-freebar .experience-freebar-actions button:hover,
+.experience-freebar-main > button:not(.experience-freebar-play):not(.experience-freebar-summary):hover,
+.experience-freebar-primary > button:not(.experience-freebar-play):not(.experience-freebar-summary):hover,
+.experience-freebar-secondary button:not(.experience-freebar-play):not(.experience-freebar-summary):hover,
+.experience-freebar-secondary .experience-freebar-reset:hover,
+.experience-freebar-secondary .experience-freebar-story:hover,
+.experience-freebar [class*='chips'] > button:hover,
+.experience-freebar [class*='presets'] > button:hover,
+.experience-freebar [class*='-tools'] > button:hover,
+.experience-freebar [class*='-actions'] > button:hover,
+.experience-freebar [class*='-wrap'] > button:hover,
+.experience-freebar [role='group']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > button:hover {
+  border-color: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 55%,
+    white
+  );
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Reassert specialized chrome after the nested-chip baseline. */
+.experience-freebar-seg button {
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  border-radius: 10px;
+  min-height: 32px;
+  padding: 0 12px;
+}
+
+.experience-freebar-seg button.is-active {
+  color: var(--freebar-accent, var(--world-accent, #e8c27a)) !important;
+  background: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 16%,
+    transparent
+  ) !important;
+  font-weight: 600;
+}
+
+.experience-freebar-tabs button {
+  position: relative;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(248, 244, 236, 0.5) !important;
+  border-radius: 0 !important;
+  min-height: 36px;
+  padding: 0 14px;
+  box-shadow: none !important;
+}
+
+.experience-freebar-tabs button.is-active {
+  color: var(--freebar-accent, var(--world-accent, #e8c27a)) !important;
+  background: transparent !important;
+  font-weight: 600;
+}
+
+/* Shared selected chip (worlds often use .is-active / .is-on without private CSS). */
+.experience-freebar [class*='chips'] > button.is-active,
+.experience-freebar [class*='chips'] > button.is-on,
+.experience-freebar [class*='presets'] > button.is-active,
+.experience-freebar [class*='presets'] > button.is-on,
+.experience-freebar [role='group']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > button.is-active,
+.experience-freebar [role='group']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > button.is-on {
+  color: var(--freebar-accent, var(--world-accent, #e8c27a));
+  border-color: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 45%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--freebar-accent, var(--world-accent, #e8c27a)) 16%,
+    transparent
+  );
+  font-weight: 600;
+}
+
+/* 唯一主操作可使用主题实心色；故事入口保持中性 */
+.experience-freebar .experience-freebar-actions button.is-accent:not([class*='replay']):not([class*='story-btn']),
+.experience-freebar-main > button.is-accent:not([class*='replay']):not([class*='story-btn']),
+.experience-freebar-primary > button.is-accent:not([class*='replay']):not([class*='story-btn']),
+.experience-freebar-secondary > button.is-accent:not([class*='replay']):not([class*='story-btn']) {
+  color: #12141a;
+  border-color: var(--freebar-accent, var(--world-accent, #e8c27a));
+  background: var(--freebar-accent, var(--world-accent, #e8c27a));
+  font-weight: 600;
+}
+
+/* freebar 内说明字：弱化，不抢主体 */
+.experience-freebar [class*='hint'],
+.experience-freebar [class*='stamp-hint'],
+.experience-freebar .experience-freebar-hint {
+  flex: 1 1 100%;
+  margin: 0;
+  color: rgba(248, 244, 236, 0.48);
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  /* 展开后最多半屏；超出的内容只在次级托盘内部纵向浏览 */
+  .experience-freebar {
+    max-height: min(50dvh, 340px);
+  }
+
+  .experience-freebar.has-freebar-disclosure {
+    max-height: min(50dvh, 340px);
+    padding:
+      4px
+      max(14px, env(safe-area-inset-right, 0px))
+      max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px))
+      max(14px, env(safe-area-inset-left, 0px));
+    overflow: visible;
+    background: transparent;
+  }
+
+  .experience-freebar.has-freebar-disclosure .experience-freebar-main {
+    width: min(100%, calc(100vw - 28px));
+    min-width: 0;
+    max-width: calc(100vw - 28px);
+    box-sizing: border-box;
+    align-items: stretch;
+    --experience-freebar-mobile-cap: min(
+      calc(50dvh - max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px)) - 6px),
+      318px
+    );
+    max-height: min(
+      calc(50dvh - max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px)) - 4px),
+      320px
+    );
+    overflow: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 手机主行：自然宽度居中；disclosure 与核心控件处于同一行 */
+  .experience-freebar-primary {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    gap: 6px;
+    justify-content: flex-start;
+    overflow-x: hidden;
+  }
+
+  .experience-freebar-primary > * {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .experience-freebar-primary > .experience-freebar-rail,
+  .experience-freebar-primary > [class*='freebar-row'] {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+
+  /* Private chip rails often carry a four-item core segment. Let the shared
+   * segment keep its intrinsic width so the disclosure can share the row when
+   * the labels genuinely fit; the non-segment chip groups remain swipe rails. */
+  .experience-freebar-primary > .experience-freebar-seg,
+  .experience-freebar-primary > .experience-freebar-seg[class*='chips'],
+  .experience-freebar-primary > .experience-freebar-seg[class*='modes'] {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    flex: 0 1 auto;
+    overflow: visible;
+  }
+
+  .experience-freebar-primary > .experience-freebar-seg button {
+    padding-inline: 8px !important;
+  }
+
+  /* A long primary chip group must yield width to the disclosure instead of
+   * pushing it onto a new row. The group becomes the swipe rail; the
+   * disclosure remains a sibling and stays reachable without scrolling the
+   * whole bar. */
+  .experience-freebar-primary > [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs) {
+    width: auto;
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+    overscroll-behavior-inline: contain;
+    touch-action: pan-x;
+    scrollbar-width: none;
+  }
+
+  .experience-freebar-primary > [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 手机：折叠/展开只显示图标，不写「折叠」「展开」 */
+  .experience-freebar-primary > .experience-freebar-summary {
+    display: inline-flex !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    min-height: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    justify-content: center;
+    border-radius: 12px !important;
+  }
+
+  .experience-freebar-primary > .experience-freebar-summary .experience-freebar-summary-more,
+  .experience-freebar-primary > .experience-freebar-summary .experience-freebar-summary-less {
+    display: none !important;
+  }
+
+  .experience-freebar-primary > .experience-freebar-summary svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .experience-freebar-play,
+  .experience-freebar button.experience-freebar-play {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    max-width: 38px !important;
+  }
+
+  .experience-freebar-play svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* 展开的托盘在主行下方滚动；主行始终可见，不需要 sticky 开关 */
+  .experience-freebar.has-freebar-disclosure .experience-freebar-secondary {
+    max-height: max(
+      0px,
+      calc(var(--experience-freebar-mobile-cap, 318px) - var(--experience-freebar-primary-height, 40px) - 16px)
+    );
+    min-height: 0;
+    flex: 0 1 auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+    justify-content: flex-start;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    scroll-padding-bottom: 14px;
+    scrollbar-gutter: auto;
+    scrollbar-width: none;
+  }
+
+  .experience-freebar.has-freebar-disclosure .experience-freebar-secondary::-webkit-scrollbar {
+    display: none;
+  }
+
+  /*
+   * Passive HUDs opt in and are lifted clear of the bar's *actual* height,
+   * published by the Freebar component. Keying off the expanded tray alone hid
+   * readouts behind tall collapsed bars; the fallback keeps the old behaviour
+   * if the measurement has not landed yet.
+   */
+  [data-freebar-clearance='true'] {
+    bottom: calc(
+      var(--experience-freebar-height, 150px) + max(14px, env(safe-area-inset-bottom, 0px))
+    ) !important;
+  }
+
+  .experience-freebar-main {
+    width: min(100%, calc(100vw - 28px));
+    min-width: 0;
+    max-width: calc(100vw - 28px);
+    box-sizing: border-box;
+    align-items: stretch;
+    --experience-freebar-mobile-cap: min(
+      calc(50dvh - max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px)) - 6px),
+      318px
+    );
+    max-height: min(
+      calc(50dvh - max(8px, calc(env(safe-area-inset-bottom, 0px) - 8px)) - 6px),
+      318px
+    );
+    overflow: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .experience-freebar-field {
+    flex: 0 1 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .experience-freebar .experience-freebar-actions {
+    flex: 0 1 auto;
+    justify-content: center;
+  }
+
+  /* 手机统一字阶：视觉保持紧凑，触控命中由控件 padding 补足 */
+  .experience-freebar-primary > button,
+  .experience-freebar-secondary > button {
+    min-height: 36px;
+    font-size: 12px;
+  }
+
+  /* 分段控件手机收紧一号，给主行省地方；图标让位给文字 */
+  .experience-freebar-seg button {
+    min-height: 34px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .experience-freebar-seg button svg {
+    display: none;
+  }
+}
+
+/* —— 私有 *-freebar 同样遵守布局/滑轨（不含共享组件，它是纵向主行+托盘结构） —— */
+[class*='freebar-main']:not(.experience-freebar-main) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  justify-content: center;
+  width: min(920px, 100%);
+  row-gap: 10px;
+}
+
+[class*='freebar-field'],
+[class*='freebar-strength'] {
+  display: grid;
+  grid-template-columns: auto minmax(96px, 1fr) auto;
+  gap: 6px 10px;
+  align-items: center;
+  flex: 1 1 200px;
+  min-width: min(200px, 100%);
+  max-width: none;
+}
+
+[class*='freebar'] [class*='presets'],
+[class*='freebar'] [class*='modes'],
+[class*='freebar'] [class*='chips'],
+[class*='freebar-chips'] {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  [class*='freebar-main'] {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  [class*='freebar-field'],
+  [class*='freebar-strength'] {
+    flex: 1 1 100%;
+    min-width: 0;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  /*
+   * 手机芯片 / 预设 / 模式：优先一行横滑，禁止 wrap 成按钮塔。
+   * 世界可用更具体的 rail class，但默认已是 nowrap + overflow-x。
+   */
+  [class*='freebar'] [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  [class*='freebar'] [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  [class*='freebar'] [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-chips:not(.experience-freebar-seg):not(.experience-freebar-tabs) {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap !important;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  [class*='freebar'] [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  [class*='freebar'] [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  [class*='freebar'] [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-chips:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar {
+    display: none;
+  }
+
+  [class*='freebar'] [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > *,
+  [class*='freebar'] [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > *,
+  [class*='freebar'] [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs) > *,
+  .experience-freebar-chips:not(.experience-freebar-seg):not(.experience-freebar-tabs) > * {
+    flex: 0 0 auto;
+  }
+
+  /* 手机主行/托盘的滑杆字段独占一行（胶囊宽） */
+  .experience-freebar-primary > .experience-freebar-field,
+  .experience-freebar-primary > [class*='field'],
+  .experience-freebar-primary > [class*='freebar-strength'] {
+    flex: 0 1 100%;
+    min-width: 0;
+    max-width: none;
+    grid-template-columns: auto minmax(48px, 1fr) auto;
+    order: 2;
+  }
+
+  .experience-freebar-secondary > .experience-freebar-field,
+  .experience-freebar-secondary > [class*='field'],
+  .experience-freebar-secondary > [class*='freebar-strength'] {
+    flex: 0 1 100%;
+    min-width: 0;
+    max-width: none;
+    grid-template-columns: auto minmax(72px, 1fr) auto;
+  }
+}
+
+/* —— 滑块轨道 —— */
+[class*='freebar'] input[type='range'] {
+  width: 100%;
+  min-width: 0;
+  height: 22px;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+
+[class*='freebar'] input[type='range']::-webkit-slider-runnable-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+[class*='freebar'] input[type='range']::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  margin-top: -6px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.2),
+    0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+[class*='freebar'] input[type='range']::-moz-range-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+[class*='freebar'] input[type='range']::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.2),
+    0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+[class*='freebar'] input[type='range']:focus-visible {
+  outline: 2px solid rgba(255, 209, 102, 0.65);
+  outline-offset: 3px;
+}
+
+[class*='freebar'] input[type='range']:focus-visible::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+[class*='freebar'] input[type='range']:focus-visible::-moz-range-track {
+  background: rgba(255, 255, 255, 0.34);
+}
+
+/*
+ * 手机舒适密度：视觉仍然紧凑，按钮和滑杆保留真实命中空间。
+ */
+@media (max-width: 720px) {
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-main {
+    gap: 8px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-primary {
+    row-gap: 8px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-secondary {
+    align-content: flex-start;
+    row-gap: 8px;
+    padding-bottom: 4px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-primary > button,
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-secondary > button,
+  .experience-freebar[data-freebar-mobile-density='comfortable'] .experience-freebar-seg button {
+    min-height: 40px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] input[type='range'] {
+    height: 32px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] input[type='range']::-webkit-slider-runnable-track {
+    height: 4px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] input[type='range']::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    margin-top: -7px;
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.42);
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] input[type='range']::-moz-range-track {
+    height: 4px;
+  }
+
+  .experience-freebar[data-freebar-mobile-density='comfortable'] input[type='range']::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 2px 9px rgba(0, 0, 0, 0.42);
+  }
+}
+
+/* 滑杆自己接管横向拖动；上下浏览参数只发生在次级托盘。 */
+[class*='freebar'] input[type='range'] {
+  touch-action: none;
+}
+
+/* Final mobile override: private chip styles may declare width:100% or
+ * overflow:visible after the shared geometry. Primary rails must give the
+ * disclosure a sibling slot and keep the rest swipeable. */
+@media (max-width: 720px) {
+  .experience-freebar-primary > [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs),
+  .experience-freebar-primary > [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs) {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 1 1 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    scrollbar-width: none;
+  }
+
+  .experience-freebar-primary > [class*='chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='modes']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='presets']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar,
+  .experience-freebar-primary > [class*='freebar-chips']:not(.experience-freebar-seg):not(.experience-freebar-tabs)::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The same rule applies to a segmented mode group when play/reset sits
+   * beside it: shrink the capsule and let its buttons swipe, instead of
+   * dropping the shared disclosure to a second row. */
+  .experience-freebar-primary > .experience-freebar-seg {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    flex: 1 1 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    justify-content: flex-start !important;
+    touch-action: pan-x;
+    scrollbar-width: none;
+  }
+
+  .experience-freebar-primary > .experience-freebar-seg::-webkit-scrollbar {
+    display: none;
+  }
+
+  .experience-freebar-primary > .experience-freebar-seg > button {
+    flex: 0 0 auto;
+    padding-inline: 8px !important;
+  }
+}

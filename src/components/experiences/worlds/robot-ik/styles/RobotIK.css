@@ -1,0 +1,394 @@
+/* ============================================================
+   RobotIK · 你只说手要到哪儿，关节自己商量出姿势
+   主体：2D 平面机械臂（Canvas 2D · FABRIK / CCD / 雅可比转置）
+   故事：GuideTour 5 步 · 自由：铭牌 / 被动读数 / Freebar
+   ============================================================ */
+.rik-experience {
+  --rik-accent: #f2b267;
+  --rik-warn: #ff7a59;
+  --rik-ink: #e4ebf4;
+  --world-accent: var(--rik-accent);
+  position: absolute;
+  inset: 0;
+  color: var(--rik-ink);
+  background: #04050a;
+  isolation: isolate;
+}
+
+.rik-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+  outline: none;
+}
+
+.rik-canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px rgba(242, 178, 103, 0.4);
+}
+
+.rik-experience .guide-replay {
+  display: none !important;
+}
+
+/* 点题铭牌 · 顶左 · 只在自由模式 */
+.rik-plaque {
+  position: absolute;
+  z-index: 5;
+  top: var(--experience-safe-top, 78px);
+  left: max(18px, env(safe-area-inset-left, 0px));
+  max-width: min(300px, 40vw);
+  margin: 0;
+  text-shadow: 0 3px 26px rgba(0, 0, 0, 0.92);
+  pointer-events: none;
+}
+
+.rik-plaque > span {
+  display: block;
+  color: var(--rik-accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.rik-plaque h1 {
+  margin: 6px 0 5px;
+  color: var(--rik-ink);
+  font-family: var(--serif, Georgia, 'Times New Roman', serif);
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.rik-plaque p {
+  margin: 0;
+  max-width: 24em;
+  color: rgba(228, 235, 244, 0.55);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* 被动读数 · 底左 · 非交互；按 freebar 实测高度避让（含托盘展开） */
+.rik-readout {
+  position: absolute;
+  z-index: 6;
+  bottom: calc(var(--experience-freebar-height, 194px) + max(14px, env(safe-area-inset-bottom, 0px)));
+  left: max(18px, env(safe-area-inset-left, 0px));
+  display: grid;
+  gap: 6px;
+  min-width: 210px;
+  max-width: min(260px, 30vw);
+  padding: 11px 13px;
+  border: 1px solid rgba(150, 178, 208, 0.14);
+  border-radius: 13px;
+  background: rgba(5, 8, 14, 0.66);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+
+.rik-readout-row {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.rik-readout-row > span {
+  color: rgba(228, 235, 244, 0.44);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.rik-readout-row > strong {
+  color: var(--rik-ink);
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rik-readout-row > strong.is-ok {
+  color: var(--rik-accent);
+}
+
+.rik-readout-row > strong.is-warn {
+  color: var(--rik-warn);
+}
+
+/* 关节角度：一排小芯片，触限的染成暖红 */
+.rik-readout-joints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(150, 178, 208, 0.16);
+}
+
+.rik-readout-joints > i {
+  padding: 2px 6px;
+  color: rgba(228, 235, 244, 0.72);
+  border: 1px solid rgba(150, 178, 208, 0.18);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  font-size: 9.5px;
+  white-space: nowrap;
+}
+
+.rik-readout-joints > i.is-locked {
+  color: #ffb09a;
+  border-color: rgba(255, 122, 89, 0.5);
+  background: rgba(255, 122, 89, 0.12);
+}
+
+/* Freebar */
+.rik-freebar .rik-play {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  place-items: center;
+  padding: 0;
+  color: #1a120c;
+  border: 0;
+  border-radius: 11px;
+  background: var(--freebar-accent, var(--rik-accent, #f2b267));
+  box-shadow: 0 0 16px rgba(242, 178, 103, 0.28);
+  cursor: pointer;
+}
+.rik-freebar .rik-play svg {
+  width: 18px;
+  height: 18px;
+}
+.rik-freebar .rik-play:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.rik-freebar.experience-freebar {
+  z-index: 8;
+}
+
+.rik-freebar-main {
+  gap: 8px 12px;
+}
+
+/* Compact tray: joint slider + one horizontal chip rail */
+.rik-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.rik-tray-field {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.rik-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.rik-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rik-chip-rail > * {
+  flex: 0 0 auto;
+}
+
+.rik-freebar .rik-field.experience-freebar-field {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  flex: 1 1 180px;
+  min-width: min(170px, 100%);
+  max-width: 260px;
+}
+
+.rik-freebar .rik-field.experience-freebar-field > div {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.rik-freebar .rik-field.experience-freebar-field > div > span {
+  color: rgba(228, 235, 244, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.rik-freebar .rik-field.experience-freebar-field > div > strong {
+  color: var(--rik-accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rik-freebar .rik-field input[type='range']::-webkit-slider-thumb {
+  background: var(--rik-accent);
+  box-shadow:
+    0 0 0 3px rgba(242, 178, 103, 0.2),
+    0 2px 10px rgba(0, 0, 0, 0.42);
+}
+
+.rik-freebar .rik-field input[type='range']::-moz-range-thumb {
+  background: var(--rik-accent);
+  box-shadow:
+    0 0 0 3px rgba(242, 178, 103, 0.2),
+    0 2px 10px rgba(0, 0, 0, 0.42);
+}
+
+.rik-chips {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rik-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.rik-chip {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  padding: 6px 11px;
+  color: rgba(228, 235, 244, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.rik-chip svg {
+  font-size: 13px;
+}
+
+.rik-chip:hover,
+.rik-chip:focus-visible {
+  color: #fff;
+  border-color: rgba(242, 178, 103, 0.55);
+  background: rgba(242, 178, 103, 0.14);
+  outline: none;
+}
+
+.rik-chip.is-on {
+  color: #ffe3c2;
+  border-color: rgba(242, 178, 103, 0.85);
+  background: rgba(242, 178, 103, 0.2);
+}
+
+.rik-chip.is-rec {
+  color: #ffb09a;
+  border-color: rgba(255, 122, 89, 0.7);
+  background: rgba(255, 122, 89, 0.14);
+}
+
+.rik-chip:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.rik-chip:disabled:hover {
+  color: rgba(228, 235, 244, 0.8);
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* 重播故事：弱入口，留在次级区 */
+.rik-freebar .rik-replay {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 900px) {
+  .rik-plaque {
+    max-width: min(300px, 70vw);
+  }
+
+  .rik-plaque h1 {
+    font-size: clamp(16px, 4.4vw, 20px);
+  }
+
+  .rik-plaque p {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  /* 手机：读数压成单列贴在底栏上方（shared 规则按实测高度再抬升） */
+  .rik-readout {
+    right: max(12px, env(safe-area-inset-right, 0px));
+    left: max(12px, env(safe-area-inset-left, 0px));
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    min-width: 0;
+    max-width: none;
+    padding: 8px 11px;
+  }
+
+  .rik-readout-joints {
+    padding-top: 4px;
+  }
+
+  .rik-freebar .rik-field.experience-freebar-field {
+    flex: 1 1 100%;
+    min-width: 100%;
+    max-width: none;
+  }
+
+  .rik-tray-field.experience-freebar-field {
+    max-width: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .rik-readout-row > span {
+    font-size: 9px;
+  }
+
+  .rik-readout-row > strong {
+    font-size: 10.5px;
+  }
+
+  .rik-chip {
+    padding: 6px 9px;
+    font-size: 10.5px;
+  }
+}
+
+/* 故事进行时只留主体与字幕轨 */
+.rik-experience.is-story .rik-readout,
+.rik-experience.is-story .rik-plaque {
+  display: none;
+}

@@ -1,0 +1,88 @@
+.experience-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #0b0f14;
+  overflow: auto;
+}
+
+/* 用已经被首页卡片缓存过的 384px 缩略图，不在设备已经吃力时再拉一张大图。
+   放大必然发虚，所以主动加一点模糊，让它读起来像有意为之的氛围底。 */
+.experience-fallback-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+  filter: saturate(0.7) blur(6px);
+  transform: scale(1.06);
+}
+
+.experience-fallback-body {
+  position: relative;
+  max-width: 34rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.experience-fallback-body h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  font-weight: 500;
+}
+
+.experience-fallback-body p {
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.experience-fallback-hint {
+  margin-bottom: 8px !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.experience-fallback-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.experience-fallback-list a {
+  display: inline-block;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.experience-fallback-list a:hover,
+.experience-fallback-list a:focus-visible {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.experience-fallback-home {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.86rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .experience-fallback-body { max-width: none; }
+}

@@ -1,0 +1,124 @@
+/* ============================================================
+   MagneticLines · 看不见的磁力线
+   满屏场线 · cyan/amber 场 · 右下参数坞
+   ============================================================ */
+.mag-experience {
+  --mag-accent: #6ee7f2;
+  --mag-amber: #f0b45a;
+  --mag-ink: #eef7f8;
+  --world-accent: var(--mag-accent);
+  --freebar-accent: var(--mag-accent);
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(8, 16, 24, 0.64),
+    rgba(3, 6, 12, 0.62)
+  );
+  --experience-panel-border: rgba(110, 231, 242, 0.22);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  color: var(--mag-ink);
+  background: #03060c;
+  isolation: isolate;
+}
+
+.mag-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+
+.mag-canvas:active {
+  cursor: grabbing;
+}
+
+.mag-plaque {
+  position: absolute;
+  z-index: 6;
+  left: clamp(22px, 3.5vw, 48px);
+  bottom: clamp(88px, 14vh, 140px);
+  max-width: min(300px, 44vw);
+  pointer-events: none;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.9);
+}
+
+.mag-plaque h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  color: #f2fbfd;
+}
+
+.mag-plaque p {
+  margin: 8px 0 0;
+  color: rgba(238, 247, 248, 0.72);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.mag-readout {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: 50%;
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.mag-readout strong {
+  color: var(--mag-accent);
+  font-family: var(--serif);
+  font-size: clamp(14px, 1.35vw, 17px);
+  font-weight: 500;
+}
+
+.mag-readout span {
+  color: rgba(238, 247, 248, 0.55);
+  font-size: 11px;
+}
+
+@media (max-width: 720px) {
+  .mag-plaque {
+    top: var(--experience-safe-top, 78px);
+    right: 16px;
+    bottom: auto;
+    left: 16px;
+    max-width: none;
+    text-align: center;
+  }
+
+  .mag-readout {
+    top: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 168px);
+  }
+}
+
+/* compact freebar secondary rail */
+.mag-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.mag-chip-rail::-webkit-scrollbar { display: none; }
+.mag-chip-rail > * { flex: 0 0 auto; }

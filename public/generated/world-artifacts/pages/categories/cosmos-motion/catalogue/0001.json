@@ -1,0 +1,86 @@
+[
+  {
+    "id": "moon-voyage",
+    "index": "01",
+    "poster": "/assets/posters/moon-voyage.webp",
+    "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+    "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+    "title": "四天抵达月球",
+    "posterTitle": "四天抵达月球",
+    "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+    "posterPosition": "50% 50%",
+    "question": "去月球要几天？",
+    "topicLabel": "载人航天",
+    "primaryCategoryId": "cosmos-motion",
+    "renderer": "moon-voyage",
+    "runtime": "scene-3d",
+    "duration": 360,
+    "evidence": "compiled",
+    "accent": "#9fdcff",
+    "translations": {
+      "en": {
+        "title": "Four Days to the Moon",
+        "posterTitle": "Four Days to the Moon",
+        "posterHook": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
+        "question": "How many days does it take to reach the Moon?",
+        "topicLabel": "human spaceflight"
+      }
+    }
+  },
+  {
+    "id": "solar-system",
+    "index": "11",
+    "poster": "/assets/posters/solar-system.webp",
+    "posterMobile": "/assets/posters/mobile/solar-system.webp",
+    "posterDesktop": "/assets/posters/desktop/solar-system.webp",
+    "title": "此刻，整座太阳系",
+    "posterTitle": "八大行星此刻都在哪里？",
+    "posterHook": "任选一天，点任意行星跟拍：此刻它们各自在哪条轨道上。",
+    "posterPosition": "50% 50%",
+    "question": "八大行星此刻都在哪里？",
+    "topicLabel": "太阳系",
+    "primaryCategoryId": "cosmos-motion",
+    "renderer": "solar-system",
+    "runtime": "scene-3d",
+    "duration": 600,
+    "evidence": "modeled",
+    "accent": "#f1b24f",
+    "translations": {
+      "en": {
+        "title": "The solar system, right now",
+        "posterTitle": "Where are the eight planets right now?",
+        "posterHook": "Pick any day and follow any planet: see where each one sits on its orbit right now.",
+        "question": "Where are the eight planets right now?",
+        "topicLabel": "solar system"
+      }
+    }
+  },
+  {
+    "id": "gravity-assist",
+    "index": "13",
+    "poster": "/assets/posters/gravity-assist.webp",
+    "posterMobile": "/assets/posters/mobile/gravity-assist.webp",
+    "posterDesktop": "/assets/posters/desktop/gravity-assist.webp",
+    "title": "引力助推改变飞船的速度",
+    "posterTitle": "飞船如何不烧燃料，向行星「借」速度？",
+    "posterHook": "选择后方或前方掠过行星，亲眼看 Δv 为正还是为负；再切到旋转参考系，找引力刚好抵消的 5 个点。",
+    "posterPosition": "50% 50%",
+    "question": "引力弹弓为什么能「白捡」速度？",
+    "topicLabel": "轨道力学",
+    "primaryCategoryId": "cosmos-motion",
+    "renderer": "gravity-assist",
+    "runtime": "particle-2d",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#51cf66",
+    "translations": {
+      "en": {
+        "title": "A gravity assist changes a spacecraft’s speed",
+        "posterTitle": "How can a spacecraft \"borrow\" speed from the planet without burning fuel?",
+        "posterHook": "Choose to fly behind or in front of the planet and see with your own eyes whether Δv is positive or negative; then switch to the rotating reference frame and find 5 points where the gravity just cancels out.",
+        "question": "Why can the gravity slingshot gain speed for free?",
+        "topicLabel": "Orbital mechanics"
+      }
+    }
+  }
+]

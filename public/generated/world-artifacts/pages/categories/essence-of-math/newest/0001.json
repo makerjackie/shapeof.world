@@ -1,0 +1,30 @@
+[
+  {
+    "id": "formula-bloom",
+    "index": "03",
+    "poster": "/assets/posters/formula-bloom.webp",
+    "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+    "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+    "title": "一条迭代公式控制一万个点的运动",
+    "posterTitle": "参数变化让点云形成周期与混沌运动",
+    "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
+    "posterPosition": "50% 50%",
+    "question": "一串三角公式，怎么长成一只会游的白影？",
+    "topicLabel": "数学",
+    "primaryCategoryId": "essence-of-math",
+    "renderer": "formula-bloom",
+    "runtime": "particle-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#e8e8e8",
+    "translations": {
+      "en": {
+        "title": "One iterative formula controls the motion of ten thousand points",
+        "posterTitle": "Parameter changes produce periodic and chaotic point-cloud motion",
+        "posterHook": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
+        "question": "How do nested trig formulas grow into a swimming white shadow?",
+        "topicLabel": "Mathematics"
+      }
+    }
+  }
+]

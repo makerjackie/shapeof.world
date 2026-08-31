@@ -1,0 +1,345 @@
+/* ============================================================
+   CliffordDust · 尘埃吸引子
+   Pure black stage · soft white / warm-gold luminous dust
+   ============================================================ */
+
+.cd-experience {
+  --cd-ink: #f4f0e8;
+  --cd-muted: rgba(232, 220, 196, 0.62);
+  --cd-gold: #e8c48a;
+  --cd-warm: #f0d8a8;
+  --world-accent: var(--cd-gold);
+  --freebar-accent: var(--cd-gold);
+  /* 烟熏玻璃底棚，透过面板看见尘埃 */
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(18, 14, 10, 0.4),
+    rgba(6, 4, 2, 0.32)
+  );
+  --experience-panel-border: rgba(232, 196, 138, 0.16);
+  --experience-panel-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 236, 200, 0.06);
+  --experience-panel-blur: 26px;
+  --experience-panel-saturation: 1.2;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000000;
+  color: var(--cd-ink);
+  isolation: isolate;
+}
+
+.cd-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+/* ─── 点题铭牌 · 顶左 · 非交互 ─── */
+.cd-plaque {
+  position: absolute;
+  z-index: 5;
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  max-width: min(360px, 48vw);
+  pointer-events: none;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.95);
+}
+
+.cd-plaque h1 {
+  margin: 0;
+  color: var(--cd-ink);
+  font-family: var(--serif, Georgia, 'Times New Roman', serif);
+  font-size: clamp(18px, 2.2vw, 26px);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.cd-plaque p {
+  margin: 7px 0 0;
+  color: var(--cd-muted);
+  font-size: clamp(11px, 1.05vw, 13px);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ─── 公式：嵌在舞台里的淡字，不是独立卡片 ─── */
+.cd-formula-panel {
+  position: absolute;
+  z-index: 4;
+  bottom: max(118px, calc(env(safe-area-inset-bottom, 0px) + 104px));
+  left: max(16px, env(safe-area-inset-left, 0px));
+  width: min(320px, 40vw);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+/* Keep the passive equation above the expanded desktop tray as well as the
+ * shared mobile clearance rule does on compact screens. */
+.cd-formula-panel[data-freebar-clearance='true'] {
+  bottom: max(118px, calc(var(--experience-freebar-height, 0px) + 24px));
+}
+
+.cd-formula-panel.is-story {
+  bottom: max(24vh, 150px);
+}
+
+.cd-formula-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  opacity: 0.55;
+}
+
+.cd-formula-head > span {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(220, 200, 170, 0.5);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+
+.cd-formula-head strong {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(240, 216, 168, 0.7);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+
+.cd-formula-eq {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: clamp(12px, 1.15vw, 14px);
+  line-height: 1.6;
+  color: rgba(250, 242, 228, 0.72);
+  letter-spacing: 0.01em;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-shadow:
+    0 0 20px rgba(0, 0, 0, 0.95),
+    0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+.cd-formula-eq sub {
+  font-size: 0.75em;
+}
+
+.cd-formula-note {
+  margin: 8px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: rgba(220, 200, 170, 0.42);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+  max-width: 28em;
+}
+
+.cd-formula-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(244, 240, 232, 0.62);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+
+.cd-formula-hint {
+  margin: 8px 0 0;
+  padding: 0;
+  border: 0;
+  font-size: 11px;
+  line-height: 1.4;
+  color: rgba(232, 196, 138, 0.72);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
+}
+
+/* ─── Freebar ─── */
+.cd-freebar {
+  z-index: 8;
+}
+
+.cd-freebar-main {
+  width: min(920px, 100%);
+}
+
+.cd-presets {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: min(640px, 86vw);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.cd-presets::-webkit-scrollbar {
+  display: none;
+}
+
+.cd-presets > * {
+  flex: 0 0 auto;
+}
+
+.cd-tray {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cd-tray-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cd-control-tabs {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.cd-tray-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.cd-secondary-fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.cd-secondary-fields.is-material {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cd-freebar-field {
+  display: grid;
+  grid-template-columns: auto minmax(88px, 1fr) auto;
+  gap: 4px 10px;
+  align-items: center;
+  min-width: 0;
+  max-width: none;
+  color: rgba(232, 220, 196, 0.58);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.cd-freebar-field span {
+  white-space: nowrap;
+}
+
+.cd-freebar-field b {
+  color: rgba(244, 240, 232, 0.88);
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cd-freebar-field input[type='range'] {
+  width: 100%;
+  min-width: 0;
+}
+
+.cd-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 720px) {
+  .cd-plaque {
+    max-width: min(280px, 72vw);
+  }
+
+  .cd-plaque h1 {
+    font-size: 17px;
+  }
+
+  .cd-plaque p {
+    font-size: 11.5px;
+  }
+
+  .cd-formula-panel {
+    width: auto;
+    left: max(12px, env(safe-area-inset-left, 0px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: max(112px, calc(env(safe-area-inset-bottom, 0px) + 100px));
+    max-width: none;
+  }
+
+  .cd-formula-eq {
+    font-size: 11.5px;
+  }
+
+  .cd-formula-note {
+    display: none;
+  }
+
+  .cd-presets {
+    max-width: min(100%, 90vw);
+  }
+
+  .cd-tray-head {
+    gap: 6px;
+  }
+
+  .cd-secondary-fields,
+  .cd-secondary-fields.is-shape {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  /* The English material labels and values do not fit two 164px fields.
+   * Give each low-frequency control a full-width touch target instead of
+   * allowing its value to spill past the phone viewport. */
+  .cd-secondary-fields.is-material {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .cd-freebar-field {
+    grid-template-columns: auto minmax(42px, 1fr) auto;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .cd-freebar-field b {
+    font-size: 11px;
+  }
+}
+

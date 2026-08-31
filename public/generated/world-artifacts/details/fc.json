@@ -1,0 +1,239 @@
+{
+  "boids-flocking": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "boids-flocking",
+      "publication": "public",
+      "index": "29",
+      "title": "鸟群依靠三条局部规则形成统一运动",
+      "poster": "/assets/posters/boids-flocking.webp",
+      "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
+      "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
+      "posterTitle": "三条局部规则形成鸟群运动",
+      "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+      "posterSource": "Canvas 2D · Boids 算法 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "没有领袖，鸟群如何飞出统一的形状？",
+      "hook": "每只鸟只看附近同伴：太近就让开，方向不一样就跟一点，离队太远就往回靠。没有谁需要看见整个鸟群。",
+      "payoff": "Craig Reynolds 在 1987 年用这三条局部规则做出了 Boids。鸟群的统一形状不是领队发出的命令，而是许多次很小的避让、转向和靠近叠在一起。",
+      "topicLabel": "群体运动",
+      "translations": {
+        "en": {
+          "title": "Three local rules produce coordinated flocking",
+          "posterTitle": "Three local rules produce flocking behavior",
+          "posterHook": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together.",
+          "posterSource": "Canvas 2D · Boids algorithm · Local build",
+          "question": "Without a leader, how does a flock fly in unified shapes?",
+          "hook": "Each bird sees only nearby neighbors: move apart when too close, turn a little toward their heading, and move back when drifting away. No bird needs to see the whole flock.",
+          "payoff": "Craig Reynolds built Boids from these three local rules in 1987. A flock’s unified shape is not an order from a leader; it is the sum of many tiny acts of avoiding, turning, and regrouping.",
+          "topicLabel": "Collective motion"
+        }
+      },
+      "primaryCategoryId": "emergence",
+      "runtime": "diagram-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "boids-flocking",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 300,
+      "evidence": "modeled",
+      "accent": "#4dd0e1",
+      "related": [
+        "firefly-sync"
+      ],
+      "sources": [
+        {
+          "label": "Craig Reynolds — Boids (1987)",
+          "labelEn": "Craig Reynolds — Boids (1987)",
+          "url": "https://www.red3d.com/cwr/boids/"
+        },
+        {
+          "label": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "labelEn": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "url": "https://www.red3d.com/cwr/papers/1987/boids.html"
+        },
+        {
+          "label": "OpenProcessing · Boids 社区实现",
+          "labelEn": "OpenProcessing · Boids community demos",
+          "url": "https://openprocessing.org/browse/#/search/boids"
+        }
+      ],
+      "provenance": {
+        "origin": "multi-model"
+      },
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "poster"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+      "releaseId": "oss-6ff3221d",
+      "id": "boids-flocking",
+      "state": "public",
+      "title": "鸟群依靠三条局部规则形成统一运动",
+      "titleEn": "Three local rules produce coordinated flocking",
+      "poster": "/assets/posters/boids-flocking.webp",
+      "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
+      "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
+      "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+      "posterHookEn": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together.",
+      "question": "没有领袖，鸟群如何飞出统一的形状？",
+      "questionEn": "Without a leader, how does a flock fly in unified shapes?",
+      "topicLabel": "群体运动",
+      "topicLabelEn": "Collective motion",
+      "primaryCategoryId": "emergence",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#4dd0e1"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+      "releaseId": "oss-6ff3221d",
+      "id": "boids-flocking",
+      "state": "public",
+      "title": "鸟群依靠三条局部规则形成统一运动",
+      "titleEn": "Three local rules produce coordinated flocking",
+      "poster": "/assets/posters/boids-flocking.webp",
+      "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
+      "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
+      "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+      "posterHookEn": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together.",
+      "question": "没有领袖，鸟群如何飞出统一的形状？",
+      "questionEn": "Without a leader, how does a flock fly in unified shapes?",
+      "topicLabel": "群体运动",
+      "topicLabelEn": "Collective motion",
+      "primaryCategoryId": "emergence",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#4dd0e1",
+      "hook": "每只鸟只看附近同伴：太近就让开，方向不一样就跟一点，离队太远就往回靠。没有谁需要看见整个鸟群。",
+      "hookEn": "Each bird sees only nearby neighbors: move apart when too close, turn a little toward their heading, and move back when drifting away. No bird needs to see the whole flock.",
+      "payoff": "Craig Reynolds 在 1987 年用这三条局部规则做出了 Boids。鸟群的统一形状不是领队发出的命令，而是许多次很小的避让、转向和靠近叠在一起。",
+      "payoffEn": "Craig Reynolds built Boids from these three local rules in 1987. A flock’s unified shape is not an order from a leader; it is the sum of many tiny acts of avoiding, turning, and regrouping.",
+      "related": [
+        "firefly-sync"
+      ],
+      "sources": [
+        {
+          "label": "Craig Reynolds — Boids (1987)",
+          "labelEn": "Craig Reynolds — Boids (1987)",
+          "url": "https://www.red3d.com/cwr/boids/"
+        },
+        {
+          "label": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "labelEn": "Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)",
+          "url": "https://www.red3d.com/cwr/papers/1987/boids.html"
+        },
+        {
+          "label": "OpenProcessing · Boids 社区实现",
+          "labelEn": "OpenProcessing · Boids community demos",
+          "url": "https://openprocessing.org/browse/#/search/boids"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "boids-flocking",
+      "duration": 300,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+      "releaseId": "oss-6ff3221d",
+      "text": "鸟群依靠三条局部规则形成统一运动 Three local rules produce coordinated flocking 没有领袖，鸟群如何飞出统一的形状？ Without a leader, how does a flock fly in unified shapes? 每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。 Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together. 群体运动 Collective motion",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+        "releaseId": "oss-6ff3221d",
+        "id": "boids-flocking",
+        "state": "public",
+        "title": "鸟群依靠三条局部规则形成统一运动",
+        "titleEn": "Three local rules produce coordinated flocking",
+        "poster": "/assets/posters/boids-flocking.webp",
+        "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
+        "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
+        "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+        "posterHookEn": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together.",
+        "question": "没有领袖，鸟群如何飞出统一的形状？",
+        "questionEn": "Without a leader, how does a flock fly in unified shapes?",
+        "topicLabel": "群体运动",
+        "topicLabelEn": "Collective motion",
+        "primaryCategoryId": "emergence",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#4dd0e1"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+      "releaseId": "oss-6ff3221d",
+      "id": "boids-flocking",
+      "renderer": "boids-flocking",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "鸟群依靠三条局部规则形成统一运动",
+        "en": "Three local rules produce coordinated flocking"
+      },
+      "summary": {
+        "zh": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+        "en": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "snow-crystal",
+      "nextWorldId": "phyllotaxis",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "kakeya-needle",
+    "index": "17",
+    "poster": "/assets/posters/kakeya-needle.webp",
+    "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+    "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+    "title": "卡库亚针问题的最小转向区域",
+    "posterTitle": "单位线段可以在任意小面积内转向",
+    "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
+    "posterPosition": "50% 46%",
+    "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+    "topicLabel": "几何直觉",
+    "primaryCategoryId": "beautiful-math",
+    "renderer": "kakeya-needle",
+    "runtime": "diagram-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#8fd0ff",
+    "translations": {
+      "en": {
+        "title": "The minimum turning region in the Kakeya needle problem",
+        "posterTitle": "A unit segment can turn inside a region of arbitrarily small area",
+        "posterHook": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
+        "question": "A needle on a table needs to turn around—how little room does it need?",
+        "topicLabel": "Geometric intuition"
+      }
+    }
+  }
+]

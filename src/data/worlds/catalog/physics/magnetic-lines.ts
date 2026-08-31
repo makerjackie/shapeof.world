@@ -1,0 +1,66 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'magnetic-lines',
+    publication: 'public',
+    index: '105',
+    title: '看不见的磁力线',
+    poster: '/assets/posters/magnetic-lines.webp',
+    posterMobile: '/assets/posters/mobile/magnetic-lines.webp',
+    posterDesktop: '/assets/posters/desktop/magnetic-lines.webp',
+    posterTitle: '铁屑排出磁场的形状',
+    posterHook: '拖动磁铁，青色与琥珀色的场线重新组织；铁屑像微型指南针，自己排成花纹。',
+    posterSource: 'Canvas 2D · 磁偶极场线 · 本地构建',
+    posterPosition: '50% 48%',
+    question: '铁屑为什么会自己排成花纹？',
+    hook: '拖动条形磁铁，看偶极场线与铁屑取向如何同时改写整片空间的纹理。',
+    payoff: '磁偶极场在外部从 N 指向 S 并在内部闭合。铁屑沿局部 B 排列，勾出看不见的场；移动磁铁时，图案不是贴纸平移，而是整片场的重新组织。',
+    topicLabel: '电磁',
+    translations: {
+      en: {
+        title: 'Invisible magnetic lines',
+        posterTitle: 'Iron filings trace the shape of a magnetic field',
+        posterHook: 'Drag a magnet and cyan–amber field lines reorganize; iron filings act like tiny compasses and line themselves into a pattern.',
+        posterSource: 'Canvas 2D · Magnetic dipole field lines · Local build',
+        question: 'Why do iron filings arrange themselves into patterns?',
+        hook: 'Drag a bar magnet and watch dipole field lines and iron-filing orientation rewrite the texture of the whole plane.',
+        payoff: 'Outside a dipole, field lines run from N toward S and close inside the magnet. Filings align with local B and sketch the invisible field; when the magnet moves, the pattern reorganizes—it does not slide like a sticker.',
+        topicLabel: 'Electromagnetism',
+      },
+    },
+    primaryCategoryId: 'fields-flow',
+    runtime: 'diagram-2d',
+    difficulty: 'intro',
+    lane: 'structure',
+    renderer: 'magnetic-lines',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 300,
+    evidence: 'modeled',
+    accent: '#6ee7f2',
+    related: ['electric-field', 'ferrofluid'],
+    sources: [
+      {
+        label: 'OpenStax University Physics — 磁偶极与磁力线',
+        labelEn: 'OpenStax University Physics — Magnetic dipoles and field lines',
+        url: 'https://openstax.org/books/university-physics-volume-2/pages/11-3-magnetic-fields-and-lines',
+      },
+      {
+        label: 'HyperPhysics — 条形磁铁场线',
+        labelEn: 'HyperPhysics — Bar magnet field lines',
+        url: 'http://hyperphysics.phy-astr.gsu.edu/hbase/magnetic/magbar.html',
+      },
+      {
+        label: 'Wikipedia — 磁场线',
+        labelEn: 'Wikipedia — Magnetic field lines',
+        url: 'https://en.wikipedia.org/wiki/Magnetic_field#Field_lines_and_flux',
+      }
+    ],
+    provenance: { origin: 'ai-prototype', initialModel: 'grok-4.5' },
+    presentation: 'full-bleed',
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

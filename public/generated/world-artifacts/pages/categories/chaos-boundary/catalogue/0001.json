@@ -1,0 +1,86 @@
+[
+  {
+    "id": "pendulum-wave",
+    "index": "05",
+    "poster": "/assets/posters/pendulum-wave.webp",
+    "posterMobile": "/assets/posters/mobile/pendulum-wave.webp",
+    "posterDesktop": "/assets/posters/desktop/pendulum-wave.webp",
+    "title": "一齐放开，一排摆自己走出波浪",
+    "posterTitle": "一排摆在不同周期中形成波浪",
+    "posterHook": "同样的起点，为什么它们会先变成波浪，再乱成一片，最后又整齐回来？",
+    "posterPosition": "50% 45%",
+    "question": "一排摆为什么会自己走出波浪？",
+    "topicLabel": "振动与波",
+    "primaryCategoryId": "chaos-boundary",
+    "renderer": "pendulum-wave",
+    "runtime": "diagram-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#f0c36a",
+    "translations": {
+      "en": {
+        "title": "Release them together and watch a row of pendulums walk themselves into waves",
+        "posterTitle": "Pendulums with different periods form a travelling wave",
+        "posterHook": "Same starting point—why do they first turn into waves, then into chaos, then line up again?",
+        "question": "Why does a row of pendulums walk itself into waves?",
+        "topicLabel": "Vibration and waves"
+      }
+    }
+  },
+  {
+    "id": "double-pendulum",
+    "index": "06",
+    "poster": "/assets/posters/double-pendulum.webp",
+    "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
+    "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
+    "title": "相差 0.1° 的双摆轨迹",
+    "posterTitle": "差 0.1° 的两次放手，为什么结局完全不同？",
+    "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
+    "posterPosition": "50% 50%",
+    "question": "两次几乎相同的放手，为什么走出完全不同的路？",
+    "topicLabel": "混沌",
+    "primaryCategoryId": "chaos-boundary",
+    "renderer": "double-pendulum",
+    "runtime": "particle-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#ff922b",
+    "translations": {
+      "en": {
+        "title": "Double-pendulum paths starting 0.1° apart",
+        "posterTitle": "Why are the two letting gos with a difference of 0.1° completely different endings?",
+        "posterHook": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
+        "question": "Two almost identical letting gos, why take completely different paths?",
+        "topicLabel": "Chaos"
+      }
+    }
+  },
+  {
+    "id": "three-body",
+    "index": "12",
+    "poster": "/assets/posters/three-body.webp",
+    "posterMobile": "/assets/posters/mobile/three-body.webp",
+    "posterDesktop": "/assets/posters/desktop/three-body.webp",
+    "title": "三颗星，能跳出这么多完美的舞吗？",
+    "posterTitle": "三颗星，能跳出这么多完美的舞吗？",
+    "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+    "posterPosition": "50% 50%",
+    "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+    "topicLabel": "周期轨道",
+    "primaryCategoryId": "chaos-boundary",
+    "renderer": "three-body",
+    "runtime": "scene-3d",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#ff922b",
+    "translations": {
+      "en": {
+        "title": "Can three stars dance in so many perfect patterns?",
+        "posterTitle": "Can three stars dance in so many perfect patterns?",
+        "posterHook": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+        "question": "Why can three stars trace flowers, butterflies, and a dance in space?",
+        "topicLabel": "Periodic orbits"
+      }
+    }
+  }
+]

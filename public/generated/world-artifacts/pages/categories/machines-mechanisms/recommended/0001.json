@@ -1,0 +1,30 @@
+[
+  {
+    "id": "robot-ik",
+    "index": "10",
+    "poster": "/assets/posters/robot-ik.webp",
+    "posterMobile": "/assets/posters/mobile/robot-ik.webp",
+    "posterDesktop": "/assets/posters/desktop/robot-ik.webp",
+    "title": "逆运动学根据末端位置计算机械臂关节",
+    "posterTitle": "末端目标位置决定各关节转角",
+    "posterHook": "拖住发光的手爪任意挪动——FABRIK 迭代像把绳子拉直再一节一节装回去；关节限位、肘上肘下双解、够不着就伸直指向，全是真的。",
+    "posterPosition": "50% 50%",
+    "question": "你只说手要到哪儿，机械臂怎么知道每个关节转多少？",
+    "topicLabel": "机械与装置",
+    "primaryCategoryId": "machines-mechanisms",
+    "renderer": "robot-ik",
+    "runtime": "diagram-2d",
+    "duration": 360,
+    "evidence": "verified",
+    "accent": "#f2b267",
+    "translations": {
+      "en": {
+        "title": "Inverse kinematics solves robot joints from an end position",
+        "posterTitle": "An end-effector target determines each joint angle",
+        "posterHook": "Drag the glowing gripper anywhere — FABRIK iterates like pulling a rope straight and reattaching it link by link. Joint limits, elbow-up and elbow-down branches, and an honest straight reach for what it cannot touch: all real.",
+        "question": "You only say where the hand should go — how does the arm know how much each joint turns?",
+        "topicLabel": "Machines and mechanisms"
+      }
+    }
+  }
+]

@@ -1,0 +1,140 @@
+/* ============================================================
+   MomentCard · 分享此刻（结果卡）
+   ============================================================ */
+.moment-card {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: max(20px, env(safe-area-inset-top, 0px)) 20px max(20px, env(safe-area-inset-bottom, 0px));
+}
+
+.moment-card-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(3, 5, 9, 0.78);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.moment-card-sheet {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(380px, 100%);
+  max-height: 100%;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(9, 12, 17, 0.96);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.moment-card-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(8, 11, 16, 0.82);
+  color: #e4ebf3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s;
+}
+.moment-card-close:hover {
+  border-color: var(--moment-accent, #e8c27a);
+  color: var(--moment-accent, #e8c27a);
+}
+
+.moment-card-preview {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0a0d12;
+  aspect-ratio: 1080 / 1350;
+}
+.moment-card-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.moment-card-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(115deg, #10151d 0%, #182130 50%, #10151d 100%);
+  background-size: 220% 100%;
+  animation: moment-card-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes moment-card-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -20% 0; }
+}
+
+.moment-card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.moment-card-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(230, 238, 247, 0.9);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.moment-card-actions button:hover:not(:disabled) {
+  border-color: var(--moment-accent, #e8c27a);
+  color: var(--moment-accent, #e8c27a);
+}
+.moment-card-actions button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.moment-card-primary {
+  grid-column: 1 / -1;
+  border-color: var(--moment-accent, #e8c27a) !important;
+  background: color-mix(in srgb, var(--moment-accent, #e8c27a) 18%, transparent) !important;
+  color: #fff8e8 !important;
+}
+
+.moment-card-note {
+  margin: 0;
+  text-align: center;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: rgba(148, 166, 186, 0.8);
+}
+
+@media (max-width: 460px) {
+  .moment-card-sheet {
+    width: 100%;
+    padding: 14px;
+    gap: 12px;
+  }
+}

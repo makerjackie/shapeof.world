@@ -1,0 +1,245 @@
+/* ============================================================
+   第三期 · newton-fractal
+   ============================================================ */
+/* ============================================================
+   NewtonFractal · 牛顿分形（newton-fractal）
+   ============================================================ */
+.nfrac-experience {
+  --n-yellow: #ffd166;
+  --n-cyan: #4dd0e1;
+  --n-purple: #b15cff;
+  --n-red: #ff6b6b;
+  --world-accent: var(--n-yellow);
+  --freebar-accent: var(--n-yellow);
+  --experience-panel-surface: linear-gradient(180deg, rgba(14, 16, 22, 0.62), rgba(6, 8, 12, 0.60));
+  --experience-panel-border: color-mix(in srgb, var(--n-yellow) 35%, transparent);
+  --experience-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.12;
+}
+.nfrac-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+.nfrac-question {
+  position: absolute;
+  top: max(76px, var(--experience-safe-top, 78px));
+  left: 20px;
+  z-index: 10;
+  max-width: min(540px, 60vw);
+  pointer-events: none;
+}
+.nfrac-question h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #f1f5f9;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+}
+.nfrac-question p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(203, 213, 225, 0.85);
+}
+.nfrac-why-btn {
+  pointer-events: auto;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(10px);
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nfrac-why-btn:hover {
+  border-color: var(--n-cyan);
+  color: var(--n-cyan);
+}
+.nfrac-readout {
+  position: absolute;
+  top: 76px;
+  right: 18px;
+  z-index: 10;
+  width: 216px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.nfrac-readout-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.nfrac-readout-row small {
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.9);
+}
+.nfrac-readout-row strong {
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #e8eef7;
+}
+.nfrac-readout-row .is-cyan { color: var(--n-cyan); }
+.nfrac-readout-row .is-yellow { color: var(--n-yellow); }
+.nfrac-readout-row .is-purple { color: var(--n-purple); }
+.nfrac-readout-row .is-red { color: var(--n-red); }
+.nfrac-critical {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #ffc2c2;
+  background: rgba(255, 107, 107, 0.12);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+.nfrac-success {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--n-cyan);
+  background: rgba(77, 208, 225, 0.1);
+  border: 1px solid rgba(77, 208, 225, 0.35);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+.nfrac-controls {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 96vw;
+}
+.nfrac-transport {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(12px);
+}
+.nfrac-icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.nfrac-icon-btn:hover {
+  border-color: var(--n-yellow);
+  color: var(--n-yellow);
+}
+.nfrac-hint-chip {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(4, 8, 14, 0.62);
+  backdrop-filter: blur(12px);
+  font-size: 11.5px;
+  color: rgba(203, 213, 225, 0.85);
+}
+.nfrac-why {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 4, 10, 0.72);
+  backdrop-filter: blur(6px);
+}
+.nfrac-why-card {
+  position: relative;
+  max-width: 580px;
+  max-height: 82vh;
+  overflow: auto;
+  padding: 26px 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 10, 18, 0.92);
+}
+.nfrac-why-card h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+.nfrac-why-card p {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: rgba(203, 213, 225, 0.92);
+}
+.nfrac-why-card strong { color: #fff; }
+.nfrac-why-card .is-purple { color: var(--n-purple); }
+.nfrac-why-card .is-red { color: var(--n-red); }
+.nfrac-why-card small {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.75);
+}
+.nfrac-why-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.nfrac-credit { pointer-events: none; }
+@media (max-width: 720px) {
+  .nfrac-question { top: var(--experience-safe-top, 78px); left: 14px; max-width: 62vw; }
+  .nfrac-question h1 { font-size: 15px; }
+  .nfrac-question p { display: none; }
+  .nfrac-readout { top: 118px; right: 12px; width: 168px; padding: 9px 11px; gap: 5px; }
+  .nfrac-readout-row strong { font-size: 12.5px; }
+  .nfrac-controls { gap: 8px; bottom: 10px; width: 96vw; }
+  .nfrac-hint-chip { display: none; }
+}

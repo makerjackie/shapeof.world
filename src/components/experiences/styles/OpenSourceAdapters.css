@@ -1,0 +1,28 @@
+/* Mature open-source experience adapters. Rendering stays upstream; OneWorld
+   only adds a shared Chinese editorial layer and mobile-safe controls. */
+.oss-experience { position: absolute; inset: 0; overflow: hidden; color: #f4f0e8; background: #05090c; }
+.oss-loading { position: absolute; z-index: 12; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.72); background: #05090c; font-size: 12px; letter-spacing: .05em; pointer-events: none; }
+.oss-loading.is-timeout { padding: 24px; pointer-events: auto; }
+.oss-loading-timeout { width: min(460px, 100%); padding: 26px; border: 1px solid rgba(255,255,255,.2); background: rgba(8,14,17,.96); letter-spacing: 0; }
+.oss-loading-timeout strong { display: block; color: #f4efe5; font-family: var(--serif); font-size: 28px; font-weight: 400; line-height: 1.1; }
+.oss-loading-timeout p { margin: 13px 0 20px; color: rgba(255,255,255,.62); font-size: 12px; line-height: 1.65; }
+.oss-loading-timeout > div { display: flex; flex-wrap: wrap; gap: 8px; }
+.oss-loading-timeout button, .oss-loading-timeout a { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; padding: 0 14px; color: #f4efe5; border: 1px solid rgba(255,255,255,.28); background: transparent; font: inherit; cursor: pointer; }
+.oss-loading-timeout button { color: #111b20; background: #f0e9dc; }
+.oss-engine-credit { position: absolute; z-index: 10; top: var(--experience-safe-top, 78px); left: 20px; padding: 8px 10px; color: rgba(255,255,255,.65); border: 1px solid rgba(255,255,255,.16); background: rgba(3,7,10,.52); backdrop-filter: blur(12px); font-size: 10px; pointer-events: none; }
+.oss-viewpoints { display: flex; gap: 5px; margin-top: 14px; }
+.oss-viewpoints button { min-height: 40px; flex: 1; padding: 0 9px; color: rgba(255,255,255,.67); border: 1px solid rgba(255,255,255,.16); background: transparent; cursor: pointer; font-size: 11px; }
+.oss-viewpoints button:hover,
+.oss-viewpoints button.is-active { color: #07100e; border-color: var(--world-accent); background: var(--world-accent); }
+
+.model-viewer-experience { background: radial-gradient(circle at 52% 42%, #d5c4aa 0, #847767 38%, #232526 78%); }
+.model-viewer-experience model-viewer { width: 100%; height: 100%; background: transparent; --poster-color: transparent; --progress-bar-color: var(--world-accent); }
+.model-progress { position: absolute; right: 0; bottom: 0; left: 0; height: 2px; background: rgba(255,255,255,.12); transition: opacity 240ms ease; }
+.model-progress span { display: block; width: 40%; height: 100%; background: var(--world-accent); animation: oss-progress 1.2s ease-in-out infinite alternate; }
+.model-progress.is-loaded { opacity: 0; }
+@keyframes oss-progress { to { transform: translateX(150%); } }
+
+.oss-finish-button { min-height: 38px; margin-top: 12px; padding: 0 13px; color: #07100e; border: 0; background: var(--world-accent); cursor: pointer; font-size: 10px; }
+
+.oss-opacity-control { display: grid; grid-template-columns: auto minmax(120px, 1fr) auto; gap: 10px; align-items: center; margin-top: 14px; color: rgba(255,255,255,.65); font-size: 10px; }
+.oss-opacity-control input { width: 100%; min-height: 32px; accent-color: var(--world-accent); }

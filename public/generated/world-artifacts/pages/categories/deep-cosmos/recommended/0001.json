@@ -1,0 +1,30 @@
+[
+  {
+    "id": "black-hole-flyby",
+    "index": "02",
+    "poster": "/assets/posters/black-hole-flyby.webp",
+    "posterMobile": "/assets/posters/mobile/black-hole-flyby.webp",
+    "posterDesktop": "/assets/posters/desktop/black-hole-flyby.webp",
+    "title": "掠过黑洞时看见的扭曲星空",
+    "posterTitle": "掠过黑洞边缘的星空",
+    "posterHook": "从遥远星海靠近，看光被拉成灿烂圆环；越过最近点，再回头看它缩成一粒金色星光。",
+    "posterPosition": "50% 50%",
+    "question": "如果从深空掠过黑洞，你会看见怎样的宇宙？",
+    "topicLabel": "引力",
+    "primaryCategoryId": "deep-cosmos",
+    "renderer": "black-hole-flyby",
+    "runtime": "scene-3d",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#e9ae62",
+    "translations": {
+      "en": {
+        "title": "The distorted sky seen on a black-hole flyby",
+        "posterTitle": "The sky on a flyby past a black hole",
+        "posterHook": "Approach through a sea of stars, hover by a blazing ring, then fly past and watch the black hole recede to a golden point.",
+        "question": "What would the universe look like on a flyby past a black hole?",
+        "topicLabel": "Gravity"
+      }
+    }
+  }
+]

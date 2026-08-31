@@ -1,0 +1,53 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'fluid-sim',
+    publication: 'public',
+    index: '84',
+    title: '涡旋从流体扰动中产生并消散',
+    poster: '/assets/posters/fluid-sim.webp',
+    posterMobile: '/assets/posters/mobile/fluid-sim.webp',
+    posterDesktop: '/assets/posters/desktop/fluid-sim.webp',
+    posterTitle: '搅动流体时形成的涡旋',
+    posterHook: '在画布上拖动鼠标或手指，实时搅动 GPU 流体——彩色染料在涡旋中拉伸、卷曲、扩散。',
+    posterSource: 'WebGL2 · Navier-Stokes 求解器 · 实时 GPU 流体',
+    posterPosition: '50% 50%',
+    question: '为什么流体被搅动后会自发形成涡旋结构？',
+    hook: '拖一下，染料会被水流带走，在快慢交界处卷成漩涡；把液体调得更黏，细小旋转又会更快消失。',
+    payoff: '水流会把原有速度继续带向前，快慢不同的相邻水层会彼此卷起，黏性再把这些速度差慢慢抹平。纳维－斯托克斯方程把这三件事写在了一起。',
+    topicLabel: '水流与漩涡',
+    translations: {
+      en: {
+        title: 'Vortices form and dissipate after a fluid is disturbed',
+        posterTitle: 'The vortices formed by stirring a fluid',
+        posterHook: 'Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices.',
+        posterSource: 'WebGL2 · Navier-Stokes solver · Real-time GPU fluid',
+        question: 'Why does fluid spontaneously form vortex structures after being stirred?',
+        hook: 'Drag once: the flow carries the dye away, curls it into vortices where fast and slow layers meet, then loses the smallest swirls faster when the liquid is more viscous.',
+        payoff: 'A flow carries its existing velocity forward, neighboring layers moving at different speeds roll around each other, and viscosity gradually smooths that difference away. The Navier–Stokes equations describe all three.',
+        topicLabel: 'Flow and vortices',
+      },
+    },
+    primaryCategoryId: 'fields-flow',
+    runtime: 'particle-2d',
+    difficulty: 'standard',
+    lane: 'flow',
+    renderer: 'fluid-sim',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 420,
+    evidence: 'modeled',
+    accent: '#4dd0e1',
+    related: ['double-pendulum'],
+    sources: [
+      {label: 'Navier-Stokes 方程（Wikipedia）', labelEn: 'Navier-Stokes equations (Wikipedia)', url: 'https://zh.wikipedia.org/wiki/纳维-斯托克斯方程'}
+    ],
+    presentation: 'full-bleed',
+    hasEmbeddedGuide: true,
+    onboardingVersion: 1,
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

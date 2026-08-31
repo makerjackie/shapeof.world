@@ -1,0 +1,415 @@
+.bh-flyby {
+  --bh-accent: #f0c36a;
+  --world-accent: var(--bh-accent);
+  --freebar-accent: var(--bh-accent);
+  --freebar-ink: rgba(248, 244, 236, 0.92);
+  /* GuideTour / Freebar 共用同一块黑洞烟熏玻璃。 */
+  --experience-panel-border: rgba(255, 255, 255, 0.14);
+  --experience-panel-surface:
+    linear-gradient(160deg, rgba(12, 12, 16, 0.72), rgba(6, 6, 10, 0.58));
+  --experience-panel-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.25;
+  --experience-panel-radius: 18px;
+  background: #020204;
+  isolation: isolate;
+}
+
+.bh-flyby iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+.bh-flyby-loading {
+  position: absolute;
+  z-index: 12;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  justify-items: center;
+  color: rgba(246, 241, 232, 0.74);
+  background:
+    linear-gradient(rgba(2, 2, 4, 0.42), rgba(2, 2, 4, 0.72)),
+    url('/assets/posters/desktop/black-hole-flyby.webp') center / cover no-repeat,
+    #020204;
+  pointer-events: none;
+}
+
+.bh-flyby-loading i {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(240, 195, 106, 0.25);
+  border-top-color: var(--bh-accent);
+  border-radius: 50%;
+  animation: bh-flyby-spin 0.9s linear infinite;
+}
+
+.bh-flyby-loading small {
+  color: rgba(246, 241, 232, 0.45);
+  font-size: 11px;
+}
+
+@keyframes bh-flyby-spin {
+  to { transform: rotate(360deg); }
+}
+
+.bh-flyby-plaque {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: max(22px, env(safe-area-inset-left));
+  display: grid;
+  max-width: min(390px, 48vw);
+  gap: 5px;
+  color: #fff8ee;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.95);
+  pointer-events: none;
+}
+
+.bh-flyby-plaque span {
+  color: var(--bh-accent);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+}
+
+.bh-flyby-plaque strong {
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.8vw, 23px);
+  font-weight: 420;
+  line-height: 1.3;
+}
+
+.bh-flyby-readout {
+  position: absolute;
+  z-index: 6;
+  bottom: max(124px, calc(env(safe-area-inset-bottom) + 112px));
+  left: max(22px, env(safe-area-inset-left));
+  display: flex;
+  gap: 18px;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(3, 4, 7, 0.52);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.bh-flyby-readout span {
+  display: grid;
+  gap: 2px;
+}
+
+.bh-flyby-readout small {
+  color: rgba(248, 244, 236, 0.48);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.bh-flyby-readout strong {
+  color: #fff8ee;
+  font-size: 12px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* One shell: tabs → current tools → primary scene rail. */
+.bh-flyby-freebar .experience-freebar-main {
+  width: min(860px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  gap: 8px;
+}
+
+.bh-flyby-freebar .experience-freebar-primary {
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.bh-flyby-freebar-secondary {
+  width: 100%;
+  flex-wrap: nowrap !important;
+}
+
+.bh-flyby-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.bh-flyby-tray-head {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.bh-flyby-tool-tabs {
+  flex: 0 1 auto;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.bh-flyby-tray-tools {
+  flex: 0 0 auto;
+}
+
+.bh-flyby-tool-tabs button {
+  min-height: 30px;
+}
+
+/* Content strip: chips + optional slider, one horizontal row — centered by default. */
+.bh-flyby-tool-row {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bh-flyby-tool-row::-webkit-scrollbar {
+  display: none;
+}
+
+.bh-flyby-tool-row > * {
+  flex: 0 0 auto;
+}
+
+.bh-flyby-toggle-group,
+.bh-flyby-view-group {
+  display: inline-flex;
+  flex: 0 1 auto;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Text chips — never force 36×36 icon squares onto labeled buttons. */
+.bh-flyby-toggle-group button,
+.bh-flyby-view-group button,
+.bh-flyby-rocket {
+  display: inline-flex;
+  width: auto;
+  min-width: 0;
+  min-height: 34px;
+  height: auto;
+  padding: 0 12px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: rgba(248, 244, 236, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.bh-flyby-toggle-group button:hover,
+.bh-flyby-view-group button:hover,
+.bh-flyby-rocket:hover {
+  color: #fff;
+  border-color: rgba(240, 195, 106, 0.45);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bh-flyby-toggle-group button.is-active,
+.bh-flyby-view-group button.is-active,
+.bh-flyby-rocket.is-active {
+  color: #ffe7ad;
+  border-color: rgba(240, 195, 106, 0.48);
+  background: rgba(240, 195, 106, 0.14);
+  font-weight: 600;
+}
+
+.bh-flyby-temperature,
+.bh-flyby-timescale {
+  flex: 1 1 200px;
+  min-width: min(180px, 100%);
+  max-width: 260px;
+}
+
+.bh-flyby-tray-tools {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Music only: icon button. */
+.bh-flyby-music {
+  display: grid;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  place-items: center;
+  color: rgba(248, 244, 236, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 0;
+  line-height: 0;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.bh-flyby-music:hover {
+  color: #fff;
+  border-color: rgba(240, 195, 106, 0.45);
+}
+
+.bh-flyby-music[aria-pressed='true'] {
+  color: #ffe7ad;
+  border-color: rgba(240, 195, 106, 0.48);
+  background: rgba(240, 195, 106, 0.12);
+}
+
+.bh-flyby-music svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.bh-flyby-scenes {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.bh-flyby .guide-replay {
+  display: none !important;
+}
+
+@media (max-width: 820px) {
+  .bh-flyby-plaque {
+    max-width: min(310px, 68vw);
+  }
+
+  .bh-flyby-readout {
+    right: 12px;
+    bottom: max(142px, calc(env(safe-area-inset-bottom) + 132px));
+    left: 12px;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .bh-flyby-freebar .experience-freebar-main {
+    width: calc(100vw - 20px);
+  }
+}
+
+@media (max-width: 540px) {
+  .oss-experience.bh-flyby .bh-flyby-plaque[data-experience-overlay='true'] {
+    /* The shell's next-world card occupies the top-right safe row on phones. */
+    top: calc(130px + env(safe-area-inset-top, 0px));
+    left: 14px;
+    max-width: 70vw;
+  }
+
+  .bh-flyby-plaque strong {
+    font-size: 15px;
+  }
+
+  .bh-flyby-readout {
+    bottom: max(150px, calc(env(safe-area-inset-bottom) + 140px));
+    padding: 8px 9px;
+  }
+
+  .bh-flyby-readout:not(.is-journey) span:nth-child(1) {
+    display: none;
+  }
+
+  .bh-flyby-readout.is-journey {
+    bottom: max(178px, calc(env(safe-area-inset-bottom) + 168px));
+  }
+
+  .bh-flyby-readout.is-journey strong {
+    font-size: 11px;
+  }
+
+  .bh-flyby-freebar .experience-freebar-primary {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .bh-flyby-freebar .experience-freebar-summary {
+    flex: 0 0 auto;
+  }
+
+  .bh-flyby-tool-row {
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .bh-flyby-tool-tabs {
+    width: auto;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .bh-flyby-toggle-group,
+  .bh-flyby-view-group {
+    width: auto;
+    flex-wrap: nowrap;
+    overflow-x: visible;
+    justify-content: center;
+  }
+
+  .bh-flyby-temperature,
+  .bh-flyby-timescale {
+    flex: 0 0 min(220px, 70vw);
+    min-width: min(180px, 60vw);
+    max-width: none;
+  }
+
+  .bh-flyby-scenes {
+    min-width: 0;
+    flex: 1 1 auto;
+    gap: 0;
+    padding: 2px;
+  }
+
+  .bh-flyby-scenes button {
+    min-width: 0;
+    padding-inline: 8px;
+    font-size: 11px;
+  }
+
+  .bh-flyby-toggle-group button,
+  .bh-flyby-view-group button,
+  .bh-flyby-rocket {
+    min-height: 34px;
+    padding-inline: 11px;
+    font-size: 11.5px;
+  }
+}
+

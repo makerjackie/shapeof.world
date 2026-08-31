@@ -1,0 +1,240 @@
+{
+  "pool-caustics": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "pool-caustics",
+      "publication": "public",
+      "index": "25",
+      "title": "泳池焦散光纹",
+      "poster": "/assets/posters/pool-caustics.webp",
+      "posterMobile": "/assets/posters/mobile/pool-caustics.webp",
+      "posterDesktop": "/assets/posters/desktop/pool-caustics.webp",
+      "posterTitle": "泳池底部不断移动的焦散光纹",
+      "posterHook": "为什么泳池底下的光一直在游？",
+      "posterSource": "Canvas 2D · 水面折射光线模型 · 本地构建",
+      "posterPosition": "58% 52%",
+      "question": "为什么泳池底下的光一直在游？",
+      "hook": "轻划透明水面，让一圈涟漪重新编织池底的亮线；再沿着光路看清每一道明暗纹路从哪里来。",
+      "payoff": "起伏的水面像无数片不断转动的软镜片，把进入水中的阳光折向不同方向。许多光线聚到一起的地方变亮，光被带走的地方变暗，于是池底出现游动的光网。",
+      "topicLabel": "光与水",
+      "translations": {
+        "en": {
+          "title": "Caustic light patterns in a pool",
+          "posterTitle": "Moving caustic patterns on a pool floor",
+          "posterHook": "Why does the light on a pool floor keep swimming?",
+          "posterSource": "Canvas 2D · Water-surface refraction model · Local build",
+          "question": "Why does the light on a pool floor keep swimming?",
+          "hook": "Brush the transparent surface and let a ripple reweave the bright lines below, then follow the rays to see where every light and dark patch comes from.",
+          "payoff": "A rippling surface behaves like countless soft lenses that continuously redirect sunlight entering the water. Places where many rays gather become bright; places rays leave behind become dark, creating the moving net on the pool floor.",
+          "topicLabel": "Light and water"
+        }
+      },
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "difficulty": "intro",
+      "lane": "flow",
+      "renderer": "pool-caustics",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 300,
+      "evidence": "modeled",
+      "accent": "#fff0a6",
+      "related": [
+        "pinhole-canopy",
+        "double-slit"
+      ],
+      "sources": [
+        {
+          "label": "Nature — 泳池光纹中的焦散交汇结构",
+          "labelEn": "Nature — Fine structure in swimming-pool caustic junctions",
+          "url": "https://doi.org/10.1038/267034a0"
+        },
+        {
+          "label": "Heritage Science — 达·芬奇手稿中的焦散光路",
+          "labelEn": "Heritage Science — Caustic ray paths in Leonardo da Vinci's notebooks",
+          "url": "https://doi.org/10.1186/s40494-022-00713-6"
+        },
+        {
+          "label": "OpenStax Physics — 折射与斯涅尔定律",
+          "labelEn": "OpenStax Physics — Refraction and Snell's law",
+          "url": "https://openstax.org/books/physics/pages/16-2-refraction"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "gpt-5.6-sol"
+      },
+      "presentation": "full-bleed",
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+      "releaseId": "oss-6ff3221d",
+      "id": "pool-caustics",
+      "state": "public",
+      "title": "泳池焦散光纹",
+      "titleEn": "Caustic light patterns in a pool",
+      "poster": "/assets/posters/pool-caustics.webp",
+      "posterMobile": "/assets/posters/mobile/pool-caustics.webp",
+      "posterDesktop": "/assets/posters/desktop/pool-caustics.webp",
+      "posterHook": "为什么泳池底下的光一直在游？",
+      "posterHookEn": "Why does the light on a pool floor keep swimming?",
+      "question": "为什么泳池底下的光一直在游？",
+      "questionEn": "Why does the light on a pool floor keep swimming?",
+      "topicLabel": "光与水",
+      "topicLabelEn": "Light and water",
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#fff0a6"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+      "releaseId": "oss-6ff3221d",
+      "id": "pool-caustics",
+      "state": "public",
+      "title": "泳池焦散光纹",
+      "titleEn": "Caustic light patterns in a pool",
+      "poster": "/assets/posters/pool-caustics.webp",
+      "posterMobile": "/assets/posters/mobile/pool-caustics.webp",
+      "posterDesktop": "/assets/posters/desktop/pool-caustics.webp",
+      "posterHook": "为什么泳池底下的光一直在游？",
+      "posterHookEn": "Why does the light on a pool floor keep swimming?",
+      "question": "为什么泳池底下的光一直在游？",
+      "questionEn": "Why does the light on a pool floor keep swimming?",
+      "topicLabel": "光与水",
+      "topicLabelEn": "Light and water",
+      "primaryCategoryId": "light-magic",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#fff0a6",
+      "hook": "轻划透明水面，让一圈涟漪重新编织池底的亮线；再沿着光路看清每一道明暗纹路从哪里来。",
+      "hookEn": "Brush the transparent surface and let a ripple reweave the bright lines below, then follow the rays to see where every light and dark patch comes from.",
+      "payoff": "起伏的水面像无数片不断转动的软镜片，把进入水中的阳光折向不同方向。许多光线聚到一起的地方变亮，光被带走的地方变暗，于是池底出现游动的光网。",
+      "payoffEn": "A rippling surface behaves like countless soft lenses that continuously redirect sunlight entering the water. Places where many rays gather become bright; places rays leave behind become dark, creating the moving net on the pool floor.",
+      "related": [
+        "pinhole-canopy",
+        "double-slit"
+      ],
+      "sources": [
+        {
+          "label": "Nature — 泳池光纹中的焦散交汇结构",
+          "labelEn": "Nature — Fine structure in swimming-pool caustic junctions",
+          "url": "https://doi.org/10.1038/267034a0"
+        },
+        {
+          "label": "Heritage Science — 达·芬奇手稿中的焦散光路",
+          "labelEn": "Heritage Science — Caustic ray paths in Leonardo da Vinci's notebooks",
+          "url": "https://doi.org/10.1186/s40494-022-00713-6"
+        },
+        {
+          "label": "OpenStax Physics — 折射与斯涅尔定律",
+          "labelEn": "OpenStax Physics — Refraction and Snell's law",
+          "url": "https://openstax.org/books/physics/pages/16-2-refraction"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "pool-caustics",
+      "duration": 300,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+      "releaseId": "oss-6ff3221d",
+      "text": "泳池焦散光纹 Caustic light patterns in a pool 为什么泳池底下的光一直在游？ Why does the light on a pool floor keep swimming? 为什么泳池底下的光一直在游？ Why does the light on a pool floor keep swimming? 光与水 Light and water",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+        "releaseId": "oss-6ff3221d",
+        "id": "pool-caustics",
+        "state": "public",
+        "title": "泳池焦散光纹",
+        "titleEn": "Caustic light patterns in a pool",
+        "poster": "/assets/posters/pool-caustics.webp",
+        "posterMobile": "/assets/posters/mobile/pool-caustics.webp",
+        "posterDesktop": "/assets/posters/desktop/pool-caustics.webp",
+        "posterHook": "为什么泳池底下的光一直在游？",
+        "posterHookEn": "Why does the light on a pool floor keep swimming?",
+        "question": "为什么泳池底下的光一直在游？",
+        "questionEn": "Why does the light on a pool floor keep swimming?",
+        "topicLabel": "光与水",
+        "topicLabelEn": "Light and water",
+        "primaryCategoryId": "light-magic",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#fff0a6"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+      "releaseId": "oss-6ff3221d",
+      "id": "pool-caustics",
+      "renderer": "pool-caustics",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "泳池焦散光纹",
+        "en": "Caustic light patterns in a pool"
+      },
+      "summary": {
+        "zh": "为什么泳池底下的光一直在游？",
+        "en": "Why does the light on a pool floor keep swimming?"
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "00d210127775fe60820cfb64777c15f933456d7f53a0a85705ac0ebfa0b9289c",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "soap-bubble",
+      "nextWorldId": "pinhole-canopy",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

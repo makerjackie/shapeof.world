@@ -1,0 +1,83 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'soap-bubble',
+    publication: 'public',
+    index: '224',
+    title: '薄膜干涉形成肥皂泡彩色条纹',
+    poster: '/assets/posters/soap-bubble.webp',
+    posterMobile: '/assets/posters/mobile/soap-bubble.webp',
+    posterDesktop: '/assets/posters/desktop/soap-bubble.webp',
+    posterTitle: '肥皂泡通过薄膜干涉呈现彩色条纹',
+    posterHook: '薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。',
+    posterSource: 'pompa-iridiscencia · SantiagoGR11 · MIT',
+    posterPosition: '50% 48%',
+    question: '肥皂膜上的颜色，究竟是颜料还是光自己在打架？',
+    hook: '一颗缓慢旋转的气泡悬在暗室里。拖它、拧厚度与排水，看纳米级薄膜怎样把白光拆成流动的光谱。',
+    payoff: '颜色来自薄膜前后两层反射波的干涉：膜厚接近可见光波长时，某些色被加强、某些相消；重力排水让顶部变黑，那是几乎完全的相消干涉。',
+    topicLabel: '光学材料',
+    translations: {
+      en: {
+        title: 'Thin-film interference colors a soap bubble',
+        posterTitle: 'Thin-film interference gives soap bubbles their colors',
+        posterHook: 'As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.',
+        posterSource: 'pompa-iridiscencia · SantiagoGR11 · MIT',
+        question: 'Are the colours on a soap film paint, or light fighting itself?',
+        hook: 'A slowly spinning bubble hangs in a dark chamber. Drag it, twist thickness and drainage, and watch a nanometre film unweave white light into a living spectrum.',
+        payoff: 'The colours come from interference between reflections at the front and back of the film: when thickness is near visible wavelengths, some colours reinforce and others cancel; gravity drainage blacks out the top where cancellation is nearly complete.',
+        topicLabel: 'Optical materials',
+      },
+    },
+    primaryCategoryId: 'materials-lab',
+    runtime: 'scene-3d',
+    difficulty: 'intro',
+    lane: 'structure',
+    renderer: 'soap-bubble',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'modeled',
+    accent: '#9ad0ff',
+    related: ['pool-caustics'],
+    sources: [
+      {
+        label: 'pompa-iridiscencia（SantiagoGR11 · 薄膜干涉物理着色器）',
+        labelEn: 'pompa-iridiscencia (SantiagoGR11 · physical thin-film interference shader)',
+        url: 'https://github.com/SantiagoGR11/pompa-iridiscencia',
+      },
+      {
+        label: '在线演示 · pompa iridiscencia',
+        labelEn: 'Live demo · pompa iridiscencia',
+        url: 'https://santiagogr11.github.io/pompa-iridiscencia/',
+      },
+      {
+        label: '薄膜干涉（Wikipedia）',
+        labelEn: 'Thin-film interference (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/Thin-film_interference',
+      },
+      {
+        label: '肥皂膜（Wikipedia）',
+        labelEn: 'Soap film (Wikipedia)',
+        url: 'https://en.wikipedia.org/wiki/Soap_film',
+      },
+      {
+        label: '原项目许可证（MIT）',
+        labelEn: 'Upstream license (MIT)',
+        url: 'https://github.com/SantiagoGR11/pompa-iridiscencia/blob/main/LICENSE',
+      }
+    ],
+    provenance: {
+      origin: 'open-source-adaptation',
+      sourceProject: 'pompa-iridiscencia (SantiagoGR11)',
+      sourceUrl: 'https://github.com/SantiagoGR11/pompa-iridiscencia',
+      adaptationModel: 'grok-4.5',
+    },
+    presentation: 'full-bleed',
+    hasEmbeddedGuide: true,
+    onboardingVersion: 1,
+    transferBudgetMb: 1,
+    fallback: 'poster',
+  } satisfies WorldExperience

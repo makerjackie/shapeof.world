@@ -1,0 +1,58 @@
+[
+  {
+    "id": "lightning-lab",
+    "index": "27",
+    "poster": "/assets/posters/lightning-lab.webp",
+    "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
+    "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
+    "title": "闪电沿分叉通道逐步前进",
+    "posterTitle": "闪电沿分叉通道形成锯齿路径",
+    "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
+    "posterPosition": "50% 42%",
+    "question": "闪电为什么是锯齿形的？",
+    "topicLabel": "大气与电",
+    "primaryCategoryId": "earth-climate",
+    "renderer": "lightning-lab",
+    "runtime": "diagram-2d",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#7ba4ff",
+    "translations": {
+      "en": {
+        "title": "Lightning advances through a branching channel",
+        "posterTitle": "Lightning forms a jagged path through branching channels",
+        "posterHook": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
+        "question": "Why is lightning shaped like a jagged line?",
+        "topicLabel": "Atmosphere and electricity"
+      }
+    }
+  },
+  {
+    "id": "snow-crystal",
+    "index": "28",
+    "poster": "/assets/posters/snow-crystal.webp",
+    "posterMobile": "/assets/posters/mobile/snow-crystal.webp",
+    "posterDesktop": "/assets/posters/desktop/snow-crystal.webp",
+    "title": "温度与湿度决定雪晶形状",
+    "posterTitle": "雪花会长成薄片或针状晶体",
+    "posterHook": "拨动温度与湿度，看同一套六角对称在薄板、枝晶与细针之间切换习性。",
+    "posterPosition": "50% 48%",
+    "question": "同一片云里，为什么雪花有时像板，有时像针？",
+    "topicLabel": "大气与冰晶",
+    "primaryCategoryId": "earth-climate",
+    "renderer": "snow-crystal",
+    "runtime": "diagram-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#a8d8ff",
+    "translations": {
+      "en": {
+        "title": "Temperature and humidity shape snow crystals",
+        "posterTitle": "Snow crystals grow as plates or needles",
+        "posterHook": "Scrub temperature and humidity and watch the same six-fold symmetry switch habits among plates, dendrites, and needles.",
+        "question": "In the same cloud, why is a snowflake sometimes a plate and sometimes a needle?",
+        "topicLabel": "Atmosphere and ice"
+      }
+    }
+  }
+]

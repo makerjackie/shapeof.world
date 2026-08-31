@@ -1,0 +1,243 @@
+/* SoapBubble · thin-film iridescence museum stage */
+
+.sb-experience {
+  --freebar-accent: var(--world-accent, rgba(154, 208, 255, 0.22));
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(12, 16, 26, 0.62),
+    rgba(4, 8, 14, 0.60)
+  );
+  --experience-panel-border: rgba(154, 208, 255, 0.22);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  --sb-ink: #f4f0ea;
+  --sb-muted: rgba(230, 234, 242, 0.58);
+  --sb-accent: #9ad0ff;
+  --world-accent: #9ad0ff;
+  overflow: hidden;
+  color: var(--sb-ink);
+  /* Soft night studio — closer to pompa-iridiscencia, not pure black */
+  background:
+    radial-gradient(1200px 800px at 32% 22%, #2a1e65 0%, #1b1740 42%, #0f1528 100%);
+  isolation: isolate;
+}
+
+.sb-experience::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 28%, rgba(8, 10, 20, 0.08) 62%, rgba(4, 6, 14, 0.55) 130%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), transparent 22%, transparent 70%, rgba(0, 0, 0, 0.4));
+  content: '';
+  pointer-events: none;
+}
+
+.sb-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sb-canvas:active {
+  cursor: grabbing;
+}
+
+/* 点题铭牌 */
+.sb-plaque {
+  position: absolute;
+  z-index: 6;
+  top: calc(var(--experience-safe-top, 78px) + 14px);
+  left: clamp(16px, 4vw, 56px);
+  width: min(360px, 44vw);
+  pointer-events: none;
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.9);
+}
+
+.sb-plaque > span {
+  color: rgba(154, 208, 255, 0.62);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+}
+
+.sb-plaque h1 {
+  margin: 8px 0 6px;
+  color: #fffaf4;
+  font: 400 clamp(26px, 3.4vw, 44px) / 0.98 var(--serif);
+  letter-spacing: -0.03em;
+}
+
+.sb-plaque p {
+  max-width: 28em;
+  margin: 0;
+  color: var(--sb-muted);
+  font: 400 clamp(12px, 1.1vw, 14px) / 1.55 var(--serif);
+}
+
+/* 被动读数 */
+.sb-readout {
+  position: absolute;
+  z-index: 6;
+  bottom: max(118px, calc(env(safe-area-inset-bottom, 0px) + 104px));
+  left: clamp(16px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 2px 14px;
+  align-items: baseline;
+  pointer-events: none;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95);
+}
+
+.sb-readout span {
+  color: rgba(230, 236, 244, 0.48);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.sb-readout strong {
+  color: #f6f1ea;
+  font: 400 18px / 1 var(--serif);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Freebar 控件（壳层由共享 Freebar 负责） */
+.sb-freebar-main {
+  width: min(960px, 100%);
+}
+
+.sb-tray-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.sb-tray-row > .sb-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.sb-tray-row > .experience-freebar-story {
+  flex: 0 0 auto;
+}
+
+.sb-field {
+  flex: 1 1 200px;
+  min-width: min(200px, 100%);
+  max-width: 320px;
+}
+
+.sb-field span {
+  color: rgba(230, 236, 244, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.sb-field strong {
+  color: var(--sb-accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  min-width: 3.6em;
+  text-align: right;
+}
+
+/* Visible track after appearance:none (Freebar baseline) */
+.sb-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(154, 208, 255, 0.18), rgba(154, 208, 255, 0.42));
+  outline: none;
+  cursor: pointer;
+}
+
+.sb-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(80, 110, 160, 0.35), rgba(154, 208, 255, 0.45));
+}
+
+.sb-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(230, 242, 255, 0.85);
+  background: radial-gradient(circle at 35% 30%, #e8f4ff, #6aa8e8 70%, #3a6aab);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  cursor: grab;
+}
+
+.sb-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(80, 110, 160, 0.35), rgba(154, 208, 255, 0.45));
+}
+
+.sb-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(230, 242, 255, 0.85);
+  background: radial-gradient(circle at 35% 30%, #e8f4ff, #6aa8e8 70%, #3a6aab);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  cursor: grab;
+}
+
+
+
+@media (max-width: 720px) {
+  .sb-plaque {
+    width: min(88vw, 340px);
+  }
+
+  .sb-plaque h1 {
+    font-size: clamp(22px, 7vw, 32px);
+  }
+
+  .sb-readout {
+    bottom: max(148px, calc(env(safe-area-inset-bottom, 0px) + 132px));
+    grid-template-columns: auto auto;
+    gap: 1px 10px;
+  }
+
+  .sb-readout strong {
+    font-size: 15px;
+  }
+
+  .sb-field {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .sb-tray-row {
+    flex-wrap: wrap;
+  }
+
+  .sb-tray-row > .sb-field {
+    flex: 1 1 100%;
+  }
+
+  .sb-freebar-replay {
+    flex: 0 0 auto;
+    width: auto;
+    margin: 0;
+  }
+}

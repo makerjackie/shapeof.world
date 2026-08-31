@@ -1,0 +1,232 @@
+{
+  "clifford-dust": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "clifford-dust",
+      "publication": "public",
+      "index": "16",
+      "title": "四个参数迭代生成 Clifford 吸引子",
+      "poster": "/assets/posters/clifford-dust.webp",
+      "posterMobile": "/assets/posters/mobile/clifford-dust.webp",
+      "posterDesktop": "/assets/posters/desktop/clifford-dust.webp",
+      "posterTitle": "Clifford 映射形成确定性的点云结构",
+      "posterHook": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
+      "posterSource": "Canvas 2D · Clifford 映射 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "为什么四个数字反复迭代，会落成一片星云？",
+      "hook": "每一步只是 sin 与 cos 的交错；十万次之后，平面上浮现出翅膀、丝带与暗涡。",
+      "payoff": "Clifford 吸引子是二维迭代映射：有界却对初值敏感。参数 (a,b,c,d) 决定折叠方式——同一规则在不同系数下会长出完全不同的尘埃纹样。",
+      "topicLabel": "数学",
+      "translations": {
+        "en": {
+          "title": "Four parameters generate a Clifford attractor",
+          "posterTitle": "The Clifford map forms a deterministic point cloud",
+          "posterHook": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black.",
+          "posterSource": "Canvas 2D · Clifford map · Local build",
+          "question": "Why does iterating four numbers settle into a nebula?",
+          "hook": "Each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies rise on the plane.",
+          "payoff": "The Clifford attractor is a 2D iterative map: bounded yet sensitive to initial conditions. Parameters (a,b,c,d) choose the fold — the same rule grows entirely different dust patterns under different coefficients.",
+          "topicLabel": "Mathematics"
+        }
+      },
+      "primaryCategoryId": "fractals-chaos",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "grok-4.5"
+      },
+      "runtime": "particle-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "clifford-dust",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 420,
+      "evidence": "modeled",
+      "accent": "#f0d9a8",
+      "related": [
+        "strange-attractors",
+        "formula-bloom"
+      ],
+      "sources": [
+        {
+          "label": "Clifford attractor",
+          "labelEn": "Clifford attractor",
+          "url": "https://en.wikipedia.org/wiki/List_of_chaotic_maps"
+        },
+        {
+          "label": "奇怪吸引子（Wikipedia）",
+          "labelEn": "Attractor (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Attractor"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+      "releaseId": "oss-6ff3221d",
+      "id": "clifford-dust",
+      "state": "public",
+      "title": "四个参数迭代生成 Clifford 吸引子",
+      "titleEn": "Four parameters generate a Clifford attractor",
+      "poster": "/assets/posters/clifford-dust.webp",
+      "posterMobile": "/assets/posters/mobile/clifford-dust.webp",
+      "posterDesktop": "/assets/posters/desktop/clifford-dust.webp",
+      "posterHook": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
+      "posterHookEn": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black.",
+      "question": "为什么四个数字反复迭代，会落成一片星云？",
+      "questionEn": "Why does iterating four numbers settle into a nebula?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#f0d9a8"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+      "releaseId": "oss-6ff3221d",
+      "id": "clifford-dust",
+      "state": "public",
+      "title": "四个参数迭代生成 Clifford 吸引子",
+      "titleEn": "Four parameters generate a Clifford attractor",
+      "poster": "/assets/posters/clifford-dust.webp",
+      "posterMobile": "/assets/posters/mobile/clifford-dust.webp",
+      "posterDesktop": "/assets/posters/desktop/clifford-dust.webp",
+      "posterHook": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
+      "posterHookEn": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black.",
+      "question": "为什么四个数字反复迭代，会落成一片星云？",
+      "questionEn": "Why does iterating four numbers settle into a nebula?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#f0d9a8",
+      "hook": "每一步只是 sin 与 cos 的交错；十万次之后，平面上浮现出翅膀、丝带与暗涡。",
+      "hookEn": "Each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies rise on the plane.",
+      "payoff": "Clifford 吸引子是二维迭代映射：有界却对初值敏感。参数 (a,b,c,d) 决定折叠方式——同一规则在不同系数下会长出完全不同的尘埃纹样。",
+      "payoffEn": "The Clifford attractor is a 2D iterative map: bounded yet sensitive to initial conditions. Parameters (a,b,c,d) choose the fold — the same rule grows entirely different dust patterns under different coefficients.",
+      "related": [
+        "strange-attractors",
+        "formula-bloom"
+      ],
+      "sources": [
+        {
+          "label": "Clifford attractor",
+          "labelEn": "Clifford attractor",
+          "url": "https://en.wikipedia.org/wiki/List_of_chaotic_maps"
+        },
+        {
+          "label": "奇怪吸引子（Wikipedia）",
+          "labelEn": "Attractor (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Attractor"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "clifford-dust",
+      "duration": 420,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+      "releaseId": "oss-6ff3221d",
+      "text": "四个参数迭代生成 Clifford 吸引子 Four parameters generate a Clifford attractor 为什么四个数字反复迭代，会落成一片星云？ Why does iterating four numbers settle into a nebula? Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。 Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black. 数学 Mathematics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+        "releaseId": "oss-6ff3221d",
+        "id": "clifford-dust",
+        "state": "public",
+        "title": "四个参数迭代生成 Clifford 吸引子",
+        "titleEn": "Four parameters generate a Clifford attractor",
+        "poster": "/assets/posters/clifford-dust.webp",
+        "posterMobile": "/assets/posters/mobile/clifford-dust.webp",
+        "posterDesktop": "/assets/posters/desktop/clifford-dust.webp",
+        "posterHook": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
+        "posterHookEn": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black.",
+        "question": "为什么四个数字反复迭代，会落成一片星云？",
+        "questionEn": "Why does iterating four numbers settle into a nebula?",
+        "topicLabel": "数学",
+        "topicLabelEn": "Mathematics",
+        "primaryCategoryId": "fractals-chaos",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#f0d9a8"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+      "releaseId": "oss-6ff3221d",
+      "id": "clifford-dust",
+      "renderer": "clifford-dust",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "四个参数迭代生成 Clifford 吸引子",
+        "en": "Four parameters generate a Clifford attractor"
+      },
+      "summary": {
+        "zh": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
+        "en": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "de31521a12171f1f03befa7907770ba0f4672ac6ab8e64e263baf6b5143b0c51",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "newton-fractal",
+      "nextWorldId": "kakeya-needle",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

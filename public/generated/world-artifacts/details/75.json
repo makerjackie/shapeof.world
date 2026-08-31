@@ -1,0 +1,222 @@
+{
+  "double-slit": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "double-slit",
+      "publication": "public",
+      "index": "04",
+      "title": "单粒子逐个穿过双缝形成干涉条纹",
+      "poster": "/assets/posters/double-slit.webp",
+      "posterMobile": "/assets/posters/mobile/double-slit.webp",
+      "posterDesktop": "/assets/posters/desktop/double-slit.webp",
+      "posterTitle": "一颗粒子会和「自己」发生干涉吗？",
+      "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+      "posterSource": "Canvas 2D · 波场模拟 + 蒙特卡洛 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "为什么单个粒子也会形成干涉条纹？",
+      "hook": "调节波长与缝距验证 Δx=λL/d，再切到逐个粒子模式看概率波浮现；打开路径观测，条纹立刻消失。",
+      "payoff": "干涉来自概率幅叠加：即使一次只发射一个粒子，落点分布仍服从波的干涉图样；一旦获取「走了哪条缝」的信息，量子叠加被破坏，条纹消失。",
+      "topicLabel": "量子物理",
+      "translations": {
+        "en": {
+          "title": "Single particles build an interference pattern at a double slit",
+          "posterTitle": "Will a particle interfere with \"itself\"?",
+          "posterHook": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
+          "posterSource": "Canvas 2D · Wave field simulation + Monte Carlo · Local construction",
+          "question": "Why do single particles also form interference fringes?",
+          "hook": "Adjust the wavelength and slit distance to verify Δx=λL/d, then switch to the particle-by-particle mode to see the probability wave emerge; open the path for observation, and the stripes disappear immediately.",
+          "payoff": "Interference comes from probability amplitude superposition: even if only one particle is emitted at a time, the impact point distribution still obeys the interference pattern of the wave; once the information of \"which slit has been taken\" is obtained, the quantum superposition is destroyed and the stripes disappear.",
+          "topicLabel": "Quantum physics"
+        }
+      },
+      "primaryCategoryId": "waves",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "particle-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "double-slit",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 480,
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "related": [
+        "fourier",
+        "neural-playground"
+      ],
+      "sources": [
+        {
+          "label": "双缝实验（Wikipedia）",
+          "labelEn": "Double slit experiment (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/雙縫實驗"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-slit",
+      "state": "public",
+      "title": "单粒子逐个穿过双缝形成干涉条纹",
+      "titleEn": "Single particles build an interference pattern at a double slit",
+      "poster": "/assets/posters/double-slit.webp",
+      "posterMobile": "/assets/posters/mobile/double-slit.webp",
+      "posterDesktop": "/assets/posters/desktop/double-slit.webp",
+      "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+      "posterHookEn": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
+      "question": "为什么单个粒子也会形成干涉条纹？",
+      "questionEn": "Why do single particles also form interference fringes?",
+      "topicLabel": "量子物理",
+      "topicLabelEn": "Quantum physics",
+      "primaryCategoryId": "waves",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-slit",
+      "state": "public",
+      "title": "单粒子逐个穿过双缝形成干涉条纹",
+      "titleEn": "Single particles build an interference pattern at a double slit",
+      "poster": "/assets/posters/double-slit.webp",
+      "posterMobile": "/assets/posters/mobile/double-slit.webp",
+      "posterDesktop": "/assets/posters/desktop/double-slit.webp",
+      "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+      "posterHookEn": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
+      "question": "为什么单个粒子也会形成干涉条纹？",
+      "questionEn": "Why do single particles also form interference fringes?",
+      "topicLabel": "量子物理",
+      "topicLabelEn": "Quantum physics",
+      "primaryCategoryId": "waves",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "hook": "调节波长与缝距验证 Δx=λL/d，再切到逐个粒子模式看概率波浮现；打开路径观测，条纹立刻消失。",
+      "hookEn": "Adjust the wavelength and slit distance to verify Δx=λL/d, then switch to the particle-by-particle mode to see the probability wave emerge; open the path for observation, and the stripes disappear immediately.",
+      "payoff": "干涉来自概率幅叠加：即使一次只发射一个粒子，落点分布仍服从波的干涉图样；一旦获取「走了哪条缝」的信息，量子叠加被破坏，条纹消失。",
+      "payoffEn": "Interference comes from probability amplitude superposition: even if only one particle is emitted at a time, the impact point distribution still obeys the interference pattern of the wave; once the information of \"which slit has been taken\" is obtained, the quantum superposition is destroyed and the stripes disappear.",
+      "related": [
+        "fourier",
+        "neural-playground"
+      ],
+      "sources": [
+        {
+          "label": "双缝实验（Wikipedia）",
+          "labelEn": "Double slit experiment (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/雙縫實驗"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "double-slit",
+      "duration": 480,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+      "releaseId": "oss-6ff3221d",
+      "text": "单粒子逐个穿过双缝形成干涉条纹 Single particles build an interference pattern at a double slit 为什么单个粒子也会形成干涉条纹？ Why do single particles also form interference fringes? 先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。 First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot. 量子物理 Quantum physics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+        "releaseId": "oss-6ff3221d",
+        "id": "double-slit",
+        "state": "public",
+        "title": "单粒子逐个穿过双缝形成干涉条纹",
+        "titleEn": "Single particles build an interference pattern at a double slit",
+        "poster": "/assets/posters/double-slit.webp",
+        "posterMobile": "/assets/posters/mobile/double-slit.webp",
+        "posterDesktop": "/assets/posters/desktop/double-slit.webp",
+        "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+        "posterHookEn": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
+        "question": "为什么单个粒子也会形成干涉条纹？",
+        "questionEn": "Why do single particles also form interference fringes?",
+        "topicLabel": "量子物理",
+        "topicLabelEn": "Quantum physics",
+        "primaryCategoryId": "waves",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#b15cff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+      "releaseId": "oss-6ff3221d",
+      "id": "double-slit",
+      "renderer": "double-slit",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "单粒子逐个穿过双缝形成干涉条纹",
+        "en": "Single particles build an interference pattern at a double slit"
+      },
+      "summary": {
+        "zh": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
+        "en": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "formula-bloom",
+      "nextWorldId": "pendulum-wave",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

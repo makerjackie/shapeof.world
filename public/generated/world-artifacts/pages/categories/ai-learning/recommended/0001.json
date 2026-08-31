@@ -1,0 +1,30 @@
+[
+  {
+    "id": "neural-playground",
+    "index": "09",
+    "poster": "/assets/posters/neural-playground.webp",
+    "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+    "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+    "title": "神经网络通过调整权重学习分类",
+    "posterTitle": "神经网络用误差反向调整权重",
+    "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
+    "posterPosition": "50% 50%",
+    "question": "神经网络是怎样从数据中学会分类的？",
+    "topicLabel": "深度学习",
+    "primaryCategoryId": "ai-learning",
+    "renderer": "neural-playground",
+    "runtime": "diagram-2d",
+    "duration": 600,
+    "evidence": "modeled",
+    "accent": "#4dabf7",
+    "translations": {
+      "en": {
+        "title": "A neural network learns classification by adjusting weights",
+        "posterTitle": "A neural network uses error to update its weights",
+        "posterHook": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
+        "question": "How do neural networks learn to classify from data?",
+        "topicLabel": "deep learning"
+      }
+    }
+  }
+]

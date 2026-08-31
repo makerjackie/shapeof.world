@@ -1,0 +1,58 @@
+[
+  {
+    "id": "firefly-sync",
+    "index": "07",
+    "poster": "/assets/posters/firefly-sync.webp",
+    "posterMobile": "/assets/posters/mobile/firefly-sync.webp",
+    "posterDesktop": "/assets/posters/desktop/firefly-sync.webp",
+    "title": "萤火虫群体同步闪烁",
+    "posterTitle": "萤火虫会逐渐同步闪烁",
+    "posterHook": "一整片微光，怎么突然一起亮？",
+    "posterPosition": "55% 50%",
+    "question": "一整片萤火虫，怎么突然一起亮？",
+    "topicLabel": "群体节律",
+    "primaryCategoryId": "emergence",
+    "renderer": "firefly-sync",
+    "runtime": "scene-3d",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#d8ff79",
+    "translations": {
+      "en": {
+        "title": "Collective synchronization in flashing fireflies",
+        "posterTitle": "Fireflies gradually synchronize their flashes",
+        "posterHook": "How does a whole field of tiny lights suddenly flash together?",
+        "question": "How does a whole field of fireflies suddenly flash together?",
+        "topicLabel": "Collective rhythms"
+      }
+    }
+  },
+  {
+    "id": "boids-flocking",
+    "index": "29",
+    "poster": "/assets/posters/boids-flocking.webp",
+    "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
+    "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
+    "title": "鸟群依靠三条局部规则形成统一运动",
+    "posterTitle": "三条局部规则形成鸟群运动",
+    "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
+    "posterPosition": "50% 50%",
+    "question": "没有领袖，鸟群如何飞出统一的形状？",
+    "topicLabel": "群体运动",
+    "primaryCategoryId": "emergence",
+    "renderer": "boids-flocking",
+    "runtime": "diagram-2d",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#4dd0e1",
+    "translations": {
+      "en": {
+        "title": "Three local rules produce coordinated flocking",
+        "posterTitle": "Three local rules produce flocking behavior",
+        "posterHook": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together.",
+        "question": "Without a leader, how does a flock fly in unified shapes?",
+        "topicLabel": "Collective motion"
+      }
+    }
+  }
+]

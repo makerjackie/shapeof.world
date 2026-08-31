@@ -1,0 +1,245 @@
+/* ============================================================
+   PoolCaustics · 泳池光纹
+   主体：游动焦散 · 故事：GuideTour 单轨 · 自由：铭牌 + 海洋感 Freebar
+   ============================================================ */
+.caustics-experience {
+  --caustics-sun: #fff0a6;
+  --caustics-cyan: #76e5e9;
+  --caustics-deep: #02101a;
+  --caustics-ink: #edf8f4;
+  --world-accent: var(--caustics-cyan);
+  --cx-ease: cubic-bezier(.2, .8, .2, 1);
+  --cx-dur: 180ms;
+  color: var(--caustics-ink);
+  background: #03121c;
+  isolation: isolate;
+}
+
+.caustics-experience::after {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 8, 14, .48), transparent 40%),
+    linear-gradient(180deg, rgba(0, 6, 12, .2), transparent 24%, transparent 74%, rgba(0, 5, 10, .36));
+  content: '';
+  pointer-events: none;
+}
+
+.caustics-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* —— 点题铭牌 · 顶左 —— */
+.caustics-plaque {
+  position: absolute;
+  z-index: 5;
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  max-width: min(320px, 40vw);
+  color: var(--caustics-ink);
+  pointer-events: none;
+  text-shadow: 0 2px 24px rgba(0, 6, 12, .92);
+}
+
+.caustics-plaque > span {
+  display: block;
+  color: var(--caustics-sun);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .28em;
+  opacity: .9;
+}
+
+.caustics-plaque h1 {
+  margin: 6px 0 4px;
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: 1.02;
+  color: #f4fffc;
+}
+
+.caustics-plaque p {
+  margin: 0;
+  max-width: 20em;
+  color: rgba(235, 248, 245, .58);
+  font-family: var(--serif);
+  font-size: clamp(12px, 1.15vw, 15px);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: .01em;
+}
+
+/* —— 自由底栏 · 控件布局（壳材质由共享 Freebar 提供） —— */
+.caustics-freebar {
+  z-index: 12;
+}
+
+.caustics-freebar-main {
+  gap: 10px 14px;
+}
+
+.caustics-freebar-field {
+  display: grid;
+  grid-template-columns: auto minmax(110px, 1fr) auto;
+  gap: 6px 10px;
+  align-items: center;
+  flex: 1 1 200px;
+  min-width: min(200px, 100%);
+  color: rgba(237, 248, 244, .72);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+
+.caustics-freebar-field span {
+  color: rgba(118, 229, 233, .82);
+  white-space: nowrap;
+}
+
+.caustics-freebar-field b {
+  min-width: 3.2ch;
+  color: var(--caustics-sun);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: right;
+  transition: color var(--cx-dur) ease, text-shadow var(--cx-dur) ease;
+}
+
+.caustics-freebar-field:focus-within b {
+  color: #fff7c4;
+  text-shadow: 0 0 12px rgba(255, 240, 166, .4);
+}
+
+.caustics-wave,
+.caustics-depth {
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  accent-color: var(--caustics-cyan);
+}
+
+.caustics-wave::-webkit-slider-runnable-track,
+.caustics-depth::-webkit-slider-runnable-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(118, 229, 233, .28), rgba(255, 240, 166, .88));
+  transition: filter var(--cx-dur) ease;
+}
+
+.caustics-wave::-webkit-slider-thumb,
+.caustics-depth::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  margin-top: -6px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid rgba(255, 251, 220, .95);
+  border-radius: 50%;
+  background: #06202a;
+  box-shadow:
+    0 0 0 3px rgba(118, 229, 233, .14),
+    0 0 16px rgba(255, 240, 166, .35);
+  transition: transform var(--cx-dur) var(--cx-ease), box-shadow var(--cx-dur) ease;
+}
+
+.caustics-wave:hover::-webkit-slider-thumb,
+.caustics-depth:hover::-webkit-slider-thumb {
+  transform: scale(1.1) translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(118, 229, 233, .22),
+    0 0 22px rgba(255, 240, 166, .55);
+}
+
+.caustics-wave:active::-webkit-slider-thumb,
+.caustics-depth:active::-webkit-slider-thumb {
+  transform: scale(0.97);
+}
+
+.caustics-wave::-moz-range-track,
+.caustics-depth::-moz-range-track {
+  height: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(118, 229, 233, .28), rgba(255, 240, 166, .88));
+}
+
+.caustics-wave::-moz-range-thumb,
+.caustics-depth::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 251, 220, .95);
+  border-radius: 50%;
+  background: #06202a;
+  box-shadow:
+    0 0 0 3px rgba(118, 229, 233, .14),
+    0 0 16px rgba(255, 240, 166, .35);
+  transition: transform var(--cx-dur) var(--cx-ease), box-shadow var(--cx-dur) ease;
+}
+
+.caustics-wave:hover::-moz-range-thumb,
+.caustics-depth:hover::-moz-range-thumb {
+  transform: scale(1.1);
+}
+
+.caustics-wave:focus-visible,
+.caustics-depth:focus-visible {
+  outline: 2px solid rgba(118, 229, 233, .55);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* story chrome: shared .experience-freebar-story */
+
+@media (max-width: 720px) {
+  .caustics-experience::after {
+    background: linear-gradient(180deg, rgba(0, 7, 13, .32), transparent 36%, rgba(0, 4, 8, .12));
+  }
+
+  .caustics-plaque {
+    max-width: min(220px, calc(100vw - 100px));
+  }
+
+  .caustics-plaque h1 {
+    font-size: clamp(20px, 6.2vw, 26px);
+    margin: 4px 0 2px;
+  }
+
+  .caustics-plaque p {
+    font-size: 12px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .caustics-freebar-main {
+    width: 100%;
+    max-height: min(38vh, 240px);
+  }
+
+  .caustics-freebar-field {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 720px) and (max-height: 640px) {
+  .caustics-plaque p {
+    display: none;
+  }
+}
+

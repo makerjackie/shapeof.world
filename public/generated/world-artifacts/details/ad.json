@@ -1,0 +1,239 @@
+{
+  "mandelbrot-zoom": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "mandelbrot-zoom",
+      "publication": "public",
+      "index": "14",
+      "title": "曼德勃罗集边界的无限细节",
+      "poster": "/assets/posters/mandelbrot-zoom.webp",
+      "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
+      "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
+      "posterTitle": "迭代公式生成自相似的分形边界",
+      "posterHook": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
+      "posterSource": "WebGL · 逃逸时间着色 · 本地 GPU 实时渲染",
+      "posterPosition": "50% 50%",
+      "question": "为什么一个公式的边界，越放大越看不完？",
+      "hook": "每个像素是一个数字。反复做 z²+c：永远不飞走的点涂成黑色，飞走的用颜色标出逃逸快慢。边界上放大再放大，永远有新图案。",
+      "payoff": "这就是曼德博集合：数学上无限复杂，却只靠一条规则生成。GPU 大约能放大到 10¹⁴ 倍；再往下，我们会跳到另一片著名边界继续看。",
+      "topicLabel": "分形",
+      "translations": {
+        "en": {
+          "title": "Infinite detail along the Mandelbrot set boundary",
+          "posterTitle": "An iterative formula produces a self-similar fractal boundary",
+          "posterHook": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same.",
+          "posterSource": "WebGL · Escape-time coloring · Local GPU real-time rendering",
+          "question": "Why does one formula’s boundary never run out as you zoom?",
+          "hook": "Each pixel is a number. Iterate z²+c: points that never fly away are painted black; escapees are colored by speed. Zoom the edge again and again—new patterns always appear.",
+          "payoff": "That is the Mandelbrot set: infinitely complex, born from one rule. The GPU reaches about 10¹⁴×; beyond that we hop to another famous valley and keep diving.",
+          "topicLabel": "Fractals"
+        }
+      },
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "diagram-2d",
+      "difficulty": "standard",
+      "lane": "structure",
+      "renderer": "mandelbrot-zoom",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 420,
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "related": [
+        "newton-fractal"
+      ],
+      "sources": [
+        {
+          "label": "曼德博集合（Wikipedia）",
+          "labelEn": "Mandelbrot set (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/曼德博集合"
+        },
+        {
+          "label": "Mandelbulb 3D / 社区着色器参考",
+          "labelEn": "Mandelbulb community & shader references",
+          "url": "https://www.mandelbulb.com/"
+        },
+        {
+          "label": "Wikipedia — Escape-time fractal",
+          "labelEn": "Wikipedia — Escape-time fractal",
+          "url": "https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set"
+        }
+      ],
+      "provenance": {
+        "origin": "multi-model"
+      },
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+      "releaseId": "oss-6ff3221d",
+      "id": "mandelbrot-zoom",
+      "state": "public",
+      "title": "曼德勃罗集边界的无限细节",
+      "titleEn": "Infinite detail along the Mandelbrot set boundary",
+      "poster": "/assets/posters/mandelbrot-zoom.webp",
+      "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
+      "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
+      "posterHook": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
+      "posterHookEn": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same.",
+      "question": "为什么一个公式的边界，越放大越看不完？",
+      "questionEn": "Why does one formula’s boundary never run out as you zoom?",
+      "topicLabel": "分形",
+      "topicLabelEn": "Fractals",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+      "releaseId": "oss-6ff3221d",
+      "id": "mandelbrot-zoom",
+      "state": "public",
+      "title": "曼德勃罗集边界的无限细节",
+      "titleEn": "Infinite detail along the Mandelbrot set boundary",
+      "poster": "/assets/posters/mandelbrot-zoom.webp",
+      "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
+      "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
+      "posterHook": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
+      "posterHookEn": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same.",
+      "question": "为什么一个公式的边界，越放大越看不完？",
+      "questionEn": "Why does one formula’s boundary never run out as you zoom?",
+      "topicLabel": "分形",
+      "topicLabelEn": "Fractals",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "hook": "每个像素是一个数字。反复做 z²+c：永远不飞走的点涂成黑色，飞走的用颜色标出逃逸快慢。边界上放大再放大，永远有新图案。",
+      "hookEn": "Each pixel is a number. Iterate z²+c: points that never fly away are painted black; escapees are colored by speed. Zoom the edge again and again—new patterns always appear.",
+      "payoff": "这就是曼德博集合：数学上无限复杂，却只靠一条规则生成。GPU 大约能放大到 10¹⁴ 倍；再往下，我们会跳到另一片著名边界继续看。",
+      "payoffEn": "That is the Mandelbrot set: infinitely complex, born from one rule. The GPU reaches about 10¹⁴×; beyond that we hop to another famous valley and keep diving.",
+      "related": [
+        "newton-fractal"
+      ],
+      "sources": [
+        {
+          "label": "曼德博集合（Wikipedia）",
+          "labelEn": "Mandelbrot set (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/曼德博集合"
+        },
+        {
+          "label": "Mandelbulb 3D / 社区着色器参考",
+          "labelEn": "Mandelbulb community & shader references",
+          "url": "https://www.mandelbulb.com/"
+        },
+        {
+          "label": "Wikipedia — Escape-time fractal",
+          "labelEn": "Wikipedia — Escape-time fractal",
+          "url": "https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "mandelbrot-zoom",
+      "duration": 420,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+      "releaseId": "oss-6ff3221d",
+      "text": "曼德勃罗集边界的无限细节 Infinite detail along the Mandelbrot set boundary 为什么一个公式的边界，越放大越看不完？ Why does one formula’s boundary never run out as you zoom? 一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。 One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same. 分形 Fractals",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+        "releaseId": "oss-6ff3221d",
+        "id": "mandelbrot-zoom",
+        "state": "public",
+        "title": "曼德勃罗集边界的无限细节",
+        "titleEn": "Infinite detail along the Mandelbrot set boundary",
+        "poster": "/assets/posters/mandelbrot-zoom.webp",
+        "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
+        "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
+        "posterHook": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
+        "posterHookEn": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same.",
+        "question": "为什么一个公式的边界，越放大越看不完？",
+        "questionEn": "Why does one formula’s boundary never run out as you zoom?",
+        "topicLabel": "分形",
+        "topicLabelEn": "Fractals",
+        "primaryCategoryId": "fractals-chaos",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#b15cff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+      "releaseId": "oss-6ff3221d",
+      "id": "mandelbrot-zoom",
+      "renderer": "mandelbrot-zoom",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "曼德勃罗集边界的无限细节",
+        "en": "Infinite detail along the Mandelbrot set boundary"
+      },
+      "summary": {
+        "zh": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
+        "en": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "gravity-assist",
+      "nextWorldId": "newton-fractal",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "fluid-sim",
+    "index": "19",
+    "poster": "/assets/posters/fluid-sim.webp",
+    "posterMobile": "/assets/posters/mobile/fluid-sim.webp",
+    "posterDesktop": "/assets/posters/desktop/fluid-sim.webp",
+    "title": "涡旋从流体扰动中产生并消散",
+    "posterTitle": "搅动流体时形成的涡旋",
+    "posterHook": "在画布上拖动鼠标或手指，实时搅动 GPU 流体——彩色染料在涡旋中拉伸、卷曲、扩散。",
+    "posterPosition": "50% 50%",
+    "question": "为什么流体被搅动后会自发形成涡旋结构？",
+    "topicLabel": "水流与漩涡",
+    "primaryCategoryId": "fields-flow",
+    "renderer": "fluid-sim",
+    "runtime": "particle-2d",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#4dd0e1",
+    "translations": {
+      "en": {
+        "title": "Vortices form and dissipate after a fluid is disturbed",
+        "posterTitle": "The vortices formed by stirring a fluid",
+        "posterHook": "Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices.",
+        "question": "Why does fluid spontaneously form vortex structures after being stirred?",
+        "topicLabel": "Flow and vortices"
+      }
+    }
+  },
+  {
+    "id": "electric-field",
+    "index": "20",
+    "poster": "/assets/posters/electric-field.webp",
+    "posterMobile": "/assets/posters/mobile/electric-field.webp",
+    "posterDesktop": "/assets/posters/desktop/electric-field.webp",
+    "title": "电场线勾出看不见的力",
+    "posterTitle": "看不见的电场，为什么能用线画出来？",
+    "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+    "posterPosition": "50% 50%",
+    "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
+    "topicLabel": "电磁学",
+    "primaryCategoryId": "fields-flow",
+    "renderer": "electric-field",
+    "runtime": "particle-2d",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#ffd166",
+    "translations": {
+      "en": {
+        "title": "Field lines trace the shape of an invisible electric force",
+        "posterTitle": "Why can an invisible electric field be drawn with lines?",
+        "posterHook": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
+        "question": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
+        "topicLabel": "Electromagnetism"
+      }
+    }
+  },
+  {
+    "id": "magnetic-lines",
+    "index": "21",
+    "poster": "/assets/posters/magnetic-lines.webp",
+    "posterMobile": "/assets/posters/mobile/magnetic-lines.webp",
+    "posterDesktop": "/assets/posters/desktop/magnetic-lines.webp",
+    "title": "看不见的磁力线",
+    "posterTitle": "铁屑排出磁场的形状",
+    "posterHook": "拖动磁铁，青色与琥珀色的场线重新组织；铁屑像微型指南针，自己排成花纹。",
+    "posterPosition": "50% 48%",
+    "question": "铁屑为什么会自己排成花纹？",
+    "topicLabel": "电磁",
+    "primaryCategoryId": "fields-flow",
+    "renderer": "magnetic-lines",
+    "runtime": "diagram-2d",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#6ee7f2",
+    "translations": {
+      "en": {
+        "title": "Invisible magnetic lines",
+        "posterTitle": "Iron filings trace the shape of a magnetic field",
+        "posterHook": "Drag a magnet and cyan–amber field lines reorganize; iron filings act like tiny compasses and line themselves into a pattern.",
+        "question": "Why do iron filings arrange themselves into patterns?",
+        "topicLabel": "Electromagnetism"
+      }
+    }
+  }
+]

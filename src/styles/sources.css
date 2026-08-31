@@ -1,0 +1,51 @@
+/* ============================================================
+   /sources 资料来源账本页
+   台账条目（.source-ledger/.evidence-*）的基线样式在 app.css 全局，
+   这里只放本页布局：标题区、节奏与「更新日志」入口链接。
+   ============================================================ */
+.sources-ledger-section {
+  padding-top: 84px;
+}
+
+.sources-page .section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sources-ledger-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.sources-ledger-link svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+.sources-ledger-link:hover svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 900px) {
+  .sources-ledger-section {
+    padding-top: 56px;
+  }
+  .sources-page .section-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  /* 窄屏收小标题字号，避免「可搜可筛」折出孤字 */
+  .sources-page .evidence-section h2 {
+    font-size: clamp(30px, 8.6vw, 40px);
+  }
+  .sources-ledger-link {
+    margin: 0;
+  }
+}

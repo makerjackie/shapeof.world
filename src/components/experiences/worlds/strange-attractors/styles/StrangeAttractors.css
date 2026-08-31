@@ -1,0 +1,473 @@
+/* ============================================================
+   StrangeAttractors · 奇异吸引子 3D 画廊
+   ============================================================ */
+.sa-experience {
+  --sa-yellow: #ffd166;
+  --sa-cyan: #4dd0e1;
+  --sa-purple: #b15cff;
+  --sa-red: #ff6b6b;
+  --world-accent: var(--sa-yellow);
+  --freebar-accent: #d5a8ff;
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(12, 10, 22, 0.62),
+    rgba(4, 6, 12, 0.60)
+  );
+  --experience-panel-border: rgba(177, 92, 255, 0.2);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #030508;
+}
+
+.sa-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+.sa-canvas:active {
+  cursor: grabbing;
+}
+
+/* ---- Header / Question ---- */
+.sa-header {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: 24px;
+  z-index: 10;
+  max-width: min(500px, 52vw);
+  pointer-events: none;
+}
+.sa-header h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #f1f5f9;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+.sa-header p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(203, 213, 225, 0.85);
+}
+/* ---- Active attractor name ---- */
+.sa-name-display {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  right: 24px;
+  z-index: 10;
+  max-width: min(460px, 43vw);
+  text-align: right;
+  pointer-events: none;
+}
+.sa-name-display .sa-name-main {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #fff;
+  text-shadow: 0 0 24px rgba(177, 92, 255, 0.5), 0 2px 12px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.4s;
+}
+.sa-name-display .sa-name-sub {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: rgba(148, 163, 184, 0.8);
+}
+.sa-name-display .sa-name-note {
+  margin-top: 6px;
+  font-size: 11px;
+  color: rgba(203, 213, 225, 0.68);
+}
+.sa-equation {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  margin-top: 13px;
+  color: rgba(247, 244, 255, 0.86);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.45;
+  text-shadow:
+    0 0 14px rgba(177, 92, 255, 0.24),
+    0 2px 10px rgba(0, 0, 0, 0.86);
+}
+.sa-equation span {
+  white-space: nowrap;
+}
+.sa-equation small {
+  margin-top: 4px;
+  color: rgba(174, 183, 202, 0.62);
+  font-family: inherit;
+  font-size: 9.5px;
+  letter-spacing: 0.01em;
+}
+
+/* ---- Freebar: selector + parameters (material via --experience-panel-*) ---- */
+.sa-experience .experience-freebar-main {
+  width: min(980px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  gap: 10px;
+}
+.sa-experience .experience-freebar-secondary {
+  overflow: visible;
+}
+.sa-params {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 12px;
+  width: 100%;
+  min-width: 0;
+}
+.sa-params .sa-param-row {
+  flex: 1 1 140px;
+  min-width: 120px;
+  max-width: 220px;
+}
+
+.sa-selector {
+  display: flex;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.sa-selector > * {
+  flex: 0 0 auto;
+}
+.sa-selector::-webkit-scrollbar {
+  display: none;
+}
+.sa-pill {
+  flex: none;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
+  color: rgba(203, 213, 225, 0.8);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.sa-pill:hover {
+  border-color: rgba(177, 92, 255, 0.5);
+  color: #e2e8f0;
+}
+.sa-pill.is-active {
+  border-color: var(--sa-purple);
+  background: rgba(177, 92, 255, 0.18);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(177, 92, 255, 0.22);
+}
+.sa-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sa-params {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 12px;
+}
+.sa-param-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr);
+  flex: 1 1 150px;
+  gap: 4px;
+}
+.sa-param-row > span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11.5px;
+  color: rgba(203, 213, 225, 0.9);
+}
+.sa-param-row i {
+  font-style: normal;
+}
+.sa-param-row .sa-param-val {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: rgba(233, 214, 255, 0.96);
+  font-size: 12px;
+}
+.sa-param-row input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+  cursor: pointer;
+}
+.sa-param-row input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #d5a8ff;
+  box-shadow: 0 0 8px rgba(177, 92, 255, 0.48);
+  cursor: pointer;
+}
+.sa-param-row input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: #d5a8ff;
+  box-shadow: 0 0 8px rgba(177, 92, 255, 0.48);
+  cursor: pointer;
+}
+.sa-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+.sa-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(241, 245, 249, 0.9);
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+.sa-actions button:hover {
+  border-color: rgba(177, 92, 255, 0.55);
+}
+
+/* ---- Challenge banner ---- */
+.sa-challenge {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 209, 102, 0.4);
+  background: rgba(255, 209, 102, 0.1);
+  backdrop-filter: blur(10px);
+  color: var(--sa-yellow);
+  font-size: 12.5px;
+  font-weight: 700;
+  animation: sa-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+.sa-challenge.is-done {
+  border-color: rgba(77, 208, 225, 0.5);
+  background: rgba(77, 208, 225, 0.12);
+  color: var(--sa-cyan);
+  animation: none;
+}
+@keyframes sa-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ---- Why modal ---- */
+.sa-why {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 4, 10, 0.75);
+  backdrop-filter: blur(6px);
+}
+.sa-why-card {
+  position: relative;
+  max-width: 600px;
+  max-height: 82vh;
+  overflow: auto;
+  padding: 28px 30px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 10, 18, 0.94);
+}
+.sa-why-card h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+.sa-why-card p {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: rgba(203, 213, 225, 0.92);
+}
+.sa-why-card strong {
+  color: #fff;
+}
+.sa-why-card .is-purple {
+  color: var(--sa-purple);
+}
+.sa-why-card .is-cyan {
+  color: var(--sa-cyan);
+}
+.sa-why-card .is-red {
+  color: var(--sa-red);
+}
+.sa-why-card small {
+  display: block;
+  margin-top: 8px;
+  font-size: 11px;
+  color: rgba(148, 163, 184, 0.75);
+}
+.sa-why-equation {
+  display: grid;
+  gap: 5px;
+  margin: 18px 0;
+  padding: 14px 16px;
+  border-left: 2px solid rgba(177, 92, 255, 0.78);
+  background: linear-gradient(90deg, rgba(177, 92, 255, 0.09), transparent);
+}
+.sa-why-equation strong {
+  margin-bottom: 3px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sa-why-equation code {
+  color: rgba(247, 244, 255, 0.96);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12.5px;
+  white-space: normal;
+}
+.sa-why-equation small {
+  margin-top: 5px;
+}
+.sa-why-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.sa-why-close:hover {
+  border-color: var(--sa-cyan);
+}
+
+/* ---- Engine credit ---- */
+.sa-credit {
+  pointer-events: none;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 720px) {
+  .sa-header {
+    top: var(--experience-safe-top, 78px);
+    left: 16px;
+    right: auto;
+    width: 58vw;
+    max-width: 58vw;
+  }
+  .sa-header h1 {
+    font-size: 17px;
+    line-height: 1.35;
+  }
+  .sa-header p {
+    display: none;
+  }
+  .sa-name-display {
+    top: var(--experience-safe-top, 78px);
+    right: 14px;
+    max-width: 45vw;
+  }
+  .sa-name-display .sa-name-main {
+    font-size: 20px;
+  }
+  .sa-name-display .sa-name-note {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .sa-equation {
+    gap: 1px;
+    margin-top: 8px;
+    font-size: 8.5px;
+    line-height: 1.35;
+  }
+  .sa-equation span {
+    white-space: normal;
+  }
+  .sa-equation small {
+    font-size: 8px;
+  }
+  .sa-experience .experience-freebar-main {
+    gap: 8px;
+    padding: 8px 9px 9px;
+  }
+  .sa-selector {
+    justify-content: flex-start;
+    gap: 5px;
+  }
+  .sa-pill {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  .sa-controls {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sa-params {
+    flex: 1 1 100%;
+    gap: 9px;
+  }
+  .sa-param-row {
+    min-width: 88px;
+  }
+  .sa-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .sa-actions button {
+    min-height: 28px;
+    padding: 0 8px;
+  }
+  .sa-why-card {
+    padding: 22px 20px;
+  }
+}

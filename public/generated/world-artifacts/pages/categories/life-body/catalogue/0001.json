@@ -1,0 +1,30 @@
+[
+  {
+    "id": "phyllotaxis",
+    "index": "30",
+    "poster": "/assets/posters/phyllotaxis.webp",
+    "posterMobile": "/assets/posters/mobile/phyllotaxis.webp",
+    "posterDesktop": "/assets/posters/desktop/phyllotaxis.webp",
+    "title": "植物的螺旋",
+    "posterTitle": "向日葵种子排列成螺旋",
+    "posterHook": "向日葵为什么把种子排成螺线？",
+    "posterPosition": "50% 48%",
+    "question": "向日葵为什么把种子排成螺线？",
+    "topicLabel": "形态发生",
+    "primaryCategoryId": "life-body",
+    "renderer": "phyllotaxis",
+    "runtime": "diagram-2d",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#e8b84a",
+    "translations": {
+      "en": {
+        "title": "Spirals in plants",
+        "posterTitle": "Sunflower seeds arrange themselves in spirals",
+        "posterHook": "Why do sunflowers arrange their seeds in spirals?",
+        "question": "Why do sunflowers arrange their seeds in spirals?",
+        "topicLabel": "Morphogenesis"
+      }
+    }
+  }
+]

@@ -1,0 +1,66 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'pendulum-wave',
+    publication: 'public',
+    index: '97',
+    title: '一齐放开，一排摆自己走出波浪',
+    poster: '/assets/posters/pendulum-wave.webp',
+    posterMobile: '/assets/posters/mobile/pendulum-wave.webp',
+    posterDesktop: '/assets/posters/desktop/pendulum-wave.webp',
+    posterTitle: '一排摆在不同周期中形成波浪',
+    posterHook: '同样的起点，为什么它们会先变成波浪，再乱成一片，最后又整齐回来？',
+    posterSource: 'Canvas 2D · 小角度单摆解析解 · 本地构建',
+    posterPosition: '50% 45%',
+    question: '一排摆为什么会自己走出波浪？',
+    hook: '同时放开一排长度略有差别的摆，看着相位差如何长成行波、交错，并在回归点再次站齐。',
+    payoff: '单摆周期 T = 2π√(L/g) 只跟长度有关。把长度排成让各摆在同一时段完成整数次振荡的序列，相位差就会均匀累积成可见的波浪，并在公约时刻重新同相。',
+    topicLabel: '振动与波',
+    translations: {
+      en: {
+        title: 'Release them together and watch a row of pendulums walk themselves into waves',
+        posterTitle: 'Pendulums with different periods form a travelling wave',
+        posterHook: 'Same starting point—why do they first turn into waves, then into chaos, then line up again?',
+        posterSource: 'Canvas 2D · Small-angle pendulum solution · Local build',
+        question: 'Why does a row of pendulums walk itself into waves?',
+        hook: 'Release a row of slightly different-length pendulums together and watch phase drift grow into traveling waves, cross-rhythms, and a clean reunion at the cycle point.',
+        payoff: 'A simple pendulum’s period T = 2π√(L/g) depends only on length. Choose lengths so each bob completes an integer number of swings in the same window, and phase differences accumulate into a visible wave—then realign at their common return time.',
+        topicLabel: 'Vibration and waves',
+      },
+    },
+    primaryCategoryId: 'chaos-boundary',
+    runtime: 'diagram-2d',
+    difficulty: 'intro',
+    lane: 'time',
+    renderer: 'pendulum-wave',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'modeled',
+    accent: '#f0c36a',
+    related: ['double-pendulum', 'firefly-sync'],
+    sources: [
+      {
+        label: 'OpenStax University Physics — 单摆周期',
+        labelEn: 'OpenStax University Physics — Simple pendulum period',
+        url: 'https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums',
+      },
+      {
+        label: 'Harvard Natural Sciences Lecture Demonstrations — 摆波',
+        labelEn: 'Harvard Natural Sciences Lecture Demonstrations — Pendulum wave',
+        url: 'https://sciencedemonstrations.fas.harvard.edu/presentations/pendulum-wave',
+      },
+      {
+        label: 'Wikipedia — 单摆',
+        labelEn: 'Wikipedia — Pendulum',
+        url: 'https://en.wikipedia.org/wiki/Pendulum',
+      }
+    ],
+    provenance: { origin: 'ai-prototype', initialModel: 'grok-4.5' },
+    presentation: 'full-bleed',
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

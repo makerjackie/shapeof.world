@@ -1,0 +1,320 @@
+/* Phyllotaxis · 植物的螺旋 / 叶序黄金角
+   植物绿 + 籽金 · 博物馆展品气质 */
+.phyllo-experience {
+  --phyllo-gold: #e8c46a;
+  --phyllo-seed: #c9a24a;
+  --phyllo-green: #7cb06a;
+  --phyllo-sage: #9bc48a;
+  --phyllo-red: #e07a6a;
+  --world-accent: var(--phyllo-gold);
+  --freebar-accent: var(--phyllo-gold);
+  --experience-panel-surface: linear-gradient(180deg, rgba(14, 18, 10, 0.62), rgba(7, 10, 6, 0.60));
+  --experience-panel-border: rgba(232, 196, 106, 0.22);
+  --experience-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.12;
+  color: #f4f0e6;
+  background: #070a06;
+}
+
+.phyllo-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+/* 点题铭牌 · 顶左 */
+.phyllo-plaque {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: clamp(18px, 3vw, 36px);
+  max-width: min(360px, 42vw);
+  pointer-events: none;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
+}
+
+.phyllo-plaque h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: #f7f2e4;
+}
+
+.phyllo-plaque p {
+  margin: 8px 0 0;
+  color: rgba(230, 236, 210, 0.68);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* 被动读数 · 底左（非交互） */
+.phyllo-readout {
+  position: absolute;
+  z-index: 6;
+  top: auto;
+  right: auto;
+  bottom: max(118px, calc(env(safe-area-inset-bottom, 0px) + 104px));
+  left: max(14px, env(safe-area-inset-left, 0px));
+  width: min(220px, 40vw);
+  display: grid;
+  gap: 6px;
+  padding: 11px 13px;
+  border: 1px solid rgba(180, 200, 140, 0.14);
+  border-radius: 14px;
+  background: linear-gradient(165deg, rgba(12, 16, 10, 0.82), rgba(6, 10, 6, 0.9));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px) saturate(1.05);
+  pointer-events: none;
+}
+
+.phyllo-readout-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.phyllo-readout-row small {
+  color: rgba(210, 220, 190, 0.52);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+}
+
+.phyllo-readout-row strong {
+  font-size: 13.5px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: #f4f0e6;
+}
+
+.phyllo-readout-row .is-yellow {
+  color: var(--phyllo-gold);
+}
+
+.phyllo-readout-row .is-sage {
+  color: var(--phyllo-sage);
+}
+
+/* 状态横幅 · 优雅淡入 */
+.phyllo-banner {
+  margin-top: 3px;
+  padding: 7px 9px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.45;
+  animation: phyllo-banner-in 0.55s ease-out both;
+}
+
+.phyllo-critical {
+  border: 1px solid rgba(224, 122, 106, 0.32);
+  background: rgba(224, 122, 106, 0.1);
+  color: #ffc8bc;
+}
+
+.phyllo-success {
+  border: 1px solid rgba(124, 176, 106, 0.4);
+  background: linear-gradient(135deg, rgba(124, 176, 106, 0.14), rgba(200, 170, 80, 0.08));
+  color: #d8efc8;
+  box-shadow: 0 0 20px rgba(180, 200, 90, 0.08);
+}
+
+@keyframes phyllo-banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 预设芯片 · 一行横滑，故事贴轨末 */
+.phyllo-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.phyllo-chip-rail,
+.phyllo-presets {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.phyllo-chip-rail::-webkit-scrollbar,
+.phyllo-presets::-webkit-scrollbar {
+  display: none;
+}
+
+.phyllo-chip-rail > *,
+.phyllo-presets > * {
+  flex: 0 0 auto;
+}
+
+.phyllo-chip {
+  min-height: 32px !important;
+  padding: 0 12px !important;
+  color: rgba(236, 240, 220, 0.88) !important;
+  border: 1px solid rgba(200, 210, 170, 0.18) !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.14s ease;
+}
+
+.phyllo-chip:hover {
+  border-color: rgba(200, 210, 170, 0.35) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  transform: translateY(-1px);
+}
+
+.phyllo-chip:active {
+  transform: scale(0.96);
+}
+
+.phyllo-chip.is-on {
+  color: #12140e !important;
+  border-color: rgba(180, 200, 140, 0.55) !important;
+  background: rgba(180, 200, 140, 0.88) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 0 0 1px rgba(200, 220, 160, 0.12), 0 2px 10px rgba(100, 140, 60, 0.16) !important;
+}
+
+.phyllo-chip-golden {
+  border-color: rgba(232, 196, 106, 0.28) !important;
+  color: rgba(244, 220, 150, 0.95) !important;
+  background: rgba(232, 196, 106, 0.08) !important;
+}
+
+.phyllo-chip-golden:hover {
+  border-color: rgba(232, 196, 106, 0.5) !important;
+  background: rgba(232, 196, 106, 0.14) !important;
+}
+
+.phyllo-chip-golden.is-on {
+  color: #1a1408 !important;
+  border-color: rgba(232, 196, 106, 0.65) !important;
+  background: linear-gradient(165deg, rgba(240, 216, 152, 0.95), rgba(212, 168, 74, 0.92)) !important;
+  box-shadow: 0 0 0 1px rgba(255, 240, 180, 0.12), 0 3px 12px rgba(200, 150, 50, 0.18) !important;
+  font-weight: 650 !important;
+}
+
+.phyllo-param-theta {
+  flex: 1 1 220px;
+}
+
+/* Themed θ slider — seed gold track + dark botanical thumb */
+.phyllo-experience .experience-freebar input[type='range']::-webkit-slider-runnable-track {
+  background: linear-gradient(90deg, rgba(124, 176, 106, 0.22), rgba(232, 196, 106, 0.85));
+}
+
+.phyllo-experience .experience-freebar input[type='range']::-webkit-slider-thumb {
+  background: #141810;
+  border-color: rgba(255, 244, 210, 0.95);
+  box-shadow:
+    0 0 0 3px rgba(232, 196, 106, 0.16),
+    0 0 14px rgba(232, 196, 106, 0.38);
+  transition: transform 0.14s ease, box-shadow 0.16s ease;
+}
+
+.phyllo-experience .experience-freebar input[type='range']:hover::-webkit-slider-thumb {
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 4px rgba(232, 196, 106, 0.22),
+    0 0 18px rgba(232, 196, 106, 0.5);
+}
+
+.phyllo-experience .experience-freebar input[type='range']:active::-webkit-slider-thumb {
+  transform: scale(1.14);
+}
+
+.phyllo-experience .experience-freebar input[type='range']::-moz-range-track {
+  background: linear-gradient(90deg, rgba(124, 176, 106, 0.22), rgba(232, 196, 106, 0.85));
+}
+
+.phyllo-experience .experience-freebar input[type='range']::-moz-range-thumb {
+  background: #141810;
+  border-color: rgba(255, 244, 210, 0.95);
+  box-shadow:
+    0 0 0 3px rgba(232, 196, 106, 0.16),
+    0 0 14px rgba(232, 196, 106, 0.38);
+}
+
+.phyllo-experience .experience-freebar-story {
+  transition: color 0.18s ease;
+}
+
+@media (max-width: 720px) {
+  .phyllo-plaque {
+    top: var(--experience-safe-top, 78px);
+    left: 14px;
+    max-width: calc(100% - 28px);
+  }
+
+  .phyllo-plaque h1 {
+    font-size: 18px;
+    letter-spacing: 0.04em;
+  }
+
+  .phyllo-plaque p {
+    font-size: 11.5px;
+    max-width: 28em;
+  }
+
+  .phyllo-readout {
+    bottom: max(158px, calc(env(safe-area-inset-bottom, 0px) + 142px));
+    left: 10px;
+    width: min(176px, calc(100vw - 20px));
+    padding: 8px 10px;
+    gap: 4px;
+    border-radius: 12px;
+  }
+
+  .phyllo-readout-row small {
+    font-size: 10px;
+  }
+
+  .phyllo-readout-row strong {
+    font-size: 12px;
+  }
+
+  .phyllo-banner {
+    font-size: 10px;
+    padding: 5px 7px;
+    line-height: 1.4;
+  }
+
+  .phyllo-chip {
+    min-height: 30px !important;
+    padding: 0 10px !important;
+    font-size: 11.5px !important;
+  }
+
+  .phyllo-param-theta {
+    flex: 1 1 100%;
+  }
+}

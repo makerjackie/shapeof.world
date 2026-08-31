@@ -1,0 +1,16 @@
+# Vite emits content-hashed JavaScript, CSS and font filenames. These files are
+# safe to keep in the browser cache permanently; poster URLs stay mutable.
+/assets/*.js
+  Cache-Control: public, max-age=31556952, immutable
+
+/assets/*.css
+  Cache-Control: public, max-age=31556952, immutable
+
+/assets/*.woff
+  Cache-Control: public, max-age=31556952, immutable
+
+/assets/*.woff2
+  Cache-Control: public, max-age=31556952, immutable
+
+/generated/world-artifacts/*
+  Cache-Control: public, max-age=60, stale-while-revalidate=300

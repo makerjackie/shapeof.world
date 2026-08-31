@@ -1,0 +1,502 @@
+{
+  "electric-field": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "electric-field",
+      "publication": "public",
+      "index": "20",
+      "title": "电场线勾出看不见的力",
+      "poster": "/assets/posters/electric-field.webp",
+      "posterMobile": "/assets/posters/mobile/electric-field.webp",
+      "posterDesktop": "/assets/posters/desktop/electric-field.webp",
+      "posterTitle": "看不见的电场，为什么能用线画出来？",
+      "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+      "posterSource": "Canvas 2D · 库仑叠加 · 实时场线追踪",
+      "posterPosition": "50% 50%",
+      "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
+      "hook": "每个点的场强是所有电荷贡献的矢量和。场线沿合力方向追踪，正电荷是源、负电荷是汇——场线密度正比于场强。",
+      "payoff": "电力线是矢量场的积分曲线：起于正电荷（散度为正）、止于负电荷（散度为负），永不相交（否则该点场方向不唯一）。这正是高斯定律的几何表达。",
+      "topicLabel": "电磁学",
+      "translations": {
+        "en": {
+          "title": "Field lines trace the shape of an invisible electric force",
+          "posterTitle": "Why can an invisible electric field be drawn with lines?",
+          "posterHook": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
+          "posterSource": "Canvas 2D · Coulomb superposition · Real-time field line tracing",
+          "question": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
+          "hook": "The field at each point is the vector sum of all charge contributions. Field lines are traced along the resultant direction—positive charges are sources, negative charges are sinks—and line density is proportional to field strength.",
+          "payoff": "Electric field lines are integral curves of the vector field: they begin at positive charges (positive divergence), end at negative charges (negative divergence), and never cross (otherwise the field direction at that point would not be unique). This is the geometric expression of Gauss's law.",
+          "topicLabel": "Electromagnetism"
+        }
+      },
+      "primaryCategoryId": "fields-flow",
+      "runtime": "particle-2d",
+      "difficulty": "intro",
+      "lane": "structure",
+      "renderer": "electric-field",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "related": [
+        "fluid-sim",
+        "double-slit"
+      ],
+      "sources": [
+        {
+          "label": "电场线（Wikipedia）",
+          "labelEn": "Field line (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/电场线"
+        },
+        {
+          "label": "Falstad — 2-D Electrostatics Applet（经典开源演示）",
+          "labelEn": "Falstad — 2-D Electrostatics Applet (classic open demo)",
+          "url": "https://www.falstad.com/vector3de/"
+        },
+        {
+          "label": "Wikipedia — 库仑定律 / 叠加原理",
+          "labelEn": "Wikipedia — Coulomb's law / superposition",
+          "url": "https://en.wikipedia.org/wiki/Coulomb%27s_law"
+        }
+      ],
+      "provenance": {
+        "origin": "multi-model"
+      },
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+      "releaseId": "oss-6ff3221d",
+      "id": "electric-field",
+      "state": "public",
+      "title": "电场线勾出看不见的力",
+      "titleEn": "Field lines trace the shape of an invisible electric force",
+      "poster": "/assets/posters/electric-field.webp",
+      "posterMobile": "/assets/posters/mobile/electric-field.webp",
+      "posterDesktop": "/assets/posters/desktop/electric-field.webp",
+      "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+      "posterHookEn": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
+      "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
+      "questionEn": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
+      "topicLabel": "电磁学",
+      "topicLabelEn": "Electromagnetism",
+      "primaryCategoryId": "fields-flow",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ffd166"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+      "releaseId": "oss-6ff3221d",
+      "id": "electric-field",
+      "state": "public",
+      "title": "电场线勾出看不见的力",
+      "titleEn": "Field lines trace the shape of an invisible electric force",
+      "poster": "/assets/posters/electric-field.webp",
+      "posterMobile": "/assets/posters/mobile/electric-field.webp",
+      "posterDesktop": "/assets/posters/desktop/electric-field.webp",
+      "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+      "posterHookEn": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
+      "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
+      "questionEn": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
+      "topicLabel": "电磁学",
+      "topicLabelEn": "Electromagnetism",
+      "primaryCategoryId": "fields-flow",
+      "runtime": "particle-2d",
+      "evidence": "modeled",
+      "accent": "#ffd166",
+      "hook": "每个点的场强是所有电荷贡献的矢量和。场线沿合力方向追踪，正电荷是源、负电荷是汇——场线密度正比于场强。",
+      "hookEn": "The field at each point is the vector sum of all charge contributions. Field lines are traced along the resultant direction—positive charges are sources, negative charges are sinks—and line density is proportional to field strength.",
+      "payoff": "电力线是矢量场的积分曲线：起于正电荷（散度为正）、止于负电荷（散度为负），永不相交（否则该点场方向不唯一）。这正是高斯定律的几何表达。",
+      "payoffEn": "Electric field lines are integral curves of the vector field: they begin at positive charges (positive divergence), end at negative charges (negative divergence), and never cross (otherwise the field direction at that point would not be unique). This is the geometric expression of Gauss's law.",
+      "related": [
+        "fluid-sim",
+        "double-slit"
+      ],
+      "sources": [
+        {
+          "label": "电场线（Wikipedia）",
+          "labelEn": "Field line (Wikipedia)",
+          "url": "https://zh.wikipedia.org/wiki/电场线"
+        },
+        {
+          "label": "Falstad — 2-D Electrostatics Applet（经典开源演示）",
+          "labelEn": "Falstad — 2-D Electrostatics Applet (classic open demo)",
+          "url": "https://www.falstad.com/vector3de/"
+        },
+        {
+          "label": "Wikipedia — 库仑定律 / 叠加原理",
+          "labelEn": "Wikipedia — Coulomb's law / superposition",
+          "url": "https://en.wikipedia.org/wiki/Coulomb%27s_law"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "electric-field",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+      "releaseId": "oss-6ff3221d",
+      "text": "电场线勾出看不见的力 Field lines trace the shape of an invisible electric force 电力线为什么从正电荷出发、终止于负电荷，而且永不相交？ Why do electric field lines start at positive charges, end at negative charges, and never cross? 在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。 Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things. 电磁学 Electromagnetism",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+        "releaseId": "oss-6ff3221d",
+        "id": "electric-field",
+        "state": "public",
+        "title": "电场线勾出看不见的力",
+        "titleEn": "Field lines trace the shape of an invisible electric force",
+        "poster": "/assets/posters/electric-field.webp",
+        "posterMobile": "/assets/posters/mobile/electric-field.webp",
+        "posterDesktop": "/assets/posters/desktop/electric-field.webp",
+        "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+        "posterHookEn": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
+        "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
+        "questionEn": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
+        "topicLabel": "电磁学",
+        "topicLabelEn": "Electromagnetism",
+        "primaryCategoryId": "fields-flow",
+        "runtime": "particle-2d",
+        "evidence": "modeled",
+        "accent": "#ffd166"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+      "releaseId": "oss-6ff3221d",
+      "id": "electric-field",
+      "renderer": "electric-field",
+      "runtime": "particle-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "电场线勾出看不见的力",
+        "en": "Field lines trace the shape of an invisible electric force"
+      },
+      "summary": {
+        "zh": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
+        "en": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "f01ec9a3c8ef0ddda82e45211c50cfafa7534a5381dd02967b0806b600da6f00",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "fluid-sim",
+      "nextWorldId": "magnetic-lines",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  },
+  "soap-bubble": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "soap-bubble",
+      "publication": "public",
+      "index": "24",
+      "title": "薄膜干涉形成肥皂泡彩色条纹",
+      "poster": "/assets/posters/soap-bubble.webp",
+      "posterMobile": "/assets/posters/mobile/soap-bubble.webp",
+      "posterDesktop": "/assets/posters/desktop/soap-bubble.webp",
+      "posterTitle": "肥皂泡通过薄膜干涉呈现彩色条纹",
+      "posterHook": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
+      "posterSource": "pompa-iridiscencia · SantiagoGR11 · MIT",
+      "posterPosition": "50% 48%",
+      "question": "肥皂膜上的颜色，究竟是颜料还是光自己在打架？",
+      "hook": "一颗缓慢旋转的气泡悬在暗室里。拖它、拧厚度与排水，看纳米级薄膜怎样把白光拆成流动的光谱。",
+      "payoff": "颜色来自薄膜前后两层反射波的干涉：膜厚接近可见光波长时，某些色被加强、某些相消；重力排水让顶部变黑，那是几乎完全的相消干涉。",
+      "topicLabel": "光学材料",
+      "translations": {
+        "en": {
+          "title": "Thin-film interference colors a soap bubble",
+          "posterTitle": "Thin-film interference gives soap bubbles their colors",
+          "posterHook": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.",
+          "posterSource": "pompa-iridiscencia · SantiagoGR11 · MIT",
+          "question": "Are the colours on a soap film paint, or light fighting itself?",
+          "hook": "A slowly spinning bubble hangs in a dark chamber. Drag it, twist thickness and drainage, and watch a nanometre film unweave white light into a living spectrum.",
+          "payoff": "The colours come from interference between reflections at the front and back of the film: when thickness is near visible wavelengths, some colours reinforce and others cancel; gravity drainage blacks out the top where cancellation is nearly complete.",
+          "topicLabel": "Optical materials"
+        }
+      },
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "difficulty": "intro",
+      "lane": "structure",
+      "renderer": "soap-bubble",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "modeled",
+      "accent": "#9ad0ff",
+      "related": [
+        "pool-caustics"
+      ],
+      "sources": [
+        {
+          "label": "pompa-iridiscencia（SantiagoGR11 · 薄膜干涉物理着色器）",
+          "labelEn": "pompa-iridiscencia (SantiagoGR11 · physical thin-film interference shader)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia"
+        },
+        {
+          "label": "在线演示 · pompa iridiscencia",
+          "labelEn": "Live demo · pompa iridiscencia",
+          "url": "https://santiagogr11.github.io/pompa-iridiscencia/"
+        },
+        {
+          "label": "薄膜干涉（Wikipedia）",
+          "labelEn": "Thin-film interference (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Thin-film_interference"
+        },
+        {
+          "label": "肥皂膜（Wikipedia）",
+          "labelEn": "Soap film (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Soap_film"
+        },
+        {
+          "label": "原项目许可证（MIT）",
+          "labelEn": "Upstream license (MIT)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia/blob/main/LICENSE"
+        }
+      ],
+      "provenance": {
+        "origin": "open-source-adaptation",
+        "sourceProject": "pompa-iridiscencia (SantiagoGR11)",
+        "sourceUrl": "https://github.com/SantiagoGR11/pompa-iridiscencia",
+        "adaptationModel": "grok-4.5"
+      },
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "poster"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+      "releaseId": "oss-6ff3221d",
+      "id": "soap-bubble",
+      "state": "public",
+      "title": "薄膜干涉形成肥皂泡彩色条纹",
+      "titleEn": "Thin-film interference colors a soap bubble",
+      "poster": "/assets/posters/soap-bubble.webp",
+      "posterMobile": "/assets/posters/mobile/soap-bubble.webp",
+      "posterDesktop": "/assets/posters/desktop/soap-bubble.webp",
+      "posterHook": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
+      "posterHookEn": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.",
+      "question": "肥皂膜上的颜色，究竟是颜料还是光自己在打架？",
+      "questionEn": "Are the colours on a soap film paint, or light fighting itself?",
+      "topicLabel": "光学材料",
+      "topicLabelEn": "Optical materials",
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#9ad0ff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+      "releaseId": "oss-6ff3221d",
+      "id": "soap-bubble",
+      "state": "public",
+      "title": "薄膜干涉形成肥皂泡彩色条纹",
+      "titleEn": "Thin-film interference colors a soap bubble",
+      "poster": "/assets/posters/soap-bubble.webp",
+      "posterMobile": "/assets/posters/mobile/soap-bubble.webp",
+      "posterDesktop": "/assets/posters/desktop/soap-bubble.webp",
+      "posterHook": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
+      "posterHookEn": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.",
+      "question": "肥皂膜上的颜色，究竟是颜料还是光自己在打架？",
+      "questionEn": "Are the colours on a soap film paint, or light fighting itself?",
+      "topicLabel": "光学材料",
+      "topicLabelEn": "Optical materials",
+      "primaryCategoryId": "materials-lab",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#9ad0ff",
+      "hook": "一颗缓慢旋转的气泡悬在暗室里。拖它、拧厚度与排水，看纳米级薄膜怎样把白光拆成流动的光谱。",
+      "hookEn": "A slowly spinning bubble hangs in a dark chamber. Drag it, twist thickness and drainage, and watch a nanometre film unweave white light into a living spectrum.",
+      "payoff": "颜色来自薄膜前后两层反射波的干涉：膜厚接近可见光波长时，某些色被加强、某些相消；重力排水让顶部变黑，那是几乎完全的相消干涉。",
+      "payoffEn": "The colours come from interference between reflections at the front and back of the film: when thickness is near visible wavelengths, some colours reinforce and others cancel; gravity drainage blacks out the top where cancellation is nearly complete.",
+      "related": [
+        "pool-caustics"
+      ],
+      "sources": [
+        {
+          "label": "pompa-iridiscencia（SantiagoGR11 · 薄膜干涉物理着色器）",
+          "labelEn": "pompa-iridiscencia (SantiagoGR11 · physical thin-film interference shader)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia"
+        },
+        {
+          "label": "在线演示 · pompa iridiscencia",
+          "labelEn": "Live demo · pompa iridiscencia",
+          "url": "https://santiagogr11.github.io/pompa-iridiscencia/"
+        },
+        {
+          "label": "薄膜干涉（Wikipedia）",
+          "labelEn": "Thin-film interference (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Thin-film_interference"
+        },
+        {
+          "label": "肥皂膜（Wikipedia）",
+          "labelEn": "Soap film (Wikipedia)",
+          "url": "https://en.wikipedia.org/wiki/Soap_film"
+        },
+        {
+          "label": "原项目许可证（MIT）",
+          "labelEn": "Upstream license (MIT)",
+          "url": "https://github.com/SantiagoGR11/pompa-iridiscencia/blob/main/LICENSE"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "soap-bubble",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+      "releaseId": "oss-6ff3221d",
+      "text": "薄膜干涉形成肥皂泡彩色条纹 Thin-film interference colors a soap bubble 肥皂膜上的颜色，究竟是颜料还是光自己在打架？ Are the colours on a soap film paint, or light fighting itself? 薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。 As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it. 光学材料 Optical materials",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+        "releaseId": "oss-6ff3221d",
+        "id": "soap-bubble",
+        "state": "public",
+        "title": "薄膜干涉形成肥皂泡彩色条纹",
+        "titleEn": "Thin-film interference colors a soap bubble",
+        "poster": "/assets/posters/soap-bubble.webp",
+        "posterMobile": "/assets/posters/mobile/soap-bubble.webp",
+        "posterDesktop": "/assets/posters/desktop/soap-bubble.webp",
+        "posterHook": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
+        "posterHookEn": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.",
+        "question": "肥皂膜上的颜色，究竟是颜料还是光自己在打架？",
+        "questionEn": "Are the colours on a soap film paint, or light fighting itself?",
+        "topicLabel": "光学材料",
+        "topicLabelEn": "Optical materials",
+        "primaryCategoryId": "materials-lab",
+        "runtime": "scene-3d",
+        "evidence": "modeled",
+        "accent": "#9ad0ff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+      "releaseId": "oss-6ff3221d",
+      "id": "soap-bubble",
+      "renderer": "soap-bubble",
+      "runtime": "scene-3d",
+      "capabilities": [
+        "webgl",
+        "three"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "薄膜干涉形成肥皂泡彩色条纹",
+        "en": "Thin-film interference colors a soap bubble"
+      },
+      "summary": {
+        "zh": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
+        "en": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "460c1f92a5cc79411f479456b031de87a9ce5e90485dc81f32e4a2cec66cbb90",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "ferrofluid",
+      "nextWorldId": "pool-caustics",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

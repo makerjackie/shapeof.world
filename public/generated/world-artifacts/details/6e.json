@@ -1,0 +1,603 @@
+{
+  "moon-voyage": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "moon-voyage",
+      "publication": "public",
+      "index": "01",
+      "title": "四天抵达月球",
+      "poster": "/assets/posters/moon-voyage.webp",
+      "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+      "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+      "posterTitle": "四天抵达月球",
+      "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+      "posterSource": "NASA Blue Marble · Black Marble 2016 · SVS CGI Moon Kit（真实贴图）",
+      "posterPosition": "50% 50%",
+      "question": "去月球要几天？",
+      "hook": "从发射台点火升空：垂直爬升、重力转向、级间分离，先横着加速进入地球轨道，再 TLI 点火飞出转移椭圆——滑行约三天后，在月球背面反向刹车，进入环月轨道。全程真实比例、真实轨道常数，可以随时旋转缩放，看地球缩成一颗蓝点。",
+      "payoff": "奔月不是直线冲过去：先横着加速进轨道，再瞄准「三天后月球才会到达的位置」飞转移椭圆；76 小时里绝大部分时间不烧一滴燃料。地月之间的空旷，才是这段旅程真正的主角。",
+      "topicLabel": "载人航天",
+      "translations": {
+        "en": {
+          "title": "Four Days to the Moon",
+          "posterTitle": "Four Days to the Moon",
+          "posterHook": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
+          "posterSource": "NASA Blue Marble · Black Marble 2016 · SVS CGI Moon Kit (real imagery)",
+          "question": "How many days does it take to reach the Moon?",
+          "hook": "Ignite from the pad: vertical rise, gravity turn, stage separation, a sideways sprint into Earth orbit, then a six-minute TLI burn onto a transfer ellipse — about three days of coasting later, brake retrograde behind the Moon and slip into lunar orbit. True scale and real orbital constants throughout; orbit and zoom freely as Earth shrinks to a blue dot.",
+          "payoff": "Going to the Moon is never a straight dash: first accelerate sideways into orbit, then aim for where the Moon will be in three days and ride a transfer ellipse; for most of the 76 hours not a drop of fuel burns. The emptiness between Earth and Moon is the real protagonist of the journey.",
+          "topicLabel": "human spaceflight"
+        }
+      },
+      "primaryCategoryId": "cosmos-motion",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "scene-3d",
+      "difficulty": "standard",
+      "lane": "time",
+      "renderer": "moon-voyage",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 360,
+      "evidence": "compiled",
+      "accent": "#9fdcff",
+      "related": [
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "NASA Visible Earth — Blue Marble（地球白昼贴图）",
+          "labelEn": "NASA Visible Earth — Blue Marble",
+          "url": "https://visibleearth.nasa.gov/collection/1484/blue-marble"
+        },
+        {
+          "label": "NASA Earth Observatory — Black Marble 2016（地球夜光）",
+          "labelEn": "NASA Earth Observatory — Black Marble 2016",
+          "url": "https://earthobservatory.nasa.gov/features/NightLights"
+        },
+        {
+          "label": "NASA SVS #4720 — CGI Moon Kit（LROC 月球贴图）",
+          "labelEn": "NASA SVS #4720 — CGI Moon Kit (LROC lunar texture)",
+          "url": "https://svs.gsfc.nasa.gov/4720"
+        },
+        {
+          "label": "NASA — Apollo 11 Flight Journal（任务时间线）",
+          "labelEn": "NASA — Apollo 11 Flight Journal (mission timeline)",
+          "url": "https://history.nasa.gov/afj/ap11fj/index.html"
+        },
+        {
+          "label": "模型边界：圆轨道月球、忽略地球自转、任务面取月球轨道面（省略真实停泊轨道 28.5° 倾角）；上升段为锚定 Saturn V 关键点的程序化剖面，TLI/转移/LOI 段为真实圆锥曲线",
+          "labelEn": "Model limits: circular lunar orbit, no Earth rotation, mission plane = lunar orbital plane (real 28.5° parking-orbit inclination omitted); scripted ascent anchored to Saturn V milestones, with true conics for TLI, transfer and LOI",
+          "url": "https://history.nasa.gov/SP-4206/sp4206.htm"
+        }
+      ],
+      "presentation": "full-bleed",
+      "transferBudgetMb": 2,
+      "fallback": "poster"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+      "releaseId": "oss-6ff3221d",
+      "id": "moon-voyage",
+      "state": "public",
+      "title": "四天抵达月球",
+      "titleEn": "Four Days to the Moon",
+      "poster": "/assets/posters/moon-voyage.webp",
+      "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+      "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+      "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+      "posterHookEn": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
+      "question": "去月球要几天？",
+      "questionEn": "How many days does it take to reach the Moon?",
+      "topicLabel": "载人航天",
+      "topicLabelEn": "human spaceflight",
+      "primaryCategoryId": "cosmos-motion",
+      "runtime": "scene-3d",
+      "evidence": "compiled",
+      "accent": "#9fdcff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+      "releaseId": "oss-6ff3221d",
+      "id": "moon-voyage",
+      "state": "public",
+      "title": "四天抵达月球",
+      "titleEn": "Four Days to the Moon",
+      "poster": "/assets/posters/moon-voyage.webp",
+      "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+      "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+      "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+      "posterHookEn": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
+      "question": "去月球要几天？",
+      "questionEn": "How many days does it take to reach the Moon?",
+      "topicLabel": "载人航天",
+      "topicLabelEn": "human spaceflight",
+      "primaryCategoryId": "cosmos-motion",
+      "runtime": "scene-3d",
+      "evidence": "compiled",
+      "accent": "#9fdcff",
+      "hook": "从发射台点火升空：垂直爬升、重力转向、级间分离，先横着加速进入地球轨道，再 TLI 点火飞出转移椭圆——滑行约三天后，在月球背面反向刹车，进入环月轨道。全程真实比例、真实轨道常数，可以随时旋转缩放，看地球缩成一颗蓝点。",
+      "hookEn": "Ignite from the pad: vertical rise, gravity turn, stage separation, a sideways sprint into Earth orbit, then a six-minute TLI burn onto a transfer ellipse — about three days of coasting later, brake retrograde behind the Moon and slip into lunar orbit. True scale and real orbital constants throughout; orbit and zoom freely as Earth shrinks to a blue dot.",
+      "payoff": "奔月不是直线冲过去：先横着加速进轨道，再瞄准「三天后月球才会到达的位置」飞转移椭圆；76 小时里绝大部分时间不烧一滴燃料。地月之间的空旷，才是这段旅程真正的主角。",
+      "payoffEn": "Going to the Moon is never a straight dash: first accelerate sideways into orbit, then aim for where the Moon will be in three days and ride a transfer ellipse; for most of the 76 hours not a drop of fuel burns. The emptiness between Earth and Moon is the real protagonist of the journey.",
+      "related": [
+        "solar-system"
+      ],
+      "sources": [
+        {
+          "label": "NASA Visible Earth — Blue Marble（地球白昼贴图）",
+          "labelEn": "NASA Visible Earth — Blue Marble",
+          "url": "https://visibleearth.nasa.gov/collection/1484/blue-marble"
+        },
+        {
+          "label": "NASA Earth Observatory — Black Marble 2016（地球夜光）",
+          "labelEn": "NASA Earth Observatory — Black Marble 2016",
+          "url": "https://earthobservatory.nasa.gov/features/NightLights"
+        },
+        {
+          "label": "NASA SVS #4720 — CGI Moon Kit（LROC 月球贴图）",
+          "labelEn": "NASA SVS #4720 — CGI Moon Kit (LROC lunar texture)",
+          "url": "https://svs.gsfc.nasa.gov/4720"
+        },
+        {
+          "label": "NASA — Apollo 11 Flight Journal（任务时间线）",
+          "labelEn": "NASA — Apollo 11 Flight Journal (mission timeline)",
+          "url": "https://history.nasa.gov/afj/ap11fj/index.html"
+        },
+        {
+          "label": "模型边界：圆轨道月球、忽略地球自转、任务面取月球轨道面（省略真实停泊轨道 28.5° 倾角）；上升段为锚定 Saturn V 关键点的程序化剖面，TLI/转移/LOI 段为真实圆锥曲线",
+          "labelEn": "Model limits: circular lunar orbit, no Earth rotation, mission plane = lunar orbital plane (real 28.5° parking-orbit inclination omitted); scripted ascent anchored to Saturn V milestones, with true conics for TLI, transfer and LOI",
+          "url": "https://history.nasa.gov/SP-4206/sp4206.htm"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "moon-voyage",
+      "duration": 360,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+      "releaseId": "oss-6ff3221d",
+      "text": "四天抵达月球 Four Days to the Moon 去月球要几天？ How many days does it take to reach the Moon? 按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。 Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit. 载人航天 human spaceflight",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+        "releaseId": "oss-6ff3221d",
+        "id": "moon-voyage",
+        "state": "public",
+        "title": "四天抵达月球",
+        "titleEn": "Four Days to the Moon",
+        "poster": "/assets/posters/moon-voyage.webp",
+        "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+        "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+        "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+        "posterHookEn": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
+        "question": "去月球要几天？",
+        "questionEn": "How many days does it take to reach the Moon?",
+        "topicLabel": "载人航天",
+        "topicLabelEn": "human spaceflight",
+        "primaryCategoryId": "cosmos-motion",
+        "runtime": "scene-3d",
+        "evidence": "compiled",
+        "accent": "#9fdcff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+      "releaseId": "oss-6ff3221d",
+      "id": "moon-voyage",
+      "renderer": "moon-voyage",
+      "runtime": "scene-3d",
+      "capabilities": [
+        "webgl",
+        "three"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "四天抵达月球",
+        "en": "Four Days to the Moon"
+      },
+      "summary": {
+        "zh": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
+        "en": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "531e2205a785860ac32af1520fddb263ecd1ea8da828aa4c48ca81c6b531e087",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "phyllotaxis",
+      "nextWorldId": "black-hole-flyby",
+      "randomWorldIds": [
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  },
+  "three-body": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "three-body",
+      "publication": "public",
+      "title": "三颗星，能跳出这么多完美的舞吗？",
+      "poster": "/assets/posters/three-body.webp",
+      "posterMobile": "/assets/posters/mobile/three-body.webp",
+      "posterDesktop": "/assets/posters/desktop/three-body.webp",
+      "posterTitle": "三颗星，能跳出这么多完美的舞吗？",
+      "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+      "posterSource": "WebGL · 三维牛顿引力周期轨道积分 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+      "hook": "先看八组正在三维空间里积分的周期解。三个点质量只受万有引力；空间解会离开水平面，平面解始终贴在一张纸上。点开一条细看，也可以轻轻一碰，看舞怎样散场。",
+      "payoff": "一般三体没有椭圆那样的通用公式，但特殊初值下存在周期解。这些解分两类：平面解始终贴在一张纸上；空间解会离开那个平面。本页把发表过的初值拿来当场积分，不是把论文里的图贴上去。",
+      "topicLabel": "周期轨道",
+      "translations": {
+        "en": {
+          "title": "Can three stars dance in so many perfect patterns?",
+          "posterTitle": "Can three stars dance in so many perfect patterns?",
+          "posterHook": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+          "posterSource": "WebGL · 3D Newtonian periodic-orbit integration · Local build",
+          "question": "Why can three stars trace flowers, butterflies, and a dance in space?",
+          "hook": "Eight live integrations in three-dimensional space come first. Three point masses, Newtonian gravity only: spatial solutions leave the horizontal plane; planar solutions stay on one sheet. Open one to watch the dance, or nudge it and watch the dance break.",
+          "payoff": "The general three-body problem has no ellipse-like formula, but special initial conditions still yield periodic orbits. Those solutions come in two geometries: planar orbits stay on one sheet; spatial orbits leave that plane. This page integrates published initial conditions live. It does not paste figures from the papers.",
+          "topicLabel": "Periodic orbits"
+        }
+      },
+      "primaryCategoryId": "chaos-boundary",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "scene-3d",
+      "difficulty": "standard",
+      "lane": "flow",
+      "renderer": "three-body",
+      "duration": 480,
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "related": [
+        "double-pendulum",
+        "gravity-assist"
+      ],
+      "experiencePolicy": {
+        "entryMode": "direct",
+        "shellMode": "standard"
+      },
+      "fieldNotes": [
+        {
+          "label": "平面还是三维",
+          "labelEn": "Planar or spatial",
+          "body": "三体问题本身在三维空间里。如果初值贴在一个平面、速度也贴着这个平面，轨迹会一直留在这张纸上，这叫平面周期解。给一个离面的 z 或 vz，一般会离开这个平面。名解、等质量 695、不等质量 1349 都是平面族；2025 年那一批才是空间周期解。",
+          "bodyEn": "The three-body problem lives in three-dimensional space. If the initial positions and velocities lie in one plane, the motion stays on that sheet: a planar periodic orbit. A nonzero out-of-plane z or vz usually leaves the plane. Named dances, the 695 equal-mass families, and the 1,349 unequal-mass families are planar. The 2025 catalog is spatial."
+        },
+        {
+          "label": "本页怎么用论文",
+          "labelEn": "How this page uses the papers",
+          "body": "没有复制论文的图、动画或程序。每一格都用牛顿引力和三维自适应 RK4，对发表过的初值当场积分。恒星在动，轨迹是它们走出来的。空间页从 2025 年发现的 10059 条里收录全部线性稳定解、钢琴三重奏解和各质量最短轨道，共 2416 条。",
+          "bodyEn": "This page does not copy figures, movies, or code from the papers. Each cell integrates published initial conditions under Newtonian gravity with adaptive 3D RK4. The stars are moving; the trails are the paths they take. The spatial tab holds 2,416 orbits from the 10,059 found in 2025: every linearly stable orbit, every piano-trio orbit, and the shortest orbit of each mass."
+        },
+        {
+          "label": "底栏四族",
+          "labelEn": "The four atlas families",
+          "body": "底栏「经典舞」对应有名字的平面解（8 字、蝴蝶、蛾）。「三颗一样重」是 2017 年 695 族平面解。「第三颗不同」是 2018 年 1349 族。「3D空间解」是 2025 年的空间解。",
+          "bodyEn": "Named dances are the planar orbits with names (figure-eight, butterfly, moth). Same mass is the 2017 catalog of 695 planar families. Third mass differs is the 2018 catalog of 1,349 families. 3D spatial is the 2025 spatial catalog."
+        },
+        {
+          "label": "模型边界",
+          "labelEn": "Model limits",
+          "body": "三个点质量，只有牛顿引力。没有潮汐、质量损失和相对论。周期模式在一个周期结束时回到发表的初值，并断开轨迹，避免画出穿过空旷空间的直线。微扰模式关闭复位。浏览器双精度会让极不稳定的轨道慢慢偏离。",
+          "bodyEn": "Three point masses and Newtonian gravity only. No tides, mass loss, or relativity. After one period, periodic mode reseeds the published initial conditions and breaks the trail so it does not draw a chord through empty space. Nudge mode turns that reset off. Browser rounding can slowly unwind very unstable orbits."
+        }
+      ],
+      "sources": [
+        {
+          "label": "Šuvakov 与 Dmitrašinović：三类牛顿平面三体周期轨道（2013）",
+          "labelEn": "Šuvakov & Dmitrašinović: three classes of Newtonian planar three-body periodic orbits (2013)",
+          "url": "https://arxiv.org/abs/1303.0181",
+          "note": "本页「名解」：蝴蝶、蛾、蜻蜓、阴阳等平面零角动量周期轨道的命名与初值。",
+          "noteEn": "Named tab: names and initial conditions for planar zero-angular-momentum orbits such as butterfly, moth, dragonfly, and yin-yang."
+        },
+        {
+          "label": "李晓明、廖世俊：六百余族等质量平面三体周期轨道（2017）",
+          "labelEn": "Li & Liao: more than six hundred families of equal-mass planar three-body periodic orbits (2017)",
+          "url": "https://arxiv.org/abs/1705.00527",
+          "note": "本页「等质量 · 695」：平面等质量碰撞无关周期族的发表初值。",
+          "noteEn": "Equal mass · 695 tab: published initial conditions for planar equal-mass collisionless families."
+        },
+        {
+          "label": "李晓明、井义鹏、廖世俊：1349 族不等质量平面三体周期轨道（2018）",
+          "labelEn": "Li, Jing & Liao: 1,349 families of unequal-mass planar three-body periodic orbits (2018)",
+          "url": "https://arxiv.org/abs/1709.04775",
+          "note": "本页「不等质量 · 1349」：m₃ ≠ 1 的平面周期族。",
+          "noteEn": "Unequal mass · 1,349 tab: planar families with m₃ ≠ 1."
+        },
+        {
+          "label": "李晓明、廖世俊：10059 条三维三体周期轨道（2025）",
+          "labelEn": "Li & Liao: 10,059 three-dimensional periodic orbits of the three-body problem (2025)",
+          "url": "https://arxiv.org/abs/2508.08568",
+          "note": "本页「三维空间」：第三颗星有离面坐标 z₀，前两颗有相反的 v_z。从 10059 条里收录稳定解、三重奏解和各质量最短轨道。",
+          "noteEn": "Spatial 3D tab: the third mass starts at z₀, and the first two have opposite v_z. This page includes stable, piano-trio, and shortest-per-mass orbits from the 10,059."
+        },
+        {
+          "label": "Chenciner 与 Montgomery：等质量三体的 8 字周期解（2000）",
+          "labelEn": "Chenciner & Montgomery: figure-eight periodic solution for three equal masses (2000)",
+          "url": "https://annals.math.princeton.edu/articles/12364",
+          "note": "本页「8 字舞」：摩尔 1993 年数值发现，这篇给出数学证明。三颗等质量恒星沿同一条 ∞ 错开追逐。",
+          "noteEn": "Figure-eight: Moore found it numerically in 1993; this paper proved it. Three equal masses chase one another on the same infinity loop."
+        },
+        {
+          "label": "庞加莱《三体问题与动力学方程》（1890）",
+          "labelEn": "Poincaré, On the Three-Body Problem and the Equations of Dynamics (1890)",
+          "url": "https://henripoincarepapers.univ-nantes.fr/chp/hp-pdf/hp1890am.pdf",
+          "note": "「不可解」指一般三体没有封闭通解，不是说没有特解。后面这些周期轨道就是特解。",
+          "noteEn": "“Unsolvable” means the general problem has no closed-form formula, not that no solutions exist. The periodic orbits on this page are special solutions."
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "transferBudgetMb": 2,
+      "fallback": "text",
+      "index": "12"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+      "releaseId": "oss-6ff3221d",
+      "id": "three-body",
+      "state": "public",
+      "title": "三颗星，能跳出这么多完美的舞吗？",
+      "titleEn": "Can three stars dance in so many perfect patterns?",
+      "poster": "/assets/posters/three-body.webp",
+      "posterMobile": "/assets/posters/mobile/three-body.webp",
+      "posterDesktop": "/assets/posters/desktop/three-body.webp",
+      "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+      "posterHookEn": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+      "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+      "questionEn": "Why can three stars trace flowers, butterflies, and a dance in space?",
+      "topicLabel": "周期轨道",
+      "topicLabelEn": "Periodic orbits",
+      "primaryCategoryId": "chaos-boundary",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#ff922b"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+      "releaseId": "oss-6ff3221d",
+      "id": "three-body",
+      "state": "public",
+      "title": "三颗星，能跳出这么多完美的舞吗？",
+      "titleEn": "Can three stars dance in so many perfect patterns?",
+      "poster": "/assets/posters/three-body.webp",
+      "posterMobile": "/assets/posters/mobile/three-body.webp",
+      "posterDesktop": "/assets/posters/desktop/three-body.webp",
+      "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+      "posterHookEn": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+      "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+      "questionEn": "Why can three stars trace flowers, butterflies, and a dance in space?",
+      "topicLabel": "周期轨道",
+      "topicLabelEn": "Periodic orbits",
+      "primaryCategoryId": "chaos-boundary",
+      "runtime": "scene-3d",
+      "evidence": "modeled",
+      "accent": "#ff922b",
+      "hook": "先看八组正在三维空间里积分的周期解。三个点质量只受万有引力；空间解会离开水平面，平面解始终贴在一张纸上。点开一条细看，也可以轻轻一碰，看舞怎样散场。",
+      "hookEn": "Eight live integrations in three-dimensional space come first. Three point masses, Newtonian gravity only: spatial solutions leave the horizontal plane; planar solutions stay on one sheet. Open one to watch the dance, or nudge it and watch the dance break.",
+      "payoff": "一般三体没有椭圆那样的通用公式，但特殊初值下存在周期解。这些解分两类：平面解始终贴在一张纸上；空间解会离开那个平面。本页把发表过的初值拿来当场积分，不是把论文里的图贴上去。",
+      "payoffEn": "The general three-body problem has no ellipse-like formula, but special initial conditions still yield periodic orbits. Those solutions come in two geometries: planar orbits stay on one sheet; spatial orbits leave that plane. This page integrates published initial conditions live. It does not paste figures from the papers.",
+      "related": [
+        "double-pendulum",
+        "gravity-assist"
+      ],
+      "sources": [
+        {
+          "label": "Šuvakov 与 Dmitrašinović：三类牛顿平面三体周期轨道（2013）",
+          "labelEn": "Šuvakov & Dmitrašinović: three classes of Newtonian planar three-body periodic orbits (2013)",
+          "url": "https://arxiv.org/abs/1303.0181",
+          "note": "本页「名解」：蝴蝶、蛾、蜻蜓、阴阳等平面零角动量周期轨道的命名与初值。",
+          "noteEn": "Named tab: names and initial conditions for planar zero-angular-momentum orbits such as butterfly, moth, dragonfly, and yin-yang."
+        },
+        {
+          "label": "李晓明、廖世俊：六百余族等质量平面三体周期轨道（2017）",
+          "labelEn": "Li & Liao: more than six hundred families of equal-mass planar three-body periodic orbits (2017)",
+          "url": "https://arxiv.org/abs/1705.00527",
+          "note": "本页「等质量 · 695」：平面等质量碰撞无关周期族的发表初值。",
+          "noteEn": "Equal mass · 695 tab: published initial conditions for planar equal-mass collisionless families."
+        },
+        {
+          "label": "李晓明、井义鹏、廖世俊：1349 族不等质量平面三体周期轨道（2018）",
+          "labelEn": "Li, Jing & Liao: 1,349 families of unequal-mass planar three-body periodic orbits (2018)",
+          "url": "https://arxiv.org/abs/1709.04775",
+          "note": "本页「不等质量 · 1349」：m₃ ≠ 1 的平面周期族。",
+          "noteEn": "Unequal mass · 1,349 tab: planar families with m₃ ≠ 1."
+        },
+        {
+          "label": "李晓明、廖世俊：10059 条三维三体周期轨道（2025）",
+          "labelEn": "Li & Liao: 10,059 three-dimensional periodic orbits of the three-body problem (2025)",
+          "url": "https://arxiv.org/abs/2508.08568",
+          "note": "本页「三维空间」：第三颗星有离面坐标 z₀，前两颗有相反的 v_z。从 10059 条里收录稳定解、三重奏解和各质量最短轨道。",
+          "noteEn": "Spatial 3D tab: the third mass starts at z₀, and the first two have opposite v_z. This page includes stable, piano-trio, and shortest-per-mass orbits from the 10,059."
+        },
+        {
+          "label": "Chenciner 与 Montgomery：等质量三体的 8 字周期解（2000）",
+          "labelEn": "Chenciner & Montgomery: figure-eight periodic solution for three equal masses (2000)",
+          "url": "https://annals.math.princeton.edu/articles/12364",
+          "note": "本页「8 字舞」：摩尔 1993 年数值发现，这篇给出数学证明。三颗等质量恒星沿同一条 ∞ 错开追逐。",
+          "noteEn": "Figure-eight: Moore found it numerically in 1993; this paper proved it. Three equal masses chase one another on the same infinity loop."
+        },
+        {
+          "label": "庞加莱《三体问题与动力学方程》（1890）",
+          "labelEn": "Poincaré, On the Three-Body Problem and the Equations of Dynamics (1890)",
+          "url": "https://henripoincarepapers.univ-nantes.fr/chp/hp-pdf/hp1890am.pdf",
+          "note": "「不可解」指一般三体没有封闭通解，不是说没有特解。后面这些周期轨道就是特解。",
+          "noteEn": "“Unsolvable” means the general problem has no closed-form formula, not that no solutions exist. The periodic orbits on this page are special solutions."
+        }
+      ],
+      "fieldNotes": [
+        {
+          "label": "平面还是三维",
+          "labelEn": "Planar or spatial",
+          "body": "三体问题本身在三维空间里。如果初值贴在一个平面、速度也贴着这个平面，轨迹会一直留在这张纸上，这叫平面周期解。给一个离面的 z 或 vz，一般会离开这个平面。名解、等质量 695、不等质量 1349 都是平面族；2025 年那一批才是空间周期解。",
+          "bodyEn": "The three-body problem lives in three-dimensional space. If the initial positions and velocities lie in one plane, the motion stays on that sheet: a planar periodic orbit. A nonzero out-of-plane z or vz usually leaves the plane. Named dances, the 695 equal-mass families, and the 1,349 unequal-mass families are planar. The 2025 catalog is spatial."
+        },
+        {
+          "label": "本页怎么用论文",
+          "labelEn": "How this page uses the papers",
+          "body": "没有复制论文的图、动画或程序。每一格都用牛顿引力和三维自适应 RK4，对发表过的初值当场积分。恒星在动，轨迹是它们走出来的。空间页从 2025 年发现的 10059 条里收录全部线性稳定解、钢琴三重奏解和各质量最短轨道，共 2416 条。",
+          "bodyEn": "This page does not copy figures, movies, or code from the papers. Each cell integrates published initial conditions under Newtonian gravity with adaptive 3D RK4. The stars are moving; the trails are the paths they take. The spatial tab holds 2,416 orbits from the 10,059 found in 2025: every linearly stable orbit, every piano-trio orbit, and the shortest orbit of each mass."
+        },
+        {
+          "label": "底栏四族",
+          "labelEn": "The four atlas families",
+          "body": "底栏「经典舞」对应有名字的平面解（8 字、蝴蝶、蛾）。「三颗一样重」是 2017 年 695 族平面解。「第三颗不同」是 2018 年 1349 族。「3D空间解」是 2025 年的空间解。",
+          "bodyEn": "Named dances are the planar orbits with names (figure-eight, butterfly, moth). Same mass is the 2017 catalog of 695 planar families. Third mass differs is the 2018 catalog of 1,349 families. 3D spatial is the 2025 spatial catalog."
+        },
+        {
+          "label": "模型边界",
+          "labelEn": "Model limits",
+          "body": "三个点质量，只有牛顿引力。没有潮汐、质量损失和相对论。周期模式在一个周期结束时回到发表的初值，并断开轨迹，避免画出穿过空旷空间的直线。微扰模式关闭复位。浏览器双精度会让极不稳定的轨道慢慢偏离。",
+          "bodyEn": "Three point masses and Newtonian gravity only. No tides, mass loss, or relativity. After one period, periodic mode reseeds the published initial conditions and breaks the trail so it does not draw a chord through empty space. Nudge mode turns that reset off. Browser rounding can slowly unwind very unstable orbits."
+        }
+      ],
+      "renderer": "three-body",
+      "duration": 480,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+      "releaseId": "oss-6ff3221d",
+      "text": "三颗星，能跳出这么多完美的舞吗？ Can three stars dance in so many perfect patterns? 三颗星为什么能跳出花朵、蝴蝶和立体的舞？ Why can three stars trace flowers, butterflies, and a dance in space? 先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。 Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart. 周期轨道 Periodic orbits",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+        "releaseId": "oss-6ff3221d",
+        "id": "three-body",
+        "state": "public",
+        "title": "三颗星，能跳出这么多完美的舞吗？",
+        "titleEn": "Can three stars dance in so many perfect patterns?",
+        "poster": "/assets/posters/three-body.webp",
+        "posterMobile": "/assets/posters/mobile/three-body.webp",
+        "posterDesktop": "/assets/posters/desktop/three-body.webp",
+        "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+        "posterHookEn": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+        "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+        "questionEn": "Why can three stars trace flowers, butterflies, and a dance in space?",
+        "topicLabel": "周期轨道",
+        "topicLabelEn": "Periodic orbits",
+        "primaryCategoryId": "chaos-boundary",
+        "runtime": "scene-3d",
+        "evidence": "modeled",
+        "accent": "#ff922b"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+      "releaseId": "oss-6ff3221d",
+      "id": "three-body",
+      "renderer": "three-body",
+      "runtime": "scene-3d",
+      "capabilities": [
+        "webgl",
+        "three"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "三颗星，能跳出这么多完美的舞吗？",
+        "en": "Can three stars dance in so many perfect patterns?"
+      },
+      "summary": {
+        "zh": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+        "en": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "ad5b1739efa647ec2c06def82ff784e19c4bc8ba9637c48ab0b2eb395d8d5af5",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "solar-system",
+      "nextWorldId": "gravity-assist",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "newton-fractal",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

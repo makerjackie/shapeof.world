@@ -1,0 +1,72 @@
+.pinhole-experience { --pinhole-yellow: #ffd166; --pinhole-cyan: #4dd0e1; --world-accent: var(--pinhole-yellow); background: #07150f; }
+.pinhole-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.pinhole-question { position: absolute; z-index: 10; top: max(76px, var(--experience-safe-top, 78px)); left: 24px; width: min(450px,calc(100% - 48px)); pointer-events: none; }
+.pinhole-question > span { color: var(--pinhole-yellow); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.pinhole-question h1 { max-width: 440px; margin: 9px 0 8px; color: #fff9e9; font-family: var(--serif); font-size: clamp(28px,3.5vw,49px); font-weight: 400; letter-spacing: -.045em; line-height: 1.04; text-shadow: 0 3px 30px rgba(0,10,5,.74); }
+.pinhole-question p { max-width: 355px; margin: 0 0 14px; color: rgba(255,255,255,.68); font-size: 12px; line-height: 1.65; text-shadow: 0 2px 18px rgba(0,8,4,.85); }
+.pinhole-question button { display: inline-flex; min-height: 38px; align-items: center; gap: 7px; padding: 0 14px; color: var(--pinhole-cyan); border: 1px solid rgba(77,208,225,.4); border-radius: 999px; background: rgba(3,20,12,.42); backdrop-filter: blur(12px); cursor: pointer; pointer-events: auto; }
+.pinhole-question button:hover { background: rgba(77,208,225,.15); }
+.pinhole-readout { position: absolute; z-index: 10; top: 78px; right: 24px; width: 238px; padding: 16px; border: 1px solid rgba(255,255,255,.15); border-radius: 17px; background: rgba(4,20,12,.58); box-shadow: 0 18px 50px rgba(0,10,4,.27); backdrop-filter: blur(18px); }
+.pinhole-readout > span { color: rgba(255,255,255,.48); font-size: 10px; letter-spacing: .08em; }
+.pinhole-readout > strong { display: block; margin: 6px 0 13px; color: #fff0b8; font-family: var(--serif); font-size: 19px; font-weight: 400; line-height: 1.25; }
+.pinhole-readout > div:not(.pinhole-meter) { display: flex; align-items: baseline; justify-content: space-between; }
+.pinhole-readout small { color: rgba(255,255,255,.46); font-size: 10px; }
+.pinhole-readout b { color: var(--pinhole-cyan); font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pinhole-meter { height: 3px; margin-top: 9px; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.12); }
+.pinhole-meter i { display: block; height: 100%; border-radius: inherit; background: var(--pinhole-cyan); box-shadow: 0 0 12px rgba(77,208,225,.75); }
+.pinhole-readout p { margin: 10px 0 0; color: rgba(255,255,255,.58); font-size: 10px; line-height: 1.5; }
+.pinhole-readout em { display: flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--pinhole-cyan); font-size: 10px; font-style: normal; }
+.pinhole-challenge { position: absolute; z-index: 9; bottom: 122px; left: 24px; display: flex; width: min(375px,calc(100% - 48px)); align-items: center; gap: 10px; padding: 11px 14px; color: rgba(255,255,255,.8); border: 1px solid rgba(255,209,102,.4); border-radius: 13px; background: rgba(27,22,6,.53); backdrop-filter: blur(14px); font-size: 11px; line-height: 1.5; }
+.pinhole-challenge svg { flex: none; color: var(--pinhole-yellow); font-size: 18px; }
+.pinhole-controls { position: absolute; z-index: 11; right: 24px; bottom: 20px; left: 24px; display: grid; grid-template-columns: 48px minmax(210px,1fr) minmax(210px,1fr); gap: 18px; width: min(920px,calc(100% - 48px)); margin: auto; padding: 14px 17px; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; background: rgba(3,18,11,.72); box-shadow: 0 22px 70px rgba(0,8,3,.45); backdrop-filter: blur(20px); }
+.pinhole-reset { display: grid; width: 44px; height: 44px; place-items: center; align-self: center; color: #fff8e9; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; background: rgba(255,255,255,.06); cursor: pointer; }
+.pinhole-control { display: grid; gap: 8px; padding-left: 16px; border-left: 1px solid rgba(255,255,255,.1); }
+.pinhole-control > span { display: flex; justify-content: space-between; color: rgba(255,255,255,.58); font-size: 11px; }
+.pinhole-control strong { color: var(--pinhole-yellow); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pinhole-control input { appearance: none; width: 100%; height: 4px; border-radius: 999px; outline: none; cursor: pointer; background: linear-gradient(90deg,var(--pinhole-yellow) 0 var(--fill),rgba(255,255,255,.15) var(--fill) 100%); }
+.pinhole-control input::-webkit-slider-thumb { appearance: none; width: 17px; height: 17px; border: 2px solid #0b180f; border-radius: 50%; background: var(--pinhole-yellow); box-shadow: 0 0 15px rgba(255,209,102,.74); }
+.pinhole-control input::-moz-range-thumb { width: 15px; height: 15px; border: 2px solid #0b180f; border-radius: 50%; background: var(--pinhole-yellow); box-shadow: 0 0 15px rgba(255,209,102,.74); }
+.pinhole-control small { display: flex; justify-content: space-between; color: rgba(255,255,255,.34); font-size: 9px; }
+.pinhole-control small i { font-style: normal; }
+.pinhole-why { position: absolute; z-index: 40; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(0,10,5,.64); backdrop-filter: blur(10px); }
+.pinhole-why article { position: relative; width: min(620px,100%); max-height: min(680px,100%); overflow: auto; padding: 30px; border: 1px solid rgba(255,255,255,.17); border-radius: 20px; background: rgba(3,18,10,.97); box-shadow: 0 35px 100px rgba(0,0,0,.56); }
+.pinhole-why article > button { position: absolute; top: 14px; right: 14px; display: grid; width: 36px; height: 36px; place-items: center; color: rgba(255,255,255,.67); border: 1px solid rgba(255,255,255,.19); border-radius: 50%; background: transparent; cursor: pointer; }
+.pinhole-why article > span { color: var(--pinhole-yellow); font-size: 9px; letter-spacing: .18em; }
+.pinhole-why h2 { max-width: 500px; margin: 10px 0 18px; color: #fff8e8; font-family: var(--serif); font-size: 25px; font-weight: 400; line-height: 1.24; }
+.pinhole-why p { margin: 0 0 12px; color: rgba(255,255,255,.73); font-size: 13px; line-height: 1.78; }
+.pinhole-credit { top: auto; right: 20px; bottom: 20px; left: auto; }
+@media (max-width:760px) {
+  .pinhole-question { top: var(--experience-safe-top, 78px); left: 18px; }
+  .pinhole-question h1 { max-width: 330px; font-size: 29px; }
+  .pinhole-question p { max-width: 295px; font-size: 11px; }
+  .pinhole-readout { top: 240px; right: 14px; width: 185px; padding: 12px; }
+  .pinhole-readout > strong { font-size: 16px; }
+  .pinhole-challenge { bottom: 188px; left: 14px; width: calc(100% - 28px); }
+  .pinhole-controls { right: 10px; bottom: 10px; left: 10px; grid-template-columns: 40px 1fr; gap: 10px 12px; width: auto; padding: 11px 12px; }
+  .pinhole-reset { grid-row: span 2; width: 38px; height: 38px; }
+  .pinhole-control { padding-left: 10px; }
+  .pinhole-control small { display: none; }
+  .pinhole-credit { display: none; }
+}
+
+/* Freebar compact tray */
+.pinhole-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+.pinhole-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.pinhole-chip-rail::-webkit-scrollbar { display: none; }
+.pinhole-chip-rail > * { flex: 0 0 auto; }

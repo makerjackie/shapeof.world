@@ -1,0 +1,251 @@
+.chemical-garden-experience {
+  --experience-panel-surface: linear-gradient(145deg, rgba(6, 18, 15, 0.72), rgba(2, 9, 8, 0.56));
+  --experience-panel-border: rgba(166, 226, 207, 0.16);
+  --experience-panel-shadow: 0 18px 70px rgba(0, 0, 0, 0.46), inset 0 1px rgba(224, 255, 245, 0.06);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.16;
+  --experience-panel-radius: 18px;
+  --freebar-accent: #68dcc5;
+  --freebar-ink: rgba(229, 250, 242, 0.92);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  color: #e9f8f1;
+  background:
+    radial-gradient(circle at 24% 40%, rgba(35, 111, 88, 0.12), transparent 34%),
+    radial-gradient(circle at 76% 64%, rgba(121, 47, 121, 0.07), transparent 28%),
+    #020706;
+}
+
+.chemical-garden-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  min-width: 0;
+  min-height: 0;
+  outline: none;
+  cursor: crosshair;
+  touch-action: manipulation;
+}
+
+.chemical-garden-experience.is-story .chemical-garden-stage {
+  cursor: default;
+}
+
+.chemical-garden-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chemical-garden-stage:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  border: 1px solid rgba(117, 231, 208, 0.7);
+  border-radius: 20px;
+  box-shadow: inset 0 0 28px rgba(69, 217, 188, 0.08);
+  pointer-events: none;
+}
+
+.chemical-garden-vignette,
+.chemical-garden-caustics {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.chemical-garden-vignette {
+  background:
+    linear-gradient(180deg, rgba(0, 4, 3, 0.3), transparent 18%, transparent 69%, rgba(0, 4, 3, 0.54)),
+    radial-gradient(ellipse at 50% 46%, transparent 38%, rgba(0, 5, 4, 0.24) 74%, rgba(0, 3, 2, 0.68) 100%);
+}
+
+.chemical-garden-caustics {
+  opacity: 0.2;
+  mix-blend-mode: screen;
+  background:
+    linear-gradient(104deg, transparent 18%, rgba(156, 255, 225, 0.035) 26%, transparent 34%),
+    linear-gradient(77deg, transparent 55%, rgba(116, 222, 190, 0.025) 62%, transparent 70%);
+  filter: blur(4px);
+  animation: chemical-garden-light-drift 15s ease-in-out infinite alternate;
+}
+
+@keyframes chemical-garden-light-drift {
+  from { transform: translate3d(-2.5%, -1%, 0) scale(1.06); }
+  to { transform: translate3d(3%, 1.5%, 0) scale(1.12); }
+}
+
+.chemical-garden-plate {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--experience-safe-top, 88px) + 22px);
+  left: clamp(22px, 4vw, 70px);
+  width: min(520px, calc(100vw - 44px));
+  display: grid;
+  gap: 5px;
+  pointer-events: none;
+  text-shadow: 0 2px 20px rgba(0, 7, 5, 0.88);
+}
+
+.chemical-garden-plate > span {
+  color: rgba(168, 222, 205, 0.66);
+  font: 650 10px/1.2 var(--font-sans, sans-serif);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.chemical-garden-plate > strong {
+  max-width: 100%;
+  color: rgba(240, 255, 249, 0.96);
+  font: 520 clamp(23px, 2.35vw, 38px)/1.08 var(--font-display, var(--font-sans, sans-serif));
+  letter-spacing: -0.035em;
+}
+
+.chemical-garden-plate > p {
+  max-width: 28em;
+  margin: 2px 0 0;
+  color: rgba(205, 230, 220, 0.68);
+  font: 450 12px/1.55 var(--font-sans, sans-serif);
+}
+
+.chemical-garden-freebar .experience-freebar-primary {
+  justify-content: center;
+}
+
+.chemical-garden-salts {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.chemical-garden-salts > button {
+  display: inline-flex;
+  min-width: 76px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: rgba(212, 232, 224, 0.68);
+}
+
+.chemical-garden-salts > button > i {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--salt-color);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--salt-color) 72%, transparent);
+}
+
+.chemical-garden-salts > button.is-active {
+  color: rgba(242, 255, 250, 0.98);
+  background: rgba(93, 202, 178, 0.13);
+  box-shadow: inset 0 0 0 1px rgba(141, 235, 214, 0.15);
+}
+
+.chemical-garden-tools {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chemical-garden-fallback {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 60%, rgba(67, 205, 173, 0.13), transparent 34%),
+    #020706;
+}
+
+.chemical-garden-fallback-seed {
+  position: absolute;
+  left: 50%;
+  bottom: 20%;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(151, 255, 230, 0.7);
+  transform: translateX(-50%) rotate(45deg);
+  box-shadow: 0 0 24px rgba(74, 225, 192, 0.42);
+}
+
+.chemical-garden-fallback > i {
+  position: absolute;
+  left: calc(50% + var(--branch-offset));
+  bottom: 21%;
+  width: 3px;
+  height: var(--branch-height);
+  border-radius: 999px;
+  transform: rotate(var(--branch-angle));
+  transform-origin: bottom;
+  background: linear-gradient(180deg, rgba(184, 255, 236, 0.92), rgba(54, 205, 173, 0.25));
+  box-shadow: 0 0 12px rgba(69, 223, 188, 0.22);
+}
+
+.chemical-garden-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .chemical-garden-experience {
+    --experience-panel-radius: 16px;
+  }
+
+  .chemical-garden-plate {
+    top: calc(var(--experience-safe-top, 132px) + 8px);
+    left: 18px;
+    width: min(276px, calc(100vw - 36px));
+    gap: 3px;
+  }
+
+  .chemical-garden-plate > span {
+    font-size: 9px;
+  }
+
+  .chemical-garden-plate > strong {
+    max-width: 7.5em;
+    font-size: clamp(21px, 7vw, 29px);
+  }
+
+  .chemical-garden-plate > p {
+    max-width: 20em;
+    font-size: 11px;
+  }
+
+  .chemical-garden-salts {
+    width: 100%;
+  }
+
+  .chemical-garden-salts > button {
+    min-width: 0;
+    flex: 1 1 0;
+    gap: 5px;
+  }
+
+  .chemical-garden-freebar.experience-freebar[data-freebar-mobile-density='comfortable']
+  .chemical-garden-salts[role='group'] > button {
+    min-height: 40px;
+  }
+
+  .chemical-garden-tools {
+    justify-content: flex-start;
+  }
+
+  .chemical-garden-vignette {
+    background:
+      linear-gradient(180deg, rgba(0, 4, 3, 0.42), transparent 23%, transparent 65%, rgba(0, 4, 3, 0.66)),
+      radial-gradient(ellipse at 50% 45%, transparent 34%, rgba(0, 4, 3, 0.36) 77%, rgba(0, 2, 2, 0.72));
+  }
+}
+

@@ -1,0 +1,216 @@
+{
+  "newton-fractal": {
+    "schemaVersion": 1,
+    "state": "public",
+    "world": {
+      "id": "newton-fractal",
+      "publication": "public",
+      "index": "15",
+      "title": "猜错起点，答案会跳到另一边",
+      "poster": "/assets/posters/newton-fractal.webp",
+      "posterMobile": "/assets/posters/mobile/newton-fractal.webp",
+      "posterDesktop": "/assets/posters/desktop/newton-fractal.webp",
+      "posterTitle": "每个像素都在猜同一个方程的答案",
+      "posterHook": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
+      "posterSource": "Canvas 2D · 牛顿迭代 · 本地构建",
+      "posterPosition": "50% 50%",
+      "question": "同一个方程，为什么换个起点答案就变了？",
+      "hook": "每个像素是一次猜测的起点。青、黄、紫三种颜色 = 三个解的地盘；拖动白点，看修正路径如何扑向某个解。",
+      "payoff": "多数起点很快落到某个解；颜色交界处起点只差一丝就可能换边——边界是永不平滑的分形。",
+      "topicLabel": "数学",
+      "translations": {
+        "en": {
+          "title": "Guess from the wrong start, and the answer jumps to another side",
+          "posterTitle": "Every pixel is guessing the answer to the same equation",
+          "posterHook": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections.",
+          "posterSource": "Canvas 2D · Newton iteration · Local build",
+          "question": "Why does the same equation give different answers from different starting points?",
+          "hook": "Each pixel is a starting guess. Cyan, yellow, and purple are the three roots’ territories—drag the white point and watch the correction path rush toward one of them.",
+          "payoff": "Most starts quickly land on a root; near the color boundaries, a tiny nudge can switch sides—the edge is a never-smoothing fractal.",
+          "topicLabel": "Mathematics"
+        }
+      },
+      "primaryCategoryId": "fractals-chaos",
+      "provenance": {
+        "origin": "ai-prototype",
+        "initialModel": "kimi-k3"
+      },
+      "runtime": "diagram-2d",
+      "difficulty": "advanced",
+      "lane": "structure",
+      "renderer": "newton-fractal",
+      "experiencePolicy": {
+        "entryMode": "guided",
+        "guideStyle": "story",
+        "shellMode": "standard"
+      },
+      "duration": 420,
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "related": [],
+      "sources": [
+        {
+          "label": "Newton fractal（Wikipedia）",
+          "labelEn": "Newton fractal（Wikipedia）",
+          "url": "https://en.wikipedia.org/wiki/Newton_fractal"
+        }
+      ],
+      "presentation": "full-bleed",
+      "hasEmbeddedGuide": true,
+      "onboardingVersion": 1,
+      "transferBudgetMb": 1,
+      "fallback": "text"
+    },
+    "card": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+      "releaseId": "oss-6ff3221d",
+      "id": "newton-fractal",
+      "state": "public",
+      "title": "猜错起点，答案会跳到另一边",
+      "titleEn": "Guess from the wrong start, and the answer jumps to another side",
+      "poster": "/assets/posters/newton-fractal.webp",
+      "posterMobile": "/assets/posters/mobile/newton-fractal.webp",
+      "posterDesktop": "/assets/posters/desktop/newton-fractal.webp",
+      "posterHook": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
+      "posterHookEn": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections.",
+      "question": "同一个方程，为什么换个起点答案就变了？",
+      "questionEn": "Why does the same equation give different answers from different starting points?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff"
+    },
+    "detail": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+      "releaseId": "oss-6ff3221d",
+      "id": "newton-fractal",
+      "state": "public",
+      "title": "猜错起点，答案会跳到另一边",
+      "titleEn": "Guess from the wrong start, and the answer jumps to another side",
+      "poster": "/assets/posters/newton-fractal.webp",
+      "posterMobile": "/assets/posters/mobile/newton-fractal.webp",
+      "posterDesktop": "/assets/posters/desktop/newton-fractal.webp",
+      "posterHook": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
+      "posterHookEn": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections.",
+      "question": "同一个方程，为什么换个起点答案就变了？",
+      "questionEn": "Why does the same equation give different answers from different starting points?",
+      "topicLabel": "数学",
+      "topicLabelEn": "Mathematics",
+      "primaryCategoryId": "fractals-chaos",
+      "runtime": "diagram-2d",
+      "evidence": "modeled",
+      "accent": "#b15cff",
+      "hook": "每个像素是一次猜测的起点。青、黄、紫三种颜色 = 三个解的地盘；拖动白点，看修正路径如何扑向某个解。",
+      "hookEn": "Each pixel is a starting guess. Cyan, yellow, and purple are the three roots’ territories—drag the white point and watch the correction path rush toward one of them.",
+      "payoff": "多数起点很快落到某个解；颜色交界处起点只差一丝就可能换边——边界是永不平滑的分形。",
+      "payoffEn": "Most starts quickly land on a root; near the color boundaries, a tiny nudge can switch sides—the edge is a never-smoothing fractal.",
+      "related": [],
+      "sources": [
+        {
+          "label": "Newton fractal（Wikipedia）",
+          "labelEn": "Newton fractal（Wikipedia）",
+          "url": "https://en.wikipedia.org/wiki/Newton_fractal"
+        }
+      ],
+      "fieldNotes": [],
+      "renderer": "newton-fractal",
+      "duration": 420,
+      "additionalCategoryIds": []
+    },
+    "search": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+      "releaseId": "oss-6ff3221d",
+      "text": "猜错起点，答案会跳到另一边 Guess from the wrong start, and the answer jumps to another side 同一个方程，为什么换个起点答案就变了？ Why does the same equation give different answers from different starting points? 用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。 Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections. 数学 Mathematics",
+      "world": {
+        "schemaVersion": 1,
+        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+        "releaseId": "oss-6ff3221d",
+        "id": "newton-fractal",
+        "state": "public",
+        "title": "猜错起点，答案会跳到另一边",
+        "titleEn": "Guess from the wrong start, and the answer jumps to another side",
+        "poster": "/assets/posters/newton-fractal.webp",
+        "posterMobile": "/assets/posters/mobile/newton-fractal.webp",
+        "posterDesktop": "/assets/posters/desktop/newton-fractal.webp",
+        "posterHook": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
+        "posterHookEn": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections.",
+        "question": "同一个方程，为什么换个起点答案就变了？",
+        "questionEn": "Why does the same equation give different answers from different starting points?",
+        "topicLabel": "数学",
+        "topicLabelEn": "Mathematics",
+        "primaryCategoryId": "fractals-chaos",
+        "runtime": "diagram-2d",
+        "evidence": "modeled",
+        "accent": "#b15cff"
+      }
+    },
+    "offline": {
+      "schemaVersion": 1,
+      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+      "releaseId": "oss-6ff3221d",
+      "id": "newton-fractal",
+      "renderer": "newton-fractal",
+      "runtime": "diagram-2d",
+      "capabilities": [
+        "canvas-2d"
+      ],
+      "offlineAssets": [],
+      "title": {
+        "zh": "猜错起点，答案会跳到另一边",
+        "en": "Guess from the wrong start, and the answer jumps to another side"
+      },
+      "summary": {
+        "zh": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
+        "en": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections."
+      }
+    },
+    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
+    "releaseId": "oss-6ff3221d",
+    "navigation": {
+      "previousWorldId": "mandelbrot-zoom",
+      "nextWorldId": "clifford-dust",
+      "randomWorldIds": [
+        "moon-voyage",
+        "black-hole-flyby",
+        "formula-bloom",
+        "double-slit",
+        "pendulum-wave",
+        "double-pendulum",
+        "firefly-sync",
+        "chemical-garden",
+        "neural-playground",
+        "robot-ik",
+        "solar-system",
+        "three-body",
+        "gravity-assist",
+        "mandelbrot-zoom",
+        "clifford-dust",
+        "kakeya-needle",
+        "strange-attractors",
+        "fluid-sim",
+        "electric-field",
+        "magnetic-lines",
+        "fourier",
+        "ferrofluid",
+        "soap-bubble",
+        "pool-caustics",
+        "pinhole-canopy",
+        "lightning-lab",
+        "snow-crystal",
+        "boids-flocking",
+        "phyllotaxis"
+      ]
+    }
+  }
+}

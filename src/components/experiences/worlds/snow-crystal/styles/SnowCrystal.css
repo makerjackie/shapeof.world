@@ -1,0 +1,151 @@
+/* ============================================================
+   SnowCrystal · 六角如何长成
+   居中晶体 · 冰蓝 / 霜白 · 右下参数坞
+   ============================================================ */
+.snow-experience {
+  --freebar-accent: var(--world-accent, rgba(154, 208, 255, 0.2));
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(12, 16, 26, 0.62),
+    rgba(4, 8, 14, 0.60)
+  );
+  --experience-panel-border: rgba(154, 208, 255, 0.2);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  --snow-accent: #c8e8ff;
+  --snow-ice: #8ec8ff;
+  --snow-ink: #eef6fc;
+  --world-accent: var(--snow-accent);
+  color: var(--snow-ink);
+  background: #040910;
+  isolation: isolate;
+}
+
+.snow-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.snow-plaque {
+  position: absolute;
+  z-index: 6;
+  left: clamp(22px, 3.5vw, 48px);
+  bottom: clamp(88px, 14vh, 140px);
+  max-width: min(300px, 44vw);
+  pointer-events: none;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, 0.9);
+}
+
+.snow-plaque h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  color: #f4f9ff;
+}
+
+.snow-plaque p {
+  margin: 8px 0 0;
+  color: rgba(220, 236, 252, 0.72);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.snow-readout {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: 50%;
+  display: grid;
+  gap: 2px;
+  justify-items: center;
+  text-align: center;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.snow-readout strong {
+  color: var(--snow-accent);
+  font-family: var(--serif);
+  font-size: clamp(14px, 1.35vw, 17px);
+  font-weight: 500;
+}
+
+.snow-readout span {
+  color: rgba(220, 236, 252, 0.55);
+  font-size: 11px;
+}
+
+/* Freebar compact tray: fields + tools, no vertical button tower */
+.snow-tray {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.snow-tray > .experience-freebar-field {
+  width: 100%;
+  max-width: none;
+  flex: none;
+  min-width: 0;
+}
+
+.snow-tray-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.snow-tray-row > .experience-freebar-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: none;
+}
+
+.snow-tray-tools {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 720px) {
+  .snow-plaque {
+    top: var(--experience-safe-top, 78px);
+    right: 16px;
+    bottom: auto;
+    left: 16px;
+    max-width: none;
+    text-align: center;
+  }
+
+  .snow-readout {
+    top: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 168px);
+  }
+
+  .snow-tray-row {
+    flex-wrap: wrap;
+  }
+
+  .snow-tray-row > .experience-freebar-field {
+    flex: 1 1 100%;
+  }
+}

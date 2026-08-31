@@ -1,0 +1,928 @@
+/* ============================================================
+   太阳系 · SolarSystem 视觉升级补丁（.solar-system- 前缀）
+   配合 2026-07 真实行星贴图升级：HUD 在明亮行星影像上的可读性微调。
+   仅增量覆盖，不改任何 className 结构；合并进 app.css 时放在现有
+   solar-system 规则之后即可。
+   ============================================================ */
+
+/* 侧栏与信息卡：真实贴图比旧卡通球亮得多，玻璃底再压暗一点保证文字可读 */
+.solar-system-sidebar {
+  background: rgba(3, 4, 8, 0.82);
+}
+
+.solar-system-info-card {
+  background: rgba(3, 4, 8, 0.88);
+}
+
+/* 信息卡选中行星时，左侧点与真实影像主色呼应已有发光；补充卡片的柔和高光描边 */
+.solar-system-info-card {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* 底部控制条：同上，压暗 + 细腻上缘高光 */
+.solar-system-bottombar {
+  background: rgba(3, 4, 8, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* Film-like story layer. The simulator HUD returns only after the story ends. */
+.solar-system-experience {
+  --solar-cream: #fff2d2;
+  --solar-gold: #f2bd68;
+  --solar-blue: #8ec9ff;
+  /* GuideTour / Freebar 共用同一块烟熏深空玻璃。 */
+  --world-accent: var(--solar-gold);
+  --freebar-accent: var(--solar-gold);
+  --experience-panel-surface:
+    linear-gradient(160deg, rgba(30, 38, 52, 0.62), rgba(9, 13, 21, 0.62));
+  --experience-panel-border: rgba(255, 255, 255, 0.17);
+  --experience-panel-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --experience-panel-blur: 24px;
+  --experience-panel-saturation: 1.3;
+  --experience-panel-radius: 16px;
+  overflow: hidden;
+}
+
+/* —— 全站试用：自由探索唯一底栏（手机/桌面同一心智） —— */
+.solar-system-experience .ss-freebar {
+  z-index: 9;
+}
+
+.solar-system-experience .ss-freebar-pick {
+  position: absolute;
+  z-index: 8;
+  right: 14px;
+  bottom: clamp(106px, 17vh, 142px);
+  left: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  justify-content: center;
+  text-align: center;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+.solar-system-experience .ss-freebar-pick strong {
+  color: #fff6e6;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.solar-system-experience .ss-freebar-pick span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+}
+
+/*
+ * 太阳系是一条“实体 rail + 仪表栏”，不是参数页。桌面两行、手机一至
+ * 两行；分类、黑色内层和独占一行的抓手全部退出。
+ */
+.solar-system-experience .ss-freebar-main {
+  gap: 7px;
+  padding: 8px 10px;
+}
+
+.solar-system-experience .ss-freebar-main .experience-freebar-primary {
+  width: 100%;
+  flex-wrap: nowrap;
+  gap: 7px;
+}
+
+.solar-system-experience .ss-freebar-main .experience-freebar-primary > button {
+  display: inline-flex;
+  height: 36px;
+  min-height: 36px;
+  flex: 0 0 auto;
+  padding: 0 11px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 11px;
+}
+
+/* Play chrome comes from shared .experience-freebar-play */
+
+.solar-system-experience .ss-freebar-main .experience-freebar-primary > button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Play triangle is asymmetric — nudge right so it reads centered in the square. */
+
+.solar-system-experience .ss-freebar-main .experience-freebar-summary {
+  width: 36px;
+  padding: 0;
+}
+
+.solar-system-experience .ss-freebar-main .experience-freebar-summary span {
+  display: none;
+}
+
+.solar-system-experience .ss-freebar-speed {
+  display: grid;
+  width: clamp(240px, 25vw, 330px);
+  min-width: 220px;
+  flex: 0 1 330px;
+  gap: 1px;
+}
+
+.solar-system-experience .ss-clock {
+  display: flex;
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: 4px 8px;
+  align-items: baseline;
+  color: rgba(255, 255, 255, 0.78);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.15;
+  pointer-events: none;
+}
+
+.solar-system-experience .ss-clock strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.solar-system-experience .ss-clock span,
+.solar-system-experience .ss-clock em {
+  color: rgba(255, 255, 255, 0.48);
+  font-style: normal;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.solar-system-experience .ss-freebar-speed input {
+  width: 100%;
+}
+
+.solar-system-experience .ss-freebar-secondary {
+  width: 100%;
+  max-height: 38px;
+  padding: 0;
+  overflow: hidden;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.solar-system-experience .ss-tools-strip {
+  display: flex;
+  width: min(900px, calc(100vw - 52px));
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 1 auto;
+  gap: 6px;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  justify-content: center;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+
+.solar-system-experience .ss-tools-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* Desktop has enough stage width to keep the instrument rail on one line.
+ * Do not let the shared chip-group wrap rule turn the layers into a clipped
+ * second row; the phone gets its own horizontal rail below. */
+@media (min-width: 721px) {
+  .solar-system-experience .ss-freebar-main {
+    width: min(1120px, calc(100vw - 52px));
+    max-width: calc(100vw - 52px);
+  }
+
+  .solar-system-experience .ss-freebar-secondary {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .solar-system-experience .ss-tools-strip {
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    justify-content: center;
+  }
+
+  .solar-system-experience .ss-freebar-layers {
+    flex-wrap: nowrap !important;
+  }
+}
+
+.solar-system-experience .ss-tools-divider {
+  width: 1px;
+  height: 20px;
+  flex: 0 0 auto;
+  margin: 0 2px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.solar-system-experience .ss-freebar-views {
+  flex: 0 0 auto;
+}
+
+.solar-system-experience .ss-freebar-views button,
+.solar-system-experience .ss-freebar-layers button,
+.solar-system-experience .ss-direction-toggle {
+  display: inline-flex;
+  min-height: 32px;
+  flex: 0 0 auto;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  cursor: pointer;
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+.solar-system-experience .ss-freebar-views button {
+  border: 0;
+  background: transparent;
+}
+
+.solar-system-experience .ss-freebar-views button svg,
+.solar-system-experience .ss-freebar-layers button svg,
+.solar-system-experience .ss-direction-toggle svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+
+.solar-system-experience .ss-freebar-layers {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
+.solar-system-experience .ss-freebar-views button.is-active,
+.solar-system-experience .ss-freebar-layers button.is-active {
+  color: rgba(255, 244, 224, 0.96);
+  border-color: rgba(242, 189, 104, 0.42);
+  background: rgba(242, 189, 104, 0.15);
+  font-weight: 600;
+}
+
+.solar-system-experience .ss-speed-select {
+  display: inline-flex;
+  min-height: 32px;
+  flex: 0 0 auto;
+  padding: 0 8px 0 10px;
+  align-items: center;
+  gap: 5px;
+  color: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  font-size: 11px;
+}
+
+.solar-system-experience .ss-speed-select select {
+  max-width: 96px;
+  padding: 0 2px;
+  color: rgba(255, 255, 255, 0.86);
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.solar-system-experience .ss-speed-select option {
+  color: #11151c;
+}
+
+/* 宽度已经进入手机/窄平板区间时，布局不再依赖指针类型。 */
+@media (min-width: 721px) {
+  .solar-system-experience .experience-freebar-primary > .experience-freebar-summary {
+    display: inline-flex !important;
+  }
+
+  .solar-system-experience .experience-freebar-seg button svg {
+    display: block;
+  }
+}
+
+/* 手机与窄平板：收起只有运输行；展开只增加一条横滑工具带。 */
+@media (max-width: 720px) {
+  .solar-system-experience .ss-freebar {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .solar-system-experience .ss-freebar[data-freebar-mobile-density='comfortable'] .ss-freebar-main {
+    box-sizing: border-box;
+    width: min(100%, calc(100vw - 28px));
+    max-width: calc(100vw - 28px);
+    min-width: 0;
+    gap: 6px;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .solar-system-experience .ss-freebar-main .experience-freebar-primary {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 40px minmax(0, 1fr) 36px;
+    gap: 8px;
+    align-items: end;
+  }
+
+  .solar-system-experience .ss-freebar-speed {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    grid-column: 2;
+  }
+
+  .solar-system-experience .experience-freebar-primary > .experience-freebar-summary {
+    display: inline-grid !important;
+    width: 36px;
+    height: 40px;
+    min-height: 40px;
+    grid-column: 3;
+    padding: 0;
+    place-items: center;
+  }
+
+  .solar-system-experience .ss-clock {
+    gap: 3px 6px;
+    font-size: 9.5px;
+  }
+
+  .solar-system-experience .ss-clock strong {
+    font-size: 10.5px;
+  }
+
+  .solar-system-experience .ss-clock span {
+    font-size: 9px;
+  }
+
+  .solar-system-experience .ss-clock em {
+    display: none;
+  }
+
+  .solar-system-experience .ss-freebar-main .ss-freebar-speed input {
+    height: 26px;
+  }
+
+  .solar-system-experience .ss-freebar-secondary {
+    width: 100%;
+    max-height: 40px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .solar-system-experience .ss-tools-strip {
+    width: 100%;
+    max-width: none;
+    gap: 5px;
+    padding-right: 18px;
+    justify-content: flex-start;
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 22px), transparent 100%);
+  }
+
+  .solar-system-experience .ss-tools-divider {
+    display: none;
+  }
+
+  .solar-system-experience .ss-freebar-views {
+    padding: 2px;
+  }
+
+  .solar-system-experience
+    .ss-freebar-main
+    .ss-tools-strip
+    .ss-freebar-layers {
+    display: flex;
+    width: max-content !important;
+    min-width: max-content;
+    flex: 0 0 auto !important;
+    flex-wrap: nowrap;
+    overflow: visible;
+  }
+
+  .solar-system-experience .ss-freebar-views button,
+  .solar-system-experience .ss-freebar-layers button,
+  .solar-system-experience .ss-direction-toggle,
+  .solar-system-experience .ss-speed-select {
+    min-height: 38px;
+    padding: 0 10px;
+    font-size: 11.5px;
+  }
+
+  .solar-system-experience .experience-freebar-seg button svg {
+    display: block;
+  }
+}
+
+/*
+ * 行星切换器：自由探索的主角，做成「图例 rail」——
+ * 桌面左侧竖排，手机底栏上方横滑条；与相机缩放无关，永远可点。
+ * 开关类（轨道/小行星带/柯伊伯带）降级进「更多参数」。
+ */
+.solar-system-experience .ss-planet-rail {
+  position: absolute;
+  z-index: 8;
+  top: 50%;
+  left: 14px;
+  display: flex;
+  max-height: calc(100dvh - 240px);
+  padding: 6px;
+  overflow-y: auto;
+  flex-direction: column;
+  gap: 2px;
+  transform: translateY(-50%);
+  border: 1px solid var(--experience-panel-border);
+  border-radius: 14px;
+  /* 与栏身同一块清透玻璃 */
+  background: var(--experience-panel-surface);
+  backdrop-filter:
+    blur(var(--experience-panel-blur))
+    saturate(var(--experience-panel-saturation));
+  -webkit-backdrop-filter:
+    blur(var(--experience-panel-blur))
+    saturate(var(--experience-panel-saturation));
+  box-shadow: var(--experience-panel-shadow);
+  scrollbar-width: none;
+}
+
+.solar-system-experience .ss-planet-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.solar-system-experience .ss-planet-rail button {
+  display: flex;
+  min-height: 32px;
+  padding: 0 14px 0 10px;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color 150ms ease, background 150ms ease;
+}
+
+.solar-system-experience .ss-planet-rail button i {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.solar-system-experience .ss-planet-rail button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.solar-system-experience .ss-planet-rail button.is-active {
+  color: var(--solar-gold);
+  border-color: rgba(242, 189, 104, 0.5);
+  background: rgba(242, 189, 104, 0.16);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  /* 手机：rail 变底栏上方的横滑条，跟着 freebar 实测高度走 */
+  .solar-system-experience .ss-planet-rail {
+    top: auto;
+    right: 8px;
+    bottom: calc(var(--experience-freebar-height, 110px) + max(10px, env(safe-area-inset-bottom, 0px)) + 6px);
+    left: 8px;
+    max-height: none;
+    padding: 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-direction: row;
+    gap: 6px;
+    transform: none;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+  }
+
+  /* 实体选择器是本世界的主控件，密度不得低于参数按钮（主行 36px 节奏） */
+  .solar-system-experience .ss-planet-rail button {
+    min-height: 40px;
+    flex: 0 0 auto;
+    padding: 0 13px 0 9px;
+    border-color: rgba(255, 255, 255, 0.07);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 12px;
+  }
+
+  .solar-system-experience .ss-planet-rail button i {
+    width: 9px;
+    height: 9px;
+  }
+
+  /* 选中读数抬到横滑条之上，不与它叠 */
+  .solar-system-experience .ss-freebar-pick {
+    bottom: calc(var(--experience-freebar-height, 110px) + 72px) !important;
+  }
+}
+
+/* 故事模式：底栏不占位，主体尽量满 */
+.solar-system-experience.is-story .ss-freebar {
+  display: none;
+}
+
+.solar-system-story-title {
+  position: absolute;
+  z-index: 5;
+  top: max(var(--experience-safe-top, 78px), clamp(82px, 10vh, 124px));
+  left: clamp(22px, 5vw, 76px);
+  max-width: min(460px, 38vw);
+  pointer-events: none;
+  text-shadow: 0 2px 30px #010207;
+  transition: opacity 450ms ease, transform 650ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.solar-system-story-title span {
+  color: rgba(255, 222, 162, 0.66);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+}
+
+.solar-system-story-title h1 {
+  margin: 7px 0 8px;
+  color: #fff7e8;
+  font: 400 clamp(38px, 5.6vw, 82px)/0.96 var(--serif);
+  letter-spacing: -0.055em;
+}
+
+.solar-system-story-title p {
+  max-width: 390px;
+  margin: 0;
+  color: rgba(240, 245, 255, 0.67);
+  font-size: clamp(12px, 1.2vw, 16px);
+  line-height: 1.65;
+}
+
+.solar-system-beat-2 .solar-system-story-title,
+.solar-system-beat-3 .solar-system-story-title,
+.solar-system-beat-4 .solar-system-story-title,
+.solar-system-beat-5 .solar-system-story-title,
+.solar-system-beat-6 .solar-system-story-title,
+.solar-system-beat-7 .solar-system-story-title {
+  opacity: 0.45;
+  transform: scale(0.8);
+  transform-origin: left top;
+}
+
+.solar-system-story {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  animation: solar-system-story-in 700ms cubic-bezier(.16, 1, .3, 1) both;
+}
+
+.solar-system-story span,
+.solar-system-story p,
+.solar-system-story small {
+  color: rgba(238, 244, 255, 0.66);
+}
+
+.solar-system-story-family {
+  top: 31%;
+  right: clamp(28px, 7vw, 105px);
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: end;
+  gap: 0 12px;
+  width: min(300px, 29vw);
+}
+
+.solar-system-story-family strong {
+  grid-row: span 2;
+  color: var(--solar-cream);
+  font: 300 clamp(64px, 10vw, 142px)/0.75 var(--serif);
+}
+
+.solar-system-story-family span {
+  font: 400 clamp(18px, 2vw, 28px)/1.2 var(--serif);
+}
+
+.solar-system-story-family i {
+  height: 1px;
+  margin-top: 16px;
+  background: linear-gradient(90deg, var(--solar-gold), transparent);
+}
+
+.solar-system-story-family p {
+  grid-column: 1 / -1;
+  margin: 12px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
+.solar-system-story-disc {
+  top: 26%;
+  right: clamp(25px, 7vw, 100px);
+  display: grid;
+  gap: 8px;
+  width: min(360px, 32vw);
+  padding-left: 22px;
+  border-left: 1px solid rgba(142, 201, 255, 0.55);
+}
+
+.solar-system-story-disc span {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.solar-system-story-disc strong {
+  font: 400 clamp(19px, 2.3vw, 34px)/1.35 var(--serif);
+}
+
+.solar-system-story-disc i {
+  width: 100%;
+  height: 1px;
+  margin-top: 8px;
+  background: linear-gradient(90deg, rgba(142, 201, 255, 0.7), transparent);
+}
+
+.solar-system-story-years {
+  right: clamp(24px, 6vw, 90px);
+  bottom: clamp(130px, 23vh, 210px);
+  display: grid;
+  grid-template-columns: auto minmax(60px, 160px) auto;
+  align-items: center;
+  gap: 15px;
+}
+
+.solar-system-story-years div {
+  display: grid;
+  gap: 3px;
+}
+
+.solar-system-story-years div span {
+  font-size: 10px;
+  letter-spacing: 0.13em;
+}
+
+.solar-system-story-years div strong {
+  color: #fff1d0;
+  font: 400 clamp(25px, 3vw, 44px)/1 var(--serif);
+}
+
+.solar-system-story-years i {
+  height: 1px;
+  background: linear-gradient(90deg, #ffb95f, #88c8ff);
+}
+
+.solar-system-story-years p {
+  grid-column: 1 / -1;
+  margin: 1px 0 0;
+  text-align: center;
+  font-size: 10px;
+}
+
+.solar-system-story-kepler {
+  top: 50%;
+  right: clamp(24px, 6vw, 92px);
+  display: grid;
+  gap: 9px;
+  width: min(330px, 31vw);
+  padding: 24px 26px;
+  border: 1px solid rgba(246, 195, 107, 0.22);
+  background: linear-gradient(145deg, rgba(5, 7, 14, 0.82), rgba(2, 3, 8, 0.42));
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(20px);
+  transform: translateY(-50%);
+}
+
+.solar-system-story-kepler > span {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+}
+
+.solar-system-story-kepler > strong {
+  color: var(--solar-cream);
+  font: 400 clamp(34px, 4vw, 58px)/1.1 Georgia, serif;
+  letter-spacing: -0.04em;
+}
+
+.solar-system-story-kepler p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.solar-system-story-kepler small {
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+}
+
+.solar-system-story-jupiter {
+  top: 25%;
+  right: clamp(24px, 6vw, 90px);
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  gap: 10px;
+  max-width: 380px;
+}
+
+.solar-system-story-jupiter span {
+  font: 400 clamp(15px, 1.7vw, 23px)/1.3 var(--serif);
+}
+
+.solar-system-story-jupiter > strong {
+  color: var(--solar-gold);
+  font: 300 clamp(38px, 5vw, 70px)/1 var(--serif);
+}
+
+.solar-system-story-jupiter p {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.solar-system-story-rings {
+  right: clamp(25px, 7vw, 100px);
+  bottom: clamp(130px, 22vh, 205px);
+  display: grid;
+  grid-template-columns: auto minmax(80px, 180px) auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.solar-system-story-rings div {
+  display: grid;
+  gap: 4px;
+}
+
+.solar-system-story-rings strong {
+  color: #fff2d8;
+  font: 400 clamp(22px, 3vw, 42px)/1 var(--serif);
+}
+
+.solar-system-story-rings span {
+  font-size: 9px;
+  letter-spacing: 0.13em;
+}
+
+.solar-system-story-rings i {
+  height: 1px;
+  background: linear-gradient(90deg, #ffe5ad, rgba(142, 201, 255, 0.55));
+}
+
+.solar-system-story-neptune {
+  top: 23%;
+  right: clamp(28px, 8vw, 120px);
+  display: grid;
+  justify-items: end;
+}
+
+.solar-system-story-neptune > span {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+
+.solar-system-story-neptune > strong {
+  color: #c7e5ff;
+  font: 300 clamp(66px, 11vw, 150px)/0.88 var(--serif);
+  letter-spacing: -0.06em;
+  text-shadow: 0 0 40px rgba(67, 147, 224, 0.28);
+}
+
+.solar-system-story-neptune p {
+  margin: 4px 0 9px;
+  font: 400 clamp(18px, 2vw, 28px)/1 var(--serif);
+}
+
+.solar-system-story-neptune small {
+  padding-top: 8px;
+  border-top: 1px solid rgba(142, 201, 255, 0.35);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.solar-system-experience:not(.solar-system-beat-0) .solar-system-hud,
+.solar-system-experience:not(.solar-system-beat-0) .solar-system-credit {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+
+.solar-system-hud,
+.solar-system-credit {
+  transition: opacity 350ms ease, transform 350ms ease, visibility 350ms;
+}
+
+.solar-system-beat-0 .solar-system-story-title {
+  opacity: 0.74;
+}
+
+@keyframes solar-system-story-in {
+  from { opacity: 0; filter: blur(7px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+@media (max-width: 820px) {
+  .solar-system-story-title {
+    top: var(--experience-safe-top, 78px);
+    left: 18px;
+    max-width: 78vw;
+  }
+
+  .solar-system-story-title h1 {
+    font-size: clamp(36px, 11vw, 60px);
+  }
+
+  .solar-system-story-title p {
+    font-size: 12px;
+  }
+
+  .solar-system-beat-2 .solar-system-story-title,
+  .solar-system-beat-3 .solar-system-story-title,
+  .solar-system-beat-4 .solar-system-story-title,
+  .solar-system-beat-5 .solar-system-story-title,
+  .solar-system-beat-6 .solar-system-story-title,
+  .solar-system-beat-7 .solar-system-story-title {
+    opacity: 0;
+  }
+
+  .solar-system-story-family,
+  .solar-system-story-disc,
+  .solar-system-story-jupiter {
+    top: 22%;
+    right: 18px;
+    width: min(300px, 72vw);
+    max-width: 72vw;
+  }
+
+  .solar-system-story-years,
+  .solar-system-story-rings {
+    right: 18px;
+    bottom: 36%;
+    left: 18px;
+  }
+
+  .solar-system-story-kepler {
+    top: 25%;
+    right: 16px;
+    width: min(300px, calc(100% - 32px));
+    padding: 17px 19px;
+    transform: none;
+  }
+
+  .solar-system-story-neptune {
+    top: 19%;
+    right: 18px;
+  }
+
+  .solar-system-sidebar {
+    top: 76px;
+    max-height: 46vh;
+  }
+
+  .solar-system-bottombar {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .solar-system-experience.is-story .solar-system-story,
+  .solar-system-experience.is-story .solar-system-story-title {
+    display: none;
+  }
+}
+
