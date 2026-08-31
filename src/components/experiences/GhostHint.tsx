@@ -71,7 +71,7 @@ export function GhostHint({ worldId, gesture, delay = 1400 }: { worldId: string;
 
   useEffect(() => {
     if (readSeen(worldId)) return
-    
+
     // 深链/海报模式：?ghost=0 时完全不演示（避免 scrub 手势改动深链指定的状态）
     if (new URLSearchParams(window.location.search).get('ghost') === '0') return
     let cancelled = false

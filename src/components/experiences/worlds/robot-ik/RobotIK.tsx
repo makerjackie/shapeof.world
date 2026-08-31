@@ -821,7 +821,7 @@ export function RobotIK({ controls }: { controls: ExperienceControls }) {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const calmQuery = { matches: false, addEventListener() {}, removeEventListener() {} }
+    const calmQuery = { matches: false, addEventListener(..._args: unknown[]) {}, removeEventListener(..._args: unknown[]) {} }
     const syncCalm = () => {
       st.current.calm = calmQuery.matches
     }

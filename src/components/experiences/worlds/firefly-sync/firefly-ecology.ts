@@ -37,8 +37,8 @@ export function seededRandom(seed: number) {
   }
 }
 
-export function shouldAdvanceFlight(reducedMotion: boolean, pageHidden = false) {
-  return !reducedMotion && !pageHidden
+export function shouldAdvanceFlight(pageHidden = false) {
+  return !pageHidden
 }
 
 export function getStoryCoupling(beat: number, pull: number, radius: number, sync: boolean) {

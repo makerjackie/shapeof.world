@@ -419,4 +419,3 @@
     bottom: max(150px, calc(env(safe-area-inset-bottom, 0px) + 138px));
   }
 }
-

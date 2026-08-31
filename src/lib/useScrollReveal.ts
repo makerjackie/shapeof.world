@@ -23,9 +23,6 @@ const INITIAL_CONTENT_KEY = Symbol('initial-scroll-reveal-content')
 
 function createRevealController(root: HTMLElement, selector: string): RevealController {
   const observed = new Set<Element>()
-  const reducedMotion = typeof window.matchMedia === 'function'
-    ? { matches: false, addEventListener() {}, removeEventListener() {} }
-    : null
   let intersectionObserver: IntersectionObserver | null = null
   let disposed = false
 
@@ -39,7 +36,6 @@ function createRevealController(root: HTMLElement, selector: string): RevealCont
   const ensureIntersectionObserver = () => {
     if (
       intersectionObserver
-      || reducedMotion?.matches
       || typeof IntersectionObserver === 'undefined'
     ) {
       return intersectionObserver
@@ -68,7 +64,7 @@ function createRevealController(root: HTMLElement, selector: string): RevealCont
     }
 
     const observer = ensureIntersectionObserver()
-    const showImmediately = revealCurrent || reducedMotion?.matches || !observer
+    const showImmediately = revealCurrent || !observer
     for (const element of items) {
       if (element.classList.contains(REVEALED_CLASS)) continue
       if (showImmediately) {
@@ -80,16 +76,7 @@ function createRevealController(root: HTMLElement, selector: string): RevealCont
     }
   }
 
-  const handleMotionPreference = () => {
-    if (!reducedMotion?.matches) return
-    intersectionObserver?.disconnect()
-    intersectionObserver = null
-    observed.clear()
-    refresh(true)
-  }
-
   root.classList.add(REVEAL_ROOT_CLASS)
-  reducedMotion?.addEventListener('change', handleMotionPreference)
 
   const mutationObserver = typeof MutationObserver === 'undefined'
     ? null
@@ -102,7 +89,6 @@ function createRevealController(root: HTMLElement, selector: string): RevealCont
       disposed = true
       intersectionObserver?.disconnect()
       mutationObserver?.disconnect()
-      reducedMotion?.removeEventListener('change', handleMotionPreference)
       observed.clear()
       root.classList.remove(REVEAL_ROOT_CLASS)
     },
@@ -113,8 +99,8 @@ function createRevealController(root: HTMLElement, selector: string): RevealCont
  * One-shot scroll reveal for a collection under one root.
  *
  * The interface deliberately exposes only the item selector and the optional
- * collection identity. Observer lifecycles, reduced-motion behavior, DOM
- * mutations, browser fallbacks, and the reveal classes stay inside the module.
+ * collection identity. Observer lifecycles, DOM mutations, browser fallbacks,
+ * and the reveal classes stay inside the module.
  */
 export function useScrollReveal<T extends HTMLElement>(
   selector: string,

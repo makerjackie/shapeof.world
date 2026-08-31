@@ -74,9 +74,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "pendulum-wave",
       "state": "public",
       "title": "一齐放开，一排摆自己走出波浪",
@@ -97,9 +97,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "pendulum-wave",
       "state": "public",
       "title": "一齐放开，一排摆自己走出波浪",
@@ -149,15 +149,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "一齐放开，一排摆自己走出波浪 Release them together and watch a row of pendulums walk themselves into waves 一排摆为什么会自己走出波浪？ Why does a row of pendulums walk itself into waves? 同样的起点，为什么它们会先变成波浪，再乱成一片，最后又整齐回来？ Same starting point—why do they first turn into waves, then into chaos, then line up again? 振动与波 Vibration and waves",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "pendulum-wave",
         "state": "public",
         "title": "一齐放开，一排摆自己走出波浪",
@@ -179,9 +179,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "pendulum-wave",
       "renderer": "pendulum-wave",
       "runtime": "diagram-2d",
@@ -198,9 +198,9 @@
         "en": "Same starting point—why do they first turn into waves, then into chaos, then line up again?"
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "5b86c62e7731248d0579a664caee81712b4c2bba334e4ad6063411ee9f2e7596",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "double-slit",
       "nextWorldId": "double-pendulum",

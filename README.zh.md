@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/apple-touch-icon-compass.png" width="96" alt="世界的形状">
+  <img src="./public/assets/brand/app-icon.png" width="112" alt="世界的形状">
   <h1>世界的形状</h1>
   <p>
     <a href="./README.md">English</a> · <a href="./README.zh.md">中文</a>

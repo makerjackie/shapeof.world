@@ -83,9 +83,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "chemical-garden",
       "state": "public",
       "title": "金属盐在溶液中长成矿物花园",
@@ -106,9 +106,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "chemical-garden",
       "state": "public",
       "title": "金属盐在溶液中长成矿物花园",
@@ -165,15 +165,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "金属盐在溶液中长成矿物花园 Metal salts grow into a mineral garden in solution 一颗金属盐落进溶液，为什么会像植物一样向上生长？ Why can a metal salt dropped into solution grow upward like a plant? 沉淀膜在渗透压下膨胀、破裂，有时反复重封，把无生命的盐长成彩色中空管。 Osmotic pressure swells and ruptures a precipitate membrane; sometimes it reseals, growing lifeless salt into colored hollow tubes. 化学自组织 · 沉淀与渗透 Chemical self-organization · Precipitation and osmosis",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "chemical-garden",
         "state": "public",
         "title": "金属盐在溶液中长成矿物花园",
@@ -195,9 +195,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "chemical-garden",
       "renderer": "chemical-garden",
       "runtime": "scene-3d",
@@ -215,9 +215,9 @@
         "en": "Osmotic pressure swells and ruptures a precipitate membrane; sometimes it reseals, growing lifeless salt into colored hollow tubes."
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "adf29506770ec5e2a17ff0e294e2372fe4fb18a76cbe9f18195617e00ebc97e6",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "firefly-sync",
       "nextWorldId": "neural-playground",

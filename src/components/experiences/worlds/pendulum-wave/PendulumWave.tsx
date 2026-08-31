@@ -747,7 +747,7 @@ export function PendulumWave({ controls }: { controls: ExperienceControls }) {
       durationMs: 5_500,
     },
     // 末步不绑 target：避免字幕框跳到底栏控件
-    
+
   ], [tx])
 
   return (

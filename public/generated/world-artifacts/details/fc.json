@@ -74,9 +74,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "boids-flocking",
       "state": "public",
       "title": "鸟群依靠三条局部规则形成统一运动",
@@ -97,9 +97,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "boids-flocking",
       "state": "public",
       "title": "鸟群依靠三条局部规则形成统一运动",
@@ -148,15 +148,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "鸟群依靠三条局部规则形成统一运动 Three local rules produce coordinated flocking 没有领袖，鸟群如何飞出统一的形状？ Without a leader, how does a flock fly in unified shapes? 每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。 Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together. 群体运动 Collective motion",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "boids-flocking",
         "state": "public",
         "title": "鸟群依靠三条局部规则形成统一运动",
@@ -178,9 +178,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "boids-flocking",
       "renderer": "boids-flocking",
       "runtime": "diagram-2d",
@@ -197,9 +197,9 @@
         "en": "Each bird does just three things: avoid collisions, follow the flow, and stay with the group. The whole flock turns together."
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "97d66d5bed4c063714a6e871988d8ae3cd71ddba3ee58861666db89d23ec1e54",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "snow-crystal",
       "nextWorldId": "phyllotaxis",

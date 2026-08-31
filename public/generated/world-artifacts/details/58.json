@@ -72,9 +72,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "black-hole-flyby",
       "state": "public",
       "title": "掠过黑洞时看见的扭曲星空",
@@ -95,9 +95,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "black-hole-flyby",
       "state": "public",
       "title": "掠过黑洞时看见的扭曲星空",
@@ -141,15 +141,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "掠过黑洞时看见的扭曲星空 The distorted sky seen on a black-hole flyby 如果从深空掠过黑洞，你会看见怎样的宇宙？ What would the universe look like on a flyby past a black hole? 从遥远星海靠近，看光被拉成灿烂圆环；越过最近点，再回头看它缩成一粒金色星光。 Approach through a sea of stars, hover by a blazing ring, then fly past and watch the black hole recede to a golden point. 引力 Gravity",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "black-hole-flyby",
         "state": "public",
         "title": "掠过黑洞时看见的扭曲星空",
@@ -171,9 +171,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "black-hole-flyby",
       "renderer": "black-hole-flyby",
       "runtime": "scene-3d",
@@ -191,9 +191,9 @@
         "en": "Approach through a sea of stars, hover by a blazing ring, then fly past and watch the black hole recede to a golden point."
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "82fc06d31c0b9d7e22890df1c65e5124c73c84b906932f8e78eb4818a54c0732",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "moon-voyage",
       "nextWorldId": "formula-bloom",

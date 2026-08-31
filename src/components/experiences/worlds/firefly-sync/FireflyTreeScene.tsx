@@ -99,8 +99,8 @@ function Environment() {
   </>
 }
 
-function updateMotion(fly: RuntimeFly, now: number, dt: number, reducedMotion: boolean) {
-  if (!shouldAdvanceFlight(reducedMotion)) return
+function updateMotion(fly: RuntimeFly, now: number, dt: number) {
+  if (!shouldAdvanceFlight()) return
   if (now > fly.nextTurn) {
     const rnd = seededRandom((fly.id + 1) * 8191 + Math.floor(now * 2))
     fly.heading += (rnd() - 0.5) * 1.2; fly.nextTurn = now + 0.65 + rnd() * 2.1
@@ -186,7 +186,7 @@ function FireflyEcosystem({ beat, params, reducedMotion, onOrderChange, onTrigge
     // The original model measured a 2D neighbourhood. The mapped 3D radius
     // keeps the same visible neighbour count while the pulse formula is intact.
     const coupling = getStoryCoupling(beat, params.pull, params.radius, params.sync)
-    flies.forEach((fly, index) => { updateMotion(fly, now, dt, reducedMotion); fly.phase += dt * params.clockSpeed; if (fly.phase >= 1) { fly.phase -= 1; fly.flash = 1; if (coupling.sync) advancePulseCoupling(flies, index, coupling.pull, coupling.radius) } fly.flash *= Math.exp(-dt / fly.flashDecay); const phase = fly.phase * TAU; sx += Math.cos(phase); sy += Math.sin(phase) })
+    flies.forEach((fly, index) => { updateMotion(fly, now, dt); fly.phase += dt * params.clockSpeed; if (fly.phase >= 1) { fly.phase -= 1; fly.flash = 1; if (coupling.sync) advancePulseCoupling(flies, index, coupling.pull, coupling.radius) } fly.flash *= Math.exp(-dt / fly.flashDecay); const phase = fly.phase * TAU; sx += Math.cos(phase); sy += Math.sin(phase) })
     if (now - lastEmit.current > 0.18) { lastEmit.current = now; onOrderChange(Math.hypot(sx, sy) / flies.length) }
   })
   const handlePointer = (event: ThreeEvent<PointerEvent>) => {

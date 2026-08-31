@@ -662,7 +662,7 @@ export function LightningLab({ controls }: { controls: ExperienceControls }) {
           }
           if (drop.x < -0.05) drop.x = 1.05
         }
-      
+
 
       const flash = s.flashGlobal
       const shakeX = (Math.random() - 0.5) * s.shake * 10

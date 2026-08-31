@@ -74,9 +74,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "mandelbrot-zoom",
       "state": "public",
       "title": "曼德勃罗集边界的无限细节",
@@ -97,9 +97,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "mandelbrot-zoom",
       "state": "public",
       "title": "曼德勃罗集边界的无限细节",
@@ -148,15 +148,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "曼德勃罗集边界的无限细节 Infinite detail along the Mandelbrot set boundary 为什么一个公式的边界，越放大越看不完？ Why does one formula’s boundary never run out as you zoom? 一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。 One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same. 分形 Fractals",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "mandelbrot-zoom",
         "state": "public",
         "title": "曼德勃罗集边界的无限细节",
@@ -178,9 +178,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "mandelbrot-zoom",
       "renderer": "mandelbrot-zoom",
       "runtime": "diagram-2d",
@@ -197,9 +197,9 @@
         "en": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same."
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "d7d0ff125df1a2aaa38f37de6fa5f9e76cc5dadb12735ef17b76cfc1fca68912",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "gravity-assist",
       "nextWorldId": "newton-fractal",

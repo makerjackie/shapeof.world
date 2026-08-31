@@ -94,9 +94,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "firefly-sync",
       "state": "public",
       "title": "萤火虫群体同步闪烁",
@@ -117,9 +117,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "firefly-sync",
       "state": "public",
       "title": "萤火虫群体同步闪烁",
@@ -184,15 +184,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "萤火虫群体同步闪烁 Collective synchronization in flashing fireflies 一整片萤火虫，怎么突然一起亮？ How does a whole field of fireflies suddenly flash together? 一整片微光，怎么突然一起亮？ How does a whole field of tiny lights suddenly flash together? 群体节律 Collective rhythms",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "firefly-sync",
         "state": "public",
         "title": "萤火虫群体同步闪烁",
@@ -214,9 +214,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "firefly-sync",
       "renderer": "firefly-sync",
       "runtime": "scene-3d",
@@ -234,9 +234,9 @@
         "en": "How does a whole field of tiny lights suddenly flash together?"
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "2df3ed42226077242c6ff780b98adbc067a0bd3dd65adf8bcca3622fffd6b182",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "double-pendulum",
       "nextWorldId": "chemical-garden",

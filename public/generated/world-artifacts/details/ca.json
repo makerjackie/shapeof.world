@@ -63,9 +63,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "newton-fractal",
       "state": "public",
       "title": "猜错起点，答案会跳到另一边",
@@ -86,9 +86,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "newton-fractal",
       "state": "public",
       "title": "猜错起点，答案会跳到另一边",
@@ -125,15 +125,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "text": "猜错起点，答案会跳到另一边 Guess from the wrong start, and the answer jumps to another side 同一个方程，为什么换个起点答案就变了？ Why does the same equation give different answers from different starting points? 用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。 Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections. 数学 Mathematics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+        "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
         "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-        "releaseId": "oss-6ff3221d",
+        "releaseId": "oss-d6b00616",
         "id": "newton-fractal",
         "state": "public",
         "title": "猜错起点，答案会跳到另一边",
@@ -155,9 +155,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+      "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
       "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-      "releaseId": "oss-6ff3221d",
+      "releaseId": "oss-d6b00616",
       "id": "newton-fractal",
       "renderer": "newton-fractal",
       "runtime": "diagram-2d",
@@ -174,9 +174,9 @@
         "en": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections."
       }
     },
-    "sourceCommit": "6ff3221d9fa285bacee24fddf62b8deea6ce3a53",
+    "sourceCommit": "d6b00616202693fcc89bb131b0b6dc928219732a",
     "contentRevision": "a01d44cbe40a2917c20e0c4afb66c289e56a98278d3a0b85e58b16dcf3eca53a",
-    "releaseId": "oss-6ff3221d",
+    "releaseId": "oss-d6b00616",
     "navigation": {
       "previousWorldId": "mandelbrot-zoom",
       "nextWorldId": "clifford-dust",
