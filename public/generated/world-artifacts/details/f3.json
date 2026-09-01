@@ -65,9 +65,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fourier",
       "state": "public",
       "title": "旋转圆叠加出方波与周期曲线",
@@ -88,9 +88,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fourier",
       "state": "public",
       "title": "旋转圆叠加出方波与周期曲线",
@@ -129,15 +129,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "旋转圆叠加出方波与周期曲线 Rotating circles combine into square waves and periodic curves 一串旋转的圆，为什么能画出任何曲线？ Why can a series of rotating circles draw any curves? 增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。 Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot. 数学 Mathematics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "fourier",
         "state": "public",
         "title": "旋转圆叠加出方波与周期曲线",
@@ -159,9 +159,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fourier",
       "renderer": "fourier",
       "runtime": "diagram-2d",
@@ -178,9 +178,9 @@
         "en": "Increase or decrease the number of harmonic terms to see how the end of the circular chain draws a square wave step by step; you can also draw a line and have it decomposed on the spot."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "14fd019250475a383303219a17b186f43aa63d861ec02fa3ab90ecbc0d85d065",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "magnetic-lines",
       "nextWorldId": "ferrofluid",

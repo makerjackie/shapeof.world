@@ -140,6 +140,33 @@ function AboutPage() {
         </div>
       </section>
 
+      <section className="about-sponsor" aria-labelledby="about-sponsor-title">
+        <p className="eyebrow" id="about-sponsor-title">{t('about.sponsorTitle')}</p>
+        <p className="about-sponsor-body">{t('about.sponsorBody')}</p>
+        <ul className="about-sponsor-logos">
+          <li>
+            <img
+              className="about-sponsor-logo about-sponsor-logo--superposition"
+              src="/assets/sponsors/superposition-black.svg"
+              alt={t('about.sponsor.superpositionAlt')}
+              width={280}
+              height={133}
+              decoding="async"
+            />
+          </li>
+          <li>
+            <img
+              className="about-sponsor-logo about-sponsor-logo--quantsparkle"
+              src="/assets/sponsors/quantsparkle-black.png"
+              alt={t('about.sponsor.quantsparkleAlt')}
+              width={420}
+              height={107}
+              decoding="async"
+            />
+          </li>
+        </ul>
+      </section>
+
       {locale === 'zh' ? (
         <section className="about-community" aria-labelledby="about-community-title">
           <div className="about-community-copy">

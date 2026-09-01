@@ -61,9 +61,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fluid-sim",
       "state": "public",
       "title": "涡旋从流体扰动中产生并消散",
@@ -84,9 +84,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fluid-sim",
       "state": "public",
       "title": "涡旋从流体扰动中产生并消散",
@@ -125,15 +125,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "涡旋从流体扰动中产生并消散 Vortices form and dissipate after a fluid is disturbed 为什么流体被搅动后会自发形成涡旋结构？ Why does fluid spontaneously form vortex structures after being stirred? 在画布上拖动鼠标或手指，实时搅动 GPU 流体——彩色染料在涡旋中拉伸、卷曲、扩散。 Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices. 水流与漩涡 Flow and vortices",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "fluid-sim",
         "state": "public",
         "title": "涡旋从流体扰动中产生并消散",
@@ -155,9 +155,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "fluid-sim",
       "renderer": "fluid-sim",
       "runtime": "particle-2d",
@@ -174,9 +174,9 @@
         "en": "Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "45b1872fbe45052246a4f93a57a3b3d8bb9939c5d7259cd033767d4b11453b26",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "strange-attractors",
       "nextWorldId": "electric-field",

@@ -71,9 +71,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-pendulum",
       "state": "public",
       "title": "相差 0.1° 的双摆轨迹",
@@ -94,9 +94,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-pendulum",
       "state": "public",
       "title": "相差 0.1° 的双摆轨迹",
@@ -141,15 +141,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "相差 0.1° 的双摆轨迹 Double-pendulum paths starting 0.1° apart 两次几乎相同的放手，为什么走出完全不同的路？ Two almost identical letting gos, why take completely different paths? 拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。 Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum. 混沌 Chaos",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "double-pendulum",
         "state": "public",
         "title": "相差 0.1° 的双摆轨迹",
@@ -171,9 +171,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-pendulum",
       "renderer": "double-pendulum",
       "runtime": "particle-2d",
@@ -190,9 +190,9 @@
         "en": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "b7dfe0a92e5a81061f938e0802ef7dffdc1dcf94f55e3aeaa244383d1867a49d",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "pendulum-wave",
       "nextWorldId": "firefly-sync",

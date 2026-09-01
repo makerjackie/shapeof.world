@@ -73,9 +73,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "lightning-lab",
       "state": "public",
       "title": "闪电沿分叉通道逐步前进",
@@ -96,9 +96,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "lightning-lab",
       "state": "public",
       "title": "闪电沿分叉通道逐步前进",
@@ -147,15 +147,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "闪电沿分叉通道逐步前进 Lightning advances through a branching channel 闪电为什么是锯齿形的？ Why is lightning shaped like a jagged line? 点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。 Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up. 大气与电 Atmosphere and electricity",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "lightning-lab",
         "state": "public",
         "title": "闪电沿分叉通道逐步前进",
@@ -177,9 +177,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "lightning-lab",
       "renderer": "lightning-lab",
       "runtime": "diagram-2d",
@@ -196,9 +196,9 @@
         "en": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "9841e0e477b9db560be01cd638fc6f339dfb268b2844ef72f19b583ae38644c0",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "pinhole-canopy",
       "nextWorldId": "snow-crystal",

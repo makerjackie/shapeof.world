@@ -65,9 +65,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "neural-playground",
       "state": "public",
       "title": "神经网络通过调整权重学习分类",
@@ -88,9 +88,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "neural-playground",
       "state": "public",
       "title": "神经网络通过调整权重学习分类",
@@ -129,15 +129,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "神经网络通过调整权重学习分类 A neural network learns classification by adjusting weights 神经网络是怎样从数据中学会分类的？ How do neural networks learn to classify from data? 换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。 Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data. 深度学习 deep learning",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "neural-playground",
         "state": "public",
         "title": "神经网络通过调整权重学习分类",
@@ -159,9 +159,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "neural-playground",
       "renderer": "neural-playground",
       "runtime": "diagram-2d",
@@ -178,9 +178,9 @@
         "en": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "7581ff31a26eb0725bc0aef8077727e7591b11e7eee23dfe34059a579e854ea1",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "chemical-garden",
       "nextWorldId": "robot-ik",

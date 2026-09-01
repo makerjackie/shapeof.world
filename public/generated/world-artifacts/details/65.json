@@ -67,9 +67,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "pinhole-canopy",
       "state": "public",
       "title": "缩小一片叶隙，让树荫落满一百个太阳",
@@ -90,9 +90,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "pinhole-canopy",
       "state": "public",
       "title": "缩小一片叶隙，让树荫落满一百个太阳",
@@ -137,15 +137,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "缩小一片叶隙，让树荫落满一百个太阳 Narrow one leaf gap and scatter a hundred tiny Suns across the ground 树荫下，为什么落着一地小太阳？ Why is the shade beneath a tree filled with tiny Suns? 让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。 Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents. 几何光学 Geometrical optics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "pinhole-canopy",
         "state": "public",
         "title": "缩小一片叶隙，让树荫落满一百个太阳",
@@ -167,9 +167,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "pinhole-canopy",
       "renderer": "pinhole-canopy",
       "runtime": "particle-2d",
@@ -186,9 +186,9 @@
         "en": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "87016805e87fe7c1ddc236c56ed74c7f223812f0233d0fecb11b954ce42d1c4e",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "pool-caustics",
       "nextWorldId": "lightning-lab",

@@ -81,9 +81,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "gravity-assist",
       "state": "public",
       "title": "引力助推改变飞船的速度",
@@ -104,9 +104,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "gravity-assist",
       "state": "public",
       "title": "引力助推改变飞船的速度",
@@ -161,15 +161,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "引力助推改变飞船的速度 A gravity assist changes a spacecraft’s speed 引力弹弓为什么能「白捡」速度？ Why can the gravity slingshot gain speed for free? 选择后方或前方掠过行星，亲眼看 Δv 为正还是为负；再切到旋转参考系，找引力刚好抵消的 5 个点。 Choose to fly behind or in front of the planet and see with your own eyes whether Δv is positive or negative; then switch to the rotating reference frame and find 5 points where the gravity just cancels out. 轨道力学 Orbital mechanics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "gravity-assist",
         "state": "public",
         "title": "引力助推改变飞船的速度",
@@ -191,9 +191,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "gravity-assist",
       "renderer": "gravity-assist",
       "runtime": "particle-2d",
@@ -210,9 +210,9 @@
         "en": "Choose to fly behind or in front of the planet and see with your own eyes whether Δv is positive or negative; then switch to the rotating reference frame and find 5 points where the gravity just cancels out."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "bcc93d959e7cfb2450809df40f33d86471955fe1f16791694521209e81a2a21c",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "three-body",
       "nextWorldId": "mandelbrot-zoom",

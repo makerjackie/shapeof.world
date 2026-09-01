@@ -57,9 +57,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "solar-system",
       "state": "public",
       "title": "此刻，整座太阳系",
@@ -80,9 +80,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "solar-system",
       "state": "public",
       "title": "此刻，整座太阳系",
@@ -113,15 +113,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "此刻，整座太阳系 The solar system, right now 八大行星此刻都在哪里？ Where are the eight planets right now? 任选一天，点任意行星跟拍：此刻它们各自在哪条轨道上。 Pick any day and follow any planet: see where each one sits on its orbit right now. 太阳系 solar system",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "solar-system",
         "state": "public",
         "title": "此刻，整座太阳系",
@@ -143,9 +143,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "solar-system",
       "renderer": "solar-system",
       "runtime": "scene-3d",
@@ -163,9 +163,9 @@
         "en": "Pick any day and follow any planet: see where each one sits on its orbit right now."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "19bc275f9cbe04ec9a64fb526f7bcc7bcf4c171b571c97ceb98395892405176b",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "robot-ik",
       "nextWorldId": "three-body",

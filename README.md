@@ -20,14 +20,21 @@
   <p>This repository is a <strong>curated edition</strong>: thirty worlds and the web code that runs them.</p>
 </div>
 
-## Sponsor
+## Sponsors
 
 <div align="center">
-  <p>Sponsored by 叠加态社区 (SUPERPOSITION).</p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
-    <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="280">
-  </picture>
+  <p>Sponsored by 叠加态社区 (SUPERPOSITION) and 数耀量生 (QuantSparkle).</p>
+  <p>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
+      <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="220">
+    </picture>
+    &nbsp;&nbsp;
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/quantsparkle-white.png">
+      <img src="./public/assets/sponsors/quantsparkle-black.png" alt="数耀量生 QuantSparkle" width="320">
+    </picture>
+  </p>
   <p><sub>See the <a href="./public/assets/sponsors/NOTICE.md">asset notice</a>.</sub></p>
 </div>
 

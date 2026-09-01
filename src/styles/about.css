@@ -157,6 +157,7 @@
 .about-principles,
 .about-glimpse,
 .about-creators,
+.about-sponsor,
 .about-links {
   width: min(1120px, calc(100% - 10vw));
   margin: 0 auto;
@@ -286,6 +287,37 @@ a.about-creator-card:hover strong {
 }
 .about-creator-card em svg { width: 13px; height: 13px; }
 
+/* —— 赞助：与 README 一样的鸣谢，安静列在创作者之后 —— */
+.about-sponsor {
+  padding: 72px 0 88px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+.about-sponsor-body {
+  max-width: 52ch;
+  margin: 18px auto 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(25, 35, 31, 0.68);
+}
+.about-sponsor-logos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 56px;
+  align-items: center;
+  justify-items: center;
+  max-width: 880px;
+  margin: 40px auto 0;
+  padding: 0;
+  list-style: none;
+}
+.about-sponsor-logo {
+  display: block;
+  height: auto;
+}
+.about-sponsor-logo--superposition { width: min(280px, 100%); }
+.about-sponsor-logo--quantsparkle { width: min(420px, 100%); }
+
 /* —— 探索者群：深色幕布，邀请而非告示 —— */
 .about-community {
   display: grid;
@@ -405,6 +437,10 @@ a.about-creator-card:hover strong {
     border-top: 1px solid var(--hairline);
     border-left: 0;
   }
+  .about-sponsor { padding: 56px 0 72px; }
+  .about-sponsor-logos { grid-template-columns: 1fr; gap: 28px; }
+  .about-sponsor-logo--superposition { width: min(240px, 72%); }
+  .about-sponsor-logo--quantsparkle { width: min(320px, 86%); }
   .about-community {
     grid-template-columns: 1fr;
     margin-bottom: 72px;

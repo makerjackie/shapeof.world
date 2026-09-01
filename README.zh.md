@@ -23,11 +23,18 @@
 ## 赞助
 
 <div align="center">
-  <p>本项目由叠加态社区（SUPERPOSITION）赞助支持。</p>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
-    <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="280">
-  </picture>
+  <p>本项目由叠加态社区（SUPERPOSITION）与数耀量生（QuantSparkle）赞助支持。</p>
+  <p>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
+      <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="220">
+    </picture>
+    &nbsp;&nbsp;
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/quantsparkle-white.png">
+      <img src="./public/assets/sponsors/quantsparkle-black.png" alt="数耀量生 QuantSparkle" width="320">
+    </picture>
+  </p>
   <p><sub>赞助方 Logo 的权利说明见 <a href="./public/assets/sponsors/NOTICE.md">资产声明</a>。</sub></p>
 </div>
 

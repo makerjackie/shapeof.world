@@ -66,9 +66,9 @@
     },
     "card": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-slit",
       "state": "public",
       "title": "单粒子逐个穿过双缝形成干涉条纹",
@@ -89,9 +89,9 @@
     },
     "detail": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-slit",
       "state": "public",
       "title": "单粒子逐个穿过双缝形成干涉条纹",
@@ -131,15 +131,15 @@
     },
     "search": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "text": "单粒子逐个穿过双缝形成干涉条纹 Single particles build an interference pattern at a double slit 为什么单个粒子也会形成干涉条纹？ Why do single particles also form interference fringes? 先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。 First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot. 量子物理 Quantum physics",
       "world": {
         "schemaVersion": 1,
-        "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+        "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
         "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-        "releaseId": "oss-c434f6ee",
+        "releaseId": "oss-0f3ff0d7",
         "id": "double-slit",
         "state": "public",
         "title": "单粒子逐个穿过双缝形成干涉条纹",
@@ -161,9 +161,9 @@
     },
     "offline": {
       "schemaVersion": 1,
-      "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+      "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
       "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-      "releaseId": "oss-c434f6ee",
+      "releaseId": "oss-0f3ff0d7",
       "id": "double-slit",
       "renderer": "double-slit",
       "runtime": "particle-2d",
@@ -180,9 +180,9 @@
         "en": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot."
       }
     },
-    "sourceCommit": "c434f6ee105bca1e17fce2143d4e4717a56f578b",
+    "sourceCommit": "0f3ff0d7f24c3f62b2c4efe342d97b80e74e20a3",
     "contentRevision": "dded1ae6cc07671b02a8e9d5a63e4df109a4097dde947363e98484a2d8abbe95",
-    "releaseId": "oss-c434f6ee",
+    "releaseId": "oss-0f3ff0d7",
     "navigation": {
       "previousWorldId": "formula-bloom",
       "nextWorldId": "pendulum-wave",
