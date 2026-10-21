@@ -1,0 +1,59 @@
+{
+  "id": "tick-escape",
+  "code": "CMP-B02",
+  "title": {
+    "en": "Tick Escape",
+    "zh": "擒纵"
+  },
+  "category": "computing-engineering",
+  "archetype": "discovery",
+  "moods": [
+    "precise",
+    "mechanical",
+    "intimate",
+    "crafted"
+  ],
+  "topics": [
+    "escapement",
+    "clockwork",
+    "gear"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "A major",
+  "instruments": [
+    "kalimba gears",
+    "dry wood ticks",
+    "muted piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.92,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a watch escapement releasing time in ticks. Around 88 BPM, A major. Dry wood ticks as pallet and wheel; kalimba as gear teeth; muted piano as the going train; cello as the mainspring's slow unwind. Intimate craft, not a ticking-time-pressure cue. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No bomb countdown, no horror clock.\n\n[00:00–00:20] Wood tick alone, even, close-mic.\n[00:20–01:00] Kalimba interlocking; piano marks larger wheels.\n[01:00–01:45] Cello long tone as stored energy; ticks remain even.\n[01:45–02:30] Mechanism thins to the original tick.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:37:37Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/tick-escape/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/tick-escape/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/tick-escape/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:07.876968+00:00",
+  "generation": {
+    "id": "1df5d261-cf26-4bc9-af65-5bb4c349f0d5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:36:46Z",
+    "completedAt": "2026-08-25T10:37:37Z",
+    "durationMs": 51000,
+    "interactionId": "P3CNarDiI4HrjMwPk_bgoAE",
+    "clientRequestId": "fde15e39-11d0-4c7d-83b9-45205c7aed79",
+    "synthid": true,
+    "c2pa": "urn:c2pa:4870a51b-c656-03cc-a927-48c5b4dfff1a",
+    "sha256": "06aa9aba0dca867e7c942a1cfe4a43d6f471f02fffebe60f615bf5aae8cf5af7"
+  }
+}

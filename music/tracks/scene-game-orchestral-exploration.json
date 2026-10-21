@@ -1,0 +1,132 @@
+{
+  "id": "scene-game-orchestral-exploration",
+  "code": "GAME-08-2",
+  "title": {
+    "en": "Copper Guardian · Exploration",
+    "zh": "铜色守卫 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "energetic tactical combat",
+    "exploration"
+  ],
+  "energy": 4,
+  "bpm": 140,
+  "key": "",
+  "instruments": [
+    "low strings",
+    "brass",
+    "tight cinematic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for energetic tactical combat, exploration state. Instruments: low strings, brass, tight cinematic drums. 140 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A suspenseful and dramatic orchestral piece featuring prominent pizzicato strings, driving percussion, and building brass and bowed string melodies. The track maintains a steady, rhythmic pulse, creating a sense of urgency and tension.",
+    "zh": "一首悬疑而富有戏剧性的管弦乐作品，以突出的拨弦乐器、强劲的打击乐以及逐渐增强的铜管和弓弦旋律为特色。该曲保持稳定、有节奏的律动，营造出紧迫感和紧张气氛。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 88.633,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:25:47.349584+00:00",
+  "generation": {
+    "id": "1dda7fe3-49d8-449e-b109-d4b0eb3f41bd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:25:01.729471+00:00",
+    "completedAt": "2026-09-22T09:25:47.349584+00:00",
+    "interactionId": "bkmyas7XF_ibjMwPpd3CiQ0",
+    "sha256": "e719f734274543abf5c68a7258246b18e327f25eb27c08cf6a65f9335d222e91"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A suspenseful and dramatic orchestral piece featuring prominent pizzicato strings, driving percussion, and building brass and bowed string melodies. The track maintains a steady, rhythmic pulse, creating a sense of urgency and tension.",
+      "zh": "一首悬疑而富有戏剧性的管弦乐作品，以突出的拨弦乐器、强劲的打击乐以及逐渐增强的铜管和弓弦旋律为特色。该曲保持稳定、有节奏的律动，营造出紧迫感和紧张气氛。"
+    },
+    "instruments": [
+      "Strings",
+      "Pizzicato strings",
+      "Bowed strings",
+      "Percussion",
+      "Drums",
+      "Brass"
+    ],
+    "moods": [
+      "Suspenseful",
+      "Dramatic",
+      "Rhythmic",
+      "Driving",
+      "Cinematic",
+      "Tense"
+    ],
+    "energy": 4,
+    "bpmEstimate": 120,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:25:58.502100+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-exploration/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "67bc9c5e414e0208d5a1050c857cca0ca2667832da285c1f6448f07ee65b93fb",
+      "bytes": 1241643,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e719f734274543abf5c68a7258246b18e327f25eb27c08cf6a65f9335d222e91",
+      "bytes": 2134870,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8392356a873e56a1b18bd7fb5d329722f6ecc316e8ad2cc564e557425186df1a",
+      "bytes": 2808,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.840776+00:00"
+}

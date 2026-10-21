@@ -1,0 +1,1445 @@
+[
+  {
+    "id": "agent-cutaway",
+    "title": "Agent 的修复循环",
+    "titleEn": "An Agent’s Repair Loop"
+  },
+  {
+    "id": "agent-runtime",
+    "title": "Agent 运行时组织上下文并调用工具",
+    "titleEn": "An agent runtime assembles context and invokes tools"
+  },
+  {
+    "id": "agent-scratchpad",
+    "title": "Claude Code 和 Codex 的脑子里，只有一张纸",
+    "titleEn": "Inside Claude Code and Codex there is only one sheet of paper"
+  },
+  {
+    "id": "ai-machine",
+    "title": "AI 的回答，从哪里来？",
+    "titleEn": "Where does an AI answer come from?"
+  },
+  {
+    "id": "aliasing",
+    "title": "帧率不足会产生车轮倒转的错觉",
+    "titleEn": "A limited frame rate creates the wagon-wheel illusion"
+  },
+  {
+    "id": "andromeda-deep-zoom",
+    "title": "一张照片要多大，才装得下两亿颗恒星？",
+    "titleEn": "How big must one photo be to hold 200 million stars?"
+  },
+  {
+    "id": "ant-nest",
+    "title": "没有图纸，没有工头，这座地下宫殿是谁设计的？",
+    "titleEn": "No blueprints, no foreman — who designed this underground palace?"
+  },
+  {
+    "id": "artificial-life",
+    "title": "遗传、突变与选择推动人工生命演化",
+    "titleEn": "Heredity, mutation and selection drive artificial evolution"
+  },
+  {
+    "id": "atmosphere-profile-lab",
+    "title": "气球越高，天空越冷？",
+    "titleEn": "Does higher always mean colder?"
+  },
+  {
+    "id": "attention-theater",
+    "title": "多头注意力为上下文分配不同权重",
+    "titleEn": "Multiple attention heads assign different weights to context"
+  },
+  {
+    "id": "australia-invasion-cities",
+    "title": "澳大利亚不是从空白开始的",
+    "titleEn": "Australia did not begin as a blank map"
+  },
+  {
+    "id": "bagua-genesis",
+    "title": "罗盘",
+    "titleEn": "Luopan"
+  },
+  {
+    "id": "banana-evolution",
+    "title": "超市里的香蕉，为什么几乎没有一颗种子？",
+    "titleEn": "Why does a supermarket banana contain almost no seeds?"
+  },
+  {
+    "id": "banana-migration",
+    "title": "一株香蕉，怎样走遍世界？",
+    "titleEn": "How did one banana plant travel the world?"
+  },
+  {
+    "id": "barycentric-survey",
+    "title": "三个有向面积把平面点写成仿射坐标",
+    "titleEn": "Three oriented areas write a planar point as affine coordinates",
+    "domain": "math-signals",
+    "category": "仿射几何"
+  },
+  {
+    "id": "bayes-intuition",
+    "title": "贝叶斯定理计算阳性后的患病概率",
+    "titleEn": "Bayes’ theorem calculates the probability of disease after a positive test"
+  },
+  {
+    "id": "beaker-reactions",
+    "title": "一只烧杯，为什么会变色、下雪、冒泡？",
+    "titleEn": "Why can one beaker change color, snow, and fizz?",
+    "domain": "chem-materials",
+    "category": "化学反应 · 虚拟烧杯"
+  },
+  {
+    "id": "beef-hotpot",
+    "title": "一头牛，潮汕人为什么能拆出十几种涮法？",
+    "titleEn": "Why does Chaoshan beef hotpot have a different cooking time for every cut?",
+    "domain": "life-body",
+    "category": "饮食文化"
+  },
+  {
+    "id": "bernoulli-lift",
+    "title": "机翼上方的空气，为什么跑得更快？",
+    "titleEn": "Why does the air above a wing run faster?"
+  },
+  {
+    "id": "birch-swinnerton-dyer",
+    "title": "一条曲线，能藏下多少分数？",
+    "titleEn": "How many fractions hide on a curve?"
+  },
+  {
+    "id": "black-hole",
+    "title": "黑洞本身不发光，为什么我们还能“看见”它？",
+    "titleEn": "A black hole itself doesn’t emit light, so why can we still “see” it?"
+  },
+  {
+    "id": "boost-glide",
+    "title": "钱学森弹道为什么不走抛物线？",
+    "titleEn": "Why doesn’t the Tsien path fly a parabola?"
+  },
+  {
+    "id": "brachistochrone",
+    "title": "从 A 滑到 B，哪条曲线最快？",
+    "titleEn": "Which curve gets you from A to B fastest?"
+  },
+  {
+    "id": "braid-group-loom",
+    "title": "不同的交叉序列可以表示同一个辫",
+    "titleEn": "Different crossing sequences can represent the same braid",
+    "domain": "math-signals",
+    "category": "低维拓扑"
+  },
+  {
+    "id": "bridge-builder",
+    "title": "主缆跨越不便设置桥墩的海峡",
+    "titleEn": "Main cables span a strait where piers are impractical"
+  },
+  {
+    "id": "brightness-illusion",
+    "title": "棋盘上的 A 和 B，是同一个灰",
+    "titleEn": "On this checkerboard, A and B are the same grey"
+  },
+  {
+    "id": "butterfly-life",
+    "title": "蝴蝶的一生",
+    "titleEn": "A butterfly’s life"
+  },
+  {
+    "id": "bz-waves",
+    "title": "化学反应自行形成靶环与螺旋",
+    "titleEn": "A chemical reaction forms target rings and spirals on its own"
+  },
+  {
+    "id": "calculus-accumulation",
+    "title": "面积不断累积，为什么会长出一条斜率曲线？",
+    "titleEn": "As area accumulates, why does it grow a curve of slopes?",
+    "domain": "math-signals",
+    "category": "微积分"
+  },
+  {
+    "id": "capillary-action",
+    "title": "细管中的水面自动上升",
+    "titleEn": "Water rises through a narrow tube"
+  },
+  {
+    "id": "cassini-ovals-lab",
+    "title": "两条闭环在临界水位相触",
+    "titleEn": "Two closed loops touch at the critical level",
+    "domain": "math-signals",
+    "category": "代数曲线"
+  },
+  {
+    "id": "catenary-arch",
+    "title": "一根倒挂的铁链，凭什么设计一座大教堂？",
+    "titleEn": "How can a hanging chain design a cathedral?"
+  },
+  {
+    "id": "change-blindness",
+    "title": "这幅夜景正在改变，你能找到哪里吗？",
+    "titleEn": "This night scene is changing. Can you find where?"
+  },
+  {
+    "id": "chemical-garden",
+    "title": "金属盐落下，矿物花园开始生长",
+    "titleEn": "Drop a Metal Salt. Watch a Mineral Garden Grow."
+  },
+  {
+    "id": "circle-inversion-workshop",
+    "title": "为什么一条直线反演后会变成圆？",
+    "titleEn": "Why does a line become a circle after inversion?",
+    "domain": "math-signals",
+    "category": "反演几何"
+  },
+  {
+    "id": "clifford-dust",
+    "title": "Clifford 映射形成确定性的点云结构",
+    "titleEn": "The Clifford map forms a deterministic point cloud"
+  },
+  {
+    "id": "cloth-drape",
+    "title": "布料的垂落、鼓动与褶皱",
+    "titleEn": "How cloth hangs, billows, and folds"
+  },
+  {
+    "id": "collatz",
+    "title": "冰雹猜想：为什么每个数都会掉到 1？",
+    "titleEn": "Collatz: why does every number seem to fall to 1?"
+  },
+  {
+    "id": "color-gamut",
+    "title": "为什么没有一种波长的光叫洋红？",
+    "titleEn": "Why is there no single wavelength called magenta?"
+  },
+  {
+    "id": "company-from-one",
+    "title": "个人业务逐步形成公司组织",
+    "titleEn": "A solo business develops into a company organization"
+  },
+  {
+    "id": "complex-squaring",
+    "title": "复数平方使角度加倍、模长平方",
+    "titleEn": "Complex squaring doubles angles and squares magnitudes"
+  },
+  {
+    "id": "conic-sections-studio",
+    "title": "圆、椭圆、抛物线和双曲线，原来是同一条交线？",
+    "titleEn": "Are circles, ellipses, parabolas, and hyperbolas one intersection?",
+    "domain": "math-signals",
+    "category": "解析几何"
+  },
+  {
+    "id": "constant-width-caliper",
+    "title": "三段圆弧构成一条非圆的等宽曲线",
+    "titleEn": "Three circular arcs form a noncircular curve of constant width",
+    "domain": "math-signals",
+    "category": "凸几何"
+  },
+  {
+    "id": "constellation-depth",
+    "title": "星座是真的存在，还是我们刚好站在这里？",
+    "titleEn": "Are constellations real, or do we just happen to stand here?"
+  },
+  {
+    "id": "continued-fraction-bakery",
+    "title": "部分商递推生成最佳有理逼近",
+    "titleEn": "Partial quotients recursively generate best rational approximations",
+    "domain": "math-signals",
+    "category": "数论与逼近"
+  },
+  {
+    "id": "convolution",
+    "title": "卷积核可以模糊、锐化或提取边缘",
+    "titleEn": "Convolution kernels blur, sharpen, or extract edges"
+  },
+  {
+    "id": "cranial-volume",
+    "title": "几百张平面切片，怎样变成一个能穿行的身体？",
+    "titleEn": "How do hundreds of flat slices become a body you can fly through?",
+    "domain": "life-body",
+    "category": "人体"
+  },
+  {
+    "id": "cross-ratio-projector",
+    "title": "距离被透视扭曲，四点交比仍然不变",
+    "titleEn": "Perspective distorts distances while the four-point cross ratio remains invariant",
+    "domain": "math-signals",
+    "category": "射影几何"
+  },
+  {
+    "id": "curvature-road",
+    "title": "道路弯得越急，藏在里面的圆为什么越小？",
+    "titleEn": "Why does the circle inside a road shrink as the bend tightens?",
+    "domain": "math-signals",
+    "category": "微分几何"
+  },
+  {
+    "id": "dark-matter",
+    "title": "星系旋转曲线显示暗物质的存在",
+    "titleEn": "Galaxy rotation curves reveal dark matter"
+  },
+  {
+    "id": "de-casteljau-atelier",
+    "title": "同一比例的递归插值确定 Bézier 曲线",
+    "titleEn": "Recursive interpolation at one ratio determines a Bézier curve",
+    "domain": "math-signals",
+    "category": "计算几何"
+  },
+  {
+    "id": "descartes-circle-packing",
+    "title": "Descartes 方程把相切关系写成整数曲率",
+    "titleEn": "The Descartes equation writes tangency as integer curvature",
+    "domain": "math-signals",
+    "category": "圆几何与数论"
+  },
+  {
+    "id": "differential-gear",
+    "title": "差速器在转弯时分配两个车轮的转速",
+    "titleEn": "A differential distributes wheel speeds through a turn"
+  },
+  {
+    "id": "diffusion-denoising",
+    "title": "一朵花，穿过潜空间与噪声",
+    "titleEn": "A flower passes through latent space and noise"
+  },
+  {
+    "id": "dislocation-glide",
+    "title": "位错移动让金属能够弯曲",
+    "titleEn": "Moving dislocations allow metals to bend"
+  },
+  {
+    "id": "dna-packing",
+    "title": "两米长的 DNA 装进 6 微米的细胞核",
+    "titleEn": "Two metres of DNA fit inside a six-micrometre nucleus"
+  },
+  {
+    "id": "doppler-effect",
+    "title": "救护车驶过，音调为什么会变？",
+    "titleEn": "Why does an ambulance change pitch as it drives by?"
+  },
+  {
+    "id": "double-pendulum",
+    "title": "差 0.1° 的两次放手，为什么结局完全不同？",
+    "titleEn": "Why do two releases 0.1° apart end so differently?"
+  },
+  {
+    "id": "double-slit",
+    "title": "双缝实验",
+    "titleEn": "Double-Slit Experiment"
+  },
+  {
+    "id": "earth-now",
+    "title": "此刻的全球风场与洋流",
+    "titleEn": "Global winds and currents right now"
+  },
+  {
+    "id": "electric-field",
+    "title": "看不见的电场，为什么能用线画出来？",
+    "titleEn": "Why can an invisible electric field be drawn with lines?"
+  },
+  {
+    "id": "electron-clouds",
+    "title": "电子以概率云分布在原子核周围",
+    "titleEn": "Electrons form probability clouds around the nucleus"
+  },
+  {
+    "id": "electron-portrait",
+    "title": "电子到底在哪里？",
+    "titleEn": "Where is the electron?"
+  },
+  {
+    "id": "electron-through-wall",
+    "title": "墙没破，电子怎么到了另一边？",
+    "titleEn": "The Wall Never Broke. How Did the Electron Get Across?",
+    "domain": "physics",
+    "category": "量子物理"
+  },
+  {
+    "id": "electron-through-wall-alt",
+    "title": "墙没破，电子怎么到了另一边？",
+    "titleEn": "The wall is intact — so how did the electron get across?",
+    "domain": "physics",
+    "category": "量子"
+  },
+  {
+    "id": "elevator-weight-lab",
+    "title": "还在上升，为什么变轻了？",
+    "titleEn": "Still rising. Why feel lighter?"
+  },
+  {
+    "id": "euler-characteristic-cabinet",
+    "title": "顶点、棱和面共同给出拓扑不变量",
+    "titleEn": "Vertices, edges, and faces combine into a topological invariant",
+    "domain": "math-signals",
+    "category": "拓扑与多面体"
+  },
+  {
+    "id": "euler-formula",
+    "title": "eⁱπ + 1 = 0 连接五个基本常数",
+    "titleEn": "eⁱπ + 1 = 0 connects five fundamental constants"
+  },
+  {
+    "id": "european-colonial-world",
+    "title": "殖民关系如何改变世界地图",
+    "titleEn": "How colonial relationships changed the world map"
+  },
+  {
+    "id": "exoplanet-hunter",
+    "title": "看不见行星，怎么知道它在那里？",
+    "titleEn": "If you can't see a planet, how do you know it's there?"
+  },
+  {
+    "id": "ferrofluid",
+    "title": "磁铁一靠近，黑色液体为什么长出尖刺？",
+    "titleEn": "Why does black liquid grow spikes when a magnet comes close?"
+  },
+  {
+    "id": "fft-ocean",
+    "title": "游戏海面由许多正弦波叠加而成",
+    "titleEn": "Game oceans are built by combining many sine waves"
+  },
+  {
+    "id": "firefly-sync",
+    "title": "没有指挥，萤火虫怎么一起闪光？",
+    "titleEn": "How do fireflies flash in sync without a leader?"
+  },
+  {
+    "id": "first-customers",
+    "title": "产品的第一批顾客",
+    "titleEn": "Your first customers"
+  },
+  {
+    "id": "flavour-atlas",
+    "title": "把世界，端上桌。",
+    "titleEn": "Bring the world to the table."
+  },
+  {
+    "id": "force-acceleration-lab",
+    "title": "力向左，车为何还向右？",
+    "titleEn": "Force left. Still moving right?"
+  },
+  {
+    "id": "ford-circle-fractions",
+    "title": "分数为什么能排成一群永不重叠的相切圆？",
+    "titleEn": "How can fractions form a family of tangent circles that never overlap?",
+    "domain": "math-signals",
+    "category": "数论几何"
+  },
+  {
+    "id": "foucault-pendulum",
+    "title": "一根摆记录地球自转",
+    "titleEn": "One pendulum records Earth’s rotation"
+  },
+  {
+    "id": "founder-funnel",
+    "title": "公司从注册到上市的数量漏斗",
+    "titleEn": "A numerical funnel from registration to public listing"
+  },
+  {
+    "id": "gabriel-horn-painter",
+    "title": "加百列号角的体积与表面积",
+    "titleEn": "Volume and surface area of Gabriel's horn",
+    "domain": "math-signals",
+    "category": "反常积分"
+  },
+  {
+    "id": "galton-board",
+    "title": "完全随机的弹跳，为什么堆出同一条曲线？",
+    "titleEn": "Completely random bounces, why do they all show the same curve?",
+    "domain": "math-signals",
+    "category": "概率与统计"
+  },
+  {
+    "id": "game-of-life",
+    "title": "生命游戏的简单规则产生复杂图案",
+    "titleEn": "Simple Game of Life rules produce complex patterns"
+  },
+  {
+    "id": "geography-contours",
+    "title": "一圈圈的线，怎样画出一座山？",
+    "titleEn": "How can lines describe a mountain?"
+  },
+  {
+    "id": "geography-earth-in-motion",
+    "title": "地震为什么沿着地球的接缝发生？",
+    "titleEn": "Why do earthquakes follow Earth’s seams?"
+  },
+  {
+    "id": "geography-faultlines",
+    "title": "地球的板块怎样拼在一起？",
+    "titleEn": "How do Earth’s plates fit together?"
+  },
+  {
+    "id": "geography-karst",
+    "title": "水怎样把岩石变成洞？",
+    "titleEn": "How does water turn rock into caves?"
+  },
+  {
+    "id": "glacier-retreat",
+    "title": "同一扇窗前，一堵冰墙去了哪里？",
+    "titleEn": "From the same vantage point, where did a wall of ice go?"
+  },
+  {
+    "id": "glass-formation",
+    "title": "教堂老窗下厚上薄并非玻璃流动",
+    "titleEn": "Uneven old cathedral windows are not evidence that glass flows"
+  },
+  {
+    "id": "gps-trilateration",
+    "title": "GPS 用四颗卫星确定位置与时间",
+    "titleEn": "GPS uses four satellites to solve position and time"
+  },
+  {
+    "id": "gradient-descent",
+    "title": "学习率决定梯度下降是否稳定",
+    "titleEn": "The learning rate determines whether gradient descent is stable"
+  },
+  {
+    "id": "gravitational-lensing",
+    "title": "看不见的暗物质，怎么称出它的重量？",
+    "titleEn": "How do you weigh dark matter you cannot see?"
+  },
+  {
+    "id": "gravitational-waves",
+    "title": "黑洞碰撞发出的引力波信号",
+    "titleEn": "The gravitational-wave signal from colliding black holes"
+  },
+  {
+    "id": "gravity-assist",
+    "title": "飞船如何不烧燃料，向行星「借」速度？",
+    "titleEn": "How can a spacecraft \"borrow\" speed from the planet without burning fuel?"
+  },
+  {
+    "id": "hairy-ball-combing",
+    "title": "毛球定理与球面静止点",
+    "titleEn": "The hairy ball theorem and stationary points on a sphere",
+    "domain": "math-signals",
+    "category": "微分拓扑"
+  },
+  {
+    "id": "harmonic-mesh",
+    "title": "谐波干涉形成周期性网格",
+    "titleEn": "Harmonic interference forms a periodic mesh"
+  },
+  {
+    "id": "harmonograph",
+    "title": "摆锤画出的花",
+    "titleEn": "Flowers drawn by pendulums"
+  },
+  {
+    "id": "harmony-ratios",
+    "title": "频率比影响两个音的拍频与和谐度",
+    "titleEn": "Frequency ratios affect beating and consonance between two notes"
+  },
+  {
+    "id": "heart-beat",
+    "title": "心脏电信号按固定路线传导",
+    "titleEn": "Electrical signals follow a fixed route through the heart"
+  },
+  {
+    "id": "heat-diffusion",
+    "title": "热在平面上逐渐扩散",
+    "titleEn": "Heat gradually spreads across a surface"
+  },
+  {
+    "id": "hilbert-curve-folding",
+    "title": "希尔伯特曲线如何填满正方形",
+    "titleEn": "How the Hilbert curve fills a square",
+    "domain": "math-signals",
+    "category": "离散几何与拓扑"
+  },
+  {
+    "id": "hodge-cycles",
+    "title": "方程如何留下几何骨架？",
+    "titleEn": "Can equations explain the geometry?"
+  },
+  {
+    "id": "hohmann-transfer",
+    "title": "为什么去火星要等 26 个月？",
+    "titleEn": "Why do we have to wait 26 months to go to Mars?"
+  },
+  {
+    "id": "horizontal-projectile-lab",
+    "title": "飞得远，会落得晚吗？",
+    "titleEn": "Farther sideways. Later to land?"
+  },
+  {
+    "id": "hubble-expansion",
+    "title": "为什么所有星系都在远离我们？",
+    "titleEn": "Why are all galaxies moving away from us?",
+    "domain": "cosmos",
+    "category": "宇宙学"
+  },
+  {
+    "id": "hubble-telescope",
+    "title": "1990 年发射的哈勃可在轨维修升级",
+    "titleEn": "Hubble launched in 1990 and serviced in orbit"
+  },
+  {
+    "id": "human-anatomy",
+    "title": "如果肌肉和骨骼都能被逐块拿开呢？",
+    "titleEn": "What if muscles and bones could be removed piece by piece?"
+  },
+  {
+    "id": "hyperbolic-tiling",
+    "title": "庞加莱圆盘把无限双曲距离压缩到边界内",
+    "titleEn": "The Poincaré disk compresses infinite hyperbolic distance inside its boundary"
+  },
+  {
+    "id": "ice-halo",
+    "title": "太阳外面的光环，为什么会拴在 22° 上？",
+    "titleEn": "Why is the sun’s halo locked at 22°?"
+  },
+  {
+    "id": "image-frequency",
+    "title": "低频保留轮廓，高频保留边缘与纹理",
+    "titleEn": "Low frequencies retain broad shapes; high frequencies retain edges and texture"
+  },
+  {
+    "id": "impact-simulator",
+    "title": "灭绝恐龙的那颗小行星，到底有多大？",
+    "titleEn": "How big was the asteroid that wiped out the dinosaurs?"
+  },
+  {
+    "id": "incline-force-lab",
+    "title": "斜面上的物体，什么时候开始滑？",
+    "titleEn": "When does a block begin to slide?"
+  },
+  {
+    "id": "induction-generator",
+    "title": "磁铁怎样点亮一盏灯？",
+    "titleEn": "How can a magnet light a bulb?"
+  },
+  {
+    "id": "inner-critic",
+    "title": "没人在骂你的时候，谁在骂你？",
+    "titleEn": "When no one is criticizing you, who is?"
+  },
+  {
+    "id": "inscribed-angle",
+    "title": "点在圆上滑，张角为什么不变？",
+    "titleEn": "When a point slides on a circle, why does the opening angle remain unchanged?",
+    "domain": "math-signals",
+    "category": "数学"
+  },
+  {
+    "id": "irrational-torus-flow",
+    "title": "一条永不闭合的线，怎样经过环面上的每片区域？",
+    "titleEn": "How can a line that never closes pass through every region of a torus?",
+    "domain": "math-signals",
+    "category": "动力系统"
+  },
+  {
+    "id": "ising-model",
+    "title": "烧红的磁铁会失去磁性",
+    "titleEn": "A red-hot magnet loses its magnetism"
+  },
+  {
+    "id": "isoperimetric-workshop",
+    "title": "同样一根绳子，围成哪种形状面积最大？",
+    "titleEn": "Which shape encloses the most area with the same string?",
+    "domain": "math-signals",
+    "category": "几何不等式"
+  },
+  {
+    "id": "kaleidoscope",
+    "title": "对称反射重复生成万花筒图案",
+    "titleEn": "Repeated reflections generate a kaleidoscope pattern"
+  },
+  {
+    "id": "kelly-criterion",
+    "title": "过高下注比例会降低长期复利增长",
+    "titleEn": "Oversized bets reduce long-term compound growth"
+  },
+  {
+    "id": "lagrange-interpolation-workshop",
+    "title": "每个节点贡献一片基函数，合成唯一的插值曲线",
+    "titleEn": "Each node contributes one basis function to the unique interpolating curve",
+    "domain": "math-signals",
+    "category": "数值分析"
+  },
+  {
+    "id": "language-loom",
+    "title": "AI 如何接住下一句话",
+    "titleEn": "How AI finds its next words"
+  },
+  {
+    "id": "language-machine",
+    "title": "从神经元到大语言模型",
+    "titleEn": "From a neuron to a language model"
+  },
+  {
+    "id": "lanxi-town",
+    "title": "飞入蓝溪镇",
+    "titleEn": "Inside the world of Lanxi Town"
+  },
+  {
+    "id": "legendre-impression",
+    "title": "一条切线在对偶空间对应一个点",
+    "titleEn": "One tangent line corresponds to one point in dual space",
+    "domain": "math-signals",
+    "category": "凸分析"
+  },
+  {
+    "id": "light-well",
+    "title": "平面上的光点，为什么看起来深不见底？",
+    "titleEn": "How can flat dots look like a bottomless well?"
+  },
+  {
+    "id": "lightning-lab",
+    "title": "闪电沿分叉通道形成锯齿路径",
+    "titleEn": "Lightning forms a jagged path through branching channels"
+  },
+  {
+    "id": "llm-internals",
+    "title": "一句话进去，另一句话出来，中间发生了什么？",
+    "titleEn": "One sentence goes in, another sentence comes out, what happens in between?",
+    "domain": "ai-ml",
+    "category": "深度学习"
+  },
+  {
+    "id": "lockstitch",
+    "title": "梭钩让两根线在布料两侧互锁",
+    "titleEn": "A rotary hook interlocks two threads across the fabric"
+  },
+  {
+    "id": "logistic-map",
+    "title": "参数变化使迭代出现分岔与混沌",
+    "titleEn": "Changing one parameter produces bifurcations and chaos"
+  },
+  {
+    "id": "long-twilight",
+    "title": "黄昏，为什么有长有短？",
+    "titleEn": "Why does twilight last longer elsewhere?"
+  },
+  {
+    "id": "lorenz-attractor",
+    "title": "洛伦兹吸引子的亮点代表系统状态",
+    "titleEn": "The bright point on a Lorenz attractor represents its state"
+  },
+  {
+    "id": "magnetic-lines",
+    "title": "铁屑排出磁场的形状",
+    "titleEn": "Iron filings trace the shape of a magnetic field"
+  },
+  {
+    "id": "mandelbulb",
+    "title": "三维迭代生成曼德球分形",
+    "titleEn": "Three-dimensional iteration generates the Mandelbulb fractal"
+  },
+  {
+    "id": "manhattan-timefold",
+    "title": "一百年前的这条街，现在是谁的门牌？",
+    "titleEn": "Whose address stands on this street a century later?",
+    "domain": "computing-engineering",
+    "category": "历史地图"
+  },
+  {
+    "id": "map-projections",
+    "title": "地图投影会扭曲大陆大小",
+    "titleEn": "Map projections distort the apparent size of continents"
+  },
+  {
+    "id": "matrix-transform",
+    "title": "矩阵乘法对平面进行线性变换",
+    "titleEn": "Matrix multiplication applies a linear transformation"
+  },
+  {
+    "id": "michelson-interferometer",
+    "title": "镜子挪一根头发，光环为什么往中心吞进去？",
+    "titleEn": "Move a mirror by a hair — why do the rings swallow themselves?"
+  },
+  {
+    "id": "minimal-surface-lab",
+    "title": "肥皂膜能把两个圆环拉开多远？",
+    "titleEn": "How far apart can a soap film hold two rings?",
+    "domain": "math-signals",
+    "category": "极小曲面"
+  },
+  {
+    "id": "mobius-band-journey",
+    "title": "为什么绕一圈回到原点，箭头却反了？",
+    "titleEn": "Why does the arrow reverse after returning to the same point?",
+    "domain": "math-signals",
+    "category": "拓扑学"
+  },
+  {
+    "id": "moire",
+    "title": "微小网格偏移形成大尺度条纹",
+    "titleEn": "A small grid offset creates large-scale bands"
+  },
+  {
+    "id": "molecular-breath",
+    "title": "这一口气里的氧，最后被什么接住了？",
+    "titleEn": "The oxygen in this breath — what finally catches it?",
+    "domain": "life-body",
+    "category": "生命结构"
+  },
+  {
+    "id": "money-circulation",
+    "title": "钱的大循环：五口水库，一张河网",
+    "titleEn": "The grand circulation of money: five reservoirs, one river web",
+    "domain": "economy-society",
+    "category": "经济循环"
+  },
+  {
+    "id": "money-creation",
+    "title": "商业银行通过贷款创造存款",
+    "titleEn": "Commercial banks create deposits through lending"
+  },
+  {
+    "id": "money-flow-atlas",
+    "title": "金钱的去向",
+    "titleEn": "Where money goes"
+  },
+  {
+    "id": "money-town",
+    "title": "你花出去的每一块钱，都变成了别人的收入",
+    "titleEn": "Every coin you spend becomes someone else’s income",
+    "domain": "economy-society",
+    "category": "经济循环"
+  },
+  {
+    "id": "moon-formation",
+    "title": "一次巨大撞击形成月球",
+    "titleEn": "A giant impact forms the Moon"
+  },
+  {
+    "id": "morley-trisector",
+    "title": "任意三角形，切三刀，里面藏着等边",
+    "titleEn": "Trisect any triangle — an equilateral hides inside"
+  },
+  {
+    "id": "motion-graphs",
+    "title": "加速度为负，小车一定慢下来吗？",
+    "titleEn": "Does negative acceleration always slow the car?"
+  },
+  {
+    "id": "napoleon-triangle-workshop",
+    "title": "任意三角形的三条边，都能生出同一个正三角形结论",
+    "titleEn": "Every triangle gives rise to the same equilateral-triangle conclusion",
+    "domain": "math-signals",
+    "category": "欧氏几何"
+  },
+  {
+    "id": "nasa-daily-earth",
+    "title": "卫星记录最近几天的地球",
+    "titleEn": "Earth over the past few days, recorded by satellite"
+  },
+  {
+    "id": "navier-stokes-core",
+    "title": "OpenAI 的千禧年难题证明，讲了什么？",
+    "titleEn": "What does OpenAI’s Navier–Stokes proof show?"
+  },
+  {
+    "id": "newton-fractal",
+    "title": "每个像素都在猜同一个方程的答案",
+    "titleEn": "Every pixel is guessing the answer to the same equation"
+  },
+  {
+    "id": "next-token",
+    "title": "每一步概率分布决定下一个词元",
+    "titleEn": "A probability distribution determines each next token"
+  },
+  {
+    "id": "night-lights",
+    "title": "地球的夜晚不是黑的，是金的",
+    "titleEn": "Earth’s night is not black — it is gold"
+  },
+  {
+    "id": "nine-point-circle-lab",
+    "title": "一个三角形里，为什么有九个点共圆？",
+    "titleEn": "Why do nine points inside a triangle lie on one circle?",
+    "domain": "math-signals",
+    "category": "三角形几何"
+  },
+  {
+    "id": "oil-world",
+    "title": "石油如何撬动世界",
+    "titleEn": "How Oil Moves the World"
+  },
+  {
+    "id": "optimal-transport-weighhouse",
+    "title": "相同的供给与需求，可以具有不同的运输代价",
+    "titleEn": "The same supply and demand can have different transport costs",
+    "domain": "math-signals",
+    "category": "概率与优化"
+  },
+  {
+    "id": "order-book",
+    "title": "订单簿中的买卖报价形成成交价",
+    "titleEn": "Bid and ask orders form the traded price"
+  },
+  {
+    "id": "origami-folding",
+    "title": "折痕决定纸张的立体形状",
+    "titleEn": "Crease patterns determine a sheet’s three-dimensional form"
+  },
+  {
+    "id": "pascal-hexagon-embroidery",
+    "title": "圆锥曲线上的六点确定一条 Pascal 直线",
+    "titleEn": "Six points on a conic determine one Pascal line",
+    "domain": "math-signals",
+    "category": "射影几何"
+  },
+  {
+    "id": "pattern-collider",
+    "title": "两组周期网格形成不重复的星形结构",
+    "titleEn": "Two periodic grids form a nonrepeating star pattern"
+  },
+  {
+    "id": "pendulum-silk",
+    "title": "摆锤织光",
+    "titleEn": "Pendulum Silk"
+  },
+  {
+    "id": "pendulum-wave",
+    "title": "一排摆在不同周期中形成波浪",
+    "titleEn": "Pendulums with different periods form a travelling wave"
+  },
+  {
+    "id": "perseverance",
+    "title": "一吨重的火星实验室独立工作",
+    "titleEn": "A one-ton laboratory working independently on Mars"
+  },
+  {
+    "id": "phantom-jam",
+    "title": "没有事故，为什么堵车",
+    "titleEn": "No crash. Why the traffic jam?"
+  },
+  {
+    "id": "photon-every-path",
+    "title": "一颗光子，同时走完所有的路",
+    "titleEn": "One photon, every path at once"
+  },
+  {
+    "id": "phyllotaxis",
+    "title": "向日葵种子排列成螺旋",
+    "titleEn": "Sunflower seeds arrange themselves in spirals"
+  },
+  {
+    "id": "pick-theorem-lake",
+    "title": "格点数精确给出多边形面积",
+    "titleEn": "Lattice-point counts give the exact polygon area",
+    "domain": "math-signals",
+    "category": "离散几何"
+  },
+  {
+    "id": "pin-tumbler-lock",
+    "title": "弹子锁依靠销钉阻断锁芯转动",
+    "titleEn": "Pins prevent the plug of a pin-tumbler lock from turning"
+  },
+  {
+    "id": "pinhole-canopy",
+    "title": "树荫下，为什么落着一地小太阳？",
+    "titleEn": "Why is the shade beneath a tree filled with tiny Suns?"
+  },
+  {
+    "id": "poincare-loops",
+    "title": "绳圈能否缩成一个点？",
+    "titleEn": "Can a loop shrink to a point?"
+  },
+  {
+    "id": "polarization",
+    "title": "偏振片筛选光的振动方向",
+    "titleEn": "A polarizer selects the direction in which light oscillates"
+  },
+  {
+    "id": "poncelet-porism",
+    "title": "任意起点都生成同一个闭合切线族",
+    "titleEn": "Every starting point generates the same closed tangent family",
+    "domain": "math-signals",
+    "category": "射影与圆锥曲线几何"
+  },
+  {
+    "id": "pool-caustics",
+    "title": "泳池底部不断移动的焦散光纹",
+    "titleEn": "Moving caustic patterns on a pool floor"
+  },
+  {
+    "id": "population-distribution-lab",
+    "title": "一万人，住得一样吗？",
+    "titleEn": "Same total. Same pattern?"
+  },
+  {
+    "id": "population-pyramid",
+    "title": "婴儿潮那条波，正在往塔顶爬",
+    "titleEn": "The baby-boom wave is still climbing toward the top"
+  },
+  {
+    "id": "president-path",
+    "title": "美国总统就任前的职业与公职经历",
+    "titleEn": "Careers and public offices held before the U.S. presidency"
+  },
+  {
+    "id": "pulsar",
+    "title": "宇宙中最准的钟，为什么会滴答？",
+    "titleEn": "Why does the most precise clock in the universe tick?"
+  },
+  {
+    "id": "pythagorean-proof",
+    "title": "三块正方形，怎样一眼证明勾股定理？",
+    "titleEn": "How can three squares prove the Pythagorean theorem at a glance?",
+    "domain": "math-signals",
+    "category": "数学"
+  },
+  {
+    "id": "qingming-riverside",
+    "title": "一篓春茶，怎样穿过汴河街市？",
+    "titleEn": "How does a basket of tea cross a bustling river town?"
+  },
+  {
+    "id": "quantum-century",
+    "title": "量子力学的一百年",
+    "titleEn": "A Century of Quantum Mechanics"
+  },
+  {
+    "id": "quantum-decoherence",
+    "title": "环境会让量子叠加迅速退相干",
+    "titleEn": "Interaction with the environment rapidly causes decoherence"
+  },
+  {
+    "id": "quantum-entanglement",
+    "title": "纠缠光子的测量结果保持关联",
+    "titleEn": "Measurements of entangled photons remain correlated"
+  },
+  {
+    "id": "quantum-passage",
+    "title": "量子隧穿：墙后为何亮起第二次心跳？",
+    "titleEn": "Quantum tunnelling: why does a second heartbeat glow beyond the wall?",
+    "domain": "physics",
+    "category": "量子物理"
+  },
+  {
+    "id": "quantum-physics",
+    "title": "量子物理：从一颗电子开始",
+    "titleEn": "Quantum physics: start with an electron"
+  },
+  {
+    "id": "quantum-tunneling-lab",
+    "title": "扔一百次，为什么总有几次穿墙而过？",
+    "titleEn": "Throw a hundred times — why do a few pass through the wall?",
+    "domain": "physics",
+    "category": "量子力学"
+  },
+  {
+    "id": "quantum-tunneling-qoder",
+    "title": "没有门，也没有洞——粒子凭什么穿过一堵墙？",
+    "titleEn": "No door, no hole — how does a particle pass through a wall?",
+    "domain": "physics",
+    "category": "量子力学"
+  },
+  {
+    "id": "quantum-well",
+    "title": "纳米盒子中的电子只有离散能级",
+    "titleEn": "An electron in a nanometre box has discrete energy levels"
+  },
+  {
+    "id": "quarks-to-universe",
+    "title": "一粒夸克，怎样连着整个宇宙？",
+    "titleEn": "How does a quark connect to the universe?"
+  },
+  {
+    "id": "radon-ct-darkroom",
+    "title": "许多方向的一维投影，可以重建一个二维截面",
+    "titleEn": "One-dimensional projections from many directions can reconstruct a two-dimensional slice",
+    "domain": "math-signals",
+    "category": "积分变换"
+  },
+  {
+    "id": "random-walk",
+    "title": "二维随机游走以概率 1 返回原点",
+    "titleEn": "A two-dimensional random walk returns to the origin with probability 1"
+  },
+  {
+    "id": "reinforcement-track",
+    "title": "奖励与惩罚塑造小车的驾驶策略",
+    "titleEn": "Rewards and penalties shape the car’s driving policy"
+  },
+  {
+    "id": "residue-contour-lab",
+    "title": "留数定理与围道积分",
+    "titleEn": "The residue theorem and contour integrals",
+    "domain": "math-signals",
+    "category": "复分析"
+  },
+  {
+    "id": "retrograde",
+    "title": "火星为什么在天上「倒着走」？",
+    "titleEn": "Why does Mars \"walk backwards\" in the sky?"
+  },
+  {
+    "id": "riemann-sum",
+    "title": "曲边面积，为什么矩形越多越好？",
+    "titleEn": "Curved side area, why are the more rectangles the better?",
+    "domain": "math-signals",
+    "category": "数学"
+  },
+  {
+    "id": "river-meander",
+    "title": "河流慢慢改了道",
+    "titleEn": "A river finds a new course"
+  },
+  {
+    "id": "robot-ik",
+    "title": "末端目标位置决定各关节转角",
+    "titleEn": "An end-effector target determines each joint angle"
+  },
+  {
+    "id": "salary-journey",
+    "title": "一份工资的来路与去处",
+    "titleEn": "Where a salary comes from, and where it goes",
+    "domain": "economy-society",
+    "category": "经济循环"
+  },
+  {
+    "id": "sand-matter",
+    "title": "一捧沙，一场雨",
+    "titleEn": "A handful of sand, a fall of rain"
+  },
+  {
+    "id": "satellite-orbits",
+    "title": "此刻环绕地球的卫星轨道",
+    "titleEn": "Satellite orbits around Earth right now"
+  },
+  {
+    "id": "schelling-segregation",
+    "title": "轻微局部偏好可以形成整体隔离",
+    "titleEn": "Small local preferences can produce global segregation"
+  },
+  {
+    "id": "schwarz-lantern-paradox",
+    "title": "施瓦茨灯笼中的曲面面积",
+    "titleEn": "Surface area in the Schwarz lantern",
+    "domain": "math-signals",
+    "category": "曲面与离散几何"
+  },
+  {
+    "id": "sea-breeze-lab",
+    "title": "海岸的风，为什么掉头？",
+    "titleEn": "Why does the coastal breeze reverse?"
+  },
+  {
+    "id": "sea-railway",
+    "title": "下一站，在海的哪一边？",
+    "titleEn": "Which shore is the next stop?"
+  },
+  {
+    "id": "sea-sparkle",
+    "title": "受扰动的海水在夜里发出蓝光",
+    "titleEn": "Disturbed seawater glows blue at night"
+  },
+  {
+    "id": "seasons",
+    "title": "四季来自地轴倾斜",
+    "titleEn": "The seasons come from Earth’s axial tilt"
+  },
+  {
+    "id": "shenzhen-growth",
+    "title": "卫星影像记录深圳的城市扩张",
+    "titleEn": "Satellite imagery records Shenzhen’s urban expansion"
+  },
+  {
+    "id": "silkworm-life",
+    "title": "蚕的一生",
+    "titleEn": "A silkworm’s life"
+  },
+  {
+    "id": "simpsons-paradox",
+    "title": "合并数据可能反转各分组的共同趋势",
+    "titleEn": "Combining data can reverse a trend shared by every group"
+  },
+  {
+    "id": "simson-line-tracer",
+    "title": "圆周上的一点，使三个垂足落在同一直线上",
+    "titleEn": "One point on the circumcircle puts three perpendicular feet on one line",
+    "domain": "math-signals",
+    "category": "三角形几何"
+  },
+  {
+    "id": "sky-atlas",
+    "title": "照片里那团亮光，是一颗星还是一整座星系？",
+    "titleEn": "That glow in the photo — one star, or an entire galaxy?"
+  },
+  {
+    "id": "sky-scattering",
+    "title": "蓝天怎么变成晚霞？",
+    "titleEn": "How does blue sky turn into dusk?"
+  },
+  {
+    "id": "slave-voyages",
+    "title": "非洲至美洲：奴隶贸易路线",
+    "titleEn": "Africa to the Americas: slave trade routes"
+  },
+  {
+    "id": "slime-mold",
+    "title": "没有大脑的黏菌形成高效路网",
+    "titleEn": "Slime mould forms an efficient network without a brain"
+  },
+  {
+    "id": "snow-crystal",
+    "title": "雪花会长成薄片或针状晶体",
+    "titleEn": "Snow crystals grow as plates or needles"
+  },
+  {
+    "id": "snowflake-journey",
+    "title": "从一片雪花，走进物质深处",
+    "titleEn": "A snowflake, a world within"
+  },
+  {
+    "id": "soap-bubble",
+    "title": "肥皂泡通过薄膜干涉呈现彩色条纹",
+    "titleEn": "Thin-film interference gives soap bubbles their colors"
+  },
+  {
+    "id": "soil-profile-lab",
+    "title": "脚下，另一片世界。",
+    "titleEn": "A world beneath our feet."
+  },
+  {
+    "id": "sorting-race",
+    "title": "同一份数组，四个排序算法谁更快？",
+    "titleEn": "Same array, four sorting algorithms—who is faster?",
+    "domain": "computing-engineering",
+    "category": "算法"
+  },
+  {
+    "id": "sound-sand",
+    "title": "声音把沙粒排成驻波图案",
+    "titleEn": "Sound arranges sand into standing-wave patterns"
+  },
+  {
+    "id": "south-africa-history",
+    "title": "黄金、土地与隔离城市",
+    "titleEn": "Gold, land, and segregated cities"
+  },
+  {
+    "id": "spaced-memory",
+    "title": "突击复习后的记忆衰减更快",
+    "titleEn": "Memory fades faster after cramming"
+  },
+  {
+    "id": "spectrum-pins",
+    "title": "频率与振幅决定针板图案",
+    "titleEn": "Frequency and amplitude determine the pin-board pattern"
+  },
+  {
+    "id": "spherical-geodesic",
+    "title": "为什么地图上弯的路线，在球面上反而更短？",
+    "titleEn": "Why can a curved map route be shorter on the sphere?",
+    "domain": "math-signals",
+    "category": "球面几何"
+  },
+  {
+    "id": "standing-waves",
+    "title": "同一根琴弦，音色为什么会变？",
+    "titleEn": "Why does the same string have different tones?"
+  },
+  {
+    "id": "stellar-life",
+    "title": "太阳的葬礼",
+    "titleEn": "The Sun's Funeral"
+  },
+  {
+    "id": "stereo-depth",
+    "title": "两只眼睛的视差产生立体深度",
+    "titleEn": "Binocular disparity creates depth perception"
+  },
+  {
+    "id": "stern-gerlach",
+    "title": "银原子穿过磁场后只有两个落点",
+    "titleEn": "Silver atoms crossing a magnetic field land in two bands"
+  },
+  {
+    "id": "stock-flows",
+    "title": "股票交易在投资者之间转移资金",
+    "titleEn": "Stock trades transfer money between investors"
+  },
+  {
+    "id": "stock-market-map",
+    "title": "今天的美股市值地图",
+    "titleEn": "Today’s map of US stock-market value"
+  },
+  {
+    "id": "submarine-cables",
+    "title": "洲际互联网主要通过海底光缆传输",
+    "titleEn": "Most intercontinental internet traffic travels through subsea cables"
+  },
+  {
+    "id": "supernova",
+    "title": "一颗恒星爆炸的瞬间",
+    "titleEn": "The instant a star explodes"
+  },
+  {
+    "id": "survivorship",
+    "title": "弹孔最多的地方，恰恰不用加装甲",
+    "titleEn": "The places with the most bullet holes are exactly where you should not add armour"
+  },
+  {
+    "id": "sweden-state-expansion",
+    "title": "瑞典不是一直中立",
+    "titleEn": "Sweden was not always neutral"
+  },
+  {
+    "id": "taylor-series",
+    "title": "普通多项式为什么能逼近任何曲线？",
+    "titleEn": "Why can ordinary polynomials approximate any curve?",
+    "domain": "math-signals",
+    "category": "数学"
+  },
+  {
+    "id": "terminator-earth",
+    "title": "此刻生活在地球昼半球与夜半球的人口",
+    "titleEn": "The population living on Earth’s day and night sides right now"
+  },
+  {
+    "id": "tides",
+    "title": "月球和太阳共同推动潮汐",
+    "titleEn": "The Moon and Sun jointly drive the tides"
+  },
+  {
+    "id": "time-dilation",
+    "title": "站台上看，运动的光钟走得更慢",
+    "titleEn": "From the platform, a moving light clock runs slower"
+  },
+  {
+    "id": "tokenizer",
+    "title": "词元切分会改变模型看到的字符结构",
+    "titleEn": "Tokenization changes the character structure visible to a model"
+  },
+  {
+    "id": "train-bridge-crossing",
+    "title": "车头过桥了，火车就过完了吗？",
+    "titleEn": "The front has crossed. Is the whole train across?"
+  },
+  {
+    "id": "tree-of-life",
+    "title": "水母、章鱼、蓝鲸和人类的演化分叉",
+    "titleEn": "Evolutionary branches connecting jellyfish, octopuses, whales and humans"
+  },
+  {
+    "id": "turing-patterns",
+    "title": "图灵反应扩散产生稳定空间图案",
+    "titleEn": "Turing reaction–diffusion produces stable spatial patterns"
+  },
+  {
+    "id": "twinkle-marble",
+    "title": "小星星的十二种声音",
+    "titleEn": "Twelve voices of Twinkle"
+  },
+  {
+    "id": "typhoon",
+    "title": "26.5°C 的海水，如何长成超级风暴？",
+    "titleEn": "How does 26.5 °C seawater grow a superstorm?"
+  },
+  {
+    "id": "typhoon-heart",
+    "title": "台风之眼：海面如何点燃一座风暴？",
+    "titleEn": "The eye of a typhoon: how does the ocean ignite a storm?",
+    "domain": "earth-climate",
+    "category": "大气科学"
+  },
+  {
+    "id": "typhoon-qoder",
+    "title": "台风为什么总先往西跑，再拐个大弯？",
+    "titleEn": "Why do typhoons run west first, then take a big bend?",
+    "domain": "earth-climate",
+    "category": "大气科学"
+  },
+  {
+    "id": "ulam-spiral",
+    "title": "整数螺旋显示素数的对角结构",
+    "titleEn": "An integer spiral reveals diagonal structure among primes"
+  },
+  {
+    "id": "uncertainty-principle",
+    "title": "粒子的位置越确定，它的速度就越不确定？",
+    "titleEn": "The more certain a particle’s position, the less certain its speed?"
+  },
+  {
+    "id": "vector-fields",
+    "title": "散度表示扩散，旋度表示局部旋转",
+    "titleEn": "Divergence measures spreading and curl measures local rotation"
+  },
+  {
+    "id": "viscous-fingers",
+    "title": "液体，也会长出枝丫。",
+    "titleEn": "Even liquids grow branches."
+  },
+  {
+    "id": "visual-illusions",
+    "title": "棋盘上 A 和 B，哪一块更深？",
+    "titleEn": "On the checkerboard, which square is darker — A or B?"
+  },
+  {
+    "id": "volcano",
+    "title": "凭什么有的火山流淌，有的火山爆炸？",
+    "titleEn": "Why do some volcanoes flow while others explode?"
+  },
+  {
+    "id": "voronoi-duality-lab",
+    "title": "为什么最近点分区背后藏着一张三角网？",
+    "titleEn": "Why does a nearest-site partition hide a triangular network?",
+    "domain": "math-signals",
+    "category": "计算几何"
+  },
+  {
+    "id": "vortex-ring",
+    "title": "烟圈会自行向前移动",
+    "titleEn": "A smoke ring moves forward under its own induced flow"
+  },
+  {
+    "id": "war-peace",
+    "title": "每一场战争，都是这座山上的一座峰",
+    "titleEn": "Every war is a peak on this mountain"
+  },
+  {
+    "id": "watch-escapement",
+    "title": "机械表的滴答声来自擒纵机构",
+    "titleEn": "A mechanical watch ticks as its escapement releases"
+  },
+  {
+    "id": "water-land-lab",
+    "title": "一场雨，接下来流向哪里？",
+    "titleEn": "Where does the rain go next?"
+  },
+  {
+    "id": "water-marbling",
+    "title": "水面开花",
+    "titleEn": "Flowers on Water"
+  },
+  {
+    "id": "water-pool",
+    "title": "扰动水面，池底光纹随之变化",
+    "titleEn": "Disturb the surface and the light below changes with it"
+  },
+  {
+    "id": "wind-tunnel",
+    "title": "不同形状产生不同大小的空气阻力",
+    "titleEn": "Different shapes produce different amounts of drag"
+  },
+  {
+    "id": "word-constellations",
+    "title": "词向量用位移表示语义关系",
+    "titleEn": "Vector displacement represents semantic relationships between words"
+  },
+  {
+    "id": "world-story",
+    "title": "1886 至 2019 年的国家边界变化",
+    "titleEn": "Changes in national borders from 1886 to 2019"
+  },
+  {
+    "id": "yang-mills-gap",
+    "title": "真空之上，第一份能量",
+    "titleEn": "The first energy above vacuum"
+  },
+  {
+    "id": "young-hook-length",
+    "title": "每个格子的钩长共同决定递增填法数量",
+    "titleEn": "Every cell’s hook length helps determine the number of increasing fillings",
+    "domain": "math-signals",
+    "category": "代数组合"
+  },
+  {
+    "id": "zipper",
+    "title": "Y 形拉头让两排拉链齿互锁",
+    "titleEn": "A Y-shaped slider interlocks two rows of zipper teeth"
+  }
+]

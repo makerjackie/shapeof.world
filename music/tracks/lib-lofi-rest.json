@@ -1,0 +1,103 @@
+{
+  "id": "lib-lofi-rest",
+  "code": "LIB-11-03",
+  "title": {
+    "en": "Rest — Lofi",
+    "zh": "休憩 · 低保真"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "lofi"
+  ],
+  "energy": 2,
+  "bpm": 62,
+  "key": "F major",
+  "instruments": [
+    "Rhodes piano",
+    "muted drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second lo-fi instrumental hip hop instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: Rhodes piano, muted drums, warm bass. Style: laid-back swung beat and hazy jazz harmony. Tempo approximately 62 BPM; F major. Main idea: a repeating five-note figure with space between phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A calm and reflective ambient track featuring a gentle piano melody, warm synth pads, and subtle percussion. It evokes a peaceful and slightly melancholic atmosphere.",
+    "zh": "一首平静而沉思的环境音乐，以柔和的钢琴旋律、温暖的合成器铺底和微妙的打击乐为特色。它营造出一种宁静而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 172.173,
+  "generatedAt": "2026-09-09T08:16:24.280589+00:00",
+  "generation": {
+    "id": "4fae93bd-8e7c-43ff-aeae-894bbd777bc6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:15:29.527958+00:00",
+    "completedAt": "2026-09-09T08:16:24.280589+00:00",
+    "interactionId": "ohWhaqieHcy5jMwP4P3F-Qs",
+    "sha256": "b3ea0e3534df7f875e6245874bcfb84a2c8447bc198f45683dd868ca1acc839f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective ambient track featuring a gentle piano melody, warm synth pads, and subtle percussion. It evokes a peaceful and slightly melancholic atmosphere.",
+      "zh": "一首平静而沉思的环境音乐，以柔和的钢琴旋律、温暖的合成器铺底和微妙的打击乐为特色。它营造出一种宁静而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "synthesizer",
+      "strings",
+      "bass",
+      "percussion"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "reflective",
+      "dreamy",
+      "melancholic",
+      "ambient"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:16:35.765625+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-lofi-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-lofi-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-lofi-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:17:43.977894+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

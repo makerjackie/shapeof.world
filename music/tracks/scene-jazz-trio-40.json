@@ -1,0 +1,184 @@
+{
+  "id": "scene-jazz-trio-40",
+  "code": "SCENE-07-40",
+  "title": {
+    "en": "Morning Notes · 40",
+    "zh": "清晨笔记 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "nimble elegant process film",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "brushed drums",
+    "double bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for nimble elegant process film. Instruments: acoustic piano, brushed drums, double bass. 124 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and sophisticated orchestral-jazz fusion track featuring a lively piano melody, prominent brass, strings, and a driving rhythm section. It has a bright and positive feel, suitable for promotional content.",
+    "zh": "一首欢快而精致的管弦乐爵士融合曲，以活泼的钢琴旋律、突出的铜管乐、弦乐和强劲的节奏部分为特色。它具有明亮积极的感觉，适合宣传内容。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "nimble elegant process film"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:42.482429+00:00",
+  "generation": {
+    "id": "1d8ba3a4-5ef9-47d6-8fc3-df3f9ee02240",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:51.968027+00:00",
+    "completedAt": "2026-09-22T09:13:42.482429+00:00",
+    "interactionId": "lUayapiPKZOE694Pyb3WcQ",
+    "sha256": "3dce5724cce27ce64d3f7b8b30c989d794bf169e264a16699131e3c27803e7a6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and sophisticated orchestral-jazz fusion track featuring a lively piano melody, prominent brass, strings, and a driving rhythm section. It has a bright and positive feel, suitable for promotional content.",
+      "zh": "一首欢快而精致的管弦乐爵士融合曲，以活泼的钢琴旋律、突出的铜管乐、弦乐和强劲的节奏部分为特色。它具有明亮积极的感觉，适合宣传内容。"
+    },
+    "instruments": [
+      "Piano",
+      "Drums",
+      "Bass",
+      "Strings",
+      "Brass",
+      "Woodwinds"
+    ],
+    "moods": [
+      "Upbeat",
+      "Positive",
+      "Energetic",
+      "Sophisticated",
+      "Bright",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, features a clear and engaging musical theme, and maintains a consistent, high-quality sound throughout. It is free of defects and has a professional feel.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a catchy piano melody and a clear rhythmic pulse. It concludes with a deliberate, sustained orchestral chord, providing a clear and resolved musical ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:00.259736+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "082811dd89231343b504c39481bf133ce8c946516810cc6e8320ea8e6beebf26"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.443208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental piece featuring piano, strings, and drums. It has a bright, cheerful, and somewhat whimsical feel, reminiscent of lighthearted background music or a film score. The melody is catchy and the arrangement is full and dynamic.",
+      "zh": "一首活泼欢快的器乐曲，以钢琴、弦乐和鼓为主。它带有一种明亮、愉悦且略带异想天开的感觉，让人联想到轻松的背景音乐或电影配乐。旋律朗朗上口，编曲饱满且富有动感。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Cheerful",
+      "Bright",
+      "Whimsical",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean instrumental piece with a pleasant, energetic character, suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:52.571024+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.443208,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "082811dd89231343b504c39481bf133ce8c946516810cc6e8320ea8e6beebf26",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3dce5724cce27ce64d3f7b8b30c989d794bf169e264a16699131e3c27803e7a6",
+      "bytes": 1386305,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1d7f6b0d5fdcd0ce0799eab871e3b2faa2384a0bc48a7e35786c455e1edda13f",
+      "bytes": 2795,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.843754+00:00"
+}

@@ -1,0 +1,102 @@
+{
+  "id": "lib-kora-focus",
+  "code": "LIB-22-02",
+  "title": {
+    "en": "Focus — Kora",
+    "zh": "专注 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "kora"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "A minor",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second West African acoustic instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 106 BPM; A minor. Main idea: a repeating five-note figure with space between phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian-inspired instrumental piece featuring plucked strings, a melodic flute, and subtle percussion, creating a calm and reflective atmosphere.",
+    "zh": "一首宁静而富有传统东方韵味的器乐曲，以弹拨乐器、悠扬的笛声和轻柔的打击乐器为主，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 112.118,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:57:41.203137+00:00",
+  "generation": {
+    "id": "5f8ae916-c9df-4f08-930a-60e2875f7dd9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:56:59.493316+00:00",
+    "completedAt": "2026-09-09T08:57:41.203137+00:00",
+    "interactionId": "XB-hav-FKsq5i9sPtKam8QQ",
+    "sha256": "e39f24a7d8d0adc6d285a02ee85f369248683beaee81966cd0ed17c9b479f303"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian-inspired instrumental piece featuring plucked strings, a melodic flute, and subtle percussion, creating a calm and reflective atmosphere.",
+      "zh": "一首宁静而富有传统东方韵味的器乐曲，以弹拨乐器、悠扬的笛声和轻柔的打击乐器为主，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Pipa",
+      "Flute",
+      "Percussion",
+      "Guzheng"
+    ],
+    "moods": [
+      "Traditional",
+      "Calm",
+      "Reflective",
+      "Serene",
+      "Peaceful",
+      "Asian-inspired"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced, clean instrumental piece with a clear traditional East Asian theme, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:57:53.529964+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:58:45.900853+00:00"
+}

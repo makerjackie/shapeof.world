@@ -1,0 +1,103 @@
+{
+  "id": "lib-dub-nature",
+  "code": "LIB-14-04",
+  "title": {
+    "en": "Wildlands — Dub",
+    "zh": "山野 · 回声律动"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "dub"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "D dorian",
+  "instruments": [
+    "round electric bass",
+    "organ",
+    "rimshot",
+    "echo guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental dub instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: round electric bass, organ, rimshot, echo guitar. Style: spacious offbeat chords with restrained tape delay. Tempo approximately 72 BPM; D dorian. Main idea: an ascending fourth answered by a stepwise descent. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental track featuring a steady drum beat, melodic electric guitar, piano, and atmospheric synth pads, underpinned by a smooth bassline.",
+    "zh": "一首平静而富有沉思感的器乐曲，以稳定的鼓点、旋律优美的电吉他、钢琴和氛围合成器铺垫，低音线条流畅。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.678,
+  "generatedAt": "2026-09-09T08:27:34.781940+00:00",
+  "generation": {
+    "id": "71f0f817-929d-423f-a3f5-9cbf072a988b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:26:50.378226+00:00",
+    "completedAt": "2026-09-09T08:27:34.781940+00:00",
+    "interactionId": "SxihauG6I9Di8vUPubf2-QQ",
+    "sha256": "c1ab36e22979ffca9ea7326271774e0f656d5f0bbcf6483d66dee893cf0dbe94"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental track featuring a steady drum beat, melodic electric guitar, piano, and atmospheric synth pads, underpinned by a smooth bassline.",
+      "zh": "一首平静而富有沉思感的器乐曲，以稳定的鼓点、旋律优美的电吉他、钢琴和氛围合成器铺垫，低音线条流畅。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass Guitar",
+      "Electric Guitar",
+      "Synthesizer",
+      "Piano"
+    ],
+    "moods": [
+      "Calm",
+      "Relaxed",
+      "Peaceful",
+      "Reflective",
+      "Mellow"
+    ],
+    "energy": 2,
+    "bpmEstimate": 92,
+    "reason": "Well-produced, clean instrumental track with a pleasant, relaxing atmosphere suitable for background use.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:27:44.143697+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-dub-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-dub-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-dub-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:28:44.564554+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

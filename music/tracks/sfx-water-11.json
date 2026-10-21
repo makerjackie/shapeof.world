@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-11",
+  "code": "SFX-WATER-11",
+  "title": {
+    "en": "Bottle glug",
+    "zh": "瓶口咕噜"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 10,
+  "seed": 1631026426,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized bottle glug for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的瓶口咕噜合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.87,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1631026426,
+    "sha256": "7f184a1df167c328261d2ad99e591a7513fb38e068580a1e6119444295e1a6a4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2d598ad4e82e80f48d6886b93987ed0f62e1b14f722a10ed516183f602b65e7d",
+      "bytes": 13209,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7f184a1df167c328261d2ad99e591a7513fb38e068580a1e6119444295e1a6a4",
+      "bytes": 76778,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5ca2bb461ae77e0b3fecbe1833c9078c0a7e8334ed5aa0ebb407b4b7b5816daa",
+      "bytes": 14515,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "885ab2d910deba7ee5b07a4b52c2f3ab013809456ff4787ce3cec307d8a42eda",
+      "bytes": 1928,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 38367,
+    "duration": 0.87,
+    "peakDbfs": -3.82,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.908989170380796e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1421809387207038,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A fast, airy whoosh or swoosh sound that quickly transitions into a dull, solid impact or thud.",
+      "zh": "快速的、带有空气感的呼啸声或嗖嗖声，迅速过渡到一个沉闷、结实的撞击声或砰击声。"
+    },
+    "reason": "The sound is a clear, isolated, and well-defined effect, free of defects, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:41.402481+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "2d598ad4e82e80f48d6886b93987ed0f62e1b14f722a10ed516183f602b65e7d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 38367
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.912301+00:00"
+}

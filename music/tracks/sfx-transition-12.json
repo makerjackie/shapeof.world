@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-12",
+  "code": "SFX-TRANSITION-12",
+  "title": {
+    "en": "Deep pass",
+    "zh": "低沉掠过"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 11,
+  "seed": 3145530898,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized deep pass for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的低沉掠过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3145530898,
+    "sha256": "b8df65802d4f4ff77a491d736ec08d981a3e6dc2843b39c6237bc583d0c143f2",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9dc0caa189c2738827a2d86fa2407a57b30acf0922d3ab561ed4f8cf967902b0",
+      "bytes": 21254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b8df65802d4f4ff77a491d736ec08d981a3e6dc2843b39c6237bc583d0c143f2",
+      "bytes": 127934,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "41f378ecb9189d14a5388a7c92c5d78ccedb3d69610bdbcbdb222615340535f1",
+      "bytes": 24850,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "90a49d80b2e1d2c5e46ef60f019d8b03f6c6158e0d35cac30616c7b5faac89f2",
+      "bytes": 1929,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 63945,
+    "duration": 1.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.45,
+    "dcOffset": 5.058821301509109e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.20051345825195366,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic whoosh or zap sound effect with a slight downward pitch modulation, resembling a sci-fi weapon or UI element.",
+      "zh": "一个短促、高音调的电子嗖嗖声或噼啪声，带有轻微的音高下调，类似于科幻武器或用户界面元素音效。"
+    },
+    "reason": "The sound is a clean, well-produced, and isolated electronic sound effect, free of defects, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:49.795260+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "9dc0caa189c2738827a2d86fa2407a57b30acf0922d3ab561ed4f8cf967902b0"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 63945
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904426+00:00"
+}

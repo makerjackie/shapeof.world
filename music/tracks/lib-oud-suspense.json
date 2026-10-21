@@ -1,0 +1,99 @@
+{
+  "id": "lib-oud-suspense",
+  "code": "LIB-20-09",
+  "title": {
+    "en": "Shadows — Oud",
+    "zh": "暗影 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "oud"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "G minor",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Middle Eastern acoustic instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 88 BPM; G minor. Main idea: a repeating five-note figure with space between phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by rhythmic percussion and a subtle bassline.",
+    "zh": "一首忧郁而传统的中东器乐作品，以突出的乌德琴旋律为主，辅以富有节奏感的打击乐和低沉的贝斯线。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.763,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:54:28.907700+00:00",
+  "generation": {
+    "id": "926c0e43-177b-46b5-ac2a-3363277e236a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:53:41.913335+00:00",
+    "completedAt": "2026-09-09T08:54:28.907700+00:00",
+    "interactionId": "lx6haoaBDNaN4vEPuMqSwQY",
+    "sha256": "e08c48a1f175bdc632fc10aa0a7805ec5dc25cde3292d4fbe626e1e845a91225"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by rhythmic percussion and a subtle bassline.",
+      "zh": "一首忧郁而传统的中东器乐作品，以突出的乌德琴旋律为主，辅以富有节奏感的打击乐和低沉的贝斯线。"
+    },
+    "instruments": [
+      "Oud",
+      "Percussion",
+      "Bass"
+    ],
+    "moods": [
+      "Melancholy",
+      "Traditional",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:54:36.642629+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:55:21.680376+00:00"
+}

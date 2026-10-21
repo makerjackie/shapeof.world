@@ -1,0 +1,818 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:33 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S126",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S126/2024",
+  "description": "H",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "S126M/2024",
+        "description": "H MASS",
+        "pdg_values": [
+          {
+            "value": 125.1995304097179,
+            "error_positive": 0.1148838236816068,
+            "error_negative": 0.1148838236816068,
+            "value_text": "125.20+-0.11",
+            "unit": "GeV",
+            "scale_factor": 1.356898,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126CP/2024",
+        "description": "H SPIN AND CP PROPERTIES"
+      },
+      {
+        "pdgid": "S126W/2024",
+        "description": "H DECAY WIDTH",
+        "pdg_values": [
+          {
+            "value": 3.673806483662679,
+            "error_positive": 1.940966602327652,
+            "error_negative": 1.405775053518198,
+            "value_text": "3.7+1.9-1.4",
+            "unit": "MeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SA/2024",
+        "description": "Combined final state",
+        "pdg_values": [
+          {
+            "value": 1.034949606395092,
+            "error_positive": 0.03875046660179619,
+            "error_negative": 0.03844809356537207,
+            "value_text": "1.03+-0.04",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SWW/2024",
+        "description": "W W* final state",
+        "pdg_values": [
+          {
+            "value": 0.9972806677122521,
+            "error_positive": 0.0801398678543316,
+            "error_negative": 0.0780938145509709,
+            "value_text": "1.00+-0.08",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SZZ/2024",
+        "description": "Z Z* final state",
+        "pdg_values": [
+          {
+            "value": 1.023621894078147,
+            "error_positive": 0.07740968292008539,
+            "error_negative": 0.07368237544508087,
+            "value_text": "1.02+-0.08",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SGG/2024",
+        "description": "gamma gamma final state",
+        "pdg_values": [
+          {
+            "value": 1.096529995249977,
+            "error_positive": 0.06308870305799565,
+            "error_negative": 0.05998890840179081,
+            "value_text": "1.10+-0.06",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SCC/2024",
+        "description": "c cbar final state",
+        "pdg_values": [
+          {
+            "value": 14.0,
+            "value_text": "< 14",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SBB/2024",
+        "description": "b bbar final state",
+        "pdg_values": [
+          {
+            "value": 0.9861779529284955,
+            "error_positive": 0.1186060225627203,
+            "error_negative": 0.1115103200226561,
+            "value_text": "0.99+-0.12",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SMU/2024",
+        "description": "mu+ mu- final state",
+        "pdg_values": [
+          {
+            "value": 1.20656129462981,
+            "error_positive": 0.36,
+            "error_negative": 0.344077406617997,
+            "value_text": "1.21+-0.35",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126STT/2024",
+        "description": "tau+ tau- final state",
+        "pdg_values": [
+          {
+            "value": 0.9116177117144233,
+            "error_positive": 0.08925894153182462,
+            "error_negative": 0.08697258676649983,
+            "value_text": "0.91+-0.09",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SZG/2024",
+        "description": "Z gamma final state",
+        "pdg_values": [
+          {
+            "value": 2.2,
+            "error_positive": 0.7,
+            "error_negative": 0.7,
+            "value_text": "2.2+-0.7",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126A01/2024",
+        "description": "gamma* gamma final state",
+        "pdg_values": [
+          {
+            "value": 1.5,
+            "error_positive": 0.5385164807134504,
+            "error_negative": 0.5099019513592785,
+            "value_text": "1.5+-0.5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126KFC/2024",
+        "description": "Fermion coupling (kappa_F)",
+        "pdg_values": [
+          {
+            "value": 0.9388042423982985,
+            "error_positive": 0.04708709557974187,
+            "error_negative": 0.04551832387313024,
+            "value_text": "0.94+-0.05",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126KVC/2024",
+        "description": "Gauge boson coupling (kappa_V)",
+        "pdg_values": [
+          {
+            "value": 1.022505056342098,
+            "error_positive": 0.02634698344308377,
+            "error_negative": 0.02634698344308377,
+            "value_text": "1.023+-0.026",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126KWC/2024",
+        "description": "W boson coupling (kappa_W)"
+      },
+      {
+        "pdgid": "S126KZC/2024",
+        "description": "Z boson coupling (kappa_Z)"
+      },
+      {
+        "pdgid": "S126YTC/2024",
+        "description": "top Yukawa coupling (kappa_t)"
+      },
+      {
+        "pdgid": "S126KBC/2024",
+        "description": "bottom quark Yukawa coupling (kappa_b)"
+      },
+      {
+        "pdgid": "S126KCC/2024",
+        "description": "charm quark Yukawa coupling (kappa_c)"
+      },
+      {
+        "pdgid": "S126KSC/2024",
+        "description": "strange quark Yukawa coupling (kappa_s)"
+      },
+      {
+        "pdgid": "S126KDC/2024",
+        "description": "down quark Yukawa coupling (kappa_d)"
+      },
+      {
+        "pdgid": "S126KUC/2024",
+        "description": "up quark Yukawa coupling (kappa_u)"
+      },
+      {
+        "pdgid": "S126KTA/2024",
+        "description": "tau Yukawa coupling (kappa_tau)"
+      },
+      {
+        "pdgid": "S126KMU/2024",
+        "description": "muon Yukawa couping (kappa_mu)"
+      },
+      {
+        "pdgid": "S126KGC/2024",
+        "description": "photon effective coupling (kappa_gamma)"
+      },
+      {
+        "pdgid": "S126KGL/2024",
+        "description": "gluon effective coupling (kappa_gluon)"
+      },
+      {
+        "pdgid": "S126KZG/2024",
+        "description": "Z gamma effective coupling (kappa(Zgamma))"
+      },
+      {
+        "pdgid": "S126STH/2024",
+        "description": "t tbar H production",
+        "pdg_values": [
+          {
+            "value": 1.096019170510497,
+            "error_positive": 0.1887860464837845,
+            "error_negative": 0.1767218869694582,
+            "value_text": "1.10+-0.18",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SBH/2024",
+        "description": "b bbar H production"
+      },
+      {
+        "pdgid": "S126PTH/2024",
+        "description": "t H production",
+        "pdg_values": [
+          {
+            "value": 5.7,
+            "error_positive": 4.036087214122113,
+            "error_negative": 4.036087214122113,
+            "value_text": "6+-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126SCH/2024",
+        "description": "c H production"
+      },
+      {
+        "pdgid": "S126SVB/2024",
+        "description": "VBS/VBF W H production"
+      },
+      {
+        "pdgid": "S126PGH/2024",
+        "description": "gamma H production"
+      },
+      {
+        "pdgid": "S126SHH/2024",
+        "description": "H H production",
+        "pdg_values": [
+          {
+            "value": 2.4,
+            "value_text": "< 2.4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126HHH/2024",
+        "description": "H H H production"
+      },
+      {
+        "pdgid": "S126KLA/2024",
+        "description": "Higgs trilinear self coupling modifier kappa_lambda"
+      },
+      {
+        "pdgid": "S126KH4/2024",
+        "description": "Higgs quartic self coupling modifier kappa_4"
+      },
+      {
+        "pdgid": "S126K2V/2024",
+        "description": "Higgs-gauge boson quartic coupling modifier kappa_2V"
+      },
+      {
+        "pdgid": "S126A02/2024",
+        "description": "H production cross section in p p collisions at sqrt(s) = 13 TeV",
+        "pdg_values": [
+          {
+            "value": 56.8284249354872,
+            "error_positive": 3.478923338661774,
+            "error_negative": 3.344933399635373,
+            "value_text": "56.8+-3.4",
+            "unit": "pb",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126A03/2024",
+        "description": "H production cross section in p p collisions at sqrt(s) = 13.6 TeV"
+      }
+    ],
+    "branching_fractions": [
+      {
+        "pdgid": "S126.1/2024",
+        "description": "H --> W W^*",
+        "mode_number": 1,
+        "pdg_values": [
+          {
+            "value": 0.257,
+            "error_positive": 0.026,
+            "error_negative": 0.024,
+            "value_text": "(25.7+-2.5)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.2/2024",
+        "description": "H --> Z Z^*",
+        "mode_number": 2,
+        "pdg_values": [
+          {
+            "value": 0.028,
+            "error_positive": 0.003,
+            "error_negative": 0.003,
+            "value_text": "(2.80+-0.30)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.3/2024",
+        "description": "H --> gamma gamma",
+        "mode_number": 3,
+        "pdg_values": [
+          {
+            "value": 0.0025,
+            "error_positive": 0.0002,
+            "error_negative": 0.0002,
+            "value_text": "(2.50+-0.20)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.4/2024",
+        "description": "H --> b bbar",
+        "mode_number": 4,
+        "pdg_values": [
+          {
+            "value": 0.53,
+            "error_positive": 0.08,
+            "error_negative": 0.08,
+            "value_text": "(53+-8)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.10/2024",
+        "description": "H --> e+ e-",
+        "mode_number": 5,
+        "pdg_values": [
+          {
+            "value": 0.0003,
+            "value_text": "<3.0 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.8/2024",
+        "description": "H --> mu+ mu-",
+        "mode_number": 6,
+        "pdg_values": [
+          {
+            "value": 0.00026,
+            "error_positive": 0.00013,
+            "error_negative": 0.00013,
+            "value_text": "(2.6+-1.3)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.5/2024",
+        "description": "H --> tau+ tau-",
+        "mode_number": 7,
+        "pdg_values": [
+          {
+            "value": 0.06,
+            "error_positive": 0.008,
+            "error_negative": 0.007,
+            "value_text": "(6.0+0.8-0.7)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.6/2024",
+        "description": "H --> Z gamma",
+        "mode_number": 8,
+        "pdg_values": [
+          {
+            "value": 0.0034,
+            "error_positive": 0.0011,
+            "error_negative": 0.0011,
+            "value_text": "(3.4+-1.1)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.25/2024",
+        "description": "H --> Z rho(770)",
+        "mode_number": 9,
+        "pdg_values": [
+          {
+            "value": 0.0121,
+            "value_text": "<1.21 E-2",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.26/2024",
+        "description": "H --> Z phi(1020)",
+        "mode_number": 10,
+        "pdg_values": [
+          {
+            "value": 0.0036,
+            "value_text": "<3.6 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.27/2024",
+        "description": "H --> Z eta_c",
+        "mode_number": 11,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S126.28/2024",
+        "description": "H --> Z J/psi",
+        "mode_number": 12,
+        "pdg_values": [
+          {
+            "value": 0.0019,
+            "value_text": "<1.9 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.29/2024",
+        "description": "H --> Z psi(2S)",
+        "mode_number": 13,
+        "pdg_values": [
+          {
+            "value": 0.0066,
+            "value_text": "<6.6 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.11/2024",
+        "description": "H --> J/psi gamma",
+        "mode_number": 14,
+        "pdg_values": [
+          {
+            "value": 0.0002,
+            "value_text": "<2.0 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.22/2024",
+        "description": "H --> J/psi J/psi",
+        "mode_number": 15,
+        "pdg_values": [
+          {
+            "value": 0.00038,
+            "value_text": "<3.8 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.20/2024",
+        "description": "H --> psi(2S) gamma",
+        "mode_number": 16,
+        "pdg_values": [
+          {
+            "value": 0.00105,
+            "value_text": "<1.05 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.30/2024",
+        "description": "H --> psi(2S) J/psi",
+        "mode_number": 17,
+        "pdg_values": [
+          {
+            "value": 0.0021,
+            "value_text": "<2.1 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.31/2024",
+        "description": "H --> psi(2S) psi(2S)",
+        "mode_number": 18,
+        "pdg_values": [
+          {
+            "value": 0.003,
+            "value_text": "<3.0 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.12/2024",
+        "description": "H --> Upsilon(1S) gamma",
+        "mode_number": 19,
+        "pdg_values": [
+          {
+            "value": 0.00025,
+            "value_text": "<2.5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.32/2024",
+        "description": "H --> Upsilon(1S) Upsilon(1S)",
+        "mode_number": 20,
+        "pdg_values": [
+          {
+            "value": 0.0017,
+            "value_text": "<1.7 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.13/2024",
+        "description": "H --> Upsilon(2S) gamma",
+        "mode_number": 21,
+        "pdg_values": [
+          {
+            "value": 0.00042,
+            "value_text": "<4.2 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.14/2024",
+        "description": "H --> Upsilon(3S) gamma",
+        "mode_number": 22,
+        "pdg_values": [
+          {
+            "value": 0.00034,
+            "value_text": "<3.4 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.23/2024",
+        "description": "H --> Upsilon(nS) Upsilon(mS)",
+        "mode_number": 23,
+        "pdg_values": [
+          {
+            "value": 0.00035,
+            "value_text": "<3.5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.35/2024",
+        "description": "H --> D^* gamma",
+        "mode_number": 24,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S126.19/2024",
+        "description": "H --> rho(770) gamma",
+        "mode_number": 25,
+        "pdg_values": [
+          {
+            "value": 0.00104,
+            "value_text": "<1.04 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.33/2024",
+        "description": "H --> omega(782) gamma",
+        "mode_number": 26,
+        "pdg_values": [
+          {
+            "value": 0.00055,
+            "value_text": "<5.5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.34/2024",
+        "description": "H --> K^*(892) gamma",
+        "mode_number": 27,
+        "pdg_values": [
+          {
+            "value": 0.00022,
+            "value_text": "<2.2 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.15/2024",
+        "description": "H --> phi(1020) gamma",
+        "mode_number": 28,
+        "pdg_values": [
+          {
+            "value": 0.0005,
+            "value_text": "<5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.17/2024",
+        "description": "H --> e mu",
+        "mode_number": 29,
+        "pdg_values": [
+          {
+            "value": 4.399999999999999e-05,
+            "value_text": "<4.4 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.18/2024",
+        "description": "H --> e tau",
+        "mode_number": 30,
+        "pdg_values": [
+          {
+            "value": 0.002,
+            "value_text": "<2.0 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.9/2024",
+        "description": "H --> mu tau",
+        "mode_number": 31,
+        "pdg_values": [
+          {
+            "value": 0.0015,
+            "value_text": "<1.5 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.7/2024",
+        "description": "H --> invisible",
+        "mode_number": 32,
+        "pdg_values": [
+          {
+            "value": 0.107,
+            "value_text": "<10.7 E-2",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S126.24/2024",
+        "description": "H --> gamma invisible",
+        "mode_number": 33,
+        "pdg_values": [
+          {
+            "value": 0.029,
+            "value_text": "<2.9 E-2",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ]
+  }
+}

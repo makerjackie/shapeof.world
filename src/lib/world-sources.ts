@@ -3,7 +3,7 @@ import type { WorldExperience, WorldSource } from '~/data/worlds/types'
 /**
  * User-facing source lists must talk about the *phenomenon*, not the render stack.
  * React / Three.js / bundlers are implementation details — they used to show up in
- * the ⓘ panel and the AI guide, which made every world sound the same.
+ * the ⓘ panel, which made every world sound the same.
  */
 
 const ENGINE_SOURCE_PATTERN =

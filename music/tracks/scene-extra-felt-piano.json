@@ -1,0 +1,125 @@
+{
+  "id": "scene-extra-felt-piano",
+  "code": "SCENE-EXTRA-2",
+  "title": {
+    "en": "Margin Notes",
+    "zh": "页边笔记"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "",
+  "instruments": [
+    "close felt piano and soft acoustic bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Original 60-second instrumental composition. Instruments exclusively: close felt piano and soft acoustic bass. 78 BPM. delicate two-note questions and quiet warm answers. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A solo piano piece with a melancholic yet reflective melody, played at a moderate tempo. The arrangement is simple and clear, evoking a sense of calm and introspection.",
+    "zh": "一首独奏钢琴曲，旋律忧郁而富有沉思感，以中等速度演奏。编排简洁明了，营造出一种平静和内省的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 58.593,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:38:31.246492+00:00",
+  "generation": {
+    "id": "266f73ae-12af-4aef-8ba5-31b2b6bd47cf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:37:38.259754+00:00",
+    "completedAt": "2026-09-22T09:38:31.246492+00:00",
+    "interactionId": "Y0yyaoGxJJaG694PsJfvuAI",
+    "sha256": "4b4b3583b8661961c2fb7d90b7ecbcb113907b399eb8cad5b5767e758b24dc2b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A solo piano piece with a melancholic yet reflective melody, played at a moderate tempo. The arrangement is simple and clear, evoking a sense of calm and introspection.",
+      "zh": "一首独奏钢琴曲，旋律忧郁而富有沉思感，以中等速度演奏。编排简洁明了，营造出一种平静和内省的氛围。"
+    },
+    "instruments": [
+      "Piano"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Peaceful",
+      "Introspective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Cleanly recorded solo piano piece with a clear, expressive melody, suitable for background or reflective content.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:38:48.800742+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-felt-piano/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-felt-piano/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-felt-piano/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ada328a0aa81068085c92ab61364091c8074d47499b4bfadfa094ce795a8e9d1",
+      "bytes": 821072,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4b4b3583b8661961c2fb7d90b7ecbcb113907b399eb8cad5b5767e758b24dc2b",
+      "bytes": 1413890,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "07bbfa122c4bb79563216951360458d139afd5993e748659306781dd75ee45c2",
+      "bytes": 2795,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.453132+00:00"
+}

@@ -1,0 +1,130 @@
+{
+  "id": "scene-koto-90",
+  "code": "SCENE-12-90",
+  "title": {
+    "en": "Paper Architecture · 90",
+    "zh": "纸上建筑 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "careful precise construction reveal",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "koto",
+    "soft synth bass",
+    "bamboo percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for careful precise construction reveal. Instruments: koto, soft synth bass, bamboo percussion. 108 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring acoustic guitar, a plucked string instrument, and subtle atmospheric pads, creating a peaceful and reflective mood.",
+    "zh": "柔和而旋律优美的器乐作品，以原声吉他、拨弦乐器和微妙的氛围音垫为特色，营造出宁静而沉思的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "careful precise construction reveal"
+    ]
+  },
+  "duration": 88.059,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:16:41.259554+00:00",
+  "generation": {
+    "id": "2d5b12a3-ae56-442a-912f-f69ed3d1a33a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:15:43.574477+00:00",
+    "completedAt": "2026-09-22T09:16:41.259554+00:00",
+    "interactionId": "QEeyasf9JLve694PlMeHuQ4",
+    "sha256": "7f095e6ab6697efc7cb28d31e8433dac306a4431eac82c9ca4e06a324cdfe15d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring acoustic guitar, a plucked string instrument, and subtle atmospheric pads, creating a peaceful and reflective mood.",
+      "zh": "柔和而旋律优美的器乐作品，以原声吉他、拨弦乐器和微妙的氛围音垫为特色，营造出宁静而沉思的氛围。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "plucked strings",
+      "synthesizer pad",
+      "light percussion"
+    ],
+    "moods": [
+      "peaceful",
+      "calm",
+      "reflective",
+      "gentle",
+      "serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 78,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:52.233234+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-koto-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-koto-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-koto-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ea95b9bca6c1d65baf443973a470b8a48ec74237f2a9f15640a1eaf535c70241",
+      "bytes": 1233597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7f095e6ab6697efc7cb28d31e8433dac306a4431eac82c9ca4e06a324cdfe15d",
+      "bytes": 2121077,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "09ad5d80724668d4008951b2a3445e83c0bf1f290269721414d4453b68969fa5",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.846274+00:00"
+}

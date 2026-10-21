@@ -1,0 +1,116 @@
+{
+  "id": "lib-orchestral-motion",
+  "code": "LIB-06-08",
+  "title": {
+    "en": "Motion — Orchestral",
+    "zh": "跃动 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "orchestral"
+  ],
+  "energy": 5,
+  "bpm": 120,
+  "key": "B minor",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second orchestral adventure instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 120 BPM; B minor. Main idea: a repeating five-note figure with space between phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A grand and majestic orchestral piece with a strong, adventurous theme. It features a full symphony orchestra with prominent strings, brass, and percussion, building from a stately opening to a powerful and heroic climax.",
+    "zh": "一首宏大而庄严的管弦乐作品，具有强烈而富有冒险精神的主题。它以完整的交响乐团为特色，弦乐、铜管乐和打击乐器突出，从庄重的开场逐渐发展到强大而英雄的高潮。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.633,
+  "generatedAt": "2026-09-09T08:02:39.809336+00:00",
+  "generation": {
+    "id": "9b8bdbec-ce3e-4b60-8fe8-62c721fc9f4b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:01:49.063374+00:00",
+    "completedAt": "2026-09-09T08:02:39.809336+00:00",
+    "interactionId": "bhKhap76DObq8vUPyqaQQA",
+    "sha256": "eea8d6e554c367c2ffde10764551566728873bb2c28efac12f5188bfed3f3a48"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and majestic orchestral piece with a strong, adventurous theme. It features a full symphony orchestra with prominent strings, brass, and percussion, building from a stately opening to a powerful and heroic climax.",
+      "zh": "一首宏大而庄严的管弦乐作品，具有强烈而富有冒险精神的主题。它以完整的交响乐团为特色，弦乐、铜管乐和打击乐器突出，从庄重的开场逐渐发展到强大而英雄的高潮。"
+    },
+    "instruments": [
+      "Orchestral Strings",
+      "French Horn",
+      "Trumpet",
+      "Trombone",
+      "Tuba",
+      "Flute",
+      "Oboe",
+      "Clarinet",
+      "Bassoon",
+      "Timpani",
+      "Snare Drum",
+      "Cymbals",
+      "Bass Drum",
+      "Harp",
+      "Glockenspiel"
+    ],
+    "moods": [
+      "Epic",
+      "Grand",
+      "Majestic",
+      "Heroic",
+      "Adventurous",
+      "Dramatic",
+      "Orchestral",
+      "Film Score"
+    ],
+    "energy": 5,
+    "bpmEstimate": 120,
+    "reason": "The audio is a well-produced, high-quality orchestral piece suitable for various media applications requiring an epic or majestic feel.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:02:51.923790+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:04:24.761905+00:00",
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review"
+}

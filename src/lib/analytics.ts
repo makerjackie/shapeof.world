@@ -1,3 +1,9 @@
+import { parseWorldPath } from './world-urls'
+import worldFirstSeen from '../data/generated/world-first-seen.json'
+
+import { analyticsPreference } from './analytics-preference'
+import { stripLocalePrefix } from './locale'
+
 import { isFailedWorldId } from '~/data/failed-worlds'
 
 import {
@@ -6,6 +12,8 @@ import {
   safeSessionStorage,
   type SafeStorage,
 } from './storage'
+
+const currentWorldRouteIds = new Set(Object.keys(worldFirstSeen))
 
 export const oneWorldEvents = [
   'page_view',
@@ -34,16 +42,21 @@ export const oneWorldEvents = [
   'guide_skip',
   'guide_autoplay_start',
   'guide_autoplay_pause',
-  'ask_open',
-  'ask_suggestion',
-  'ask_question',
-  'ask_response',
-  'ask_error',
-  'atlas_save',
   'share_open',
   'share',
   'follow_prompt_shown',
   'follow_prompt_click',
+  'follow_prompt_dismiss',
+  'search_open',
+  'search_results',
+  'search_result_click',
+  'feedback_open',
+  'feedback_submit',
+  'feedback_error',
+  'experience_renderer_ready',
+  'share_cancel',
+  'share_error',
+  'share_download',
   'pwa_install',
 ] as const
 
@@ -56,6 +69,7 @@ export type EventPayload = {
   worldId?: string
   issueId?: string
   value?: number | string | boolean
+  metricId?: string
 }
 
 export type AnalyticsPayload = EventPayload & {
@@ -93,6 +107,7 @@ const allowedPayloadKeys = new Set([
   'issueId',
   'value',
   'occurredAt',
+  'metricId',
 ])
 const contentIdentifierPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const lowCardinalityValuePattern = /^[a-z0-9_-]*$/i
@@ -145,18 +160,20 @@ function isIpAddressHost(value: string): boolean {
 const knownExactPaths = new Set([
   '/',
   '/about',
-  '/atlas',
   '/changelog',
+  '/routes',
   '/failures',
   '/making',
-  '/made-with',
   '/other',
   '/legacy',
   '/not-found',
   '/explore-unknown',
   '/sources',
-  '/story',
   '/worlds',
+  '/logo',
+  '/feedback',
+  '/privacy',
+  '/terms',
 ])
 
 function normalizeAnalyticsPath(path: string): string {
@@ -168,13 +185,15 @@ function normalizeAnalyticsPath(path: string): string {
 
 function isKnownAnalyticsPath(path: string): boolean {
   const normalized = normalizeAnalyticsPath(path)
+  const world = parseWorldPath(normalized)
   return knownExactPaths.has(normalized)
-    || /^\/explore\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
-    || /^\/made-with\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
+    || Boolean(world && world.locale === 'zh' && (world.legacy || currentWorldRouteIds.has(world.worldId)))
+    || /^\/routes\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
+    || /^\/category\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
 }
 
 function isAnalyticsPath(value: string): boolean {
-  return isKnownAnalyticsPath(value)
+  return value === normalizeAnalyticsPath(value) && !/[?#]/.test(value) && isKnownAnalyticsPath(value)
 }
 
 /**
@@ -182,7 +201,7 @@ function isAnalyticsPath(value: string): boolean {
  * 404s and leftover v1 paths apart, without recording arbitrary path text.
  */
 export function coarsenAnalyticsPath(path: string): string {
-  const normalized = normalizeAnalyticsPath(path)
+  const normalized = stripLocalePrefix(normalizeAnalyticsPath(path))
   if (isKnownAnalyticsPath(normalized)) return normalized
   if (/^\/(?:zh|en)(?:\/|$)/i.test(normalized)) return '/legacy'
   if (/^\/(?:t|lab|history|w)(?:\/|$)/i.test(normalized)) return '/legacy'
@@ -289,6 +308,10 @@ export function validateAnalyticsPayload(input: unknown): AnalyticsValidationRes
   ) {
     return { ok: false, error: 'Invalid experience duration' }
   }
+  if (payload.metricId !== undefined && (
+    !validBoundedString(payload.metricId, 80) || !/^[a-z0-9_-]+$/i.test(payload.metricId)
+    || !String(payload.event).startsWith('web_vital_')
+  )) return { ok: false, error: 'Invalid metric id' }
   if (!validOccurredAt(payload.occurredAt)) {
     return { ok: false, error: 'Invalid event time' }
   }
@@ -398,14 +421,21 @@ export function shouldTrackEvent(payload: EventPayload): boolean {
   return !payload.worldId || !isFailedWorldId(payload.worldId)
 }
 
-export function trackEvent(payload: EventPayload): void {
+export function trackEvent(payload: EventPayload, pagePath?: string): void {
   // Failure Museum artifacts have their own archive context and must not
   // contaminate the engagement, completion, recommendation, or Atlas signals
   // used to judge published worlds.
   if (!shouldTrackEvent(payload)) return
 
+  if (analyticsPreference.disabled()) return
   const context = currentContext()
   if (!context) return
+  // Local/preview traffic and a QA tab must never enter product metrics.
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('qa') === '1') safeSessionStorage.set('oneworld.analytics.qa', '1')
+  if (window.location.hostname !== 'shapeof.world' || navigator.webdriver
+    || safeSessionStorage.get('oneworld.analytics.qa') === '1') return
+  if (pagePath) { context.path = pagePath; context.documentLanguage = pagePath === '/en' || pagePath.startsWith('/en/') ? 'en' : 'zh' }
 
   const body = JSON.stringify(buildAnalyticsPayload(payload, context))
 

@@ -1,0 +1,164 @@
+{
+  "id": "promo-minimalism-25",
+  "code": "PROMO-03-25",
+  "title": {
+    "en": "Clockwork Play · 25",
+    "zh": "发条游戏 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "woodblocks",
+    "pizzicato strings",
+    "marimba",
+    "brushed snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and playful orchestral piece featuring prominent pizzicato strings, bright brass, and driving percussion. It has an energetic and whimsical feel, reminiscent of a cartoon score or lighthearted adventure.",
+    "zh": "一首活泼俏皮的管弦乐曲，以突出的拨弦乐器、明亮的铜管乐器和强劲的打击乐为特色。它充满活力和异想天开的感觉，让人联想到卡通配乐或轻松愉快的冒险。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:21:41.968750+00:00",
+  "generation": {
+    "id": "610b4aa0-d778-49e0-b364-a49b5de34530",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:21:29.648222+00:00",
+    "completedAt": "2026-09-10T05:21:41.968750+00:00",
+    "interactionId": "Wj6iat3lJaLijNAPs_zQyQE",
+    "sha256": "24e1a39f0a9df4f66df1e7072d9d9752f8245baf31ac2ea645a859d5f951bf28"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful orchestral piece featuring prominent pizzicato strings, bright brass, and driving percussion. It has an energetic and whimsical feel, reminiscent of a cartoon score or lighthearted adventure.",
+      "zh": "一首活泼俏皮的管弦乐曲，以突出的拨弦乐器、明亮的铜管乐器和强劲的打击乐为特色。它充满活力和异想天开的感觉，让人联想到卡通配乐或轻松愉快的冒险。"
+    },
+    "instruments": [
+      "strings",
+      "brass",
+      "woodwinds",
+      "percussion"
+    ],
+    "moods": [
+      "playful",
+      "energetic",
+      "lively",
+      "whimsical",
+      "upbeat",
+      "lighthearted"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a lively pizzicato string melody and light percussion, establishing a playful and energetic tone. It concludes with a clear, sustained orchestral chord and a final cymbal crash, providing a definitive and resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:25:32.915606+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "9a08d0c859918ed1196dc7341d400f1355b1bdc160318ba6d36b2f02c5481aed"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.328125,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively jazz big band piece with a swing rhythm, featuring prominent brass, piano, bass, and drums. The track has a bright and energetic feel.",
+      "zh": "一首欢快活泼的爵士大乐队作品，具有摇摆节奏，突出铜管乐器、钢琴、贝斯和鼓。该曲目给人一种明亮而充满活力的感觉。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Piano",
+      "Trumpet",
+      "Trombone",
+      "Saxophone"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Jazzy",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:22:08.361435+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.328125,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-minimalism-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-minimalism-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-minimalism-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:50.070069+00:00"
+}

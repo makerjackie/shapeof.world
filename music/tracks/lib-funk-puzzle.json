@@ -1,0 +1,102 @@
+{
+  "id": "lib-funk-puzzle",
+  "code": "LIB-13-07",
+  "title": {
+    "en": "Clues — Funk",
+    "zh": "线索 · 放克"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "funk"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "C lydian",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental funk instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 118 BPM; C lydian. Main idea: alternating short and long phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "An upbeat and groovy instrumental track featuring a prominent funky bassline, tight drums, and a catchy electric guitar melody. It has a modern funk/fusion feel.",
+    "zh": "一首欢快而律动的纯音乐曲目，以突出的放克贝斯线、紧凑的鼓点和抓耳的电吉他旋律为特色。它带有一种现代放克/融合的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.928,
+  "generatedAt": "2026-09-09T08:25:09.709088+00:00",
+  "generation": {
+    "id": "42000395-7218-417e-a08c-7cf5d668532d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:24:25.332940+00:00",
+    "completedAt": "2026-09-09T08:25:09.709088+00:00",
+    "interactionId": "uhehaqSOJNDi8vUPubf2-QQ",
+    "sha256": "9ecb83d949eb676fce31960077369be27ea7d0b66d94a3cc52bbcf1c3fac9267"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring a prominent funky bassline, tight drums, and a catchy electric guitar melody. It has a modern funk/fusion feel.",
+      "zh": "一首欢快而律动的纯音乐曲目，以突出的放克贝斯线、紧凑的鼓点和抓耳的电吉他旋律为特色。它带有一种现代放克/融合的感觉。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Funky",
+      "Groovy",
+      "Upbeat",
+      "Energetic",
+      "Cool"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:25:18.449778+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:26:04.388777+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

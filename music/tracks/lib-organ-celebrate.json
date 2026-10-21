@@ -1,0 +1,103 @@
+{
+  "id": "lib-organ-celebrate",
+  "code": "LIB-05-10",
+  "title": {
+    "en": "First Light — Organ",
+    "zh": "初光 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "organ"
+  ],
+  "energy": 5,
+  "bpm": 68,
+  "key": "C major",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second contemporary organ music instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 68 BPM; C major. Main idea: alternating short and long phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A grand and majestic orchestral piece with a classical feel, featuring prominent strings, brass, and percussion, building to a triumphant climax.",
+    "zh": "一首宏大而庄严的管弦乐作品，具有古典风格，以突出的弦乐、铜管乐和打击乐为主，逐渐达到高潮。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.331,
+  "generatedAt": "2026-09-09T07:58:54.324689+00:00",
+  "generation": {
+    "id": "c2b624fe-9afd-4a1d-a029-584c19246551",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:58:10.913002+00:00",
+    "completedAt": "2026-09-09T07:58:54.324689+00:00",
+    "interactionId": "kxGhaqayOcy5jMwP4P3F-Qs",
+    "sha256": "e7f7fe942a7073e46615e51788ec98e0d19934386bad873ac7a682e1d35c90b7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and majestic orchestral piece with a classical feel, featuring prominent strings, brass, and percussion, building to a triumphant climax.",
+      "zh": "一首宏大而庄严的管弦乐作品，具有古典风格，以突出的弦乐、铜管乐和打击乐为主，逐渐达到高潮。"
+    },
+    "instruments": [
+      "strings",
+      "brass",
+      "woodwinds",
+      "percussion",
+      "timpani",
+      "cymbals"
+    ],
+    "moods": [
+      "majestic",
+      "grand",
+      "epic",
+      "triumphant",
+      "heroic",
+      "dramatic"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:59:04.521698+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:59:55.758969+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

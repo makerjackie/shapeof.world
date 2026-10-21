@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-15",
+  "code": "SFX-MECHANICAL-15",
+  "title": {
+    "en": "Lock bolt",
+    "zh": "锁舌滑动"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 14,
+  "seed": 720191888,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized lock bolt for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的锁舌滑动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.58,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 720191888,
+    "sha256": "a492c4d6e375daef3f9073c2f6b025adb90c5db3cf47358acd459fc452efc236",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "70d4194ddd492c46617dc7dedd8a044116a4d6d99f0dbc5af3ab79da3500ac77",
+      "bytes": 9186,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a492c4d6e375daef3f9073c2f6b025adb90c5db3cf47358acd459fc452efc236",
+      "bytes": 51200,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "c4812b53c2b8ccb6715d68eb0e96779a095a0e3ae67d1676daf3ac807d97cac9",
+      "bytes": 7445,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "cdfcb7ef8abcec896f1c4f93ed1e90fcf2787e4285bd9eb524bb477a620c3722",
+      "bytes": 1944,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 25578,
+    "duration": 0.58,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.8,
+    "dcOffset": 1.2527741430623974e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.16160229492187383,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap followed by a lower-pitched electronic impact or thump.",
+      "zh": "一个短促、高音的电子冲击声，随后是一个低音的电子撞击或砰击声。"
+    },
+    "reason": "The sound is a clean, well-defined synthesized effect suitable for sci-fi weapon or UI feedback.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:31.907593+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "70d4194ddd492c46617dc7dedd8a044116a4d6d99f0dbc5af3ab79da3500ac77"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 25578
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.887604+00:00"
+}

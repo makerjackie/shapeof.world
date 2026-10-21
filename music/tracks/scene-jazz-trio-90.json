@@ -1,0 +1,129 @@
+{
+  "id": "scene-jazz-trio-90",
+  "code": "SCENE-07-90",
+  "title": {
+    "en": "Morning Notes · 90",
+    "zh": "清晨笔记 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "nimble elegant process film",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "brushed drums",
+    "double bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for nimble elegant process film. Instruments: acoustic piano, brushed drums, double bass. 124 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz piece featuring piano, upright bass, and light drums, creating a sophisticated lounge atmosphere.",
+    "zh": "一首流畅轻松的爵士乐曲，以钢琴、低音提琴和轻柔的鼓点为主，营造出精致的休闲氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "nimble elegant process film"
+    ]
+  },
+  "duration": 88.268,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:44.242498+00:00",
+  "generation": {
+    "id": "6298231e-3b46-4945-8ec6-679a0716d0a8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:57.496972+00:00",
+    "completedAt": "2026-09-22T09:13:44.242498+00:00",
+    "interactionId": "mkayar3rELve694PlMeHuQ4",
+    "sha256": "0baeac9ebdd44cd1f4cbd629e1844eb2e8ba15dc2c18fb6d28e2abfe3743605d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz piece featuring piano, upright bass, and light drums, creating a sophisticated lounge atmosphere.",
+      "zh": "一首流畅轻松的爵士乐曲，以钢琴、低音提琴和轻柔的鼓点为主，营造出精致的休闲氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Upright Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Lounge",
+      "Sophisticated",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Clean, well-produced instrumental jazz with a clear mood and instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:55.168499+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "668935db649a5393180fed15dd2853f875120b6c90a1f6aba38756c31b6284ae",
+      "bytes": 1236523,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0baeac9ebdd44cd1f4cbd629e1844eb2e8ba15dc2c18fb6d28e2abfe3743605d",
+      "bytes": 2126093,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "2ea90192a9c65fa0cf5a4d97f2cdfca8559ae7afb0d900b111e8b3f548b7e51d",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.844132+00:00"
+}

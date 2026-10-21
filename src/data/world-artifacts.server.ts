@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers'
 import { getRequest } from '@tanstack/react-start/server'
+import { homeFeaturedWeek } from '~/lib/home-featured'
 
 import {
   worldArtifactBucketPath,
@@ -7,7 +8,6 @@ import {
   type HomeBootstrapArtifact,
   type CuratedWorldArtifacts,
   type MakingWorldArtifact,
-  type ModelWorldCollection,
   type WorldCatalogSort,
   type WorldArtifact,
   type WorldSourcesArtifact,
@@ -44,19 +44,12 @@ export async function loadWorldSummaryPage(
 }
 
 export async function loadHomeBootstrap(): Promise<HomeBootstrapArtifact | undefined> {
-  return readArtifactJson<HomeBootstrapArtifact>('/generated/world-artifacts/home-bootstrap.json')
+  const home = await readArtifactJson<HomeBootstrapArtifact>('/generated/world-artifacts/home-bootstrap.json')
+  return home ? { ...home, featuredWeek: homeFeaturedWeek() } : undefined
 }
 
 export async function loadCuratedWorlds(): Promise<CuratedWorldArtifacts | undefined> {
   return readArtifactJson<CuratedWorldArtifacts>('/generated/world-artifacts/curated.json')
-}
-
-export async function loadModelCollections(): Promise<ReadonlyArray<ModelWorldCollection> | undefined> {
-  return readArtifactJson<ReadonlyArray<ModelWorldCollection>>('/generated/world-artifacts/models/manifest.json')
-}
-
-export async function loadModelWorlds(modelId: string): Promise<WorldSummaryPage | undefined> {
-  return readArtifactJson<WorldSummaryPage>(`/generated/world-artifacts/models/${encodeURIComponent(modelId)}.json`)
 }
 
 export async function loadWorldSources(): Promise<WorldSourcesArtifact | undefined> {

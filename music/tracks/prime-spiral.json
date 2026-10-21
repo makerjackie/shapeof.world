@@ -1,0 +1,59 @@
+{
+  "id": "prime-spiral",
+  "code": "MAT-B04",
+  "title": {
+    "en": "Prime Spiral",
+    "zh": "素数螺旋"
+  },
+  "category": "math-signals",
+  "archetype": "discovery",
+  "moods": [
+    "stepwise",
+    "irregular",
+    "curious",
+    "patterned"
+  ],
+  "topics": [
+    "primes",
+    "ulam-spiral",
+    "number"
+  ],
+  "energy": 2,
+  "bpm": 90,
+  "key": "D Dorian",
+  "instruments": [
+    "kalimba",
+    "muted piano",
+    "light analog click",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 143.935,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about primes lighting up on a spiral grid. Around 90 BPM, D Dorian. Kalimba walks a regular grid; muted piano strikes only on irregular steps, like primes. Curious, stepwise, patterned without being a groove track. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No trap hats, no bass drop.\n\n[00:00–00:20] Kalimba on a pentatonic grid, even steps.\n[00:20–01:00] Muted piano dots appear off-grid; analog clicks mark the spiral's corners.\n[01:00–01:45] Soft bass holds D; irregular piano density increases, still never a drum loop.\n[01:45–02:30] Grid remains; piano dots thin, revealing the spiral as afterimage.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:20:33Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/prime-spiral/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/prime-spiral/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/prime-spiral/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:11.320906+00:00",
+  "generation": {
+    "id": "c5bf8128-1d92-420f-b0c1-21e396374ead",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:19:36Z",
+    "completedAt": "2026-08-25T10:20:33Z",
+    "durationMs": 57000,
+    "interactionId": "OWyNasLcKuCF694P-px-",
+    "clientRequestId": "12c3e49f-e389-4676-8084-81f847ee5ee6",
+    "synthid": true,
+    "c2pa": "urn:c2pa:15e290e8-b3e4-4f9c-e37c-42ef0112443a",
+    "sha256": "23b1c063f4780c604b95ed32a3e2064a3e635c098bc0ab2b4a67ffa23c5de1ad"
+  }
+}

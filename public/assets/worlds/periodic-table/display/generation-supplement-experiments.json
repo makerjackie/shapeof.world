@@ -1,0 +1,56 @@
+[
+  {
+    "symbol": "Po",
+    "asset": "/assets/worlds/periodic-table/display/Po.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Po.webp",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Physicist_Studying_Alpha_Rays_GPN-2000-000381.jpg",
+    "credit": "NASA / Glenn Research Center / Bill Bowles",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "observation",
+    "visualTreatment": "Monochrome archival photographic plate on a white museum background. Retains the scientist, cloud chamber, central condensation tracks and surrounding optical equipment. The tracks show radiation from a polonium source, not polonium metal.",
+    "prompt": "Use case: precise-object-edit. Asset type: square museum catalog display artwork for an interactive science exhibition. Image 1 is the REAL historical scientific photograph and the only content reference/edit target. Preserve the original photographic scene and arrange it as a clean, flat archival photographic plate on a seamless pure white (#ffffff) background. Keep the photo plane front-facing, no perspective tilt. Center the full original 5:4 image at approximately 88 percent canvas width, with generous white whitespace outside it and a very faint soft shadow just beneath the photograph. Keep the archival image monochrome, with only a restrained tonal cleanup; maintain photographic grain and authentic observed details. Do not modernize, recolor, redraw, or reconstruct this historical experiment. Critical invariants: preserve this exact scientist's visible face and pose looking into the round cloud chamber; preserve the round chamber, flower-like central alpha-particle condensation tracks, microscope/objective above it, attached black optical apparatus on the right, the visible bottle at lower left, and their original arrangement. These are tracks from a polonium source in a cloud chamber, NOT a photograph of polonium metal. Do not invent a polonium specimen, visible polonium material, extra particle trajectories, glowing atoms, new apparatus, new furniture, or any further science details. This is a reference-based AI display treatment of an archival photograph, not new documentary evidence. No text, labels, logo, watermark, decorative mat frame, thick physical picture frame, border ornament, or added props. Square canvas.",
+    "generator": "OpenAI imagegen",
+    "generatedFile": "exec-eba2a85b-2fd4-4c3e-9acf-331a5947491c.png",
+    "generatedPath": "/Users/jackiexiao/.codex/generated_images/01a08b7b-4884-7931-acad-0efc8cc42ae0/exec-eba2a85b-2fd4-4c3e-9acf-331a5947491c.png",
+    "date": "2026-09-10",
+    "sha256": "ed85ed7f9983e553d3f7f4e43a499311265bde84b70c03c22faf6de4ff1e5ea7",
+    "referenceSha256": "93a61302c552d8e3d8723001e42dae6d7325edc94ea23854dcf225718ee2893f",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed the actual collection input and generated output and compared the scientific subject before local WebP compression.",
+      "scientificAppearance": "The visible historical cloud-chamber scene, scientist pose, monochrome record and central track pattern remain recognisable. No elemental polonium specimen or new physical claim is introduced. AI-rendered fine detail is not measurement evidence; the unedited reference remains authoritative.",
+      "presentation": "Front-facing archival photograph with clean outer white space and a subtle shadow; no modernised apparatus or artificial colour.",
+      "compressedAsset": "720x720 WebP q85; output and actual input SHA256 recorded."
+    },
+    "derivation": "AI-generated presentation adaptation based on a supplied real archival photograph; not a new specimen photograph or experimental record."
+  },
+  {
+    "symbol": "Rn",
+    "asset": "/assets/worlds/periodic-table/display/Rn-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Rn.webp",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Radon_detector_setup.jpg",
+    "credit": "Curt Storlazzi / USGS Pacific Coastal and Marine Science Center",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "apparatus",
+    "visualTreatment": "Use case: scientific-educational / background-extraction. Make a museum exhibit cutout from the supplied real USGS field photograph. The reference image shows a yellow radon detector buoy and a researcher. Isolate only the yellow radon-measuring buoy apparatus (open yellow lid, detector cylinder, visible tubes, wires, black pontoon ends and white front support). Remove the researcher, ocean, shoreline and sky. Preserve recognisable equipment layout, authentic materials, proportions and yellow/black/white colors. Use restrained photographic museum lighting. Center the complete apparatus at about 85% of image width. This is an AI interpretive display of an instrument, not documentary evidence and NOT a specimen of radon. Radon is invisible: absolutely no gas, glow, crystals, radiation symbols, magical particles, atom models, or invented radon matter. No text, lettering, logos, platform or border. Use an absolutely uniform PURE WHITE #ffffff background. No checkerboard pattern, no transparency illustration, no texture, no shadows outside the object. Clean accurate silhouette with pure white space around all sides, clean edges around tubes. Square canvas.",
+    "prompt": "Use case: scientific-educational / background-extraction. Make a museum exhibit cutout from the supplied real USGS field photograph. The reference image shows a yellow radon detector buoy and a researcher. Isolate only the yellow radon-measuring buoy apparatus (open yellow lid, detector cylinder, visible tubes, wires, black pontoon ends and white front support). Remove the researcher, ocean, shoreline and sky. Preserve recognisable equipment layout, authentic materials, proportions and yellow/black/white colors. Use restrained photographic museum lighting. Center the complete apparatus at about 85% of image width. This is an AI interpretive display of an instrument, not documentary evidence and NOT a specimen of radon. Radon is invisible: absolutely no gas, glow, crystals, radiation symbols, magical particles, atom models, or invented radon matter. No text, lettering, logos, platform or border. Use an absolutely uniform PURE WHITE #ffffff background. No checkerboard pattern, no transparency illustration, no texture, no shadows outside the object. Clean accurate silhouette with pure white space around all sides, clean edges around tubes. Square canvas.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-7206377a-0ac4-44e0-967f-3eedc0473879.png",
+    "date": "2026-09-11",
+    "sha256": "f5b47502de7b3aa2b3123b0db3c769dbbab94258c9edfe05b43e97175016b0f9",
+    "referenceSha256": "a62b2b205f029ab26a587c2cd115f4d68019571cf446207d866548097358f3f0",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Instrument interpretation based on field photo, not a radon specimen or accurate instrument schematic. Researcher and environment removed.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    },
+    "previousGeneration": {
+      "asset": "/assets/worlds/periodic-table/display/Rn.webp",
+      "sha256": "2880b43c314d0bc45a72074ff97dbdcfa3b4cd309deacdbc6cf1ca8dfe965844",
+      "date": "2026-09-10"
+    }
+  }
+]

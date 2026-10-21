@@ -1,0 +1,51 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "shapeof-press",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-15",
+  // Pages built by scripts/build.mjs. The Worker runs first so it can serve the
+  // picks API and the videos and add its headers to every page.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "routes": [
+    {
+      "pattern": "press.shapeof.world",
+      "custom_domain": true
+    }
+  ],
+  "workers_dev": false,
+  "preview_urls": false,
+  // Title, description and cover picks (key press-picks:v1).
+  "kv_namespaces": [
+    {
+      "binding": "PRESS_PICKS",
+      "id": "cd4d4d7cca1c442d8bf7eafe59645b68"
+    }
+  ],
+  // Upload-ready videos, served with byte ranges under /media/<key>.
+  "r2_buckets": [
+    {
+      "binding": "PRESS_MEDIA",
+      "bucket_name": "shapeof-press"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "WRITE_LIMITER",
+      "namespace_id": "31201",
+      "simple": {
+        "limit": 30,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 0.1
+    }
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-13",
+  "code": "SFX-RETRO-13",
+  "title": {
+    "en": "High score",
+    "zh": "刷新纪录"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 12,
+  "seed": 684268296,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized high score for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的刷新纪录合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 684268296,
+    "sha256": "f0ea631d2716f2b002924e14d8caadc1c080ab99e4a1759d8f2c2ebc0fec9280",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "213aa3e495e194978d6197707d7ea761cd293f46c606cac0a792ba1107e7e99c",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f0ea631d2716f2b002924e14d8caadc1c080ab99e4a1759d8f2c2ebc0fec9280",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b9d7c291fba022484cd99fda104622d62f43304661c79e9586a72eded6342fd7",
+      "bytes": 7820,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e352929cf26e3bbddc91683e5b2e7cf12b6d1dffe023f692ae1df91d6ffc3e0e",
+      "bytes": 1798,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -3.86,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.158327132936508e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.119720458984375,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched synthesized blip sound effect with a slight downward pitch bend, resembling a UI notification or alert.",
+      "zh": "一个短促、高音的合成音效，带有轻微的下行音高弯曲，类似于用户界面通知或警报声。"
+    },
+    "reason": "The sound is a clean, intentionally synthesized sound effect, well-suited for UI feedback, notifications, or game sound design. It has no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:23.481940+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "213aa3e495e194978d6197707d7ea761cd293f46c606cac0a792ba1107e7e99c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.896185+00:00"
+}

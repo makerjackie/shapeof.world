@@ -1,0 +1,59 @@
+{
+  "id": "star-nursery",
+  "code": "COS-B02",
+  "title": {
+    "en": "Star Nursery",
+    "zh": "恒星苗圃"
+  },
+  "category": "cosmos",
+  "archetype": "discovery",
+  "moods": [
+    "warm",
+    "nascent",
+    "hazy",
+    "hopeful"
+  ],
+  "topics": [
+    "stellar-life",
+    "nebula",
+    "star-formation"
+  ],
+  "energy": 2,
+  "bpm": 74,
+  "key": "Bb Lydian",
+  "instruments": [
+    "harp",
+    "flute harmonics",
+    "clustered analog oscillators",
+    "soft strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 131.605,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a star condensing inside a nebula. Around 74 BPM, Bb Lydian. Harp figures, flute harmonics and clustered analog oscillators that slowly fuse into a single warm tone. Hazy, natal, hopeful. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No explosion, no choir, no epic climax.\n\n[00:00–00:25] Diffuse oscillator cluster, no attack, like dust.\n[00:25–01:05] Harp picks out a Lydian cell; flute harmonics hover above.\n[01:05–01:50] Cluster tightens into a clearer pitch center; soft strings appear.\n[01:50–02:30] One stable warm tone remains, with harp still circling it like leftover gas.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:24:25Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/star-nursery/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/star-nursery/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/star-nursery/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:48.057470+00:00",
+  "generation": {
+    "id": "7501f4fe-0568-4fad-ad29-36b71eca1276",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:23:33Z",
+    "completedAt": "2026-08-25T10:24:25Z",
+    "durationMs": 52000,
+    "interactionId": "Jm2NarmmKL6h7PkPkbKMuAY",
+    "clientRequestId": "23fa55bc-f573-43fd-9df1-f1b643e3ce72",
+    "synthid": true,
+    "c2pa": "urn:c2pa:5af09e7b-0e30-8d75-c458-4b3786aea9b2",
+    "sha256": "a376c66b8e5570888d494fcc2babcd755fb46fdbb47a375b99f5b6b4fe472889"
+  }
+}

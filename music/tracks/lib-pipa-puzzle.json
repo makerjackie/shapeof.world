@@ -1,0 +1,102 @@
+{
+  "id": "lib-pipa-puzzle",
+  "code": "LIB-18-07",
+  "title": {
+    "en": "Clues — Pipa",
+    "zh": "线索 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "pipa"
+  ],
+  "energy": 2,
+  "bpm": 110,
+  "key": "C lydian",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second Chinese plucked-string ensemble instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 110 BPM; C lydian. Main idea: alternating short and long phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A serene and elegant traditional East Asian instrumental piece, featuring a prominent plucked string melody, accompanied by flute and light percussion.",
+    "zh": "一首宁静而优雅的东亚传统器乐曲，以突出的弹拨弦乐旋律为主，辅以长笛和轻柔的打击乐。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.928,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:34:06.305357+00:00",
+  "generation": {
+    "id": "03236559-b548-4ba5-b2b5-2bb5d6801442",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:33:23.056399+00:00",
+    "completedAt": "2026-09-09T08:34:06.305357+00:00",
+    "interactionId": "1BmharT6G-ONk7QPyufS2Ao",
+    "sha256": "80222b080525aee81b6a7914d04115b95301f966197edf0170d64039b00cb743"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and elegant traditional East Asian instrumental piece, featuring a prominent plucked string melody, accompanied by flute and light percussion.",
+      "zh": "一首宁静而优雅的东亚传统器乐曲，以突出的弹拨弦乐旋律为主，辅以长笛和轻柔的打击乐。"
+    },
+    "instruments": [
+      "guzheng",
+      "flute",
+      "percussion",
+      "strings"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "traditional",
+      "elegant",
+      "serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:47:07.459244+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:47:49.670721+00:00"
+}

@@ -1,0 +1,159 @@
+{
+  "id": "promo-acoustic-folk-25",
+  "code": "PROMO-12-25",
+  "title": {
+    "en": "Little Workshop · 25",
+    "zh": "小小工坊 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "fingerpicked guitar",
+    "handclaps",
+    "mandolin",
+    "kick drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: tactile upbeat acoustic folk with a nimble mandolin hook. Instruments: fingerpicked guitar, handclaps, mandolin, kick drum. Tempo 118 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively acoustic folk-pop track featuring a prominent, catchy guitar melody, driving rhythm section, and a positive, energetic feel.",
+    "zh": "一首欢快活泼的民谣流行乐曲，以突出且抓耳的吉他旋律为主，配以强劲的节奏部分，整体感觉积极向上，充满活力。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:29:31.343967+00:00",
+  "generation": {
+    "id": "78a5c53a-b59e-47f3-b76f-ddd283d7d609",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:29:18.854538+00:00",
+    "completedAt": "2026-09-10T05:29:31.343967+00:00",
+    "interactionId": "L0CiasjRLfLTi9sPs7ej0QE",
+    "sha256": "d33260e054bd39a3ad481221d8d95c348c6c65bb32061e094088120f5d0064d0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively acoustic folk-pop track featuring a prominent, catchy guitar melody, driving rhythm section, and a positive, energetic feel.",
+      "zh": "一首欢快活泼的民谣流行乐曲，以突出且抓耳的吉他旋律为主，配以强劲的节奏部分，整体感觉积极向上，充满活力。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Positive",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality, well-produced, and catchy acoustic track with a clear structure and positive energy, suitable for various promotional uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, catchy acoustic guitar riff and percussion. Ends with a clear, resolved final chord and drum hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:51.137761+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "8eafc269a89fbe240d27fd4a13030f069a3a4b44476c847a3dd9625bb5d736c7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a clean electric guitar melody over a steady rhythm section. The music has a cheerful and positive vibe with a slight jazzy/bluesy influence.",
+      "zh": "一首欢快活泼的纯音乐曲目，以清晰的电吉他旋律为主，配以稳定的节奏部分。音乐氛围愉悦积极，略带爵士/布鲁斯风格。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:41.469885+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:25.584717+00:00"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "first-opening",
+  "code": "GLO-B02",
+  "title": {
+    "en": "First Opening",
+    "zh": "初次打开"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "moods": [
+    "expectant",
+    "clear",
+    "inviting",
+    "light"
+  ],
+  "topics": [
+    "first-visit",
+    "portal",
+    "curiosity"
+  ],
+  "energy": 2,
+  "bpm": 76,
+  "key": "F Lydian",
+  "instruments": [
+    "music box",
+    "felt piano",
+    "clarinet",
+    "chamber strings",
+    "soft mallets"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.032,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about opening a new knowledge world for the first time. Around 76 BPM, F Lydian. A small music-box figure becomes felt piano, then a single clarinet and chamber strings. Curious and inviting rather than ceremonial. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No fanfare, no choir swell, no sudden transients.\n\n[00:00–00:18] Music-box motif, close and dry, as if a lid just lifted.\n[00:18–00:55] Felt piano doubles the motif; soft mallets add a second interval.\n[00:55–01:40] Clarinet enters with a long Lydian line; strings hold a transparent bed.\n[01:40–02:30] The motif returns simpler, as if the door is now open and the room is quiet.\n",
+  "recommendedWorldIds": [
+    "solar-system",
+    "fourier",
+    "human-anatomy"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:14:20Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/first-opening/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/first-opening/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/first-opening/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:04.055498+00:00",
+  "generation": {
+    "id": "6088a2cb-7539-449b-adf3-f55cc317e56e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:13:28Z",
+    "completedAt": "2026-08-25T10:14:20Z",
+    "durationMs": 52000,
+    "interactionId": "ymqNaoTCCbye7PkPpd_HuQk",
+    "clientRequestId": "22c7ade0-ea59-47ad-a052-3ae6e0f984ac",
+    "synthid": true,
+    "c2pa": "urn:c2pa:8294b894-989c-6206-8fd1-463a44e80627",
+    "sha256": "ef2d0db582a2aacb3225598f141e52cd90ccc3c358554929e68c150e2655bd17"
+  }
+}

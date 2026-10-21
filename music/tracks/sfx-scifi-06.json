@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-06",
+  "code": "SFX-SCIFI-06",
+  "title": {
+    "en": "Shield hit",
+    "zh": "护盾受击"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 5,
+  "seed": 3171623520,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized shield hit for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的护盾受击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.5,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3171623520,
+    "sha256": "22a20a3a28c5691db911011a41347ed00415dbe74a4703930b048eb4da375e0d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6cc15e03deb4ce6e5a95c22bbbd47ade34c43677084f5b4b4d2cbb6112edcd40",
+      "bytes": 21986,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "22a20a3a28c5691db911011a41347ed00415dbe74a4703930b048eb4da375e0d",
+      "bytes": 132344,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1f856bbea61925a17c0f7f08e2e15f4a8f9148c61562c4c30f8fd1b3e1ca0fc9",
+      "bytes": 24909,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a0e4b9c463619146232baa7efa199eae054d46acedc73a268aa179c969675dc2",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 66150,
+    "duration": 1.5,
+    "peakDbfs": -4.19,
+    "rmsDbfs": -17.08,
+    "dcOffset": 5.628336404006047e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07627478027343715,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthesized whoosh sound effect with a resonant, spring-like 'boing' at the end, suggesting a sci-fi transition or elastic recoil.",
+      "zh": "一个合成的嗖嗖声效果，结尾带有共鸣的弹簧般‘嘣’的声音，暗示科幻过渡或弹性回弹。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect, free of technical flaws, and suitable for various sound design applications like transitions or impacts.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:03.670846+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6cc15e03deb4ce6e5a95c22bbbd47ade34c43677084f5b4b4d2cbb6112edcd40"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 66150
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.899412+00:00"
+}

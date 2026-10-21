@@ -1,0 +1,159 @@
+{
+  "id": "promo-synthwave-20",
+  "code": "PROMO-17-20",
+  "title": {
+    "en": "Neon Switch · 20",
+    "zh": "霓虹开关 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 128,
+  "key": "",
+  "instruments": [
+    "analog synth arpeggios",
+    "gated snare",
+    "synth bass",
+    "kick"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: bright retro-futuristic synth groove with a compact melodic hook. Instruments: analog synth arpeggios, gated snare, synth bass, kick. Tempo 128 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and uplifting electronic track featuring a driving beat, prominent synth melodies, and a clean, modern production style. It maintains a consistent, positive vibe throughout.",
+    "zh": "一首充满活力和振奋人心的电子音乐，具有强劲的节拍、突出的合成器旋律和干净现代的制作风格。它始终保持着积极向上的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:32:24.725683+00:00",
+  "generation": {
+    "id": "849c52bd-b9b9-4da4-b27e-a6666f3aaee1",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:32:12.397525+00:00",
+    "completedAt": "2026-09-10T05:32:24.725683+00:00",
+    "interactionId": "3UCiaqbZCe67i9sP06HTyAM",
+    "sha256": "b6d43031a71b9a0f1e379dfd9aa204106dcb3487f7a4b25a65f3b2ea8416cc55"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and uplifting electronic track featuring a driving beat, prominent synth melodies, and a clean, modern production style. It maintains a consistent, positive vibe throughout.",
+      "zh": "一首充满活力和振奋人心的电子音乐，具有强劲的节拍、突出的合成器旋律和干净现代的制作风格。它始终保持着积极向上的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Driving",
+      "Modern",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Clean production, clear musical theme, and good energy make it suitable for a library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent synth melody and a driving electronic beat. It concludes with a quick but controlled fade-out of all elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:32:41.799770+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1938a00daae33a7adece079f45dbcdaaaceb17f290f1469f1b9f3ce483e742b3"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic dance track featuring a prominent synth melody, a driving bassline, and a steady, upbeat drum beat. The overall feel is bright and dynamic.",
+      "zh": "一首充满活力的电子舞曲，以突出的合成器旋律、强劲的低音线和稳定、欢快的鼓点为特色。整体感觉明亮而富有动感。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Driving",
+      "Danceable",
+      "Bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced and a good example of an energetic electronic dance track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:32:33.608696+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.772167,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-synthwave-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-synthwave-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-synthwave-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:16.399896+00:00"
+}

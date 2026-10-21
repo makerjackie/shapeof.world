@@ -1,0 +1,100 @@
+{
+  "id": "lib-acoustic-folk-nature",
+  "code": "LIB-15-04",
+  "title": {
+    "en": "Wildlands — Acoustic Folk",
+    "zh": "山野 · 原声民谣"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "acoustic-folk"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "D dorian",
+  "instruments": [
+    "steel-string guitar",
+    "mandolin",
+    "light hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second fingerstyle acoustic folk instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: steel-string guitar, mandolin, light hand percussion. Style: alternating bass picking and a clear acoustic melody. Tempo approximately 88 BPM; D dorian. Main idea: a repeating five-note figure with space between phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A mellow and reflective acoustic folk piece featuring a fingerpicked acoustic guitar melody, supported by a gentle bassline and light, brushed drums. The arrangement is clean and spacious, creating a calming atmosphere.",
+    "zh": "一首柔和而富有沉思感的原声民谣作品，以指弹原声吉他旋律为主，辅以轻柔的贝斯线和轻刷的鼓点。编曲干净且富有空间感，营造出一种宁静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 143.882,
+  "generatedAt": "2026-09-09T08:29:51.582020+00:00",
+  "generation": {
+    "id": "827b9436-8f1a-47e0-ae96-f1dcd6d2999b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:29:02.228038+00:00",
+    "completedAt": "2026-09-09T08:29:51.582020+00:00",
+    "interactionId": "zxihap36HtDi8vUPubf2-QQ",
+    "sha256": "232d0436b304ba86e23d989664ab6e2da29df836494a7c31d4dd8a5d15bffecc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A mellow and reflective acoustic folk piece featuring a fingerpicked acoustic guitar melody, supported by a gentle bassline and light, brushed drums. The arrangement is clean and spacious, creating a calming atmosphere.",
+      "zh": "一首柔和而富有沉思感的原声民谣作品，以指弹原声吉他旋律为主，辅以轻柔的贝斯线和轻刷的鼓点。编曲干净且富有空间感，营造出一种宁静的氛围。"
+    },
+    "instruments": [
+      "Acoustic guitar",
+      "Bass guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Mellow",
+      "Relaxed",
+      "Reflective",
+      "Calming",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 100,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear melodic structure and pleasant instrumentation, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:30:13.572340+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:31:55.837320+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,78 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'cnn-vision',
+    publication: 'public',
+    index: '220',
+    title: '卷积网络从像素中识别手写数字',
+    poster: '/assets/posters/cnn-vision.webp',
+    posterMobile: '/assets/posters/mobile/cnn-vision.webp',
+    posterDesktop: '/assets/posters/desktop/cnn-vision.webp',
+    posterTitle: '28×28 像素经过卷积与池化完成分类',
+    posterHook: '在 3D 里看着手写数字流过卷积、池化与 Softmax——每个小方块都是一个神经元在亮。',
+    posterSource: 'LeNet 风格 MNIST · 卷积特征可视化',
+    posterPosition: '50% 50%',
+    question: '卷积神经网络是怎样从笔画像认出数字的？',
+    hook: '画一个数字，或点示例。输入层亮起像素，卷积摸边缘，池化压缩，最后 Softmax 给 0–9 投票。',
+    payoff: '这是教育用的 LeNet 风格 MNIST 网络（约六千参数）：卷积提取局部特征，池化缩小图，全连接层做分类——现代视觉模型更深，但流水线思想一脉相承。',
+    topicLabel: '深度学习',
+    translations: {
+      en: {
+        title: 'A convolutional network recognizes handwritten digits from pixels',
+        posterTitle: 'Convolution and pooling classify a 28×28-pixel image',
+        posterHook: 'In 3D, follow a handwritten digit through convolution, pooling, and Softmax—each cube is a neuron lighting up.',
+        posterSource: 'LeNet-style MNIST · convolutional feature visualization',
+        question: 'How does a convolutional network turn pen strokes into a digit?',
+        hook: 'Draw a digit or tap a sample. The input lights pixels, conv finds edges, pooling compresses, Softmax votes 0–9.',
+        payoff: 'An educational LeNet-style MNIST net (~6k params): convolution extracts local features, pooling shrinks maps, a dense layer classifies—modern vision models go deeper, but share this pipeline idea.',
+        topicLabel: 'deep learning',
+      },
+    },
+    primaryCategoryId: 'ai-learning',
+    provenance: {
+      origin: 'open-source-adaptation',
+      sourceProject: 'cnn-3d-visualization',
+      sourceUrl: 'https://github.com/Purna94/cnn-3d-visualization',
+      adaptationModel: 'grok-4.5',
+    },
+    runtime: 'scene-3d',
+    difficulty: 'standard',
+    lane: 'structure',
+    renderer: 'cnn-vision',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 480,
+    evidence: 'modeled',
+    accent: '#5eead4',
+    related: ['neural-playground'],
+    sources: [
+      {
+        label: 'cnn-3d-visualization（Purna94 · MIT）',
+        labelEn: 'cnn-3d-visualization (Purna94 · MIT)',
+        url: 'https://github.com/Purna94/cnn-3d-visualization',
+      },
+      {
+        label: '3D 神经网络可视化灵感（aharley/nn_vis）',
+        labelEn: '3D neural-net visualization inspiration (aharley/nn_vis)',
+        url: 'https://github.com/aharley/nn_vis',
+      },
+      {
+        label: 'LeCun 等 · Gradient-Based Learning Applied to Document Recognition (1998)',
+        labelEn: 'LeCun et al., Gradient-Based Learning Applied to Document Recognition (1998)',
+        url: 'http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf',
+      },
+      {
+        label: 'MNIST 手写数字数据集',
+        labelEn: 'MNIST handwritten digits dataset',
+        url: 'https://yann.lecun.com/exdb/mnist/',
+      }
+    ],
+    presentation: 'full-bleed',
+    hasEmbeddedGuide: true,
+    onboardingVersion: 1,
+    transferBudgetMb: 1,
+    fallback: 'text',
+  } satisfies WorldExperience

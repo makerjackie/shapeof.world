@@ -1,0 +1,60 @@
+{
+  "id": "coastline-infinity",
+  "code": "MAT-A02",
+  "title": {
+    "en": "Coastline Infinity",
+    "zh": "无限海岸"
+  },
+  "category": "math-signals",
+  "archetype": "ambient",
+  "moods": [
+    "recursive",
+    "fragile",
+    "endless",
+    "cool"
+  ],
+  "topics": [
+    "fractal",
+    "mandelbrot",
+    "self-similarity"
+  ],
+  "energy": 1,
+  "bpm": 54,
+  "key": "C minor",
+  "instruments": [
+    "delay-scattered bells",
+    "soft granular cloud",
+    "low sine pedal"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.633,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about zooming into a fractal coastline. Around 54 BPM, C minor. A four-note bell cell repeats at three nested tempos via delay, self-similar but never identical. Cool, fragile, endless. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No drops, no percussion kit, no horror.\n\n[00:00–00:30] Bell cell dry, then a quieter copy at half speed.\n[00:30–01:15] A third copy at double speed appears in high register; granular haze like finer coastline.\n[01:15–01:55] All three layers overlap; tiny pitch drifts suggest deeper zoom.\n[01:55–02:30] Outer copies fade; the original cell remains, as if the zoom reset.\n",
+  "recommendedWorldIds": [
+    "mandelbrot-zoom"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:10:01Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/coastline-infinity/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/coastline-infinity/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/coastline-infinity/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:02.177611+00:00",
+  "generation": {
+    "id": "879b0bc9-be5d-400b-a178-4940ca3aa4fb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:08:58Z",
+    "completedAt": "2026-08-25T10:10:01Z",
+    "durationMs": 63000,
+    "interactionId": "xmmNarqLJu_crtoPxNyAqQ0",
+    "clientRequestId": "b1e9a1f7-4faf-4f6b-8db5-0c7a95c72b7f",
+    "synthid": true,
+    "c2pa": "urn:c2pa:9ba7bb11-4709-2f42-a0b8-483dfd634f9d",
+    "sha256": "f8d1a06f3bcf359ad8624f2e6ff4bd1aba4a191481b1590df8c40d1c0a3fbd22"
+  }
+}

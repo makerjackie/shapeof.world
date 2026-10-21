@@ -471,3 +471,15 @@
     padding: 22px 20px;
   }
 }
+
+/* Phones: orbit trails run under the story caption, so give the caption a dark halo
+   (a box backdrop would also dim the attractor name on the right) and keep the name block short. */
+@media (max-width: 720px) {
+  .sa-experience.is-story .guide-stage-copy {
+    --guide-stage-text-shadow: 0 0 5px rgba(3, 4, 10, 0.95), 0 0 12px rgba(3, 4, 10, 0.92), 0 0 26px rgba(3, 4, 10, 0.85);
+  }
+  .sa-experience.is-story .sa-name-note,
+  .sa-experience.is-story .sa-equation {
+    display: none;
+  }
+}

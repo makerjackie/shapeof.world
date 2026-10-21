@@ -1,3 +1,4 @@
+import { worldPath } from '~/lib/world-urls'
 import { getCategory, getPrimaryCategoryTrail } from '~/data/content-graph'
 import type { WorldSummary } from '~/data/world-summaries'
 
@@ -30,7 +31,7 @@ export function worldMatchesSearch(world: WorldSummary, query: string): boolean 
   ]
   return [
     world.id,
-    `/explore/${world.id}`,
+    worldPath(world.id),
     world.title,
     world.posterTitle,
     world.posterHook,

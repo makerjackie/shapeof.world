@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "Fr",
+    "asset": "/assets/worlds/periodic-table/display/Fr.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Fr.webp",
+    "sourceKind": "mineral",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Francium_(Element_-_87)_2.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Francium_%28Element_-_87%29_2.jpg",
+    "credit": "James St. John",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "prompt": "Use case: precise-object-edit.\nAsset type: square museum catalog display asset for an interactive scientific periodic table.\nInput image 1 is the ACTUAL REAL PHOTOGRAPH, the subject reference and edit target. The referenced exhibit is uranium mineral containing trace francium from radioactive decay according to the photographer's description. It is NOT a sample of francium metal. Base the object only on the image.\nPrimary request: Restage the same transparent glass vial containing the same orange ochre mineral grains against seamless pure white (#FFFFFF), matching elegant white museum specimen catalog photography. Change only background, distracting surroundings, lighting and framing. Remove the grey fabric/display case surroundings. Preserve the observed reference object's proportions, grain arrangement, colour and container.\nScientific invariants: Preserve a single long straight transparent cylindrical glass vial diagonally rising from the lower-left to the upper-right. Its closed rounded bottom is visible in the lower-left. Preserve the long narrow bed of fine orange ochre uranium mineral granules along its lower side, including the slightly larger pale yellow-orange flecks; do not fill the whole tube or make a single crystal. Preserve the visible dark capped portion at the upper-right border. In the photograph, that cap continues OUT OF FRAME: keep this cropping; do not complete an imaginary unseen cap, neck or sealing mechanism. Retain all glass containment. The orange colour belongs to the uranium mineral, not to francium. NO metallic francium, metal nugget, orange glowing gas, coloured lighting, radioactive glow, sparks, atoms or symbols. Do not infer or depict how much francium is present.\nComposition: keep the same diagonal orientation and viewing angle as the reference, with generous clear white space around the visible lower and middle vial region. Top-right capped portion may continue outside canvas exactly as in the reference. Whole visible mineral bed inside the tube is in frame. Gentle neutral soft natural light, fine transparent glass edges and an extremely faint contact shadow. No added display case, pedestal or props.\nNo text, labels, watermark, border or graphic overlays. This is an AI presentation adaptation of a documented real reference, not new scientific photographic evidence or a microscopic measurement. Do not invent precise mineral microstructure beyond the source.",
+    "generator": "OpenAI imagegen",
+    "generatedFile": "exec-5a6ed060-8129-4849-8f49-47f50433be8d.png",
+    "generatedPath": "/Users/jackiexiao/.codex/generated_images/01a08b7a-84e3-7d73-8d87-fe25cf04f06a/exec-5a6ed060-8129-4849-8f49-47f50433be8d.png",
+    "generatedSha256": "d038e1815db99607d4eb6fd6e703d6902cb426462e4e98e88c73adebbcc5210c",
+    "date": "2026-09-10",
+    "sha256": "a21015f1728ca2a405d733c613244751765e4869249d949cf880461ecfbe3750",
+    "referenceSha256": "4c044acc5ff7060057f3e2203edd95e305c1cef02e8589d49bcb1066116391dd",
+    "visualTreatment": "Reference-based white-background restaging of orange uranium mineral in a glass vial. Keeps the long narrow mineral bed, diagonal vial and source-cropped dark cap. It is uranium mineral associated with trace francium, never a depiction of francium metal.",
+    "scientificBoundary": "The photographed orange solid is uranium mineral, not francium metal. The source associates it with trace francium from decay; neither the original photograph nor this AI adaptation measures its francium content.",
+    "derivation": "AI-generated adaptation based on the referenced real photograph; not a new specimen photograph.",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed each real local reference with view_image before passing that exact file as referenced_image_paths to the built-in imagegen tool, then visually compared the generated result and decoded final WebP against the original.",
+      "scientificAppearance": "Orange-ochre granular mineral, visible pale flecks, transparent tube, rounded lower end and partial dark cap remain. The mineral stays inside the original type of vial; no metal nugget or radioactive glow was added. Exact individual grains are not scientific evidence.",
+      "presentation": "Pure white seamless background with gentle neutral lighting and faint shadow; source-cropped enclosure remains cropped.",
+      "limitation": "The photographed orange solid is uranium mineral, not francium metal. The source associates it with trace francium from decay; neither the original photograph nor this AI adaptation measures its francium content.",
+      "compressedAsset": "WebP decoded with webpinfo; 720x720; q85; original-reference, generated-PNG and compressed-asset SHA256 recorded."
+    }
+  },
+  {
+    "symbol": "Th",
+    "asset": "/assets/worlds/periodic-table/display/Th.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Th.webp",
+    "sourceKind": "specimen",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Thorium_(Element_-_90)_2.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Thorium_%28Element_-_90%29_2.jpg",
+    "credit": "James St. John",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "prompt": "Use case: precise-object-edit.\nAsset type: square museum catalog display asset for an interactive scientific periodic table.\nInput image 1 is the ACTUAL REAL PHOTOGRAPH, the subject reference and edit target. It is a photograph of a grey-black thorium metal rod in a transparent glass tube. Base the entire object on this image; do not synthesize a different sample from the element name.\nPrimary request: Restage the referenced photographed tube and its single metal rod against seamless pure white (#FFFFFF), matching elegant white museum specimen catalog photography. Change only background, distracting surroundings, soft lighting and framing. Remove the grey fabric/display-case background. Preserve the observed reference object's silhouette, proportions, material and surface character.\nScientific invariants: One short elongated dark grey-black rough rod near the closed lower end of a much larger transparent straight cylindrical glass tube. Preserve its irregular granular texture, long bright grey ridge and subdued dark metal. The visible lower glass end remains in the lower-left and the open-ended crop of the tube extends diagonally toward the upper-right edge. The tube's far/top end is NOT visible in the original: it must still exit the canvas, with no invented cap, stopper, seal, neck or unseen structure. Keep the tube around the rod and no additional fragments. Do not turn this into a decorative crystalline mineral, shiny ingot or freely exposed rod. No glow, colour coding, radiation symbols or sparks.\nComposition: same diagonal orientation and viewing angle as the photograph. Centre the short metal rod around the central-lower part of the square and keep all of it visible. The tube may exit at the upper-right as it does in the reference. Generous white space around the observed specimen region, clean fine glass edges, gentle natural soft light and an extremely faint contact shadow. Do not create an extra display case or pedestal.\nNo text, labels, watermark, border or graphic overlays. The result is an AI presentation adaptation of a documented real reference, not new scientific photographic evidence. Do not invent precise microstructure absent from the source.",
+    "generator": "OpenAI imagegen",
+    "generatedFile": "exec-9e1be41b-6647-4bc7-ab44-469668d9735c.png",
+    "generatedPath": "/Users/jackiexiao/.codex/generated_images/01a08b7a-84e3-7d73-8d87-fe25cf04f06a/exec-9e1be41b-6647-4bc7-ab44-469668d9735c.png",
+    "generatedSha256": "e63bf370a544551df15029e82700eefa7f76611d94eaab03aed0b46bb849fb5c",
+    "date": "2026-09-10",
+    "sha256": "6a8902baa75b3578d6b9f458282bd4312d9a7c7f970498e6ca2dd5c7e20fd774",
+    "referenceSha256": "7a300c0cac95b29c192817ca7534321e747cfc7c344d9413a88af38bb06001cd",
+    "visualTreatment": "Reference-based white-background restaging of the dark grey thorium metal rod inside its glass tube. Keeps the source's diagonal orientation and cropped upper end; no unseen cap or enclosure structure is invented.",
+    "scientificBoundary": "The glass enclosure is not thorium. This display adaptation does not determine purity, exact microstructure or dimensions; the original source photograph remains available.",
+    "derivation": "AI-generated adaptation based on the referenced real photograph; not a new specimen photograph.",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed each real local reference with view_image before passing that exact file as referenced_image_paths to the built-in imagegen tool, then visually compared the generated result and decoded final WebP against the original.",
+      "scientificAppearance": "The single short, rough grey-black rod, longitudinal bright ridge, transparent surrounding glass and cropped diagonal tube are retained. Surface detail is interpretive at the source's limited resolution; sample purity is unknown.",
+      "presentation": "Pure white seamless background with gentle neutral lighting and faint shadow; source-cropped enclosure remains cropped.",
+      "limitation": "The glass enclosure is not thorium. This display adaptation does not determine purity, exact microstructure or dimensions; the original source photograph remains available.",
+      "compressedAsset": "WebP decoded with webpinfo; 720x720; q85; original-reference, generated-PNG and compressed-asset SHA256 recorded."
+    }
+  }
+]

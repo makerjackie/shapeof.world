@@ -1,0 +1,103 @@
+{
+  "id": "lib-bossa-puzzle",
+  "code": "LIB-08-07",
+  "title": {
+    "en": "Clues — Bossa",
+    "zh": "线索 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "bossa"
+  ],
+  "energy": 2,
+  "bpm": 116,
+  "key": "C lydian",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second bossa nova instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 116 BPM; C lydian. Main idea: alternating short and long phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A smooth and relaxing instrumental jazz piece featuring acoustic guitar, electric piano, bass, and light drums. It has a mellow and sophisticated feel.",
+    "zh": "一首流畅轻松的器乐爵士乐曲，以原声吉他、电钢琴、贝斯和轻柔的鼓点为特色。营造出一种醇厚而精致的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.902,
+  "generatedAt": "2026-09-09T08:07:35.391503+00:00",
+  "generation": {
+    "id": "821e6362-e172-46c6-b217-d74256a2f4f1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:06:51.384091+00:00",
+    "completedAt": "2026-09-09T08:07:35.391503+00:00",
+    "interactionId": "nBOhasaHJ9OJoLAPwd-WiAQ",
+    "sha256": "9cd01891dd72b524a3ea48d3899409c04da786bdd1044ebbb0ce7cca2b4a713e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxing instrumental jazz piece featuring acoustic guitar, electric piano, bass, and light drums. It has a mellow and sophisticated feel.",
+      "zh": "一首流畅轻松的器乐爵士乐曲，以原声吉他、电钢琴、贝斯和轻柔的鼓点为特色。营造出一种醇厚而精致的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Electric Piano",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Relaxing",
+      "Smooth Jazz",
+      "Mellow",
+      "Sophisticated",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 88,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:07:59.501371+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:09:09.386902+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-02",
+  "code": "SFX-FOLEY-02",
+  "title": {
+    "en": "Card slide",
+    "zh": "卡片滑动"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 1,
+  "seed": 1938293973,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized card slide for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的卡片滑动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.37,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1938293973,
+    "sha256": "32197d0e2361c7fab1f31b59ea73e9da52db9dad04e4ee4d31a1df30d6d41d7e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0f9c21f5f7723c205de10ee4ef3fde5605154e1b2697f5b91ea15cea8356ce5d",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "32197d0e2361c7fab1f31b59ea73e9da52db9dad04e4ee4d31a1df30d6d41d7e",
+      "bytes": 32678,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a042e57cd900ef328b7f216fb90a30d29d22a4968cdd9e7fcbfa8772aa73db6b",
+      "bytes": 8745,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8fd60a7903ffa274857e8e0bb112ac469637ab5210972090287d884ee8f55a28",
+      "bytes": 1711,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16317,
+    "duration": 0.37,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.82,
+    "dcOffset": -2.150837460547282e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1597993469238273,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched whoosh or swoosh sound effect with a quick attack and decay, suitable for fast transitions or movement.",
+      "zh": "短促、尖锐、高音的嗖嗖声或呼啸声，具有快速的起音和衰减，适用于快速过渡或移动。"
+    },
+    "reason": "The sound is a clean, well-defined, and versatile whoosh effect, free of defects, making it ideal for various game or video transitions and UI feedback.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:51.706634+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0f9c21f5f7723c205de10ee4ef3fde5605154e1b2697f5b91ea15cea8356ce5d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16317
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.862597+00:00"
+}

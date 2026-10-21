@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-10",
+  "code": "SFX-SCIFI-10",
+  "title": {
+    "en": "Radar sweep",
+    "zh": "雷达扫过"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 9,
+  "seed": 3584579726,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized radar sweep for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的雷达扫过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3584579726,
+    "sha256": "74d1237274872e59ea6c873c814309fb8f8797e4f5c5395dee8ad25506be8d1a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5b91f7b6aa164b8aad6d2596f6ae53ff4f8b311bed383408c141888ce01ff161",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "74d1237274872e59ea6c873c814309fb8f8797e4f5c5395dee8ad25506be8d1a",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8595f5485479ca4b63f8b628f2bb9233fd7c1ea672d6e7065aacfaba909a63ec",
+      "bytes": 15899,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "54cce7e5cf7197c94ac3e779d432cb0a8a12095122b9e392e2ca3943b5246e85",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -4.27,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.4841333435083434e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10260705566406236,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, elastic 'boing' sound, reminiscent of a spring or cartoon bounce effect.",
+      "zh": "一个短促、高音的弹性“嘣”声，类似于弹簧或卡通弹跳音效。"
+    },
+    "reason": "The sound is a clean, isolated effect with no technical defects, making it suitable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:06.541300+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5b91f7b6aa164b8aad6d2596f6ae53ff4f8b311bed383408c141888ce01ff161"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.900417+00:00"
+}

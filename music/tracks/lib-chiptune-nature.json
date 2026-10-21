@@ -1,0 +1,101 @@
+{
+  "id": "lib-chiptune-nature",
+  "code": "LIB-29-04",
+  "title": {
+    "en": "Wildlands — Chiptune",
+    "zh": "山野 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "D dorian",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second melodic chiptune instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 132 BPM; D dorian. Main idea: an ascending fourth answered by a stepwise descent. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "An energetic and adventurous electronic track featuring prominent synth melodies, driving electronic drums, and a dynamic arrangement that shifts from playful to epic. It has a retro-futuristic feel.",
+    "zh": "一首充满活力和冒险精神的电子音乐，以突出的合成器旋律、强劲的电子鼓点和从活泼到史诗般的动态编排为特色。它带有一种复古未来主义的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.853,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:15:14.559733+00:00",
+  "generation": {
+    "id": "a31d5653-f74e-4b06-88dd-eee9b1407ede",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:14:25.497706+00:00",
+    "completedAt": "2026-09-09T09:15:14.559733+00:00",
+    "interactionId": "ciOharzjMNOJoLAPwd-WiAQ",
+    "sha256": "047d7a079f807c5b754115f1548a839826a2a72c5279d055dbab75605b4b9b9e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and adventurous electronic track featuring prominent synth melodies, driving electronic drums, and a dynamic arrangement that shifts from playful to epic. It has a retro-futuristic feel.",
+      "zh": "一首充满活力和冒险精神的电子音乐，以突出的合成器旋律、强劲的电子鼓点和从活泼到史诗般的动态编排为特色。它带有一种复古未来主义的感觉。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass",
+      "synth pads"
+    ],
+    "moods": [
+      "energetic",
+      "adventurous",
+      "epic",
+      "playful",
+      "retro-futuristic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced electronic track with clear instrumentation and dynamic arrangement, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:15:25.363805+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:16:52.628208+00:00"
+}

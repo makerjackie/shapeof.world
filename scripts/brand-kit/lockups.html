@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    @font-face {
+      font-family: "Noto Serif SC";
+      font-weight: 500;
+      src: url("./fonts/noto-serif-sc-500-shapeof.woff") format("woff");
+    }
+    @font-face {
+      font-family: "Cormorant Garamond";
+      font-weight: 500;
+      src: url("./fonts/cormorant-garamond-500.woff") format("woff");
+    }
+    html, body { margin: 0; padding: 0; }
+    .card {
+      width: 1600px;
+      height: 480px;
+      display: flex;
+      align-items: center;
+      padding: 0 96px;
+      gap: 36px;
+      box-sizing: border-box;
+    }
+    .card img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex: none;
+    }
+    .zh {
+      font-family: "Noto Serif SC", serif;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+    }
+    .en {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .sub {
+      display: block;
+      margin-top: 12px;
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 0.62;
+    }
+    .dark { background: #080a0a; color: #f6f1e8; }
+    .light { background: #f1ecdf; color: #19231f; }
+    .light .sub { color: #69716a; opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="card dark" id="zh-dark">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <span class="zh" style="font-size: 92px;">世界的形状</span>
+  </div>
+  <div class="card light" id="zh-light">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <span class="zh" style="font-size: 92px;">世界的形状</span>
+  </div>
+  <div class="card dark" id="en-dark">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <span class="en" style="font-size: 76px;">Shape of the World</span>
+  </div>
+  <div class="card light" id="en-light">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <span class="en" style="font-size: 76px;">Shape of the World</span>
+  </div>
+  <div class="card dark" id="bi-dark">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <div>
+      <span class="zh" style="font-size: 84px;">世界的形状</span>
+      <span class="sub" style="font-size: 36px;">Shape of the World</span>
+    </div>
+  </div>
+  <div class="card light" id="bi-light">
+    <img src="../../public/assets/brand/app-icon.png" alt="" />
+    <div>
+      <span class="zh" style="font-size: 84px;">世界的形状</span>
+      <span class="sub" style="font-size: 36px;">Shape of the World</span>
+    </div>
+  </div>
+</body>
+</html>

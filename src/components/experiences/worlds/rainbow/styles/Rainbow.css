@@ -1,0 +1,383 @@
+/* ============================================================
+   Rainbow · 彩虹（一颗雨滴的折返边，与围着你头影的那个圆锥）
+   ============================================================ */
+.rb-experience {
+  --world-accent: #e8c27a;
+  --rb-warm: #ffcf7d;
+  --rb-cool: #8fc9f0;
+  --rb-line: rgba(255, 255, 255, 0.16);
+  --rb-panel: rgba(6, 9, 14, 0.72);
+  /* Freebar / GuideTour 共用面板材质：阴天雨幕里的一块深玻璃 */
+  --freebar-accent: var(--rb-warm);
+  --experience-panel-surface:
+    linear-gradient(160deg, rgba(13, 21, 33, 0.62), rgba(4, 8, 14, 0.7));
+  --experience-panel-border: rgba(143, 201, 240, 0.24);
+  --experience-panel-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  position: absolute;
+  inset: 0;
+  background: #04060a;
+}
+
+.rb-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* Dragging picks a ray on the drop, or swings the camera round the scene. */
+.rb-experience.is-free .rb-canvas {
+  cursor: grab;
+  touch-action: none;
+}
+.rb-experience.is-free .rb-canvas:active {
+  cursor: grabbing;
+}
+
+/* ---------- 点题铭牌（顶左） ---------- */
+.rb-plaque {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  z-index: 10;
+  max-width: min(410px, 44vw);
+  pointer-events: none;
+}
+.rb-plaque h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #f4f7fb;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+}
+.rb-plaque p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(206, 218, 232, 0.86);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.72);
+}
+
+/* ---------- 被动读数（底左 · 非交互） ---------- */
+.rb-hud {
+  position: absolute;
+  /* Clears the two-row freebar; the readout must never slide under it. */
+  bottom: max(168px, calc(env(safe-area-inset-bottom, 0px) + 156px));
+  left: max(14px, env(safe-area-inset-left, 0px));
+  z-index: 10;
+  width: min(182px, 42vw);
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: var(--rb-panel);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  pointer-events: none;
+}
+.rb-hud-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.rb-hud-row small {
+  font-size: 11px;
+  color: rgba(150, 168, 188, 0.92);
+}
+.rb-hud-row strong {
+  font-size: 16px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #eaf0f7;
+}
+.rb-hud-row .is-warm { color: var(--rb-warm); }
+.rb-hud-row .is-cool { color: var(--rb-cool); }
+
+/*
+ * An expanded control tray must never cover the readout. The shared rule in
+ * Freebar.css only covers narrow screens, so wide screens need their own.
+ */
+.rb-experience:has(.experience-freebar[data-freebar-open='true']) .rb-hud {
+  bottom: min(48dvh, 402px);
+}
+
+/* ---------- Freebar 内容 ---------- */
+.rb-freebar {
+  z-index: 12;
+}
+
+/* 视角切换（一颗雨滴/整片雨）= 共享 .experience-freebar-seg（Freebar.css） */
+.rb-chip {
+  flex: none;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(228, 236, 245, 0.86);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+}
+.rb-chip:hover {
+  border-color: var(--rb-cool);
+  color: var(--rb-cool);
+}
+.rb-chip.is-active {
+  border-color: var(--rb-warm);
+  background: rgba(255, 207, 125, 0.16);
+  color: var(--rb-warm);
+}
+
+.rb-field {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 6px 9px;
+  align-items: center;
+  flex: 1 1 165px;
+  min-width: 145px;
+  max-width: 235px;
+  color: rgba(228, 236, 245, 0.78);
+  font-size: 12px;
+}
+.rb-field input[type='range'] {
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+}
+.rb-field input[type='range']::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.rb-field input[type='range']::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.rb-field input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.rb-field input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.rb-field b {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--rb-warm);
+  white-space: nowrap;
+}
+
+.rb-tray {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  gap: 8px 14px;
+}
+
+.rb-tray .rb-field {
+  flex: 1 1 220px;
+  max-width: 280px;
+  min-width: 0;
+}
+
+.rb-chip-rail {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.rb-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rb-chip-rail > * {
+  flex: 0 0 auto;
+}
+
+/* 走动：五个紧凑方向键，和芯片同排 */
+.rb-walk {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+  padding: 3px 6px 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+.rb-walk-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(228, 236, 245, 0.7);
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.rb-walk-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(228, 236, 245, 0.9);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.18s, color 0.18s, background 0.18s;
+}
+.rb-walk-btn svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.rb-walk-btn:hover {
+  border-color: var(--rb-warm);
+  color: var(--rb-warm);
+}
+.rb-walk-btn:active {
+  background: rgba(255, 207, 125, 0.18);
+}
+
+/* 重播故事 = 共享 .experience-freebar-story（FilmStrip + 「故事」），样式见 Freebar.css */
+
+/* ---------- 手机 ---------- */
+@media (max-width: 720px) {
+  .rb-plaque {
+    top: var(--experience-safe-top, 78px);
+    left: 14px;
+    right: auto;
+    width: min(150px, 40vw);
+    max-width: none;
+  }
+  .rb-plaque h1 { font-size: 17px; }
+  .rb-plaque p { display: none; }
+  .rb-hud {
+    /* 实际避让由共享 --experience-freebar-height 接管；这里只保留首帧回退。 */
+    bottom: max(238px, calc(env(safe-area-inset-bottom, 0px) + 226px));
+    left: 12px;
+    width: min(158px, calc(100vw - 24px));
+    padding: 9px 11px;
+    gap: 5px;
+  }
+  .rb-hud-row strong { font-size: 13.5px; }
+  .rb-walk-btn { width: 34px; height: 34px; }
+  .rb-field {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+  .rb-tray .rb-field {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  /* Keep secondary chips as one intentional touch rail; the broad shared
+     chip selector otherwise recenters them and wins the overflow cascade. */
+  .rb-freebar .experience-freebar-secondary .rb-chip-rail {
+    flex: 1 1 100%;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    touch-action: pan-x;
+  }
+
+  .rb-freebar .experience-freebar-secondary .rb-chip-rail > * {
+    flex: 0 0 auto;
+  }
+}
+
+.rb-notes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* A small typographic readout, leaving the arcs as the only large shapes. */
+.rb-hud {
+  border: 0;
+  background: none;
+  backdrop-filter: none;
+  padding: 0;
+  gap: 5px;
+  width: 168px;
+  bottom: calc(var(--experience-freebar-height, 156px) + 30px);
+  text-shadow: 0 2px 8px #07101b;
+}
+.rb-experience:has(.experience-freebar[data-freebar-open='true']) .rb-hud {
+  bottom: calc(var(--experience-freebar-height, 156px) + 30px);
+}
+.rb-hud-row strong { font-size: 13px; font-weight: 600; }
+.rb-plaque h1 { font-weight: 600; }
+.rb-tray .rb-field { flex: 1 1 190px; max-width: 300px; }
+
+@media (max-width: 720px) {
+  .rb-plaque { width: calc(100% - 28px); }
+  .rb-plaque h1 { font-size: 20px; }
+  .rb-plaque p { display: block; max-width: 32ch; }
+  .rb-hud { width: 154px; }
+  .rb-tray .rb-field { flex: 1 1 100%; max-width: none; }
+}
+
+/* Keep the walking group on the same horizontal rail as the other options. */
+.rb-freebar .rb-walk {
+  flex-wrap: nowrap !important;
+  width: max-content;
+}
+.rb-freebar .rb-walk > * { flex: 0 0 auto; }
+@media (max-width: 720px) {
+  .rb-tray { gap: 8px; }
+  .rb-tray .rb-field {
+    flex: 1 1 145px;
+    min-width: 145px;
+    grid-template-columns: auto 1fr;
+    gap: 2px 6px;
+  }
+  .rb-tray .rb-field > span { font-size: 11px; }
+  .rb-tray .rb-field > input { grid-row: 2; grid-column: 1 / -1; }
+  .rb-tray .rb-field > b { grid-row: 1; grid-column: 2; text-align: right; font-size: 11px; }
+}
+
+/* Both languages use short explanatory captions, leaving room for the light. */
+.rb-experience .guide-stage-title {
+  max-width: none;
+  font-size: clamp(24px, 2.6vw, 36px);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+}

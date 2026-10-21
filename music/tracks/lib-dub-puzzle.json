@@ -1,0 +1,100 @@
+{
+  "id": "lib-dub-puzzle",
+  "code": "LIB-14-07",
+  "title": {
+    "en": "Clues — Dub",
+    "zh": "线索 · 回声律动"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "dub"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "C lydian",
+  "instruments": [
+    "round electric bass",
+    "organ",
+    "rimshot",
+    "echo guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental dub instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: round electric bass, organ, rimshot, echo guitar. Style: spacious offbeat chords with restrained tape delay. Tempo approximately 80 BPM; C lydian. Main idea: a descending melody with an upward answer. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A smooth, laid-back instrumental track featuring a clean electric guitar melody over a steady bass and drum groove. It evokes a relaxed and slightly reflective mood.",
+    "zh": "一首流畅、轻松的纯音乐，以干净的电吉他旋律为主，配以稳定的贝斯和鼓点。营造出一种放松而略带沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.85,
+  "generatedAt": "2026-09-09T08:28:09.338349+00:00",
+  "generation": {
+    "id": "92f65266-272e-47d3-a89f-afe3e4c9b1ff",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:27:24.083393+00:00",
+    "completedAt": "2026-09-09T08:28:09.338349+00:00",
+    "interactionId": "bRihatzOE8O3i9sP57WLuQM",
+    "sha256": "eef75b32c5b88981cf74ebfac806e1642f81f0a97d937a62d3b3b4218c3b7419"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, laid-back instrumental track featuring a clean electric guitar melody over a steady bass and drum groove. It evokes a relaxed and slightly reflective mood.",
+      "zh": "一首流畅、轻松的纯音乐，以干净的电吉他旋律为主，配以稳定的贝斯和鼓点。营造出一种放松而略带沉思的氛围。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "relaxed",
+      "chill",
+      "groovy",
+      "reflective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 83,
+    "reason": "Well-produced, clean instrumental track with a clear musical theme and pleasant atmosphere.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:28:17.325441+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-dub-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-dub-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-dub-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:29:02.225263+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

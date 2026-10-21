@@ -1,0 +1,178 @@
+{
+  "id": "scene-post-rock-25",
+  "code": "SCENE-16-25",
+  "title": {
+    "en": "Open Windows · 25",
+    "zh": "打开窗户 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "uplifting architecture and open landscapes",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "clean guitar harmonics",
+    "bass",
+    "restrained acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for uplifting architecture and open landscapes. Instruments: clean guitar harmonics, bass, restrained acoustic drums. 120 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic modern pop-rock track featuring a driving drum beat, prominent electric guitar melody, and supportive synth pads.",
+    "zh": "一首欢快且充满活力的现代流行摇滚乐曲，具有强劲的鼓点、突出的电吉他旋律和辅助的合成器铺垫。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "uplifting architecture and open landscapes"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:48.747236+00:00",
+  "generation": {
+    "id": "2f514921-0047-4775-9165-351dd6780e68",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:17:32.951441+00:00",
+    "completedAt": "2026-09-22T09:17:48.747236+00:00",
+    "interactionId": "rUeyasSvKJ3vv_gP1PPxsQc",
+    "sha256": "9b82ae15e217a03d61c7c647d9d2045fd0bd2683025a5e673a9f9ce3e6b67604"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic modern pop-rock track featuring a driving drum beat, prominent electric guitar melody, and supportive synth pads.",
+      "zh": "一首欢快且充满活力的现代流行摇滚乐曲，具有强劲的鼓点、突出的电吉他旋律和辅助的合成器铺垫。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "synthesizer"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "driving",
+      "modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-produced, clean, and energetic instrumental track with a clear structure, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving drum beat and a catchy electric guitar melody. It concludes with a sustained final chord that fades out naturally.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:01.453799+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "9c39c046c7cd1b522bde093f8415ac3d461e6e438b073fa95d756c93e22f49a2"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.805667,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a prominent synth melody, driving drums, and a pulsing bassline, creating a danceable and uplifting atmosphere.",
+      "zh": "一首欢快且充满活力的电子音乐，以突出的合成器旋律、强劲的鼓点和律动的低音线为特色，营造出舞动而振奋的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Uplifting",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:55.879391+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.805667,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-post-rock-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-post-rock-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-post-rock-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9c39c046c7cd1b522bde093f8415ac3d461e6e438b073fa95d756c93e22f49a2",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9b82ae15e217a03d61c7c647d9d2045fd0bd2683025a5e673a9f9ce3e6b67604",
+      "bytes": 723004,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "c695a606cc3a22809ece5882712b7a0cd06237bbca1e44229f0561a376f0dc27",
+      "bytes": 2793,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.850538+00:00"
+}

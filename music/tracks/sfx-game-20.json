@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-20",
+  "code": "SFX-GAME-20",
+  "title": {
+    "en": "Puzzle solved",
+    "zh": "解开谜题"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 19,
+  "seed": 3585824454,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized puzzle solved for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的解开谜题合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.2,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3585824454,
+    "sha256": "603c4062725270c6eeccdea4a7ae528f151250b4c8010cefcc3a58702ede40f2",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "44ce4e4791e4f3a10b08325f7ef068bc36e8d78adfba20191ce5b07ed83164ac",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "603c4062725270c6eeccdea4a7ae528f151250b4c8010cefcc3a58702ede40f2",
+      "bytes": 105884,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e4f6803b6f504f7a2504c122fb3727acd53852bb9435c5fe3c33ebef6489cadb",
+      "bytes": 9698,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "374ab34613d1af0de69d5d249f92aea42ef823d54147a5aa4d620b0d6a47bd8d",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52920,
+    "duration": 1.2,
+    "peakDbfs": -4.75,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.825701678240741e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07043957519531263,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized electronic blip, similar to a digital notification or UI interaction sound.",
+      "zh": "一个短促、高音调的合成电子提示音，类似于数字通知或用户界面交互音效。"
+    },
+    "reason": "The sound is a clean, distinct, and short electronic blip, making it highly suitable for UI feedback, notifications, or small digital interactions in games or video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:58.812681+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "44ce4e4791e4f3a10b08325f7ef068bc36e8d78adfba20191ce5b07ed83164ac"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52920
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.875730+00:00"
+}

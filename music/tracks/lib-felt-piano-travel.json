@@ -1,0 +1,99 @@
+{
+  "id": "lib-felt-piano-travel",
+  "code": "LIB-01-06",
+  "title": {
+    "en": "Roaming — Felt Piano",
+    "zh": "漫游 · 毡音钢琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "felt-piano"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "E minor",
+  "instruments": [
+    "felt piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second neoclassical felt piano instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: felt piano, soft cello. Style: spacious broken chords, intimate close room. Tempo approximately 72 BPM; E minor. Main idea: a compact three-note motif. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A calm and reflective piano piece with a melancholic yet hopeful undertone, supported by a subtle, sustained synth pad. The melody is gentle and flowing, creating a peaceful and introspective atmosphere.",
+    "zh": "一首平静而富有沉思感的钢琴曲，带有忧郁而又充满希望的底色，由微妙而持续的合成器衬垫支撑。旋律轻柔流畅，营造出宁静内省的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.402,
+  "generatedAt": "2026-09-09T07:40:34.322321+00:00",
+  "generation": {
+    "id": "45537dd5-56f6-47a5-9050-feb1cbd05b18",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:39:48.137353+00:00",
+    "completedAt": "2026-09-09T07:40:34.322321+00:00",
+    "interactionId": "RQ2haszbHvWJ88EPntfq6A4",
+    "sha256": "cc540dca4819b3255908a71a1c7989bb815bbb58271827a4b01752ff4b772eef"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective piano piece with a melancholic yet hopeful undertone, supported by a subtle, sustained synth pad. The melody is gentle and flowing, creating a peaceful and introspective atmosphere.",
+      "zh": "一首平静而富有沉思感的钢琴曲，带有忧郁而又充满希望的底色，由微妙而持续的合成器衬垫支撑。旋律轻柔流畅，营造出宁静内省的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Melancholic",
+      "Hopeful",
+      "Peaceful",
+      "Introspective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:40:41.229020+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:42:11.929520+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

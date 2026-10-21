@@ -1,0 +1,192 @@
+{
+  "id": "scene-funk-15",
+  "code": "SCENE-01-15",
+  "title": {
+    "en": "Pocket Camera · 15",
+    "zh": "口袋相机 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted guitar",
+    "elastic bass",
+    "dry drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for syncopated stop-motion product reveal. Instruments: muted guitar, elastic bass, dry drums. 112 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and upbeat electronic dance track featuring a driving beat, pulsing synth bass, and catchy synth melodies. The production is clean and modern, creating a positive and dynamic atmosphere.",
+    "zh": "一首充满活力和乐观的电子舞曲，具有强劲的节拍、脉动的合成器低音和抓耳的合成器旋律。制作干净现代，营造出积极动感的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:03:36.488555+00:00",
+  "generation": {
+    "id": "0ad35495-2216-43fb-87a5-324b87ef1e88",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:03:21.502050+00:00",
+    "completedAt": "2026-09-22T09:03:36.488555+00:00",
+    "interactionId": "W0SyaoaSN7ve694PlMeHuQ4",
+    "sha256": "b7ed3b6cd2002f93b5dc7be588377d2c948c254afd65213db0cd656e0e41c921"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat electronic dance track featuring a driving beat, pulsing synth bass, and catchy synth melodies. The production is clean and modern, creating a positive and dynamic atmosphere.",
+      "zh": "一首充满活力和乐观的电子舞曲，具有强劲的节拍、脉动的合成器低音和抓耳的合成器旋律。制作干净现代，营造出积极动感的氛围。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "bass synthesizer"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "driving",
+      "positive",
+      "modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic, and clean electronic track with a clear structure and positive vibe.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving beat and synth melody, establishing an instant groove. It concludes with a deliberate fade-out and a final synth chord, providing a clear and resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:03:54.070614+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "0e5cf52f1c61f2bc3eba782e2dea738c0ee9ff9ca690b61f94a1c00333e70de8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.68975,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track with a driving beat, prominent synth bass, and a catchy lead melody. It has a modern, club-ready sound.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有强劲的节拍、突出的合成器低音和抓耳的主旋律。它拥有现代、适合俱乐部的音效。"
+    },
+    "instruments": [
+      "Electronic drums",
+      "Synthesizer",
+      "Synth bass",
+      "Pads"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Modern",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 123,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:03:46.478880+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 12.68975,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-funk-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-funk-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-funk-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0e5cf52f1c61f2bc3eba782e2dea738c0ee9ff9ca690b61f94a1c00333e70de8",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b7ed3b6cd2002f93b5dc7be588377d2c948c254afd65213db0cd656e0e41c921",
+      "bytes": 672222,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "2283a4d9393f7e0bfaafd8591d46a59c8222929c444e1825e8ab880037cc6cfd",
+      "bytes": 2815,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:24:08.208480+00:00",
+  "additionalReviews": {
+    "voiceSpotCheck": {
+      "voicesDetected": false,
+      "evidence": "The audio contains an instrumental funk/pop track. The sounds consist of drums, a bass guitar, rhythmic chords (likely a synth or guitar), and a melodic synth lead. There are no human voices, singing, humming, or speech present.",
+      "vocalTimestampsSeconds": [],
+      "wordsHeard": [],
+      "model": "gemini-2.5-pro",
+      "method": "automated-audio-review",
+      "scope": "full-preview",
+      "reviewedAt": "2026-09-22",
+      "sha256": "0e5cf52f1c61f2bc3eba782e2dea738c0ee9ff9ca690b61f94a1c00333e70de8"
+    }
+  }
+}

@@ -13,6 +13,7 @@ export type WorldArtifactManifestCategory = {
 export type WorldArtifactManifest = {
   schemaVersion: 1
   pageSize: number
+  tailAbsorb: number
   bucketCount: number
   total: number
   pageCount: number
@@ -79,6 +80,8 @@ export type WorldSearchDocument = {
 }
 
 export type HomeBootstrapArtifact = {
+  /** Set by the request loader so SSR and hydration share the same week. */
+  featuredWeek?: number
   worlds: ReadonlyArray<WorldSummary>
   initialPageIds: ReadonlyArray<string>
   freshWorldIds: ReadonlyArray<string>
@@ -86,13 +89,6 @@ export type HomeBootstrapArtifact = {
 
 export type CuratedWorldArtifacts = {
   about: ReadonlyArray<WorldSummary>
-  bookshelf: ReadonlyArray<WorldSummary>
-}
-
-export type ModelWorldCollection = {
-  modelId: string
-  count: number
-  preview: ReadonlyArray<WorldSummary>
 }
 
 export type WorldSourcesArtifact = {
@@ -114,4 +110,6 @@ export type MakingWorldArtifact = Pick<
   'id' | 'title' | 'poster' | 'posterMobile' | 'primaryCategoryId'
 > & {
   translations: { en: Pick<WorldExperience['translations']['en'], 'title'> }
+  firstSeen: string
+  lastModified: string
 }

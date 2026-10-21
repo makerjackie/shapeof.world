@@ -1,0 +1,27 @@
+{
+  "commonReservedNames": [
+    "api",
+    "admin",
+    "login",
+    "logout",
+    "account",
+    "search",
+    "explore",
+    "new",
+    "apps",
+    "app",
+    "blog",
+    "docs",
+    "help",
+    "pricing",
+    "shop",
+    "static",
+    "assets",
+    "cdn",
+    "rss",
+    "feed",
+    "sitemap.xml",
+    "robots.txt"
+  ],
+  "mountedWorks": []
+}

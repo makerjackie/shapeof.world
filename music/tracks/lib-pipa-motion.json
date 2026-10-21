@@ -1,0 +1,106 @@
+{
+  "id": "lib-pipa-motion",
+  "code": "LIB-18-08",
+  "title": {
+    "en": "Motion — Pipa",
+    "zh": "跃动 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "pipa"
+  ],
+  "energy": 5,
+  "bpm": 122,
+  "key": "B minor",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Chinese plucked-string ensemble instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 122 BPM; B minor. Main idea: a descending melody with an upward answer. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A grand and epic orchestral track featuring powerful strings, majestic brass, and driving percussion, building to a heroic climax. Ideal for cinematic scores or dramatic scenes.",
+    "zh": "一首宏大史诗般的管弦乐曲，以强劲的弦乐、雄伟的铜管乐和富有推动力的打击乐为主，逐步推向英雄般的最高潮。非常适合电影配乐或戏剧性场景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.024,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:48:24.353285+00:00",
+  "generation": {
+    "id": "b6ae41ca-39e9-4e27-b302-6df24fbc7477",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:47:32.641644+00:00",
+    "completedAt": "2026-09-09T08:48:24.353285+00:00",
+    "interactionId": "JR2haubJJdOJoLAPwd-WiAQ",
+    "sha256": "9612d4ea60a78001a4a616ebfe79abb1214ed059e72691f3feb2ffbb877a6da1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and epic orchestral track featuring powerful strings, majestic brass, and driving percussion, building to a heroic climax. Ideal for cinematic scores or dramatic scenes.",
+      "zh": "一首宏大史诗般的管弦乐曲，以强劲的弦乐、雄伟的铜管乐和富有推动力的打击乐为主，逐步推向英雄般的最高潮。非常适合电影配乐或戏剧性场景。"
+    },
+    "instruments": [
+      "Orchestral Strings",
+      "Brass",
+      "Percussion",
+      "Timpani",
+      "Cymbals",
+      "Piano"
+    ],
+    "moods": [
+      "Epic",
+      "Heroic",
+      "Grand",
+      "Majestic",
+      "Powerful",
+      "Adventurous",
+      "Cinematic"
+    ],
+    "energy": 5,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:48:36.727567+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:49:19.784697+00:00"
+}

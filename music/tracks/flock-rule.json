@@ -1,0 +1,61 @@
+{
+  "id": "flock-rule",
+  "code": "CMP-B01",
+  "title": {
+    "en": "Flock Rule",
+    "zh": "群飞规则"
+  },
+  "category": "computing-engineering",
+  "archetype": "discovery",
+  "moods": [
+    "many-bodied",
+    "aligning",
+    "airborne",
+    "light"
+  ],
+  "topics": [
+    "boids",
+    "flocking",
+    "local-rules"
+  ],
+  "energy": 3,
+  "bpm": 94,
+  "key": "F major",
+  "instruments": [
+    "many small pizzicato voices",
+    "air pads",
+    "light shaker",
+    "flute dabs"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 143.099,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about flocking from local rules. Around 94 BPM, F major. Many tiny pizzicato voices that separate, align, and split; air pads as sky; flute dabs as a brief leader that is not a soloist. Light, airborne. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No orchestral birds, no trailer whoosh.\n\n[00:00–00:25] Scattered pizzicato, no common tempo.\n[00:25–01:05] Alignment: a shared pulse appears; shaker very light.\n[01:05–01:40] Split into two flocks, then merge.\n[01:40–02:30] Voices thin as if passing out of frame.\n",
+  "recommendedWorldIds": [
+    "boids-flocking"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:30:35Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/flock-rule/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/flock-rule/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/flock-rule/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:43.795713+00:00",
+  "generation": {
+    "id": "4831b9b7-f1f8-43d9-accc-c21d9a2139bd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:29:46Z",
+    "completedAt": "2026-08-25T10:30:35Z",
+    "durationMs": 49000,
+    "interactionId": "nG6Nao7MAbye7PkP6fXl8AE",
+    "clientRequestId": "66a5965b-864c-4b46-a408-2ac8ffc45aed",
+    "synthid": true,
+    "c2pa": "urn:c2pa:fc8abdab-a810-4848-12a9-42ee38915d30",
+    "sha256": "e644d5ac8737142c9a80c94968decb1565190c7ab5fef2c5819c97a3eae0cd11"
+  }
+}

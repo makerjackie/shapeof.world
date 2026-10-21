@@ -1,0 +1,10 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:11 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S066MNE",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S066MNE/2024",
+  "description": "nu MASS (electron based)"
+}

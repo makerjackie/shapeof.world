@@ -1,0 +1,103 @@
+{
+  "id": "lib-gypsy-jazz-puzzle",
+  "code": "LIB-10-07",
+  "title": {
+    "en": "Clues — Gypsy Jazz",
+    "zh": "线索 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "C lydian",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second acoustic swing jazz instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 148 BPM; C lydian. Main idea: a compact three-note motif. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A lively and intricate folk-inspired piece featuring a prominent accordion and a string ensemble, creating a vibrant and energetic atmosphere.",
+    "zh": "一首活泼精致的民间风格乐曲，以手风琴和弦乐合奏为主，营造出充满活力和能量的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 130.064,
+  "generatedAt": "2026-09-09T08:14:09.524977+00:00",
+  "generation": {
+    "id": "1c9d0c96-e44b-4bbc-b24a-32168a37dca4",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:13:26.657783+00:00",
+    "completedAt": "2026-09-09T08:14:09.524977+00:00",
+    "interactionId": "JxWhar7jM8O3i9sP57WLuQM",
+    "sha256": "9ac7b5d70357aef6e891942792bccfeabb0cc5ecbaafd6f267098e1b9fa10018"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and intricate folk-inspired piece featuring a prominent accordion and a string ensemble, creating a vibrant and energetic atmosphere.",
+      "zh": "一首活泼精致的民间风格乐曲，以手风琴和弦乐合奏为主，营造出充满活力和能量的氛围。"
+    },
+    "instruments": [
+      "Accordion",
+      "Violin",
+      "Cello",
+      "Double Bass",
+      "Viola"
+    ],
+    "moods": [
+      "Lively",
+      "Energetic",
+      "Playful",
+      "Traditional",
+      "Folk",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 165,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:14:17.457805+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:15:30.982172+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

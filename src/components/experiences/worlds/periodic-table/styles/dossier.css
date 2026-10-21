@@ -1,0 +1,97 @@
+/* One continuous folio: specimen and atomic model share the reading surface. */
+.pm-inspector{display:block;padding:52px max(24px,4vw) 24px;background:rgba(33,43,37,.2);backdrop-filter:blur(14px);animation:none}
+.pm-folio{position:relative;display:grid;grid-template-columns:minmax(330px,.85fr) minmax(0,1.15fr);max-width:1180px;margin:auto;background:var(--paper,#f0eddf);border:1px solid #fff9;border-radius:16px;box-shadow:0 24px 80px #162b2426;overflow:hidden}
+.pm-dossier-header{grid-column:1/-1;display:flex;align-items:center;gap:22px;padding:25px 32px;border-bottom:1px solid #263b271c;background:linear-gradient(110deg,#fff6,transparent)}
+.pm-dossier-badge{width:68px;flex:none;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:1px solid #263b2726}
+.pm-dossier-badge small{font:12px ui-monospace,monospace;color:var(--muted)}
+.pm-dossier-badge b{font-size:38px;font-weight:500;line-height:1.1}
+.pm-dossier-header h2{font-size:clamp(23px,2.5vw,34px);line-height:1.25;font-weight:500;margin:5px 0 8px;letter-spacing:-.03em}
+.pm-dossier-header .pm-kicker{font-size:10px;letter-spacing:.12em}
+.pm-dossier-header .pm-exhibit-name{margin:0;font-size:12px}
+.pm-folio .pm-visuals{max-height:none;overflow:visible;padding:20px 24px;border-right:1px solid #263b271c}
+.pm-folio .pm-hero{height:194px;margin:0 0 16px;border:0;border-radius:0;box-shadow:none;background:none;isolation:auto}
+.pm-folio .pm-hero::before,.pm-folio .pm-hero::after{display:none}
+.pm-folio .pm-hero-top{left:0;right:0;top:0}
+.pm-folio .pm-hero-top b,.pm-folio .pm-hero-top>span{display:none}
+.pm-folio .pm-hero-top small{font-size:11px}
+.pm-folio .pm-hero-image{inset:25px 49% 24px 0}
+.pm-folio .pm-photo-caption{left:55%;right:0;top:28px;max-height:100px;font-size:10px;line-height:1.6}
+.pm-folio .pm-photo-mode{left:55%;right:0;bottom:8px;flex-wrap:wrap;gap:5px}
+.pm-folio .pm-photo-mode button{white-space:nowrap;flex:none;min-height:26px;font-size:10px;padding:5px 7px;border-radius:5px}
+.pm-folio .pm-hero-label{left:0;right:50%;bottom:0}
+.pm-folio .pm-hero-label strong,.pm-folio .pm-hero-label>span{display:none}
+.pm-folio .pm-hero-label button{margin-left:auto;width:25px;height:25px}
+.pm-folio .pm-inline-atom{animation:none;padding-top:16px}
+.pm-folio .pm-inline-atom .pm-atom-studio:not(.is-expanded) .pm-atom-touch{height:210px}
+.pm-folio .pm-details{padding:24px 30px 28px;max-width:none;animation:none}
+.pm-folio .pm-detail-tabs{margin:0 0 24px;gap:4px;flex-wrap:wrap;border-bottom:1px solid #263b2720;padding-bottom:12px}
+.pm-folio .pm-detail-tabs button{font-size:12px;padding:8px 10px;border:0;border-radius:6px;background:transparent;min-height:34px}
+.pm-folio .pm-detail-tabs button[aria-pressed=true]{background:#344c3f;color:#fff}
+.pm-folio .pm-copy h3{font-size:12px;letter-spacing:.04em;margin-top:24px;color:#657266}
+.pm-folio .pm-copy h3:first-child{margin-top:0}
+.pm-folio .pm-copy p{font-size:14px;line-height:1.95}
+.pm-folio .pm-experiment-invite{border-radius:8px;background:#e2e8dc;border-color:#354a3e25;box-shadow:none}
+.pm-folio .pm-neighbours{margin-top:24px;padding-top:15px;border-top:1px solid #263b271c}
+.pm-inspector .pm-close{position:fixed;top:calc(var(--experience-safe-top,64px) + 8px);left:max(24px,4vw);background:transparent;color:var(--ink);z-index:20}
+.pm-world.is-extracting .pm-folio{animation:pm-folio-arrive 1.85s both}
+.pm-world.is-extracting .pm-hero-image{visibility:hidden}
+.pm-inspector.is-closing .pm-folio{opacity:0;transform:translateY(8px);pointer-events:none}
+
+.pm-inspector.is-closing .pm-visuals{border-color:transparent}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio{overflow:visible;display:block}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-dossier-header{display:none}
+@keyframes pm-folio-arrive{0%,65%{opacity:0}100%{opacity:1}}
+/* The reveal is portalled out of the scrollable world to keep the entire flight visible. */
+.pm-reveal{position:fixed;inset:0;z-index:90;pointer-events:none;display:grid;place-items:center;perspective:1100px;color:#233d30;font-family:inherit}
+.pm-reveal-veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,#3e594fe0,#102921f2);animation:pm-reveal-veil 1.85s both}
+.pm-reveal-halo{position:absolute;width:min(76vw,560px);aspect-ratio:1;border:1px solid #d9edc866;border-radius:50%;box-shadow:0 0 90px #c7e5a62b,inset 0 0 80px #d9edc814;animation:pm-reveal-halo 1.85s both}
+.pm-reveal-halo::before,.pm-reveal-halo::after{content:'';position:absolute;inset:25px;border:1px solid #ecf5d331;border-radius:50%;transform:rotateX(65deg) rotate(-25deg)}
+.pm-reveal-halo::after{inset:-22px;transform:rotateY(65deg) rotate(20deg)}
+.pm-reveal-card{position:relative;width:280px;height:380px;transform-style:preserve-3d;will-change:transform,opacity}
+.pm-reveal-frame{position:absolute;inset:0;border:1px solid #fff9;border-radius:15px;background:linear-gradient(130deg,#f6f5eaf5,#e3e8ddeb 65%,#cad9cbdc);box-shadow:inset 3px 0 2px #ffffffe0,inset -4px 0 3px #375c4440,0 24px 65px #0005;overflow:hidden;animation:pm-reveal-chrome 1.85s both}
+.pm-reveal-frame::after{content:'';position:absolute;inset:-70%;background:linear-gradient(110deg,transparent 44%,#fff9 49%,transparent 54%);animation:pm-reveal-sheen 1.85s both}
+.pm-reveal-heading{position:absolute;top:22px;left:23px;right:23px;display:grid;grid-template-columns:1fr auto;align-items:start;animation:pm-reveal-chrome 1.85s both}
+.pm-reveal-heading>span{font:12px ui-monospace,monospace}.pm-reveal-heading b{font-size:42px;line-height:1;font-weight:500;grid-column:1;grid-row:2}.pm-reveal-heading small{font-size:10px;grid-column:2;grid-row:1/3;max-width:95px;text-align:right}
+.pm-reveal-object{position:absolute;inset:20% 10%;width:80%;height:60%;object-fit:contain;filter:drop-shadow(0 16px 13px #294a3526)}
+.pm-reveal-name{position:absolute;bottom:24px;left:24px;right:24px;font-size:26px;animation:pm-reveal-chrome 1.85s both}
+.pm-reveal-name span{display:block;font:10px ui-monospace,monospace;letter-spacing:.15em;margin-top:8px;opacity:.6}
+@keyframes pm-reveal-veil{0%{opacity:0}18%,65%{opacity:1}100%{opacity:0}}
+@keyframes pm-reveal-halo{0%,16%{opacity:0;transform:scale(.3) rotate(-35deg)}42%{opacity:1}76%,100%{opacity:0;transform:scale(1.25) rotate(25deg)}}
+@keyframes pm-reveal-chrome{0%,69%{opacity:1}90%,100%{opacity:0}}
+@keyframes pm-reveal-sheen{0%,22%{transform:translateX(-45%)}58%,100%{transform:translateX(45%)}}
+@media(max-width:700px){
+ .pm-inspector{padding:46px 10px 20px}
+ .pm-folio{display:block;border-radius:12px}
+ .pm-dossier-header{padding:18px 16px;gap:14px}
+ .pm-dossier-badge{width:48px}.pm-dossier-badge b{font-size:30px}
+ .pm-dossier-header h2{font-size:23px}.pm-dossier-header .pm-exhibit-name{font-size:10px;flex-wrap:wrap;gap:5px}
+ .pm-folio .pm-visuals{padding:16px;border-right:0;border-bottom:1px solid #263b271c}
+ .pm-folio .pm-hero{height:166px;margin-bottom:12px}
+ .pm-folio .pm-inline-atom .pm-atom-studio:not(.is-expanded) .pm-atom-touch{height:180px}
+ .pm-folio .pm-details{padding:20px 16px}
+ .pm-folio .pm-detail-tabs{gap:1px}.pm-folio .pm-detail-tabs button{font-size:11px;padding:7px}
+ .pm-inspector .pm-close{left:15px;top:calc(var(--experience-safe-top,64px) + 8px);background:var(--paper);border-radius:6px;padding:5px 8px}
+ .pm-reveal-card{width:240px;height:330px}
+}
+@media(prefers-reduced-motion:reduce){.pm-world.is-extracting .pm-folio{animation:none}.pm-reveal{display:none}}
+/* Sticky within the dialog scrollport; backdrop-filter establishes a fixed containing block. */
+.pm-inspector{padding-top:12px}
+.pm-inspector .pm-close{position:sticky;top:0;left:auto;width:fit-content;margin:0 0 14px;padding:5px 8px;background:var(--paper);border-radius:6px}
+@media(max-width:700px){.pm-folio .pm-photo-caption{max-height:70px;overflow:auto}.pm-inspector .pm-close{top:0;left:auto}}
+@media(max-width:700px){.pm-folio .pm-photo-caption a{display:none}}
+/* The return action belongs to the dossier, not another row below navigation. */
+.pm-inspector{padding-top:0;transition:background-color .45s,backdrop-filter .45s}
+.pm-folio{overflow:clip;transition:opacity .28s,transform .5s}
+.pm-folio-content{display:contents}
+.pm-folio-toolbar{grid-column:1/-1;position:sticky;top:0;z-index:20;padding:10px 24px 0;background:var(--paper);border-radius:16px 16px 0 0}
+.pm-inspector .pm-close{position:static;margin:0;padding:5px 8px;background:transparent;min-height:32px}
+.pm-dossier-header{padding-top:12px}
+.pm-world.is-inspecting .pm-room{transform:none}
+.pm-world.is-returning .pm-room{transition:opacity .55s}
+.pm-inspector.is-closing{backdrop-filter:blur(0);background:transparent}
+.pm-inspector.is-closing .pm-hero-image{visibility:hidden}
+.pm-world [data-returning=true] img{visibility:hidden}
+.pm-return-specimen{position:fixed;z-index:90;object-fit:contain;pointer-events:none;transform-origin:center;will-change:transform,opacity}
+.experience-page:has(.pm-inspector) .experience-discovery-nav,
+.experience-page:has(.pm-inspector) .experience-mobile-next-link{visibility:hidden;pointer-events:none}
+@media(max-width:700px){.pm-folio-toolbar{padding:6px 8px 0}.pm-dossier-header{padding-top:8px}}

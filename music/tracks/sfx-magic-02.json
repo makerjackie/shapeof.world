@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-02",
+  "code": "SFX-MAGIC-02",
+  "title": {
+    "en": "Ice shard",
+    "zh": "冰晶飞出"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 1,
+  "seed": 2272147421,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized ice shard for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的冰晶飞出合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2272147421,
+    "sha256": "5b08033013e638fd03107b343fd7af4e250b261ae3a18d9dab32de68353fd5a6",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e482f614481f3ac811d076db06110ae91aebcf89d1fb50b6af78679c8d933feb",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5b08033013e638fd03107b343fd7af4e250b261ae3a18d9dab32de68353fd5a6",
+      "bytes": 112940,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f81dc6f202a1cf391eddee7b43784598b9f623240c96033c7f60a8339acf6998",
+      "bytes": 27357,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a3bbec00fa9717499effe7c455dcc031065789622c2adef4a54c5eb9fc6eab4b",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 56448,
+    "duration": 1.28,
+    "peakDbfs": -5.02,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.3247163041648953e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12415869140624913,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic whoosh or swipe sound, followed by a resonant, low-frequency impact or thump.",
+      "zh": "一个短促、高音的电子嗖声或划过声，随后是一个共鸣的低频撞击或砰击声。"
+    },
+    "reason": "N/A",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:38.432055+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e482f614481f3ac811d076db06110ae91aebcf89d1fb50b6af78679c8d933feb"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 56448
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.880344+00:00"
+}

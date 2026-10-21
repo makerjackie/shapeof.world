@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-08",
+  "code": "SFX-MECHANICAL-08",
+  "title": {
+    "en": "Motor start",
+    "zh": "电机启动"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 7,
+  "seed": 2564591095,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized motor start for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的电机启动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.38,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2564591095,
+    "sha256": "8d9024ed1fdda805d5b9961f2c2889fc24426f06da5e46fd5c783ddd7788cae5",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5f1737b882f4c81261e33cd84f482cea4d07682e6b205fafd64e77cc6425e514",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8d9024ed1fdda805d5b9961f2c2889fc24426f06da5e46fd5c783ddd7788cae5",
+      "bytes": 33560,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0e0818eea5f81e0d6b1389985179b05182a40aa9ddabd0abdbeca9e8305cf57a",
+      "bytes": 6073,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "df757faf76d08c43bb9fdf9cd44ae96493b8fa3936dd910f448d8f3e1dcc5cd5",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16758,
+    "duration": 0.38,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.55,
+    "dcOffset": 1.821075195429049e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1772648925781226,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh sound effect with a digital quality, suitable for transitions or quick movements.",
+      "zh": "一个短促的合成嗖嗖声效果，带有数字感，适用于转场或快速移动。"
+    },
+    "reason": "The sound is a clean, well-defined synthesized whoosh effect with no technical defects or unintended elements, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:41.904974+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5f1737b882f4c81261e33cd84f482cea4d07682e6b205fafd64e77cc6425e514"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16758
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.886308+00:00"
+}

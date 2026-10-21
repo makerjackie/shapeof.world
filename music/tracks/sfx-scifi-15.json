@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-15",
+  "code": "SFX-SCIFI-15",
+  "title": {
+    "en": "Drone pass",
+    "zh": "无人机掠过"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 14,
+  "seed": 995396260,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized drone pass for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的无人机掠过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.3,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 995396260,
+    "sha256": "7dd9f681d1626645901d742e1d49d652824636fd85fd854e3a9fb290f3e7c2f0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "aab19aac062283a5368d5f5caaf6524517f51a9c1d0826851b9fd0b2311dac36",
+      "bytes": 5163,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7dd9f681d1626645901d742e1d49d652824636fd85fd854e3a9fb290f3e7c2f0",
+      "bytes": 26504,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "95b8b102f3bcaa894b504fe2ef0bf6d479b6a5e6e655b5446f29f99a3b5e3315",
+      "bytes": 7984,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f6be82f611fac381edaa8bfcebf8037ab8f2d220c4323d33623bc6414eb3f7a6",
+      "bytes": 1933,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 13230,
+    "duration": 0.3,
+    "peakDbfs": -4.5,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.7680342970521543e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14302685546875082,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized spring or boing sound effect, reminiscent of a cartoon bounce or UI feedback.",
+      "zh": "一个短促、高音调的合成弹簧或‘boing’音效，类似于卡通弹跳或用户界面反馈。"
+    },
+    "reason": "The audio is a clean, isolated, and intentionally synthesized sound effect with no defects, making it highly suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:10.234981+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "aab19aac062283a5368d5f5caaf6524517f51a9c1d0826851b9fd0b2311dac36"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 13230
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901412+00:00"
+}

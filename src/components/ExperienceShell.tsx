@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { worldRoute } from '~/lib/world-urls'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode, type RefObject } from 'react'
 import { Link } from '@tanstack/react-router'
 import {
   ArrowRight,
-  BookmarkSimple,
   ChatCircleDots,
   CornersIn,
   CornersOut,
@@ -15,12 +15,14 @@ import {
   X,
 } from '@phosphor-icons/react'
 
+import { WorldPathNavigation } from '~/components/WorldPathNavigation'
+import type { WorldPathNavigation as WorldPath } from '~/lib/world-path-navigation'
 import { BrandMark } from '~/components/BrandMark'
 import { LocaleToggle } from '~/components/LocaleToggle'
 import { SiteBgmToggle } from '~/components/SiteBgmToggle'
 import { ExperienceCapabilitiesProvider, useExperienceCapabilities } from '~/components/experiences/ExperienceCapabilities'
+import { ownsExperienceStageInput } from '~/components/experiences/experience-input'
 import { getWorldExperiencePolicy } from '~/data/worlds/experience-policy'
-import { ASK_WORLD_EVENT, AskWorldPanel } from '~/components/AskWorldPanel'
 import { FollowStayPrompt, hasDismissedFollowPrompt } from '~/components/FollowStayPrompt'
 import { MomentCard } from '~/components/MomentCard'
 import {
@@ -29,9 +31,9 @@ import {
 } from '~/components/experiences/useShareableState'
 import {
   GUIDE_AUTOPLAY_STATE_EVENT,
+  GUIDE_LAST_STEP_EVENT,
   setGuideAutoplay,
 } from '~/components/experiences/GuideTour'
-import { getAiModelLabel } from '~/data/ai-models'
 import { getRootCategory } from '~/data/content-graph'
 import { localizeIssue } from '~/data/issue-localization'
 import type { DailyIssue } from '~/data/issues'
@@ -49,7 +51,13 @@ import {
   requestMobileBrowserFullscreen,
 } from '~/lib/mobile-browser-fullscreen'
 import { worldOwnsMusic } from '~/lib/world-music'
+import { warmWorldOnIntent, worldIntentHandlers } from '~/lib/world-prefetch'
 import { useAtlas } from '~/state/atlas'
+import { useExploration } from '~/lib/exploration'
+import '~/styles/experience-single-row.css'
+
+/** The follow prompt waits for the last story step or this long on the page. */
+const FOLLOW_PROMPT_DWELL_MS = 180_000
 
 export type ExperienceControls = {
   interacted: boolean
@@ -69,6 +77,7 @@ function automatedDemoIsDriving(): boolean {
 }
 
 export type ExperienceNavigation = {
+  worldPaths?: Array<WorldPath>
   nextWorld?: WorldExperience
   nextIssue?: DailyIssue
   nextKind?: 'issue' | 'path' | 'related' | 'recommended'
@@ -90,12 +99,16 @@ export function ExperienceShell({
   issue,
   navigation,
   isPublic,
+  exploreAll = false,
+  exploreFeatured = false,
   children,
 }: {
   world: WorldExperience
   issue?: DailyIssue
   navigation: ExperienceNavigation
   isPublic: boolean
+  exploreAll?: boolean
+  exploreFeatured?: boolean
   children: (controls: ExperienceControls) => ReactNode
 }) {
   return (
@@ -105,6 +118,8 @@ export function ExperienceShell({
         issue={issue}
         navigation={navigation}
         isPublic={isPublic}
+        exploreAll={exploreAll}
+        exploreFeatured={exploreFeatured}
       >
         {children}
       </ExperienceShellView>
@@ -117,43 +132,50 @@ function ExperienceShellView({
   issue,
   navigation,
   isPublic,
+  exploreAll = false,
+  exploreFeatured = false,
   children,
 }: {
   world: WorldExperience
   issue?: DailyIssue
   navigation: ExperienceNavigation
   isPublic: boolean
+  exploreAll?: boolean
+  exploreFeatured?: boolean
   children: (controls: ExperienceControls) => ReactNode
 }) {
   const atlas = useAtlas()
+  const explorationActive = exploreAll || exploreFeatured
+  const exploration = useExploration(explorationActive && atlas.ready, atlas.visited, world.id, exploreFeatured ? 'featured' : 'all')
   const { locale, t, worldText, sourceText, categoryText } = useI18n()
   const capabilities = useExperienceCapabilities()
   const experiencePolicy = getWorldExperiencePolicy(world)
   const issueCopy = issue ? localizeIssue(issue, locale) : undefined
   const searchCopy = getWorldSearchProfile(world.id)?.[locale]
+  const answerHeading = locale === 'zh' ? '简要答案' : 'Quick answer'
+  const documentTitle = issueCopy?.question ?? searchCopy?.title ?? worldText(world, 'question')
+  const documentDescription = issueCopy?.hook ?? searchCopy?.description ?? worldText(world, 'hook')
   useLocalizedMetadata({
-    title: `${issueCopy?.question ?? searchCopy?.title ?? worldText(world, 'question')} — ${t('brand.name')}`,
-    description: issueCopy?.hook ?? searchCopy?.description ?? worldText(world, 'hook'),
+    title: `${documentTitle} — ${t('brand.name')}`,
+    description: documentDescription,
   })
   const [interacted, setInteracted] = useState(false)
   const [complete, setComplete] = useState(() => isPublic && (
     issue ? atlas.isIssueComplete(issue.id) : atlas.isComplete(world.id)
   ))
   const [introOpen, setIntroOpen] = useState(false)
-  const [askOpen, setAskOpen] = useState(false)
-  const [askSeed, setAskSeed] = useState('')
   const [moreOpen, setMoreOpen] = useState(false)
+  const [morePosition, setMorePosition] = useState({ top: 64, right: 12 })
   const [overlaysHidden, setOverlaysHidden] = useState(false)
   const [guideAutoplay, setGuideAutoplayPlaying] = useState(false)
   const [essentialChrome, setEssentialChrome] = useState(experiencePolicy.shellMode === 'standard')
-  const infoButtonRef = useRef<HTMLButtonElement>(null)
-  const askButtonRef = useRef<HTMLButtonElement>(null)
   const moreButtonRef = useRef<HTMLButtonElement>(null)
-  const mobileMoreButtonRef = useRef<HTMLButtonElement>(null)
+  const compactMoreButtonRef = useRef<HTMLButtonElement>(null)
   const moreSheetRef = useRef<HTMLDivElement>(null)
   const introCloseRef = useRef<HTMLButtonElement>(null)
   const introCopyRef = useRef<HTMLDivElement>(null)
   const nextLinkRef = useRef<HTMLAnchorElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
   const browserFullscreenOwnedRef = useRef(false)
   const immersiveRequestedRef = useRef(false)
   const { nextIssue, nextKind, nextWorld, pathPosition, worldIssues } = navigation
@@ -161,6 +183,7 @@ function ExperienceShellView({
   const nextIssueCopy = nextIssue ? localizeIssue(nextIssue, locale) : undefined
   const [shareOpen, setShareOpen] = useState(false)
   const [followChipOpen, setFollowChipOpen] = useState(false)
+  const [followPromptDue, setFollowPromptDue] = useState(false)
   /**
    * Holds whatever the mounted world last published via `useShareableState`.
    * A ref-backed store rather than state: worlds update it on every slider
@@ -191,21 +214,6 @@ function ExperienceShellView({
     : (world.index ?? '')
   const displayTotal = navigation.displayTotal
   const showDefaultMusic = !worldOwnsMusic(world.id)
-  const initialModelId = world.provenance && 'initialModel' in world.provenance
-    ? world.provenance.initialModel
-    : undefined
-  const initialModelLabel = initialModelId
-    ? getAiModelLabel(initialModelId)
-    : undefined
-  const adaptationModelId = world.provenance?.origin === 'open-source-adaptation'
-    ? world.provenance.adaptationModel
-    : undefined
-  const adaptationModelLabel = adaptationModelId
-    ? getAiModelLabel(adaptationModelId)
-    : undefined
-  const modelCollectionId = initialModelId ?? adaptationModelId
-  const modelCollectionLabel = initialModelLabel ?? adaptationModelLabel
-
   useEffect(() => {
     const shellClass = 'experience-shell-active'
     document.documentElement.classList.add(shellClass)
@@ -257,6 +265,8 @@ function ExperienceShellView({
 
   useEffect(() => {
     if (!moreOpen) return
+    window.addEventListener('resize', positionMore)
+    window.addEventListener('scroll', positionMore, true)
     const frame = window.requestAnimationFrame(() => {
       const sheet = moreSheetRef.current
       if (!sheet) return
@@ -289,6 +299,8 @@ function ExperienceShellView({
     return () => {
       window.cancelAnimationFrame(frame)
       window.removeEventListener('keydown', trapMoreSheetFocus)
+      window.removeEventListener('resize', positionMore)
+      window.removeEventListener('scroll', positionMore, true)
     }
   }, [moreOpen])
 
@@ -323,9 +335,8 @@ function ExperienceShellView({
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return
       event.preventDefault()
-      if (introOpen || askOpen || moreOpen || shareOpen) {
+      if (introOpen || moreOpen || shareOpen) {
         setIntroOpen(false)
-        setAskOpen(false)
         setMoreOpen(false)
         setShareOpen(false)
         return
@@ -345,28 +356,33 @@ function ExperienceShellView({
       window.removeEventListener('pointerdown', reveal)
       window.removeEventListener('keydown', onKey)
     }
-  }, [askOpen, experiencePolicy.shellMode, introOpen, moreOpen, shareOpen])
+  }, [experiencePolicy.shellMode, introOpen, moreOpen, shareOpen])
 
+  // The follow chip sits over the bottom controls, so it waits until the visitor
+  // has finished this world's story or has stayed for a few minutes.
   useEffect(() => {
+    setFollowPromptDue(false)
+    const timer = window.setTimeout(() => setFollowPromptDue(true), FOLLOW_PROMPT_DWELL_MS)
     const handler = (event: Event) => {
-      const detail = (event as CustomEvent<{ worldId?: string; question?: string }>).detail
-      if (detail?.worldId !== world.id) return
-      setAskSeed(detail.question ?? '')
-      setIntroOpen(false)
-      setMoreOpen(false)
-      setShareOpen(false)
-      setAskOpen(true)
-      trackEvent({ event: 'ask_open', worldId: world.id, issueId: issue?.id })
+      const detail = (event as CustomEvent<{ worldId?: string }>).detail
+      if (detail?.worldId === world.id) setFollowPromptDue(true)
     }
-    window.addEventListener(ASK_WORLD_EVENT, handler)
-    return () => window.removeEventListener(ASK_WORLD_EVENT, handler)
-  }, [world.id, issue?.id])
+    window.addEventListener(GUIDE_LAST_STEP_EVENT, handler)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener(GUIDE_LAST_STEP_EVENT, handler)
+    }
+  }, [world.id])
 
   useEffect(() => {
-    if (!atlas.ready || atlas.visited.length < 2 || shareOpen) return
+    if (!followPromptDue || !atlas.ready || atlas.visited.length < 2 || shareOpen) return
     if (hasDismissedFollowPrompt()) return
     setFollowChipOpen(true)
-  }, [atlas.ready, atlas.visited.length, shareOpen, world.id])
+  }, [followPromptDue, atlas.ready, atlas.visited.length, shareOpen])
+
+  useEffect(() => {
+    if (!explorationActive && nextWorld) warmWorldOnIntent(nextWorld.id)
+  }, [nextWorld, explorationActive])
 
   useEffect(() => {
     let visibleSeconds = 0
@@ -391,11 +407,6 @@ function ExperienceShellView({
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape' && askOpen) {
-        event.preventDefault()
-        closeAsk()
-        return
-      }
       if (event.key === 'Escape' && moreOpen) {
         event.preventDefault()
         closeMore()
@@ -406,16 +417,14 @@ function ExperienceShellView({
         closeIntro()
         return
       }
-      if (event.defaultPrevented || introOpen || askOpen || moreOpen || shareOpen || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.isComposing) return
       if (event.key !== 'ArrowDown' && event.key !== 'PageDown') return
-      const target = event.target as HTMLElement | null
-      if (target?.closest('button, a, input, textarea, select, [contenteditable="true"]')) return
+      if (!ownsExperienceStageInput(stageRef.current, event)) return
       event.preventDefault()
       nextLinkRef.current?.click()
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [askOpen, introOpen, moreOpen, shareOpen, world.id])
+  }, [introOpen, moreOpen, shareOpen, world.id])
 
   useEffect(() => {
     if (!introOpen) return
@@ -445,7 +454,6 @@ function ExperienceShellView({
   }
 
   function openIntro() {
-    setAskOpen(false)
     setMoreOpen(false)
     setShareOpen(false)
     setIntroOpen(true)
@@ -458,41 +466,24 @@ function ExperienceShellView({
   function closeIntro() {
     setIntroOpen(false)
     window.requestAnimationFrame(() => {
-      focusVisibleControl(infoButtonRef.current, mobileMoreButtonRef.current, moreButtonRef.current)
+      focusVisibleControl(compactMoreButtonRef.current, moreButtonRef.current)
     })
   }
 
-  /** 资料按钮再点一次即关闭，符合开关心智 */
-  function toggleIntro() {
-    if (introOpen) closeIntro()
-    else openIntro()
-  }
-
-  function openAsk() {
-    setAskSeed('')
-    setIntroOpen(false)
-    setMoreOpen(false)
-    setShareOpen(false)
-    setAskOpen(true)
-    trackEvent({ event: 'ask_open', worldId: world.id, issueId: issue?.id })
-  }
-
-  function closeAsk() {
-    setAskSeed('')
-    setAskOpen(false)
-    window.requestAnimationFrame(() => {
-      focusVisibleControl(askButtonRef.current, mobileMoreButtonRef.current, moreButtonRef.current)
+  function positionMore() {
+    const trigger = [compactMoreButtonRef.current, moreButtonRef.current]
+      .find((element) => element?.getClientRects().length)
+    if (!trigger) return
+    const rect = trigger.getBoundingClientRect()
+    setMorePosition({
+      top: Math.max(12, rect.bottom + 8),
+      right: Math.max(12, window.innerWidth - rect.right),
     })
-  }
-
-  function toggleAsk() {
-    if (askOpen) closeAsk()
-    else openAsk()
   }
 
   function openMore() {
+    positionMore()
     setIntroOpen(false)
-    setAskOpen(false)
     setShareOpen(false)
     setMoreOpen(true)
   }
@@ -500,7 +491,7 @@ function ExperienceShellView({
   function closeMore() {
     setMoreOpen(false)
     window.requestAnimationFrame(() => {
-      focusVisibleControl(mobileMoreButtonRef.current, moreButtonRef.current)
+      focusVisibleControl(compactMoreButtonRef.current, moreButtonRef.current)
     })
   }
 
@@ -520,7 +511,6 @@ function ExperienceShellView({
     immersiveRequestedRef.current = next
     if (next) {
       setIntroOpen(false)
-      setAskOpen(false)
       void requestMobileBrowserFullscreen().then((entered) => {
         if (!entered) return
         if (immersiveRequestedRef.current) {
@@ -567,7 +557,6 @@ function ExperienceShellView({
 
   function openShare() {
     setIntroOpen(false)
-    setAskOpen(false)
     setMoreOpen(false)
     setShareOpen(true)
     trackEvent({ event: 'share_open', worldId: world.id, issueId: issue?.id })
@@ -575,6 +564,134 @@ function ExperienceShellView({
 
   function closeShare() {
     setShareOpen(false)
+  }
+
+  function renderExplorationNext(mobile: boolean) {
+    const className = mobile ? 'experience-mobile-next-link' : 'experience-next-link'
+    if (!exploration.nextId && exploration.ready) {
+      return <Link to="/" hash="home-worlds" className={className} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>{t('exploration.directory')}</Link>
+    }
+    if (!exploration.nextId) {
+      return (
+        <button className={className} style={{ gridTemplateColumns: 'minmax(0, 1fr)' }} type="button" disabled={!exploration.error} onClick={exploration.retry}
+          aria-label={exploration.error ? t('exploration.loadError') : t('home.collection.loading')}>
+          {exploration.error ? t('system.retry') : t('home.collection.loading')}
+        </button>
+      )
+    }
+    const label = t(exploreFeatured
+      ? exploration.complete ? 'home.featured.revisit' : 'home.featured.next'
+      : exploration.complete ? 'exploration.revisit' : 'exploration.nextUnviewed')
+    const visibleLabel = mobile && exploreFeatured
+      ? t(exploration.complete ? 'home.featured.revisitShort' : 'home.featured.nextShort')
+      : label
+    return (
+      <Link
+        ref={mobile ? undefined : nextLinkRef}
+        to={worldRoute}
+        params={{ worldId: exploration.nextId }}
+        search={exploreFeatured ? { collection: 'featured' } : { exploreAll: true }}
+        className={className}
+        aria-label={label}
+        title={label}
+        viewTransition
+        {...worldIntentHandlers(exploration.nextId)}
+      >
+        <img className={mobile ? 'experience-mobile-next-thumb' : 'experience-next-thumb'}
+          src={worldThumbnail({ id: exploration.nextId })} alt="" width={32} height={32} loading="lazy" decoding="async" />
+        <span className={mobile ? 'experience-mobile-next-copy' : 'experience-next-copy'}>
+          <small>{exploration.ids.filter((id) => id === world.id || atlas.visited.includes(id)).length} / {exploration.ids.length}</small>
+          <strong>{visibleLabel}</strong>
+        </span>
+        <ArrowRight aria-hidden="true" />
+      </Link>
+    )
+  }
+
+  const nextSearch = nextIssue
+    ? { issue: nextIssue.id }
+    : pathPosition && nextKind === 'path'
+      ? { path: pathPosition.id }
+      : {}
+
+  function renderShareButton(extraClass = '') {
+    return (
+      <button
+        type="button"
+        className={`experience-header-icon experience-share-button${extraClass}`}
+        onClick={openShare}
+        title={t('experience.share')}
+        aria-label={t('experience.share')}
+      >
+        <ShareNetwork aria-hidden="true" weight="regular" />
+      </button>
+    )
+  }
+
+  function renderMoreButton(buttonRef: RefObject<HTMLButtonElement | null>, className: string) {
+    return (
+      <button
+        ref={buttonRef}
+        type="button"
+        className={`experience-header-icon ${className}`}
+        onClick={toggleMore}
+        aria-haspopup="dialog"
+        aria-expanded={moreOpen}
+        aria-controls={`experience-more-${world.id}`}
+        title={t('experience.more')}
+        aria-label={t('experience.more')}
+      >
+        <DotsThree aria-hidden="true" weight="bold" />
+      </button>
+    )
+  }
+
+  function renderNextLink(placement: 'bar' | 'toolbar') {
+    if (!nextWorld) return null
+    const inToolbar = placement === 'toolbar'
+    const prefix = inToolbar ? 'experience-mobile-next' : 'experience-next'
+    return (
+      <Link
+        ref={inToolbar ? undefined : nextLinkRef}
+        to={worldRoute}
+        params={{ worldId: nextWorld.id }}
+        search={nextSearch}
+        className={inToolbar ? `${prefix}-link` : 'experience-next-link'}
+        viewTransition
+        style={{ '--next-world-accent': nextWorld.accent } as CSSProperties}
+        title={`${nextLabel}: ${nextTitle}`}
+        aria-label={`${t('experience.next')}: ${nextTitle}`}
+        onClick={trackNextNavigation}
+        {...worldIntentHandlers(nextWorld.id)}
+      >
+        <img
+          className={`${prefix}-thumb`}
+          src={worldThumbnail(nextWorld)}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+        />
+        <span className={`${prefix}-copy`}>
+          {inToolbar ? (
+            <>
+              <small>{mobileNextEyebrow}</small>
+              <strong>{nextTitle}</strong>
+            </>
+          ) : (
+            <>
+              <small>{nextLabel}</small>
+              <strong className="experience-next-title-full">{nextTitle}</strong>
+              <strong className="experience-next-title-short">{nextShortTitle}</strong>
+            </>
+          )}
+        </span>
+        {inToolbar
+          ? <span className="experience-mobile-next-arrow" aria-hidden="true">→</span>
+          : <ArrowRight aria-hidden="true" weight="regular" />}
+      </Link>
+    )
   }
 
   function trackNextNavigation() {
@@ -611,16 +728,17 @@ function ExperienceShellView({
       data-essential-chrome={essentialChrome ? 'true' : 'false'}
       data-overlays-hidden={overlaysHidden ? 'true' : 'false'}
       data-guide-autoplay={guideAutoplay ? 'true' : 'false'}
-      data-panel-open={introOpen || askOpen || moreOpen || shareOpen ? 'true' : 'false'}
+      data-panel-open={introOpen || moreOpen || shareOpen ? 'true' : 'false'}
       style={{ '--world-accent': world.accent } as CSSProperties}
     >
       <header className="experience-header" inert={moreOpen ? true : undefined}>
         <Link
           to="/"
-          search={issue ? { issue: issue.id } : {}}
+          search={exploreFeatured ? {} : exploreAll ? { viewed: 'unviewed' } : issue ? { issue: issue.id } : {}}
+          hash={exploreAll && !exploreFeatured ? 'home-worlds' : undefined}
           className="experience-brand"
-          aria-label={t('experience.back')}
-          title={t('experience.back')}
+          aria-label={exploreAll ? t('exploration.directory') : t('experience.back')}
+          title={exploreAll ? t('exploration.directory') : t('experience.back')}
           viewTransition
         >
           <BrandMark />
@@ -629,67 +747,23 @@ function ExperienceShellView({
 
         {/* 进度仅供读屏：视觉顶栏保持极简，不挂长标题与学科 chip */}
         <p className="experience-progress-sr">
-          {t('experience.position', {
+          {isPublic && t('experience.position', {
             current: displayIndex,
             total: String(displayTotal).padStart(2, '0'),
           })}
-          {pathPosition ? ` · ${pathPosition.order}/${pathPosition.total}` : ''}
-          {` · ${categoryText(rootCategory, 'title')}`}
+          {isPublic && pathPosition ? ` · ${pathPosition.order}/${pathPosition.total}` : ''}
+          {isPublic ? ' · ' : ''}{categoryText(rootCategory, 'title')}
         </p>
 
         <div className="experience-header-actions experience-header-actions--desktop">
-          <button
-            ref={infoButtonRef}
-            type="button"
-            className="experience-header-icon experience-info-button"
-            onClick={toggleIntro}
-            aria-expanded={introOpen}
-            aria-controls={`experience-intro-${world.id}`}
-            title={introOpen ? t('experience.sourcesClose') : t('experience.sources')}
-            aria-label={introOpen ? t('experience.sourcesClose') : t('experience.sources')}
-          >
-            <Info aria-hidden="true" weight="regular" />
-          </button>
-          <button
-            ref={askButtonRef}
-            type="button"
-            className="experience-header-icon experience-ask-button"
-            onClick={toggleAsk}
-            aria-expanded={askOpen}
-            aria-controls={`experience-ask-${world.id}`}
-            title={askOpen ? t('experience.ask.close') : t('experience.ask.title')}
-            aria-label={askOpen ? t('experience.ask.close') : t('experience.ask.title')}
-          >
-            <ChatCircleDots aria-hidden="true" weight="regular" />
-          </button>
+          <LocaleToggle compact />
           {/*
             Share sits in the top bar, not inside the ⓘ drawer. It is the one
             action the whole growth model depends on, and two taps behind an
             info panel is where growth mechanisms go to die.
           */}
-          <button
-            type="button"
-            className="experience-header-icon experience-share-button"
-            onClick={openShare}
-            title={t('experience.share')}
-            aria-label={t('experience.share')}
-          >
-            <ShareNetwork aria-hidden="true" weight="regular" />
-          </button>
+          {renderShareButton()}
           {showDefaultMusic && <SiteBgmToggle />}
-          <button
-            ref={moreButtonRef}
-            type="button"
-            className="experience-header-icon experience-more-button"
-            onClick={toggleMore}
-            aria-haspopup="dialog"
-            aria-expanded={moreOpen}
-            aria-controls={`experience-more-${world.id}`}
-            title={t('experience.more')}
-            aria-label={t('experience.more')}
-          >
-            <DotsThree aria-hidden="true" weight="bold" />
-          </button>
           <button
             type="button"
             className="experience-header-icon experience-overlay-toggle"
@@ -702,6 +776,7 @@ function ExperienceShellView({
               ? <CornersIn aria-hidden="true" weight="regular" />
               : <CornersOut aria-hidden="true" weight="regular" />}
           </button>
+          {renderMoreButton(moreButtonRef, 'experience-more-button')}
           {/* 沉浸角标：播放 = 自动把 GuideTour 整段演完，像动态科普片 */}
           {overlaysHidden && capabilities.hasGuide && (
             <button
@@ -722,186 +797,104 @@ function ExperienceShellView({
             aria-label={t('experience.discoveryNav')}
             data-experience-overlay="true"
           >
-            {nextWorld && (
-            <Link
-              ref={nextLinkRef}
-              to="/explore/$worldId"
-              params={{ worldId: nextWorld.id }}
-              search={nextIssue
-                ? { issue: nextIssue.id }
-                : pathPosition && nextKind === 'path'
-                  ? { path: pathPosition.id }
-                  : {}}
-              className="experience-next-link"
-              viewTransition
-              style={{ '--next-world-accent': nextWorld.accent } as CSSProperties}
-              title={`${nextLabel}: ${nextTitle}`}
-              aria-label={`${t('experience.next')}: ${nextTitle}`}
-              onClick={trackNextNavigation}
-            >
-              <img
-                className="experience-next-thumb"
-                src={worldThumbnail(nextWorld)}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-              />
-              <span className="experience-next-copy">
-                <small>{nextLabel}</small>
-                <strong className="experience-next-title-full">{nextTitle}</strong>
-                <strong className="experience-next-title-short">{nextShortTitle}</strong>
-              </span>
-              <ArrowRight aria-hidden="true" weight="regular" />
-            </Link>
-            )}
+            {explorationActive && renderExplorationNext(false)}
+            {!explorationActive && renderNextLink('bar')}
           </nav>
         </div>
 
         <div className="experience-mobile-toolbar">
-          {nextWorld && (
-          <Link
-            to="/explore/$worldId"
-            params={{ worldId: nextWorld.id }}
-            search={nextIssue
-              ? { issue: nextIssue.id }
-              : pathPosition && nextKind === 'path'
-                ? { path: pathPosition.id }
-                : {}}
-            className="experience-mobile-next-link"
-            viewTransition
-            style={{ '--next-world-accent': nextWorld.accent } as CSSProperties}
-            title={`${nextLabel}: ${nextTitle}`}
-            aria-label={`${t('experience.next')}: ${nextTitle}`}
-            onClick={trackNextNavigation}
-          >
-            <img
-              className="experience-mobile-next-thumb"
-              src={worldThumbnail(nextWorld)}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-            />
-            <span className="experience-mobile-next-copy">
-              <small>{mobileNextEyebrow}</small>
-              <strong>{nextTitle}</strong>
-            </span>
-            <span className="experience-mobile-next-arrow" aria-hidden="true">→</span>
-          </Link>
-          )}
+          {explorationActive && renderExplorationNext(true)}
+          {!explorationActive && renderNextLink('toolbar')}
 
-          <button
-            type="button"
-            className="experience-header-icon experience-share-button experience-mobile-share"
-            onClick={openShare}
-            title={t('experience.share')}
-            aria-label={t('experience.share')}
-          >
-            <ShareNetwork aria-hidden="true" weight="regular" />
-          </button>
+          {renderShareButton(' experience-mobile-share')}
+          <LocaleToggle compact />
           {showDefaultMusic && <SiteBgmToggle className="experience-header-icon experience-mobile-sound" />}
           <button
-            ref={mobileMoreButtonRef}
             type="button"
-            className="experience-header-icon experience-mobile-more-button"
-            onClick={toggleMore}
-            aria-haspopup="dialog"
-            aria-expanded={moreOpen}
-            aria-controls={`experience-more-${world.id}`}
-            title={t('experience.more')}
-            aria-label={t('experience.more')}
+            className="experience-header-icon experience-mobile-immersive"
+            onClick={toggleImmersive}
+            aria-pressed={overlaysHidden}
+            title={t('experience.overlays.hide')}
+            aria-label={t('experience.overlays.hide')}
           >
-            <DotsThree aria-hidden="true" weight="bold" />
+            <CornersOut aria-hidden="true" weight="regular" />
           </button>
+          {renderMoreButton(compactMoreButtonRef, 'experience-mobile-more-button')}
         </div>
       </header>
 
-      {moreOpen && (
-        <div className="experience-more-layer" data-experience-overlay="true">
-          <div
-            className="experience-more-backdrop"
-            onClick={closeMore}
-            aria-hidden="true"
-          />
-          <div
-            ref={moreSheetRef}
-            id={`experience-more-${world.id}`}
-            className="experience-more-sheet"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby={`experience-more-title-${world.id}`}
-          >
-            <div className="experience-more-heading">
-              <h2 id={`experience-more-title-${world.id}`}>{t('experience.more')}</h2>
-              <button type="button" onClick={closeMore} aria-label={t('experience.more.close')}>
-                <X aria-hidden="true" />
-              </button>
-            </div>
-            <div className="experience-more-actions">
-              <button
-                type="button"
-                className="experience-more-action experience-more-phone-only"
-                onClick={openIntro}
+      <div
+        className="experience-more-layer"
+        data-experience-overlay="true"
+        data-open={moreOpen}
+        inert={!moreOpen ? true : undefined}
+        aria-hidden={!moreOpen ? true : undefined}
+        style={{
+          '--experience-more-top': `${morePosition.top}px`,
+          '--experience-more-right': `${morePosition.right}px`,
+        } as CSSProperties}
+      >
+        <div
+          className="experience-more-backdrop"
+          onClick={closeMore}
+          aria-hidden="true"
+        />
+        <div
+          ref={moreSheetRef}
+          id={`experience-more-${world.id}`}
+          className="experience-more-sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={`experience-more-title-${world.id}`}
+        >
+          <div className="experience-more-heading">
+            <h2 id={`experience-more-title-${world.id}`}>{t('experience.more')}</h2>
+            <button type="button" onClick={closeMore} aria-label={t('experience.more.close')}>
+              <X aria-hidden="true" />
+            </button>
+          </div>
+          {navigation.worldPaths?.map((path) => (
+            <WorldPathNavigation key={path.id} path={path} worldId={world.id} active={pathPosition?.id === path.id} onNavigate={closeMore} />
+          ))}
+          {!atlas.storageAvailable && <p role="alert">{t('progress.storageError')}</p>}
+          <div className="experience-more-actions">
+            <button
+              type="button"
+              className="experience-more-action"
+              onClick={openIntro}
+            >
+              <Info aria-hidden="true" weight="regular" />
+              <span>{t('experience.sources')}</span>
+            </button>
+            <button type="button" className="experience-more-action experience-more-narrow-only" onClick={() => { closeMore(); openShare() }}>
+              <ShareNetwork aria-hidden="true" weight="regular" /><span>{t('experience.share')}</span>
+            </button>
+            {showDefaultMusic && <SiteBgmToggle className="experience-more-action experience-more-narrow-only" showLabel />}
+            <Link to="/feedback" search={{ world: world.id, kind: 'problem' }} className="experience-more-action" onClick={closeMore}>
+              <ChatCircleDots aria-hidden="true" /><span>{t('feedback.world')}</span>
+            </Link>
+            {randomWorldId && (
+              <Link
+                to={worldRoute}
+                params={{ worldId: randomWorldId }}
+                search={{}}
+                className="experience-more-action experience-more-random"
+                viewTransition
+                onClick={() => {
+                  setMoreOpen(false)
+                  trackRandomNavigation()
+                }}
               >
-                <Info aria-hidden="true" weight="regular" />
-                <span>{t('experience.sources')}</span>
-              </button>
-              <button
-                type="button"
-                className="experience-more-action experience-more-phone-only"
-                onClick={openAsk}
-              >
-                <ChatCircleDots aria-hidden="true" weight="regular" />
-                <span>{t('experience.ask.title')}</span>
-              </button>
-              {isPublic && (
-                <button
-                  type="button"
-                  className="experience-more-action"
-                  onClick={() => {
-                    if (atlas.isSaved(world.id)) atlas.removeWorld(world.id)
-                    else atlas.saveWorld(world.id)
-                    closeMore()
-                  }}
-                >
-                  <BookmarkSimple aria-hidden="true" weight={atlas.isSaved(world.id) ? 'fill' : 'regular'} />
-                  <span>{atlas.isSaved(world.id) ? t('experience.saved') : t('experience.save')}</span>
-                </button>
-              )}
-              <div className="experience-more-action experience-more-locale">
-                <LocaleToggle />
-                <span>{t('header.language')}</span>
-              </div>
-              <button type="button" className="experience-more-action" onClick={toggleImmersive}>
-                <CornersOut aria-hidden="true" weight="regular" />
-                <span>{t('experience.overlays.hide')}</span>
-              </button>
-              {randomWorldId && (
-                <Link
-                  to="/explore/$worldId"
-                  params={{ worldId: randomWorldId }}
-                  search={{}}
-                  className="experience-more-action experience-more-random"
-                  viewTransition
-                  onClick={() => {
-                    setMoreOpen(false)
-                    trackRandomNavigation()
-                  }}
-                >
-                  <DiceFive aria-hidden="true" weight="regular" />
-                  <span>{t('experience.random')}</span>
-                </Link>
-              )}
-            </div>
+                <DiceFive aria-hidden="true" weight="regular" />
+                <span>{t('experience.random')}</span>
+              </Link>
+            )}
           </div>
         </div>
-      )}
+      </div>
 
       <section className="experience-layout is-started" inert={moreOpen ? true : undefined}>
-        <div className="experience-stage" tabIndex={-1}>
+        <div ref={stageRef} className="experience-stage" tabIndex={-1}>
           <ShareStateContext.Provider value={shareStore}>
             {children({ interacted, complete, registerInteraction, completeOnboarding, finish })}
           </ShareStateContext.Provider>
@@ -918,14 +911,13 @@ function ExperienceShellView({
           <button ref={introCloseRef} type="button" className="experience-intro-close" onClick={closeIntro} aria-label={t('experience.closeReveal')}>
             <X aria-hidden="true" />
           </button>
-          <div className="experience-intro-index" aria-hidden="true">
+          {isPublic && <div className="experience-intro-index" aria-hidden="true">
             <span>{displayIndex}</span>
             <i />
-          </div>
+          </div>}
           <div ref={introCopyRef} className="experience-intro-copy">
             <p className="eyebrow">
-              {displayIndex} / {String(displayTotal).padStart(2, '0')}
-              {' · '}
+              {isPublic && <>{displayIndex} / {String(displayTotal).padStart(2, '0')}{' · '}</>}
               {worldText(world, 'topicLabel')}
               {' · '}
               {worldText(world, 'evidence')}
@@ -935,6 +927,9 @@ function ExperienceShellView({
             {!issueCopy && (
               <p className="experience-payoff">{worldText(world, 'payoff')}</p>
             )}
+            {navigation.worldPaths?.map((path) => (
+              <WorldPathNavigation key={path.id} path={path} worldId={world.id} active={pathPosition?.id === path.id} onNavigate={closeIntro} />
+            ))}
             {!issueCopy && world.fieldNotes && world.fieldNotes.length > 0 && (
               <div className="experience-field-notes">
                 {world.fieldNotes.map((note) => (
@@ -945,12 +940,12 @@ function ExperienceShellView({
                 ))}
               </div>
             )}
-            {!issueCopy && searchCopy && (
-              <section className="experience-search-answer" aria-label={locale === 'zh' ? '简要答案' : 'Quick answer'}>
-                <strong>{locale === 'zh' ? '简要答案' : 'Quick answer'}</strong>
+            {searchCopy && !issueCopy ? (
+              <section className="experience-search-answer" aria-label={answerHeading}>
+                <strong>{answerHeading}</strong>
                 <p>{searchCopy.answer}</p>
               </section>
-            )}
+            ) : null}
             {worldIssues.length > 1 && (
               <div className="experience-chapters">
                 <span>{locale === 'zh' ? `这个世界的 ${worldIssues.length} 条探索路径` : `${worldIssues.length} paths through this world`}</span>
@@ -960,7 +955,7 @@ function ExperienceShellView({
                   return (
                     <Link
                       key={item.id}
-                      to="/explore/$worldId"
+                      to={worldRoute}
                       params={{worldId: world.id}}
                       search={{issue: item.id}}
                       className={current ? 'is-current' : ''}
@@ -990,47 +985,21 @@ function ExperienceShellView({
                 )
               })}
             </div>
-            {world.provenance && (
+            {world.provenance?.origin === 'open-source-adaptation' && (
               <div className="experience-provenance">
                 <span>{t('experience.provenance.label')}</span>
-                {world.provenance.origin === 'ai-prototype' && initialModelLabel && (
-                  <p>{t('experience.provenance.aiPrototype', { model: initialModelLabel })}</p>
-                )}
-                {world.provenance.origin === 'multi-model' && (
-                  <p>{initialModelLabel
-                    ? t('experience.provenance.multiModel', { model: initialModelLabel })
-                    : t('experience.provenance.multiModelUnknown')}</p>
-                )}
-                {world.provenance.origin === 'open-source-adaptation' && (
-                  <>
-                    <a href={world.provenance.sourceUrl} target="_blank" rel="noreferrer">
-                      {t('experience.provenance.openSource', { project: world.provenance.sourceProject })}
-                      <ArrowRight aria-hidden="true" />
-                    </a>
-                    {adaptationModelLabel && (
-                      <p>{t('experience.provenance.openSourceModel', { model: adaptationModelLabel })}</p>
-                    )}
-                  </>
-                )}
-                {world.provenance.origin === 'human-led' && (
-                  <p>{t('experience.provenance.humanLed')}</p>
-                )}
-                {modelCollectionId && modelCollectionLabel && (
-                  <Link to="/made-with/$modelId" params={{ modelId: modelCollectionId }}>
-                    {t(world.provenance.origin === 'open-source-adaptation'
-                      ? 'experience.provenance.exploreAdaptationModel'
-                      : 'experience.provenance.exploreModel', { model: modelCollectionLabel })}
-                    <ArrowRight aria-hidden="true" />
-                  </Link>
-                )}
+                <a href={world.provenance.sourceUrl} target="_blank" rel="noreferrer">
+                  {t('experience.provenance.openSource', { project: world.provenance.sourceProject })}
+                  <ArrowRight aria-hidden="true" />
+                </a>
               </div>
             )}
           </div>
         </aside>
-        <AskWorldPanel world={world} open={askOpen} onClose={closeAsk} seedQuestion={askSeed} />
       </section>
 
       <MomentCard
+        worldId={world.id}
         open={shareOpen}
         onClose={closeShare}
         capture={shareStore.capture}
@@ -1039,9 +1008,9 @@ function ExperienceShellView({
         summary={shareStore.current.summary}
         posterUrl={world.posterDesktop ?? world.poster}
         accent={world.accent}
-        onShared={() => trackEvent({ event: 'share', worldId: world.id, issueId: issue?.id })}
+        onShared={(method) => trackEvent({ event: method === 'download' ? 'share_download' : 'share', worldId: world.id, issueId: issue?.id, value: method })}
       />
-      {followChipOpen && !shareOpen && (
+      {followChipOpen && !shareOpen && !moreOpen && (
         <FollowStayPrompt
           origin="second_world"
           layout="chip"

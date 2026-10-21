@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-05",
+  "code": "SFX-MECHANICAL-05",
+  "title": {
+    "en": "Ratchet",
+    "zh": "棘轮转动"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 4,
+  "seed": 4248220341,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized ratchet for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的棘轮转动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.98,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4248220341,
+    "sha256": "bef22eed7566229141d2567d637d01ccc731bcb80feca8d82a859c61f6392f56",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "beb8511230bf4751b1cc7f56c358668d1d584c6a3f89f09ab07abec174dc2e39",
+      "bytes": 14672,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bef22eed7566229141d2567d637d01ccc731bcb80feca8d82a859c61f6392f56",
+      "bytes": 86480,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0dc89e19ea611c552723bd6308c9f0ed8da4caf50138ca99a0f4e9379ff44a8d",
+      "bytes": 8501,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "01918389b3c0edac2341422d8721c4ea20c067392901935c36b57049b68cd462",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 43218,
+    "duration": 0.98,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.74,
+    "dcOffset": 3.340000567616502e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14421386718749973,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clean electronic blip or boop sound.",
+      "zh": "短促、高音调、干净的电子提示音或嘟嘟声。"
+    },
+    "reason": "The sound is a clear, isolated electronic effect, well-suited for UI feedback or game sound design. It has no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:23.456984+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "beb8511230bf4751b1cc7f56c358668d1d584c6a3f89f09ab07abec174dc2e39"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 43218
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.885719+00:00"
+}

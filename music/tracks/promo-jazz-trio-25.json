@@ -1,0 +1,162 @@
+{
+  "id": "promo-jazz-trio-25",
+  "code": "PROMO-08-25",
+  "title": {
+    "en": "Pocket Swing · 25",
+    "zh": "口袋摇摆 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble swinging jazz trio with dry piano accents. Instruments: acoustic piano, upright bass, brushed drums. Tempo 132 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic modern pop-rock track featuring a driving drum beat, prominent electric guitar melody, and synth accents. It has a positive and dynamic feel.",
+    "zh": "一首欢快且充满活力的现代流行摇滚乐曲，具有强劲的鼓点、突出的电吉他旋律和合成器点缀。整体感觉积极向上且充满动感。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:26:26.515565+00:00",
+  "generation": {
+    "id": "3acc4c9d-90c2-47a4-90a9-c9950e029f0e",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:15.218553+00:00",
+    "completedAt": "2026-09-10T05:26:26.515565+00:00",
+    "interactionId": "eD-iavGnBoTLk7QP7q-OwQ0",
+    "sha256": "3637c31dc0cc93852f3d09aa5865f1be0ddfeb22c6b0872bab82c344f392620a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic modern pop-rock track featuring a driving drum beat, prominent electric guitar melody, and synth accents. It has a positive and dynamic feel.",
+      "zh": "一首欢快且充满活力的现代流行摇滚乐曲，具有强劲的鼓点、突出的电吉他旋律和合成器点缀。整体感觉积极向上且充满动感。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass guitar",
+      "Electric guitar",
+      "Synthesizer",
+      "Piano"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving",
+      "Modern",
+      "Catchy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, energetic, and versatile track suitable for various media applications requiring an uplifting and modern sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens with an immediate, driving drum and bass groove, quickly introducing the main guitar melody. It concludes with a definitive, sustained final chord and drum hit, providing a clear musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:49.254542+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6aacdef16fcea76c33d2de6c8db81659b941c0ab5e22e342dd1d2d6353db7ee5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 25.652167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A vibrant, upbeat instrumental track featuring a prominent, groovy bassline, crisp drums, and a catchy synth melody. It has a funky, jazz-fusion feel with a driving rhythm.",
+      "zh": "一首充满活力、欢快的器乐曲，以突出、律动的贝斯线、清脆的鼓点和抓耳的合成器旋律为特色。它具有放克爵士融合的风格和强劲的节奏。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Synthesizer",
+      "Electric Piano"
+    ],
+    "moods": [
+      "Upbeat",
+      "Funky",
+      "Groovy",
+      "Energetic",
+      "Jazzy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean, and engaging instrumental track with a clear genre identity, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:38.540529+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 0.6521669999999986,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:52.521227+00:00"
+}

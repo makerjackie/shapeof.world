@@ -1,0 +1,100 @@
+{
+  "id": "lib-funk-travel",
+  "code": "LIB-13-06",
+  "title": {
+    "en": "Roaming — Funk",
+    "zh": "漫游 · 放克"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "funk"
+  ],
+  "energy": 4,
+  "bpm": 122,
+  "key": "E minor",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second instrumental funk instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 122 BPM; E minor. Main idea: a repeating five-note figure with space between phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "An upbeat instrumental rock track featuring electric guitars, bass, and drums. It has a driving rhythm and a clear, melodic lead guitar line.",
+    "zh": "一首欢快的器乐摇滚乐曲，以电吉他、贝斯和鼓为主。它具有强劲的节奏和清晰、旋律优美的主音吉他线条。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 119.353,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:25:10.940488+00:00",
+  "generation": {
+    "id": "132c8d3c-93ce-4177-95cc-297e71794203",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:24:24.994069+00:00",
+    "completedAt": "2026-09-09T08:25:10.940488+00:00",
+    "interactionId": "uhehavOhIou3i9sP7uehmQM",
+    "sha256": "45edebb078b46446791ef40eb6f24bbdecf0199346ea0c72cf538935b6a0f7de"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat instrumental rock track featuring electric guitars, bass, and drums. It has a driving rhythm and a clear, melodic lead guitar line.",
+      "zh": "一首欢快的器乐摇滚乐曲，以电吉他、贝斯和鼓为主。它具有强劲的节奏和清晰、旋律优美的主音吉他线条。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced instrumental rock track with clear instrumentation and no audible defects, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:37:54.423782+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:39:34.374538+00:00"
+}

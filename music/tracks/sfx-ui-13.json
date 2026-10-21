@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-13",
+  "code": "SFX-UI-13",
+  "title": {
+    "en": "Selection",
+    "zh": "选择项目"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 12,
+  "seed": 820030972,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized selection for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的选择项目合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 820030972,
+    "sha256": "08a443450e005194faf48d5eb1686758145af49fd8010c195a6426c7f680c707",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "839d8a6efd802caa7c5fcd8fc5b4b47b342369600c227616a46b86574361c73a",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "08a443450e005194faf48d5eb1686758145af49fd8010c195a6426c7f680c707",
+      "bytes": 22976,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "302cce3be27b77b0245215c4d1e99e9acf5ea5c861fdae876059d26cd75d9f51",
+      "bytes": 4851,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f2eac0b1482fb59f0ce7679b6fb00e8392bde4780456fa2cd50ece891ac5900c",
+      "bytes": 1749,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11466,
+    "duration": 0.26,
+    "peakDbfs": -2.42,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.2231630132020757e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07978857421875007,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip sound effect.",
+      "zh": "一个短促、高音的电子提示音效。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:36.882609+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "839d8a6efd802caa7c5fcd8fc5b4b47b342369600c227616a46b86574361c73a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11466
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.908221+00:00"
+}

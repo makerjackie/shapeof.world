@@ -1,0 +1,521 @@
+import type { SceneId } from './equation-wormhole-model'
+
+/**
+ * equation-wormhole 数据集：科目（公式主题）× 公式条目。
+ *
+ * 每个条目：tex（微排版 DSL）、name、by（作者）、year、what（它当年解决了什么问题）。
+ * 中文为源字符串，英文经体验 i18n override 提供；渲染处一律走 tx()。
+ * 史实以维基百科级公开来源为准（详见 catalog sources）。
+ */
+
+export type FormulaEntry = {
+  id: string
+  tex: string
+  name: string
+  by: string
+  year: string
+  what: string
+}
+
+export type FormulaSubject = {
+  id: 'classic' | 'em' | 'relativity' | 'quantum' | 'math'
+  label: string
+  formulas: Array<FormulaEntry>
+}
+
+export const FORMULA_SUBJECTS: Array<FormulaSubject> = [
+  {
+    id: 'classic',
+    label: '经典',
+    formulas: [
+      {
+        id: 'newton-second',
+        tex: 'F = ma',
+        name: '牛顿第二定律',
+        by: '艾萨克·牛顿',
+        year: '1687',
+        what: '把「力改变运动」变成算术：知道力，就能预言物体下一秒在哪里。',
+      },
+      {
+        id: 'gravitation',
+        tex: 'F = G\\frac{m_{1}m_{2}}{r^{2}}',
+        name: '万有引力定律',
+        by: '艾萨克·牛顿',
+        year: '1687',
+        what: '第一次用同一条公式算清苹果落地和月球绕地，天上的运动从此可以预报。',
+      },
+      {
+        id: 'kinetic-energy',
+        tex: 'E_{k} = \\frac{1}{2}mv^{2}',
+        name: '动能公式',
+        by: '加斯帕德-居斯塔夫·科里奥利',
+        year: '1829',
+        what: '给「活力之争」收场：运动的能量与力做的功从此可以互相换算。',
+      },
+      {
+        id: 'bernoulli',
+        tex: 'p + \\frac{1}{2}\\rho v^{2} + \\rho gh = C',
+        name: '伯努利方程',
+        by: '丹尼尔·伯努利',
+        year: '1738',
+        what: '流得快的地方压强低：喷雾器、机翼和球赛里的弧线球都记在这本账上。',
+      },
+      {
+        id: 'ideal-gas',
+        tex: 'pV = nRT',
+        name: '理想气体状态方程',
+        by: '埃米尔·克拉珀龙',
+        year: '1834',
+        what: '把三条气体实验定律并成一条，压强、体积、温度互相换算，热机有了设计图。',
+      },
+      {
+        id: 'boltzmann-entropy',
+        tex: 'S = k\\log W',
+        name: '玻尔兹曼熵公式',
+        by: '路德维希·玻尔兹曼',
+        year: '1877',
+        what: '把「混乱」变成可数的量：熵就是微观状态数的对数。这条公式刻在他的墓碑上。',
+      },
+      {
+        id: 'second-law',
+        tex: '\\Delta S \\geq 0',
+        name: '热力学第二定律',
+        by: '鲁道夫·克劳修斯',
+        year: '1865',
+        what: '孤立系统的熵只增不减——物理学里第一支指明时间方向的箭头。',
+      },
+      {
+        id: 'pendulum',
+        tex: 'T = 2\\pi\\sqrt{\\frac{l}{g}}',
+        name: '单摆周期公式',
+        by: '克里斯蒂安·惠更斯',
+        year: '1673',
+        what: '摆的周期只由摆长和重力决定，摆钟因此可以校准，时间第一次被测准。',
+      },
+      {
+        id: 'hooke',
+        tex: 'F = kx',
+        name: '胡克定律',
+        by: '罗伯特·胡克',
+        year: '1676',
+        what: '弹簧伸长与拉力成正比。弹簧秤、避震器和整门弹性力学从这里开始。',
+      },
+      {
+        id: 'kepler-third',
+        tex: 'T^{2} = \\frac{4\\pi^{2}}{GM}\\,a^{3}',
+        name: '开普勒第三定律',
+        by: '约翰内斯·开普勒（牛顿补上质量项）',
+        year: '1619',
+        what: '行星周期的平方正比于轨道半长轴的立方：太阳系的天平，用周期称出行星轨道。',
+      },
+      {
+        id: 'snell',
+        tex: 'n_{1}\\sin\\theta_{1} = n_{2}\\sin\\theta_{2}',
+        name: '折射定律',
+        by: '威理博·斯涅尔',
+        year: '1621',
+        what: '光进新介质拐多少度可以预先算出，望远镜、显微镜和眼镜片都靠它设计。',
+      },
+      {
+        id: 'newton-iteration',
+        tex: 'x_{n+1} = x_n - \\frac{f(x_n)}{f\' (x_n)}',
+        name: '牛顿迭代法',
+        by: '牛顿 / 拉夫森',
+        year: '1685',
+        what: '用切线快速逼近方程的根：每迭代一次精度大约翻一倍，至今是数值计算的标配。',
+      },
+      {
+        id: 'binomial',
+        tex: '(a + b)^{n} = \\sum_{k=0}^{n} \\mathrm{C}_{n}^{k}\\,a^{n-k}b^{k}',
+        name: '二项式定理',
+        by: '艾萨克·牛顿（推广到任意指数）',
+        year: '1665',
+        what: '任意次幂都能展开成级数：牛顿靠它打开了无穷级数与微积分的大门。',
+      },
+    ],
+  },
+  {
+    id: 'em',
+    label: '电磁',
+    formulas: [
+      {
+        id: 'gauss-e',
+        tex: '\\nabla\\cdot\\mathbf{E} = \\frac{\\rho}{\\varepsilon_{0}}',
+        name: '电场高斯定律',
+        by: '卡尔·弗里德里希·高斯',
+        year: '1835',
+        what: '电荷是电场的源头：数清包住的电荷，就知道穿出多少电场线。',
+      },
+      {
+        id: 'gauss-b',
+        tex: '\\nabla\\cdot\\mathbf{B} = 0',
+        name: '磁场高斯定律',
+        by: '卡尔·弗里德里希·高斯',
+        year: '1835',
+        what: '磁场没有源头：磁感线永远闭合，磁单极子至今没人找到。',
+      },
+      {
+        id: 'faraday',
+        tex: '\\nabla\\times\\mathbf{E} = -\\frac{\\partial\\mathbf{B}}{\\partial t}',
+        name: '法拉第电磁感应定律',
+        by: '迈克尔·法拉第',
+        year: '1831',
+        what: '变化的磁场会生出电场。发电机、变压器和电磁炉全都靠这条公式吃饭。',
+      },
+      {
+        id: 'ampere-maxwell',
+        tex: '\\nabla\\times\\mathbf{B} = \\mu_{0}\\mathbf{J} + \\mu_{0}\\varepsilon_{0}\\frac{\\partial\\mathbf{E}}{\\partial t}',
+        name: '安培-麦克斯韦定律',
+        by: '安德烈-马里·安培 / 詹姆斯·克拉克·麦克斯韦',
+        year: '1861',
+        what: '电流能造磁，变化的电场也能。补上这一项后，电磁波在纸上被预言出来。',
+      },
+      {
+        id: 'light-speed',
+        tex: 'c = \\frac{1}{\\sqrt{\\mu_{0}\\varepsilon_{0}}}',
+        name: '电磁波速公式',
+        by: '詹姆斯·克拉克·麦克斯韦',
+        year: '1865',
+        what: '从两个电学常数算出电磁波速，正好等于光速——光因此被认出是电磁波。',
+      },
+      {
+        id: 'lorentz-force',
+        tex: '\\mathbf{F} = q\\left(\\mathbf{E} + \\mathbf{v}\\times\\mathbf{B}\\right)',
+        name: '洛伦兹力公式',
+        by: '亨德里克·洛伦兹',
+        year: '1892',
+        what: '电磁场推电荷的完整规则：电动机、显像管和粒子加速器都按它运行。',
+      },
+      {
+        id: 'ohm',
+        tex: 'V = IR',
+        name: '欧姆定律',
+        by: '格奥尔格·欧姆',
+        year: '1827',
+        what: '电压、电流、电阻三者的换算表，整个电路工程的字母表。',
+      },
+      {
+        id: 'joule-heating',
+        tex: 'Q = I^{2}Rt',
+        name: '焦耳定律',
+        by: '詹姆斯·焦耳',
+        year: '1841',
+        what: '电流发多少热可以预先算清：保险丝、电暖器和输电损耗都按它设计。',
+      },
+      {
+        id: 'solenoid',
+        tex: 'B = \\mu_{0}nI',
+        name: '螺线管磁场公式',
+        by: '安德烈-马里·安培',
+        year: '1823',
+        what: '线圈绕多密、电流多大，磁场就多强：电磁铁第一次可以按图纸制造。',
+      },
+      {
+        id: 'lc-resonance',
+        tex: '\\omega = \\frac{1}{\\sqrt{LC}}',
+        name: 'LC 谐振频率公式',
+        by: '威廉·汤姆孙（开尔文勋爵）',
+        year: '1853',
+        what: '电感电容回路的固有节拍：收音机和无线电的调谐原理。',
+      },
+      {
+        id: 'capacitor-energy',
+        tex: 'U = \\frac{1}{2}CV^{2}',
+        name: '电容储能公式',
+        by: '十九世纪电路理论',
+        year: '1870',
+        what: '电容能存多少能量有了定量答案，相机闪光灯与电源滤波都靠它估算。',
+      },
+      {
+        id: 'wave-relation',
+        tex: 'v = f\\lambda',
+        name: '波速公式',
+        by: '经典波动理论',
+        year: '1687',
+        what: '频率乘波长等于波速：从琴弦到 Wi-Fi，所有波的通用换算。',
+      },
+    ],
+  },
+  {
+    id: 'relativity',
+    label: '相对论',
+    formulas: [
+      {
+        id: 'mass-energy',
+        tex: 'E = mc^{2}',
+        name: '质能方程',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1905',
+        what: '质量是凝固的能量：解释了太阳凭什么烧几十亿年，也打开了核能时代。',
+      },
+      {
+        id: 'photoelectric',
+        tex: 'E = h\\nu - W',
+        name: '光电效应方程',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1905',
+        what: '光电子的能量只随频率涨、不随亮度涨：光由一颗颗光子组成的判决证据。',
+      },
+      {
+        id: 'field-equation',
+        tex: 'G_{\\mu\\nu} = \\frac{8\\pi G}{c^{4}}\\,T_{\\mu\\nu}',
+        name: '爱因斯坦场方程',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1915',
+        what: '时空告诉物质怎么动，物质告诉时空怎么弯：广义相对论的核心方程。',
+      },
+      {
+        id: 'time-dilation',
+        tex: '\\Delta t\' = \\frac{\\Delta t}{\\sqrt{1 - \\frac{v^{2}}{c^{2}}}}',
+        name: '时间膨胀公式',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1905',
+        what: '动得越快的钟走得越慢。不是理论游戏：GPS 卫星每天都得拿它校准。',
+      },
+      {
+        id: 'velocity-addition',
+        tex: 'w = \\frac{u + v}{1 + \\frac{uv}{c^{2}}}',
+        name: '相对论速度合成公式',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1905',
+        what: '再怎么叠加也超不过光速：牛顿时代「速度直接相加」到此为止。',
+      },
+      {
+        id: 'brownian',
+        tex: '\\bar{x}^{2} = 2Dt',
+        name: '布朗运动均方位移公式',
+        by: '阿尔伯特·爱因斯坦',
+        year: '1905',
+        what: '花粉在水中乱走的平均距离可以算出来：第一次用实验测出原子的真实大小。',
+      },
+    ],
+  },
+  {
+    id: 'quantum',
+    label: '量子',
+    formulas: [
+      {
+        id: 'schrodinger',
+        tex: 'i\\hbar\\frac{\\partial\\psi}{\\partial t} = \\hat{H}\\psi',
+        name: '薛定谔方程',
+        by: '埃尔温·薛定谔',
+        year: '1926',
+        what: '量子世界的运动方程：波函数如何随时间演化，原子和化学键都由它算。',
+      },
+      {
+        id: 'eigenstate',
+        tex: '\\hat{H}\\psi = E\\psi',
+        name: '定态薛定谔方程',
+        by: '埃尔温·薛定谔',
+        year: '1926',
+        what: '为什么原子只有特定的能量：允许的能量是算符的本征值，像琴弦只有特定音高。',
+      },
+      {
+        id: 'uncertainty',
+        tex: '\\Delta x\\,\\Delta p \\geq \\frac{\\hbar}{2}',
+        name: '不确定性原理',
+        by: '维尔纳·海森堡',
+        year: '1927',
+        what: '位置与动量不能同时测准——不是仪器不行，是自然本身不设这个状态。',
+      },
+      {
+        id: 'planck',
+        tex: 'E = h\\nu',
+        name: '普朗克能量子公式',
+        by: '马克斯·普朗克',
+        year: '1900',
+        what: '能量只能一份一份地交换。为黑体辐射解围的权宜之计，意外打开了量子时代。',
+      },
+      {
+        id: 'de-broglie',
+        tex: 'p = \\frac{h}{\\lambda}',
+        name: '德布罗意波长公式',
+        by: '路易·德布罗意',
+        year: '1924',
+        what: '粒子也是波：电子因此能衍射，电子显微镜的放大本领由此而来。',
+      },
+      {
+        id: 'born-rule',
+        tex: 'P = \\left|\\psi\\right|^{2}',
+        name: '玻恩定则',
+        by: '马克斯·玻恩',
+        year: '1926',
+        what: '波函数不告诉你粒子在哪，只告诉你概率：量子世界的第一条统计规则。',
+      },
+      {
+        id: 'commutator',
+        tex: '\\left[\\hat{x}, \\hat{p}\\right] = i\\hbar',
+        name: '正则对易关系',
+        by: '马克斯·玻恩 / 帕斯夸尔·约尔当',
+        year: '1925',
+        what: '先测位置再测动量，换个顺序结果就不同：矩阵力学的心跳。',
+      },
+      {
+        id: 'bohr-energy',
+        tex: 'E_{n} = -\\frac{13.6\\,\\mathrm{eV}}{n^{2}}',
+        name: '玻尔氢原子能级公式',
+        by: '尼尔斯·玻尔',
+        year: '1913',
+        what: '电子只能站在固定的台阶上：氢光谱一条条谱线的位置第一次被算对。',
+      },
+      {
+        id: 'plane-wave',
+        tex: '\\psi = Ae^{i(kx - \\omega t)}',
+        name: '自由粒子平面波',
+        by: '路易·德布罗意',
+        year: '1924',
+        what: '不被束缚的粒子是一列行波：量子教科书的第一个波函数。',
+      },
+      {
+        id: 'dirac',
+        tex: '\\left(i\\hbar\\gamma^{\\mu}\\partial_{\\mu} - mc\\right)\\psi = 0',
+        name: '狄拉克方程',
+        by: '保罗·狄拉克',
+        year: '1928',
+        what: '把量子力学和相对论缝进同一条方程，顺手预言了正电子——四年后被找到。',
+      },
+      {
+        id: 'energy-time',
+        tex: '\\Delta E\\,\\Delta t \\geq \\frac{\\hbar}{2}',
+        name: '能量-时间不确定关系',
+        by: '尼尔斯·玻尔等',
+        year: '1927',
+        what: '寿命越短的态，能量越说不准：谱线的天然宽度由此而来。',
+      },
+    ],
+  },
+  {
+    id: 'math',
+    label: '数学',
+    formulas: [
+      {
+        id: 'euler-identity',
+        tex: 'e^{i\\pi} + 1 = 0',
+        name: '欧拉恒等式',
+        by: '莱昂哈德·欧拉',
+        year: '1748',
+        what: '五个最要紧的常数——0、1、e、π、i——被同一个等号串在一起。',
+      },
+      {
+        id: 'pythagoras',
+        tex: 'a^{2} + b^{2} = c^{2}',
+        name: '勾股定理',
+        by: '毕达哥拉斯学派',
+        year: '约前 6 世纪',
+        what: '直角三角形三边的永恒关系：量地、盖房、导航都从这里出发。',
+      },
+      {
+        id: 'euler-polyhedron',
+        tex: 'V - E + F = 2',
+        name: '欧拉多面体公式',
+        by: '莱昂哈德·欧拉',
+        year: '1752',
+        what: '不管怎么捏凸多面体，点减棱加面恒等于 2：拓扑学的第一颗种子。',
+      },
+      {
+        id: 'ftc',
+        tex: '\\int_{a}^{b} f(x)\\,dx = F(b) - F(a)',
+        name: '微积分基本定理',
+        by: '牛顿 / 莱布尼茨',
+        year: '17 世纪',
+        what: '微分和积分互为逆运算：算面积不必再穷竭分割，找原函数就行。',
+      },
+      {
+        id: 'exp-series',
+        tex: 'e^{x} = \\sum_{n=0}^{\\infty} \\frac{x^{n}}{n!}',
+        name: '指数函数级数',
+        by: '布鲁克·泰勒 / 科林·麦克劳林',
+        year: '18 世纪',
+        what: '指数函数可以写成无穷多项式：计算机和计算器算 eˣ 就靠这类展开。',
+      },
+      {
+        id: 'trig-identity',
+        tex: '\\sin^{2}\\theta + \\cos^{2}\\theta = 1',
+        name: '三角恒等式',
+        by: '由勾股定理直接推出',
+        year: '古代',
+        what: '同一个角正弦与余弦的平方和恒为 1：所有三角换算的总闸门。',
+      },
+      {
+        id: 'zeta',
+        tex: '\\zeta(s) = \\sum_{n=1}^{\\infty} \\frac{1}{n^{s}}',
+        name: '黎曼 ζ 函数',
+        by: '欧拉引入 / 黎曼深挖',
+        year: '1737',
+        what: '素数分布的密码本。它的零点在哪里，是悬赏一百万美元的千禧年难题。',
+      },
+      {
+        id: 'golden-ratio',
+        tex: '\\varphi = \\frac{1 + \\sqrt{5}}{2}',
+        name: '黄金分割比',
+        by: '欧几里得《几何原本》',
+        year: '前 3 世纪',
+        what: '整体与部分的特殊比例：连分数全为 1 的极限，斐波那契数列相邻项之比。',
+      },
+      {
+        id: 'gauss-integral',
+        tex: '\\int_{-\\infty}^{\\infty} e^{-x^{2}}\\,dx = \\sqrt{\\pi}',
+        name: '高斯积分',
+        by: '卡尔·弗里德里希·高斯',
+        year: '1809',
+        what: '钟形曲线下的总面积恰好是 √π：正态分布的归一化常数由此而来。',
+      },
+      {
+        id: 'fourier',
+        tex: '\\hat{f}(\\xi) = \\int_{-\\infty}^{\\infty} f(x)e^{-2\\pi ix\\xi}\\,dx',
+        name: '傅里叶变换',
+        by: '约瑟夫·傅里叶',
+        year: '1822',
+        what: '任何信号都能拆成一堆纯频率：MP3、JPEG、Wi-Fi 全都长在它上面。',
+      },
+      {
+        id: 'quadratic',
+        tex: 'x = \\frac{-b \\pm \\sqrt{b^{2} - 4ac}}{2a}',
+        name: '一元二次方程求根公式',
+        by: '花拉子密集大成',
+        year: '9 世纪',
+        what: '任何二次方程都能机械求解。代数学（algebra）的名字就来自他的著作。',
+      },
+      {
+        id: 'bayes',
+        tex: 'P(A|B) = \\frac{P(B|A)\\,P(A)}{P(B)}',
+        name: '贝叶斯定理',
+        by: '托马斯·贝叶斯',
+        year: '1763',
+        what: '新证据如何更新旧判断：从垃圾邮件过滤到现代机器学习都靠它迭代。',
+      },
+      {
+        id: 'stirling',
+        tex: 'n! \\approx \\sqrt{2\\pi n}\\left(\\frac{n}{e}\\right)^{n}',
+        name: '斯特林公式',
+        by: '詹姆斯·斯特林',
+        year: '1730',
+        what: '阶乘涨得有多快的渐近答案：统计物理和组合计数的常用扳手。',
+      },
+      {
+        id: 'laplace',
+        tex: '\\nabla^{2}\\varphi = 0',
+        name: '拉普拉斯方程',
+        by: '皮埃尔-西蒙·拉普拉斯',
+        year: '1782',
+        what: '无源之处的平衡方程：引力势、电势、稳态温度分布都服从它。',
+      },
+    ],
+  },
+]
+
+export type { SceneId } from './equation-wormhole-model'
+
+export const SCENE_DEFS: Array<{ id: SceneId; label: string }> = [
+  { id: 'wormhole', label: '隧道' },
+  { id: 'rush', label: '穿越' },
+  { id: 'rain', label: '雨' },
+  { id: 'portrait', label: '画像' },
+  { id: 'blackhole', label: '黑洞' },
+  { id: 'mobius', label: '莫比乌斯环' },
+]
+
+export const subjectById = (id: string): FormulaSubject =>
+  FORMULA_SUBJECTS.find((s) => s.id === id) ?? FORMULA_SUBJECTS[0]
+
+export const MIXED_FORMULAS: FormulaEntry[] = FORMULA_SUBJECTS.flatMap(subject => subject.formulas)

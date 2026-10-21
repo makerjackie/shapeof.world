@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-08",
+  "code": "SFX-FOLEY-08",
+  "title": {
+    "en": "Pen click",
+    "zh": "按动圆珠笔"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 7,
+  "seed": 4237236157,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized pen click for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的按动圆珠笔合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.37,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4237236157,
+    "sha256": "09c98e1d305e254702de97f94b913105679b13b5135a00c7c155e7e2910843ec",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "68382e11ccdc6ebadf61f81d6a9317597c63839eee0a5c84d5bc03d698927d30",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "09c98e1d305e254702de97f94b913105679b13b5135a00c7c155e7e2910843ec",
+      "bytes": 32678,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "715a3e8b9bb7c8024989b27e60f534308b4474ccdfc262e3b62d5b739794490f",
+      "bytes": 10155,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "958e3013888a96aca453a19853138a228c3c700ce49431cd84bf1590b847cfa2",
+      "bytes": 1906,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16317,
+    "duration": 0.37,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.06,
+    "dcOffset": 2.3378668049426978e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2229284667968745,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp synthesized electrical zap or spark sound effect with a quick fizz tail.",
+      "zh": "一个短促、尖锐的合成电击或电火花音效，带有一个快速的嘶嘶声尾音。"
+    },
+    "reason": "The sound is a clean, isolated synthesized effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:03.228592+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "68382e11ccdc6ebadf61f81d6a9317597c63839eee0a5c84d5bc03d698927d30"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16317
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.864631+00:00"
+}

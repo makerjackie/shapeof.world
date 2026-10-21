@@ -1,0 +1,102 @@
+{
+  "id": "lib-jazz-trio-celebrate",
+  "code": "LIB-07-10",
+  "title": {
+    "en": "First Light — Jazz Trio",
+    "zh": "初光 · 爵士三重奏"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "jazz-trio"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "C major",
+  "instruments": [
+    "piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic jazz instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: piano, upright bass, brushed drums. Style: relaxed swing, walking bass and conversational piano. Tempo approximately 108 BPM; C major. Main idea: a compact three-note motif. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and upbeat jazz track featuring a prominent piano melody, a walking upright bassline, light and swinging drums, and subtle electric guitar comping. The mood is sophisticated and positive.",
+    "zh": "一首活泼欢快的爵士乐曲，以突出的钢琴旋律、行进的低音提琴线、轻快摇摆的鼓点和微妙的电吉他伴奏为特色。氛围精致而积极。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 56.503,
+  "generatedAt": "2026-09-09T08:05:40.865980+00:00",
+  "generation": {
+    "id": "3e7a8bf6-6b37-4035-9d2b-8472df34aa85",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:04:57.324123+00:00",
+    "completedAt": "2026-09-09T08:05:40.865980+00:00",
+    "interactionId": "KhOhas6CEZC9jMwPrKKKyAI",
+    "sha256": "944de6726cbaec61052ba68cf4a22146530d46f2feed59bc6099fcd8efb30997"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat jazz track featuring a prominent piano melody, a walking upright bassline, light and swinging drums, and subtle electric guitar comping. The mood is sophisticated and positive.",
+      "zh": "一首活泼欢快的爵士乐曲，以突出的钢琴旋律、行进的低音提琴线、轻快摇摆的鼓点和微妙的电吉他伴奏为特色。氛围精致而积极。"
+    },
+    "instruments": [
+      "Piano",
+      "Upright Bass",
+      "Drums",
+      "Electric Guitar"
+    ],
+    "moods": [
+      "Upbeat",
+      "Jazzy",
+      "Lively",
+      "Playful",
+      "Sophisticated",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The track is well-produced with clear instrumentation, a consistent upbeat mood, and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:05:49.476622+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:06:51.379989+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

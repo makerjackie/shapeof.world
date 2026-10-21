@@ -1,0 +1,104 @@
+{
+  "id": "lib-harp-celebrate",
+  "code": "LIB-03-10",
+  "title": {
+    "en": "First Light — Harp",
+    "zh": "初光 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "harp"
+  ],
+  "energy": 4,
+  "bpm": 84,
+  "key": "C major",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second pastoral acoustic instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 84 BPM; C major. Main idea: an ascending fourth answered by a stepwise descent. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and whimsical instrumental piece with a folk-classical fusion feel. It features a prominent flute melody, supported by pizzicato and bowed strings, and light percussion, creating an upbeat and traditional atmosphere.",
+    "zh": "一首活泼而异想天开的器乐作品，融合了民间与古典风格。它以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器以及轻柔的打击乐，营造出欢快而传统的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.932,
+  "generatedAt": "2026-09-09T07:51:33.654897+00:00",
+  "generation": {
+    "id": "136f4337-1964-49df-a646-0c8eb7ccf1f5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:50:53.810455+00:00",
+    "completedAt": "2026-09-09T07:51:33.654897+00:00",
+    "interactionId": "3g-hat2HOKKsrtoP65a1oAo",
+    "sha256": "ba019af6abb09448eb1efceb0504067ebd6644d4a0e5bb0ab4a6b600a65628cd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and whimsical instrumental piece with a folk-classical fusion feel. It features a prominent flute melody, supported by pizzicato and bowed strings, and light percussion, creating an upbeat and traditional atmosphere.",
+      "zh": "一首活泼而异想天开的器乐作品，融合了民间与古典风格。它以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器以及轻柔的打击乐，营造出欢快而传统的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Percussion (Triangle)"
+    ],
+    "moods": [
+      "Whimsical",
+      "Lively",
+      "Playful",
+      "Folkloric",
+      "Traditional",
+      "Classical"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is clean, well-produced, and features clear instrumental performances suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:51:50.428992+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:52:54.552477+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

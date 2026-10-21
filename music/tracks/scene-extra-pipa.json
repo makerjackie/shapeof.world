@@ -1,0 +1,133 @@
+{
+  "id": "scene-extra-pipa",
+  "code": "SCENE-EXTRA-8",
+  "title": {
+    "en": "Paper Lantern",
+    "zh": "纸灯笼"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 110,
+  "key": "",
+  "instruments": [
+    "pipa",
+    "soft bass and woodblock"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Original 60-second instrumental composition. Instruments exclusively: pipa, soft bass and woodblock. 110 BPM. crisp original plucked motif with a spacious steady pulse. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and elegant orchestral piece featuring traditional East Asian instruments like Guzheng, flute, and Pipa, accompanied by strings and light percussion.",
+    "zh": "一首宁静典雅的管弦乐曲，以古筝、笛子、琵琶等东方传统乐器为主，辅以弦乐和轻柔的打击乐。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 59.011,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:39:32.560016+00:00",
+  "generation": {
+    "id": "fb547914-6587-4a9a-b3d5-9fb3180fa8d2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:38:48.803055+00:00",
+    "completedAt": "2026-09-22T09:39:32.560016+00:00",
+    "interactionId": "qUyyapD_Ivjg8vUP-oXvoAg",
+    "sha256": "a50ddd4680b7a3d3eb4d0d1da731fe0cff10b11ad2957814ad8971fc2834a6ba"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and elegant orchestral piece featuring traditional East Asian instruments like Guzheng, flute, and Pipa, accompanied by strings and light percussion.",
+      "zh": "一首宁静典雅的管弦乐曲，以古筝、笛子、琵琶等东方传统乐器为主，辅以弦乐和轻柔的打击乐。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Flute",
+      "Strings",
+      "Pipa",
+      "Percussion",
+      "Harp"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Serene",
+      "Traditional",
+      "Elegant",
+      "Reflective",
+      "Tranquil"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:39:54.601800+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-pipa/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-pipa/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-pipa/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4688b920853d5a616aaf0008e167420410d6c663b613a6552f65e2a08180b150",
+      "bytes": 826923,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a50ddd4680b7a3d3eb4d0d1da731fe0cff10b11ad2957814ad8971fc2834a6ba",
+      "bytes": 1423921,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a02dee8e52c410f079236def10f0a39ef228fb7233695fea9860e413bb78a94d",
+      "bytes": 2799,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.454219+00:00"
+}

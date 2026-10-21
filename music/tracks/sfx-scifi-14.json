@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-14",
+  "code": "SFX-SCIFI-14",
+  "title": {
+    "en": "Reactor pulse",
+    "zh": "反应堆脉冲"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 13,
+  "seed": 752072034,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized reactor pulse for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的反应堆脉冲合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.74,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 752072034,
+    "sha256": "e64210af51297118fb198e5afcd0bf00a29d8ee33a82c38432ac0f3acab56226",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e2b5cac534b700db51580e8eb10469f26a36d8d319dee1f405ae5a5a7f83e723",
+      "bytes": 25277,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e64210af51297118fb198e5afcd0bf00a29d8ee33a82c38432ac0f3acab56226",
+      "bytes": 153512,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e6dfce4b33330e34b634547d0d395c2c046ad4114c1f2192ea5825643b65dd5a",
+      "bytes": 28953,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "384613dbe1e2d44d13c1dc48d6cacff45eda755b864a24a76d886feeb1bb73bf",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 76734,
+    "duration": 1.74,
+    "peakDbfs": -4.06,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.7384371253290587e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12978747558593673,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthesized whoosh sound effect with a distinct upward and then downward frequency sweep, creating a dynamic, fast-moving sensation.",
+      "zh": "合成的嗖嗖声效果，具有明显的先上升后下降的频率扫频，营造出动态、快速移动的感觉。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized whoosh, free from defects and suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:09.928615+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e2b5cac534b700db51580e8eb10469f26a36d8d319dee1f405ae5a5a7f83e723"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 76734
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901220+00:00"
+}

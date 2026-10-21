@@ -1,0 +1,182 @@
+{
+  "id": "scene-guzheng-15",
+  "code": "SCENE-11-15",
+  "title": {
+    "en": "Porcelain Steps · 15",
+    "zh": "瓷器轻步 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "modern material and design close-ups",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "plucked bass",
+    "dry electronic percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 15,
+  "prompt": "Create a complete original 60-second instrumental cue in guzheng style. Use guzheng, plucked bass, dry electronic percussion. Tempo 118 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a catchy synth melody, driving beat, and modern production. Ideal for promotional content.",
+    "zh": "一首欢快且充满活力的电子音乐，具有引人入胜的合成器旋律、强劲的节拍和现代制作。非常适合宣传内容。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "modern material and design close-ups"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:30:12.406108+00:00",
+  "generation": {
+    "id": "094eceeb-4bea-4df3-9b7b-cf8e9dbdd29e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:29:32.983288+00:00",
+    "completedAt": "2026-09-22T09:30:12.406108+00:00",
+    "interactionId": "fUqyau6tK53vv_gP1PPxsQc",
+    "sha256": "eb1cdcd3c78934b899bb37b199598e3652877b67ef0ade261d78baf54e0447b7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a catchy synth melody, driving beat, and modern production. Ideal for promotional content.",
+      "zh": "一首欢快且充满活力的电子音乐，具有引人入胜的合成器旋律、强劲的节拍和现代制作。非常适合宣传内容。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass",
+      "pads"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "modern",
+      "driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean, and suitable for its intended promotional use.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent synth melody and beat, and concludes with a short, deliberate musical flourish and final drum hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:28.811725+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a57e851a54fb560645f8d24c1db05b9555fa2249fda2365cbc2a7173177c3d80"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.827708,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring traditional East Asian melodic elements over a modern electronic dance beat. It combines plucked strings, synth melodies, and a driving rhythm section.",
+      "zh": "一首欢快且充满活力的纯音乐曲目，以现代电子舞曲节拍为基础，融入了东亚传统旋律元素。它结合了弹拨乐器、合成器旋律和强劲的节奏部分。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Synthesizer",
+      "Plucked Strings (Pipa/Guzheng-like)",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Exotic",
+      "Driving",
+      "Modern",
+      "Traditional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:18.997581+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 43.827708,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-guzheng-15/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-guzheng-15/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-guzheng-15/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a57e851a54fb560645f8d24c1db05b9555fa2249fda2365cbc2a7173177c3d80",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "eb1cdcd3c78934b899bb37b199598e3652877b67ef0ade261d78baf54e0447b7",
+      "bytes": 1419533,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "af3eb5e3e710ca6769ae7a1b79e99c6637be2ebbcd6d6f1443f47e86d5652527",
+      "bytes": 2796,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.467510+00:00"
+}

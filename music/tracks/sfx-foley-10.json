@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-10",
+  "code": "SFX-FOLEY-10",
+  "title": {
+    "en": "Tape peel",
+    "zh": "胶带揭起"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 9,
+  "seed": 555122549,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized tape peel for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的胶带揭起合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.67,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 555122549,
+    "sha256": "b4c9a3154cb3a0b9de5e95049822091c7f70f2378e3c13dd7240705a06d0f9e0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1be22a2e612ad83314f87a9f19a330b5918c5245ce0e2526da77e5dfa849512d",
+      "bytes": 10283,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b4c9a3154cb3a0b9de5e95049822091c7f70f2378e3c13dd7240705a06d0f9e0",
+      "bytes": 59138,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "cf36f3a806fc69140ae4afe1a2046b4954fd6c130fe986e5f64f5f071165eddd",
+      "bytes": 11205,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3e9080379548c6522221c285b102756c7ec53543c3f98f10a92b52204a9ec60c",
+      "bytes": 1710,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 29547,
+    "duration": 0.67,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.82,
+    "dcOffset": -2.2722669602666938e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.18901535034179906,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, electronic static burst or zap sound effect.",
+      "zh": "短促、尖锐的电子静电爆发或电击音效。"
+    },
+    "reason": "The sound is a clean, isolated, and usable electronic sound effect without any technical defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:55.597204+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1be22a2e612ad83314f87a9f19a330b5918c5245ce0e2526da77e5dfa849512d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 29547
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.865179+00:00"
+}

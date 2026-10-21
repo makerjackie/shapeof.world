@@ -1,0 +1,101 @@
+{
+  "id": "lib-harp-nature",
+  "code": "LIB-03-04",
+  "title": {
+    "en": "Wildlands — Harp",
+    "zh": "山野 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "harp"
+  ],
+  "energy": 1,
+  "bpm": 68,
+  "key": "D dorian",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second pastoral acoustic instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 68 BPM; D dorian. Main idea: a compact three-note motif. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring a clear, high-pitched wind instrument (flute/recorder-like) playing the main melody, accompanied by a string ensemble. The music evokes a calm and somewhat classical or folk atmosphere.",
+    "zh": "一首轻柔而旋律优美的纯音乐，以清晰、高音的管乐器（类似长笛/竖笛）演奏主旋律，并由弦乐合奏伴奏。音乐营造出一种平静、略带古典或民间风格的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.67,
+  "generatedAt": "2026-09-09T07:49:20.588676+00:00",
+  "generation": {
+    "id": "fd3345bf-6baf-4c74-a502-2c3cbcc92aba",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:48:34.723513+00:00",
+    "completedAt": "2026-09-09T07:49:20.588676+00:00",
+    "interactionId": "Uw-havqdNszRi9sPrKHS-AM",
+    "sha256": "92b182436bb3de3169585b190b712a9d34284744386dab47fa5ba6f900c0b1dd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring a clear, high-pitched wind instrument (flute/recorder-like) playing the main melody, accompanied by a string ensemble. The music evokes a calm and somewhat classical or folk atmosphere.",
+      "zh": "一首轻柔而旋律优美的纯音乐，以清晰、高音的管乐器（类似长笛/竖笛）演奏主旋律，并由弦乐合奏伴奏。音乐营造出一种平静、略带古典或民间风格的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Violin",
+      "Cello",
+      "Harp"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Serene",
+      "Reflective",
+      "Gentle"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:49:37.948365+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:52:05.799031+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

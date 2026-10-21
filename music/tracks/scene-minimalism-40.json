@@ -1,0 +1,180 @@
+{
+  "id": "scene-minimalism-40",
+  "code": "SCENE-17-40",
+  "title": {
+    "en": "Measured Motion · 40",
+    "zh": "有序运动 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "satisfying mechanical transformations",
+    "product-video"
+  ],
+  "energy": 3,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "marimba",
+    "muted piano",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for satisfying mechanical transformations. Instruments: marimba, muted piano, woodblocks. 120 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and playful acoustic folk-pop track featuring pizzicato strings, acoustic guitar, and light percussion, creating a bright and cheerful atmosphere.",
+    "zh": "一首欢快活泼的民谣流行乐曲，以拨弦乐器、原声吉他和轻快打击乐为主，营造出明亮愉悦的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "satisfying mechanical transformations"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:18:42.877997+00:00",
+  "generation": {
+    "id": "5801d299-8f5d-44d5-8436-339845b8de59",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:18:01.455621+00:00",
+    "completedAt": "2026-09-22T09:18:42.877997+00:00",
+    "interactionId": "ykeyaoP9Ie7i694Pjazv0QI",
+    "sha256": "fa2dcc5c94e17cfab493d977e32dfa8dd980abbc2b1b9966bfaceabc49be6003"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and playful acoustic folk-pop track featuring pizzicato strings, acoustic guitar, and light percussion, creating a bright and cheerful atmosphere.",
+      "zh": "一首欢快活泼的民谣流行乐曲，以拨弦乐器、原声吉他和轻快打击乐为主，营造出明亮愉悦的氛围。"
+    },
+    "instruments": [
+      "pizzicato strings",
+      "acoustic guitar",
+      "light percussion",
+      "bells"
+    ],
+    "moods": [
+      "cheerful",
+      "playful",
+      "light",
+      "optimistic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 126,
+    "reason": "Well-produced, catchy, and bright instrumental track with a clear structure and positive mood, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a bright, catchy pizzicato string melody and light percussion, establishing a cheerful mood. It concludes with a clear musical resolution, fading out on a final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:01.363549+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "7077b04121f2c0964a7313effd0655bbd05dfcd21cdfa030e6e8d9fca4424960"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.887292,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a bright synth melody, driving synth bass, and dynamic percussion. It has a modern, positive, and slightly playful feel.",
+      "zh": "一首欢快且充满活力的电子音乐，以明亮的合成器旋律、强劲的合成器贝斯和动感的打击乐为特色。它带有一种现代、积极且略带俏皮的感觉。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass",
+      "percussion"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "playful",
+      "driving",
+      "modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced, clean electronic track with a clear structure and consistent energy, making it suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:52.973901+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.887292000000002,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-minimalism-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-minimalism-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-minimalism-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7077b04121f2c0964a7313effd0655bbd05dfcd21cdfa030e6e8d9fca4424960",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fa2dcc5c94e17cfab493d977e32dfa8dd980abbc2b1b9966bfaceabc49be6003",
+      "bytes": 1396963,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "7cd9736cd3efd1875a4abb795cd5b7f89600801038203f2932e116bd813297e9",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.847817+00:00"
+}

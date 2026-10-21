@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-11",
+  "code": "SFX-MAGIC-11",
+  "title": {
+    "en": "Enchant",
+    "zh": "附魔"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 10,
+  "seed": 2945436603,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized enchant for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的附魔合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.84,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2945436603,
+    "sha256": "d4f110682245162a959983661e7a70138cc5eab8ddfb6228bdd0178236c77eaa",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "49d2106bf26e0892ff388811620129d1a75e81ef445b7190e39648914507953e",
+      "bytes": 26740,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d4f110682245162a959983661e7a70138cc5eab8ddfb6228bdd0178236c77eaa",
+      "bytes": 162332,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "afc9c385d5fdc794f7e66ad0ea0ec3e09292c5a7d6e2a7e3694410ad87ce36ba",
+      "bytes": 38389,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "24514f84e71dcac0ebf80eda6170290af4ae8ec9b2d44db078d1e04ca4796210",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 81144,
+    "duration": 1.84,
+    "peakDbfs": -4.56,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.550708559012373e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14640167236328017,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, electronic spring or boing sound effect, reminiscent of a cartoon sound.",
+      "zh": "一个短促、高音调的电子弹簧或“boing”音效，类似于卡通音效。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced electronic sound effect, free of any technical defects or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:43.377253+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "49d2106bf26e0892ff388811620129d1a75e81ef445b7190e39648914507953e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 81144
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.882714+00:00"
+}

@@ -1,0 +1,130 @@
+{
+  "id": "ambience-wind-05",
+  "code": "AMB-WIND-05",
+  "title": {
+    "en": "Winter wind · designed ambience",
+    "zh": "冬日寒风 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "wind",
+  "designIndex": 4,
+  "seed": 2817246569,
+  "targetDuration": 45,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized winter wind atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "冬日寒风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "wind",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-wind"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 45.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-wind-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-wind-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-wind-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-wind-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2817246569,
+    "sha256": "29e302fbf09f294663d0019a19704f30eea398700d9d60a39bb9e58fbcef9301",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a33850f5e8c03d824c07aa60e7587ae75fcc28e67f88e1880529434b4ee412a5",
+      "bytes": 630900,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "29e302fbf09f294663d0019a19704f30eea398700d9d60a39bb9e58fbcef9301",
+      "bytes": 3969044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f1b2025596fa87a8fa8891b41808df188eae5a6cd32c25db89aa33ba842af238",
+      "bytes": 315291,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "74565facb959247744bc8e84c98d372e0d0e6f542ddb73bb39189033c2e1e1ab",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1984500,
+    "duration": 45.0,
+    "peakDbfs": -2.19,
+    "rmsDbfs": -17.08,
+    "dcOffset": -6.904707774313429e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00433349609375,
+    "internalStepP999": 0.0296630859375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A continuous, synthetic, low-frequency hum with a resonant, slightly metallic quality. It features subtle, evolving high-frequency elements that create a sense of distant whirring or shimmering, suitable for an abstract or technological ambient background.",
+      "zh": "持续的合成低频嗡鸣声，带有共鸣感和轻微的金属质感。包含细微且不断变化的高频元素，营造出一种遥远旋转或闪烁的感觉，适合作为抽象或科技环境的背景音。"
+    },
+    "reason": "This is a clean, well-produced, and versatile ambient texture. It has no audible defects and loops perfectly, making it highly suitable for game or video sound design libraries.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:13.251634+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "f8fd3afe02a56648d7f1809368eea2e902ae130330e494cf40a457dad7ee8054"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1984500
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.861577+00:00"
+}

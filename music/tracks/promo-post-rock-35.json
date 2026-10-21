@@ -1,0 +1,158 @@
+{
+  "id": "promo-post-rock-35",
+  "code": "PROMO-18-35",
+  "title": {
+    "en": "Open Horizon · 35",
+    "zh": "展开地平线 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 130,
+  "key": "",
+  "instruments": [
+    "clean electric guitar",
+    "melodic bass",
+    "tight acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: energetic instrumental guitar rock with immediate sparkling riff. Instruments: clean electric guitar, melodic bass, tight acoustic drums. Tempo 130 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and driving rock track featuring prominent electric guitars, a solid bassline, and dynamic drums. It has a bright, upbeat feel with a clear melodic structure.",
+    "zh": "一首充满活力和动感的摇滚乐曲，以突出的电吉他、坚实的贝斯线和富有活力的鼓点为特色。它具有明亮、欢快的氛围和清晰的旋律结构。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:33:57.166077+00:00",
+  "generation": {
+    "id": "e3647693-e6f9-49d9-98be-d8ebdad7f2de",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:33:14.664736+00:00",
+    "completedAt": "2026-09-10T05:33:57.166077+00:00",
+    "interactionId": "G0Giasa_EszRi9sPrKHS-AM",
+    "sha256": "d83e14c904965cc005e480647b4c3768a11b72ad157b229a19eb8f974d25dec2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving rock track featuring prominent electric guitars, a solid bassline, and dynamic drums. It has a bright, upbeat feel with a clear melodic structure.",
+      "zh": "一首充满活力和动感的摇滚乐曲，以突出的电吉他、坚实的贝斯线和富有活力的鼓点为特色。它具有明亮、欢快的氛围和清晰的旋律结构。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Lively",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 165,
+    "reason": "Well-produced, high-energy rock track with clear instrumentation and a strong rhythmic drive.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving electric guitar riff and drums. It concludes with a sustained guitar chord and a final drum hit, providing a clear resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:26.097159+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "564439ea8239da5e787a1d86bdcc48d463b26ee3f3468cbce12c6cdc68b4fec4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.20075,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A high-energy instrumental rock track featuring prominent electric guitar melodies, a driving bassline, and dynamic drumming. The track has a lively and upbeat feel.",
+      "zh": "一首高能量的纯器乐摇滚乐曲，以突出的电吉他旋律、强劲的贝斯线和充满活力的鼓点为特色。这首曲子充满活力和乐观的感觉。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Driving",
+      "Lively",
+      "Rock"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Clean, well-produced instrumental track with a clear rock genre, suitable for various media applications requiring an energetic background.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:12.526655+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 23.20075,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-post-rock-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-post-rock-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-post-rock-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:39.002002+00:00"
+}

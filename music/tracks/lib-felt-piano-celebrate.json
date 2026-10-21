@@ -1,0 +1,99 @@
+{
+  "id": "lib-felt-piano-celebrate",
+  "code": "LIB-01-10",
+  "title": {
+    "en": "First Light — Felt Piano",
+    "zh": "初光 · 毡音钢琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "felt-piano"
+  ],
+  "energy": 2,
+  "bpm": 76,
+  "key": "C major",
+  "instruments": [
+    "felt piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second neoclassical felt piano instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: felt piano, soft cello. Style: spacious broken chords, intimate close room. Tempo approximately 76 BPM; C major. Main idea: a descending melody with an upward answer. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A melancholic and reflective classical piece featuring a prominent string melody, likely a violin or cello, accompanied by a piano. The arrangement is elegant and expressive, with a gentle flow.",
+    "zh": "一首忧郁而沉思的古典乐曲，以突出的弦乐旋律为主，可能是小提琴或大提琴，并由钢琴伴奏。编曲优雅富有表现力，流畅而轻柔。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.69,
+  "generatedAt": "2026-09-09T07:41:16.640042+00:00",
+  "generation": {
+    "id": "e573a464-51c0-46fb-8098-c1fb2b577d01",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:40:33.542507+00:00",
+    "completedAt": "2026-09-09T07:41:16.640042+00:00",
+    "interactionId": "cg2havbgJpC9jMwPrKKKyAI",
+    "sha256": "c4608fd649b73ba1f530b56d6194f06251f2e234019a7963b4dc926bfcba422d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and reflective classical piece featuring a prominent string melody, likely a violin or cello, accompanied by a piano. The arrangement is elegant and expressive, with a gentle flow.",
+      "zh": "一首忧郁而沉思的古典乐曲，以突出的弦乐旋律为主，可能是小提琴或大提琴，并由钢琴伴奏。编曲优雅富有表现力，流畅而轻柔。"
+    },
+    "instruments": [
+      "Violin",
+      "Piano",
+      "Cello"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Elegant",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "Well-recorded and performed, suitable for background music or reflective content.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:41:24.435150+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:42:20.614877+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

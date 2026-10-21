@@ -1,0 +1,1098 @@
+{
+  "schemaVersion": 1,
+  "batch": "short-promos-2026-09",
+  "tracks": [
+    {
+      "id": "short-funk-15",
+      "code": "SHORT-01-15",
+      "title": {
+        "en": "Snap Fit · 15",
+        "zh": "咔哒合拍 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 4,
+      "bpm": 112,
+      "key": "",
+      "instruments": [
+        "muted rhythm guitar",
+        "elastic electric bass",
+        "dry claps",
+        "tight kick"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "funk"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful electro-funk; syncopated bass answers clipped guitar cue for product-demo.",
+        "zh": "咔哒合拍风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-funk-20",
+      "code": "SHORT-01-20",
+      "title": {
+        "en": "Snap Fit · 20",
+        "zh": "咔哒合拍 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 4,
+      "bpm": 112,
+      "key": "",
+      "instruments": [
+        "muted rhythm guitar",
+        "elastic electric bass",
+        "dry claps",
+        "tight kick"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "funk"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful electro-funk; syncopated bass answers clipped guitar cue for product-demo.",
+        "zh": "咔哒合拍风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-funk-25",
+      "code": "SHORT-01-25",
+      "title": {
+        "en": "Snap Fit · 25",
+        "zh": "咔哒合拍 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 4,
+      "bpm": 112,
+      "key": "",
+      "instruments": [
+        "muted rhythm guitar",
+        "elastic electric bass",
+        "dry claps",
+        "tight kick"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "funk"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful electro-funk; syncopated bass answers clipped guitar cue for product-demo.",
+        "zh": "咔哒合拍风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-breakbeat-15",
+      "code": "SHORT-02-15",
+      "title": {
+        "en": "Quick Shift · 15",
+        "zh": "瞬间换挡 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 136,
+      "key": "",
+      "instruments": [
+        "chopped acoustic drums",
+        "analog synth plucks",
+        "tight bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: crisp breakbeat; energetic drum edits and a two-note synth hook. Instruments: chopped acoustic drums, analog synth plucks, tight bass. Tempo 136 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "breakbeat"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short crisp breakbeat; energetic drum edits and a two-note synth hook cue for fast-montage.",
+        "zh": "瞬间换挡风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-breakbeat-20",
+      "code": "SHORT-02-20",
+      "title": {
+        "en": "Quick Shift · 20",
+        "zh": "瞬间换挡 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 136,
+      "key": "",
+      "instruments": [
+        "chopped acoustic drums",
+        "analog synth plucks",
+        "tight bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: crisp breakbeat; energetic drum edits and a two-note synth hook. Instruments: chopped acoustic drums, analog synth plucks, tight bass. Tempo 136 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "breakbeat"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short crisp breakbeat; energetic drum edits and a two-note synth hook cue for fast-montage.",
+        "zh": "瞬间换挡风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-breakbeat-25",
+      "code": "SHORT-02-25",
+      "title": {
+        "en": "Quick Shift · 25",
+        "zh": "瞬间换挡 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 136,
+      "key": "",
+      "instruments": [
+        "chopped acoustic drums",
+        "analog synth plucks",
+        "tight bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: crisp breakbeat; energetic drum edits and a two-note synth hook. Instruments: chopped acoustic drums, analog synth plucks, tight bass. Tempo 136 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "breakbeat"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short crisp breakbeat; energetic drum edits and a two-note synth hook cue for fast-montage.",
+        "zh": "瞬间换挡风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-minimalism-15",
+      "code": "SHORT-03-15",
+      "title": {
+        "en": "Small Mechanisms · 15",
+        "zh": "微小机关 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "process"
+      ],
+      "energy": 3,
+      "bpm": 120,
+      "key": "",
+      "instruments": [
+        "woodblocks",
+        "pizzicato strings",
+        "marimba",
+        "brushed snare"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "minimalism"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody cue for process.",
+        "zh": "微小机关风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-minimalism-20",
+      "code": "SHORT-03-20",
+      "title": {
+        "en": "Small Mechanisms · 20",
+        "zh": "微小机关 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "process"
+      ],
+      "energy": 3,
+      "bpm": 120,
+      "key": "",
+      "instruments": [
+        "woodblocks",
+        "pizzicato strings",
+        "marimba",
+        "brushed snare"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "minimalism"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody cue for process.",
+        "zh": "微小机关风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-minimalism-25",
+      "code": "SHORT-03-25",
+      "title": {
+        "en": "Small Mechanisms · 25",
+        "zh": "微小机关 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "process"
+      ],
+      "energy": 3,
+      "bpm": 120,
+      "key": "",
+      "instruments": [
+        "woodblocks",
+        "pizzicato strings",
+        "marimba",
+        "brushed snare"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "minimalism"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody cue for process.",
+        "zh": "微小机关风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-house-15",
+      "code": "SHORT-04-15",
+      "title": {
+        "en": "Color Pop · 15",
+        "zh": "色彩跳动 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "reveal"
+      ],
+      "energy": 4,
+      "bpm": 124,
+      "key": "",
+      "instruments": [
+        "rounded kick",
+        "electric piano stabs",
+        "bright synth bass",
+        "shakers"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "house"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short bright compact house; buoyant chord stabs with a memorable bass hook cue for reveal.",
+        "zh": "色彩跳动风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "reveal",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-house-20",
+      "code": "SHORT-04-20",
+      "title": {
+        "en": "Color Pop · 20",
+        "zh": "色彩跳动 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "reveal"
+      ],
+      "energy": 4,
+      "bpm": 124,
+      "key": "",
+      "instruments": [
+        "rounded kick",
+        "electric piano stabs",
+        "bright synth bass",
+        "shakers"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "house"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short bright compact house; buoyant chord stabs with a memorable bass hook cue for reveal.",
+        "zh": "色彩跳动风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "reveal",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-house-25",
+      "code": "SHORT-04-25",
+      "title": {
+        "en": "Color Pop · 25",
+        "zh": "色彩跳动 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "reveal"
+      ],
+      "energy": 4,
+      "bpm": 124,
+      "key": "",
+      "instruments": [
+        "rounded kick",
+        "electric piano stabs",
+        "bright synth bass",
+        "shakers"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "house"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short bright compact house; buoyant chord stabs with a memorable bass hook cue for reveal.",
+        "zh": "色彩跳动风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "reveal",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chiptune-15",
+      "code": "SHORT-05-15",
+      "title": {
+        "en": "Pixel Flip · 15",
+        "zh": "像素翻转 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 144,
+      "key": "",
+      "instruments": [
+        "square-wave arpeggios",
+        "triangle bass",
+        "crunchy electronic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful modern chiptune; original arcade-like call and response. Instruments: square-wave arpeggios, triangle bass, crunchy electronic drums. Tempo 144 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chiptune"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful modern chiptune; original arcade-like call and response cue for fast-montage.",
+        "zh": "像素翻转风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chiptune-20",
+      "code": "SHORT-05-20",
+      "title": {
+        "en": "Pixel Flip · 20",
+        "zh": "像素翻转 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 144,
+      "key": "",
+      "instruments": [
+        "square-wave arpeggios",
+        "triangle bass",
+        "crunchy electronic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful modern chiptune; original arcade-like call and response. Instruments: square-wave arpeggios, triangle bass, crunchy electronic drums. Tempo 144 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chiptune"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful modern chiptune; original arcade-like call and response cue for fast-montage.",
+        "zh": "像素翻转风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chiptune-25",
+      "code": "SHORT-05-25",
+      "title": {
+        "en": "Pixel Flip · 25",
+        "zh": "像素翻转 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "fast-montage"
+      ],
+      "energy": 4,
+      "bpm": 144,
+      "key": "",
+      "instruments": [
+        "square-wave arpeggios",
+        "triangle bass",
+        "crunchy electronic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful modern chiptune; original arcade-like call and response. Instruments: square-wave arpeggios, triangle bass, crunchy electronic drums. Tempo 144 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chiptune"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short playful modern chiptune; original arcade-like call and response cue for fast-montage.",
+        "zh": "像素翻转风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "fast-montage",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chamber-15",
+      "code": "SHORT-06-15",
+      "title": {
+        "en": "Paper Sprint · 15",
+        "zh": "纸上疾行 · 15"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 3,
+      "bpm": 116,
+      "key": "",
+      "instruments": [
+        "pizzicato cello",
+        "staccato violin",
+        "bass clarinet",
+        "dry hand percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 15,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM, 4/4. Main hook: a falling three-note figure. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chamber"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short nimble chamber pop; surprising offbeat accents and precise short phrases cue for product-demo.",
+        "zh": "纸上疾行风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chamber-20",
+      "code": "SHORT-06-20",
+      "title": {
+        "en": "Paper Sprint · 20",
+        "zh": "纸上疾行 · 20"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 3,
+      "bpm": 116,
+      "key": "",
+      "instruments": [
+        "pizzicato cello",
+        "staccato violin",
+        "bass clarinet",
+        "dry hand percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 20,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chamber"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short nimble chamber pop; surprising offbeat accents and precise short phrases cue for product-demo.",
+        "zh": "纸上疾行风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 20,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "short-chamber-25",
+      "code": "SHORT-06-25",
+      "title": {
+        "en": "Paper Sprint · 25",
+        "zh": "纸上疾行 · 25"
+      },
+      "category": "global",
+      "archetype": "discovery",
+      "role": "library",
+      "moods": [
+        "playful",
+        "rhythmic",
+        "confident"
+      ],
+      "topics": [
+        "short-promo",
+        "product-demo"
+      ],
+      "energy": 3,
+      "bpm": 116,
+      "key": "",
+      "instruments": [
+        "pizzicato cello",
+        "staccato violin",
+        "bass clarinet",
+        "dry hand percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-clip-preview",
+      "targetDuration": 25,
+      "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chamber"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "A short nimble chamber pop; surprising offbeat accents and precise short phrases cue for product-demo.",
+        "zh": "纸上疾行风格的短宣传片配乐。"
+      },
+      "batch": "short-promos-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "structure": {
+          "hook": 0,
+          "change": 16,
+          "logo": 29
+        },
+        "delivery": "ending-excerpt"
+      }
+    }
+  ]
+}

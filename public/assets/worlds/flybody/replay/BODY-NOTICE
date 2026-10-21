@@ -1,0 +1,14 @@
+NeuroMechFly v2 assets vendored from flygym
+  source: https://github.com/NeLy-EPFL/flygym (ref dev-v2.0.3)
+  path:   src/flygym/assets/model
+
+flygym is distributed under the Apache License, Version 2.0. The
+bundled meshes (meshes/*.stl) and the derived metadata (rigging.json,
+neutral_pose.json, colors.json) originate from that project and remain
+subject to its license and attribution requirements.
+
+NeuroMechFly v2 reference:
+  Wang-Chen et al. (2024), NeuroMechFly v2, Nature Methods.
+  https://doi.org/10.1038/s41592-024-02497-y
+
+Regenerate with: python scripts/vendor_neuromechfly_assets.py

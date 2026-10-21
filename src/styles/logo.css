@@ -1,0 +1,183 @@
+.logo-page {
+  --logo-shell: min(1080px, calc(100% - 10vw));
+  --logo-ink-soft: var(--text-2);
+  --logo-ink-faint: var(--text-3);
+  --logo-cn: 'Noto Serif SC', 'Source Han Serif SC', serif;
+  --logo-en: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+  color: var(--text);
+  background: var(--bg);
+}
+
+.logo-page *,
+.logo-page *::before,
+.logo-page *::after {
+  box-sizing: border-box;
+}
+
+.logo-page .site-header {
+  background: var(--bg);
+}
+
+.logo-hero,
+.logo-section {
+  width: var(--logo-shell);
+  margin: 0 auto;
+}
+
+.logo-hero {
+  padding: clamp(64px, 10vh, 104px) 0 48px;
+}
+
+.logo-hero h1 {
+  margin: 0;
+}
+
+.logo-lede {
+  max-width: 40em;
+  margin: 22px 0 0;
+  color: var(--logo-ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+}
+
+.logo-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.logo-section {
+  padding: 48px 0 8px;
+  border-top: 1px solid var(--line);
+}
+
+.logo-section h2 {
+  margin: 0 0 12px;
+}
+
+.logo-section > p {
+  max-width: 42em;
+  margin: 0 0 24px;
+  color: var(--logo-ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+}
+
+.logo-mark-grid,
+.logo-lockup-grid,
+.logo-size-row {
+  display: grid;
+  gap: 16px;
+}
+
+.logo-mark-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.logo-mark-grid--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.logo-lockup-grid {
+  grid-template-columns: 1fr;
+}
+
+.logo-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: #fffdf8;
+}
+
+.logo-card figcaption {
+  --logo-ink-faint: #5c635d;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px 14px;
+  color: var(--logo-ink-faint);
+  font-size: var(--fs-support);
+}
+
+.logo-stage {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  padding: 28px;
+}
+
+.logo-stage img {
+  display: block;
+  object-fit: cover;
+}
+
+.logo-stage--dark { background: #080a0a; }
+.logo-stage--paper { background: #f1ecdf; }
+.logo-mark { width: min(180px, 56%); height: auto; border-radius: 50%; }
+.logo-lockup-img { width: 100%; height: auto; display: block; }
+
+.logo-size-row {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+}
+
+.logo-size {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  color: var(--logo-ink-faint);
+  font-size: var(--fs-label);
+}
+
+.logo-size img { border-radius: 50%; }
+
+.logo-download {
+  color: var(--text);
+  font-size: var(--fs-support);
+}
+
+.logo-list {
+  max-width: 46em;
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--logo-ink-soft);
+  font-size: var(--fs-body);
+  line-height: 1.7;
+}
+
+.logo-list li + li { margin-top: 8px; }
+
+.logo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-body);
+}
+
+.logo-table th,
+.logo-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.logo-table th {
+  color: var(--logo-ink-faint);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.logo-page .site-footer { margin-top: 64px; }
+
+@media (max-width: 800px) {
+  .logo-page { --logo-shell: min(1080px, calc(100% - 32px)); }
+  .logo-mark-grid,
+  .logo-mark-grid--three,
+  .logo-size-row { grid-template-columns: 1fr; }
+}

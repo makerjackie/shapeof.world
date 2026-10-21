@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-08",
+  "code": "SFX-WATER-08",
+  "title": {
+    "en": "Wide splash",
+    "zh": "大片水花"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 7,
+  "seed": 79509032,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized wide splash for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的大片水花合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.3,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 79509032,
+    "sha256": "efae1175627955a8f378e8286441df2ece6eb4d9d9f176ce789bd93890106be6",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "08603c35096b7399372449e9a8fdef367d8fa1abe1f4a677d365493e6afe9d1d",
+      "bytes": 5163,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "efae1175627955a8f378e8286441df2ece6eb4d9d9f176ce789bd93890106be6",
+      "bytes": 26504,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0bde5830536f789cafe4470a8ce0de7ccff4e6162ba185885797cac273396573",
+      "bytes": 7327,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "371dce91d43b06cb2f956b359e0d08f6bb435b8ad58acd204b54274ab5fc05e0",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 13230,
+    "duration": 0.3,
+    "peakDbfs": -4.62,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.0760257227891155e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10778381347656263,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic clink sound effect.",
+      "zh": "一个短促、尖锐的金属叮当声效果。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined metallic impact, making it technically usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:59.810445+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "08603c35096b7399372449e9a8fdef367d8fa1abe1f4a677d365493e6afe9d1d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 13230
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.911648+00:00"
+}

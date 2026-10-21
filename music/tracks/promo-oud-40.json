@@ -1,0 +1,163 @@
+{
+  "id": "promo-oud-40",
+  "code": "PROMO-15-40",
+  "title": {
+    "en": "Copper Steps · 40",
+    "zh": "铜色脚步 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 5,
+  "bpm": 122,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "electric bass",
+    "handclaps"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: nimble oud-led groove with syncopated hand percussion. Instruments: oud, darbuka, electric bass, handclaps. Tempo 122 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody, supported by a driving bassline and dynamic drums. It has a lively and positive feel.",
+    "zh": "一首欢快活泼的纯音乐，以突出的电吉他旋律为主，配以强劲的贝斯线和动感的鼓点。整体感觉充满活力和积极向上。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:32:28.912885+00:00",
+  "generation": {
+    "id": "60528b67-6189-4971-8261-5206efdaf437",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:31:33.388580+00:00",
+    "completedAt": "2026-09-10T05:32:28.912885+00:00",
+    "interactionId": "tkCiavWADcO3i9sP57WLuQM",
+    "sha256": "113717dae689c578640781e39d66c3f835149ecba9c6defebaffb1a4d14086de"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody, supported by a driving bassline and dynamic drums. It has a lively and positive feel.",
+      "zh": "一首欢快活泼的纯音乐，以突出的电吉他旋律为主，配以强劲的贝斯线和动感的鼓点。整体感觉充满活力和积极向上。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drum kit"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Lively",
+      "Positive",
+      "Driving",
+      "Playful"
+    ],
+    "energy": 5,
+    "bpmEstimate": 122,
+    "reason": "This is a well-produced, energetic instrumental track with a clear structure, suitable for various promotional uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens with an immediate melodic hook and a clear beat, and concludes with a definitive final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:32:50.672540+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b7a53b8c5f491f8e2080b2a44099034b1affa44e39e64c5fd1c76fad8192b6af"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.861167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a prominent accordion melody over a driving rhythm section of acoustic guitar, bass, and drums. It evokes a festive, Mediterranean or Latin atmosphere.",
+      "zh": "一首欢快活泼的器乐曲，以手风琴为主旋律，搭配原声吉他、贝斯和鼓的强劲节奏。营造出节日般的地中海或拉丁风情。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass",
+      "Drums",
+      "Accordion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Festive",
+      "Cheerful",
+      "Danceable",
+      "Mediterranean",
+      "Latin"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-produced and engaging instrumental track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:32:40.711636+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.861167000000002,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-oud-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-oud-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-oud-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:15.758947+00:00"
+}

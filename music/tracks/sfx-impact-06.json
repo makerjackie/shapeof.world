@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-06",
+  "code": "SFX-IMPACT-06",
+  "title": {
+    "en": "Ceramic tap",
+    "zh": "陶瓷轻敲"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 5,
+  "seed": 2855234591,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized ceramic tap for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的陶瓷轻敲合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.1,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2855234591,
+    "sha256": "637407fee0cad16394b9d761ed07fb581dfbc861b47713ce638e2e4300d1b959",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7ed6775ac4292303cc3ba6bbfc2854d629be33cd47957e80e763d61bae96b11c",
+      "bytes": 16500,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "637407fee0cad16394b9d761ed07fb581dfbc861b47713ce638e2e4300d1b959",
+      "bytes": 97064,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "594aff97100f6a0969000e18569e53665cb6ba2a9f37e3c44de5a0beffa663ee",
+      "bytes": 12567,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6c3f3b12e3804453e0363bd34dfbfa099a9e2c68cb8de5476d2adae52d10c15d",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 48510,
+    "duration": 1.1,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.61,
+    "dcOffset": 1.0191399002782932e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1228937988281249,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched metallic ding sound, like a small bell or chime.",
+      "zh": "短促、尖锐、高音的金属叮当声，像小铃铛或钟琴。"
+    },
+    "reason": "The sound is a clean, isolated, and distinct metallic ding, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:00.457536+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7ed6775ac4292303cc3ba6bbfc2854d629be33cd47957e80e763d61bae96b11c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 48510
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.876751+00:00"
+}

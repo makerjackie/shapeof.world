@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-11",
+  "code": "SFX-SCIFI-11",
+  "title": {
+    "en": "Data transfer",
+    "zh": "数据传输"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 10,
+  "seed": 1730337728,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized data transfer for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的数据传输合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.02,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1730337728,
+    "sha256": "bdbfd08b5dd66e7dad0bcbd3820c51fbe00a5e6565aa3ac5899c1b82a96fd343",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0fb6612e1545fda48a83baff9859ef9bd0fc3a582231625291d700f3e8b1ea93",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bdbfd08b5dd66e7dad0bcbd3820c51fbe00a5e6565aa3ac5899c1b82a96fd343",
+      "bytes": 90008,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f9717d878603c1d4116aeff3d3eeb1fd94f97a82f286a3ffb4d5d5afb0103798",
+      "bytes": 18269,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0ca47dec51cf1e68f39c4a0f3a71eabf8b5aa22159559f9f4448b83269ba6536",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 44982,
+    "duration": 1.02,
+    "peakDbfs": -4.16,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.055773698368236e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1054998779296874,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthesized, high-pitched whoosh sound effect with a rapid rise and fall in frequency, resembling a futuristic weapon charge or quick transition.",
+      "zh": "一种合成的高音调嗖嗖声效果，频率快速上升和下降，类似于未来武器充能或快速过渡。"
+    },
+    "reason": "The sound is a clean, intentional synthesized effect with no technical flaws, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:06.279022+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0fb6612e1545fda48a83baff9859ef9bd0fc3a582231625291d700f3e8b1ea93"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 44982
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.900663+00:00"
+}

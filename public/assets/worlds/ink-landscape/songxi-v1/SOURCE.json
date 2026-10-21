@@ -1,0 +1,81 @@
+{
+  "title": "松溪入画",
+  "created": "2026-10-12",
+  "tool": "built-in image_gen",
+  "source": "Original project painting approved by the owner, with derived style-matched assets",
+  "license": "Project-controlled original visual content: CC BY-NC 4.0",
+  "storage": "Compressed fixed textures in Git + Static Assets; source PNG working masters stay outside public and Git. Under 10 MiB per world; no file above 1 MiB. Local runtime dependencies are collectable for offline exports.",
+  "assets": [
+    {
+      "file": "master.webp",
+      "sourceSha256": "31cc20ca1c996e188678cd04e53abb8d1af69ea4405fe86a13eb3167cd0ad230",
+      "sha256": "5d0f8b295fd6358c2588d2e8994e69205ee5faef9c2ccb401ba581bbe5f0b74b",
+      "bytes": 591538,
+      "dimensions": [
+        "  pixelWidth: 1672",
+        "  pixelHeight: 941"
+      ],
+      "conversion": "cwebp -q 92"
+    },
+    {
+      "file": "pine.webp",
+      "sourceSha256": "53991f02664e9dfc06b922e91271a8f2c232d6cd970ede99aa73d466fe00fefb",
+      "sha256": "efcb632c5bf32903d92c8afa453f925939e1b9344700ffba29a7f7e10ec2cd39",
+      "bytes": 160000,
+      "dimensions": [
+        "  pixelWidth: 768",
+        "  pixelHeight: 768"
+      ],
+      "conversion": "cwebp -q 90 -alpha_q 100 -resize 768 0"
+    },
+    {
+      "file": "horizon.webp",
+      "sourceSha256": "73f94fbfc65dde8e43ccc020b52e6d7c36d481a60f10740b324ce41dcd23bbf2",
+      "sha256": "0a8c36f2bf963dfbdac47b25ac912583c2fc2b2d7234bf50086bb4cb542d5d57",
+      "bytes": 172454,
+      "dimensions": [
+        "  pixelWidth: 1983",
+        "  pixelHeight: 793"
+      ],
+      "conversion": "cwebp -q 90"
+    },
+    {
+      "file": "stone.webp",
+      "sourceSha256": "6da4473ee1bede6e584f656d6265efb921af9ec3c8fecbeeb086367bb250e27c",
+      "sha256": "5d1abf2fc398f344965067856d75199a4991c53ba88caad63afdfdd1a83ba5f4",
+      "bytes": 342690,
+      "dimensions": [
+        "  pixelWidth: 1024",
+        "  pixelHeight: 1024"
+      ],
+      "conversion": "cwebp -q 88 -resize 1024 1024"
+    },
+    {
+      "file": "cun-v2.webp",
+      "sourceSha256": "1edbffef19e4e7bdfdb975b66b4dc62c2b8ab1fa95509a6da9e8f4a4a6489a32",
+      "sha256": "08f59652a49f270fe660c7a89192c9b9c2e500f0f4e6d1100b6219f6d489b039",
+      "bytes": 297332,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "conversion": "cwebp -q 86 -resize 1024 1024",
+      "purpose": "Flat dry-brush surface marks; no prepainted mountains. Generated using the approved mother painting as a style reference."
+    },
+    {
+      "file": "cun-v3.webp",
+      "created": "2026-10-13",
+      "tool": "built-in image_gen",
+      "sourceSha256": "c1447b08cea5e1cec7881d01ebc7091155b12c71431cefe004e562334eafc0ff",
+      "sha256": "7a6cd7d9d335dcfb9827ad61b091ad6327602b631a99d4427cc9761a4f7288dc",
+      "bytes": 307654,
+      "dimensions": [
+        1024,
+        1024
+      ],
+      "conversion": "cwebp -q 89 -resize 1024 1024",
+      "purpose": "Original black-and-white dry brush strokes, mapped onto actual rock geometry at wash and detail scales. No complete mountain image or scenery.",
+      "prompt": "cun-v3.prompt.txt"
+    }
+  ]
+}

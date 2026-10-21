@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-acoustic-folk-menu",
+  "code": "GAME-06-1",
+  "title": {
+    "en": "Village Market · Menu",
+    "zh": "村庄集市 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "friendly village and shop",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "acoustic guitar",
+    "flute",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for friendly village and shop, menu state. Instruments: acoustic guitar, flute, hand percussion. 106 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring a recorder-like wind instrument playing a simple, folk-inspired melody over a plucked string accompaniment. It evokes a calm and peaceful atmosphere.",
+    "zh": "一首温柔而旋律优美的器乐曲，以类似竖笛的管乐器演奏简单、受民间音乐启发的旋律，并伴有拨弦乐器伴奏。营造出平静祥和的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 90.07,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:23:50.017922+00:00",
+  "generation": {
+    "id": "09ca2452-d77b-4768-9dcf-7bb168e5bea8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:23:08.326548+00:00",
+    "completedAt": "2026-09-22T09:23:50.017922+00:00",
+    "interactionId": "_Uiyar6DFvibjMwPpd3CiQ0",
+    "sha256": "e99f3a0076b65237780a7673a9b88a27847456f01d56ce474c72749248832c35"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring a recorder-like wind instrument playing a simple, folk-inspired melody over a plucked string accompaniment. It evokes a calm and peaceful atmosphere.",
+      "zh": "一首温柔而旋律优美的器乐曲，以类似竖笛的管乐器演奏简单、受民间音乐启发的旋律，并伴有拨弦乐器伴奏。营造出平静祥和的氛围。"
+    },
+    "instruments": [
+      "Recorder",
+      "Plucked Strings"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Melodic",
+      "Gentle",
+      "Folk",
+      "Relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:02.092607+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 51.05,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2251305,
+    "sourceStartSeconds": 6.8750113378684805,
+    "sourceEndSeconds": 58.07501133786848,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2251305,
+        "duration": 51.05,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.86,
+        "dcOffset": 0.0016739500480997063,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002899169921875,
+        "internalStepP999": 0.077667236328125,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2251305,
+        "duration": 51.05,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.92,
+        "dcOffset": 0.0014341418169952747,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00128173828125,
+        "internalStepP999": 0.08642578125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A gentle, sustained, and ethereal synthesized pad or texture with a soft, melodic lead. It evokes a calm, atmospheric, or slightly mysterious mood.",
+        "zh": "一种柔和、持续、空灵的合成器衬底或音色，带有轻柔的旋律主音。它营造出一种平静、氛围感或略带神秘的氛围。"
+      },
+      "reason": "The audio is clean, well-produced, and loops perfectly without any audible seams, clicks, or abrupt changes. Its atmospheric quality makes it versatile for various sound design applications.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:43.204524+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "df9de059f8e339ba64cc7f915e5deb650ac4eb1e8f860dc9fa0f634ff16f1b55"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. The final chord of each segment sustains perfectly into the beginning of the next, creating continuous rhythm, harmony, and dynamics. There are no fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the joins.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:01.719656+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b4ac43eb86ee3db37949b37eace41411c84fb267be0ae416f626b563ccc139bb",
+      "bytes": 1261757,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e99f3a0076b65237780a7673a9b88a27847456f01d56ce474c72749248832c35",
+      "bytes": 2169352,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "9f199d0b1d3e0613a5cd8fe27587be5ee3bf0174fc922c2b9f6771b179f73c46",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "87f8c783d2e97cc66ddde931f5815488e9e8d42a7b56c1c6dcd82ee6191e3006",
+      "bytes": 9005264,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "b1e391d4be57ed0af980565f43ddc34733b7f29b3845c1755cc7bc02165ad10c",
+      "bytes": 567990,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.455828+00:00"
+}

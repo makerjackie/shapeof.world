@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-18",
+  "code": "SFX-SCIFI-18",
+  "title": {
+    "en": "Hologram open",
+    "zh": "全息展开"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 17,
+  "seed": 2443135594,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized hologram open for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的全息展开合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.02,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2443135594,
+    "sha256": "13335885b4dd338ddaebb3426989f3005a1413760f70df6563fafe8d47728ada",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f8afe9b611bf0e32c0c31f4134105b7c500df110b4c8ee95bc15a22756b53ebc",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "13335885b4dd338ddaebb3426989f3005a1413760f70df6563fafe8d47728ada",
+      "bytes": 90008,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0a8eba236eb995a7d8119fa7dad1a33cc30a0c7ff6af488fc0d248d1973190a0",
+      "bytes": 18688,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "5b078ab3a7deebf8492fe6d54a1cc51de5f80f22f7a293c3942d946c9ba74005",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 44982,
+    "duration": 1.02,
+    "peakDbfs": -4.19,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.713759114757014e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1652246093749996,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A distinct, cartoonish boing sound, resembling a spring or elastic snap.",
+      "zh": "一个独特的卡通弹簧声，类似于弹簧或橡皮筋的弹响。"
+    },
+    "reason": "The audio is a clean, isolated, and well-defined sound effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:12.554688+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "f8afe9b611bf0e32c0c31f4134105b7c500df110b4c8ee95bc15a22756b53ebc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 44982
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901936+00:00"
+}

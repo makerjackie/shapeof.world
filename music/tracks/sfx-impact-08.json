@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-08",
+  "code": "SFX-IMPACT-08",
+  "title": {
+    "en": "Low thump",
+    "zh": "低沉撞击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 7,
+  "seed": 94423316,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized low thump for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的低沉撞击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.42,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 94423316,
+    "sha256": "db011482f5afa8b2252762c237b279a373367c6598bc8add4d5a87f498f599e6",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b80f75cf974ef045bd3f3300aa5aabb60b11941281a94bf608fa47d3096e0d4c",
+      "bytes": 6992,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "db011482f5afa8b2252762c237b279a373367c6598bc8add4d5a87f498f599e6",
+      "bytes": 37088,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1a7adcc86bf7589b7e1a10aaa6956c72a52df5d60579e27f52b403f12da89808",
+      "bytes": 6304,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d8dd86b576d5191cc2e75c497d8756e303f0582216993c15c1d4d7b0f7b17d68",
+      "bytes": 1946,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 18522,
+    "duration": 0.42,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.07,
+    "dcOffset": 4.9429183875931323e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04887329101562499,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing or spring sound effect, reminiscent of a cartoon bounce.",
+      "zh": "一个短促的、合成的弹簧或弹跳音效，类似于卡通片中的弹跳声。"
+    },
+    "reason": "The sound is a clean, synthesized boing effect with no audible defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:30.393792+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b80f75cf974ef045bd3f3300aa5aabb60b11941281a94bf608fa47d3096e0d4c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 18522
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.877117+00:00"
+}

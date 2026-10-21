@@ -1,0 +1,254 @@
+/* Phone elements · 一部手机里的元素与它们的产地
+   舞台是画布（手机 / 周期表 / 产地地图），底区是 freebar，中间只留点题铭牌与被动读数。 */
+
+.elem-experience{--elem-accent: #7cc4ff;
+  --elem-gold: #ecbe6c;
+  --elem-hot: #f0765c;
+  --elem-ink: #eef3f8;
+  background: #05070c;
+  --world-accent: var(--elem-gold);
+  --freebar-accent: var(--elem-gold);
+  --experience-panel-surface: linear-gradient(180deg, rgba(14, 16, 22, 0.62), rgba(6, 8, 12, 0.60));
+  --experience-panel-border: color-mix(in srgb, var(--elem-gold) 35%, transparent);
+  --experience-panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.12;
+}
+
+.elem-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+}
+
+/* —— 点题铭牌 —— */
+.elem-plate {
+  position: absolute;
+  z-index: 9;
+  top: max(76px, var(--experience-safe-top, 78px));
+  left: 26px;
+  width: min(420px, calc(100% - 190px));
+  pointer-events: none;
+}
+
+.elem-plate > span {
+  color: var(--elem-accent);
+  font-size: 10px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.elem-plate h1 {
+  margin: 8px 0 0;
+  color: var(--elem-ink);
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.7vw, 38px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  text-shadow: 0 3px 26px rgba(0, 0, 0, 0.8);
+}
+
+/* —— 被动读数：只读数据带，不是控件坞 —— */
+.elem-readout {
+  position: absolute;
+  z-index: 9;
+  bottom: calc(var(--elem-dock, 132px) + 4px);
+  left: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: flex-end;
+  width: min(680px, calc(100% - 52px));
+  pointer-events: none;
+}
+
+.elem-readout-row {
+  display: grid;
+  gap: 1px;
+}
+
+.elem-readout-row.is-wide {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.elem-readout-row small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.elem-readout-row b {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+  color: var(--elem-ink);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.elem-readout-row.is-key b {
+  color: var(--elem-gold);
+}
+
+.elem-readout-row b i {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.elem-readout > p {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+/* 故事进行时：铭牌收起，读数移到左上，把底部整段让给字幕轨 */
+.elem-experience.is-story .elem-readout {
+  top: max(80px, var(--experience-safe-top, 78px));
+  bottom: auto;
+  width: min(560px, calc(100% - 52px));
+  opacity: 0.82;
+}
+
+/* —— 自由底栏 —— */
+.elem-experience .experience-freebar-main {
+  width: min(920px, 100%);
+  gap: 8px 10px;
+}
+
+.elem-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.elem-chip-rail,
+.elem-freebar-chips,
+.elem-freebar-layers {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.elem-chip-rail::-webkit-scrollbar,
+.elem-freebar-chips::-webkit-scrollbar,
+.elem-freebar-layers::-webkit-scrollbar {
+  display: none;
+}
+
+.elem-chip-rail > *,
+.elem-freebar-chips > *,
+.elem-freebar-layers > * {
+  flex: 0 0 auto;
+}
+
+.elem-chip {
+  min-height: 28px;
+  padding: 0 11px;
+  color: rgba(248, 244, 236, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.elem-chip:hover {
+  color: var(--elem-ink);
+  border-color: rgba(124, 196, 255, 0.5);
+  background: rgba(124, 196, 255, 0.12);
+}
+
+.elem-chip.is-on {
+  color: #08131d;
+  border-color: var(--elem-accent);
+  background: var(--elem-accent);
+  font-weight: 600;
+}
+
+.elem-chip.is-layer {
+  color: rgba(236, 190, 108, 0.82);
+  border-color: rgba(236, 190, 108, 0.28);
+  background: rgba(236, 190, 108, 0.06);
+}
+
+.elem-chip.is-layer:hover {
+  border-color: rgba(236, 190, 108, 0.6);
+  background: rgba(236, 190, 108, 0.14);
+}
+
+.elem-chip.is-layer.is-on {
+  color: #1c1408;
+  border-color: var(--elem-gold);
+  background: var(--elem-gold);
+}
+
+@media (max-width: 760px) {
+  .elem-plate {
+    top: max(62px, var(--experience-safe-top, 66px));
+    left: 16px;
+    width: calc(100% - 112px);
+  }
+
+  .elem-plate h1 {
+    font-size: 17px;
+    line-height: 1.16;
+  }
+
+  .elem-readout {
+    left: 16px;
+    gap: 4px 12px;
+    width: calc(100% - 32px);
+  }
+
+  .elem-readout-row:not(.is-key) {
+    display: none;
+  }
+
+  .elem-readout > p {
+    display: none;
+  }
+
+  /* Story chapters keep their caption in the top band, so the readout stays above the story bar. */
+  .elem-experience.is-story .elem-readout {
+    top: auto;
+    bottom: calc(var(--elem-dock, 72px) + 4px);
+  }
+
+  .elem-chip-rail,
+  .elem-freebar-chips,
+  .elem-freebar-layers {
+    mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
+  }
+
+  .elem-chip {
+    padding: 0 10px;
+    font-size: 11px;
+  }
+}

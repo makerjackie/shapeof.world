@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-16",
+  "code": "SFX-MAGIC-16",
+  "title": {
+    "en": "Spell release",
+    "zh": "法术释放"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 15,
+  "seed": 1369517001,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized spell release for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的法术释放合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1369517001,
+    "sha256": "36ae7b95d2524bb0a61149b5f829a70e7f7f74f136aff81120371b40e3311190",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9d4fd5a7dac07a4b7e4370bec36c439a9a7e1cf8767e7afad63f823079599616",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "36ae7b95d2524bb0a61149b5f829a70e7f7f74f136aff81120371b40e3311190",
+      "bytes": 112940,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ebca11b50395926fda818bb2655a72b41d70796c4707a81d7af8d9b424c60f3c",
+      "bytes": 25924,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "704a9e1572b52952bf5ec98c5f6466c89fc32231b82d9694736e03b731175176",
+      "bytes": 1933,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 56448,
+    "duration": 1.28,
+    "peakDbfs": -4.47,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.7572216630792943e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10866278076171842,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized whoosh or swoosh sound effect, with a slight electronic resonance at the end.",
+      "zh": "短促、干净的合成嗖嗖声，结尾带有一丝电子共鸣。"
+    },
+    "reason": "The sound is a clear, well-produced synthesized whoosh effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:49.735509+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "9d4fd5a7dac07a4b7e4370bec36c439a9a7e1cf8767e7afad63f823079599616"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 56448
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.883870+00:00"
+}

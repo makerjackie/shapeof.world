@@ -6,7 +6,7 @@ export function ExperienceOpeningPoster({ world }: { world: WorldExperience }) {
   const { t, worldText } = useI18n()
   return (
     <div className="canvas-loading canvas-loading--poster">
-      <picture>
+      {world.poster && <picture>
         {world.posterMobile ? (
           <source media="(max-width: 720px)" srcSet={world.posterMobile} type="image/webp" />
         ) : null}
@@ -21,7 +21,7 @@ export function ExperienceOpeningPoster({ world }: { world: WorldExperience }) {
           fetchPriority="high"
           decoding="async"
         />
-      </picture>
+      </picture>}
       <p>{t('experience.opening')} · {worldText(world, 'title')}</p>
     </div>
   )

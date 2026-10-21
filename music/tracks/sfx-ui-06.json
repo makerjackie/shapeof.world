@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-06",
+  "code": "SFX-UI-06",
+  "title": {
+    "en": "Focus",
+    "zh": "获得焦点"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 5,
+  "seed": 3096418382,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized focus for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的获得焦点合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3096418382,
+    "sha256": "7afff4a97672d6ad576d4adf84695b66aaa7b419c59e9034ae9eb8e597cff806",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "31d7fba890c6780e1a08e1e8017debc9d4bb341040250c711e12f079cae8162b",
+      "bytes": 2603,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7afff4a97672d6ad576d4adf84695b66aaa7b419c59e9034ae9eb8e597cff806",
+      "bytes": 10628,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b143af5a975e3f87c55e70bb745ee2150b12dadcb9cceb6f933f623b538db374",
+      "bytes": 4609,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7b3a75da6e629a35a2097aeda257910376b457f891a6a4d75bae8fad1b8960dd",
+      "bytes": 1952,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 5292,
+    "duration": 0.12,
+    "peakDbfs": -2.48,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.904081706467309e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10273071289062508,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or blip sound effect with a rapid decay.",
+      "zh": "短促、高音调的电子“噼啪”或“哔”声，带有快速衰减。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, suitable for various electronic sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:32.136571+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "31d7fba890c6780e1a08e1e8017debc9d4bb341040250c711e12f079cae8162b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 5292
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.906923+00:00"
+}

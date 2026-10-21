@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-10",
+  "code": "SFX-UI-10",
+  "title": {
+    "en": "Slider notch",
+    "zh": "滑杆刻度"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 9,
+  "seed": 3848655036,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized slider notch for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的滑杆刻度合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3848655036,
+    "sha256": "25d1dfcfac87c21ef7bb5b20c6f36d1c077da247b039dbe5c7c66d6ae539050d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ef3c73b10feb1c7234670277e307978dd22171622586cf6493f6af94f353f94a",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "25d1dfcfac87c21ef7bb5b20c6f36d1c077da247b039dbe5c7c66d6ae539050d",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "3000a864134c1e1f90b5f528f00799a988d6f8fa0d31b0c8c91d96ce092b40f6",
+      "bytes": 5281,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "bc634982655267a2e2bc933e8c336f94d2280596d156705afba0eeb0a2452607",
+      "bytes": 1946,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -2.27,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.4739306529903627e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04614202880859408,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, high-pitched electronic blip or click sound with a slight downward pitch modulation, suitable for UI feedback or game effects.",
+      "zh": "一个短促、干净、高音调的电子哔哔声或咔嗒声，带有轻微的音高下行调制，适用于用户界面反馈或游戏音效。"
+    },
+    "reason": "The sound is a clear, isolated electronic effect with no technical flaws, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:36.330466+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ef3c73b10feb1c7234670277e307978dd22171622586cf6493f6af94f353f94a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.907649+00:00"
+}

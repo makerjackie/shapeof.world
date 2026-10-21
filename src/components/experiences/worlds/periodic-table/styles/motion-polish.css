@@ -1,0 +1,13 @@
+/* One short entrance, then only the specimen under the pointer moves. */
+.pm-table .pm-cell{animation:pm-specimen-arrive .6s cubic-bezier(.2,.7,.2,1) var(--entry-delay,0ms) backwards}
+@keyframes pm-specimen-arrive{from{opacity:0;translate:0 9px}to{translate:0 0}}
+.pm-cell:active:not(.is-dimmed){scale:.97;transition-duration:.12s}
+.pm-cell{transition:transform .45s cubic-bezier(.16,.8,.2,1),scale .2s,box-shadow .4s,border-color .35s,opacity .3s,background .4s}
+.pm-cell img{transition:transform .65s cubic-bezier(.16,.8,.2,1),filter .5s}
+.pm-cell:hover img,.pm-cell:focus-visible img{transform:translateY(-2px) scale(1.075);filter:drop-shadow(1px 5px 3px #23452c30)}
+.pm-feature-photo img{animation:pm-preview-arrive .48s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pm-preview-arrive{from{opacity:0;translate:0 8px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+.pm-mystery-specimens>button:active:not(:disabled),.pm-feature:active{scale:.985}
+.pm-tabs button,.pm-detail-tabs button{transition:color .2s,background .25s,box-shadow .25s}
+@media(hover:none){.pm-cell:hover img{transform:none}.pm-cell:active:not(.is-dimmed){scale:.98}}
+@media(prefers-reduced-motion:reduce){.pm-table .pm-cell,.pm-feature-photo img{animation:none}.pm-cell,.pm-cell img,.pm-tabs button,.pm-detail-tabs button{transition:none}.pm-cell:active,.pm-mystery-specimens>button:active,.pm-feature:active{scale:1}}

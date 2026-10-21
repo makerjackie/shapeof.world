@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-14",
+  "code": "SFX-GAME-14",
+  "title": {
+    "en": "Life lost",
+    "zh": "失去生命"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 13,
+  "seed": 2206027766,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized life lost for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的失去生命合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.36,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2206027766,
+    "sha256": "8d61a925a1d54c3390a47607f9ed0d70d23fde191cedcfb6289a67dd17c987be",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6520115f93301274f962705af137c3565e839c38e0b4d4c3d6f26c5f13a9fa6e",
+      "bytes": 20157,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8d61a925a1d54c3390a47607f9ed0d70d23fde191cedcfb6289a67dd17c987be",
+      "bytes": 119996,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9d6e94735b805ff5738fc1d873ae01592f784a497e98d59e5718f4c6e1465e91",
+      "bytes": 11345,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "cbebf6d6668604a7ccc72c74ee1a55a8f6af68e2a7f58dd4736dc276adea5d98",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 59976,
+    "duration": 1.36,
+    "peakDbfs": -4.38,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.4777025393490727e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11496606445312452,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized electronic chime or ping sound.",
+      "zh": "一个短促、高音、合成的电子提示音或叮咚声。"
+    },
+    "reason": "The sound is a clean, distinct, and short electronic chime, free from any audible defects or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:59.862389+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6520115f93301274f962705af137c3565e839c38e0b4d4c3d6f26c5f13a9fa6e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 59976
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.874281+00:00"
+}

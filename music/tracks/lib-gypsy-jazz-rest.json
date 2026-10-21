@@ -1,0 +1,99 @@
+{
+  "id": "lib-gypsy-jazz-rest",
+  "code": "LIB-10-03",
+  "title": {
+    "en": "Rest — Gypsy Jazz",
+    "zh": "休憩 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 128,
+  "key": "F major",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second acoustic swing jazz instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 128 BPM; F major. Main idea: an ascending fourth answered by a stepwise descent. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A lively and cheerful folk tune featuring a prominent fiddle melody, supported by acoustic guitar and accordion. The arrangement is dynamic, with instruments entering and exiting, creating a rich, traditional sound.",
+    "zh": "一首活泼欢快的民谣曲调，以小提琴为主旋律，由原声吉他和手风琴伴奏。编曲富有动感，乐器交替出现，营造出丰富而传统的音色。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 171.233,
+  "generatedAt": "2026-09-09T08:13:23.585460+00:00",
+  "generation": {
+    "id": "53f42b09-4e55-4bb7-b359-06a29e959914",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:12:37.950631+00:00",
+    "completedAt": "2026-09-09T08:13:23.585460+00:00",
+    "interactionId": "9xShav7UH8q5i9sPtKam8QQ",
+    "sha256": "afd9045e2a1ffd6475b78a8c4ffe82c57753cebd0af522f9425270a1f55be08d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful folk tune featuring a prominent fiddle melody, supported by acoustic guitar and accordion. The arrangement is dynamic, with instruments entering and exiting, creating a rich, traditional sound.",
+      "zh": "一首活泼欢快的民谣曲调，以小提琴为主旋律，由原声吉他和手风琴伴奏。编曲富有动感，乐器交替出现，营造出丰富而传统的音色。"
+    },
+    "instruments": [
+      "Fiddle",
+      "Acoustic Guitar",
+      "Accordion"
+    ],
+    "moods": [
+      "Lively",
+      "Cheerful",
+      "Traditional",
+      "Folk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The audio is clean, well-recorded, and features clear instrumentation with a lively, engaging performance, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:13:33.110707+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:14:51.223229+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-16",
+  "code": "SFX-TRANSITION-16",
+  "title": {
+    "en": "Unfold",
+    "zh": "展开转场"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 15,
+  "seed": 2894635876,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized unfold for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的展开转场合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2894635876,
+    "sha256": "565d76ca577b72402d0fb9240684a254cb5fc434c70b39a26284a9431120ad78",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c2c43c02821d24922561dd79130975f6b144e1a0bf5bdad5dadce54784c184a5",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "565d76ca577b72402d0fb9240684a254cb5fc434c70b39a26284a9431120ad78",
+      "bytes": 61784,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d0d914e512f5b641affbf5410ec7c9bc0b106f0f1f29a42420cff47a57009e5d",
+      "bytes": 15435,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f9a8d5bc9a52131e31e011c431503507fab6bf5a5ecf430d0ba88274ce273231",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 30870,
+    "duration": 0.7,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.4,
+    "dcOffset": 2.866892664804017e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.21461914062500087,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, metallic zing or twang sound effect with a quick decay, resembling a spring or a quick metallic vibration.",
+      "zh": "一个短促、高音调的金属嗡鸣或弹拨声效果，带有快速衰减，类似于弹簧或快速金属振动。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:56.731559+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c2c43c02821d24922561dd79130975f6b144e1a0bf5bdad5dadce54784c184a5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 30870
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.905169+00:00"
+}

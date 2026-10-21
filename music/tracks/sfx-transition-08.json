@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-08",
+  "code": "SFX-TRANSITION-08",
+  "title": {
+    "en": "Soft reveal",
+    "zh": "柔和揭晓"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 7,
+  "seed": 2170885285,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized soft reveal for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的柔和揭晓合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2170885285,
+    "sha256": "df11686b435c9517babe5134596205d31ca56a642ff077f9ef9c0180f600f27d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "84979ad8bef605e0b3b1e48fee0e38324ace89c1d29bb89806478dc1e0944060",
+      "bytes": 7357,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "df11686b435c9517babe5134596205d31ca56a642ff077f9ef9c0180f600f27d",
+      "bytes": 39734,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7ef6b8f4022ca487c1adfa85fe3545563bef9d23f3c122742078e8f4c84cc654",
+      "bytes": 9164,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ae060bcbad05e1cc11f8cf9b83f5f4c060e068b219370fc7384f20b48c973ff6",
+      "bytes": 1921,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19845,
+    "duration": 0.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.3,
+    "dcOffset": -1.8453561980347694e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12219177246093427,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic clang sound with a brief resonance.",
+      "zh": "短促、尖锐、带有短暂共鸣的金属撞击声。"
+    },
+    "reason": "The sound is a clear, isolated, and well-defined metallic impact effect, free from any audible defects or unintended elements, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:28.819136+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "84979ad8bef605e0b3b1e48fee0e38324ace89c1d29bb89806478dc1e0944060"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19845
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.903686+00:00"
+}

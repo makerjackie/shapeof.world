@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-07",
+  "code": "SFX-SCIFI-07",
+  "title": {
+    "en": "Warp start",
+    "zh": "跃迁启动"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 6,
+  "seed": 3936203199,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized warp start for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的跃迁启动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.74,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3936203199,
+    "sha256": "d5956888bed4e1709bb44339ec5e4f505d0c029bf4eee9c0d1699c4fd920815f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c9f10cc995e28cd3e96447da4836bbfdb7eee823d7c53dd72b05fa10cef54fd3",
+      "bytes": 25277,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d5956888bed4e1709bb44339ec5e4f505d0c029bf4eee9c0d1699c4fd920815f",
+      "bytes": 153512,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d6f76727246ad06d12ce1cfadcac7a779259029e0a307665951dbfba272583ec",
+      "bytes": 30508,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a54d4681a513749fa660d28f33e273e0a8cdb63bcbfb63150a34addfc60275b1",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 76734,
+    "duration": 1.74,
+    "peakDbfs": -4.14,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.02256618643626e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08632824707031217,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A fast, high-pitched whoosh or swoosh sound effect, rising in pitch and ending abruptly.",
+      "zh": "一个快速、高音调的嗖嗖声或呼啸声效果，音高上升并突然结束。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:05.261248+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c9f10cc995e28cd3e96447da4836bbfdb7eee823d7c53dd72b05fa10cef54fd3"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 76734
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.899686+00:00"
+}

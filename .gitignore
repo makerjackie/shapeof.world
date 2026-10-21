@@ -1,0 +1,87 @@
+node_modules
+.DS_Store
+.cache
+# Local secrets and machine-specific environment values.
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+dist
+.claude
+.wrangler
+infra/insights/worker-configuration.d.ts
+.tanstack
+.artifacts/
+.qoder/
+design-references/
+artifacts
+output
+design/qa/
+design/reference/
+.playwright-cli/
+apps/music/dist/
+apps/music/src/generated/
+
+# Local upstream audit clones. Integrated source, licenses, and npm packages
+# are tracked in their product locations; keeping nested Git repositories here
+# would create unusable gitlinks in this repository.
+vendor/cnn-3d-visualization/
+vendor/dli-waves/
+vendor/gedankens/
+vendor/interactive-penrose-triangle/
+vendor/jbouny-fft-ocean/
+vendor/three-geospatial/
+vendor/three-pinata/
+
+# Local font files used only to rasterize brand lockups
+scripts/brand-kit/fonts/
+
+# Interrupted mobile runtime export staging dirs (Vite builds them under repo root)
+.mobile-runtime-export-*/
+
+# Local visual QA and batch handoff artifacts
+.scratch/
+.local/
+.smoke-*.png
+.tmp/
+.tmp-verify/
+_batch/
+vibe_images/
+public/assets/posters/thumbs/
+
+# Local editor / agent state
+.claude/
+
+
+# Generated deployment metadata; rebuild with `pnpm data:world-artifacts`.
+/public/generated/world-artifacts/
+
+# Local music masters / previews (catalog JSON is tracked)
+music/.cache/
+music/**/*.wav
+music/**/*.mp3
+music/**/*.flac
+
+# Generated music retrieval endpoints
+apps/music/public/catalog.json
+apps/music/public/catalog.ndjson
+apps/music/public/llms.txt
+apps/music/public/tracks/
+music/scripts/__pycache__/
+scripts/standard-model/__pycache__/
+apps/music/public/taxonomy.json
+apps/music/public/styles/
+apps/music/public/scenarios/
+
+apps/music/public/collections/
+apps/music/public/audio/
+apps/music/public/audio-index.json
+apps/music/public/audio-license.txt
+apps/music/public/rights.json
+apps/music/public/packs.json
+
+# Local registry override (npmmirror lacks some pinned optional deps)
+.npmrc
+
+# Press kits keep only kit.json; covers and videos live in R2.
+infra/press/kits/*/covers/

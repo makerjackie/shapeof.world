@@ -1,0 +1,102 @@
+{
+  "id": "lib-harp-focus",
+  "code": "LIB-03-02",
+  "title": {
+    "en": "Focus — Harp",
+    "zh": "专注 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "harp"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "A minor",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second pastoral acoustic instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 72 BPM; A minor. Main idea: alternating short and long phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A gentle and expressive classical chamber piece featuring a prominent flute melody, accompanied by woodwinds like clarinet/oboe and bassoon, creating a reflective and slightly melancholic atmosphere.",
+    "zh": "一首温柔而富有表现力的古典室内乐，以悠扬的长笛旋律为主，配以单簧管/双簧管和巴松管等木管乐器，营造出一种沉思而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.917,
+  "generatedAt": "2026-09-09T07:47:10.721235+00:00",
+  "generation": {
+    "id": "a8c4d497-a31c-406a-8077-efeebce9ca56",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:46:23.491651+00:00",
+    "completedAt": "2026-09-09T07:47:10.721235+00:00",
+    "interactionId": "0A6harGKLaKsrtoP65a1oAo",
+    "sha256": "6d5131608bc86bc4f54ba3be5a96f7df9a3d61169f7f41d3c3b255ec231bdeeb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and expressive classical chamber piece featuring a prominent flute melody, accompanied by woodwinds like clarinet/oboe and bassoon, creating a reflective and slightly melancholic atmosphere.",
+      "zh": "一首温柔而富有表现力的古典室内乐，以悠扬的长笛旋律为主，配以单簧管/双簧管和巴松管等木管乐器，营造出一种沉思而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Clarinet",
+      "Oboe",
+      "Bassoon"
+    ],
+    "moods": [
+      "Reflective",
+      "Calm",
+      "Gentle",
+      "Melancholic",
+      "Peaceful",
+      "Elegant"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "The audio is a well-performed and clearly recorded instrumental piece with a distinct classical chamber music feel, suitable for various reflective or peaceful media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:47:30.295703+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:48:57.589479+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

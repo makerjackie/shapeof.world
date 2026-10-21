@@ -1,0 +1,26 @@
+.site-utility-page > .site-header { position: relative; }
+.site-form-page { width: min(var(--site-content-width), calc(100% - 2 * var(--site-gutter))); margin: 72px auto 100px; color: var(--text); }
+.site-form-page > * { max-width: 680px; }
+.site-form-page h1 { margin: 0 0 24px; }
+.site-form-lede, .privacy-copy p { font-size: var(--fs-body); line-height: 1.9; opacity: .8; }
+.site-feedback-form { display: grid; gap: 20px; margin-top: 36px; }
+.site-feedback-form label { display: grid; gap: 10px; font-size: var(--fs-support); }
+.site-feedback-form input, .site-feedback-form select, .site-feedback-form textarea { width: 100%; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); color: inherit; padding: 12px; font: inherit; font-size: var(--fs-body); }
+.site-feedback-form select option { color: var(--text); background: var(--surface-2); }
+.site-feedback-form textarea { resize: vertical; min-height: 160px; }
+.site-feedback-form :focus-visible, .site-form-contact :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.site-form-note { font-size: var(--fs-support); line-height: 1.8; opacity: .72; margin: 0; }
+.site-feedback-form button { justify-self: start; }
+.site-feedback-form button:disabled { opacity: .5; cursor: wait; }
+.site-form-error { color: #ff9a86; line-height: 1.8; }
+.site-form-success { padding: 28px 0; overflow-wrap: anywhere; }
+.site-form-contact { border-top: 1px solid var(--line); margin-top: 36px; padding-top: 24px; font-size: var(--fs-support); line-height: 1.8; }
+.site-form-contact button, .site-form-contact a { margin-right: 24px; }
+.site-form-trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.privacy-copy section { margin: 36px 0; }
+.privacy-toggle { display: flex; gap: 12px; align-items: center; min-height: 44px; line-height: 1.6; }
+.privacy-toggle input { width: 20px; height: 20px; flex-shrink: 0; }
+.site-search-empty-actions { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 0 0 24px; }
+@media(max-width: 600px) { .site-form-page { margin-top: 36px; } }
+
+.site-form-note a, .privacy-copy a { text-decoration: underline; text-underline-offset: 3px; }

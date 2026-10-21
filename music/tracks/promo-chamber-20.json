@@ -1,0 +1,165 @@
+{
+  "id": "promo-chamber-20",
+  "code": "PROMO-06-20",
+  "title": {
+    "en": "Paper Kites · 20",
+    "zh": "纸鸢起飞 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively, upbeat, and playful instrumental piece featuring a small brass and woodwind ensemble with a traditional jazz/ragtime feel. It has a clear melody and rhythmic drive.",
+    "zh": "一首活泼、欢快、俏皮的器乐曲，由小型铜管和木管乐器组成，带有传统爵士/拉格泰姆风格。旋律清晰，节奏感强。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:24:30.224738+00:00",
+  "generation": {
+    "id": "6ee088fd-2e7e-4ce1-a81e-d196e3bf101a",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:24:18.264359+00:00",
+    "completedAt": "2026-09-10T05:24:30.224738+00:00",
+    "interactionId": "Aj-iavnJOdK44vEPhZWJ4A0",
+    "sha256": "018b6286efac807b5325a133f28e7c8b6b99079ed689746ff5d8e9c04d5e8765"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively, upbeat, and playful instrumental piece featuring a small brass and woodwind ensemble with a traditional jazz/ragtime feel. It has a clear melody and rhythmic drive.",
+      "zh": "一首活泼、欢快、俏皮的器乐曲，由小型铜管和木管乐器组成，带有传统爵士/拉格泰姆风格。旋律清晰，节奏感强。"
+    },
+    "instruments": [
+      "Trumpet",
+      "Trombone",
+      "Clarinet",
+      "Tuba",
+      "Snare Drum",
+      "Cymbals"
+    ],
+    "moods": [
+      "Upbeat",
+      "Playful",
+      "Lively",
+      "Energetic",
+      "Joyful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and energetic instrumental piece suitable for various media requiring a lively, traditional jazz sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens with an immediate, catchy brass melody and rhythmic accompaniment. It concludes with a clear, deliberate final chord and cymbal crash, providing a strong sense of resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:25:04.045863+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "c2f4d644ed39e257b27ef3617634a0ebc9aaacf56ed8362f1eb0acf01ea5a7d7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.223625,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful jazz piece featuring a clarinet melody over a walking bass line, acoustic guitar, and brush drums. It has a sophisticated, retro feel with a whimsical touch.",
+      "zh": "一首轻松活泼的爵士乐曲，以单簧管旋律为主，配以行进贝斯、原声吉他和刷子鼓。它带有一种精致、复古而又异想天开的感觉。"
+    },
+    "instruments": [
+      "clarinet",
+      "acoustic guitar",
+      "upright bass",
+      "drums",
+      "vibraphone"
+    ],
+    "moods": [
+      "playful",
+      "light",
+      "jazzy",
+      "sophisticated",
+      "retro",
+      "whimsical"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "N/A",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:24:41.904193+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.223624999999998,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-chamber-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-chamber-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-chamber-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:11.068042+00:00"
+}

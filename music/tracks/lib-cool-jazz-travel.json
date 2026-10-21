@@ -1,0 +1,106 @@
+{
+  "id": "lib-cool-jazz-travel",
+  "code": "LIB-09-06",
+  "title": {
+    "en": "Roaming — Cool Jazz",
+    "zh": "漫游 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "cool-jazz"
+  ],
+  "energy": 3,
+  "bpm": 90,
+  "key": "E minor",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second cool jazz instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 90 BPM; E minor. Main idea: alternating short and long phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A smooth, upbeat jazz quartet featuring a saxophone melody, supported by piano, upright bass, and drums. The track has a relaxed yet swinging feel, with a pleasant, warm tone.",
+    "zh": "一首流畅、欢快的爵士四重奏，以萨克斯风为主旋律，配以钢琴、低音提琴和鼓。这首曲子节奏轻松摇摆，音色温暖宜人。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.637,
+  "generatedAt": "2026-09-09T08:11:08.818181+00:00",
+  "generation": {
+    "id": "f04444a8-2f67-42c6-8875-8cb1e44cce47",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:10:23.369480+00:00",
+    "completedAt": "2026-09-09T08:11:08.818181+00:00",
+    "interactionId": "cBShar6uJuq6i9sPx5K0uAY",
+    "sha256": "9d70c899d6dffcb6779b535483dd9d58743f99f26023035289a44f7238b12174"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, upbeat jazz quartet featuring a saxophone melody, supported by piano, upright bass, and drums. The track has a relaxed yet swinging feel, with a pleasant, warm tone.",
+      "zh": "一首流畅、欢快的爵士四重奏，以萨克斯风为主旋律，配以钢琴、低音提琴和鼓。这首曲子节奏轻松摇摆，音色温暖宜人。"
+    },
+    "instruments": [
+      "Saxophone",
+      "Piano",
+      "Upright Bass",
+      "Drums",
+      "Trumpet"
+    ],
+    "moods": [
+      "Smooth",
+      "Jazzy",
+      "Relaxed",
+      "Upbeat",
+      "Sophisticated",
+      "Elegant",
+      "Chill",
+      "Groovy"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "Well-produced, clear instrumentation, pleasant and consistent jazz performance suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:11:47.585138+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:12:37.935776+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "profiles": {
+    "lyria-commercial-2026-09": {
+      "id": "lyria-commercial-2026-09",
+      "status": "provider-terms-reviewed",
+      "label": {"en": "Commercial use · terms apply", "zh": "可商用 · 遵循使用条款"},
+      "license": "Shape Audio Permission 1.0",
+      "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+      "commercialUse": true,
+      "modification": true,
+      "standaloneRedistribution": true,
+      "attributionRequired": false,
+      "exclusiveRights": false,
+      "claimFreeGuarantee": false,
+      "reviewedAt": "2026-09-22",
+      "provider": "Google Cloud Vertex AI / Lyria 3",
+      "basis": "The Lyria 3 model documentation explicitly permits production/commercial use and disclosure of Generated Output to third parties, subject to the customer's Google Cloud agreement. The service terms do not assert Google ownership in new IP in generated output. The project grants only rights it can control; no third-party clearance or provider indemnity is represented.",
+      "sources": [
+        "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3",
+        "https://cloud.google.com/terms/service-terms"
+      ]
+    },
+    "original-synthesis-cc0": {
+      "id": "original-synthesis-cc0",
+      "status": "original-source-reviewed",
+      "label": {"en": "CC0 · no attribution required", "zh": "CC0 · 无需署名"},
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "commercialUse": true,
+      "modification": true,
+      "standaloneRedistribution": true,
+      "attributionRequired": false,
+      "exclusiveRights": false,
+      "claimFreeGuarantee": false,
+      "reviewedAt": "2026-09-22",
+      "basis": "Original deterministic oscillator/noise synthesis implemented in music/scripts/synthesize-sounds.py. No external recordings, samples, melodies or model-generated audio are inputs. CC0 applies only to designated rendered audio, to the extent the project controls rights; generator code retains its software license.",
+      "sources": ["https://creativecommons.org/publicdomain/zero/1.0/"]
+    },
+    "legacy-unreviewed": {
+      "id": "legacy-unreviewed",
+      "status": "needs-review",
+      "label": {"en": "Usage terms not yet verified", "zh": "使用权限待核对"},
+      "license": null,
+      "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+      "commercialUse": null,
+      "modification": null,
+      "standaloneRedistribution": null,
+      "attributionRequired": null,
+      "exclusiveRights": false,
+      "claimFreeGuarantee": false,
+      "basis": "A source generation record is not a license. No retrospective production-time agreement or rights grant has been verified for this asset. Exclude from requests requiring confirmed commercial-use permission."
+    }
+  }
+}

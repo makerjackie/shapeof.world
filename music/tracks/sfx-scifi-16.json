@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-16",
+  "code": "SFX-SCIFI-16",
+  "title": {
+    "en": "Robot wake",
+    "zh": "机器人唤醒"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 15,
+  "seed": 2813170820,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized robot wake for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的机器人唤醒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.54,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2813170820,
+    "sha256": "7db89874845d7f32f797950b8ed33c421553423a59ba601ee26b42b7c8b16458",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7d5d54be1e6b3c9703c04d257aabe07324ad7e36f172d64759799ab9f8765246",
+      "bytes": 8454,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7db89874845d7f32f797950b8ed33c421553423a59ba601ee26b42b7c8b16458",
+      "bytes": 47672,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "95dd6788128c086403bce0b20dc797600d99466cb4ea22000bc6b52cc975d767",
+      "bytes": 12369,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "daf7c18b13e52f44596725ecca8687e86c6b831639ce642a0d04473b98f8e776",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 23814,
+    "duration": 0.54,
+    "peakDbfs": -4.25,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.1259894389854706e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15319641113281224,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A swift whoosh sound followed by a sharp, resonant metallic impact.",
+      "zh": "快速的嗖嗖声后紧接着是尖锐、有共鸣的金属撞击声。"
+    },
+    "reason": "The sound is a clean, isolated effect with a clear whoosh and metallic impact, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:10.456455+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7d5d54be1e6b3c9703c04d257aabe07324ad7e36f172d64759799ab9f8765246"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 23814
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901584+00:00"
+}

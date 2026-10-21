@@ -1,0 +1,100 @@
+{
+  "id": "lib-kora-rest",
+  "code": "LIB-22-03",
+  "title": {
+    "en": "Rest — Kora",
+    "zh": "休憩 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "kora"
+  ],
+  "energy": 2,
+  "bpm": 90,
+  "key": "F major",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second West African acoustic instrumental instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 90 BPM; F major. Main idea: alternating short and long phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A gentle and melancholic instrumental piece featuring a blend of strings, plucked strings, and woodwinds. The melody is serene and flowing, creating a calm and reflective atmosphere.",
+    "zh": "一首温柔而忧郁的器乐作品，融合了弦乐、拨弦乐器和木管乐器。旋律宁静流畅，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 167.549,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:57:47.688264+00:00",
+  "generation": {
+    "id": "798e5bb3-5cc1-437b-add6-98f4c4aa1881",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:57:00.361603+00:00",
+    "completedAt": "2026-09-09T08:57:47.688264+00:00",
+    "interactionId": "XR-has-XDObRi9sPvtzDgAc",
+    "sha256": "c2ee50b7a5b2d3cccb84e1ab59d8d0bb4f98b0ae45e425b374821485fc27b20a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic instrumental piece featuring a blend of strings, plucked strings, and woodwinds. The melody is serene and flowing, creating a calm and reflective atmosphere.",
+      "zh": "一首温柔而忧郁的器乐作品，融合了弦乐、拨弦乐器和木管乐器。旋律宁静流畅，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Strings",
+      "Classical Guitar",
+      "Flute"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Melancholic",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:57:58.845317+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:59:01.514316+00:00"
+}

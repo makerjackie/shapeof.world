@@ -1,0 +1,702 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:12:51 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/Q007",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "Q007/2024",
+  "description": "t",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "Q007TP/2024",
+        "description": "t-Quark Mass (Direct Measurements)",
+        "pdg_values": [
+          {
+            "value": 172.5746930968864,
+            "error_positive": 0.2883819664072206,
+            "error_negative": 0.2904332853293443,
+            "value_text": "172.57+-0.29",
+            "unit": "GeV",
+            "scale_factor": 1.503838,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TP2/2024",
+        "description": "t-Quark Mass from Cross-Section Measurements",
+        "pdg_values": [
+          {
+            "value": 162.5002846980492,
+            "error_positive": 2.13161370878598,
+            "error_negative": 1.5324334305524,
+            "value_text": "162.5+2.1-1.5",
+            "unit": "GeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TP4/2024",
+        "description": "t-Quark Pole Mass from Cross-Section Measurements",
+        "pdg_values": [
+          {
+            "value": 172.3523553288312,
+            "error_positive": 0.6752618288606228,
+            "error_negative": 0.6432013333753764,
+            "value_text": "172.4+-0.7",
+            "unit": "GeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007CPT/2024",
+        "description": "mass(t) - mass(tbar)",
+        "pdg_values": [
+          {
+            "value": -0.145581792598028,
+            "error_positive": 0.202558240896274,
+            "error_negative": 0.2017431778798671,
+            "value_text": "-0.15+-0.20",
+            "unit": "GeV",
+            "scale_factor": 1.094977,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007W/2024",
+        "description": "t-quark DECAY WIDTH",
+        "pdg_values": [
+          {
+            "value": 1.424101758196898,
+            "error_positive": 0.1905134297354235,
+            "error_negative": 0.1525604117117907,
+            "value_text": "1.42+0.19-0.15",
+            "unit": "GeV",
+            "scale_factor": 1.424286,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TV0/2024",
+        "description": "F_0",
+        "pdg_values": [
+          {
+            "value": 0.6925052486716334,
+            "error_positive": 0.01288139758715197,
+            "error_negative": 0.01288139758715197,
+            "value_text": "0.693+-0.013",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TVN/2024",
+        "description": "F_-",
+        "pdg_values": [
+          {
+            "value": 0.3148000709474513,
+            "error_positive": 0.009899017285764759,
+            "error_negative": 0.009899017285764759,
+            "value_text": "0.315+-0.010",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TVP/2024",
+        "description": "F_+",
+        "pdg_values": [
+          {
+            "value": -0.004877536407781464,
+            "error_positive": 0.007015129843468883,
+            "error_negative": 0.007015129843468883,
+            "value_text": "-0.005+-0.007",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TV2/2024",
+        "description": "F_{V+A}",
+        "pdg_values": [
+          {
+            "value": 0.29,
+            "value_text": "< 0.29",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007TV4/2024",
+        "description": "f(1)**R"
+      },
+      {
+        "pdgid": "Q007TV5/2024",
+        "description": "f(2)**L"
+      },
+      {
+        "pdgid": "Q007TV6/2024",
+        "description": "f(2)**R"
+      },
+      {
+        "pdgid": "Q007A02/2024",
+        "description": "|f(LV)V(tb)|",
+        "pdg_values": [
+          {
+            "value": 0.9951552795031056,
+            "error_positive": 0.02114722130550724,
+            "error_negative": 0.02114722130550724,
+            "value_text": "0.995+-0.021",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007A05/2024",
+        "description": "|f(LV)sqrt(|V(td)|**2 + |V(ts)|**2)|"
+      },
+      {
+        "pdgid": "Q007A09/2024",
+        "description": "CP-odd EW dipole couplings"
+      },
+      {
+        "pdgid": "Q007CMD/2024",
+        "description": "Chromo-magnetic dipole moment mu_t=g_smuhat(t)/mass(t)"
+      },
+      {
+        "pdgid": "Q007CED/2024",
+        "description": "Chromo-electric dipole moment d_t = g_sdhat(t)/mass(t)"
+      },
+      {
+        "pdgid": "Q007SC/2024",
+        "description": "Spin Correlation in t tbar Production in p pbar Collisions"
+      },
+      {
+        "pdgid": "Q007TSC/2024",
+        "description": "Spin Correlation in t tbar Production in p p Collisions"
+      },
+      {
+        "pdgid": "Q007TUG/2024",
+        "description": "t-quark FCNC Couplings kappa**utg/Lambda and kappa**ctg/Lambda"
+      },
+      {
+        "pdgid": "Q007MAH/2024",
+        "description": "Mixing Angle of CP-even and CP-odd t-Quark Yukawa Couplings"
+      },
+      {
+        "pdgid": "Q007A03/2024",
+        "description": "t-Quark Yukawa Coupling from t tbar Kinematic Distributions in p p Collisions"
+      },
+      {
+        "pdgid": "Q007TTH/2024",
+        "description": "sigma(H t tbar) /sigma(H t tbar)(SM)"
+      },
+      {
+        "pdgid": "Q007STA/2024",
+        "description": "Single t-Quark Production Cross Section in p pbar Collisions at sqrt(s) = 1.8 TeV"
+      },
+      {
+        "pdgid": "Q007STB/2024",
+        "description": "Single t-Quark Production Cross Section in p pbar Collisions at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007ST5/2024",
+        "description": "Production Cross Section in p p Collisions at sqrt(s) = 5.02 TeV"
+      },
+      {
+        "pdgid": "Q007ST7/2024",
+        "description": "t-channel Single t Production Cross Section in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007ST8/2024",
+        "description": "t-channel Single t Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007TT8/2024",
+        "description": "s-channel Single t Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007STX/2024",
+        "description": "t-channel Single t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007TTX/2024",
+        "description": "s-channel Single t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007WT7/2024",
+        "description": "W t Production Cross Section in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007WT8/2024",
+        "description": "W t Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007WTX/2024",
+        "description": "W t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007WTY/2024",
+        "description": "W t Production Cross Section in p p Collisions at sqrt(s) = 13.6 TeV"
+      },
+      {
+        "pdgid": "Q007ZTX/2024",
+        "description": "Z t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007HTX/2024",
+        "description": "H t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007GTX/2024",
+        "description": "gamma t Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007A08/2024",
+        "description": "t W Z Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007STE/2024",
+        "description": "Single t-Quark Production Cross Section in e p Collisions"
+      },
+      {
+        "pdgid": "Q007TXA/2024",
+        "description": "t tbar Production Cross Section in p pbar Collisions at sqrt(s) = 1.8 TeV"
+      },
+      {
+        "pdgid": "Q007TX/2024",
+        "description": "t tbar Production Cross Section in p pbar Collisions at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007TTA/2024",
+        "description": "Ratio of the Production Cross Sections of t tbar gamma to t tbar at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007TP7/2024",
+        "description": "t t Production Cross Section in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007TPX/2024",
+        "description": "t t or tbar tbar Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007TX5/2024",
+        "description": "t tbar Production Cross Section in p p Collisions at sqrt(s) = 5.02 TeV"
+      },
+      {
+        "pdgid": "Q007TX7/2024",
+        "description": "t tbar Production Cross Section in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007TX8/2024",
+        "description": "t tbar Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007X13/2024",
+        "description": "t tbar Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007Y13/2024",
+        "description": "t tbar Production Cross Section in p p Collisions at sqrt(s) = 13.6 TeV"
+      },
+      {
+        "pdgid": "Q007NP1/2024",
+        "description": "t tbar Production Cross Section in p-Nucleus Collisions"
+      },
+      {
+        "pdgid": "Q007NN1/2024",
+        "description": "t tbar Production Cross Section in Nucleus-Nucleus Collisions"
+      },
+      {
+        "pdgid": "Q007DT8/2024",
+        "description": "t tbar t tbar Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007D13/2024",
+        "description": "t tbar t tbar Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007TW8/2024",
+        "description": "t tbar W Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007TWX/2024",
+        "description": "t tbar W Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007TZ8/2024",
+        "description": "t tbar Z Production Cross Section in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007TZX/2024",
+        "description": "t tbar Z Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007THX/2024",
+        "description": "t tbar H Production Cross Section in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007A01/2024",
+        "description": "t tbar gamma Production Cross Section in pp Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007FQ7/2024",
+        "description": "f(Q(0)): t tbar Fraction of Events with a Veto on Additional Central Jet Activity in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007TJ7/2024",
+        "description": "Fraction of t tbar + multi-jet Events in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007AC7/2024",
+        "description": "t tbar Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007AC8/2024",
+        "description": "t tbar Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007ACX/2024",
+        "description": "t tbar Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007A06/2024",
+        "description": "t tbar W leptonic Charge Asymmetry (A( C)**lepton) in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007A07/2024",
+        "description": "t tbar gamma Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007PL2/2024",
+        "description": "t-quark Polarization in t tbar Events in p pbar Collisions at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007PL7/2024",
+        "description": "t-quark Polarization in t tbar Events in p p Collisions at sqrt(s) = 7 TeV"
+      },
+      {
+        "pdgid": "Q007PL8/2024",
+        "description": "t-quark Polarization in t tbar Events in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007A00/2024",
+        "description": "t-quark Polarization in Single Top Events in p p Collisions at sqrt(s) = 8 TeV"
+      },
+      {
+        "pdgid": "Q007A04/2024",
+        "description": "t-quark Polarization in Single Top Events in p p Collisions at sqrt(s) = 13 TeV"
+      },
+      {
+        "pdgid": "Q007TXG/2024",
+        "description": "g g --> t tbar Fraction in p pbar Collisions at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007TFB/2024",
+        "description": "A_FB of t tbar in p pbar Collisions at sqrt(s) = 1.96 TeV"
+      },
+      {
+        "pdgid": "Q007TQ/2024",
+        "description": "t-Quark Electric Charge",
+        "pdg_values": [
+          {
+            "value": 0.64,
+            "error_positive": 0.08246211251235322,
+            "error_negative": 0.08246211251235322,
+            "value_text": "0.64+-0.08",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ],
+    "branching_fractions": [
+      {
+        "pdgid": "Q007.6/2024",
+        "description": "t --> W q (q = b, s, d)",
+        "mode_number": 1
+      },
+      {
+        "pdgid": "Q007.1/2024",
+        "description": "t --> W b",
+        "mode_number": 2
+      },
+      {
+        "pdgid": "Q007.9/2024",
+        "description": "t --> e nu_e b",
+        "mode_number": 3,
+        "pdg_values": [
+          {
+            "value": 0.111,
+            "error_positive": 0.003,
+            "error_negative": 0.003,
+            "value_text": "(11.10+-0.30)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.10/2024",
+        "description": "t --> mu nu_mu b",
+        "mode_number": 4,
+        "pdg_values": [
+          {
+            "value": 0.114,
+            "error_positive": 0.002,
+            "error_negative": 0.002,
+            "value_text": "(11.40+-0.20)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.4/2024",
+        "description": "t --> tau nu_tau b",
+        "mode_number": 5,
+        "pdg_values": [
+          {
+            "value": 0.107260992140752,
+            "error_positive": 0.00549278012638177,
+            "error_negative": 0.00549278012638177,
+            "value_text": "(10.7+-0.5)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.11/2024",
+        "description": "t --> q qbar b",
+        "mode_number": 6,
+        "pdg_values": [
+          {
+            "value": 0.665,
+            "error_positive": 0.0136014705087354,
+            "error_negative": 0.0136014705087354,
+            "value_text": "(66.5+-1.4)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.3/2024",
+        "description": "t --> gamma q (q=u,c)",
+        "mode_number": 7,
+        "pdg_values": [
+          {
+            "value": 4.5e-05,
+            "value_text": "<4.5 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.14/2024",
+        "description": "t --> H+ b , H+ --> tau nu_tau",
+        "mode_number": 8,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.30/2024",
+        "description": "t --> a q (q=u , c)",
+        "mode_number": 9,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.2/2024",
+        "description": "t --> Z q (q=u,c)",
+        "mode_number": 10,
+        "section": "DeltaT = 1 weak neutral current (T1) modes",
+        "pdg_values": [
+          {
+            "value": 0.00012,
+            "value_text": "<1.2 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.12/2024",
+        "description": "t --> H u",
+        "mode_number": 11,
+        "section": "DeltaT = 1 weak neutral current (T1) modes",
+        "pdg_values": [
+          {
+            "value": 0.00019,
+            "value_text": "<1.9 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.13/2024",
+        "description": "t --> H c",
+        "mode_number": 12,
+        "section": "DeltaT = 1 weak neutral current (T1) modes",
+        "pdg_values": [
+          {
+            "value": 0.00043,
+            "value_text": "<4.3 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.8/2024",
+        "description": "t --> lepton+ qbar qbar^' (q=d,s,b; q^'=u,c)",
+        "mode_number": 13,
+        "section": "DeltaT = 1 weak neutral current (T1) modes",
+        "pdg_values": [
+          {
+            "value": 0.0016,
+            "value_text": "<1.6 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.15/2024",
+        "description": "t --> e+- mu-+ c",
+        "mode_number": 14,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 8.900000000000001e-07,
+            "value_text": "<8.9 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.16/2024",
+        "description": "t --> e+- mu-+ u",
+        "mode_number": 15,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 7e-08,
+            "value_text": "<7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q007.17/2024",
+        "description": "t --> mu+- tau-+ q",
+        "mode_number": 16,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.18/2024",
+        "description": "t --> e+ ubar dbar",
+        "mode_number": 17,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.19/2024",
+        "description": "t --> mu+ ubar dbar",
+        "mode_number": 18,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.20/2024",
+        "description": "t --> e+ cbar dbar",
+        "mode_number": 19,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.21/2024",
+        "description": "t --> mu+ cbar dbar",
+        "mode_number": 20,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.22/2024",
+        "description": "t --> e+ ubar sbar",
+        "mode_number": 21,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.23/2024",
+        "description": "t --> mu+ ubar sbar",
+        "mode_number": 22,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.24/2024",
+        "description": "t --> e+ cbar sbar",
+        "mode_number": 23,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.25/2024",
+        "description": "t --> mu+ cbar sbar",
+        "mode_number": 24,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.26/2024",
+        "description": "t --> e+ ubar bbar",
+        "mode_number": 25,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.27/2024",
+        "description": "t --> mu+ ubar bbar",
+        "mode_number": 26,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.28/2024",
+        "description": "t --> e+ cbar bbar",
+        "mode_number": 27,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "Q007.29/2024",
+        "description": "t --> mu+ cbar bbar",
+        "mode_number": 28,
+        "section": "Baryon number (B) violating modes",
+        "pdg_values": "no summary value"
+      }
+    ]
+  }
+}

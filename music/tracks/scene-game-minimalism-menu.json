@@ -1,0 +1,203 @@
+{
+  "id": "scene-game-minimalism-menu",
+  "code": "GAME-07-1",
+  "title": {
+    "en": "Hidden Corridor · Menu",
+    "zh": "隐秘长廊 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "mild stealth and suspense",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 92,
+  "key": "",
+  "instruments": [
+    "low marimba",
+    "bass clarinet",
+    "quiet ticking percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for mild stealth and suspense, menu state. Instruments: low marimba, bass clarinet, quiet ticking percussion. 92 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A melancholic and gentle classical piece featuring a prominent clarinet melody over pizzicato strings. The mood is reflective and somewhat sad.",
+    "zh": "一首忧郁而温柔的古典乐曲，以突出的单簧管旋律和拨弦乐器为特色。情绪是沉思和略带悲伤的。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 88.215,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:24:48.263668+00:00",
+  "generation": {
+    "id": "e74e34ea-fd56-4603-bca9-b2d7879dfe29",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:24:02.097890+00:00",
+    "completedAt": "2026-09-22T09:24:48.263668+00:00",
+    "interactionId": "M0myapGoDd6trtoP_5G08QE",
+    "sha256": "244ed280f46f209c6969d0af7b0b76b462b307463e082e2365fe25b6677090d8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and gentle classical piece featuring a prominent clarinet melody over pizzicato strings. The mood is reflective and somewhat sad.",
+      "zh": "一首忧郁而温柔的古典乐曲，以突出的单簧管旋律和拨弦乐器为特色。情绪是沉思和略带悲伤的。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Pizzicato Strings"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Gentle",
+      "Sad"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-performed and recorded instrumental piece with clear musicality, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:25:06.661055+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 24.5,
+    "sourceEndSeconds": 83.57691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -14.89,
+        "dcOffset": 0.0009020950867160903,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 3.0517578125e-05,
+        "internalStepP999": 0.057830810546875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.75,
+        "dcOffset": 0.0005125616878462039,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002410888671875,
+        "internalStepP999": 0.058441162109375,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthesized, evolving, and slightly melancholic pad or texture, featuring bell-like or plucked elements and a subtle harmonic progression. Suitable for atmospheric or background sound design.",
+        "zh": "合成的、不断演变的、略带忧郁的衬底或纹理音效，带有钟声或拨弦般的元素和微妙的和声进行。适合作为氛围或背景音效设计。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture with no audible defects. It loops perfectly without any clicks, gaps, or abrupt changes, making it highly suitable for continuous background audio in video or game sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:38.246612+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "96025f86ea5a62ae27d20f9bbf5c7c8a4cb7a9a2bf6f792840a721a08b929002"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are excellent across the joins. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the loop points, making it comfortable for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:44.567997+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ba74e39411059d3b59f044285ffcd8635df974979dfb3b60773b96a2921ee845",
+      "bytes": 1235792,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "244ed280f46f209c6969d0af7b0b76b462b307463e082e2365fe25b6677090d8",
+      "bytes": 2124839,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a7b85923d230533ad30b071eef2bfbfefd8035cb7ef50e9068f5b8694f604738",
+      "bytes": 2805,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "8b4e6e13374fec27f161883ec3cdfc7acb4ac394f69aee05c59d7dc2332a66c0",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "3b6b5adc3e00596677821ae145b8ff8b04f9aecf30569bb0c2158014f3511d67",
+      "bytes": 565302,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.464253+00:00"
+}

@@ -1,0 +1,161 @@
+{
+  "id": "promo-gypsy-jazz-40",
+  "code": "PROMO-09-40",
+  "title": {
+    "en": "Silver Wheels · 40",
+    "zh": "银色车轮 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "",
+  "instruments": [
+    "acoustic rhythm guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: bright acoustic swing with precise offbeat guitar chops. Instruments: acoustic rhythm guitar, violin, upright bass. Tempo 148 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively, whimsical orchestral piece featuring prominent pizzicato strings and a driving violin melody, supported by rhythmic percussion. It evokes a lighthearted, playful mood.",
+    "zh": "一首活泼、异想天开的管弦乐曲，以突出的拨弦乐器和主导的小提琴旋律为特色，并由有节奏的打击乐器支撑。它营造出一种轻松愉快的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:28:15.305109+00:00",
+  "generation": {
+    "id": "a5aad556-30b0-477f-8ae5-df93343f68ca",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:27:18.607477+00:00",
+    "completedAt": "2026-09-10T05:28:15.305109+00:00",
+    "interactionId": "tz-iauHZCYq34vEP1ray8Q0",
+    "sha256": "5837db724cb5b384760f406d073dbae9ee0e26fcff4e7e2ecbaeb109a0ce932d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively, whimsical orchestral piece featuring prominent pizzicato strings and a driving violin melody, supported by rhythmic percussion. It evokes a lighthearted, playful mood.",
+      "zh": "一首活泼、异想天开的管弦乐曲，以突出的拨弦乐器和主导的小提琴旋律为特色，并由有节奏的打击乐器支撑。它营造出一种轻松愉快的氛围。"
+    },
+    "instruments": [
+      "strings",
+      "violin",
+      "cello",
+      "double bass",
+      "percussion"
+    ],
+    "moods": [
+      "lively",
+      "playful",
+      "whimsical",
+      "energetic",
+      "lighthearted",
+      "cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a catchy pizzicato string melody and clear rhythmic pulse. It concludes with a deliberate final chord and a slight fade out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:36.376456+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "c87b2f67acb429b5908f18c4ff1823a894ec56dccfbe68f5ff8d62d8d7a88bf3"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 55.980333,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful instrumental piece featuring a prominent accordion melody, walking bass, and light drums, evoking a festive folk dance atmosphere.",
+      "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，搭配行进贝斯和轻快鼓点，营造出节日般的民间舞蹈氛围。"
+    },
+    "instruments": [
+      "accordion",
+      "upright bass",
+      "drums"
+    ],
+    "moods": [
+      "cheerful",
+      "lively",
+      "festive",
+      "danceable",
+      "playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:26.227662+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.980333000000002,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:22.481084+00:00"
+}

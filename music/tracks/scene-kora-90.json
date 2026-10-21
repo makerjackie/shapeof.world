@@ -1,0 +1,130 @@
+{
+  "id": "scene-kora-90",
+  "code": "SCENE-14-90",
+  "title": {
+    "en": "Woven Sunlight · 90",
+    "zh": "编织日光 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "interlocking patterns and natural motion",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "kora",
+    "calabash",
+    "shakers",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for interlocking patterns and natural motion. Instruments: kora, calabash, shakers, soft bass. 112 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring a plucked string instrument (like a classical guitar or ukulele) playing the main melody, accompanied by a soft, airy wind instrument (flute or recorder) and light percussion. The overall feel is calm and reflective.",
+    "zh": "一首轻柔旋律的器乐曲，以拨弦乐器（如古典吉他或尤克里里）演奏主旋律，配以柔和空灵的管乐器（长笛或竖笛）和轻快的打击乐。整体感觉平静而富有思考性。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "interlocking patterns and natural motion"
+    ]
+  },
+  "duration": 88.033,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:39.447215+00:00",
+  "generation": {
+    "id": "db972946-a615-4d61-9886-8348c0b30ddb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:16:52.235784+00:00",
+    "completedAt": "2026-09-22T09:17:39.447215+00:00",
+    "interactionId": "hUeyarLGJM7ojNAPzs-CwQ0",
+    "sha256": "fcef9fc53c1c6fb94463f9af70e313255723ceb6ad729261e4cb3525237c2cbe"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring a plucked string instrument (like a classical guitar or ukulele) playing the main melody, accompanied by a soft, airy wind instrument (flute or recorder) and light percussion. The overall feel is calm and reflective.",
+      "zh": "一首轻柔旋律的器乐曲，以拨弦乐器（如古典吉他或尤克里里）演奏主旋律，配以柔和空灵的管乐器（长笛或竖笛）和轻快的打击乐。整体感觉平静而富有思考性。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Flute",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Gentle",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Clean recording with pleasant instrumentation and a soothing melody, suitable for various background uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:53.965979+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-kora-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-kora-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-kora-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b30ecc47c697d0c3b83c8d62e27e172330320c1922270c8b1e0786b9ce4479d4",
+      "bytes": 1233232,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fcef9fc53c1c6fb94463f9af70e313255723ceb6ad729261e4cb3525237c2cbe",
+      "bytes": 2120450,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3ede631400d8721caae99b6fdb1f2abc6919db7d9fb0e8bc391d1a233bc8550c",
+      "bytes": 2799,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.844960+00:00"
+}

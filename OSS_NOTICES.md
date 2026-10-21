@@ -1,36 +1,464 @@
 # Third-party assets and open-source notices
 
-This curated edition redistributes only the engines and assets required by:
+The deployed, plain-text copy of the applicable notices and full license texts
+for the redistributed Three.js, Draco, Swiper, NiiVue,
+and CT volume components is available at
+[`/third-party-notices.txt`](public/third-party-notices.txt) and from the
+OneWorld site footer.
 
-- `moon-voyage`
-- `black-hole-flyby`
-- `formula-bloom`
-- `double-slit`
-- `pendulum-wave`
-- `double-pendulum`
-- `firefly-sync`
-- `chemical-garden`
-- `neural-playground`
-- `robot-ik`
-- `solar-system`
-- `three-body`
-- `gravity-assist`
-- `mandelbrot-zoom`
-- `newton-fractal`
-- `clifford-dust`
-- `kakeya-needle`
-- `strange-attractors`
-- `fluid-sim`
-- `electric-field`
-- `magnetic-lines`
-- `fourier`
-- `ferrofluid`
-- `soap-bubble`
-- `pool-caustics`
-- `pinhole-canopy`
-- `lightning-lab`
-- `snow-crystal`
-- `boids-flocking`
-- `phyllotaxis`
+This file records the third-party assets and primary visualization libraries
+that OneWorld redistributes. It is not legal advice, does not change the
+licenses described in [`LICENSING.md`](./LICENSING.md), and does not grant
+rights in third-party names, logos, trademarks, privacy rights, or publicity
+rights.
 
-Site fonts remain under OFL-1.1 (`public/assets/oss-source/LICENSE-fonts-ofl.txt`). Eric Bruneton's black-hole shader remains BSD-3-Clause when that world is included. Firefly forest audio and the jacaranda tree remain CC0 / their stated licenses when that world is included.
+## Current open-source experience engines
+
+The audio library is governed separately by [music/AUDIO_LICENSE.txt](./music/AUDIO_LICENSE.txt).
+Lyria recordings preserve Google model and generation provenance; those model
+outputs are not relicensed as project software. Sample-free procedural audio is
+identified individually as CC0. 音频逐条授权，不随代码许可证统一再授权。
+
+The public edition uses the following mature upstream engines. Exact license
+texts copied from the inspected repositories are deployed with the app:
+
+| Engine | Version / source | License | Deployed text |
+| --- | --- | --- | --- |
+| Google model-viewer | 4.3.1 | Apache-2.0 | `public/assets/oss-source/LICENSE-model-viewer.txt` |
+| OpenSeadragon | 6.0.2 | BSD-3-Clause | `public/assets/oss-source/LICENSE-openseadragon.txt` |
+| Flowmap.gl | 9.4.0 | Apache-2.0 | `public/assets/oss-source/LICENSE-flowmap.txt` |
+| WorldWide Telescope WebGL engine | inspected upstream `853b899` | MIT | `public/assets/oss-source/LICENSE-worldwide-telescope.txt` |
+| deck.gl | 9.3.6 | MIT | `public/assets/oss-source/LICENSE-deck-gl.txt` |
+| earth.nullschool / cambecc/earth | inspected upstream | MIT | `public/assets/oss-source/LICENSE-earth-nullschool.md` |
+| MapLibre GL JS | 5.24.0 | BSD-3-Clause | `public/assets/oss-source/LICENSE-maplibre.txt` |
+| Allmaps MapLibre plugin | 1.0.0-beta.43 | MIT | `public/assets/oss-source/LICENSE-allmaps.md` |
+| Manrope / Cormorant Garamond via Fontsource | 5.3.0 | OFL-1.1 | `public/assets/oss-source/LICENSE-fonts-ofl.txt` |
+| Open 3D Viewer Google Cow | archived Google Code source | Apache-2.0 | `public/assets/oss-source/LICENSE-google-cow.txt` |
+| Three.js CSS3D Periodic Table | Three.js revision `f9fb68d` | MIT | `public/assets/oss-source/LICENSE-three-periodic-table.txt` |
+| ashemag/human-atlas | inspected upstream `7a383d3` | MIT | `public/assets/oss-source/LICENSE-human-atlas.txt` |
+| Eric Bruneton Black Hole Shader | revision `e72b3f293409893a6fa25528b29572c96fc57f57`; locally adapted demo | BSD-3-Clause | `public/assets/oss-source/LICENSE-black-hole-shader.txt` |
+
+WorldWide Telescope is used through its official Research App embed and
+documented message API, so its engine and scientific tiles are not redistributed
+in OneWorld's JavaScript bundle.
+The native engines are lazy production chunks and are never imported by
+the poster feed.
+
+## Site fonts
+
+The deployable interface uses unmodified Manrope and Cormorant Garamond font
+files distributed through Fontsource. Both remain under OFL-1.1 and are not
+relicensed under the project's software license. Copyright notices and the
+complete OFL text are deployed at
+`public/assets/oss-source/LICENSE-fonts-ofl.txt`.
+
+## Black-hole flyby — shader and generated sky
+
+`public/vendor/black-hole/` redistributes Eric Bruneton's BSD-3-Clause shader,
+precomputed ray/color lookup tables, noise texture, and rocket model/textures.
+The matching source subset is pinned to upstream revision
+`e72b3f293409893a6fa25528b29572c96fc57f57` in `vendor/black-hole-shader/`.
+The upstream paper assets, the separately sourced Khronos RGB9_E5 C helper,
+the copied Gaia instrument passband table and raw CIE table are excluded from
+that subset; the existing BSD demo lookup tables are retained as acquired.
+Full shader notices travel beside the runtime
+and at `public/assets/oss-source/LICENSE-black-hole-shader.txt`.
+
+The background `sky/*.dat` is generated by this project with
+`scripts/generate-black-hole-sky.mjs`, seed `0x5eeda17c`. Its spherical star
+positions, galaxy band and dust pattern are synthetic; blackbody colors use
+Bruneton's BSD lookup table. No third-party star catalogue or sky image is
+redistributed or fetched by this world. Posters are new captures of this
+generated sky through the renderer. File-level provenance and model limits are
+in [the runtime notice](public/vendor/black-hole/NOTICE.md) and
+[the world source record](src/components/experiences/worlds/black-hole-flyby/SOURCE.md).
+
+## Open 3D Viewer Google Cow
+
+`public/assets/cow/bessie-anatomy.glb` is a format-converted and Meshopt-
+compressed derivative of `cow_anatomy/Bessie.obj`. The archive contains an
+Apache-2.0 license and a NOTICE crediting model artist Leo White (2010). Both
+are preserved in `public/assets/oss-source/LICENSE-google-cow.txt` and
+`public/assets/cow/NOTICE.txt`. OneWorld changed the format and compression,
+kept the seven named system groups, and added Chinese educational annotations.
+
+## Three.js CSS3D Periodic Table
+
+The historical adapted build of the official Three.js CSS3D periodic table
+remains in the repository. Its inspected upstream HTML is preserved unchanged
+at `vendor/three-periodic-table/UPSTREAM.html`, with the adaptation record beside
+it. Its MIT license remains at `/assets/oss-source/LICENSE-three-periodic-table.txt`.
+The current `periodic-table` world no longer loads this build: its interface is now an original photographic museum preview. Seven CC BY 3.0
+specimen photographs are attributed in the asset notice linked below. Earlier
+procedural studies remain private modules and are not loaded by the preview.
+No external meshes or HDR photographs were imported. Its factual data snapshot, original
+copy and model boundaries are recorded in
+`src/components/experiences/worlds/periodic-table/NOTICE.md`.
+
+## Future-Style-Periodic-Table atom renderer
+
+The periodic-table world's `atom-specimen.tsx` adapts CSS3D ring construction,
+electron placement, animation and drag controls from SeanWong17's MIT project,
+commit `6f76f56078ed6cd388493e080e77bad6b026645f`. Copyright (c) 2025 SeanWong17.
+Full terms: [upstream license](src/components/experiences/worlds/periodic-table/upstream-LICENSE.txt).
+The adaptation uses independently sourced factual populations; it does not import
+the upstream project's separately licensed CC BY-SA data or summaries.
+
+## Human atlas — ashemag/human-atlas and BodyParts3D
+
+`public/assets/human-atlas/` redistributes gzipped BodyParts3D 4.0 geometry
+and an adapted Three.js renderer from
+[ashemag/human-atlas](https://github.com/ashemag/human-atlas) at commit
+`7a383d3ee2759e3ddf157c704fb8814fd0c50bcb`. Application code remains MIT;
+the anatomy data remains CC BY 4.0. The MIT license is at
+`public/assets/oss-source/LICENSE-human-atlas.txt`. Full dataset credit is
+in `public/assets/human-atlas/ATTRIBUTION.md`.
+
+## Shape of the World original soundtrack
+
+Default world music is the GLO-B01 theme `hidden-shapes`, streamed from
+`https://music-cdn.shapeof.world/tracks/hidden-shapes/v3/preview.mp3` and bundled
+as `public/assets/audio/hidden-shapes.mp3`. Category tracks are assigned per world
+and streamed from the music CDN. The previous uncleared `site-bgm.mp3` bed has
+been removed.
+
+## Hammond's 1917 New York map
+
+`public/assets/posters/manhattan-1917.webp` derives from Boston Public
+Library / Digital Commonwealth item `commonwealth:4m90f212r`. The public JSON
+record says “No known copyright restrictions” and “No known restrictions on
+use.” Allmaps' georeference annotations are CC0. The archived interactive page
+preserves provider links and runtime attribution.
+
+## OpenFlights derived database
+
+`public/assets/flow/global-routes.json` is a dated derivative of the OpenFlights
+airport and route databases under ODbL-1.0 / DbCL-1.0. It is made publicly
+available under the same database terms, credits OpenFlights in the interface,
+and is explicitly labeled a June 2014 historical snapshot. Natural Earth
+country geometry is public domain.
+
+## NASA Earth imagery
+
+**Bundled files**
+
+- `public/assets/earth-blue-marble.jpg`
+- `public/assets/posters/living-earth.webp`
+- `public/assets/posters/living-earth-desktop.webp`
+- `public/assets/posters/earth-cutaway.webp`
+- `public/assets/posters/scale-portal.webp`
+- `public/assets/posters/epic-earth.webp`
+- `public/assets/posters/epic-earth-mobile.webp`
+
+`earth-blue-marble.jpg` is a byte-for-byte copy of the NASA-derived
+`earth_atmos_2048.jpg` in the
+[Three.js r185 example textures](https://github.com/mrdoob/three.js/blob/r185/examples/textures/planets/earth_atmos_2048.jpg).
+OneWorld links its scientific provenance to NASA Visible Earth's
+[Blue Marble collection](https://visibleearth.nasa.gov/collection/1484/blue-marble).
+
+The two EPIC posters are OneWorld-designed compositions derived from exact
+natural-color frame `epic_1b_20260708195604`, published by the NASA EPIC Team.
+Checksums and the archive URL are recorded in
+`public/assets/posters/PROVENANCE.md`. The live experience retrieves
+metadata and JPEGs from the [NASA EPIC API and
+archive](https://epic.gsfc.nasa.gov/about/api). EPIC's
+[Image Use Policy](https://epic.gsfc.nasa.gov/about) says EPIC Team materials,
+including imagery, are available for reproduction and reuse, including
+commercial purposes, and requests credit to the NASA EPIC Team.
+
+NASA's broader media guidelines still apply: third-party material can have
+separate rights, NASA marks are protected, identifiable people can raise
+privacy or publicity issues, and use must not imply endorsement. OneWorld
+credits “NASA EPIC Team” for EPIC imagery and does not use NASA or NOAA marks as
+its own identity.
+
+## Smithsonian Apollo 11 Command Module — retired
+
+**Formerly bundled files**
+
+- `public/assets/flagships/apollo/{hull,seats,panel,graffiti}/release.gltf`
+- The matching `model.bin` and `baseColor.jpg` files in each part directory
+- `public/assets/posters/apollo-eleven.webp` (OneWorld render of the model)
+
+**Source and credit**
+
+- Smithsonian National Air and Space Museum, [Apollo 11 Command Module
+  interior 3D
+  model](https://3d.si.edu/object/3d/d8c63e8a-4ebc-11ea-b77f-2e728ce88125)
+- Smithsonian collection record, [Command Module, Apollo
+  11](https://www.si.edu/object/nasm_A19700102000)
+
+These files were removed from the deployable tree on 2026-08-09. The
+Smithsonian designates the source model as **CC0 1.0 Universal** (public-domain
+dedication). CC0 permits copying, modification, and redistribution, including
+commercial use, without a copyright attribution requirement. This section is
+retained only as historical provenance.
+
+CC0 addresses copyright only. The Smithsonian notes that other rights can
+still apply, its names and logos are not part of the Open Access release, and
+citation does not imply endorsement. OneWorld is not sponsored or endorsed by
+the Smithsonian or the National Air and Space Museum. See the [Smithsonian Open
+Access FAQ](https://www.si.edu/openaccess/faq), [Smithsonian Terms of
+Use](https://www.si.edu/termsofuse), and [CC0 1.0 legal
+code](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+
+## RCSB Protein Data Bank structures
+
+The archived `molecular-breath` experience bundles 2DN1, 2DN2, and 2HBS data
+under `public/assets/flagships/`, plus a heme extraction from the 2DN1
+coordinates. Persistent records are available at
+[2DN1](https://doi.org/10.2210/pdb2dn1/pdb),
+[2DN2](https://doi.org/10.2210/pdb2dn2/pdb), and
+[2HBS](https://doi.org/10.2210/pdb2hbs/pdb). The Worldwide Protein Data Bank
+makes PDB archive data files available under CC0 1.0 Universal; see the
+[RCSB PDB usage policy](https://www.rcsb.org/pages/usage-policy).
+
+## SCI Institute CT_Electrodes volume
+
+The archived `cranial-volume` experience bundles
+`public/assets/volume/CT_Electrodes.nii.gz`. It originated in the Scientific
+Computing and Imaging Institute, University of Utah's Seg3DData repository and
+is distributed from the pinned NiiVue demo-images revision documented in
+`public/assets/volume/NOTICE.md`. That record identifies the volume as
+MIT-licensed SCI Institute data. SHA-256:
+`0566942708ff451458d0fdb1f61c4611187bb5cc0efa516c8500f1ff3c142e57`.
+The exact MIT license is preserved beside the volume.
+
+## Poly Haven HDRIs
+
+**Bundled files**
+
+| File | Source asset | Creator credit |
+| --- | --- | --- |
+| `public/assets/flagships/mars-sky.hdr` | [Kloppenheim 06 (Pure Sky)](https://polyhaven.com/a/kloppenheim_06_puresky) | Greg Zaal (original), Jarod Guest (sky edit) |
+
+Poly Haven releases its HDRIs, textures, and 3D models under **CC0 1.0
+Universal**. Attribution is not required, but it is appreciated and is included
+here. See the [Poly Haven Asset License](https://polyhaven.com/license) and
+[CC0 1.0 legal
+code](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+
+## USGS observations and references
+
+OneWorld reads the USGS Earthquake Hazards Program's
+[real-time GeoJSON feed](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php)
+at runtime and uses USGS publications about Earth's interior as factual
+references. These are not redistributed as a standalone dataset.
+
+USGS says USGS-authored or produced data and information are considered public
+domain in the United States and asks users to acknowledge USGS. Separately
+identified third-party content is excluded from that statement. See the
+official [USGS copyright and credit
+guidance](https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted).
+
+## NOAA and NIST references
+
+The ocean-depth experience compiles facts from NOAA Ocean Exploration, and the
+powers-of-ten experience uses NIST's SI length material as a factual reference.
+OneWorld does not redistribute a NOAA or NIST dataset for those experiences.
+`public/assets/posters/ocean-descent.webp` is an application-generated capture,
+not a reproduction of NOAA media.
+
+NOAA says most NOAA information is public domain unless otherwise identified,
+requests credit, and prohibits implying U.S. Government endorsement; see the
+[NOAA reuse FAQ](https://oceanservice.noaa.gov/about/faq.html). NIST says
+unmarked information on NIST sites is public information and requests
+appropriate credit, while individual products may carry separate terms; see
+[NIST Copyrights & Disclaimers](https://www.nist.gov/copyrights-disclaimers).
+
+## Draco glTF decoder distributed with Three.js
+
+**Bundled files**
+
+- `public/draco/draco_decoder.js`
+- `public/draco/draco_decoder.wasm`
+- `public/draco/draco_wasm_wrapper.js`
+
+These glTF-targeted decoder builds were copied byte-for-byte from
+`three@0.185.1/examples/jsm/libs/draco/gltf/`. See the [corresponding Three.js
+decoder directory](https://github.com/mrdoob/three.js/tree/r185/examples/jsm/libs/draco/gltf)
+and [Three.js source repository](https://github.com/mrdoob/three.js).
+
+The decoder is part of [Google Draco](https://github.com/google/draco), which
+is distributed under the **Apache License 2.0**. See the [Draco license
+text](https://github.com/google/draco/blob/master/LICENSE). It is provided
+without warranties or conditions beyond those stated in that license.
+
+
+## Swiper
+
+OneWorld uses Swiper `12.2.0` for the vertical poster magazine, including its
+mousewheel and accessibility modules. Swiper is distributed under
+the MIT License. Source and license: [Swiper repository](https://github.com/nolimits4web/swiper)
+and [Swiper license](https://github.com/nolimits4web/swiper/blob/master/LICENSE).
+
+```text
+Copyright (c) 2019 Vladimir Kharlampidi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## NiiVue
+
+OneWorld uses `@niivue/niivue` `0.69.0` to render the archived NIfTI CT
+volume. NiiVue is distributed under the BSD 2-Clause License. Source and exact
+tagged license: [NiiVue repository](https://github.com/niivue/niivue) and
+[0.69.0 license](https://github.com/niivue/niivue/blob/%40niivue%2Fniivue-v0.69.0/LICENSE).
+The full license text is reproduced in `public/third-party-notices.txt`.
+
+## d3-geo
+
+OneWorld uses `d3-geo` `3.1.1` for the round-table story’s real-country paths,
+projections, and great-circle clipping. Source: [d3-geo v3.1.1](https://github.com/d3/d3-geo/tree/v3.1.1).
+The ISC and included GeographicLib MIT notices are retained in
+[d3-geo license](https://github.com/d3/d3-geo/blob/v3.1.1/LICENSE)
+and `public/third-party-notices.txt`.
+
+## No endorsement
+
+Source attribution identifies provenance only. It must not be read as an
+endorsement of OneWorld by NASA, JPL, the Smithsonian Institution, the
+National Air and Space Museum, RCSB PDB, wwPDB, Poly Haven, Google, Three.js,
+Swiper, NiiVue, d3, the World Bank, USGS, NOAA, NIST, SCI Institute, or
+the authors associated with the cited records.
+
+### Periodic-table museum preview photographs
+
+Seven photographs from [Chemical Elements — A Virtual Museum](https://images-of-elements.com/),
+CC BY 3.0, individually checked 2026-09-10. Original pixels retained.
+Per-image URLs, hashes, credit and scientific context: [asset notice](public/assets/worlds/periodic-table/NOTICE.md)
+and [manifest](public/assets/worlds/periodic-table/sources.json). These third-party
+images retain their upstream terms and are excluded from project-owned content licensing.
+
+## Underwater Planet optical pass (making)
+
+`WaterOptics.ts` adapts the depth reconstruction, Beer–Lambert attenuation and bounded ray integration from [WaterThreeJS](https://github.com/achrefelouafi/WaterThreeJS), commit `4f85f4a557da80a1dd24b9243869177f30c604c7`, copyright (c) 2026 mohamedachrefelouafi, MIT. Added heightfield sun occlusion, resource cleanup and a 6/12-step mobile/desktop budget. The full notice is preserved in `public/assets/underwater-planet/WATERTHREEJS_LICENSE.txt` and adjacent to the adapted source. Upstream UI and assets are not included.
+
+### Periodic-table expanded photo collection (2026-09-10)
+
+The complete photo mapping and image kinds are in
+`src/components/experiences/worlds/periodic-table/photo-data.ts`.
+The active collection combines CC BY 2.0, 3.0 and 4.0 photographs with
+explicitly public-domain NASA, DOE and USGS references. The generic historical
+cyclotron file is retained with attribution but no longer displayed. Each derivative
+has its own source, terms, credit and hash in
+[the collection manifest](public/assets/worlds/periodic-table/collection/sources.json)
+and [adjacent notice](public/assets/worlds/periodic-table/collection/NOTICE.md).
+The six element-specific additions cover Po, At, Rn, Fr, Th and Pa, with
+exposure, material and apparatus context in their captions. Seventeen heavy
+elements instead use original, explicitly labelled synthesis drawings with
+per-reaction sources in [the synthesis notice](public/assets/worlds/periodic-table/synthesis/NOTICE.md).
+Contextual research images are not claimed to be specimens. Project licences
+do not relicense photographic material or linked scientific publications.
+
+### Periodic-table photo-referenced AI display illustrations
+
+The daylit display adaptations are generated from individual real photo inputs.
+The originals remain separately accessible with their original credits and
+licences. CC BY-derived images retain attribution and a change notice; no
+exclusive project-owned content licence is asserted over these assets.
+Per-image prompts, source and output hashes, generation identifiers and review
+notes: [display asset notice](public/assets/worlds/periodic-table/display/NOTICE.md).
+
+## Cat Anatomy Models and Reference Plates
+
+The intact surface layer uses **3d modelling my cat: Fripouille** by
+[guillaume bolis](https://sketchfab.com/3d-models/3d-modelling-my-cat-fripouille-0ab14bf98e754f8d90fe1bf1c84ca66c),
+under CC BY 4.0. This is an artistic exterior, not a scan or an anatomical
+registration. Attribution and conversion records accompany the derivative in
+`public/assets/worlds/cat-anatomy/body/`. The project licenses do not relicense
+this model or its textures. Blender Lab MCP is an external production tool;
+its GPL code is not bundled into the world.
+
+The whole-body teaching view includes newly authored schematic geometry and
+an approximate fit of the westerly skeleton. The fit is not medical registration
+and does not change the third-party skeleton's CC BY 4.0 license.
+
+The cat anatomy world bundles three third-party model derivatives under Creative
+Commons Attribution 4.0 International (CC BY 4.0). Attribution, source links,
+license terms, modification notes and hashes are also kept in
+`public/assets/worlds/cat-anatomy/model/LICENSE.md`, `NOTICE.md`, and the body
+directory notice linked above.
+
+The abdominal model is **Normal Feline Anatomy - Digestive System** by
+[Pixelbeaker](https://sketchfab.com/3d-models/normal-feline-anatomy-digestive-system-ab92a2a9d9024447b0ed4c080ad17106).
+The source itself is a torso excerpt containing the liver, stomach and upper
+gastrointestinal tract, intestines, pancreas, kidneys, bladder and vessel
+group; it does not provide the heart, lungs or skeleton. Source group forms
+and relative registration are retained; delivery applies decimation,
+quantization and Meshopt compression. The source provides no verifiable
+evidence of CT/MRI reconstruction or clinical validation.
+
+The independent whole-body skeleton is **Feline Skeleton Dec** by
+[westerly](https://sketchfab.com/3d-models/feline-skeleton-dec-a5d0bb8f55dc4f49b103cd20d65e0b17),
+also CC BY 4.0. The author describes it as an ecorche practice study made
+from reference images. The source provides no verifiable evidence of scanning
+or medical validation, and the world keeps it as a separate skeletal view
+rather than registering or fusing it with the abdominal viscera.
+
+Historical illustrations from Reighard and Jennings, *Anatomy of the Cat*
+(1901), retain their public-domain status and are not claimed as project-owned
+art. The diaphragm specimen photograph is **Diaphragma-cat.jpg** by Uwe Gille
+(2006), from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Diaphragma-cat.jpg),
+under CC BY 2.5. It shows dissected and retracted tissue, not an intact-animal
+measurement image. Plate and specimen credits, conversions and integrity
+records accompany the assets in `public/assets/worlds/cat-anatomy/plates/`.
+
+## flybody body-model adaptation
+
+- Source: [TuragaLab/flybody](https://github.com/TuragaLab/flybody/tree/d015e9bfe441bd90ae431bac24c55cb74bdbce26), HHMI Janelia / Google DeepMind.
+- Apache-2.0 body geometry and MJCF hierarchy, simplified and converted to GLB for the `flybody` world. No Figshare policies or datasets are included.
+- See [asset licence](public/assets/worlds/flybody/LICENSE) and [source / modification notice](public/assets/worlds/flybody/SOURCES.md). These materials retain their upstream terms.
+
+### MaleCNS v1.0 data in flybody
+
+MaleCNS annotations and reduced connection data retain CC BY 4.0, including attribution and modification notices. See [source and transformation record](public/assets/worlds/flybody/neural/SOURCES.md) and [licence](public/assets/worlds/flybody/neural/LICENSE.txt). The site's software/original-content terms do not relicense these data or mixed-source captures. No Eon or slvDev code, policies or demonstration assets are included.
+
+### flybody Neural Canvas replay
+
+Offline model source in `scripts/vendor/flybody-xenova/` comes from Xenova / Neural Canvas, revision `776d115ee5aa934578a87fd6d260d138084f59c1`: original code MIT (file-level LICENSE), body forward kinematics MIT. The adjacent LICENSE files retain upstream terms. Runtime replay and mesh notices are in `public/assets/worlds/flybody/replay/`. NeuroMechFly meshes retain Apache-2.0; MaleCNS data retains CC BY 4.0. The opening photograph by Rolf Dietrich Brecher retains CC BY 2.0. These materials are not relicensed by the project software licence.
+
+
+### flybody pose-matched AI opening (2026-09-13)
+
+The active opening is now `fly-render-404267a77b19.webp`, an AI illustration referenced to the existing Apache-2.0 flybody model, not a real photograph. The earlier Brecher photograph is unused and retains its CC BY 2.0 record. See [asset provenance](public/assets/worlds/flybody/SOURCES.md) for the generation prompt, model attribution and output hash. No claim of measured anatomy or exclusive ownership of the model-derived visual is made.
+
+## Standard Model museum data and research tools
+
+PDG Review 2024 data retains **CC BY 4.0** with source, edition and transformation records. CMS's Zmumu education sample from CERN Open Data record 307 and the dimuon mass-bin counts derived from record 700 retain **CC0**. Record 700 attribution, source checksum and aggregation details are in [the spectrum notice](src/components/experiences/worlds/standard-model/evidence/DIMUON_SPECTRUM_NOTICE.md). These materials are not relicensed by the project's software or original-content notices. See [data provenance](DATA_SOURCES.md#standard-model-elementary-particle-museum), [PDG extraction](scripts/standard-model/THIRD_PARTY_NOTICES.md), and [CMS event notice](src/components/experiences/worlds/standard-model/evidence/NOTICE.md).
+
+Scikit-HEP Particle 0.24.0 (**BSD-3-Clause**) was used for an offline cross-check only; it is not bundled with the browser. Its full [license](scripts/standard-model/LICENSE-particle-0.24.0) is retained. CMS iSpy WebGL and DecayLanguage were evaluated but their implementation code and assets are not included in this museum.
+
+## Forest Atlas wind and lighting
+
+The forest tree shaders adapt `Steve245270533/three-stylized` revision
+`8eb0dde5a8e7eae985d69f923b627b0cf253bed5` (MIT), with its upstream
+`cortiz2894/stylized-components` credit retained. Full notices and modification
+record: [forest-wind.LICENSE](src/components/experiences/worlds/forest-atlas/forest-wind.LICENSE).
+Existing tree artwork and geographic datasets retain their separate asset notices.
+
+## Solar System — Voyager imagery and astronomical data
+
+NASA/JPL NAIF and SBDB observations and NASA/JPL-Caltech Photojournal imagery
+retain their source terms and attribution; they are not relicensed as project-
+owned software or exclusive original artwork. See the
+[asset source and rights record](public/assets/solar-system/voyager/SOURCES.md).
+SpiceyPy 8.0.0 (MIT) is an external offline preparation dependency; neither its
+code nor CSPICE is bundled in the browser. The simplified spacecraft geometry
+and synthesized soundtrack are original; no Golden Record recording is included.

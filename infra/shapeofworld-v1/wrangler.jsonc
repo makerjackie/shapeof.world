@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "shapeofworld-v1-proxy",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-15",
+  "workers_dev": false,
+  "services": [
+    {
+      "binding": "LEGACY_SITE",
+      "service": "shapeofworld"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "v1.shapeof.world",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  }
+}

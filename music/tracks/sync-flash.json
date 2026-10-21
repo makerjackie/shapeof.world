@@ -1,0 +1,59 @@
+{
+  "id": "sync-flash",
+  "code": "LIF-C01",
+  "title": {
+    "en": "Sync Flash",
+    "zh": "同步闪光"
+  },
+  "category": "life-body",
+  "archetype": "event",
+  "moods": [
+    "emergent",
+    "twilight",
+    "joyful",
+    "locked"
+  ],
+  "topics": [
+    "firefly-sync",
+    "emergence",
+    "phase"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "G major",
+  "instruments": [
+    "scattered mallets",
+    "tiny clicks",
+    "warm strings",
+    "soft tom"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.946,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about fireflies locking into phase. Around 102 BPM, G major. Scattered mallet pulses start random, then couple, then flash together. Twilight-joyful, not a drop-based dance track. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No four-on-the-floor kick pattern, no crowd noise.\n\n[00:00–00:25] Isolated mallet notes, irregular, like separate insects.\n[00:25–01:05] Pairs form; tiny clicks suggest nearby flashers.\n[01:05–01:40] Large group locks; a soft tom marks the shared period.\n[01:40–02:10] Unison flashes with warm strings, still gentle.\n[02:10–02:30] Sync loosens slightly, remaining mostly together.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:25:06Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sync-flash/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sync-flash/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sync-flash/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:44.332040+00:00",
+  "generation": {
+    "id": "bce609ea-4954-47b6-bbde-32a62dd50d46",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:24:09Z",
+    "completedAt": "2026-08-25T10:25:06Z",
+    "durationMs": 57000,
+    "interactionId": "Sm2Nasa9HJen7PkPzZj18Aw",
+    "clientRequestId": "61788cbe-1f4d-411a-b73e-2d5110bb80a9",
+    "synthid": true,
+    "c2pa": "urn:c2pa:cd319d6a-878c-5cb5-a27d-471e11980f0e",
+    "sha256": "986e047b7c979f5b51bf66219992d4f3c1cd9ebc0134b531e227357a31923303"
+  }
+}

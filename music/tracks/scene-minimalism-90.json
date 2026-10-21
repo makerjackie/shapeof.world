@@ -1,0 +1,130 @@
+{
+  "id": "scene-minimalism-90",
+  "code": "SCENE-17-90",
+  "title": {
+    "en": "Measured Motion · 90",
+    "zh": "有序运动 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "satisfying mechanical transformations",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "marimba",
+    "muted piano",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for satisfying mechanical transformations. Instruments: marimba, muted piano, woodblocks. 120 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A light and playful instrumental piece featuring piano, woodwinds, and pizzicato strings, creating a whimsical and gentle atmosphere.",
+    "zh": "一首轻快活泼的器乐曲，以钢琴、木管乐器和拨弦乐器为主，营造出异想天开而又温柔的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "satisfying mechanical transformations"
+    ]
+  },
+  "duration": 86.962,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:19:18.445231+00:00",
+  "generation": {
+    "id": "08089c6b-3484-4ab7-b383-b9a5e1dfbf40",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:18:28.998199+00:00",
+    "completedAt": "2026-09-22T09:19:18.445231+00:00",
+    "interactionId": "5keyaqvcI7bi694PucGn6Ac",
+    "sha256": "e5e28181bc6281687d7545e6d45371bd393fc4d8753f7ce55b4d9f7d742db1d2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful instrumental piece featuring piano, woodwinds, and pizzicato strings, creating a whimsical and gentle atmosphere.",
+      "zh": "一首轻快活泼的器乐曲，以钢琴、木管乐器和拨弦乐器为主，营造出异想天开而又温柔的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "woodwinds",
+      "strings",
+      "percussion",
+      "bells"
+    ],
+    "moods": [
+      "playful",
+      "whimsical",
+      "light",
+      "gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Clear, well-produced instrumental piece with a pleasant, consistent mood and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:38.618795+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-minimalism-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-minimalism-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-minimalism-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1fa1b48a8bc1bdd0d6aacec77ca32b438af551001839a98aa58f70ae4c0ad1c0",
+      "bytes": 1218237,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e5e28181bc6281687d7545e6d45371bd393fc4d8753f7ce55b4d9f7d742db1d2",
+      "bytes": 2094746,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b39c2cc1138883a5bc2c684957f0197d95193f3a4e551f6948e60bc0de09c4ba",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.848113+00:00"
+}

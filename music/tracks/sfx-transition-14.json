@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-14",
+  "code": "SFX-TRANSITION-14",
+  "title": {
+    "en": "Elastic stretch",
+    "zh": "弹性拉伸"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 13,
+  "seed": 3736596061,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized elastic stretch for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的弹性拉伸合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.95,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3736596061,
+    "sha256": "0f0e9a60f0b925b8954a735f0221cc8c9eeef189b74d090a0839651c655b55f3",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "35d184cb40b9ed5eeea9c8002a511469ac484da54d0fe758023f7e20be6d26eb",
+      "bytes": 28203,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0f0e9a60f0b925b8954a735f0221cc8c9eeef189b74d090a0839651c655b55f3",
+      "bytes": 172034,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1c9cb608ab0bbc8358a00fe50578ca1c9dbf9f3649ca8e382e6c88515a7b4f24",
+      "bytes": 34600,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "58ec411259d45212ab68eca5c801436ef26377053a7ee27b0a50948c0feb9196",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 85995,
+    "duration": 1.95,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.77,
+    "dcOffset": -5.0392419254026395e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1894533386230468,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A rapid, Doppler-like whoosh or swoosh sound effect with a metallic, slightly grinding or scraping texture at its peak, suggesting fast movement, a transition, or a sci-fi/magic element.",
+      "zh": "快速的多普勒效应嗖嗖声，带有金属质感，在最高点略带研磨或刮擦声，暗示快速移动、过渡或科幻/魔法元素。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced whoosh/swoosh effect with a distinct metallic character, free from technical defects, making it highly usable for various video and game sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:56.283773+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "35d184cb40b9ed5eeea9c8002a511469ac484da54d0fe758023f7e20be6d26eb"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 85995
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904800+00:00"
+}

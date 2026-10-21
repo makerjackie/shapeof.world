@@ -1,610 +1,160 @@
 [
   {
-    "id": "moon-voyage",
+    "id": "global-flight-network",
     "index": "01",
-    "poster": "/assets/posters/moon-voyage.webp",
-    "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
-    "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
-    "title": "四天抵达月球",
-    "posterTitle": "四天抵达月球",
-    "posterHook": "按下点火：真实比例的地球与月球、真实轨道力学，从发射台一路飞进环月轨道。",
-    "posterPosition": "50% 50%",
-    "question": "去月球要几天？",
-    "topicLabel": "载人航天",
-    "primaryCategoryId": "cosmos-motion",
-    "renderer": "moon-voyage",
-    "runtime": "scene-3d",
-    "duration": 360,
-    "evidence": "compiled",
-    "accent": "#9fdcff",
+    "poster": "/assets/posters/global-flights.webp",
+    "posterMobile": "/assets/posters/mobile/global-flight-network.webp",
+    "posterDesktop": "/assets/posters/desktop/global-flight-network.webp",
+    "title": "全球航线网络中的枢纽城市",
+    "posterTitle": "全球航线由少数枢纽城市连接",
+    "posterHook": "从 2014 年历史快照筛出 216 座高连接机场，比较四种完全不同的枢纽结构。",
+    "question": "如果拿掉国名，世界会被哪些城市重新组织？",
+    "topicLabel": "流动网络",
     "translations": {
       "en": {
-        "title": "Four Days to the Moon",
-        "posterTitle": "Four Days to the Moon",
-        "posterHook": "Press ignite: true-scale Earth and Moon, real orbital mechanics, from the launch pad all the way into lunar orbit.",
-        "question": "How many days does it take to reach the Moon?",
-        "topicLabel": "human spaceflight"
+        "title": "Hub cities in the global flight network",
+        "posterTitle": "A few hub cities connect the global flight network",
+        "posterHook": "Screening 216 high-connectivity airports from a 2014 historical snapshot, comparing four completely different hub structures.",
+        "question": "If country names were removed, which cities would the world be reorganized by?",
+        "topicLabel": "mobile network"
       }
-    }
-  },
-  {
-    "id": "black-hole-flyby",
-    "index": "02",
-    "poster": "/assets/posters/black-hole-flyby.webp",
-    "posterMobile": "/assets/posters/mobile/black-hole-flyby.webp",
-    "posterDesktop": "/assets/posters/desktop/black-hole-flyby.webp",
-    "title": "掠过黑洞时看见的扭曲星空",
-    "posterTitle": "掠过黑洞边缘的星空",
-    "posterHook": "从遥远星海靠近，看光被拉成灿烂圆环；越过最近点，再回头看它缩成一粒金色星光。",
-    "posterPosition": "50% 50%",
-    "question": "如果从深空掠过黑洞，你会看见怎样的宇宙？",
-    "topicLabel": "引力",
-    "primaryCategoryId": "deep-cosmos",
-    "renderer": "black-hole-flyby",
-    "runtime": "scene-3d",
-    "duration": 480,
-    "evidence": "modeled",
-    "accent": "#e9ae62",
-    "translations": {
-      "en": {
-        "title": "The distorted sky seen on a black-hole flyby",
-        "posterTitle": "The sky on a flyby past a black hole",
-        "posterHook": "Approach through a sea of stars, hover by a blazing ring, then fly past and watch the black hole recede to a golden point.",
-        "question": "What would the universe look like on a flyby past a black hole?",
-        "topicLabel": "Gravity"
-      }
-    }
-  },
-  {
-    "id": "formula-bloom",
-    "index": "03",
-    "poster": "/assets/posters/formula-bloom.webp",
-    "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
-    "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
-    "title": "一条迭代公式控制一万个点的运动",
-    "posterTitle": "参数变化让点云形成周期与混沌运动",
-    "posterHook": "纯黑画布上，每个点只是 sin 与 cos；合在一起却像深海里一只缓缓呼吸的白影。换系数、拧形变，看它从水母变成脊骨。",
-    "posterPosition": "50% 50%",
-    "question": "一串三角公式，怎么长成一只会游的白影？",
-    "topicLabel": "数学",
-    "primaryCategoryId": "essence-of-math",
-    "renderer": "formula-bloom",
-    "runtime": "particle-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#e8e8e8",
-    "translations": {
-      "en": {
-        "title": "One iterative formula controls the motion of ten thousand points",
-        "posterTitle": "Parameter changes produce periodic and chaotic point-cloud motion",
-        "posterHook": "On pure black, each point is only sin and cos; together they look like a white silhouette breathing in the deep. Swap coefficients, turn morph, watch jellyfish become spine.",
-        "question": "How do nested trig formulas grow into a swimming white shadow?",
-        "topicLabel": "Mathematics"
-      }
-    }
-  },
-  {
-    "id": "double-slit",
-    "index": "04",
-    "poster": "/assets/posters/double-slit.webp",
-    "posterMobile": "/assets/posters/mobile/double-slit.webp",
-    "posterDesktop": "/assets/posters/desktop/double-slit.webp",
-    "title": "单粒子逐个穿过双缝形成干涉条纹",
-    "posterTitle": "一颗粒子会和「自己」发生干涉吗？",
-    "posterHook": "先看波的叠加，再逐个发射粒子累积条纹；打开「观测路径」，亲手让干涉当场消失。",
-    "posterPosition": "50% 50%",
-    "question": "为什么单个粒子也会形成干涉条纹？",
-    "topicLabel": "量子物理",
-    "primaryCategoryId": "waves",
-    "renderer": "double-slit",
-    "runtime": "particle-2d",
-    "duration": 480,
-    "evidence": "modeled",
-    "accent": "#b15cff",
-    "translations": {
-      "en": {
-        "title": "Single particles build an interference pattern at a double slit",
-        "posterTitle": "Will a particle interfere with \"itself\"?",
-        "posterHook": "First watch the superposition of waves, then launch particles one by one to accumulate stripes; open the \"observation path\" and make the interference disappear on the spot.",
-        "question": "Why do single particles also form interference fringes?",
-        "topicLabel": "Quantum physics"
-      }
-    }
-  },
-  {
-    "id": "pendulum-wave",
-    "index": "05",
-    "poster": "/assets/posters/pendulum-wave.webp",
-    "posterMobile": "/assets/posters/mobile/pendulum-wave.webp",
-    "posterDesktop": "/assets/posters/desktop/pendulum-wave.webp",
-    "title": "一齐放开，一排摆自己走出波浪",
-    "posterTitle": "一排摆在不同周期中形成波浪",
-    "posterHook": "同样的起点，为什么它们会先变成波浪，再乱成一片，最后又整齐回来？",
-    "posterPosition": "50% 45%",
-    "question": "一排摆为什么会自己走出波浪？",
-    "topicLabel": "振动与波",
-    "primaryCategoryId": "chaos-boundary",
-    "renderer": "pendulum-wave",
-    "runtime": "diagram-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#f0c36a",
-    "translations": {
-      "en": {
-        "title": "Release them together and watch a row of pendulums walk themselves into waves",
-        "posterTitle": "Pendulums with different periods form a travelling wave",
-        "posterHook": "Same starting point—why do they first turn into waves, then into chaos, then line up again?",
-        "question": "Why does a row of pendulums walk itself into waves?",
-        "topicLabel": "Vibration and waves"
-      }
-    }
-  },
-  {
-    "id": "double-pendulum",
-    "index": "06",
-    "poster": "/assets/posters/double-pendulum.webp",
-    "posterMobile": "/assets/posters/mobile/double-pendulum.webp",
-    "posterDesktop": "/assets/posters/desktop/double-pendulum.webp",
-    "title": "相差 0.1° 的双摆轨迹",
-    "posterTitle": "差 0.1° 的两次放手，为什么结局完全不同？",
-    "posterHook": "拖摆球设定初始角，释放后看紫色影子摆（仅差 0.1°）多久与主摆彻底分叉。",
-    "posterPosition": "50% 50%",
-    "question": "两次几乎相同的放手，为什么走出完全不同的路？",
-    "topicLabel": "混沌",
-    "primaryCategoryId": "chaos-boundary",
-    "renderer": "double-pendulum",
-    "runtime": "particle-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#ff922b",
-    "translations": {
-      "en": {
-        "title": "Double-pendulum paths starting 0.1° apart",
-        "posterTitle": "Why are the two letting gos with a difference of 0.1° completely different endings?",
-        "posterHook": "Drag the pendulum ball to set the initial angle. After releasing it, see how long it takes for the purple shadow pendulum (with a difference of only 0.1°) to completely diverge from the main pendulum.",
-        "question": "Two almost identical letting gos, why take completely different paths?",
-        "topicLabel": "Chaos"
-      }
-    }
-  },
-  {
-    "id": "firefly-sync",
-    "index": "07",
-    "poster": "/assets/posters/firefly-sync.webp",
-    "posterMobile": "/assets/posters/mobile/firefly-sync.webp",
-    "posterDesktop": "/assets/posters/desktop/firefly-sync.webp",
-    "title": "萤火虫群体同步闪烁",
-    "posterTitle": "萤火虫会逐渐同步闪烁",
-    "posterHook": "一整片微光，怎么突然一起亮？",
-    "posterPosition": "55% 50%",
-    "question": "一整片萤火虫，怎么突然一起亮？",
-    "topicLabel": "群体节律",
-    "primaryCategoryId": "emergence",
-    "renderer": "firefly-sync",
-    "runtime": "scene-3d",
-    "duration": 300,
-    "evidence": "modeled",
-    "accent": "#d8ff79",
-    "translations": {
-      "en": {
-        "title": "Collective synchronization in flashing fireflies",
-        "posterTitle": "Fireflies gradually synchronize their flashes",
-        "posterHook": "How does a whole field of tiny lights suddenly flash together?",
-        "question": "How does a whole field of fireflies suddenly flash together?",
-        "topicLabel": "Collective rhythms"
-      }
-    }
-  },
-  {
-    "id": "chemical-garden",
-    "index": "08",
-    "poster": "/assets/posters/chemical-garden.webp",
-    "posterMobile": "/assets/posters/mobile/chemical-garden.webp",
-    "posterDesktop": "/assets/posters/desktop/chemical-garden.webp",
-    "title": "金属盐在溶液中长成矿物花园",
-    "posterTitle": "金属盐落下，矿物花园开始生长",
-    "posterHook": "沉淀膜在渗透压下膨胀、破裂，有时反复重封，把无生命的盐长成彩色中空管。",
-    "posterPosition": "50% 50%",
-    "question": "一颗金属盐落进溶液，为什么会像植物一样向上生长？",
-    "topicLabel": "化学自组织 · 沉淀与渗透",
-    "primaryCategoryId": "chem-materials",
-    "renderer": "chemical-garden",
-    "runtime": "scene-3d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#63ddbd",
-    "translations": {
-      "en": {
-        "title": "Metal salts grow into a mineral garden in solution",
-        "posterTitle": "Drop a Metal Salt. Watch a Mineral Garden Grow.",
-        "posterHook": "Osmotic pressure swells and ruptures a precipitate membrane; sometimes it reseals, growing lifeless salt into colored hollow tubes.",
-        "question": "Why can a metal salt dropped into solution grow upward like a plant?",
-        "topicLabel": "Chemical self-organization · Precipitation and osmosis"
-      }
-    }
-  },
-  {
-    "id": "neural-playground",
-    "index": "09",
-    "poster": "/assets/posters/neural-playground.webp",
-    "posterMobile": "/assets/posters/mobile/neural-playground.webp",
-    "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
-    "title": "神经网络通过调整权重学习分类",
-    "posterTitle": "神经网络用误差反向调整权重",
-    "posterHook": "换数据集、加深网络、改学习率——看决策边界怎样一点点贴上数据。",
-    "posterPosition": "50% 50%",
-    "question": "神经网络是怎样从数据中学会分类的？",
-    "topicLabel": "深度学习",
-    "primaryCategoryId": "ai-learning",
-    "renderer": "neural-playground",
-    "runtime": "diagram-2d",
+    },
+    "primaryCategoryId": "global-data-theatre",
+    "renderer": "global-flight-flow",
+    "runtime": "globe-3d",
+    "difficulty": "standard",
     "duration": 600,
-    "evidence": "modeled",
-    "accent": "#4dabf7",
-    "translations": {
-      "en": {
-        "title": "A neural network learns classification by adjusting weights",
-        "posterTitle": "A neural network uses error to update its weights",
-        "posterHook": "Swap datasets, deepen the net, change the learning rate — watch the decision boundary ease onto the data.",
-        "question": "How do neural networks learn to classify from data?",
-        "topicLabel": "deep learning"
-      }
-    }
+    "evidence": "compiled",
+    "accent": "#56d4c3",
+    "posterPosition": "50% 50%"
   },
   {
-    "id": "robot-ik",
-    "index": "10",
-    "poster": "/assets/posters/robot-ik.webp",
-    "posterMobile": "/assets/posters/mobile/robot-ik.webp",
-    "posterDesktop": "/assets/posters/desktop/robot-ik.webp",
-    "title": "逆运动学根据末端位置计算机械臂关节",
-    "posterTitle": "末端目标位置决定各关节转角",
-    "posterHook": "拖住发光的手爪任意挪动——FABRIK 迭代像把绳子拉直再一节一节装回去；关节限位、肘上肘下双解、够不着就伸直指向，全是真的。",
-    "posterPosition": "50% 50%",
-    "question": "你只说手要到哪儿，机械臂怎么知道每个关节转多少？",
-    "topicLabel": "机械与装置",
-    "primaryCategoryId": "machines-mechanisms",
-    "renderer": "robot-ik",
-    "runtime": "diagram-2d",
-    "duration": 360,
-    "evidence": "verified",
-    "accent": "#f2b267",
+    "id": "cow-anatomy",
+    "index": "02",
+    "poster": "/assets/posters/cow-anatomy.webp",
+    "posterMobile": "/assets/posters/mobile/cow-anatomy.webp",
+    "posterDesktop": "/assets/posters/desktop/cow-anatomy.webp",
+    "title": "牛的里里外外",
+    "posterTitle": "牛的里里外外",
+    "posterHook": "把地方标准中的十一种牛肉与内脏放回牛身，再看肌纤维、筋膜、脂肪、切法与火候怎样变成嫩、脆、筋与脂。",
+    "question": "同一头牛的不同部位，为什么会拥有完全不同的口感与涮烫时间？",
+    "topicLabel": "动物结构与饮食",
     "translations": {
       "en": {
-        "title": "Inverse kinematics solves robot joints from an end position",
-        "posterTitle": "An end-effector target determines each joint angle",
-        "posterHook": "Drag the glowing gripper anywhere — FABRIK iterates like pulling a rope straight and reattaching it link by link. Joint limits, elbow-up and elbow-down branches, and an honest straight reach for what it cannot touch: all real.",
-        "question": "You only say where the hand should go — how does the arm know how much each joint turns?",
-        "topicLabel": "Machines and mechanisms"
+        "title": "A cow, inside and out",
+        "posterTitle": "A cow, inside and out",
+        "posterHook": "Put the local standard’s eleven beef and offal items back onto the cow, then see how fibres, fascia, fat, slicing, and heat become tenderness, snap, sinew, and richness.",
+        "question": "Why do cuts from the same cow need such different hotpot times and feel so different to eat?",
+        "topicLabel": "Animal Structure & Food"
       }
-    }
+    },
+    "primaryCategoryId": "body-atlas",
+    "renderer": "cow-anatomy",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 480,
+    "evidence": "verified",
+    "accent": "#d6a968",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "periodic-table",
+    "index": "03",
+    "poster": "/assets/posters/periodic-table.webp",
+    "posterMobile": "/assets/posters/mobile/periodic-table.webp",
+    "posterDesktop": "/assets/posters/desktop/periodic-table.webp",
+    "title": "元素周期表",
+    "posterTitle": "元素周期表",
+    "posterHook": "取出一件展品，发现一种变化。",
+    "question": "元素符号背后，物质是什么模样？",
+    "topicLabel": "元素与物态",
+    "translations": {
+      "en": {
+        "title": "Periodic table",
+        "posterTitle": "Periodic table",
+        "posterHook": "Lift an exhibit. Discover a transformation.",
+        "question": "What does matter look like behind an element symbol?",
+        "topicLabel": "Elements and physical states"
+      }
+    },
+    "primaryCategoryId": "materials-lab",
+    "renderer": "periodic-table",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 300,
+    "evidence": "verified",
+    "accent": "#9a7947",
+    "posterPosition": "50% 50%"
   },
   {
     "id": "solar-system",
-    "index": "11",
+    "index": "04",
     "poster": "/assets/posters/solar-system.webp",
     "posterMobile": "/assets/posters/mobile/solar-system.webp",
     "posterDesktop": "/assets/posters/desktop/solar-system.webp",
-    "title": "此刻，整座太阳系",
-    "posterTitle": "八大行星此刻都在哪里？",
-    "posterHook": "任选一天，点任意行星跟拍：此刻它们各自在哪条轨道上。",
-    "posterPosition": "50% 50%",
-    "question": "八大行星此刻都在哪里？",
+    "title": "太阳系模拟",
+    "posterTitle": "太阳系模拟",
+    "posterHook": "行星之间，究竟隔着多大的空白？",
+    "question": "太阳系有多空旷？",
     "topicLabel": "太阳系",
+    "translations": {
+      "en": {
+        "title": "Solar System Simulator",
+        "posterTitle": "Solar System Simulator",
+        "posterHook": "How much empty space lies between the planets?",
+        "question": "How empty is the Solar System?",
+        "topicLabel": "solar system"
+      }
+    },
     "primaryCategoryId": "cosmos-motion",
     "renderer": "solar-system",
     "runtime": "scene-3d",
+    "difficulty": "intro",
     "duration": 600,
     "evidence": "modeled",
     "accent": "#f1b24f",
-    "translations": {
-      "en": {
-        "title": "The solar system, right now",
-        "posterTitle": "Where are the eight planets right now?",
-        "posterHook": "Pick any day and follow any planet: see where each one sits on its orbit right now.",
-        "question": "Where are the eight planets right now?",
-        "topicLabel": "solar system"
-      }
-    }
+    "posterPosition": "50% 50%"
   },
   {
-    "id": "three-body",
-    "index": "12",
-    "poster": "/assets/posters/three-body.webp",
-    "posterMobile": "/assets/posters/mobile/three-body.webp",
-    "posterDesktop": "/assets/posters/desktop/three-body.webp",
-    "title": "三颗星，能跳出这么多完美的舞吗？",
-    "posterTitle": "三颗星，能跳出这么多完美的舞吗？",
-    "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
-    "posterPosition": "50% 50%",
-    "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
-    "topicLabel": "周期轨道",
-    "primaryCategoryId": "chaos-boundary",
-    "renderer": "three-body",
-    "runtime": "scene-3d",
-    "duration": 480,
-    "evidence": "modeled",
-    "accent": "#ff922b",
+    "id": "eclipses",
+    "index": "05",
+    "poster": "/assets/posters/eclipses.webp",
+    "posterMobile": "/assets/posters/mobile/eclipses.webp",
+    "posterDesktop": "/assets/posters/desktop/eclipses.webp",
+    "title": "本影与半影中的日食和月食",
+    "posterTitle": "为什么不是每个月都有日食或月食？",
+    "posterHook": "控制时间、切换视角，观察太阳、地球、月球何时真正对齐，以及月球轨道倾角如何挡住大多数“食”的机会。",
+    "question": "日食和月食是怎么形成的？",
+    "topicLabel": "天体",
     "translations": {
       "en": {
-        "title": "Can three stars dance in so many perfect patterns?",
-        "posterTitle": "Can three stars dance in so many perfect patterns?",
-        "posterHook": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
-        "question": "Why can three stars trace flowers, butterflies, and a dance in space?",
-        "topicLabel": "Periodic orbits"
+        "title": "Solar and lunar eclipses in the umbra and penumbra",
+        "posterTitle": "Why isn't there a solar or lunar eclipse every month?",
+        "posterHook": "Control the time, switch perspectives, and observe when the sun, earth, and moon are truly aligned, and how the moon's orbital inclination blocks most eclipse opportunities.",
+        "question": "How are solar and lunar eclipses formed?",
+        "topicLabel": "celestial body"
       }
-    }
-  },
-  {
-    "id": "gravity-assist",
-    "index": "13",
-    "poster": "/assets/posters/gravity-assist.webp",
-    "posterMobile": "/assets/posters/mobile/gravity-assist.webp",
-    "posterDesktop": "/assets/posters/desktop/gravity-assist.webp",
-    "title": "引力助推改变飞船的速度",
-    "posterTitle": "飞船如何不烧燃料，向行星「借」速度？",
-    "posterHook": "选择后方或前方掠过行星，亲眼看 Δv 为正还是为负；再切到旋转参考系，找引力刚好抵消的 5 个点。",
-    "posterPosition": "50% 50%",
-    "question": "引力弹弓为什么能「白捡」速度？",
-    "topicLabel": "轨道力学",
+    },
     "primaryCategoryId": "cosmos-motion",
-    "renderer": "gravity-assist",
-    "runtime": "particle-2d",
+    "renderer": "eclipses",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
     "duration": 480,
     "evidence": "modeled",
-    "accent": "#51cf66",
-    "translations": {
-      "en": {
-        "title": "A gravity assist changes a spacecraft’s speed",
-        "posterTitle": "How can a spacecraft \"borrow\" speed from the planet without burning fuel?",
-        "posterHook": "Choose to fly behind or in front of the planet and see with your own eyes whether Δv is positive or negative; then switch to the rotating reference frame and find 5 points where the gravity just cancels out.",
-        "question": "Why can the gravity slingshot gain speed for free?",
-        "topicLabel": "Orbital mechanics"
-      }
-    }
-  },
-  {
-    "id": "mandelbrot-zoom",
-    "index": "14",
-    "poster": "/assets/posters/mandelbrot-zoom.webp",
-    "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
-    "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
-    "title": "曼德勃罗集边界的无限细节",
-    "posterTitle": "迭代公式生成自相似的分形边界",
-    "posterHook": "一个公式画出的宇宙：黑色是永远逃不出的点，彩色是逃逸快慢。放大边界，海马谷与螺旋层层展开——相似，却永不重复。",
-    "posterPosition": "50% 50%",
-    "question": "为什么一个公式的边界，越放大越看不完？",
-    "topicLabel": "分形",
-    "primaryCategoryId": "fractals-chaos",
-    "renderer": "mandelbrot-zoom",
-    "runtime": "diagram-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#b15cff",
-    "translations": {
-      "en": {
-        "title": "Infinite detail along the Mandelbrot set boundary",
-        "posterTitle": "An iterative formula produces a self-similar fractal boundary",
-        "posterHook": "One formula paints a universe: black means trapped forever, color means how fast you escape. Zoom the boundary—seahorse valleys and spirals unfold, similar yet never the same.",
-        "question": "Why does one formula’s boundary never run out as you zoom?",
-        "topicLabel": "Fractals"
-      }
-    }
-  },
-  {
-    "id": "newton-fractal",
-    "index": "15",
-    "poster": "/assets/posters/newton-fractal.webp",
-    "posterMobile": "/assets/posters/mobile/newton-fractal.webp",
-    "posterDesktop": "/assets/posters/desktop/newton-fractal.webp",
-    "title": "猜错起点，答案会跳到另一边",
-    "posterTitle": "每个像素都在猜同一个方程的答案",
-    "posterHook": "用牛顿法从每个像素出发解 z³−1=0：颜色表示落到哪个解，白线是修正路径。",
-    "posterPosition": "50% 50%",
-    "question": "同一个方程，为什么换个起点答案就变了？",
-    "topicLabel": "数学",
-    "primaryCategoryId": "fractals-chaos",
-    "renderer": "newton-fractal",
-    "runtime": "diagram-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#b15cff",
-    "translations": {
-      "en": {
-        "title": "Guess from the wrong start, and the answer jumps to another side",
-        "posterTitle": "Every pixel is guessing the answer to the same equation",
-        "posterHook": "Solve z³−1=0 from every pixel with Newton’s method: color shows which root you land on; the white line is the path of corrections.",
-        "question": "Why does the same equation give different answers from different starting points?",
-        "topicLabel": "Mathematics"
-      }
-    }
-  },
-  {
-    "id": "clifford-dust",
-    "index": "16",
-    "poster": "/assets/posters/clifford-dust.webp",
-    "posterMobile": "/assets/posters/mobile/clifford-dust.webp",
-    "posterDesktop": "/assets/posters/desktop/clifford-dust.webp",
-    "title": "四个参数迭代生成 Clifford 吸引子",
-    "posterTitle": "Clifford 映射形成确定性的点云结构",
-    "posterHook": "Clifford 吸引子：每一步只是 sin 与 cos 的交错；十万次之后，翅膀、丝带与暗涡在纯黑里浮现。",
-    "posterPosition": "50% 50%",
-    "question": "为什么四个数字反复迭代，会落成一片星云？",
-    "topicLabel": "数学",
-    "primaryCategoryId": "fractals-chaos",
-    "renderer": "clifford-dust",
-    "runtime": "particle-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#f0d9a8",
-    "translations": {
-      "en": {
-        "title": "Four parameters generate a Clifford attractor",
-        "posterTitle": "The Clifford map forms a deterministic point cloud",
-        "posterHook": "Clifford attractor: each step is only interlaced sin and cos; after a hundred thousand steps, wings, ribbons, and dark eddies appear on pure black.",
-        "question": "Why does iterating four numbers settle into a nebula?",
-        "topicLabel": "Mathematics"
-      }
-    }
-  },
-  {
-    "id": "kakeya-needle",
-    "index": "17",
-    "poster": "/assets/posters/kakeya-needle.webp",
-    "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
-    "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
-    "title": "卡库亚针问题的最小转向区域",
-    "posterTitle": "单位线段可以在任意小面积内转向",
-    "posterHook": "最笨的办法是原地转一圈；更聪明的办法是贴着一条三尖形轨道滑过去。答案是：地方可以几乎为零——但再小也不能瘪成一条线。",
-    "posterPosition": "50% 46%",
-    "question": "桌上有一根针要掉头，最少需要多大一块地方？",
-    "topicLabel": "几何直觉",
-    "primaryCategoryId": "beautiful-math",
-    "renderer": "kakeya-needle",
-    "runtime": "diagram-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#8fd0ff",
-    "translations": {
-      "en": {
-        "title": "The minimum turning region in the Kakeya needle problem",
-        "posterTitle": "A unit segment can turn inside a region of arbitrarily small area",
-        "posterHook": "The clumsy way is to spin in place; a smarter way is to slide along a three-cusped track. The area can shrink to almost nothing—but it still cannot flatten into a single line.",
-        "question": "A needle on a table needs to turn around—how little room does it need?",
-        "topicLabel": "Geometric intuition"
-      }
-    }
-  },
-  {
-    "id": "strange-attractors",
-    "index": "18",
-    "poster": "/assets/posters/strange-attractors.webp",
-    "posterMobile": "/assets/posters/mobile/strange-attractors.webp",
-    "posterDesktop": "/assets/posters/desktop/strange-attractors.webp",
-    "title": "状态轨迹形成奇异吸引子",
-    "posterTitle": "公式迭代出的奇异吸引子",
-    "posterHook": "六套方程各自规定「下一刻往哪走」；光点跟着跑，久了留下双翼、螺旋与空心球壳。",
-    "posterPosition": "50% 50%",
-    "question": "这些图形到底是怎么画出来的？",
-    "topicLabel": "混沌",
-    "primaryCategoryId": "fractals-chaos",
-    "renderer": "strange-attractors",
-    "runtime": "particle-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#b15cff",
-    "translations": {
-      "en": {
-        "title": "State trajectories form strange attractors",
-        "posterTitle": "Strange attractors generated by iterated equations",
-        "posterHook": "Six equation families each say where the state goes next; points follow the rules and leave wings, spirals, and hollow shells.",
-        "question": "How are these shapes actually drawn?",
-        "topicLabel": "Chaos"
-      }
-    }
-  },
-  {
-    "id": "fluid-sim",
-    "index": "19",
-    "poster": "/assets/posters/fluid-sim.webp",
-    "posterMobile": "/assets/posters/mobile/fluid-sim.webp",
-    "posterDesktop": "/assets/posters/desktop/fluid-sim.webp",
-    "title": "涡旋从流体扰动中产生并消散",
-    "posterTitle": "搅动流体时形成的涡旋",
-    "posterHook": "在画布上拖动鼠标或手指，实时搅动 GPU 流体——彩色染料在涡旋中拉伸、卷曲、扩散。",
-    "posterPosition": "50% 50%",
-    "question": "为什么流体被搅动后会自发形成涡旋结构？",
-    "topicLabel": "水流与漩涡",
-    "primaryCategoryId": "fields-flow",
-    "renderer": "fluid-sim",
-    "runtime": "particle-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#4dd0e1",
-    "translations": {
-      "en": {
-        "title": "Vortices form and dissipate after a fluid is disturbed",
-        "posterTitle": "The vortices formed by stirring a fluid",
-        "posterHook": "Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices.",
-        "question": "Why does fluid spontaneously form vortex structures after being stirred?",
-        "topicLabel": "Flow and vortices"
-      }
-    }
-  },
-  {
-    "id": "electric-field",
-    "index": "20",
-    "poster": "/assets/posters/electric-field.webp",
-    "posterMobile": "/assets/posters/mobile/electric-field.webp",
-    "posterDesktop": "/assets/posters/desktop/electric-field.webp",
-    "title": "电场线勾出看不见的力",
-    "posterTitle": "看不见的电场，为什么能用线画出来？",
-    "posterHook": "在画布上放置正负电荷，实时看电力线弯曲、叠加；拖动电荷，场线像活物一样跟随变形。",
-    "posterPosition": "50% 50%",
-    "question": "电力线为什么从正电荷出发、终止于负电荷，而且永不相交？",
-    "topicLabel": "电磁学",
-    "primaryCategoryId": "fields-flow",
-    "renderer": "electric-field",
-    "runtime": "particle-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#ffd166",
-    "translations": {
-      "en": {
-        "title": "Field lines trace the shape of an invisible electric force",
-        "posterTitle": "Why can an invisible electric field be drawn with lines?",
-        "posterHook": "Place positive and negative charges on the canvas and watch field lines bend and superimpose in real time; drag charges and the lines follow like living things.",
-        "question": "Why do electric field lines start at positive charges, end at negative charges, and never cross?",
-        "topicLabel": "Electromagnetism"
-      }
-    }
-  },
-  {
-    "id": "magnetic-lines",
-    "index": "21",
-    "poster": "/assets/posters/magnetic-lines.webp",
-    "posterMobile": "/assets/posters/mobile/magnetic-lines.webp",
-    "posterDesktop": "/assets/posters/desktop/magnetic-lines.webp",
-    "title": "看不见的磁力线",
-    "posterTitle": "铁屑排出磁场的形状",
-    "posterHook": "拖动磁铁，青色与琥珀色的场线重新组织；铁屑像微型指南针，自己排成花纹。",
-    "posterPosition": "50% 48%",
-    "question": "铁屑为什么会自己排成花纹？",
-    "topicLabel": "电磁",
-    "primaryCategoryId": "fields-flow",
-    "renderer": "magnetic-lines",
-    "runtime": "diagram-2d",
-    "duration": 300,
-    "evidence": "modeled",
-    "accent": "#6ee7f2",
-    "translations": {
-      "en": {
-        "title": "Invisible magnetic lines",
-        "posterTitle": "Iron filings trace the shape of a magnetic field",
-        "posterHook": "Drag a magnet and cyan–amber field lines reorganize; iron filings act like tiny compasses and line themselves into a pattern.",
-        "question": "Why do iron filings arrange themselves into patterns?",
-        "topicLabel": "Electromagnetism"
-      }
-    }
+    "accent": "#ffb347",
+    "posterPosition": "50% 50%"
   },
   {
     "id": "fourier",
-    "index": "22",
+    "index": "06",
     "poster": "/assets/posters/fourier.webp",
     "posterMobile": "/assets/posters/mobile/fourier.webp",
     "posterDesktop": "/assets/posters/desktop/fourier.webp",
     "title": "旋转圆叠加出方波与周期曲线",
     "posterTitle": "傅里叶级数把周期信号分解为正弦波",
     "posterHook": "增减谐波项数，看圆链末端如何一步步描出方波；还可以随手画一条线，让它现场分解。",
-    "posterPosition": "50% 50%",
     "question": "一串旋转的圆，为什么能画出任何曲线？",
     "topicLabel": "数学",
-    "primaryCategoryId": "waves",
-    "renderer": "fourier",
-    "runtime": "diagram-2d",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#b15cff",
     "translations": {
       "en": {
         "title": "Rotating circles combine into square waves and periodic curves",
@@ -613,194 +163,172 @@
         "question": "Why can a series of rotating circles draw any curves?",
         "topicLabel": "Mathematics"
       }
-    }
+    },
+    "primaryCategoryId": "waves",
+    "renderer": "fourier",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#b15cff",
+    "posterPosition": "50% 50%"
   },
   {
-    "id": "ferrofluid",
-    "index": "23",
-    "poster": "/assets/posters/ferrofluid.webp",
-    "posterMobile": "/assets/posters/mobile/ferrofluid.webp",
-    "posterDesktop": "/assets/posters/desktop/ferrofluid.webp",
-    "title": "铁磁流体",
-    "posterTitle": "磁铁一靠近，黑色液体为什么长出尖刺？",
-    "posterHook": "磁铁一靠近，黑色液体就长出尖刺。",
-    "posterPosition": "58% 50%",
-    "question": "磁铁一靠近，黑色液体为什么会长出尖刺？",
-    "topicLabel": "磁性材料",
-    "primaryCategoryId": "materials-lab",
-    "renderer": "ferrofluid",
-    "runtime": "scene-3d",
-    "duration": 240,
-    "evidence": "modeled",
-    "accent": "#efb661",
+    "id": "moon-pixel",
+    "index": "07",
+    "poster": "/assets/posters/moon-pixel.webp",
+    "posterMobile": "/assets/posters/mobile/moon-pixel.webp",
+    "posterDesktop": "/assets/posters/desktop/moon-pixel.webp",
+    "title": "月球只有一个像素时的太阳系尺度",
+    "posterTitle": "如果月球只有一个像素？",
+    "posterHook": "月球 = 1 像素，所有天体同比例。向右滚过 136 万像素，穿过一个几乎什么都没有的太阳系。",
+    "question": "如果月球只有一个像素，太阳系会是什么样子？",
+    "topicLabel": "尺度",
     "translations": {
       "en": {
-        "title": "Ferrofluid",
-        "posterTitle": "Why does black liquid grow spikes when a magnet comes close?",
-        "posterHook": "Bring a magnet close, and black liquid grows a crown of spikes.",
-        "question": "Why does black liquid grow spikes when a magnet comes close?",
-        "topicLabel": "Magnetic materials"
+        "title": "The Solar System at one-pixel Moon scale",
+        "posterTitle": "What if the moon only has one pixel?",
+        "posterHook": "Moon = 1 pixel, same scale for all celestial bodies. Scroll right through 1.36 million pixels, through a solar system of almost nothing.",
+        "question": "What would the solar system look like if the moon had only one pixel?",
+        "topicLabel": "scale"
       }
-    }
+    },
+    "primaryCategoryId": "sky-reading",
+    "renderer": "moon-pixel",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "compiled",
+    "accent": "#9fb2c8",
+    "posterPosition": "50% 50%"
   },
   {
-    "id": "soap-bubble",
-    "index": "24",
-    "poster": "/assets/posters/soap-bubble.webp",
-    "posterMobile": "/assets/posters/mobile/soap-bubble.webp",
-    "posterDesktop": "/assets/posters/desktop/soap-bubble.webp",
-    "title": "薄膜干涉形成肥皂泡彩色条纹",
-    "posterTitle": "肥皂泡通过薄膜干涉呈现彩色条纹",
-    "posterHook": "薄膜变厚变薄，彩虹跟着滑动；液体往下排，颜色也一起走。",
-    "posterPosition": "50% 48%",
-    "question": "肥皂膜上的颜色，究竟是颜料还是光自己在打架？",
-    "topicLabel": "光学材料",
-    "primaryCategoryId": "materials-lab",
-    "renderer": "soap-bubble",
+    "id": "neural-playground",
+    "index": "08",
+    "poster": "/assets/posters/neural-playground.webp",
+    "posterMobile": "/assets/posters/mobile/neural-playground.webp",
+    "posterDesktop": "/assets/posters/desktop/neural-playground.webp",
+    "title": "神经网络如何从错误中学习",
+    "posterTitle": "神经网络怎样学会分类？",
+    "posterHook": "两种颜色的点混在一起，网络如何把它们分开？改变数据和学习速度，看边界怎样变化。",
+    "question": "神经网络是怎样从数据中学会分类的？",
+    "topicLabel": "深度学习",
+    "translations": {
+      "en": {
+        "title": "How a neural network learns from mistakes",
+        "posterTitle": "How does a neural network learn to classify?",
+        "posterHook": "Two colors of dots are mixed together. How can a network separate them? Change the data and learning rate to see the boundary respond.",
+        "question": "How do neural networks learn to classify from data?",
+        "topicLabel": "Deep learning"
+      }
+    },
+    "primaryCategoryId": "ai-learning",
+    "renderer": "neural-playground",
+    "runtime": "diagram-2d",
+    "difficulty": "advanced",
+    "duration": 600,
+    "evidence": "modeled",
+    "accent": "#4dabf7",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "aurora",
+    "index": "09",
+    "poster": "/assets/posters/aurora.webp",
+    "posterMobile": "/assets/posters/mobile/aurora.webp",
+    "posterDesktop": "/assets/posters/desktop/aurora.webp",
+    "title": "太阳风增强时，极光向低纬扩展",
+    "posterTitle": "太阳喷出的粒子，为什么在两极变成光帘？",
+    "posterHook": "看太阳风撞上地球磁层：粒子沿磁力线灌进两极，点亮一层飘动的绿色光帘。",
+    "question": "太阳喷出的粒子，为什么在两极变成光帘？",
+    "topicLabel": "空间天气",
+    "translations": {
+      "en": {
+        "title": "A stronger solar wind expands the aurora toward lower latitudes",
+        "posterTitle": "Why do particles from the Sun turn into curtains of light at the poles?",
+        "posterHook": "Watch the solar wind hit Earth’s magnetosphere: particles pour along field lines into the poles and light up a rippling green curtain.",
+        "question": "Why do particles from the Sun turn into curtains of light at the poles?",
+        "topicLabel": "space weather"
+      }
+    },
+    "primaryCategoryId": "stellar-theatre",
+    "renderer": "aurora",
     "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 300,
+    "evidence": "modeled",
+    "accent": "#69f0ae",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "galaxy-collision",
+    "index": "10",
+    "poster": "/assets/posters/galaxy-collision.webp",
+    "posterMobile": "/assets/posters/mobile/galaxy-collision.webp",
+    "posterDesktop": "/assets/posters/desktop/galaxy-collision.webp",
+    "title": "银河系与仙女座的未来碰撞",
+    "posterTitle": "40 亿年后，银河系会撞上仙女座吗？",
+    "posterHook": "拖动 60 亿年时间轴：两个旋涡星系靠近、变形、甩出潮汐尾，最终并成一个椭圆星系。",
+    "question": "40 亿年后，银河系会撞上仙女座吗？",
+    "topicLabel": "星系",
+    "translations": {
+      "en": {
+        "title": "The future collision of the Milky Way and Andromeda",
+        "posterTitle": "Will the Milky Way crash into Andromeda in 4 billion years?",
+        "posterHook": "Scrub 6 billion years: two spirals approach, distort, fling out tidal tails, and merge into one elliptical galaxy.",
+        "question": "Will the Milky Way crash into Andromeda in 4 billion years?",
+        "topicLabel": "galaxies"
+      }
+    },
+    "primaryCategoryId": "stellar-theatre",
+    "renderer": "galaxy-collision",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
     "duration": 360,
     "evidence": "modeled",
-    "accent": "#9ad0ff",
-    "translations": {
-      "en": {
-        "title": "Thin-film interference colors a soap bubble",
-        "posterTitle": "Thin-film interference gives soap bubbles their colors",
-        "posterHook": "As the film thickens or thins, the rainbow slides; as liquid drains down, the colours move with it.",
-        "question": "Are the colours on a soap film paint, or light fighting itself?",
-        "topicLabel": "Optical materials"
-      }
-    }
+    "accent": "#7ea6ff",
+    "posterPosition": "50% 50%"
   },
   {
-    "id": "pool-caustics",
-    "index": "25",
-    "poster": "/assets/posters/pool-caustics.webp",
-    "posterMobile": "/assets/posters/mobile/pool-caustics.webp",
-    "posterDesktop": "/assets/posters/desktop/pool-caustics.webp",
-    "title": "泳池焦散光纹",
-    "posterTitle": "泳池底部不断移动的焦散光纹",
-    "posterHook": "为什么泳池底下的光一直在游？",
-    "posterPosition": "58% 52%",
-    "question": "为什么泳池底下的光一直在游？",
-    "topicLabel": "光与水",
-    "primaryCategoryId": "light-magic",
-    "renderer": "pool-caustics",
-    "runtime": "particle-2d",
-    "duration": 300,
-    "evidence": "modeled",
-    "accent": "#fff0a6",
+    "id": "three-body",
+    "index": "11",
+    "poster": "/assets/posters/three-body.webp",
+    "posterMobile": "/assets/posters/mobile/three-body.webp",
+    "posterDesktop": "/assets/posters/desktop/three-body.webp",
+    "title": "三颗星，能跳出这么多完美的舞吗？",
+    "posterTitle": "三颗星，能跳出这么多完美的舞吗？",
+    "posterHook": "先看见离开地面的空间周期解。名解、蝴蝶和 8 字贴在一个平面上；2025 年的三维解会跳起来。点开一条，也可以亲手把它拧散。",
+    "question": "三颗星为什么能跳出花朵、蝴蝶和立体的舞？",
+    "topicLabel": "周期轨道",
     "translations": {
       "en": {
-        "title": "Caustic light patterns in a pool",
-        "posterTitle": "Moving caustic patterns on a pool floor",
-        "posterHook": "Why does the light on a pool floor keep swimming?",
-        "question": "Why does the light on a pool floor keep swimming?",
-        "topicLabel": "Light and water"
+        "title": "Can three stars dance in so many perfect patterns?",
+        "posterTitle": "Can three stars dance in so many perfect patterns?",
+        "posterHook": "Spatial periodic orbits leave the plane first. Named dances, butterflies, and the figure-eight stay flat; the 2025 three-dimensional solutions lift off. Open one, or nudge it until it falls apart.",
+        "question": "Why can three stars trace flowers, butterflies, and a dance in space?",
+        "topicLabel": "Periodic orbits"
       }
-    }
-  },
-  {
-    "id": "pinhole-canopy",
-    "index": "26",
-    "poster": "/assets/posters/pinhole-canopy.webp",
-    "posterMobile": "/assets/posters/mobile/pinhole-canopy.webp",
-    "posterDesktop": "/assets/posters/desktop/pinhole-canopy.webp",
-    "title": "缩小一片叶隙，让树荫落满一百个太阳",
-    "posterTitle": "树荫下，为什么落着一地小太阳？",
-    "posterHook": "让月球咬住太阳，再缩小叶片缝隙：上百个模糊圆斑会同时变成清晰的金色月牙。",
-    "posterPosition": "50% 63%",
-    "question": "树荫下，为什么落着一地小太阳？",
-    "topicLabel": "几何光学",
-    "primaryCategoryId": "light-magic",
-    "renderer": "pinhole-canopy",
-    "runtime": "particle-2d",
-    "duration": 300,
+    },
+    "primaryCategoryId": "chaos-boundary",
+    "renderer": "three-body",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 480,
     "evidence": "modeled",
-    "accent": "#ffd166",
-    "translations": {
-      "en": {
-        "title": "Narrow one leaf gap and scatter a hundred tiny Suns across the ground",
-        "posterTitle": "Why is the shade beneath a tree filled with tiny Suns?",
-        "posterHook": "Let the Moon bite into the Sun, then narrow the gaps: more than a hundred blurry circles snap into crisp golden crescents.",
-        "question": "Why is the shade beneath a tree filled with tiny Suns?",
-        "topicLabel": "Geometrical optics"
-      }
-    }
-  },
-  {
-    "id": "lightning-lab",
-    "index": "27",
-    "poster": "/assets/posters/lightning-lab.webp",
-    "posterMobile": "/assets/posters/mobile/lightning-lab.webp",
-    "posterDesktop": "/assets/posters/desktop/lightning-lab.webp",
-    "title": "闪电沿分叉通道逐步前进",
-    "posterTitle": "闪电沿分叉通道形成锯齿路径",
-    "posterHook": "点击天空召唤闪电，看阶梯先导一步步试探出锯齿路径，回击的光从地面冲向云层。",
-    "posterPosition": "50% 42%",
-    "question": "闪电为什么是锯齿形的？",
-    "topicLabel": "大气与电",
-    "primaryCategoryId": "earth-climate",
-    "renderer": "lightning-lab",
-    "runtime": "diagram-2d",
-    "duration": 300,
-    "evidence": "modeled",
-    "accent": "#7ba4ff",
-    "translations": {
-      "en": {
-        "title": "Lightning advances through a branching channel",
-        "posterTitle": "Lightning forms a jagged path through branching channels",
-        "posterHook": "Tap the sky to summon a bolt and watch the stepped leader feel its way down while the return stroke races back up.",
-        "question": "Why is lightning shaped like a jagged line?",
-        "topicLabel": "Atmosphere and electricity"
-      }
-    }
-  },
-  {
-    "id": "snow-crystal",
-    "index": "28",
-    "poster": "/assets/posters/snow-crystal.webp",
-    "posterMobile": "/assets/posters/mobile/snow-crystal.webp",
-    "posterDesktop": "/assets/posters/desktop/snow-crystal.webp",
-    "title": "温度与湿度决定雪晶形状",
-    "posterTitle": "雪花会长成薄片或针状晶体",
-    "posterHook": "拨动温度与湿度，看同一套六角对称在薄板、枝晶与细针之间切换习性。",
-    "posterPosition": "50% 48%",
-    "question": "同一片云里，为什么雪花有时像板，有时像针？",
-    "topicLabel": "大气与冰晶",
-    "primaryCategoryId": "earth-climate",
-    "renderer": "snow-crystal",
-    "runtime": "diagram-2d",
-    "duration": 360,
-    "evidence": "modeled",
-    "accent": "#a8d8ff",
-    "translations": {
-      "en": {
-        "title": "Temperature and humidity shape snow crystals",
-        "posterTitle": "Snow crystals grow as plates or needles",
-        "posterHook": "Scrub temperature and humidity and watch the same six-fold symmetry switch habits among plates, dendrites, and needles.",
-        "question": "In the same cloud, why is a snowflake sometimes a plate and sometimes a needle?",
-        "topicLabel": "Atmosphere and ice"
-      }
-    }
+    "accent": "#ff922b",
+    "posterPosition": "50% 50%"
   },
   {
     "id": "boids-flocking",
-    "index": "29",
+    "index": "12",
     "poster": "/assets/posters/boids-flocking.webp",
     "posterMobile": "/assets/posters/mobile/boids-flocking.webp",
     "posterDesktop": "/assets/posters/desktop/boids-flocking.webp",
     "title": "鸟群依靠三条局部规则形成统一运动",
     "posterTitle": "三条局部规则形成鸟群运动",
     "posterHook": "每只鸟只做三件小事：别撞上、跟着飞、别掉队，整群就会一起转弯。",
-    "posterPosition": "50% 50%",
     "question": "没有领袖，鸟群如何飞出统一的形状？",
     "topicLabel": "群体运动",
-    "primaryCategoryId": "emergence",
-    "renderer": "boids-flocking",
-    "runtime": "diagram-2d",
-    "duration": 300,
-    "evidence": "modeled",
-    "accent": "#4dd0e1",
     "translations": {
       "en": {
         "title": "Three local rules produce coordinated flocking",
@@ -809,34 +337,971 @@
         "question": "Without a leader, how does a flock fly in unified shapes?",
         "topicLabel": "Collective motion"
       }
-    }
-  },
-  {
-    "id": "phyllotaxis",
-    "index": "30",
-    "poster": "/assets/posters/phyllotaxis.webp",
-    "posterMobile": "/assets/posters/mobile/phyllotaxis.webp",
-    "posterDesktop": "/assets/posters/desktop/phyllotaxis.webp",
-    "title": "植物的螺旋",
-    "posterTitle": "向日葵种子排列成螺旋",
-    "posterHook": "向日葵为什么把种子排成螺线？",
-    "posterPosition": "50% 48%",
-    "question": "向日葵为什么把种子排成螺线？",
-    "topicLabel": "形态发生",
-    "primaryCategoryId": "life-body",
-    "renderer": "phyllotaxis",
+    },
+    "primaryCategoryId": "emergence",
+    "renderer": "boids-flocking",
     "runtime": "diagram-2d",
+    "difficulty": "standard",
     "duration": 300,
     "evidence": "modeled",
-    "accent": "#e8b84a",
+    "accent": "#4dd0e1",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "fluid-sim",
+    "index": "13",
+    "poster": "/assets/posters/fluid-sim.webp",
+    "posterMobile": "/assets/posters/mobile/fluid-sim.webp",
+    "posterDesktop": "/assets/posters/desktop/fluid-sim.webp",
+    "title": "涡旋从流体扰动中产生并消散",
+    "posterTitle": "搅动流体时形成的涡旋",
+    "posterHook": "在画布上拖动鼠标或手指，实时搅动 GPU 流体——彩色染料在涡旋中拉伸、卷曲、扩散。",
+    "question": "为什么流体被搅动后会自发形成涡旋结构？",
+    "topicLabel": "水流与漩涡",
     "translations": {
       "en": {
-        "title": "Spirals in plants",
-        "posterTitle": "Sunflower seeds arrange themselves in spirals",
-        "posterHook": "Why do sunflowers arrange their seeds in spirals?",
-        "question": "Why do sunflowers arrange their seeds in spirals?",
-        "topicLabel": "Morphogenesis"
+        "title": "Vortices form and dissipate after a fluid is disturbed",
+        "posterTitle": "The vortices formed by stirring a fluid",
+        "posterHook": "Drag your mouse or finger across the canvas to stir GPU fluid in real time—colorful dye stretches, curls, and diffuses in vortices.",
+        "question": "Why does fluid spontaneously form vortex structures after being stirred?",
+        "topicLabel": "Flow and vortices"
       }
-    }
+    },
+    "primaryCategoryId": "fields-flow",
+    "renderer": "fluid-sim",
+    "runtime": "particle-2d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#4dd0e1",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "mandelbrot-zoom",
+    "index": "14",
+    "poster": "/assets/posters/mandelbrot-zoom.webp",
+    "posterMobile": "/assets/posters/mobile/mandelbrot-zoom.webp",
+    "posterDesktop": "/assets/posters/desktop/mandelbrot-zoom.webp",
+    "title": "曼德勃罗集边界的无限细节",
+    "posterTitle": "分形里，还有分形",
+    "posterHook": "沿着黑色与彩色的交界靠近，细小的卷须会展开成另一片山谷。",
+    "question": "为什么一个公式的边界，越放大越看不完？",
+    "topicLabel": "分形",
+    "translations": {
+      "en": {
+        "title": "Infinite detail along the Mandelbrot set boundary",
+        "posterTitle": "Fractals within fractals",
+        "posterHook": "Follow the edge between black and color. Tiny tendrils unfold into whole new valleys.",
+        "question": "Why does one formula’s boundary never run out as you zoom?",
+        "topicLabel": "Fractals"
+      }
+    },
+    "primaryCategoryId": "fractals-chaos",
+    "renderer": "mandelbrot-zoom",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#a9d6cd",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "strange-attractors",
+    "index": "15",
+    "poster": "/assets/posters/strange-attractors.webp",
+    "posterMobile": "/assets/posters/mobile/strange-attractors.webp",
+    "posterDesktop": "/assets/posters/desktop/strange-attractors.webp",
+    "title": "状态轨迹形成奇异吸引子",
+    "posterTitle": "公式迭代出的奇异吸引子",
+    "posterHook": "六套方程各自规定「下一刻往哪走」；光点跟着跑，久了留下双翼、螺旋与空心球壳。",
+    "question": "这些图形到底是怎么画出来的？",
+    "topicLabel": "混沌",
+    "translations": {
+      "en": {
+        "title": "State trajectories form strange attractors",
+        "posterTitle": "Strange attractors generated by iterated equations",
+        "posterHook": "Six equation families each say where the state goes next; points follow the rules and leave wings, spirals, and hollow shells.",
+        "question": "How are these shapes actually drawn?",
+        "topicLabel": "Chaos"
+      }
+    },
+    "primaryCategoryId": "fractals-chaos",
+    "renderer": "strange-attractors",
+    "runtime": "particle-2d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#b15cff",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "cnn-vision",
+    "index": "16",
+    "poster": "/assets/posters/cnn-vision.webp",
+    "posterMobile": "/assets/posters/mobile/cnn-vision.webp",
+    "posterDesktop": "/assets/posters/desktop/cnn-vision.webp",
+    "title": "卷积网络从像素中识别手写数字",
+    "posterTitle": "28×28 像素经过卷积与池化完成分类",
+    "posterHook": "在 3D 里看着手写数字流过卷积、池化与 Softmax——每个小方块都是一个神经元在亮。",
+    "question": "卷积神经网络是怎样从笔画像认出数字的？",
+    "topicLabel": "深度学习",
+    "translations": {
+      "en": {
+        "title": "A convolutional network recognizes handwritten digits from pixels",
+        "posterTitle": "Convolution and pooling classify a 28×28-pixel image",
+        "posterHook": "In 3D, follow a handwritten digit through convolution, pooling, and Softmax—each cube is a neuron lighting up.",
+        "question": "How does a convolutional network turn pen strokes into a digit?",
+        "topicLabel": "deep learning"
+      }
+    },
+    "primaryCategoryId": "ai-learning",
+    "renderer": "cnn-vision",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#5eead4",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "kakeya-needle",
+    "index": "17",
+    "poster": "/assets/posters/kakeya-needle.webp",
+    "posterMobile": "/assets/posters/mobile/kakeya-needle.webp",
+    "posterDesktop": "/assets/posters/desktop/kakeya-needle.webp",
+    "title": "挂谷针问题：一根针掉头需要多大地方？",
+    "posterTitle": "一根针掉头，最少需要多大地方？",
+    "posterHook": "原地转弯很占地方。让针一边移动、一边转向，能不能用更小的面积掉头？",
+    "question": "桌上有一根针要掉头，最少需要多大一块地方？",
+    "topicLabel": "几何直觉",
+    "translations": {
+      "en": {
+        "title": "The Kakeya needle problem: how much room does a needle need?",
+        "posterTitle": "How little room does a needle need to turn around?",
+        "posterHook": "Turning on the spot takes space. Could moving the needle as it turns use less area?",
+        "question": "A needle on a table needs to turn around — how little room does it need?",
+        "topicLabel": "Geometric intuition"
+      }
+    },
+    "primaryCategoryId": "beautiful-math",
+    "renderer": "kakeya-needle",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#8fd0ff",
+    "posterPosition": "50% 46%"
+  },
+  {
+    "id": "phone-elements",
+    "index": "18",
+    "poster": "/assets/posters/phone-elements.webp",
+    "posterMobile": "/assets/posters/mobile/phone-elements.webp",
+    "posterDesktop": "/assets/posters/desktop/phone-elements.webp",
+    "title": "把一部手机拆到只剩元素，它散落在半个地球上",
+    "posterTitle": "一部手机的元素来自许多国家",
+    "posterHook": "拆到最后，是 53 种金属。钴有 76% 出自一个国家，镓有 98% 出自另一个——供应链风险，是可以画在地图上的。",
+    "question": "你手里这块玻璃，是从多少个国家挖出来的？",
+    "topicLabel": "材料与供应链",
+    "translations": {
+      "en": {
+        "title": "Take a phone apart down to the elements, and it scatters across half the planet",
+        "posterTitle": "The elements in one phone come from many countries",
+        "posterHook": "Strip it down and 53 metals are left. Cobalt is 76% one country, gallium 98% another—supply-chain risk you can draw on a map.",
+        "question": "How many countries were mined to make the glass in your hand?",
+        "topicLabel": "Materials and supply chains"
+      }
+    },
+    "primaryCategoryId": "materials-lab",
+    "renderer": "phone-elements",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 360,
+    "evidence": "compiled",
+    "accent": "#7cc4ff",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "radio-spectrum",
+    "index": "19",
+    "poster": "/assets/posters/radio-spectrum.webp",
+    "posterMobile": "/assets/posters/mobile/radio-spectrum.webp",
+    "posterDesktop": "/assets/posters/desktop/radio-spectrum.webp",
+    "title": "无线电波在频谱中的位置",
+    "posterTitle": "为什么 2.4G 穿得过墙，5G 更快？",
+    "posterHook": "一条可以无限放大的频谱街道：从长波广播一路飞到可见光，看每一种电波住在哪、波长有多长、为什么有的绕得过墙角。",
+    "question": "此刻穿过你身体的电波有几十种，它们各自住在频谱的哪一段？",
+    "topicLabel": "无线电与频谱",
+    "translations": {
+      "en": {
+        "title": "Where radio waves sit on the spectrum",
+        "posterTitle": "Why does 2.4 GHz get through walls while 5 GHz is faster?",
+        "posterHook": "An infinitely zoomable spectrum street: fly from longwave broadcasting all the way to visible light and see where each wave lives, how long it is, and why some bend around corners.",
+        "question": "Dozens of radio waves are passing through your body right now — which stretch of the spectrum does each one live on?",
+        "topicLabel": "Radio and spectrum"
+      }
+    },
+    "primaryCategoryId": "physics",
+    "renderer": "radio-spectrum",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 360,
+    "evidence": "verified",
+    "accent": "#b28dff",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "rainbow",
+    "index": "20",
+    "poster": "/assets/posters/rainbow.webp",
+    "posterMobile": "/assets/posters/mobile/rainbow.webp",
+    "posterDesktop": "/assets/posters/desktop/rainbow.webp",
+    "title": "彩虹为什么会有两道？",
+    "posterTitle": "彩虹为什么会有两道？",
+    "posterHook": "外面那道更淡，颜色也反过来。跟着阳光走进一颗雨滴，看看多一次反射带来了什么。",
+    "question": "外面那道彩虹从哪里来，为什么更淡、颜色相反，两圈之间还更暗？",
+    "topicLabel": "几何光学",
+    "translations": {
+      "en": {
+        "title": "Why are there two rainbows?",
+        "posterTitle": "Why are there two rainbows?",
+        "posterHook": "The outer bow is fainter, and its colours run backwards. Follow sunlight into a drop to see what one extra reflection changes.",
+        "question": "Where does the outer rainbow come from, and why is it fainter and reversed, with darker sky between the two arcs?",
+        "topicLabel": "Geometric optics"
+      }
+    },
+    "primaryCategoryId": "light-magic",
+    "renderer": "rainbow",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#ffcf7d",
+    "posterPosition": "50% 45%"
+  },
+  {
+    "id": "trade-chokepoints",
+    "index": "21",
+    "poster": "/assets/posters/trade-chokepoints.webp",
+    "posterMobile": "/assets/posters/mobile/trade-chokepoints.webp",
+    "posterDesktop": "/assets/posters/desktop/trade-chokepoints.webp",
+    "title": "亲手关掉苏伊士，看全球船流当场改道",
+    "posterTitle": "关掉一条海峡，世界要多绕多远？",
+    "posterHook": "全球贸易八成的货量走海运，却只穿过七个针眼。合拢苏伊士的闸门，亚欧航线当场滑向好望角。",
+    "question": "关掉一条海峡，世界要多绕多远？",
+    "topicLabel": "全球数据剧场",
+    "translations": {
+      "en": {
+        "title": "Shut the Suez yourself and watch world shipping reroute",
+        "posterTitle": "Close one strait — how much farther must the world sail?",
+        "posterHook": "Four fifths of world trade by volume goes by sea, through just seven needle eyes. Swing the Suez gates shut and the Asia–Europe lane slides to the Cape of Good Hope.",
+        "question": "Close one strait — how much farther must the world sail?",
+        "topicLabel": "Global Data Theatre"
+      }
+    },
+    "primaryCategoryId": "global-data-theatre",
+    "renderer": "trade-chokepoints",
+    "runtime": "diagram-2d",
+    "difficulty": "standard",
+    "duration": 360,
+    "evidence": "compiled",
+    "accent": "#e8b04b",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "formula-bloom",
+    "index": "22",
+    "poster": "/assets/posters/formula-bloom.webp",
+    "posterMobile": "/assets/posters/mobile/formula-bloom.webp",
+    "posterDesktop": "/assets/posters/desktop/formula-bloom.webp",
+    "title": "公式粒子：数学画出的流动形状",
+    "posterTitle": "一条公式，为什么看起来像在呼吸？",
+    "posterHook": "点的位置由公式计算，却像水母、脊骨或丝带一样流动。换一种形状，看看同一套规则还能画出什么。",
+    "question": "三角函数怎样画出像生物一样流动的形状？",
+    "topicLabel": "数学",
+    "translations": {
+      "en": {
+        "title": "Formula particles: moving shapes drawn by mathematics",
+        "posterTitle": "Why does a formula look as though it is breathing?",
+        "posterHook": "Their positions come from formulas, yet the points move like a jellyfish, a spine or a ribbon. Switch shapes to see what else the same rules can draw.",
+        "question": "How can trigonometric functions draw shapes that seem alive?",
+        "topicLabel": "Mathematics"
+      }
+    },
+    "primaryCategoryId": "essence-of-math",
+    "renderer": "formula-bloom",
+    "runtime": "particle-2d",
+    "difficulty": "intro",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#e8e8e8",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "moon-voyage",
+    "index": "23",
+    "poster": "/assets/posters/moon-voyage.webp",
+    "posterMobile": "/assets/posters/mobile/moon-voyage.webp",
+    "posterDesktop": "/assets/posters/desktop/moon-voyage.webp",
+    "title": "四天抵达月球",
+    "posterTitle": "四天抵达月球",
+    "posterHook": "按下点火：看飞船升空、绕地、滑行，再在月球背面刹车。",
+    "question": "去月球要几天？",
+    "topicLabel": "载人航天",
+    "translations": {
+      "en": {
+        "title": "Four Days to the Moon",
+        "posterTitle": "Four Days to the Moon",
+        "posterHook": "Press ignite: follow a spacecraft from launch through Earth orbit, coasting and braking behind the Moon.",
+        "question": "How many days does it take to reach the Moon?",
+        "topicLabel": "human spaceflight"
+      }
+    },
+    "primaryCategoryId": "cosmos-motion",
+    "renderer": "moon-voyage",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 360,
+    "evidence": "compiled",
+    "accent": "#9fdcff",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "butterfly-effect",
+    "index": "24",
+    "poster": "/assets/posters/butterfly-effect.webp",
+    "posterMobile": "/assets/posters/mobile/butterfly-effect.webp",
+    "posterDesktop": "/assets/posters/desktop/butterfly-effect.webp",
+    "title": "蝴蝶效应：吸引子的美妙",
+    "posterTitle": "蝴蝶效应：吸引子的美妙",
+    "posterHook": "金色与青色光点遵守同一组方程、起点只差 0.000001；看它们在发光的蝴蝶翅膀上当场撕成两种未来。",
+    "question": "几乎相同的起点，为什么走出完全不同的未来？",
+    "topicLabel": "混沌",
+    "translations": {
+      "en": {
+        "title": "Butterfly Effect: The Beauty of Attractors",
+        "posterTitle": "Butterfly Effect: The Beauty of Attractors",
+        "posterHook": "A gold and a cyan light follow the very same equations, starting only 0.000001 apart—watch them tear into two futures on glowing butterfly wings.",
+        "question": "Why do nearly identical starts lead to completely different futures?",
+        "topicLabel": "Chaos"
+      }
+    },
+    "primaryCategoryId": "fractals-chaos",
+    "renderer": "butterfly-effect",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#ff8a3c",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "complex-mapping",
+    "index": "25",
+    "poster": "/assets/posters/complex-mapping.webp",
+    "posterMobile": "/assets/posters/mobile/complex-mapping.webp",
+    "posterDesktop": "/assets/posters/desktop/complex-mapping.webp",
+    "title": "复变函数的曲面",
+    "posterTitle": "复指数，也有波峰与波谷",
+    "posterHook": "沿虚数方向，指数函数的实部不断起伏。沿实数方向，振幅指数增长，平缓的线网逐渐升成高峰、降成深谷。",
+    "question": "实数里的正弦波有界，到了复数里为什么越长越高？",
+    "topicLabel": "复分析",
+    "translations": {
+      "en": {
+        "title": "The surfaces of complex functions",
+        "posterTitle": "The exponential has peaks and valleys",
+        "posterHook": "Along the imaginary direction, the real part of the exponential oscillates. Along the real direction, its amplitude grows exponentially, lifting a shallow mesh into tall peaks and deep valleys.",
+        "question": "Why does a bounded sine wave grow without bound when its input becomes complex?",
+        "topicLabel": "Complex analysis"
+      }
+    },
+    "primaryCategoryId": "math-signals",
+    "renderer": "complex-mapping",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#5eead4",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "earth-spin-orbit",
+    "index": "26",
+    "poster": "/assets/posters/earth-spin-orbit.webp",
+    "posterMobile": "/assets/posters/mobile/earth-spin-orbit.webp",
+    "posterDesktop": "/assets/posters/desktop/earth-spin-orbit.webp",
+    "title": "交互地球仪",
+    "posterTitle": "同一颗地球，不同的白天",
+    "posterHook": "近看一半亮一半暗的写实地球；拉远后，同一颗地球斜着绕太阳，地轴在一年内几乎指向同一个方向。",
+    "question": "同一个瞬间，地球上的不同地方正在经历什么？",
+    "topicLabel": "地球与地理",
+    "translations": {
+      "en": {
+        "title": "Interactive Earth",
+        "posterTitle": "One Earth, different days",
+        "posterHook": "Up close, a realistic Earth is half lit and half dark. Pull back, and the same globe leans around the Sun with its axis still pointing the same way.",
+        "question": "What is happening in different places on Earth at the same instant?",
+        "topicLabel": "Earth and geography"
+      }
+    },
+    "primaryCategoryId": "cosmos-motion",
+    "renderer": "earth-spin-orbit",
+    "runtime": "globe-3d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#7ec8ff",
+    "posterPosition": "50% 42%"
+  },
+  {
+    "id": "equation-wormhole",
+    "index": "27",
+    "poster": "/assets/posters/equation-wormhole.webp",
+    "posterMobile": "/assets/posters/mobile/equation-wormhole.webp",
+    "posterDesktop": "/assets/posters/desktop/equation-wormhole.webp",
+    "title": "公式虫洞",
+    "posterTitle": "钻进一条由公式铺成的隧道",
+    "posterHook": "白得发亮的公式一层层螺旋向心；点任意一条，看它当年解决了什么问题。",
+    "question": "一条由公式组成的虫洞，尽头是什么？",
+    "topicLabel": "数学与物理",
+    "translations": {
+      "en": {
+        "title": "Equation Wormhole",
+        "posterTitle": "Dive into a tunnel built of equations",
+        "posterHook": "White-hot typeset equations spiral toward a black mouth. Tap any one of them to read the problem it once solved.",
+        "question": "What waits at the end of a wormhole made of equations?",
+        "topicLabel": "Math & physics"
+      }
+    },
+    "primaryCategoryId": "math-signals",
+    "renderer": "equation-wormhole",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#ff9a3c",
+    "posterPosition": "42% 55%"
+  },
+  {
+    "id": "photon",
+    "index": "28",
+    "poster": "/assets/posters/photon.webp",
+    "posterMobile": "/assets/posters/mobile/photon.webp",
+    "posterDesktop": "/assets/posters/desktop/photon.webp",
+    "title": "光子，一次一粒",
+    "posterTitle": "光子，一次一粒",
+    "posterHook": "一颗颗光点积成条纹。颜色决定每份能量，运动拉长光钟的一次往返。",
+    "question": "光子怎样遵循波的规律，又被一颗颗探测到？光速不变，为什么运动的钟会变慢？",
+    "topicLabel": "光子与光速",
+    "translations": {
+      "en": {
+        "title": "Photons, one at a time",
+        "posterTitle": "Photons, one at a time",
+        "posterHook": "Single detections build stripes. Color sets each photon’s energy, and motion lengthens a light clock’s round trip.",
+        "question": "How can photons follow wave rules yet arrive one at a time? If light keeps the same speed, why does a moving clock run slower?",
+        "topicLabel": "Photons and the speed of light"
+      }
+    },
+    "primaryCategoryId": "light-magic",
+    "renderer": "photon",
+    "runtime": "particle-2d",
+    "difficulty": "intro",
+    "duration": 180,
+    "evidence": "modeled",
+    "accent": "#8de8d1",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "human-atlas",
+    "index": "29",
+    "poster": "/assets/posters/human-atlas.webp",
+    "posterMobile": "/assets/posters/mobile/human-atlas.webp",
+    "posterDesktop": "/assets/posters/desktop/human-atlas.webp",
+    "title": "人体可以一件一件拆开",
+    "posterTitle": "把人体拆成两千多个零件",
+    "posterHook": "点一件结构，把它从完整身体里抽出来；再把滑杆拉到头，看两千多个零件摊成一张清单。",
+    "question": "身体里的器官、骨骼和血管，究竟怎样叠在一起？",
+    "topicLabel": "人体",
+    "translations": {
+      "en": {
+        "title": "The body can be taken apart, piece by piece",
+        "posterTitle": "A body taken apart into two thousand pieces",
+        "posterHook": "Tap a structure and lift it out of the assembled body, then drag the slider all the way and watch more than two thousand pieces spread into an inventory.",
+        "question": "How do organs, bones, and vessels actually stack inside the body?",
+        "topicLabel": "Human body"
+      }
+    },
+    "primaryCategoryId": "body-atlas",
+    "renderer": "human-atlas",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 600,
+    "evidence": "verified",
+    "accent": "#d4b896",
+    "posterPosition": "50% 42%"
+  },
+  {
+    "id": "p-versus-np",
+    "index": "30",
+    "poster": "/assets/posters/p-versus-np.webp",
+    "posterMobile": "/assets/posters/mobile/p-versus-np.webp",
+    "posterDesktop": "/assets/posters/desktop/p-versus-np.webp",
+    "title": "P 与 NP：找答案，验答案",
+    "posterTitle": "答案好验，也好找吗？",
+    "posterHook": "一根金线，连接一个关于计算的百万美元问题。",
+    "question": "能够快速核对的答案，也一定能快速找到吗？",
+    "topicLabel": "P 与 NP 问题",
+    "translations": {
+      "en": {
+        "title": "P vs NP: find it, check it",
+        "posterTitle": "Easy to check. Easy to find?",
+        "posterHook": "One golden thread and a million-dollar question about computation.",
+        "question": "If an answer is quick to check, must it be quick to find?",
+        "topicLabel": "The P vs NP problem"
+      }
+    },
+    "primaryCategoryId": "essence-of-math",
+    "renderer": "p-versus-np",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 60,
+    "evidence": "modeled",
+    "accent": "#a38a47",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "riemann-primes",
+    "index": "31",
+    "poster": "/assets/posters/riemann-primes.webp",
+    "posterMobile": "/assets/posters/mobile/riemann-primes.webp",
+    "posterDesktop": "/assets/posters/desktop/riemann-primes.webp",
+    "title": "素数，藏着怎样的节奏？",
+    "posterTitle": "素数，藏着怎样的节奏？",
+    "posterHook": "素数的起伏，为什么会与另一条线上看不见的零点有关？",
+    "question": "不规则的素数间距，能被另一种数学结构描述吗？",
+    "topicLabel": "黎曼猜想",
+    "translations": {
+      "en": {
+        "title": "What rhythm hides in the primes?",
+        "posterTitle": "What rhythm hides in the primes?",
+        "posterHook": "Why are prime fluctuations linked to zeros on another mathematical line?",
+        "question": "Can another mathematical structure describe the uneven gaps between primes?",
+        "topicLabel": "Riemann hypothesis"
+      }
+    },
+    "primaryCategoryId": "beautiful-math",
+    "renderer": "riemann-primes",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 90,
+    "evidence": "modeled",
+    "accent": "#bda1ed",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "fire-gravity",
+    "index": "32",
+    "poster": "/assets/posters/fire-gravity.webp",
+    "posterMobile": "/assets/posters/mobile/fire-gravity.webp",
+    "posterDesktop": "/assets/posters/desktop/fire-gravity.webp",
+    "title": "烛火里面，发生了什么？",
+    "posterTitle": "烛火里面，发生了什么？",
+    "posterHook": "剖开一簇烛火，看暗处的蜡蒸气、发亮的烟炱和外侧的反应。",
+    "question": "为什么最亮的内焰未必最热，暗暗的焰心里又有什么？",
+    "topicLabel": "烛火分区 · 燃料、氧气与发光",
+    "translations": {
+      "en": {
+        "title": "What happens inside a candle flame?",
+        "posterTitle": "What happens inside a candle flame?",
+        "posterHook": "Open a candle flame to find wax vapor, glowing soot and an outer reaction zone.",
+        "question": "Why is the brightest region not necessarily the hottest, and what is inside the dark core?",
+        "topicLabel": "Candle anatomy · Fuel, oxygen and light"
+      }
+    },
+    "primaryCategoryId": "chem-materials",
+    "renderer": "fire-gravity",
+    "runtime": "volume-3d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#efac60",
+    "posterPosition": "50% 48%"
+  },
+  {
+    "id": "flybody",
+    "index": "33",
+    "poster": "/assets/posters/flybody.webp",
+    "posterMobile": "/assets/posters/mobile/flybody.webp",
+    "posterDesktop": "/assets/posters/desktop/flybody.webp",
+    "title": "果蝇的脑内世界",
+    "posterTitle": "果蝇的脑内世界",
+    "posterHook": "从一张连接图，到感觉与动作。",
+    "question": "一个感觉，怎样变成果蝇的动作？",
+    "topicLabel": "果蝇脑与神经连接",
+    "translations": {
+      "en": {
+        "title": "Inside a Fly’s Brain",
+        "posterTitle": "Inside a Fly’s Brain",
+        "posterHook": "From a wiring diagram to sensation and action.",
+        "question": "How does a sensation become a fly’s action?",
+        "topicLabel": "Fly brain & neural connections"
+      }
+    },
+    "primaryCategoryId": "life-body",
+    "renderer": "flybody",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 150,
+    "evidence": "modeled",
+    "accent": "#ddc48a",
+    "posterPosition": "57% 50%"
+  },
+  {
+    "id": "light-speed",
+    "index": "34",
+    "poster": "/assets/posters/light-speed.webp",
+    "posterMobile": "/assets/posters/mobile/light-speed.webp",
+    "posterDesktop": "/assets/posters/desktop/light-speed.webp",
+    "title": "为什么追不上光？",
+    "posterTitle": "为什么追不上光？",
+    "posterHook": "飞船越来越快，测得的光速却始终相同。",
+    "question": "如果追着光飞，为什么测得的光速不变？这与时间和空间有什么关系？",
+    "topicLabel": "光速与时空",
+    "translations": {
+      "en": {
+        "title": "Why can’t you catch light?",
+        "posterTitle": "Why can’t you catch light?",
+        "posterHook": "The ship gets faster. Its measured speed of light stays the same.",
+        "question": "Why does chasing light leave its measured speed unchanged? What does that have to do with space and time?",
+        "topicLabel": "Light speed and spacetime"
+      }
+    },
+    "primaryCategoryId": "light-magic",
+    "renderer": "light-speed",
+    "runtime": "scene-3d",
+    "difficulty": "standard",
+    "duration": 430,
+    "evidence": "modeled",
+    "accent": "#b7ddff",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "standard-model",
+    "index": "35",
+    "poster": "/assets/posters/standard-model.webp",
+    "posterMobile": "/assets/posters/mobile/standard-model.webp",
+    "posterDesktop": "/assets/posters/desktop/standard-model.webp",
+    "title": "基本粒子博物馆",
+    "posterTitle": "基本粒子博物馆",
+    "posterHook": "认识粒子，理解相互作用，追溯发现的证据。",
+    "question": "基本粒子有哪些，我们如何发现它们？",
+    "topicLabel": "量子物理",
+    "translations": {
+      "en": {
+        "title": "Elementary Particle Museum",
+        "posterTitle": "Elementary Particle Museum",
+        "posterHook": "Particles, interactions and the evidence behind them.",
+        "question": "What are the elementary particles, and how did we discover them?",
+        "topicLabel": "Quantum physics"
+      }
+    },
+    "primaryCategoryId": "physics",
+    "renderer": "standard-model",
+    "runtime": "molecule-3d",
+    "difficulty": "intro",
+    "duration": 300,
+    "evidence": "verified",
+    "accent": "#85cddb",
+    "posterPosition": "50% 42%"
+  },
+  {
+    "id": "tshirt-world",
+    "index": "36",
+    "poster": "/assets/posters/tshirt-world.webp",
+    "posterMobile": "/assets/posters/mobile/tshirt-world.webp",
+    "posterDesktop": "/assets/posters/desktop/tshirt-world.webp",
+    "title": "一件 T 恤的世界",
+    "posterTitle": "买一件 T 恤，钱去了哪里？",
+    "posterHook": "从一件衣服出发，逐步看见商店、工厂和整座经济小镇。",
+    "question": "一件 T 恤背后，谁在劳动、谁先垫钱，谁最后留下多少？",
+    "topicLabel": "商品与产业链",
+    "translations": {
+      "en": {
+        "title": "The World in a T-Shirt",
+        "posterTitle": "Buy a T-shirt. Where does the money go?",
+        "posterHook": "Begin with one shirt. Gradually reveal the shops, factories and economic town behind it.",
+        "question": "Who works, who advances the money, and who keeps what behind one T-shirt?",
+        "topicLabel": "Goods and supply chains"
+      }
+    },
+    "primaryCategoryId": "economy-society",
+    "renderer": "tshirt-world",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 900,
+    "evidence": "modeled",
+    "accent": "#d8b178",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "cafe-terrace",
+    "index": "37",
+    "poster": "/assets/posters/cafe-terrace.webp",
+    "posterMobile": "/assets/posters/mobile/cafe-terrace.webp",
+    "posterDesktop": "/assets/posters/desktop/cafe-terrace.webp",
+    "title": "夜间露天咖啡座",
+    "posterTitle": "梵高画框外的街道，通向哪里？",
+    "posterHook": "走过暖黄灯光下的桌椅，转进小巷，再从屋顶回看夜色。",
+    "question": "梵高画框外的街道，通向哪里？",
+    "topicLabel": "绘画与空间",
+    "translations": {
+      "en": {
+        "title": "Café Terrace at Night",
+        "posterTitle": "Where does the street beyond Van Gogh’s frame lead?",
+        "posterHook": "Walk among tables in warm lamplight, turn into an alley and look back over the rooftops.",
+        "question": "Where does the street beyond Van Gogh’s frame lead?",
+        "topicLabel": "Painting and space"
+      }
+    },
+    "primaryCategoryId": "economy-society",
+    "renderer": "cafe-terrace",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 240,
+    "evidence": "modeled",
+    "accent": "#dfc477",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "earth-and-nature",
+    "index": "38",
+    "poster": "/assets/posters/earth-and-nature.webp",
+    "posterMobile": "/assets/posters/mobile/earth-and-nature.webp",
+    "posterDesktop": "/assets/posters/desktop/earth-and-nature.webp",
+    "title": "地球与自然",
+    "posterTitle": "地表从来没有停止变化",
+    "posterHook": "从火山熔岩到冰川裂隙，在立体地貌中观察形成、侵蚀与沉积。",
+    "question": "山川为何一直在改变？",
+    "topicLabel": "地貌演化",
+    "translations": {
+      "en": {
+        "title": "Earth & Nature",
+        "posterTitle": "Earth’s surface is always changing",
+        "posterHook": "From lava flows to glacier crevasses, explore formation, erosion and deposition in three dimensions.",
+        "question": "What keeps reshaping the land?",
+        "topicLabel": "Landforms"
+      }
+    },
+    "primaryCategoryId": "earth-climate",
+    "renderer": "earth-and-nature",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#73c7cb",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "frontscope",
+    "index": "39",
+    "poster": "/assets/posters/frontscope.webp",
+    "posterMobile": "/assets/posters/mobile/frontscope.webp",
+    "posterDesktop": "/assets/posters/desktop/frontscope.webp",
+    "title": "锋界",
+    "posterTitle": "天气，沿着冷暖交界改变",
+    "posterHook": "推移一道锋面，看云雨越过山川，观察小镇的气温和气压如何改变。",
+    "question": "冷暖空气相遇，为什么会变天？",
+    "topicLabel": "锋面天气",
+    "translations": {
+      "en": {
+        "title": "FrontScope",
+        "posterTitle": "Weather changes at the boundary",
+        "posterHook": "Move a front across a landscape and watch clouds, rain, temperature and pressure change.",
+        "question": "Why does weather change when air masses meet?",
+        "topicLabel": "Weather fronts"
+      }
+    },
+    "primaryCategoryId": "earth-climate",
+    "renderer": "frontscope",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 360,
+    "evidence": "modeled",
+    "accent": "#87d8db",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "starry-night",
+    "index": "40",
+    "poster": "/assets/posters/starry-night.webp",
+    "posterMobile": "/assets/posters/mobile/starry-night.webp",
+    "posterDesktop": "/assets/posters/desktop/starry-night.webp",
+    "title": "星月夜·走进笔触",
+    "posterTitle": "如果能走进《星月夜》，笔触会有多深？",
+    "posterHook": "从柏树旁的木屋起飞，穿过街巷与桥洞，飞进有厚度的星空。",
+    "question": "如果能走进《星月夜》，笔触会有多深？",
+    "topicLabel": "绘画与空间",
+    "translations": {
+      "en": {
+        "title": "Inside The Starry Night",
+        "posterTitle": "What lies behind the brushstrokes of The Starry Night?",
+        "posterHook": "Launch from the cypress lookout, skim the lanes, pass under the bridge and enter the painted sky.",
+        "question": "What lies behind the brushstrokes of The Starry Night?",
+        "topicLabel": "Painting and space"
+      }
+    },
+    "primaryCategoryId": "economy-society",
+    "renderer": "starry-night",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 240,
+    "evidence": "modeled",
+    "accent": "#dfc477",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "vegetation-atlas",
+    "index": "41",
+    "poster": "/assets/posters/vegetation-atlas.webp",
+    "posterMobile": "/assets/posters/mobile/vegetation-atlas.webp",
+    "posterDesktop": "/assets/posters/desktop/vegetation-atlas.webp",
+    "title": "植被之间",
+    "posterTitle": "树冠之下，还有一片世界",
+    "posterHook": "穿过树冠、林下与根系，比较六种植被场景和季节中的变化。",
+    "question": "同一片土地，为何长出不同的绿色？",
+    "topicLabel": "植被与生境",
+    "translations": {
+      "en": {
+        "title": "The Living Land",
+        "posterTitle": "A world beneath the canopy",
+        "posterHook": "Explore canopy, undergrowth and roots; compare six vegetation scenes and seasonal change.",
+        "question": "Why do different plants share one landscape?",
+        "topicLabel": "Vegetation"
+      }
+    },
+    "primaryCategoryId": "earth-climate",
+    "renderer": "vegetation-atlas",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#a9c58a",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "ink-landscape",
+    "index": "42",
+    "poster": "/assets/posters/ink-landscape.webp",
+    "posterMobile": "/assets/posters/mobile/ink-landscape.webp",
+    "posterDesktop": "/assets/posters/desktop/ink-landscape.webp",
+    "title": "松溪入画",
+    "posterTitle": "如果飞进水墨，留白里有什么？",
+    "posterHook": "掠过渔舟、穿桥入巷，再升入群山，回望整幅松溪。",
+    "question": "如果飞进水墨，留白里有什么？",
+    "topicLabel": "水墨与空间",
+    "translations": {
+      "en": {
+        "title": "Songxi: Into the Ink",
+        "posterTitle": "What lies in the empty space of an ink landscape?",
+        "posterHook": "Sweep over a fishing boat, through bridges and village lanes, then rise into the mountains and look back over Songxi.",
+        "question": "What lies in the empty space of an ink landscape?",
+        "topicLabel": "Ink and space"
+      }
+    },
+    "primaryCategoryId": "economy-society",
+    "renderer": "ink-landscape",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 180,
+    "evidence": "modeled",
+    "accent": "#53695c",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "follow-the-money",
+    "index": "43",
+    "poster": "/assets/posters/follow-the-money.webp",
+    "posterMobile": "/assets/posters/mobile/follow-the-money.webp",
+    "posterDesktop": "/assets/posters/desktop/follow-the-money.webp",
+    "title": "跟着一张钞票走：你花的钱最后去了哪？",
+    "posterTitle": "你花掉的 100 元，最后去了哪？",
+    "posterHook": "一张钞票顺着供应链一路被切开：工资、利润、税，还有付给国外的钱，加起来一分不少。",
+    "question": "我一辈子花掉的钱，最后变成了谁的收入？",
+    "topicLabel": "消费与供应链",
+    "translations": {
+      "en": {
+        "title": "Follow the money: where does your spending end up?",
+        "posterTitle": "Where does the money you spend end up?",
+        "posterHook": "One banknote is cut again and again up the supply chain: wages, profit, tax and imports, adding back to every cent.",
+        "question": "Whose income does a lifetime of my spending become?",
+        "topicLabel": "Spending and supply chains"
+      }
+    },
+    "primaryCategoryId": "economy-society",
+    "renderer": "follow-the-money",
+    "runtime": "particle-2d",
+    "difficulty": "intro",
+    "duration": 240,
+    "evidence": "modeled",
+    "accent": "#d9b56c",
+    "posterPosition": "58% 50%"
+  },
+  {
+    "id": "black-hole-flyby",
+    "index": "44",
+    "poster": "/assets/posters/black-hole-flyby.webp",
+    "posterMobile": "/assets/posters/mobile/black-hole-flyby.webp",
+    "posterDesktop": "/assets/posters/desktop/black-hole-flyby.webp",
+    "title": "掠过黑洞时看见的扭曲星空",
+    "posterTitle": "掠过黑洞边缘的星空",
+    "posterHook": "从遥远星海靠近，看光被拉成灿烂圆环；越过最近点，再回头看它缩成一粒金色星光。",
+    "question": "如果从深空掠过黑洞，你会看见怎样的宇宙？",
+    "topicLabel": "引力",
+    "translations": {
+      "en": {
+        "title": "The distorted sky seen on a black-hole flyby",
+        "posterTitle": "The sky on a flyby past a black hole",
+        "posterHook": "Approach through a sea of stars, hover by a blazing ring, then fly past and watch the black hole recede to a golden point.",
+        "question": "What would the universe look like on a flyby past a black hole?",
+        "topicLabel": "Gravity"
+      }
+    },
+    "primaryCategoryId": "deep-cosmos",
+    "renderer": "black-hole-flyby",
+    "runtime": "scene-3d",
+    "difficulty": "advanced",
+    "duration": 480,
+    "evidence": "modeled",
+    "accent": "#e9ae62",
+    "posterPosition": "50% 50%"
+  },
+  {
+    "id": "ukulele",
+    "index": "45",
+    "poster": "/assets/posters/ukulele.webp",
+    "posterMobile": "/assets/posters/mobile/ukulele.webp",
+    "posterDesktop": "/assets/posters/desktop/ukulele.webp",
+    "title": "尤克里里是怎么弹出一首歌的",
+    "posterTitle": "尤克里里的四根弦，怎么弹出一首歌？",
+    "posterHook": "按高一格，弦短 5.6%，音升一个半音。",
+    "question": "同样四根弦，为什么按在不同的格上，就弹出不同的音？",
+    "topicLabel": "乐器与音高",
+    "translations": {
+      "en": {
+        "title": "How does a ukulele play a song?",
+        "posterTitle": "How do four ukulele strings play a whole song?",
+        "posterHook": "One fret higher: 5.6% shorter string, one semitone up.",
+        "question": "Why does pressing a different fret make the same string play a different note?",
+        "topicLabel": "instruments and pitch"
+      }
+    },
+    "primaryCategoryId": "waves",
+    "renderer": "ukulele",
+    "runtime": "scene-3d",
+    "difficulty": "intro",
+    "duration": 150,
+    "evidence": "modeled",
+    "accent": "#f0a050",
+    "posterPosition": "50% 58%"
   }
 ]

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-12",
+  "code": "SFX-MECHANICAL-12",
+  "title": {
+    "en": "Camera shutter",
+    "zh": "机械快门"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 11,
+  "seed": 285675475,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized camera shutter for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的机械快门合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.18,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 285675475,
+    "sha256": "b082a33251ee6add50630ee78db31b24c511bc07aca81eb206bd0ee088fed1a5",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1f06e8c76294432de877d909cf4434ff26479c49c4fbf411befab5dab6bd70be",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b082a33251ee6add50630ee78db31b24c511bc07aca81eb206bd0ee088fed1a5",
+      "bytes": 104120,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6f2e0f801361eaaba3ff9c442be9abdbd67f34e456711fd0a448620da06f0eda",
+      "bytes": 9232,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "223a2f6869c76b0df55ebc5da4187f0d88a99c34cc626ef3f679f6623a13b317",
+      "bytes": 1837,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52038,
+    "duration": 1.18,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -25.19,
+    "dcOffset": -1.137122563979688e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.09709374999999998,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized electronic zap or laser sound effect.",
+      "zh": "一个短促、高音调的合成电子冲击或激光音效。"
+    },
+    "reason": "The sound is a clean, well-produced electronic zap, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:27.358898+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1f06e8c76294432de877d909cf4434ff26479c49c4fbf411befab5dab6bd70be"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52038
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.887031+00:00"
+}

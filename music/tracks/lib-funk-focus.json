@@ -1,0 +1,101 @@
+{
+  "id": "lib-funk-focus",
+  "code": "LIB-13-02",
+  "title": {
+    "en": "Focus — Funk",
+    "zh": "专注 · 放克"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "funk"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "A minor",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second instrumental funk instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 114 BPM; A minor. Main idea: alternating short and long phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "An upbeat and groovy instrumental track featuring electric guitar, bass, and drums. It has a lively, funk-rock feel with a prominent guitar melody.",
+    "zh": "一首欢快律动的纯音乐，以电吉他、贝斯和鼓为主。具有活泼的放克摇滚风格，吉他旋律突出。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.544,
+  "generatedAt": "2026-09-09T08:21:58.900942+00:00",
+  "generation": {
+    "id": "a56c9fa6-e3b8-4faa-aba0-73791c9d4056",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:21:14.537042+00:00",
+    "completedAt": "2026-09-09T08:21:58.900942+00:00",
+    "interactionId": "-xahavC_LMO3i9sP57WLuQM",
+    "sha256": "5b059766c3251178959f1baf139e738f66fb1567f2923754619920c67e84e075"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring electric guitar, bass, and drums. It has a lively, funk-rock feel with a prominent guitar melody.",
+      "zh": "一首欢快律动的纯音乐，以电吉他、贝斯和鼓为主。具有活泼的放克摇滚风格，吉他旋律突出。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Groovy",
+      "Energetic",
+      "Lively",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear funk-rock style, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:22:10.714236+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:24:24.989902+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

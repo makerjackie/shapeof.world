@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-20",
+  "code": "SFX-UI-20",
+  "title": {
+    "en": "Notification muted",
+    "zh": "关闭提醒"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 19,
+  "seed": 4204964933,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized notification muted for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的关闭提醒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4204964933,
+    "sha256": "cd65eb8c7393985d8afe77359036d39e58ecbb00e982d20c7fbf225f0fb53350",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9cc94ba5d241e18c43276c61d9d52dfea561adaf564e37b7d2f5b9c31cc7ecd4",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cd65eb8c7393985d8afe77359036d39e58ecbb00e982d20c7fbf225f0fb53350",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "2040d46ad3307f16c2c526bd7a0e835e219485a61f41c8b9567235a280483171",
+      "bytes": 5209,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e76fd60d2103f55e46339aacfc7c6f863aedd4844da92927c74937395491519e",
+      "bytes": 1751,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -2.5,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.760971380739796e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.09808874511718768,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, high-pitched electronic blip or boop sound effect.",
+      "zh": "一个短促、清晰、高音调的电子提示音或嘟嘟声。"
+    },
+    "reason": "The sound is a clear, isolated electronic blip, free of defects, and suitable for various UI or notification sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:44.944465+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "9cc94ba5d241e18c43276c61d9d52dfea561adaf564e37b7d2f5b9c31cc7ecd4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.909709+00:00"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "living-blue",
+  "code": "EAR-A01",
+  "title": {
+    "en": "Living Blue",
+    "zh": "活着的蓝"
+  },
+  "category": "earth-climate",
+  "archetype": "ambient",
+  "moods": [
+    "planetary",
+    "gentle",
+    "distant",
+    "awake"
+  ],
+  "topics": [
+    "earth",
+    "satellite",
+    "day-night"
+  ],
+  "energy": 1,
+  "bpm": 56,
+  "key": "D major",
+  "instruments": [
+    "soft piano",
+    "warm pads",
+    "distant water texture (abstract)",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.043,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about Earth seen as a living blue disk. Around 56 BPM, D major. Soft piano, warm pads and low strings; water is an abstract filtered texture, not a nature-documentary collage. Gentle, planetary, awake. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No ethnographic flute, no thunder, no stock birdcalls.\n\n[00:00–00:30] Piano thirds, slow, like cloud-light.\n[00:30–01:15] Pads open the stereo field; a distant water-like texture sits under, very low.\n[01:15–01:55] Low strings add a day-to-night tilt to relative minor, then return.\n[01:55–02:30] Piano alone again, as if the globe turned once.\n",
+  "recommendedWorldIds": [
+    "earth-now"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:32:59Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/living-blue/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/living-blue/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/living-blue/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:48.085798+00:00",
+  "generation": {
+    "id": "546258b4-cde2-4f3a-a3c3-d1145f1710bf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:32:13Z",
+    "completedAt": "2026-08-25T10:32:59Z",
+    "durationMs": 46000,
+    "interactionId": "Lm-NarKDO_a5i9sPpsak-Qw",
+    "clientRequestId": "9e48c3d4-947f-4cff-9d3e-d240164482b0",
+    "synthid": true,
+    "c2pa": "urn:c2pa:92f4a754-958b-4e90-e4fa-49c457852cd1",
+    "sha256": "4dcf2dbc8f11d014244e12dde2f5237da9898a6f8e672d494c7ddddcfe3a8ae7"
+  }
+}

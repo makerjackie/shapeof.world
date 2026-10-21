@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-18",
+  "code": "SFX-FOLEY-18",
+  "title": {
+    "en": "Squeak",
+    "zh": "短促摩擦"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 17,
+  "seed": 2837631960,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized squeak for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的短促摩擦合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.97,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2837631960,
+    "sha256": "5d5d42e7837a47a99d80c9fff8a19ad0d68a4e1002589adf5cfcdd37d1892abb",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d0c7c3c5a33f55a888683d98a5617abd93610ea7080897141004c4be3d169169",
+      "bytes": 14672,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5d5d42e7837a47a99d80c9fff8a19ad0d68a4e1002589adf5cfcdd37d1892abb",
+      "bytes": 85598,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f34894e868b649ed767e8b0a19a0447e19fb19e164b1ef59c870fd3348a56c83",
+      "bytes": 16445,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "28b847cba3074d6cebc5078e0be41b147bbc8ebd9c91f3a9df55daec4bac0481",
+      "bytes": 1724,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 42777,
+    "duration": 0.97,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -24.24,
+    "dcOffset": -4.28046540781261e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15934600830078116,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized whoosh or swoosh sound effect with a distinct digital or electronic character, featuring a quick attack and decay.",
+      "zh": "一个短促、尖锐的合成嗖嗖声或呼啸声，具有独特的数字或电子特性，起音和衰减迅速。"
+    },
+    "reason": "The audio is a clean, well-produced, and distinct synthesized whoosh/swoosh sound effect. It is free from any technical defects such as clipping, clicks, or unintended silence, making it highly suitable for various applications in video game and multimedia sound design, particularly for UI feedback, transitions, or quick movement.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:03.399776+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d0c7c3c5a33f55a888683d98a5617abd93610ea7080897141004c4be3d169169"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 42777
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.867318+00:00"
+}

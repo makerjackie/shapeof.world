@@ -1,0 +1,104 @@
+{
+  "id": "lib-organ-rest",
+  "code": "LIB-05-03",
+  "title": {
+    "en": "Rest — Organ",
+    "zh": "休憩 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "organ"
+  ],
+  "energy": 3,
+  "bpm": 48,
+  "key": "F major",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second contemporary organ music instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 48 BPM; F major. Main idea: an ascending fourth answered by a stepwise descent. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A serene and expansive orchestral piece featuring lush strings, delicate woodwinds, and subtle brass. It begins with a calm, ethereal atmosphere, gradually building in emotional depth and grandeur with a melancholic yet majestic feel.",
+    "zh": "一首宁静而广阔的管弦乐作品，以郁郁葱葱的弦乐、精致的木管乐器和微妙的铜管乐器为特色。它以平静、空灵的氛围开始，逐渐增强情感深度和宏伟感，带有一种忧郁而庄严的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 177.842,
+  "generatedAt": "2026-09-09T07:56:21.403344+00:00",
+  "generation": {
+    "id": "73dd050e-3811-42bf-b06d-e3a2940895b2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:55:30.476197+00:00",
+    "completedAt": "2026-09-09T07:56:21.403344+00:00",
+    "interactionId": "8xChaon5JqzTi9sPx8r-kAE",
+    "sha256": "14d15ab6a988a5b2b0b0cc519e15803d7a7060fe076aae11eae174e845e255a1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and expansive orchestral piece featuring lush strings, delicate woodwinds, and subtle brass. It begins with a calm, ethereal atmosphere, gradually building in emotional depth and grandeur with a melancholic yet majestic feel.",
+      "zh": "一首宁静而广阔的管弦乐作品，以郁郁葱葱的弦乐、精致的木管乐器和微妙的铜管乐器为特色。它以平静、空灵的氛围开始，逐渐增强情感深度和宏伟感，带有一种忧郁而庄严的感觉。"
+    },
+    "instruments": [
+      "orchestra",
+      "strings",
+      "woodwinds",
+      "brass"
+    ],
+    "moods": [
+      "serene",
+      "expansive",
+      "ethereal",
+      "calm",
+      "reflective",
+      "melancholic",
+      "dramatic",
+      "majestic",
+      "cinematic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 75,
+    "reason": "Well-produced orchestral piece with clear emotional progression, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:56:35.596356+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:57:39.968068+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

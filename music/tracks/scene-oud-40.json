@@ -1,0 +1,180 @@
+{
+  "id": "scene-oud-40",
+  "code": "SCENE-13-40",
+  "title": {
+    "en": "Copper Compass · 40",
+    "zh": "铜色罗盘 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "lively geographical discovery",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "bass guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for lively geographical discovery. Instruments: oud, darbuka, bass guitar. 120 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat Middle Eastern-inspired track featuring traditional percussion, a prominent wind instrument melody, and string elements, creating an energetic and exotic atmosphere.",
+    "zh": "一首活泼欢快的受中东风格启发的曲目，包含传统打击乐器、突出的管乐旋律和弦乐元素，营造出充满活力和异国情调的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "lively geographical discovery"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:16:39.165456+00:00",
+  "generation": {
+    "id": "ccb99ed4-8594-4294-ba26-edd6a85433c4",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:15:54.574955+00:00",
+    "completedAt": "2026-09-22T09:16:39.165456+00:00",
+    "interactionId": "S0eyasXgOZyA694PvP-84Q0",
+    "sha256": "620d6b7d4f573a2616c03553e51c4439ef7aa2c5a86b072abbe65dc201817d09"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat Middle Eastern-inspired track featuring traditional percussion, a prominent wind instrument melody, and string elements, creating an energetic and exotic atmosphere.",
+      "zh": "一首活泼欢快的受中东风格启发的曲目，包含传统打击乐器、突出的管乐旋律和弦乐元素，营造出充满活力和异国情调的氛围。"
+    },
+    "instruments": [
+      "Percussion",
+      "Ney",
+      "Oud",
+      "Bass",
+      "Strings"
+    ],
+    "moods": [
+      "Exotic",
+      "Lively",
+      "Upbeat",
+      "Energetic",
+      "Traditional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High quality production with clear instrumentation and a well-defined structure, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving percussion rhythm and a distinctive melodic phrase. It concludes with a clear, deliberate musical resolution, featuring a final chord and percussion hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:56.135398+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1fb0d363a42e070fe4f7b0d349ea0d0e4de71ebaefbc2a09ce04f40b686d67df"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.174625,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat Middle Eastern electronic track featuring a prominent synth melody reminiscent of a traditional wind instrument, supported by a driving synth bass and lively percussion.",
+      "zh": "一首充满活力的中东电子音乐，以合成器演奏的传统管乐器旋律为主，配以强劲的合成器贝斯和活泼的打击乐。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Middle Eastern Percussion",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Exotic",
+      "Dance",
+      "Middle Eastern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, clear, and has a distinct cultural flavor suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:48.041334+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 18.174625,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-oud-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-oud-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-oud-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1fb0d363a42e070fe4f7b0d349ea0d0e4de71ebaefbc2a09ce04f40b686d67df",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "620d6b7d4f573a2616c03553e51c4439ef7aa2c5a86b072abbe65dc201817d09",
+      "bytes": 1403859,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1e76bafe351f3c35be038976c4355425fb5118b8b4e2b1bd48a9c4c21f504a48",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.849709+00:00"
+}

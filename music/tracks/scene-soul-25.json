@@ -1,0 +1,180 @@
+{
+  "id": "scene-soul-25",
+  "code": "SCENE-08-25",
+  "title": {
+    "en": "Warm Circuit · 25",
+    "zh": "温暖电路 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "warm human-centered product story",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "muted brass",
+    "electric bass",
+    "snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for warm human-centered product story. Instruments: electric piano, muted brass, electric bass, snare. 100 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and modern electronic track featuring a catchy synth melody, driving drums, and uplifting pads. It builds energy with a positive and inspiring feel.",
+    "zh": "一首欢快现代的电子音乐，带有抓耳的合成器旋律、强劲的鼓点和振奋人心的铺垫音。它以积极和鼓舞人心的感觉积聚能量。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "warm human-centered product story"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:16.547231+00:00",
+  "generation": {
+    "id": "963326f1-e02a-4ff1-bd67-e6835519fbc9",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:13:02.096537+00:00",
+    "completedAt": "2026-09-22T09:13:16.547231+00:00",
+    "interactionId": "n0ayaq2YDbuL694P-9X7wAk",
+    "sha256": "41238ed3a40aab1eb3ffef9f5fc6f10a7ad0311cb3642cdaf6b10dd0ae63fe67"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and modern electronic track featuring a catchy synth melody, driving drums, and uplifting pads. It builds energy with a positive and inspiring feel.",
+      "zh": "一首欢快现代的电子音乐，带有抓耳的合成器旋律、强劲的鼓点和振奋人心的铺垫音。它以积极和鼓舞人心的感觉积聚能量。"
+    },
+    "instruments": [
+      "synthesizer",
+      "drums",
+      "synth bass",
+      "synth pads"
+    ],
+    "moods": [
+      "upbeat",
+      "positive",
+      "energetic",
+      "modern",
+      "inspiring",
+      "optimistic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, energetic, and modern electronic track with a clear structure and positive mood, suitable for promotional content.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent synth melody and driving beat, and concludes with a clear, sustained synth chord and cymbal crash.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:33.702708+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "434ce7c618fed7905f4b7c712dff006bcb265e9891bb32885e9716765b39f953"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.663625,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful electronic track featuring a prominent synth melody, driving bassline, and electronic drums, creating a bright and playful atmosphere.",
+      "zh": "一首欢快活泼的电子音乐，以突出的合成器旋律、强劲的贝斯线和电子鼓为特色，营造出明亮而俏皮的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Playful",
+      "Bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "N/A",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:24.375359+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 2.6636249999999997,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-soul-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-soul-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-soul-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "434ce7c618fed7905f4b7c712dff006bcb265e9891bb32885e9716765b39f953",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "41238ed3a40aab1eb3ffef9f5fc6f10a7ad0311cb3642cdaf6b10dd0ae63fe67",
+      "bytes": 671595,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "fcc9668647367e80448cb731c5e6848c9805a9c81a25df3d4b18e5dab28ddbab",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.851189+00:00"
+}

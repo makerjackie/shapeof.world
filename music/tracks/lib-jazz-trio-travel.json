@@ -1,0 +1,99 @@
+{
+  "id": "lib-jazz-trio-travel",
+  "code": "LIB-07-06",
+  "title": {
+    "en": "Roaming — Jazz Trio",
+    "zh": "漫游 · 爵士三重奏"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "jazz-trio"
+  ],
+  "energy": 2,
+  "bpm": 104,
+  "key": "E minor",
+  "instruments": [
+    "piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second acoustic jazz instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: piano, upright bass, brushed drums. Style: relaxed swing, walking bass and conversational piano. Tempo approximately 104 BPM; E minor. Main idea: an ascending fourth answered by a stepwise descent. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A calm and reflective jazz-influenced instrumental piece featuring piano, strings, and light percussion, creating a sophisticated and peaceful atmosphere.",
+    "zh": "一首平静而富有沉思感的爵士风格器乐曲，以钢琴、弦乐和轻柔的打击乐为主，营造出精致而宁静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.577,
+  "generatedAt": "2026-09-09T08:05:07.570505+00:00",
+  "generation": {
+    "id": "324be278-f554-46b7-9325-f9abe2b0b1a8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:04:24.768258+00:00",
+    "completedAt": "2026-09-09T08:05:07.570505+00:00",
+    "interactionId": "CROhatihN6zTi9sPx8r-kAE",
+    "sha256": "b230c28335b5773df4867cc02030ee2876cd13a1e9529bb96de1645972cfa975"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective jazz-influenced instrumental piece featuring piano, strings, and light percussion, creating a sophisticated and peaceful atmosphere.",
+      "zh": "一首平静而富有沉思感的爵士风格器乐曲，以钢琴、弦乐和轻柔的打击乐为主，营造出精致而宁静的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:05:16.703119+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:06:45.867617+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

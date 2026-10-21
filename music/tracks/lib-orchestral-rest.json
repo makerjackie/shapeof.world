@@ -1,0 +1,117 @@
+{
+  "id": "lib-orchestral-rest",
+  "code": "LIB-06-03",
+  "title": {
+    "en": "Rest — Orchestral",
+    "zh": "休憩 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "orchestral"
+  ],
+  "energy": 4,
+  "bpm": 88,
+  "key": "F major",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second orchestral adventure instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 88 BPM; F major. Main idea: a repeating five-note figure with space between phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A grand and emotional orchestral piece featuring a full range of strings, woodwinds, brass, and percussion. It builds from a gentle opening to a majestic and dramatic climax, then resolves peacefully.",
+    "zh": "一首宏大而富有情感的管弦乐作品，包含完整的弦乐、木管乐、铜管乐和打击乐。它从柔和的开场逐渐发展到雄伟而戏剧性的高潮，然后平静地结束。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 175.595,
+  "generatedAt": "2026-09-09T07:59:46.298481+00:00",
+  "generation": {
+    "id": "5475b96f-70ee-4a8b-8679-8ee2a4ad788c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:58:55.852411+00:00",
+    "completedAt": "2026-09-09T07:59:46.298481+00:00",
+    "interactionId": "wBGhavWbPMO3i9sP57WLuQM",
+    "sha256": "4b68d1b09dbebb49aee44a2d0160208ddb7265db5d0368839c8c1b7005a88b1c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and emotional orchestral piece featuring a full range of strings, woodwinds, brass, and percussion. It builds from a gentle opening to a majestic and dramatic climax, then resolves peacefully.",
+      "zh": "一首宏大而富有情感的管弦乐作品，包含完整的弦乐、木管乐、铜管乐和打击乐。它从柔和的开场逐渐发展到雄伟而戏剧性的高潮，然后平静地结束。"
+    },
+    "instruments": [
+      "orchestra",
+      "strings",
+      "violin",
+      "cello",
+      "viola",
+      "woodwinds",
+      "flute",
+      "oboe",
+      "clarinet",
+      "brass",
+      "french horn",
+      "trumpet",
+      "percussion",
+      "timpani",
+      "cymbals",
+      "snare drum"
+    ],
+    "moods": [
+      "grand",
+      "epic",
+      "majestic",
+      "dramatic",
+      "emotional",
+      "cinematic",
+      "hopeful",
+      "peaceful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 100,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:00:51.572539+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:03:12.071745+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

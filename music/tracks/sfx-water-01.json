@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-01",
+  "code": "SFX-WATER-01",
+  "title": {
+    "en": "Single drop",
+    "zh": "单滴水声"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 0,
+  "seed": 3466211829,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized single drop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的单滴水声合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.3,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3466211829,
+    "sha256": "0875c4163125e5a4d43f37b550950af37b4dc037845b94c9701c8b217e36ea9b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1a60767e622a90b8072c930ca03135020c00e32584abd553eedc597fd0a36b1b",
+      "bytes": 5163,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0875c4163125e5a4d43f37b550950af37b4dc037845b94c9701c8b217e36ea9b",
+      "bytes": 26504,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "eff95fa955d9404ca680bc8786c2597ebc8e2e052b2521b738e8c44d1c20f451",
+      "bytes": 4644,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "bad5b06c4eaa6f34a6a14e18afb7956b87d5210f6f13228ead613890a069ed61",
+      "bytes": 1800,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 13230,
+    "duration": 0.3,
+    "peakDbfs": -2.38,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.896008273100907e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05180065917968768,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip sound effect, resembling a UI notification or feedback.",
+      "zh": "一个短促、高音调的电子提示音效，类似于用户界面通知或反馈声。"
+    },
+    "reason": "The sound is a clean, isolated electronic blip, suitable for various UI or notification sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:57.426681+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1a60767e622a90b8072c930ca03135020c00e32584abd553eedc597fd0a36b1b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 13230
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.909988+00:00"
+}

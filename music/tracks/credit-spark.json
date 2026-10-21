@@ -1,0 +1,59 @@
+{
+  "id": "credit-spark",
+  "code": "SOC-B01",
+  "title": {
+    "en": "Credit Spark",
+    "zh": "信用火花"
+  },
+  "category": "economy-society",
+  "archetype": "discovery",
+  "moods": [
+    "multiplicative",
+    "fragile",
+    "bright",
+    "systemic"
+  ],
+  "topics": [
+    "money-creation",
+    "credit",
+    "reserve"
+  ],
+  "energy": 3,
+  "bpm": 90,
+  "key": "D major",
+  "instruments": [
+    "small piano spark",
+    "delay-multiplied mallets",
+    "warm bass",
+    "soft strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.704,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a small reserve sparking a wider credit chain. Around 90 BPM, D major. One piano note is the reserve; delay-multiplied mallets are loans of loans; warm bass is the remaining fraction. Bright then fragile, systemic not triumphal. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No stock-market stinger, no champagne pop.\n\n[00:00–00:20] Single piano spark, dry.\n[00:20–01:00] Mallet delays multiply the spark across stereo, each quieter.\n[01:00–01:40] Bass holds the reserve; strings show the expanded system.\n[01:40–02:30] Multiples resolve back toward the original spark, as if the chain is settled.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:11:15Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/credit-spark/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/credit-spark/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/credit-spark/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:58.474404+00:00",
+  "generation": {
+    "id": "c11e0207-230c-4f01-bd47-05b5eaa735e5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:10:24Z",
+    "completedAt": "2026-08-25T10:11:15Z",
+    "durationMs": 51000,
+    "interactionId": "EmqNaoWEE7n6rtoP04y9sQo",
+    "clientRequestId": "f3aa7bfe-508f-4528-aafb-8a99436486a0",
+    "synthid": true,
+    "c2pa": "urn:c2pa:65cc9517-6834-d95e-94c7-44730c3992cf",
+    "sha256": "a84d8ad82602c0e2bec3caed399589e6694bd5131db5f985090f12033140ce43"
+  }
+}

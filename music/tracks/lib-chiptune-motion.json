@@ -1,0 +1,101 @@
+{
+  "id": "lib-chiptune-motion",
+  "code": "LIB-29-08",
+  "title": {
+    "en": "Motion — Chiptune",
+    "zh": "跃动 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 152,
+  "key": "B minor",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second melodic chiptune instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 152 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track with a strong retro arcade game and chiptune influence. It features a catchy synth melody, driving drums, and a prominent bassline, creating a playful and dynamic atmosphere.",
+    "zh": "一首欢快活泼的电子音乐，带有浓厚的复古街机游戏和芯片音乐风格。它以抓耳的合成器旋律、强劲的鼓点和突出的贝斯线为特色，营造出一种俏皮而充满活力的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 148.715,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:17:18.373193+00:00",
+  "generation": {
+    "id": "4a853507-9f49-41bc-881a-a99cda2c1cb3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:16:22.423238+00:00",
+    "completedAt": "2026-09-09T09:17:18.373193+00:00",
+    "interactionId": "8yOhaozBM8zRi9sPrKHS-AM",
+    "sha256": "b2200303f4ad228874a58827e13476742f20a714dae1bb218d3651b37e9c2e86"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track with a strong retro arcade game and chiptune influence. It features a catchy synth melody, driving drums, and a prominent bassline, creating a playful and dynamic atmosphere.",
+      "zh": "一首欢快活泼的电子音乐，带有浓厚的复古街机游戏和芯片音乐风格。它以抓耳的合成器旋律、强劲的鼓点和突出的贝斯线为特色，营造出一种俏皮而充满活力的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Retro",
+      "Fun",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Well-produced, high-energy electronic track with a distinct retro gaming aesthetic, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:17:25.857903+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:18:56.871229+00:00"
+}

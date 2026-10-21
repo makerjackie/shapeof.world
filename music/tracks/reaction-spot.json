@@ -1,0 +1,59 @@
+{
+  "id": "reaction-spot",
+  "code": "MAT-C02",
+  "title": {
+    "en": "Reaction Spot",
+    "zh": "反应斑图"
+  },
+  "category": "math-signals",
+  "archetype": "event",
+  "moods": [
+    "spreading",
+    "organic-geometric",
+    "hypnotic",
+    "stable"
+  ],
+  "topics": [
+    "turing-patterns",
+    "reaction-diffusion",
+    "spots"
+  ],
+  "energy": 3,
+  "bpm": 104,
+  "key": "F# major",
+  "instruments": [
+    "tuned gongs",
+    "marimba",
+    "soft analog bass",
+    "brushed snare (color only)"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 136.15,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about reaction-diffusion spots appearing and locking into a lattice. Around 104 BPM, F# major. Tuned gongs strike like nuclei; marimba fills space between them until a hexagonal ostinato stabilizes. Hypnotic, organic-geometric. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No rock drums; brushed snare is texture, not a backbeat.\n\n[00:00–00:25] Isolated gong pitches in a wide field.\n[00:25–01:05] Marimba cells grow around each gong, irregular at first.\n[01:05–01:50] Cells lock into a repeating lattice; analog bass holds the tonic.\n[01:50–02:30] Lattice remains; some spots fade, leaving a sparser stable pattern.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:21:44Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/reaction-spot/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/reaction-spot/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/reaction-spot/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:51.403808+00:00",
+  "generation": {
+    "id": "6f5edd22-0726-4325-be7a-28e303e348bf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:20:51Z",
+    "completedAt": "2026-08-25T10:21:44Z",
+    "durationMs": 53000,
+    "interactionId": "hGyNarb-PMfi694P55HXgQg",
+    "clientRequestId": "561a388f-02a4-459b-a1bb-b1fa0eb19fcc",
+    "synthid": true,
+    "c2pa": "urn:c2pa:4172aa2e-22c2-15dc-22e4-43bfb6afb863",
+    "sha256": "3baad5404804d06cfac9b3c454c0e992db2b8de9a6e309c4f526fe0981e5564c"
+  }
+}

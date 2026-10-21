@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-07",
+  "code": "SFX-TRANSITION-07",
+  "title": {
+    "en": "Reverse swell",
+    "zh": "反向渐强"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 6,
+  "seed": 1998232154,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized reverse swell for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的反向渐强合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.95,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1998232154,
+    "sha256": "b1cf5fe7602e316c1e6173b374fdd2a6616e4edbdda1881f6087876301005008",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5ec04385e545f92f8f54280b26170a60e1066a9d7fba07c2a22456191ec44229",
+      "bytes": 28203,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b1cf5fe7602e316c1e6173b374fdd2a6616e4edbdda1881f6087876301005008",
+      "bytes": 172034,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8ec5337b336954c09d45ef053f1f49101586efe1df6832990916d8f966c12354",
+      "bytes": 26794,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0c740716ea4210482164ce895dcb7f1247c63cc6eb57aa7e49034ff43953e8f8",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 85995,
+    "duration": 1.95,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.58,
+    "dcOffset": 3.797175253648468e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1311671142578117,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthetic, metallic whoosh sound effect with a sharp attack and a resonant, slightly distorted tail.",
+      "zh": "一种合成的、带有金属质感的嗖嗖声效果，具有尖锐的起始和共鸣、略带失真的尾音。"
+    },
+    "reason": "The sound is a clean, well-produced synthetic whoosh effect with no audible defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:49.270421+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5ec04385e545f92f8f54280b26170a60e1066a9d7fba07c2a22456191ec44229"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 85995
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.903480+00:00"
+}

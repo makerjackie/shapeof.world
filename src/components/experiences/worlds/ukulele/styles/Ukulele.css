@@ -1,0 +1,437 @@
+/* Ukulele world: private styles. Everything is scoped under .uke-world; nothing here touches the shell. */
+
+.uke-world {
+  --uke-bg: #070504;
+  --uke-ink: #f3cfa6;
+  --uke-strong: #ffe2bf;
+  --uke-dim: #c9ab86;
+  --uke-accent: #f0a050;
+  --uke-accent-rgb: 240, 160, 80;
+  --uke-panel-rgb: 16, 10, 7;
+  --uke-shade-rgb: 5, 3, 2;
+  --uke-line: rgba(255, 220, 170, 0.16);
+  --uke-chord-font: var(--serif);
+  --uke-chord-style: italic;
+  --uke-chord-weight: 500;
+  --uke-chord-shadow: 0 0 24px rgba(255, 170, 90, 0.35), 0 2px 0 rgba(0, 0, 0, 0.4);
+  --uke-label-font: var(--sans);
+  --uke-radius: 14px;
+  /* the tab strip is 668:176; its width follows the stage but never takes more than ~62% of the height */
+  --uke-tab-w: min(720px, calc(100cqw - 4px), 62vh);
+  --uke-tab-h: calc(var(--uke-tab-w) * 176 / 668);
+  /* tab + gap + transport row + bottom padding: how much of the bottom the controls occupy */
+  --uke-stack: calc(var(--uke-tab-h) + 10px + 52px + 12px);
+  container-type: inline-size;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--uke-ink);
+  background: var(--uke-bg);
+  font-family: var(--sans);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.uke-world[data-uke-look='neon'] {
+  --uke-bg: #05040c;
+  --uke-ink: #e2ecff;
+  --uke-strong: #ffffff;
+  --uke-dim: #9aa2d6;
+  --uke-accent: #3ee6ff;
+  --uke-accent-rgb: 62, 230, 255;
+  --uke-accent-2: #ff4fd1;
+  --uke-panel-rgb: 10, 8, 28;
+  --uke-shade-rgb: 4, 3, 12;
+  --uke-line: rgba(140, 170, 255, 0.22);
+  --uke-chord-font: var(--sans);
+  --uke-chord-style: normal;
+  --uke-chord-weight: 700;
+  --uke-chord-shadow: 0 0 2px #fff, 0 0 10px rgba(62, 230, 255, 0.9), 0 0 28px rgba(62, 230, 255, 0.6), 0 0 60px rgba(255, 79, 209, 0.45);
+  --uke-label-font: ui-monospace, 'SF Mono', Menlo, var(--sans);
+  --uke-radius: 8px;
+}
+
+.uke-canvas-host { position: absolute; inset: 0; }
+.uke-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* legibility gradients; the picture itself carries its own vignette */
+.uke-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(var(--uke-shade-rgb), 0.55) 0%, rgba(var(--uke-shade-rgb), 0) 24%),
+    linear-gradient(to top, rgba(var(--uke-shade-rgb), 0.62) 0%, rgba(var(--uke-shade-rgb), 0) 30%);
+}
+
+/* neon: faint scanlines and a slow sweep */
+.uke-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+.uke-world[data-uke-look='neon'] .uke-scan {
+  opacity: 1;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0) 0 3px, rgba(0, 0, 0, 0.07) 3px 4px);
+  mix-blend-mode: multiply;
+}
+.uke-world[data-uke-look='neon'] .uke-scan::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 22%;
+  background: linear-gradient(to bottom, rgba(120, 220, 255, 0), rgba(120, 220, 255, 0.05), rgba(120, 220, 255, 0));
+  mix-blend-mode: screen;
+  animation: uke-sweep 7s linear infinite;
+}
+@keyframes uke-sweep {
+  from { top: -22%; }
+  to { top: 100%; }
+}
+
+/* ---- top left: the plate and the live chord ---- */
+.uke-topleft {
+  position: absolute;
+  z-index: 2;
+  top: var(--experience-safe-top, 78px);
+  left: clamp(14px, 3.4vw, 44px);
+  display: flex;
+  max-width: min(440px, 66vw);
+  flex-direction: column;
+  gap: clamp(10px, 1.6vh, 18px);
+  pointer-events: none;
+}
+
+.uke-plate-title {
+  margin: 0;
+  color: var(--uke-strong);
+  font-family: var(--serif);
+  font-size: clamp(19px, 2.1vw, 28px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.6);
+}
+.uke-plate-line {
+  margin: 6px 0 0;
+  color: var(--uke-dim);
+  font-size: clamp(12px, 1.05vw, 14px);
+  line-height: 1.45;
+  text-wrap: balance;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
+}
+
+.uke-hud { display: flex; flex-direction: column; gap: 4px; }
+.uke-now,
+.uke-bar {
+  color: var(--uke-dim);
+  font-family: var(--uke-label-font);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+.uke-now { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.uke-now-title { color: var(--uke-ink); }
+.uke-world[data-uke-look='neon'] .uke-now,
+.uke-world[data-uke-look='neon'] .uke-bar { color: var(--uke-accent); text-shadow: 0 0 8px rgba(var(--uke-accent-rgb), 0.7); }
+.uke-world[data-phase='intro'] .uke-now,
+.uke-world[data-phase='intro'] .uke-bar { visibility: hidden; }
+
+.uke-chordrow { display: flex; align-items: flex-end; gap: clamp(10px, 1.6vw, 20px); }
+.uke-chord {
+  min-width: 1ch;
+  color: var(--uke-strong);
+  font-family: var(--uke-chord-font);
+  font-style: var(--uke-chord-style);
+  font-weight: var(--uke-chord-weight);
+  font-size: clamp(60px, 9vw, 112px);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-shadow: var(--uke-chord-shadow);
+  transform-origin: 0 60%;
+}
+.uke-chord.is-pop { animation: uke-pop 0.38s ease-out; }
+.uke-world[data-uke-look='neon'] .uke-chord.is-pop { animation: uke-flicker 0.5s steps(1, end); }
+@keyframes uke-pop {
+  0% { transform: scale(1.1) translateY(-3px); opacity: 0.4; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes uke-flicker {
+  0% { opacity: 0.2; transform: translateX(-3px) skewX(-6deg); }
+  12% { opacity: 1; transform: none; }
+  20% { opacity: 0.35; }
+  28% { opacity: 1; }
+  44% { opacity: 0.7; }
+  52%, 100% { opacity: 1; }
+}
+.uke-diagram {
+  width: clamp(48px, 6.4vw, 80px);
+  height: auto;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+/* ---- bottom: song rail, tab, transport ---- */
+.uke-bottom {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px calc(env(safe-area-inset-bottom, 0px) + 12px);
+  pointer-events: none;
+}
+.uke-bottom > * { pointer-events: auto; }
+
+.uke-rail {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + var(--uke-stack) + 6px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: max-height 0.45s ease, opacity 0.35s ease, transform 0.35s ease;
+}
+.uke-rail.is-open { max-height: 220px; opacity: 1; transform: none; pointer-events: auto; }
+.uke-rail-hint {
+  margin: 0;
+  padding: 3px 11px;
+  border-radius: 99px;
+  color: var(--uke-ink);
+  background: rgba(var(--uke-panel-rgb), 0.55);
+  font-family: var(--uke-label-font);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+}
+.uke-world[data-uke-look='neon'] .uke-rail-hint { color: var(--uke-accent); }
+.uke-chips {
+  display: flex;
+  width: min(760px, 100%);
+  gap: 8px;
+  padding: 2px 2px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+.uke-chips::-webkit-scrollbar { display: none; }
+/* wide screens: the song list lives in a column at the right, so the instrument stays unobstructed */
+@media (min-width: 900px) {
+  .uke-rail {
+    top: 50%;
+    right: clamp(16px, 3.4vw, 48px);
+    bottom: auto;
+    left: auto;
+    width: 240px;
+    max-height: none;
+    align-items: stretch;
+    padding: 0;
+    transform: translate(14px, -50%);
+  }
+  .uke-rail.is-open { max-height: none; transform: translate(0, -50%); }
+  .uke-rail-hint { text-align: left; }
+  .uke-chips { width: 100%; flex-direction: column; overflow: visible; }
+  .uke-chip-wrap { width: 100%; }
+  .uke-chip { width: 100%; min-width: 0; max-width: none; }
+}
+
+.uke-chip-wrap { position: relative; flex: 0 0 auto; scroll-snap-align: start; }
+.uke-chip {
+  display: flex;
+  min-width: 132px;
+  max-width: 210px;
+  min-height: 52px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 14px;
+  border: 1px solid var(--uke-line);
+  border-radius: var(--uke-radius);
+  color: var(--uke-ink);
+  background: rgba(var(--uke-panel-rgb), 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.uke-chip:hover,
+.uke-chip:focus-visible { border-color: rgba(var(--uke-accent-rgb), 0.75); background: rgba(var(--uke-panel-rgb), 0.82); transform: translateY(-1px); outline: none; }
+.uke-chip:focus-visible { box-shadow: 0 0 0 2px rgba(var(--uke-accent-rgb), 0.6); }
+.uke-chip[aria-pressed='true'] { border-color: rgba(var(--uke-accent-rgb), 0.9); box-shadow: inset 0 0 0 1px rgba(var(--uke-accent-rgb), 0.45); }
+.uke-chip-title { color: var(--uke-strong); font-size: 15px; font-weight: 700; letter-spacing: 0.02em; line-height: 1.2; }
+.uke-chip-meta { color: var(--uke-dim); font-size: 10.5px; letter-spacing: 0.04em; line-height: 1.35; }
+.uke-chip-add { border-style: dashed; align-items: center; text-align: center; }
+.uke-chip-add svg { width: 14px; height: 14px; color: var(--uke-accent); }
+.uke-chip-del {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--uke-line);
+  border-radius: 50%;
+  color: var(--uke-ink);
+  background: rgba(var(--uke-panel-rgb), 0.92);
+  cursor: pointer;
+}
+.uke-chip-del svg { width: 11px; height: 11px; }
+/* the visible button is small and sits on the corner; its tap area is the full 44px */
+.uke-chip-del::after { content: ''; position: absolute; inset: -10px; }
+.uke-chip-del:hover,
+.uke-chip-del:focus-visible { color: #fff; background: rgba(190, 60, 60, 0.85); outline: none; }
+
+.uke-tabwrap { position: relative; width: var(--uke-tab-w); height: var(--uke-tab-h); }
+.uke-tab {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--uke-radius) + 2px);
+  background: rgba(var(--uke-panel-rgb), 0.5);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 0 1px var(--uke-line), 0 10px 40px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.uke-world[data-uke-look='neon'] .uke-tab {
+  background: linear-gradient(180deg, rgba(var(--uke-panel-rgb), 0.62), rgba(var(--uke-panel-rgb), 0.78));
+  box-shadow: 0 0 0 1px rgba(var(--uke-accent-rgb), 0.35), 0 0 18px rgba(var(--uke-accent-rgb), 0.18), inset 0 0 24px rgba(120, 80, 255, 0.12), 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.uke-transport { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.uke-btn {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--uke-line);
+  border-radius: 50%;
+  color: var(--uke-ink);
+  background: rgba(var(--uke-panel-rgb), 0.62);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s, color 0.2s;
+}
+.uke-btn svg { width: 20px; height: 20px; }
+.uke-btn:hover,
+.uke-btn:focus-visible { transform: translateY(-1px); color: var(--uke-strong); box-shadow: 0 0 0 1px rgba(var(--uke-accent-rgb), 0.6), 0 0 16px rgba(var(--uke-accent-rgb), 0.3); outline: none; }
+.uke-btn[aria-pressed='true'] { color: var(--uke-accent); }
+.uke-btn-main { width: 52px; height: 52px; color: var(--uke-bg); background: var(--uke-accent); border-color: transparent; }
+.uke-btn-main svg { width: 22px; height: 22px; }
+.uke-btn-main:hover,
+.uke-btn-main:focus-visible { color: var(--uke-bg); }
+.uke-world[data-uke-look='neon'] .uke-btn { border-radius: 10px; }
+.uke-world[data-uke-look='neon'] .uke-btn-main { background: linear-gradient(135deg, var(--uke-accent), var(--uke-accent-2)); box-shadow: 0 0 18px rgba(var(--uke-accent-rgb), 0.5); }
+
+/* ---- toast, drop target, failure ---- */
+.uke-toast {
+  position: absolute;
+  z-index: 4;
+  top: calc(var(--experience-safe-top, 78px) + 6px);
+  left: 50%;
+  max-width: min(86%, 520px);
+  padding: 9px 18px;
+  border: 1px solid rgba(var(--uke-accent-rgb), 0.5);
+  border-radius: 99px;
+  color: var(--uke-strong);
+  background: rgba(var(--uke-panel-rgb), 0.88);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  text-align: center;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.uke-toast.is-on { opacity: 1; }
+.uke-toast.is-bad { border-color: rgba(255, 110, 110, 0.7); }
+.uke-drop {
+  position: absolute;
+  z-index: 3;
+  inset: 12px;
+  display: grid;
+  place-items: center;
+  border: 2px dashed rgba(var(--uke-accent-rgb), 0.8);
+  border-radius: 18px;
+  color: var(--uke-accent);
+  background: rgba(var(--uke-shade-rgb), 0.7);
+  font-size: clamp(16px, 2.4vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.uke-drop.is-on { opacity: 1; }
+.uke-failure { display: grid; place-items: center; padding: 24px; text-align: center; }
+.uke-failure p { max-width: 320px; margin: 0; color: var(--uke-ink); font-size: 15px; line-height: 1.6; }
+.uke-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---- small screens: the strip and controls take the bottom, the instrument keeps the middle ---- */
+@media (max-width: 640px) {
+  /* a blur over a live WebGL canvas is re-composited every frame; on phones use plainer, more opaque panels */
+  .uke-chip,
+  .uke-tab,
+  .uke-btn,
+  .uke-toast { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .uke-chip { background: rgba(var(--uke-panel-rgb), 0.82); }
+  .uke-tab { background: rgba(var(--uke-panel-rgb), 0.74); }
+  .uke-btn { background: rgba(var(--uke-panel-rgb), 0.8); }
+  /* the song strip scrolls sideways: fade its right edge so that is visible */
+  .uke-chips { -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); padding-right: 24px; }
+  .uke-topleft { max-width: 72vw; }
+  .uke-chord { font-size: clamp(54px, 17vw, 76px); }
+  .uke-diagram { width: 46px; }
+  .uke-bottom { gap: 8px; padding-right: 8px; padding-left: 8px; }
+  .uke-chip { min-width: 124px; min-height: 46px; padding: 6px 12px; }
+  .uke-transport { gap: 8px; }
+}
+@media (max-height: 600px) {
+  .uke-plate-line,
+  .uke-rail-hint { display: none; }
+  .uke-chord { font-size: clamp(44px, 12vh, 72px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uke-chord.is-pop,
+  .uke-world[data-uke-look='neon'] .uke-chord.is-pop { animation: none; }
+  .uke-world[data-uke-look='neon'] .uke-scan::after { animation: none; display: none; }
+  .uke-rail,
+  .uke-chip,
+  .uke-btn,
+  .uke-drop { transition: none; }
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-01",
+  "code": "SFX-FOOTSTEP-01",
+  "title": {
+    "en": "Wood walk",
+    "zh": "木地板步行"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 0,
+  "seed": 1919084531,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized wood walk for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的木地板步行合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1919084531,
+    "sha256": "389ac2fb5f06c9e34c1e4a4cc507143e11b6d94376536f5aef8f73bd8e508120",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "834915cf53946246d8a3f16879d55b164b6bdf0ccac5e5219ccb3aa6302ec026",
+      "bytes": 4797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "389ac2fb5f06c9e34c1e4a4cc507143e11b6d94376536f5aef8f73bd8e508120",
+      "bytes": 24740,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "fb76ac09b95a616d147e6a7a8709791e242efa486b4225631b57ec0091f30db1",
+      "bytes": 6901,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "cfb3d8572ee70a7e63400a802d2d85de40cc99b21a901651ea76106a26689a74",
+      "bytes": 1933,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 12348,
+    "duration": 0.28,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.39,
+    "dcOffset": -9.144399017047295e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08478863525390695,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or blip sound effect.",
+      "zh": "短促、尖锐、高音调的电子“滋啦”或“哔”声效果。"
+    },
+    "reason": "The sound is a clean, distinct, and short electronic effect, suitable for various UI interactions, sci-fi elements, or game feedback.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:38.255245+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "834915cf53946246d8a3f16879d55b164b6bdf0ccac5e5219ccb3aa6302ec026"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 12348
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.867860+00:00"
+}

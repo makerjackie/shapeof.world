@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-08",
+  "code": "SFX-GAME-08",
+  "title": {
+    "en": "Quest complete",
+    "zh": "完成任务"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 7,
+  "seed": 1234883181,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized quest complete for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的完成任务合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1234883181,
+    "sha256": "7b8a1b45086a841e086474e9379ec090420e5c5ee92cb4c67547692cdbc69223",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "de8b5c99f1523f9c14eb73719e229adf545e9f31dffeeafc66e5d41d96a7c180",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7b8a1b45086a841e086474e9379ec090420e5c5ee92cb4c67547692cdbc69223",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6c032c62db5589bf628a76500a93a6c9439e599ea74c250a63d9a990a9d318ce",
+      "bytes": 5430,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2b7a8b83b79189d80c9cc2921cf3ae78be2dc20ee42c15e4e55a626eb3317321",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -5.0,
+    "rmsDbfs": -17.08,
+    "dcOffset": 8.823109321853741e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.02607305908203128,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized spring or boing sound effect, reminiscent of a cartoon bounce or a UI element interaction.",
+      "zh": "一个短促、干净、合成的弹簧或“boing”音效，类似于卡通弹跳声或用户界面元素互动声。"
+    },
+    "reason": "The sound is a clear, well-produced, and isolated sound effect without any audible defects, making it highly suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:36.910955+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "de8b5c99f1523f9c14eb73719e229adf545e9f31dffeeafc66e5d41d96a7c180"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.873119+00:00"
+}

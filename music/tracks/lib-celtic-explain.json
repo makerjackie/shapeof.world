@@ -1,0 +1,103 @@
+{
+  "id": "lib-celtic-explain",
+  "code": "LIB-16-05",
+  "title": {
+    "en": "Discovery — Celtic",
+    "zh": "发现 · 凯尔特"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "celtic"
+  ],
+  "energy": 2,
+  "bpm": 108,
+  "key": "G major",
+  "instruments": [
+    "fiddle",
+    "tin whistle",
+    "bodhran",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second Celtic acoustic instrumental instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: fiddle, tin whistle, bodhran, harp. Style: lilting compound-meter dance and modal melody. Tempo approximately 108 BPM; G major. Main idea: a descending melody with an upward answer. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A gentle and melodic neoclassical piece featuring plucked strings, flute, harp, and piano, creating a serene and elegant atmosphere.",
+    "zh": "一首温柔而旋律优美的新古典乐曲，以拨弦乐器、长笛、竖琴和钢琴为主，营造出宁静优雅的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 69.381,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:40:16.675977+00:00",
+  "generation": {
+    "id": "aaacbbd2-acfe-4997-850c-606ece2e5bd2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:39:34.535332+00:00",
+    "completedAt": "2026-09-09T08:40:16.675977+00:00",
+    "interactionId": "RxuharfaO9OJoLAPwd-WiAQ",
+    "sha256": "8000ade2f9b0875e2065a8a0e44188e4490b526ed6e049f146844f6908b4d5b0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic neoclassical piece featuring plucked strings, flute, harp, and piano, creating a serene and elegant atmosphere.",
+      "zh": "一首温柔而旋律优美的新古典乐曲，以拨弦乐器、长笛、竖琴和钢琴为主，营造出宁静优雅的氛围。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Flute",
+      "Harp",
+      "Piano",
+      "Cello"
+    ],
+    "moods": [
+      "Serene",
+      "Calm",
+      "Peaceful",
+      "Elegant",
+      "Whimsical"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Clean recording of a well-performed instrumental piece with clear instrumentation and a pleasant mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:40:28.815156+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-celtic-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-celtic-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-celtic-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:42:12.162047+00:00"
+}

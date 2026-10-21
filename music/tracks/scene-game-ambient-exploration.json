@@ -1,0 +1,208 @@
+{
+  "id": "scene-game-ambient-exploration",
+  "code": "GAME-03-2",
+  "title": {
+    "en": "Underwater Archive · Exploration",
+    "zh": "水下档案馆 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "unhurried underwater exploration",
+    "exploration"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "",
+  "instruments": [
+    "soft pads",
+    "glass marimba",
+    "muted sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for unhurried underwater exploration, exploration state. Instruments: soft pads, glass marimba, muted sub bass. 72 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A calm and mysterious instrumental piece featuring synth pads, pizzicato strings, and a melodic wind instrument, creating an ethereal atmosphere.",
+    "zh": "一首平静而神秘的器乐作品，以合成器铺底、拨弦乐器和旋律性的管乐器为主，营造出空灵的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 85.943,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:06:43.941598+00:00",
+  "generation": {
+    "id": "5ef6a306-e59b-4d11-af85-5dcf7fe56f86",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:06:01.600142+00:00",
+    "completedAt": "2026-09-22T09:06:43.941598+00:00",
+    "interactionId": "-0SyapvrBbve694PlMeHuQ4",
+    "sha256": "b1af3428f4d5ff65953b9aabfb61ec530a979048291ca0bc6164161c66839138"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and mysterious instrumental piece featuring synth pads, pizzicato strings, and a melodic wind instrument, creating an ethereal atmosphere.",
+      "zh": "一首平静而神秘的器乐作品，以合成器铺底、拨弦乐器和旋律性的管乐器为主，营造出空灵的氛围。"
+    },
+    "instruments": [
+      "Synth Pad",
+      "Pizzicato Strings",
+      "Bells",
+      "Bass",
+      "Wind Instruments",
+      "Light Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Mysterious",
+      "Peaceful",
+      "Ethereal",
+      "Contemplative"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:06:56.825301+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 12.25,
+    "sourceEndSeconds": 71.32691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.81,
+        "dcOffset": 0.0015448468757116001,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01739501953125,
+        "internalStepP999": 0.0406494140625,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.58,
+        "dcOffset": 0.0011433946053855302,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.02789306640625,
+        "internalStepP999": 0.0421142578125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A dark, evolving, and slightly dissonant synthesized ambient texture. It features sustained pads, subtle swells, and a deep, resonant character, evoking a sense of mystery or unease.",
+        "zh": "一种黑暗、演变且略带不和谐的合成环境音纹。它具有持续的衬垫音、细微的起伏和深沉共鸣的特质，营造出神秘或不安的感觉。"
+      },
+      "reason": "The audio is a clean, well-designed synthesized ambient texture. It loops perfectly without any audible seams, clicks, or abrupt changes, making it highly suitable for continuous background audio in video games or film. No defects or unintended elements were detected.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:15:19.578544+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "42af663e1ae4dbdec415492a29f270961c07777fcce825f347ba65c4a8ea1fb6"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are maintained across the joins. There are no obvious fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the loop points. It is well-suited for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:15:25.867933+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ceaba14081fd34c6c478c31c65755b9413e213549a2864b987c02d4a6bafa6f0",
+      "bytes": 1203974,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b1af3428f4d5ff65953b9aabfb61ec530a979048291ca0bc6164161c66839138",
+      "bytes": 2070295,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3d2a9f2a666ac9a031d6dae88b185fde9060968811b9c88b06366cf204e7d6d9",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "edcaa6cf473a9bd8749fe3b47f7013305ca6e721ce252369bca10861b5f33593",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "321937bf4b00173fff11fa0f2fec0a02ff73568db78365835140e23deb4be2fb",
+      "bytes": 719825,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.456763+00:00"
+}

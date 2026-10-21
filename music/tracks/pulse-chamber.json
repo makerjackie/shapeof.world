@@ -1,0 +1,62 @@
+{
+  "id": "pulse-chamber",
+  "code": "LIF-B01",
+  "title": {
+    "en": "Pulse Chamber",
+    "zh": "搏动室"
+  },
+  "category": "life-body",
+  "archetype": "discovery",
+  "moods": [
+    "circulatory",
+    "warm",
+    "steady",
+    "interior"
+  ],
+  "topics": [
+    "heart",
+    "circulation",
+    "rhythm"
+  ],
+  "energy": 3,
+  "bpm": 72,
+  "key": "C major",
+  "instruments": [
+    "soft kick as heartbeat",
+    "bass clarinet valves",
+    "warm pad",
+    "felt piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.371,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a heart as a chambered pump. Around 72 BPM, C major. A soft kick (not a club drum) as diastole-systole; bass clarinet as valves; warm pad as circulating blood; felt piano as a calm interior. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No hospital beep, no trap hats.\n\n[00:00–00:20] Soft two-part pulse alone, human-scale.\n[00:20–01:00] Bass clarinet opens and closes with the pulse; piano adds a simple cell.\n[01:00–01:45] Pad fills the stereo like volume of blood; pulse stays steady.\n[01:45–02:30] Pad recedes; pulse and piano remain.\n",
+  "recommendedWorldIds": [
+    "human-anatomy",
+    "organ-atlas"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:21:13Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-chamber/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-chamber/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-chamber/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:44.580142+00:00",
+  "generation": {
+    "id": "a412110c-99f5-4834-9b0a-20d327320dfc",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:20:21Z",
+    "completedAt": "2026-08-25T10:21:13Z",
+    "durationMs": 52000,
+    "interactionId": "Z2yNatWQFbSJ694PxZu9uQw",
+    "clientRequestId": "f1f78667-1ed3-4a5d-9c90-01e046f1afcd",
+    "synthid": true,
+    "c2pa": "urn:c2pa:33c98fa0-f2eb-c300-2d4e-4b690bd92273",
+    "sha256": "a5a732dbd4f23915b125a1a5bf020fea569d60f2a6800b5ad0ae9c315e9d5d59"
+  }
+}

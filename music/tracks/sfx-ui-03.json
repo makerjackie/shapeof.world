@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-03",
+  "code": "SFX-UI-03",
+  "title": {
+    "en": "Toggle off",
+    "zh": "关闭开关"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 2,
+  "seed": 1313227601,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized toggle off for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的关闭开关合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1313227601,
+    "sha256": "aad7eba07158176763517cc50f4bc9f1e3a53ef558a9278da2ce301a8a9f7691",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "89999facab97c90daa245e5f68c9c4d702a7dc6e832d8c12c20038e0bc0fa66b",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "aad7eba07158176763517cc50f4bc9f1e3a53ef558a9278da2ce301a8a9f7691",
+      "bytes": 22976,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a3dbfc014ee02d8c2fd1845c367f911080e0854de59f34dc5383470d26352faf",
+      "bytes": 4710,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "bddf087e28b9f877195d7af9b2c705f7a9bd23ee7e01006527f8d45acbefbcd8",
+      "bytes": 1761,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11466,
+    "duration": 0.26,
+    "peakDbfs": -2.64,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.311745731946625e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05965234375000006,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing or spring sound effect, with a clear, resonant quality.",
+      "zh": "一个短促的合成弹簧或弹跳音效，音质清晰，带有共鸣感。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:30.733267+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "89999facab97c90daa245e5f68c9c4d702a7dc6e832d8c12c20038e0bc0fa66b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11466
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.906374+00:00"
+}

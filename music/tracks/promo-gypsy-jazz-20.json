@@ -1,0 +1,161 @@
+{
+  "id": "promo-gypsy-jazz-20",
+  "code": "PROMO-09-20",
+  "title": {
+    "en": "Silver Wheels · 20",
+    "zh": "银色车轮 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "",
+  "instruments": [
+    "acoustic rhythm guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: bright acoustic swing with precise offbeat guitar chops. Instruments: acoustic rhythm guitar, violin, upright bass. Tempo 148 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively, upbeat and energetic instrumental track featuring accordion, acoustic guitar, and bass, with a folk-jazz fusion feel. It has a cheerful and danceable rhythm.",
+    "zh": "一首活泼、欢快且充满活力的纯音乐，以手风琴、原声吉他和贝斯为主，带有民间爵士融合风格。节奏欢快，适合跳舞。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:27:02.956087+00:00",
+  "generation": {
+    "id": "7ac99255-0d63-4f3f-b988-008ac5d9c58b",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:49.849515+00:00",
+    "completedAt": "2026-09-10T05:27:02.956087+00:00",
+    "interactionId": "mj-iatr-K4q34vEP1ray8Q0",
+    "sha256": "662353410065b4526ccb2dcff121a337cfad8a34d47459cdd0c77769a9dce064"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively, upbeat and energetic instrumental track featuring accordion, acoustic guitar, and bass, with a folk-jazz fusion feel. It has a cheerful and danceable rhythm.",
+      "zh": "一首活泼、欢快且充满活力的纯音乐，以手风琴、原声吉他和贝斯为主，带有民间爵士融合风格。节奏欢快，适合跳舞。"
+    },
+    "instruments": [
+      "Accordion",
+      "Acoustic Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Energetic",
+      "Danceable",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumentation, and a distinct, engaging style suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy accordion melody and a clear rhythm. It concludes with a distinct, resolved final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:18.595050+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "12fd0ab4c2f4ec81c83bbd35b7beefcd2a308cb8fa026700bd03123db84ddd78"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 26.827708,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat acoustic instrumental track featuring a prominent acoustic guitar melody, supported by a rhythmic bass and drums. It evokes a folk or gypsy jazz style.",
+      "zh": "一首活泼欢快的原声器乐曲，以突出的原声吉他旋律为主，辅以节奏感强的贝斯和鼓。它散发出民谣或吉普赛爵士的风格。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Cheerful",
+      "Folk",
+      "Gypsy Jazz"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:12.347194+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 6.827708000000001,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:50.881338+00:00"
+}

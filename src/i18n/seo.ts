@@ -1,8 +1,20 @@
 import { useEffect } from 'react'
 
+import { languageCanonicalUrl, localizedPublicUrl, publicUrlWithoutLocale } from '~/lib/share-url'
+
 import { useI18n, type Locale } from './index'
 
-export type LocalizedSeoRoute = 'home' | 'worlds' | 'atlas' | 'story' | 'about' | 'changelog' | 'sources' | 'failures' | 'making'
+export function languageDiscoveryLinks(rawUrl: string, locale: Locale) {
+  const xDefault = publicUrlWithoutLocale(rawUrl)
+  return [
+    { rel: 'canonical' as const, href: languageCanonicalUrl(xDefault, locale) },
+    { rel: 'alternate' as const, hrefLang: 'zh-Hans' as const, href: localizedPublicUrl(xDefault, 'zh') },
+    { rel: 'alternate' as const, hrefLang: 'en' as const, href: localizedPublicUrl(xDefault, 'en') },
+    { rel: 'alternate' as const, hrefLang: 'x-default' as const, href: xDefault },
+  ]
+}
+
+export type LocalizedSeoRoute = 'home' | 'worlds' | 'about' | 'changelog' | 'routes' | 'sources' | 'failures' | 'making' | 'logo'
 
 type SeoCopy = {
   title: string
@@ -12,42 +24,22 @@ type SeoCopy = {
 const routeSeo: Record<LocalizedSeoRoute, Record<Locale, SeoCopy>> = {
   home: {
     zh: {
-      title: '世界的形状 — 一个可玩的知识宇宙',
+      title: '世界的形状 — 看见世界如何运行',
       description: '看见世界如何运行：改变参数，观察结果，亲手理解宇宙、生命、数学、AI 与人类世界背后的规律。',
     },
     en: {
-      title: 'Shape of the World — A Playable Universe of Knowledge',
+      title: 'Shape of the World — See how the world works',
       description: 'See how the world works: change parameters, observe results, and explore the rules behind space, life, mathematics, AI, and engineering.',
     },
   },
   worlds: {
     zh: {
       title: '全部互动世界 — 世界的形状',
-      description: '一个可玩的知识宇宙：进入宇宙地图、细胞、航线、数学与 AI 的互动世界，点进去就能玩。',
+      description: '黑洞、星系、名画、钱的流向、数学与 AI——五十多个可以亲手玩的互动世界。',
     },
     en: {
       title: 'All Interactive Worlds — Shape of the World',
-      description: 'Explore a playable universe of astronomy, cells, flight networks, mathematics, AI, and more.',
-    },
-  },
-  atlas: {
-    zh: {
-      title: '我的图鉴 — 世界的形状',
-      description: '回到你完成、收藏和愿意再次探索的互动世界。',
-    },
-    en: {
-      title: 'My Atlas — Shape of the World',
-      description: 'Return to the interactive worlds you completed, saved, and want to explore again.',
-    },
-  },
-  story: {
-    zh: {
-      title: '为什么做世界的形状 — 创作故事',
-      description: '记录我们从数据可视化走向互动世界图鉴时的初心、怀疑、选择与重建。',
-    },
-    en: {
-      title: 'Why We Made Shape of the World — Our Story',
-      description: 'The questions, choices, and rebuild that turned data visualization into an atlas of interactive worlds.',
+      description: 'Black holes, galaxies, paintings, where money goes, mathematics and AI: fifty-plus interactive worlds you can play with your own hands.',
     },
   },
   changelog: {
@@ -60,14 +52,24 @@ const routeSeo: Record<LocalizedSeoRoute, Record<Locale, SeoCopy>> = {
       description: 'Which interactive worlds joined Shape of the World, which stages were rebuilt, and what changed recently.',
     },
   },
+  routes: {
+    zh: {
+      title: '策展路线 — 世界的形状',
+      description: '把几个世界串成一条路线，从一个问题一路探索下去。',
+    },
+    en: {
+      title: 'Curated routes — Shape of the World',
+      description: 'A few worlds, in order, from one question to the next.',
+    },
+  },
   about: {
     zh: {
       title: '关于我们 — 世界的形状',
-      description: '这个可玩的知识宇宙为什么存在：创作缘起、创作者，以及 01MVP 制作教程入口。',
+      description: '世界的形状为什么存在：创作缘起与创作者。',
     },
     en: {
       title: 'About Us — Shape of the World',
-      description: 'Why this playable universe of knowledge exists, who makes it, and how-to notes on 01MVP.',
+      description: 'Why Shape of the World exists, and who makes it.',
     },
   },
   sources: {
@@ -93,17 +95,36 @@ const routeSeo: Record<LocalizedSeoRoute, Record<Locale, SeoCopy>> = {
   making: {
     zh: {
       title: '制作中的世界 — 世界的形状',
-      description: '还没有进入公开目录的互动世界。直达链接仍然可以打开。',
+      description: '尚未进入公开目录的互动世界与早期尝试，可以直接打开体验。',
     },
     en: {
       title: 'Worlds in the Making — Shape of the World',
-      description: 'Interactive worlds that are not in the public catalogue yet. Direct links still open.',
+      description: 'Explore interactive worlds and early experiments outside the public catalogue.',
+    },
+  },
+  logo: {
+    zh: {
+      title: 'Logo — 世界的形状',
+      description: '世界的形状 Logo、中英锁名、深色与浅色版本，以及 PNG 与 zip 下载。',
+    },
+    en: {
+      title: 'Logo — Shape of the World',
+      description: 'The Shape of the World mark, Chinese and English lockups, dark and paper versions, and PNG and zip downloads.',
     },
   },
 }
 
 export function getLocalizedSeo(route: LocalizedSeoRoute, locale: Locale): SeoCopy {
   return routeSeo[route][locale]
+}
+
+function localeFromUnknown(value: unknown): Locale | undefined {
+  if (value === 'zh' || value === 'en') return value
+  if (value && typeof value === 'object' && 'locale' in value) {
+    const locale = value.locale
+    if (locale === 'zh' || locale === 'en') return locale
+  }
+  return undefined
 }
 
 export function localeFromRouteMatches(
@@ -115,27 +136,25 @@ export function localeFromRouteMatches(
     context?: unknown
   }>,
 ): Locale {
-  const rootMatch = matches.find((match) => (
-    match.routeId === '__root__'
-    || (typeof match.id === 'string' && match.id.startsWith('__root__'))
-  ))
-  if (
-    rootMatch?.context
-    && typeof rootMatch.context === 'object'
-    && 'locale' in rootMatch.context
-    && (rootMatch.context.locale === 'zh' || rootMatch.context.locale === 'en')
-  ) {
-    return rootMatch.context.locale
+  for (const match of matches) {
+    if (
+      match.search
+      && typeof match.search === 'object'
+      && 'lang' in match.search
+      && (match.search.lang === 'zh' || match.search.lang === 'en')
+    ) {
+      return match.search.lang
+    }
   }
-  if (
-    rootMatch?.search
-    && typeof rootMatch.search === 'object'
-    && 'lang' in rootMatch.search
-    && (rootMatch.search.lang === 'zh' || rootMatch.search.lang === 'en')
-  ) {
-    return rootMatch.search.lang
+  for (const match of matches) {
+    const fromContext = localeFromUnknown(match.context)
+    if (fromContext) return fromContext
   }
-  return rootMatch?.loaderData === 'en' ? 'en' : 'zh'
+  for (const match of matches) {
+    const fromLoader = localeFromUnknown(match.loaderData)
+    if (fromLoader) return fromLoader
+  }
+  return 'zh'
 }
 
 function updateMeta(selector: string, content: string) {

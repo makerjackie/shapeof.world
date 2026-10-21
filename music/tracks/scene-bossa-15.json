@@ -1,0 +1,179 @@
+{
+  "id": "scene-bossa-15",
+  "code": "SCENE-06-15",
+  "title": {
+    "en": "Window Garden · 15",
+    "zh": "窗边花园 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "sunny home and lifestyle demonstration",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "brushed percussion",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for sunny home and lifestyle demonstration. Instruments: nylon guitar, brushed percussion, upright bass. 106 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A groovy and upbeat funk track featuring a prominent bassline, tight drums, and a catchy electric guitar melody. It has a retro feel with a modern production.",
+    "zh": "一首律动感十足、欢快的放克音乐，以突出的贝斯线、紧凑的鼓点和抓耳的电吉他旋律为特色。它带有复古气息和现代制作感。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "sunny home and lifestyle demonstration"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:12:18.392853+00:00",
+  "generation": {
+    "id": "0eccb611-adb9-4abc-9a4f-c9fcacb7e105",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:05.498337+00:00",
+    "completedAt": "2026-09-22T09:12:18.392853+00:00",
+    "interactionId": "ZkayasHkGKeA694PtMejkAU",
+    "sha256": "52c41c62c80b8e1275f12dff7031457250b21123acf583987717ce5e82ea1be8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A groovy and upbeat funk track featuring a prominent bassline, tight drums, and a catchy electric guitar melody. It has a retro feel with a modern production.",
+      "zh": "一首律动感十足、欢快的放克音乐，以突出的贝斯线、紧凑的鼓点和抓耳的电吉他旋律为特色。它带有复古气息和现代制作感。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Funky",
+      "Groovy",
+      "Upbeat",
+      "Energetic",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 115,
+    "reason": "Well-produced, catchy, and suitable for various media applications requiring an upbeat and groovy instrumental.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a strong bass and drum groove and concludes with a smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:33.589203+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "2371c93024e01fe489dc46a599b96fb77757b5b6c0291022b6285c29fcb6a61c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.066875,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz instrumental featuring a prominent walking bass line, clean electric guitar melody, and light brush drums, creating a sophisticated lounge atmosphere.",
+      "zh": "一段流畅轻松的爵士乐器演奏，以突出的行进贝斯线、清晰的电吉他旋律和轻柔的刷子鼓为特色，营造出精致的休闲氛围。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "jazzy",
+      "smooth",
+      "relaxed",
+      "lounge",
+      "sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Clean, well-produced jazz instrumental with a clear melodic structure and pleasant instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:25.918459+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.066875,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-bossa-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-bossa-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-bossa-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2371c93024e01fe489dc46a599b96fb77757b5b6c0291022b6285c29fcb6a61c",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "52c41c62c80b8e1275f12dff7031457250b21123acf583987717ce5e82ea1be8",
+      "bytes": 729273,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "7261a98d592600d1eb06c48750c3576cf1491a68ddb8c698a5fa932e4b8864de",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.824976+00:00"
+}

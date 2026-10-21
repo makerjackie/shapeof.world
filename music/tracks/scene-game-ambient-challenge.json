@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-ambient-challenge",
+  "code": "GAME-03-3",
+  "title": {
+    "en": "Underwater Archive · Challenge",
+    "zh": "水下档案馆 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "unhurried underwater exploration",
+    "challenge"
+  ],
+  "energy": 3,
+  "bpm": 72,
+  "key": "",
+  "instruments": [
+    "soft pads",
+    "glass marimba",
+    "muted sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for unhurried underwater exploration, challenge state. Instruments: soft pads, glass marimba, muted sub bass. 72 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "A smooth, atmospheric electronic track featuring arpeggiated synthesizers, warm pads, and a steady electronic drum beat. It has a modern retro feel with a driving yet relaxed rhythm.",
+    "zh": "一首流畅、大气的电子音乐，以琶音合成器、温暖的衬垫音和稳定的电子鼓点为特色。它具有现代复古感，节奏富有动感而又轻松。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 85.264,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:04.138000+00:00",
+  "generation": {
+    "id": "300869c6-db95-4ddc-be2d-91af6978ca79",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:21:24.170450+00:00",
+    "completedAt": "2026-09-22T09:22:04.138000+00:00",
+    "interactionId": "lEiyaq70NbK97PkPkrbi4A8",
+    "sha256": "1eee6d220a671cbd90083284bc44d98bbc30ecf206f146888fe6c7714a051991"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, atmospheric electronic track featuring arpeggiated synthesizers, warm pads, and a steady electronic drum beat. It has a modern retro feel with a driving yet relaxed rhythm.",
+      "zh": "一首流畅、大气的电子音乐，以琶音合成器、温暖的衬垫音和稳定的电子鼓点为特色。它具有现代复古感，节奏富有动感而又轻松。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Pads"
+    ],
+    "moods": [
+      "Chill",
+      "Dreamy",
+      "Uplifting",
+      "Relaxed",
+      "Atmospheric",
+      "Driving"
+    ],
+    "energy": 3,
+    "bpmEstimate": 115,
+    "reason": "Well-produced electronic track with a clear, engaging sound and no technical flaws, suitable for background music or various media projects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:14.313511+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 33.286961,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1467955,
+    "sourceStartSeconds": 21.25,
+    "sourceEndSeconds": 54.64131519274376,
+    "crossfadeSeconds": 0.10435374149659864,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1467955,
+        "duration": 33.286961,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.9,
+        "dcOffset": 0.00469778993639057,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01409912109375,
+        "internalStepP999": 0.131561279296875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1467955,
+        "duration": 33.286961,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.84,
+        "dcOffset": 0.004211764707222643,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.013885498046875,
+        "internalStepP999": 0.13201904296875,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, evolving electronic pad texture with a resonant, slightly metallic quality. It features subtle shifts in timbre and volume, creating an ambient and ethereal atmosphere.",
+        "zh": "一种持续演变的电子衬底音效，带有共鸣感和轻微的金属质感。音色和音量有细微变化，营造出一种环境和空灵的氛围。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture with no audible defects. It loops perfectly, making it highly suitable for continuous background audio in games or video.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:42.215207+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "abdd561968c82f07076e50415893994058085d19eaab8a13d4687035c2dd9899"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music features a consistent rhythm, harmony, and dynamic level throughout. The transitions at the specified loop points (33.287s and 66.574s) are seamless, with no abrupt changes, skipped beats, fade-ins, ending cadences, or conspicuous edits. The track is clearly designed for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:28:58.702075+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4f62fe180088c2b8f6ab3bcaf03d35ace8a8de515ef66376bba30225cf93f2d1",
+      "bytes": 1194466,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1eee6d220a671cbd90083284bc44d98bbc30ecf206f146888fe6c7714a051991",
+      "bytes": 2053995,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "24467c6a9d019af34ed9552bcf1c5ded34b7a1b40d08732a2e94b2e9570638c9",
+      "bytes": 2809,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "d257cba4d3f18263c00723b593b0d738462c2e9d128281666d09f08312044612",
+      "bytes": 5871864,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "85b6288c79786f83d0e391ed5e77ce7232097d44cc42b40766ce920f27d7f45e",
+      "bytes": 458829,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.456451+00:00"
+}

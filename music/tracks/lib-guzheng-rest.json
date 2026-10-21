@@ -1,0 +1,100 @@
+{
+  "id": "lib-guzheng-rest",
+  "code": "LIB-17-03",
+  "title": {
+    "en": "Rest — Guzheng",
+    "zh": "休憩 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "guzheng"
+  ],
+  "energy": 2,
+  "bpm": 54,
+  "key": "F major",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Chinese chamber instrumental instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 54 BPM; F major. Main idea: alternating short and long phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A melancholic and peaceful instrumental piece featuring traditional Chinese instruments. The Guzheng carries the main melody with a flowing, expressive Dizi providing counter-melodies and harmonies. The arrangement is sparse and reflective, evoking a serene and contemplative atmosphere.",
+    "zh": "一首忧郁而宁静的器乐作品，以中国传统乐器为主。古筝演奏主旋律，悠扬的笛子提供对位旋律与和声。编曲简洁而富有内涵，营造出一种宁静沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 175.726,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:44:16.242267+00:00",
+  "generation": {
+    "id": "9da9057d-30cb-4425-9118-6f3285551a0b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:43:13.173883+00:00",
+    "completedAt": "2026-09-09T08:44:16.242267+00:00",
+    "interactionId": "IhyharuiH7GejMwP1PWpyAg",
+    "sha256": "c59b6c7560bec2718d01d889f66b0c01b25d2b5b5498a3781ed14419d19d9f21"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and peaceful instrumental piece featuring traditional Chinese instruments. The Guzheng carries the main melody with a flowing, expressive Dizi providing counter-melodies and harmonies. The arrangement is sparse and reflective, evoking a serene and contemplative atmosphere.",
+      "zh": "一首忧郁而宁静的器乐作品，以中国传统乐器为主。古筝演奏主旋律，悠扬的笛子提供对位旋律与和声。编曲简洁而富有内涵，营造出一种宁静沉思的氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Dizi",
+      "Percussion"
+    ],
+    "moods": [
+      "Melancholic",
+      "Peaceful",
+      "Reflective",
+      "Serene",
+      "Traditional"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The music is well-produced, emotionally evocative, and free of technical flaws, making it suitable for various media applications requiring a traditional, peaceful, or melancholic Asian sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:44:28.758532+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:45:49.871116+00:00"
+}

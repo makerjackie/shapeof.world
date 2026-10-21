@@ -1,0 +1,164 @@
+{
+  "id": "promo-gypsy-jazz-35",
+  "code": "PROMO-09-35",
+  "title": {
+    "en": "Silver Wheels · 35",
+    "zh": "银色车轮 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "",
+  "instruments": [
+    "acoustic rhythm guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: bright acoustic swing with precise offbeat guitar chops. Instruments: acoustic rhythm guitar, violin, upright bass. Tempo 148 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat acoustic jazz piece with a swing feel, featuring a prominent clarinet melody, supported by a walking bass, acoustic guitar, and drums. It evokes a vintage, almost Dixieland or Gypsy Jazz atmosphere.",
+    "zh": "一首活泼欢快的原声爵士乐曲，带有摇摆乐的律动，以清晰的单簧管旋律为主导，配以行进贝斯、原声吉他和鼓。它营造出一种复古的、近似迪克西兰或吉普赛爵士的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:27:52.766329+00:00",
+  "generation": {
+    "id": "0ad1e3d2-a009-418a-837c-0410a464a0a7",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:27:13.543944+00:00",
+    "completedAt": "2026-09-10T05:27:52.766329+00:00",
+    "interactionId": "sj-iar3JBYq34vEP1ray8Q0",
+    "sha256": "fb27a3354f54c081922474027c840385fdf56cf30d52e10d76aec62388eeeffa"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat acoustic jazz piece with a swing feel, featuring a prominent clarinet melody, supported by a walking bass, acoustic guitar, and drums. It evokes a vintage, almost Dixieland or Gypsy Jazz atmosphere.",
+      "zh": "一首活泼欢快的原声爵士乐曲，带有摇摆乐的律动，以清晰的单簧管旋律为主导，配以行进贝斯、原声吉他和鼓。它营造出一种复古的、近似迪克西兰或吉普赛爵士的氛围。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Acoustic Guitar",
+      "Upright Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Playful",
+      "Energetic",
+      "Vintage",
+      "Jazzy",
+      "Swing"
+    ],
+    "energy": 4,
+    "bpmEstimate": 185,
+    "reason": "Well-produced, clear instrumentation, engaging melody, and strong rhythmic drive make it suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a lively clarinet melody and full band instrumentation, establishing a clear swing feel. It concludes with a clear, sustained final chord, providing a definitive musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:14.365162+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "3974e7125108318576a4d5a44dccaf11a72a8e0a34b55f1a4650de6f594bf8f2"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 55.74525,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful instrumental piece featuring a prominent accordion melody, supported by a pizzicato string section, double bass, and light percussion, creating a cheerful and somewhat retro swing feel.",
+      "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，辅以拨弦乐器、低音提琴和轻柔的打击乐，营造出一种愉悦而略带复古的摇摆乐氛围。"
+    },
+    "instruments": [
+      "accordion",
+      "strings",
+      "double bass",
+      "percussion",
+      "clarinet"
+    ],
+    "moods": [
+      "lively",
+      "playful",
+      "cheerful",
+      "whimsical",
+      "retro",
+      "swing"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumentation, and a distinct, engaging style suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:05.978159+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 20.74525,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:11.407747+00:00"
+}

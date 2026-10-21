@@ -1,0 +1,102 @@
+{
+  "id": "lib-celtic-celebrate",
+  "code": "LIB-16-10",
+  "title": {
+    "en": "First Light — Celtic",
+    "zh": "初光 · 凯尔特"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "celtic"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "C major",
+  "instruments": [
+    "fiddle",
+    "tin whistle",
+    "bodhran",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Celtic acoustic instrumental instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: fiddle, tin whistle, bodhran, harp. Style: lilting compound-meter dance and modal melody. Tempo approximately 120 BPM; C major. Main idea: a descending melody with an upward answer. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and traditional folk tune featuring a prominent violin melody, supported by plucked strings and light percussion. It evokes a festive and danceable atmosphere.",
+    "zh": "充满活力的传统民谣，以小提琴为主旋律，辅以拨弦乐器和轻柔的打击乐，营造出欢快、适合跳舞的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.305,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:43:29.288787+00:00",
+  "generation": {
+    "id": "cf23d6eb-af36-4644-bd71-b05301ffc3fa",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:42:45.391498+00:00",
+    "completedAt": "2026-09-09T08:43:29.288787+00:00",
+    "interactionId": "BxyhaumwEfWJ88EPntfq6A4",
+    "sha256": "065636abf3c9ea655f9c3ae40da08e5f9f1ef8428c60ffb1d85bcac6bf6385ba"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and traditional folk tune featuring a prominent violin melody, supported by plucked strings and light percussion. It evokes a festive and danceable atmosphere.",
+      "zh": "充满活力的传统民谣，以小提琴为主旋律，辅以拨弦乐器和轻柔的打击乐，营造出欢快、适合跳舞的氛围。"
+    },
+    "instruments": [
+      "violin",
+      "mandolin",
+      "cello",
+      "percussion"
+    ],
+    "moods": [
+      "joyful",
+      "lively",
+      "festive",
+      "traditional",
+      "danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:43:37.755630+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-celtic-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-celtic-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-celtic-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:44:30.264367+00:00"
+}

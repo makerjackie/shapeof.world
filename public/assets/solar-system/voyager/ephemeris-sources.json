@@ -1,0 +1,73 @@
+{
+  "generator": "scripts/build-voyager-ephemeris.py",
+  "spiceypy": "8.0.0",
+  "frame": "ECLIPJ2000",
+  "observer": "Sun (10)",
+  "aberration": "NONE",
+  "time": "Unix UTC seconds",
+  "retrieved": "2026-09-18",
+  "kernels": [
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/Voyager_1.a54206u_V0.2_merged.bsp",
+      "sha256": "47c6f2be03668b50a1efb5f96978a2b68b2b501dae6f585841b1569baa3f4311"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/Voyager_2.m05016u.merged.bsp",
+      "sha256": "ce66cba12cf77bf3a1097f44142ef978f46656788ed08f9052238a102ed2e706"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr1_jup230.bsp",
+      "sha256": "e1ea3f72f19b15508bc45979771a36a97d02f33056b76867d444304cb82205c9"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr1_sat337.bsp",
+      "sha256": "f451f9f095bc4ad175cde701367cbf1ccc061dd706ad0008cda75fd939d94efa"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr2_jup230.bsp",
+      "sha256": "9c00be3c83915f6c1fd8448d9266420e3c462e9d78e4c32b17145dac81529d5a"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr2_sat337.bsp",
+      "sha256": "1d15debf7bdc6c6ba4c0462b5f4f6af85ddf9948735f434792a1c41418bb39a8"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr2.ura182.bsp",
+      "sha256": "22d012ab426273ffb22710238cfe4f7d0c63850225cc9e46b1f5aa40308cd880"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr2_nep097.bsp",
+      "sha256": "1aee50e5e4a5253c660d06f7359eb4dac2fe4a5dab5fdc821d2b868469bdc473"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/sat337.bsp",
+      "sha256": "5f145798110d6e070c72876cd0673ec07b02b94f36d835f1996474441681847d"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr1.x2100.bsp",
+      "sha256": "aa8f37673b5ef60296d210566d01cc49f7b32711f37003393c3327616c9fc6d0"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/VOYAGER/kernels/spk/vgr2.x2100.bsp",
+      "sha256": "391f5361773322e2242fb1c81578aeb1fbf9134c3878b2f325e9b8b5f46ad7cb"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/satellites/a_old_versions/jup230.bsp",
+      "sha256": "858d5530be82eef3364c816d4b04f943ae676f8bf5b4451499836358ec016b2e"
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b"
+    }
+  ],
+  "voyager-1": {
+    "sha256": "40e5a5a80e55178999c388b8f2f15053fd26067b020656864253a598ee52d4e1",
+    "rows": 2460,
+    "maxCheckedErrorKm": 0.9948
+  },
+  "voyager-2": {
+    "sha256": "e6097e6bbe70228669a8683e30ea8402fad34859c9d0ecd09d6ecccdb87aa5d2",
+    "rows": 2720,
+    "maxCheckedErrorKm": 0.9971
+  }
+}

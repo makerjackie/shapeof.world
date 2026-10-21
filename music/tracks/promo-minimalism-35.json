@@ -1,0 +1,162 @@
+{
+  "id": "promo-minimalism-35",
+  "code": "PROMO-03-35",
+  "title": {
+    "en": "Clockwork Play · 35",
+    "zh": "发条游戏 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 3,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "woodblocks",
+    "pizzicato strings",
+    "marimba",
+    "brushed snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An elegant and sophisticated orchestral piece featuring prominent strings and a light, playful melody, evoking a classical or period drama feel.",
+    "zh": "一首优雅精致的管弦乐曲，以突出的弦乐和轻快活泼的旋律为主，营造出古典或时代剧的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:22:12.360550+00:00",
+  "generation": {
+    "id": "87561cdf-88f1-495a-9bef-30246313f734",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:21:30.632173+00:00",
+    "completedAt": "2026-09-10T05:22:12.360550+00:00",
+    "interactionId": "Wz6iao-nMNLN694P8bKosQU",
+    "sha256": "4a86a54ac441c236f2215c1867449181a6304fbbeb317643e1b50c5c7891abd2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An elegant and sophisticated orchestral piece featuring prominent strings and a light, playful melody, evoking a classical or period drama feel.",
+      "zh": "一首优雅精致的管弦乐曲，以突出的弦乐和轻快活泼的旋律为主，营造出古典或时代剧的氛围。"
+    },
+    "instruments": [
+      "Strings",
+      "Woodwinds",
+      "Percussion",
+      "Piano"
+    ],
+    "moods": [
+      "Elegant",
+      "Sophisticated",
+      "Classical",
+      "Playful",
+      "Refined",
+      "Grand"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "This is a well-produced, clean orchestral piece with a clear structure and pleasant melody, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens with an immediate, clear string melody and rhythm, and concludes with a deliberate, resolved orchestral chord and fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:22:51.043322+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "8c811665c3b4adc0ccea5828228961a1bd8f6d6ae7662034aeae82df3e649854"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 56.894625,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light, playful orchestral piece featuring prominent pizzicato strings, woodwinds, and brass, creating a whimsical and cheerful atmosphere.",
+      "zh": "一首轻快、俏皮的管弦乐曲，以突出的拨弦乐器、木管乐器和铜管乐器为特色，营造出异想天开、欢快的氛围。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Woodwinds",
+      "Brass",
+      "Percussion",
+      "Plucked Bass"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Cheerful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "Clear, well-produced, and fits a light, playful orchestral style suitable for various media.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:22:27.722400+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 21.894624999999998,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-minimalism-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-minimalism-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-minimalism-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:51.225305+00:00"
+}

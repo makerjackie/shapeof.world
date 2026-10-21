@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-07",
+  "code": "SFX-NOTIFICATION-07",
+  "title": {
+    "en": "Countdown tick",
+    "zh": "倒计时单响"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 6,
+  "seed": 3005558415,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized countdown tick for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的倒计时单响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.84,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3005558415,
+    "sha256": "6c01492356b7aa24b2bc9c48823f9ed75f9127370e3da2bf8a7905b38bb408a0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "41269dc181b707d6a35c8ed3a3323c88b156a0427e27d5278570f71b54c20c66",
+      "bytes": 12843,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6c01492356b7aa24b2bc9c48823f9ed75f9127370e3da2bf8a7905b38bb408a0",
+      "bytes": 74132,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6ea83f064ab4a0b1b5145acd5323682f8ced4870aed62fc5db28e6384fa135dd",
+      "bytes": 6871,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ab8ed724fa6225c81596270b843434895761ffb5ea32d56de1353f0401d85ed9",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 37044,
+    "duration": 0.84,
+    "peakDbfs": -4.82,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.414377581389699e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.015226989746093711,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clean electronic blip or boop sound, reminiscent of a UI notification or simple digital interaction.",
+      "zh": "一个短促、高音、干净的电子哔哔声或嘟嘟声，类似于用户界面通知或简单的数字交互音效。"
+    },
+    "reason": "The sound is a clean, distinct, and short electronic blip, ideal for UI, notification, or game interaction sound design. It has no audible defects or voices.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:22.828159+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "41269dc181b707d6a35c8ed3a3323c88b156a0427e27d5278570f71b54c20c66"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 37044
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.889952+00:00"
+}

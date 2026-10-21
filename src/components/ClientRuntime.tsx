@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { SilentSiteUpdate } from './SilentSiteUpdate'
 import { useLocation } from '@tanstack/react-router'
 import { onCLS, onINP, onLCP, onTTFB, type Metric } from 'web-vitals'
 
@@ -9,15 +10,14 @@ import { parseExploreWorldId, shouldPlayDefaultWorldMusic, soundtrackSrcForWorld
 import { installWorldPlaybackGuards, setWorldPaused } from '~/lib/world-playback'
 
 export function ClientRuntime() {
-  const navigationKey = useLocation({ select: (location) => location.href })
   const pathname = useLocation({ select: (location) => location.pathname })
   const lastTrackedNavigation = useRef<string | undefined>(undefined)
 
   useEffect(() => {
-    if (lastTrackedNavigation.current === navigationKey) return
-    lastTrackedNavigation.current = navigationKey
+    if (lastTrackedNavigation.current === pathname) return
+    lastTrackedNavigation.current = pathname
     trackEvent({ event: 'page_view' })
-  }, [navigationKey])
+  }, [pathname])
 
   useEffect(() => {
     const restore = installWorldPlaybackGuards(window)
@@ -38,10 +38,12 @@ export function ClientRuntime() {
       LCP: 'web_vital_lcp',
       TTFB: 'web_vital_ttfb',
     } as const
+    const initialPath = window.location.pathname
     const report = (metric: Metric) => {
       const event = eventByMetric[metric.name as keyof typeof eventByMetric]
       if (!event || !Number.isFinite(metric.value) || metric.value < 0) return
-      trackEvent({ event, value: metric.value })
+      const path = metric.navigationURL ? new URL(metric.navigationURL, window.location.origin).pathname : initialPath
+      trackEvent({ event, value: metric.value, metricId: metric.id }, path)
     }
 
     onCLS(report)
@@ -80,7 +82,7 @@ export function ClientRuntime() {
     }, 1_000)
 
     return () => window.clearInterval(timer)
-  }, [navigationKey, pathname])
+  }, [pathname])
 
   useEffect(() => {
     const worldId = parseExploreWorldId(pathname)
@@ -93,7 +95,7 @@ export function ClientRuntime() {
         event: 'experience_duration',
         worldId,
         value: visibleSeconds,
-      }),
+      }, pathname),
     })
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') tracker.show()
@@ -115,35 +117,5 @@ export function ClientRuntime() {
     }
   }, [pathname])
 
-  useEffect(() => {
-    if (import.meta.env.PROD && 'serviceWorker' in navigator) {
-      let refreshing = false
-      const hadController = Boolean(navigator.serviceWorker.controller)
-      const refreshOnControllerChange = () => {
-        // A first install also claims the page, but it has no stale app shell.
-        // Reload only when this page actually started under an older worker.
-        if (!hadController || refreshing) return
-        refreshing = true
-        window.location.reload()
-      }
-
-      navigator.serviceWorker.addEventListener('controllerchange', refreshOnControllerChange)
-      void navigator.serviceWorker.register('/sw.js', {updateViaCache: 'none'}).then((registration) => {
-        void registration.update()
-        registration.waiting?.postMessage({type: 'SKIP_WAITING'})
-        registration.addEventListener('updatefound', () => {
-          const worker = registration.installing
-          worker?.addEventListener('statechange', () => {
-            if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-              worker.postMessage({type: 'SKIP_WAITING'})
-            }
-          })
-        })
-      })
-
-      return () => navigator.serviceWorker.removeEventListener('controllerchange', refreshOnControllerChange)
-    }
-  }, [])
-
-  return null
+  return <SilentSiteUpdate />
 }

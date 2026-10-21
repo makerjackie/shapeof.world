@@ -1,0 +1,102 @@
+{
+  "id": "lib-cool-jazz-reading",
+  "code": "LIB-09-01",
+  "title": {
+    "en": "Reading — Cool Jazz",
+    "zh": "静读 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "cool-jazz"
+  ],
+  "energy": 2,
+  "bpm": 74,
+  "key": "D major",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second cool jazz instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 74 BPM; D major. Main idea: alternating short and long phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A melancholic and nostalgic instrumental piece featuring a prominent cornet melody, accompanied by clarinet, double bass, and light percussion. It evokes a classic, jazzy, and slightly whimsical atmosphere.",
+    "zh": "一首忧郁怀旧的器乐曲，以小号（或短号）为主旋律，配以单簧管、低音提琴和轻柔的打击乐。营造出一种经典、爵士且略带异想天开的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.22,
+  "generatedAt": "2026-09-09T08:09:37.527326+00:00",
+  "generation": {
+    "id": "b22f1587-9da7-4cb1-a472-23ca1e6bf285",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:08:54.699492+00:00",
+    "completedAt": "2026-09-09T08:09:37.527326+00:00",
+    "interactionId": "FxShaqCMOsSDoLAP8OO9wA8",
+    "sha256": "fc89c7e1bc60109fec57b1b8d2a8c29dd680586b339fde593816ad479b821804"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and nostalgic instrumental piece featuring a prominent cornet melody, accompanied by clarinet, double bass, and light percussion. It evokes a classic, jazzy, and slightly whimsical atmosphere.",
+      "zh": "一首忧郁怀旧的器乐曲，以小号（或短号）为主旋律，配以单簧管、低音提琴和轻柔的打击乐。营造出一种经典、爵士且略带异想天开的氛围。"
+    },
+    "instruments": [
+      "Cornet",
+      "Clarinet",
+      "Double Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Melancholic",
+      "Nostalgic",
+      "Whimsical",
+      "Calm",
+      "Jazzy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean instrumental track with clear instrumentation and a distinct mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:09:49.321951+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:10:23.361951+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

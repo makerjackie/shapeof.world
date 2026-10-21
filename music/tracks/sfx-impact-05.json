@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-05",
+  "code": "SFX-IMPACT-05",
+  "title": {
+    "en": "Glass clink",
+    "zh": "玻璃轻碰"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 4,
+  "seed": 3396381157,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized glass clink for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的玻璃轻碰合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.93,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3396381157,
+    "sha256": "c02756e593446e0f3f5ede30efee1bafe665ac7299d06cf00ca61b6c50ff694f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "afeb9ecb89de90efe8f42f020e4f68a0bd20f5e26d95057362cf417f1659afad",
+      "bytes": 13940,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c02756e593446e0f3f5ede30efee1bafe665ac7299d06cf00ca61b6c50ff694f",
+      "bytes": 82070,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "461f6c69c89f6a4cad2307f2b8e2acae1f0f13bd52bb4a6954122bcb556bd358",
+      "bytes": 11661,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "72e098501590209146dbb6b32c2fe8a0a9fc305c4571dca4083c1cf37f2a39ba",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 41013,
+    "duration": 0.93,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.33,
+    "dcOffset": -1.71141905462902e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2136391296386737,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized spring or boing sound effect. It has a distinct, playful, and slightly metallic character.",
+      "zh": "一个短促、高音、合成的弹簧或'boing'音效。它具有独特、俏皮且略带金属感的特征。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:00.139686+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "afeb9ecb89de90efe8f42f020e4f68a0bd20f5e26d95057362cf417f1659afad"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 41013
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.876563+00:00"
+}

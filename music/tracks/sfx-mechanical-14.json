@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-14",
+  "code": "SFX-MECHANICAL-14",
+  "title": {
+    "en": "Clock tick",
+    "zh": "时钟滴答"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 13,
+  "seed": 1419045996,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized clock tick for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的时钟滴答合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.38,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1419045996,
+    "sha256": "298f32edf7abef4425828ac8f879b68d5900d483798ce946ae7a0e3e9a32e13f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "078b419a32ca851f1b255c48839ab89416d288104eff3d9e4360a96050a7e18a",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "298f32edf7abef4425828ac8f879b68d5900d483798ce946ae7a0e3e9a32e13f",
+      "bytes": 33560,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b416b3199937d202a2360b979215cbca48df9f4b7a4c2272a3877a00a1546ca3",
+      "bytes": 6258,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3196e96a3e581aad23780c39478729aebdb5033f13ad9349a5a8db391e823377",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16758,
+    "duration": 0.38,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.68,
+    "dcOffset": 5.2811180667442415e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15889611816406224,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, cartoonish spring sound followed by a soft, dull impact.",
+      "zh": "短促的卡通弹簧声，随后是轻柔、沉闷的撞击声。"
+    },
+    "reason": "The sound is a clear, isolated, and well-produced sound effect, free of defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:30.448424+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "078b419a32ca851f1b255c48839ab89416d288104eff3d9e4360a96050a7e18a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16758
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.887378+00:00"
+}

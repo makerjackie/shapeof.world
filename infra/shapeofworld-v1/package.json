@@ -1,0 +1,11 @@
+{
+  "name": "shapeofworld-v1-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/index.test.mjs",
+    "deploy": "pnpm --dir ../.. exec wrangler deploy --config infra/shapeofworld-v1/wrangler.jsonc",
+    "deploy:dry-run": "pnpm --dir ../.. exec wrangler deploy --config infra/shapeofworld-v1/wrangler.jsonc --dry-run"
+  }
+}

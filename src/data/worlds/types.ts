@@ -1,7 +1,7 @@
 import type { AiModelId } from '../ai-models'
 import type { CategoryId } from '../content-graph/types'
 
-/** Renderer ids retained for catalog records that are archived. */
+/** No archived worlds remain in the catalog. */
 export type ArchivedWorldRenderer = never
 
 /** Renderer ids are discovered from files; registry/catalog integrity tests enforce the runtime contract. */
@@ -72,6 +72,10 @@ export type WorldProvenance =
   | {
       origin: 'human-led'
     }
+  | {
+      /** Original prototype was supplied for integration; its initial builder is not yet verified. */
+      origin: 'supplied-prototype'
+    }
 
 export type WorldLocalizedCopy = {
   title: string
@@ -92,7 +96,8 @@ export type WorldExperience = {
    */
   index?: string
   title: string
-  poster: string
+  /** Public worlds always ship poster artifacts; archived worlds may have had theirs purged. */
+  poster?: string
   posterMobile?: string
   posterDesktop?: string
   posterTitle: string
@@ -133,7 +138,7 @@ export type WorldExperience = {
    * a story, atlas, game, film, or any other closed creative type.
    */
   experiencePolicy: WorldExperiencePolicy
-  /** Optional origin record when the world has a documented source. */
+  /** Optional for legacy worlds; required by the create-world workflow for every newly registered world. */
   provenance?: WorldProvenance
   presentation: 'full-bleed'
   /** @deprecated Legacy shell coachmarks were removed. New worlds should omit this. */

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-17",
+  "code": "SFX-WATER-17",
+  "title": {
+    "en": "Wet click",
+    "zh": "湿润轻响"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 16,
+  "seed": 151991415,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized wet click for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的湿润轻响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.68,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 151991415,
+    "sha256": "2c6e6a7fcb1ca9088756cab3e75bbbc94ff7aa1426781e4d3cfd4a5378b43bd5",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6b2e5cd50c70e67655de39b79d62ad8f28b99d1a1345f42252c74031c459e36d",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2c6e6a7fcb1ca9088756cab3e75bbbc94ff7aa1426781e4d3cfd4a5378b43bd5",
+      "bytes": 60020,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "597bb356b4ce119f21937310cce6bbd4356baa957e8257ad92b694965ebd673a",
+      "bytes": 12243,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2a4f74bc8d998e0018a2e342173f9d7be4f46154c8dd06b6e08fa43b0d4ef01c",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 29988,
+    "duration": 0.68,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.31,
+    "dcOffset": 6.20772397500667e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1322119750976557,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A fast, sharp whoosh sound followed by a distinct, metallic impact or clang.",
+      "zh": "快速而尖锐的嗖嗖声，随后是清晰的金属撞击声或铿锵声。"
+    },
+    "reason": "The sound effect is clean, well-defined, and clearly an intentional design, making it highly usable for video or game sound design. There are no audible defects or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:45.105519+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6b2e5cd50c70e67655de39b79d62ad8f28b99d1a1345f42252c74031c459e36d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 29988
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.913717+00:00"
+}

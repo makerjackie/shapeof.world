@@ -1,0 +1,130 @@
+{
+  "id": "ambience-forest-02",
+  "code": "AMB-FOREST-02",
+  "title": {
+    "en": "Summer insects · designed ambience",
+    "zh": "夏日虫声 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "forest",
+  "designIndex": 1,
+  "seed": 3231028130,
+  "targetDuration": 45,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized summer insects atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "夏日虫声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "forest",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-forest"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 45.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-forest-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-forest-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-forest-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-forest-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3231028130,
+    "sha256": "a52b899ed15281f7e988f4dff06091f8f15e73c860b81875db9bcd103e734cce",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "bb4348933feb413090caf76aef5b3ee1c4ccb65d7e7b0a10c63f91a2553a58b4",
+      "bytes": 630900,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a52b899ed15281f7e988f4dff06091f8f15e73c860b81875db9bcd103e734cce",
+      "bytes": 3969044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "24cebb809a49e0ee8b6d2880835d6fa00ede243f799f6f844a820a667189dded",
+      "bytes": 702830,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e263e8ca163dfb9571555772ed777eaef90d83842e5d1ee140ff44e69e4fdb12",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1984500,
+    "duration": 45.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.02,
+    "dcOffset": -5.489934689153439e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.004486083984375,
+    "internalStepP999": 0.124603271484375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A continuous, evolving atmospheric texture characterized by a low-frequency rumble and a higher-frequency whooshing or windy sound. It has a constant, dynamic movement without distinct peaks or troughs, creating a sense of abstract environmental ambience.",
+      "zh": "一种持续演变的氛围纹理，特点是低频隆隆声和高频呼啸或风声。它具有持续的动态变化，没有明显的波峰或波谷，营造出一种抽象的环境氛围感。"
+    },
+    "reason": "The audio provides a clean, abstract environmental texture that loops seamlessly, making it highly usable for background ambience in video or game sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:33.516425+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "a13cff5a98ec1292c0aaf527a3192c134c7c9a4256066fe84f993ef4f5c9e1ea"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1984500
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.852789+00:00"
+}

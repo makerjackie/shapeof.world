@@ -1,0 +1,131 @@
+{
+  "id": "scene-lofi-90",
+  "code": "SCENE-18-90",
+  "title": {
+    "en": "Small Desk · 90",
+    "zh": "小小书桌 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "quiet study and tutorial backdrop without vinyl noise",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 86,
+  "key": "",
+  "instruments": [
+    "soft electric piano",
+    "restrained drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. soft electric piano, restrained drums, warm bass. 86 BPM, lofi character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring a gentle piano melody, acoustic guitar arpeggios, and soft string pads, supported by light drums and bass. The mood is peaceful and flowing.",
+    "zh": "一首平静而富有沉思感的器乐曲，以轻柔的钢琴旋律、原声吉他琶音和柔和的弦乐铺垫为主，辅以轻快的鼓点和贝斯。整体氛围宁静流畅。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "quiet study and tutorial backdrop without vinyl noise"
+    ]
+  },
+  "duration": 89.339,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:32:07.754575+00:00",
+  "generation": {
+    "id": "275def6f-a142-4720-9d02-90fac3e5eaf3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:31:23.020891+00:00",
+    "completedAt": "2026-09-22T09:32:07.754575+00:00",
+    "interactionId": "60qyatWuKJaG694PsJfvuAI",
+    "sha256": "2822ad6bd43370927f526a2780ece9e93546874558df44d4a165f71443a3aa98"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring a gentle piano melody, acoustic guitar arpeggios, and soft string pads, supported by light drums and bass. The mood is peaceful and flowing.",
+      "zh": "一首平静而富有沉思感的器乐曲，以轻柔的钢琴旋律、原声吉他琶音和柔和的弦乐铺垫为主，辅以轻快的鼓点和贝斯。整体氛围宁静流畅。"
+    },
+    "instruments": [
+      "Piano",
+      "Acoustic Guitar",
+      "Strings",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Relaxing",
+      "Dreamy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:32:26.258518+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-lofi-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-lofi-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-lofi-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9323a52a595e254bad1390dc99f1ac42141298896f4dae3440894655d2300aa0",
+      "bytes": 1251517,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2822ad6bd43370927f526a2780ece9e93546874558df44d4a165f71443a3aa98",
+      "bytes": 2151797,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "0dd5ed904a8aba82c5fae2ccb41397d6ece4dfad5c2c8ca1be8ef901c95f8862",
+      "bytes": 2802,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.468914+00:00"
+}

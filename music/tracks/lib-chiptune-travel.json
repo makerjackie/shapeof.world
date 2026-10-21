@@ -1,0 +1,100 @@
+{
+  "id": "lib-chiptune-travel",
+  "code": "LIB-29-06",
+  "title": {
+    "en": "Roaming — Chiptune",
+    "zh": "漫游 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 144,
+  "key": "E minor",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second melodic chiptune instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 144 BPM; E minor. Main idea: alternating short and long phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "An energetic electronic track featuring a driving beat, synth melodies, and a mix of arpeggiated and sustained synth pads. It has a dynamic structure with build-ups and breakdowns.",
+    "zh": "一首充满活力的电子音乐，具有强劲的节拍、合成器旋律以及琶音和持续的合成器衬垫。它具有动态的结构，包含高潮和低谷。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 96.81,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:15:30.273898+00:00",
+  "generation": {
+    "id": "dd8a98eb-af40-49a5-80de-7f06be761fbd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:14:46.083643+00:00",
+    "completedAt": "2026-09-09T09:15:30.273898+00:00",
+    "interactionId": "hyOhau3qDprSi9sPsKbCgAE",
+    "sha256": "57b8abe457507076d9d647f6937203db29dcac3d591568574372ae7bb68f3e84"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic track featuring a driving beat, synth melodies, and a mix of arpeggiated and sustained synth pads. It has a dynamic structure with build-ups and breakdowns.",
+      "zh": "一首充满活力的电子音乐，具有强劲的节拍、合成器旋律以及琶音和持续的合成器衬垫。它具有动态的结构，包含高潮和低谷。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Uplifting",
+      "Electronic",
+      "Melodic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:15:38.461958+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:16:50.173801+00:00"
+}

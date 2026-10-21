@@ -8,6 +8,11 @@
   pointer-events: none;
   font-family: inherit;
 }
+
+.experience-page[data-panel-open='true'] .guide-tour {
+  visibility: hidden;
+  pointer-events: none;
+}
 .guide-spotlight {
   position: absolute;
   border: 2px solid color-mix(in srgb, var(--world-accent, #fff) 78%, white);
@@ -65,20 +70,20 @@
   margin-bottom: 8px;
   max-height: 4.8em;
   overflow: auto;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.5;
 }
 .guide-card.is-corner .guide-btn {
   min-height: 32px;
   min-width: 0;
   padding: 0 10px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .guide-card.is-corner .guide-btn.is-primary {
   min-width: 0;
 }
 .guide-card.is-corner .guide-skip {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* 舞台旁白：文字进入主体周围的安全区，底部只保留推进故事所需的轻控制轨。 */
@@ -141,7 +146,7 @@
 }
 .guide-stage-copy[data-stage-position='bottom-left'] {
   --guide-stage-auto-top: auto;
-  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
   --guide-stage-auto-right: auto;
   --guide-stage-auto-left: clamp(24px, 6vw, 92px);
   --guide-stage-auto-align: left;
@@ -149,7 +154,7 @@
 }
 .guide-stage-copy[data-stage-position='bottom-center'] {
   --guide-stage-auto-top: auto;
-  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
   --guide-stage-auto-right: auto;
   --guide-stage-auto-left: 50%;
   --guide-stage-auto-align: center;
@@ -157,7 +162,7 @@
 }
 .guide-stage-copy[data-stage-position='bottom-right'] {
   --guide-stage-auto-top: auto;
-  --guide-stage-auto-bottom: max(104px, 14vh);
+  --guide-stage-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
   --guide-stage-auto-right: clamp(24px, 6vw, 92px);
   --guide-stage-auto-left: auto;
   --guide-stage-auto-align: right;
@@ -195,7 +200,7 @@
   display: block;
   margin-bottom: 13px;
   color: var(--guide-stage-kicker, var(--world-accent, #ffd166));
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.18em;
   line-height: 1.4;
@@ -223,8 +228,9 @@
   font-size: clamp(24px, 2.6vw, 40px);
   letter-spacing: -0.02em;
   line-height: 1.06;
-  overflow-wrap: normal;
-  word-break: normal;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+  line-break: strict;
 }
 .guide-stage-body {
   max-width: 34em;
@@ -268,6 +274,13 @@
 .guide-stage-copy:lang(zh)[data-stage-width='wide'][data-stage-treatment='monumental'] .guide-stage-title {
   font-size: clamp(42px, 5.5vw, 78px);
 }
+/* Long translated headings must leave room for the scene on tablets too. */
+.guide-stage-copy:lang(en)[data-stage-long-title='true'] .guide-stage-title {
+  max-width: 100%;
+  font-size: clamp(26px, 3.5vw, 40px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
 .guide-stage-copy[data-stage-treatment='monumental'] .guide-stage-body {
   max-width: 28em;
 }
@@ -285,7 +298,7 @@
 .guide-stage-copy[data-stage-treatment='annotation'] .guide-stage-body {
   max-width: 30em;
   margin-top: 10px;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.55;
 }
 .guide-stage-cue {
@@ -314,46 +327,57 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  width: min(420px, calc(100vw - 40px));
-  min-height: 44px;
-  padding: 4px 6px;
-  color: rgba(255, 255, 255, 0.58);
+  gap: 14px;
+  min-height: 48px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(8, 10, 16, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  color: rgba(255, 255, 255, 0.76);
   pointer-events: auto;
   transform: translateX(-50%);
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.88);
   animation: guide-stage-nav-in 360ms ease-out both;
 }
-.guide-stage-position {
+.guide-stage-dots {
   display: inline-flex;
-  flex: 1 1 126px;
+  flex: 0 0 auto;
   align-items: center;
-  gap: 8px;
-  min-width: 112px;
-  max-width: 150px;
-  color: color-mix(in srgb, var(--world-accent, #ffd166) 72%, white);
-  font-size: 9px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.13em;
 }
-.guide-stage-progress {
-  position: relative;
-  display: block;
-  height: 1px;
-  flex: 1;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.18);
+.guide-stage-dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
-.guide-stage-progress i {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: var(--guide-progress, 0%);
+.guide-stage-dot::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  transition: width 250ms ease, background 250ms ease, box-shadow 250ms ease;
+}
+.guide-stage-dot.is-done::before {
+  background: color-mix(in srgb, var(--world-accent, #ffd166) 70%, transparent);
+}
+.guide-stage-dot.is-current::before {
+  width: 22px;
   background: var(--world-accent, #ffd166);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--world-accent, #ffd166) 70%, transparent);
-  transition: width 450ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--world-accent, #ffd166) 60%, transparent);
+}
+.guide-stage-dot:focus-visible {
+  outline: 2px solid var(--world-accent, #ffd166);
+  outline-offset: 4px;
 }
 .guide-stage-continue,
-.guide-stage-exit {
+:is(.guide-stage-exit, .guide-stage-replay) {
   border: 0;
   background: transparent;
   font: inherit;
@@ -363,13 +387,24 @@
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 10px;
-  min-height: 40px;
-  padding: 0;
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  gap: 8px;
+  height: 44px;
+  padding: 0 14px 0 16px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--world-accent, #ffd166) 16%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--world-accent, #ffd166) 45%, transparent);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.04em;
   white-space: nowrap;
+  transition: background 180ms ease, transform 180ms ease;
+}
+.guide-stage-continue:active {
+  transform: scale(0.97);
+}
+.guide-stage-continue:focus-visible {
+  outline: 2px solid var(--world-accent, #ffd166);
+  outline-offset: 2px;
 }
 .guide-stage-continue-mobile {
   display: none;
@@ -377,42 +412,34 @@
 .guide-stage-scroll-mark {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid color-mix(in srgb, var(--world-accent, #ffd166) 58%, transparent);
-  border-radius: 50%;
+  width: 14px;
+  height: 14px;
   color: var(--world-accent, #ffd166);
-  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
   animation: guide-scroll-breathe 2.4s ease-in-out infinite;
 }
 .guide-stage-scroll-mark svg {
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
 }
 .guide-stage-continue:hover {
-  color: #fff;
+  background: color-mix(in srgb, var(--world-accent, #ffd166) 26%, transparent);
 }
-.guide-stage-continue:hover .guide-stage-scroll-mark {
-  border-color: var(--world-accent, #ffd166);
-  background: color-mix(in srgb, var(--world-accent, #ffd166) 11%, transparent);
-  transform: translateY(2px);
-}
-.guide-stage-exit {
+:is(.guide-stage-exit, .guide-stage-replay) {
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
-  color: rgba(255, 255, 255, 0.36);
+  color: rgba(255, 255, 255, 0.4);
   transition: color 180ms ease, background 180ms ease;
 }
-.guide-stage-exit:hover {
+:is(.guide-stage-exit, .guide-stage-replay):hover {
   color: rgba(255, 255, 255, 0.88);
   background: rgba(255, 255, 255, 0.08);
 }
-.guide-stage-exit svg {
+:is(.guide-stage-exit, .guide-stage-replay) svg {
   width: 15px;
   height: 15px;
 }
@@ -491,7 +518,7 @@
 .guide-cinema-hint {
   margin: 6px 0 0;
   color: rgba(255, 255, 255, 0.38);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
 }
 @keyframes guide-card-in {
@@ -507,7 +534,7 @@
 .guide-step-badge {
   flex: 0 0 auto;
   color: var(--world-accent, #ffd166);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
@@ -628,7 +655,7 @@
   color: rgba(255, 255, 255, 0.4);
   border: none;
   background: transparent;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -677,7 +704,7 @@
   border-radius: 999px;
   background: rgba(4, 8, 14, 0.6);
   backdrop-filter: blur(12px);
-  font-size: 11.5px;
+  font-size: 12px;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -699,6 +726,8 @@
 }
 
 @media (max-width: 720px) {
+  /* The direction cue hangs outside the caption box; on a phone the box fills the width and the cue lands off-screen. */
+  .guide-stage-cue { display: none; }
   /* 手机：引导统一贴底全宽（参数坞也在底，模式互斥不叠） */
   .guide-card,
   .guide-card:not(.is-corner),
@@ -772,7 +801,7 @@
   }
   .guide-stage-copy[data-stage-mobile-position='bottom-left'] {
     --guide-stage-mobile-auto-top: auto;
-    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
     --guide-stage-mobile-auto-right: auto;
     --guide-stage-mobile-auto-left: 16px;
     --guide-stage-mobile-auto-align: left;
@@ -780,7 +809,7 @@
   }
   .guide-stage-copy[data-stage-mobile-position='bottom-center'] {
     --guide-stage-mobile-auto-top: auto;
-    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
     --guide-stage-mobile-auto-right: auto;
     --guide-stage-mobile-auto-left: 50%;
     --guide-stage-mobile-auto-align: center;
@@ -788,7 +817,7 @@
   }
   .guide-stage-copy[data-stage-mobile-position='bottom-right'] {
     --guide-stage-mobile-auto-top: auto;
-    --guide-stage-mobile-auto-bottom: max(104px, 14vh);
+    --guide-stage-mobile-auto-bottom: max(calc(120px + env(safe-area-inset-bottom, 0px)), 14vh);
     --guide-stage-mobile-auto-right: 16px;
     --guide-stage-mobile-auto-left: auto;
     --guide-stage-mobile-auto-align: right;
@@ -811,17 +840,27 @@
   }
   .guide-stage-kicker {
     margin-bottom: 10px;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.14em;
   }
   .guide-stage-title {
     max-width: 8ch;
     font-size: clamp(34px, 10vw, 54px);
   }
+  /* English words need the authored frame width on phones. Desktop's
+     narrow display headings can otherwise grow taller than the stage. */
+  .guide-stage-copy:lang(en) .guide-stage-title {
+    max-width: 100%;
+  }
+  .guide-stage-copy:lang(en):is([data-stage-treatment='editorial'], [data-stage-treatment='monumental']) .guide-stage-title {
+    font-size: clamp(26px, 7.5vw, 34px);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+  }
   .guide-stage-body {
     max-width: 30em;
     margin-top: 14px;
-    font-size: 11.5px;
+    font-size: 12px;
     line-height: 1.6;
   }
   .guide-tour.is-stage .guide-card {
@@ -835,10 +874,12 @@
   }
   .guide-stage-nav {
     bottom: max(10px, calc(env(safe-area-inset-bottom) + 8px));
-    gap: 11px;
-    width: min(344px, calc(100vw - 24px));
-    min-height: 46px;
-    padding: 3px 4px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0 8px;
+    width: calc(100vw - 32px);
+    padding: 2px 6px;
+    border-radius: 24px;
     touch-action: none;
   }
   .guide-stage-continue-desktop {
@@ -850,20 +891,8 @@
   .guide-stage-scroll-mark .guide-stage-continue-mobile {
     display: block;
   }
-  .guide-stage-position {
-    flex-basis: 104px;
-    min-width: 92px;
-    max-width: 116px;
-    gap: 6px;
-  }
   .guide-stage-continue {
-    gap: 8px;
-    font-size: 10px;
-    letter-spacing: 0.06em;
-  }
-  .guide-stage-scroll-mark {
-    width: 34px;
-    height: 34px;
+    font-size: 13px;
   }
   @keyframes guide-card-in {
     from { opacity: 0; transform: translateY(10px) scale(0.98); }
@@ -905,12 +934,22 @@
     border: 0;
   }
   .guide-close { width: 28px; height: 28px; }
-  .guide-step-badge { font-size: 10px; }
+  .guide-step-badge { font-size: 12px; }
   .guide-replay {
     top: 60px;
     right: 10px;
     bottom: auto;
     min-height: 31px;
     padding: 0 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-stage-scroll-mark,
+  .guide-stage-nav,
+  .guide-stage-dot::before,
+  .guide-stage-continue {
+    animation: none;
+    transition: none;
   }
 }

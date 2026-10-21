@@ -1,0 +1,100 @@
+{
+  "id": "lib-house-explain",
+  "code": "LIB-27-05",
+  "title": {
+    "en": "Discovery — House",
+    "zh": "发现 · 浩室"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "house"
+  ],
+  "energy": 3,
+  "bpm": 122,
+  "key": "G major",
+  "instruments": [
+    "warm synth chords",
+    "four-on-floor drums",
+    "sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second deep instrumental house instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: warm synth chords, four-on-floor drums, sub bass. Style: consistent dance groove, small filter movement, no large drop. Tempo approximately 122 BPM; G major. Main idea: a compact three-note motif. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A chill and upbeat electronic track featuring a catchy synth melody, light electronic drums, and a smooth bassline, creating a relaxed and dreamy atmosphere.",
+    "zh": "一首轻松愉快的电子音乐，带有抓耳的合成器旋律、轻快的电子鼓和流畅的贝斯线，营造出轻松梦幻的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 86.178,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:09:34.382385+00:00",
+  "generation": {
+    "id": "16c89d2d-0c31-405c-a1d0-123622202a00",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:08:44.662394+00:00",
+    "completedAt": "2026-09-09T09:09:34.382385+00:00",
+    "interactionId": "HSKhaqqKM4q34vEP1ray8Q0",
+    "sha256": "f93bdf443d49e298cbff6c7dc5f6574f3c9ad88217f3291d6a84e3ebda54f560"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A chill and upbeat electronic track featuring a catchy synth melody, light electronic drums, and a smooth bassline, creating a relaxed and dreamy atmosphere.",
+      "zh": "一首轻松愉快的电子音乐，带有抓耳的合成器旋律、轻快的电子鼓和流畅的贝斯线，营造出轻松梦幻的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Chill",
+      "Upbeat",
+      "Relaxed",
+      "Dreamy",
+      "Mellow"
+    ],
+    "energy": 3,
+    "bpmEstimate": 106,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:09:43.980166+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-house-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-house-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-house-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:10:40.534237+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-11",
+  "code": "SFX-TRANSITION-11",
+  "title": {
+    "en": "Glitter trail",
+    "zh": "闪光拖尾"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 10,
+  "seed": 2115283329,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized glitter trail for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的闪光拖尾合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.2,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2115283329,
+    "sha256": "918f4fbb7ccd0ccbbcedabf434bcaaf3189b04ea9c48a7c43fd2e9251e6fe5ec",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c411113e36f2d4b3faec1b7aa91f079af09e91c3a2412925a500b54ec0ae7967",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "918f4fbb7ccd0ccbbcedabf434bcaaf3189b04ea9c48a7c43fd2e9251e6fe5ec",
+      "bytes": 105884,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d14389c316ba730cb9e33dcc96111edd5e09aeeae31bdeb9aeeedc8176c17587",
+      "bytes": 20874,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "54cc1027cf775b387ef90dcc1332048bceaa8352c9a2024c74be40768ebf26ca",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52920,
+    "duration": 1.2,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.81,
+    "dcOffset": 2.306695247543462e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.18912194824218842,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, resonant 'boing' or 'twang' sound effect with a quick decay. It has a springy, elastic, or metallic quality, reminiscent of a UI feedback sound or a small impact.",
+      "zh": "短促、高音、有共鸣的‘嘣’或‘叮’声效，带有快速衰减。它具有弹簧、弹性或金属质感，类似于UI反馈音或轻微撞击声。"
+    },
+    "reason": "The sound is a clean, isolated, and intentionally synthesized effect. It has a clear character and is free from any technical defects, making it highly usable for various sound design applications like UI feedback, small impacts, or spring actions.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:37.878608+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c411113e36f2d4b3faec1b7aa91f079af09e91c3a2412925a500b54ec0ae7967"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52920
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904234+00:00"
+}

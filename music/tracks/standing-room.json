@@ -1,0 +1,59 @@
+{
+  "id": "standing-room",
+  "code": "PHY-B03",
+  "title": {
+    "en": "Standing Room",
+    "zh": "驻波室"
+  },
+  "category": "physics",
+  "archetype": "discovery",
+  "moods": [
+    "pulsing",
+    "architectural",
+    "resonant",
+    "focused"
+  ],
+  "topics": [
+    "standing-waves",
+    "resonance",
+    "nodes"
+  ],
+  "energy": 2,
+  "bpm": 68,
+  "key": "G minor",
+  "instruments": [
+    "viola drones",
+    "soft mallet pulses",
+    "roomy analog bass",
+    "resonant metal"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 119.98,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a standing wave in a room. Around 68 BPM, G minor. Viola drones at a node (almost still) while mallet pulses live at antinodes. Architectural, resonant. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No beat drop, no voiceable oohs.\n\n[00:00–00:25] Viola open fifth, static.\n[00:25–01:05] Mallet pulses fade in and out as if walking between nodes.\n[01:05–01:50] Analog bass finds the room mode; metal resonance blooms then cancels.\n[01:50–02:30] Pulses leave; drone remains as the still node.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:24:00Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/standing-room/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/standing-room/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/standing-room/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:05.545309+00:00",
+  "generation": {
+    "id": "d84d2ab3-4f51-4bd0-9647-0130a110ab98",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:23:08Z",
+    "completedAt": "2026-08-25T10:24:00Z",
+    "durationMs": 52000,
+    "interactionId": "EG2NavPKDPyIoLAP8ranwA4",
+    "clientRequestId": "3fe3e5fc-d984-4cbb-9d31-53b9b9345c20",
+    "synthid": true,
+    "c2pa": "urn:c2pa:a5c6852b-c47c-d898-db91-49d5c2eac09b",
+    "sha256": "e18bb03d6a3d350041410bb2169191c69ad7b5240187f6cac876e035ca4fe7bf"
+  }
+}

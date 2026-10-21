@@ -1,0 +1,104 @@
+{
+  "id": "lib-pipa-travel",
+  "code": "LIB-18-06",
+  "title": {
+    "en": "Roaming — Pipa",
+    "zh": "漫游 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "pipa"
+  ],
+  "energy": 3,
+  "bpm": 114,
+  "key": "E minor",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Chinese plucked-string ensemble instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 114 BPM; E minor. Main idea: a repeating five-note figure with space between phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A traditional Chinese-inspired instrumental piece featuring prominent plucked strings (Pipa-like), accompanied by a gentle flute, subtle percussion, and atmospheric pads. The melody is elegant and flowing, creating a contemplative and slightly melancholic yet ultimately uplifting atmosphere.",
+    "zh": "一首受中国传统音乐启发的器乐曲，以琵琶般的弹拨乐器为主，辅以悠扬的笛声、轻柔的打击乐和氛围感强的合成器衬底。旋律优雅流畅，营造出一种沉思、略带忧郁但最终令人振奋的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.114,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:47:31.979613+00:00",
+  "generation": {
+    "id": "9b568e74-52f2-4db1-be0c-8eb7b9f8b51e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:46:48.996482+00:00",
+    "completedAt": "2026-09-09T08:47:31.979613+00:00",
+    "interactionId": "-hyharfXIPbQi9sPmYO72AI",
+    "sha256": "d88da89c591b3c7b1a83cb6a7af417d22bd0d5c05b516503b849817974e14df1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A traditional Chinese-inspired instrumental piece featuring prominent plucked strings (Pipa-like), accompanied by a gentle flute, subtle percussion, and atmospheric pads. The melody is elegant and flowing, creating a contemplative and slightly melancholic yet ultimately uplifting atmosphere.",
+      "zh": "一首受中国传统音乐启发的器乐曲，以琵琶般的弹拨乐器为主，辅以悠扬的笛声、轻柔的打击乐和氛围感强的合成器衬底。旋律优雅流畅，营造出一种沉思、略带忧郁但最终令人振奋的氛围。"
+    },
+    "instruments": [
+      "Pipa",
+      "Chinese Flute",
+      "Percussion",
+      "Synthesizer Pads",
+      "Pizzicato Strings",
+      "String Ensemble"
+    ],
+    "moods": [
+      "Traditional",
+      "Elegant",
+      "Contemplative",
+      "Melancholic",
+      "Uplifting"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The audio is a well-produced instrumental piece with clear traditional Chinese instrumentation and a pleasant, evolving mood, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:47:43.146043+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:48:34.570533+00:00"
+}

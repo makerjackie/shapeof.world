@@ -1,0 +1,105 @@
+{
+  "id": "lib-bossa-nature",
+  "code": "LIB-08-04",
+  "title": {
+    "en": "Wildlands — Bossa",
+    "zh": "山野 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "bossa"
+  ],
+  "energy": 3,
+  "bpm": 108,
+  "key": "D dorian",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second bossa nova instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 108 BPM; D dorian. Main idea: a compact three-note motif. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece that begins with a gentle acoustic guitar melody, gradually building with the introduction of piano, bass, light drums, and lush orchestral strings. The track evolves into a rich, emotional, and cinematic soundscape.",
+    "zh": "一首平静而富有沉思感的器乐作品，以柔和的木吉他旋律开场，随后逐渐加入钢琴、贝斯、轻柔的鼓点和华丽的管弦乐弦乐，最终发展成丰富、情感充沛且富有电影感的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.051,
+  "generatedAt": "2026-09-09T08:07:08.799423+00:00",
+  "generation": {
+    "id": "7c90021f-4fb0-442a-a66a-a79493299c55",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:06:14.803110+00:00",
+    "completedAt": "2026-09-09T08:07:08.799423+00:00",
+    "interactionId": "eBOhavNhw7eL2w_ntYu5Aw",
+    "sha256": "625ff771b372eb7faa30b56baf02e10c315e5f050b6a7c67805e4a9be748cc67"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece that begins with a gentle acoustic guitar melody, gradually building with the introduction of piano, bass, light drums, and lush orchestral strings. The track evolves into a rich, emotional, and cinematic soundscape.",
+      "zh": "一首平静而富有沉思感的器乐作品，以柔和的木吉他旋律开场，随后逐渐加入钢琴、贝斯、轻柔的鼓点和华丽的管弦乐弦乐，最终发展成丰富、情感充沛且富有电影感的音景。"
+    },
+    "instruments": [
+      "Acoustic guitar",
+      "Piano",
+      "Bass guitar",
+      "Drums",
+      "Orchestral strings"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Melancholic",
+      "Hopeful",
+      "Cinematic",
+      "Emotional",
+      "Peaceful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 78,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:07:20.143393+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:09:19.751675+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

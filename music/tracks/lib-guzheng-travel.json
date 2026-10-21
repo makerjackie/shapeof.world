@@ -1,0 +1,100 @@
+{
+  "id": "lib-guzheng-travel",
+  "code": "LIB-17-06",
+  "title": {
+    "en": "Roaming — Guzheng",
+    "zh": "漫游 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "guzheng"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "E minor",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Chinese chamber instrumental instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 78 BPM; E minor. Main idea: an ascending fourth answered by a stepwise descent. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A serene and elegant instrumental piece featuring traditional East Asian string instruments, flute, and light percussion. It has a calming and reflective quality, building slightly in intensity before returning to a gentle close.",
+    "zh": "一首宁静而优雅的器乐曲，以传统东方弦乐器、长笛和轻柔的打击乐器为主。它具有平静和沉思的特质，强度略有增加，然后温柔地结束。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 119.406,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:45:17.294921+00:00",
+  "generation": {
+    "id": "85ad7756-78a1-4d82-a77c-a056c640205e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:44:30.284810+00:00",
+    "completedAt": "2026-09-09T08:45:17.294921+00:00",
+    "interactionId": "bxyhasCHE_6WjMwPtfeJmQQ",
+    "sha256": "dbf830a028dfc7150cf8b240f3ecef299150b5822ce5b4bd39801e44f6cb79e5"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and elegant instrumental piece featuring traditional East Asian string instruments, flute, and light percussion. It has a calming and reflective quality, building slightly in intensity before returning to a gentle close.",
+      "zh": "一首宁静而优雅的器乐曲，以传统东方弦乐器、长笛和轻柔的打击乐器为主。它具有平静和沉思的特质，强度略有增加，然后温柔地结束。"
+    },
+    "instruments": [
+      "Zither",
+      "Flute",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Elegant",
+      "Peaceful",
+      "Reflective",
+      "Calming"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean recording of a well-performed instrumental piece.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:45:36.515561+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:46:16.652407+00:00"
+}

@@ -489,3 +489,17 @@
   }
   .bf-presets { flex-wrap: nowrap !important; justify-content: flex-start; }
 }
+
+/* Phones: the flock fills the whole stage, so each story caption gets a soft dark backing. */
+@media (max-width: 720px) {
+  .bf-experience.is-story .guide-stage-copy::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -16px -12px -14px;
+    border-radius: 26px;
+    background: rgba(2, 2, 6, 0.78);
+    filter: blur(13px);
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "lattice-grow",
+  "code": "CHE-B01",
+  "title": {
+    "en": "Lattice Grow",
+    "zh": "晶格生长"
+  },
+  "category": "chem-materials",
+  "archetype": "discovery",
+  "moods": [
+    "additive",
+    "crystalline",
+    "orderly",
+    "bright"
+  ],
+  "topics": [
+    "crystal",
+    "lattice",
+    "symmetry"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "C major",
+  "instruments": [
+    "glass mallet grid",
+    "perfect-fifth synths",
+    "piano octaves"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.293,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a crystal lattice growing from a seed. Around 80 BPM, C major. Glass mallets add cells in fifths and octaves until a rigid grid rings. Orderly, bright, additive. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No broken-glass horror, no trap.\n\n[00:00–00:20] One mallet pitch, the seed.\n[00:20–01:00] Fifths and octaves attach; a grid becomes audible.\n[01:00–01:40] Piano octaves thicken the unit cell; stereo becomes a lattice.\n[01:40–02:30] Growth stops; the grid rings and slowly damps.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T13:52:47Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lattice-grow/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lattice-grow/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lattice-grow/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:18.135597+00:00",
+  "generation": {
+    "id": "21515d81-d392-40a3-9a52-7b3745c6fbcb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T13:51:59Z",
+    "completedAt": "2026-08-25T13:52:47Z",
+    "durationMs": 48000,
+    "interactionId": "AJ6Nav2bMJKPk7QPhZeHiQk",
+    "clientRequestId": "87f4c222-cde7-491e-a28c-ef72b8897417",
+    "synthid": true,
+    "c2pa": "urn:c2pa:f32896c2-ff88-24e7-9a4c-4a392c944a20",
+    "sha256": "8f225be7eac758d6724a980b871e6f6fbc371a930a99420d5e5d257709e7a199"
+  }
+}

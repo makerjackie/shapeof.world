@@ -1,0 +1,62 @@
+{
+  "id": "chaos-onset",
+  "code": "MAT-C01",
+  "title": {
+    "en": "Chaos Onset",
+    "zh": "混沌初现"
+  },
+  "category": "math-signals",
+  "archetype": "event",
+  "moods": [
+    "bifurcating",
+    "restless",
+    "precise",
+    "unsettled"
+  ],
+  "topics": [
+    "logistic-map",
+    "chaos",
+    "bifurcation"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "Bb minor",
+  "instruments": [
+    "dry analog sequence",
+    "split percussion",
+    "dissonant piano",
+    "noise ticks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.428,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about a logistic map leaving period-1 and bifurcating into chaos. Around 112 BPM, Bb minor. Start with a single dry analog note repeating; it splits into two, then four, then a cloud of noise ticks, then a strange but stable groove. Precise, not random-noise music. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No dubstep bass, no trailer drums.\n\n[00:00–00:20] One analog pitch, even eighths, dead-dry.\n[00:20–00:50] Pitch alternates two values; a second percussion tick appears.\n[00:50–01:20] Four-value cycle; piano adds dissonant neighbor tones.\n[01:20–01:55] Texture becomes irregular but bounded; noise ticks like sensitive dependence.\n[01:55–02:30] A new quieter period-3-like cell emerges, then cuts to one note.\n",
+  "recommendedWorldIds": [
+    "strange-attractors",
+    "butterfly-effect"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:08:58Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/chaos-onset/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/chaos-onset/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/chaos-onset/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:05.611724+00:00",
+  "generation": {
+    "id": "e2cbc120-1a99-4ec8-b53a-9697aeb870be",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:08:04Z",
+    "completedAt": "2026-08-25T10:08:58Z",
+    "durationMs": 54000,
+    "interactionId": "iGmNao-UJYHrjMwPk_bgoAE",
+    "clientRequestId": "05b53cee-8d7f-4582-b228-a1c3a1e04db6",
+    "synthid": true,
+    "c2pa": "urn:c2pa:978dba1b-5bba-e2f2-1296-4cea16ddd025",
+    "sha256": "86b86853be3bfdcafcc19b03b21e14605d232e2b7dfd5721ae0fd6d563437054"
+  }
+}

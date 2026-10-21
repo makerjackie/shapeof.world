@@ -1,0 +1,105 @@
+{
+  "id": "lib-orchestral-travel",
+  "code": "LIB-06-06",
+  "title": {
+    "en": "Roaming — Orchestral",
+    "zh": "漫游 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "orchestral"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "E minor",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second orchestral adventure instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 112 BPM; E minor. Main idea: a compact three-note motif. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A grand and majestic orchestral piece with a classical and cinematic feel. It features a rich blend of strings, brass, woodwinds, and percussion, building in intensity and emotion.",
+    "zh": "一首宏大而庄严的管弦乐作品，具有古典和电影般的氛围。它融合了丰富的弦乐、铜管乐、木管乐和打击乐，情感和强度逐渐增强。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.838,
+  "generatedAt": "2026-09-09T08:00:43.386832+00:00",
+  "generation": {
+    "id": "f26cd60b-45cc-4ac9-b03e-398c64448e07",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:59:59.453397+00:00",
+    "completedAt": "2026-09-09T08:00:43.386832+00:00",
+    "interactionId": "ABKhauuQGaKsrtoP65a1oAo",
+    "sha256": "93a28e008d842978ead9a6d436fab00914513c749411ace8d4ed9debcb9fe0a4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and majestic orchestral piece with a classical and cinematic feel. It features a rich blend of strings, brass, woodwinds, and percussion, building in intensity and emotion.",
+      "zh": "一首宏大而庄严的管弦乐作品，具有古典和电影般的氛围。它融合了丰富的弦乐、铜管乐、木管乐和打击乐，情感和强度逐渐增强。"
+    },
+    "instruments": [
+      "Strings",
+      "Brass",
+      "Woodwinds",
+      "Percussion",
+      "Piano"
+    ],
+    "moods": [
+      "Grand",
+      "Majestic",
+      "Epic",
+      "Heroic",
+      "Dramatic",
+      "Inspiring",
+      "Triumphant"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:00:54.709364+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:02:47.087673+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

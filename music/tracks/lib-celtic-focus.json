@@ -1,0 +1,102 @@
+{
+  "id": "lib-celtic-focus",
+  "code": "LIB-16-02",
+  "title": {
+    "en": "Focus — Celtic",
+    "zh": "专注 · 凯尔特"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "celtic"
+  ],
+  "energy": 2,
+  "bpm": 108,
+  "key": "A minor",
+  "instruments": [
+    "fiddle",
+    "tin whistle",
+    "bodhran",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Celtic acoustic instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: fiddle, tin whistle, bodhran, harp. Style: lilting compound-meter dance and modal melody. Tempo approximately 108 BPM; A minor. Main idea: an ascending fourth answered by a stepwise descent. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A melancholic and elegant classical-folk piece featuring a string ensemble and piano, with a graceful and reflective melody.",
+    "zh": "一首忧郁而优雅的古典民间乐曲，以弦乐合奏和钢琴为主，旋律优美而富有沉思感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 119.745,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:33:19.015120+00:00",
+  "generation": {
+    "id": "22b67546-bab9-42da-bc3e-90da25c8aed6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:32:30.084126+00:00",
+    "completedAt": "2026-09-09T08:33:19.015120+00:00",
+    "interactionId": "nxmhapzGBOONk7QPyufS2Ao",
+    "sha256": "bb5b9ea92bee8a3e7270df6179813937775b6b8628fb09b0360172e14d368406"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and elegant classical-folk piece featuring a string ensemble and piano, with a graceful and reflective melody.",
+      "zh": "一首忧郁而优雅的古典民间乐曲，以弦乐合奏和钢琴为主，旋律优美而富有沉思感。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Double Bass",
+      "Piano"
+    ],
+    "moods": [
+      "Melancholic",
+      "Elegant",
+      "Reflective",
+      "Graceful",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "The audio is professionally produced, emotionally engaging, and free from any technical imperfections, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:38:45.877192+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-celtic-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-celtic-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-celtic-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:40:48.370286+00:00"
+}

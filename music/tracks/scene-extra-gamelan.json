@@ -1,0 +1,128 @@
+{
+  "id": "scene-extra-gamelan",
+  "code": "SCENE-EXTRA-5",
+  "title": {
+    "en": "Bronze Courtyard",
+    "zh": "青铜庭院"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 96,
+  "key": "",
+  "instruments": [
+    "soft metallophones",
+    "gongs and bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Original 60-second instrumental composition. Instruments exclusively: soft metallophones, gongs and bamboo flute. 96 BPM. slow interlocking bronze patterns with gentle resonances. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A gentle and melancholic instrumental piece featuring pizzicato strings, a delicate wind instrument, and a bowed string melody. The arrangement builds subtly, maintaining a peaceful and reflective atmosphere.",
+    "zh": "一首温柔而忧郁的器乐作品，以拨弦乐器、精致的管乐器和弓弦乐器旋律为特色。编曲巧妙地发展，保持着宁静而沉思的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 59.324,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:39:21.407681+00:00",
+  "generation": {
+    "id": "e871ca33-67fc-4ba7-bf4a-9ee21cdad073",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:38:36.835237+00:00",
+    "completedAt": "2026-09-22T09:39:21.407681+00:00",
+    "interactionId": "nkyyaunUJLWe7PkPmK7ngAY",
+    "sha256": "ca5caf05d70f0326b2588e1cc36dbe963eb3db67d9eda28d1b48d6989f072cbf"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic instrumental piece featuring pizzicato strings, a delicate wind instrument, and a bowed string melody. The arrangement builds subtly, maintaining a peaceful and reflective atmosphere.",
+      "zh": "一首温柔而忧郁的器乐作品，以拨弦乐器、精致的管乐器和弓弦乐器旋律为特色。编曲巧妙地发展，保持着宁静而沉思的氛围。"
+    },
+    "instruments": [
+      "Cello (pizzicato)",
+      "Recorder",
+      "Violin"
+    ],
+    "moods": [
+      "Gentle",
+      "Melancholic",
+      "Peaceful",
+      "Reflective",
+      "Traditional"
+    ],
+    "energy": 3,
+    "bpmEstimate": 65,
+    "reason": "Well-produced and emotionally evocative instrumental piece, suitable for various contemplative or background uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:39:40.592275+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-gamelan/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-gamelan/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-gamelan/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d56db59da21ea2b68bd1617c49ec1ee9ceeaff1a2a82a209f4e0044f74029671",
+      "bytes": 831312,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ca5caf05d70f0326b2588e1cc36dbe963eb3db67d9eda28d1b48d6989f072cbf",
+      "bytes": 1431445,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "117ac0e31421f5a12753038d56500532880a1966138e75bab1f37f1cd6e105e6",
+      "bytes": 2792,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.453417+00:00"
+}

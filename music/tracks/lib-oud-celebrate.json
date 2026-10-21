@@ -1,0 +1,103 @@
+{
+  "id": "lib-oud-celebrate",
+  "code": "LIB-20-10",
+  "title": {
+    "en": "First Light — Oud",
+    "zh": "初光 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "oud"
+  ],
+  "energy": 4,
+  "bpm": 110,
+  "key": "C major",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Middle Eastern acoustic instrumental instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 110 BPM; C major. Main idea: alternating short and long phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and upbeat folk-inspired instrumental piece featuring a prominent accordion melody, supported by a rhythmic acoustic guitar, bass, and light percussion. It has a cheerful and danceable feel.",
+    "zh": "一首活泼欢快的民谣风格器乐曲，以手风琴为主旋律，由节奏感强的原声吉他、贝斯和轻柔的打击乐器伴奏。整体感觉欢快且富有舞动感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 57.783,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:54:46.729843+00:00",
+  "generation": {
+    "id": "9ba60dbb-2bb2-4829-8b73-5c7c0146762e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:54:02.924572+00:00",
+    "completedAt": "2026-09-09T08:54:46.729843+00:00",
+    "interactionId": "rB6haqqGDdK44vEPhZWJ4A0",
+    "sha256": "eb94d5d2aa1a3fcf86e8bbbdeda9f483fa542f4d11bfd3a1f8b921c226440f60"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat folk-inspired instrumental piece featuring a prominent accordion melody, supported by a rhythmic acoustic guitar, bass, and light percussion. It has a cheerful and danceable feel.",
+      "zh": "一首活泼欢快的民谣风格器乐曲，以手风琴为主旋律，由节奏感强的原声吉他、贝斯和轻柔的打击乐器伴奏。整体感觉欢快且富有舞动感。"
+    },
+    "instruments": [
+      "Accordion",
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Cheerful",
+      "Lively",
+      "Upbeat",
+      "Joyful",
+      "Danceable",
+      "Folkloric"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear recording with a distinct and engaging folk-dance style, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:54:56.764060+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:55:26.548809+00:00"
+}

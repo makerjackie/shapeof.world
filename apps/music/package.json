@@ -1,0 +1,33 @@
+{
+  "name": "@shapeof/music",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "catalog": "node scripts/build-catalog.mjs",
+    "dev": "pnpm catalog && vite",
+    "build": "pnpm catalog && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "deploy": "pnpm build && wrangler deploy --config wrangler.jsonc",
+    "typecheck": "pnpm catalog && tsc --noEmit",
+    "test": "pnpm catalog && vitest run"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8",
+    "@tanstack/react-router": "^1.170.17",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.0.14",
+    "vitest": "^3.2.4",
+    "wrangler": "^4.110.0"
+  }
+}

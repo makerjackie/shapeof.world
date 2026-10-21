@@ -1,0 +1,73 @@
+Shape of the World audio permissions / 世界的形状音频使用说明
+Version 1.0 — 2026-09-22
+
+Scope
+This notice applies only to published audio whose individual metadata links to
+a rights profile in music/rights-profiles.json. It does not license the website
+software, Google models, logos, unrelated media, or legacy tracks without a
+reviewed rights profile. Preserve the asset id, source URL and downloaded
+metadata as a record of which terms apply.
+
+1. Shape Audio Permission 1.0 — designated Lyria output
+To the extent the project owns or controls rights in designated recordings, it
+grants everyone a worldwide, non-exclusive, royalty-free permission to download,
+copy, edit, synchronize, distribute and use those recordings in commercial and
+noncommercial videos, games, applications and other creative works. Attribution
+is optional. Redistribution of the designated audio as standalone files is also
+permitted by the project; retain the source metadata and this notice when
+redistributing standalone files so subsequent users can identify applicable terms.
+This is not an exclusive assignment, a promise of copyrightability, a license
+to a Google model, or an indemnity. Do not represent these shared recordings as
+exclusively yours or enroll them in an exclusive rights-management program.
+Nothing here supersedes applicable upstream terms or grants rights held by others.
+
+Provider basis checked 2026-09-22:
+https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3
+https://cloud.google.com/terms/service-terms
+The Lyria model documentation permits commercial/production use and disclosure
+to third parties subject to the customer's Google Cloud agreement. The service
+terms do not assert Google ownership in new intellectual property in output.
+These facts do not establish that any particular recording is free of all
+third-party claims. No provider IP indemnity is asserted for preview models.
+
+2. CC0-1.0 — designated original procedural audio
+For the rendered audio marked original-synthesis-cc0, the project dedicates its
+copyright and related rights, to the extent it controls them, under CC0 1.0:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+Commercial use, editing and redistribution are allowed; attribution is not
+required. The source generator is software with its own license. Its license
+does not replace the separately designated audio permission. Designed natural
+textures and foley are synthesis, not authentic field recordings.
+
+3. Legacy recordings
+needs-review or missing rights information means unknown. It does not mean
+prohibited use, public domain, or verified commercial permission. Such recordings
+remain discoverable, but agents must exclude them when confirmed permission is
+a project requirement. Current terms are not automatically applied retroactively.
+
+4. Boundaries
+Audio is supplied as is. No guarantee of uniqueness, third-party clearance,
+copyright protection, fitness, platform acceptance or absence of automated claims
+is made. Trademark, privacy and publicity rights are not granted. Keep the exact
+asset metadata and hashes with a project so any claim can be traced to its source.
+
+中文
+本说明仅适用于逐条元数据明确引用授权档案的已发布音频，不覆盖网站代码、模型、
+品牌或权限未核对的旧曲。请保存素材 id、下载地址、元数据与文件摘要。
+
+标记 Shape Audio Permission 1.0 的 Lyria 音频：在项目方有权授权的范围内，允许
+全球、非独占、免版税地下载、复制、修改、配入商业或非商业视频、游戏、应用及其他
+创作作品，也允许单独分发。署名可选；单独分发时应保留来源元数据与本说明。
+不得将共享录音声称为自己独占，或以独占权利加入版权识别系统。本授权不取代上游
+条款，不承诺输出必然具有著作权，也不转授项目方不拥有的第三方权利。
+
+标记 original-synthesis-cc0 的程序合成音频：项目方将其可控制的著作权及相关权利
+按 CC0 1.0 贡献，允许商用、修改、再分发，无需署名。生成器代码仍适用自身软件
+许可证。合成拟音和自然氛围不是实地录音。
+
+旧曲标记 needs-review 或缺少权限信息代表尚未核对，不代表禁止使用，也不代表
+已获商用许可。需要确认商用权限的 AI 检索必须排除这些记录；不能把现行服务条款
+自动追溯应用到过去的生成记录。
+
+音频按现状提供，不保证独一无二、绝无第三方权利争议或平台自动误报，不授予品牌、
+隐私或肖像权益。自动音质审核不能证明版权清白；Lyria 预览模型不在此承诺侵权赔偿。

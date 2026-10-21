@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-14",
+  "edition": "2024",
+  "source": "https://pdgapi.lbl.gov/doc/restapi.html",
+  "license": "CC BY 4.0",
+  "extraction": "scripts/standard-model/export-museum-snapshot.py",
+  "records": {
+    "u": {
+      "mass": "2.16 ± 0.07 MeV/c² (90% CL)",
+      "massEn": "2.16 ± 0.07 MeV/c² (90% CL)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q002/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "MS-bar 方案，重整化尺度 2 GeV；CL 表示置信水平。",
+      "noteEn": "MS-bar scheme at a renormalization scale of 2 GeV. CL denotes confidence level."
+    },
+    "d": {
+      "mass": "4.70 ± 0.07 MeV/c² (90% CL)",
+      "massEn": "4.70 ± 0.07 MeV/c² (90% CL)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q001/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "MS-bar 方案，重整化尺度 2 GeV；CL 表示置信水平。",
+      "noteEn": "MS-bar scheme at a renormalization scale of 2 GeV. CL denotes confidence level."
+    },
+    "c": {
+      "mass": "1.2730 ± 0.0046 GeV/c² (90% CL)",
+      "massEn": "1.2730 ± 0.0046 GeV/c² (90% CL)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q004/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "MS-bar 方案，在该夸克自身质量尺度定义。",
+      "noteEn": "MS-bar mass defined at the scale of the quark mass itself."
+    },
+    "s": {
+      "mass": "93.5 ± 0.8 MeV/c² (90% CL)",
+      "massEn": "93.5 ± 0.8 MeV/c² (90% CL)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q003/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "MS-bar 方案，重整化尺度 2 GeV；CL 表示置信水平。",
+      "noteEn": "MS-bar scheme at a renormalization scale of 2 GeV. CL denotes confidence level."
+    },
+    "t": {
+      "mass": "172.57 ± 0.29 GeV/c²",
+      "massEn": "172.57 ± 0.29 GeV/c²",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q007/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "直接重建测量的质量参数；不等同于截面法提取的极点质量或 MS-bar 质量。",
+      "noteEn": "Mass parameter from direct reconstruction; distinct from a pole or MS-bar mass extracted from cross sections."
+    },
+    "b": {
+      "mass": "4.183 ± 0.007 GeV/c² (90% CL)",
+      "massEn": "4.183 ± 0.007 GeV/c² (90% CL)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/Q005/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "MS-bar 方案，在该夸克自身质量尺度定义。",
+      "noteEn": "MS-bar mass defined at the scale of the quark mass itself."
+    },
+    "e": {
+      "mass": "0.51099895000 ± 0.00000000015 MeV/c²",
+      "massEn": "0.51099895000 ± 0.00000000015 MeV/c²",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S003/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    },
+    "mu": {
+      "mass": "105.6583755 ± 0.0000023 MeV/c²",
+      "massEn": "105.6583755 ± 0.0000023 MeV/c²",
+      "lifetime": "(2.1969811 ± 0.0000022)E-6 s",
+      "lifetimeEn": "(2.1969811 ± 0.0000022)E-6 s",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S004/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    },
+    "tau": {
+      "mass": "1776.93 ± 0.09 MeV/c²",
+      "massEn": "1776.93 ± 0.09 MeV/c²",
+      "lifetime": "(2.903 ± 0.005)E-13 s",
+      "lifetimeEn": "(2.903 ± 0.005)E-13 s",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S035/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    },
+    "ve": {
+      "mass": "未列出（味态不是质量本征态）",
+      "massEn": "Not listed (flavour state is not a mass eigenstate)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S066MNE/2024",
+      "sourceStatus": "unavailable",
+      "edition": "PDG Review 2024",
+      "note": "PDG 的味态不能作为单一质量值展示。",
+      "noteEn": "A PDG flavour state is not a single mass eigenstate."
+    },
+    "vmu": {
+      "mass": "未列出（味态不是质量本征态）",
+      "massEn": "Not listed (flavour state is not a mass eigenstate)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S066MNM/2024",
+      "sourceStatus": "unavailable",
+      "edition": "PDG Review 2024",
+      "note": "PDG 的味态不能作为单一质量值展示。",
+      "noteEn": "A PDG flavour state is not a single mass eigenstate."
+    },
+    "vtau": {
+      "mass": "未列出（味态不是质量本征态）",
+      "massEn": "Not listed (flavour state is not a mass eigenstate)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S066MNT/2024",
+      "sourceStatus": "unavailable",
+      "edition": "PDG Review 2024",
+      "note": "PDG 的味态不能作为单一质量值展示。",
+      "noteEn": "A PDG flavour state is not a single mass eigenstate."
+    },
+    "gamma": {
+      "mass": "<1 E-18 eV/c²（实验上限；理论上为零）",
+      "massEn": "<1 E-18 eV/c² (experimental upper limit; theoretically zero)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S000/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "实验上限与标准模型中的无质量理论状态分开标注。",
+      "noteEn": "The experimental upper limit is kept separate from the massless Standard Model state."
+    },
+    "gluon": {
+      "mass": "0（标准模型理论值）",
+      "massEn": "0 (Standard Model prediction)",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdg.lbl.gov/2024/listings/particle_properties.html",
+      "sourceStatus": "unavailable",
+      "edition": "PDG Review 2024",
+      "note": "胶子在标准模型中无质量；不能把禁闭中的胶子当作可自由测量的稳定粒子。",
+      "noteEn": "Gluons are massless in the Standard Model; confinement prevents treating one as a freely measurable stable particle."
+    },
+    "w": {
+      "mass": "80.3692  ±  0.0133 GeV/c²",
+      "massEn": "80.3692  ±  0.0133 GeV/c²",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S043/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    },
+    "z": {
+      "mass": "91.1880 ± 0.0020 GeV/c²",
+      "massEn": "91.1880 ± 0.0020 GeV/c²",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S044/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    },
+    "higgs": {
+      "mass": "125.20 ± 0.11 GeV/c²",
+      "massEn": "125.20 ± 0.11 GeV/c²",
+      "lifetime": "未列出",
+      "lifetimeEn": "Not listed",
+      "sourceUrl": "https://pdgapi.lbl.gov/summaries/S126/2024",
+      "sourceStatus": "parsed",
+      "edition": "PDG Review 2024",
+      "note": "",
+      "noteEn": ""
+    }
+  }
+}

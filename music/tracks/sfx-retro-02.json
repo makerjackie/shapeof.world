@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-02",
+  "code": "SFX-RETRO-02",
+  "title": {
+    "en": "Arcade select",
+    "zh": "街机选择"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 1,
+  "seed": 1664504293,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized arcade select for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的街机选择合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1664504293,
+    "sha256": "d09af9e5870706ff3bfc051caa587e9794f99048d67d6cc0cab760fed97ed224",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c5e24cc6750e645b54945a34cddb26a3085f85b208a0e343705603c335b6e9f8",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d09af9e5870706ff3bfc051caa587e9794f99048d67d6cc0cab760fed97ed224",
+      "bytes": 36206,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "4865f982553875290e58dc2955e6667b268a3cf5f3fd03e787480c6b7abfa2fd",
+      "bytes": 10152,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "dcb2b181f8bc562e8ecb20372059e25df8bf6ca9bf1c52ee7c33bd9ed1f6b171",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 18081,
+    "duration": 0.41,
+    "peakDbfs": -4.23,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.750275345148222e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.086883544921875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, distinct, high-pitched boing sound, resembling a spring or cartoon bounce effect.",
+      "zh": "一个短促、清晰、高音调的弹簧声，类似于卡通弹跳效果。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:14.530561+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c5e24cc6750e645b54945a34cddb26a3085f85b208a0e343705603c335b6e9f8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 18081
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.893384+00:00"
+}

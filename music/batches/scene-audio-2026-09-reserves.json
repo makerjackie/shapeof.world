@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 1,
+  "batch": "scene-audio-2026-09",
+  "tracks": [
+    {
+      "id": "scene-extra-organ",
+      "code": "SCENE-EXTRA-1",
+      "title": {
+        "en": "Evening Register",
+        "zh": "傍晚音栓"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 70,
+      "key": "",
+      "instruments": [
+        "gentle pipe organ with quiet flute stops"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 45,
+      "prompt": "Original 45-second instrumental composition. Instruments exclusively: gentle pipe organ with quiet flute stops. 70 BPM. slow legato phrases with generous silence between notes. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "organ"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "slow legato phrases with generous silence between notes",
+        "zh": "傍晚音栓：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-felt-piano",
+      "code": "SCENE-EXTRA-2",
+      "title": {
+        "en": "Margin Notes",
+        "zh": "页边笔记"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 78,
+      "key": "",
+      "instruments": [
+        "close felt piano and soft acoustic bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 60,
+      "prompt": "Original 60-second instrumental composition. Instruments exclusively: close felt piano and soft acoustic bass. 78 BPM. delicate two-note questions and quiet warm answers. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "felt-piano"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "delicate two-note questions and quiet warm answers",
+        "zh": "页边笔记：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-harp",
+      "code": "SCENE-EXTRA-3",
+      "title": {
+        "en": "Pebble Path",
+        "zh": "卵石小路"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 92,
+      "key": "",
+      "instruments": [
+        "harp",
+        "wooden flute and soft hand percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 120,
+      "prompt": "Original 120-second instrumental composition. Instruments exclusively: harp, wooden flute and soft hand percussion. 92 BPM. light interlocking plucked patterns. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "harp"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "light interlocking plucked patterns",
+        "zh": "卵石小路：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-sitar",
+      "code": "SCENE-EXTRA-4",
+      "title": {
+        "en": "Quiet Courtyard",
+        "zh": "静谧庭院"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 88,
+      "key": "",
+      "instruments": [
+        "sitar",
+        "soft tabla and tanpura"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 45,
+      "prompt": "Original 45-second instrumental composition. Instruments exclusively: sitar, soft tabla and tanpura. 88 BPM. restrained spacious melodic phrases. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "sitar"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "restrained spacious melodic phrases",
+        "zh": "静谧庭院：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-gamelan",
+      "code": "SCENE-EXTRA-5",
+      "title": {
+        "en": "Bronze Courtyard",
+        "zh": "青铜庭院"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 96,
+      "key": "",
+      "instruments": [
+        "soft metallophones",
+        "gongs and bamboo flute"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 60,
+      "prompt": "Original 60-second instrumental composition. Instruments exclusively: soft metallophones, gongs and bamboo flute. 96 BPM. slow interlocking bronze patterns with gentle resonances. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "gamelan"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "slow interlocking bronze patterns with gentle resonances",
+        "zh": "青铜庭院：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-celtic",
+      "code": "SCENE-EXTRA-6",
+      "title": {
+        "en": "Hillside Map",
+        "zh": "山坡地图"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 102,
+      "key": "",
+      "instruments": [
+        "acoustic fiddle",
+        "harp and light frame drum"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 120,
+      "prompt": "Original 120-second instrumental composition. Instruments exclusively: acoustic fiddle, harp and light frame drum. 102 BPM. buoyant original folk melody with restrained dance rhythm. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "celtic"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "buoyant original folk melody with restrained dance rhythm",
+        "zh": "山坡地图：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-cool-jazz",
+      "code": "SCENE-EXTRA-7",
+      "title": {
+        "en": "Blue Notebook",
+        "zh": "蓝色笔记"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 94,
+      "key": "",
+      "instruments": [
+        "muted trumpet",
+        "brushed drums and upright bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 45,
+      "prompt": "Original 45-second instrumental composition. Instruments exclusively: muted trumpet, brushed drums and upright bass. 94 BPM. relaxed sparse melodic conversation. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "cool-jazz"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "relaxed sparse melodic conversation",
+        "zh": "蓝色笔记：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    },
+    {
+      "id": "scene-extra-pipa",
+      "code": "SCENE-EXTRA-8",
+      "title": {
+        "en": "Paper Lantern",
+        "zh": "纸灯笼"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 110,
+      "key": "",
+      "instruments": [
+        "pipa",
+        "soft bass and woodblock"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 60,
+      "prompt": "Original 60-second instrumental composition. Instruments exclusively: pipa, soft bass and woodblock. 110 BPM. crisp original plucked motif with a spacious steady pulse. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "pipa"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "crisp original plucked motif with a spacious steady pulse",
+        "zh": "纸灯笼：适合旁白与场景铺垫。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      }
+    }
+  ]
+}

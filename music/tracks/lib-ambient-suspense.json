@@ -1,0 +1,104 @@
+{
+  "id": "lib-ambient-suspense",
+  "code": "LIB-24-09",
+  "title": {
+    "en": "Shadows — Ambient",
+    "zh": "暗影 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "ambient"
+  ],
+  "energy": 4,
+  "bpm": 48,
+  "key": "G minor",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second ambient electronic instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 48 BPM; G minor. Main idea: an ascending fourth answered by a stepwise descent. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A cinematic and emotional orchestral piece blending piano, strings, and synth pads, building from a reflective opening to an epic and dramatic climax.",
+    "zh": "一首电影感十足的管弦乐作品，融合了钢琴、弦乐和合成器音垫，从沉思的开场逐渐发展为史诗般且富有戏剧性的高潮。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.17,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:05:12.568433+00:00",
+  "generation": {
+    "id": "00b35c42-79ce-40e5-8b96-17b7a0e982cb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:04:17.076673+00:00",
+    "completedAt": "2026-09-09T09:05:12.568433+00:00",
+    "interactionId": "FCGhaoqkBsq5i9sPtKam8QQ",
+    "sha256": "c37838a8efd36b0ad1cc056490e0d196e14a455f6c6a4297a35aca146d5ac869"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A cinematic and emotional orchestral piece blending piano, strings, and synth pads, building from a reflective opening to an epic and dramatic climax.",
+      "zh": "一首电影感十足的管弦乐作品，融合了钢琴、弦乐和合成器音垫，从沉思的开场逐渐发展为史诗般且富有戏剧性的高潮。"
+    },
+    "instruments": [
+      "Piano",
+      "Orchestral Strings",
+      "Synth Pads",
+      "Percussion",
+      "Brass",
+      "Chimes"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Emotional",
+      "Epic",
+      "Dramatic",
+      "Hopeful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 65,
+    "reason": "High-quality production, clear emotional arc, and versatile for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:05:24.077374+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:07:48.366142+00:00"
+}

@@ -1,0 +1,181 @@
+{
+  "id": "scene-kora-15",
+  "code": "SCENE-14-15",
+  "title": {
+    "en": "Woven Sunlight · 15",
+    "zh": "编织日光 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "interlocking patterns and natural motion",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "kora",
+    "calabash",
+    "shakers",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 15,
+  "prompt": "Create a complete original 60-second instrumental cue in kora style. Use kora, calabash, shakers, soft bass. Tempo 112 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and cheerful acoustic track featuring a prominent flute melody over guitar, bass, and drums.",
+    "zh": "一首欢快活泼的器乐曲，以长笛旋律为主，配以吉他、贝斯和鼓。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "interlocking patterns and natural motion"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:31:10.601655+00:00",
+  "generation": {
+    "id": "d89fdc0f-6188-4eea-a0ec-5a85f5e262f8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:30:28.813804+00:00",
+    "completedAt": "2026-09-22T09:31:10.601655+00:00",
+    "interactionId": "tUqyav3iO53vv_gP1PPxsQc",
+    "sha256": "197700dddf67e1b5aa4237ca290411788c4371db14319a0483fa03872f209c48"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful acoustic track featuring a prominent flute melody over guitar, bass, and drums.",
+      "zh": "一首欢快活泼的器乐曲，以长笛旋律为主，配以吉他、贝斯和鼓。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "bass guitar",
+      "drums",
+      "flute"
+    ],
+    "moods": [
+      "upbeat",
+      "cheerful",
+      "lighthearted",
+      "positive",
+      "playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, has a clear structure, and is free of defects, making it suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main melody and rhythm, and concludes with a sustained, resolved chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:26.513295+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1c25b56b69af3278157ebde9fc02959a7d77725604a0807bf5dfa91affa8274b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.141167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful acoustic folk piece featuring a prominent mandolin melody, supported by a walking acoustic bass line and light, rhythmic percussion. The overall feel is upbeat and playful.",
+      "zh": "一首活泼欢快的原声民谣乐曲，以曼陀林为主旋律，配以行走的低音提琴和轻快的打击乐。整体感觉积极向上，充满趣味。"
+    },
+    "instruments": [
+      "Mandolin",
+      "Acoustic Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Playful",
+      "Folk",
+      "Country"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear acoustic instrumentation with an engaging melody and rhythm, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:19.433977+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 44.141167,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-kora-15/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-kora-15/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-kora-15/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1c25b56b69af3278157ebde9fc02959a7d77725604a0807bf5dfa91affa8274b",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "197700dddf67e1b5aa4237ca290411788c4371db14319a0483fa03872f209c48",
+      "bytes": 1427056,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "443d9e6bec4e35bbfa56330ca75e027bbba12fec9f87c4628001246108d344e0",
+      "bytes": 2805,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.468447+00:00"
+}

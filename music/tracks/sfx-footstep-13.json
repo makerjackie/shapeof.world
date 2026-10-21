@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-13",
+  "code": "SFX-FOOTSTEP-13",
+  "title": {
+    "en": "Carpet step",
+    "zh": "地毯脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 12,
+  "seed": 1246186014,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized carpet step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的地毯脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1246186014,
+    "sha256": "5c0b56f2cc2210408efcbafe14873077aea1252d9e4501840d2b3d067c117d85",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6244ef278bc84a66444aed01af0a847fb3629ef18e460e1b88d6a4135dd5dfa3",
+      "bytes": 4797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5c0b56f2cc2210408efcbafe14873077aea1252d9e4501840d2b3d067c117d85",
+      "bytes": 24740,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "18f9861b8d23f48bfc0abf88e5ae32040027c21d6eabe55d6044a377a30aade3",
+      "bytes": 6952,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "eeebbe17d7896e2b223b233ed0d76cc504328e53543b8676d49c66d347de6bf7",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 12348,
+    "duration": 0.28,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.79,
+    "dcOffset": 1.0627274533325234e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.0869199829101564,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or zapper sound effect.",
+      "zh": "短促、尖锐的电子“zap”或“zapper”音效。"
+    },
+    "reason": "The sound is a clear, well-produced electronic sound effect, free from defects, and suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:10.039805+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6244ef278bc84a66444aed01af0a847fb3629ef18e460e1b88d6a4135dd5dfa3"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 12348
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.870297+00:00"
+}

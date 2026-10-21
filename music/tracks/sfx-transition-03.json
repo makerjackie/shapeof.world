@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-03",
+  "code": "SFX-TRANSITION-03",
+  "title": {
+    "en": "Page turn",
+    "zh": "翻页转场"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 2,
+  "seed": 2207265198,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized page turn for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的翻页转场合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.95,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2207265198,
+    "sha256": "b2c87c5af4b1886027ba2662dcd07509e95208a1cca8d53b9115a7c2f07c8a05",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "39ec68a433a345d99e87ba5020a7d25e0fb9d8071c7ac697f686f960d49d9788",
+      "bytes": 14306,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b2c87c5af4b1886027ba2662dcd07509e95208a1cca8d53b9115a7c2f07c8a05",
+      "bytes": 83834,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5c7794e22bde6e62f4387662233c78fba64998011e21a88beb907b86f9f64b11",
+      "bytes": 12755,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2485e5a70c0b34f271908a285c98da6865d663bc646e3ae19a4f70ba59b76ab0",
+      "bytes": 1923,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 41895,
+    "duration": 0.95,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.96,
+    "dcOffset": -1.821075195429049e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07259039306640558,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or spark sound effect with a slight downward pitch bend.",
+      "zh": "一个短促、高音调的电子冲击或火花音效，带有一点点下行的音高弯曲。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined electronic sound effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:32.282565+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "39ec68a433a345d99e87ba5020a7d25e0fb9d8071c7ac697f686f960d49d9788"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 41895
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.902638+00:00"
+}

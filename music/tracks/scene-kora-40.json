@@ -1,0 +1,186 @@
+{
+  "id": "scene-kora-40",
+  "code": "SCENE-14-40",
+  "title": {
+    "en": "Woven Sunlight · 40",
+    "zh": "编织日光 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "interlocking patterns and natural motion",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "kora",
+    "calabash",
+    "shakers",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for interlocking patterns and natural motion. Instruments: kora, calabash, shakers, soft bass. 112 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and cheerful orchestral piece with a distinct folk or traditional feel, featuring pizzicato strings, woodwinds, and light percussion. It has a playful and lighthearted character, reminiscent of a festive dance.",
+    "zh": "一首活泼欢快的管弦乐曲，带有独特的民间或传统风格，以拨弦乐器、木管乐器和轻打击乐器为主。它具有俏皮和轻松的特点，让人联想到节日舞蹈。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "interlocking patterns and natural motion"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:32.120309+00:00",
+  "generation": {
+    "id": "000bbd4c-ecda-4712-8fcd-501fd4fe0856",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:16:51.557221+00:00",
+    "completedAt": "2026-09-22T09:17:32.120309+00:00",
+    "interactionId": "hEeyatC1G5OE694Pyb3WcQ",
+    "sha256": "010c1a16a8cad15a15a849d067715460f6d252684b233e631d234c24cfd6116a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful orchestral piece with a distinct folk or traditional feel, featuring pizzicato strings, woodwinds, and light percussion. It has a playful and lighthearted character, reminiscent of a festive dance.",
+      "zh": "一首活泼欢快的管弦乐曲，带有独特的民间或传统风格，以拨弦乐器、木管乐器和轻打击乐器为主。它具有俏皮和轻松的特点，让人联想到节日舞蹈。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Flute",
+      "Clarinet",
+      "Percussion",
+      "Cello",
+      "Double Bass"
+    ],
+    "moods": [
+      "Cheerful",
+      "Playful",
+      "Lively",
+      "Lighthearted",
+      "Whimsical",
+      "Traditional",
+      "Festive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, engaging, and free of defects, making it highly suitable for a music library. Its cheerful and playful nature is well-executed with clear instrumentation and a strong melodic hook.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy pizzicato melody and a clear rhythmic pulse. It concludes with a deliberate, resolved orchestral chord, providing a clean and satisfying end.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:49.421092+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "25c08fd61807329cdfbaa45ba7195ab18e7bd68b5bb07c1255e668dbc08e4694"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.402375,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful acoustic folk tune with a clear, memorable melody, featuring accordion, acoustic guitar, and light percussion. It evokes a festive and lighthearted atmosphere.",
+      "zh": "一首活泼欢快的原声民谣曲，旋律清晰且令人难忘，以手风琴、原声吉他和轻快打击乐为主。营造出节日般轻松愉快的氛围。"
+    },
+    "instruments": [
+      "Accordion",
+      "Acoustic Guitar",
+      "Percussion",
+      "Bass"
+    ],
+    "moods": [
+      "Cheerful",
+      "Lively",
+      "Festive",
+      "Lighthearted",
+      "Upbeat",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and engaging instrumental piece suitable for various lighthearted or festive media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:40.309807+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.402375,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-kora-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-kora-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-kora-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "25c08fd61807329cdfbaa45ba7195ab18e7bd68b5bb07c1255e668dbc08e4694",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "010c1a16a8cad15a15a849d067715460f6d252684b233e631d234c24cfd6116a",
+      "bytes": 1433325,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a549f5a0c2996bf5b21f8aedaa48090860b18b2e87072c9043e0e437574f3f06",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.844715+00:00"
+}

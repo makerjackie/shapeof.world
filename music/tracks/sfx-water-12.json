@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-12",
+  "code": "SFX-WATER-12",
+  "title": {
+    "en": "Stream trickle",
+    "zh": "细流经过"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 11,
+  "seed": 1498634203,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized stream trickle for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的细流经过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.06,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1498634203,
+    "sha256": "3f44a1d58d80a8811b8a02963ce6dd3def365efdcaf52e3de196505476d409f4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "443563be72711e299cc9219910dc22f9b2c3db17648af08ad3558c02910201bd",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3f44a1d58d80a8811b8a02963ce6dd3def365efdcaf52e3de196505476d409f4",
+      "bytes": 93536,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5c51610de5f696376aaad61b9bc1f6b55bb69b0704ff52dbb28b1fe2da1cf6a9",
+      "bytes": 16944,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "43d9cd8b71d600ff6c603aa924f6e8a3b876d188ce754ffa0deab7c564115b16",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46746,
+    "duration": 1.06,
+    "peakDbfs": -2.34,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.5015280384952724e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14089331054687526,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh or swish sound effect, followed by a brief, high-pitched electronic hum that quickly fades.",
+      "zh": "短促的合成嗖嗖声或刷刷声，随后是短暂的、高音调的电子嗡鸣声，迅速消退。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:39.160304+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "443563be72711e299cc9219910dc22f9b2c3db17648af08ad3558c02910201bd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46746
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.912505+00:00"
+}

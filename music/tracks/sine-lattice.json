@@ -1,0 +1,60 @@
+{
+  "id": "sine-lattice",
+  "code": "MAT-A01",
+  "title": {
+    "en": "Sine Lattice",
+    "zh": "正弦网格"
+  },
+  "category": "math-signals",
+  "archetype": "ambient",
+  "moods": [
+    "pure",
+    "additive",
+    "transparent",
+    "calm"
+  ],
+  "topics": [
+    "fourier",
+    "sine",
+    "spectrum"
+  ],
+  "energy": 1,
+  "bpm": 66,
+  "key": "A Lydian",
+  "instruments": [
+    "pure sine synths",
+    "marimba",
+    "soft low-pass pad"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 143.438,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about building a tone from stacked sines. Around 66 BPM, A Lydian. Pure sine synthesizers enter one partial at a time; a marimba occasionally states the fundamental. Transparent, additive, almost diagrammatic. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No distortion, no drums, no supersaw stack.\n\n[00:00–00:25] Single sine fundamental, centered.\n[00:25–01:05] Odd partials fade in, beating slightly, forming a lattice in the stereo field.\n[01:05–01:50] Marimba plays the fundamental in slow notes; even partials complete the chord.\n[01:50–02:30] Partials remove in reverse order until only the opening sine remains.\n",
+  "recommendedWorldIds": [
+    "fourier"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T13:55:00Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sine-lattice/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sine-lattice/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sine-lattice/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:54.385962+00:00",
+  "generation": {
+    "id": "2a46b08f-cbb5-4077-b05e-f23e69ed6d70",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T13:54:13Z",
+    "completedAt": "2026-08-25T13:55:00Z",
+    "durationMs": 47000,
+    "interactionId": "hp6NaonEOdKL4vEP3YfJuAU",
+    "clientRequestId": "0bf05bd9-bb91-4644-8570-69a86db9f7a9",
+    "synthid": true,
+    "c2pa": "urn:c2pa:a7348dc3-a1d4-9318-5814-43178b15c89c",
+    "sha256": "35cc26bf79a0ea3d0ef822c093e95f82d4b4dc0d1d51c9abe9df55087de0fa68"
+  }
+}

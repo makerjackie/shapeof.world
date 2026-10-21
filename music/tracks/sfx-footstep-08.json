@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-08",
+  "code": "SFX-FOOTSTEP-08",
+  "title": {
+    "en": "Puddle step",
+    "zh": "浅水脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 7,
+  "seed": 3364151099,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized puddle step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的浅水脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3364151099,
+    "sha256": "066903d14b6affd0f22f96d2f286cd9c83dc3d228772fbb6a5add2a4575341eb",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "572c7c6f75208aca898167811ef3d05d9ffdf7f38d1e2099000fcfabcfa77729",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "066903d14b6affd0f22f96d2f286cd9c83dc3d228772fbb6a5add2a4575341eb",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "c168d1ff7ddf2eabf98d2f9f977bd745273ab8323db2ab62aa9bf2706acf96f7",
+      "bytes": 9349,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "988967d00cd7ae4a173d13893c17b5cb48cce227a2755bf40260e8748f1d2a78",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.21,
+    "dcOffset": -2.3954142955259028e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.22436828613281223,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic impact sound, resembling a sword clang or a metal strike.",
+      "zh": "一个短促、尖锐的金属撞击声，类似于剑的碰撞或金属敲击声。"
+    },
+    "reason": "The sound is a clear, well-defined metallic impact, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:03.073102+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "572c7c6f75208aca898167811ef3d05d9ffdf7f38d1e2099000fcfabcfa77729"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.869401+00:00"
+}

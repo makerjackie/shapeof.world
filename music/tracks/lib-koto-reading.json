@@ -1,0 +1,102 @@
+{
+  "id": "lib-koto-reading",
+  "code": "LIB-19-01",
+  "title": {
+    "en": "Reading — Koto",
+    "zh": "静读 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "koto"
+  ],
+  "energy": 1,
+  "bpm": 60,
+  "key": "D major",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Japanese acoustic instrumental instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 60 BPM; D major. Main idea: alternating short and long phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A serene and contemplative instrumental piece featuring a prominent plucked zither (likely guzheng) playing a gentle, flowing melody. It is accompanied by a soft string ensemble and a melodic flute, creating a peaceful and reflective atmosphere with a subtle melancholic undertone.",
+    "zh": "一首宁静而沉思的纯音乐作品，以突出的拨弦乐器（可能是古筝）演奏着轻柔流畅的旋律。伴随着柔和的弦乐合奏和悠扬的笛声，营造出平和、富有内省的氛围，并带有一丝淡淡的忧郁。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.514,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:48:58.438734+00:00",
+  "generation": {
+    "id": "8c47a3ca-9602-48f3-8569-de43a59017f8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:48:20.961180+00:00",
+    "completedAt": "2026-09-09T08:48:58.438734+00:00",
+    "interactionId": "Vh2hasKsEMSDoLAP8OO9wA8",
+    "sha256": "f6add8f7b54f370c0908a2f9bb8c4f5243453c90124ed3b680a3526a38fb141c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and contemplative instrumental piece featuring a prominent plucked zither (likely guzheng) playing a gentle, flowing melody. It is accompanied by a soft string ensemble and a melodic flute, creating a peaceful and reflective atmosphere with a subtle melancholic undertone.",
+      "zh": "一首宁静而沉思的纯音乐作品，以突出的拨弦乐器（可能是古筝）演奏着轻柔流畅的旋律。伴随着柔和的弦乐合奏和悠扬的笛声，营造出平和、富有内省的氛围，并带有一丝淡淡的忧郁。"
+    },
+    "instruments": [
+      "Guzheng",
+      "String Ensemble",
+      "Flute"
+    ],
+    "moods": [
+      "Peaceful",
+      "Calm",
+      "Reflective",
+      "Serene",
+      "Traditional",
+      "Asian-inspired",
+      "Melancholic"
+    ],
+    "energy": 1,
+    "bpmEstimate": 68,
+    "reason": "The music is well-produced, emotionally evocative, and free of technical flaws, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:49:09.664988+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:49:37.461762+00:00"
+}

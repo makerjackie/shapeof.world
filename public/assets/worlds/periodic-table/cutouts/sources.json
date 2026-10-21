@@ -1,0 +1,1597 @@
+{
+  "tool": "Version: ImageMagick 7.1.1-41 Q16-HDRI aarch64 22504 https://imagemagick.org",
+  "segmentation": "Apple Vision VNGenerateForegroundInstanceMaskRequest revision 1",
+  "platform": "26.5.1",
+  "recipe": "Original RGB + foreground alpha; mask level 1%,99%; WebP quality 84, method 6. Original dimensions and sources retained.",
+  "records": [
+    {
+      "symbol": "Cf",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cf-8c640b3d19b9.webp",
+      "sha256": "8c640b3d19b958c97207fd71fb5840ac1426b4f9526a130c057a3339aeec9e7d",
+      "bytes": 41150,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Cf-museum.webp",
+      "sourceSha256": "7cf530598b7836c5240438562d288bac770329e1817ee3d5883a1e0f029082e4",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 375289,
+        "opaque": 136332,
+        "feathered": 6779
+      }
+    },
+    {
+      "symbol": "Am",
+      "asset": "/assets/worlds/periodic-table/cutouts/Am-d7a1c2bccf4b.webp",
+      "sha256": "d7a1c2bccf4b485006d8f3f07ac7a5aff16747f695c3e5dbb58d878500b4fbea",
+      "bytes": 61882,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Am-museum.webp",
+      "sourceSha256": "a0a14b3b7184fa94f32477cb452bfb265e67423a2808dfa38e46efdcef29a6e5",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 391085,
+        "opaque": 109858,
+        "feathered": 17457
+      }
+    },
+    {
+      "symbol": "Np",
+      "asset": "/assets/worlds/periodic-table/cutouts/Np-d4b278aebb80.webp",
+      "sha256": "d4b278aebb809cba266dbefb0010e8075ad84c41c6c4fbe2f4e41045cea254e0",
+      "bytes": 24392,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Np-museum.webp",
+      "sourceSha256": "fe2e7b2dfce55098463fed456f564786a13a9289a30be24f5288128fbd5d242f",
+      "method": "connected outer white background only",
+      "fuzzPercent": 14,
+      "edgeBlur": 0.45,
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 397756,
+        "opaque": 117369,
+        "feathered": 3275
+      }
+    },
+    {
+      "symbol": "Tc",
+      "asset": "/assets/worlds/periodic-table/cutouts/Tc-24bf16a1678b.webp",
+      "sha256": "24bf16a1678b77dd8ee9cbb30feaf725969581b147179b3fd541abc2ef91ecbb",
+      "bytes": 90126,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Tc-museum.webp",
+      "sourceSha256": "0545eb42960cd9f8149e777f5c09c32a4c116b81051fad005bac1a5a8c721764",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 281202,
+        "opaque": 227317,
+        "feathered": 9881
+      }
+    },
+    {
+      "symbol": "F",
+      "asset": "/assets/worlds/periodic-table/cutouts/F-d602f6ec7d53.webp",
+      "sha256": "d602f6ec7d53ba4cac28a5cf5b74f69bcbf4ea54c0b22014098bf5a856654852",
+      "bytes": 39106,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/F-museum.webp",
+      "sourceSha256": "6253321968c47d97abcedeebe8b35e930f595a757087065977b86702175f6cb4",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 273497,
+        "opaque": 235550,
+        "feathered": 9353
+      }
+    },
+    {
+      "symbol": "At",
+      "asset": "/assets/worlds/periodic-table/cutouts/At-78a59df97915.webp",
+      "sha256": "78a59df979158c2a51b15ed3dc7f7bae77f26975a4ba6a14640d3302aa4c292e",
+      "bytes": 18800,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/At.webp",
+      "sourceSha256": "aa5868184d2de4a83d9cfba06963e5b3c69e970e0784480ee58f3d0fa50ea7c4",
+      "method": "connected outer white background only",
+      "fuzzPercent": 8,
+      "edgeBlur": 0.45,
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 195044,
+        "opaque": 318757,
+        "feathered": 4599
+      }
+    },
+    {
+      "symbol": "Fr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Fr-860ee22afe09.webp",
+      "sha256": "860ee22afe09f55db440b3abd329a8318c1f179e3100c37cc5001dc928ec9be2",
+      "bytes": 31790,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Fr.webp",
+      "sourceSha256": "a21015f1728ca2a405d733c613244751765e4869249d949cf880461ecfbe3750",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 386884,
+        "opaque": 122548,
+        "feathered": 8968
+      }
+    },
+    {
+      "symbol": "Pa",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pa-d1d72f048e85.webp",
+      "sha256": "d1d72f048e851efe8c602bd1f73ec1e1228e31cad60c6238fcae3cd3a6860a4f",
+      "bytes": 25346,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pa.webp",
+      "sourceSha256": "0920bec0522d2a1638e20bf50b2e3b8e9b5efe36104e3538e9359b7f24a3206f",
+      "method": "connected outer white background only",
+      "fuzzPercent": 8,
+      "edgeBlur": 0.45,
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 179482,
+        "opaque": 334098,
+        "feathered": 4820
+      }
+    },
+    {
+      "symbol": "Po",
+      "asset": "/assets/worlds/periodic-table/cutouts/Po-f69004030ec7.webp",
+      "sha256": "f69004030ec7a09ac2b51e5097795ebb357d9b10722b3164bc0da4d611d07990",
+      "bytes": 32080,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Po.webp",
+      "sourceSha256": "ed85ed7f9983e553d3f7f4e43a499311265bde84b70c03c22faf6de4ff1e5ea7",
+      "method": "connected outer white background only",
+      "fuzzPercent": 8,
+      "edgeBlur": 0.45,
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 188903,
+        "opaque": 324818,
+        "feathered": 4679
+      }
+    },
+    {
+      "symbol": "Rn",
+      "asset": "/assets/worlds/periodic-table/cutouts/Rn-a84ac7507760.webp",
+      "sha256": "a84ac75077608513df9497d7f9e3a8d9c62e499ce7a56f6fcdfeaea4c0f9a2bd",
+      "bytes": 57112,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Rn-museum.webp",
+      "sourceSha256": "f5b47502de7b3aa2b3123b0db3c769dbbab94258c9edfe05b43e97175016b0f9",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 300700,
+        "opaque": 204300,
+        "feathered": 13400
+      }
+    },
+    {
+      "symbol": "Th",
+      "asset": "/assets/worlds/periodic-table/cutouts/Th-81519114bfd7.webp",
+      "sha256": "81519114bfd769196206ab8e6520058c7e18cb1b3c4fca31e9dcad50e98c31c8",
+      "bytes": 16846,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Th.webp",
+      "sourceSha256": "6a8902baa75b3578d6b9f458282bd4312d9a7c7f970498e6ca2dd5c7e20fd774",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 352278,
+        "opaque": 157849,
+        "feathered": 8273
+      }
+    },
+    {
+      "symbol": "Ag",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ag-ec596b30da93.webp",
+      "sha256": "ec596b30da935fd58c30892d108aec6492bf3dcde6176752f1f3591e4c66e613",
+      "bytes": 60710,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ag.webp",
+      "sourceSha256": "b00d7baadb63204015ec000738dceca39be98ea4556a90558f8233ce91bea865",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 389681,
+        "opaque": 116501,
+        "feathered": 12218
+      }
+    },
+    {
+      "symbol": "Al",
+      "asset": "/assets/worlds/periodic-table/cutouts/Al-01e5920f6ee2.webp",
+      "sha256": "01e5920f6ee2aa0d30b63a584337cadafb29f597ace60e74144f9aa1251b342f",
+      "bytes": 79410,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Al.webp",
+      "sourceSha256": "a52f5bf7f414cb1889ce506f73f74c9dcb437e617b4ea418d9ced0e26bc2fa81",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 295079,
+        "opaque": 213892,
+        "feathered": 9429
+      }
+    },
+    {
+      "symbol": "Ar",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ar-a751ace8555b.webp",
+      "sha256": "a751ace8555b358402a8426001417a96ad8ac56e35195caa9f96843cf713acb8",
+      "bytes": 34050,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ar.webp",
+      "sourceSha256": "041a8fed512329f2f086682d35dc21da0f0a0aeeaa2030ff6d66d2850df7a145",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 359269,
+        "opaque": 148815,
+        "feathered": 10316
+      }
+    },
+    {
+      "symbol": "As",
+      "asset": "/assets/worlds/periodic-table/cutouts/As-1b0044792c6b.webp",
+      "sha256": "1b0044792c6b024fee16b3b6d410e9600267a46a7bc476b02e52f4139a08c4b0",
+      "bytes": 22346,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/As.webp",
+      "sourceSha256": "ca69da60c00780de29d9ae4adb8e90cdd7e033f928b62157440d82d32d809641",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 433118,
+        "opaque": 78503,
+        "feathered": 6779
+      }
+    },
+    {
+      "symbol": "Au",
+      "asset": "/assets/worlds/periodic-table/cutouts/Au-510bcd6f2975.webp",
+      "sha256": "510bcd6f2975c3e535203809f7c974361842d6586261d4ccde15cfa9c1f646d7",
+      "bytes": 71134,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Au.webp",
+      "sourceSha256": "3691908e295a03629765c481d4f86b5f213a694fcc1188fc829deb194945e7cb",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 376730,
+        "opaque": 132839,
+        "feathered": 8831
+      }
+    },
+    {
+      "symbol": "B",
+      "asset": "/assets/worlds/periodic-table/cutouts/B-de7ba8212ddd.webp",
+      "sha256": "de7ba8212ddde6215edbf6a218811bc97e56d9055ed1d211ec8edf3647b6a77f",
+      "bytes": 79642,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/B.webp",
+      "sourceSha256": "dfbcae5586485e7f677200067b318bc6630be75b4c3960139a99122e8d764559",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 325834,
+        "opaque": 180974,
+        "feathered": 11592
+      }
+    },
+    {
+      "symbol": "Ba",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ba-18e812039911.webp",
+      "sha256": "18e812039911df2ea0f43a84f010520275139e457abd8e94e00cc8e857afbfb3",
+      "bytes": 20650,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ba.webp",
+      "sourceSha256": "ac654b985369b3cf969716a724b8e46f09761114049e370578e960f33bfb7cb3",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 403959,
+        "opaque": 107036,
+        "feathered": 7405
+      }
+    },
+    {
+      "symbol": "Be",
+      "asset": "/assets/worlds/periodic-table/cutouts/Be-d5b42ddc62d7.webp",
+      "sha256": "d5b42ddc62d760db60af082ba9ff96ccfdda7d05101a338d189c55026d5b3252",
+      "bytes": 60428,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Be.webp",
+      "sourceSha256": "2e42769cda1b84c77096a303ae1a8b113b0aec6936a9c2b8f321b4d8dc5bc89c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 263999,
+        "opaque": 244954,
+        "feathered": 9447
+      }
+    },
+    {
+      "symbol": "Bi",
+      "asset": "/assets/worlds/periodic-table/cutouts/Bi-0dc3b1e8f2e6.webp",
+      "sha256": "0dc3b1e8f2e6bed75dd6546e1f87fc9fb32a38ec06ae19f5f7c1567d4dd8e03a",
+      "bytes": 82634,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Bi.webp",
+      "sourceSha256": "31d6918637926dbe990ffa4d152bd8a688d154956e0511e64598aaec6998a30a",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 279317,
+        "opaque": 228367,
+        "feathered": 10716
+      }
+    },
+    {
+      "symbol": "Br",
+      "asset": "/assets/worlds/periodic-table/cutouts/Br-1f4bdc9ceb2c.webp",
+      "sha256": "1f4bdc9ceb2caf83e47ffa066c254f5fc23ee420e233fef26eb466595e8860e5",
+      "bytes": 14090,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Br.webp",
+      "sourceSha256": "249ad97083f49ef6b827a99434f8537f0d64e166dce71d717a68e84e26025a05",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 440673,
+        "opaque": 70605,
+        "feathered": 7122
+      }
+    },
+    {
+      "symbol": "C",
+      "asset": "/assets/worlds/periodic-table/cutouts/C-90e539c2dd75.webp",
+      "sha256": "90e539c2dd750e1ecc2bc514d77d743dd43e3bf4eb39889e3b9de6646fedaf7f",
+      "bytes": 51932,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/C.webp",
+      "sourceSha256": "3347b1df3615d6d19fbdc4ea57739e4646189ae72bf21c66ec42f81a374b3429",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 345346,
+        "opaque": 164102,
+        "feathered": 8952
+      }
+    },
+    {
+      "symbol": "Ca",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ca-32d48634fc61.webp",
+      "sha256": "32d48634fc6162d5ecf70505e7f2981395dd68e187497a2a23600016db3cbb00",
+      "bytes": 36410,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ca.webp",
+      "sourceSha256": "bb9a1cc1fecde94534554ed7acc4d2eef9126fb6de05304e294627de2836fba4",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 389194,
+        "opaque": 120189,
+        "feathered": 9017
+      }
+    },
+    {
+      "symbol": "Cd",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cd-331aa60495e9.webp",
+      "sha256": "331aa60495e98f478eae89862e092f151f2074d2cdf227f15d3a5b6fc9ab3d8a",
+      "bytes": 45024,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Cd.webp",
+      "sourceSha256": "51789a36c43d570e3d513f38093114ea918fc2271f27411febd8589c9a607ec4",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 374993,
+        "opaque": 133492,
+        "feathered": 9915
+      }
+    },
+    {
+      "symbol": "Ce",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ce-1dd9db23ec25.webp",
+      "sha256": "1dd9db23ec259d02d4364e393399996dfd7a3f10136f4d157699f8f53d08a6bb",
+      "bytes": 33714,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ce.webp",
+      "sourceSha256": "4943b9a5b7979af30714005ebbcdd22a2310bae763eccbf67db8a86f21a0e56c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 339179,
+        "opaque": 169944,
+        "feathered": 9277
+      }
+    },
+    {
+      "symbol": "Cl",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cl-13d43cc56598.webp",
+      "sha256": "13d43cc56598a554d2d8ac63d4c60624929adb9af6341c348efb5fa20cea3aa4",
+      "bytes": 18080,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Cl.webp",
+      "sourceSha256": "8aebfd2fd1f90a835796a26e73dfe2a2fcebd0d0c7fdede70e1c2e1e0cc29bbc",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 446604,
+        "opaque": 62303,
+        "feathered": 9493
+      }
+    },
+    {
+      "symbol": "Co",
+      "asset": "/assets/worlds/periodic-table/cutouts/Co-1640c86a625f.webp",
+      "sha256": "1640c86a625fc703fa37d545ea669f7cdd03970b6c93e3175ffc88ed84671242",
+      "bytes": 81724,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Co.webp",
+      "sourceSha256": "dbe21075cf694465c1f13aa916a261aacc950ef367f317e2f497ff5cc3f2565b",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 295710,
+        "opaque": 212704,
+        "feathered": 9986
+      }
+    },
+    {
+      "symbol": "Cr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cr-1ef61f9aab56.webp",
+      "sha256": "1ef61f9aab56fc9c9d7e86a8d08e8cf0c666e968a936df592724a3ebc9a23838",
+      "bytes": 94990,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Cr.webp",
+      "sourceSha256": "af7b6929bc259c88d24e8869982e360173705ddb335449fb1a3bb9039578292e",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 289532,
+        "opaque": 219232,
+        "feathered": 9636
+      }
+    },
+    {
+      "symbol": "Cs",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cs-ff39a787cbf1.webp",
+      "sha256": "ff39a787cbf196d464d0b207ef6c0be98427f3c3ca1803c689d9bdfdc908bc3e",
+      "bytes": 9856,
+      "width": 720,
+      "height": 323,
+      "source": "/assets/worlds/periodic-table/display/Cs.webp",
+      "sourceSha256": "6c1ff4538985c7c8cc81edc9e84a1a83268c85c7dd7c29c8c2a40967e16822eb",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 232560,
+        "transparent": 179628,
+        "opaque": 49849,
+        "feathered": 3083
+      }
+    },
+    {
+      "symbol": "Cu",
+      "asset": "/assets/worlds/periodic-table/cutouts/Cu-5e94cb0e6689.webp",
+      "sha256": "5e94cb0e6689dfdaed194a348a995a3c80a21b3186aec27969a133a75b2d2688",
+      "bytes": 86424,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Cu.webp",
+      "sourceSha256": "3c044f57224758eac71083f7a768502a29cc229536ea58179d071a9123dc5f5c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 262357,
+        "opaque": 245742,
+        "feathered": 10301
+      }
+    },
+    {
+      "symbol": "Dy",
+      "asset": "/assets/worlds/periodic-table/cutouts/Dy-84931ea6e062.webp",
+      "sha256": "84931ea6e062fc9beb96a60f06c9a0dde061eb6322132a581593ed16dea32f67",
+      "bytes": 97912,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Dy.webp",
+      "sourceSha256": "84f46520a54140acb4d0e314138fc591b5f023d931e7bfe17206f670a0785b68",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 280204,
+        "opaque": 222478,
+        "feathered": 15718
+      }
+    },
+    {
+      "symbol": "Er",
+      "asset": "/assets/worlds/periodic-table/cutouts/Er-d910ca462890.webp",
+      "sha256": "d910ca462890e4db18108af52d6b66a9f4fe243ab4750d72ed20552748929500",
+      "bytes": 118406,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Er.webp",
+      "sourceSha256": "d49c58880cf4d27eccb4dc52be09cfcf9ec8836a59e258853618a3f83c3097cc",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 205926,
+        "opaque": 300983,
+        "feathered": 11491
+      }
+    },
+    {
+      "symbol": "Eu",
+      "asset": "/assets/worlds/periodic-table/cutouts/Eu-14c811f53432.webp",
+      "sha256": "14c811f534325b098a2f3344a8901607d78062cf91caad65138e402b3adcd83b",
+      "bytes": 40030,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Eu.webp",
+      "sourceSha256": "3c0f44d71fe49348243673186a9f79a598ec346e4ce26c74f3f98e9c87d49a1e",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 398182,
+        "opaque": 111007,
+        "feathered": 9211
+      }
+    },
+    {
+      "symbol": "Fe",
+      "asset": "/assets/worlds/periodic-table/cutouts/Fe-ad27b2553f10.webp",
+      "sha256": "ad27b2553f103acf044b97302b4cb9ee39b3a424d10a9fa4490c8734caaeb3af",
+      "bytes": 64626,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Fe.webp",
+      "sourceSha256": "3a4e0166d460bef8902470554690a32a75fda823ff2420def5af98c95fc944e2",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 349465,
+        "opaque": 160094,
+        "feathered": 8841
+      }
+    },
+    {
+      "symbol": "Ga",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ga-68d7740089c2.webp",
+      "sha256": "68d7740089c246d2dc82959eba3cd4f9fd3067f648eb75ab81f548635f92db37",
+      "bytes": 40622,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ga.webp",
+      "sourceSha256": "252e9880f3d2e9cffff21a27330fc19350514c7bf08ba053e5280292d770c49f",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 384405,
+        "opaque": 125419,
+        "feathered": 8576
+      }
+    },
+    {
+      "symbol": "Gd",
+      "asset": "/assets/worlds/periodic-table/cutouts/Gd-31b99dc3ba8c.webp",
+      "sha256": "31b99dc3ba8c6eabcadd4ab15c4356a60887793542e85c2ef71896e434af20a7",
+      "bytes": 81392,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Gd.webp",
+      "sourceSha256": "8365cc157cadb0a06e7630c8b4ae39d281ebab257c46847560d44cff654a9454",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 276758,
+        "opaque": 231179,
+        "feathered": 10463
+      }
+    },
+    {
+      "symbol": "Ge",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ge-844dbd1d79c4.webp",
+      "sha256": "844dbd1d79c4af48e4fcd8b242c4fe0af253840208bcbfaf073909025bc67414",
+      "bytes": 71198,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ge.webp",
+      "sourceSha256": "a252ad4f7296fa3340a78ace748d0df749e9474902f690ba2ae98353c4a96720",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 314533,
+        "opaque": 195095,
+        "feathered": 8772
+      }
+    },
+    {
+      "symbol": "H",
+      "asset": "/assets/worlds/periodic-table/cutouts/H-369eb6455e82.webp",
+      "sha256": "369eb6455e8223e3ef6cdb3bfce074a4080536384222c231b7dbabc19254212c",
+      "bytes": 29102,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/H.webp",
+      "sourceSha256": "01221fee3854334aa3971b14227de394feac789b92dcf0588edbaa7e139cad0c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 357452,
+        "opaque": 150895,
+        "feathered": 10053
+      }
+    },
+    {
+      "symbol": "He",
+      "asset": "/assets/worlds/periodic-table/cutouts/He-5064d164d3d4.webp",
+      "sha256": "5064d164d3d44bb6d31d67108f5b2dea799161189162e60c2ac923413723744a",
+      "bytes": 30446,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/He.webp",
+      "sourceSha256": "ab43c9aa69131a3d394f0497ef8551b725c63bb2395e69a4473cb3be16c44377",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 368322,
+        "opaque": 140311,
+        "feathered": 9767
+      }
+    },
+    {
+      "symbol": "Hf",
+      "asset": "/assets/worlds/periodic-table/cutouts/Hf-13f597a9502a.webp",
+      "sha256": "13f597a9502a116d1df41db918378aa4d044ee35063ac975c4ca11928b1e9bdb",
+      "bytes": 98254,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Hf.webp",
+      "sourceSha256": "cc1924625f1dc5c7e7694c912b2903c2b4682644273b1ce5d74feee4c1a52ff8",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 283991,
+        "opaque": 223424,
+        "feathered": 10985
+      }
+    },
+    {
+      "symbol": "Hg",
+      "asset": "/assets/worlds/periodic-table/cutouts/Hg-ac759db992f4.webp",
+      "sha256": "ac759db992f488b61238dad9fa601516e30ed5913e21165138b3f604cb07191e",
+      "bytes": 32854,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Hg.webp",
+      "sourceSha256": "2e10586abcae4cedf6cb056ecbb76c20e14c3bbb2a6abd07e8184141945b341b",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 278849,
+        "opaque": 230886,
+        "feathered": 8665
+      }
+    },
+    {
+      "symbol": "Ho",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ho-d305c18766c4.webp",
+      "sha256": "d305c18766c4abe868e1f0fcef87062184f5a640c27bbe261567a8c37ed1b998",
+      "bytes": 102192,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ho.webp",
+      "sourceSha256": "0d3d9175b661b554297405350e068ebfd014274c3ceda1ffaebded7dcf7e692b",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 290023,
+        "opaque": 215321,
+        "feathered": 13056
+      }
+    },
+    {
+      "symbol": "I",
+      "asset": "/assets/worlds/periodic-table/cutouts/I-aee9c8921d26.webp",
+      "sha256": "aee9c8921d2614dff4f7e2d5a3b380df13f1f426dd5fb138f0cb51dca98034c9",
+      "bytes": 83184,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/I.webp",
+      "sourceSha256": "4d972934ba7075ed9c7d279ef47cbf7e495de74fb5645118a1662080bfae268c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 337138,
+        "opaque": 166669,
+        "feathered": 14593
+      }
+    },
+    {
+      "symbol": "In",
+      "asset": "/assets/worlds/periodic-table/cutouts/In-4c33fff68352.webp",
+      "sha256": "4c33fff683521d0f97dbfa05966d1303b09b55cd1698688e61959b359261b38a",
+      "bytes": 68550,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/In.webp",
+      "sourceSha256": "7fe106edbf39ec19827541db252ad6daaa645e3f11182c42f29853f901077866",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 333202,
+        "opaque": 176526,
+        "feathered": 8672
+      }
+    },
+    {
+      "symbol": "Ir",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ir-9ded9a01b711.webp",
+      "sha256": "9ded9a01b711d5dab37e1d59ae2fcb3c15f11e5ea98e9b472cbf7b937554356d",
+      "bytes": 37208,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ir.webp",
+      "sourceSha256": "b962d234e5d76b96d91d098b820ca387ad448f608656fa8c4401c3eb0dd6024c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 387466,
+        "opaque": 123001,
+        "feathered": 7933
+      }
+    },
+    {
+      "symbol": "K",
+      "asset": "/assets/worlds/periodic-table/cutouts/K-c1d554e79773.webp",
+      "sha256": "c1d554e79773f3ec584d8195aab5a07bbfd1b77e98d2ca652fc3ba51a475d5df",
+      "bytes": 16356,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/K.webp",
+      "sourceSha256": "c3792fbd52e6904cbf259e9f37d8fadefd5e7babe57302a89ba78e2293668c20",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 429723,
+        "opaque": 81229,
+        "feathered": 7448
+      }
+    },
+    {
+      "symbol": "Kr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Kr-ddea7c380b60.webp",
+      "sha256": "ddea7c380b6024987a931489c71e83764eefb55b3973d57e086f74959f10e773",
+      "bytes": 28352,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Kr.webp",
+      "sourceSha256": "23a28b2207e2c9ff39c5c5fb0d11c369d5d1e82231fbd8771892fb66edd2f116",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 380484,
+        "opaque": 128947,
+        "feathered": 8969
+      }
+    },
+    {
+      "symbol": "La",
+      "asset": "/assets/worlds/periodic-table/cutouts/La-48e10d51e1e8.webp",
+      "sha256": "48e10d51e1e8bb1b593963da14b4643de46601b761320c39995b205b4f06b7ad",
+      "bytes": 43940,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/La.webp",
+      "sourceSha256": "7cc058ea60f57f247ffa6393c311de80ffd93f205eb6d95d66b74c2659a7c6fe",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 388527,
+        "opaque": 122663,
+        "feathered": 7210
+      }
+    },
+    {
+      "symbol": "Li",
+      "asset": "/assets/worlds/periodic-table/cutouts/Li-2e00b3932782.webp",
+      "sha256": "2e00b3932782cd86b722b67191d3a3efa76747f4528d9c27947f71e21eea004a",
+      "bytes": 34566,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Li.webp",
+      "sourceSha256": "112c260e834d92b501521d63a442b116174d0a7402ddd58d81a86bc9ed7e1c40",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 364247,
+        "opaque": 143008,
+        "feathered": 11145
+      }
+    },
+    {
+      "symbol": "Lu",
+      "asset": "/assets/worlds/periodic-table/cutouts/Lu-0e010c7d5a71.webp",
+      "sha256": "0e010c7d5a71844be1b6873bbab44c07e128b4528ab61c29c7e13b75594d432e",
+      "bytes": 74666,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Lu.webp",
+      "sourceSha256": "f11b9d1e7ae6d93eb910fab5f4e27dfe77f5c81fe535c60d3ccbd80321cfeb6a",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 287606,
+        "opaque": 221398,
+        "feathered": 9396
+      }
+    },
+    {
+      "symbol": "Mg",
+      "asset": "/assets/worlds/periodic-table/cutouts/Mg-aad64ccb9d3a.webp",
+      "sha256": "aad64ccb9d3af5196f55b4b044106fa24c9dcbb8b4a9de7aeb0899431b59c55b",
+      "bytes": 43184,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Mg.webp",
+      "sourceSha256": "dc8dec292a5ff2bea5204ba631de4388615960a86916123391f9d0f37985b6c1",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 419462,
+        "opaque": 89859,
+        "feathered": 9079
+      }
+    },
+    {
+      "symbol": "Mn",
+      "asset": "/assets/worlds/periodic-table/cutouts/Mn-fb895e5f90e0.webp",
+      "sha256": "fb895e5f90e046072cc4b47153aed0fef38eeab42a47e29ff62aa8785f06776a",
+      "bytes": 65566,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Mn.webp",
+      "sourceSha256": "260e31e718bc9e746468db86535dfd5c4dfd6fc424af2c9d6f2903cb34223bff",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 366439,
+        "opaque": 142880,
+        "feathered": 9081
+      }
+    },
+    {
+      "symbol": "Mo",
+      "asset": "/assets/worlds/periodic-table/cutouts/Mo-3ee25d7c8111.webp",
+      "sha256": "3ee25d7c8111689055b15f33235f4cf78ba63fc892c5fe7c6e37a5ae6a945a04",
+      "bytes": 53954,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Mo.webp",
+      "sourceSha256": "de08d44b8da5b2af83f2b0c1e150e0cb0e92374d052f1d9344929e6be6e84c94",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 374582,
+        "opaque": 135507,
+        "feathered": 8311
+      }
+    },
+    {
+      "symbol": "N",
+      "asset": "/assets/worlds/periodic-table/cutouts/N-86f1f3591518.webp",
+      "sha256": "86f1f35915186c0af37c9c24348aee7da07678cd7ee83af8bb608838e16ebbac",
+      "bytes": 30658,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/N.webp",
+      "sourceSha256": "e952975bad55cc983cd32d737370f14593a444a62769a4302c325a6e7f1bf709",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 389965,
+        "opaque": 117718,
+        "feathered": 10717
+      }
+    },
+    {
+      "symbol": "Na",
+      "asset": "/assets/worlds/periodic-table/cutouts/Na-1c1e82567786.webp",
+      "sha256": "1c1e8256778646218ce5323b7fb352ef608779ebedb1754e1b4a87a9ad8e7287",
+      "bytes": 26370,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Na.webp",
+      "sourceSha256": "6227b0df6ee2ab94e8b8054d4ab2ca12d667dfef1de5a4cfebb23baf004c400d",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 328808,
+        "opaque": 181477,
+        "feathered": 8115
+      }
+    },
+    {
+      "symbol": "Nb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Nb-54c733686223.webp",
+      "sha256": "54c733686223a32a6710ba17b80a44a58d32cac87b61f20be572aa0468f33786",
+      "bytes": 34270,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Nb.webp",
+      "sourceSha256": "dc4f2b2f4969c302b43c3880b76fed63ead512d46928d65545f5da591cd09034",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 421606,
+        "opaque": 91263,
+        "feathered": 5531
+      }
+    },
+    {
+      "symbol": "Nd",
+      "asset": "/assets/worlds/periodic-table/cutouts/Nd-7e1971a429f5.webp",
+      "sha256": "7e1971a429f5ca8d0b0c0688140c867524429b7863e3d6c7acbc0c035dfeb8d7",
+      "bytes": 54900,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Nd.webp",
+      "sourceSha256": "6bdc73709bf0be98f33ddfe6a965c54893270da3024e43b25486ce690f52be48",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 284495,
+        "opaque": 213840,
+        "feathered": 20065
+      }
+    },
+    {
+      "symbol": "Ne",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ne-32afa2f1eaba.webp",
+      "sha256": "32afa2f1eabac617ff31aa13e7ca326328c4ee4cf399f00550febe26c9601178",
+      "bytes": 19292,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ne.webp",
+      "sourceSha256": "ca2cdb6619eac48bf32ef42fe81acaa83a1101856afc01418fe0d07f7053912e",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 439378,
+        "opaque": 71536,
+        "feathered": 7486
+      }
+    },
+    {
+      "symbol": "Ni",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ni-debd0f08f494.webp",
+      "sha256": "debd0f08f4945d2d953c8a81d5794d12cfdcee864f4fbb221e252b234e8c5652",
+      "bytes": 66532,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ni.webp",
+      "sourceSha256": "cafdb2a2e0751591600ca73386acc24ee6cf3f11e06297b97323971dc5e096dc",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 277629,
+        "opaque": 231520,
+        "feathered": 9251
+      }
+    },
+    {
+      "symbol": "O",
+      "asset": "/assets/worlds/periodic-table/cutouts/O-96763b9045b9.webp",
+      "sha256": "96763b9045b984f94d5569f4dae3e77a5481601456ac47462c80c8e4fb744caa",
+      "bytes": 27796,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/O.webp",
+      "sourceSha256": "b8a2fc46d4fe223d789db542f86b79643bdbf60495c7e280e5e4517bb66844c7",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 368920,
+        "opaque": 139699,
+        "feathered": 9781
+      }
+    },
+    {
+      "symbol": "Os",
+      "asset": "/assets/worlds/periodic-table/cutouts/Os-1960aa49fa32.webp",
+      "sha256": "1960aa49fa321d1c5150ba90744623836c4633b9dafbdd978f50e7da40010949",
+      "bytes": 45780,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Os.webp",
+      "sourceSha256": "5701c50bf8a4b224c8c90bf36a0679b0942d99871638664c6f3132b58b6f603c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 294276,
+        "opaque": 215661,
+        "feathered": 8463
+      }
+    },
+    {
+      "symbol": "P",
+      "asset": "/assets/worlds/periodic-table/cutouts/P-47e2fa0ad90b.webp",
+      "sha256": "47e2fa0ad90b8546291908842a3067f9a9bb45ae2117d232e4dd3071aaa890b5",
+      "bytes": 45698,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/P.webp",
+      "sourceSha256": "93ac0fb005dffaacc59df9454a82af15b4c202632f4316de34e5312809a95ac7",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 282725,
+        "opaque": 226906,
+        "feathered": 8769
+      }
+    },
+    {
+      "symbol": "Pb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pb-b8288f3dffbc.webp",
+      "sha256": "b8288f3dffbc42b09ad8b65e26f50ca7eb711706ace9b6b39443c4c381280e5f",
+      "bytes": 66744,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pb.webp",
+      "sourceSha256": "3607727bc290ef6feddb6b3111e8cc4305341ba468d3e3bd62e501f3a3a37dd8",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 260675,
+        "opaque": 248476,
+        "feathered": 9249
+      }
+    },
+    {
+      "symbol": "Pd",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pd-f10f1d71e59d.webp",
+      "sha256": "f10f1d71e59d3fea29e36adc76ef2c4f63332e92bdef369d6d96e392eb861867",
+      "bytes": 52574,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pd.webp",
+      "sourceSha256": "b67377dea2d13b23316b17723571e0c7f25885c25e5351ff75405cce98a8da87",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 403720,
+        "opaque": 102468,
+        "feathered": 12212
+      }
+    },
+    {
+      "symbol": "Pr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pr-a9a1f39bd4d6.webp",
+      "sha256": "a9a1f39bd4d67bc31f24473379789263250feb0bd053ba1fe420db311d5de3aa",
+      "bytes": 42448,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pr.webp",
+      "sourceSha256": "7ca3be4eb8dca1a7ada5753be0e9fae18e7c311ab912a643968c0cadc042dd00",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 342321,
+        "opaque": 166643,
+        "feathered": 9436
+      }
+    },
+    {
+      "symbol": "Pt",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pt-0a311cd43ead.webp",
+      "sha256": "0a311cd43ead3a55c73a0c8849f97ecd944ab2c9e7ca341f1c98e5153bd22450",
+      "bytes": 19044,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pt.webp",
+      "sourceSha256": "f963c3d5c2c43f71880a4d29fc0fca04e9301b8dbe29e72c102fce28d19975c9",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 469565,
+        "opaque": 44004,
+        "feathered": 4831
+      }
+    },
+    {
+      "symbol": "Pu",
+      "asset": "/assets/worlds/periodic-table/cutouts/Pu-ab638476a3a7.webp",
+      "sha256": "ab638476a3a7e4ed3ae41e77e1343d5f0af3e90ed62c1969c6073f74feb286ce",
+      "bytes": 37628,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Pu.webp",
+      "sourceSha256": "9823ead9da0c303293adff215661d8a08304b0853473daed09e970742d4ae1f7",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 379865,
+        "opaque": 129201,
+        "feathered": 9334
+      }
+    },
+    {
+      "symbol": "Rb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Rb-5df8b8c253a6.webp",
+      "sha256": "5df8b8c253a621a54062e23aa051bb622b4da694e50cb48715bb5d793d54a969",
+      "bytes": 25300,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Rb.webp",
+      "sourceSha256": "ae95935ff7a984ac85c868e9813d422e60f7d2b2c8d0caac8e8aacd059092ea2",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 413916,
+        "opaque": 95493,
+        "feathered": 8991
+      }
+    },
+    {
+      "symbol": "Re",
+      "asset": "/assets/worlds/periodic-table/cutouts/Re-21dceaece678.webp",
+      "sha256": "21dceaece67867eb32a04002664aa9e77b9e0ad37cfed6b7994cc7225c070ced",
+      "bytes": 42832,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Re.webp",
+      "sourceSha256": "93f3dcaaf266c91a8aad2d3c82c9d4fbb9fdba947370d0789a460e895d3e4f15",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 258709,
+        "opaque": 250604,
+        "feathered": 9087
+      }
+    },
+    {
+      "symbol": "Rh",
+      "asset": "/assets/worlds/periodic-table/cutouts/Rh-32a8c45fe31f.webp",
+      "sha256": "32a8c45fe31f4cf01e88a51b624481a3e76c2d6bb098448407034e6dfecf6295",
+      "bytes": 28084,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Rh.webp",
+      "sourceSha256": "9d07f64ced10f6038769b20794aa7dbd191f0f3ce37bd1cfe1dad8aa67a20a6c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 361305,
+        "opaque": 150003,
+        "feathered": 7092
+      }
+    },
+    {
+      "symbol": "Ru",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ru-5a2c1040f5b9.webp",
+      "sha256": "5a2c1040f5b9f0a777238eb85a385a4550f62b0f10a61471fee33a5a60c9e450",
+      "bytes": 84632,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ru.webp",
+      "sourceSha256": "306f417dfd0599896f6654a6fef904f32a2cbe4ff3d85f8bc148af0c7e3b4029",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 288366,
+        "opaque": 218978,
+        "feathered": 11056
+      }
+    },
+    {
+      "symbol": "S",
+      "asset": "/assets/worlds/periodic-table/cutouts/S-5a53e2ad5618.webp",
+      "sha256": "5a53e2ad56182fe33c5bfd59871caf693efa89b5d4973fe7714c841b1ef92cc9",
+      "bytes": 40460,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/S.webp",
+      "sourceSha256": "f9cd10732bdd7c8ae478c32ca5a55783a2c011e7b79dbcd3ea75eba40d63c30f",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 306510,
+        "opaque": 201545,
+        "feathered": 10345
+      }
+    },
+    {
+      "symbol": "Sb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Sb-517f3729e095.webp",
+      "sha256": "517f3729e0952fd254ded36f4bb23620eb31d4c2884d4a612b18c1e8ac6f8272",
+      "bytes": 78006,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Sb.webp",
+      "sourceSha256": "edf5fbb1394ab914cc4d227f95a6435b6a73afe0495118b0e1d1f3ed5c023e57",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 282123,
+        "opaque": 226375,
+        "feathered": 9902
+      }
+    },
+    {
+      "symbol": "Sc",
+      "asset": "/assets/worlds/periodic-table/cutouts/Sc-0bf53aac39cb.webp",
+      "sha256": "0bf53aac39cb6a84b8e712c7018ccbf287c3cfe5a7f58f618407127a2cd14936",
+      "bytes": 53468,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Sc.webp",
+      "sourceSha256": "a39b741de6a4ccb79764b600d251cb6eaee1d1ed371bfe0f06643309db383c35",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 330263,
+        "opaque": 179052,
+        "feathered": 9085
+      }
+    },
+    {
+      "symbol": "Se",
+      "asset": "/assets/worlds/periodic-table/cutouts/Se-995de2f9be6b.webp",
+      "sha256": "995de2f9be6be137d7380bc1d2ee6bbcb64b24bfcf7a5b5de5048986ad802e88",
+      "bytes": 65242,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Se.webp",
+      "sourceSha256": "424de50b91276a41ffee241c58489826a6a3ebd4bacbed708fc1a193a8043345",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 248418,
+        "opaque": 260738,
+        "feathered": 9244
+      }
+    },
+    {
+      "symbol": "Si",
+      "asset": "/assets/worlds/periodic-table/cutouts/Si-00d30d0c438e.webp",
+      "sha256": "00d30d0c438efabe740fcbd44d128aa0e9c8ab7f9c5d737777962992761a2177",
+      "bytes": 66270,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Si.webp",
+      "sourceSha256": "11cc05e09d46404fa012486fefc8e616644e1bac49203db51103a15ba5d3d8f9",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 280857,
+        "opaque": 227314,
+        "feathered": 10229
+      }
+    },
+    {
+      "symbol": "Sm",
+      "asset": "/assets/worlds/periodic-table/cutouts/Sm-305974ccc545.webp",
+      "sha256": "305974ccc54559dd9b5d5233e8f53eb2bd92257babd2106cd35713a1c9ce38b6",
+      "bytes": 35842,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Sm.webp",
+      "sourceSha256": "58d3ddd599548e84b401197520fcc1dcc73bab8c9a75940feb4b1fb483d42610",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 396031,
+        "opaque": 113911,
+        "feathered": 8458
+      }
+    },
+    {
+      "symbol": "Sn",
+      "asset": "/assets/worlds/periodic-table/cutouts/Sn-85da2c19f427.webp",
+      "sha256": "85da2c19f427bc7183ddf89882ab64cc24e94e380229b0e05e9151d148aa4179",
+      "bytes": 86338,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Sn.webp",
+      "sourceSha256": "96c03cd154f65147ea9585b2a941e5a5a3fc07446a04ca7e15fc07ceb5984496",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 271484,
+        "opaque": 235524,
+        "feathered": 11392
+      }
+    },
+    {
+      "symbol": "Sr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Sr-8ed2f0a1a099.webp",
+      "sha256": "8ed2f0a1a099e799cd6cb06f79bb790b10ea0f60126b1f668312d589477f7d81",
+      "bytes": 38846,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Sr.webp",
+      "sourceSha256": "b1ecf8a86be0698d2d965f01de7626e6bacae19665aadda064d6ca13e41f5a11",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 305850,
+        "opaque": 203429,
+        "feathered": 9121
+      }
+    },
+    {
+      "symbol": "Ta",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ta-1992f70818d0.webp",
+      "sha256": "1992f70818d087ff2482e83da19fc726eff0696a0baa4eab6c228aec88e24070",
+      "bytes": 50110,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ta.webp",
+      "sourceSha256": "9bf2c9a7cbdc229617b6b89e0bde77169c0def9628f5e97455c0954731212b01",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 386148,
+        "opaque": 124463,
+        "feathered": 7789
+      }
+    },
+    {
+      "symbol": "Tb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Tb-20b62a13488a.webp",
+      "sha256": "20b62a13488afdbf44701203826426b6dee44df90be5d6f0635ff300f159ff59",
+      "bytes": 63520,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Tb.webp",
+      "sourceSha256": "b97c9b5fc488c3653af372636f9224a1655a6a1dd82c4afebca281d88e81c436",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 332849,
+        "opaque": 176400,
+        "feathered": 9151
+      }
+    },
+    {
+      "symbol": "Te",
+      "asset": "/assets/worlds/periodic-table/cutouts/Te-a74fccbc1df1.webp",
+      "sha256": "a74fccbc1df1885f4a8e2681a1dc3b2a6b671c0fee7499bc274ed81c53fa01e8",
+      "bytes": 109886,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Te.webp",
+      "sourceSha256": "9fb7884b62ba8e2aa8bdb053f0c038d116ad2cf5c60f507f8140d7ee5625953c",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 228713,
+        "opaque": 280039,
+        "feathered": 9648
+      }
+    },
+    {
+      "symbol": "Ti",
+      "asset": "/assets/worlds/periodic-table/cutouts/Ti-45996c80f0f0.webp",
+      "sha256": "45996c80f0f0fad4567542781961b3d04b19c39ff18e6cea94289218a9205aef",
+      "bytes": 69212,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Ti.webp",
+      "sourceSha256": "b0b4f6403c6f4dd3ea634baf3a4b95c9720410545bad0bfed72f7aaa1410733f",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 323584,
+        "opaque": 185572,
+        "feathered": 9244
+      }
+    },
+    {
+      "symbol": "Tl",
+      "asset": "/assets/worlds/periodic-table/cutouts/Tl-b855108d2e59.webp",
+      "sha256": "b855108d2e59381d35c0568c870bbb88d1c25c274714481f28534784f554242f",
+      "bytes": 27784,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Tl.webp",
+      "sourceSha256": "210bf0b8913209867ae20a11ff846564b0192045e272d217b405b7a6578dee9d",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 408131,
+        "opaque": 101341,
+        "feathered": 8928
+      }
+    },
+    {
+      "symbol": "Tm",
+      "asset": "/assets/worlds/periodic-table/cutouts/Tm-f383517845e5.webp",
+      "sha256": "f383517845e549150029ccd8777d95362440d17eb44360b9202e5a4aaa49c79b",
+      "bytes": 93600,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Tm.webp",
+      "sourceSha256": "6f8e79a0976be05bd0174a02dae24154e620ac443cc81739ac79453cee5b632b",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 280853,
+        "opaque": 223554,
+        "feathered": 13993
+      }
+    },
+    {
+      "symbol": "U",
+      "asset": "/assets/worlds/periodic-table/cutouts/U-7d3dda2df775.webp",
+      "sha256": "7d3dda2df7758dfef4474c483126dd6b4430b4c13bcb38324fc08c70fd25f4e6",
+      "bytes": 51584,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/U.webp",
+      "sourceSha256": "63813afef4b590b82d10c1a1fa59fad9c1f18b444e978f540dd6ad62f0da002a",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 370373,
+        "opaque": 139579,
+        "feathered": 8448
+      }
+    },
+    {
+      "symbol": "V",
+      "asset": "/assets/worlds/periodic-table/cutouts/V-f8db69d0d8bb.webp",
+      "sha256": "f8db69d0d8bb012364367da298a1bd1847ab00c88dfdb6aae11eaf795d190df8",
+      "bytes": 36274,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/V.webp",
+      "sourceSha256": "dcf1515d7338c25438c60a17145f962d4ed1fec8656a2b46fd8ea1f761b28f28",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 353028,
+        "opaque": 156685,
+        "feathered": 8687
+      }
+    },
+    {
+      "symbol": "W",
+      "asset": "/assets/worlds/periodic-table/cutouts/W-128ecf0027dd.webp",
+      "sha256": "128ecf0027dd39b644a544761f5554302c71876d2a3dc83ad5377d3ddab4f519",
+      "bytes": 50708,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/W.webp",
+      "sourceSha256": "17221947fe54ae86eb591553755aab292993e07a2873adcd9924520dae9a64ce",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 334751,
+        "opaque": 174774,
+        "feathered": 8875
+      }
+    },
+    {
+      "symbol": "Xe",
+      "asset": "/assets/worlds/periodic-table/cutouts/Xe-97e878ab8a00.webp",
+      "sha256": "97e878ab8a00f666c253d1846c13e25843d43eac20b5b87dbd78871bc4e219b1",
+      "bytes": 26336,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Xe.webp",
+      "sourceSha256": "75738d092a9deb639b713729ee9235aab8e5f046da35866e063027c563ef9398",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 405961,
+        "opaque": 103737,
+        "feathered": 8702
+      }
+    },
+    {
+      "symbol": "Y",
+      "asset": "/assets/worlds/periodic-table/cutouts/Y-4b9bb01720c7.webp",
+      "sha256": "4b9bb01720c73b129abc02ebc67798769ddb4f8f0b094ce6372fd7c8ea31c7d8",
+      "bytes": 70776,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Y.webp",
+      "sourceSha256": "6339f012f5698f7688c46e96079a7a5524e27e96d33573bd42c95a58a761a1fd",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 318603,
+        "opaque": 186693,
+        "feathered": 13104
+      }
+    },
+    {
+      "symbol": "Yb",
+      "asset": "/assets/worlds/periodic-table/cutouts/Yb-f05cd4d79383.webp",
+      "sha256": "f05cd4d79383c89eeffd5a4edcda1f2297d30ea06e9a0b2c4ff7994e00ecc536",
+      "bytes": 74266,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Yb.webp",
+      "sourceSha256": "2f152645d7af57a0e698a55fbf74c99230e9357aa5d1c113dd9eb831c2ef1944",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 320211,
+        "opaque": 188890,
+        "feathered": 9299
+      }
+    },
+    {
+      "symbol": "Zn",
+      "asset": "/assets/worlds/periodic-table/cutouts/Zn-b974ae5bbc0e.webp",
+      "sha256": "b974ae5bbc0e3a4e70f24e452cb4f935a3aa939d39d4504d7f0f42574dfff6aa",
+      "bytes": 63458,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Zn.webp",
+      "sourceSha256": "0b78d8e0c81388161f5261c3fd0cfbebe188af15b76079855eb4c5905eb9de8f",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 323032,
+        "opaque": 187447,
+        "feathered": 7921
+      }
+    },
+    {
+      "symbol": "Zr",
+      "asset": "/assets/worlds/periodic-table/cutouts/Zr-55a10678527c.webp",
+      "sha256": "55a10678527c7f5854bda6d8d89569227541cdb88c97e5475a0e66bf07587301",
+      "bytes": 52434,
+      "width": 720,
+      "height": 720,
+      "source": "/assets/worlds/periodic-table/display/Zr.webp",
+      "sourceSha256": "f7a61920bebedcd10bcdc2fc98265c63e28c8e5d270f278d150c25bee59eaf45",
+      "method": "Apple Vision foreground instances, all objects, revision 1",
+      "alpha": {
+        "pixels": 518400,
+        "transparent": 340387,
+        "opaque": 168793,
+        "feathered": 9220
+      }
+    }
+  ]
+}

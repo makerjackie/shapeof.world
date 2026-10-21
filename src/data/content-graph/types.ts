@@ -21,11 +21,24 @@ export type Category = LocalizedNodeCopy & {
   order: number
 }
 
+export type PathStopLabel = {
+  zh: string
+  en: string
+}
+
 export type Path = LocalizedNodeCopy & {
   id: PathId
+  /** Public URL segment for `/routes/<slug>`. Stable independently of the internal Path id. */
+  slug: string
   /** Omitted publication status keeps a discovered node in authoring-only draft state. */
   publication?: ContentGraphPublication
+  /** Explicit experimental direct link; remains outside public discovery when draft. */
+  experimental?: boolean
+  /** Actual publication date of a substantial series curation update (YYYY-MM-DD). */
+  updatedAt?: string
   worldIds: ReadonlyArray<string>
+  /** Optional short stop names for the homepage chain. Must match `worldIds` length when present. */
+  stopLabels?: ReadonlyArray<PathStopLabel>
   order: number
 }
 

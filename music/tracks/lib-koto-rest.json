@@ -1,0 +1,102 @@
+{
+  "id": "lib-koto-rest",
+  "code": "LIB-19-03",
+  "title": {
+    "en": "Rest — Koto",
+    "zh": "休憩 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "koto"
+  ],
+  "energy": 2,
+  "bpm": 52,
+  "key": "F major",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Japanese acoustic instrumental instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 52 BPM; F major. Main idea: a compact three-note motif. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A serene and reflective instrumental piece featuring traditional-sounding plucked strings, a melodic flute, and subtle background pads. The music evokes a peaceful and slightly melancholic atmosphere.",
+    "zh": "一首宁静而富有沉思感的器乐作品，以传统风格的弹拨弦乐器、悠扬的长笛和柔和的背景音垫为主。音乐营造出一种平和而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 171.572,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:49:20.475343+00:00",
+  "generation": {
+    "id": "4bf6a13b-80bc-4052-87cc-5d1e12003dc7",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:48:34.577757+00:00",
+    "completedAt": "2026-09-09T08:49:20.475343+00:00",
+    "interactionId": "ZB2haqqDCebRi9sPvtzDgAc",
+    "sha256": "64229c42b5ae7ae668ab5d8a19b4c66227de390862c0c7321a3ff8e73491ccf9"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and reflective instrumental piece featuring traditional-sounding plucked strings, a melodic flute, and subtle background pads. The music evokes a peaceful and slightly melancholic atmosphere.",
+      "zh": "一首宁静而富有沉思感的器乐作品，以传统风格的弹拨弦乐器、悠扬的长笛和柔和的背景音垫为主。音乐营造出一种平和而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Flute",
+      "Pads",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Reflective",
+      "Peaceful",
+      "Melancholic",
+      "Traditional",
+      "Calming"
+    ],
+    "energy": 2,
+    "bpmEstimate": 80,
+    "reason": "High-quality instrumental piece with clear emotional content and no technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:49:30.948874+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:50:42.946068+00:00"
+}

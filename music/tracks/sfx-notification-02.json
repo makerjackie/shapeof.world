@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-02",
+  "code": "SFX-NOTIFICATION-02",
+  "title": {
+    "en": "Gentle error",
+    "zh": "温和报错"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 1,
+  "seed": 4061031542,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized gentle error for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的温和报错合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.84,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4061031542,
+    "sha256": "3e5760a2c1117709c05853a9f330cdfd859133e63484746c30ce3597b0d60794",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0741934bf0cb0268b952fc2ab9195c78291bd9c783a88d3c3e1f26bd25c5d51b",
+      "bytes": 12843,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3e5760a2c1117709c05853a9f330cdfd859133e63484746c30ce3597b0d60794",
+      "bytes": 74132,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "fcd8669c6d2d2e6c1ec48fab5d6d15124d91ef3d58b9b9af475a79440a2e0bf5",
+      "bytes": 7413,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "29c4c62f9f42e4d0b7c326d975d96e9b17be46da4f353a510e291dd75a726037",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 37044,
+    "duration": 0.84,
+    "peakDbfs": -4.65,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.9657510325558793e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04522320556640613,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic boop sound, followed by a slightly longer, lower-pitched electronic boop.",
+      "zh": "一个短促的高音电子提示音，随后是一个稍长、低音的电子提示音。"
+    },
+    "reason": "The sound is a clean, synthesized electronic effect, suitable for UI or notification sounds in games or video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:14.809673+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0741934bf0cb0268b952fc2ab9195c78291bd9c783a88d3c3e1f26bd25c5d51b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 37044
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.888948+00:00"
+}

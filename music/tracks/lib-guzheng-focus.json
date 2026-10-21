@@ -1,0 +1,102 @@
+{
+  "id": "lib-guzheng-focus",
+  "code": "LIB-17-02",
+  "title": {
+    "en": "Focus — Guzheng",
+    "zh": "专注 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "guzheng"
+  ],
+  "energy": 2,
+  "bpm": 70,
+  "key": "A minor",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Chinese chamber instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 70 BPM; A minor. Main idea: a repeating five-note figure with space between phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and traditional Chinese instrumental piece featuring plucked strings (like guzheng and pipa), flute, and light percussion, creating a calm and reflective atmosphere.",
+    "zh": "一首宁静的中国传统器乐曲，以古筝、琵琶等弹拨乐器、笛子和轻柔的打击乐为主，营造出平静而富有沉思感的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.708,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:43:43.391534+00:00",
+  "generation": {
+    "id": "a36c8dc2-77f9-4b40-9b19-fd025c50ba33",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:42:56.488507+00:00",
+    "completedAt": "2026-09-09T08:43:43.391534+00:00",
+    "interactionId": "EhyhamOirK7aD-uWtaAK",
+    "sha256": "5077d6c5bd100cadfbf09b937a31ae513262551e98bfd8641325590e39d68218"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional Chinese instrumental piece featuring plucked strings (like guzheng and pipa), flute, and light percussion, creating a calm and reflective atmosphere.",
+      "zh": "一首宁静的中国传统器乐曲，以古筝、琵琶等弹拨乐器、笛子和轻柔的打击乐为主，营造出平静而富有沉思感的氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Pipa",
+      "Flute",
+      "Percussion",
+      "Strings"
+    ],
+    "moods": [
+      "Peaceful",
+      "Calm",
+      "Traditional",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "High-quality traditional Chinese instrumental music with a clear, serene mood and no defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:43:54.838129+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:45:08.959295+00:00"
+}

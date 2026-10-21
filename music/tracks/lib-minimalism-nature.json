@@ -1,0 +1,101 @@
+{
+  "id": "lib-minimalism-nature",
+  "code": "LIB-04-04",
+  "title": {
+    "en": "Wildlands — Minimalism",
+    "zh": "山野 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 104,
+  "key": "D dorian",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second acoustic minimalism instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 104 BPM; D dorian. Main idea: an ascending fourth answered by a stepwise descent. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A melancholic and dramatic orchestral piece featuring piano and strings, building from a gentle opening to a powerful, emotional climax before fading out.",
+    "zh": "一首忧郁而富有戏剧性的管弦乐作品，以钢琴和弦乐为主，从柔和的开场逐渐发展到高潮，然后逐渐淡出。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.644,
+  "generatedAt": "2026-09-09T07:53:22.235563+00:00",
+  "generation": {
+    "id": "1fb59469-64ef-41a2-af6d-69911c28ef4a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:52:35.062279+00:00",
+    "completedAt": "2026-09-09T07:53:22.235563+00:00",
+    "interactionId": "RBChavfwEKKsrtoP65a1oAo",
+    "sha256": "17b640c972ff3253e15a1ccea0ea90ffce34af7cf6d8a2a10470eb1f4d3c4ad3"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and dramatic orchestral piece featuring piano and strings, building from a gentle opening to a powerful, emotional climax before fading out.",
+      "zh": "一首忧郁而富有戏剧性的管弦乐作品，以钢琴和弦乐为主，从柔和的开场逐渐发展到高潮，然后逐渐淡出。"
+    },
+    "instruments": [
+      "Piano",
+      "Orchestral Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Melancholic",
+      "Dramatic",
+      "Emotional",
+      "Reflective",
+      "Cinematic",
+      "Hopeful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 68,
+    "reason": "Well-produced, clear sound quality, and emotionally engaging.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:53:36.689495+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:54:48.726205+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

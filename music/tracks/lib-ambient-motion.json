@@ -1,0 +1,103 @@
+{
+  "id": "lib-ambient-motion",
+  "code": "LIB-24-08",
+  "title": {
+    "en": "Motion — Ambient",
+    "zh": "跃动 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "ambient"
+  ],
+  "energy": 4,
+  "bpm": 68,
+  "key": "B minor",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second ambient electronic instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 68 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An energetic and driving electronic track featuring pulsing synth bass, melodic synth leads, and a steady drum beat. It builds and releases tension with layered arpeggios and rhythmic elements, creating a dynamic and modern soundscape.",
+    "zh": "一首充满活力和驱动力的电子音乐，以脉动的合成器低音、旋律性的合成器主音和稳定的鼓点为特色。它通过分层的琶音和节奏元素构建并释放张力，营造出动态而现代的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 143.778,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:05:07.146038+00:00",
+  "generation": {
+    "id": "a4e9468c-846a-4730-bde6-b3a2db4a219f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:04:12.601613+00:00",
+    "completedAt": "2026-09-09T09:05:07.146038+00:00",
+    "interactionId": "DSGhasa3G8zRi9sPrKHS-AM",
+    "sha256": "189346ced79ec9577deb348343c1173bdb34ed78841baca4428fed34661827e0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving electronic track featuring pulsing synth bass, melodic synth leads, and a steady drum beat. It builds and releases tension with layered arpeggios and rhythmic elements, creating a dynamic and modern soundscape.",
+      "zh": "一首充满活力和驱动力的电子音乐，以脉动的合成器低音、旋律性的合成器主音和稳定的鼓点为特色。它通过分层的琶音和节奏元素构建并释放张力，营造出动态而现代的音景。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Synth Pad",
+      "Arpeggiator"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Modern",
+      "Uplifting",
+      "Dynamic",
+      "Pulsing"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a professionally produced, clean electronic track with a clear structure and good sound quality, making it suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:05:24.592020+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:07:52.222284+00:00"
+}

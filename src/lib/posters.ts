@@ -8,11 +8,6 @@ export function worldThumbnail(world: Pick<WorldExperience, 'id'>): string {
   return `/assets/posters/thumb/${world.id}.webp`
 }
 
-/** 首页知识星球用的更小图：128×86，避免把目录缩略图再放大成首屏竞争。 */
-export function worldOrbThumbnail(world: Pick<WorldExperience, 'id'>): string {
-  return `/assets/posters/orb/${world.id}.webp`
-}
-
 /** OG / 分享卡片的画幅，与 `scripts/generate-social-cards.mjs` 保持一致。 */
 export const SOCIAL_CARD_WIDTH = 1200
 export const SOCIAL_CARD_HEIGHT = 630

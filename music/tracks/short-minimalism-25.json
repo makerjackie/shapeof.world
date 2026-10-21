@@ -1,0 +1,165 @@
+{
+  "id": "short-minimalism-25",
+  "code": "SHORT-03-25",
+  "title": {
+    "en": "Small Mechanisms · 25",
+    "zh": "微小机关 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "woodblocks",
+    "pizzicato strings",
+    "marimba",
+    "brushed snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: tactile acoustic minimalism; interlocking wooden percussion and witty plucked melody. Instruments: woodblocks, pizzicato strings, marimba, brushed snare. Tempo 120 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat, playful, and slightly retro orchestral pop track with a clear, memorable melody, featuring pizzicato strings, bright brass, and a driving rhythm section.",
+    "zh": "一首欢快、俏皮且略带复古感的管弦流行乐曲，旋律清晰动听，以拨弦乐器、明亮的铜管乐和强劲的节奏部分为特色。"
+  },
+  "batch": "short-promos-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 16,
+      "logo": 29
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T02:33:51.208821+00:00",
+  "generation": {
+    "id": "d4786145-abb5-4855-8760-d65c213fafad",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T02:33:22.287838+00:00",
+    "completedAt": "2026-09-10T02:33:51.208821+00:00",
+    "interactionId": "8xaiaua4BtDi8vUPubf2-QQ",
+    "sha256": "3faccd62e0955bba56c2bd7c4d67b5ad580ad9582e55e5eece3349f0039ea2c7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat, playful, and slightly retro orchestral pop track with a clear, memorable melody, featuring pizzicato strings, bright brass, and a driving rhythm section.",
+      "zh": "一首欢快、俏皮且略带复古感的管弦流行乐曲，旋律清晰动听，以拨弦乐器、明亮的铜管乐和强劲的节奏部分为特色。"
+    },
+    "instruments": [
+      "Pizzicato strings",
+      "Brass",
+      "Drums",
+      "Bass",
+      "Woodwinds",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Cheerful",
+      "Upbeat",
+      "Whimsical",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and engaging promotional music with a distinct character.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens with an immediate, catchy melodic and rhythmic motif. It concludes with a clear, deliberate orchestral flourish and a final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:41:59.443569+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "25a72f11a3823f71e6720d65834e9b325c6020e9e5ddc50ff998f6378a35a5d5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.074208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A playful and whimsical cartoon-style instrumental track featuring a prominent glockenspiel melody, a walking bassline, and light, bouncy percussion. It evokes a cheerful, retro, and lighthearted atmosphere, reminiscent of classic animation or children's media.",
+      "zh": "一首俏皮而异想天开的卡通风格器乐曲，以突出的木琴旋律、行进的低音线和轻快活泼的打击乐为特色。它唤起了一种欢快、复古和轻松的氛围，让人联想到经典动画或儿童媒体。"
+    },
+    "instruments": [
+      "Glockenspiel",
+      "Xylophone",
+      "Acoustic Bass",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Cheerful",
+      "Lighthearted",
+      "Cartoonish",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The music is well-produced, clear, and fits a specific lighthearted, playful niche without any audible defects or unwanted elements, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:37:28.674479+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.074207999999999,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/short-minimalism-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/short-minimalism-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/short-minimalism-25/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T02:44:49.855320+00:00"
+}

@@ -1,0 +1,35 @@
+.making-page .failures-hero {
+  padding: clamp(108px, 12vh, 148px) 7.5vw 36px;
+}
+
+.making-page .failures-hero-lead {
+  margin-top: 18px;
+}
+
+.making-page .failures-collection {
+  padding-top: clamp(28px, 3.5vw, 44px);
+}
+
+@media (max-width: 760px) {
+  .making-page .failures-hero {
+    padding: 110px 20px 32px;
+  }
+
+  .making-page .failures-hero::after {
+    right: 20px;
+    left: 20px;
+  }
+
+  .making-page .failures-hero h1 {
+    max-width: none;
+  }
+
+  .making-page .failures-hero-lead {
+    margin-top: 16px;
+    font-size: var(--fs-body);
+  }
+
+  .making-page .failures-collection {
+    padding: 28px 20px 96px;
+  }
+}

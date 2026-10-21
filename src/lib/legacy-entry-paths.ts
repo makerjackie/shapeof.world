@@ -1,22 +1,16 @@
+import { parseWorldPath, worldPath } from './world-urls'
+import { legacyWorldRedirects } from '../data/legacy-redirects'
+import firstSeen from '../data/generated/world-first-seen.json'
+import routeReservations from '../data/generated/route-reservations.json'
+
+export const legacyHomeEntryNames = ['index.html', 'index.htm', 't', 'lab', 'history'] as const
+export const legacyWorldEntryPrefix = 'w'
+export const legacyChineseEntryPrefix = 'zh'
+
 /**
  * Old-site and locale-prefixed URLs that still arrive on shapeof.world.
  * Send them into the current site. Never send them to v1.
  */
-
-const currentExactPaths = new Set([
-  '/',
-  '/about',
-  '/atlas',
-  '/changelog',
-  '/failures',
-  '/making',
-  '/made-with',
-  '/sources',
-  '/story',
-  '/worlds',
-])
-
-const worldIdPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
 function normalizePathname(pathname: string): string {
   const collapsed = pathname.replace(/\/{2,}/g, '/')
@@ -24,18 +18,11 @@ function normalizePathname(pathname: string): string {
   return collapsed || '/'
 }
 
-function isCurrentPath(path: string): boolean {
-  if (currentExactPaths.has(path)) return true
-  const explore = path.match(/^\/explore\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)
-  if (explore) return worldIdPattern.test(explore[1])
-  const madeWith = path.match(/^\/made-with\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)
-  return Boolean(madeWith)
-}
-
 /**
  * Returns a same-origin href when the incoming path is a known leftover from
- * the previous site or a `/zh` `/en` prefix. Query strings, including UTM,
- * are preserved. Returns null when the router should 404 as usual.
+ * the previous site or a `/zh` prefix. English `/en` is the live English site
+ * and is left alone. Query strings, including UTM, are preserved. Returns
+ * null when the router should 404 as usual.
  */
 export function resolveLegacyEntryHref(pathname: string, search = ''): string | null {
   const query = !search || search.startsWith('?') ? search : `?${search}`
@@ -44,29 +31,37 @@ export function resolveLegacyEntryHref(pathname: string, search = ''): string | 
   let path = original
   let locale: 'zh' | 'en' | undefined
 
-  const localeMatch = path.match(/^\/(zh|en)(\/.*)?$/i)
+  const localeMatch = path.match(new RegExp(`^/${legacyChineseEntryPrefix}(/.*)?$`, 'i'))
   if (localeMatch) {
-    locale = localeMatch[1].toLowerCase() as 'zh' | 'en'
-    path = normalizePathname(localeMatch[2] || '/')
+    locale = 'zh'
+    path = normalizePathname(localeMatch[1] || '/')
   }
 
-  if (path === '/index.html' || path === '/index.htm') path = '/'
-  if (path === '/t' || path === '/lab' || path === '/history') path = '/'
+  if ((legacyHomeEntryNames as readonly string[]).includes(path.slice(1))) path = '/'
 
-  const shortWorld = path.match(/^\/w\/([a-z0-9]+(?:-[a-z0-9]+)*)$/i)
-  if (shortWorld) path = `/explore/${shortWorld[1].toLowerCase()}`
-
-  if (!isCurrentPath(path)) {
-    if (!locale) return null
-    path = '/'
+  const shortWorld = path.match(new RegExp(`^/${legacyWorldEntryPrefix}/([a-z0-9]+(?:-[a-z0-9]+)*)$`, 'i'))
+  if (shortWorld) {
+    const id = shortWorld[1].toLowerCase()
+    const target = Object.hasOwn(legacyWorldRedirects, id) ? legacyWorldRedirects[id] : id
+    if (!Object.hasOwn(firstSeen, target)) return null
+    path = worldPath(target)
   }
 
   const unchanged = path === original && !locale
   if (unchanged) return null
 
-  incoming.pathname = path
-  if (locale && !incoming.searchParams.has('lang')) {
-    incoming.searchParams.set('lang', locale)
+  const world = parseWorldPath(path)
+  if (world && (world.legacy || Object.hasOwn(legacyWorldRedirects, world.worldId))) {
+    const target = Object.hasOwn(legacyWorldRedirects, world.worldId) ? legacyWorldRedirects[world.worldId] : world.worldId
+    if (!Object.hasOwn(firstSeen, target)) return null
+    path = worldPath(target, world.locale)
   }
+
+  if (locale && path.split('/').filter(Boolean).length <= 1
+    && !routeReservations.exactPagePaths.includes(path)
+    && !Object.hasOwn(firstSeen, path.slice(1))) return null
+
+  incoming.pathname = path
+  incoming.searchParams.delete('lang')
   return `${incoming.pathname}${incoming.search}${incoming.hash}`
 }

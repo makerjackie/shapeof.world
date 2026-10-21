@@ -1,0 +1,9 @@
+# Audio binaries belong on R2, not in git
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.m4a
+*.aiff
+.cache/
+AGENT_HANDOFF.md

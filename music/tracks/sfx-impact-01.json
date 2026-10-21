@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-01",
+  "code": "SFX-IMPACT-01",
+  "title": {
+    "en": "Wood knock",
+    "zh": "木块敲击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 0,
+  "seed": 4085822206,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized wood knock for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的木块敲击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4085822206,
+    "sha256": "e2268a19e55b2dc87d932f7167ba8183b6e079c83b22b9e6eea4d9c197fcece7",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2c497886cc2f016d80ed0b22d6b2c5072170e0c5cb297171536a8fdb3faeb7ce",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e2268a19e55b2dc87d932f7167ba8183b6e079c83b22b9e6eea4d9c197fcece7",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6c899d4fbb857a5671fc3bfa81c6deb4098d77f1429cdd01c72baa1c97cd10f1",
+      "bytes": 5221,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "857bcf6d4c26cb594284dc7fed10bbbbd1fd44d6dc53929b6a037ef5e614f938",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.79,
+    "dcOffset": -1.1072137188208617e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.03527481079101574,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized whoosh sound effect with a slight metallic or electronic quality, suggesting a quick movement or transition.",
+      "zh": "一个短促、干净的合成嗖嗖声效果，带有一丝金属或电子质感，暗示快速移动或过渡。"
+    },
+    "reason": "The sound is a clear, isolated, and well-produced synthesized whoosh, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:29.667801+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "2c497886cc2f016d80ed0b22d6b2c5072170e0c5cb297171536a8fdb3faeb7ce"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:24:08.210292+00:00"
+}

@@ -59,7 +59,8 @@
   list-style: none;
 }
 
-.experience-fallback-list a {
+.experience-fallback-list a,
+.experience-fallback-retry {
   display: inline-block;
   padding: 9px 16px;
   border: 1px solid rgba(255, 255, 255, 0.24);
@@ -70,8 +71,18 @@
   transition: border-color 160ms ease, background-color 160ms ease;
 }
 
+.experience-fallback-retry {
+  min-height: 44px;
+  margin-bottom: 22px;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .experience-fallback-list a:hover,
-.experience-fallback-list a:focus-visible {
+.experience-fallback-list a:focus-visible,
+.experience-fallback-retry:hover,
+.experience-fallback-retry:focus-visible {
   border-color: rgba(255, 255, 255, 0.55);
   background: rgba(255, 255, 255, 0.08);
 }

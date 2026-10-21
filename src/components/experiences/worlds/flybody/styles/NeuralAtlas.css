@@ -1,0 +1,722 @@
+.fly-neural {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	color: #efdfed;
+	background: radial-gradient(ellipse at 58% 45%, #21192c 0%, #100f1d 48%, #070812 100%);
+	--experience-panel-surface: rgba(23, 20, 34, 0.96);
+	--experience-panel-border: rgba(219, 190, 223, 0.22);
+	--experience-panel-shadow: 0 12px 36px #0005;
+	--experience-panel-radius: 18px;
+	--freebar-accent: #e1abc4;
+	--freebar-ink: #f4e6ef;
+	--freebar-text-shadow: none;
+	animation: fly-neural-enter 0.5s ease-out;
+}
+.fly-neural-stage {
+	position: absolute;
+	inset: 8% 0 13% 17%;
+	touch-action: none;
+	cursor: grab;
+}
+.fly-neural-stage:active {
+	cursor: grabbing;
+}
+.fly-neural-stage canvas {
+	display: block;
+}
+.fly-neural-caption {
+	position: absolute;
+	top: var(--experience-safe-top);
+	left: clamp(24px, 4.8vw, 76px);
+	pointer-events: none;
+	max-width: 320px;
+}
+.fly-neural-caption > span {
+	font-size: 10px;
+	letter-spacing: 0.22em;
+	color: #b9a5c1;
+}
+.fly-neural-caption h1 {
+	font-family: var(--font-display, serif);
+	font-size: clamp(28px, 3.5vw, 46px);
+	font-weight: 400;
+	line-height: 1.2;
+	margin: 18px 0 16px;
+}
+.fly-neural-caption p {
+	font-size: 13px;
+	line-height: 1.8;
+	color: #c3b2ca;
+	margin: 0 0 12px;
+}
+.fly-neural-caption small {
+	color: #9988a6;
+	font-size: 11px;
+}
+.fly-neural-selection {
+	position: absolute;
+	left: clamp(24px, 4.8vw, 76px);
+	bottom: calc(var(--experience-freebar-clearance, 145px) + 24px);
+	pointer-events: none;
+}
+.fly-neural-id {
+	font-size: 17px;
+	color: #f8dfae;
+}
+.fly-neural-id small {
+	font-size: 11px;
+	color: #aa95b3;
+	margin-left: 8px;
+}
+.fly-neural-selection p {
+	font-size: 12px;
+	margin: 10px 0;
+}
+.fly-neural-selection strong {
+	font-size: 21px;
+	font-weight: 400;
+	color: #ffe5b0;
+	margin: 0 5px;
+}
+.fly-neural-selection > small {
+	font-size: 10px;
+	color: #a592b0;
+}
+.fly-neural-selection em {
+	font-style: normal;
+	color: #f395ad;
+}
+.fly-neural-filters {
+	display: flex;
+	gap: 4px;
+}
+.fly-neural-filters button {
+	background: none;
+	color: #bba9c5;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	font-size: 12px;
+	padding: 10px 13px;
+	min-height: 40px;
+}
+.fly-neural-filters button[aria-pressed='true'] {
+	color: #fce7f6;
+	background: #df9bb520;
+	border-color: #ddaac333;
+}
+.fly-neural button:focus-visible {
+	outline: 2px solid #ffdb98;
+	outline-offset: 3px;
+}
+.fly-neural-status {
+	position: absolute;
+	top: 45%;
+	left: 15%;
+	right: 15%;
+	text-align: center;
+	color: #c9b8d6;
+	font-size: 14px;
+}
+.fly-neural-status button {
+	background: #292134;
+	color: #efdfed;
+	border: 1px solid #756480;
+	border-radius: 8px;
+	padding: 10px 20px;
+}
+[data-overlays-hidden='true'] .fly-neural-stage {
+	inset: 0;
+}
+@keyframes fly-neural-enter {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@media (max-width: 720px) {
+	.fly-neural-stage {
+		inset: 24% 0 24%;
+	}
+	.fly-neural-caption {
+		left: 24px;
+		max-width: 330px;
+	}
+	.fly-neural-caption h1 {
+		font-size: 30px;
+		margin: 12px 0;
+	}
+	.fly-neural-caption p {
+		font-size: 12px;
+		margin-bottom: 6px;
+	}
+	.fly-neural-caption small {
+		font-size: 10px;
+	}
+	.fly-neural-selection {
+		left: 24px;
+		bottom: calc(var(--experience-freebar-clearance, 160px) + 16px);
+	}
+	.fly-neural-id {
+		font-size: 14px;
+	}
+	.fly-neural-selection p {
+		margin: 6px 0;
+		font-size: 11px;
+	}
+	.fly-neural-selection strong {
+		font-size: 17px;
+	}
+	.fly-neural-filters button {
+		padding: 10px 11px;
+	}
+	.fly-neural .experience-freebar-reset {
+		font-size: 12px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.fly-neural {
+		animation: none;
+	}
+}
+
+.flybody-experience {
+	animation: fly-neural-enter 0.5s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+	.flybody-experience {
+		animation: none;
+	}
+}
+
+.fly-neural-action {
+	flex: 0 0 auto;
+	min-height: 40px;
+	padding: 9px 13px;
+	border: 1px solid #ddaac333;
+	border-radius: 10px;
+	background: #df9bb512;
+	color: #f4e6ef;
+	font: inherit;
+	font-size: 12px;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.fly-neural-action:hover,
+.fly-neural-action[aria-pressed='true'] {
+	background: #df9bb52b;
+}
+.fly-neural-action:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+@media (max-width: 720px) {
+	.fly-neural-action {
+		padding: 9px 8px;
+		font-size: 11px;
+	}
+	.fly-neural .experience-freebar-primary {
+		gap: 4px;
+	}
+}
+
+/* A single optical stage carries the entire body-to-brain journey. */
+.fly-journey {
+	background: radial-gradient(ellipse at 64% 42%, #272320 0%, #12151b 43%, #090b12 78%);
+	transition: background 1.5s;
+}
+.fly-journey .fly-neural-stage {
+	inset: 7% 0 17% 20%;
+}
+.fly-journey-copy {
+	position: absolute;
+	top: calc(var(--experience-safe-top) + 10px);
+	left: clamp(24px, 4.8vw, 76px);
+	max-width: 340px;
+	pointer-events: none;
+}
+.fly-journey-kicker {
+	font-size: 10px;
+	letter-spacing: 0.21em;
+	color: #b8a99b;
+}
+.fly-journey-copy h1 {
+	font-family: var(--font-display, serif);
+	font-size: clamp(29px, 3.2vw, 43px);
+	font-weight: 400;
+	line-height: 1.35;
+	margin: 22px 0 18px;
+	text-wrap: balance;
+	color: #f2e5d6;
+}
+.fly-journey-copy p {
+	max-width: 290px;
+	font-size: 13px;
+	line-height: 1.9;
+	color: #c1b5ad;
+	margin: 0 0 18px;
+	text-wrap: pretty;
+}
+.fly-journey-copy small {
+	font-size: 10px;
+	color: #8e8690;
+	letter-spacing: 0.02em;
+}
+.fly-journey-words {
+	animation: fly-copy-enter 0.65s ease-out both;
+}
+.fly-film {
+	position: absolute;
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 22px);
+	left: 50%;
+	transform: translateX(-50%);
+	width: min(680px, calc(100% - 48px));
+	color: #d8c8b8;
+}
+.fly-film-chapters {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	gap: 6px;
+}
+.fly-film button {
+	border: 0;
+	background: none;
+	color: #9d9291;
+	cursor: pointer;
+	min-height: 44px;
+	white-space: nowrap;
+}
+.fly-film-chapters button {
+	font-size: 12px;
+	padding: 8px 10px;
+	border-bottom: 1px solid transparent;
+	transition:
+		color 0.4s,
+		border-color 0.4s;
+}
+.fly-film-chapters button[aria-current='step'] {
+	color: #f4dab6;
+	border-color: #d4b58b;
+}
+.fly-film-transport {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	border-top: 1px solid #dcc3a122;
+	padding-top: 10px;
+}
+.fly-film-transport button {
+	display: grid;
+	place-items: center;
+	flex: 0 0 auto;
+	width: 40px;
+}
+.fly-film-transport svg {
+	width: 19px;
+	height: 19px;
+}
+.fly-film-transport .fly-film-explore {
+	width: auto;
+	font-size: 12px;
+	padding: 0 8px;
+	color: #ddcbb8;
+}
+.fly-film input,
+.fly-journey-slider input {
+	min-width: 30px;
+	flex: 1;
+	width: 100%;
+	height: 44px;
+	appearance: none;
+	background: transparent;
+	cursor: pointer;
+}
+.fly-film input::-webkit-slider-runnable-track,
+.fly-journey-slider input::-webkit-slider-runnable-track {
+	height: 2px;
+	background: linear-gradient(to right, #e5c6a0 var(--fill), #81726755 var(--fill));
+	border-radius: 4px;
+}
+.fly-film input::-webkit-slider-thumb,
+.fly-journey-slider input::-webkit-slider-thumb {
+	appearance: none;
+	width: 10px;
+	height: 10px;
+	margin-top: -4px;
+	border-radius: 50%;
+	background: #f8dfbf;
+	box-shadow: 0 0 12px #e6c7a144;
+}
+.fly-film input::-moz-range-track,
+.fly-journey-slider input::-moz-range-track {
+	height: 2px;
+	background: #81726755;
+}
+.fly-film input::-moz-range-thumb,
+.fly-journey-slider input::-moz-range-thumb {
+	width: 10px;
+	height: 10px;
+	border: 0;
+	border-radius: 50%;
+	background: #f8dfbf;
+}
+.fly-journey-slider {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-width: 230px;
+	flex: 1;
+	font-size: 12px;
+	white-space: nowrap;
+	color: #cbbab1;
+}
+.fly-journey button:focus-visible,
+.fly-journey input:focus-visible {
+	outline: 2px solid #e5c6a0;
+	outline-offset: 3px;
+}
+@keyframes fly-copy-enter {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@media (max-width: 720px) {
+	.fly-journey .fly-neural-stage {
+		inset: 24% 0 26%;
+	}
+	.fly-journey-copy {
+		top: calc(var(--experience-safe-top) + 3px);
+		left: 24px;
+		right: 24px;
+		max-width: none;
+	}
+	.fly-journey-copy h1 {
+		font-size: 27px;
+		line-height: 1.28;
+		margin: 12px 0 10px;
+		max-width: 340px;
+	}
+	.fly-journey-copy p {
+		font-size: 12px;
+		line-height: 1.6;
+		margin-bottom: 9px;
+		max-width: 340px;
+	}
+	.fly-journey-copy small {
+		font-size: 9px;
+	}
+	.fly-film {
+		bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+		width: calc(100% - 32px);
+	}
+	.fly-film-chapters {
+		gap: 0;
+		margin-bottom: 2px;
+	}
+	.fly-film-chapters button {
+		font-size: 10px;
+		padding: 5px 3px;
+		flex: 1;
+	}
+	.fly-film-transport {
+		gap: 8px;
+		padding-top: 6px;
+	}
+	.fly-film-transport .fly-film-explore {
+		font-size: 11px;
+		padding: 0 3px;
+	}
+	.fly-journey-slider {
+		min-width: 250px;
+	}
+}
+[data-overlays-hidden='true'] .fly-journey .fly-neural-stage {
+	inset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+	.fly-journey-words,
+	.fly-journey {
+		animation: none;
+		transition: none;
+	}
+}
+
+.fly-journey-copy h1 > span {
+	display: block;
+}
+
+.fly-circuit {
+	position: absolute;
+	left: clamp(24px, 4.8vw, 76px);
+	bottom: calc(var(--experience-freebar-clearance, 145px) + 24px);
+	width: 310px;
+	pointer-events: none;
+}
+.fly-circuit-steps {
+	display: flex;
+	gap: 16px;
+}
+.fly-circuit-step {
+	flex: 1;
+	color: #f5d796;
+	min-width: 0;
+}
+.fly-circuit-step.step-1 {
+	color: #e6a6db;
+}
+.fly-circuit-step.step-2 {
+	color: #9bd8dc;
+}
+.fly-circuit-step span {
+	display: block;
+	font-size: 11px;
+	margin-bottom: 8px;
+}
+.fly-circuit-step small {
+	font-variant-numeric: tabular-nums;
+	font-size: 11px;
+}
+.fly-circuit-step meter {
+	display: block;
+	width: 100%;
+	height: 5px;
+	margin-bottom: 8px;
+	background: #ffffff14;
+	border: 0;
+	border-radius: 3px;
+}
+.fly-circuit-step meter::-webkit-meter-bar {
+	background: #ffffff14;
+	border: 0;
+}
+.fly-circuit-step meter::-webkit-meter-optimum-value {
+	background: currentColor;
+}
+.fly-circuit p {
+	font-size: 12px;
+	line-height: 1.7;
+	margin: 12px 0 5px;
+}
+.fly-circuit > small {
+	font-size: 10px;
+	color: #b0a0ae;
+}
+.fly-explanation {
+	position: absolute;
+	inset: calc(var(--experience-safe-top, 50px) + 12px) 7% calc(var(--experience-safe-bottom, 20px) + 30px);
+	z-index: 8;
+	background: #17151e;
+	border: 1px solid #c6abc436;
+	border-radius: 20px;
+	padding: 32px;
+	overflow: auto;
+	box-shadow: 0 20px 80px #0009;
+}
+.fly-explanation h2 {
+	font-size: clamp(22px, 3vw, 34px);
+	font-weight: 400;
+	margin: 20px 0 26px;
+}
+.fly-explain-close {
+	float: right;
+	border: 1px solid #ffffff30;
+	background: transparent;
+	color: inherit;
+	border-radius: 20px;
+	padding: 10px 18px;
+}
+.fly-explain-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px 36px;
+}
+.fly-explain-grid b {
+	font-size: 14px;
+	font-weight: 500;
+	color: #e3c8a5;
+}
+.fly-explain-grid p,
+.fly-explain-note {
+	font-size: 13px;
+	line-height: 1.9;
+	color: #ccbdcc;
+	margin: 10px 0 0;
+}
+.fly-explain-note {
+	padding-top: 20px;
+	border-top: 1px solid #ffffff16;
+	margin-top: 24px;
+}
+.fly-explain-sources {
+	display: flex;
+	gap: 24px;
+	flex-wrap: wrap;
+	margin-top: 24px;
+	font-size: 12px;
+}
+.fly-explain-sources a {
+	color: #abd6e5;
+}
+@media (max-width: 600px) {
+	.fly-circuit {
+		left: 24px;
+		right: 24px;
+		width: auto;
+		bottom: calc(var(--experience-freebar-clearance, 120px) + 12px);
+	}
+	.fly-circuit p {
+		font-size: 10px;
+		line-height: 1.4;
+		margin: 6px 0 3px;
+	}
+	.fly-circuit > small {
+		font-size: 9px;
+	}
+	.fly-circuit-step span {
+		margin-bottom: 3px;
+		font-size: 10px;
+	}
+	.fly-circuit-step meter {
+		margin-bottom: 3px;
+	}
+	.fly-explanation {
+		inset: calc(var(--experience-safe-top, 50px) + 6px) 12px 24px;
+		padding: 20px;
+	}
+	.fly-explain-grid {
+		grid-template-columns: 1fr;
+		gap: 18px;
+	}
+	.fly-explanation h2 {
+		margin-top: 24px;
+	}
+	.fly-explanation > .fly-journey-kicker {
+		display: block;
+		max-width: 210px;
+		font-size: 8px;
+	}
+}
+
+.fly-real-photo {
+	position: absolute;
+	inset: 7% 0 17% 20%;
+	container-type: size;
+	margin: 0;
+	z-index: 1;
+	will-change: opacity;
+	pointer-events: none;
+}
+.fly-real-photo img {
+	position: absolute;
+	left: 50%;
+	top: 50.5%;
+	/* Match PerspectiveCamera height and its narrow-screen framing factor. */
+	width: min(125.333cqh, 133.333cqw);
+	max-width: none;
+	height: auto;
+	transform: translate(-50%, -50%);
+	mask-image: radial-gradient(ellipse at center, #000 47%, transparent 73%);
+}
+.fly-real-photo figcaption {
+	position: absolute;
+	bottom: 4%;
+	width: 100%;
+	text-align: center;
+	font-size: 10px;
+	color: #c3b5bc;
+	pointer-events: auto;
+}
+.fly-real-photo a {
+	color: inherit;
+	text-decoration: none;
+}
+.fly-replay-panel {
+	width: 330px;
+}
+.fly-replay-heading {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 13px;
+	font-size: 11px;
+	color: #cdb3ca;
+}
+.fly-replay-heading small {
+	font-size: 10px;
+}
+.fly-replay-transport {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 12px;
+}
+.fly-replay-transport button {
+	background: none;
+	border: 1px solid #ffffff28;
+	border-radius: 12px;
+	padding: 6px 9px;
+	color: inherit;
+	font-size: 10px;
+	white-space: nowrap;
+}
+.fly-replay-transport input {
+	min-width: 0;
+	flex: 1;
+	accent-color: #dfadbd;
+}
+.fly-replay-transport time {
+	font-size: 10px;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+@media (max-width: 600px) {
+	.fly-real-photo {
+		inset: 24% 0 26%;
+	}
+	.fly-real-photo figcaption {
+		bottom: 0;
+		font-size: 8px;
+	}
+	.fly-replay-heading {
+		margin-bottom: 7px;
+		font-size: 10px;
+	}
+	.fly-replay-panel {
+		width: auto;
+	}
+	.fly-replay-transport {
+		margin-top: 5px;
+	}
+}
+.fly-replay-panel {
+	pointer-events: auto;
+	z-index: 2;
+}
+/* Empty stage margins must not intercept the shell's header controls. */
+.fly-journey {
+	pointer-events: none;
+}
+.fly-journey .fly-neural-stage,
+.fly-journey .fly-film,
+.fly-journey .fly-neural-status,
+.fly-journey .fly-explanation,
+.fly-journey .experience-freebar {
+	pointer-events: auto;
+}
+
+@media (min-width: 601px) and (max-width: 720px) {
+	.fly-real-photo {
+		inset: 24% 0 26%;
+	}
+}
+[data-overlays-hidden='true'] .fly-journey .fly-real-photo {
+	inset: 0;
+}

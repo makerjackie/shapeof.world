@@ -1,0 +1,179 @@
+{
+  "id": "scene-minimalism-25",
+  "code": "SCENE-17-25",
+  "title": {
+    "en": "Measured Motion · 25",
+    "zh": "有序运动 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "satisfying mechanical transformations",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "marimba",
+    "muted piano",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for satisfying mechanical transformations. Instruments: marimba, muted piano, woodblocks. 120 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively orchestral pop piece with a prominent brass melody, supported by strings, drums, and bass. It has a bright, energetic feel.",
+    "zh": "一首欢快活泼的管弦乐流行乐曲，以突出的铜管旋律为主，配以弦乐、鼓和贝斯。整体感觉明亮而充满活力。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "satisfying mechanical transformations"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:18:13.910020+00:00",
+  "generation": {
+    "id": "5940e5c4-68f6-47f7-92e3-2e87dd5cd511",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:17:54.534702+00:00",
+    "completedAt": "2026-09-22T09:18:13.910020+00:00",
+    "interactionId": "w0eyao6UELve694PlMeHuQ4",
+    "sha256": "b906ef189aebb4462bd3b3132985afe4c9214b360703fe63d2230e0f149e8a6c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively orchestral pop piece with a prominent brass melody, supported by strings, drums, and bass. It has a bright, energetic feel.",
+      "zh": "一首欢快活泼的管弦乐流行乐曲，以突出的铜管旋律为主，配以弦乐、鼓和贝斯。整体感觉明亮而充满活力。"
+    },
+    "instruments": [
+      "Brass",
+      "Strings",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Bright",
+      "Energetic",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main brass melody and a full ensemble, establishing a lively tempo. It concludes with a distinct, resolved orchestral flourish and a final chord, providing a clear musical ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:33.078806+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "e5eb88d3c432fc70e92cdfff1e48133c5c8ffa10addf429b7aa1ac499477fb33"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.283208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A cheerful and upbeat instrumental track featuring a prominent synth melody, a walking bassline, and light drums. It has a retro, playful feel.",
+      "zh": "一首欢快活泼的纯音乐，以突出的合成器旋律、行进的贝斯线和轻快的鼓点为特色。它带有一种复古、俏皮的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Cheerful",
+      "Upbeat",
+      "Playful",
+      "Retro",
+      "Happy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Cleanly produced, well-structured, and suitable for various lighthearted media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:25.186313+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.283207999999998,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-minimalism-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-minimalism-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-minimalism-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e5eb88d3c432fc70e92cdfff1e48133c5c8ffa10addf429b7aa1ac499477fb33",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b906ef189aebb4462bd3b3132985afe4c9214b360703fe63d2230e0f149e8a6c",
+      "bytes": 710465,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3fbcfdabdafcfea9ec1be26bdfe3ba4cd5f7049b2387a4f60e614602c33ecf02",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.847503+00:00"
+}

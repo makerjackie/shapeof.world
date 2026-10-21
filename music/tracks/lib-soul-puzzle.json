@@ -1,0 +1,106 @@
+{
+  "id": "lib-soul-puzzle",
+  "code": "LIB-12-07",
+  "title": {
+    "en": "Clues — Soul",
+    "zh": "线索 · 灵魂律动"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "soul"
+  ],
+  "energy": 3,
+  "bpm": 92,
+  "key": "C lydian",
+  "instruments": [
+    "electric piano",
+    "electric bass",
+    "clean guitar",
+    "drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental neo-soul instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: electric piano, electric bass, clean guitar, drums. Style: pocket groove with syncopated seventh chords. Tempo approximately 92 BPM; C lydian. Main idea: a repeating five-note figure with space between phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A smooth, chill jazz-funk track with a relaxed groove, featuring piano, electric guitar, bass, drums, and subtle orchestral elements.",
+    "zh": "一首流畅、轻松的爵士放克乐曲，带有放松的律动，以钢琴、电吉他、贝斯、鼓和微妙的管弦乐元素为特色。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.268,
+  "generatedAt": "2026-09-09T08:21:19.411463+00:00",
+  "generation": {
+    "id": "4cdd66b5-9409-498c-9046-7354524ddf13",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:20:35.538206+00:00",
+    "completedAt": "2026-09-09T08:21:19.411463+00:00",
+    "interactionId": "1Bahaqj0LsSDoLAP8OO9wA8",
+    "sha256": "b2d62efcff992cad7e03798dda93f29955191c65469285a0afcd670e376cffdf"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, chill jazz-funk track with a relaxed groove, featuring piano, electric guitar, bass, drums, and subtle orchestral elements.",
+      "zh": "一首流畅、轻松的爵士放克乐曲，带有放松的律动，以钢琴、电吉他、贝斯、鼓和微妙的管弦乐元素为特色。"
+    },
+    "instruments": [
+      "Drums",
+      "Electric Bass",
+      "Piano",
+      "Electric Guitar",
+      "Synthesizer",
+      "Strings",
+      "Woodwinds"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Chill",
+      "Jazzy",
+      "Lounge",
+      "Sophisticated"
+    ],
+    "energy": 3,
+    "bpmEstimate": 106,
+    "reason": "Well-produced instrumental track with a clear musical structure and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:21:28.934492+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-soul-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-soul-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-soul-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:23:07.942278+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

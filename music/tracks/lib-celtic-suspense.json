@@ -1,0 +1,104 @@
+{
+  "id": "lib-celtic-suspense",
+  "code": "LIB-16-09",
+  "title": {
+    "en": "Shadows — Celtic",
+    "zh": "暗影 · 凯尔特"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "celtic"
+  ],
+  "energy": 4,
+  "bpm": 98,
+  "key": "G minor",
+  "instruments": [
+    "fiddle",
+    "tin whistle",
+    "bodhran",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Celtic acoustic instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: fiddle, tin whistle, bodhran, harp. Style: lilting compound-meter dance and modal melody. Tempo approximately 98 BPM; G minor. Main idea: alternating short and long phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A dynamic and expressive string ensemble piece, featuring a prominent accordion or bandoneon. It blends classical and folk-dance influences, with intricate melodies and a wide dynamic range. The mood shifts between playful, melancholic, and passionate sections.",
+    "zh": "一首充满活力和表现力的弦乐合奏曲，手风琴或班多钮琴音色突出。融合了古典和民间舞曲风格，旋律复杂，动态范围广。情绪在俏皮、忧郁和热情之间切换。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.3,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:43:07.380490+00:00",
+  "generation": {
+    "id": "39c519fb-bfdc-4921-9deb-6e5d1e254d78",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:42:12.175489+00:00",
+    "completedAt": "2026-09-09T08:43:07.380490+00:00",
+    "interactionId": "5RuharuNI5C9jMwPrKKKyAI",
+    "sha256": "7d1a7439974a36bbbbad3a6c6942962ba7d7e1cfbe837cf8f795ef24c06ad133"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dynamic and expressive string ensemble piece, featuring a prominent accordion or bandoneon. It blends classical and folk-dance influences, with intricate melodies and a wide dynamic range. The mood shifts between playful, melancholic, and passionate sections.",
+      "zh": "一首充满活力和表现力的弦乐合奏曲，手风琴或班多钮琴音色突出。融合了古典和民间舞曲风格，旋律复杂，动态范围广。情绪在俏皮、忧郁和热情之间切换。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Double Bass",
+      "Accordion",
+      "Bandoneon"
+    ],
+    "moods": [
+      "Playful",
+      "Melancholic",
+      "Passionate",
+      "Lively",
+      "Elegant",
+      "Sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:43:21.114937+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-celtic-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-celtic-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-celtic-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:44:50.366554+00:00"
+}

@@ -1,0 +1,182 @@
+{
+  "id": "scene-house-25",
+  "code": "SCENE-03-25",
+  "title": {
+    "en": "Soft Geometry · 25",
+    "zh": "柔软几何 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "bright colorful interface demonstration",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "Rhodes stabs",
+    "soft four-on-floor kick",
+    "plucked bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for bright colorful interface demonstration. Instruments: Rhodes stabs, soft four-on-floor kick, plucked bass. 124 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and positive modern pop track featuring a bright piano melody, driving drums, and a clean bassline, creating an optimistic and corporate-friendly atmosphere.",
+    "zh": "一首欢快积极的现代流行音乐，以明亮的钢琴旋律、强劲的鼓点和清晰的贝斯线为特色，营造出乐观且适合企业宣传的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "bright colorful interface demonstration"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:03:34.073360+00:00",
+  "generation": {
+    "id": "0eb82350-0e86-4a34-b604-d00538529549",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:03:21.501687+00:00",
+    "completedAt": "2026-09-22T09:03:34.073360+00:00",
+    "interactionId": "W0SyaoTfL7uL694P-9X7wAk",
+    "sha256": "e08e7477e4d8ae4db48b6044a5664a75eb355070ee43b658d054ad05d8d0e33b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and positive modern pop track featuring a bright piano melody, driving drums, and a clean bassline, creating an optimistic and corporate-friendly atmosphere.",
+      "zh": "一首欢快积极的现代流行音乐，以明亮的钢琴旋律、强劲的鼓点和清晰的贝斯线为特色，营造出乐观且适合企业宣传的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Drums",
+      "Bass guitar",
+      "Synthesizer pads",
+      "Synthesizer lead"
+    ],
+    "moods": [
+      "Upbeat",
+      "Positive",
+      "Optimistic",
+      "Bright",
+      "Corporate",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The track is well-produced, has a clear structure, and evokes a positive, energetic mood suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy piano melody and a clear rhythmic pulse. It concludes with a smooth, deliberate fade-out of all instruments.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:03:52.256812+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "55b3e343f538608dad62d46c0632ca06fae0fc4b5d9255f23639c051d660686c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.58525,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a prominent synth melody, driving bassline, and steady drum beat. It has a modern, positive feel suitable for background music or dance.",
+      "zh": "一首欢快活泼的电子音乐，具有突出的合成器旋律、强劲的低音线和稳定的鼓点。它具有现代、积极的感觉，适合作为背景音乐或舞曲。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Bass guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Cleanly produced, energetic electronic track with clear instrumentation and a positive, modern vibe, making it highly suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:03:42.642840+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 2.5852499999999985,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-house-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-house-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-house-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "55b3e343f538608dad62d46c0632ca06fae0fc4b5d9255f23639c051d660686c",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e08e7477e4d8ae4db48b6044a5664a75eb355070ee43b658d054ad05d8d0e33b",
+      "bytes": 669714,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "cfd14a103c835eed683f83ee8bf05d3036eccf9ddf9ed24112fcf385335cee9f",
+      "bytes": 2786,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:24:08.209421+00:00"
+}

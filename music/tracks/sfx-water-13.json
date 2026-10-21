@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-13",
+  "code": "SFX-WATER-13",
+  "title": {
+    "en": "Underwater ping",
+    "zh": "水下轻响"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 12,
+  "seed": 238723175,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized underwater ping for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的水下轻响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 238723175,
+    "sha256": "08d1bca37a9eb163c7b4ce88f84c2d3bcfe3b15397cd1cda81aa7f3585a5a171",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "62d1224880d55e543f3546ccf75ac6cc0efc964d44c58c22089e675590dab777",
+      "bytes": 18329,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "08d1bca37a9eb163c7b4ce88f84c2d3bcfe3b15397cd1cda81aa7f3585a5a171",
+      "bytes": 110294,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ce4deafd67cb9c0696965b1e7c123d00e081d6131416ea121eea86e2dcdbe088",
+      "bytes": 19298,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "79936023dcad2a5761f5e22a5469d689b7ff6d3f142501fddcd4e898e3ab61fe",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55125,
+    "duration": 1.25,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.42,
+    "dcOffset": 5.536068594104308e-10,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12780059814453137,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp electronic zap or energy discharge sound, followed by a lower-pitched, slightly distorted impact or thud.",
+      "zh": "一个短促、尖锐的电子放电或能量冲击声，随后是一个较低沉、略带失真的撞击或砰击声。"
+    },
+    "reason": "The sound is a clear, well-produced synthesized effect with no technical flaws, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:40.583292+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "62d1224880d55e543f3546ccf75ac6cc0efc964d44c58c22089e675590dab777"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55125
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.912729+00:00"
+}

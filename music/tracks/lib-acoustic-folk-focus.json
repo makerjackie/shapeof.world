@@ -1,0 +1,98 @@
+{
+  "id": "lib-acoustic-folk-focus",
+  "code": "LIB-15-02",
+  "title": {
+    "en": "Focus — Acoustic Folk",
+    "zh": "专注 · 原声民谣"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "acoustic-folk"
+  ],
+  "energy": 2,
+  "bpm": 92,
+  "key": "A minor",
+  "instruments": [
+    "steel-string guitar",
+    "mandolin",
+    "light hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second fingerstyle acoustic folk instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: steel-string guitar, mandolin, light hand percussion. Style: alternating bass picking and a clear acoustic melody. Tempo approximately 92 BPM; A minor. Main idea: a compact three-note motif. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A gentle and melodic acoustic guitar instrumental featuring intricate fingerpicking and a clean, warm tone. The piece has a flowing, contemplative feel.",
+    "zh": "一首温柔而旋律优美的原声吉他纯音乐，以精巧的指弹技巧和干净温暖的音色为特色。这首曲子带有一种流畅、沉思的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 119.275,
+  "generatedAt": "2026-09-09T08:29:39.919686+00:00",
+  "generation": {
+    "id": "42a591c5-099f-4c4e-955a-3fe345cbf18b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:28:48.840455+00:00",
+    "completedAt": "2026-09-09T08:29:39.919686+00:00",
+    "interactionId": "wRihaoqDNszRi9sPrKHS-AM",
+    "sha256": "61bbe5d81a53ff5fc4c8877a6d9d1693cfd022642b6595b9c848b48012546cbf"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic acoustic guitar instrumental featuring intricate fingerpicking and a clean, warm tone. The piece has a flowing, contemplative feel.",
+      "zh": "一首温柔而旋律优美的原声吉他纯音乐，以精巧的指弹技巧和干净温暖的音色为特色。这首曲子带有一种流畅、沉思的感觉。"
+    },
+    "instruments": [
+      "Acoustic Guitar"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Relaxing",
+      "Gentle",
+      "Contemplative"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "The track is a well-produced, clean acoustic guitar instrumental with a pleasant melody, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:30:02.007620+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:31:45.201258+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

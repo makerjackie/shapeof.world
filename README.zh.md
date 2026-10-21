@@ -1,199 +1,110 @@
-<div align="center">
-  <img src="./public/assets/brand/app-icon.png" width="112" alt="世界的形状">
-  <h1>世界的形状</h1>
-  <p>
-    <a href="./README.md">English</a> · <a href="./README.zh.md">中文</a>
-  </p>
-  <p>
-    <strong>The World, Playable</strong><br>
-    一个可游玩的知识宇宙。
-  </p>
-  <p>
-    看见世界如何运行。<br>
-    改变参数，观察结果。
-  </p>
-  <p>
-    <a href="https://open.shapeof.world">在线演示</a>
-    ·
-    <a href="https://shapeof.world">完整产品</a>
-  </p>
-  <p>这是一份<strong>精选开源版</strong>：三十个世界，以及运行它们的网页代码。</p>
-</div>
+# Shape of the World
 
-## 赞助
+[English](./README.md) · [中文](./README.zh.md)
 
-<div align="center">
-  <p>本项目由叠加态社区（SUPERPOSITION）与数耀量生（QuantSparkle）赞助支持。</p>
-  <p>
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
-      <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="220">
-    </picture>
-    &nbsp;&nbsp;
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/quantsparkle-white.png">
-      <img src="./public/assets/sponsors/quantsparkle-black.png" alt="数耀量生 QuantSparkle" width="320">
-    </picture>
-  </p>
-  <p><sub>赞助方 Logo 的权利说明见 <a href="./public/assets/sponsors/NOTICE.md">资产声明</a>。</sub></p>
-</div>
+Shape of the World（世界的形状）：看见世界如何运行。一组面向普通人的可玩视觉世界：先用美、惊喜和触感把人留下来，再让科普自然发生。网站：[shapeof.world](https://shapeof.world)。
 
-## 收录世界
+本仓库包含网站、世界运行时和世界本身。旧的私有仓 `oneworld` 仅作为历史档案保留。本站不出售任何东西。
 
-<table align="center">
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/moon-voyage"><img src="./public/assets/posters/thumb/moon-voyage.webp" width="170" alt="四天抵达月球"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/black-hole-flyby"><img src="./public/assets/posters/thumb/black-hole-flyby.webp" width="170" alt="掠过黑洞时看见的扭曲星空"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/formula-bloom"><img src="./public/assets/posters/thumb/formula-bloom.webp" width="170" alt="一条迭代公式控制一万个点的运动"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/double-slit"><img src="./public/assets/posters/thumb/double-slit.webp" width="170" alt="单粒子逐个穿过双缝形成干涉条纹"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/pendulum-wave"><img src="./public/assets/posters/thumb/pendulum-wave.webp" width="170" alt="一齐放开，一排摆自己走出波浪"></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/double-pendulum"><img src="./public/assets/posters/thumb/double-pendulum.webp" width="170" alt="相差 0.1° 的双摆轨迹"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/firefly-sync"><img src="./public/assets/posters/thumb/firefly-sync.webp" width="170" alt="萤火虫群体同步闪烁"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/chemical-garden"><img src="./public/assets/posters/thumb/chemical-garden.webp" width="170" alt="金属盐在溶液中长成矿物花园"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/neural-playground"><img src="./public/assets/posters/thumb/neural-playground.webp" width="170" alt="神经网络通过调整权重学习分类"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/robot-ik"><img src="./public/assets/posters/thumb/robot-ik.webp" width="170" alt="逆运动学根据末端位置计算机械臂关节"></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/solar-system"><img src="./public/assets/posters/thumb/solar-system.webp" width="170" alt="此刻，整座太阳系"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/three-body"><img src="./public/assets/posters/thumb/three-body.webp" width="170" alt="三颗星，能跳出这么多完美的舞吗？"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/gravity-assist"><img src="./public/assets/posters/thumb/gravity-assist.webp" width="170" alt="引力助推改变飞船的速度"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/mandelbrot-zoom"><img src="./public/assets/posters/thumb/mandelbrot-zoom.webp" width="170" alt="曼德勃罗集边界的无限细节"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/newton-fractal"><img src="./public/assets/posters/thumb/newton-fractal.webp" width="170" alt="猜错起点，答案会跳到另一边"></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/clifford-dust"><img src="./public/assets/posters/thumb/clifford-dust.webp" width="170" alt="四个参数迭代生成 Clifford 吸引子"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/kakeya-needle"><img src="./public/assets/posters/thumb/kakeya-needle.webp" width="170" alt="卡库亚针问题的最小转向区域"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/strange-attractors"><img src="./public/assets/posters/thumb/strange-attractors.webp" width="170" alt="状态轨迹形成奇异吸引子"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/fluid-sim"><img src="./public/assets/posters/thumb/fluid-sim.webp" width="170" alt="涡旋从流体扰动中产生并消散"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/electric-field"><img src="./public/assets/posters/thumb/electric-field.webp" width="170" alt="电场线勾出看不见的力"></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/magnetic-lines"><img src="./public/assets/posters/thumb/magnetic-lines.webp" width="170" alt="看不见的磁力线"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/fourier"><img src="./public/assets/posters/thumb/fourier.webp" width="170" alt="旋转圆叠加出方波与周期曲线"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/ferrofluid"><img src="./public/assets/posters/thumb/ferrofluid.webp" width="170" alt="铁磁流体"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/soap-bubble"><img src="./public/assets/posters/thumb/soap-bubble.webp" width="170" alt="薄膜干涉形成肥皂泡彩色条纹"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/pool-caustics"><img src="./public/assets/posters/thumb/pool-caustics.webp" width="170" alt="泳池焦散光纹"></a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/pinhole-canopy"><img src="./public/assets/posters/thumb/pinhole-canopy.webp" width="170" alt="缩小一片叶隙，让树荫落满一百个太阳"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/lightning-lab"><img src="./public/assets/posters/thumb/lightning-lab.webp" width="170" alt="闪电沿分叉通道逐步前进"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/snow-crystal"><img src="./public/assets/posters/thumb/snow-crystal.webp" width="170" alt="温度与湿度决定雪晶形状"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/boids-flocking"><img src="./public/assets/posters/thumb/boids-flocking.webp" width="170" alt="鸟群依靠三条局部规则形成统一运动"></a>
-    </td>
-    <td align="center" width="20%">
-      <a href="https://open.shapeof.world/explore/phyllotaxis"><img src="./public/assets/posters/thumb/phyllotaxis.webp" width="170" alt="植物的螺旋"></a>
-    </td>
-  </tr>
-</table>
+根目录 [`AGENTS.md`](./AGENTS.md) 记录全仓仅有的几条事实和规则。
 
-点开海报即可游玩。每个世界都有简体中文和英文、海报和来源说明。
-
-## 创作者
-
-<table align="center">
-  <tr>
-    <td align="center" valign="top" width="180">
-      <img src="./public/assets/team/makerjackie.jpg" width="96" height="96" alt="Maker Jackie"><br>
-      <strong>Maker Jackie</strong><br>
-      独立开发者<br>
-      <a href="https://makerjackie.com">makerjackie.com</a>
-    </td>
-    <td align="center" valign="top" width="180">
-      <img src="./public/assets/team/designer.jpg" width="96" height="96" alt="余"><br>
-      <strong>余</strong><br>
-      产品设计<br>
-      <a href="https://yusually.it.com/">yusually.it.com</a>
-    </td>
-  </tr>
-</table>
-
-## 本地运行
-
-需要 Node.js 24 和 pnpm 10+。
+## 本地开发
 
 ```sh
 pnpm install
 pnpm dev
 ```
 
-打开 `http://localhost:3000`。不需要 API Key。
+打开 `http://localhost:3000`。默认语言是简体中文；英文页面在 `/en` 下。
+
+官方 Three.js 元素周期表示例的上游快照与本项目的改编版本保存在
+`vendor/three-periodic-table/`；改动后运行 `pnpm build:periodic-table`。
+
+## 验证
 
 ```sh
 pnpm check
 ```
 
-该命令会做类型检查、测试和生产构建。
+`pnpm check` 是本地质量门禁：类型、单元与基础设施测试、生成器、生产构建、
+客户端资产预算与 Worker 打包预算。仓库不配置 GitHub Actions，发布者在干净的
+工作区上运行该命令。
 
-## 许可
+单个世界的开发循环用 `pnpm world:check --id <world-id>`。
 
-- 项目方可控制的软件代码：[AGPL-3.0-only](./LICENSE)
-- 项目明确拥有权利的原创文案和视觉内容：[CC BY-NC 4.0](./CONTENT_LICENSE.md)
-- 第三方代码、数据、模型、图片、字体和音频继续遵循各自许可证。见 [OSS_NOTICES.md](./OSS_NOTICES.md) 与 [DATA_SOURCES.md](./DATA_SOURCES.md)
-- “Shape of the World / 世界的形状”、Logo 和应用身份不随代码或内容许可开放。见 [TRADEMARKS.md](./TRADEMARKS.md)
+## 部署
 
-产品 Logo 是 App 光球。见 [NOTICE.md](./public/assets/brand/NOTICE.md)。界面里仍使用 Phosphor Icons（MIT）。见 [LICENSE-phosphor-icons.txt](./public/assets/oss-source/LICENSE-phosphor-icons.txt)。
+生产环境是 Cloudflare Workers：Worker `shape-of-the-world` 服务 `shapeof.world`。
+2026-10-21 之前的旧版网站保留在 `v2.shapeof.world`，不被搜索引擎收录。统计
+（`infra/insights`）和视频发布套件（`infra/press`）各自是独立的 Worker。
 
-完整条款：[LICENSING.md](./LICENSING.md)、[COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md)、[PROJECT_OWNED_CONTENT.md](./PROJECT_OWNED_CONTENT.md)。以上是便于理解的摘要，不替代正式文本，也不构成法律意见。
+```sh
+pnpm check
+pnpm build
+npx wrangler deploy
+```
 
-## 贡献
+## 产品架构
 
-见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+- TanStack Start + TanStack Router：服务端渲染与路由
+- 客户端体验注册表：每个世界的主组件、私有 CSS 与英文词典并行懒加载；大型浏览器引擎不进入 Worker 服务端包
+- 384×256 目录缩略图：目录与系列卡片不会下载 2560px 海报
+- deck.gl / Flowmap.gl、model-viewer、Mol* 与 Three.js 适配器：流网络、结构、分子、行星影像与原生互动实验
+- Cloudflare Workers：边缘部署、同源资产与匿名事件
+- 构建预算：Worker、全局 CSS、共享体验运行时、单个 JS chunk 与 Cloudflare 静态资产体积
+- 可安装的 PWA 外壳
+- 匿名产品事件：打开、真实互动、有效停留、收藏、分享与远程资产加载失败；不记录知识内容与个人身份
+
+## 世界与来源
+
+每个世界都在代码旁自带来源与权利记录；项目只发布自绘自建，或第三方许可为
+「无需申请、署名即可、允许商用」的素材。新世界的进仓门槛见
+[`AGENTS.md`](./AGENTS.md)。
+
+- 第三方代码与资产：[OSS_NOTICES.md](./OSS_NOTICES.md)
+- 数据来源与依据：[DATA_SOURCES.md](./DATA_SOURCES.md)
+- 产品范围与术语：[CONTEXT.md](./CONTEXT.md)
+
+## 许可与商业条款
+
+- 本仓项目方软件：[`AGPL-3.0-only`](./LICENSE)。完整履行相应用途下 AGPL
+  义务的商业使用无需付费许可；超出 AGPL 授权范围把代码用于闭源产品时，需另签
+  [商业授权](./COMMERCIAL_LICENSE.md)。
+- 项目方原创文案与视觉内容：[`CC BY-NC 4.0`](./CONTENT_LICENSE.md)；超出
+  `NonCommercial` 范围且依法需要版权许可时须另行授权。
+- 第三方代码、模型、数据、图片、字体、音频与服务继续遵循各自许可证，不因位于
+  本仓而重新授权。
+- “Shape of the World / 世界的形状”名称、标识与品牌不随代码或内容授权开放：
+  [TRADEMARKS.md](./TRADEMARKS.md)。
+
+完整边界见 [LICENSING.md](./LICENSING.md)；贡献规则见
+[CONTRIBUTING.md](./CONTRIBUTING.md)，可版权化贡献需按 [CLA.md](./CLA.md) 或
+[CCLA.md](./CCLA.md) 完成核验。
+
+## 贡献者
+
+- [MakerJackie](https://github.com/makerjackie)：创作与维护。
+- 历史贡献者：余（[yuzerofish](https://github.com/yuzerofish)），2026 年 7 月至 10 月参与设计与开发。
+
+## 赞助
+
+本项目由 叠加态社区（SUPERPOSITION）与 数耀量生（QuantSparkle）赞助。
+
+<table>
+  <tr>
+    <td align="center" valign="middle">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/superposition-white.svg">
+        <img src="./public/assets/sponsors/superposition-black.svg" alt="叠加态社区 SUPERPOSITION" width="240">
+      </picture>
+    </td>
+    <td align="center" valign="middle">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./public/assets/sponsors/quantsparkle-white.png">
+        <img src="./public/assets/sponsors/quantsparkle-black.png" alt="数耀量生 QuantSparkle" width="360">
+      </picture>
+    </td>
+  </tr>
+</table>
+
+赞助方标识的权利说明见 [asset notice](./public/assets/sponsors/NOTICE.md)。

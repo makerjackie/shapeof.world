@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-orchestral-rest",
+  "code": "GAME-08-4",
+  "title": {
+    "en": "Copper Guardian · Rest",
+    "zh": "铜色守卫 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "energetic tactical combat",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 140,
+  "key": "",
+  "instruments": [
+    "low strings",
+    "brass",
+    "tight cinematic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for energetic tactical combat, rest state. Instruments: low strings, brass, tight cinematic drums. 140 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A melancholic and reflective orchestral piece featuring prominent string sections, including violins, violas, and cellos. The melody is clear and expressive, evoking a sense of longing or contemplation. The arrangement is clean and well-balanced, with a consistent, moderate tempo.",
+    "zh": "一首忧郁而沉思的管弦乐作品，以突出的弦乐部分为主，包括小提琴、中提琴和大提琴。旋律清晰富有表现力，唤起一种渴望或沉思的感觉。编曲干净平衡，节奏稳定适中。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 86.962,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:26:08.432076+00:00",
+  "generation": {
+    "id": "e31243c1-11f4-4f5c-b095-60c2b5bd0ab1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:25:26.757564+00:00",
+    "completedAt": "2026-09-22T09:26:08.432076+00:00",
+    "interactionId": "h0myapL-HPibjMwPpd3CiQ0",
+    "sha256": "fcee861881414cfe4da154c9be3f19c51c467ac9947b4c63a06fc3c8789f0823"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and reflective orchestral piece featuring prominent string sections, including violins, violas, and cellos. The melody is clear and expressive, evoking a sense of longing or contemplation. The arrangement is clean and well-balanced, with a consistent, moderate tempo.",
+      "zh": "一首忧郁而沉思的管弦乐作品，以突出的弦乐部分为主，包括小提琴、中提琴和大提琴。旋律清晰富有表现力，唤起一种渴望或沉思的感觉。编曲干净平衡，节奏稳定适中。"
+    },
+    "instruments": [
+      "strings",
+      "violin",
+      "viola",
+      "cello"
+    ],
+    "moods": [
+      "melancholy",
+      "reflective",
+      "dramatic",
+      "somber",
+      "contemplative"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear emotional theme, suitable for various media applications requiring a reflective or dramatic string-based score.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:18.867993+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 7.75,
+    "sourceEndSeconds": 66.82691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.94,
+        "rmsDbfs": -15.34,
+        "dcOffset": 0.0019024640331858048,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.03106689453125,
+        "internalStepP999": 0.060791015625,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.59,
+        "dcOffset": 0.001577185918542487,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00250244140625,
+        "internalStepP999": 0.05704727172852131,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, evolving synthesized atmospheric texture with a mystical or sci-fi character. It features a repeating, slightly melancholic melodic phrase over a soft, ethereal pad, creating a sense of wonder or subtle tension. The sound is clean and well-produced.",
+        "zh": "一种持续的、不断演变的合成大气纹理，带有神秘或科幻的特征。它以重复的、略带忧郁的旋律短语叠加在柔和、空灵的衬底音上，营造出一种奇妙或微妙的紧张感。声音干净且制作精良。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture that loops perfectly without any audible seams, clicks, or defects. Its evolving nature and distinct melodic phrases make it suitable for atmospheric background or event sounds in games or video.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:59.745942+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "7d97aa030ccc01e4493a19187854333f024069bb128c67c0f72572c5c20c0239"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music maintains consistent rhythm, harmony, and dynamics across the loop points. The phrase concludes naturally at the end of each segment, leading smoothly back to the beginning without any abrupt changes, fade-ins, ending cadences, skipped beats, or conspicuous edits. It is well-suited for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:31:07.169655+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2529eeb1452f75b2c529222b4194d018e50c854a7ff24538bb42e52c6c2f28b0",
+      "bytes": 1218237,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fcee861881414cfe4da154c9be3f19c51c467ac9947b4c63a06fc3c8789f0823",
+      "bytes": 2094746,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "f5104e57492b5b272302c6b23559ab79179bc6cbef7031cf3ea95a380e3bae2d",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "6d656452f10d49fc99bbc91c51228d5675552bcfaa9d2e7608220ac28f61859c",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "020ced59cc894a820daa477cbc38881566a12503679fa0da199c8ee9b9b066a8",
+      "bytes": 809346,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.465989+00:00"
+}

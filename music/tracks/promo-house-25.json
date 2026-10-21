@@ -1,0 +1,160 @@
+{
+  "id": "promo-house-25",
+  "code": "PROMO-04-25",
+  "title": {
+    "en": "Prism Dance · 25",
+    "zh": "棱镜舞步 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "rounded kick",
+    "electric piano stabs",
+    "bright synth bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a driving synth bassline, rhythmic synth arpeggios, and a steady electronic drum beat. The music has a modern, positive, and dynamic feel.",
+    "zh": "一首欢快且充满活力的电子音乐，具有强劲的合成器贝斯线、律动感十足的合成器琶音和稳定的电子鼓点。音乐呈现出一种现代、积极和充满活力的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:22:50.033283+00:00",
+  "generation": {
+    "id": "b0d8d198-1506-46f1-a616-6e1de232965b",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:22:38.044408+00:00",
+    "completedAt": "2026-09-10T05:22:50.033283+00:00",
+    "interactionId": "nz6iao6LAv6k694P1Iir8AQ",
+    "sha256": "9ca769e163aa185d5244d0dc399acb1710f9919011d0cd0d431090380248476d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving synth bassline, rhythmic synth arpeggios, and a steady electronic drum beat. The music has a modern, positive, and dynamic feel.",
+      "zh": "一首欢快且充满活力的电子音乐，具有强劲的合成器贝斯线、律动感十足的合成器琶音和稳定的电子鼓点。音乐呈现出一种现代、积极和充满活力的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, energetic, and versatile electronic track suitable for various media applications requiring a modern and positive feel.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving synth melody and a clear beat. It concludes with a smooth, deliberate fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:23:11.323433+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "ce1bf08e5e4d8b0fef7cd938c4a784ff69f858970c66d24dfdf2c82bb25c4b7b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.805667,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving beat, prominent synth bass, and a catchy, melodic synth lead. The arrangement is clean and well-produced, creating a positive and danceable atmosphere.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有强劲的节拍、突出的合成器低音和一段抓耳的旋律合成器主音。编曲干净且制作精良，营造出积极且适合跳舞的氛围。"
+    },
+    "instruments": [
+      "drums",
+      "synth bass",
+      "synth pads",
+      "synth lead"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "danceable",
+      "positive",
+      "driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean, well-produced electronic track with clear instrumentation and high energy, suitable for various media uses requiring an upbeat and modern sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:23:01.492090+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.805667,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-house-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-house-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-house-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:51.286842+00:00"
+}

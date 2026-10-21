@@ -44,12 +44,13 @@ are excluded.
 
 **Public Licenses / 公开许可** means the repository license applicable to the
 relevant material when submitted, currently `AGPL-3.0-only` for project-controlled
-software and `CC BY-NC 4.0` for eligible project-owned editorial and visual
-content, together with any more specific file-level notice.
+software in the open-source edition (proprietary in the main repository)
+and `CC BY-NC 4.0` for eligible project-owned editorial and visual content,
+together with any more specific file-level notice.
 
-“公开许可”指提交时适用于相关材料的仓库许可，目前项目方可控制的软件为
-`AGPL-3.0-only`，符合条件的项目原创文案和视觉内容为 `CC BY-NC 4.0`，并以文件级
-特殊声明为准。
+“公开许可”指提交时适用于相关材料的仓库许可，目前项目方可控制的软件在开源版中为
+`AGPL-3.0-only`（主仓中为专有），符合条件的项目原创文案和视觉内容为
+`CC BY-NC 4.0`，并以文件级特殊声明为准。
 
 **Effective Date / 生效日** means the later of the dates on which the
 Contributor and the Company execute this Agreement, unless the signature block

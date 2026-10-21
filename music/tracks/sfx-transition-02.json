@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-02",
+  "code": "SFX-TRANSITION-02",
+  "title": {
+    "en": "Ribbon sweep",
+    "zh": "丝带掠过"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 1,
+  "seed": 3247466818,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized ribbon sweep for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的丝带掠过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3247466818,
+    "sha256": "21048b63bd334da0ba8d54f9dbf3a322d6108caa2ab131a38e4061306b501da1",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "67870a77b40a13b9473f572da7f39b307260142d30c83078e83b068f654e608d",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "21048b63bd334da0ba8d54f9dbf3a322d6108caa2ab131a38e4061306b501da1",
+      "bytes": 61784,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "88112cc0b06cf20a03e34b4784d3f61c22aa6f3e91a06656675c8e664900eb8d",
+      "bytes": 9485,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2840f1222d7eabe2a6390f58b5ec6ae2fc4869b8b1468a475e2f548c35671e16",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 30870,
+    "duration": 0.7,
+    "peakDbfs": -2.19,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.908669420149012e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08680981445312552,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized electronic zap or energy burst sound effect with a quick attack and decay.",
+      "zh": "一个短促、尖锐的合成电子冲击或能量爆发音效，具有快速的起音和衰减。"
+    },
+    "reason": "Clean, well-defined synthesized sound effect suitable for various sound design applications like sci-fi weapons or UI feedback.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:45.463441+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "67870a77b40a13b9473f572da7f39b307260142d30c83078e83b068f654e608d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 30870
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.902427+00:00"
+}

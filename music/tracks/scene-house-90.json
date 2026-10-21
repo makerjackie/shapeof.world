@@ -1,0 +1,130 @@
+{
+  "id": "scene-house-90",
+  "code": "SCENE-03-90",
+  "title": {
+    "en": "Soft Geometry · 90",
+    "zh": "柔软几何 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "bright colorful interface demonstration",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "Rhodes stabs",
+    "soft four-on-floor kick",
+    "plucked bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for bright colorful interface demonstration. Instruments: Rhodes stabs, soft four-on-floor kick, plucked bass. 124 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A smooth, electronic track featuring a prominent synth melody over a steady electronic drum beat and atmospheric pads. The production is clean and polished, creating a calm and reflective atmosphere.",
+    "zh": "一首流畅的电子音乐，以突出的合成器旋律为主，配以稳定的电子鼓点和氛围感强的衬底音。制作干净精致，营造出平静而沉思的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "bright colorful interface demonstration"
+    ]
+  },
+  "duration": 87.536,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:11:41.267164+00:00",
+  "generation": {
+    "id": "d670487b-097d-46c2-acfc-d5d7326ab04d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:10:57.308248+00:00",
+    "completedAt": "2026-09-22T09:11:41.267164+00:00",
+    "interactionId": "IkayarijG7uL694P-9X7wAk",
+    "sha256": "bb383b02df91b049312672078e1906971e0fa9009a18033cebb5a8592ffe3761"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, electronic track featuring a prominent synth melody over a steady electronic drum beat and atmospheric pads. The production is clean and polished, creating a calm and reflective atmosphere.",
+      "zh": "一首流畅的电子音乐，以突出的合成器旋律为主，配以稳定的电子鼓点和氛围感强的衬底音。制作干净精致，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Pads"
+    ],
+    "moods": [
+      "Chill",
+      "Reflective",
+      "Atmospheric",
+      "Calm",
+      "Melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 120,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:51.838979+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-house-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-house-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-house-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "31a6fdb1bbd12c963d0a8d266a5272f89e47b789472bc47285f6adeeab665a94",
+      "bytes": 1226283,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bb383b02df91b049312672078e1906971e0fa9009a18033cebb5a8592ffe3761",
+      "bytes": 2108538,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a995523d27e983bb859db9ab8d157323cce6d85ff153fc238b2dd9e57effd440",
+      "bytes": 2795,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.843441+00:00"
+}

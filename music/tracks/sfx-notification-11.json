@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-11",
+  "code": "SFX-NOTIFICATION-11",
+  "title": {
+    "en": "Connection lost",
+    "zh": "连接断开"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 10,
+  "seed": 2379111270,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized connection lost for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的连接断开合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.65,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2379111270,
+    "sha256": "99c108fefd49149eb7d09d1a46fbd07787e8f4be945f8ac0ea0c7cbd7b1861a8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c1f982c4ee5c9f7640e400b86f311176ee00b81944a00c28d8a912f01eb48e04",
+      "bytes": 9917,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "99c108fefd49149eb7d09d1a46fbd07787e8f4be945f8ac0ea0c7cbd7b1861a8",
+      "bytes": 57374,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "31aa92fe949d69381dd65d2f0f91deeae862ddaf8facc8705f1ec2d236e58c2d",
+      "bytes": 6705,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c23f9604f5eb37979f69595d21a1425a597eb78d84248fcb8fb31a40c018b5e0",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 28665,
+    "duration": 0.65,
+    "peakDbfs": -4.89,
+    "rmsDbfs": -17.08,
+    "dcOffset": -6.068382881998953e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.057648376464843665,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip sound effect.",
+      "zh": "短促、高音调的电子提示音效。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:22.302969+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c1f982c4ee5c9f7640e400b86f311176ee00b81944a00c28d8a912f01eb48e04"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 28665
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.890752+00:00"
+}

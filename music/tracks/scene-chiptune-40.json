@@ -1,0 +1,179 @@
+{
+  "id": "scene-chiptune-40",
+  "code": "SCENE-05-40",
+  "title": {
+    "en": "Pocket Planet · 40",
+    "zh": "口袋星球 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "playful original pixel-art motion",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 142,
+  "key": "",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "crisp electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for playful original pixel-art motion. Instruments: pulse-wave lead, triangle bass, crisp electronic drums. 142 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic, upbeat electronic track with a prominent chiptune aesthetic, featuring driving synth melodies and a strong rhythmic pulse.",
+    "zh": "一首充满活力、欢快的电子音乐，带有明显的芯片音乐风格，以强劲的合成器旋律和鲜明的节奏脉动为特色。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "playful original pixel-art motion"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:12:36.162506+00:00",
+  "generation": {
+    "id": "71d542c5-1a0d-4f7f-b2b4-d6f18d57aa7f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:11:51.844518+00:00",
+    "completedAt": "2026-09-22T09:12:36.162506+00:00",
+    "interactionId": "WUayaoBevYzr3g-s-cOICg",
+    "sha256": "7a31bbfcf96410899e17ce05cff9c7f21969715af8d9a0167d3bb88d937cbb11"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic, upbeat electronic track with a prominent chiptune aesthetic, featuring driving synth melodies and a strong rhythmic pulse.",
+      "zh": "一首充满活力、欢快的电子音乐，带有明显的芯片音乐风格，以强劲的合成器旋律和鲜明的节奏脉动为特色。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Playful",
+      "Driving",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 145,
+    "reason": "High-quality, well-produced electronic track with a clear chiptune aesthetic and strong rhythmic drive, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent melodic hook and driving beat. It concludes with a distinct musical flourish and a short fade-out, providing a clear and satisfying resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:51.962585+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1146df8ded57ff74480739f85d11986d8f1bbe03bd3181d0068d909dec439e8f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.443208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic track featuring a driving beat, prominent synth bass, and catchy synth melodies. It has a modern, upbeat feel.",
+      "zh": "一首充满活力的电子音乐，具有强劲的节拍、突出的合成器低音和动听的合成器旋律。它带有一种现代、欢快的氛围。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Synth Lead"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Driving",
+      "Modern",
+      "Futuristic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "The track is well-produced, clean, and offers a dynamic electronic sound suitable for various media applications requiring an energetic and modern feel.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:43.765944+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.443208,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chiptune-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chiptune-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chiptune-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1146df8ded57ff74480739f85d11986d8f1bbe03bd3181d0068d909dec439e8f",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7a31bbfcf96410899e17ce05cff9c7f21969715af8d9a0167d3bb88d937cbb11",
+      "bytes": 1386305,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "5bc846cb754745082043510653ddfa9331c3fe8693eeabc65e3b762c755d8d20",
+      "bytes": 2796,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.828832+00:00"
+}

@@ -1,0 +1,182 @@
+{
+  "id": "scene-soul-40",
+  "code": "SCENE-08-40",
+  "title": {
+    "en": "Warm Circuit · 40",
+    "zh": "温暖电路 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "warm human-centered product story",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "muted brass",
+    "electric bass",
+    "snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for warm human-centered product story. Instruments: electric piano, muted brass, electric bass, snare. 100 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and positive orchestral pop track featuring a prominent piano melody, supported by strings, brass, and a driving rhythm section. It has a bright and cheerful atmosphere.",
+    "zh": "一首欢快积极的管弦流行乐曲，以突出的钢琴旋律为主，配以弦乐、铜管乐和强劲的节奏部分。整体氛围明亮而愉悦。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "warm human-centered product story"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:14:04.493165+00:00",
+  "generation": {
+    "id": "3916644b-3436-4e9a-8c19-6363a4ac29c1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:13:24.226626+00:00",
+    "completedAt": "2026-09-22T09:14:04.493165+00:00",
+    "interactionId": "tUayatL4EpOE694Pyb3WcQ",
+    "sha256": "1baa35c515304d39b4a960f8fa6636504e0bc18962beeffb4a35cb3da92b1645"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and positive orchestral pop track featuring a prominent piano melody, supported by strings, brass, and a driving rhythm section. It has a bright and cheerful atmosphere.",
+      "zh": "一首欢快积极的管弦流行乐曲，以突出的钢琴旋律为主，配以弦乐、铜管乐和强劲的节奏部分。整体氛围明亮而愉悦。"
+    },
+    "instruments": [
+      "piano",
+      "strings",
+      "brass",
+      "drums",
+      "bass guitar"
+    ],
+    "moods": [
+      "upbeat",
+      "positive",
+      "cheerful",
+      "bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean, and professionally arranged instrumental track with a clear structure and positive mood, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main piano melody and rhythm section, establishing the upbeat feel. It concludes with a smooth, deliberate fade-out of all instruments.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:25.446823+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6930a58bf97e8ef03938c9da5a19beb916989d8b8275a8b006851b5e0b3abd81"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.383625,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a prominent saxophone melody over a funky rhythm section. The arrangement includes piano, bass, and drums, creating a cheerful and energetic jazz-funk feel.",
+      "zh": "一首欢快活泼的纯音乐曲目，以萨克斯风为主旋律，搭配律动感十足的放克节奏部分。编曲中包含钢琴、贝斯和鼓，营造出一种愉悦且充满活力的爵士放克氛围。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass guitar",
+      "Piano",
+      "Saxophone",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Funky",
+      "Energetic",
+      "Cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumental track with a distinct jazz-funk style, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:12.320757+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 18.383625000000002,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-soul-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-soul-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-soul-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6930a58bf97e8ef03938c9da5a19beb916989d8b8275a8b006851b5e0b3abd81",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1baa35c515304d39b4a960f8fa6636504e0bc18962beeffb4a35cb3da92b1645",
+      "bytes": 1408875,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "4541c2746119f0448531e8d084587f58071bfba56f12dbc98422c27a7f14998f",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.851421+00:00"
+}

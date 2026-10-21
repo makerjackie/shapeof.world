@@ -1,0 +1,61 @@
+{
+  "id": "complex-bloom",
+  "code": "MAT-B01",
+  "title": {
+    "en": "Complex Bloom",
+    "zh": "复平面绽放"
+  },
+  "category": "math-signals",
+  "archetype": "discovery",
+  "moods": [
+    "rotating",
+    "witty",
+    "bright",
+    "elegant"
+  ],
+  "topics": [
+    "euler-formula",
+    "complex-plane",
+    "rotation"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "C major",
+  "instruments": [
+    "piano",
+    "clarinet",
+    "rotating synth pan",
+    "light triangle"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.853,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a point rotating on the complex plane. Around 80 BPM, C major. Piano states a unit-circle motif; clarinet follows 90 degrees later; a synth voice slowly pans around the listener once per phrase. Witty and elegant. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No EDM sidechain, no brass.\n\n[00:00–00:20] Piano motif of four notes that imply a circle, dry.\n[00:20–01:00] Clarinet enters a quarter-turn later; stereo pan begins.\n[01:00–01:45] Harmony blooms through related keys as if multiplying by i, returning to C.\n[01:45–02:30] Rotation slows; piano alone, still circling.\n",
+  "recommendedWorldIds": [
+    "complex-mapping"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:10:12Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/complex-bloom/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/complex-bloom/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/complex-bloom/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:17.177671+00:00",
+  "generation": {
+    "id": "abfce7dc-6336-4883-9edb-6a3b9e5ff1a9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:09:22Z",
+    "completedAt": "2026-08-25T10:10:12Z",
+    "durationMs": 50000,
+    "interactionId": "1WmNas32Ku_crtoPxNyAqQ0",
+    "clientRequestId": "583065b5-99f9-45d2-9067-244d0a1bc7cd",
+    "synthid": true,
+    "c2pa": "urn:c2pa:3501bfd9-6e09-8481-ac1a-4cc710e5ba3b",
+    "sha256": "595d1a49b4dfdaa47f613f50abe5ba2eab99e7e99f2755100f365c5d805992e6"
+  }
+}

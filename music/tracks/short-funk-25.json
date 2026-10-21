@@ -1,0 +1,162 @@
+{
+  "id": "short-funk-25",
+  "code": "SHORT-01-25",
+  "title": {
+    "en": "Snap Fit · 25",
+    "zh": "咔哒合拍 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted rhythm guitar",
+    "elastic electric bass",
+    "dry claps",
+    "tight kick"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic pop track with a driving beat and catchy synth melodies, suitable for promotional content.",
+    "zh": "一首欢快且充满活力的电子流行音乐，带有强劲的节拍和抓耳的合成器旋律，适合宣传内容。"
+  },
+  "batch": "short-promos-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 16,
+      "logo": 29
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T02:35:55.728255+00:00",
+  "generation": {
+    "id": "884d9482-be5d-433f-aecc-1413198450f6",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T02:35:41.774599+00:00",
+    "completedAt": "2026-09-10T02:35:55.728255+00:00",
+    "interactionId": "fheiavK_OL2p4vEPtLXW2AM",
+    "sha256": "1b170973a4689fece05ebd8ed9193a3ed035a24754fec6b1cea084bcf707f1dc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic pop track with a driving beat and catchy synth melodies, suitable for promotional content.",
+      "zh": "一首欢快且充满活力的电子流行音乐，带有强劲的节拍和抓耳的合成器旋律，适合宣传内容。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Synth Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "This is a well-produced, clean, and energetic track with a clear structure, making it highly suitable for a music library, especially for promotional or background use.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a prominent synth melody and driving beat, establishing the main theme. It concludes with a clean and deliberate fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:41:17.685755+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6098e0c16d82e0da1029d1f728b82c24a69ae65dfd120f6d47cf74355b3921e9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.675042,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring a prominent, driving bassline, clean electric guitars playing rhythmic and melodic parts, and a steady, danceable drum beat, creating a positive and energetic atmosphere with a pop-funk feel.",
+      "zh": "一首欢快且律动感十足的纯音乐曲目，以突出且富有推动力的贝斯线、演奏节奏和旋律部分的清澈电吉他，以及稳定且适合跳舞的鼓点为特色，营造出积极、充满活力的流行放克氛围。"
+    },
+    "instruments": [
+      "drums",
+      "bass guitar",
+      "electric guitar",
+      "synthesizer"
+    ],
+    "moods": [
+      "upbeat",
+      "groovy",
+      "energetic",
+      "positive",
+      "danceable",
+      "pop-funk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 126,
+    "reason": "Well-produced, clean instrumental track with a clear musical theme and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:36:24.109162+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.675042000000001,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/short-funk-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/short-funk-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/short-funk-25/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T02:44:16.997207+00:00"
+}

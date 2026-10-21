@@ -329,8 +329,7 @@
 
 @media (max-width: 540px) {
   .oss-experience.bh-flyby .bh-flyby-plaque[data-experience-overlay='true'] {
-    /* The shell's next-world card occupies the top-right safe row on phones. */
-    top: calc(130px + env(safe-area-inset-top, 0px));
+    top: var(--experience-safe-top, 78px);
     left: 14px;
     max-width: 70vw;
   }
@@ -367,7 +366,7 @@
 
   .bh-flyby-tool-row {
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .bh-flyby-tool-tabs {
@@ -378,6 +377,8 @@
 
   .bh-flyby-toggle-group,
   .bh-flyby-view-group {
+    flex: 0 0 auto;
+    min-width: max-content;
     width: auto;
     flex-wrap: nowrap;
     overflow-x: visible;
@@ -407,6 +408,7 @@
   .bh-flyby-toggle-group button,
   .bh-flyby-view-group button,
   .bh-flyby-rocket {
+    flex: 0 0 auto;
     min-height: 34px;
     padding-inline: 11px;
     font-size: 11.5px;

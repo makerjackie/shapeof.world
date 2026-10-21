@@ -1,0 +1,99 @@
+{
+  "id": "lib-post-rock-reading",
+  "code": "LIB-30-01",
+  "title": {
+    "en": "Reading — Post Rock",
+    "zh": "静读 · 后摇"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "post-rock"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "D major",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second instrumental post-rock instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 88 BPM; D major. Main idea: a descending melody with an upward answer. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring clean electric guitar melodies and arpeggios over a steady bass and drum rhythm. The mood is peaceful and slightly melancholic.",
+    "zh": "一首平静而富有沉思感的器乐作品，以干净的电吉他旋律和琶音为主，配以稳定的贝斯和鼓点节奏。整体氛围宁静略带忧郁。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 56.215,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:17:36.143391+00:00",
+  "generation": {
+    "id": "86c5a23e-809d-426a-9548-3758ecbd0ca7",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:16:52.652190+00:00",
+    "completedAt": "2026-09-09T09:17:36.143391+00:00",
+    "interactionId": "BSShar30MaKsrtoP65a1oAo",
+    "sha256": "9f2018a052b1283ee8816c6d9c38a8b9ac4aee220579ea1474ea7f86ef338be1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring clean electric guitar melodies and arpeggios over a steady bass and drum rhythm. The mood is peaceful and slightly melancholic.",
+      "zh": "一首平静而富有沉思感的器乐作品，以干净的电吉他旋律和琶音为主，配以稳定的贝斯和鼓点节奏。整体氛围宁静略带忧郁。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "calm",
+      "reflective",
+      "peaceful",
+      "melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 72,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear musical theme and no defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:17:43.429724+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:18:32.786468+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-13",
+  "code": "SFX-SCIFI-13",
+  "title": {
+    "en": "Airlock release",
+    "zh": "气闸释放"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 12,
+  "seed": 3976682880,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized airlock release for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的气闸释放合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.5,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3976682880,
+    "sha256": "9887293cd122b7c24b16d091c159ca7dab4f346e95c434ec66cb17c96de78f09",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6e0db22dc4c09ab0183c4a817876c96c46273e95a1202432464bafcb0ff904ec",
+      "bytes": 21986,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9887293cd122b7c24b16d091c159ca7dab4f346e95c434ec66cb17c96de78f09",
+      "bytes": 132344,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "3c08701181897aede81b3e5da84c8ae304bbc8ea0301c2e67c2c31d693c8f3af",
+      "bytes": 27335,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "043156730df731be9cfb258a8d649ff107cde33ff061ff655a65bea8a24954e8",
+      "bytes": 1929,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 66150,
+    "duration": 1.5,
+    "peakDbfs": -4.18,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.2144274376417234e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1269870605468748,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, rising electronic sweep or whoosh sound effect.",
+      "zh": "一个短促、高音调、上升的电子扫过或嗖嗖声效果。"
+    },
+    "reason": "The sound is a clean, intentionally designed electronic sound effect, suitable for various UI or transition applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:09.070309+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6e0db22dc4c09ab0183c4a817876c96c46273e95a1202432464bafcb0ff904ec"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 66150
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901046+00:00"
+}

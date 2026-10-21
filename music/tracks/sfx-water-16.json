@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-16",
+  "code": "SFX-WATER-16",
+  "title": {
+    "en": "Raindrop tap",
+    "zh": "雨点轻敲"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 15,
+  "seed": 508051058,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized raindrop tap for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的雨点轻敲合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.49,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 508051058,
+    "sha256": "06e7bfff4c42f8ce0d1375e43e20008e85998d27953ce57c44b751f488d9dbba",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "445344fde2ca3f2e4d0e47b1767b4f653b68d706c710e19295438d66d158731f",
+      "bytes": 7723,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "06e7bfff4c42f8ce0d1375e43e20008e85998d27953ce57c44b751f488d9dbba",
+      "bytes": 43262,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "32232fd09262593228e46e27db2c590d665caabd88b38a63ccf36c7972690b68",
+      "bytes": 9866,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6954c600bd039ff37cf5fbd8b4ba0164d002397dd061b19af860fab6512e2510",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 21609,
+    "duration": 0.49,
+    "peakDbfs": -2.73,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.977167355037253e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1273062744140625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A sharp, quick whoosh or swish sound with a distinct metallic or resonant quality, suggesting a fast movement or impact. It's clean and punchy.",
+      "zh": "一个尖锐、快速的嗖嗖声或划过声，带有明显的金属或共鸣质感，暗示着快速移动或冲击。声音干净有力。"
+    },
+    "reason": "The sound is a clean, sharp whoosh with a distinct metallic resonance, free from any audible defects like clipping or glitches. It's well-suited for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:44.778303+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "445344fde2ca3f2e4d0e47b1767b4f653b68d706c710e19295438d66d158731f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 21609
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.913476+00:00"
+}

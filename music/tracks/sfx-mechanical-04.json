@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-04",
+  "code": "SFX-MECHANICAL-04",
+  "title": {
+    "en": "Button spring",
+    "zh": "按键弹簧"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 3,
+  "seed": 2106667277,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized button spring for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的按键弹簧合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2106667277,
+    "sha256": "fd63c482461728c1b9fc473c383741443e2abfd5bce05c02be46f7cfb4b2c7ad",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "73705c2790896110d0ad9c24f6c655ba2089e7c60f6db59090704a3ecde270ef",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fd63c482461728c1b9fc473c383741443e2abfd5bce05c02be46f7cfb4b2c7ad",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "eb3481647c6084ab6387fad10a8b829c10ae4d6cbe132e118a091c0d5bc2ac92",
+      "bytes": 7583,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "078c8134f80fa9e364fb884d12e462aed591e1f87ad0ac74f2d41fdb6f0433db",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.73,
+    "dcOffset": 3.3003485849467994e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1683265380859369,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, ascending electronic whoosh or swoosh sound, concluding with a distinct, high-pitched metallic ping.",
+      "zh": "一个短促的、上升的电子嗖嗖声或呼啸声，以一个清晰的高音金属叮声结束。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced electronic effect, suitable for various sound design applications like UI feedback or transitions.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:22.600677+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "73705c2790896110d0ad9c24f6c655ba2089e7c60f6db59090704a3ecde270ef"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.885494+00:00"
+}

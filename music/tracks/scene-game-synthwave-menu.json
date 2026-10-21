@@ -1,0 +1,204 @@
+{
+  "id": "scene-game-synthwave-menu",
+  "code": "GAME-05-1",
+  "title": {
+    "en": "Orbital Dock · Menu",
+    "zh": "轨道船坞 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "science-fiction navigation",
+    "menu"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "analog sequencer",
+    "filtered bass",
+    "restrained drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for science-fiction navigation, menu state. Instruments: analog sequencer, filtered bass, restrained drums. 112 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A driving electronic track featuring a prominent arpeggiated synth melody, synth pads, and a steady electronic drum beat.",
+    "zh": "一首充满活力的电子音乐，以突出的琶音合成器旋律、合成器衬底和稳定的电子鼓点为特色。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 87.275,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:23:18.132739+00:00",
+  "generation": {
+    "id": "6cbbb089-8c76-49fc-be30-89646f969adb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:38.016096+00:00",
+    "completedAt": "2026-09-22T09:23:18.132739+00:00",
+    "interactionId": "3kiyaq3BK7WxoLAP4prukQo",
+    "sha256": "d4825b071cb5fdda21513f05e4e3c41b37afd7c4d7770cf3d6a9ab8f5ddec904"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A driving electronic track featuring a prominent arpeggiated synth melody, synth pads, and a steady electronic drum beat.",
+      "zh": "一首充满活力的电子音乐，以突出的琶音合成器旋律、合成器衬底和稳定的电子鼓点为特色。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass"
+    ],
+    "moods": [
+      "energetic",
+      "driving",
+      "futuristic",
+      "uplifting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:29.127227+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 31.377052,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1383728,
+    "sourceStartSeconds": 7.8750113378684805,
+    "sourceEndSeconds": 39.350430839002264,
+    "crossfadeSeconds": 0.09836734693877551,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -15.46,
+        "dcOffset": 0.0021607099143398194,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00213623046875,
+        "internalStepP999": 0.12412335205078051,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.45,
+        "dcOffset": 0.0019012479975192582,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00054931640625,
+        "internalStepP999": 0.1381004028320305,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A rhythmic, synthesized electronic texture with percussive and metallic elements, featuring a consistent pulse and shimmering high-frequency details. It evokes a futuristic or digital atmosphere.",
+        "zh": "一种有节奏感的合成电子音效，带有打击乐和金属质感，具有一致的脉冲和闪烁的高频细节。它营造出一种未来感或数字化的氛围。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture with no audible defects. It loops seamlessly across repetitions, making it highly suitable for game or video sound design where continuous background elements are needed.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:31:05.184286+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "a7dbada57320c8ee02b9c3c7d8633a92115b29635b97552e5f4db60e0a70af5e"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The excerpt demonstrates excellent loop continuity. Rhythm, harmony, dynamics, and phrase structure are consistent across both joins. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The music flows seamlessly from one repetition to the next, making it suitable for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:31:22.585395+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "464c2425b39f70e7e4e3c4148dc46866e5a91abdbec969efe15203f7acdb6690",
+      "bytes": 1222626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d4825b071cb5fdda21513f05e4e3c41b37afd7c4d7770cf3d6a9ab8f5ddec904",
+      "bytes": 2102269,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1ed53dfdfd499e604e9e95031eca1ce4e4df8ba0e288d8342249b1275d668ff6",
+      "bytes": 2818,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "fe4a32dbba33bf655bad6ebc1fa8c2a993d5f6325f677fa36838687006c0fa45",
+      "bytes": 5534956,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "91a539d3c47f0b28eec7535149332a0f939cff93666b5b6b97c92bd23255c7a8",
+      "bytes": 510417,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.466869+00:00"
+}

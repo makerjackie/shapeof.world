@@ -1,0 +1,99 @@
+{
+  "id": "lib-jazz-trio-reading",
+  "code": "LIB-07-01",
+  "title": {
+    "en": "Reading — Jazz Trio",
+    "zh": "静读 · 爵士三重奏"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "jazz-trio"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "D major",
+  "instruments": [
+    "piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic jazz instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: piano, upright bass, brushed drums. Style: relaxed swing, walking bass and conversational piano. Tempo approximately 88 BPM; D major. Main idea: an ascending fourth answered by a stepwise descent. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A gentle and melancholic orchestral piece featuring piano, strings, and flute. The melody is reflective and flowing, creating a serene atmosphere.",
+    "zh": "一首温柔而忧郁的管弦乐曲，以钢琴、弦乐和长笛为主。旋律富有沉思感且流畅，营造出宁静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.089,
+  "generatedAt": "2026-09-09T08:03:28.389305+00:00",
+  "generation": {
+    "id": "5de28a2b-6f1b-40d2-9977-f1c4f2ccb717",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:02:47.091302+00:00",
+    "completedAt": "2026-09-09T08:03:28.389305+00:00",
+    "interactionId": "qBKhaq7TC8y5jMwP4P3F-Qs",
+    "sha256": "d356a65fe1053cc612199f5a75538ede925d2a6df94b9b00e250aaa0140bb8ea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic orchestral piece featuring piano, strings, and flute. The melody is reflective and flowing, creating a serene atmosphere.",
+      "zh": "一首温柔而忧郁的管弦乐曲，以钢琴、弦乐和长笛为主。旋律富有沉思感且流畅，营造出宁静的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Flute"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Serene",
+      "Gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:03:36.730781+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:04:48.810779+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

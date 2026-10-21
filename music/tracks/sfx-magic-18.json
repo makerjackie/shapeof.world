@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-18",
+  "code": "SFX-MAGIC-18",
+  "title": {
+    "en": "Runes activate",
+    "zh": "符文激活"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 17,
+  "seed": 2133499309,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized runes activate for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的符文激活合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.84,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2133499309,
+    "sha256": "38de22c5f0c6d6351cb2a70b43ba7fe46a8aabe8bf1611b8527aeadfb82bf066",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ec67298f7934c7d27c3cb12e13b776e51c42cee6547f63a11fa3516882a6441c",
+      "bytes": 26740,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "38de22c5f0c6d6351cb2a70b43ba7fe46a8aabe8bf1611b8527aeadfb82bf066",
+      "bytes": 162332,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "bcb03df919fdc0d6488b50cb92cffd31720da0bc9967fdf704be5b79fcf9e91f",
+      "bytes": 38215,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "dd36997c1baafd5884e405180b4fee89063623624a40a93fd95f72145dc27d42",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 81144,
+    "duration": 1.84,
+    "peakDbfs": -4.56,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.497652032959923e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13449114990234223,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, rising electronic whoosh or swell sound, followed by a high-pitched electronic ping or chime. It has a clean, digital quality.",
+      "zh": "一个短促、上升的电子嗖嗖声或膨胀声，随后是一个高音调的电子叮当声或提示音。它具有干净的数字音质。"
+    },
+    "reason": "The sound is a clear, isolated electronic effect suitable for UI feedback, notifications, or short transitions in games or video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:53.187113+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ec67298f7934c7d27c3cb12e13b776e51c42cee6547f63a11fa3516882a6441c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 81144
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.884266+00:00"
+}

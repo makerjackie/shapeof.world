@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-03",
+  "code": "SFX-SCIFI-03",
+  "title": {
+    "en": "Energy charge",
+    "zh": "能量充能"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 2,
+  "seed": 2624513577,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized energy charge for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的能量充能合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2624513577,
+    "sha256": "4ca60c502a7afa72629d095384455a6f1cb5ee816a472257d17666e85d134054",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a901664adb54dcc5b575c8270b58c030831a0b1b210adebe7eef3ce93b2186bd",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4ca60c502a7afa72629d095384455a6f1cb5ee816a472257d17666e85d134054",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e29dffd2ccc64578779dff36e99c0cb2dc1e1957b61a0989fa21aa9a1e47e238",
+      "bytes": 14453,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d6eea3b773c4624138012eb2a2598eba19f51a1c68d74140cc90f9af4011ad88",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -4.61,
+    "rmsDbfs": -17.08,
+    "dcOffset": 6.831366694647945e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07468347167968736,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthetic whoosh sound effect with a rising and falling pitch, suggesting a quick movement or transition.",
+      "zh": "短促的合成嗖声效果，音高有升有降，暗示快速移动或过渡。"
+    },
+    "reason": "The sound is clean, well-defined, and suitable for various sound design applications like UI feedback or transitions.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:59.645690+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a901664adb54dcc5b575c8270b58c030831a0b1b210adebe7eef3ce93b2186bd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.898659+00:00"
+}

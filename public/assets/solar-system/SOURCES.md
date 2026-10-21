@@ -28,3 +28,9 @@
 Jónsson 环模型数据跨度约 74,500 km – 140,385 km（13177 采样 × 5 km，Voyager 掩星剖面）。
 渲染时代码按此物理跨度映射到环面几何（见 SolarSystem.tsx `RING_STRIP_INNER_KM/OUTER_KM`），
 条带 x=0 对应内缘（C 环，半透明），中段为 B 环（不透明），含卡西尼缝、A 环与细 F 环。
+
+## Solar System Earth rendering (2026-09-19)
+
+The solar-system renderer now reuses `earth-bmng-4k.jpg` unchanged (NASA Blue Marble land/shallow-water/shaded-topography composite, above), replacing the repeatedly saturated `earth-day.jpg` in this world only. Cloud opacity now uses the unmodified NASA 2048 × 1024 historical composite at `/assets/earth-spin-orbit/clouds-nasa-2k.jpg`; its original download URL, SHA-256 and rights are recorded in [the adjacent source record](../earth-spin-orbit/SOURCES.md). Night lights reuse `earth-night.jpg`. No new binary or third-party model was added.
+
+The cloud shell is placed approximately 10 km above the reference sphere. Clouds rotate slowly relative to the surface for illustration, not as a weather forecast. A thin atmospheric shell and blue limb approximate scattering, not calibrated radiative transfer. Ocean glint uses a blue-dominance surface mask, not measured reflectance or a geographic water mask. The two scale modes use identical materials and relative shell heights. 4K is retained for close-up coastlines; texture loads are shared/cached and GPU textures are used at their native resolutions.

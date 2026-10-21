@@ -1,0 +1,162 @@
+{
+  "id": "promo-oud-20",
+  "code": "PROMO-15-20",
+  "title": {
+    "en": "Copper Steps · 20",
+    "zh": "铜色脚步 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 122,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "electric bass",
+    "handclaps"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble oud-led groove with syncopated hand percussion. Instruments: oud, darbuka, electric bass, handclaps. Tempo 122 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and groovy funk-rock track featuring a prominent electric guitar riff, driving bassline, and energetic drums. It has a positive and dynamic feel, suitable for promotional content.",
+    "zh": "一首欢快且律动感十足的放克摇滚乐曲，以突出的电吉他Riff、强劲的贝斯线和充满活力的鼓点为特色。整体感觉积极向上，充满动感，适合宣传内容。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:31:17.702167+00:00",
+  "generation": {
+    "id": "1732775c-53a7-4176-98a5-03399fd46e5d",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:31:05.027978+00:00",
+    "completedAt": "2026-09-10T05:31:17.702167+00:00",
+    "interactionId": "mUCiarqtIt6O7PkP2qGV6As",
+    "sha256": "7843000adbac7178f667ff9175d2aeb368653737efc348384e3fb73519861dc6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy funk-rock track featuring a prominent electric guitar riff, driving bassline, and energetic drums. It has a positive and dynamic feel, suitable for promotional content.",
+      "zh": "一首欢快且律动感十足的放克摇滚乐曲，以突出的电吉他Riff、强劲的贝斯线和充满活力的鼓点为特色。整体感觉积极向上，充满动感，适合宣传内容。"
+    },
+    "instruments": [
+      "Drums",
+      "Electric Bass",
+      "Electric Guitar",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Groovy",
+      "Energetic",
+      "Funky",
+      "Positive",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced, instrumental funk-rock track with a clear structure and no defects, making it suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a strong, driving funk-rock groove led by guitar and drums. It concludes with a clean, deliberate fade-out of the main musical theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:31:33.384552+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "4ea98121a8495ea96bb930e69bdfe105f0fc2d2e3527a7ad691732948a169474"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental piece featuring a prominent accordion melody, supported by a driving rhythm section with drums and bass. The music has a festive and traditional feel, suitable for dancing.",
+      "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，配以鼓和贝斯组成的强劲节奏部分。音乐充满节日和传统气息，适合舞蹈。"
+    },
+    "instruments": [
+      "accordion",
+      "drums",
+      "bass",
+      "percussion"
+    ],
+    "moods": [
+      "lively",
+      "upbeat",
+      "festive",
+      "traditional",
+      "danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Clean, well-produced, and energetic instrumental track with a clear traditional sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:31:26.257463+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.772167,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-oud-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-oud-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-oud-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:05.793592+00:00"
+}

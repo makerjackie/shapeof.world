@@ -1,0 +1,145 @@
+.photon-experience {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #050b10;
+  color: #e3f1ec;
+  --experience-panel-surface: rgba(9, 19, 23, 0.93);
+  --experience-panel-border: rgba(158, 219, 204, 0.15);
+  --experience-panel-shadow: 0 12px 44px rgba(0, 0, 0, 0.3);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.1;
+  --experience-panel-radius: 18px;
+  --freebar-accent: #a0ead1;
+  --freebar-ink: #dfece8;
+  --freebar-text-shadow: none;
+}
+.photon-canvas { width: 100%; height: 100%; display: block; touch-action: none; }
+.photon-experience[data-photon-story='false'] .photon-canvas { cursor: ew-resize; }
+.photon-experience[data-photon-mode='detect'] .photon-canvas { cursor: pointer; }
+.photon-experience[data-photon-paired='true'] .photon-canvas { cursor: pointer; }
+.photon-nameplate { position: absolute; left: clamp(24px, 5vw, 84px); top: var(--experience-safe-top); max-width: 400px; pointer-events: none; }
+.photon-eyebrow { font-size: 10px; letter-spacing: 0.22em; color: #8baba7; margin-bottom: 17px; }
+.photon-nameplate h1 { font-weight: 450; font-size: clamp(25px, 2.7vw, 39px); letter-spacing: -.035em; line-height: 1.2; margin: 0 0 15px; }
+.photon-nameplate p { margin: 0; max-width: 335px; color: #95aaa9; font-size: 13px; line-height: 1.85; }
+.photon-readout { position: absolute; bottom: calc(var(--experience-freebar-height, 144px) + 32px); left: clamp(24px, 5vw, 84px); pointer-events: none; font-variant-numeric: tabular-nums; }
+.photon-readout-top { display: flex; align-items: center; gap: 10px; color: #9db2ae; font-size: 11px; }
+.photon-readout-top strong { color: #d9f4e9; font-size: 27px; font-weight: 400; margin-left: 12px; }
+.photon-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #a0ead1; box-shadow: 0 0 12px #8adebb; }
+.photon-readout p { margin: 10px 0 0; color: #79928e; font-size: 11px; line-height: 1.6; }
+.photon-equation { display: flex; align-items: center; gap: 14px; margin-top: 14px; color: #768a88; font-size: 11px; }
+.photon-equation span { color: #bacac5; letter-spacing: 0.035em; }
+.photon-energy, .photon-clock-readings { display: flex; gap: 34px; }
+.photon-energy > div, .photon-clock-readings > div { display: flex; flex-direction: column; gap: 7px; }
+.photon-energy span, .photon-clock-readings span { font-size: 11px; color: #88a6a0; }
+.photon-energy strong, .photon-clock-readings strong { font-size: 27px; font-weight: 400; letter-spacing: -.025em; color: #c9efe4; }
+.photon-energy small, .photon-clock-readings small { font-size: 12px; color: #82a39b; }
+.photon-clock-readings > div:last-child strong { color: #efc690; }
+.photon-clock-readings > div:last-child span { color: #b5a083; }
+.photon-times { padding: 0 9px; }
+.photon-readout-story { bottom: 105px; }
+.photon-source-hit { position: absolute; width: 76px; height: 76px; transform: translate(-50%, -50%); display: grid; place-items: center; border: 0; padding: 0; color: #b9e4d6; background: none; cursor: pointer; touch-action: none; }
+.photon-source-ring { width: 49px; height: 49px; border: 1px solid rgba(169,238,215,.2); border-radius: 50%; transition: border-color .2s, transform .25s; }
+.photon-source-hit:hover .photon-source-ring, .photon-source-hit:active .photon-source-ring { border-color: #abead4; transform: scale(1.12); }
+.photon-source-label { position: absolute; top: 73px; width: 130px; font-size: 10px; letter-spacing: .08em; color: #88aaa2; }
+.photon-secondary { display: flex; align-items: center; gap: 12px; }
+.photon-adjust-row, .photon-option-row, .photon-observers { display: flex; align-items: center; gap: 9px; }
+.photon-option-row { flex-shrink: 0; }
+.photon-chip:disabled { opacity: .35; cursor: default; }
+.photon-ticks { margin-left: 10px; }
+.photon-paired-readings > div:first-child span { color: #d69887; }
+.photon-paired-readings > div:first-child strong { color: #ffae9c; }
+.photon-paired-readings > div:last-child span { color: #96a9e6; }
+.photon-paired-readings > div:last-child strong { color: #afc4ff; }
+.photon-arrival { transition: color .25s; }
+.photon-arrival[data-arrived='true'] { color: #c9e8dc; }
+.photon-slider { display: flex; flex-direction: column; gap: 10px; min-width: 120px; width: 165px; }
+.photon-slider > span { font-size: 10px; color: #87a69e; display: flex; justify-content: space-between; gap: 10px; }
+.photon-slider b { font-weight: 400; color: #d0e3dd; font-variant-numeric: tabular-nums; }
+.photon-slider input { appearance: none; width: 100%; height: 4px; border-radius: 5px; background: #3b5952; cursor: pointer; margin: 0; accent-color: #a0ead1; }
+.photon-slider input::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #ceeee1; border: 2px solid #8dbdab; box-shadow: 0 0 0 4px rgba(155,227,201,.07); }
+.photon-slider input::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #ceeee1; border: 2px solid #8dbdab; }
+.photon-spectrum-slider { width: 270px; }
+.photon-spectrum-slider input { background: linear-gradient(90deg, #7955e8, #438cdc, #52ceba, #b5dc71, #e4b265, #de685c); }
+.photon-speed-slider { width: 260px; }
+.photon-chip { color: #a3c0b7; font-size: 11px; white-space: nowrap; background: rgba(150,195,181,.045); border: 1px solid rgba(150,195,181,.12); padding: 10px 12px; border-radius: 9px; min-height: 40px; cursor: pointer; }
+.photon-chip.is-active { color: #d8eddf; background: rgba(153,219,193,.12); }
+.photon-modes button { min-width: 82px; }
+.photon-error { position: absolute; top: 45%; width: 100%; text-align: center; color: #bdcfc8; padding: 24px; }
+.photon-experience .guide-stage-title { max-width: none; font-size: clamp(28px, 2.8vw, 42px); line-height: 1.08; }
+.photon-experience :focus-visible { outline: 2px solid #a0ead1; outline-offset: 5px; }
+
+@media (min-width: 721px) and (max-height: 519px) {
+  .photon-nameplate { top: 76px; left: 25px; max-width: 255px; }
+  .photon-eyebrow { font-size: 9px; margin-bottom: 8px; }
+  .photon-nameplate h1 { font-size: 20px; margin-bottom: 8px; }
+  .photon-nameplate p { max-width: 235px; font-size: 11px; line-height: 1.6; }
+  .photon-readout { top: 190px; bottom: auto; left: 25px; max-width: 255px; }
+  .photon-readout p, .photon-equation { display: none; }
+  .photon-energy strong, .photon-clock-readings strong { font-size: 22px; }
+  .photon-readout-story { top: auto; bottom: 75px; }
+  .photon-experience .guide-stage-copy { max-width: 290px; }
+  .photon-experience .guide-stage-title { font-size: 26px; }
+}
+
+@media (max-width: 720px) {
+  .photon-nameplate { left: 25px; right: 25px; max-width: none; }
+  .photon-eyebrow { margin-bottom: 12px; font-size: 9px; }
+  .photon-nameplate h1 { font-size: 28px; margin-bottom: 12px; }
+  .photon-nameplate p { font-size: 12px; line-height: 1.8; max-width: 300px; }
+  .photon-readout { left: 25px; right: 20px; bottom: calc(var(--experience-freebar-height, 88px) + 15px); }
+  .photon-readout-story { bottom: 100px; }
+  .photon-equation { flex-wrap: wrap; gap: 5px 12px; margin-top: 9px; font-size: 10px; }
+  .photon-readout p { font-size: 10px; margin-top: 6px; }
+  .photon-readout-top strong { font-size: 23px; }
+  .photon-energy strong, .photon-clock-readings strong { font-size: 25px; }
+  .photon-energy, .photon-clock-readings { gap: 30px; }
+  .photon-secondary { max-width: 320px; flex-wrap: wrap; justify-content: flex-start; gap: 10px; }
+  .photon-adjust-row { width: 100%; gap: 8px; }
+  .photon-option-row { max-width: 100%; gap: 7px; overflow-x: auto; scrollbar-width: thin; }
+  .photon-observers { gap: 7px; }
+  .photon-option-row .photon-chip { flex-shrink: 0; }
+  .photon-slider { width: 135px; padding: 7px 0; }
+  .photon-spectrum-slider, .photon-speed-slider { width: 145px; }
+  .photon-experience .guide-stage-copy .guide-stage-title { max-width: none; font-size: 26px; line-height: 1.12; }
+  .photon-slider input { height: 5px; }
+  .photon-experience .photon-freebar .photon-secondary .photon-option-row .photon-chip { min-height: 40px; padding: 0 8px; }
+  .photon-modes button { min-width: 76px; }
+  .photon-source-hit { width: 64px; height: 64px; }
+  .photon-source-ring { width: 40px; height: 40px; }
+  .photon-source-label { top: 65px; font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .photon-experience *, .photon-experience *::before, .photon-experience *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+.photon-exposure-comparison { margin-top: 10px; max-width: 300px; }
+.photon-exposure-comparison svg { display: block; width: 240px; height: 32px; overflow: visible; }
+.photon-exposure-comparison path { fill: none; stroke-width: 1.2; }
+.photon-old-exposure { stroke: #899799; stroke-dasharray: 3 3; opacity: .75; }
+.photon-new-exposure { stroke: #b8ead5; }
+.photon-exposure-comparison span, .photon-simultaneity > span { color: #8da5a0; font-size: 9px; }
+.photon-simultaneity { position: absolute; left: calc(100% + 35px); bottom: 0; width: 240px; }
+.photon-simultaneity svg { display: block; width: 240px; height: 120px; overflow: visible; }
+.photon-simultaneity path { fill: none; stroke-width: 1.2; }
+.photon-diagram-axis { stroke: #526760; opacity: .5; }
+.photon-ground-history { stroke: #a0ead1; }
+.photon-ship-history { stroke: #efc690; }
+.photon-ground-event { fill: #a0ead1; }
+.photon-ship-event { fill: #efc690; }
+.photon-now { stroke: #eef6f0; stroke-width: 2 !important; }
+.photon-other-now { stroke: #95aaa4; stroke-dasharray: 3 4; opacity: .5; }
+.photon-simultaneity text { fill: #9bb1aa; font-size: 10px; }
+.photon-model-note { max-width: 340px; }
+@media (max-width: 720px) {
+  .photon-simultaneity { position: relative; left: auto; width: 100%; margin-top: 5px; display: flex; align-items: center; gap: 10px; }
+  .photon-simultaneity svg { width: 170px; height: 85px; flex-shrink: 0; }
+  .photon-simultaneity > span { max-width: 112px; line-height: 1.7; }
+  .photon-exposure-comparison { margin-top: 6px; }
+  .photon-exposure-comparison svg { height: 26px; }
+}
+@media (min-width: 721px) and (max-height: 519px) {
+  .photon-simultaneity { position: relative; left: 0; width: 190px; }
+  .photon-simultaneity svg { width: 180px; height: 90px; }
+  .photon-simultaneity > span { display: none; }
+}

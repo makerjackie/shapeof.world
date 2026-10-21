@@ -1,0 +1,101 @@
+{
+  "id": "lib-kora-travel",
+  "code": "LIB-22-06",
+  "title": {
+    "en": "Roaming — Kora",
+    "zh": "漫游 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "kora"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "E minor",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second West African acoustic instrumental instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 114 BPM; E minor. Main idea: an ascending fourth answered by a stepwise descent. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A lively and cheerful folk-inspired instrumental track featuring a prominent mandolin melody, acoustic guitar, bass, and light percussion, creating an upbeat and engaging atmosphere.",
+    "zh": "一首活泼欢快的民谣风格器乐曲，以曼陀林为主旋律，搭配原声吉他、贝斯和轻快打击乐，营造出积极愉悦的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 115.252,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:59:02.024677+00:00",
+  "generation": {
+    "id": "6987c0d0-9b62-431f-b5f2-fa48a9e13efe",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:58:15.679917+00:00",
+    "completedAt": "2026-09-09T08:59:02.024677+00:00",
+    "interactionId": "qB-hat73Neq6i9sPx5K0uAY",
+    "sha256": "5622b14dc3345efe3f913092514b9036915863a1b1104f0e60e40e2cadb93214"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful folk-inspired instrumental track featuring a prominent mandolin melody, acoustic guitar, bass, and light percussion, creating an upbeat and engaging atmosphere.",
+      "zh": "一首活泼欢快的民谣风格器乐曲，以曼陀林为主旋律，搭配原声吉他、贝斯和轻快打击乐，营造出积极愉悦的氛围。"
+    },
+    "instruments": [
+      "Mandolin",
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Percussion"
+    ],
+    "moods": [
+      "Lively",
+      "Cheerful",
+      "Upbeat",
+      "Folk",
+      "Traditional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean recording, well-performed, and pleasant musical content suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:59:14.297487+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:00:07.148797+00:00"
+}

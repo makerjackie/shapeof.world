@@ -1,6 +1,9 @@
 import './styles/GuideTour.css'
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useGuideCanvasExit } from './useGuideCanvasExit'
+import { ownsExperienceStageInput } from './experience-input'
+
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowCounterClockwise, ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Lightbulb, X } from '@phosphor-icons/react'
 
 import { trackEvent } from '~/lib/analytics'
@@ -15,8 +18,6 @@ export type GuideStep = {
   action?: () => void
   /** 提供时在操作区显示「重播这一幕」：把本步的演示从头再演一遍 */
   replay?: () => void
-  /** 返回 false 时先消费本次继续操作，用于完成当前长动画后再进入下一幕。 */
-  beforeAdvance?: () => boolean
   /** 自动播放时本步停留毫秒；默认 5200 */
   durationMs?: number
 }
@@ -108,6 +109,8 @@ export const GUIDE_AUTOPLAY_EVENT = 'oneworld:guide-autoplay'
 export const GUIDE_AUTOPLAY_STATE_EVENT = 'oneworld:guide-autoplay-state'
 /** Story finished (not skipped): { worldId } */
 export const GUIDE_COMPLETE_EVENT = 'oneworld:guide-complete'
+/** The visitor reached the final story step: { worldId } */
+export const GUIDE_LAST_STEP_EVENT = 'oneworld:guide-last-step'
 /** GuideTour 统一广播运行状态；用户只点「下一步」。 */
 
 function storageKey(worldId: string) {
@@ -133,6 +136,7 @@ function writeSeen(worldId: string) {
   } catch {
     /* ignore */
   }
+  window.dispatchEvent(new CustomEvent('oneworld:guide-seen', { detail: { worldId } }))
 }
 
 function emitAutoplayState(worldId: string, playing: boolean, active: boolean) {
@@ -166,10 +170,6 @@ export function GuideTour({
    * 现行标准默认 false：重播只放 freebar 弱文字链，禁止第二颗 chip。
    */
   showReplayChip = false,
-  /** 兼容尚未迁移的卡片导览；舞台导览始终保留共享退出入口。 */
-  showCloseButton = true,
-  /** 允许旧世界把章节正文交给自己的舞台层，底部仍使用共享进度与继续入口。 */
-  showCard = true,
   kicker,
   exitLabel,
   onExit,
@@ -183,8 +183,6 @@ export function GuideTour({
   /** 每一步可独立选择位置、动效、明暗、宽度、文字层级与方向提示。 */
   stagePlan?: GuideStagePlan
   showReplayChip?: boolean
-  showCloseButton?: boolean
-  showCard?: boolean
   /** 已翻译的舞台 kicker。默认「故事」；高光/演示型世界可传「高光」。 */
   kicker?: string
   /** 已翻译的退出控件名称。默认「退出故事」。 */
@@ -200,6 +198,7 @@ export function GuideTour({
   const [index, setIndex] = useState(0)
   const [autoplay, setAutoplay] = useState(false)
   const [nudging, setNudging] = useState(false)
+  const guideRef = useRef<HTMLElement>(null)
   const advanceTimer = useRef(0)
   const gestureDelta = useRef(0)
   const gestureDirection = useRef<1 | -1 | 0>(0)
@@ -322,6 +321,13 @@ export function GuideTour({
     },
     [worldId, index, steps.length, onExit],
   )
+  useEffect(() => {
+    if (!active || steps.length === 0 || index !== steps.length - 1) return
+    window.dispatchEvent(new CustomEvent(GUIDE_LAST_STEP_EVENT, { detail: { worldId } }))
+  }, [active, index, steps.length, worldId])
+  const exitForCanvasInteraction = useCallback(() => finish(false), [finish])
+  useGuideCanvasExit({ worldId, active, onExit: exitForCanvasInteraction })
+
   const finishRef = useRef(finish)
   finishRef.current = finish
 
@@ -335,11 +341,24 @@ export function GuideTour({
     setIndex((i) => Math.max(0, i - 1))
   }, [pauseAutoplay])
 
+  const goTo = useCallback(
+    (sceneIndex: number) => {
+      if (sceneIndex === index || sceneIndex < 0 || sceneIndex >= steps.length) return
+      pauseAutoplay()
+      setIndex(sceneIndex)
+    },
+    [index, steps.length, pauseAutoplay],
+  )
+
   const goNextManual = useCallback(() => {
     pauseAutoplay()
-    if (step?.beforeAdvance?.() === false) return
     next()
-  }, [pauseAutoplay, step, next])
+  }, [pauseAutoplay, next])
+
+  const replayCurrentStep = useCallback(() => {
+    pauseAutoplay()
+    step?.replay?.()
+  }, [pauseAutoplay, step])
 
   // 舞台故事像一页可滚动的长叙事：滚轮 / 触控板向下进入后续章节，向上回看。
   // capture 阶段先于 Canvas / OrbitControls 接管 wheel；否则主题镜头会在
@@ -353,6 +372,8 @@ export function GuideTour({
       else if (indexRef.current > 0) goPrev()
     }
     const handleWheel = (event: WheelEvent) => {
+      const guide = guideRef.current
+      if (!ownsExperienceStageInput(guide?.closest('.experience-stage') ?? null, event, guide)) return
       event.preventDefault()
       event.stopPropagation()
       if (autoplay) return
@@ -386,8 +407,8 @@ export function GuideTour({
       moveByGesture(direction)
     }
     const handleTouchStart = (event: TouchEvent) => {
-      const target = event.target
-      if (!(target instanceof Element) || !target.closest('.guide-stage-nav')) {
+      const guide = guideRef.current
+      if (event.touches.length !== 1 || !ownsExperienceStageInput(guide?.closest('.experience-stage') ?? null, event, guide)) {
         touchStart.current = null
         return
       }
@@ -399,6 +420,8 @@ export function GuideTour({
       const touch = event.changedTouches[0]
       touchStart.current = null
       if (!startPoint || !touch) return
+      const guide = guideRef.current
+      if (!ownsExperienceStageInput(guide?.closest('.experience-stage') ?? null, event, guide)) return
       const deltaX = startPoint.x - touch.clientX
       const deltaY = startPoint.y - touch.clientY
       if (Math.abs(deltaY) < 54 || Math.abs(deltaY) <= Math.abs(deltaX) * 1.15) return
@@ -410,8 +433,8 @@ export function GuideTour({
     }
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.repeat) return
-      const target = event.target
-      if (target instanceof Element && target.closest('input, textarea, select, button, [contenteditable="true"]')) return
+      const guide = guideRef.current
+      if (!ownsExperienceStageInput(guide?.closest('.experience-stage') ?? null, event, guide)) return
       if (event.key === 'ArrowDown' || event.key === 'PageDown' || event.key === ' ') {
         event.preventDefault()
         // 故事进行中必须截停事件：体验是 lazy 挂载，keydown 监听注册晚于壳层，
@@ -507,8 +530,7 @@ export function GuideTour({
   const stageFrame = stageFrameFor(worldId, index, stagePlan)
   const previousLabel = tx('上一步')
   const nextLabel = tx(isLast ? '完成' : '下一步')
-  const stageContinueLabel = tx(isLast ? '进入自由探索' : '向下滚动继续')
-  const mobileStageContinueLabel = isLast ? tx('进入自由探索') : t('experience.guide.nextScene')
+  const stageContinueLabel = isLast ? tx('进入自由探索') : t('experience.guide.nextScene')
   const cardClass = [
     'guide-card',
     placement === 'corner' ? 'is-corner' : '',
@@ -518,6 +540,7 @@ export function GuideTour({
 
   return (
     <aside
+      ref={guideRef}
       className={[
         'guide-tour',
         autoplay ? 'is-autoplay' : '',
@@ -530,11 +553,10 @@ export function GuideTour({
       data-guide-stage-plan={stagePlan?.length ? 'authored' : 'adaptive'}
       data-guide-world={worldId}
       data-guide-step={index + 1}
-      data-guide-total={steps.length}
       role="region"
       aria-label={tx('玩法引导')}
     >
-      {placement === 'stage' && showCard && (
+      {placement === 'stage' && (
         <div
           className="guide-stage-copy"
           key={index}
@@ -544,6 +566,7 @@ export function GuideTour({
           data-stage-tone={stageFrame.tone}
           data-stage-width={stageFrame.width}
           data-stage-treatment={stageFrame.treatment}
+          data-stage-long-title={tx(step.title).length > 70 ? 'true' : undefined}
           aria-live="polite"
         >
           <span className="guide-stage-kicker">{kickerText} · {tx(index + 1)} / {tx(steps.length)}</span>
@@ -562,22 +585,39 @@ export function GuideTour({
       {isStagePlacement && !autoplay ? (
         <nav
           className="guide-stage-nav"
-          style={{ '--guide-progress': `${((index + 1) / steps.length) * 100}%` } as CSSProperties}
           aria-label={tx(`导览进度 ${index + 1} / ${steps.length}`)}
         >
-          <span className="guide-stage-position" aria-hidden="true">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <span className="guide-stage-progress"><i /></span>
-            <span>{String(steps.length).padStart(2, '0')}</span>
+          <span className="guide-stage-dots" role="group" aria-label={tx('故事')}>
+            {steps.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                className={['guide-stage-dot', i < index ? 'is-done' : '', i === index ? 'is-current' : ''].filter(Boolean).join(' ')}
+                aria-label={tx(`第 ${i + 1} 幕`)}
+                aria-current={i === index ? 'step' : undefined}
+                onClick={() => goTo(i)}
+              />
+            ))}
           </span>
           <button type="button" className="guide-stage-continue" onClick={goNextManual}>
             <span className="guide-stage-continue-desktop">{stageContinueLabel}</span>
-            <span className="guide-stage-continue-mobile">{mobileStageContinueLabel}</span>
+            <span className="guide-stage-continue-mobile">{stageContinueLabel}</span>
             <span className="guide-stage-scroll-mark" aria-hidden="true">
               <ArrowDown className="guide-stage-continue-desktop" weight="bold" />
               <ArrowRight className="guide-stage-continue-mobile" weight="bold" />
             </span>
           </button>
+          {step.replay ? (
+            <button
+              type="button"
+              className="guide-stage-replay"
+              onClick={replayCurrentStep}
+              title={tx('重播这一幕')}
+              aria-label={tx('重播这一幕')}
+            >
+              <ArrowCounterClockwise weight="bold" />
+            </button>
+          ) : null}
           <button
             type="button"
             className="guide-stage-exit"
@@ -591,12 +631,11 @@ export function GuideTour({
       ) : (
         <div
           className={cardClass}
-          style={{ '--guide-progress': `${((index + 1) / steps.length) * 100}%` } as CSSProperties}
         >
           <div className="guide-card-head">
             <span className="guide-step-badge">{tx(index + 1)} / {tx(steps.length)}</span>
             <span className="guide-progress" aria-hidden="true"><i /></span>
-            {!autoplay && showCloseButton && (
+            {!autoplay && (
               <button type="button" className="guide-close" onClick={() => finish(false)} aria-label={tx('跳过引导')}>
                 <X weight="bold" />
               </button>
@@ -635,10 +674,7 @@ export function GuideTour({
                 <button
                   type="button"
                   className="guide-btn-replay-step"
-                  onClick={() => {
-                    pauseAutoplay()
-                    step.replay?.()
-                  }}
+                  onClick={replayCurrentStep}
                   aria-label={tx('重播这一幕')}
                   title={tx('重播这一幕')}
                 >

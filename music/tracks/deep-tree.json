@@ -1,0 +1,61 @@
+{
+  "id": "deep-tree",
+  "code": "LIF-A02",
+  "title": {
+    "en": "Deep Tree",
+    "zh": "深树"
+  },
+  "category": "life-body",
+  "archetype": "ambient",
+  "moods": [
+    "branching",
+    "ancient",
+    "patient",
+    "green-quiet"
+  ],
+  "topics": [
+    "tree-of-life",
+    "evolution",
+    "lineage"
+  ],
+  "energy": 1,
+  "bpm": 52,
+  "key": "E major",
+  "instruments": [
+    "acoustic guitar harmonics",
+    "bass flute",
+    "soft strings",
+    "delay copies"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 144.17,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about a tree of lineages branching backward in time. Around 52 BPM, E major. Acoustic guitar harmonics split into delayed copies like branches; bass flute is the deep trunk. Patient, ancient, green-quiet. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No tribal drums, no pan flute lead.\n\n[00:00–00:30] Guitar harmonic, then two delayed quieter copies.\n[00:30–01:15] More delay taps as finer branches; bass flute enters as trunk.\n[01:15–01:55] Soft strings fill canopy; still slow.\n[01:55–02:30] Branches prune back to one harmonic.\n",
+  "recommendedWorldIds": [
+    "woolly-mammoth"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:11:34Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/deep-tree/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/deep-tree/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/deep-tree/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:52.492437+00:00",
+  "generation": {
+    "id": "78c17b6b-d617-453b-a2f1-e6b9aa02b5f3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:10:45Z",
+    "completedAt": "2026-08-25T10:11:34Z",
+    "durationMs": 49000,
+    "interactionId": "KWqNau-jBdn1jMwPlcOF0Qw",
+    "clientRequestId": "bc8a67dc-6e7b-4796-a402-25467394536f",
+    "synthid": true,
+    "c2pa": "urn:c2pa:b256b041-ff53-755f-ba0b-4ab7a8e25478",
+    "sha256": "b8899630a6d843740fb0e5e7b57ec29d01994d529df72207848cd4f64e70a51e"
+  }
+}

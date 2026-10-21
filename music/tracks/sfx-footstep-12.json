@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-12",
+  "code": "SFX-FOOTSTEP-12",
+  "title": {
+    "en": "Stone floor",
+    "zh": "石板脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 11,
+  "seed": 11176596,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized stone floor for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的石板脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 11176596,
+    "sha256": "32d6aa800db73f56e1ac8340b7994349215f6a432057796f8382788f4fc61076",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1a2e0710fd6177137e3a168e9ab321841f6089a412743cd3a8489647627c7192",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "32d6aa800db73f56e1ac8340b7994349215f6a432057796f8382788f4fc61076",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e9b414822cbc2f828e00b7706479922ca9480ea8041de53476aa08969fcf5881",
+      "bytes": 13307,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "abef4535fb8f9176f3c693f2d4fbe174c8f81d52b63274fefd960e52888f6802",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.99,
+    "dcOffset": 1.676790006868132e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2446041870117186,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched metallic clink or ping sound.",
+      "zh": "短促、尖锐的金属叮当声或砰击声。"
+    },
+    "reason": "The sound is a clean, isolated metallic impact, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:09.313819+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1a2e0710fd6177137e3a168e9ab321841f6089a412743cd3a8489647627c7192"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.870118+00:00"
+}

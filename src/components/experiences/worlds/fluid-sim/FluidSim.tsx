@@ -372,10 +372,13 @@ const displayShader = `
     vec3 bc = texture2D(uTexture, vB).rgb;
     vec3 bloom = (lc + rc + tc + bc) * 0.06;
     c += bloom;
+    // Lift faint dye while keeping the mixed colours distinct from white.
+    c = max(c - vec3(min(c.r, min(c.g, c.b)) * 0.16), vec3(0.0)) * 2.8;
     // Peak-based Reinhard mapping keeps accumulated dye in gamut while
     // preserving its hue instead of clipping bright channels to white.
     float peak = max(c.r, max(c.g, c.b));
     c = c / (1.0 + peak);
+    c = pow(c, vec3(0.82));
 
     float a = max(c.r, max(c.g, c.b));
     gl_FragColor = vec4(c, a);

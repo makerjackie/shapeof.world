@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-minimalism-exploration",
+  "code": "GAME-07-2",
+  "title": {
+    "en": "Hidden Corridor · Exploration",
+    "zh": "隐秘长廊 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "mild stealth and suspense",
+    "exploration"
+  ],
+  "energy": 3,
+  "bpm": 92,
+  "key": "",
+  "instruments": [
+    "low marimba",
+    "bass clarinet",
+    "quiet ticking percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for mild stealth and suspense, exploration state. Instruments: low marimba, bass clarinet, quiet ticking percussion. 92 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A light and playful orchestral piece featuring a prominent woodwind melody, pizzicato strings, and light percussion. It has a whimsical and cheerful character.",
+    "zh": "一首轻松活泼的管弦乐曲，以突出的木管旋律、拨弦乐器和轻快的打击乐器为特色。它具有异想天开和欢快的特点。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 85.028,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:24:49.805476+00:00",
+  "generation": {
+    "id": "a6ade648-aad3-42b5-bc66-c48134ff6140",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:24:03.111664+00:00",
+    "completedAt": "2026-09-22T09:24:49.805476+00:00",
+    "interactionId": "NEmyaprjCv6N88EPy_v08Ac",
+    "sha256": "b249ae369ab50a11fea1655f6b27a85f9780356caccca6376b6d356763047ea8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful orchestral piece featuring a prominent woodwind melody, pizzicato strings, and light percussion. It has a whimsical and cheerful character.",
+      "zh": "一首轻松活泼的管弦乐曲，以突出的木管旋律、拨弦乐器和轻快的打击乐器为特色。它具有异想天开和欢快的特点。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Oboe",
+      "Pizzicato Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Cheerful",
+      "Lighthearted"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumentation, and a pleasant, engaging melody suitable for various lighthearted applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:25:01.727009+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 29.906259,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1318866,
+    "sourceStartSeconds": 19.375011337868482,
+    "sourceEndSeconds": 49.37501133786848,
+    "crossfadeSeconds": 0.09374149659863945,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1318866,
+        "duration": 29.906259,
+        "peakDbfs": -1.5,
+        "rmsDbfs": -15.88,
+        "dcOffset": 0.0014677492075519329,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00537109375,
+        "internalStepP999": 0.08502612304687318,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1318866,
+        "duration": 29.906259,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.24,
+        "dcOffset": 0.0009398685684996737,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.003692626953125,
+        "internalStepP999": 0.096832275390625,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A rhythmic, synthesized electronic texture with percussive elements and a repeating melodic motif, reminiscent of retro game sound effects or chiptune music. It has a consistent tempo and dynamic.",
+        "zh": "一种有节奏的合成电子纹理，带有打击乐元素和重复的旋律主题，让人联想到复古游戏音效或芯片音乐。它具有一致的速度和动态。"
+      },
+      "reason": "The audio is a clean, well-produced synthetic texture with a clear rhythmic pattern. It loops perfectly without any audible seams or defects, making it highly suitable for game or video sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:32.094984+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "39ae14fa7d4bac7842198bf4836bc78819b181006814d514fb400ac81bb19316"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified boundaries. Rhythm, harmony, dynamics, and phrase continuity are excellent. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the joins. It is very comfortable for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:38.652717+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a1985f32e35cdaf5b9fef39a3461952c4a02eed9dba98faa48ca591a3877efb0",
+      "bytes": 1191174,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b249ae369ab50a11fea1655f6b27a85f9780356caccca6376b6d356763047ea8",
+      "bytes": 2048352,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1086eee02e2f443d209042cb45cf40be418247432998179ec75dbb950338ca42",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "d7b07ffce6c8801c6c9b02d5dde825835db350086696512dd9a62af2fa3c5f72",
+      "bytes": 5275508,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "76866d498daed0d94ce7a56bc6e6bec18aafdcda69a20ea151afc48e404df8ad",
+      "bytes": 410797,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.463732+00:00"
+}

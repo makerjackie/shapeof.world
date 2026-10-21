@@ -1,3 +1,4 @@
+import { worldRoute } from '~/lib/world-urls'
 import { Link } from '@tanstack/react-router'
 
 import { worldArtifactManifest } from '~/data/world-artifacts'
@@ -42,13 +43,19 @@ export function ExperienceFallback({
         <h2>{worldText(world, 'title')}</h2>
         <p>{reason === 'webgl' ? t('experience.fallback.webgl') : t('experience.fallback.slow')}</p>
 
+        {reason === 'slow' && (
+          <button className="experience-fallback-retry" type="button" onClick={() => window.location.reload()}>
+            {t('system.retry')}
+          </button>
+        )}
+
         {alternatives.length > 0 && (
           <>
             <p className="experience-fallback-hint">{t('experience.fallback.tryInstead')}</p>
             <ul className="experience-fallback-list">
               {alternatives.map((item) => (
                 <li key={item.id}>
-                  <Link to="/explore/$worldId" params={{ worldId: item.id }}>
+                  <Link to={worldRoute} params={{ worldId: item.id }}>
                     {worldText(item, 'posterTitle')}
                   </Link>
                 </li>
@@ -57,6 +64,9 @@ export function ExperienceFallback({
           </>
         )}
 
+        <Link to="/feedback" search={{ world: world.id, kind: 'problem' }} className="experience-fallback-home">
+          {t('feedback.report')}
+        </Link>
         <Link to="/" className="experience-fallback-home">
           {t('experience.fallback.browseAll')}
         </Link>

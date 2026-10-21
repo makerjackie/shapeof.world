@@ -1,0 +1,103 @@
+{
+  "id": "lib-pipa-suspense",
+  "code": "LIB-18-09",
+  "title": {
+    "en": "Shadows — Pipa",
+    "zh": "暗影 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "pipa"
+  ],
+  "energy": 2,
+  "bpm": 96,
+  "key": "G minor",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Chinese plucked-string ensemble instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 96 BPM; G minor. Main idea: a compact three-note motif. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A serene and traditional-sounding instrumental piece featuring plucked strings, a prominent flute-like melody, and light percussion. It evokes a peaceful and meditative atmosphere.",
+    "zh": "一首宁静而富有传统气息的纯器乐作品，以拨弦乐器、悠扬的笛子般旋律和轻柔的打击乐为主。营造出平和冥想的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 172.069,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:48:35.391566+00:00",
+  "generation": {
+    "id": "7815a4fc-731a-40c3-8445-2298d4651f9c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:47:49.677828+00:00",
+    "completedAt": "2026-09-09T08:48:35.391566+00:00",
+    "interactionId": "Nx2haueNBprSi9sPsKbCgAE",
+    "sha256": "fa606547932655c4ce72248cbcb0876eb0618560560f21cf59b27b9b5216c1f8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional-sounding instrumental piece featuring plucked strings, a prominent flute-like melody, and light percussion. It evokes a peaceful and meditative atmosphere.",
+      "zh": "一首宁静而富有传统气息的纯器乐作品，以拨弦乐器、悠扬的笛子般旋律和轻柔的打击乐为主。营造出平和冥想的氛围。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "flute",
+      "percussion",
+      "shaker",
+      "drums"
+    ],
+    "moods": [
+      "peaceful",
+      "calm",
+      "traditional",
+      "meditative",
+      "relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 72,
+    "reason": "High-quality, well-produced instrumental track with a clear traditional folk sound, suitable for various media.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:26:40.711955+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:27:36.137874+00:00"
+}

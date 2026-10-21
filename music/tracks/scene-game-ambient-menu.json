@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-ambient-menu",
+  "code": "GAME-03-1",
+  "title": {
+    "en": "Underwater Archive · Menu",
+    "zh": "水下档案馆 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "unhurried underwater exploration",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "",
+  "instruments": [
+    "soft pads",
+    "glass marimba",
+    "muted sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for unhurried underwater exploration, menu state. Instruments: soft pads, glass marimba, muted sub bass. 72 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A serene and reflective instrumental piece featuring a gentle piano melody over warm, sustained string pads. The mood is calm and slightly melancholic, suitable for background listening or contemplative moments.",
+    "zh": "一首宁静而富有沉思感的器乐作品，以柔和的钢琴旋律为主，伴随着温暖而绵延的弦乐衬底。氛围平静，略带忧郁，适合作为背景音乐或沉思时聆听。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 88.085,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:21:57.371660+00:00",
+  "generation": {
+    "id": "dbfd05d6-a4b7-4d29-b048-99436543ef7a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:21:02.628958+00:00",
+    "completedAt": "2026-09-22T09:21:57.371660+00:00",
+    "interactionId": "f0iyasTSFZiu7PkP37y0EQ",
+    "sha256": "b15a651a70cc68f38d12af2c4be5ba8bd6b0e8c4b23b4f54846e1df5520b7dee"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and reflective instrumental piece featuring a gentle piano melody over warm, sustained string pads. The mood is calm and slightly melancholic, suitable for background listening or contemplative moments.",
+      "zh": "一首宁静而富有沉思感的器乐作品，以柔和的钢琴旋律为主，伴随着温暖而绵延的弦乐衬底。氛围平静，略带忧郁，适合作为背景音乐或沉思时聆听。"
+    },
+    "instruments": [
+      "Piano",
+      "Synthesizer",
+      "Strings"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Melancholic",
+      "Relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clear, well-produced instrumental track with a consistent mood and good sound quality.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:07.678486+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 17.75,
+    "sourceEndSeconds": 76.82691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.64,
+        "dcOffset": 0.002479491202266847,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002532958984375,
+        "internalStepP999": 0.05401611328125,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.76,
+        "dcOffset": 0.0020028674367734765,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01300048828125,
+        "internalStepP999": 0.0478515625,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A smooth, evolving electronic pad with a subtle, shimmering texture. It has a melancholic and atmospheric quality, suitable for background ambience or emotional underscoring.",
+        "zh": "平滑、演变的电子音垫，带有微妙的闪烁纹理。它具有忧郁和氛围感，适合作为背景环境音或情感烘托。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture with no defects. It loops seamlessly, making it highly suitable for continuous background use in video or game sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:59.137217+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "37071ec2461f008f9f67e7076e153ef033e3aee917a8b3bc3fc3a92b3ff1f24f"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music excerpt loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are excellent across both joins. There are no obvious repeated fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. It is well-suited for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:09.853446+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "aa168ee917bea01b0ec922fd119b7131950a0b20f7bc996d054a3f702c8c1923",
+      "bytes": 1233963,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b15a651a70cc68f38d12af2c4be5ba8bd6b0e8c4b23b4f54846e1df5520b7dee",
+      "bytes": 2121704,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a597c385397597ef5dda87b143c1628c3e28032808abfdf80675affdd3ab0c0b",
+      "bytes": 2808,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "926f8f2feb43b0532eb90f0f5c0d9298e130abc25aa41d762211b09d60f60d1f",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "67d56e6f21ff496b490239e9beaeee4276c20aec329a8f58c0111a6d0ed88378",
+      "bytes": 568403,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.457101+00:00"
+}

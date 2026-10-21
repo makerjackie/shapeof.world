@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-14",
+  "code": "SFX-WATER-14",
+  "title": {
+    "en": "Ice crack",
+    "zh": "冰块裂开"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 13,
+  "seed": 3571103901,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized ice crack for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的冰块裂开合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.44,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3571103901,
+    "sha256": "0f60170cb2b02ea8b415bb68875f73499cf41a30aa35de3896ab6666cad33f17",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "3ecc036ed3d4781d793ada9038145095514c7ddaba367fbb50906991c3e316c5",
+      "bytes": 21254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0f60170cb2b02ea8b415bb68875f73499cf41a30aa35de3896ab6666cad33f17",
+      "bytes": 127052,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1f7c63fe7cee5651f6ba47d14c1fc3545282e6b40ad3c779569ecb004a6bca06",
+      "bytes": 21919,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "98f0069ef33bfbe947d5fea10181c867df81e261db6d121ceb1744ec59bfa18d",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 63504,
+    "duration": 1.44,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.22,
+    "dcOffset": 2.8833690594293274e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14538549804687495,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, rapid whoosh sound effect, reminiscent of a fast air movement or a quick pass-by. It has a clean, slightly airy quality.",
+      "zh": "短促、快速的嗖嗖声音效，类似于快速气流或物体快速经过的声音。音质干净，略带空气感。"
+    },
+    "reason": "The sound is a clear, isolated effect with good technical quality, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:41.720322+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "3ecc036ed3d4781d793ada9038145095514c7ddaba367fbb50906991c3e316c5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 63504
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.913013+00:00"
+}

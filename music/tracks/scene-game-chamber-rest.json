@@ -1,0 +1,204 @@
+{
+  "id": "scene-game-chamber-rest",
+  "code": "GAME-04-4",
+  "title": {
+    "en": "Library Puzzle · Rest",
+    "zh": "书库谜题 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "thoughtful puzzle solving",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 98,
+  "key": "",
+  "instruments": [
+    "pizzicato quartet",
+    "clarinet",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for thoughtful puzzle solving, rest state. Instruments: pizzicato quartet, clarinet, woodblocks. 98 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A melancholic classical piece featuring a bowed string instrument playing a sorrowful melody over a gentle pizzicato accompaniment.",
+    "zh": "一首忧郁的古典乐曲，弓弦乐器演奏着悲伤的旋律，伴随着轻柔的拨弦伴奏。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 88.947,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:57.580308+00:00",
+  "generation": {
+    "id": "8ee9405f-a3fe-463c-ab09-e1abbcf6e152",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:14.316098+00:00",
+    "completedAt": "2026-09-22T09:22:57.580308+00:00",
+    "interactionId": "x0iyarCABL-DoLAPxL3PgQM",
+    "sha256": "bb82fcef68fcf7e8e9a4aad168885c5342cfd1c4bd0a033e10111de176a6ab6e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic classical piece featuring a bowed string instrument playing a sorrowful melody over a gentle pizzicato accompaniment.",
+      "zh": "一首忧郁的古典乐曲，弓弦乐器演奏着悲伤的旋律，伴随着轻柔的拨弦伴奏。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Pizzicato Strings"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Sorrowful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean recording of a well-performed classical piece with no technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:08.322385+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 17.875011337868482,
+    "sourceEndSeconds": 76.95192743764173,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.71,
+        "dcOffset": 0.000948103664113268,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.009796142578125,
+        "internalStepP999": 0.073333740234375,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.94,
+        "rmsDbfs": -14.67,
+        "dcOffset": 0.0005838251557043798,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.007537841796875,
+        "internalStepP999": 0.07305908203125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthesized, melancholic and slightly eerie looping texture, characterized by a prominent, simple melody played on a wind instrument (flute-like) with subtle plucked string accompaniment. It creates a contemplative and atmospheric background.",
+        "zh": "一段合成的、忧郁而略带诡异的循环音效纹理，以突出的、类似长笛的管乐器演奏的简单旋律为主，辅以细微的拨弦乐器声。营造出沉思且富有氛围感的背景。"
+      },
+      "reason": "The audio is a clean, well-produced, short musical loop with a distinct atmospheric quality, free of technical defects or unintended elements. It loops perfectly without any audible seams, clicks, or abrupt changes in texture.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:29:25.079038+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "72207b249bfa53d8373854e74c3f78e304eb4beaaccfbceb8fd56d39c174ff10"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, and dynamics are consistent across the join points. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The final sustained note transitions smoothly into the opening of the piece, making it suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:32.787013+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6ff18e37fb527e250850344d6fc65fc8c407c364b6af46ef0f956791018c958c",
+      "bytes": 1246032,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bb82fcef68fcf7e8e9a4aad168885c5342cfd1c4bd0a033e10111de176a6ab6e",
+      "bytes": 2142393,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8ed4358d74853c5f6c5f4ecada6721b49753fe100a52da29876ad1e3f8dc33c4",
+      "bytes": 2811,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "fa2aa05ada99bd6fd302715bb9c37ba8d403f456c3359143660bd2d5aba48523",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "347f0d5924508c0c4efe52587374d7bfae9c788f482fc0ab00deea39be9308a5",
+      "bytes": 618962,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.458321+00:00"
+}

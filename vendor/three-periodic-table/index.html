@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>元素的四种秩序 · OneWorld</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta property="og:title" content="元素的四种秩序 · OneWorld">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://threejs.org/examples/css3d_periodictable.html">
+		<meta property="og:image" content="https://threejs.org/examples/screenshots/css3d_periodictable.jpg">
+		<link type="text/css" rel="stylesheet" href="main.css">
+		<style>
+			html, body {
+				height: 100%;
+				overflow: hidden;
+				background: radial-gradient(circle at 50% 45%, #062a2f 0%, #02090b 42%, #000 72%);
+			}
+
+			a {
+				color: #8ff;
+			}
+
+			#menu {
+				position: absolute;
+				z-index: 8;
+				bottom: 24px;
+				width: 100%;
+				text-align: center;
+			}
+
+			#info {
+				top: 18px;
+				left: 22px;
+				width: auto;
+				padding: 0;
+				text-align: left;
+				font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+				letter-spacing: .04em;
+			}
+
+			#info strong { display: block; font-family: Georgia, "Songti SC", serif; font-size: 22px; font-weight: 400; }
+			#info span { display: block; margin-top: 5px; color: rgba(175, 242, 238, .58); font-size: 11px; }
+
+			.element {
+				width: 120px;
+				height: 160px;
+				box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+				border: 1px solid rgba(127,255,255,0.25);
+				font-family: Helvetica, sans-serif;
+				text-align: center;
+				line-height: normal;
+				cursor: pointer;
+				transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+			}
+
+			.element:hover {
+				box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+				border: 1px solid rgba(127,255,255,0.75);
+			}
+
+			.element:focus-visible,
+			.element.is-selected {
+				border-color: rgba(255, 218, 137, .95);
+				box-shadow: 0 0 0 2px rgba(255, 218, 137, .24), 0 0 28px rgba(0, 255, 255, .72);
+				outline: none;
+			}
+
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					left: 0px;
+					right: 0px;
+					font-size: 60px;
+					font-weight: bold;
+					color: rgba(255,255,255,0.75);
+					text-shadow: 0 0 10px rgba(0,255,255,0.95);
+				}
+
+				.element .details {
+					position: absolute;
+					bottom: 15px;
+					left: 0px;
+					right: 0px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+			button {
+				color: rgba(127,255,255,0.75);
+				min-height: 42px;
+				margin: 0 3px;
+				background: rgba(0, 18, 21, .72);
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 8px 14px;
+				cursor: pointer;
+				font-size: 12px;
+				letter-spacing: .08em;
+			}
+
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+
+			button.is-active { color: #001416; background: rgba(127,255,255,.9); }
+
+			#detail {
+				position: absolute;
+				z-index: 9;
+				top: 86px;
+				right: 22px;
+				width: min(310px, calc(100vw - 44px));
+				box-sizing: border-box;
+				padding: 20px 22px 18px;
+				color: rgba(222, 251, 248, .84);
+				border: 1px solid rgba(127,255,255,.28);
+				background: rgba(1, 16, 19, .86);
+				box-shadow: 0 22px 70px rgba(0,0,0,.48);
+				backdrop-filter: blur(18px);
+				font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+				opacity: 0;
+				pointer-events: none;
+				transform: translateY(-8px);
+				transition: opacity 180ms ease, transform 180ms ease;
+			}
+
+			#detail.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+			#detail small { color: rgba(127,255,255,.58); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+			#detail h2 { margin: 8px 0 4px; color: #fff; font-family: Georgia, "Songti SC", serif; font-size: 36px; font-weight: 400; line-height: 1; }
+			#detail h2 span { margin-left: 8px; color: #8ff; font-family: Helvetica, sans-serif; font-size: 17px; }
+			#detail dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 17px 0 14px; }
+			#detail dt { color: rgba(127,255,255,.5); font-size: 9px; }
+			#detail dd { margin: 4px 0 0; color: #fff; font-size: 13px; }
+			#detail p { margin: 0; font-size: 13px; line-height: 1.7; }
+			#detail a { display: inline-flex; margin-top: 14px; font-size: 11px; }
+			#detail .data-note { margin-top: 10px; color: rgba(222, 251, 248, .52); font-size: 10px; line-height: 1.55; }
+			#detail .data-note a { display: inline; margin: 0; color: rgba(127,255,255,.72); }
+
+			@media (max-width: 720px) {
+				#info { top: 14px; left: 16px; }
+				#info strong { font-size: 18px; }
+				#menu { bottom: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; box-sizing: border-box; padding: 0 12px; }
+				#menu button { min-width: 0; margin: 0; padding: 7px 4px; font-size: 10px; }
+				#detail { top: auto; right: 12px; bottom: 66px; left: 12px; width: auto; padding: 15px 16px; }
+				#detail h2 { font-size: 28px; }
+				#detail p { font-size: 12px; line-height: 1.55; }
+				.element { width: 100px; height: 132px; }
+				.element .symbol { top: 35px; font-size: 48px; }
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="info"><strong>元素的四种秩序</strong><span>拖动空间，点击任一元素</span></div>
+		<div id="container"></div>
+		<aside id="detail" aria-live="polite" aria-label="元素资料">
+			<small id="detail-kicker">第 1 号元素</small>
+			<h2 id="detail-title">Hydrogen <span>H</span></h2>
+			<dl>
+				<div><dt>原子序数</dt><dd id="detail-number">1</dd></div>
+				<div><dt id="detail-mass-label">相对原子质量</dt><dd id="detail-mass">1.0080 ± 0.0002</dd></div>
+				<div><dt>位置</dt><dd id="detail-position">第 1 周期 · 第 1 族</dd></div>
+			</dl>
+			<p id="detail-story">宇宙中最丰富、也最轻的元素；恒星正通过聚变把它变成更重的元素。</p>
+			<a id="detail-source" href="https://zh.wikipedia.org/wiki/氢" target="_blank" rel="noopener">继续查阅资料 →</a>
+			<p class="data-note">原子量采用 <a href="https://ciaaw.org/abridged-atomic-weights.htm" target="_blank" rel="noopener">CIAAW 2024</a>；方括号表示代表性同位素质量数。</p>
+		</aside>
+		<div id="menu">
+			<button id="table" type="button">周期表</button>
+			<button id="sphere" type="button">球体</button>
+			<button id="helix" type="button">螺旋</button>
+			<button id="grid" type="button">晶格</button>
+		</div>
+
+		<script type="module">
+
+			import * as THREE from 'three';
+
+			import TWEEN from 'three/addons/libs/tween.module.js';
+			import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
+			import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
+			import elementData from './element-data.json';
+
+			const requestedLocale = new URLSearchParams( window.location.search ).get( 'lang' );
+			const locale = requestedLocale === 'zh' || requestedLocale === 'en'
+				? requestedLocale
+				: navigator.language.toLowerCase().startsWith( 'zh' ) ? 'zh' : 'en';
+			const ui = locale === 'zh' ? {
+				title: '元素的四种秩序', hint: '拖动空间，点击任一元素', detail: '元素资料',
+				atomicNumber: '原子序数', atomicMass: '相对原子质量', isotope: '代表性同位素', position: '位置',
+				table: '周期表', sphere: '球体', helix: '螺旋', grid: '晶格', source: '继续查阅资料 →',
+				noteBefore: '原子量采用', noteAfter: '；方括号表示代表性同位素质量数。',
+			} : {
+				title: 'Four Orders of the Elements', hint: 'Drag the space · select any element', detail: 'Element details',
+				atomicNumber: 'Atomic number', atomicMass: 'Relative atomic mass', isotope: 'Representative isotope', position: 'Position',
+				table: 'Table', sphere: 'Sphere', helix: 'Helix', grid: 'Grid', source: 'Read the source →',
+				noteBefore: 'Atomic weights use', noteAfter: '; brackets indicate a representative isotope mass number.',
+			};
+
+			const table = elementData.elements.flatMap( element => [
+				element.symbol,
+				element.name,
+				element.atomicMass,
+				element.layoutColumn,
+				element.layoutRow
+			] );
+			const elementBySymbol = new Map( elementData.elements.map( element => [ element.symbol, element ] ) );
+
+			let camera, scene, renderer;
+			let controls;
+			let activeLayout = 'table';
+
+			const objects = [];
+			const targets = { table: [], sphere: [], helix: [], grid: [] };
+			const stories = {
+				H: '宇宙中最丰富、也最轻的元素；恒星正通过聚变把它变成更重的元素。',
+				C: '生命分子与化石燃料的骨架，也是钻石、石墨和石墨烯共同的核心。',
+				N: '约占地球空气的 78%，也是蛋白质与 DNA 不可缺少的一部分。',
+				O: '支撑呼吸与燃烧，也与氢结合成覆盖地球表面的大量水。',
+				Na: '活泼到无法以单质长期存在；它与氯结合后却成为日常食盐。',
+				Al: '轻、耐腐蚀且可回收，从飞机蒙皮到易拉罐都依赖它。',
+				Si: '沙粒、玻璃与计算机芯片之间的共同元素，连接地质世界与数字世界。',
+				P: 'DNA、细胞膜和 ATP 能量传递都需要它，也是农业肥料的重要成分。',
+				S: '影响蛋白质如何折叠，也让火山、温泉和许多矿物带有鲜明气味与颜色。',
+				Cl: '单质具有强氧化性；变成氯离子后，却参与体液平衡与食盐结构。',
+				K: '神经和肌肉传递电信号的重要离子，也是植物生长所需的三大营养元素之一。',
+				Ca: '骨骼和牙齿储存了人体绝大多数钙，细胞也用钙离子传递信号。',
+				Fe: '恒星核聚变的重要终点之一；在地球上，它同时构成钢铁与血红蛋白中心。',
+				Cu: '优秀的导电与导热材料，也会在时间中氧化成绿色铜锈。',
+				Ag: '导电性最强的金属之一，曾塑造摄影，也进入电子与抗菌材料。',
+				Au: '极少与其他元素反应，因此古代金器穿越几千年仍能保持光泽。',
+				U: '天然存在的重元素；它的原子核裂变让人类第一次大规模释放核能。'
+			};
+			const storiesEn = {
+				H: 'The lightest and most abundant element in the universe; stars fuse it into heavier elements.',
+				C: 'The backbone of living molecules and fossil fuels, and the shared core of diamond, graphite, and graphene.',
+				N: 'About 78% of Earth’s atmosphere, and an essential part of proteins and DNA.',
+				O: 'Supports respiration and combustion, and joins hydrogen to form much of Earth’s water.',
+				Na: 'Too reactive to persist alone; paired with chlorine, it becomes everyday salt.',
+				Al: 'Light, corrosion-resistant, and recyclable; used from aircraft skins to drink cans.',
+				Si: 'The common element linking sand, glass, and computer chips.',
+				P: 'Essential to DNA, cell membranes, ATP energy transfer, and agricultural fertilizers.',
+				S: 'Shapes protein folding and gives many volcanoes, springs, and minerals distinctive chemistry.',
+				Cl: 'A strong oxidizer as an element; as chloride, it supports fluid balance and salt crystals.',
+				K: 'An ion vital to nerve and muscle signals, and a major nutrient for plants.',
+				Ca: 'Stored mostly in bones and teeth; cells also use calcium ions as signals.',
+				Fe: 'A major endpoint of stellar fusion and the core of both steel and hemoglobin.',
+				Cu: 'An excellent electrical and thermal conductor that weathers into a green patina.',
+				Ag: 'One of the best electrical conductors; important to photography, electronics, and antimicrobial materials.',
+				Au: 'Rarely reacts, allowing ancient gold objects to keep their lustre for millennia.',
+				U: 'A naturally occurring heavy element whose fission enabled large-scale nuclear energy.',
+			};
+			let selectedElement = null;
+
+			init();
+			animate();
+
+			function init() {
+
+				applyLocale();
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.z = cameraDistanceFor( activeLayout );
+
+				scene = new THREE.Scene();
+
+				// table
+
+				for ( let i = 0; i < table.length; i += 5 ) {
+
+					const element = document.createElement( 'div' );
+					element.className = 'element';
+					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+					element.tabIndex = 0;
+					element.setAttribute( 'role', 'button' );
+					element.setAttribute( 'aria-label', table[ i + 1 ] + ', ' + ui.atomicNumber + ' ' + ( ( i / 5 ) + 1 ) );
+
+					const number = document.createElement( 'div' );
+					number.className = 'number';
+					number.textContent = ( i / 5 ) + 1;
+					element.appendChild( number );
+
+					const symbol = document.createElement( 'div' );
+					symbol.className = 'symbol';
+					symbol.textContent = table[ i ];
+					element.appendChild( symbol );
+
+					const details = document.createElement( 'div' );
+					details.className = 'details';
+					details.innerHTML = table[ i + 1 ] + '<br>' + table[ i + 2 ];
+					element.appendChild( details );
+
+					const elementIndex = i;
+					element.addEventListener( 'click', () => showDetail( elementIndex, element ) );
+					element.addEventListener( 'keydown', ( event ) => {
+
+						if ( event.key === 'Enter' || event.key === ' ' ) {
+
+							event.preventDefault();
+							showDetail( elementIndex, element );
+
+						}
+
+					} );
+
+					const objectCSS = new CSS3DObject( element );
+					objectCSS.position.x = Math.random() * 4000 - 2000;
+					objectCSS.position.y = Math.random() * 4000 - 2000;
+					objectCSS.position.z = Math.random() * 4000 - 2000;
+					scene.add( objectCSS );
+
+					objects.push( objectCSS );
+
+					//
+
+					const object = new THREE.Object3D();
+					object.position.x = ( table[ i + 3 ] * 140 ) - 1330;
+					object.position.y = - ( table[ i + 4 ] * 180 ) + 990;
+
+					targets.table.push( object );
+
+				}
+
+				// sphere
+
+				const vector = new THREE.Vector3();
+
+				for ( let i = 0, l = objects.length; i < l; i ++ ) {
+
+					const phi = Math.acos( - 1 + ( 2 * i ) / l );
+					const theta = Math.sqrt( l * Math.PI ) * phi;
+
+					const object = new THREE.Object3D();
+
+					object.position.setFromSphericalCoords( 800, phi, theta );
+
+					vector.copy( object.position ).multiplyScalar( 2 );
+
+					object.lookAt( vector );
+
+					targets.sphere.push( object );
+
+				}
+
+				// helix
+
+				for ( let i = 0, l = objects.length; i < l; i ++ ) {
+
+					const theta = i * 0.175 + Math.PI;
+					const y = - ( i * 8 ) + 450;
+
+					const object = new THREE.Object3D();
+
+					object.position.setFromCylindricalCoords( 900, theta, y );
+
+					vector.x = object.position.x * 2;
+					vector.y = object.position.y;
+					vector.z = object.position.z * 2;
+
+					object.lookAt( vector );
+
+					targets.helix.push( object );
+
+				}
+
+				// grid
+
+				for ( let i = 0; i < objects.length; i ++ ) {
+
+					const object = new THREE.Object3D();
+
+					object.position.x = ( ( i % 5 ) * 400 ) - 800;
+					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+
+					targets.grid.push( object );
+
+				}
+
+				//
+
+				renderer = new CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+				//
+
+				controls = new TrackballControls( camera, renderer.domElement );
+				controls.minDistance = 500;
+				controls.maxDistance = 9000;
+				controls.addEventListener( 'change', render );
+
+				const buttonTable = document.getElementById( 'table' );
+				buttonTable.addEventListener( 'click', function () {
+
+					setLayoutCamera( 'table' );
+					transform( targets.table, 2000 );
+					selectLayout( buttonTable );
+
+				} );
+
+				const buttonSphere = document.getElementById( 'sphere' );
+				buttonSphere.addEventListener( 'click', function () {
+
+					setLayoutCamera( 'sphere' );
+					transform( targets.sphere, 2000 );
+					selectLayout( buttonSphere );
+
+				} );
+
+				const buttonHelix = document.getElementById( 'helix' );
+				buttonHelix.addEventListener( 'click', function () {
+
+					setLayoutCamera( 'helix' );
+					transform( targets.helix, 2000 );
+					selectLayout( buttonHelix );
+
+				} );
+
+				const buttonGrid = document.getElementById( 'grid' );
+				buttonGrid.addEventListener( 'click', function () {
+
+					setLayoutCamera( 'grid' );
+					transform( targets.grid, 2000 );
+					selectLayout( buttonGrid );
+
+				} );
+
+				transform( targets.table, 2000 );
+				selectLayout( buttonTable );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function applyLocale() {
+
+				document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+				document.title = `${ ui.title } · Shape of the World`;
+				document.querySelector( '#info strong' ).textContent = ui.title;
+				document.querySelector( '#info span' ).textContent = ui.hint;
+				document.getElementById( 'detail' ).setAttribute( 'aria-label', ui.detail );
+				document.querySelector( '#detail dl div:nth-child(1) dt' ).textContent = ui.atomicNumber;
+				document.querySelector( '#detail dl div:nth-child(3) dt' ).textContent = ui.position;
+				document.getElementById( 'detail-source' ).textContent = ui.source;
+				document.querySelector( '.data-note' ).firstChild.textContent = `${ ui.noteBefore } `;
+				document.querySelector( '.data-note' ).lastChild.textContent = ui.noteAfter;
+				document.getElementById( 'table' ).textContent = ui.table;
+				document.getElementById( 'sphere' ).textContent = ui.sphere;
+				document.getElementById( 'helix' ).textContent = ui.helix;
+				document.getElementById( 'grid' ).textContent = ui.grid;
+
+			}
+
+			function cameraDistanceFor( layout ) {
+
+				const aspect = window.innerWidth / window.innerHeight;
+				return layout === 'table' && aspect < 0.75 ? 7900 : 3000;
+
+			}
+
+			function setLayoutCamera( layout ) {
+
+				activeLayout = layout;
+				const distance = cameraDistanceFor( layout );
+				new TWEEN.Tween( camera.position )
+					.to( { x: 0, y: 0, z: distance }, 850 )
+					.easing( TWEEN.Easing.Exponential.InOut )
+					.start();
+				controls.target.set( 0, 0, 0 );
+
+			}
+
+			function selectLayout( button ) {
+
+				document.querySelectorAll( '#menu button' ).forEach( item => item.classList.toggle( 'is-active', item === button ) );
+				window.parent.postMessage( { type: 'oneworld:periodic-interaction' }, window.location.origin );
+
+			}
+
+			function showDetail( index, element ) {
+
+				const symbol = table[ index ];
+				const record = elementBySymbol.get( symbol );
+				if ( ! record ) return;
+				const { atomicNumber: number, name, atomicMass, uncertainty, massKind, group, period, series } = record;
+				const mass = massKind === 'standard' ? `${ atomicMass } ± ${ uncertainty }` : atomicMass;
+				const position = locale === 'zh'
+					? series ? `第 ${ period } 周期 · ${ series }` : `第 ${ period } 周期 · 第 ${ group } 族`
+					: series ? `Period ${ period } · ${ series }` : `Period ${ period } · Group ${ group }`;
+
+				selectedElement?.classList.remove( 'is-selected' );
+				selectedElement = element;
+				element.classList.add( 'is-selected' );
+
+				document.getElementById( 'detail-kicker' ).textContent = locale === 'zh' ? `第 ${ number } 号元素` : `Element ${ number }`;
+				document.getElementById( 'detail-title' ).innerHTML = `${ name } <span>${ symbol }</span>`;
+				document.getElementById( 'detail-number' ).textContent = number;
+				document.getElementById( 'detail-mass-label' ).textContent = massKind === 'standard' ? ui.atomicMass : ui.isotope;
+				document.getElementById( 'detail-mass' ).textContent = mass;
+				document.getElementById( 'detail-position' ).textContent = position;
+				document.getElementById( 'detail-story' ).textContent = locale === 'zh'
+					? stories[ symbol ] || `它位于${ position }；改变排列方式，可以看到同一组元素如何在不同空间秩序中保持关系。`
+					: storiesEn[ symbol ] || `It sits at ${ position }; changing the layout reveals how the same relationships persist in a different spatial order.`;
+				document.getElementById( 'detail-source' ).href = `https://${ locale === 'zh' ? 'zh' : 'en' }.wikipedia.org/wiki/${ encodeURIComponent( name ) }`;
+				document.getElementById( 'detail' ).classList.add( 'is-open' );
+				window.parent.postMessage( { type: 'oneworld:periodic-interaction', element: symbol }, window.location.origin );
+
+			}
+
+			function transform( targets, duration ) {
+
+				TWEEN.removeAll();
+
+				for ( let i = 0; i < objects.length; i ++ ) {
+
+					const object = objects[ i ];
+					const target = targets[ i ];
+
+					new TWEEN.Tween( object.position )
+						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+					new TWEEN.Tween( object.rotation )
+						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+
+				}
+
+				new TWEEN.Tween( this )
+					.to( {}, duration * 2 )
+					.onUpdate( render )
+					.start();
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.position.set( 0, 0, cameraDistanceFor( activeLayout ) );
+				controls.target.set( 0, 0, 0 );
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				TWEEN.update();
+
+				controls.update();
+
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>

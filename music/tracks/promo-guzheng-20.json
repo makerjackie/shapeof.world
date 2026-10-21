@@ -1,0 +1,161 @@
+{
+  "id": "promo-guzheng-20",
+  "code": "PROMO-13-20",
+  "title": {
+    "en": "Jade Sparks · 20",
+    "zh": "玉石火花 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "",
+  "instruments": [
+    "guzheng plucks",
+    "electronic bass",
+    "dry kick",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: contemporary guzheng electronica with sharp plucked accents. Instruments: guzheng plucks, electronic bass, dry kick, woodblocks. Tempo 126 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and upbeat electronic track featuring a catchy synth melody, driving electronic drums, and a pulsing bassline. It has a modern, positive, and dynamic feel.",
+    "zh": "一首充满活力和乐观的电子音乐，具有抓耳的合成器旋律、强劲的电子鼓点和律动的低音线。整体感觉现代、积极且充满动感。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:30:03.678453+00:00",
+  "generation": {
+    "id": "0c81f617-c31d-479b-aa50-18ffefb98aba",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:29:51.144290+00:00",
+    "completedAt": "2026-09-10T05:30:03.678453+00:00",
+    "interactionId": "T0CiapqHMczRi9sPrKHS-AM",
+    "sha256": "541882f9048e36d69689b90da960152e0400878cc3a6c2d79fb24ad3fb05a3e8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat electronic track featuring a catchy synth melody, driving electronic drums, and a pulsing bassline. It has a modern, positive, and dynamic feel.",
+      "zh": "一首充满活力和乐观的电子音乐，具有抓耳的合成器旋律、强劲的电子鼓点和律动的低音线。整体感觉现代、积极且充满动感。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving",
+      "Modern",
+      "Dynamic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality, well-produced electronic track with a clear structure and engaging melody, suitable for various media applications requiring an energetic and modern sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main synth melody and beat. It ends with a quick but smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:38.071424+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "79fba03647802cfe22b1014936c434a060022d8386272dcc92b0e0922692aa1a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 20.453833,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving house track featuring a prominent four-on-the-floor beat, pulsating synth bass, and uplifting melodic synthesizers. It has a consistent dance groove suitable for clubs or background music.",
+      "zh": "一首充满活力和驱动力的浩室音乐，以突出的四四拍节奏、脉动的合成器贝斯和振奋人心的旋律合成器为特色。它具有稳定的舞曲律动，适合俱乐部或背景音乐使用。"
+    },
+    "instruments": [
+      "synthesizer",
+      "drum machine",
+      "bass guitar (synth bass)",
+      "percussion"
+    ],
+    "moods": [
+      "energetic",
+      "danceable",
+      "uplifting",
+      "driving",
+      "groovy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced electronic dance music with a clear structure and good sound quality, suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:12.641968+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 0.4538329999999995,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-guzheng-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-guzheng-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-guzheng-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:38.006802+00:00"
+}

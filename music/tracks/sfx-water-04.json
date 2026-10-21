@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-04",
+  "code": "SFX-WATER-04",
+  "title": {
+    "en": "Bubble rise",
+    "zh": "气泡上浮"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 3,
+  "seed": 3906082812,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized bubble rise for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的气泡上浮合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.87,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3906082812,
+    "sha256": "6407ab6b0d2413427617fd5b3f58df68123a3d525c7e63092f4589bf48df1525",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4b5333167efd3f7985a3a71505dc16d88335323590e0f81309d7058aa1f74708",
+      "bytes": 13209,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6407ab6b0d2413427617fd5b3f58df68123a3d525c7e63092f4589bf48df1525",
+      "bytes": 76778,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6f6e825fc33c85c216a8308b749a8dd1f5bb219c30eaee0a5020eca969bfc346",
+      "bytes": 7252,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "773440d150ed625264aea8fe589517ac846e0039597a439bc4e84be5ccceeb33",
+      "bytes": 1865,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 38367,
+    "duration": 0.87,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.48,
+    "dcOffset": 7.182571753557745e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07357498168945331,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, cartoon-like boing or spring sound effect, reminiscent of a jump or bounce.",
+      "zh": "一个短促、干净、卡通风格的“嘣”或弹簧音效，类似于跳跃或弹跳的声音。"
+    },
+    "reason": "The sound is clear, well-recorded, and free of defects, making it suitable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:33.338605+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "4b5333167efd3f7985a3a71505dc16d88335323590e0f81309d7058aa1f74708"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 38367
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.910652+00:00"
+}

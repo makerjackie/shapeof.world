@@ -1,9 +1,10 @@
 {
-  "name": "Shape of the World",
-  "short_name": "Shape of the World",
+  "name": "世界的形状 — 看见世界如何运行",
+  "short_name": "世界的形状",
   "id": "/?source=pwa",
-  "lang": "en",
-  "description": "A curated open-source edition of Shape of the World.",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "description": "看见世界如何运行：改变参数，观察结果，亲手理解世界背后的规律。",
   "start_url": "/",
   "scope": "/",
   "icons": [
@@ -20,5 +21,22 @@
   ],
   "theme_color": "#f1ecdf",
   "background_color": "#f1ecdf",
-  "display": "standalone"
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "categories": ["education", "science", "reference"],
+  "shortcuts": [
+    {
+      "name": "全部互动世界",
+      "short_name": "全部世界",
+      "url": "/?source=shortcut",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "我的图鉴",
+      "short_name": "图鉴",
+      "url": "/atlas?source=shortcut",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    }
+  ]
 }

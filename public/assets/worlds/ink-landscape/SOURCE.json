@@ -1,0 +1,17 @@
+{
+  "asset": "rock-ink-v1.webp",
+  "created": "2026-10-11",
+  "origin": "Original asset generated with built-in image_gen tool for this task",
+  "sourceSha256": "153d743ba6f9cd7b5362357971518db04e69052e41c4016732ecba485e8e24a5",
+  "sha256": "40ceb39e402aaccf53fe97887bc83243b373b49b5fb1dae13245ecb064983e6f",
+  "bytes": 487354,
+  "dimensions": [
+    1280,
+    1280
+  ],
+  "conversion": "cwebp -resize 1280 1280 -q 87",
+  "purpose": "Triplanar ink marks on actual 3D mountain geometry",
+  "storage": "Small fixed world texture, Git + Static Assets; automatically collect local runtime dependency in offline export",
+  "license": "Project-controlled original visual content: CC BY-NC 4.0; third-party music from the user-selected Bilibili video is excluded",
+  "prompt": "Original seamless Chinese ink rock brush texture on ivory paper; black dry hemp-fibre and axe-cut strokes, wet ink washes, no horizon, trees, water, buildings, text, seal or signature."
+}

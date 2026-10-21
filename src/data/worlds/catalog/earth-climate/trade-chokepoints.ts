@@ -1,0 +1,81 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'trade-chokepoints',
+    publication: 'public',
+    index: '247',
+    title: '亲手关掉苏伊士，看全球船流当场改道',
+    poster: '/assets/posters/trade-chokepoints.webp',
+    posterMobile: '/assets/posters/mobile/trade-chokepoints.webp',
+    posterDesktop: '/assets/posters/desktop/trade-chokepoints.webp',
+    posterTitle: '关掉一条海峡，世界要多绕多远？',
+    posterHook: '全球贸易八成的货量走海运，却只穿过七个针眼。合拢苏伊士的闸门，亚欧航线当场滑向好望角。',
+    posterSource: 'EIA 世界石油运输咽喉要道 · UNCTAD 海运回顾 · Natural Earth 110m',
+    posterPosition: '50% 50%',
+    question: '关掉一条海峡，世界要多绕多远？',
+    hook: '在一张会流动的夜航海图上，七处咽喉各有一枚可点的闸门。关掉任意几处，船流平滑改道，读数当场给出多绕的公里、多花的天数和被卡住的石油通过量。',
+    payoff: '海运承担了国际贸易约八成的货物量，而干线只穿过七个针眼。苏伊士一关，亚欧航线要绕好望角多走约 6,700 公里、十天上下；霍尔木兹一关，波斯湾根本没有海上替代路线。EIA 的数字把这件事记了下来：2024 年好望角石油通过量从 6.2 升到 9.3 百万桶/日，正好接住了苏伊士与曼德掉下来的量。',
+    topicLabel: '全球数据剧场',
+    translations: {
+      en: {
+        title: 'Shut the Suez yourself and watch world shipping reroute',
+        posterTitle: 'Close one strait — how much farther must the world sail?',
+        posterHook: 'Four fifths of world trade by volume goes by sea, through just seven needle eyes. Swing the Suez gates shut and the Asia–Europe lane slides to the Cape of Good Hope.',
+        posterSource: 'U.S. EIA World Oil Transit Chokepoints · UNCTAD Review of Maritime Transport · Natural Earth 110m',
+        question: 'Close one strait — how much farther must the world sail?',
+        hook: 'Seven chokepoints sit on a living night chart, each one a gate you can click. Shut any of them and the traffic slides onto a new route while the readout counts the extra kilometres, the extra days and the oil left stranded.',
+        payoff: 'About 80% of world trade by volume travels by sea, and the trunk routes squeeze through only seven needle eyes. Close the Suez and Asia–Europe must round the Cape of Good Hope — roughly 6,700 km and about ten days more. Close Hormuz and the Gulf has no sea alternative at all. EIA figures recorded it: Cape of Good Hope oil traffic rose from 6.2 to 9.3 million b/d in 2024, absorbing what Suez and Bab el-Mandeb lost.',
+        topicLabel: 'Global Data Theatre',
+      },
+    },
+    primaryCategoryId: 'global-data-theatre',
+    runtime: 'diagram-2d',
+    difficulty: 'standard',
+    lane: 'flow',
+    renderer: 'trade-chokepoints',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'compiled',
+    accent: '#e8b04b',
+    related: ['global-flight-network'],
+    sources: [
+      {
+        label: 'EIA《世界石油运输咽喉要道》通过量数据',
+        labelEn: 'U.S. EIA — World Oil Transit Chokepoints',
+        url: 'https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints',
+      },
+      {
+        label: 'UNCTAD《海运回顾》',
+        labelEn: 'UNCTAD — Review of Maritime Transport',
+        url: 'https://unctad.org/publication/review-maritime-transport-2024',
+      },
+      {
+        label: 'UNCTAD：红海、黑海与巴拿马运河航线中断的贸易影响',
+        labelEn: 'UNCTAD — Navigating troubled waters: Red Sea, Black Sea and Panama Canal disruption',
+        url: 'https://unctad.org/publication/navigating-troubled-waters-impact-global-trade-disruption-shipping-routes-red-sea-black',
+      },
+      {
+        label: '长赐号堵塞苏伊士运河：Lloyd’s List 每日货值估算报道',
+        labelEn: 'Ever Given blocks the Suez Canal — reporting on the Lloyd’s List daily trade estimate',
+        url: 'https://www.aljazeera.com/economy/2021/3/25/suez-blockage-seen-halting-9-6-billion-a-day-of-ship-traffic',
+      },
+      {
+        label: '巴拿马运河管理局 2023 年降水不足限航通告',
+        labelEn: 'Panama Canal Authority — 2023 advisory on transit reductions from the rainfall deficit',
+        url: 'https://pancanal.com/wp-content/uploads/2023/01/ADV48-2023-Reduction-in-Transits-Due-to-the-Ongoing-Deficit-in-Precipitation-in-the-Canal-Watershed.pdf',
+      },
+      {
+        label: 'Natural Earth — 公共领域矢量底图',
+        labelEn: 'Natural Earth — public-domain vector basemap',
+        url: 'https://www.naturalearthdata.com/about/terms-of-use/',
+      }
+    ],
+    provenance: { origin: 'ai-prototype', initialModel: 'claude-opus-5' },
+    presentation: 'full-bleed',
+    transferBudgetMb: 2,
+    fallback: 'poster',
+  } satisfies WorldExperience

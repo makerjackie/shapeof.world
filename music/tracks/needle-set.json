@@ -1,0 +1,61 @@
+{
+  "id": "needle-set",
+  "code": "MAT-B03",
+  "title": {
+    "en": "Needle Set",
+    "zh": "针集"
+  },
+  "category": "math-signals",
+  "archetype": "discovery",
+  "moods": [
+    "angular",
+    "sparse",
+    "ingenious",
+    "taut"
+  ],
+  "topics": [
+    "kakeya",
+    "geometry",
+    "rotation"
+  ],
+  "energy": 3,
+  "bpm": 84,
+  "key": "E minor",
+  "instruments": [
+    "pizzicato viola",
+    "prepared piano",
+    "thin synth line",
+    "woodblock (sparse)"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.775,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a thin needle rotating to cover a plane with as little area as possible. Around 84 BPM, E minor. A single pizzicato line rotates through registers; prepared-piano scrapes mark each turn. Sparse, angular, ingenious. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No lush pads at first; density is geometric, not emotional swell. No trailer hits.\n\n[00:00–00:22] One pizzicato pitch, then a second a tritone away, like a needle and its turn.\n[00:22–01:05] Line rotates through a circle of fifths fragment; woodblock on each 180-degree turn.\n[01:05–01:50] Multiple faint copies overlap, covering more pitch-space with little material.\n[01:50–02:30] Copies collapse back to the original thin line.\n",
+  "recommendedWorldIds": [
+    "kakeya-needle"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:17:40Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/needle-set/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/needle-set/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/needle-set/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:46.550477+00:00",
+  "generation": {
+    "id": "882f12ab-60b5-4f1b-988f-8f8c18b287fc",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:16:41Z",
+    "completedAt": "2026-08-25T10:17:40Z",
+    "durationMs": 59000,
+    "interactionId": "i2uNareGDfXq8vUPq5OsgAM",
+    "clientRequestId": "5a9ebbff-430b-49fc-a46a-1bcfb19f3a12",
+    "synthid": true,
+    "c2pa": "urn:c2pa:126f8e6b-4783-ea3e-b3cd-4e857df5448f",
+    "sha256": "30981445292c8468b43b548f16b99282dc5c6e307268ffb837a79f0db7d10db9"
+  }
+}

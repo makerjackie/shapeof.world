@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-09",
+  "code": "SFX-MECHANICAL-09",
+  "title": {
+    "en": "Motor stop",
+    "zh": "电机停止"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 8,
+  "seed": 1912017014,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized motor stop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的电机停止合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.58,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1912017014,
+    "sha256": "606379acab3d805dbe5e492fe164dbe361c664915dee00482cc6805f7806df41",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "544b256a403693a0d884ee66d793db461fa59ec32169059977b6f373fc38578b",
+      "bytes": 9186,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "606379acab3d805dbe5e492fe164dbe361c664915dee00482cc6805f7806df41",
+      "bytes": 51200,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9b2fa5e730a036993ec3ba9f7c2842f21b036a80574abd4296a99afaae8e9424",
+      "bytes": 6935,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7c3c9f8350d639856b15da2e7a34bb775b2a7796c95c1d5bf232b96aebc2651c",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 25578,
+    "duration": 0.58,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.09,
+    "dcOffset": 8.351827620415983e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15680029296874665,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp electronic zap or spark sound effect, reminiscent of a quick electrical discharge.",
+      "zh": "一个短促、尖锐的电子电击或火花音效，类似于快速的放电声。"
+    },
+    "reason": "The sound is a clean, intentional electronic effect, well-suited for video game or UI sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:25.826629+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "544b256a403693a0d884ee66d793db461fa59ec32169059977b6f373fc38578b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 25578
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.886484+00:00"
+}

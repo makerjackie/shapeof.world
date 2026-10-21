@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-08",
+  "code": "SFX-MAGIC-08",
+  "title": {
+    "en": "Portal open",
+    "zh": "传送门开启"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 7,
+  "seed": 37727101,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized portal open for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的传送门开启合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.0,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 37727101,
+    "sha256": "3c3518c260a63479e810593f27e8b31fb13566d6d783428a642dca3530ec2f80",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "af651dbcab476bc25dae5216bd7646a561dcde7d64084c524111360d21164d54",
+      "bytes": 15037,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3c3518c260a63479e810593f27e8b31fb13566d6d783428a642dca3530ec2f80",
+      "bytes": 88244,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1a08f7f7622ded9bcc2d66fb98b9a0d599fc8f850d32b83a4a4208d6d50a6841",
+      "bytes": 21091,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8a780d57bf48e4ef62dd67e3582ceeb7779a4e5e49bf7d15be0515617baf6eaf",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 44100,
+    "duration": 1.0,
+    "peakDbfs": -5.06,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.2456154336734694e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11312689208984494,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized whoosh sound effect with a slight electronic or metallic quality, suitable for transitions or quick movements.",
+      "zh": "短促、干净的合成嗖嗖声，带有一点电子或金属质感，适合用于转场或快速移动。"
+    },
+    "reason": "The sound is a clear, isolated, and well-produced synthetic whoosh effect without any technical flaws, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:46.523081+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "af651dbcab476bc25dae5216bd7646a561dcde7d64084c524111360d21164d54"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 44100
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.881871+00:00"
+}

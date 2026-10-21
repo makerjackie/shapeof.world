@@ -1,0 +1,104 @@
+{
+  "id": "lib-minimalism-motion",
+  "code": "LIB-04-08",
+  "title": {
+    "en": "Motion — Minimalism",
+    "zh": "跃动 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "minimalism"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "B minor",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second acoustic minimalism instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 124 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A grand and adventurous orchestral piece with a strong cinematic feel, featuring prominent pizzicato strings, brass, woodwinds, and percussion. It evokes a sense of journey or epic narrative.",
+    "zh": "一首宏大而富有冒险精神的管弦乐作品，具有强烈的电影感，以突出的拨弦乐器、铜管乐器、木管乐器和打击乐器为特色。它唤起了一种旅程或史诗叙事的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.86,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T07:54:59.467776+00:00",
+  "generation": {
+    "id": "05c6ab8a-2e98-440e-a8b4-215d5bfd3f49",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:54:06.172232+00:00",
+    "completedAt": "2026-09-09T07:54:59.467776+00:00",
+    "interactionId": "nxChavy2GbGejMwP1PWpyAg",
+    "sha256": "3f8e5c46b8d5c3afe82d0027b58a636cce808326040d227c03bcc88a6cc4e2ae"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and adventurous orchestral piece with a strong cinematic feel, featuring prominent pizzicato strings, brass, woodwinds, and percussion. It evokes a sense of journey or epic narrative.",
+      "zh": "一首宏大而富有冒险精神的管弦乐作品，具有强烈的电影感，以突出的拨弦乐器、铜管乐器、木管乐器和打击乐器为特色。它唤起了一种旅程或史诗叙事的感觉。"
+    },
+    "instruments": [
+      "Orchestral Strings",
+      "Pizzicato Strings",
+      "Brass",
+      "Woodwinds",
+      "Percussion",
+      "Harp"
+    ],
+    "moods": [
+      "Epic",
+      "Grand",
+      "Adventurous",
+      "Dramatic",
+      "Cinematic",
+      "Orchestral"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "High-quality orchestral composition suitable for cinematic, adventure, or dramatic themes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:55:12.312700+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:35:54.648323+00:00"
+}

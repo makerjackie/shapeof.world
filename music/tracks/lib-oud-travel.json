@@ -1,0 +1,101 @@
+{
+  "id": "lib-oud-travel",
+  "code": "LIB-20-06",
+  "title": {
+    "en": "Roaming — Oud",
+    "zh": "漫游 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "oud"
+  ],
+  "energy": 4,
+  "bpm": 106,
+  "key": "E minor",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Middle Eastern acoustic instrumental instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 106 BPM; E minor. Main idea: a descending melody with an upward answer. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A lively and cheerful instrumental piece featuring a prominent accordion melody, supported by a steady bass line and rhythmic drums. It evokes a festive, folk-dance atmosphere.",
+    "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，配以稳定的贝斯线和有节奏的鼓点。营造出一种节日般的民间舞蹈氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.584,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:52:55.081241+00:00",
+  "generation": {
+    "id": "61929d45-2576-4b7f-a326-362cae13e300",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:52:09.154958+00:00",
+    "completedAt": "2026-09-09T08:52:55.081241+00:00",
+    "interactionId": "Oh6haoPwIvTyk7QPmu_A4Q0",
+    "sha256": "13e84165f24016a6879b714bd2803382522777915270d09662ea4fdb278b1074"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful instrumental piece featuring a prominent accordion melody, supported by a steady bass line and rhythmic drums. It evokes a festive, folk-dance atmosphere.",
+      "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，配以稳定的贝斯线和有节奏的鼓点。营造出一种节日般的民间舞蹈氛围。"
+    },
+    "instruments": [
+      "Accordion",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Cheerful",
+      "Lively",
+      "Festive",
+      "Upbeat",
+      "Joyful",
+      "Nostalgic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumental track with a distinct and engaging folk-dance style, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:53:09.469093+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:54:16.003309+00:00"
+}

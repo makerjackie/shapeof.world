@@ -1,57 +1,54 @@
 import {
-  ErrorComponent,
   Link,
   useLocation,
   useRouter,
 } from '@tanstack/react-router'
 import type { ErrorComponentProps } from '@tanstack/react-router'
+import { useEffect } from 'react'
 
-import { useOptionalI18n } from '~/i18n'
+import { messages, useOptionalI18n } from '~/i18n'
+import { recoverFromChunkError } from '~/lib/chunk-load-recovery'
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
   const router = useRouter()
   const i18n = useOptionalI18n()
-  const t = i18n?.t ?? ((key: string) => ({
-    'system.error.eyebrow': 'A fold in the atlas',
-    'system.error.title': 'This world did not open correctly.',
-    'system.retry': 'Try again',
-    'system.back': 'Go back',
-    'system.home': 'Return home',
-  }[key] ?? key))
+  const fallbackLocale = typeof window !== 'undefined' && /^\/en(?:\/|$)/.test(window.location.pathname) ? 'en' : 'zh'
+  const t = i18n?.t ?? ((key: string) => messages[fallbackLocale][key] ?? key)
   const isRoot = useLocation({
     select: (location) => location.pathname === '/',
   })
 
-  console.error('DefaultCatchBoundary Error:', error)
+  // Public recovery UI deliberately excludes raw exception details.
+  useEffect(() => { recoverFromChunkError(error) }, [error])
 
   return (
     <main className="nf-page">
       <div className="nf-content">
-        <p className="eyebrow">{t('system.error.eyebrow')}</p>
-        <h1 className="nf-title">{t('system.error.title')}</h1>
+        <h1 className="page-title nf-title">{t('system.error.title')}</h1>
         <div className="nf-copy">
-          <ErrorComponent error={error} />
+          <p>{t('system.recoveryBody')}</p>
         </div>
         <div className="nf-actions">
+          <Link to="/feedback" search={{ kind: 'problem' }} className="btn-secondary">{t('feedback.report')}</Link>
           <button
             onClick={() => {
               router.invalidate()
             }}
-            className="action action--primary"
+            className="btn-primary"
           >
             {t('system.retry')}
           </button>
           {isRoot ? (
             <Link
               to="/"
-              className="action"
+              className="btn-secondary"
             >
               {t('system.home')}
             </Link>
           ) : (
             <Link
               to="/"
-              className="action"
+              className="btn-secondary"
               onClick={(e) => {
                 e.preventDefault()
                 window.history.back()

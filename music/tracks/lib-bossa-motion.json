@@ -1,0 +1,103 @@
+{
+  "id": "lib-bossa-motion",
+  "code": "LIB-08-08",
+  "title": {
+    "en": "Motion — Bossa",
+    "zh": "跃动 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "bossa"
+  ],
+  "energy": 4,
+  "bpm": 128,
+  "key": "B minor",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second bossa nova instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 128 BPM; B minor. Main idea: a descending melody with an upward answer. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A lively and upbeat instrumental piece featuring a prominent accordion melody, supported by a driving bassline, rhythmic drums, and clean guitar. It has a cheerful and energetic feel, reminiscent of folk or world music with a modern touch.",
+    "zh": "一首活泼欢快的器乐曲，手风琴旋律突出，由强劲的贝斯线、有节奏的鼓点和干净的吉他伴奏。它带有一种欢快而充满活力的感觉，让人联想到带有现代气息的民间音乐或世界音乐。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.618,
+  "generatedAt": "2026-09-09T08:08:46.776412+00:00",
+  "generation": {
+    "id": "ec17f2fe-d85a-4a97-8893-d488efe4cec8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:07:54.966280+00:00",
+    "completedAt": "2026-09-09T08:08:46.776412+00:00",
+    "interactionId": "3BOhapr3G-67i9sP06HTyAM",
+    "sha256": "498d7f83ad13c7419d132593bffde9d200c95315aebfc0424783f11ceef6dc0d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental piece featuring a prominent accordion melody, supported by a driving bassline, rhythmic drums, and clean guitar. It has a cheerful and energetic feel, reminiscent of folk or world music with a modern touch.",
+      "zh": "一首活泼欢快的器乐曲，手风琴旋律突出，由强劲的贝斯线、有节奏的鼓点和干净的吉他伴奏。它带有一种欢快而充满活力的感觉，让人联想到带有现代气息的民间音乐或世界音乐。"
+    },
+    "instruments": [
+      "Accordion",
+      "Bass",
+      "Drums",
+      "Electric Guitar",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Energetic",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear melody and engaging rhythm, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:09:04.395139+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:09:55.519283+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

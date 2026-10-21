@@ -1,0 +1,9 @@
+.starry-flight-world { position: absolute; inset: 0; --experience-panel-surface: rgba(12, 28, 41, .88); --experience-panel-border: rgba(231, 205, 142, .2); --freebar-accent: #e8c67b; --freebar-ink: #eee6d5; }
+.starry-flight-options { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.starry-flight-options button, .starry-flight-options select { flex: 0 0 auto; min-height: 40px; padding: 6px 12px; color: #eee6d5; border: 1px solid #dfc47730; border-radius: 8px; background: #142636; font: inherit; font-size: 12px; }
+.starry-flight-options select { min-width: 110px; }
+.starry-flight-options option { background: #142636; }
+@media (max-width: 720px) {
+  .starry-flight-options { overflow-x: auto; scrollbar-width: none; }
+  .starry-flight-options::-webkit-scrollbar { display: none; }
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-05",
+  "code": "SFX-TRANSITION-05",
+  "title": {
+    "en": "Camera pullback",
+    "zh": "镜头拉远"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 4,
+  "seed": 3464221035,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized camera pullback for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的镜头拉远合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3464221035,
+    "sha256": "a5956cb62771ae9370dcb0d88da0b1671d9f95ecdab26a10a337f23cdd85ae80",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c9cf8017b58d5d58223aedf7447df095b3f44b902a729581f55edfb41f431857",
+      "bytes": 21254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a5956cb62771ae9370dcb0d88da0b1671d9f95ecdab26a10a337f23cdd85ae80",
+      "bytes": 127934,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e01aa68482c8702331d5ff15d8e4433b00222a11e5accba2d6e033b310a4959b",
+      "bytes": 19238,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b6e6433b467390db220173d150948cadd5770628ab71ed5ca90314a74d54fbee",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 63945,
+    "duration": 1.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.63,
+    "dcOffset": 2.863483755571194e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10876638793945315,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized whoosh or swipe sound with a metallic or electronic texture, ending abruptly.",
+      "zh": "短促、尖锐的合成嗖嗖声或划过声，带有金属或电子质感，突然结束。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthetic effect, suitable for various sound design applications like transitions, impacts, or UI feedback.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:45.410119+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c9cf8017b58d5d58223aedf7447df095b3f44b902a729581f55edfb41f431857"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 63945
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.903092+00:00"
+}

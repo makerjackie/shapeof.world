@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-20",
+  "code": "SFX-SCIFI-20",
+  "title": {
+    "en": "Space beacon",
+    "zh": "太空信标"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 19,
+  "seed": 2144729971,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized space beacon for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的太空信标合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.5,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2144729971,
+    "sha256": "836d8d13864a78ae802adf2a1c9d3d85ea88efe683e01c6f6436d2807a468533",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1acb0fa8447537d932a232395737b44fac54324f823515d7057fe340d05fe6c4",
+      "bytes": 21986,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "836d8d13864a78ae802adf2a1c9d3d85ea88efe683e01c6f6436d2807a468533",
+      "bytes": 132344,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e48aa4d48ac8c72d5a55996f8b4e829c068ab0e70f17b9d7d8c9d251072a6e2c",
+      "bytes": 26034,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "76bf2bc1c4c863020d9a10612e6ddff73647cc5b91248b2f594e9d7276a9575e",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 66150,
+    "duration": 1.5,
+    "peakDbfs": -4.14,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.8453561980347694e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.18274279785156144,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A rapid, airy whoosh sound effect, ending with a distinct, sharp impact.",
+      "zh": "一个快速、轻盈的嗖嗖声效果，以一个清晰、尖锐的撞击声结束。"
+    },
+    "reason": "The sound is a clear, isolated effect with no technical flaws, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:14.601072+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1acb0fa8447537d932a232395737b44fac54324f823515d7057fe340d05fe6c4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 66150
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.902263+00:00"
+}

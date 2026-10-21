@@ -1,0 +1,163 @@
+{
+  "id": "promo-chamber-15",
+  "code": "PROMO-06-15",
+  "title": {
+    "en": "Paper Kites · 15",
+    "zh": "纸鸢起飞 · 15"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM. Distinct motif: descending pentatonic triplet. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 15-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively, upbeat, and sophisticated big band swing piece featuring brass, woodwinds, and a walking bassline, with a clear, memorable melody.",
+    "zh": "一首活泼、欢快、精致的大乐队摇摆乐曲，以铜管乐、木管乐和行进贝斯线为特色，旋律清晰且令人难忘。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:24:26.096367+00:00",
+  "generation": {
+    "id": "b0b20a67-a54f-496e-babb-fe93d56d9833",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:24:05.128540+00:00",
+    "completedAt": "2026-09-10T05:24:26.096367+00:00",
+    "interactionId": "9j6iasCgBdW54vEPzPyHuAE",
+    "sha256": "9de4d339930eaf856b7de68860183a0c726a730810693f8a130d48595a95eeea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively, upbeat, and sophisticated big band swing piece featuring brass, woodwinds, and a walking bassline, with a clear, memorable melody.",
+      "zh": "一首活泼、欢快、精致的大乐队摇摆乐曲，以铜管乐、木管乐和行进贝斯线为特色，旋律清晰且令人难忘。"
+    },
+    "instruments": [
+      "brass",
+      "woodwinds",
+      "upright bass",
+      "drums",
+      "piano"
+    ],
+    "moods": [
+      "upbeat",
+      "lively",
+      "sophisticated",
+      "playful",
+      "jazzy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 185,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main melodic theme played by brass and woodwinds over a driving rhythm section. It concludes with a definitive, sustained final chord from the full ensemble.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:27.268409+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6ff80821751923eb508c7ed4b745ddb72f7c1d09f28b6e6ca52965b43baf9fba"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.615458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful instrumental track featuring a prominent pizzicato string melody, supported by a walking bassline, light percussion, and occasional brass accents. It has a lighthearted and whimsical feel.",
+      "zh": "一首活泼俏皮的纯音乐，以拨弦乐器为主旋律，配以行进的贝斯线、轻快的打击乐和偶尔出现的铜管乐器。整体感觉轻松愉快，带有一丝异想天开的色彩。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Upright Bass",
+      "Drums",
+      "Brass",
+      "Woodwinds"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Upbeat",
+      "Jazzy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, clean instrumental track with a clear melody and engaging arrangement, suitable for various lighthearted media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:19.180861+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.615458,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-chamber-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-chamber-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-chamber-15/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:10.579675+00:00"
+}

@@ -1,0 +1,344 @@
+/* ============================================================
+   Aurora · 极光
+   满屏 3D 行星际 · 绿/红/紫按高度分色 · 自由底栏
+   ============================================================ */
+.aurora-experience {
+  --aurora-accent: #69f0ae;
+  --aurora-ink: #eaf6ff;
+  --world-accent: var(--aurora-accent);
+  --freebar-accent: var(--aurora-accent);
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(4, 14, 18, 0.60),
+    rgba(2, 8, 12, 0.54)
+  );
+  --experience-panel-border: rgba(105, 240, 174, 0.18);
+  --experience-panel-shadow:
+    0 20px 56px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --experience-panel-blur: 20px;
+  --experience-panel-saturation: 1.2;
+  color: var(--aurora-ink);
+  background: #01020a;
+  isolation: isolate;
+}
+
+.aurora-experience canvas {
+  display: block;
+  touch-action: none;
+}
+
+/* —— 点题铭牌 —— */
+.aurora-plaque {
+  position: absolute;
+  z-index: 6;
+  top: var(--experience-safe-top, 78px);
+  left: clamp(20px, 3.4vw, 46px);
+  max-width: min(300px, 44vw);
+  pointer-events: none;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.95);
+}
+
+.aurora-plaque h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  color: #f2fbff;
+}
+
+.aurora-plaque p {
+  margin: 8px 0 0;
+  color: rgba(214, 240, 255, 0.66);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* —— 被动读数（底左，非交互） —— */
+.aurora-readout {
+  position: absolute;
+  z-index: 6;
+  left: clamp(20px, 3.4vw, 46px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 138px);
+  display: grid;
+  gap: 7px;
+  min-width: 208px;
+  padding: 11px 13px;
+  border: 1px solid rgba(105, 240, 174, 0.14);
+  border-radius: 12px;
+  background: rgba(3, 10, 14, 0.5);
+  backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.aurora-readout-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.aurora-readout-row small {
+  color: rgba(214, 240, 255, 0.46);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.aurora-readout-row strong {
+  color: #f2fbff;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.aurora-readout-row span {
+  margin-left: auto;
+  color: var(--aurora-accent);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.aurora-cities {
+  display: grid;
+  gap: 3px;
+  margin: 2px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  list-style: none;
+}
+
+.aurora-cities li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 11px;
+}
+
+.aurora-cities b {
+  color: rgba(230, 246, 255, 0.72);
+  font-weight: 500;
+}
+
+.aurora-cities span {
+  margin-left: auto;
+  color: rgba(214, 240, 255, 0.34);
+}
+
+.aurora-cities li.is-overhead span {
+  color: #7dffc0;
+}
+
+.aurora-cities li.is-horizon span {
+  color: #b6f7a8;
+}
+
+.aurora-cities li.is-camera span {
+  color: #ff8fa6;
+}
+
+/* —— 3D 锚定标签 —— */
+.aurora-labels {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  white-space: nowrap;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95);
+}
+
+.aurora-label b {
+  color: rgba(232, 248, 255, 0.9);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  font-variant-numeric: tabular-nums;
+}
+
+.aurora-label span {
+  color: rgba(200, 230, 255, 0.5);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+}
+
+.aurora-label.is-ruler b {
+  color: rgba(206, 232, 255, 0.82);
+}
+
+.aurora-label.is-bands b {
+  color: #d9ffe9;
+}
+
+.aurora-label.is-cities b {
+  color: #ffd9a8;
+  font-size: 11px;
+}
+
+.aurora-label.is-cities::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -11px;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: rgba(255, 217, 168, 0.45);
+  box-shadow: 0 0 8px rgba(255, 200, 130, 0.45);
+}
+
+.aurora-label.is-cities.is-overhead::before {
+  background: #8dffc8;
+  box-shadow: 0 0 12px rgba(105, 240, 174, 0.95);
+}
+
+.aurora-label.is-cities.is-horizon::before {
+  background: #cdf7a3;
+  box-shadow: 0 0 10px rgba(190, 245, 150, 0.8);
+}
+
+.aurora-label.is-cities.is-camera::before {
+  background: #ff8fa6;
+  box-shadow: 0 0 10px rgba(255, 120, 150, 0.75);
+}
+
+.aurora-label.is-cities.is-overhead b {
+  color: #d6ffe9;
+}
+
+/* —— 自由底栏控件（壳层材质/定位由共享 Freebar 负责） —— */
+.aurora-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+
+.aurora-chip-rail,
+.aurora-freebar-chips {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.aurora-chip-rail::-webkit-scrollbar,
+.aurora-freebar-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.aurora-chip-rail > *,
+.aurora-freebar-chips > * {
+  flex: 0 0 auto;
+}
+
+.aurora-chip-rail button:not(.experience-freebar-story),
+.aurora-freebar-chips button:not(.experience-freebar-story) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 13px;
+  color: rgba(234, 246, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.aurora-chip-rail button:not(.experience-freebar-story):hover,
+.aurora-freebar-chips button:not(.experience-freebar-story):hover {
+  border-color: rgba(105, 240, 174, 0.5);
+  background: rgba(105, 240, 174, 0.1);
+}
+
+.aurora-chip-rail button:not(.experience-freebar-story).is-active,
+.aurora-freebar-chips button:not(.experience-freebar-story).is-active {
+  color: #062015;
+  border-color: var(--aurora-accent);
+  background: var(--aurora-accent);
+  font-weight: 600;
+}
+
+.aurora-kp {
+  flex: 1 1 180px;
+  min-width: min(180px, 100%);
+}
+
+.aurora-experience .experience-freebar input[type='range']::-webkit-slider-thumb {
+  background: var(--aurora-accent);
+  box-shadow:
+    0 0 0 3px rgba(105, 240, 174, 0.18),
+    0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+.aurora-experience .experience-freebar input[type='range']::-moz-range-thumb {
+  background: var(--aurora-accent);
+}
+
+@media (max-width: 720px) {
+  .aurora-plaque {
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+
+  .aurora-plaque h1 {
+    font-size: 24px;
+  }
+
+  .aurora-readout {
+    right: 16px;
+    left: 16px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 196px);
+    min-width: 0;
+  }
+
+  .aurora-cities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+
+  .aurora-cities li {
+    gap: 5px;
+  }
+
+  .aurora-cities span {
+    margin-left: 0;
+  }
+
+  .aurora-label span {
+    display: none;
+  }
+}
+
+@media (max-height: 620px) {
+  .aurora-readout {
+    display: none;
+  }
+}

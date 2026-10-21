@@ -1,0 +1,161 @@
+{
+  "id": "promo-bossa-20",
+  "code": "PROMO-07-20",
+  "title": {
+    "en": "Sunlit Steps · 20",
+    "zh": "日光步伐 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "rim clicks",
+    "upright bass",
+    "shaker"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: brisk bossa nova with clipped sunny guitar answers. Instruments: nylon guitar, rim clicks, upright bass, shaker. Tempo 108 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and groovy instrumental track featuring a catchy electric guitar riff, solid bassline, and driving drums. It has a funky, positive, and energetic feel.",
+    "zh": "一首欢快而富有律动的纯音乐，以抓耳的电吉他Riff、扎实的贝斯线和强劲的鼓点为特色。整体感觉时髦、积极且充满活力。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:25:46.508480+00:00",
+  "generation": {
+    "id": "a09f3a23-c740-4fe3-a0ff-3c9a3df9c306",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:25:32.993464+00:00",
+    "completedAt": "2026-09-10T05:25:46.508480+00:00",
+    "interactionId": "Tj-iasXUAt6O7PkP2qGV6As",
+    "sha256": "4872f0e87ebc2f41e943904546231691d5eefe00316ffcaa4ff255540bd6e443"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring a catchy electric guitar riff, solid bassline, and driving drums. It has a funky, positive, and energetic feel.",
+      "zh": "一首欢快而富有律动的纯音乐，以抓耳的电吉他Riff、扎实的贝斯线和强劲的鼓点为特色。整体感觉时髦、积极且充满活力。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drum Kit"
+    ],
+    "moods": [
+      "Upbeat",
+      "Groovy",
+      "Funky",
+      "Positive",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens with an immediate, catchy electric guitar riff and ends with a clear, sustained chord and cymbal crash.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:08.856701+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "5d44afed898f317535b6d2771c9ebb9da58a51324c499730cafb91e1dd36f5dd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.048125,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, laid-back instrumental track featuring a prominent, groovy bassline, clean electric guitar chords and melodies, and a steady drum beat. It has a relaxed, lounge-jazz feel.",
+      "zh": "一首流畅、悠闲的纯音乐曲目，以突出、律动的贝斯线、干净的电吉他和弦与旋律以及稳定的鼓点为特色。它带有一种轻松的休息室爵士乐感觉。"
+    },
+    "instruments": [
+      "electric bass",
+      "electric guitar",
+      "drum kit",
+      "electric piano"
+    ],
+    "moods": [
+      "smooth",
+      "relaxed",
+      "groovy",
+      "lounge",
+      "jazzy",
+      "chill"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "Well-produced instrumental track with a clear genre, good musicality, and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:00.665801+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 9.048124999999999,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-bossa-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-bossa-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-bossa-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:24.250020+00:00"
+}

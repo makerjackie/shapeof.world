@@ -1,0 +1,101 @@
+{
+  "id": "lib-funk-reading",
+  "code": "LIB-13-01",
+  "title": {
+    "en": "Reading — Funk",
+    "zh": "静读 · 放克"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "funk"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "D major",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second instrumental funk instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 106 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A relaxed, acoustic-leaning instrumental piece featuring a clean electric guitar melody over a steady bassline and light, brushed percussion. The guitar has a warm, slightly jazzy tone, creating a smooth and mellow atmosphere.",
+    "zh": "一首轻松、偏原声的器乐曲，以干净的电吉他旋律为主，配以稳定的贝斯线和轻柔的刷奏打击乐。吉他音色温暖，略带爵士风味，营造出流畅而柔和的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.298,
+  "generatedAt": "2026-09-09T08:21:46.774923+00:00",
+  "generation": {
+    "id": "b3dbbbbb-1212-48b6-bc35-8191068d86d7",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:21:09.729287+00:00",
+    "completedAt": "2026-09-09T08:21:46.774923+00:00",
+    "interactionId": "9hahavz1J6zTi9sPx8r-kAE",
+    "sha256": "f482b99a6cadb230a21f02ece94d2fb0fdc88e3880356b9b1bf09fd61313e107"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A relaxed, acoustic-leaning instrumental piece featuring a clean electric guitar melody over a steady bassline and light, brushed percussion. The guitar has a warm, slightly jazzy tone, creating a smooth and mellow atmosphere.",
+      "zh": "一首轻松、偏原声的器乐曲，以干净的电吉他旋律为主，配以稳定的贝斯线和轻柔的刷奏打击乐。吉他音色温暖，略带爵士风味，营造出流畅而柔和的氛围。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Chill",
+      "Mellow",
+      "Smooth",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "The music is well-produced, clean, and evokes a relaxed, pleasant atmosphere suitable for background music or chill playlists.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:21:55.361160+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:24:00.898552+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="theme-color" content="#eee9df">
+    <title>Shape of the World · Insights</title>
+    <link rel="stylesheet" href="/styles.css?v=20260815-1">
+    <script src="/app.js?v=20260815-1" defer></script>
+  </head>
+  <body>
+    <section class="login-shell" id="login-shell" aria-labelledby="login-title">
+      <div class="login-mark" aria-hidden="true">S</div>
+      <form class="login-card" id="login-form">
+        <p class="eyebrow">Shape of the World · Private Insights</p>
+        <h1 id="login-title">看见人们怎样探索世界</h1>
+        <p class="login-copy">这是只读数据后台。输入共享访问密码，查看匿名汇总数据。</p>
+        <label for="password">访问密码</label>
+        <div class="password-row">
+          <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+          <button type="submit">进入后台</button>
+        </div>
+        <p class="form-status" id="login-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="dashboard" id="dashboard" hidden>
+      <header class="topbar">
+        <a class="brand" href="#overview" aria-label="世界的形状数据洞察">
+          <span class="brand-mark">S</span>
+          <span><b>Shape of the World</b><small>Insights</small></span>
+        </a>
+        <nav class="topnav" aria-label="后台章节">
+          <a href="#overview">概览</a>
+          <a href="#health">网站健康</a>
+          <a href="#website">受众</a>
+          <a href="#worlds">内容</a>
+        </nav>
+        <div class="top-actions">
+          <div class="range-switch" aria-label="统计周期">
+            <button type="button" data-days="7" aria-pressed="true">7 天</button>
+            <button type="button" data-days="30" aria-pressed="false">30 天</button>
+            <button type="button" data-days="90" aria-pressed="false">90 天</button>
+          </div>
+          <button class="quiet-button" id="logout" type="button">退出</button>
+          <a class="ai-analysis-link" href="/app/">App 统计</a>
+          <a class="ai-analysis-link" href="/report/">AI 分析 <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <div class="dashboard-body">
+        <section class="loading-state" id="loading-state" aria-live="polite">
+          <span class="loading-dot"></span>正在读取匿名汇总数据…
+        </section>
+        <section class="error-state" id="error-state" hidden>
+          <h2>数据暂时没有回来</h2>
+          <p id="error-message">请稍后重试。</p>
+          <button type="button" id="retry">重新读取</button>
+        </section>
+
+        <div id="dashboard-content" hidden>
+          <section class="overview-header" id="overview">
+            <div>
+              <p class="eyebrow">实时产品数据</p>
+              <h1>网站分析</h1>
+              <p id="freshness">数据更新中</p>
+            </div>
+            <div class="data-status" aria-label="数据状态">
+              <span class="live-chip"><i></i>实时查询</span>
+              <span id="comparison-status">正在确认基线</span>
+            </div>
+          </section>
+
+          <section class="traffic-section" id="traffic">
+            <div class="section-kicker compact">
+              <div><p class="eyebrow">网站概况</p><h2>用户与流量</h2></div>
+            </div>
+            <div class="activity-grid" id="activity-metrics" aria-label="活跃用户指标"></div>
+            <div class="site-metric-grid" id="site-metrics" aria-label="网站常规指标"></div>
+            <section class="section-grid trend-grid">
+              <article class="panel panel-wide">
+                <header class="panel-head">
+                  <div><p class="eyebrow">趋势</p><h2 class="heading-with-help">每日访客与玩家 <button type="button" class="metric-info-button" data-metric-definition="dailyAudience" data-metric-label="每日访客与玩家" aria-label="查看每日访客与玩家说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h2></div>
+                  <p><span class="legend-dot visitors"></span>访客 <span class="legend-dot players"></span>玩家</p>
+                </header>
+                <div class="daily-chart" id="daily-chart"></div>
+              </article>
+              <article class="panel">
+                <header class="panel-head"><div><p class="eyebrow">来源</p><h2 class="heading-with-help">访问来源 <button type="button" class="metric-info-button" data-metric-definition="referrer" data-metric-label="访问来源" aria-label="查看访问来源说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h2></div></header>
+                <div class="bar-list" id="referrer-list"></div>
+              </article>
+            </section>
+          </section>
+
+          <section class="kpi-section">
+            <div class="section-kicker">
+              <div><p class="eyebrow">产品体验</p><h2>游玩质量与继续探索</h2></div>
+            </div>
+            <div class="outcome-grid" id="outcome-metrics" aria-label="核心结果指标"></div>
+          </section>
+
+          <section class="kpi-section driver-section">
+            <div class="section-kicker compact">
+              <div><p class="eyebrow">关键驱动</p><h2>问题发生在哪一步</h2></div>
+            </div>
+            <div class="driver-grid" id="driver-metrics" aria-label="关键驱动指标"></div>
+          </section>
+
+          <section class="journey-section">
+            <div class="section-title">
+              <p class="eyebrow">产品路径</p>
+              <h2>访问、游玩与继续探索</h2>
+            </div>
+            <div class="journey-grid">
+              <article class="panel">
+                <header class="panel-head"><div><p class="eyebrow">访客路径</p><h3>从网站访问到第二个世界</h3></div></header>
+                <div class="funnel-list" id="visitor-journey"></div>
+              </article>
+              <article class="panel">
+                <header class="panel-head"><div><p class="eyebrow">游玩路径</p><h3>从打开世界到深度游玩</h3></div></header>
+                <div class="funnel-list" id="play-journey"></div>
+              </article>
+            </div>
+            <div class="guardrail-strip" id="guardrail-metrics" aria-label="质量护栏"></div>
+          </section>
+
+          <section class="health-section" id="health">
+            <div class="section-title">
+              <p class="eyebrow">真实用户体验</p>
+              <h2>网站健康</h2>
+            </div>
+            <div class="performance-grid" id="performance-metrics" aria-label="网站速度与稳定性"></div>
+          </section>
+
+          <section class="website-section" id="website">
+            <div class="section-title">
+              <p class="eyebrow">访问明细</p>
+              <h2>受众与页面</h2>
+            </div>
+            <section class="section-grid audience-grid">
+              <article class="panel"><header class="panel-head"><div><p class="eyebrow">地区</p><h3 class="heading-with-help">访问地区 <button type="button" class="metric-info-button" data-metric-definition="country" data-metric-label="访问地区" aria-label="查看访问地区说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header><div class="bar-list" id="country-list"></div></article>
+              <article class="panel"><header class="panel-head"><div><p class="eyebrow">设备</p><h3 class="heading-with-help">设备类型 <button type="button" class="metric-info-button" data-metric-definition="device" data-metric-label="设备类型" aria-label="查看设备类型说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header><div class="bar-list" id="device-list"></div></article>
+              <article class="panel"><header class="panel-head"><div><p class="eyebrow">浏览器</p><h3 class="heading-with-help">浏览器 <button type="button" class="metric-info-button" data-metric-definition="browser" data-metric-label="浏览器" aria-label="查看浏览器说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header><div class="bar-list" id="browser-list"></div></article>
+              <article class="panel"><header class="panel-head"><div><p class="eyebrow">语言</p><h3 class="heading-with-help">界面语言 <button type="button" class="metric-info-button" data-metric-definition="locale" data-metric-label="界面语言" aria-label="查看界面语言说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header><div class="bar-list" id="locale-list"></div></article>
+            </section>
+
+            <section class="detail-grid">
+              <article class="panel">
+                <header class="panel-head"><div><p class="eyebrow">投放归因</p><h3 class="heading-with-help">UTM 活动 <button type="button" class="metric-info-button" data-metric-definition="campaign" data-metric-label="UTM 活动" aria-label="查看 UTM 活动说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header>
+                <div class="campaign-list" id="campaign-list"></div>
+              </article>
+              <article class="panel page-panel">
+                <header class="panel-head"><div><p class="eyebrow">页面</p><h3 class="heading-with-help">页面访问与停留 <button type="button" class="metric-info-button" data-metric-definition="pageMetrics" data-metric-label="页面访问与停留" aria-label="查看页面访问与停留说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header>
+                <div class="page-list" id="page-list"></div>
+              </article>
+            </section>
+          </section>
+
+          <section class="world-section" id="worlds">
+            <div class="section-title world-title-row">
+              <div><p class="eyebrow">内容表现</p><h2>各主题访问与游玩质量</h2></div>
+              <div class="world-filters">
+                <label><span>搜索</span><input id="world-search" type="search" placeholder="标题或 world id"></label>
+                <label><span>学科域</span><select id="domain-filter"><option value="all">全部</option></select></label>
+                <label><span>诊断</span><select id="signal-filter"><option value="all">全部</option></select></label>
+                <label><span>最低样本</span><select id="sample-filter"><option value="0">不限</option><option value="10">10 次</option><option value="20" selected>20 次</option></select></label>
+              </div>
+            </div>
+
+            <article class="panel duration-panel">
+              <header class="panel-head">
+                <div><p class="eyebrow">停留深度</p><h3 class="heading-with-help">平均停留最长的主题 <button type="button" class="metric-info-button" data-metric-definition="visibleDuration" data-metric-label="前台停留时长" aria-label="查看前台停留时长说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div>
+                <p>平均 · 中位数 · P75</p>
+              </header>
+              <div class="duration-ranking" id="duration-ranking"></div>
+            </article>
+
+            <article class="panel scatter-panel">
+              <header class="panel-head">
+                <div><p class="eyebrow">体验地图</p><h3 class="heading-with-help">沉浸率 × 互动率 <button type="button" class="metric-info-button" data-metric-definition="experienceMap" data-metric-label="沉浸率 × 互动率" aria-label="查看体验地图说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div>
+              </header>
+              <div class="scatter-chart" id="scatter-chart"></div>
+            </article>
+
+            <article class="panel table-panel">
+              <div class="table-summary" id="table-summary"></div>
+              <div class="world-table-wrap">
+                <table class="world-table">
+                  <thead>
+                    <tr>
+                      <th>世界</th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="visits">游玩</button><button type="button" class="metric-info-button" data-metric-definition="playVisit" data-metric-label="世界游玩" aria-label="查看世界游玩说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="averageVisibleSeconds">平均停留</button><button type="button" class="metric-info-button" data-metric-definition="visibleDuration" data-metric-label="平均停留" aria-label="查看平均停留说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="retention30Rate">30 秒</button><button type="button" class="metric-info-button" data-metric-definition="retention30" data-metric-label="30 秒沉浸率" aria-label="查看 30 秒沉浸率说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="interactionRate">互动</button><button type="button" class="metric-info-button" data-metric-definition="interaction" data-metric-label="真实互动率" aria-label="查看真实互动率说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="deepPlayRate">深度游玩</button><button type="button" class="metric-info-button" data-metric-definition="deepPlay" data-metric-label="深度游玩率" aria-label="查看深度游玩率说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help"><button type="button" data-sort="guideCompletionRate">故事完成</button><button type="button" class="metric-info-button" data-metric-definition="guideCompletion" data-metric-label="故事完成率" aria-label="查看故事完成率说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                      <th><span class="table-heading-with-help">诊断 <button type="button" class="metric-info-button" data-metric-definition="signal" data-metric-label="诊断标签" aria-label="查看诊断标签说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="world-table-body"></tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="panel attention-panel">
+              <header class="panel-head"><div><p class="eyebrow">待检查</p><h3 class="heading-with-help">高影响的体验机会 <button type="button" class="metric-info-button" data-metric-definition="signal" data-metric-label="高影响的体验机会" aria-label="查看高影响的体验机会说明" aria-controls="metric-popover" aria-describedby="metric-popover" aria-expanded="false"><span aria-hidden="true">i</span></button></h3></div></header>
+              <div id="attention-list"></div>
+            </article>
+          </section>
+
+          <section class="method-section" id="method">
+            <details class="method-details">
+              <summary>数据口径与说明</summary>
+              <div class="method-grid" id="definitions"></div>
+              <article class="caveat-card">
+                <h3>数据边界</h3>
+                <ul id="caveats"></ul>
+              </article>
+            </details>
+          </section>
+        </div>
+      </div>
+    </main>
+    <div class="metric-popover" id="metric-popover" role="tooltip" aria-live="polite" hidden>
+      <strong id="metric-popover-title"></strong>
+      <p id="metric-popover-body"></p>
+    </div>
+  </body>
+</html>

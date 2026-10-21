@@ -1,0 +1,130 @@
+{
+  "id": "scene-synthwave-90",
+  "code": "SCENE-15-90",
+  "title": {
+    "en": "Night Transit · 90",
+    "zh": "夜间穿行 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "original retro-futuristic transport montage",
+    "narration"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "",
+  "instruments": [
+    "analog arpeggios",
+    "rounded bass",
+    "tight gated snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. analog arpeggios, rounded bass, tight gated snare. 126 BPM, synthwave character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "An energetic and driving electronic dance track featuring prominent synthesizers, a steady beat, and a dynamic build-up. It has a modern, uplifting feel suitable for various media.",
+    "zh": "一首充满活力和动感的电子舞曲，以突出的合成器、稳定的节拍和动态的渐强为特色。它具有现代、振奋人心的感觉，适合各种媒体使用。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "original retro-futuristic transport montage"
+    ]
+  },
+  "duration": 83.017,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:31:20.091141+00:00",
+  "generation": {
+    "id": "1d319d25-f97a-405c-8151-00c2f9c56f7b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:30:35.231238+00:00",
+    "completedAt": "2026-09-22T09:31:20.091141+00:00",
+    "interactionId": "u0qyasP-MuG5694P9qvy2Ag",
+    "sha256": "49cebe7955a7a815ad28356e77f4dd1273ef816b2612c6640c953be24a51ab37"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving electronic dance track featuring prominent synthesizers, a steady beat, and a dynamic build-up. It has a modern, uplifting feel suitable for various media.",
+      "zh": "一首充满活力和动感的电子舞曲，以突出的合成器、稳定的节拍和动态的渐强为特色。它具有现代、振奋人心的感觉，适合各种媒体使用。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "bass synthesizer",
+      "pads"
+    ],
+    "moods": [
+      "energetic",
+      "uplifting",
+      "driving",
+      "danceable",
+      "modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a clean, well-produced electronic track with a clear structure and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:40.119772+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-synthwave-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-synthwave-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-synthwave-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "93396ef1519f9a9b81c87beefb2786d28ad93bf26b1ae53fe7996ae063304272",
+      "bytes": 1163014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "49cebe7955a7a815ad28356e77f4dd1273ef816b2612c6640c953be24a51ab37",
+      "bytes": 2000078,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "9ded9e6ac065b9232374d5a432508369f213dbfc0e808bfe573b41fedfc4be6e",
+      "bytes": 2811,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.469789+00:00"
+}

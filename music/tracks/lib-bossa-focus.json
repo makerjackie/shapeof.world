@@ -1,0 +1,104 @@
+{
+  "id": "lib-bossa-focus",
+  "code": "LIB-08-02",
+  "title": {
+    "en": "Focus — Bossa",
+    "zh": "专注 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "bossa"
+  ],
+  "energy": 2,
+  "bpm": 112,
+  "key": "A minor",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second bossa nova instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 112 BPM; A minor. Main idea: alternating short and long phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring acoustic guitar, gentle drums, bass, piano, and subtle synth textures.",
+    "zh": "一首平静而富有沉思感的器乐作品，以原声吉他为主，配以轻柔的鼓点、贝斯、钢琴和微妙的合成器音色。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.23,
+  "generatedAt": "2026-09-09T08:06:09.982581+00:00",
+  "generation": {
+    "id": "b3ab1b4f-b2c6-4f2b-b68d-c2d60c15eab2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:05:30.737118+00:00",
+    "completedAt": "2026-09-09T08:06:09.982581+00:00",
+    "interactionId": "SxOhapjrOsq5i9sPtKam8QQ",
+    "sha256": "6cdd4ce0b4637ca39818f87720870d68fdfc07fba8c0f6f72cfe98f05a927979"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring acoustic guitar, gentle drums, bass, piano, and subtle synth textures.",
+      "zh": "一首平静而富有沉思感的器乐作品，以原声吉他为主，配以轻柔的鼓点、贝斯、钢琴和微妙的合成器音色。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "electric bass",
+      "drums",
+      "piano",
+      "synth pad",
+      "synth lead"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "reflective",
+      "mellow",
+      "relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 76,
+    "reason": "Clean, well-produced instrumental track with a clear mood and instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:06:21.062849+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:08:24.292836+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-09",
+  "code": "SFX-FOLEY-09",
+  "title": {
+    "en": "Scissor snip",
+    "zh": "剪刀剪切"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 8,
+  "seed": 1684730286,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized scissor snip for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的剪刀剪切合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1684730286,
+    "sha256": "8462d7bfe2bae487d8838323a0583fd62d1f50f64d0fb81386ad0095bca1bcad",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5c088b61f4aa4d21f0b36a507568429a2ff2ba6f01997b42666dbd32ffd97aa8",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8462d7bfe2bae487d8838323a0583fd62d1f50f64d0fb81386ad0095bca1bcad",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "67d21c335fbbd8eda98d56e3513d9253f8c7d9fa25bb333de0691d760ff2be2f",
+      "bytes": 10119,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "94bf03f5abf11dd49cc61477fcc363a8c38e1adc7f41523f33fa500d65555da7",
+      "bytes": 1727,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -23.07,
+    "dcOffset": 0.0,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1702526855468749,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or spark sound effect.",
+      "zh": "一个短促、尖锐、高音调的电子电击或火花音效。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:54.234853+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5c088b61f4aa4d21f0b36a507568429a2ff2ba6f01997b42666dbd32ffd97aa8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.864895+00:00"
+}

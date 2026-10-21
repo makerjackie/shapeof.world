@@ -1,0 +1,103 @@
+{
+  "id": "lib-ambient-focus",
+  "code": "LIB-24-02",
+  "title": {
+    "en": "Focus — Ambient",
+    "zh": "专注 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "ambient"
+  ],
+  "energy": 3,
+  "bpm": 52,
+  "key": "A minor",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second ambient electronic instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 52 BPM; A minor. Main idea: a descending melody with an upward answer. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "An atmospheric electronic track featuring evolving synth pads, a prominent bell-like synth melody, and a driving electronic rhythm section. It builds from a serene opening to a more dynamic, yet still ethereal, soundscape.",
+    "zh": "一首氛围感十足的电子乐曲，以不断演变的合成器铺底、突出的钟声般合成器旋律和富有推动力的电子节奏部分为特色。它从宁静的开场逐渐发展成更具活力但仍空灵的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 100.937,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:03:56.826971+00:00",
+  "generation": {
+    "id": "2f610c73-a047-4c1e-9f3b-7360c0a1b624",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:03:16.701351+00:00",
+    "completedAt": "2026-09-09T09:03:56.826971+00:00",
+    "interactionId": "1iChaoHtOuuCoLAP9_u-qAs",
+    "sha256": "dcbd1e5d787dde659881776feee37993dccfbb8c8c61052378ae2b597621afd8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An atmospheric electronic track featuring evolving synth pads, a prominent bell-like synth melody, and a driving electronic rhythm section. It builds from a serene opening to a more dynamic, yet still ethereal, soundscape.",
+      "zh": "一首氛围感十足的电子乐曲，以不断演变的合成器铺底、突出的钟声般合成器旋律和富有推动力的电子节奏部分为特色。它从宁静的开场逐渐发展成更具活力但仍空灵的音景。"
+    },
+    "instruments": [
+      "Synthesizers",
+      "Electronic Drums",
+      "Pads",
+      "Bell Synth",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Atmospheric",
+      "Dreamy",
+      "Melancholic",
+      "Hopeful",
+      "Ethereal",
+      "Cinematic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 120,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:04:09.777729+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:04:50.592387+00:00"
+}

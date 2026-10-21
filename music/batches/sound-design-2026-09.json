@@ -1,0 +1,5407 @@
+{
+  "schemaVersion": 1,
+  "batch": "sound-design-2026-09",
+  "recipe": "sow-dsp-1",
+  "assets": [
+    {
+      "id": "sfx-ui-01",
+      "code": "SFX-UI-01",
+      "title": {
+        "en": "Tap",
+        "zh": "轻点"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 0,
+      "seed": 1987820964,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized tap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的轻点合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-02",
+      "code": "SFX-UI-02",
+      "title": {
+        "en": "Toggle on",
+        "zh": "开启开关"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 1,
+      "seed": 1035632446,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized toggle on for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的开启开关合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-03",
+      "code": "SFX-UI-03",
+      "title": {
+        "en": "Toggle off",
+        "zh": "关闭开关"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 2,
+      "seed": 1313227601,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized toggle off for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的关闭开关合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-04",
+      "code": "SFX-UI-04",
+      "title": {
+        "en": "Soft confirm",
+        "zh": "柔和确认"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 3,
+      "seed": 2757618128,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized soft confirm for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的柔和确认合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-05",
+      "code": "SFX-UI-05",
+      "title": {
+        "en": "Back",
+        "zh": "返回"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 4,
+      "seed": 985893282,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized back for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的返回合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-06",
+      "code": "SFX-UI-06",
+      "title": {
+        "en": "Focus",
+        "zh": "获得焦点"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 5,
+      "seed": 3096418382,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized focus for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的获得焦点合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-07",
+      "code": "SFX-UI-07",
+      "title": {
+        "en": "Panel open",
+        "zh": "面板展开"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 6,
+      "seed": 3213629327,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized panel open for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的面板展开合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-08",
+      "code": "SFX-UI-08",
+      "title": {
+        "en": "Panel close",
+        "zh": "面板收起"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 7,
+      "seed": 2227998764,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized panel close for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的面板收起合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-09",
+      "code": "SFX-UI-09",
+      "title": {
+        "en": "Tab switch",
+        "zh": "切换标签"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 8,
+      "seed": 1937303286,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized tab switch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的切换标签合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-10",
+      "code": "SFX-UI-10",
+      "title": {
+        "en": "Slider notch",
+        "zh": "滑杆刻度"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 9,
+      "seed": 3848655036,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized slider notch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的滑杆刻度合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-11",
+      "code": "SFX-UI-11",
+      "title": {
+        "en": "Drag start",
+        "zh": "开始拖拽"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 10,
+      "seed": 461578716,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized drag start for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的开始拖拽合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-12",
+      "code": "SFX-UI-12",
+      "title": {
+        "en": "Drop in place",
+        "zh": "放置到位"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 11,
+      "seed": 1236696058,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized drop in place for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的放置到位合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-13",
+      "code": "SFX-UI-13",
+      "title": {
+        "en": "Selection",
+        "zh": "选择项目"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 12,
+      "seed": 820030972,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized selection for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的选择项目合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-14",
+      "code": "SFX-UI-14",
+      "title": {
+        "en": "Deselect",
+        "zh": "取消选择"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 13,
+      "seed": 64306259,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized deselect for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的取消选择合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-15",
+      "code": "SFX-UI-15",
+      "title": {
+        "en": "Refresh",
+        "zh": "刷新"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 14,
+      "seed": 1430018735,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized refresh for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的刷新合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-16",
+      "code": "SFX-UI-16",
+      "title": {
+        "en": "Save",
+        "zh": "保存"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 15,
+      "seed": 1661714530,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized save for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的保存合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-17",
+      "code": "SFX-UI-17",
+      "title": {
+        "en": "Delete",
+        "zh": "删除"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 16,
+      "seed": 721791404,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized delete for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的删除合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-18",
+      "code": "SFX-UI-18",
+      "title": {
+        "en": "Undo",
+        "zh": "撤销"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 17,
+      "seed": 2774023376,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized undo for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的撤销合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-19",
+      "code": "SFX-UI-19",
+      "title": {
+        "en": "Message sent",
+        "zh": "消息送出"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 18,
+      "seed": 4178386717,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized message sent for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的消息送出合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-ui-20",
+      "code": "SFX-UI-20",
+      "title": {
+        "en": "Notification muted",
+        "zh": "关闭提醒"
+      },
+      "kind": "sfx",
+      "family": "ui",
+      "designIndex": 19,
+      "seed": 4204964933,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized notification muted for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的关闭提醒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-01",
+      "code": "SFX-TRANSITION-01",
+      "title": {
+        "en": "Air swipe",
+        "zh": "空气划过"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 0,
+      "seed": 653247886,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized air swipe for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的空气划过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-02",
+      "code": "SFX-TRANSITION-02",
+      "title": {
+        "en": "Ribbon sweep",
+        "zh": "丝带掠过"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 1,
+      "seed": 3247466818,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized ribbon sweep for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的丝带掠过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-03",
+      "code": "SFX-TRANSITION-03",
+      "title": {
+        "en": "Page turn",
+        "zh": "翻页转场"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 2,
+      "seed": 2207265198,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized page turn for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的翻页转场合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-04",
+      "code": "SFX-TRANSITION-04",
+      "title": {
+        "en": "Quick zoom",
+        "zh": "快速推进"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 3,
+      "seed": 667706054,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized quick zoom for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的快速推进合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-05",
+      "code": "SFX-TRANSITION-05",
+      "title": {
+        "en": "Camera pullback",
+        "zh": "镜头拉远"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 4,
+      "seed": 3464221035,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized camera pullback for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的镜头拉远合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-06",
+      "code": "SFX-TRANSITION-06",
+      "title": {
+        "en": "Spin",
+        "zh": "旋转转场"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 5,
+      "seed": 39767264,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized spin for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的旋转转场合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-07",
+      "code": "SFX-TRANSITION-07",
+      "title": {
+        "en": "Reverse swell",
+        "zh": "反向渐强"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 6,
+      "seed": 1998232154,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized reverse swell for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的反向渐强合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-08",
+      "code": "SFX-TRANSITION-08",
+      "title": {
+        "en": "Soft reveal",
+        "zh": "柔和揭晓"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 7,
+      "seed": 2170885285,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized soft reveal for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的柔和揭晓合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-09",
+      "code": "SFX-TRANSITION-09",
+      "title": {
+        "en": "Hard cut",
+        "zh": "硬切重音"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 8,
+      "seed": 3915449736,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized hard cut for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的硬切重音合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-10",
+      "code": "SFX-TRANSITION-10",
+      "title": {
+        "en": "Digital scan",
+        "zh": "数字扫描"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 9,
+      "seed": 3184153684,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized digital scan for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的数字扫描合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-11",
+      "code": "SFX-TRANSITION-11",
+      "title": {
+        "en": "Glitter trail",
+        "zh": "闪光拖尾"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 10,
+      "seed": 2115283329,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized glitter trail for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的闪光拖尾合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-12",
+      "code": "SFX-TRANSITION-12",
+      "title": {
+        "en": "Deep pass",
+        "zh": "低沉掠过"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 11,
+      "seed": 3145530898,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized deep pass for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的低沉掠过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-13",
+      "code": "SFX-TRANSITION-13",
+      "title": {
+        "en": "Wind rush",
+        "zh": "疾风掠过"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 12,
+      "seed": 3547976784,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized wind rush for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的疾风掠过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-14",
+      "code": "SFX-TRANSITION-14",
+      "title": {
+        "en": "Elastic stretch",
+        "zh": "弹性拉伸"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 13,
+      "seed": 3736596061,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized elastic stretch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的弹性拉伸合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-15",
+      "code": "SFX-TRANSITION-15",
+      "title": {
+        "en": "Fold",
+        "zh": "折叠转场"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 14,
+      "seed": 1014460087,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized fold for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的折叠转场合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-16",
+      "code": "SFX-TRANSITION-16",
+      "title": {
+        "en": "Unfold",
+        "zh": "展开转场"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 15,
+      "seed": 2894635876,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized unfold for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的展开转场合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-17",
+      "code": "SFX-TRANSITION-17",
+      "title": {
+        "en": "Tunnel",
+        "zh": "穿过隧道"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 16,
+      "seed": 1796198527,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized tunnel for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的穿过隧道合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-18",
+      "code": "SFX-TRANSITION-18",
+      "title": {
+        "en": "Downward sweep",
+        "zh": "下降扫频"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 17,
+      "seed": 1542336355,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized downward sweep for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的下降扫频合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-19",
+      "code": "SFX-TRANSITION-19",
+      "title": {
+        "en": "Lift",
+        "zh": "向上抬升"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 18,
+      "seed": 3786938428,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized lift for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的向上抬升合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-transition-20",
+      "code": "SFX-TRANSITION-20",
+      "title": {
+        "en": "Final reveal",
+        "zh": "结尾揭晓"
+      },
+      "kind": "sfx",
+      "family": "transition",
+      "designIndex": 19,
+      "seed": 329161894,
+      "scenarios": [
+        "video-transition"
+      ],
+      "description": {
+        "en": "Original synthesized final reveal for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的结尾揭晓合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-01",
+      "code": "SFX-IMPACT-01",
+      "title": {
+        "en": "Wood knock",
+        "zh": "木块敲击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 0,
+      "seed": 4085822206,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized wood knock for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的木块敲击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-02",
+      "code": "SFX-IMPACT-02",
+      "title": {
+        "en": "Hollow box",
+        "zh": "空箱碰撞"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 1,
+      "seed": 789554623,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized hollow box for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的空箱碰撞合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-03",
+      "code": "SFX-IMPACT-03",
+      "title": {
+        "en": "Metal tick",
+        "zh": "金属轻敲"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 2,
+      "seed": 3311038565,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized metal tick for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的金属轻敲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-04",
+      "code": "SFX-IMPACT-04",
+      "title": {
+        "en": "Steel plate",
+        "zh": "钢板撞击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 3,
+      "seed": 1850521339,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized steel plate for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的钢板撞击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-05",
+      "code": "SFX-IMPACT-05",
+      "title": {
+        "en": "Glass clink",
+        "zh": "玻璃轻碰"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 4,
+      "seed": 3396381157,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized glass clink for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的玻璃轻碰合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-06",
+      "code": "SFX-IMPACT-06",
+      "title": {
+        "en": "Ceramic tap",
+        "zh": "陶瓷轻敲"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 5,
+      "seed": 2855234591,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized ceramic tap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的陶瓷轻敲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-07",
+      "code": "SFX-IMPACT-07",
+      "title": {
+        "en": "Rubber bounce",
+        "zh": "橡胶弹跳"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 6,
+      "seed": 2130897241,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized rubber bounce for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的橡胶弹跳合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-08",
+      "code": "SFX-IMPACT-08",
+      "title": {
+        "en": "Low thump",
+        "zh": "低沉撞击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 7,
+      "seed": 94423316,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized low thump for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的低沉撞击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-09",
+      "code": "SFX-IMPACT-09",
+      "title": {
+        "en": "Stone hit",
+        "zh": "石块碰撞"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 8,
+      "seed": 2457127462,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized stone hit for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的石块碰撞合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-10",
+      "code": "SFX-IMPACT-10",
+      "title": {
+        "en": "Plastic snap",
+        "zh": "塑料卡扣"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 9,
+      "seed": 1190993705,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized plastic snap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的塑料卡扣合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-11",
+      "code": "SFX-IMPACT-11",
+      "title": {
+        "en": "Heavy landing",
+        "zh": "重物落地"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 10,
+      "seed": 212206737,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized heavy landing for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的重物落地合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-12",
+      "code": "SFX-IMPACT-12",
+      "title": {
+        "en": "Tiny drop",
+        "zh": "小物掉落"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 11,
+      "seed": 3103516365,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized tiny drop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的小物掉落合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-13",
+      "code": "SFX-IMPACT-13",
+      "title": {
+        "en": "Anvil strike",
+        "zh": "铁砧敲击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 12,
+      "seed": 4020264002,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized anvil strike for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的铁砧敲击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-14",
+      "code": "SFX-IMPACT-14",
+      "title": {
+        "en": "Dull punch",
+        "zh": "闷声冲击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 13,
+      "seed": 3315523297,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized dull punch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的闷声冲击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-15",
+      "code": "SFX-IMPACT-15",
+      "title": {
+        "en": "Bright crack",
+        "zh": "清脆裂响"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 14,
+      "seed": 4002099891,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized bright crack for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的清脆裂响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-16",
+      "code": "SFX-IMPACT-16",
+      "title": {
+        "en": "Sub hit",
+        "zh": "低频重击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 15,
+      "seed": 3777052821,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized sub hit for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的低频重击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-17",
+      "code": "SFX-IMPACT-17",
+      "title": {
+        "en": "Soft cushion",
+        "zh": "软垫落物"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 16,
+      "seed": 791033902,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized soft cushion for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的软垫落物合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-18",
+      "code": "SFX-IMPACT-18",
+      "title": {
+        "en": "Spring boing",
+        "zh": "弹簧回弹"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 17,
+      "seed": 2309656797,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized spring boing for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的弹簧回弹合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-19",
+      "code": "SFX-IMPACT-19",
+      "title": {
+        "en": "Bell rim",
+        "zh": "钟沿轻击"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 18,
+      "seed": 1031156458,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized bell rim for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的钟沿轻击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-impact-20",
+      "code": "SFX-IMPACT-20",
+      "title": {
+        "en": "Logo accent",
+        "zh": "标志落点"
+      },
+      "kind": "sfx",
+      "family": "impact",
+      "designIndex": 19,
+      "seed": 3238456225,
+      "scenarios": [
+        "impact"
+      ],
+      "description": {
+        "en": "Original synthesized logo accent for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的标志落点合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-01",
+      "code": "SFX-NOTIFICATION-01",
+      "title": {
+        "en": "Success",
+        "zh": "操作成功"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 0,
+      "seed": 3256422692,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized success for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的操作成功合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-02",
+      "code": "SFX-NOTIFICATION-02",
+      "title": {
+        "en": "Gentle error",
+        "zh": "温和报错"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 1,
+      "seed": 4061031542,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized gentle error for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的温和报错合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-03",
+      "code": "SFX-NOTIFICATION-03",
+      "title": {
+        "en": "Warning pair",
+        "zh": "双音警告"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 2,
+      "seed": 562910860,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized warning pair for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的双音警告合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-04",
+      "code": "SFX-NOTIFICATION-04",
+      "title": {
+        "en": "New message",
+        "zh": "新消息"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 3,
+      "seed": 945606036,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized new message for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的新消息合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-05",
+      "code": "SFX-NOTIFICATION-05",
+      "title": {
+        "en": "Task complete",
+        "zh": "任务完成"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 4,
+      "seed": 1554584328,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized task complete for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的任务完成合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-06",
+      "code": "SFX-NOTIFICATION-06",
+      "title": {
+        "en": "Timer ready",
+        "zh": "计时就绪"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 5,
+      "seed": 1243366233,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized timer ready for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的计时就绪合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-07",
+      "code": "SFX-NOTIFICATION-07",
+      "title": {
+        "en": "Countdown tick",
+        "zh": "倒计时单响"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 6,
+      "seed": 3005558415,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized countdown tick for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的倒计时单响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-08",
+      "code": "SFX-NOTIFICATION-08",
+      "title": {
+        "en": "Calendar reminder",
+        "zh": "日程提醒"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 7,
+      "seed": 1982563080,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized calendar reminder for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的日程提醒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-09",
+      "code": "SFX-NOTIFICATION-09",
+      "title": {
+        "en": "New idea",
+        "zh": "灵感提示"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 8,
+      "seed": 3469032248,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized new idea for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的灵感提示合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-10",
+      "code": "SFX-NOTIFICATION-10",
+      "title": {
+        "en": "Connection found",
+        "zh": "连接成功"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 9,
+      "seed": 2660350612,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized connection found for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的连接成功合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-11",
+      "code": "SFX-NOTIFICATION-11",
+      "title": {
+        "en": "Connection lost",
+        "zh": "连接断开"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 10,
+      "seed": 2379111270,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized connection lost for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的连接断开合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-12",
+      "code": "SFX-NOTIFICATION-12",
+      "title": {
+        "en": "Upload done",
+        "zh": "上传完成"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 11,
+      "seed": 2861349296,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized upload done for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的上传完成合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-13",
+      "code": "SFX-NOTIFICATION-13",
+      "title": {
+        "en": "Download ready",
+        "zh": "下载就绪"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 12,
+      "seed": 862790926,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized download ready for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的下载就绪合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-14",
+      "code": "SFX-NOTIFICATION-14",
+      "title": {
+        "en": "Quiet reminder",
+        "zh": "轻声提醒"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 13,
+      "seed": 3036929462,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized quiet reminder for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的轻声提醒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-15",
+      "code": "SFX-NOTIFICATION-15",
+      "title": {
+        "en": "Attention",
+        "zh": "注意提示"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 14,
+      "seed": 1825872155,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized attention for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的注意提示合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-16",
+      "code": "SFX-NOTIFICATION-16",
+      "title": {
+        "en": "Progress step",
+        "zh": "进度推进"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 15,
+      "seed": 2526582277,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized progress step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的进度推进合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-17",
+      "code": "SFX-NOTIFICATION-17",
+      "title": {
+        "en": "Permission granted",
+        "zh": "权限通过"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 16,
+      "seed": 480859911,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized permission granted for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的权限通过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-18",
+      "code": "SFX-NOTIFICATION-18",
+      "title": {
+        "en": "Permission denied",
+        "zh": "权限拒绝"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 17,
+      "seed": 693801588,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized permission denied for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的权限拒绝合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-19",
+      "code": "SFX-NOTIFICATION-19",
+      "title": {
+        "en": "Welcome",
+        "zh": "欢迎提示"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 18,
+      "seed": 3865914540,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized welcome for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的欢迎提示合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-notification-20",
+      "code": "SFX-NOTIFICATION-20",
+      "title": {
+        "en": "Goodbye",
+        "zh": "结束提示"
+      },
+      "kind": "sfx",
+      "family": "notification",
+      "designIndex": 19,
+      "seed": 3739958185,
+      "scenarios": [
+        "ui"
+      ],
+      "description": {
+        "en": "Original synthesized goodbye for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的结束提示合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-01",
+      "code": "SFX-GAME-01",
+      "title": {
+        "en": "Coin pickup",
+        "zh": "拾取金币"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 0,
+      "seed": 3186414714,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized coin pickup for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的拾取金币合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-02",
+      "code": "SFX-GAME-02",
+      "title": {
+        "en": "Gem pickup",
+        "zh": "拾取宝石"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 1,
+      "seed": 721992687,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized gem pickup for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的拾取宝石合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-03",
+      "code": "SFX-GAME-03",
+      "title": {
+        "en": "Health restore",
+        "zh": "恢复生命"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 2,
+      "seed": 1505621483,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized health restore for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的恢复生命合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-04",
+      "code": "SFX-GAME-04",
+      "title": {
+        "en": "Mana restore",
+        "zh": "恢复能量"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 3,
+      "seed": 3507653669,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized mana restore for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的恢复能量合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-05",
+      "code": "SFX-GAME-05",
+      "title": {
+        "en": "Level up",
+        "zh": "等级提升"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 4,
+      "seed": 1141306539,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized level up for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的等级提升合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-06",
+      "code": "SFX-GAME-06",
+      "title": {
+        "en": "Checkpoint",
+        "zh": "到达检查点"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 5,
+      "seed": 4279169948,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized checkpoint for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的到达检查点合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-07",
+      "code": "SFX-GAME-07",
+      "title": {
+        "en": "Quest accepted",
+        "zh": "接受任务"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 6,
+      "seed": 601980659,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized quest accepted for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的接受任务合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-08",
+      "code": "SFX-GAME-08",
+      "title": {
+        "en": "Quest complete",
+        "zh": "完成任务"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 7,
+      "seed": 1234883181,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized quest complete for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的完成任务合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-09",
+      "code": "SFX-GAME-09",
+      "title": {
+        "en": "Item equip",
+        "zh": "装备物品"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 8,
+      "seed": 3544173811,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized item equip for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的装备物品合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-10",
+      "code": "SFX-GAME-10",
+      "title": {
+        "en": "Item unequip",
+        "zh": "卸下物品"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 9,
+      "seed": 1170675250,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized item unequip for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的卸下物品合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-11",
+      "code": "SFX-GAME-11",
+      "title": {
+        "en": "Inventory open",
+        "zh": "打开背包"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 10,
+      "seed": 2187295986,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized inventory open for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的打开背包合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-12",
+      "code": "SFX-GAME-12",
+      "title": {
+        "en": "Treasure open",
+        "zh": "开启宝箱"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 11,
+      "seed": 4165394681,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized treasure open for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的开启宝箱合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-13",
+      "code": "SFX-GAME-13",
+      "title": {
+        "en": "Door unlock",
+        "zh": "解锁门锁"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 12,
+      "seed": 456842718,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized door unlock for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的解锁门锁合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-14",
+      "code": "SFX-GAME-14",
+      "title": {
+        "en": "Life lost",
+        "zh": "失去生命"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 13,
+      "seed": 2206027766,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized life lost for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的失去生命合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-15",
+      "code": "SFX-GAME-15",
+      "title": {
+        "en": "Respawn",
+        "zh": "重新出现"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 14,
+      "seed": 2879411923,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized respawn for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的重新出现合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-16",
+      "code": "SFX-GAME-16",
+      "title": {
+        "en": "Jump",
+        "zh": "跳跃"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 15,
+      "seed": 2534345515,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized jump for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的跳跃合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-17",
+      "code": "SFX-GAME-17",
+      "title": {
+        "en": "Double jump",
+        "zh": "二段跳"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 16,
+      "seed": 3398648573,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized double jump for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的二段跳合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-18",
+      "code": "SFX-GAME-18",
+      "title": {
+        "en": "Dash",
+        "zh": "冲刺"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 17,
+      "seed": 882972189,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized dash for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的冲刺合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-19",
+      "code": "SFX-GAME-19",
+      "title": {
+        "en": "Shield block",
+        "zh": "护盾格挡"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 18,
+      "seed": 2749587733,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized shield block for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的护盾格挡合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-game-20",
+      "code": "SFX-GAME-20",
+      "title": {
+        "en": "Puzzle solved",
+        "zh": "解开谜题"
+      },
+      "kind": "sfx",
+      "family": "game",
+      "designIndex": 19,
+      "seed": 3585824454,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized puzzle solved for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的解开谜题合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-01",
+      "code": "SFX-FOOTSTEP-01",
+      "title": {
+        "en": "Wood walk",
+        "zh": "木地板步行"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 0,
+      "seed": 1919084531,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized wood walk for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的木地板步行合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-02",
+      "code": "SFX-FOOTSTEP-02",
+      "title": {
+        "en": "Wood run",
+        "zh": "木地板跑动"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 1,
+      "seed": 3403163849,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized wood run for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的木地板跑动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-03",
+      "code": "SFX-FOOTSTEP-03",
+      "title": {
+        "en": "Gravel step",
+        "zh": "碎石脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 2,
+      "seed": 1265426795,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized gravel step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的碎石脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-04",
+      "code": "SFX-FOOTSTEP-04",
+      "title": {
+        "en": "Sand step",
+        "zh": "沙地脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 3,
+      "seed": 179346099,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized sand step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的沙地脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-05",
+      "code": "SFX-FOOTSTEP-05",
+      "title": {
+        "en": "Snow crunch",
+        "zh": "积雪踩踏"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 4,
+      "seed": 3721648995,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized snow crunch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的积雪踩踏合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-06",
+      "code": "SFX-FOOTSTEP-06",
+      "title": {
+        "en": "Grass step",
+        "zh": "草地脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 5,
+      "seed": 2939445144,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized grass step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的草地脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-07",
+      "code": "SFX-FOOTSTEP-07",
+      "title": {
+        "en": "Mud step",
+        "zh": "泥地脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 6,
+      "seed": 2486567860,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized mud step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的泥地脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-08",
+      "code": "SFX-FOOTSTEP-08",
+      "title": {
+        "en": "Puddle step",
+        "zh": "浅水脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 7,
+      "seed": 3364151099,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized puddle step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的浅水脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-09",
+      "code": "SFX-FOOTSTEP-09",
+      "title": {
+        "en": "Metal walkway",
+        "zh": "金属栈道"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 8,
+      "seed": 1290069098,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized metal walkway for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的金属栈道合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-10",
+      "code": "SFX-FOOTSTEP-10",
+      "title": {
+        "en": "Hollow stairs",
+        "zh": "空心楼梯"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 9,
+      "seed": 57988899,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized hollow stairs for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的空心楼梯合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-11",
+      "code": "SFX-FOOTSTEP-11",
+      "title": {
+        "en": "Concrete step",
+        "zh": "水泥地脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 10,
+      "seed": 2717869015,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized concrete step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的水泥地脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-12",
+      "code": "SFX-FOOTSTEP-12",
+      "title": {
+        "en": "Stone floor",
+        "zh": "石板脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 11,
+      "seed": 11176596,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized stone floor for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的石板脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-13",
+      "code": "SFX-FOOTSTEP-13",
+      "title": {
+        "en": "Carpet step",
+        "zh": "地毯脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 12,
+      "seed": 1246186014,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized carpet step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的地毯脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-14",
+      "code": "SFX-FOOTSTEP-14",
+      "title": {
+        "en": "Boot landing",
+        "zh": "靴子落地"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 13,
+      "seed": 3784179349,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized boot landing for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的靴子落地合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-15",
+      "code": "SFX-FOOTSTEP-15",
+      "title": {
+        "en": "Barefoot step",
+        "zh": "赤足脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 14,
+      "seed": 2115355918,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized barefoot step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的赤足脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-16",
+      "code": "SFX-FOOTSTEP-16",
+      "title": {
+        "en": "Sneak",
+        "zh": "轻声潜行"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 15,
+      "seed": 198474154,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized sneak for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的轻声潜行合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-17",
+      "code": "SFX-FOOTSTEP-17",
+      "title": {
+        "en": "Heel click",
+        "zh": "鞋跟轻响"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 16,
+      "seed": 4105038752,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized heel click for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的鞋跟轻响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-18",
+      "code": "SFX-FOOTSTEP-18",
+      "title": {
+        "en": "Robot step",
+        "zh": "机械脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 17,
+      "seed": 2733602853,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized robot step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的机械脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-19",
+      "code": "SFX-FOOTSTEP-19",
+      "title": {
+        "en": "Creature step",
+        "zh": "生物脚步"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 18,
+      "seed": 3512174660,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized creature step for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的生物脚步合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-footstep-20",
+      "code": "SFX-FOOTSTEP-20",
+      "title": {
+        "en": "Heavy stomp",
+        "zh": "沉重跺脚"
+      },
+      "kind": "sfx",
+      "family": "footstep",
+      "designIndex": 19,
+      "seed": 3608452889,
+      "scenarios": [
+        "gameplay"
+      ],
+      "description": {
+        "en": "Original synthesized heavy stomp for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的沉重跺脚合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-01",
+      "code": "SFX-MECHANICAL-01",
+      "title": {
+        "en": "Switch click",
+        "zh": "机械开关"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 0,
+      "seed": 3829484587,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized switch click for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的机械开关合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-02",
+      "code": "SFX-MECHANICAL-02",
+      "title": {
+        "en": "Latch",
+        "zh": "搭扣扣合"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 1,
+      "seed": 3090655539,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized latch for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的搭扣扣合合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-03",
+      "code": "SFX-MECHANICAL-03",
+      "title": {
+        "en": "Key press",
+        "zh": "键盘按键"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 2,
+      "seed": 2652749517,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized key press for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的键盘按键合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-04",
+      "code": "SFX-MECHANICAL-04",
+      "title": {
+        "en": "Button spring",
+        "zh": "按键弹簧"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 3,
+      "seed": 2106667277,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized button spring for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的按键弹簧合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-05",
+      "code": "SFX-MECHANICAL-05",
+      "title": {
+        "en": "Ratchet",
+        "zh": "棘轮转动"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 4,
+      "seed": 4248220341,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized ratchet for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的棘轮转动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-06",
+      "code": "SFX-MECHANICAL-06",
+      "title": {
+        "en": "Gear shift",
+        "zh": "齿轮换挡"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 5,
+      "seed": 3789588417,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized gear shift for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的齿轮换挡合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-07",
+      "code": "SFX-MECHANICAL-07",
+      "title": {
+        "en": "Servo move",
+        "zh": "舵机移动"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 6,
+      "seed": 1586992172,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized servo move for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的舵机移动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-08",
+      "code": "SFX-MECHANICAL-08",
+      "title": {
+        "en": "Motor start",
+        "zh": "电机启动"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 7,
+      "seed": 2564591095,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized motor start for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的电机启动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-09",
+      "code": "SFX-MECHANICAL-09",
+      "title": {
+        "en": "Motor stop",
+        "zh": "电机停止"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 8,
+      "seed": 1912017014,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized motor stop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的电机停止合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-10",
+      "code": "SFX-MECHANICAL-10",
+      "title": {
+        "en": "Hydraulic release",
+        "zh": "液压泄放"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 9,
+      "seed": 1064031886,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized hydraulic release for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的液压泄放合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-11",
+      "code": "SFX-MECHANICAL-11",
+      "title": {
+        "en": "Valve turn",
+        "zh": "阀门转动"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 10,
+      "seed": 442965388,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized valve turn for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的阀门转动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-12",
+      "code": "SFX-MECHANICAL-12",
+      "title": {
+        "en": "Camera shutter",
+        "zh": "机械快门"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 11,
+      "seed": 285675475,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized camera shutter for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的机械快门合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-13",
+      "code": "SFX-MECHANICAL-13",
+      "title": {
+        "en": "Printer feed",
+        "zh": "进纸机构"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 12,
+      "seed": 707417148,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized printer feed for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的进纸机构合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-14",
+      "code": "SFX-MECHANICAL-14",
+      "title": {
+        "en": "Clock tick",
+        "zh": "时钟滴答"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 13,
+      "seed": 1419045996,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized clock tick for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的时钟滴答合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-15",
+      "code": "SFX-MECHANICAL-15",
+      "title": {
+        "en": "Lock bolt",
+        "zh": "锁舌滑动"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 14,
+      "seed": 720191888,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized lock bolt for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的锁舌滑动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-16",
+      "code": "SFX-MECHANICAL-16",
+      "title": {
+        "en": "Tool spin",
+        "zh": "工具旋转"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 15,
+      "seed": 3757913266,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized tool spin for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的工具旋转合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-17",
+      "code": "SFX-MECHANICAL-17",
+      "title": {
+        "en": "Scanner pass",
+        "zh": "扫描机构"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 16,
+      "seed": 3025439901,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized scanner pass for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的扫描机构合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-18",
+      "code": "SFX-MECHANICAL-18",
+      "title": {
+        "en": "Elevator stop",
+        "zh": "升降停止"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 17,
+      "seed": 379583374,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized elevator stop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的升降停止合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-19",
+      "code": "SFX-MECHANICAL-19",
+      "title": {
+        "en": "Magnet snap",
+        "zh": "磁铁吸合"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 18,
+      "seed": 1057076534,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized magnet snap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的磁铁吸合合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-mechanical-20",
+      "code": "SFX-MECHANICAL-20",
+      "title": {
+        "en": "Machine ready",
+        "zh": "机器就绪"
+      },
+      "kind": "sfx",
+      "family": "mechanical",
+      "designIndex": 19,
+      "seed": 1330039683,
+      "scenarios": [
+        "mechanism"
+      ],
+      "description": {
+        "en": "Original synthesized machine ready for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的机器就绪合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-01",
+      "code": "SFX-MAGIC-01",
+      "title": {
+        "en": "Spark cast",
+        "zh": "施放火花"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 0,
+      "seed": 1242795232,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized spark cast for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的施放火花合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-02",
+      "code": "SFX-MAGIC-02",
+      "title": {
+        "en": "Ice shard",
+        "zh": "冰晶飞出"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 1,
+      "seed": 2272147421,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized ice shard for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的冰晶飞出合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-03",
+      "code": "SFX-MAGIC-03",
+      "title": {
+        "en": "Fire burst",
+        "zh": "火焰喷出"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 2,
+      "seed": 3386061777,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized fire burst for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的火焰喷出合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-04",
+      "code": "SFX-MAGIC-04",
+      "title": {
+        "en": "Wind spell",
+        "zh": "风系法术"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 3,
+      "seed": 512554710,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized wind spell for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的风系法术合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-05",
+      "code": "SFX-MAGIC-05",
+      "title": {
+        "en": "Earth pulse",
+        "zh": "大地脉冲"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 4,
+      "seed": 2394174183,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized earth pulse for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的大地脉冲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-06",
+      "code": "SFX-MAGIC-06",
+      "title": {
+        "en": "Healing glow",
+        "zh": "治愈光芒"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 5,
+      "seed": 214584283,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized healing glow for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的治愈光芒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-07",
+      "code": "SFX-MAGIC-07",
+      "title": {
+        "en": "Teleport",
+        "zh": "瞬间传送"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 6,
+      "seed": 755876192,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized teleport for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的瞬间传送合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-08",
+      "code": "SFX-MAGIC-08",
+      "title": {
+        "en": "Portal open",
+        "zh": "传送门开启"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 7,
+      "seed": 37727101,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized portal open for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的传送门开启合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-09",
+      "code": "SFX-MAGIC-09",
+      "title": {
+        "en": "Portal close",
+        "zh": "传送门关闭"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 8,
+      "seed": 3115890325,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized portal close for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的传送门关闭合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-10",
+      "code": "SFX-MAGIC-10",
+      "title": {
+        "en": "Magic shield",
+        "zh": "魔法护罩"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 9,
+      "seed": 2103787559,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized magic shield for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的魔法护罩合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-11",
+      "code": "SFX-MAGIC-11",
+      "title": {
+        "en": "Enchant",
+        "zh": "附魔"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 10,
+      "seed": 2945436603,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized enchant for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的附魔合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-12",
+      "code": "SFX-MAGIC-12",
+      "title": {
+        "en": "Dispel",
+        "zh": "解除法术"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 11,
+      "seed": 3268599810,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized dispel for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的解除法术合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-13",
+      "code": "SFX-MAGIC-13",
+      "title": {
+        "en": "Crystal resonate",
+        "zh": "水晶共鸣"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 12,
+      "seed": 2091402171,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized crystal resonate for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的水晶共鸣合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-14",
+      "code": "SFX-MAGIC-14",
+      "title": {
+        "en": "Fairy dust",
+        "zh": "微光粉尘"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 13,
+      "seed": 4104175829,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized fairy dust for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的微光粉尘合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-15",
+      "code": "SFX-MAGIC-15",
+      "title": {
+        "en": "Spell charge",
+        "zh": "法术蓄力"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 14,
+      "seed": 1751068334,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized spell charge for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的法术蓄力合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-16",
+      "code": "SFX-MAGIC-16",
+      "title": {
+        "en": "Spell release",
+        "zh": "法术释放"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 15,
+      "seed": 1369517001,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized spell release for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的法术释放合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-17",
+      "code": "SFX-MAGIC-17",
+      "title": {
+        "en": "Wand flick",
+        "zh": "挥动魔杖"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 16,
+      "seed": 3508086831,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized wand flick for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的挥动魔杖合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-18",
+      "code": "SFX-MAGIC-18",
+      "title": {
+        "en": "Runes activate",
+        "zh": "符文激活"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 17,
+      "seed": 2133499309,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized runes activate for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的符文激活合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-19",
+      "code": "SFX-MAGIC-19",
+      "title": {
+        "en": "Mystery shimmer",
+        "zh": "神秘闪烁"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 18,
+      "seed": 1259346656,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized mystery shimmer for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的神秘闪烁合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-magic-20",
+      "code": "SFX-MAGIC-20",
+      "title": {
+        "en": "Treasure sparkle",
+        "zh": "宝藏闪光"
+      },
+      "kind": "sfx",
+      "family": "magic",
+      "designIndex": 19,
+      "seed": 1362228980,
+      "scenarios": [
+        "fantasy"
+      ],
+      "description": {
+        "en": "Original synthesized treasure sparkle for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的宝藏闪光合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-01",
+      "code": "SFX-SCIFI-01",
+      "title": {
+        "en": "Laser zap",
+        "zh": "激光短射"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 0,
+      "seed": 2635085719,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized laser zap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的激光短射合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-02",
+      "code": "SFX-SCIFI-02",
+      "title": {
+        "en": "Plasma shot",
+        "zh": "等离子发射"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 1,
+      "seed": 2695119881,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized plasma shot for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的等离子发射合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-03",
+      "code": "SFX-SCIFI-03",
+      "title": {
+        "en": "Energy charge",
+        "zh": "能量充能"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 2,
+      "seed": 2624513577,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized energy charge for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的能量充能合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-04",
+      "code": "SFX-SCIFI-04",
+      "title": {
+        "en": "Energy discharge",
+        "zh": "能量释放"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 3,
+      "seed": 3702736811,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized energy discharge for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的能量释放合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-05",
+      "code": "SFX-SCIFI-05",
+      "title": {
+        "en": "Shield on",
+        "zh": "护盾开启"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 4,
+      "seed": 784785469,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized shield on for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的护盾开启合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-06",
+      "code": "SFX-SCIFI-06",
+      "title": {
+        "en": "Shield hit",
+        "zh": "护盾受击"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 5,
+      "seed": 3171623520,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized shield hit for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的护盾受击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-07",
+      "code": "SFX-SCIFI-07",
+      "title": {
+        "en": "Warp start",
+        "zh": "跃迁启动"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 6,
+      "seed": 3936203199,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized warp start for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的跃迁启动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-08",
+      "code": "SFX-SCIFI-08",
+      "title": {
+        "en": "Warp arrival",
+        "zh": "跃迁抵达"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 7,
+      "seed": 2690379500,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized warp arrival for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的跃迁抵达合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-09",
+      "code": "SFX-SCIFI-09",
+      "title": {
+        "en": "Scanner ping",
+        "zh": "扫描回波"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 8,
+      "seed": 3424877027,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized scanner ping for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的扫描回波合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-10",
+      "code": "SFX-SCIFI-10",
+      "title": {
+        "en": "Radar sweep",
+        "zh": "雷达扫过"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 9,
+      "seed": 3584579726,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized radar sweep for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的雷达扫过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-11",
+      "code": "SFX-SCIFI-11",
+      "title": {
+        "en": "Data transfer",
+        "zh": "数据传输"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 10,
+      "seed": 1730337728,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized data transfer for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的数据传输合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-12",
+      "code": "SFX-SCIFI-12",
+      "title": {
+        "en": "Computer blip",
+        "zh": "计算机短音"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 11,
+      "seed": 1160529584,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized computer blip for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的计算机短音合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-13",
+      "code": "SFX-SCIFI-13",
+      "title": {
+        "en": "Airlock release",
+        "zh": "气闸释放"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 12,
+      "seed": 3976682880,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized airlock release for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的气闸释放合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-14",
+      "code": "SFX-SCIFI-14",
+      "title": {
+        "en": "Reactor pulse",
+        "zh": "反应堆脉冲"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 13,
+      "seed": 752072034,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized reactor pulse for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的反应堆脉冲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-15",
+      "code": "SFX-SCIFI-15",
+      "title": {
+        "en": "Drone pass",
+        "zh": "无人机掠过"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 14,
+      "seed": 995396260,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized drone pass for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的无人机掠过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-16",
+      "code": "SFX-SCIFI-16",
+      "title": {
+        "en": "Robot wake",
+        "zh": "机器人唤醒"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 15,
+      "seed": 2813170820,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized robot wake for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的机器人唤醒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-17",
+      "code": "SFX-SCIFI-17",
+      "title": {
+        "en": "Power down",
+        "zh": "系统断电"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 16,
+      "seed": 2289464353,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized power down for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的系统断电合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-18",
+      "code": "SFX-SCIFI-18",
+      "title": {
+        "en": "Hologram open",
+        "zh": "全息展开"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 17,
+      "seed": 2443135594,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized hologram open for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的全息展开合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-19",
+      "code": "SFX-SCIFI-19",
+      "title": {
+        "en": "Gravity pulse",
+        "zh": "重力脉冲"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 18,
+      "seed": 2796669401,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized gravity pulse for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的重力脉冲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-scifi-20",
+      "code": "SFX-SCIFI-20",
+      "title": {
+        "en": "Space beacon",
+        "zh": "太空信标"
+      },
+      "kind": "sfx",
+      "family": "scifi",
+      "designIndex": 19,
+      "seed": 2144729971,
+      "scenarios": [
+        "science-fiction"
+      ],
+      "description": {
+        "en": "Original synthesized space beacon for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的太空信标合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-01",
+      "code": "SFX-RETRO-01",
+      "title": {
+        "en": "Arcade start",
+        "zh": "街机开始"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 0,
+      "seed": 1044915501,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized arcade start for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的街机开始合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-02",
+      "code": "SFX-RETRO-02",
+      "title": {
+        "en": "Arcade select",
+        "zh": "街机选择"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 1,
+      "seed": 1664504293,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized arcade select for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的街机选择合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-03",
+      "code": "SFX-RETRO-03",
+      "title": {
+        "en": "Pixel jump",
+        "zh": "像素跳跃"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 2,
+      "seed": 758740327,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel jump for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素跳跃合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-04",
+      "code": "SFX-RETRO-04",
+      "title": {
+        "en": "Pixel fall",
+        "zh": "像素下落"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 3,
+      "seed": 3572128582,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel fall for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素下落合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-05",
+      "code": "SFX-RETRO-05",
+      "title": {
+        "en": "Pixel coin",
+        "zh": "像素金币"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 4,
+      "seed": 1775231216,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel coin for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素金币合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-06",
+      "code": "SFX-RETRO-06",
+      "title": {
+        "en": "Pixel hit",
+        "zh": "像素受击"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 5,
+      "seed": 3380368703,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel hit for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素受击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-07",
+      "code": "SFX-RETRO-07",
+      "title": {
+        "en": "Pixel shoot",
+        "zh": "像素射击"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 6,
+      "seed": 4123498161,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel shoot for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素射击合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-08",
+      "code": "SFX-RETRO-08",
+      "title": {
+        "en": "Pixel explosion",
+        "zh": "像素爆破"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 7,
+      "seed": 2633718042,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel explosion for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素爆破合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-09",
+      "code": "SFX-RETRO-09",
+      "title": {
+        "en": "Pixel powerup",
+        "zh": "像素强化"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 8,
+      "seed": 422675581,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel powerup for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素强化合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-10",
+      "code": "SFX-RETRO-10",
+      "title": {
+        "en": "Pixel lose",
+        "zh": "像素失败"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 9,
+      "seed": 2288168302,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel lose for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素失败合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-11",
+      "code": "SFX-RETRO-11",
+      "title": {
+        "en": "Pixel win",
+        "zh": "像素胜利"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 10,
+      "seed": 4089944086,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized pixel win for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的像素胜利合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-12",
+      "code": "SFX-RETRO-12",
+      "title": {
+        "en": "Extra life",
+        "zh": "增加生命"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 11,
+      "seed": 1652650656,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized extra life for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的增加生命合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-13",
+      "code": "SFX-RETRO-13",
+      "title": {
+        "en": "High score",
+        "zh": "刷新纪录"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 12,
+      "seed": 684268296,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized high score for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的刷新纪录合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-14",
+      "code": "SFX-RETRO-14",
+      "title": {
+        "en": "Stage clear",
+        "zh": "关卡完成"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 13,
+      "seed": 2548841894,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized stage clear for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的关卡完成合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-15",
+      "code": "SFX-RETRO-15",
+      "title": {
+        "en": "Countdown beep",
+        "zh": "倒数蜂鸣"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 14,
+      "seed": 3514799084,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized countdown beep for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的倒数蜂鸣合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-16",
+      "code": "SFX-RETRO-16",
+      "title": {
+        "en": "Retro cursor",
+        "zh": "复古光标"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 15,
+      "seed": 2832659081,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized retro cursor for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的复古光标合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-17",
+      "code": "SFX-RETRO-17",
+      "title": {
+        "en": "Retro confirm",
+        "zh": "复古确认"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 16,
+      "seed": 1672438587,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized retro confirm for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的复古确认合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-18",
+      "code": "SFX-RETRO-18",
+      "title": {
+        "en": "Retro cancel",
+        "zh": "复古取消"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 17,
+      "seed": 1354422258,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized retro cancel for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的复古取消合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-19",
+      "code": "SFX-RETRO-19",
+      "title": {
+        "en": "Retro alarm",
+        "zh": "复古警报"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 18,
+      "seed": 3017629434,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized retro alarm for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的复古警报合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-retro-20",
+      "code": "SFX-RETRO-20",
+      "title": {
+        "en": "Retro boot",
+        "zh": "复古开机"
+      },
+      "kind": "sfx",
+      "family": "retro",
+      "designIndex": 19,
+      "seed": 2869198581,
+      "scenarios": [
+        "arcade"
+      ],
+      "description": {
+        "en": "Original synthesized retro boot for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的复古开机合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-01",
+      "code": "SFX-WATER-01",
+      "title": {
+        "en": "Single drop",
+        "zh": "单滴水声"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 0,
+      "seed": 3466211829,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized single drop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的单滴水声合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-02",
+      "code": "SFX-WATER-02",
+      "title": {
+        "en": "Twin drops",
+        "zh": "双滴水声"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 1,
+      "seed": 1172982596,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized twin drops for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的双滴水声合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-03",
+      "code": "SFX-WATER-03",
+      "title": {
+        "en": "Small bubble",
+        "zh": "小气泡"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 2,
+      "seed": 2730638306,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized small bubble for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的小气泡合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-04",
+      "code": "SFX-WATER-04",
+      "title": {
+        "en": "Bubble rise",
+        "zh": "气泡上浮"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 3,
+      "seed": 3906082812,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized bubble rise for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的气泡上浮合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-05",
+      "code": "SFX-WATER-05",
+      "title": {
+        "en": "Bubble pop",
+        "zh": "气泡破裂"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 4,
+      "seed": 4206718181,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized bubble pop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的气泡破裂合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-06",
+      "code": "SFX-WATER-06",
+      "title": {
+        "en": "Water plop",
+        "zh": "落入水中"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 5,
+      "seed": 2480642509,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized water plop for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的落入水中合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-07",
+      "code": "SFX-WATER-07",
+      "title": {
+        "en": "Small splash",
+        "zh": "小水花"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 6,
+      "seed": 2221919756,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized small splash for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的小水花合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-08",
+      "code": "SFX-WATER-08",
+      "title": {
+        "en": "Wide splash",
+        "zh": "大片水花"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 7,
+      "seed": 79509032,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized wide splash for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的大片水花合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-09",
+      "code": "SFX-WATER-09",
+      "title": {
+        "en": "Drip echo",
+        "zh": "水滴回声"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 8,
+      "seed": 3510536063,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized drip echo for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的水滴回声合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-10",
+      "code": "SFX-WATER-10",
+      "title": {
+        "en": "Liquid pour",
+        "zh": "液体倾倒"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 9,
+      "seed": 1243576284,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized liquid pour for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的液体倾倒合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-11",
+      "code": "SFX-WATER-11",
+      "title": {
+        "en": "Bottle glug",
+        "zh": "瓶口咕噜"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 10,
+      "seed": 1631026426,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized bottle glug for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的瓶口咕噜合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-12",
+      "code": "SFX-WATER-12",
+      "title": {
+        "en": "Stream trickle",
+        "zh": "细流经过"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 11,
+      "seed": 1498634203,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized stream trickle for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的细流经过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-13",
+      "code": "SFX-WATER-13",
+      "title": {
+        "en": "Underwater ping",
+        "zh": "水下轻响"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 12,
+      "seed": 238723175,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized underwater ping for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的水下轻响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-14",
+      "code": "SFX-WATER-14",
+      "title": {
+        "en": "Ice crack",
+        "zh": "冰块裂开"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 13,
+      "seed": 3571103901,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized ice crack for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的冰块裂开合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-15",
+      "code": "SFX-WATER-15",
+      "title": {
+        "en": "Ice clink",
+        "zh": "冰块轻碰"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 14,
+      "seed": 3139026,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized ice clink for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的冰块轻碰合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-16",
+      "code": "SFX-WATER-16",
+      "title": {
+        "en": "Raindrop tap",
+        "zh": "雨点轻敲"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 15,
+      "seed": 508051058,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized raindrop tap for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的雨点轻敲合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-17",
+      "code": "SFX-WATER-17",
+      "title": {
+        "en": "Wet click",
+        "zh": "湿润轻响"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 16,
+      "seed": 151991415,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized wet click for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的湿润轻响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-18",
+      "code": "SFX-WATER-18",
+      "title": {
+        "en": "Water swoosh",
+        "zh": "水流掠过"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 17,
+      "seed": 1821083004,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized water swoosh for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的水流掠过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-19",
+      "code": "SFX-WATER-19",
+      "title": {
+        "en": "Foam burst",
+        "zh": "泡沫破裂"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 18,
+      "seed": 2644845973,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized foam burst for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的泡沫破裂合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-water-20",
+      "code": "SFX-WATER-20",
+      "title": {
+        "en": "Deep bubble",
+        "zh": "深水气泡"
+      },
+      "kind": "sfx",
+      "family": "water",
+      "designIndex": 19,
+      "seed": 3439450818,
+      "scenarios": [
+        "water"
+      ],
+      "description": {
+        "en": "Original synthesized deep bubble for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的深水气泡合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-01",
+      "code": "SFX-FOLEY-01",
+      "title": {
+        "en": "Paper flutter",
+        "zh": "纸张扑动"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 0,
+      "seed": 1931023626,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized paper flutter for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的纸张扑动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-02",
+      "code": "SFX-FOLEY-02",
+      "title": {
+        "en": "Card slide",
+        "zh": "卡片滑动"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 1,
+      "seed": 1938293973,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized card slide for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的卡片滑动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-03",
+      "code": "SFX-FOLEY-03",
+      "title": {
+        "en": "Cloth swish",
+        "zh": "布料擦过"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 2,
+      "seed": 4253128620,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized cloth swish for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的布料擦过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-04",
+      "code": "SFX-FOLEY-04",
+      "title": {
+        "en": "Zip close",
+        "zh": "拉链合拢"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 3,
+      "seed": 1762950294,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized zip close for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的拉链合拢合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-05",
+      "code": "SFX-FOLEY-05",
+      "title": {
+        "en": "Bag rustle",
+        "zh": "袋子沙响"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 4,
+      "seed": 2872072848,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized bag rustle for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的袋子沙响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-06",
+      "code": "SFX-FOLEY-06",
+      "title": {
+        "en": "Brush stroke",
+        "zh": "刷子划过"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 5,
+      "seed": 1702321591,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized brush stroke for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的刷子划过合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-07",
+      "code": "SFX-FOLEY-07",
+      "title": {
+        "en": "Pencil stroke",
+        "zh": "铅笔划线"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 6,
+      "seed": 2807555271,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized pencil stroke for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的铅笔划线合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-08",
+      "code": "SFX-FOLEY-08",
+      "title": {
+        "en": "Pen click",
+        "zh": "按动圆珠笔"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 7,
+      "seed": 4237236157,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized pen click for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的按动圆珠笔合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-09",
+      "code": "SFX-FOLEY-09",
+      "title": {
+        "en": "Scissor snip",
+        "zh": "剪刀剪切"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 8,
+      "seed": 1684730286,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized scissor snip for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的剪刀剪切合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-10",
+      "code": "SFX-FOLEY-10",
+      "title": {
+        "en": "Tape peel",
+        "zh": "胶带揭起"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 9,
+      "seed": 555122549,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized tape peel for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的胶带揭起合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-11",
+      "code": "SFX-FOLEY-11",
+      "title": {
+        "en": "Velcro pull",
+        "zh": "魔术贴撕开"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 10,
+      "seed": 2331844778,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized velcro pull for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的魔术贴撕开合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-12",
+      "code": "SFX-FOLEY-12",
+      "title": {
+        "en": "Chain jingle",
+        "zh": "链条轻响"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 11,
+      "seed": 2776531688,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized chain jingle for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的链条轻响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-13",
+      "code": "SFX-FOLEY-13",
+      "title": {
+        "en": "Key jingle",
+        "zh": "钥匙轻响"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 12,
+      "seed": 700053454,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized key jingle for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的钥匙轻响合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-14",
+      "code": "SFX-FOLEY-14",
+      "title": {
+        "en": "Marble roll",
+        "zh": "弹珠滚动"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 13,
+      "seed": 2037196977,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized marble roll for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的弹珠滚动合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-15",
+      "code": "SFX-FOLEY-15",
+      "title": {
+        "en": "Dice toss",
+        "zh": "骰子投掷"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 14,
+      "seed": 2141270162,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized dice toss for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的骰子投掷合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-16",
+      "code": "SFX-FOLEY-16",
+      "title": {
+        "en": "Book close",
+        "zh": "合上书本"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 15,
+      "seed": 3070649051,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized book close for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的合上书本合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-17",
+      "code": "SFX-FOLEY-17",
+      "title": {
+        "en": "Cup set",
+        "zh": "放下杯子"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 16,
+      "seed": 111627165,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized cup set for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的放下杯子合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-18",
+      "code": "SFX-FOLEY-18",
+      "title": {
+        "en": "Squeak",
+        "zh": "短促摩擦"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 17,
+      "seed": 2837631960,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized squeak for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的短促摩擦合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-19",
+      "code": "SFX-FOLEY-19",
+      "title": {
+        "en": "Clap accent",
+        "zh": "拍手重音"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 18,
+      "seed": 531820087,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized clap accent for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的拍手重音合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "sfx-foley-20",
+      "code": "SFX-FOLEY-20",
+      "title": {
+        "en": "Soft breath of air",
+        "zh": "轻柔气流"
+      },
+      "kind": "sfx",
+      "family": "foley",
+      "designIndex": 19,
+      "seed": 4146014568,
+      "scenarios": [
+        "foley"
+      ],
+      "description": {
+        "en": "Original synthesized soft breath of air for editing and interactive projects. Designed sound, not a field recording.",
+        "zh": "用于剪辑与交互的轻柔气流合成音效，非实地录音。"
+      }
+    },
+    {
+      "id": "ambience-wind-01",
+      "code": "AMB-WIND-01",
+      "title": {
+        "en": "Meadow breeze · designed ambience",
+        "zh": "草地微风 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "wind",
+      "designIndex": 0,
+      "seed": 980868473,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized meadow breeze atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "草地微风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-wind-02",
+      "code": "AMB-WIND-02",
+      "title": {
+        "en": "Mountain air · designed ambience",
+        "zh": "山间气流 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "wind",
+      "designIndex": 1,
+      "seed": 3175240857,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized mountain air atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "山间气流的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-wind-03",
+      "code": "AMB-WIND-03",
+      "title": {
+        "en": "Desert wind · designed ambience",
+        "zh": "沙漠风声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "wind",
+      "designIndex": 2,
+      "seed": 3166088448,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized desert wind atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "沙漠风声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-wind-04",
+      "code": "AMB-WIND-04",
+      "title": {
+        "en": "Canyon gusts · designed ambience",
+        "zh": "峡谷阵风 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "wind",
+      "designIndex": 3,
+      "seed": 3170447569,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized canyon gusts atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "峡谷阵风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-wind-05",
+      "code": "AMB-WIND-05",
+      "title": {
+        "en": "Winter wind · designed ambience",
+        "zh": "冬日寒风 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "wind",
+      "designIndex": 4,
+      "seed": 2817246569,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized winter wind atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "冬日寒风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-rain-01",
+      "code": "AMB-RAIN-01",
+      "title": {
+        "en": "Fine drizzle · designed ambience",
+        "zh": "细雨 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "rain",
+      "designIndex": 0,
+      "seed": 3692113233,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized fine drizzle atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "细雨的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-rain-02",
+      "code": "AMB-RAIN-02",
+      "title": {
+        "en": "Roof rain · designed ambience",
+        "zh": "屋顶雨声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "rain",
+      "designIndex": 1,
+      "seed": 3495759947,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized roof rain atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "屋顶雨声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-rain-03",
+      "code": "AMB-RAIN-03",
+      "title": {
+        "en": "Window rain · designed ambience",
+        "zh": "窗边雨声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "rain",
+      "designIndex": 2,
+      "seed": 1803677417,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized window rain atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "窗边雨声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-rain-04",
+      "code": "AMB-RAIN-04",
+      "title": {
+        "en": "Heavy shower · designed ambience",
+        "zh": "骤雨 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "rain",
+      "designIndex": 3,
+      "seed": 1441398548,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized heavy shower atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "骤雨的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-rain-05",
+      "code": "AMB-RAIN-05",
+      "title": {
+        "en": "Distant storm · designed ambience",
+        "zh": "远处风暴 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "rain",
+      "designIndex": 4,
+      "seed": 2749698100,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized distant storm atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "远处风暴的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-water-01",
+      "code": "AMB-WATER-01",
+      "title": {
+        "en": "Slow surf · designed ambience",
+        "zh": "缓慢海浪 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "water",
+      "designIndex": 0,
+      "seed": 3788465465,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized slow surf atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "缓慢海浪的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-water-02",
+      "code": "AMB-WATER-02",
+      "title": {
+        "en": "Pebble shore · designed ambience",
+        "zh": "卵石海岸 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "water",
+      "designIndex": 1,
+      "seed": 108173329,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized pebble shore atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "卵石海岸的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-water-03",
+      "code": "AMB-WATER-03",
+      "title": {
+        "en": "Small stream · designed ambience",
+        "zh": "细小溪流 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "water",
+      "designIndex": 2,
+      "seed": 228130965,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized small stream atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "细小溪流的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-water-04",
+      "code": "AMB-WATER-04",
+      "title": {
+        "en": "Waterfall mist · designed ambience",
+        "zh": "瀑布水雾 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "water",
+      "designIndex": 3,
+      "seed": 877519414,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized waterfall mist atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "瀑布水雾的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-water-05",
+      "code": "AMB-WATER-05",
+      "title": {
+        "en": "Underwater current · designed ambience",
+        "zh": "水下暗流 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "water",
+      "designIndex": 4,
+      "seed": 763879121,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized underwater current atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "水下暗流的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-forest-01",
+      "code": "AMB-FOREST-01",
+      "title": {
+        "en": "Forest dawn · designed ambience",
+        "zh": "林间晨声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "forest",
+      "designIndex": 0,
+      "seed": 1253560003,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized forest dawn atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "林间晨声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-forest-02",
+      "code": "AMB-FOREST-02",
+      "title": {
+        "en": "Summer insects · designed ambience",
+        "zh": "夏日虫声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "forest",
+      "designIndex": 1,
+      "seed": 3231028130,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized summer insects atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "夏日虫声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-forest-03",
+      "code": "AMB-FOREST-03",
+      "title": {
+        "en": "Night clearing · designed ambience",
+        "zh": "夜间空地 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "forest",
+      "designIndex": 2,
+      "seed": 265810868,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized night clearing atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "夜间空地的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-forest-04",
+      "code": "AMB-FOREST-04",
+      "title": {
+        "en": "Bamboo breeze · designed ambience",
+        "zh": "竹林风声 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "forest",
+      "designIndex": 3,
+      "seed": 712983658,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized bamboo breeze atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "竹林风声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-forest-05",
+      "code": "AMB-FOREST-05",
+      "title": {
+        "en": "Woodland dusk · designed ambience",
+        "zh": "林间暮色 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "forest",
+      "designIndex": 4,
+      "seed": 2926687302,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized woodland dusk atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "林间暮色的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-room-01",
+      "code": "AMB-ROOM-01",
+      "title": {
+        "en": "Quiet ventilation · designed ambience",
+        "zh": "安静通风 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "room",
+      "designIndex": 0,
+      "seed": 2840927256,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized quiet ventilation atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "安静通风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-room-02",
+      "code": "AMB-ROOM-02",
+      "title": {
+        "en": "Large hall air · designed ambience",
+        "zh": "大厅气流 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "room",
+      "designIndex": 1,
+      "seed": 4061337756,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized large hall air atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "大厅气流的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-room-03",
+      "code": "AMB-ROOM-03",
+      "title": {
+        "en": "Soft fan · designed ambience",
+        "zh": "柔和风扇 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "room",
+      "designIndex": 2,
+      "seed": 1923235305,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized soft fan atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "柔和风扇的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-room-04",
+      "code": "AMB-ROOM-04",
+      "title": {
+        "en": "Window draft · designed ambience",
+        "zh": "窗边穿堂风 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "room",
+      "designIndex": 3,
+      "seed": 4040783002,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized window draft atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "窗边穿堂风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-room-05",
+      "code": "AMB-ROOM-05",
+      "title": {
+        "en": "Warm cabin · designed ambience",
+        "zh": "温暖小屋 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "room",
+      "designIndex": 4,
+      "seed": 3988655894,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized warm cabin atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "温暖小屋的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-machine-01",
+      "code": "AMB-MACHINE-01",
+      "title": {
+        "en": "Engine room · designed ambience",
+        "zh": "机舱底噪 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "machine",
+      "designIndex": 0,
+      "seed": 312437554,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized engine room atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "机舱底噪的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-machine-02",
+      "code": "AMB-MACHINE-02",
+      "title": {
+        "en": "Server room · designed ambience",
+        "zh": "服务器机房 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "machine",
+      "designIndex": 1,
+      "seed": 1806526825,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized server room atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "服务器机房的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-machine-03",
+      "code": "AMB-MACHINE-03",
+      "title": {
+        "en": "Factory hum · designed ambience",
+        "zh": "工厂低鸣 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "machine",
+      "designIndex": 2,
+      "seed": 3889360682,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized factory hum atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "工厂低鸣的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-machine-04",
+      "code": "AMB-MACHINE-04",
+      "title": {
+        "en": "Electric train · designed ambience",
+        "zh": "电车行进 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "machine",
+      "designIndex": 3,
+      "seed": 4055281868,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized electric train atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "电车行进的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-machine-05",
+      "code": "AMB-MACHINE-05",
+      "title": {
+        "en": "Airship cabin · designed ambience",
+        "zh": "飞艇座舱 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "machine",
+      "designIndex": 4,
+      "seed": 3386471907,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized airship cabin atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "飞艇座舱的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-space-01",
+      "code": "AMB-SPACE-01",
+      "title": {
+        "en": "Orbital station · designed ambience",
+        "zh": "轨道空间站 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "space",
+      "designIndex": 0,
+      "seed": 1970705440,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized orbital station atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "轨道空间站的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-space-02",
+      "code": "AMB-SPACE-02",
+      "title": {
+        "en": "Reactor chamber · designed ambience",
+        "zh": "反应堆舱 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "space",
+      "designIndex": 1,
+      "seed": 377346496,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized reactor chamber atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "反应堆舱的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-space-03",
+      "code": "AMB-SPACE-03",
+      "title": {
+        "en": "Alien cavern · designed ambience",
+        "zh": "异星洞穴 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "space",
+      "designIndex": 2,
+      "seed": 725930071,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized alien cavern atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "异星洞穴的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-space-04",
+      "code": "AMB-SPACE-04",
+      "title": {
+        "en": "Deep-space vessel · designed ambience",
+        "zh": "深空飞船 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "space",
+      "designIndex": 3,
+      "seed": 1056737880,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized deep-space vessel atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "深空飞船的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-space-05",
+      "code": "AMB-SPACE-05",
+      "title": {
+        "en": "Energy field · designed ambience",
+        "zh": "能量场 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "space",
+      "designIndex": 4,
+      "seed": 1405901804,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized energy field atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "能量场的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-texture-01",
+      "code": "AMB-TEXTURE-01",
+      "title": {
+        "en": "Soft pink noise · designed ambience",
+        "zh": "柔和粉噪 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "texture",
+      "designIndex": 0,
+      "seed": 2799636456,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized soft pink noise atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "柔和粉噪的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-texture-02",
+      "code": "AMB-TEXTURE-02",
+      "title": {
+        "en": "Deep brown noise · designed ambience",
+        "zh": "深沉棕噪 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "texture",
+      "designIndex": 1,
+      "seed": 577362876,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized deep brown noise atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "深沉棕噪的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-texture-03",
+      "code": "AMB-TEXTURE-03",
+      "title": {
+        "en": "Airy texture · designed ambience",
+        "zh": "轻盈空气 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "texture",
+      "designIndex": 2,
+      "seed": 904162443,
+      "targetDuration": 60,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized airy texture atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "轻盈空气的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-texture-04",
+      "code": "AMB-TEXTURE-04",
+      "title": {
+        "en": "Glassy atmosphere · designed ambience",
+        "zh": "玻璃质感氛围 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "texture",
+      "designIndex": 3,
+      "seed": 2334997628,
+      "targetDuration": 30,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized glassy atmosphere atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "玻璃质感氛围的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    },
+    {
+      "id": "ambience-texture-05",
+      "code": "AMB-TEXTURE-05",
+      "title": {
+        "en": "Low-frequency bed · designed ambience",
+        "zh": "低频背景 · 合成环境声"
+      },
+      "kind": "ambience",
+      "family": "texture",
+      "designIndex": 4,
+      "seed": 815275896,
+      "targetDuration": 45,
+      "scenarios": [
+        "environment",
+        "game-exploration"
+      ],
+      "description": {
+        "en": "Synthesized low-frequency bed atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+        "zh": "低频背景的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+      }
+    }
+  ]
+}

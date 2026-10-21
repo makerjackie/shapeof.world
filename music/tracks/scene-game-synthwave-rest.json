@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-synthwave-rest",
+  "code": "GAME-05-4",
+  "title": {
+    "en": "Orbital Dock · Rest",
+    "zh": "轨道船坞 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "science-fiction navigation",
+    "rest"
+  ],
+  "energy": 3,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "analog sequencer",
+    "filtered bass",
+    "restrained drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for science-fiction navigation, rest state. Instruments: analog sequencer, filtered bass, restrained drums. 112 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A relaxed electronic track featuring a steady beat, synth pads, and arpeggiated melodies. It creates a calm and atmospheric soundscape with a consistent groove.",
+    "zh": "一首轻松的电子音乐，具有稳定的节拍、合成器铺底和琶音旋律。它营造出平静而富有氛围感的音景，并带有持续的律动。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 87.171,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:23:52.741248+00:00",
+  "generation": {
+    "id": "e946c4c9-975c-4cd2-b1b2-fe6adb9c2544",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:23:04.761190+00:00",
+    "completedAt": "2026-09-22T09:23:52.741248+00:00",
+    "interactionId": "-kiyavWfBf6N88EPy_v08Ac",
+    "sha256": "88c68966b92c60f21f34c4a2b4ef6599d63feb3b42c4fcfed5f3577742e5d880"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A relaxed electronic track featuring a steady beat, synth pads, and arpeggiated melodies. It creates a calm and atmospheric soundscape with a consistent groove.",
+      "zh": "一首轻松的电子音乐，具有稳定的节拍、合成器铺底和琶音旋律。它营造出平静而富有氛围感的音景，并带有持续的律动。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Relaxed",
+      "Calm",
+      "Melodic",
+      "Dreamy",
+      "Atmospheric",
+      "Chill"
+    ],
+    "energy": 3,
+    "bpmEstimate": 120,
+    "reason": "Clean production and clear musical structure.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:03.109397+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 31.9,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1406790,
+    "sourceStartSeconds": 41.0,
+    "sourceEndSeconds": 73.0,
+    "crossfadeSeconds": 0.1,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1406790,
+        "duration": 31.9,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.35,
+        "dcOffset": 0.005752962086517111,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.0037841796875,
+        "internalStepP999": 0.15887451171875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1406790,
+        "duration": 31.9,
+        "peakDbfs": -0.99,
+        "rmsDbfs": -15.28,
+        "dcOffset": 0.005617014767718085,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.003936767578125,
+        "internalStepP999": 0.160675048828125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, evolving electronic drone or pad sound with a slightly dark and ethereal quality. It features subtle timbral shifts and gentle modulation, creating a continuous, atmospheric texture.",
+        "zh": "持续的、演变的电子嗡鸣声或衬垫音，带有一丝黑暗和空灵的特质。它具有微妙的音色变化和柔和的调制，营造出一种连续的氛围纹理。"
+      },
+      "reason": "The audio provides a clean, well-produced electronic ambient texture suitable for background sound design. No unintended defects like clipping or abrupt changes were detected. The loop points are perfectly seamless, making it highly usable for continuous playback.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:31:07.181610+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "02746533f5f9516ef8da19f95d38e0a8369d51ddff1384a16bde9364db1e56bf"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music maintains consistent rhythm, harmony, and dynamics across the loop points. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the joins. The phrase continuity is excellent, making it suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:31:12.864683+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "837089cf5f6ae1eb9fd8eada790e7d767884e08f0fd8e3860a58bfbb271bb677",
+      "bytes": 1221163,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "88c68966b92c60f21f34c4a2b4ef6599d63feb3b42c4fcfed5f3577742e5d880",
+      "bytes": 2099761,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "c5a08237d884212b9d46b2e036dbbb963d4e0223a533615fdae5ca7bb0a4e62d",
+      "bytes": 2811,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "0a9e85ccfd6168832aebe3b61e71676e545a0aeee24beb578f20ec5159d5e51d",
+      "bytes": 5627204,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "578638c21d6644ab87763f460f9b6ac9081356b9c37f92b0509ef16d8aab7ce2",
+      "bytes": 554221,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.467197+00:00"
+}

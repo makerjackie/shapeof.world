@@ -1,0 +1,102 @@
+{
+  "id": "lib-kora-suspense",
+  "code": "LIB-22-09",
+  "title": {
+    "en": "Shadows — Kora",
+    "zh": "暗影 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "kora"
+  ],
+  "energy": 2,
+  "bpm": 96,
+  "key": "G minor",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second West African acoustic instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 96 BPM; G minor. Main idea: a descending melody with an upward answer. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian-inspired instrumental piece featuring plucked strings, subtle percussion, and a gentle flute melody, creating a calm and reflective atmosphere.",
+    "zh": "一首宁静的东亚风格器乐曲，以弹拨乐器、轻柔的打击乐和悠扬的笛声为主，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 173.14,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:59:49.338601+00:00",
+  "generation": {
+    "id": "a58f22f6-3576-403a-a564-a30d8fb402b1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:59:01.521617+00:00",
+    "completedAt": "2026-09-09T08:59:49.338601+00:00",
+    "interactionId": "1h-haoObK_LTi9sPs7ej0QE",
+    "sha256": "9badac66a38f5b9d476126b18bf614b279b47394ed06b3f68b12b1f9b44cd675"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian-inspired instrumental piece featuring plucked strings, subtle percussion, and a gentle flute melody, creating a calm and reflective atmosphere.",
+      "zh": "一首宁静的东亚风格器乐曲，以弹拨乐器、轻柔的打击乐和悠扬的笛声为主，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Flute",
+      "Percussion",
+      "Synthesizer Pads"
+    ],
+    "moods": [
+      "Calm",
+      "Meditative",
+      "Peaceful",
+      "Traditional",
+      "Reflective",
+      "Elegant"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean, well-produced instrumental piece with clear East Asian traditional influences, suitable for background or thematic use.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:00:04.217741+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:01:01.153791+00:00"
+}

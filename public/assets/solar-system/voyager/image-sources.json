@@ -1,0 +1,83 @@
+[
+  {
+    "file": "pia00144.webp",
+    "source": "https://science.nasa.gov/wp-content/uploads/2024/04/pia00144.jpg",
+    "sourceSha256": "ba60399dd5c1d731803d016133fd31e4d461f6eaa37c258d1947b76eaee490ed",
+    "sha256": "eab9aa04fe2bbdb9d2a544a57ccc25261416619e3fbd6884a5aa2385b4837aa9",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia00459.webp",
+    "source": "https://science.nasa.gov/wp-content/uploads/2024/04/pia00459.jpg",
+    "sourceSha256": "76f4777ac8dacc883a5d4dc7ce8584ceb28e4c91e94bc3f8ea18bb0c1283d22e",
+    "sha256": "d9847c7c1ce1b1aab21a7fd57e749b6f27204461270fa3a875e2770fcc7e667b",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia02238.webp",
+    "source": "https://science.nasa.gov/wp-content/uploads/2024/04/pia02238.jpg",
+    "sourceSha256": "4b412692dcc6095a1eb32c152e850b16bfa55bcb3d5a1797a7ad9f883a652950",
+    "sha256": "f036dfc258c7a3427ea3b3067fee507e4d5a56fb65aae82525e6dc4432e53595",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia00335.webp",
+    "source": "https://science.nasa.gov/wp-content/uploads/2024/04/pia00335.jpg",
+    "sourceSha256": "70bd0ada985d4cd7995076f94e5e172f89f9445e79b3f32c5af525eb0171546a",
+    "sha256": "0313a9a2858ea4b1d761a079a8846620893892396e48dcf9c708866e4e3f1329",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia03152.webp",
+    "source": "https://science.nasa.gov/wp-content/uploads/2024/04/pia03152.jpg",
+    "sourceSha256": "5a930caded69731caabee42fdd48f09733ba9f27f0e825b5bcd553e9fdd7f132",
+    "sha256": "8e73390d316ed910a19471ac7368c10e11b275e7e0c3bf0e685c9ae0f2134d42",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia18182.webp",
+    "source": "https://images-assets.nasa.gov/image/PIA18182/PIA18182~orig.jpg",
+    "sourceSha256": "3dcc83114f1a25caa1ae1a1436830fffaa15a3e429666dbf4c68bcf035e8932b",
+    "sha256": "c217cbb20585fd872cd4efad300ad03e78f505a7c76c7bf8c89b418a1261fd33",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia01492.webp",
+    "source": "https://assets.science.nasa.gov/dynamicimage/assets/science/psd/solar/2023/09/p/i/a/0/PIA01492-1.jpg",
+    "sourceSha256": "feb99b07fcfbeb57fdb109339b2c7c1d3bcfdfb06b2a80bd573d030015884ee6",
+    "sha256": "beec9cc5c904b3d995744b0784b85bc6272164ad4b44efb8ae1c4dad1e663d96",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia02212.webp",
+    "source": "https://images-assets.nasa.gov/image/PIA02212/PIA02212~orig.jpg",
+    "sourceSha256": "61ecadf606c83eeb219a3f79506f8635bab8e02a68b998833a7e0496b1ee4b93",
+    "sha256": "d10e2718e6bfd2309538c8cd038426210687ef1cb6b19dd7fd8c5e35abc38d0a",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  },
+  {
+    "file": "pia23645.webp",
+    "source": "https://d2pn8kiwq2w21t.cloudfront.net/original_images/jpegPIA23645.jpg",
+    "sourceSha256": "b783a29a134377ba41ffe8f644fd1f066b591b77b316daac3d32b315cc265c34",
+    "sha256": "4b5e956b0279f7d3a7b55cc9dd7632c5c188ecf8f68a5c252c4f2ddfab3baa12",
+    "credit": "Courtesy NASA/JPL-Caltech",
+    "processing": "WebP q82; width capped at 1280; no crop or creative alteration",
+    "retrieved": "2026-09-18"
+  }
+]

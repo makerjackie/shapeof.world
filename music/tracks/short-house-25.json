@@ -1,0 +1,163 @@
+{
+  "id": "short-house-25",
+  "code": "SHORT-04-25",
+  "title": {
+    "en": "Color Pop · 25",
+    "zh": "色彩跳动 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "rounded kick",
+    "electric piano stabs",
+    "bright synth bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic dance track featuring a driving beat, synth melodies, and a modern, polished production style. It has a bright and positive feel.",
+    "zh": "一首欢快且充满活力的电子舞曲，具有强劲的节拍、合成器旋律和现代、精致的制作风格。整体感觉明亮积极。"
+  },
+  "batch": "short-promos-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 16,
+      "logo": 29
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T02:37:43.984761+00:00",
+  "generation": {
+    "id": "747560b3-b994-4cd1-8ed9-2a781337198d",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T02:37:30.449503+00:00",
+    "completedAt": "2026-09-10T02:37:43.984761+00:00",
+    "interactionId": "6xeiaoK7Boq34vEP1ray8Q0",
+    "sha256": "37d2f525a903bca1a2fc5108ebd46db51a0c8346527237fd10e96d0bd6d5fc05"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving beat, synth melodies, and a modern, polished production style. It has a bright and positive feel.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有强劲的节拍、合成器旋律和现代、精致的制作风格。整体感觉明亮积极。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synthesizer",
+      "synth bass",
+      "synth pad",
+      "percussion"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "driving",
+      "modern",
+      "danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic electronic track with a clear structure and good sound quality, suitable for promotional or background use.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving beat and synth melody, establishing its energetic feel. It concludes with a deliberate musical fade-out on a synth chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:42:08.187793+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "fffd4f95ad241a635bddbea938a12087536caec68293faa8234c972994bc9f9c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving four-on-the-floor beat, prominent synth bassline, and catchy, bright synth melodies. The arrangement is dynamic with build-ups and drops, creating a danceable atmosphere.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有强劲的四四拍节奏、突出的合成器低音线和朗朗上口、明亮的合成器旋律。编曲富有动感，包含渐强和下降，营造出舞动的氛围。"
+    },
+    "instruments": [
+      "Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Driving",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-produced electronic dance music with a clear structure and good sound quality, suitable for various media applications requiring an energetic and modern feel.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:38:02.852485+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/short-house-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/short-house-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/short-house-25/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T02:45:32.215875+00:00"
+}

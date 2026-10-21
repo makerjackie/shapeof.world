@@ -1,0 +1,103 @@
+{
+  "id": "lib-felt-piano-suspense",
+  "code": "LIB-01-09",
+  "title": {
+    "en": "Shadows — Felt Piano",
+    "zh": "暗影 · 毡音钢琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "felt-piano"
+  ],
+  "energy": 3,
+  "bpm": 54,
+  "key": "G minor",
+  "instruments": [
+    "felt piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second neoclassical felt piano instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: felt piano, soft cello. Style: spacious broken chords, intimate close room. Tempo approximately 54 BPM; G minor. Main idea: alternating short and long phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and dramatic orchestral piece, primarily featuring a string ensemble and piano. The composition builds from a reflective opening to a more passionate and sweeping middle section, then returns to a quiet, thoughtful close. It evokes a sense of longing and introspection.",
+    "zh": "一首忧郁而富有戏剧性的管弦乐作品，主要由弦乐合奏和钢琴演奏。乐曲从沉思的开场逐渐发展到更具激情和宏大的中段，随后回归到安静、深思的结尾。它唤起了一种渴望和内省的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.823,
+  "generatedAt": "2026-09-09T07:40:38.654613+00:00",
+  "generation": {
+    "id": "e4f4eac9-031a-45b6-b077-9b04ad46e6ac",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:39:51.669286+00:00",
+    "completedAt": "2026-09-09T07:40:38.654613+00:00",
+    "interactionId": "SA2haujNMZC9jMwPrKKKyAI",
+    "sha256": "7ec6c0254a04ba57247a06903e368fe6c8b5950915810de78f534994a8be2789"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and dramatic orchestral piece, primarily featuring a string ensemble and piano. The composition builds from a reflective opening to a more passionate and sweeping middle section, then returns to a quiet, thoughtful close. It evokes a sense of longing and introspection.",
+      "zh": "一首忧郁而富有戏剧性的管弦乐作品，主要由弦乐合奏和钢琴演奏。乐曲从沉思的开场逐渐发展到更具激情和宏大的中段，随后回归到安静、深思的结尾。它唤起了一种渴望和内省的感觉。"
+    },
+    "instruments": [
+      "Piano",
+      "String Orchestra",
+      "Violin",
+      "Cello",
+      "Viola",
+      "Double Bass"
+    ],
+    "moods": [
+      "Melancholic",
+      "Dramatic",
+      "Reflective",
+      "Somber",
+      "Passionate",
+      "Longing"
+    ],
+    "energy": 3,
+    "bpmEstimate": 70,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:40:55.470486+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:42:30.301988+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

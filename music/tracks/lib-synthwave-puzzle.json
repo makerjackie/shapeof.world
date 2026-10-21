@@ -1,0 +1,101 @@
+{
+  "id": "lib-synthwave-puzzle",
+  "code": "LIB-26-07",
+  "title": {
+    "en": "Clues — Synthwave",
+    "zh": "线索 · 合成器浪潮"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "synthwave"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "C lydian",
+  "instruments": [
+    "analog arpeggiator",
+    "synth bass",
+    "electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental synthwave instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: analog arpeggiator, synth bass, electronic drums. Style: steady retro pulse with luminous melodic synth phrases. Tempo approximately 114 BPM; C lydian. Main idea: an ascending fourth answered by a stepwise descent. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "An upbeat and driving electronic track featuring a prominent synth melody, pulsating bassline, and crisp electronic drums. It has a modern yet slightly retro feel, building energy throughout.",
+    "zh": "一首欢快且富有推动力的电子音乐，以突出的合成器旋律、脉动的低音线和清脆的电子鼓为特色。它具有现代感又略带复古气息，在整个过程中不断积蓄能量。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.484,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:07:54.902677+00:00",
+  "generation": {
+    "id": "02ff3be1-a661-40e3-8d6e-8a7f4dfedffb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:07:08.065586+00:00",
+    "completedAt": "2026-09-09T09:07:54.902677+00:00",
+    "interactionId": "wCGhavHkHfTyk7QPmu_A4Q0",
+    "sha256": "1f7bb15f76106b8d3393bc9d2967edbebd5a2f8bfabddc437da0218a1e495614"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and driving electronic track featuring a prominent synth melody, pulsating bassline, and crisp electronic drums. It has a modern yet slightly retro feel, building energy throughout.",
+      "zh": "一首欢快且富有推动力的电子音乐，以突出的合成器旋律、脉动的低音线和清脆的电子鼓为特色。它具有现代感又略带复古气息，在整个过程中不断积蓄能量。"
+    },
+    "instruments": [
+      "Electronic drums",
+      "Synthesizer",
+      "Synth bass",
+      "Synth pads"
+    ],
+    "moods": [
+      "Uplifting",
+      "Energetic",
+      "Driving",
+      "Futuristic",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:08:08.045964+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-synthwave-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-synthwave-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-synthwave-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:09:04.916970+00:00"
+}

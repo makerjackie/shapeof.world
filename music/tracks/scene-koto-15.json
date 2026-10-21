@@ -1,0 +1,178 @@
+{
+  "id": "scene-koto-15",
+  "code": "SCENE-12-15",
+  "title": {
+    "en": "Paper Architecture · 15",
+    "zh": "纸上建筑 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "careful precise construction reveal",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "koto",
+    "soft synth bass",
+    "bamboo percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for careful precise construction reveal. Instruments: koto, soft synth bass, bamboo percussion. 108 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a driving synth melody, rhythmic bass, and a steady drum beat. It has a modern, positive feel.",
+    "zh": "一首欢快且充满活力的电子音乐，以驱动性的合成器旋律、有节奏的贝斯和稳定的鼓点为特色。它具有现代、积极的感觉。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "careful precise construction reveal"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:15:36.111029+00:00",
+  "generation": {
+    "id": "39c25281-0cf9-443f-ae91-3c0dc7629915",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:15:22.739460+00:00",
+    "completedAt": "2026-09-22T09:15:36.111029+00:00",
+    "interactionId": "K0eyavOWHLve694PlMeHuQ4",
+    "sha256": "be4aab14cf295e3a5b2d88c0d7a783dbbbf0cd8472df796b980b8c8abd0ce23a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving synth melody, rhythmic bass, and a steady drum beat. It has a modern, positive feel.",
+      "zh": "一首欢快且充满活力的电子音乐，以驱动性的合成器旋律、有节奏的贝斯和稳定的鼓点为特色。它具有现代、积极的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens with an immediate synth melody and rhythmic elements, and concludes with a smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:53.545763+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "907f7f1d10fb28aab37b263af5e5dfafaba69830b9173a7462654782bb50452c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 25.678292,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat electronic track featuring a prominent synth melody, driving electronic drums, and layered synth pads. It has a bright and energetic feel, suitable for background music or dance-oriented content.",
+      "zh": "一首活泼欢快的电子音乐，以突出的合成器旋律、强劲的电子鼓点和分层合成器音垫为特色。整体感觉明亮且充满活力，适合作为背景音乐或舞曲相关内容。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Electronic Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Lively",
+      "Positive",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Clean production, clear instrumentation, and an engaging, energetic feel make it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:46.529178+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.678291999999999,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-koto-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-koto-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-koto-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "907f7f1d10fb28aab37b263af5e5dfafaba69830b9173a7462654782bb50452c",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "be4aab14cf295e3a5b2d88c0d7a783dbbbf0cd8472df796b980b8c8abd0ce23a",
+      "bytes": 623947,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "5e8c2bd1f688e45177b148072d2924e4ef7fde59908742a2ad600cc7dbcabf4a",
+      "bytes": 2791,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.845503+00:00"
+}

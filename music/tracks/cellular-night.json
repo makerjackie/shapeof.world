@@ -1,0 +1,58 @@
+{
+  "id": "cellular-night",
+  "code": "CMP-A01",
+  "title": {
+    "en": "Cellular Night",
+    "zh": "细胞之夜"
+  },
+  "category": "computing-engineering",
+  "archetype": "ambient",
+  "moods": [
+    "generational",
+    "sparse",
+    "nocturnal",
+    "rule-bound"
+  ],
+  "topics": [
+    "game-of-life",
+    "cellular-automata",
+    "emergence"
+  ],
+  "energy": 1,
+  "bpm": 50,
+  "key": "D minor",
+  "instruments": [
+    "tiny electric clicks",
+    "soft square-wave dots",
+    "low drone"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.868,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about generations of a cellular automaton passing like night. Around 50 BPM, D minor. Tiny electric clicks as cells; a few surviving square-wave dots; a low drone as the grid. Sparse, nocturnal, rule-bound. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No 8-bit chiptune melody-as-song, no drums.\n\n[00:00–00:30] Empty grid drone, then a handful of clicks.\n[00:30–01:20] Patterns blink, some die, a glider-like figure crosses stereo slowly.\n[01:20–02:00] Density thins to still lifes: held square tones.\n[02:00–02:30] Night again: drone and one leftover click.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:08:39Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/cellular-night/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/cellular-night/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/cellular-night/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:11.430154+00:00",
+  "generation": {
+    "id": "8a153340-30f1-4ebe-b3cc-573c8566d653",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:07:41Z",
+    "completedAt": "2026-08-25T10:08:39Z",
+    "durationMs": 58000,
+    "interactionId": "b2mNaqmOJO_crtoPxNyAqQ0",
+    "clientRequestId": "ee2bd8e5-f029-4f40-892c-61d661a9a657",
+    "synthid": true,
+    "c2pa": "urn:c2pa:bb5dbbfc-8f65-0c26-1085-424849025ad7",
+    "sha256": "67624cffce711d80fd650a0ec236ad8d93f8c84d26c5c9ea8685e5466e57cc1d"
+  }
+}

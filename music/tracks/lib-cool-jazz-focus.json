@@ -1,0 +1,105 @@
+{
+  "id": "lib-cool-jazz-focus",
+  "code": "LIB-09-02",
+  "title": {
+    "en": "Focus — Cool Jazz",
+    "zh": "专注 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "cool-jazz"
+  ],
+  "energy": 4,
+  "bpm": 82,
+  "key": "A minor",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second cool jazz instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 82 BPM; A minor. Main idea: a descending melody with an upward answer. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A lively and sophisticated big band swing piece featuring a prominent clarinet melody, supported by brass, saxophone, piano, upright bass, and drums. The arrangement is dynamic, building in complexity and energy.",
+    "zh": "一首活泼精致的大乐队摇摆乐曲，以单簧管为主旋律，辅以铜管乐器、萨克斯风、钢琴、低音提琴和鼓。编曲充满活力，复杂性和能量逐渐增强。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.245,
+  "generatedAt": "2026-09-09T08:09:56.987791+00:00",
+  "generation": {
+    "id": "85bbc843-c38e-411b-a273-ec94ef54aa6e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:09:09.394340+00:00",
+    "completedAt": "2026-09-09T08:09:56.987791+00:00",
+    "interactionId": "JhShavz2JMzRi9sPrKHS-AM",
+    "sha256": "9bb106a458958f681f6c1d331cce62186d33a942b22f38d1c5fc50e13095428f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and sophisticated big band swing piece featuring a prominent clarinet melody, supported by brass, saxophone, piano, upright bass, and drums. The arrangement is dynamic, building in complexity and energy.",
+      "zh": "一首活泼精致的大乐队摇摆乐曲，以单簧管为主旋律，辅以铜管乐器、萨克斯风、钢琴、低音提琴和鼓。编曲充满活力，复杂性和能量逐渐增强。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Trumpet",
+      "Trombone",
+      "Saxophone",
+      "Piano",
+      "Upright Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Jazzy",
+      "Swing",
+      "Upbeat",
+      "Playful",
+      "Lively",
+      "Sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:10:06.066078+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:10:53.311133+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,105 @@
+{
+  "id": "lib-orchestral-puzzle",
+  "code": "LIB-06-07",
+  "title": {
+    "en": "Clues — Orchestral",
+    "zh": "线索 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "orchestral"
+  ],
+  "energy": 3,
+  "bpm": 108,
+  "key": "C lydian",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second orchestral adventure instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 108 BPM; C lydian. Main idea: an ascending fourth answered by a stepwise descent. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A dynamic orchestral piece featuring prominent strings, woodwinds, and brass. It transitions from a light, whimsical and playful mood to more dramatic and melancholic sections, evoking a narrative journey. The arrangement is rich and varied, suitable for storytelling or cinematic contexts.",
+    "zh": "一首充满活力的管弦乐作品，以突出的弦乐、木管乐和铜管乐为特色。它从轻快、异想天开和俏皮的氛围过渡到更具戏剧性和忧郁的段落，唤起一种叙事性的旅程。编曲丰富多样，适合讲故事或电影配乐。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 89.652,
+  "generatedAt": "2026-09-09T08:01:16.387128+00:00",
+  "generation": {
+    "id": "58655bb9-c91b-46d3-a3d4-17a4403c27f3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:00:34.210883+00:00",
+    "completedAt": "2026-09-09T08:01:16.387128+00:00",
+    "interactionId": "IxKhaqX6ILGejMwP1PWpyAg",
+    "sha256": "0dcde795a7ebb0cef4cb5f3e3d91fe4108f6449d207389872730d0541183e345"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dynamic orchestral piece featuring prominent strings, woodwinds, and brass. It transitions from a light, whimsical and playful mood to more dramatic and melancholic sections, evoking a narrative journey. The arrangement is rich and varied, suitable for storytelling or cinematic contexts.",
+      "zh": "一首充满活力的管弦乐作品，以突出的弦乐、木管乐和铜管乐为特色。它从轻快、异想天开和俏皮的氛围过渡到更具戏剧性和忧郁的段落，唤起一种叙事性的旅程。编曲丰富多样，适合讲故事或电影配乐。"
+    },
+    "instruments": [
+      "Orchestra",
+      "Strings",
+      "Woodwinds",
+      "Brass",
+      "Harp",
+      "Percussion"
+    ],
+    "moods": [
+      "Whimsical",
+      "Playful",
+      "Narrative",
+      "Dramatic",
+      "Melancholic",
+      "Lighthearted"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "High-quality orchestral recording with clear instrumentation and dynamic emotional range, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:01:29.918774+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:02:51.289746+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

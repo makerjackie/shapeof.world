@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-minimalism-rest",
+  "code": "GAME-07-4",
+  "title": {
+    "en": "Hidden Corridor · Rest",
+    "zh": "隐秘长廊 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "mild stealth and suspense",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 92,
+  "key": "",
+  "instruments": [
+    "low marimba",
+    "bass clarinet",
+    "quiet ticking percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for mild stealth and suspense, rest state. Instruments: low marimba, bass clarinet, quiet ticking percussion. 92 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A calm and reflective piece featuring pizzicato strings, sustained string melodies, and a gentle piano. The mood is peaceful and slightly melancholic, with a slow, steady tempo.",
+    "zh": "一首平静而富有沉思感的乐曲，以拨弦乐器、持续的弦乐旋律和柔和的钢琴为特色。情绪平和，略带忧郁，节奏缓慢而稳定。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 88.764,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:25:17.211056+00:00",
+  "generation": {
+    "id": "eb535d16-bda6-434c-b86e-5a6113c7e95c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:24:35.571493+00:00",
+    "completedAt": "2026-09-22T09:25:17.211056+00:00",
+    "interactionId": "VEmyavPUIP6N88EPy_v08Ac",
+    "sha256": "b4917666687e6605d78ed42b8541412d283c1fe895baa1d1c46803b00159974a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective piece featuring pizzicato strings, sustained string melodies, and a gentle piano. The mood is peaceful and slightly melancholic, with a slow, steady tempo.",
+      "zh": "一首平静而富有沉思感的乐曲，以拨弦乐器、持续的弦乐旋律和柔和的钢琴为特色。情绪平和，略带忧郁，节奏缓慢而稳定。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Piano",
+      "Strings",
+      "Cello",
+      "Acoustic Guitar"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Peaceful",
+      "Melancholic",
+      "Gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Standard quality assessment.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:25:28.592863+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 4.1249886621315195,
+    "sourceEndSeconds": 63.201904761904764,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -1.04,
+        "rmsDbfs": -15.1,
+        "dcOffset": 0.001998707546497909,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.003753662109375,
+        "internalStepP999": 0.09154205322266762,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.82,
+        "dcOffset": 0.001454660545197163,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00262451171875,
+        "internalStepP999": 0.12335205078125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A serene and ethereal synthesized texture featuring a repeating, melancholic bell-like melody over a sustained, evolving pad. It evokes a dreamy or reflective atmosphere.",
+        "zh": "一种宁静而空灵的合成音效纹理，以重复的、略带忧郁的钟声旋律为主，叠加在持续演变的衬底音上。它营造出一种梦幻或沉思的氛围。"
+      },
+      "reason": "The audio presents a clean, well-produced synthesized texture with a clear, repeating melodic element. It loops seamlessly between repetitions, demonstrating excellent technical usability for sound design libraries. No defects, voices, or abrupt changes were detected.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:40.982913+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "c912146ba6b20e681427f0a00fd534bc781551e410969fc8d32d0f50ab4c8c7b"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. The transitions at both 58.927 seconds and 117.854 seconds are smooth, maintaining consistent rhythm, harmony, and dynamics. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits, making it suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:47.964299+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-minimalism-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a923c6846e56c7c2952fdd2a815a281a7628b7ff1a52422e8e94723619b3236d",
+      "bytes": 1243472,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b4917666687e6605d78ed42b8541412d283c1fe895baa1d1c46803b00159974a",
+      "bytes": 2138005,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "296bed719c4c6ec0271d88bcb33d0a6c90282dfd87cc7ec5986e86454e057ef2",
+      "bytes": 2802,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "198d484969f3f1a427638e1430cc79e880df604d9a0858952dbc23355a79361c",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "def24d51f6bbc2c95bb567ed09de1553376db7779f500f77cdd8e128025bf3bc",
+      "bytes": 642019,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.464758+00:00"
+}

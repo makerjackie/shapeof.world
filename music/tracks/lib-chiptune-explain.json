@@ -1,0 +1,100 @@
+{
+  "id": "lib-chiptune-explain",
+  "code": "LIB-29-05",
+  "title": {
+    "en": "Discovery — Chiptune",
+    "zh": "发现 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 136,
+  "key": "G major",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second melodic chiptune instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 136 BPM; G major. Main idea: a repeating five-note figure with space between phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and playful electronic track with a retro chiptune feel, featuring prominent synth melodies, driving bass, and energetic drums.",
+    "zh": "一首欢快活泼的电子音乐，带有复古的芯片音乐风格，以突出的合成器旋律、强劲的低音和充满活力的鼓点为特色。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.242,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:15:14.630895+00:00",
+  "generation": {
+    "id": "9f5c804b-d020-4f1c-8be1-0cba51d61842",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:14:28.283205+00:00",
+    "completedAt": "2026-09-09T09:15:14.630895+00:00",
+    "interactionId": "dSOhaoObHObq8vUPyqaQQA",
+    "sha256": "cc358ae018b52cd7d15d1554e732f32547adc6c135f2f12bc4d5cf08de2b7d58"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and playful electronic track with a retro chiptune feel, featuring prominent synth melodies, driving bass, and energetic drums.",
+      "zh": "一首欢快活泼的电子音乐，带有复古的芯片音乐风格，以突出的合成器旋律、强劲的低音和充满活力的鼓点为特色。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Playful",
+      "Energetic",
+      "Retro",
+      "Quirky"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": "The track is well-produced with a clear, consistent sound. It features a distinct chiptune style that is engaging and suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:15:23.272087+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:16:34.570400+00:00"
+}

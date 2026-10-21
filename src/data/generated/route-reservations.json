@@ -1,0 +1,71 @@
+{
+  "topLevelRoutes": [
+    "about",
+    "api",
+    "category",
+    "changelog",
+    "explore",
+    "failures",
+    "feedback",
+    "logo",
+    "making",
+    "media",
+    "privacy",
+    "routes",
+    "sources",
+    "terms",
+    "worlds"
+  ],
+  "exactPagePaths": [
+    "/",
+    "/about",
+    "/changelog",
+    "/failures",
+    "/feedback",
+    "/logo",
+    "/making",
+    "/privacy",
+    "/routes",
+    "/sources",
+    "/terms",
+    "/worlds"
+  ],
+  "languagePrefixes": [
+    "en",
+    "zh"
+  ],
+  "legacyEntryNames": [
+    "history",
+    "index.htm",
+    "index.html",
+    "lab",
+    "t",
+    "w",
+    "zh"
+  ],
+  "staticNames": [
+    "android-chrome-192x192.png",
+    "android-chrome-512x512.png",
+    "android-chrome-compass-192x192.png",
+    "android-chrome-compass-512x512.png",
+    "apple-touch-icon-compass.png",
+    "apple-touch-icon.png",
+    "assets",
+    "draco",
+    "favicon-16x16.png",
+    "favicon-32x32.png",
+    "favicon-compass-16x16.png",
+    "favicon-compass-32x32.png",
+    "favicon-compass.svg",
+    "favicon.ico",
+    "favicon.svg",
+    "generated",
+    "offline.html",
+    "robots.txt",
+    "site.webmanifest",
+    "sitemap.xml",
+    "sw.js",
+    "third-party-notices.txt",
+    "vendor"
+  ]
+}

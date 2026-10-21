@@ -1,0 +1,99 @@
+{
+  "id": "lib-felt-piano-explain",
+  "code": "LIB-01-05",
+  "title": {
+    "en": "Discovery — Felt Piano",
+    "zh": "发现 · 毡音钢琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "felt-piano"
+  ],
+  "energy": 2,
+  "bpm": 64,
+  "key": "G major",
+  "instruments": [
+    "felt piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second neoclassical felt piano instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: felt piano, soft cello. Style: spacious broken chords, intimate close room. Tempo approximately 64 BPM; G major. Main idea: a descending melody with an upward answer. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A melancholic and reflective classical piece featuring a prominent piano melody accompanied by lush orchestral strings. The arrangement builds gently, creating a serene yet emotional atmosphere.",
+    "zh": "一首忧郁而沉思的古典乐曲，以突出的钢琴旋律为主，并伴有丰富的大提琴弦乐。编曲轻柔地发展，营造出宁静而感性的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.954,
+  "generatedAt": "2026-09-09T07:40:31.703589+00:00",
+  "generation": {
+    "id": "54017f6b-f06a-47b6-b9bc-48dbb69bf387",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:39:48.147960+00:00",
+    "completedAt": "2026-09-09T07:40:31.703589+00:00",
+    "interactionId": "RQ2haqvcH8y5jMwP4P3F-Qs",
+    "sha256": "543425451aa7b036a810f7371edc521ddc4731aa71abf600eaade0c8cb8da270"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and reflective classical piece featuring a prominent piano melody accompanied by lush orchestral strings. The arrangement builds gently, creating a serene yet emotional atmosphere.",
+      "zh": "一首忧郁而沉思的古典乐曲，以突出的钢琴旋律为主，并伴有丰富的大提琴弦乐。编曲轻柔地发展，营造出宁静而感性的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Orchestra"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Serene",
+      "Emotional",
+      "Grand"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:40:39.210897+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:42:04.278004+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,19 +1,36 @@
-import type { SupportedLocale } from './locale'
+import { parseWorldPath, worldPath } from './world-urls'
+import { localizePathname, stripLocalePrefix, type SupportedLocale } from './locale'
 
 const campaignParameter = /^(?:utm_.+|gclid|fbclid|msclkid)$/i
 
-export function localizedPublicUrl(rawUrl: string, locale: SupportedLocale): string {
+export function publicUrlWithoutLocale(rawUrl: string): string {
   const url = new URL(rawUrl)
-  url.searchParams.set('lang', locale)
+  url.searchParams.delete('lang')
+  url.pathname = stripLocalePrefix(url.pathname)
+  const world = parseWorldPath(url.pathname)
+  if (world?.legacy) url.pathname = worldPath(world.worldId)
   return url.toString()
 }
 
+export function localizedPublicUrl(rawUrl: string, locale: SupportedLocale): string {
+  const url = new URL(publicUrlWithoutLocale(rawUrl))
+  url.pathname = localizePathname(url.pathname, locale)
+  return url.toString()
+}
+
+/** Chinese keeps the pretty default URL. English self-canonicalizes under `/en`. */
+export function languageCanonicalUrl(rawUrl: string, locale: SupportedLocale): string {
+  const xDefault = publicUrlWithoutLocale(rawUrl)
+  return locale === 'en' ? localizedPublicUrl(xDefault, 'en') : xDefault
+}
+
 export function localizedShareUrl(rawUrl: string, locale: SupportedLocale): string {
-  const url = new URL(rawUrl)
+  const url = new URL(publicUrlWithoutLocale(rawUrl))
   for (const key of [...url.searchParams.keys()]) {
     if (campaignParameter.test(key)) url.searchParams.delete(key)
   }
-  url.searchParams.set('lang', locale)
+  url.searchParams.delete('lang')
+  url.pathname = localizePathname(url.pathname, locale)
   return url.toString()
 }
 

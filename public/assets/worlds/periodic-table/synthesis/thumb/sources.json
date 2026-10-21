@@ -1,0 +1,346 @@
+{
+  "tool": "Version: ImageMagick 7.1.1-41 Q16-HDRI aarch64 22504 https://imagemagick.org",
+  "renderer": "Chromium 149.0.7827.55; full SVG rendered to transparent 160x120 canvas",
+  "records": [
+    {
+      "symbol": "Md",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Md-160-0a707843794b.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Md.svg",
+      "sourceSha256": "d416f38ef9144d7c0c6cd6a34343250c756e72baa3509e954cc285a94ad43d0b",
+      "sha256": "0a707843794bcd823b2e3a3e6b6caefc6037335d76aa97d4dded3792974d3c51",
+      "bytes": 6320,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "No",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/No-160-be96d06ed22a.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/No.svg",
+      "sourceSha256": "9adcbf3c54fa39abd83aacee6a548fdfb7b72e0e917e2c520e5c2d2cf2ea8ad3",
+      "sha256": "be96d06ed22a8fd0af69abac72fb285a5939bf0b146cda0e0363d47225195c3a",
+      "bytes": 6550,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Lr",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Lr-160-e0942f2a0626.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Lr.svg",
+      "sourceSha256": "9dee08070206ba0a6b9059f0e26fcd9fce8467b230cf5faeae928e2dec594198",
+      "sha256": "e0942f2a0626e25578962d6fadf6d49529837fa5aafe7396d3b8db2994800981",
+      "bytes": 6438,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Rf",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Rf-160-4f6d57476ce8.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Rf.svg",
+      "sourceSha256": "60eaff859f2618f04fb1816b61305356137ae6519422a2c2d7d31f4705cae035",
+      "sha256": "4f6d57476ce8d0e1802d0af2aa11cd3fb029b69ff3725a76342a561037fa556b",
+      "bytes": 6180,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Db",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Db-160-c16f52c3418e.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Db.svg",
+      "sourceSha256": "18a22384740fd2d6a4eea53e067439cfa92bbae207282a29099234eac1fd0fb9",
+      "sha256": "c16f52c3418e8b8677e2645b01fa738e13c5985bda4e7b047acb88dabd8c013b",
+      "bytes": 6412,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Sg",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Sg-160-e14500922299.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Sg.svg",
+      "sourceSha256": "b21a7201b151d820a614b08a522c4b9c0e7ec25762d8506488131c6695b3cbb8",
+      "sha256": "e1450092229917b02cc65eec5e40464d1b5a2dc31f6773c06be8e3fdaa0cadcf",
+      "bytes": 6450,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Bh",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Bh-160-1c9faaf5af75.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Bh.svg",
+      "sourceSha256": "3b5e2aaedeeb4bae7141548523f42b7f8ebfa3f6f00efedb6b5e76349f7b01b9",
+      "sha256": "1c9faaf5af7534dbf755d6fc8977e6acbabb609be2dac20831f054f3947dfa2a",
+      "bytes": 6508,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Hs",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Hs-160-67dbdf3b0abe.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Hs.svg",
+      "sourceSha256": "9f1c3ae6a7d7d39fea5d17c5905530ff48baa0b0559a6f08758fcd013bafef79",
+      "sha256": "67dbdf3b0abe17ddd1d5241943e64c19a40bb3cf80ffedb0f128b797bd34e551",
+      "bytes": 6552,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Mt",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Mt-160-ac100e538029.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Mt.svg",
+      "sourceSha256": "c1af14211adf9670309360de6ca704c48146b340cd09f37c14ebaa6f1683b645",
+      "sha256": "ac100e538029c6f78d8cfdd14e0333ca7d58d16a23972e1a5db47b99af27bf3a",
+      "bytes": 6534,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Ds",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Ds-160-b65f6b9b7022.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Ds.svg",
+      "sourceSha256": "abbeae44db9f61811a5e5c94fdc0e4c2b11a7a7f6b244b8c69f94fcf6f1c9fb5",
+      "sha256": "b65f6b9b7022d175454d6cf5618729209cdbad41fd024e78a596fe77526630d6",
+      "bytes": 6610,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Rg",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Rg-160-efe34f7a6bc3.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Rg.svg",
+      "sourceSha256": "dd83f43616a7dfee8704124bced33deb26d1eaa8b676dd472000fc41ea297b35",
+      "sha256": "efe34f7a6bc3adbcde3526aebaae49fdfba30dbe97d59a3bd4a8d50d5a083946",
+      "bytes": 6622,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Cn",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Cn-160-f5b611eeb448.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Cn.svg",
+      "sourceSha256": "28e2803526e080a5710a25a5f3d6abb936b1f60a5657578a26888178e8245394",
+      "sha256": "f5b611eeb4487e499edd6e5ab36a2afc2b2ebd0639210c6bfdba27d26160dcb6",
+      "bytes": 6648,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Nh",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Nh-160-bc9041626629.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Nh.svg",
+      "sourceSha256": "4b8b575e78e40f36fc1559541ccc5771b9752bb7ab1b51a0c4a8c289858f1b3a",
+      "sha256": "bc9041626629bbaca50b563fe093ebda6601e73619d2bfe8ef5c88ed6fde57d7",
+      "bytes": 6628,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Fl",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Fl-160-088bf5ef9e3f.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Fl.svg",
+      "sourceSha256": "6a543f6322ab01e643db4d3e028e835ba1ef1351294dbd072055b380e0e0914a",
+      "sha256": "088bf5ef9e3f7f263d61bddc1116e05d90381c55a5a0412a5d3e8309daf9c3a2",
+      "bytes": 6712,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Mc",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Mc-160-412bb38cd4f9.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Mc.svg",
+      "sourceSha256": "b493a8360ce489507e2ddfe5a502d9146222333727fef8a8f30ce9c515adb34f",
+      "sha256": "412bb38cd4f9950834c4fae6737d7b440a91133dbb221481752ccfd3950ea0b2",
+      "bytes": 6780,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Lv",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Lv-160-d74b2255fca0.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Lv.svg",
+      "sourceSha256": "66a2c2375fb5388e00ada5aae70417439b1c92c1e1d297680fcfba9970b05e17",
+      "sha256": "d74b2255fca0b1f121f6958916ab396f01f00bba796bfc3d0ba76d756dd9a3f2",
+      "bytes": 6794,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    },
+    {
+      "symbol": "Og",
+      "asset": "/assets/worlds/periodic-table/synthesis/thumb/Og-160-e17d690d20c3.webp",
+      "source": "/assets/worlds/periodic-table/synthesis/Og.svg",
+      "sourceSha256": "b8714a0d31310ca28c905093692813379ed523770761ed116cfc01c33a9521bd",
+      "sha256": "e17d690d20c313c9aeea564ab413db12ac0b67a5fa89394d6f77f6ff42eea447",
+      "bytes": 6798,
+      "width": 160,
+      "height": 120,
+      "transform": [
+        "-strip",
+        "-quality",
+        "82",
+        "-define",
+        "webp:method=6"
+      ],
+      "credit": "Shape of the World",
+      "license": "CC BY-NC 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-nc/4.0/"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-06",
+  "code": "SFX-MAGIC-06",
+  "title": {
+    "en": "Healing glow",
+    "zh": "治愈光芒"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 5,
+  "seed": 214584283,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized healing glow for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的治愈光芒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 214584283,
+    "sha256": "2896196964cdfe8f3d7f729af1bc1beaf675d37c727a419e747e2ad6b659e875",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "77dbb94d37afa285849b49c0a2135414ede6e33e04a2cc34a12d078817152e8c",
+      "bytes": 34420,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2896196964cdfe8f3d7f729af1bc1beaf675d37c727a419e747e2ad6b659e875",
+      "bytes": 211724,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5a1beb0b5d190096495888c37b1126d6d6b57aa6696f26f2e761dcea96af5280",
+      "bytes": 50725,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6be74b81ef106bebaf9d8bea153bf452ab7439ba1344175408d311ea7724ca75",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 105840,
+    "duration": 2.4,
+    "peakDbfs": -4.45,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.0183583416005292e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.25485638427734303,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, magical whoosh sound effect followed by a series of sparkling, high-pitched chimes or pings, suggesting a magical appearance, transition, or UI element.",
+      "zh": "一个短促的魔法嗖嗖声，随后是一系列闪烁、高音的叮当声或提示音，暗示着魔法出现、过渡或用户界面元素。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect suitable for various sound design applications like magic, transitions, or UI feedback. No defects or unintended elements are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:42.879697+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "77dbb94d37afa285849b49c0a2135414ede6e33e04a2cc34a12d078817152e8c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 105840
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.881339+00:00"
+}

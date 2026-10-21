@@ -1,0 +1,101 @@
+{
+  "id": "lib-house-suspense",
+  "code": "LIB-27-09",
+  "title": {
+    "en": "Shadows — House",
+    "zh": "暗影 · 浩室"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "house"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "G minor",
+  "instruments": [
+    "warm synth chords",
+    "four-on-floor drums",
+    "sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second deep instrumental house instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: warm synth chords, four-on-floor drums, sub bass. Style: consistent dance groove, small filter movement, no large drop. Tempo approximately 112 BPM; G minor. Main idea: a descending melody with an upward answer. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "An energetic and upbeat electronic track featuring a driving synth melody, pulsating bassline, and a steady electronic drum beat. The production is clean and polished, creating a positive and danceable atmosphere.",
+    "zh": "一首充满活力和乐观的电子音乐，以驱动的合成器旋律、脉动的低音线和稳定的电子鼓点为特色。制作干净精致，营造出积极和适合跳舞的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.823,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:11:11.529201+00:00",
+  "generation": {
+    "id": "df6a640f-e634-432e-ba32-59e3df539bc8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:10:24.893780+00:00",
+    "completedAt": "2026-09-09T09:11:11.529201+00:00",
+    "interactionId": "giKhatHmFdW54vEPzPyHuAE",
+    "sha256": "e004c570a8d1975d1b27d50f59cf20908a613785d40f493e0ce5f434a4b1e5eb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat electronic track featuring a driving synth melody, pulsating bassline, and a steady electronic drum beat. The production is clean and polished, creating a positive and danceable atmosphere.",
+      "zh": "一首充满活力和乐观的电子音乐，以驱动的合成器旋律、脉动的低音线和稳定的电子鼓点为特色。制作干净精致，营造出积极和适合跳舞的氛围。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "bass synthesizer",
+      "percussion"
+    ],
+    "moods": [
+      "energetic",
+      "upbeat",
+      "positive",
+      "danceable",
+      "driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, free of defects, and features a clear, engaging electronic arrangement suitable for various media applications requiring an energetic and positive mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:11:20.729848+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-house-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-house-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-house-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:12:29.276343+00:00"
+}

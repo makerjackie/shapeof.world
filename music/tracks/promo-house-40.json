@@ -1,0 +1,159 @@
+{
+  "id": "promo-house-40",
+  "code": "PROMO-04-40",
+  "title": {
+    "en": "Prism Dance · 40",
+    "zh": "棱镜舞步 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "rounded kick",
+    "electric piano stabs",
+    "bright synth bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a driving beat, synth melodies, and a positive, modern feel, suitable for promotional content.",
+    "zh": "一首欢快且充满活力的电子音乐，具有强劲的节拍、合成器旋律和积极现代的氛围，适合宣传内容。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:23:33.926180+00:00",
+  "generation": {
+    "id": "eec4f47d-b83f-41e3-9803-1ab3953eba74",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:22:53.947203+00:00",
+    "completedAt": "2026-09-10T05:23:33.926180+00:00",
+    "interactionId": "rj6iaqmYJaLijNAPs_zQyQE",
+    "sha256": "96af7d9414a5840ff5c2f44270e7ddaa28b749faa84e58df3bc567b19052a327"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving beat, synth melodies, and a positive, modern feel, suitable for promotional content.",
+      "zh": "一首欢快且充满活力的电子音乐，具有强劲的节拍、合成器旋律和积极现代的氛围，适合宣传内容。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass Guitar (Synth)"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Positive",
+      "Driving",
+      "Modern",
+      "Optimistic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High production quality, clear mix, engaging rhythm, and positive mood make it versatile for various media uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a rhythmic synth arpeggio and a driving beat, establishing an energetic feel. It concludes with a deliberate fade-out on a sustained synth chord, providing a smooth and resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:23:56.458362+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "13ab83f6ceb33e8dd2b23174901cb49aa785d0f4adad7824bb384045141d0c18"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.626083,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "Upbeat and energetic electronic dance music with a driving beat, prominent synth melodies, and a consistent rhythm. Features a clear, modern production style.",
+      "zh": "欢快且充满活力的电子舞曲，带有强劲的节拍、突出的合成器旋律和连贯的节奏。制作风格清晰现代。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synthesizer",
+      "bass"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "danceable",
+      "positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean production and clear musicality.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:23:46.766276+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.626083,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-house-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-house-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-house-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:02.081202+00:00"
+}

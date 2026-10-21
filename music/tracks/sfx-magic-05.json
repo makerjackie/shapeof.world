@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-05",
+  "code": "SFX-MAGIC-05",
+  "title": {
+    "en": "Earth pulse",
+    "zh": "大地脉冲"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 4,
+  "seed": 2394174183,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized earth pulse for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的大地脉冲合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2394174183,
+    "sha256": "b91c53bfd87e9a124c424d5c31477f583a7b1338192654905b4f98c7ed09be94",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "216af7f31620934b4b0a7d22ea199fe9090ef9725b9bb76848db68e69bc8ab07",
+      "bytes": 30763,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b91c53bfd87e9a124c424d5c31477f583a7b1338192654905b4f98c7ed09be94",
+      "bytes": 187028,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d06e4ceb20c09f45cd2e8d3f6a30edb2bc6a5cb3f16f68424a258e0ad1fbeed3",
+      "bytes": 44761,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3b51f690683ab0a21f0385ffed53d33974af21e92bb6332473c3fb5e35abfe42",
+      "bytes": 1948,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 93492,
+    "duration": 2.12,
+    "peakDbfs": -4.53,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.5134273687855647e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1869357299804686,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized electronic sound effect. It begins with a distinct, high-pitched 'boing' or 'spring' like sound, followed by a descending, metallic-tinged 'ricochet' or 'whoosh' that fades out. The sound is clean and sharp.",
+      "zh": "一个短促的合成电子音效。以一个清晰、高音的‘boing’或‘弹簧’般的声音开始，随后是一个带有金属感的下降式‘跳弹’或‘嗖’声，并逐渐消逝。音色干净而尖锐。"
+    },
+    "reason": "The audio is a clear, isolated, and well-produced synthesized sound effect. It contains no speech, music, or technical defects like clipping or glitches. Its distinct character makes it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:45.098839+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "216af7f31620934b4b0a7d22ea199fe9090ef9725b9bb76848db68e69bc8ab07"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 93492
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.881080+00:00"
+}

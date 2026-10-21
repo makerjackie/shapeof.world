@@ -1,0 +1,102 @@
+{
+  "id": "lib-pipa-focus",
+  "code": "LIB-18-02",
+  "title": {
+    "en": "Focus — Pipa",
+    "zh": "专注 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "pipa"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "A minor",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Chinese plucked-string ensemble instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 106 BPM; A minor. Main idea: alternating short and long phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian instrumental piece featuring a prominent plucked zither (likely guzheng) and a bamboo flute, accompanied by subtle percussion. The melody is flowing and contemplative, evoking a sense of calm and reflection.",
+    "zh": "一首宁静的东亚传统器乐曲，以突出的弹拨古筝和竹笛为主，并伴有微妙的打击乐。旋律流畅而沉思，营造出一种平静和反思的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.812,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:46:52.095383+00:00",
+  "generation": {
+    "id": "43373422-75e1-45f6-8c04-39caa58c5cc6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:45:52.859017+00:00",
+    "completedAt": "2026-09-09T08:46:52.095383+00:00",
+    "interactionId": "whyhasTxBf6WjMwPtfeJmQQ",
+    "sha256": "9564bd68acb327f5788be8b428334d5bb1460e07afe485be825bcb97dc790fac"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian instrumental piece featuring a prominent plucked zither (likely guzheng) and a bamboo flute, accompanied by subtle percussion. The melody is flowing and contemplative, evoking a sense of calm and reflection.",
+      "zh": "一首宁静的东亚传统器乐曲，以突出的弹拨古筝和竹笛为主，并伴有微妙的打击乐。旋律流畅而沉思，营造出一种平静和反思的感觉。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Dizi",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Traditional",
+      "Reflective",
+      "Serene",
+      "Melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced, clear instrumental piece with no audible defects, making it suitable for a music library. The instrumentation and mood are consistent throughout.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:47:04.340783+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:47:57.137142+00:00"
+}

@@ -1,0 +1,163 @@
+{
+  "id": "promo-funk-35",
+  "code": "PROMO-01-35",
+  "title": {
+    "en": "Magnetic Click · 35",
+    "zh": "磁力轻响 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted rhythm guitar",
+    "elastic electric bass",
+    "dry claps",
+    "tight kick"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody, driving bassline, and a steady drum beat. It has a modern rock/pop feel with a dynamic arrangement.",
+    "zh": "一首欢快且充满活力的器乐曲，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它具有现代摇滚/流行风格，编排充满动感。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:21:12.028356+00:00",
+  "generation": {
+    "id": "f0e3bd69-8f54-4725-ae58-7db7f8a49f05",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:20:34.954520+00:00",
+    "completedAt": "2026-09-10T05:21:12.028356+00:00",
+    "interactionId": "Iz6iasXLIf6k694P1Iir8AQ",
+    "sha256": "ece529806f390a195b9cab8ac8dded7355473be06f367b5da30b8104868b8b36"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody, driving bassline, and a steady drum beat. It has a modern rock/pop feel with a dynamic arrangement.",
+      "zh": "一首欢快且充满活力的器乐曲，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它具有现代摇滚/流行风格，编排充满动感。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Positive",
+      "Modern",
+      "Groovy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "A well-produced, dynamic, and versatile instrumental track suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a distinct electric guitar riff, bass, and drums, establishing the main groove. It concludes with a sustained, resolved chord, followed by a short reverb tail.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:29.644381+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "9b71d00a386e3b3f3a5cbb7082b48c59f4cffbee2bd43b969f477469daaf4756"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.070167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track with a funky pop-rock feel. It features a prominent electric guitar melody, a driving bassline, solid drums, and subtle synth pads, creating a lively and positive atmosphere.",
+      "zh": "一首充满活力和能量的器乐曲，带有放克流行摇滚的风格。它以突出的电吉他旋律、强劲的贝斯线、扎实的鼓点和微妙的合成器铺垫为特色，营造出活泼积极的氛围。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Funky",
+      "Groovy",
+      "Positive",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:21.440791+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 23.070166999999998,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-funk-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-funk-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-funk-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:40.556216+00:00"
+}

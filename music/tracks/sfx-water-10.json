@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-10",
+  "code": "SFX-WATER-10",
+  "title": {
+    "en": "Liquid pour",
+    "zh": "液体倾倒"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 9,
+  "seed": 1243576284,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized liquid pour for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的液体倾倒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.68,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1243576284,
+    "sha256": "16e1a76b7821a7fbbe8856916532787aa0c4a7586376455fd67b8d7fe6a8f9be",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "163ea8517ef318613534b3f502439656c4c4e503865c5ee42e86ef44fee7d503",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "16e1a76b7821a7fbbe8856916532787aa0c4a7586376455fd67b8d7fe6a8f9be",
+      "bytes": 60020,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ed96f0238a60e9c8ff66716733b71e6202e30bea22e24755d8cecfdf760b0cca",
+      "bytes": 12184,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "226794e821bfc0889df050b10cfa9103e60917f28d22306702c54214a4ebb8c9",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 29988,
+    "duration": 0.68,
+    "peakDbfs": -3.14,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.1703086182389623e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12864013671874952,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized whoosh or swipe sound followed by a resonant, low-frequency impact or thud.",
+      "zh": "一个短促、高音调的合成嗖嗖声或划过声，随后是一个共鸣的低频撞击声或砰击声。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced synthesized sound effect, suitable for UI feedback, transitions, or impacts in games/video. It has no technical flaws or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:37.747051+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "163ea8517ef318613534b3f502439656c4c4e503865c5ee42e86ef44fee7d503"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 29988
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.912118+00:00"
+}

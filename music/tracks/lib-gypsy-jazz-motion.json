@@ -1,0 +1,102 @@
+{
+  "id": "lib-gypsy-jazz-motion",
+  "code": "LIB-10-08",
+  "title": {
+    "en": "Motion — Gypsy Jazz",
+    "zh": "跃动 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 160,
+  "key": "B minor",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second acoustic swing jazz instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 160 BPM; B minor. Main idea: an ascending fourth answered by a stepwise descent. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A lively and energetic instrumental piece featuring a prominent violin melody, supported by a string ensemble and acoustic guitar. It has a folk or traditional dance feel.",
+    "zh": "一首活泼而充满活力的器乐曲，以小提琴为主旋律，由弦乐合奏和原声吉他伴奏。具有民间或传统舞蹈的风格。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.704,
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:14:34.364284+00:00",
+  "generation": {
+    "id": "529596b2-5b32-4c62-afb5-c28a17233c80",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:13:46.825501+00:00",
+    "completedAt": "2026-09-09T08:14:34.364284+00:00",
+    "interactionId": "PBWhasGPAvbQi9sPmYO72AI",
+    "sha256": "89bf3708592e4cee4f7d64b488fbbb0ced7eb8b5a1799bebc11fa55dff0827b9"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and energetic instrumental piece featuring a prominent violin melody, supported by a string ensemble and acoustic guitar. It has a folk or traditional dance feel.",
+      "zh": "一首活泼而充满活力的器乐曲，以小提琴为主旋律，由弦乐合奏和原声吉他伴奏。具有民间或传统舞蹈的风格。"
+    },
+    "instruments": [
+      "violin",
+      "acoustic guitar",
+      "cello",
+      "double bass"
+    ],
+    "moods": [
+      "lively",
+      "energetic",
+      "folk",
+      "traditional",
+      "danceable",
+      "upbeat"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-performed and recorded instrumental piece with a clear folk/traditional character, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:36:06.289285+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:38:22.815263+00:00"
+}

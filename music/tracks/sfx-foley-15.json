@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-15",
+  "code": "SFX-FOLEY-15",
+  "title": {
+    "en": "Dice toss",
+    "zh": "骰子投掷"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 14,
+  "seed": 2141270162,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized dice toss for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的骰子投掷合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2141270162,
+    "sha256": "feb3e7d9cdbc0b61339cfef5dd689aff3e3d55720124c15cf02c1f668417c8d8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "88cc8f5daa949c616e410a59fdbacac2f11e7978cd8728a083f90008066c1afe",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "feb3e7d9cdbc0b61339cfef5dd689aff3e3d55720124c15cf02c1f668417c8d8",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "949c84dff4a8eb39b14ae97494af496f953d3f6156bf27a0f6ed13a066aed6d6",
+      "bytes": 11549,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c68434fb4c9b5f9a50b00f05fc11339819ff5ec4d69dff103a45a9b8e3e9063c",
+      "bytes": 1908,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.52,
+    "dcOffset": 2.12925715157858e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.23863586425781103,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or spark sound effect, with a quick attack and decay.",
+      "zh": "一个短促、尖锐、高音调的电子冲击或火花音效，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct electronic zap, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:01.064221+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "88cc8f5daa949c616e410a59fdbacac2f11e7978cd8728a083f90008066c1afe"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.866655+00:00"
+}

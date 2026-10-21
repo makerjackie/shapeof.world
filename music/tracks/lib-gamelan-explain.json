@@ -1,0 +1,105 @@
+{
+  "id": "lib-gamelan-explain",
+  "code": "LIB-23-05",
+  "title": {
+    "en": "Discovery — Gamelan",
+    "zh": "发现 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "gamelan"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "G major",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second gamelan-inspired instrumental instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 80 BPM; G major. Main idea: an ascending fourth answered by a stepwise descent. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A gentle and reflective classical piece featuring pizzicato strings, a soft wind instrument like a recorder or flute, and later joined by harp arpeggios and sustained bowed strings. The mood is calm and slightly melancholic.",
+    "zh": "一首轻柔而富有沉思感的古典乐曲，以拨弦乐器、柔和的管乐器（如竖笛或长笛）为主，随后加入竖琴琶音和持续的弓弦乐器。整体氛围平静略带忧郁。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 86.361,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:01:27.250406+00:00",
+  "generation": {
+    "id": "9b4c2548-de0d-4aa9-95a0-edd843c05b49",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:00:47.016251+00:00",
+    "completedAt": "2026-09-09T09:01:27.250406+00:00",
+    "interactionId": "QCChaufCFpDSi9sP696dkAg",
+    "sha256": "ed8e9ecd8fa8ef8beedc007682577156ba06f639c199be39c19e796135942ab1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and reflective classical piece featuring pizzicato strings, a soft wind instrument like a recorder or flute, and later joined by harp arpeggios and sustained bowed strings. The mood is calm and slightly melancholic.",
+      "zh": "一首轻柔而富有沉思感的古典乐曲，以拨弦乐器、柔和的管乐器（如竖笛或长笛）为主，随后加入竖琴琶音和持续的弓弦乐器。整体氛围平静略带忧郁。"
+    },
+    "instruments": [
+      "Pizzicato strings",
+      "Recorder",
+      "Flute",
+      "Harp",
+      "Bowed strings",
+      "Cello",
+      "Violin"
+    ],
+    "moods": [
+      "Gentle",
+      "Calm",
+      "Reflective",
+      "Melancholic",
+      "Peaceful",
+      "Classical"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced instrumental piece with clear, distinct classical instruments, suitable for background or reflective scenes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:01:35.627970+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:02:53.922607+00:00"
+}

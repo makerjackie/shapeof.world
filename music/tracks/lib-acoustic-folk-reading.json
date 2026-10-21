@@ -1,0 +1,98 @@
+{
+  "id": "lib-acoustic-folk-reading",
+  "code": "LIB-15-01",
+  "title": {
+    "en": "Reading — Acoustic Folk",
+    "zh": "静读 · 原声民谣"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "acoustic-folk"
+  ],
+  "energy": 2,
+  "bpm": 84,
+  "key": "D major",
+  "instruments": [
+    "steel-string guitar",
+    "mandolin",
+    "light hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second fingerstyle acoustic folk instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: steel-string guitar, mandolin, light hand percussion. Style: alternating bass picking and a clear acoustic melody. Tempo approximately 84 BPM; D major. Main idea: a descending melody with an upward answer. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A calm and mellow acoustic guitar piece with a gentle bass line, creating a relaxing and pleasant atmosphere.",
+    "zh": "一首平静而柔和的木吉他曲，配以轻柔的贝斯线，营造出轻松愉悦的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.148,
+  "generatedAt": "2026-09-09T08:29:24.584051+00:00",
+  "generation": {
+    "id": "1ad8472c-c4fd-4c87-a3fb-8649df84a0f6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:28:44.586992+00:00",
+    "completedAt": "2026-09-09T08:29:24.584051+00:00",
+    "interactionId": "vRihat2AN-q6i9sPx5K0uAY",
+    "sha256": "e2a97be6879a1c0e77649c6dc7f50cd8aecb26f8d79c2708dce037fbfdace7db"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and mellow acoustic guitar piece with a gentle bass line, creating a relaxing and pleasant atmosphere.",
+      "zh": "一首平静而柔和的木吉他曲，配以轻柔的贝斯线，营造出轻松愉悦的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar"
+    ],
+    "moods": [
+      "Calm",
+      "Mellow",
+      "Relaxing",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "The audio is a well-recorded, pleasant instrumental piece with no defects, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:29:34.837205+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-acoustic-folk-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:31:16.365487+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

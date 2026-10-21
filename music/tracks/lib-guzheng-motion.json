@@ -1,0 +1,105 @@
+{
+  "id": "lib-guzheng-motion",
+  "code": "LIB-17-08",
+  "title": {
+    "en": "Motion — Guzheng",
+    "zh": "跃动 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "guzheng"
+  ],
+  "energy": 4,
+  "bpm": 86,
+  "key": "B minor",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Chinese chamber instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 86 BPM; B minor. Main idea: alternating short and long phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A majestic and epic traditional Chinese orchestral piece featuring prominent plucked strings, flutes, and a dynamic percussion section. It builds from a clear melodic theme to a grand, powerful soundscape.",
+    "zh": "一首雄伟壮丽的中国传统管弦乐曲，以突出的弹拨乐器、笛子和富有活力的打击乐部分为特色。它从清晰的旋律主题发展到宏大而有力的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 120.66,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:45:48.979948+00:00",
+  "generation": {
+    "id": "9b7fae64-afae-4611-a05f-0ef1241c21db",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:44:50.408468+00:00",
+    "completedAt": "2026-09-09T08:45:48.979948+00:00",
+    "interactionId": "gxyhasK8IZC9jMwPrKKKyAI",
+    "sha256": "a71c53255e6cdab18e062280e400c23d76d8ea0c2de093803115cb3b6a55f2ed"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A majestic and epic traditional Chinese orchestral piece featuring prominent plucked strings, flutes, and a dynamic percussion section. It builds from a clear melodic theme to a grand, powerful soundscape.",
+      "zh": "一首雄伟壮丽的中国传统管弦乐曲，以突出的弹拨乐器、笛子和富有活力的打击乐部分为特色。它从清晰的旋律主题发展到宏大而有力的音景。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Pipa",
+      "Flute",
+      "Percussion",
+      "Gong",
+      "Cymbals",
+      "Drums"
+    ],
+    "moods": [
+      "Majestic",
+      "Epic",
+      "Traditional",
+      "Dramatic",
+      "Powerful",
+      "Inspiring"
+    ],
+    "energy": 4,
+    "bpmEstimate": 105,
+    "reason": "Well-produced traditional Chinese orchestral piece with a grand and epic feel, suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:45:59.806758+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:46:41.223191+00:00"
+}

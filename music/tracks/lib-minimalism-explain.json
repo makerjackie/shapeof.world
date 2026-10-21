@@ -1,0 +1,102 @@
+{
+  "id": "lib-minimalism-explain",
+  "code": "LIB-04-05",
+  "title": {
+    "en": "Discovery — Minimalism",
+    "zh": "发现 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 108,
+  "key": "G major",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second acoustic minimalism instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 108 BPM; G major. Main idea: a repeating five-note figure with space between phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A classical-style orchestral piece featuring piano, strings, and woodwinds, with a flowing, elegant melody and a waltz-like rhythm.",
+    "zh": "一首古典风格的管弦乐曲，以钢琴、弦乐和木管乐器为主，旋律流畅优雅，带有华尔兹般的节奏。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.137,
+  "generatedAt": "2026-09-09T07:53:32.431239+00:00",
+  "generation": {
+    "id": "303d9d45-4939-49d3-b43a-af3a9003d44c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:52:40.080134+00:00",
+    "completedAt": "2026-09-09T07:53:32.431239+00:00",
+    "interactionId": "SRChao7eEcy5jMwP4P3F-Qs",
+    "sha256": "9ca574d26515be8f87c59a85050ae333d2c76a06e2e81b6ff0eab077b1289b13"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style orchestral piece featuring piano, strings, and woodwinds, with a flowing, elegant melody and a waltz-like rhythm.",
+      "zh": "一首古典风格的管弦乐曲，以钢琴、弦乐和木管乐器为主，旋律流畅优雅，带有华尔兹般的节奏。"
+    },
+    "instruments": [
+      "Piano",
+      "Violin",
+      "Cello",
+      "Clarinet",
+      "Flute"
+    ],
+    "moods": [
+      "Elegant",
+      "Whimsical",
+      "Nostalgic",
+      "Graceful",
+      "Refined"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "Clean recording of a well-composed orchestral piece with clear instrumentation and a pleasant melody.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:53:41.242821+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:54:42.065118+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

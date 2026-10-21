@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-07",
+  "code": "SFX-IMPACT-07",
+  "title": {
+    "en": "Rubber bounce",
+    "zh": "橡胶弹跳"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 6,
+  "seed": 2130897241,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized rubber bounce for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的橡胶弹跳合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2130897241,
+    "sha256": "b765c85ee38fabd48a88fb66c6c4d8810f664fd605659fb532524b34f0b8ad72",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8c4b0042de50c45613b34b91155853253a7f9c77451feace5c3c66a2fa6252bf",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b765c85ee38fabd48a88fb66c6c4d8810f664fd605659fb532524b34f0b8ad72",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8e67499e067a910ef5dc65df1853bd37e51bbd73de078f68df0d66e850450d2f",
+      "bytes": 5173,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "770b65ef5a128fcfab535db652b974d3263bd41e0eacbd81f152035820f44b3a",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -3.34,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.5224188633786848e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.030814331054687782,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or zapper sound effect.",
+      "zh": "一个短促、高音调的电子冲击或电击音效。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect suitable for UI feedback, sci-fi elements, or quick impacts in games and video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:02.784706+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "8c4b0042de50c45613b34b91155853253a7f9c77451feace5c3c66a2fa6252bf"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.876937+00:00"
+}

@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-synthwave-challenge",
+  "code": "GAME-05-3",
+  "title": {
+    "en": "Orbital Dock · Challenge",
+    "zh": "轨道船坞 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "science-fiction navigation",
+    "challenge"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "analog sequencer",
+    "filtered bass",
+    "restrained drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for science-fiction navigation, challenge state. Instruments: analog sequencer, filtered bass, restrained drums. 112 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring prominent synthesizers, a driving beat, and a futuristic, playful melody. It has a clean, well-produced sound.",
+    "zh": "一首欢快且充满活力的电子音乐，以突出的合成器、强劲的节拍和未来感十足的俏皮旋律为特色。音质清晰，制作精良。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 88.137,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:23:37.039739+00:00",
+  "generation": {
+    "id": "aaeddbb0-0839-403e-82f2-a69455ea5017",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:54.798148+00:00",
+    "completedAt": "2026-09-22T09:23:37.039739+00:00",
+    "interactionId": "70iyapXBIoyrrtoPpqeQqQg",
+    "sha256": "31453af4b62b1791a96aca00a174a0e70f8aacb335f39fe8b8ef1060da824cdc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring prominent synthesizers, a driving beat, and a futuristic, playful melody. It has a clean, well-produced sound.",
+      "zh": "一首欢快且充满活力的电子音乐，以突出的合成器、强劲的节拍和未来感十足的俏皮旋律为特色。音质清晰，制作精良。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Futuristic",
+      "Playful",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:46.858545+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 28.355556,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1250480,
+    "sourceStartSeconds": 18.875011337868482,
+    "sourceEndSeconds": 47.31945578231293,
+    "crossfadeSeconds": 0.08888888888888889,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1250480,
+        "duration": 28.355556,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.85,
+        "dcOffset": 0.005833219760408878,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.0054931640625,
+        "internalStepP999": 0.082305908203125,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1250480,
+        "duration": 28.355556,
+        "peakDbfs": -0.94,
+        "rmsDbfs": -14.9,
+        "dcOffset": 0.005563966586244944,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002197265625,
+        "internalStepP999": 0.0853271484375,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A metallic, resonant, and somewhat industrial electronic hum or drone with a subtle, rhythmic percussive element integrated into the texture. It evokes a sense of machinery or an abstract, sci-fi environment.",
+        "zh": "一种金属质感、共鸣感强的电子嗡鸣声或无人机声，带有微妙的、有节奏的打击乐元素融入其中。它唤起了一种机械感或抽象的科幻环境。"
+      },
+      "reason": "The sound is a clean, well-produced electronic texture with a distinct metallic and industrial character. Its consistent nature and seamless looping make it ideal for background ambience in sci-fi, industrial, or abstract game/video environments. It provides a strong, immersive textural layer without being distracting.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:59.327523+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "109aaca607a45780376fa47226271c4483322829e3e351174994e631bcb07319"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified intervals. Rhythm, harmony, dynamics, and phrase continuity are maintained without any noticeable breaks, abrupt changes, fade-ins, or cadences. It is well-suited for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:31:05.376173+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6d417f3594f5b8fbfb4be032200a4818af0a3054d325b0cffd616154e1721660",
+      "bytes": 1234694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "31453af4b62b1791a96aca00a174a0e70f8aacb335f39fe8b8ef1060da824cdc",
+      "bytes": 2122958,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "5fe071ecad0c6132645733ad8f7d6eb2030a3b5dd5fccf0245116c1a599c61af",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "6b650e2adaed1530e905bfd1dd77a681a10142ac0ab0998aca0d039015a42855",
+      "bytes": 5001964,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "dd2224fd194233dfd4d7cc13676a4725d318d5e21fc60fe44c69d64b629c4106",
+      "bytes": 306018,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.466297+00:00"
+}

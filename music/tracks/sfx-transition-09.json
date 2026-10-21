@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-09",
+  "code": "SFX-TRANSITION-09",
+  "title": {
+    "en": "Hard cut",
+    "zh": "硬切重音"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 8,
+  "seed": 3915449736,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized hard cut for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的硬切重音合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3915449736,
+    "sha256": "31419faf0adb2b0ed5f3794a5ab12cbed9c058c5eb7589032e6dd705934a7a2f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8efc8e3be93b5d68c109c63a27fe41416a5d3781c52ee45e3304d680a176690b",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "31419faf0adb2b0ed5f3794a5ab12cbed9c058c5eb7589032e6dd705934a7a2f",
+      "bytes": 61784,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6b9343f3675f9120d75962643b84ae0cfb24d46e8f093eb1ff64b495697bb691",
+      "bytes": 12995,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a5be7e01797425a92b4e29f6c255ea17c68709ed429933fc7be0c69e83dcb182",
+      "bytes": 1926,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 30870,
+    "duration": 0.7,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.51,
+    "dcOffset": 1.977167355037253e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15687988281250087,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched metallic impact sound with a brief, resonant decay. It sounds like a small, quick clang or strike.",
+      "zh": "一个短促、尖锐、高音的金属撞击声，带有短暂的共鸣衰减。听起来像一声小而快速的叮当声或敲击声。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced sound effect without any technical defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:50.348071+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "8efc8e3be93b5d68c109c63a27fe41416a5d3781c52ee45e3304d680a176690b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 30870
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.903884+00:00"
+}

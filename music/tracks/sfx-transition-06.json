@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-06",
+  "code": "SFX-TRANSITION-06",
+  "title": {
+    "en": "Spin",
+    "zh": "旋转转场"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 5,
+  "seed": 39767264,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized spin for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的旋转转场合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 39767264,
+    "sha256": "cbbac9f06ecd30b76fad93ae1d21c53319ae48d183c896ccf84a73f768fcccac",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c7ada9abd442316319ad69057d3f4a8eecb814fb2ab405a29d8e08fcc23a9eab",
+      "bytes": 24912,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cbbac9f06ecd30b76fad93ae1d21c53319ae48d183c896ccf84a73f768fcccac",
+      "bytes": 149984,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d0a631d0a783f39a4a467890af04bf6f2c941e2d192bf2eab0959ed6fc983b75",
+      "bytes": 22533,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "19736ee7f89687bcf0d4652d48c190c62201ece5e6f656a6a822e19082898593",
+      "bytes": 1917,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 74970,
+    "duration": 1.7,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.65,
+    "dcOffset": -2.157438496231826e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11775048828125279,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh or swoosh sound effect, ending with a low-frequency rumble or growl.",
+      "zh": "一个短促的合成嗖嗖声或呼啸声效果，以低频隆隆声或咆哮声结束。"
+    },
+    "reason": "The sound is a clean, isolated, and intentionally synthesized effect, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:47.860493+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c7ada9abd442316319ad69057d3f4a8eecb814fb2ab405a29d8e08fcc23a9eab"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 74970
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.903297+00:00"
+}

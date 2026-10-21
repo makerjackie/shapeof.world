@@ -1,0 +1,102 @@
+{
+  "id": "lib-chamber-puzzle",
+  "code": "LIB-02-07",
+  "title": {
+    "en": "Clues — Chamber",
+    "zh": "线索 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "chamber"
+  ],
+  "energy": 3,
+  "bpm": 90,
+  "key": "C lydian",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second chamber classical instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 90 BPM; C lydian. Main idea: a repeating five-note figure with space between phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A classical-style string ensemble piece with a flowing, elegant melody, featuring both arco and pizzicato sections, creating a sophisticated and graceful atmosphere.",
+    "zh": "一首古典风格的弦乐合奏曲，旋律流畅优雅，包含弓奏和拨奏部分，营造出精致而优美的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.432,
+  "generatedAt": "2026-09-09T07:44:55.050443+00:00",
+  "generation": {
+    "id": "dfefba09-fd70-4a04-8aa7-4d0206de60b8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:44:08.126448+00:00",
+    "completedAt": "2026-09-09T07:44:55.050443+00:00",
+    "interactionId": "SQ6haqmXFKKsrtoP65a1oAo",
+    "sha256": "2388525faa6a0e133b3f8f0b80e940e3a2ec467af46a78ed4db925d1590e7be4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style string ensemble piece with a flowing, elegant melody, featuring both arco and pizzicato sections, creating a sophisticated and graceful atmosphere.",
+      "zh": "一首古典风格的弦乐合奏曲，旋律流畅优雅，包含弓奏和拨奏部分，营造出精致而优美的氛围。"
+    },
+    "instruments": [
+      "String Ensemble",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass"
+    ],
+    "moods": [
+      "Elegant",
+      "Classical",
+      "Sophisticated",
+      "Graceful",
+      "Flowing",
+      "Refined"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The audio is a well-performed and recorded instrumental piece with clear instrumentation and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:45:06.579390+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:58.729292+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

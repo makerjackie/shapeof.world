@@ -1,0 +1,425 @@
+/* 银河系 × 仙女座：深空构图。舞台独占中区，说明与参数退到安全区。 */
+
+.gcx-experience {
+  --world-accent: #e8c27a;
+  --freebar-accent: #9dbcff;
+  /* Shared glass — keep translucent so the galaxy shows through. */
+  --experience-panel-surface: linear-gradient(
+    180deg,
+    rgba(12, 18, 32, 0.55),
+    rgba(5, 8, 16, 0.48)
+  );
+  --experience-panel-border: rgba(126, 166, 255, 0.16);
+  --experience-panel-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --experience-panel-blur: 20px;
+  --experience-panel-saturation: 1.18;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #02030a;
+  --gcx-readout-bottom: 104px;
+}
+
+.gcx-stage {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: none;
+}
+
+.gcx-experience.is-dragging .gcx-stage {
+  cursor: grabbing;
+}
+
+/* 暗角：把视线压回中心，避免满屏均匀噪点 */
+.gcx-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 88% at 50% 46%, rgba(0, 0, 0, 0) 44%, rgba(2, 3, 8, 0.5) 78%, rgba(1, 2, 6, 0.86) 100%);
+  pointer-events: none;
+}
+
+/* —— 点题铭牌（顶左，非交互） —— */
+.gcx-plate {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: max(18px, env(safe-area-inset-left, 0px));
+  z-index: 6;
+  max-width: min(320px, 62vw);
+  pointer-events: none;
+}
+
+.gcx-plate strong {
+  display: block;
+  color: rgba(238, 243, 255, 0.94);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.75);
+}
+
+.gcx-plate span {
+  display: block;
+  margin-top: 5px;
+  color: rgba(206, 220, 246, 0.6);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+/* —— 被动读数（底左，非交互） —— */
+.gcx-readout {
+  position: absolute;
+  bottom: var(--gcx-readout-bottom);
+  left: max(18px, env(safe-area-inset-left, 0px));
+  z-index: 6;
+  display: grid;
+  gap: 5px 14px;
+  min-width: 176px;
+  pointer-events: none;
+}
+
+.gcx-readout-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.gcx-readout-row small {
+  color: rgba(198, 212, 240, 0.52);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.gcx-readout-row strong {
+  color: rgba(240, 246, 255, 0.92);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.gcx-readout-row strong.is-accent {
+  color: #9dbcff;
+}
+
+.gcx-readout-row strong.is-burst {
+  color: #bcd6ff;
+}
+
+.gcx-readout-row strong.is-sun {
+  color: #ffce6e;
+}
+
+.gcx-readout-phase {
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(160, 190, 240, 0.16);
+  color: rgba(214, 226, 248, 0.74);
+  font-size: 11px;
+  line-height: 1.5;
+  max-width: 250px;
+}
+
+/* —— 自由底栏：只调排布，材质走 --experience-panel-* —— */
+.gcx-freebar .experience-freebar-main {
+  width: min(860px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  gap: 8px;
+}
+.gcx-freebar .experience-freebar-primary {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap !important;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.gcx-freebar .experience-freebar-primary > .experience-freebar-play,
+.gcx-freebar .experience-freebar-primary > .experience-freebar-summary {
+  flex: 0 0 auto;
+}
+.gcx-freebar-secondary {
+  width: 100%;
+  flex-wrap: wrap;
+}
+.gcx-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+/* 交会模式 · 流速 · 视角 · 重置/故事 同一条横滑轨 */
+.gcx-chip-rail {
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 1px 2px;
+}
+.gcx-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+.gcx-chip-rail > * {
+  flex: 0 0 auto;
+}
+.gcx-rail-sep {
+  width: 1px;
+  height: 18px;
+  margin: 0 2px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 1px;
+}
+
+/*
+ * 时间轴：距今 | 滑杆(下挂今天/并合) | 读数 —— 与播放钮同一视觉行
+ */
+.gcx-freebar .gcx-time {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 1fr) auto;
+  gap: 4px 10px;
+  flex: 1 1 560px;
+  min-width: 0;
+  max-width: none;
+  align-items: center;
+}
+
+.gcx-freebar .gcx-time-label {
+  color: rgba(248, 244, 236, 0.55);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.gcx-freebar .gcx-time-track {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  min-width: 0;
+}
+
+.gcx-freebar .gcx-time input[type='range'] {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  accent-color: var(--freebar-accent, #9dbcff);
+}
+
+.gcx-freebar .gcx-time-ends {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: rgba(198, 212, 240, 0.45);
+  font-size: 10px;
+  line-height: 1.15;
+  pointer-events: none;
+}
+
+.gcx-freebar .gcx-time-ends span {
+  white-space: nowrap;
+}
+
+.gcx-freebar .gcx-time-value {
+  color: var(--freebar-accent, #9dbcff);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.gcx-chip-rail button,
+.gcx-rate button {
+  min-height: 30px;
+  padding: 0 11px;
+  color: rgba(232, 240, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11.5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gcx-chip-rail button:hover,
+.gcx-rate button:hover {
+  border-color: rgba(126, 166, 255, 0.5);
+}
+
+.gcx-chip-rail button.is-on,
+.gcx-rate button.is-on {
+  color: #071019;
+  border-color: #9dbcff;
+  background: #9dbcff;
+  font-weight: 600;
+}
+
+.gcx-freebar .gcx-note-link {
+  min-height: 32px;
+  padding: 0 4px;
+  color: rgba(206, 220, 246, 0.48);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gcx-freebar .gcx-note-link:hover {
+  color: rgba(200, 222, 255, 0.9);
+}
+
+/* —— 模型说明 —— */
+.gcx-note {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 4, 10, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.gcx-note article {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(78vh, 620px);
+  overflow-y: auto;
+  padding: 26px 26px 22px;
+  color: rgba(232, 240, 255, 0.86);
+  border: 1px solid rgba(126, 166, 255, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(11, 16, 28, 0.97), rgba(6, 9, 18, 0.97));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.gcx-note h2 {
+  margin: 0 0 14px;
+  color: #f2f6ff;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.gcx-note p {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.gcx-note strong {
+  color: #9dbcff;
+  font-weight: 600;
+}
+
+.gcx-note small {
+  display: block;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(160, 190, 240, 0.16);
+  color: rgba(198, 212, 240, 0.56);
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+
+.gcx-note button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: rgba(232, 240, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .gcx-experience {
+    --gcx-readout-bottom: 92px;
+  }
+
+  /* 故事模式下手机屏底部让给字幕轨，读数退场 */
+  .gcx-experience.is-story .gcx-readout {
+    display: none;
+  }
+
+  .gcx-plate {
+    max-width: min(280px, 74vw);
+  }
+
+  .gcx-plate strong {
+    font-size: 13.5px;
+  }
+
+  .gcx-plate span {
+    font-size: 11px;
+  }
+
+  .gcx-readout {
+    min-width: 0;
+    gap: 3px 10px;
+  }
+
+  .gcx-readout-row strong {
+    font-size: 11.5px;
+  }
+
+  .gcx-readout-phase {
+    max-width: min(300px, 78vw);
+    font-size: 10.5px;
+  }
+
+  .gcx-freebar .experience-freebar-main {
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+  }
+
+  /* 手机主行：播放 | 时间轴 | 折叠图标，禁止时间轴独占一行把播放挤飞 */
+  .gcx-freebar .experience-freebar-primary {
+    flex-wrap: nowrap !important;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .gcx-freebar .gcx-time {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+@media (min-width: 721px) {
+  .gcx-chip-rail {
+    justify-content: center;
+  }
+
+  .gcx-freebar .experience-freebar-primary {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .gcx-freebar .gcx-time {
+    flex: 1 1 min(560px, 58vw);
+    max-width: 640px;
+  }
+}

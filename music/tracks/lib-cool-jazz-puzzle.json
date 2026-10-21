@@ -1,0 +1,106 @@
+{
+  "id": "lib-cool-jazz-puzzle",
+  "code": "LIB-09-07",
+  "title": {
+    "en": "Clues — Cool Jazz",
+    "zh": "线索 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "cool-jazz"
+  ],
+  "energy": 4,
+  "bpm": 86,
+  "key": "C lydian",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second cool jazz instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 86 BPM; C lydian. Main idea: a descending melody with an upward answer. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A lively and playful big band jazz piece featuring prominent brass and woodwind melodies over a walking bass line and swinging drum rhythm. The arrangement is dynamic with call-and-response sections and a cheerful, energetic feel.",
+    "zh": "一首活泼俏皮的大乐队爵士乐曲，以突出的铜管和木管旋律为主，配以行进贝斯线和摇摆的鼓点节奏。编曲充满活力，有呼应部分，整体感觉欢快而充满能量。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.268,
+  "generatedAt": "2026-09-09T08:11:15.169033+00:00",
+  "generation": {
+    "id": "12520d7b-752e-483e-a562-98f98e26013a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:10:30.750543+00:00",
+    "completedAt": "2026-09-09T08:11:15.169033+00:00",
+    "interactionId": "dxShasC0OczRi9sPrKHS-AM",
+    "sha256": "0213f55fe27b9d278b09c92107b6d46d36a74cb457fb005e18a407596c295333"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful big band jazz piece featuring prominent brass and woodwind melodies over a walking bass line and swinging drum rhythm. The arrangement is dynamic with call-and-response sections and a cheerful, energetic feel.",
+      "zh": "一首活泼俏皮的大乐队爵士乐曲，以突出的铜管和木管旋律为主，配以行进贝斯线和摇摆的鼓点节奏。编曲充满活力，有呼应部分，整体感觉欢快而充满能量。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Piano",
+      "Trumpet",
+      "Trombone",
+      "Clarinet",
+      "Saxophone"
+    ],
+    "moods": [
+      "Playful",
+      "Cheerful",
+      "Lively",
+      "Whimsical",
+      "Energetic",
+      "Uplifting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:11:24.125367+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:12:04.695155+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

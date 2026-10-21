@@ -1,0 +1,103 @@
+{
+  "id": "lib-gamelan-focus",
+  "code": "LIB-23-02",
+  "title": {
+    "en": "Focus — Gamelan",
+    "zh": "专注 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "gamelan"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "A minor",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second gamelan-inspired instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 80 BPM; A minor. Main idea: alternating short and long phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and melodic instrumental piece featuring a prominent flute-like melody, supported by pizzicato strings, harp, and gentle bell sounds. The arrangement is light and airy, creating a peaceful and somewhat whimsical atmosphere.",
+    "zh": "一首宁静而悠扬的器乐曲，以长笛般的旋律为主，辅以拨弦乐器、竖琴和轻柔的钟声。编曲轻盈空灵，营造出平和而略带奇幻的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 114.155,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:00:53.049239+00:00",
+  "generation": {
+    "id": "fcfb3514-66ea-4232-8987-6d9b5f45e227",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:00:06.370423+00:00",
+    "completedAt": "2026-09-09T09:00:53.049239+00:00",
+    "interactionId": "FyChavuRFOq6i9sPx5K0uAY",
+    "sha256": "973e7c45fe0bda8224e248d8bbd52c61ef43e0db085ca7537e9fbaba10b76478"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and melodic instrumental piece featuring a prominent flute-like melody, supported by pizzicato strings, harp, and gentle bell sounds. The arrangement is light and airy, creating a peaceful and somewhat whimsical atmosphere.",
+      "zh": "一首宁静而悠扬的器乐曲，以长笛般的旋律为主，辅以拨弦乐器、竖琴和轻柔的钟声。编曲轻盈空灵，营造出平和而略带奇幻的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Harp",
+      "Pizzicato Strings",
+      "Bells",
+      "Pads"
+    ],
+    "moods": [
+      "Peaceful",
+      "Serene",
+      "Calm",
+      "Whimsical",
+      "Dreamy",
+      "Relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 62,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:01:04.191028+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:01:46.966513+00:00"
+}

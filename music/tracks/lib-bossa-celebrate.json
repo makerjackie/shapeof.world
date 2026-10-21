@@ -1,0 +1,102 @@
+{
+  "id": "lib-bossa-celebrate",
+  "code": "LIB-08-10",
+  "title": {
+    "en": "First Light — Bossa",
+    "zh": "初光 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "bossa"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "C major",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second bossa nova instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 124 BPM; C major. Main idea: an ascending fourth answered by a stepwise descent. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and upbeat jazz instrumental featuring a clarinet melody, supported by piano chords, a walking upright bass line, and swing drums.",
+    "zh": "一首活泼欢快的爵士乐器曲，以单簧管演奏主旋律，配以钢琴和弦、行进式低音提琴和摇摆鼓点。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.279,
+  "generatedAt": "2026-09-09T08:09:28.061184+00:00",
+  "generation": {
+    "id": "fc1b5aa6-0830-4f61-a651-26ef6e1583f6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:08:47.143982+00:00",
+    "completedAt": "2026-09-09T08:09:28.061184+00:00",
+    "interactionId": "EBShavyqAubq8vUPyqaQQA",
+    "sha256": "33d12c09a08bdc71221f295098b38b010048e85e84369b9e00c88a7c2a7d05aa"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat jazz instrumental featuring a clarinet melody, supported by piano chords, a walking upright bass line, and swing drums.",
+      "zh": "一首活泼欢快的爵士乐器曲，以单簧管演奏主旋律，配以钢琴和弦、行进式低音提琴和摇摆鼓点。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Piano",
+      "Upright Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Jazzy",
+      "Swing",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:09:36.491048+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:10:10.085838+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

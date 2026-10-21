@@ -1,0 +1,13 @@
+{
+  "name": "shapeof-press",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test src/index.test.mjs",
+    "dev": "node scripts/build.mjs && pnpm --dir ../.. exec wrangler dev --config infra/press/wrangler.jsonc",
+    "deploy:dry-run": "node scripts/build.mjs && pnpm --dir ../.. exec wrangler deploy --config infra/press/wrangler.jsonc --dry-run",
+    "deploy": "node scripts/build.mjs && node --test src/index.test.mjs && pnpm --dir ../.. exec wrangler deploy --config infra/press/wrangler.jsonc"
+  }
+}

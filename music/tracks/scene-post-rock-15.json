@@ -1,0 +1,179 @@
+{
+  "id": "scene-post-rock-15",
+  "code": "SCENE-16-15",
+  "title": {
+    "en": "Open Windows · 15",
+    "zh": "打开窗户 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "uplifting architecture and open landscapes",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "clean guitar harmonics",
+    "bass",
+    "restrained acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for uplifting architecture and open landscapes. Instruments: clean guitar harmonics, bass, restrained acoustic drums. 120 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and groovy instrumental track featuring a prominent electric guitar melody, a driving bassline, and a steady drum beat. It has a positive and energetic feel, suitable for various promotional or background uses.",
+    "zh": "一首欢快且律动感十足的纯音乐，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它营造出积极而充满活力的氛围，适合各种宣传或背景用途。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "uplifting architecture and open landscapes"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:39.819106+00:00",
+  "generation": {
+    "id": "0aef3832-b673-4fe3-924d-49ad98065d4e",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:17:25.823757+00:00",
+    "completedAt": "2026-09-22T09:17:39.819106+00:00",
+    "interactionId": "p0eyarqIC53vv_gP1PPxsQc",
+    "sha256": "a9ba0c7c7246b5afbfef7734761a92a231b672324c0a47d455f2dd06d17b2657"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring a prominent electric guitar melody, a driving bassline, and a steady drum beat. It has a positive and energetic feel, suitable for various promotional or background uses.",
+      "zh": "一首欢快且律动感十足的纯音乐，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它营造出积极而充满活力的氛围，适合各种宣传或背景用途。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Groovy",
+      "Energetic",
+      "Positive",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The track is well-produced, has a clear structure, and a positive, energetic vibe without any defects, making it suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy electric guitar riff and full band instrumentation. It concludes with a clear, deliberate final chord and drum hit, providing a resolved musical ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:54.251276+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "2d0c38a6883503fb4458253fa4b49d53090d9ad9c3a41be6bd129a51720749bd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.533,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody, driving bassline, and solid drum beat. It has a positive and lively pop-rock feel with a touch of funk.",
+      "zh": "一首欢快活泼的纯音乐，以突出的电吉他旋律为主，配以强劲的贝斯线和扎实的鼓点。整体呈现出积极、充满活力的流行摇滚风格，并带有一丝放克元素。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Lively",
+      "Groovy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:47.271197+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 12.533000000000001,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-post-rock-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-post-rock-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-post-rock-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2d0c38a6883503fb4458253fa4b49d53090d9ad9c3a41be6bd129a51720749bd",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a9ba0c7c7246b5afbfef7734761a92a231b672324c0a47d455f2dd06d17b2657",
+      "bytes": 668460,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "5e443231a8d0468de4a5c9008528413ea897d2e1de304f84fa57059f56929673",
+      "bytes": 2790,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.850295+00:00"
+}

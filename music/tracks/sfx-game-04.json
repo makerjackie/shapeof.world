@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-04",
+  "code": "SFX-GAME-04",
+  "title": {
+    "en": "Mana restore",
+    "zh": "恢复能量"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 3,
+  "seed": 3507653669,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized mana restore for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的恢复能量合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.88,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3507653669,
+    "sha256": "a13c8fad16809143f687f40159ae14bdd2dc7b766d1f10269993b55b749ecaf0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b0cf883301e47e2dc8b1a3d32398a7ef20baf13da94f78c37a8067a1eef58870",
+      "bytes": 13209,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a13c8fad16809143f687f40159ae14bdd2dc7b766d1f10269993b55b749ecaf0",
+      "bytes": 77660,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "557ba5ea3b7de4ba53c1f9df4e6063a1416c2dd394c39521fb32414cb0e036d8",
+      "bytes": 8818,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "303203f2ec316c1d14f28dbf0eb7046735ed105a8058ae33f7642af0f3020c84",
+      "bytes": 1948,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 38808,
+    "duration": 0.88,
+    "peakDbfs": -4.93,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.403690927128427e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.06135809326171904,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, digital notification chime, resembling a 'ding' sound.",
+      "zh": "一个短促、高音调的数字通知提示音，类似于“叮”的声音。"
+    },
+    "reason": "The sound is a clean, distinct digital chime, suitable for UI feedback or alerts in games/video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:35.027389+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b0cf883301e47e2dc8b1a3d32398a7ef20baf13da94f78c37a8067a1eef58870"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 38808
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.872347+00:00"
+}

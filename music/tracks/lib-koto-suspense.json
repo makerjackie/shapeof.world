@@ -1,0 +1,101 @@
+{
+  "id": "lib-koto-suspense",
+  "code": "LIB-19-09",
+  "title": {
+    "en": "Shadows — Koto",
+    "zh": "暗影 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "koto"
+  ],
+  "energy": 3,
+  "bpm": 58,
+  "key": "G minor",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Japanese acoustic instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 58 BPM; G minor. Main idea: an ascending fourth answered by a stepwise descent. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and reflective instrumental piece featuring a prominent flute melody over a string section and a subtle plucked string accompaniment. The piece builds in intensity and instrumentation, incorporating piano-like harmonies and a fuller orchestral sound before a gentle fade-out.",
+    "zh": "一首忧郁而沉思的器乐曲，以悠扬的长笛旋律为主，配以弦乐和微妙的拨弦乐器伴奏。乐曲逐渐增强，融入了钢琴般的和声和更丰富的管弦乐音效，最后温柔地渐弱。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 178.024,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:50:58.398323+00:00",
+  "generation": {
+    "id": "47d5cd55-156a-4774-8fb4-b5302009d3fd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:50:10.484865+00:00",
+    "completedAt": "2026-09-09T08:50:58.398323+00:00",
+    "interactionId": "wx2hasDNF4u3i9sP7uehmQM",
+    "sha256": "346f67d7390a2b2a12e99756d8abb37c25d1e8f1a3222e0fefab0d19ef3bab19"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and reflective instrumental piece featuring a prominent flute melody over a string section and a subtle plucked string accompaniment. The piece builds in intensity and instrumentation, incorporating piano-like harmonies and a fuller orchestral sound before a gentle fade-out.",
+      "zh": "一首忧郁而沉思的器乐曲，以悠扬的长笛旋律为主，配以弦乐和微妙的拨弦乐器伴奏。乐曲逐渐增强，融入了钢琴般的和声和更丰富的管弦乐音效，最后温柔地渐弱。"
+    },
+    "instruments": [
+      "Flute",
+      "Strings",
+      "Harp",
+      "Piano"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Serene",
+      "Emotional",
+      "Elegant"
+    ],
+    "energy": 3,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:51:08.966641+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:52:21.209957+00:00"
+}

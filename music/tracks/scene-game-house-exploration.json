@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-house-exploration",
+  "code": "GAME-10-2",
+  "title": {
+    "en": "Neon Workshop · Exploration",
+    "zh": "霓虹工坊 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "rhythmic building and automation",
+    "exploration"
+  ],
+  "energy": 3,
+  "bpm": 122,
+  "key": "",
+  "instruments": [
+    "muted synth plucks",
+    "steady electronic drums",
+    "rubber bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for rhythmic building and automation, exploration state. Instruments: muted synth plucks, steady electronic drums, rubber bass. 122 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A clean, driving electronic track featuring arpeggiated synthesizers, a steady bassline, and a consistent drum beat, creating a hypnotic and atmospheric soundscape.",
+    "zh": "一首干净、富有驱动力的电子音乐，以琶音合成器、稳定的低音线和持续的鼓点为特色，营造出一种催眠而富有氛围感的音景。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 87.928,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:26:59.785245+00:00",
+  "generation": {
+    "id": "98062d70-4244-4af1-b009-ac46c70b0c12",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:26:18.869753+00:00",
+    "completedAt": "2026-09-22T09:26:59.785245+00:00",
+    "interactionId": "u0myasznIP6N88EPy_v08Ac",
+    "sha256": "5377421d7c32569f2c537cdca18771b4b600a8bd70f473ae46f5b9c1427aa62c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A clean, driving electronic track featuring arpeggiated synthesizers, a steady bassline, and a consistent drum beat, creating a hypnotic and atmospheric soundscape.",
+      "zh": "一首干净、富有驱动力的电子音乐，以琶音合成器、稳定的低音线和持续的鼓点为特色，营造出一种催眠而富有氛围感的音景。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass Synth"
+    ],
+    "moods": [
+      "Electronic",
+      "Rhythmic",
+      "Hypnotic",
+      "Atmospheric",
+      "Driving",
+      "Chill"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:27:15.098197+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 31.377052,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1383728,
+    "sourceStartSeconds": 7.25,
+    "sourceEndSeconds": 38.725419501133786,
+    "crossfadeSeconds": 0.09836734693877551,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -0.94,
+        "rmsDbfs": -14.38,
+        "dcOffset": 0.006021823461593088,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00396728515625,
+        "internalStepP999": 0.06257775878906102,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -0.95,
+        "rmsDbfs": -14.42,
+        "dcOffset": 0.005911903672027385,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002197265625,
+        "internalStepP999": 0.063079833984375,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "An evolving, ethereal electronic pad texture with a subtle, consistent arpeggiated pulse. It creates a mysterious and slightly melancholic atmosphere, suitable for background ambience or tension building.",
+        "zh": "一种不断演变、空灵的电子衬底音效，带有微妙而连贯的琶音脉冲。它营造出一种神秘而略带忧郁的氛围，适合作为背景环境音或营造紧张感。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture that is highly versatile for sound design. No voices, clipping, or other defects were detected. The repetitions within the audio demonstrate a perfectly seamless loop, with no audible clicks, gaps, or abrupt textural changes at the transition points.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:12.160735+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "ad3abf49073b4c70b70d36af5a388ca7139c7dfaf253e2d7c1d18571b3be1b26"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music exhibits excellent continuity in rhythm, harmony, dynamics, and phrase structure across the specified join points. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits, making it suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:28.311564+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-house-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-house-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-house-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-house-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-house-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a886f334a24f05ac4ba381f227bef9cffb1c76e3bf97e749f025d4f35e2c6907",
+      "bytes": 1231769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5377421d7c32569f2c537cdca18771b4b600a8bd70f473ae46f5b9c1427aa62c",
+      "bytes": 2117943,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a854bcf9173a2777693c70ef9b8df0fcd97035ec3a0b7abd4a1190d52bbe5d95",
+      "bytes": 2808,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "b2a3fd390d0c99e1bbde0a292f9489247b041a57ccf97f34e349d4d44ebdb2ba",
+      "bytes": 5534956,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "547a2b012c8808615a65dad24f599c57ec469ed7ce951d11d7f486f77e5d96cb",
+      "bytes": 363100,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.460118+00:00"
+}

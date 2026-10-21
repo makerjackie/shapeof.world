@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-koto-exploration",
+  "code": "GAME-09-2",
+  "title": {
+    "en": "Moonlit Courtyard · Exploration",
+    "zh": "月下庭院 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "quiet courtyard exploration",
+    "exploration"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "",
+  "instruments": [
+    "koto",
+    "bamboo flute",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for quiet courtyard exploration, exploration state. Instruments: koto, bamboo flute, soft bass. 82 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A gentle and whimsical instrumental piece featuring a prominent flute melody, supported by pizzicato and bowed strings, and subtle percussion. The music evokes a dreamy and reflective atmosphere.",
+    "zh": "一首温柔而异想天开的器乐作品，以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器，以及微妙的打击乐。音乐营造出梦幻而沉思的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 88.764,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:26:28.103141+00:00",
+  "generation": {
+    "id": "d1d16b00-9ebf-4998-beb0-0def17d7a413",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:25:43.527675+00:00",
+    "completedAt": "2026-09-22T09:26:28.103141+00:00",
+    "interactionId": "mEmyap-AEP6N88EPy_v08Ac",
+    "sha256": "d9c57fe221a00c6b6f87108b42ea5743fcbaa26aa4c10fddd56db7f524c589a8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and whimsical instrumental piece featuring a prominent flute melody, supported by pizzicato and bowed strings, and subtle percussion. The music evokes a dreamy and reflective atmosphere.",
+      "zh": "一首温柔而异想天开的器乐作品，以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器，以及微妙的打击乐。音乐营造出梦幻而沉思的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Whimsical",
+      "Dreamy",
+      "Gentle",
+      "Reflective",
+      "Nostalgic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "The audio is clean, well-produced, and features clear instrumental performances suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:39.978947+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 51.05,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2251305,
+    "sourceStartSeconds": 25.0,
+    "sourceEndSeconds": 76.2,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2251305,
+        "duration": 51.05,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.44,
+        "dcOffset": 0.0004963349149203531,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.010650634765625,
+        "internalStepP999": 0.093414306640625,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2251305,
+        "duration": 51.05,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.44,
+        "dcOffset": 0.00012151365565177059,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00335693359375,
+        "internalStepP999": 0.09149169921875,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A continuous, evolving electronic texture featuring layered pads, arpeggiated synths, and subtle bell-like elements. It has an ethereal, atmospheric quality with a gentle ebb and flow, designed for seamless looping.",
+        "zh": "一种连续、演变的电子音效纹理，包含分层衬底音、琶音合成器和微妙的钟声元素。它具有空灵、大气的特质，伴随着轻柔的起伏，专为无缝循环设计。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture with no audible defects like clipping, clicks, or glitches. It loops perfectly seamlessly, making it highly suitable for background ambience or dynamic soundscapes in video games or video production where continuous, non-repetitive-sounding audio is required.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:14.972419+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "adc837fd45dccc0321a820a16e03ed7232b91c56740f97490f7dac9a253b582e"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified boundaries. Rhythm, harmony, dynamics, and phrase continuity are excellent. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the joins, making it comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:21.548196+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-koto-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-koto-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-koto-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-koto-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-koto-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "18a284df828e31d293542b91a02a7b40a0227ce29daa5f014be18e534b52ca11",
+      "bytes": 1243472,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d9c57fe221a00c6b6f87108b42ea5743fcbaa26aa4c10fddd56db7f524c589a8",
+      "bytes": 2138005,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8cb1ef38e2196c7cc47d5948518b8b4391617d4db4f7f8c2799b2ad53390d5a5",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "7a2859734db61625691a585c44da52e80daea986de6fd53bbf4529c899d1e2c8",
+      "bytes": 9005264,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "9bcf237e3e6e407f447071ea37a6e826c37dfdb92a469549b29edd465b392dd5",
+      "bytes": 732407,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.461194+00:00"
+}

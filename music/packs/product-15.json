@@ -1,0 +1,99 @@
+{
+  "id": "product-15",
+  "title": {
+    "en": "15-second product reveal",
+    "zh": "15 秒产品展示"
+  },
+  "description": {
+    "en": "A rhythmic chamber score with a swipe, a light impact and a final interface cue.",
+    "zh": "室内乐节奏搭配划过、轻撞击与结尾提示，适合短促产品展示。"
+  },
+  "duration": 15,
+  "schemaVersion": 1,
+  "kind": "scene-kit",
+  "isIndependentComposition": false,
+  "events": [
+    {
+      "id": "scene-chamber-40",
+      "role": "preview",
+      "use": "music",
+      "atSeconds": 0,
+      "gainDb": -5,
+      "url": "https://music-cdn.shapeof.world/tracks/scene-chamber-40/v1/preview.mp3",
+      "sha256": "e72ad5e59904b92b748845de9302d3ff2a132f3fe8be7707a46cf504da8a8ec1",
+      "file": "audio/scene-chamber-40-preview.mp3"
+    },
+    {
+      "id": "sfx-transition-01",
+      "role": "master",
+      "use": "transition",
+      "atSeconds": 4.5,
+      "gainDb": -5,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/master.wav",
+      "sha256": "be5ecddcd0b307b5466fc036915aa83bbd333a53ab094cf8c88460c9fddc40b4",
+      "file": "audio/sfx-transition-01-master.wav"
+    },
+    {
+      "id": "sfx-impact-01",
+      "role": "master",
+      "use": "impact",
+      "atSeconds": 9,
+      "gainDb": -3,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/master.wav",
+      "sha256": "e2268a19e55b2dc87d932f7167ba8183b6e079c83b22b9e6eea4d9c197fcece7",
+      "file": "audio/sfx-impact-01-master.wav"
+    },
+    {
+      "id": "sfx-ui-01",
+      "role": "master",
+      "use": "logo",
+      "atSeconds": 14,
+      "gainDb": -3,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-ui-01/v1/master.wav",
+      "sha256": "1d34a61b23227718f303e8e2ab69865018ed33adb59b265d162b0d5a6485fb33",
+      "file": "audio/sfx-ui-01-master.wav"
+    }
+  ],
+  "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful instrumental piece featuring a clarinet melody over a pizzicato bass, creating a whimsical and cheerful atmosphere.",
+      "zh": "一首轻快活泼的器乐曲，以单簧管旋律为主，配以拨奏低音，营造出异想天开、欢快的氛围。"
+    },
+    "instruments": [
+      "clarinet",
+      "pizzicato bass"
+    ],
+    "moods": [
+      "playful",
+      "whimsical",
+      "light",
+      "cheerful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 110,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:37:46.096875+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "assets": {
+    "preview": {
+      "url": "https://music-cdn.shapeof.world/kits/product-15/114da00ed7f816db/preview.mp3",
+      "sha256": "114da00ed7f816db8bbd7b32201a855a1621ff1afdf46245c6f15832c561b03b",
+      "bytes": 301497
+    },
+    "download": {
+      "url": "https://music-cdn.shapeof.world/kits/product-15/2ab3c1fbc848c673/kit.zip",
+      "sha256": "2ab3c1fbc848c673b15d7d88a39c748e1f64e78f97fcf6af1282e22596320269",
+      "bytes": 932424
+    }
+  },
+  "status": "published",
+  "verifiedAt": "2026-09-22T09:54:59.756218+00:00"
+}

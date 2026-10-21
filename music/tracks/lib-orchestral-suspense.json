@@ -1,0 +1,102 @@
+{
+  "id": "lib-orchestral-suspense",
+  "code": "LIB-06-09",
+  "title": {
+    "en": "Shadows — Orchestral",
+    "zh": "暗影 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "orchestral"
+  ],
+  "energy": 3,
+  "bpm": 94,
+  "key": "G minor",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second orchestral adventure instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 94 BPM; G minor. Main idea: alternating short and long phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A charming and gentle instrumental piece featuring a prominent flute melody, supported by pizzicato and bowed strings, and light percussion. It evokes a whimsical and slightly melancholic atmosphere.",
+    "zh": "一首迷人而温柔的器乐曲，以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器，以及轻柔的打击乐。营造出一种异想天开而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 158.145,
+  "generatedAt": "2026-09-09T08:03:15.141233+00:00",
+  "generation": {
+    "id": "9d2c8814-6abb-45d6-80e6-9117b1582a7e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:02:28.818965+00:00",
+    "completedAt": "2026-09-09T08:03:15.141233+00:00",
+    "interactionId": "lhKhasD9Acy5jMwP4P3F-Qs",
+    "sha256": "eaa809062f68aa1084b594401b8165852603edb116151bde6749773d66fa1773"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A charming and gentle instrumental piece featuring a prominent flute melody, supported by pizzicato and bowed strings, and light percussion. It evokes a whimsical and slightly melancholic atmosphere.",
+      "zh": "一首迷人而温柔的器乐曲，以悠扬的长笛旋律为主，辅以拨弦和弓弦乐器，以及轻柔的打击乐。营造出一种异想天开而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "flute",
+      "strings",
+      "harp",
+      "percussion"
+    ],
+    "moods": [
+      "whimsical",
+      "playful",
+      "gentle",
+      "melancholic",
+      "nostalgic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 85,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:03:26.287274+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:05:30.733307+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

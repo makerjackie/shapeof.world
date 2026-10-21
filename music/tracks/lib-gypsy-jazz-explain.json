@@ -1,0 +1,104 @@
+{
+  "id": "lib-gypsy-jazz-explain",
+  "code": "LIB-10-05",
+  "title": {
+    "en": "Discovery — Gypsy Jazz",
+    "zh": "发现 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 144,
+  "key": "G major",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second acoustic swing jazz instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 144 BPM; G major. Main idea: alternating short and long phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and melodic acoustic folk piece featuring a prominent violin/fiddle melody, supported by rhythmic acoustic guitar, bass, and light percussion. It evokes a cheerful, rustic dance atmosphere.",
+    "zh": "一首活泼悠扬的民谣原声乐曲，以小提琴/提琴为主旋律，配以节奏感强的原声吉他、贝斯和轻柔的打击乐。营造出欢快、乡村舞曲的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 89.26,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:13:59.112634+00:00",
+  "generation": {
+    "id": "ca7a0a9d-f626-4464-b41a-89ae6b34defd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:13:15.496660+00:00",
+    "completedAt": "2026-09-09T08:13:59.112634+00:00",
+    "interactionId": "HBWhar6GK-67i9sP06HTyAM",
+    "sha256": "57c67540f8ddefab0805783b7a7f94b081d69deb8d8a5ab0e6a23e73ff6ee928"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and melodic acoustic folk piece featuring a prominent violin/fiddle melody, supported by rhythmic acoustic guitar, bass, and light percussion. It evokes a cheerful, rustic dance atmosphere.",
+      "zh": "一首活泼悠扬的民谣原声乐曲，以小提琴/提琴为主旋律，配以节奏感强的原声吉他、贝斯和轻柔的打击乐。营造出欢快、乡村舞曲的氛围。"
+    },
+    "instruments": [
+      "Acoustic guitar",
+      "Violin",
+      "Fiddle",
+      "Bass guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Lively",
+      "Cheerful",
+      "Playful",
+      "Rustic",
+      "Uplifting",
+      "Traditional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:36:03.914382+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:37:37.656802+00:00"
+}

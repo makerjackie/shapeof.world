@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+  Transparent credit layer composited over the untouched brand master by render.mjs.
+  render.mjs calls setupCredit(options) once and renderAt(t) for each of the master's frames.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; }
+  body { overflow: hidden; }
+  .stage { position: relative; overflow: hidden; }
+  .credit {
+    position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: baseline;
+    font-family: Helvetica, Arial, sans-serif; font-weight: 400; white-space: nowrap;
+    will-change: opacity, transform;
+  }
+  .label { margin-right: .36em; letter-spacing: .02em; }
+  .name { letter-spacing: .02em; }
+  :lang(zh) .label {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", sans-serif;
+    letter-spacing: .06em; margin-right: .44em;
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage"><div class="credit" id="credit"><span class="label"></span><span class="name"></span></div></div>
+<script>
+  const ease = p => 1 - (1 - p) ** 3;
+  const clamp = p => Math.max(0, Math.min(1, p));
+  let state = null;
+
+  window.setupCredit = async ({ lang, width, height, centerY, strings, layout, motion }) => {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    const stage = document.getElementById('stage');
+    stage.style.width = width + 'px';
+    stage.style.height = height + 'px';
+    const credit = document.getElementById('credit');
+    credit.style.fontSize = layout.fontSize + 'px';
+    credit.style.lineHeight = layout.fontSize * 1.5 + 'px';
+    credit.style.top = centerY - layout.fontSize * 0.75 + 'px';
+    const [label, name] = credit.children;
+    label.textContent = strings.label;
+    label.style.color = layout.labelColor;
+    name.textContent = strings.name;
+    name.style.color = layout.nameColor;
+    await document.fonts.ready;
+    state = { credit, motion };
+    // Ink bounds, not the line box, so placement checks match what is visible.
+    const range = document.createRange();
+    range.selectNodeContents(credit);
+    const r = range.getBoundingClientRect();
+    return { x: r.x, y: r.y, w: r.width, h: r.height };
+  };
+
+  window.renderAt = t => {
+    const { credit, motion } = state;
+    const a = ease(clamp((t - motion.delay) / motion.duration));
+    credit.style.opacity = String(a);
+    credit.style.transform = `translateY(${(motion.rise * (1 - a)).toFixed(3)}px)`;
+  };
+</script>
+</body>
+</html>

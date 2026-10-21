@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-14",
+  "code": "SFX-NOTIFICATION-14",
+  "title": {
+    "en": "Quiet reminder",
+    "zh": "轻声提醒"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 13,
+  "seed": 3036929462,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized quiet reminder for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的轻声提醒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.22,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3036929462,
+    "sha256": "9132d869efe19874b5321f6a6cc47c9ff0fb062012f001aeb288f42a38f29a8d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "736c757460c418ebc590bef84b5eb42e90cb4c2cbdaffb2f0ccdb7afb2e471e6",
+      "bytes": 17963,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9132d869efe19874b5321f6a6cc47c9ff0fb062012f001aeb288f42a38f29a8d",
+      "bytes": 107648,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "2dba4d655402605fe3092b541eb831db4c5b93f1a91c881b6dd579a834262769",
+      "bytes": 10560,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f9293e025d09f85c52bb776cf708d647fd37c4e5a82db19655f4a7d4c5d89531",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 53802,
+    "duration": 1.22,
+    "peakDbfs": -4.42,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.63020891416676e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11541748046875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clear, high-pitched synthesized chime or ding sound effect, suitable for notifications or positive feedback.",
+      "zh": "一个短促、清晰、高音的合成提示音或叮当声，适用于通知或积极反馈。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized chime, free from defects, and highly usable for various sound design applications like UI feedback or notifications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:26.499085+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "736c757460c418ebc590bef84b5eb42e90cb4c2cbdaffb2f0ccdb7afb2e471e6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 53802
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.891478+00:00"
+}

@@ -1,0 +1,162 @@
+{
+  "id": "promo-gypsy-jazz-25",
+  "code": "PROMO-09-25",
+  "title": {
+    "en": "Silver Wheels · 25",
+    "zh": "银色车轮 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "",
+  "instruments": [
+    "acoustic rhythm guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: bright acoustic swing with precise offbeat guitar chops. Instruments: acoustic rhythm guitar, violin, upright bass. Tempo 148 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively instrumental track featuring acoustic guitar, mandolin, banjo, bass, and drums, creating a cheerful folk-country sound.",
+    "zh": "一首欢快活泼的器乐曲，以原声吉他、曼陀林、班卓琴、贝斯和鼓为主，营造出愉悦的乡村民谣风格。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:27:08.663445+00:00",
+  "generation": {
+    "id": "2c179016-bc50-4c80-99a4-7cc3e32a4d6d",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:55.527414+00:00",
+    "completedAt": "2026-09-10T05:27:08.663445+00:00",
+    "interactionId": "oD-iaoSzCNK44vEPhZWJ4A0",
+    "sha256": "94daf08dcd5093de5d2b98f9420158dc3217c15c42ad165de63fad78b1a8be89"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring acoustic guitar, mandolin, banjo, bass, and drums, creating a cheerful folk-country sound.",
+      "zh": "一首欢快活泼的器乐曲，以原声吉他、曼陀林、班卓琴、贝斯和鼓为主，营造出愉悦的乡村民谣风格。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "mandolin",
+      "banjo",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "lively",
+      "cheerful",
+      "energetic",
+      "playful",
+      "rustic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 172,
+    "reason": "High-quality, well-produced instrumental track with a clear, energetic folk-country style, suitable for various media applications. No defects detected.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a rhythmic acoustic guitar strum and ends with a clear, deliberate final chord and drum hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:32.237146+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "d548a44c9d77ff22407dbd9f05e6aa3d86ad3e12e28615f2ded41c5728e1d777"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 26.566458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat acoustic swing piece featuring a prominent acoustic guitar melody, supported by a walking bass line and light, rhythmic drumming. The track has a playful and energetic feel.",
+      "zh": "一首活泼欢快的原声摇摆乐曲，以突出的原声吉他旋律为主，辅以行进的贝斯线和轻快的鼓点。整首曲子充满俏皮和活力。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Playful",
+      "Jazzy",
+      "Swing"
+    ],
+    "energy": 4,
+    "bpmEstimate": 185,
+    "reason": "The audio is a clean, well-produced instrumental track with clear instrumentation and a consistent performance, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:34.852883+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 1.5664580000000008,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-gypsy-jazz-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:53.782052+00:00"
+}

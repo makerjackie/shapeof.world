@@ -1,0 +1,98 @@
+{
+  "id": "lib-gypsy-jazz-focus",
+  "code": "LIB-10-02",
+  "title": {
+    "en": "Focus — Gypsy Jazz",
+    "zh": "专注 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "gypsy-jazz"
+  ],
+  "energy": 2,
+  "bpm": 144,
+  "key": "A minor",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second acoustic swing jazz instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 144 BPM; A minor. Main idea: a compact three-note motif. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A solo acoustic guitar piece with a melancholic yet peaceful melody, featuring intricate fingerpicking and a classical or folk-inspired feel.",
+    "zh": "一段独奏原声吉他曲，旋律忧郁而宁静，指弹技巧精湛，带有古典或民谣风格。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.655,
+  "generatedAt": "2026-09-09T08:12:48.980024+00:00",
+  "generation": {
+    "id": "91609d27-b7cc-42a6-a59d-74a0c6fc14f5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:12:04.698501+00:00",
+    "completedAt": "2026-09-09T08:12:48.980024+00:00",
+    "interactionId": "1RShaqfHLvbQi9sPmYO72AI",
+    "sha256": "5f71add9a4b5fa436d9febca29d687c05411d94695d50c0d1eff7c70096b74d0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A solo acoustic guitar piece with a melancholic yet peaceful melody, featuring intricate fingerpicking and a classical or folk-inspired feel.",
+      "zh": "一段独奏原声吉他曲，旋律忧郁而宁静，指弹技巧精湛，带有古典或民谣风格。"
+    },
+    "instruments": [
+      "Acoustic guitar"
+    ],
+    "moods": [
+      "Melancholic",
+      "Peaceful",
+      "Reflective",
+      "Calm",
+      "Thoughtful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clear, well-recorded acoustic guitar performance with a pleasant, expressive melody, suitable for various background uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:12:57.489360+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:13:46.812390+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

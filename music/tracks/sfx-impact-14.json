@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-14",
+  "code": "SFX-IMPACT-14",
+  "title": {
+    "en": "Dull punch",
+    "zh": "闷声冲击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 13,
+  "seed": 3315523297,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized dull punch for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的闷声冲击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.42,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3315523297,
+    "sha256": "325436fabadf24c9727dddee91293de24f9a78495b1b561a2bcdb328fe2486cc",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "589ec5e20730f466b84b2d836b1cddbba568101029578809b675c8c0a85ef9f3",
+      "bytes": 6992,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "325436fabadf24c9727dddee91293de24f9a78495b1b561a2bcdb328fe2486cc",
+      "bytes": 37088,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1c9c46aa483aea0c84ee0d8442fa98f1d8d352f0dde66d5ea98c8191eec7e5a4",
+      "bytes": 6278,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "63f1d3235c1683ef957e776cb065c378793e7b4f89f3d4b33b38595e27cb6083",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 18522,
+    "duration": 0.42,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.16,
+    "dcOffset": -2.6362231400496708e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04983032226562489,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, percussive impact sound with a subtle, high-frequency decay. It sounds like a stylized hit or thwack.",
+      "zh": "短促、尖锐的打击声，带有微妙的高频衰减。听起来像风格化的撞击或拍打声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined sound effect, suitable for various impact or hit scenarios in sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:07.095807+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "589ec5e20730f466b84b2d836b1cddbba568101029578809b675c8c0a85ef9f3"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 18522
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.878326+00:00"
+}

@@ -1,0 +1,180 @@
+{
+  "id": "scene-funk-40",
+  "code": "SCENE-01-40",
+  "title": {
+    "en": "Pocket Camera · 40",
+    "zh": "口袋相机 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted guitar",
+    "elastic bass",
+    "dry drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for syncopated stop-motion product reveal. Instruments: muted guitar, elastic bass, dry drums. 112 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic pop track featuring a driving beat, prominent synth bassline, and catchy synth melodies. The production is clean and modern, creating a positive and dynamic atmosphere.",
+    "zh": "一首欢快且充满活力的电子流行音乐，具有强劲的节拍、突出的合成器低音线和抓耳的合成器旋律。制作干净现代，营造出积极动感的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:10:39.267133+00:00",
+  "generation": {
+    "id": "e7ff49dc-a08c-4d2d-80b3-88bcb9902ed9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:09:58.193666+00:00",
+    "completedAt": "2026-09-22T09:10:39.267133+00:00",
+    "interactionId": "50WyaszeLpqE694P7omguQ0",
+    "sha256": "00df506f9c31e38a50115f86426a0a1a9c5f5a5c51328a2bda6a4c10cd359370"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic pop track featuring a driving beat, prominent synth bassline, and catchy synth melodies. The production is clean and modern, creating a positive and dynamic atmosphere.",
+      "zh": "一首欢快且充满活力的电子流行音乐，具有强劲的节拍、突出的合成器低音线和抓耳的合成器旋律。制作干净现代，营造出积极动感的氛围。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving",
+      "Modern",
+      "Dynamic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "High-quality production, clear mix, and engaging composition with a consistent energetic feel, making it suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a strong rhythmic and melodic hook. It concludes with a smooth, deliberate fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:58.525320+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "0f9fa45a01bcdabf9e244ea721e3e77343f394ffa529c3c7df8e16da88dd03f7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.02525,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving bassline, steady drums, and a catchy synth melody.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有强劲的低音线、稳定的鼓点和抓耳的合成器旋律。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Positive",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:50.095097+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.02525,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-funk-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-funk-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-funk-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0f9fa45a01bcdabf9e244ea721e3e77343f394ffa529c3c7df8e16da88dd03f7",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "00df506f9c31e38a50115f86426a0a1a9c5f5a5c51328a2bda6a4c10cd359370",
+      "bytes": 1376274,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a673463cc34a81d1180e59d5ac38b91f398086ea6b13599fbf650e3ca73f8f82",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.830541+00:00"
+}

@@ -1,0 +1,104 @@
+{
+  "id": "lib-sitar-explain",
+  "code": "LIB-21-05",
+  "title": {
+    "en": "Discovery — Sitar",
+    "zh": "发现 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "sitar"
+  ],
+  "energy": 2,
+  "bpm": 90,
+  "key": "G major",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second Indian acoustic instrumental instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 90 BPM; G major. Main idea: a descending melody with an upward answer. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A serene and melodic instrumental piece featuring a prominent bansuri flute melody over a gentle string and light percussion accompaniment, evoking a traditional Indian or Middle Eastern feel.",
+    "zh": "一首宁静而悠扬的器乐曲，以悠扬的班苏里长笛旋律为主，配以柔和的弦乐和轻快的打击乐，营造出一种传统的印度或中东氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.921,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:55:59.357386+00:00",
+  "generation": {
+    "id": "532f03ba-332a-4673-a83e-e5d56273310e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:55:21.695982+00:00",
+    "completedAt": "2026-09-09T08:55:59.357386+00:00",
+    "interactionId": "-h6haou-NYTLk7QP7q-OwQ0",
+    "sha256": "14a5a02cea5a5eaa50b0210fdc9ba69a21c9c6ad8636bf0f3e6870050d97170a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and melodic instrumental piece featuring a prominent bansuri flute melody over a gentle string and light percussion accompaniment, evoking a traditional Indian or Middle Eastern feel.",
+      "zh": "一首宁静而悠扬的器乐曲，以悠扬的班苏里长笛旋律为主，配以柔和的弦乐和轻快的打击乐，营造出一种传统的印度或中东氛围。"
+    },
+    "instruments": [
+      "Bansuri",
+      "Strings",
+      "Tabla",
+      "Percussion",
+      "Tanpura"
+    ],
+    "moods": [
+      "Meditative",
+      "Peaceful",
+      "Traditional",
+      "Exotic",
+      "Calming",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "The audio is clean, well-produced, and suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:56:08.084482+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:56:45.395271+00:00"
+}

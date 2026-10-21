@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-20",
+  "code": "SFX-MECHANICAL-20",
+  "title": {
+    "en": "Machine ready",
+    "zh": "机器就绪"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 19,
+  "seed": 1330039683,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized machine ready for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的机器就绪合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.38,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1330039683,
+    "sha256": "42e2486f5576999aff47c26c9daa13e159c764543e28a943d1f9bd8e606286a7",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "da3e11d94bdfdc2b043cdd16737fe47b30d454bb51c69e23eb1eaeb459cbfb36",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "42e2486f5576999aff47c26c9daa13e159c764543e28a943d1f9bd8e606286a7",
+      "bytes": 33560,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a6af68f88642eab9402964f244a40d7098935b1d1853c21d38e14906224503ba",
+      "bytes": 6579,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a9a8b44cf83cb7faf768525a6c88411f631950d4a1b702e65c0991a54d07908e",
+      "bytes": 1946,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16758,
+    "duration": 0.38,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.56,
+    "dcOffset": 1.8210751954290487e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.16543310546874634,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized electronic whoosh or swipe sound effect with a slight upward pitch. It has a metallic or digital quality.",
+      "zh": "一个短促的、合成的电子嗖嗖声或滑动音效，带有轻微的音高上升。它具有金属或数字质感。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect suitable for UI interactions, transitions, or sci-fi elements. No defects are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:35.724911+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "da3e11d94bdfdc2b043cdd16737fe47b30d454bb51c69e23eb1eaeb459cbfb36"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16758
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.888567+00:00"
+}

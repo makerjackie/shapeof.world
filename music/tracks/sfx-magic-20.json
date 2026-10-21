@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-20",
+  "code": "SFX-MAGIC-20",
+  "title": {
+    "en": "Treasure sparkle",
+    "zh": "宝藏闪光"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 19,
+  "seed": 1362228980,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized treasure sparkle for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的宝藏闪光合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1362228980,
+    "sha256": "e168844023da0f3813633fbfdd937b4be34edd8457448c969c34479910fc1208",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ac9fbee801378b6acf08fb3f1ef721d542c55c0e3d1c75124031b4c0d3f2a292",
+      "bytes": 34420,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e168844023da0f3813633fbfdd937b4be34edd8457448c969c34479910fc1208",
+      "bytes": 211724,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b81449890147182b7e1950288924e4753b87fde21e802f8ac687b741277b4bd6",
+      "bytes": 49089,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7b248ac1c829c45ac2cd858723644d7340b8f29d1d9c684e0431022fe717fc08",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 105840,
+    "duration": 2.4,
+    "peakDbfs": -5.06,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.2110150049603175e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1347449951171873,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A quick, airy whoosh followed by a bright, resonant, and slightly metallic or glassy chime/sparkle effect.",
+      "zh": "快速的空气呼啸声，随后是明亮、有共鸣且略带金属或玻璃质感的叮当/闪烁声。"
+    },
+    "reason": "The sound is a clean, well-produced whoosh and chime effect, free of defects, and highly versatile for various sound design applications like UI feedback, transitions, or magical effects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:56.325055+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ac9fbee801378b6acf08fb3f1ef721d542c55c0e3d1c75124031b4c0d3f2a292"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 105840
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.884655+00:00"
+}

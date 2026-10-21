@@ -1,0 +1,59 @@
+{
+  "id": "folded-life",
+  "code": "LIF-B03",
+  "title": {
+    "en": "Folded Life",
+    "zh": "折叠的生命"
+  },
+  "category": "life-body",
+  "archetype": "discovery",
+  "moods": [
+    "searching",
+    "settling",
+    "tactile",
+    "warm"
+  ],
+  "topics": [
+    "protein",
+    "folding",
+    "shape"
+  ],
+  "energy": 2,
+  "bpm": 70,
+  "key": "F Lydian",
+  "instruments": [
+    "chain of piano notes",
+    "warm strings",
+    "soft marimba",
+    "low clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.521,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a protein chain folding into a stable shape. Around 70 BPM, F Lydian. A long piano chain of nearby notes collapses, through trial contacts, into a compact chorale of strings and marimba. Searching, then settled. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No glitch as error, no drums.\n\n[00:00–00:30] Linear piano chain, one note after another.\n[00:30–01:10] Some notes leap back to earlier pitches (contacts); marimba marks hydrophobic huddles.\n[01:10–01:50] Compact chorale forms; clarinet holds a stable core.\n[01:50–02:30] Chain is gone; only the folded chorale remains, breathing once.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:15:17Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/folded-life/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/folded-life/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/folded-life/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:57.943557+00:00",
+  "generation": {
+    "id": "53b04a54-a724-41d6-a159-079dbbc1851a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:14:20Z",
+    "completedAt": "2026-08-25T10:15:17Z",
+    "durationMs": 57000,
+    "interactionId": "_WqNavTOOvXq8vUPq5OsgAM",
+    "clientRequestId": "5008de21-8ea4-48bc-9789-c3f2de5c84d0",
+    "synthid": true,
+    "c2pa": "urn:c2pa:006c86ec-c314-7f49-da3c-4d2731b184d7",
+    "sha256": "facb07a66a7ad13e11255478e8484114fd6801d9d2ec6c19dd5ab93a5808d629"
+  }
+}

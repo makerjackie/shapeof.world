@@ -1,0 +1,62 @@
+{
+  "id": "orbital-garden",
+  "code": "COS-B01",
+  "title": {
+    "en": "Orbital Garden",
+    "zh": "轨道花园"
+  },
+  "category": "cosmos",
+  "archetype": "discovery",
+  "moods": [
+    "elegant",
+    "circular",
+    "playful",
+    "clear"
+  ],
+  "topics": [
+    "orbits",
+    "solar-system",
+    "kepler"
+  ],
+  "energy": 3,
+  "bpm": 88,
+  "key": "D major",
+  "instruments": [
+    "celesta",
+    "pizzicato strings",
+    "bassoon",
+    "soft woodwinds",
+    "light shaker"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 141.871,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about planets tracing nested orbits. Around 88 BPM, D major, a gentle circular pulse rather than a march. Celesta, pizzicato, bassoon and soft woodwinds as separate orbital voices that occasionally align. Elegant and slightly playful. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No heroic brass, no ticking-clock cliché, no trailer percussion.\n\n[00:00–00:22] Celesta ostinato in a 3-against-4 pattern, dry and bright.\n[00:22–01:00] Pizzicato joins on a slower orbit; bassoon states a round bass path.\n[01:00–01:45] Woodwinds layer inner planets; a light shaker appears only when orbits briefly commensurate.\n[01:45–02:30] Voices peel away until celesta remains, still circling.\n",
+  "recommendedWorldIds": [
+    "solar-system"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:19:14Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/orbital-garden/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/orbital-garden/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/orbital-garden/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:43.729937+00:00",
+  "generation": {
+    "id": "121e497e-e43c-4efe-8dca-8860af1651b2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:18:16Z",
+    "completedAt": "2026-08-25T10:19:14Z",
+    "durationMs": 58000,
+    "interactionId": "6muNavC_EoiN694P4-7fuQU",
+    "clientRequestId": "f0c04a29-7eb5-4f1e-afb8-fd2787edf37f",
+    "synthid": true,
+    "c2pa": "urn:c2pa:bdab9ece-d195-5f72-7f38-441e6e590608",
+    "sha256": "64a0ac37fcb45e7c6aac078e0669b0f0b303fed7a0f5dab9f264e869a1d3cc36"
+  }
+}

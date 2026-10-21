@@ -1,0 +1,104 @@
+{
+  "id": "lib-bossa-rest",
+  "code": "LIB-08-03",
+  "title": {
+    "en": "Rest — Bossa",
+    "zh": "休憩 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "bossa"
+  ],
+  "energy": 1,
+  "bpm": 96,
+  "key": "F major",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second bossa nova instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 96 BPM; F major. Main idea: a descending melody with an upward answer. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A gentle, melancholic, and reflective instrumental piece featuring piano, acoustic guitar, and subtle strings, with light percussive elements. The melody is flowing and somewhat nostalgic.",
+    "zh": "一首轻柔、忧郁且富有沉思感的器乐曲，以钢琴、原声吉他和细微的弦乐为主，并带有轻微的打击乐元素。旋律流畅，略带怀旧感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.528,
+  "generatedAt": "2026-09-09T08:06:24.017758+00:00",
+  "generation": {
+    "id": "1eab3e85-a75e-45a7-b35e-5673efd6e78f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:05:37.144431+00:00",
+    "completedAt": "2026-09-09T08:06:24.017758+00:00",
+    "interactionId": "UROhatX3PJrSi9sPsKbCgAE",
+    "sha256": "35e71d1debf73cce63844bab62e2ade30658b1e7d3d1a865cb8ace4f11afaedc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle, melancholic, and reflective instrumental piece featuring piano, acoustic guitar, and subtle strings, with light percussive elements. The melody is flowing and somewhat nostalgic.",
+      "zh": "一首轻柔、忧郁且富有沉思感的器乐曲，以钢琴、原声吉他和细微的弦乐为主，并带有轻微的打击乐元素。旋律流畅，略带怀旧感。"
+    },
+    "instruments": [
+      "Piano",
+      "Acoustic Guitar",
+      "Strings",
+      "Percussion",
+      "Bass"
+    ],
+    "moods": [
+      "Reflective",
+      "Melancholic",
+      "Gentle",
+      "Calm",
+      "Nostalgic",
+      "Peaceful"
+    ],
+    "energy": 1,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:06:35.479229+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:08:47.141081+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

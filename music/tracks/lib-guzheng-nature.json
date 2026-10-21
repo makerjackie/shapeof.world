@@ -1,0 +1,100 @@
+{
+  "id": "lib-guzheng-nature",
+  "code": "LIB-17-04",
+  "title": {
+    "en": "Wildlands — Guzheng",
+    "zh": "山野 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "guzheng"
+  ],
+  "energy": 1,
+  "bpm": 66,
+  "key": "D dorian",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Chinese chamber instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 66 BPM; D dorian. Main idea: a descending melody with an upward answer. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian-inspired piece featuring a plucked string instrument, flute, and light percussion, creating a peaceful and reflective atmosphere.",
+    "zh": "一首宁静而富有传统东方韵味的乐曲，以弹拨乐器、长笛和轻柔的打击乐器为主，营造出平和而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.998,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:44:36.326960+00:00",
+  "generation": {
+    "id": "03071140-fb7e-4477-a387-26b21aee00c5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:43:48.064303+00:00",
+    "completedAt": "2026-09-09T08:44:36.326960+00:00",
+    "interactionId": "RRyhaq-kIvWJ88EPntfq6A4",
+    "sha256": "b458c5deb1e5cfc852ef5088083ef6ed4faaabc7637673b72196c66c2cf2a37b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian-inspired piece featuring a plucked string instrument, flute, and light percussion, creating a peaceful and reflective atmosphere.",
+      "zh": "一首宁静而富有传统东方韵味的乐曲，以弹拨乐器、长笛和轻柔的打击乐器为主，营造出平和而沉思的氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Flute",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Traditional",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:44:49.019346+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:45:52.848508+00:00"
+}

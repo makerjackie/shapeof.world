@@ -1,0 +1,161 @@
+{
+  "id": "promo-post-rock-25",
+  "code": "PROMO-18-25",
+  "title": {
+    "en": "Open Horizon · 25",
+    "zh": "展开地平线 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 130,
+  "key": "",
+  "instruments": [
+    "clean electric guitar",
+    "melodic bass",
+    "tight acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: energetic instrumental guitar rock with immediate sparkling riff. Instruments: clean electric guitar, melodic bass, tight acoustic drums. Tempo 130 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and funky instrumental track featuring a prominent electric bassline, driving drums, and a catchy electric guitar melody, supported by synth pads. It has a modern retro feel.",
+    "zh": "一首充满活力和放克风格的纯音乐曲目，以突出的电贝斯线、强劲的鼓点和抓耳的电吉他旋律为特色，并辅以合成器铺垫。它具有现代复古的感觉。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:33:39.368826+00:00",
+  "generation": {
+    "id": "2222e718-8709-411f-9796-4cb7179efaa2",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:33:13.380814+00:00",
+    "completedAt": "2026-09-10T05:33:39.368826+00:00",
+    "interactionId": "GkGiatjoCd6O7PkP2qGV6As",
+    "sha256": "8427b7f23158de4f34acdc527a256e011d4d40b8ccceac07577ec63db1c1afda"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and funky instrumental track featuring a prominent electric bassline, driving drums, and a catchy electric guitar melody, supported by synth pads. It has a modern retro feel.",
+      "zh": "一首充满活力和放克风格的纯音乐曲目，以突出的电贝斯线、强劲的鼓点和抓耳的电吉他旋律为特色，并辅以合成器铺垫。它具有现代复古的感觉。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Energetic",
+      "Funky",
+      "Driving",
+      "Upbeat",
+      "Groovy",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "A well-produced, high-energy instrumental track with a strong groove, suitable for various media applications requiring an upbeat and funky vibe.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving bassline and drums, establishing a clear groove. It concludes with a deliberate, sustained final chord and drum hit, providing a clear resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:24.524198+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a08658503745f26ef291ada1369d082076d6d8c1e24c10a144c4df39c1711863"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic track featuring a prominent synth melody, driving drums, bass, and electric guitar. It has an upbeat and danceable feel.",
+      "zh": "一首充满活力的电子音乐，以突出的合成器旋律、强劲的鼓点、贝斯和电吉他为特色。它给人一种欢快、适合跳舞的感觉。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Positive",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean, well-produced, and energetic track with clear instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:14.408596+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-post-rock-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-post-rock-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-post-rock-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:31.733106+00:00"
+}

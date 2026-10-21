@@ -1,0 +1,159 @@
+{
+  "id": "promo-post-rock-20",
+  "code": "PROMO-18-20",
+  "title": {
+    "en": "Open Horizon · 20",
+    "zh": "展开地平线 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 130,
+  "key": "",
+  "instruments": [
+    "clean electric guitar",
+    "melodic bass",
+    "tight acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: energetic instrumental guitar rock with immediate sparkling riff. Instruments: clean electric guitar, melodic bass, tight acoustic drums. Tempo 130 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic pop-rock track featuring a driving rhythm, catchy electric guitar riffs, and a bright, positive feel. The arrangement is clean and dynamic, building a lively atmosphere.",
+    "zh": "一首充满活力和乐观的流行摇滚乐曲，具有强劲的节奏、抓耳的电吉他重复段和明亮积极的氛围。编曲干净且富有动感，营造出活泼的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:33:14.683272+00:00",
+  "generation": {
+    "id": "8935906f-c1e1-4815-ad13-5204b0d01f24",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:33:02.119157+00:00",
+    "completedAt": "2026-09-10T05:33:14.683272+00:00",
+    "interactionId": "DkGiap_QLMO3i9sP57WLuQM",
+    "sha256": "95dfa3ae88de8c18bb2a0cb43940e6c55c031115ea49b300ba50eb75df2aa6d7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic pop-rock track featuring a driving rhythm, catchy electric guitar riffs, and a bright, positive feel. The arrangement is clean and dynamic, building a lively atmosphere.",
+      "zh": "一首充满活力和乐观的流行摇滚乐曲，具有强劲的节奏、抓耳的电吉他重复段和明亮积极的氛围。编曲干净且富有动感，营造出活泼的氛围。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "synthesizer"
+    ],
+    "moods": [
+      "energetic",
+      "positive",
+      "upbeat",
+      "lively",
+      "driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, professionally mixed, and features a clear, engaging musical theme suitable for various media applications requiring an energetic and positive underscore.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent, catchy electric guitar riff and a driving drum beat, establishing an energetic mood. It concludes with a definitive, sustained final chord and drum hit, providing a clear and resolved musical close.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:33:31.043568+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a03a4688a538a2b5eb3f1b5a6e8ec1e33166212aa898fe41cd65f530361f032c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic dance track featuring a prominent, catchy synth melody, a driving synth bassline, and a steady electronic drum beat. The overall sound has a retro, synthwave-inspired feel.",
+      "zh": "一首充满活力的电子舞曲，具有突出且抓耳的合成器旋律、强劲的合成器贝斯线和稳定的电子鼓点。整体音色带有复古的合成器浪潮风格。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Catchy",
+      "Retro",
+      "Dance"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122.0,
+    "reason": "The track is a well-produced, energetic electronic piece with a clear melody and rhythm, making it suitable for a music library. No vocals or audible defects were detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:33:22.689211+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.772167,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-post-rock-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-post-rock-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-post-rock-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:35.184025+00:00"
+}

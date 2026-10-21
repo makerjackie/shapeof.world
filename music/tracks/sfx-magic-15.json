@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-15",
+  "code": "SFX-MAGIC-15",
+  "title": {
+    "en": "Spell charge",
+    "zh": "法术蓄力"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 14,
+  "seed": 1751068334,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized spell charge for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的法术蓄力合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.0,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1751068334,
+    "sha256": "551cd44c98058a4f3d7b1907e1e67bceddbb0045d3618daf87e4e92fa6114599",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c4411ce9b476b3c76e716f5ed4eda90915ebb2b2e896362440d0915e48f983b0",
+      "bytes": 15037,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "551cd44c98058a4f3d7b1907e1e67bceddbb0045d3618daf87e4e92fa6114599",
+      "bytes": 88244,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "bbba7c57046c4caa9993df22b96d35fd24bb374f98c2729fde4d663ef1c93245",
+      "bytes": 20606,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "9de6b48889f3f9c8e10148d6f52bdec4d4e9246989a4a2a1682a0b26d7001618",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 44100,
+    "duration": 1.0,
+    "peakDbfs": -4.96,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.190064306972789e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11056042480468875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or spark sound effect.",
+      "zh": "短促、尖锐的电子放电或火花音效。"
+    },
+    "reason": "The sound is a clean, well-produced, short electronic effect suitable for UI, sci-fi, or game sound design. No technical defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:48.449176+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c4411ce9b476b3c76e716f5ed4eda90915ebb2b2e896362440d0915e48f983b0"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 44100
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.883679+00:00"
+}

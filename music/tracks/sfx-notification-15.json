@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-15",
+  "code": "SFX-NOTIFICATION-15",
+  "title": {
+    "en": "Attention",
+    "zh": "注意提示"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 14,
+  "seed": 1825872155,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized attention for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的注意提示合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1825872155,
+    "sha256": "ed9f45f19701ca8783ae7b90923ae4cc384527c170acefec6efd1fdf68a5510e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "cb706bf441bf432de47c3ed4c55218c59aaaf036195b877138aa9125eb33e301",
+      "bytes": 20523,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ed9f45f19701ca8783ae7b90923ae4cc384527c170acefec6efd1fdf68a5510e",
+      "bytes": 124406,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a5fcbcd55f6f62c1c5c64c661ef5ccd9b71dff0fbcbb469973f1644c50f3c682",
+      "bytes": 8689,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7eca3bd9e90415108cbea50147aa6b2b58be4121fc9900db2153f8637653ff67",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 62181,
+    "duration": 1.41,
+    "peakDbfs": -4.64,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.9753684053408595e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.013153076171875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic 'boop' sound with a quick decay, resembling a UI notification or alert.",
+      "zh": "一个短促、高音调的电子“嘟”声，带有快速衰减，类似于用户界面通知或警报。"
+    },
+    "reason": "The sound is a clean, well-produced electronic effect, free of defects, and suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:27.050235+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "cb706bf441bf432de47c3ed4c55218c59aaaf036195b877138aa9125eb33e301"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 62181
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.891686+00:00"
+}

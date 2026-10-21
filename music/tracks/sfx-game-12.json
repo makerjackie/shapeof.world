@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-12",
+  "code": "SFX-GAME-12",
+  "title": {
+    "en": "Treasure open",
+    "zh": "开启宝箱"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 11,
+  "seed": 4165394681,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized treasure open for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的开启宝箱合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.04,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4165394681,
+    "sha256": "598811a2a8428d9b40784a1effe760c87b251a78adb518ae4aad8add8b14417d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7c6acb05edd4176269b24935f1505896612fc1a0200fb0a60a601073850384dd",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "598811a2a8428d9b40784a1effe760c87b251a78adb518ae4aad8add8b14417d",
+      "bytes": 91772,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "31758f25db8f13daa2aaeff70b2fb5376e6dc87328e760f504c95e43052d78a1",
+      "bytes": 9807,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f6ece4092d83e37546e30573c33cf6f9db05673f0f68711dd692ab6aac42c769",
+      "bytes": 1929,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 45864,
+    "duration": 1.04,
+    "peakDbfs": -4.74,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.5304035776971044e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05902941894531244,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, distinct, high-pitched boing sound with a spring-like quality, reminiscent of a cartoon bounce.",
+      "zh": "一个短促、清晰、高音的“boing”声，带有弹簧般的质感，类似于卡通弹跳音效。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:47.108909+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7c6acb05edd4176269b24935f1505896612fc1a0200fb0a60a601073850384dd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 45864
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.873863+00:00"
+}

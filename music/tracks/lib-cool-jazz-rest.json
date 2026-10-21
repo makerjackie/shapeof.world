@@ -1,0 +1,103 @@
+{
+  "id": "lib-cool-jazz-rest",
+  "code": "LIB-09-03",
+  "title": {
+    "en": "Rest — Cool Jazz",
+    "zh": "休憩 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "cool-jazz"
+  ],
+  "energy": 2,
+  "bpm": 66,
+  "key": "F major",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second cool jazz instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 66 BPM; F major. Main idea: a compact three-note motif. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A smooth and mellow jazz piece featuring a soulful saxophone melody over a gentle rhythm section of piano, bass, and brush drums. The track evokes a relaxed and sophisticated atmosphere.",
+    "zh": "一首流畅而柔和的爵士乐曲，以深情的萨克斯风旋律为主，配以钢琴、贝斯和鼓刷组成的轻柔节奏部分。营造出轻松而精致的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 175.752,
+  "generatedAt": "2026-09-09T08:10:12.689515+00:00",
+  "generation": {
+    "id": "e344fc29-64d6-440b-bfae-eb30146b80a2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:09:19.757553+00:00",
+    "completedAt": "2026-09-09T08:10:12.689515+00:00",
+    "interactionId": "MBShaoz6OeuCoLAP9_u-qAs",
+    "sha256": "913f0d82d17c5ea0454f1f379f0603e4b0df68ecefa1f2395295223286b39e4a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and mellow jazz piece featuring a soulful saxophone melody over a gentle rhythm section of piano, bass, and brush drums. The track evokes a relaxed and sophisticated atmosphere.",
+      "zh": "一首流畅而柔和的爵士乐曲，以深情的萨克斯风旋律为主，配以钢琴、贝斯和鼓刷组成的轻柔节奏部分。营造出轻松而精致的氛围。"
+    },
+    "instruments": [
+      "saxophone",
+      "piano",
+      "bass",
+      "drums"
+    ],
+    "moods": [
+      "smooth jazz",
+      "relaxing",
+      "calm",
+      "mellow",
+      "sophisticated",
+      "reflective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "The audio is a well-produced, clean instrumental jazz piece with a clear melodic structure and appropriate instrumentation, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:10:25.920615+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:11:28.558162+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

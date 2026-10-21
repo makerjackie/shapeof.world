@@ -1,0 +1,103 @@
+{
+  "id": "lib-house-motion",
+  "code": "LIB-27-08",
+  "title": {
+    "en": "Motion — House",
+    "zh": "跃动 · 浩室"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "house"
+  ],
+  "energy": 4,
+  "bpm": 138,
+  "key": "B minor",
+  "instruments": [
+    "warm synth chords",
+    "four-on-floor drums",
+    "sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second deep instrumental house instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: warm synth chords, four-on-floor drums, sub bass. Style: consistent dance groove, small filter movement, no large drop. Tempo approximately 138 BPM; B minor. Main idea: alternating short and long phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic dance track featuring a driving synth melody, pulsating bassline, and a steady electronic drum beat. It has a modern, club-ready sound.",
+    "zh": "一首欢快且充满活力的电子舞曲，具有驱动性的合成器旋律、脉动的低音线和稳定的电子鼓点。它拥有现代、适合舞厅的音效。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 144.039,
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:11:17.035328+00:00",
+  "generation": {
+    "id": "0c1b895e-8031-4e6e-8476-fa3e6ae1895e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:10:23.431028+00:00",
+    "completedAt": "2026-09-09T09:11:17.035328+00:00",
+    "interactionId": "gCKhasiUHIq34vEP1ray8Q0",
+    "sha256": "876bea6e1978ec8cea5e6d8c8ae30e283048cbc25dbd9b32748ea01372d1ddce"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving synth melody, pulsating bassline, and a steady electronic drum beat. It has a modern, club-ready sound.",
+      "zh": "一首欢快且充满活力的电子舞曲，具有驱动性的合成器旋律、脉动的低音线和稳定的电子鼓点。它拥有现代、适合舞厅的音效。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer (Lead)",
+      "Synthesizer (Bass)",
+      "Synthesizer (Pads)",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Driving",
+      "Positive",
+      "Modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean, well-produced instrumental track with a clear electronic dance genre and high energy, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:11:25.319272+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-house-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-house-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-house-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:12:21.697730+00:00"
+}

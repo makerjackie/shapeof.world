@@ -1,0 +1,179 @@
+{
+  "id": "scene-bossa-40",
+  "code": "SCENE-06-40",
+  "title": {
+    "en": "Window Garden · 40",
+    "zh": "窗边花园 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "sunny home and lifestyle demonstration",
+    "product-video"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "brushed percussion",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for sunny home and lifestyle demonstration. Instruments: nylon guitar, brushed percussion, upright bass. 106 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A gentle and melodic acoustic instrumental featuring a prominent acoustic guitar melody, supported by a light jazz-influenced rhythm section of bass and drums.",
+    "zh": "一段轻柔旋律的器乐曲，以突出的原声吉他旋律为主，辅以轻快的爵士风格贝斯和鼓的节奏部分。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "sunny home and lifestyle demonstration"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:06.180326+00:00",
+  "generation": {
+    "id": "319a36a0-e0df-459c-a214-5d66e24b8de6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:27.359857+00:00",
+    "completedAt": "2026-09-22T09:13:06.180326+00:00",
+    "interactionId": "fEayaubPKpqE694P7omguQ0",
+    "sha256": "6e00a41b1b62504563149a671496b911cf1f70cdeecd4dd65e7b6989294e3d6d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic acoustic instrumental featuring a prominent acoustic guitar melody, supported by a light jazz-influenced rhythm section of bass and drums.",
+      "zh": "一段轻柔旋律的器乐曲，以突出的原声吉他旋律为主，辅以轻快的爵士风格贝斯和鼓的节奏部分。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "relaxed",
+      "calm",
+      "peaceful",
+      "gentle",
+      "pleasant"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "High-quality, well-produced instrumental with a clear melody and pleasant arrangement.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a clear, engaging acoustic guitar melody. It concludes with a deliberate, sustained final chord, providing a complete musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:24.222910+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "bbfb198217b20376c1ce35194da52e023c99467d47d032aa4870e91ccbd46743"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.062792,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic acoustic instrumental featuring fingerpicked guitar, light bass, and subtle drums, creating a relaxed and pleasant atmosphere.",
+      "zh": "一首轻柔旋律的器乐曲，以指弹吉他为主，搭配轻柔的贝斯和鼓点，营造出轻松愉悦的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Calm",
+      "Pleasant",
+      "Gentle",
+      "Mellow",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 108,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:16.534782+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.062792,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-bossa-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-bossa-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-bossa-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "bbfb198217b20376c1ce35194da52e023c99467d47d032aa4870e91ccbd46743",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6e00a41b1b62504563149a671496b911cf1f70cdeecd4dd65e7b6989294e3d6d",
+      "bytes": 1425175,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "fd6c480e08e29d7c6988b604cca0ae2c2d7430dd99c578e57a37c481edac1397",
+      "bytes": 2795,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.825789+00:00"
+}

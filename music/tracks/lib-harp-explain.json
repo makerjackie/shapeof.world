@@ -1,0 +1,101 @@
+{
+  "id": "lib-harp-explain",
+  "code": "LIB-03-05",
+  "title": {
+    "en": "Discovery — Harp",
+    "zh": "发现 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "harp"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "G major",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second pastoral acoustic instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 72 BPM; G major. Main idea: an ascending fourth answered by a stepwise descent. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian-inspired instrumental piece featuring a melodic flute, plucked zither (guzheng-like), and subtle percussion. The arrangement is gentle and flowing, evoking a peaceful and contemplative atmosphere.",
+    "zh": "一首宁静而富有东方传统韵味的纯音乐，以悠扬的笛子、拨弦古筝（或类似乐器）和轻柔的打击乐器为主。编曲流畅而温和，营造出一种平和沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.842,
+  "generatedAt": "2026-09-09T07:49:21.746041+00:00",
+  "generation": {
+    "id": "8cf6e005-2778-4e06-b672-d3e3614d2701",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:48:40.806125+00:00",
+    "completedAt": "2026-09-09T07:49:21.746041+00:00",
+    "interactionId": "Wg-hatWsAf6WjMwPtfeJmQQ",
+    "sha256": "02ec0a54c32963e48fd84211cfa43caecbd1a94f0d1ab2a5b52de0e3ddc7f06f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian-inspired instrumental piece featuring a melodic flute, plucked zither (guzheng-like), and subtle percussion. The arrangement is gentle and flowing, evoking a peaceful and contemplative atmosphere.",
+      "zh": "一首宁静而富有东方传统韵味的纯音乐，以悠扬的笛子、拨弦古筝（或类似乐器）和轻柔的打击乐器为主。编曲流畅而温和，营造出一种平和沉思的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Guzheng",
+      "Percussion"
+    ],
+    "moods": [
+      "Peaceful",
+      "Serene",
+      "Traditional",
+      "Calm",
+      "Contemplative",
+      "Gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The music is well-produced, emotionally evocative, and free of technical flaws, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:49:33.045639+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:50:53.798913+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

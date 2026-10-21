@@ -1,0 +1,61 @@
+{
+  "id": "downhill-loss",
+  "code": "AIM-B01",
+  "title": {
+    "en": "Downhill Loss",
+    "zh": "下山的损失"
+  },
+  "category": "ai-ml",
+  "archetype": "discovery",
+  "moods": [
+    "searching",
+    "iterative",
+    "settling",
+    "focused"
+  ],
+  "topics": [
+    "gradient-descent",
+    "optimization",
+    "learning"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "G minor",
+  "instruments": [
+    "searching piano figure",
+    "stepping analog bass",
+    "soft strings",
+    "light click metronome"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.696,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a parameter rolling downhill on a loss surface. Around 82 BPM, G minor. A piano figure searches, overshoots, steps back; analog bass descends by small increments until a valley ostinato. Focused, iterative. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No victory brass when it converges.\n\n[00:00–00:25] Piano wandering around G, no bass yet.\n[00:25–01:05] Bass steps downward; piano overshoots and corrects; light clicks as iterations.\n[01:05–01:45] Valley found: ostinato in G minor, strings hold.\n[01:45–02:30] Tiny jitter around the minimum, then rest.\n",
+  "recommendedWorldIds": [
+    "neural-playground"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:12:57Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/downhill-loss/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/downhill-loss/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/downhill-loss/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:11.320596+00:00",
+  "generation": {
+    "id": "d2cf2019-d880-4531-bd72-25f534075e7e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:12:07Z",
+    "completedAt": "2026-08-25T10:12:57Z",
+    "durationMs": 50000,
+    "interactionId": "eGqNarTzNc63i9sP7piIkAo",
+    "clientRequestId": "16c61bc8-3f41-417a-b2a8-35d5766791fb",
+    "synthid": true,
+    "c2pa": "urn:c2pa:5d068090-22aa-4c5a-e8d0-4e4ba76a8068",
+    "sha256": "8f17e10b330bb5e94bdf4c9545e25d6d4beae9dc5be7c641fd73f7f0c583dab5"
+  }
+}

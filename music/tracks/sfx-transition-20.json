@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-20",
+  "code": "SFX-TRANSITION-20",
+  "title": {
+    "en": "Final reveal",
+    "zh": "结尾揭晓"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 19,
+  "seed": 329161894,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized final reveal for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的结尾揭晓合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 329161894,
+    "sha256": "ac285c2158b4899d568d91b203ad1ef8dba93d30fb40dca5f630caf0a6e3ea6f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7f2c74491688a36e9c5c189e822d1af3f8aa95413fc334b5185d0d47e17e83c8",
+      "bytes": 24912,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ac285c2158b4899d568d91b203ad1ef8dba93d30fb40dca5f630caf0a6e3ea6f",
+      "bytes": 149984,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "4e9341c760e7292941f874ff55bd9d8a607ab10b119599faff621d21953db844",
+      "bytes": 35684,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b158c58b0ab397f1bcb6b687ffd5001b49fa59ce69f2f0feb9234a888a1e09f2",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 74970,
+    "duration": 1.7,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.67,
+    "dcOffset": 1.2618979883620115e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2291948242187516,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh sound effect with a slightly metallic or electronic quality, suggesting rapid movement or transition.",
+      "zh": "短促的合成嗖嗖声，带有一点金属或电子质感，暗示快速移动或过渡。"
+    },
+    "reason": "The sound is a clean, well-produced, and versatile whoosh effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:56.789831+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7f2c74491688a36e9c5c189e822d1af3f8aa95413fc334b5185d0d47e17e83c8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 74970
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.905970+00:00"
+}

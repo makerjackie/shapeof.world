@@ -1,0 +1,129 @@
+{
+  "id": "scene-extra-celtic",
+  "code": "SCENE-EXTRA-6",
+  "title": {
+    "en": "Hillside Map",
+    "zh": "山坡地图"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "",
+  "instruments": [
+    "acoustic fiddle",
+    "harp and light frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Original 120-second instrumental composition. Instruments exclusively: acoustic fiddle, harp and light frame drum. 102 BPM. buoyant original folk melody with restrained dance rhythm. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A lively and traditional-sounding string ensemble piece, featuring a prominent violin melody and a danceable rhythm.",
+    "zh": "一首活泼且带有传统风格的弦乐合奏曲，以小提琴为主旋律，节奏感强，适合舞蹈。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 118.047,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:39:31.264348+00:00",
+  "generation": {
+    "id": "29ee3415-23e1-4391-a7aa-450eb9a786e5",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:38:37.709891+00:00",
+    "completedAt": "2026-09-22T09:39:31.264348+00:00",
+    "interactionId": "nkyyaoyZNLSui9sPvazj-A8",
+    "sha256": "effe1a725ea3dbb2e8595ad5d73b700f11cf2fa3656c2cc7af03b6146da51bf4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and traditional-sounding string ensemble piece, featuring a prominent violin melody and a danceable rhythm.",
+      "zh": "一首活泼且带有传统风格的弦乐合奏曲，以小提琴为主旋律，节奏感强，适合舞蹈。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "String Ensemble"
+    ],
+    "moods": [
+      "Lively",
+      "Cheerful",
+      "Traditional",
+      "Danceable",
+      "Joyful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-performed and recorded instrumental piece with a clear, engaging melody and rhythm, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:39:50.447978+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-celtic/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-celtic/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-celtic/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7ea619d549090ba6916041a6e1cd7afb137713c35c5f175f5e661b6d05ca3086",
+      "bytes": 1653437,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "effe1a725ea3dbb2e8595ad5d73b700f11cf2fa3656c2cc7af03b6146da51bf4",
+      "bytes": 2840803,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b014c8c6d2ea286dd4a008655058fde87028836ecd89aba660818ce93ffacd6e",
+      "bytes": 2739,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.452543+00:00"
+}

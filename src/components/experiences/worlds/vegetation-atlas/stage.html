@@ -1,0 +1,42 @@
+
+<a href="#classroom" class="skip-link">进入三维课堂</a>
+<header class="topbar">
+ <a class="brand" href="#" aria-label="植被之间 首页" data-action="home"><span class="brand-mark" data-icon="brand"></span><span><strong>植被之间</strong><small>THE LIVING LAND</small></span></a>
+ <span class="brand-description">3D 交互地理教室</span>
+ <nav class="topnav" aria-label="主导航"><button class="topnav-item active" data-action="explore"><span data-icon="cube"></span>三维课堂</button><button class="topnav-item" data-action="atlas"><span data-icon="book"></span>植被图鉴</button><button class="topnav-item" data-action="guide"><span data-icon="notes"></span>教学手册</button></nav>
+ <div class="header-tools"><span class="offline-badge"><i></i> 三维探索</span><button class="icon-button save-button" data-action="save" title="保存课堂状态" aria-label="保存课堂状态"><span data-icon="save"></span></button><button class="teach-button" data-action="teach"><span data-icon="present"></span><span id="teach-text">进入授课</span></button></div>
+</header>
+<div class="workspace">
+ <aside class="chapters-panel" aria-label="课程章节">
+  <div class="section-kicker">A FIELD GUIDE TO VEGETATION</div><div class="sidebar-heading"><h2>从绿色，看见自然</h2><span>06</span></div>
+  <div id="chapter-list" class="chapter-list"></div>
+  <div class="sidebar-bottom">
+   <div class="journey-head"><span>探索足迹</span><span id="visited-count">01 / 06</span></div><div class="journey-progress" id="journey-progress"></div>
+   <div class="teacher-card"><span class="teacher-card-icon" data-icon="spark"></span><h3>让知识，变得看得见。</h3><p>转一转，近一点。<br>把一片自然带进课堂。</p><button data-action="guide">打开教学指引 <span data-icon="arrow"></span></button><svg class="teacher-card-art" viewBox="0 0 180 70" fill="none" aria-hidden="true"><path d="M0 68Q42 44 87 66T180 61M15 65V30m-8 15q8-23 16-10m12 29V17m-11 22q10-35 24-9M64 65V35m-9 16q8-25 18-12M92 65V13m-15 24q15-34 29-9M128 65V24m-12 15q12-30 25-5m16 31V35m-7 16q8-23 16-13" stroke="currentColor" stroke-width="1.2"/></svg></div>
+   <button class="sidebar-help" data-action="help"><span data-icon="help"></span>操作与快捷键<span class="keycap">?</span></button>
+  </div>
+ </aside>
+ <main class="classroom" id="classroom" tabindex="-1">
+  <div class="scene-ambience" aria-hidden="true"></div>
+  <canvas id="world" aria-label="可旋转与缩放的三维植被景观。用左键拖动旋转，滚轮缩放，右键拖动平移。" tabindex="0"></canvas>
+  <div class="heading-overlay"><div class="eyebrow"><span id="chapter-number">01</span><i></i><span id="chapter-en">LIVING LANDSCAPES</span></div><h1 id="scene-title">一片绿意，万千生境。</h1><p id="scene-description">从树冠到草尖，走进植物共同构成的立体世界。</p></div>
+  <div class="live-indicator"><i></i><span>实时 3D · 精修版</span></div>
+  <div id="labels" class="labels" aria-label="场景知识标记"></div>
+  <div class="detail-lens" role="group" aria-label="细节观察镜头"><span>近一点看</span><button data-detail="canopy" aria-pressed="false">树冠</button><button data-detail="floor" aria-pressed="false">林下</button><button data-detail="roots" aria-pressed="false">根系</button><button data-detail="water" aria-pressed="false">水岸</button></div>
+  <div class="detail-focus-note"><span id="detail-caption" hidden></span><button id="detail-return" data-detail="return" hidden>← 返回全景</button></div>
+  <div id="laser" aria-hidden="true"></div>
+  <div class="view-controls" role="group" aria-label="视角控制"><button class="active" data-view="orbit" title="立体视角">3D</button><button data-view="top" title="切换俯视"><span data-icon="top"></span></button><button data-view="front" title="正面剖视"><span data-icon="section"></span></button><i></i><button data-action="reset" title="复位视角 · R" aria-label="复位视角"><span data-icon="reset"></span></button></div>
+  <div class="scene-utilities"><button class="icon-button" data-action="labels" title="显示 / 隐藏标记 · H" aria-label="显示或隐藏知识标记"><span data-icon="pin"></span></button><button class="icon-button" data-action="capture" title="导出当前画面" aria-label="导出当前画面"><span data-icon="camera"></span></button><button class="icon-button" data-action="fullscreen" title="全屏 · F" aria-label="全屏"><span data-icon="expand"></span></button></div>
+  <div class="scene-meta"><span class="model-label"><i></i>立体生境 · 教学示意</span><span class="interaction-hint"><span data-icon="mouse"></span>拖动旋转 <b>·</b> 滚轮缩放</span></div>
+  <div class="compass" aria-hidden="true"><span>N</span><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27"/><path d="M32 11v7m0 28v7M11 32h7m28 0h7"/><g id="compass-needle"><path class="north" d="M32 20l5 16-5-3-5 3z"/><path d="M32 44l5-12-5 3-5-3z"/></g></svg></div>
+  <section class="lesson-dock" aria-label="本章讲解步骤"><div class="lesson-dock-top"><div><span class="dock-label">观察路径</span><span id="step-hint">一次，只看一个问题。</span></div><button class="tour-button" data-action="tour"><span data-icon="play"></span><span id="tour-text">开始讲解</span></button></div><div class="lesson-steps" id="lesson-steps"></div><div class="tour-progress"><span id="tour-progress"></span></div></section>
+  <div class="teacher-navigation"><button data-action="prev" aria-label="上一章"><span data-icon="left"></span></button><span id="teacher-chapter">01 / 06 · 认识植被</span><button data-action="next" aria-label="下一章"><span data-icon="right"></span></button><button data-action="quiz" title="课堂提问 · Q"><span data-icon="question"></span>课堂提问</button><button data-action="laser" title="激光笔 · L"><span data-icon="pointer"></span></button></div>
+  <div class="scene-loading" id="scene-loading"><div class="loader-leaf" data-icon="brand"></div><strong>一片绿色，正在生长</strong><span>正在构建三维植被景观…</span></div>
+ </main>
+ <aside class="inspector" aria-label="观察与互动工作台"><div class="inspector-title"><span data-icon="sliders"></span><h2>观察工作台</h2><span class="inspector-dot"></span></div><div id="inspector-body"></div><div class="inspector-footer"><span>内容深度</span><div class="grade-switch" aria-label="教学内容深度"><button class="active" data-grade="junior">初中</button><button data-grade="senior">高中</button></div></div></aside>
+</div>
+<footer class="statusbar"><div><span class="small-leaf" data-icon="leaf"></span><span>万物生长，皆有章法。</span></div><span class="status-center">植被之间 · VEGETATION ATLAS</span><div class="playback"><button data-action="play" title="暂停 / 继续动态 · 空格"><span id="play-icon" data-icon="pause"></span><span id="play-text">动态运行中</span></button><button data-action="speed" title="调整播放速度" id="speed-button">1×</button><button data-action="quality" title="切换画质" id="quality-button">精细</button></div></footer>
+<dialog id="modal" aria-labelledby="modal-title"><div class="modal-header"><div><span class="section-kicker" id="modal-eyebrow">VEGETATION ATLAS</span><h2 id="modal-title"></h2></div><button class="icon-button" data-action="close" aria-label="关闭对话框"><span data-icon="close"></span></button></div><div id="modal-body"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="load-file" accept="application/json,.json" hidden>
+<noscript><div class="noscript">三维课堂需要启用 JavaScript。请启用后重新打开本文件。</div></noscript>

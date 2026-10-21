@@ -1,0 +1,130 @@
+{
+  "id": "scene-breakbeat-90",
+  "code": "SCENE-02-90",
+  "title": {
+    "en": "Rapid Assembly · 90",
+    "zh": "快速组装 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "precise fast-cut making-of montage",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 138,
+  "key": "",
+  "instruments": [
+    "breakbeat drums",
+    "marimba",
+    "rounded synth bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for precise fast-cut making-of montage. Instruments: breakbeat drums, marimba, rounded synth bass. 138 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A chill and groovy electronic track featuring a steady drum beat, prominent bassline, clean electric guitar melody, and atmospheric synth pads. It has an upbeat yet relaxed feel.",
+    "zh": "一首轻松愉快的电子音乐，具有稳定的鼓点、突出的贝斯线、干净的电吉他旋律和氛围感合成器音垫。整体感觉既欢快又放松。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "precise fast-cut making-of montage"
+    ]
+  },
+  "duration": 85.29,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:11:09.641492+00:00",
+  "generation": {
+    "id": "6603626f-3d2c-433a-ad96-2a632c6e162f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:10:26.922442+00:00",
+    "completedAt": "2026-09-22T09:11:09.641492+00:00",
+    "interactionId": "A0ayavfSMJaG694PsJfvuAI",
+    "sha256": "f9b89cc9854d150e2000db081f7b54a100cc1692268c87c5d152097fc5708912"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A chill and groovy electronic track featuring a steady drum beat, prominent bassline, clean electric guitar melody, and atmospheric synth pads. It has an upbeat yet relaxed feel.",
+      "zh": "一首轻松愉快的电子音乐，具有稳定的鼓点、突出的贝斯线、干净的电吉他旋律和氛围感合成器音垫。整体感觉既欢快又放松。"
+    },
+    "instruments": [
+      "drums",
+      "bass guitar",
+      "electric guitar",
+      "synthesizer"
+    ],
+    "moods": [
+      "chill",
+      "upbeat",
+      "relaxed",
+      "groovy",
+      "atmospheric"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "Clean, well-produced instrumental track with a pleasant, consistent groove.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:21.576401+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-breakbeat-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-breakbeat-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-breakbeat-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1a2394a9836f71877fd9257865a6d71fa2f2a18c0ffe51abd3480edc390d4f15",
+      "bytes": 1194832,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f9b89cc9854d150e2000db081f7b54a100cc1692268c87c5d152097fc5708912",
+      "bytes": 2054622,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b4fd28e1fab41a3092da6f4dd82cceffeec4408fc9687e2edc4bc52c398c5d56",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.826916+00:00"
+}

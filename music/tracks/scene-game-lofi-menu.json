@@ -1,0 +1,208 @@
+{
+  "id": "scene-game-lofi-menu",
+  "code": "GAME-01-1",
+  "title": {
+    "en": "Garden Workshop · Menu",
+    "zh": "花园工坊 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "cozy crafting and management",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 84,
+  "key": "",
+  "instruments": [
+    "Rhodes",
+    "muted bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for cozy crafting and management, menu state. Instruments: Rhodes, muted bass, brushed drums. 84 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring a gentle piano melody supported by lush, sustained string arrangements. The music evokes a sense of peaceful melancholy and introspection.",
+    "zh": "一首平静而沉思的器乐作品，以柔和的钢琴旋律为主，并辅以丰富、持续的弦乐编排。音乐营造出一种宁静的忧郁和内省感。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 89.757,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:05:47.745910+00:00",
+  "generation": {
+    "id": "937c605b-5b8e-4ea1-a0cd-744afea79ce3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:05:04.718520+00:00",
+    "completedAt": "2026-09-22T09:05:47.745910+00:00",
+    "interactionId": "wkSyavKRBqeA694PtMejkAU",
+    "sha256": "0673043e2107a37dcc96ba4ae4b7793fcefe117db2cfd6d29029888993e4a406"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring a gentle piano melody supported by lush, sustained string arrangements. The music evokes a sense of peaceful melancholy and introspection.",
+      "zh": "一首平静而沉思的器乐作品，以柔和的钢琴旋律为主，并辅以丰富、持续的弦乐编排。音乐营造出一种宁静的忧郁和内省感。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Cello",
+      "Violin",
+      "Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Melancholic",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "Well-produced, emotionally evocative, and free of any audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:06:01.588755+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 56.32059,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2483738,
+    "sourceStartSeconds": 15.5,
+    "sourceEndSeconds": 71.97058956916099,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2483738,
+        "duration": 56.32059,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.83,
+        "dcOffset": 0.004484150853102071,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.000244140625,
+        "internalStepP999": 0.12174267578124898,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2483738,
+        "duration": 56.32059,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -14.73,
+        "dcOffset": 0.004369032045371388,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00018310546875,
+        "internalStepP999": 0.10797119140625,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthetic, atmospheric texture featuring a sustained low-frequency drone, shimmering high-frequency elements, and subtle, evolving melodic or percussive accents. The sound has an ethereal and slightly melancholic quality, with a sense of continuous movement.",
+        "zh": "一种合成的氛围音效纹理，包含持续的低频嗡鸣声、闪烁的高频元素以及微妙、不断演变的旋律或打击乐点缀。该声音具有空灵且略带忧郁的特质，并带有持续运动感。"
+      },
+      "reason": "The audio provides a well-produced, clean, and versatile synthetic atmospheric texture suitable for background ambiance or mood setting in various media. There are no technical flaws like clipping, unwanted noise, or speech. The sound design is intentional and effective.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:15:45.309982+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "8ba7ed23d5c43dd1eca094511ea9c3fef4a9d3f28dd60f3cf7eb5d2fb0689eb2"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music maintains consistent rhythm, harmony, dynamics, and phrase continuity across all loop points. There are no abrupt changes, skipped beats, fade-ins, fade-outs, or conspicuous edits. The transitions are seamless and comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:15:51.970963+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "39a1af7f36a73b665d2ee78501f026268a2df061b36984c7ec512edbeda5b24d",
+      "bytes": 1257369,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0673043e2107a37dcc96ba4ae4b7793fcefe117db2cfd6d29029888993e4a406",
+      "bytes": 2161828,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8360caca45782bae6ca4f80fb634a57a36d64449f33e01431d261a06068d2eeb",
+      "bytes": 2793,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "17b8d7ada4ca56414054fb2cfb9fe1e731386b0c4e5efd6e63ad8f314bae2486",
+      "bytes": 9934996,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "2f0c408c31fe6a586ea12c0a0e0447813d3861645ad9a9c5000cf2b85c516de8",
+      "bytes": 602000,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.462809+00:00"
+}

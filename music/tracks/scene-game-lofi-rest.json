@@ -1,0 +1,129 @@
+{
+  "id": "scene-game-lofi-rest",
+  "code": "GAME-01-4",
+  "title": {
+    "en": "Garden Workshop · Rest",
+    "zh": "花园工坊 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "cozy crafting and management",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 84,
+  "key": "",
+  "instruments": [
+    "Rhodes",
+    "muted bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for cozy crafting and management, rest state. Instruments: Rhodes, muted bass, brushed drums. 84 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring a gentle piano melody over a soft synth pad and light, unobtrusive percussion. The atmosphere is peaceful and slightly melancholic.",
+    "zh": "一首平静而沉思的器乐作品，以柔和的钢琴旋律为主，配以轻柔的合成器衬底和轻巧、不突兀的打击乐。整体氛围宁静而略带忧郁。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 87.275,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:21:14.201476+00:00",
+  "generation": {
+    "id": "52e43be7-49c2-43ad-b675-f3f6f30600d1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:20:28.087595+00:00",
+    "completedAt": "2026-09-22T09:21:14.201476+00:00",
+    "interactionId": "XUiyaq2oDNvi8vUPwd3swAU",
+    "sha256": "5bb5b2d5e4331c414a6868b9e4e204249ccf219e1984bca99ec5665f900f8e80"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring a gentle piano melody over a soft synth pad and light, unobtrusive percussion. The atmosphere is peaceful and slightly melancholic.",
+      "zh": "一首平静而沉思的器乐作品，以柔和的钢琴旋律为主，配以轻柔的合成器衬底和轻巧、不突兀的打击乐。整体氛围宁静而略带忧郁。"
+    },
+    "instruments": [
+      "piano",
+      "synth pad",
+      "drums",
+      "percussion"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "reflective",
+      "melancholic",
+      "relaxed"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The music is well-produced, clean, and evokes a clear, consistent mood, making it suitable for various background applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:23.981163+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-rest/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "886b7281a145d32cbf8b08d726c3edee19aba93293ce62ffc2c3eabc8e5ac2fa",
+      "bytes": 1222626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5bb5b2d5e4331c414a6868b9e4e204249ccf219e1984bca99ec5665f900f8e80",
+      "bytes": 2102269,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "f280b0b51e6d2f2425d863278afe68db020edbfb7ef514fbe0b345c601bdd2bd",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.839105+00:00"
+}

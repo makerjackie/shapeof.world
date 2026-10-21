@@ -1,0 +1,104 @@
+{
+  "id": "lib-ambient-celebrate",
+  "code": "LIB-24-10",
+  "title": {
+    "en": "First Light — Ambient",
+    "zh": "初光 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "ambient"
+  ],
+  "energy": 4,
+  "bpm": 64,
+  "key": "C major",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second ambient electronic instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 64 BPM; C major. Main idea: a repeating five-note figure with space between phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A majestic and expansive orchestral electronic track featuring soaring synth pads, a driving beat, and a rich, evolving harmonic structure. It builds from a serene opening to a powerful, uplifting climax.",
+    "zh": "一首宏伟而广阔的管弦电子乐曲，以 soaring 合成器铺垫、强劲的节拍和丰富、不断发展的和声结构为特色。它从宁静的开场逐渐发展到强大、振奋的高潮。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 57.913,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:05:31.247238+00:00",
+  "generation": {
+    "id": "5d6b58b8-3e28-48bd-ae18-bd897c309952",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:04:50.615160+00:00",
+    "completedAt": "2026-09-09T09:05:31.247238+00:00",
+    "interactionId": "MyGhaoDDNPKc8vUPttiuwAE",
+    "sha256": "c345277772a043c7a1d88fc8ed6647669998691b53fafbc02ef31a105b3eb8f3"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A majestic and expansive orchestral electronic track featuring soaring synth pads, a driving beat, and a rich, evolving harmonic structure. It builds from a serene opening to a powerful, uplifting climax.",
+      "zh": "一首宏伟而广阔的管弦电子乐曲，以 soaring 合成器铺垫、强劲的节拍和丰富、不断发展的和声结构为特色。它从宁静的开场逐渐发展到强大、振奋的高潮。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Orchestral Strings",
+      "Orchestral Brass"
+    ],
+    "moods": [
+      "Majestic",
+      "Epic",
+      "Uplifting",
+      "Grand",
+      "Expansive",
+      "Powerful",
+      "Hopeful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, clear, and fits a common library need for epic/uplifting instrumental music.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:05:40.918491+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:28:33.806896+00:00"
+}

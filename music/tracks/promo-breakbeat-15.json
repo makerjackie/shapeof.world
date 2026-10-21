@@ -1,0 +1,158 @@
+{
+  "id": "promo-breakbeat-15",
+  "code": "PROMO-02-15",
+  "title": {
+    "en": "Fast Forward · 15",
+    "zh": "快进一格 · 15"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 5,
+  "bpm": 136,
+  "key": "",
+  "instruments": [
+    "chopped acoustic drums",
+    "analog synth plucks",
+    "tight bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: crisp breakbeat; energetic drum edits and a two-note synth hook. Instruments: chopped acoustic drums, analog synth plucks, tight bass. Tempo 136 BPM. Distinct motif: descending pentatonic triplet. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 15-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic dance track featuring a driving beat, synth melodies, and a prominent bassline, designed for promotional use.",
+    "zh": "一首欢快、充满活力的电子舞曲，具有强劲的节拍、合成器旋律和突出的低音线，专为宣传用途设计。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:20:43.216965+00:00",
+  "generation": {
+    "id": "0ab279e9-0984-40b8-bf4d-05fcb84d0869",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:20:29.499775+00:00",
+    "completedAt": "2026-09-10T05:20:43.216965+00:00",
+    "interactionId": "Hj6iaozTJuTk694Pn6CxwQQ",
+    "sha256": "5e42be6cae5ba9ac896d98e7e3b7778d743d15895e716318c6f335a1579999d3"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a driving beat, synth melodies, and a prominent bassline, designed for promotional use.",
+      "zh": "一首欢快、充满活力的电子舞曲，具有强劲的节拍、合成器旋律和突出的低音线，专为宣传用途设计。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums"
+    ],
+    "moods": [
+      "energetic",
+      "upbeat",
+      "driving",
+      "modern",
+      "danceable"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "A well-produced, high-energy electronic dance music track suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens instantly with full instrumentation and main melody; ends with a quick, clean fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:13.901000+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "bc188420de6266ef75d938681fc25450f6b36f90d5c43b768eb9dec8be65220d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic dance track featuring a driving beat, prominent synth bassline, and catchy melodic synth leads. The rhythm is consistent and upbeat, creating a danceable atmosphere.",
+      "zh": "一首充满活力的电子舞曲，具有强劲的节拍、突出的合成器低音线和抓耳的旋律合成器主音。节奏连贯且欢快，营造出舞动的氛围。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer Bass",
+      "Synthesizer Lead",
+      "Synthesizer Pads"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Danceable",
+      "Driving",
+      "Exciting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": "Cleanly produced electronic track with a clear, driving rhythm and engaging synth melodies, suitable for various media applications requiring an energetic and modern sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:05.663600+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.772167,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-15/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:39.504047+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "lib-koto-nature",
+  "code": "LIB-19-04",
+  "title": {
+    "en": "Wildlands — Koto",
+    "zh": "山野 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "koto"
+  ],
+  "energy": 2,
+  "bpm": 64,
+  "key": "D dorian",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Japanese acoustic instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 64 BPM; D dorian. Main idea: an ascending fourth answered by a stepwise descent. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A serene and meditative instrumental piece featuring traditional East Asian-inspired melodies played on bowed strings, plucked strings, and flute. The music evokes a sense of calm and introspection.",
+    "zh": "一首宁静而富有冥想感的纯音乐，以弓弦乐器、弹拨乐器和长笛演奏出具有东亚风格的旋律。音乐营造出一种平静和内省的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 148.532,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:49:36.634694+00:00",
+  "generation": {
+    "id": "50bc7dc6-e399-47eb-901b-d46ea7262d14",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:48:48.490727+00:00",
+    "completedAt": "2026-09-09T08:49:36.634694+00:00",
+    "interactionId": "cR2haqu2HfKc8vUPttiuwAE",
+    "sha256": "468221b4ecac409a8daf0019123d1ebb6d6abe356c697329382a296d63354039"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and meditative instrumental piece featuring traditional East Asian-inspired melodies played on bowed strings, plucked strings, and flute. The music evokes a sense of calm and introspection.",
+      "zh": "一首宁静而富有冥想感的纯音乐，以弓弦乐器、弹拨乐器和长笛演奏出具有东亚风格的旋律。音乐营造出一种平静和内省的氛围。"
+    },
+    "instruments": [
+      "Bowed strings",
+      "Plucked strings",
+      "Flute"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Meditative",
+      "Traditional",
+      "East Asian"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced instrumental track with clear East Asian influences, featuring melodic bowed strings, plucked strings, and flute. It is free of defects and suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:49:50.523039+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:50:50.321702+00:00"
+}

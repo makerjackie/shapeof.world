@@ -1,0 +1,178 @@
+{
+  "id": "scene-chiptune-15",
+  "code": "SCENE-05-15",
+  "title": {
+    "en": "Pocket Planet · 15",
+    "zh": "口袋星球 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "playful original pixel-art motion",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 142,
+  "key": "",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "crisp electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 15,
+  "prompt": "Create a complete original 60-second instrumental cue in chiptune style. Use pulse-wave lead, triangle bass, crisp electronic drums. Tempo 142 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track with a driving beat, prominent synth melodies, and a chiptune-like aesthetic.",
+    "zh": "一首欢快活泼的电子音乐，节奏感强，合成器旋律突出，带有芯片音乐风格。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "playful original pixel-art motion"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:29:10.372284+00:00",
+  "generation": {
+    "id": "5ce3ddf0-8d27-4a7c-98ad-4d983a0f701a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:28:28.667291+00:00",
+    "completedAt": "2026-09-22T09:29:10.372284+00:00",
+    "interactionId": "Pkqyaty6CLve694PlMeHuQ4",
+    "sha256": "d35a12622f0e1f1ee3ff87599f64c13e773523111577524b0b2162cff191d8a2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track with a driving beat, prominent synth melodies, and a chiptune-like aesthetic.",
+      "zh": "一首欢快活泼的电子音乐，节奏感强，合成器旋律突出，带有芯片音乐风格。"
+    },
+    "instruments": [
+      "Drums",
+      "Synthesizer",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 148,
+    "reason": "Well-produced, energetic, and suitable for various media requiring an upbeat electronic feel.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving beat and synth melody, and concludes with a clear, sustained final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:29:24.866805+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b2a1992b50ab94aedc00ff99e01f1423f3ce4a3c33cc166d46149cfe19215f81"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.723208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a prominent synth melody, driving electronic drums, and a pulsating bassline. It evokes a retro arcade or video game feel.",
+      "zh": "一首欢快活泼的电子音乐，以突出的合成器旋律、强劲的电子鼓点和律动的贝斯线为特色。它唤起了复古街机或视频游戏的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Driving",
+      "Electronic",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:29:17.445617+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 43.723208,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chiptune-15/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chiptune-15/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chiptune-15/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b2a1992b50ab94aedc00ff99e01f1423f3ce4a3c33cc166d46149cfe19215f81",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d35a12622f0e1f1ee3ff87599f64c13e773523111577524b0b2162cff191d8a2",
+      "bytes": 1417025,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "873b4dc395cb01b9bba8894a6a937274b06db096a068bdbd9e78750ee790e486",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.451604+00:00"
+}

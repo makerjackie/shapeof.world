@@ -1,0 +1,182 @@
+{
+  "id": "scene-acoustic-folk-40",
+  "code": "SCENE-10-40",
+  "title": {
+    "en": "Handmade Map · 40",
+    "zh": "手作地图 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "optimistic craft and travel sequence",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "",
+  "instruments": [
+    "fingerstyle guitar",
+    "mandolin",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for optimistic craft and travel sequence. Instruments: fingerstyle guitar, mandolin, hand percussion. 114 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and cheerful acoustic folk-pop track featuring bright acoustic guitars, a playful plucked melody, and a steady rhythm section. It evokes a lighthearted and positive atmosphere.",
+    "zh": "一首欢快活泼的民谣流行乐曲，以明亮的木吉他、俏皮的拨弦旋律和稳定的节奏部分为特色。营造出轻松愉快的积极氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "optimistic craft and travel sequence"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:15:06.281505+00:00",
+  "generation": {
+    "id": "0a7900f6-974f-47b0-af53-125af47bb37f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:14:25.450571+00:00",
+    "completedAt": "2026-09-22T09:15:06.281505+00:00",
+    "interactionId": "8kayapiLCrbi694PucGn6Ac",
+    "sha256": "fa252d7e7479906e4e82be9cd105a3f0e07a6710d31811be9c7a736c5428ecfd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful acoustic folk-pop track featuring bright acoustic guitars, a playful plucked melody, and a steady rhythm section. It evokes a lighthearted and positive atmosphere.",
+      "zh": "一首欢快活泼的民谣流行乐曲，以明亮的木吉他、俏皮的拨弦旋律和稳定的节奏部分为特色。营造出轻松愉快的积极氛围。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "ukulele",
+      "bass guitar",
+      "drums",
+      "glockenspiel"
+    ],
+    "moods": [
+      "upbeat",
+      "cheerful",
+      "lighthearted",
+      "positive",
+      "playful",
+      "optimistic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean, and versatile for various positive and lighthearted media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a bright acoustic guitar melody and rhythm, establishing a cheerful mood. It concludes with a gentle, deliberate fade-out of the main theme, providing a smooth resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:26.489718+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "e29405d839bd431c5edbd412cc738e5cac7fbcea10778b7df90e8bdff675785e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.141167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful acoustic folk piece, driven by a prominent acoustic guitar melody and rhythm, supported by a steady bassline and light percussion.",
+      "zh": "一首活泼欢快的原声民谣乐曲，以突出的原声吉他旋律和节奏为主导，辅以稳定的贝斯线和轻快的打击乐。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Lively",
+      "Joyful",
+      "Folk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Cleanly recorded, well-performed, and engaging acoustic folk music with a clear structure and positive mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:17.480829+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.141167000000003,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e29405d839bd431c5edbd412cc738e5cac7fbcea10778b7df90e8bdff675785e",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fa252d7e7479906e4e82be9cd105a3f0e07a6710d31811be9c7a736c5428ecfd",
+      "bytes": 1427056,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "336e1e241ae5757bef544926c3552425b0b8702f7619162c8add78a626fbec44",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.822232+00:00"
+}

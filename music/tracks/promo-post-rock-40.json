@@ -1,0 +1,158 @@
+{
+  "id": "promo-post-rock-40",
+  "code": "PROMO-18-40",
+  "title": {
+    "en": "Open Horizon · 40",
+    "zh": "展开地平线 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 130,
+  "key": "",
+  "instruments": [
+    "clean electric guitar",
+    "melodic bass",
+    "tight acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: energetic instrumental guitar rock with immediate sparkling riff. Instruments: clean electric guitar, melodic bass, tight acoustic drums. Tempo 130 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic rock track featuring driving electric guitars, a prominent bassline, and dynamic drums. It has a positive and lively feel.",
+    "zh": "一首欢快且充满活力的摇滚乐曲，以强劲的电吉他、突出的贝斯线和动感的鼓点为特色。整体感觉积极而生动。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:34:02.407874+00:00",
+  "generation": {
+    "id": "3b18dad3-b768-4485-b2d6-540d89c6aba3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:33:18.646253+00:00",
+    "completedAt": "2026-09-10T05:34:02.407874+00:00",
+    "interactionId": "H0GiavjOLe67i9sP06HTyAM",
+    "sha256": "531844f5198c704b774561922c1cbfa0aaec2c649e09a7eab5859ed14fe147f7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic rock track featuring driving electric guitars, a prominent bassline, and dynamic drums. It has a positive and lively feel.",
+      "zh": "一首欢快且充满活力的摇滚乐曲，以强劲的电吉他、突出的贝斯线和动感的鼓点为特色。整体感觉积极而生动。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "driving",
+      "lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 145,
+    "reason": "Well-produced, energetic rock track with clear instrumentation and a positive vibe, suitable for various media placements.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, catchy guitar riff and drums, and ends with a clear, sustained final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:35.737056+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6816bc9c744bd240a47f9ea94b5cb855b1e9a4ea91e96269ee7ddf1579c27d84"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.297917,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and driving instrumental rock track featuring a prominent electric guitar melody, supported by a solid bassline and energetic drums.",
+      "zh": "一首欢快且富有动感的器乐摇滚乐曲，以突出的电吉他旋律为主，配以扎实的贝斯线和充满活力的鼓点。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "driving",
+      "positive",
+      "lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 126,
+    "reason": "Well-produced, clear, and engaging instrumental track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:34:29.839597+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.297916999999998,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-post-rock-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-post-rock-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-post-rock-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:38.099313+00:00"
+}

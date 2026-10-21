@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-04",
+  "code": "SFX-RETRO-04",
+  "title": {
+    "en": "Pixel fall",
+    "zh": "像素下落"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 3,
+  "seed": 3572128582,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel fall for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素下落合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.73,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3572128582,
+    "sha256": "2a41e0adfbf9e3cf651e49f8f1035236be853890df837f6284bd597cb3a67a25",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "05e83909d45f99ca38d0326dbad3d9d3478c6af5364ce9423a64c2919ba742bc",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2a41e0adfbf9e3cf651e49f8f1035236be853890df837f6284bd597cb3a67a25",
+      "bytes": 64430,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1eee927d2ca68eef5815ceef7c2c2e55a65892f1187ff70bf3efd835ed737608",
+      "bytes": 16474,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6bdb9a79455c9bb04898440060f2291bc209a727c3b8bc2acc246ea9559398ae",
+      "bytes": 1948,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 32193,
+    "duration": 0.73,
+    "peakDbfs": -4.48,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.80614174179946e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.115478515625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized spring or boing sound effect, followed by a quick pop or click.",
+      "zh": "一个短促的合成弹簧或弹跳音效，随后是一个快速的爆裂或点击声。"
+    },
+    "reason": "The sound is a clear, isolated, and well-produced synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:16.477789+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "05e83909d45f99ca38d0326dbad3d9d3478c6af5364ce9423a64c2919ba742bc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 32193
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.893826+00:00"
+}

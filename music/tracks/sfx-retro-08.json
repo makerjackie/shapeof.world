@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-08",
+  "code": "SFX-RETRO-08",
+  "title": {
+    "en": "Pixel explosion",
+    "zh": "像素爆破"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 7,
+  "seed": 2633718042,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel explosion for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素爆破合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2633718042,
+    "sha256": "12034a367ed03002cdba219620f8f7eb7a9d0b790ac8272aaf295fde2e9b4eec",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "49d22ac37a4164f5fc790c08377da67ede57eccab187fecf1bd977b90f3e95e5",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "12034a367ed03002cdba219620f8f7eb7a9d0b790ac8272aaf295fde2e9b4eec",
+      "bytes": 36206,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a6bb54ce345609097ea7ad8f30fd6b6bd60835099953edc61bb217e46f884828",
+      "bytes": 9211,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "9e2d9ed31f84e926725f6be95fc1ee59eb44cfe7f2d9c55ef79a95eeccc0ac6b",
+      "bytes": 1924,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 18081,
+    "duration": 0.41,
+    "peakDbfs": -4.11,
+    "rmsDbfs": -17.08,
+    "dcOffset": -6.09305110509651e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.06417840576171696,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized electronic zap or laser sound effect.",
+      "zh": "一个短促、高音调的合成电子冲击或激光音效。"
+    },
+    "reason": "The sound is a clean, intentional, and well-produced electronic sound effect without any audible defects or unintended elements, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:56.423725+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "49d22ac37a4164f5fc790c08377da67ede57eccab187fecf1bd977b90f3e95e5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 18081
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.894752+00:00"
+}

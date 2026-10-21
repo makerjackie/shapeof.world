@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-09",
+  "code": "SFX-FOOTSTEP-09",
+  "title": {
+    "en": "Metal walkway",
+    "zh": "金属栈道"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 8,
+  "seed": 1290069098,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized metal walkway for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的金属栈道合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1290069098,
+    "sha256": "9c4a367be8b61caaa80020addd7166906c4a4f3da37bcf446312ad65526e70b3",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0e5c9a8d2d58c0a4a3394e3c5571400b08aa2bc5fa25e5555e36d6fa0bdc59df",
+      "bytes": 4797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9c4a367be8b61caaa80020addd7166906c4a4f3da37bcf446312ad65526e70b3",
+      "bytes": 24740,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b26abb85bb8fbaa35e7f3a754d59fc3faccc74dcfcc8f822937b0ec72ef75be5",
+      "bytes": 8506,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3a265c37d9449c0366cf6e7d753667546e22f7f82f00756878339df6f1ff36a4",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 12348,
+    "duration": 0.28,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.43,
+    "dcOffset": -4.448626548833819e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.22920202636719023,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, percussive impact sound, resembling a quick thwack or slap. It has a synthesized quality.",
+      "zh": "短促、尖锐的打击声，类似于快速的拍打或重击。具有合成音质。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined percussive effect, suitable for various sound design applications. It lacks any technical flaws or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:06.523839+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0e5c9a8d2d58c0a4a3394e3c5571400b08aa2bc5fa25e5555e36d6fa0bdc59df"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 12348
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.869579+00:00"
+}

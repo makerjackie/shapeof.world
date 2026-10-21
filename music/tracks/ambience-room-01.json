@@ -1,0 +1,130 @@
+{
+  "id": "ambience-room-01",
+  "code": "AMB-ROOM-01",
+  "title": {
+    "en": "Quiet ventilation · designed ambience",
+    "zh": "安静通风 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "room",
+  "designIndex": 0,
+  "seed": 2840927256,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized quiet ventilation atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "安静通风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "room",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-room"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-room-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-room-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-room-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-room-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2840927256,
+    "sha256": "59b21906d4bb03edb1e037b5293881bc451578ed6caf4e4a13f513a82d67dc43",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c8ee4c1672c481ef3ec6c486f331899a5526e1648fa0ef003588d6f1562905b9",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "59b21906d4bb03edb1e037b5293881bc451578ed6caf4e4a13f513a82d67dc43",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "2943b2e4121ccd7382411085568d6c2624d07c2bed17fd6828c89291b2cca16b",
+      "bytes": 131620,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "656e8ff1139825a2a98c9abb89394232b43aa09f9738145cb1f6cd551bde8ce2",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -3.03,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.0354205050075585e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00579833984375,
+    "internalStepP999": 0.014007568359375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, metallic hum or drone with a subtle internal modulation, creating a sense of sustained power or an ambient machine sound.",
+      "zh": "深沉、共鸣的金属嗡鸣声或无人机声，带有微妙的内部调制，营造出持续的动力感或环境机器声。"
+    },
+    "reason": "The sound is a clean, well-produced synthetic texture suitable for background ambience or machine sounds. It exhibits no technical defects.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:19.553523+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "f279ad31b90af17fe3aec0c47aeb0520b3809f3e5d39b6ae02665d2fad461fd4"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.855648+00:00"
+}

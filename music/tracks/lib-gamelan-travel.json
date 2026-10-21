@@ -1,0 +1,100 @@
+{
+  "id": "lib-gamelan-travel",
+  "code": "LIB-23-06",
+  "title": {
+    "en": "Roaming — Gamelan",
+    "zh": "漫游 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "gamelan"
+  ],
+  "energy": 3,
+  "bpm": 88,
+  "key": "E minor",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second gamelan-inspired instrumental instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 88 BPM; E minor. Main idea: a repeating five-note figure with space between phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A light and playful instrumental piece featuring a prominent plucked bassline, a simple, repetitive piano melody, and subtle percussion. It evokes a whimsical and cheerful atmosphere.",
+    "zh": "一首轻松活泼的器乐曲，以突出的拨弦低音线、简单重复的钢琴旋律和微妙的打击乐为特色。它营造出一种异想天开、欢快的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 91.611,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:02:03.522961+00:00",
+  "generation": {
+    "id": "9c4ab51c-391b-433a-9c94-5c1749f489c2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:01:01.160590+00:00",
+    "completedAt": "2026-09-09T09:02:03.522961+00:00",
+    "interactionId": "TiChapjTFNOJoLAPwd-WiAQ",
+    "sha256": "39f7bbe0fa8cdba019056ae5b03a1dbeb49b1dae30a7cd3162cf3cad87df016e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful instrumental piece featuring a prominent plucked bassline, a simple, repetitive piano melody, and subtle percussion. It evokes a whimsical and cheerful atmosphere.",
+      "zh": "一首轻松活泼的器乐曲，以突出的拨弦低音线、简单重复的钢琴旋律和微妙的打击乐为特色。它营造出一种异想天开、欢快的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Pizzicato Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Light",
+      "Cheerful",
+      "Innocent"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "The audio is a clean, well-produced instrumental track with a clear, light, and playful theme, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:02:17.498608+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:03:50.622043+00:00"
+}

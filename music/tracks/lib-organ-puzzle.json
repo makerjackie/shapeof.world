@@ -1,0 +1,107 @@
+{
+  "id": "lib-organ-puzzle",
+  "code": "LIB-05-07",
+  "title": {
+    "en": "Clues — Organ",
+    "zh": "线索 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "organ"
+  ],
+  "energy": 3,
+  "bpm": 60,
+  "key": "C lydian",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second contemporary organ music instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 60 BPM; C lydian. Main idea: a compact three-note motif. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "An elegant and whimsical orchestral piece with a waltz-like feel, featuring prominent strings and woodwinds. It evokes a classical or fairytale atmosphere, with a flowing and graceful melody.",
+    "zh": "一首优雅而异想天开的管弦乐曲，带有华尔兹般的韵律，以突出的弦乐和木管乐器为特色。它营造出古典或童话般的氛围，旋律流畅而优美。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.327,
+  "generatedAt": "2026-09-09T07:57:41.955722+00:00",
+  "generation": {
+    "id": "1dcdd5e4-a48e-472e-a7b0-53b1a9701299",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:56:56.655844+00:00",
+    "completedAt": "2026-09-09T07:57:41.955722+00:00",
+    "interactionId": "SRGhat2EIcy5jMwP4P3F-Qs",
+    "sha256": "d2b9635b48b9d8a08888086588bd87eb52c79cb85872a7368996fd0fe848083a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An elegant and whimsical orchestral piece with a waltz-like feel, featuring prominent strings and woodwinds. It evokes a classical or fairytale atmosphere, with a flowing and graceful melody.",
+      "zh": "一首优雅而异想天开的管弦乐曲，带有华尔兹般的韵律，以突出的弦乐和木管乐器为特色。它营造出古典或童话般的氛围，旋律流畅而优美。"
+    },
+    "instruments": [
+      "strings",
+      "violin",
+      "cello",
+      "woodwinds",
+      "flute",
+      "clarinet",
+      "oboe",
+      "percussion",
+      "timpani"
+    ],
+    "moods": [
+      "elegant",
+      "whimsical",
+      "classical",
+      "romantic",
+      "graceful",
+      "fairytale",
+      "dreamy"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "Well-produced orchestral piece with clear instrumentation and a consistent, pleasant mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:57:50.217176+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:58:45.259911+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

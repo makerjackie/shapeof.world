@@ -1,0 +1,182 @@
+{
+  "id": "scene-guzheng-25",
+  "code": "SCENE-11-25",
+  "title": {
+    "en": "Porcelain Steps · 25",
+    "zh": "瓷器轻步 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "modern material and design close-ups",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "plucked bass",
+    "dry electronic percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 25,
+  "prompt": "Create a complete original 60-second instrumental cue in guzheng style. Use guzheng, plucked bass, dry electronic percussion. Tempo 118 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and uplifting electronic pop track featuring a driving synth melody, a steady dance beat, and a bright, modern feel. It builds with layers of synths and a prominent bassline, creating a positive and dynamic atmosphere.",
+    "zh": "一首充满活力和振奋人心的电子流行乐曲，具有驱动性的合成器旋律、稳定的舞曲节拍和明亮现代的感觉。它通过合成器层和突出的低音线进行构建，营造出积极动感的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "modern material and design close-ups"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:30:11.698108+00:00",
+  "generation": {
+    "id": "36e79ee3-c44c-49b6-bdcd-bbce1f47c847",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:29:33.333089+00:00",
+    "completedAt": "2026-09-22T09:30:11.698108+00:00",
+    "interactionId": "fUqyasjkO5aG694PsJfvuAI",
+    "sha256": "8349345c09e6832b6fa87dabc87ee220a2562742b1f8e7014276e8e8fd728718"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and uplifting electronic pop track featuring a driving synth melody, a steady dance beat, and a bright, modern feel. It builds with layers of synths and a prominent bassline, creating a positive and dynamic atmosphere.",
+      "zh": "一首充满活力和振奋人心的电子流行乐曲，具有驱动性的合成器旋律、稳定的舞曲节拍和明亮现代的感觉。它通过合成器层和突出的低音线进行构建，营造出积极动感的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Driving",
+      "Positive",
+      "Modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Suitable for library use.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy synth melody and a driving beat. It concludes with a smooth, controlled fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:35.227449+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "86b8da4f2c8651c879185a6d29b27fd766f5e7a56b2a086fb77cf3aaadc77381"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.20075,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat track featuring a prominent, bright melody played on a flute-like instrument, supported by plucked strings (pizzicato), a driving percussion beat, and a steady bassline. The arrangement is clean and energetic, evoking a folk or world music feel with a modern production.",
+      "zh": "一首活泼欢快的曲子，以长笛般的乐器演奏出突出、明亮的旋律，辅以拨弦乐器（拨奏）、强劲的打击乐节奏和稳定的低音线。编曲干净且充满活力，带有现代制作的民间或世界音乐风格。"
+    },
+    "instruments": [
+      "Flute",
+      "Pizzicato strings",
+      "Percussion",
+      "Bass",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Whimsical",
+      "Folk",
+      "Bright",
+      "Cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The track is well-produced with a clear, engaging melody and a consistent, energetic rhythm. It is free of defects and offers a versatile, positive mood suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:26.711949+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 33.20075,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-guzheng-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-guzheng-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-guzheng-25/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "86b8da4f2c8651c879185a6d29b27fd766f5e7a56b2a086fb77cf3aaadc77381",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8349345c09e6832b6fa87dabc87ee220a2562742b1f8e7014276e8e8fd728718",
+      "bytes": 1404486,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "e32be1b54b7b86dfec49d9479830452dbc47ff906c6fa372e9ee1836ef25a984",
+      "bytes": 2793,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.467758+00:00"
+}

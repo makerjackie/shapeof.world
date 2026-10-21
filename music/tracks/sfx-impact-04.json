@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-04",
+  "code": "SFX-IMPACT-04",
+  "title": {
+    "en": "Steel plate",
+    "zh": "钢板撞击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 3,
+  "seed": 1850521339,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized steel plate for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的钢板撞击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.76,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1850521339,
+    "sha256": "010240d0b0e05acb3eac857b4364811b033538e65ab3e6ab7fc6e616ebc70207",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e4e7ec5641cdb6f364a725748486661782df68d58189f865e5efa1ea0e9d90ab",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "010240d0b0e05acb3eac857b4364811b033538e65ab3e6ab7fc6e616ebc70207",
+      "bytes": 67076,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "61d92fd4280f8b5bd935b0948a331fc8ea7175634f0ee9a2b137a1c6c3219ecc",
+      "bytes": 8117,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "90ab3fa857761f33957dad36c3e0e52d1e1493cb7cc07a585a6137b61aff6e76",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 33516,
+    "duration": 0.76,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.04,
+    "dcOffset": -2.5495052736006682e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.0762939453125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing sound effect with a springy, metallic resonance.",
+      "zh": "一个短促的合成弹簧音效，带有弹性和金属共鸣。"
+    },
+    "reason": "The sound is clean, well-defined, and free of technical defects. It's a clear, usable sound effect suitable for various applications like UI feedback or cartoon sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:00.805268+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e4e7ec5641cdb6f364a725748486661782df68d58189f865e5efa1ea0e9d90ab"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 33516
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.876342+00:00"
+}

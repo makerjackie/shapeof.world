@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-05",
+  "code": "SFX-FOOTSTEP-05",
+  "title": {
+    "en": "Snow crunch",
+    "zh": "积雪踩踏"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 4,
+  "seed": 3721648995,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized snow crunch for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的积雪踩踏合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3721648995,
+    "sha256": "f4774da569dc7c26708cae421e6782c7d32e2264da1e57be567b8b85f8e5087e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0f6c384468c45585934884b77a725b623246512aa58fee50062fc7594eb86fc8",
+      "bytes": 4797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f4774da569dc7c26708cae421e6782c7d32e2264da1e57be567b8b85f8e5087e",
+      "bytes": 24740,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d17c43e19952fb74dd8ea2c5a6b643cd60bdf5e05019134920f145217f1af8b6",
+      "bytes": 9609,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "5b2a191451ec4f05a4bc69ffa23dda75e1d850f973ea38d7988b5e35a8390e60",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 12348,
+    "duration": 0.28,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.13,
+    "dcOffset": 4.2014806294541626e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.26962060546875044,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, percussive 'thwack' or 'whip' sound effect, possibly electronic or synthesized.",
+      "zh": "短促、尖锐的打击声或鞭打声效果，可能是电子合成的。"
+    },
+    "reason": "The sound is clean, distinct, and well-produced, making it suitable for a sound library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:02.719653+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0f6c384468c45585934884b77a725b623246512aa58fee50062fc7594eb86fc8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 12348
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.868834+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-18",
+  "code": "SFX-WATER-18",
+  "title": {
+    "en": "Water swoosh",
+    "zh": "水流掠过"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 17,
+  "seed": 1821083004,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized water swoosh for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的水流掠过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.87,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1821083004,
+    "sha256": "60183bf2ae608e8683429757fca8b737c95168f04ce9dae6f02ee1e6069ed53e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "3da477d74e787b246b4a345dbdd3ef51b92bc0c58fbccc6df734dea8085781f6",
+      "bytes": 13209,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "60183bf2ae608e8683429757fca8b737c95168f04ce9dae6f02ee1e6069ed53e",
+      "bytes": 76778,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "856ab9e11edd7af93f763ebacccb86e7bc35e767f69e7e0aa05d159f26086c89",
+      "bytes": 14488,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2d03e35b3527c0116b95caba75bb721cf6a4624e55aa0e6ecc2bd510d4a228eb",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 38367,
+    "duration": 0.87,
+    "peakDbfs": -3.37,
+    "rmsDbfs": -17.08,
+    "dcOffset": -6.681462096332786e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13719985961914305,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched synthetic whoosh or swoosh sound effect. It has a distinct electronic or metallic quality, suggesting a fast movement, energy burst, or sci-fi weapon effect.",
+      "zh": "一个短促、尖锐、高音的合成嗖嗖声或呼啸声效果。具有独特的电子或金属质感，暗示着快速移动、能量爆发或科幻武器效果。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced synthetic sound effect. It has a clear character and good transient response, making it highly usable for sound design. No technical defects were detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:46.502038+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "3da477d74e787b246b4a345dbdd3ef51b92bc0c58fbccc6df734dea8085781f6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 38367
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.913915+00:00"
+}

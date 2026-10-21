@@ -1,0 +1,160 @@
+{
+  "id": "promo-dub-35",
+  "code": "PROMO-11-35",
+  "title": {
+    "en": "Rubber Orbit · 35",
+    "zh": "弹性轨道 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 96,
+  "key": "",
+  "instruments": [
+    "deep bass guitar",
+    "rimshot drums",
+    "organ stabs",
+    "spring echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: spacious rhythmic dub with playful bass and short echoes. Instruments: deep bass guitar, rimshot drums, organ stabs, spring echo. Tempo 96 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and driving electronic track featuring a prominent synth lead melody, punchy electronic drums, and a dynamic build-up. The music maintains a consistent, energetic dance rhythm throughout.",
+    "zh": "一首欢快且富有动感的电子音乐，以突出的合成器主旋律、有力的电子鼓点和动态的渐强为特色。音乐全程保持着一致、充满活力的舞曲节奏。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:29:22.308916+00:00",
+  "generation": {
+    "id": "ce9dad88-a5cb-4a96-9d17-e3e7799bba74",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:28:42.241555+00:00",
+    "completedAt": "2026-09-10T05:29:22.308916+00:00",
+    "interactionId": "C0CiaqOUCK-2i9sPp9X5mAU",
+    "sha256": "a8b75dcc32d12f8448e98390b2ccb7013ffd53b5815039d13d1f95087412666b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and driving electronic track featuring a prominent synth lead melody, punchy electronic drums, and a dynamic build-up. The music maintains a consistent, energetic dance rhythm throughout.",
+      "zh": "一首欢快且富有动感的电子音乐，以突出的合成器主旋律、有力的电子鼓点和动态的渐强为特色。音乐全程保持着一致、充满活力的舞曲节奏。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Dynamic",
+      "Modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic, and features a clear, driving electronic sound suitable for various media applications. The short form is well-structured with a clear beginning and end.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a rhythmic synth arpeggio and a driving electronic beat, establishing the energy quickly. It concludes with a definitive, sustained synth chord and drum hit, providing a clear and resolved musical finish.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:42.169614+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "03b3312d7358c6d4d88b85f000f243796cb96aff2cc9b49b269f0e7ef2dd907c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.495458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring prominent synthesizers, a driving beat, and a catchy melody. It has a modern, dance-pop feel.",
+      "zh": "一首欢快且充满活力的电子音乐，以突出的合成器、强劲的节拍和抓耳的旋律为特色。它具有现代舞曲流行乐的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Pads"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Modern",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The audio is clean, well-produced, and features a clear, engaging electronic arrangement suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:32.478219+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 22.495458,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-dub-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-dub-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-dub-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:25.312052+00:00"
+}

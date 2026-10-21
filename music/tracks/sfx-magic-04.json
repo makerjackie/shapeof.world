@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-04",
+  "code": "SFX-MAGIC-04",
+  "title": {
+    "en": "Wind spell",
+    "zh": "风系法术"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 3,
+  "seed": 512554710,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized wind spell for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的风系法术合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.84,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 512554710,
+    "sha256": "4e7222f7592a7058af80436f3d59c14859f192d1bf80560528e9a0140f2fd8df",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "626ccc930b722d67daff6c1bf898901fcb8915eb24cf9fe348612dae1fb49150",
+      "bytes": 26740,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4e7222f7592a7058af80436f3d59c14859f192d1bf80560528e9a0140f2fd8df",
+      "bytes": 162332,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a561c30f787361b56edbbbdc6c0ebbe34bc25d7a4ccf68ca1373e09f96e5eaaa",
+      "bytes": 38702,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6730579a2af5721f91008f18aa6d80e2c8ccc4d7ab50156226da69c2700f0809",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 81144,
+    "duration": 1.84,
+    "peakDbfs": -4.32,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.933514608288968e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14804095458984223,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, electronic whoosh or sweep sound that rises and falls, immediately followed by a high-pitched electronic chime or ding. It has a sci-fi or UI notification quality.",
+      "zh": "短促的电子嗖嗖声，音调先升后降，紧接着是一个高音调的电子提示音或叮当声。具有科幻或用户界面通知的特点。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced electronic effect without any technical flaws, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:39.296855+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "626ccc930b722d67daff6c1bf898901fcb8915eb24cf9fe348612dae1fb49150"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 81144
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.880809+00:00"
+}

@@ -1,0 +1,102 @@
+{
+  "id": "lib-breakbeat-motion",
+  "code": "LIB-28-08",
+  "title": {
+    "en": "Motion — Breakbeat",
+    "zh": "跃动 · 碎拍"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "breakbeat"
+  ],
+  "energy": 4,
+  "bpm": 148,
+  "key": "B minor",
+  "instruments": [
+    "breakbeat drums",
+    "rounded bass",
+    "shimmering synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second melodic breakbeat electronica instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: breakbeat drums, rounded bass, shimmering synth. Style: syncopated chopped drum rhythm under an evolving melody. Tempo approximately 148 BPM; B minor. Main idea: a descending melody with an upward answer. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a driving synth bass, rhythmic electronic drums, and catchy synth melodies. It has a modern, dance-pop feel.",
+    "zh": "一首欢快且充满活力的电子音乐，带有强劲的合成器低音、富有节奏感的电子鼓点和抓耳的合成器旋律。它具有现代舞曲流行乐的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.032,
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:13:08.887299+00:00",
+  "generation": {
+    "id": "dec36aa9-1bca-44b2-aa49-fb952ca92cfb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:12:21.713314+00:00",
+    "completedAt": "2026-09-09T09:13:08.887299+00:00",
+    "interactionId": "9yKhas6wFPLTi9sPs7ej0QE",
+    "sha256": "1d792a2d8511c839ed9806c3aeb876af1d3ebe3ce94d5801268f3bbcbc4e56e0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving synth bass, rhythmic electronic drums, and catchy synth melodies. It has a modern, dance-pop feel.",
+      "zh": "一首欢快且充满活力的电子音乐，带有强劲的合成器低音、富有节奏感的电子鼓点和抓耳的合成器旋律。它具有现代舞曲流行乐的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic drums",
+      "Synth bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Danceable",
+      "Modern",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:13:23.379325+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:14:46.071586+00:00"
+}

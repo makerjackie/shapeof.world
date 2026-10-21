@@ -1,0 +1,130 @@
+{
+  "id": "ambience-rain-04",
+  "code": "AMB-RAIN-04",
+  "title": {
+    "en": "Heavy shower · designed ambience",
+    "zh": "骤雨 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "rain",
+  "designIndex": 3,
+  "seed": 1441398548,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized heavy shower atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "骤雨的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "rain",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-rain"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-rain-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-rain-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-rain-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-rain-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1441398548,
+    "sha256": "7646dc52842a8b27224cc6bf39702cf66eb68a39e29dd08e58b1ae678ee5a46b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "58b9b7b16e38357328903e138bf3c03254853f5380f35d234be06bdd4c68a59e",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7646dc52842a8b27224cc6bf39702cf66eb68a39e29dd08e58b1ae678ee5a46b",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d744e7615c596ea45e29769b1593c3b65ce2246162672fc72824a7a46a98e03a",
+      "bytes": 800495,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "439149bcc048e772e27d284b565c9d214af9c5c3e019e3943fdd9e25bd0f6d5d",
+      "bytes": 1930,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.49,
+    "dcOffset": 1.2202417859504913e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.01617431640625,
+    "internalStepP999": 0.35275274658203415,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthetic, evolving, whooshing, and resonant texture with a sense of swirling movement. It has a clean, digital quality.",
+      "zh": "一种合成的、不断演变的、呼啸且共鸣的纹理，带有旋转运动感。它具有干净的数字音质。"
+    },
+    "reason": "The audio is a perfectly seamless loop with no audible defects, making it ideal for continuous background or effect layers in sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:20.602103+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "a862ed6fae5b2a361f888ea026c3ffccaec80c6341cd044d050941b8a559311a"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.855213+00:00"
+}

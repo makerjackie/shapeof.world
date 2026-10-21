@@ -11,6 +11,13 @@ body.experience-shell-active {
   flex: none;
 }
 
+/* A compact next-world target remains discoverable in minimal shells. */
+.experience-page[data-shell-mode='minimal'] .experience-discovery-nav,
+.experience-page[data-shell-mode='minimal'] .experience-mobile-next-link {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .experience-random-link {
   flex: 0 0 44px;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -97,13 +104,13 @@ body.experience-shell-active {
 
 .experience-next-copy small {
   color: color-mix(in srgb, var(--next-world-accent) 74%, white);
-  font-size: 9px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.06em;
 }
 
 .experience-next-copy strong {
-  font-size: 11.5px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: 0.01em;
 }
@@ -119,13 +126,18 @@ body.experience-shell-active {
   color: var(--next-world-accent);
 }
 
+/* The compact toolbar only exists on phones (see the 720px block below). */
 .experience-mobile-toolbar {
   display: none;
 }
 
-/* Immersive restore lives in the header DOM, but the control is not a first-row tool. */
+.experience-header-actions > .experience-more-button {
+  display: inline-flex;
+}
+
+/* Immersion stays one tap away; the same desktop control also restores the shell. */
 .experience-header-actions > .experience-overlay-toggle {
-  display: none;
+  display: inline-flex;
 }
 
 .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-overlay-toggle {
@@ -136,9 +148,18 @@ body.experience-shell-active {
   position: fixed;
   z-index: 70;
   inset: 0;
-  display: grid;
-  align-items: end;
   color: #f8f4ec;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease, visibility 0s linear 120ms;
+}
+
+.experience-more-layer[data-open='true'] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 160ms ease, visibility 0s;
 }
 
 .experience-more-backdrop {
@@ -148,50 +169,49 @@ body.experience-shell-active {
   height: 100%;
   padding: 0;
   border: 0;
-  background: rgba(2, 4, 5, 0.58);
-  backdrop-filter: blur(8px);
+  background: rgba(2, 4, 5, 0.16);
+  touch-action: none;
   cursor: default;
-  animation: experience-more-fade 180ms ease-out both;
 }
 
 .experience-more-sheet {
-  position: relative;
+  position: absolute;
   z-index: 1;
-  width: min(100%, 520px);
-  max-height: min(70dvh, 440px);
-  margin-inline: auto;
-  padding:
-    12px
-    max(16px, env(safe-area-inset-right, 0px))
-    max(16px, env(safe-area-inset-bottom, 0px))
-    max(16px, env(safe-area-inset-left, 0px));
+  top: var(--experience-more-top);
+  right: max(var(--experience-more-right), env(safe-area-inset-right, 0px));
+  width: min(256px, calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+  max-height: calc(100dvh - var(--experience-more-top) - max(12px, env(safe-area-inset-bottom, 0px)));
+  padding: 6px;
   overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.13);
-  border-bottom: 0;
-  border-radius: 24px 24px 0 0;
-  background:
-    radial-gradient(circle at 82% 0%, color-mix(in srgb, var(--world-accent) 13%, transparent), transparent 36%),
-    rgba(9, 12, 13, 0.96);
-  box-shadow: 0 -24px 70px rgba(0, 0, 0, 0.44);
+  border-radius: var(--radius-card);
+  background: #111516;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
   overscroll-behavior: contain;
-  animation: experience-more-rise 240ms cubic-bezier(.2, .8, .2, 1) both;
+  transform: translateY(-4px);
+  transition: transform 120ms ease;
+}
+
+.experience-more-layer[data-open='true'] .experience-more-sheet {
+  transform: translateY(0);
+  transition-duration: 160ms;
 }
 
 .experience-more-heading {
   display: flex;
-  min-height: 48px;
+  min-height: 44px;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 8px;
+  padding-left: 12px;
 }
 
 .experience-more-heading h2 {
   margin: 0;
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  color: rgba(248, 244, 236, 0.56);
+  font-family: inherit;
+  font-size: var(--fs-label);
+  font-weight: 500;
 }
 
 .experience-more-heading button {
@@ -205,6 +225,12 @@ body.experience-shell-active {
   border: 0;
   border-radius: 50%;
   background: transparent;
+  cursor: pointer;
+}
+
+.experience-more-heading button:hover {
+  color: #fffaf0;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .experience-more-heading button svg {
@@ -214,25 +240,25 @@ body.experience-shell-active {
 
 .experience-more-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
 }
 
 .experience-more-action {
   display: flex;
   min-width: 0;
-  min-height: 58px;
+  min-height: 44px;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
   color: rgba(248, 244, 236, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.045);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: transparent;
   cursor: pointer;
   font: inherit;
-  font-size: 12px;
-  line-height: 1.3;
+  font-size: var(--fs-support);
+  line-height: 1.4;
   text-align: left;
   text-decoration: none;
 }
@@ -241,19 +267,18 @@ body.experience-shell-active {
 .experience-more-action:focus-visible,
 .experience-more-action[aria-pressed='true'] {
   color: #fffaf0;
-  border-color: color-mix(in srgb, var(--world-accent) 58%, rgba(255, 255, 255, 0.22));
-  background: color-mix(in srgb, var(--world-accent) 10%, rgba(255, 255, 255, 0.06));
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .experience-more-action:focus-visible,
 .experience-more-heading button:focus-visible {
   outline: 2px solid var(--world-accent, #e8c27a);
-  outline-offset: 2px;
+  outline-offset: -2px;
 }
 
 .experience-more-action svg {
-  width: 21px;
-  height: 21px;
+  width: 20px;
+  height: 20px;
   flex: 0 0 auto;
 }
 
@@ -262,23 +287,9 @@ body.experience-shell-active {
 }
 
 .experience-more-random {
-  grid-column: 1 / -1;
-  justify-content: center;
-}
-
-.experience-more-locale .locale-toggle {
-  width: 21px;
-  min-width: 21px;
-  height: 21px;
-  padding: 0;
-  color: inherit;
-  background: transparent;
-}
-
-@media (min-width: 721px) {
-  .experience-more-action.experience-more-phone-only {
-    display: none;
-  }
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 0 8px 8px;
 }
 
 @media (max-width: 960px) {
@@ -287,40 +298,12 @@ body.experience-shell-active {
   }
 }
 
-/* Keep the discovery controls out of the crowded first row on small tablets
- * as well as phones. The actual controls stay unchanged; only their shared
- * navigation band moves below the toolbar. */
-@media (min-width: 721px) and (max-width: 820px) {
-  .experience-page,
-  .experience-stage {
-    --experience-header-h: 56px;
-    --experience-safe-top: calc(
-      56px + env(safe-area-inset-top, 0px) + 54px
-    );
-  }
-
-  .experience-header {
-    height: calc(56px + env(safe-area-inset-top, 0px));
-    padding-top: env(safe-area-inset-top, 0px);
-  }
-
-  .experience-discovery-nav {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 14px;
-  }
-
-  .experience-page[data-panel-open='true'] .experience-discovery-nav {
-    display: none;
-  }
-}
-
 @media (max-width: 720px) {
   .experience-page,
   .experience-stage {
     --experience-header-h: 60px;
     --experience-safe-top: calc(
-      60px + env(safe-area-inset-top, 0px) + 54px
+      60px + env(safe-area-inset-top, 0px) + 10px
     );
   }
 
@@ -337,14 +320,12 @@ body.experience-shell-active {
     display: none;
   }
 
-  /* 桌面工具在手机端改由 compact toolbar 承接；资料/问问/沉浸进入更多。 */
+  /* 桌面工具在手机端改由 compact toolbar 承接；资料进入更多。 */
   .experience-header-actions .locale-toggle {
     display: none;
   }
 
   .experience-header-actions > .site-bgm-toggle,
-  .experience-header-actions > .experience-info-button,
-  .experience-header-actions > .experience-ask-button,
   .experience-header-actions > .experience-overlay-toggle {
     display: none;
   }
@@ -362,18 +343,6 @@ body.experience-shell-active {
 
   .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-share-button,
   .experience-page[data-overlays-hidden='true'] .experience-header-actions > .experience-more-button {
-    display: none;
-  }
-
-  /* 「下一世界」使用独立导航带；点题铭牌从它下方的内容安全区开始。 */
-  .experience-discovery-nav {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 8px;
-  }
-
-  /* 随机探索进入「更多」；第二行只留下有编辑连续性的下一世界。 */
-  .experience-discovery-nav .experience-random-link {
     display: none;
   }
 
@@ -411,11 +380,11 @@ body.experience-shell-active {
   }
 
   .experience-next-copy small {
-    font-size: 9px;
+    font-size: var(--fs-label);
   }
 
   .experience-next-copy strong {
-    font-size: 11.5px;
+    font-size: var(--fs-label);
   }
 
   .experience-next-title-full {
@@ -480,20 +449,21 @@ body.experience-shell-active {
   }
 
   .chip-scroller > :focus-visible {
-    outline: 2px solid var(--category-accent, var(--model-accent, var(--ink, #19231f)));
+    outline: 2px solid var(--category-accent, var(--model-accent, var(--text)));
     outline-offset: 2px;
   }
 
 }
 
-@keyframes experience-more-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+@media (prefers-reduced-motion: reduce) {
+  .experience-more-layer,
+  .experience-more-sheet {
+    transition: none !important;
+  }
 
-@keyframes experience-more-rise {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  .experience-more-sheet {
+    transform: none;
+  }
 }
 
 @media (max-width: 359px) {
@@ -517,193 +487,399 @@ body.experience-shell-active {
   }
 }
 
-/* The original mobile toolbar composes navigation and primary utilities as one
- * compact row. The current action sheet remains the secondary-action surface. */
+/* Phones: next-world navigation and the primary utilities share one compact
+ * row. Everything else lives in the "more" sheet. */
 @media (max-width: 720px) {
   .experience-page,
-  .experience-stage {
+  .experience-stage,
+  .experience-page:has(.guide-tour),
+  .experience-page:has(.guide-tour) .experience-stage {
     --experience-header-h: 64px;
-    --experience-safe-top: calc(64px + env(safe-area-inset-top, 0px) + 10px);
+    --experience-safe-top: calc(10px + 64px + env(safe-area-inset-top, 0px));
   }
 
   .experience-header {
     display: grid;
     grid-template-columns: 44px minmax(0, 1fr);
     gap: 4px;
-    height: calc(64px + env(safe-area-inset-top, 0px));
+    block-size: calc(env(safe-area-inset-top, 0px) + 64px);
   }
 
   .experience-header .experience-brand {
-    width: 44px;
-    min-width: 44px;
-    height: 44px;
-    min-height: 44px;
     justify-content: center;
+    inline-size: 44px;
+    block-size: 44px;
+    min-inline-size: 44px;
+    min-block-size: 44px;
     padding: 0;
-    border: 0;
+    border: none;
     border-radius: 0;
-    background: transparent;
+    background: none;
   }
 
-  .experience-header .experience-brand:hover,
-  .experience-header .experience-brand:focus-visible {
-    background: transparent;
+  .experience-header .experience-brand:is(:hover, :focus-visible) {
+    background: none;
   }
 
-  .experience-header-actions--desktop,
-  .experience-discovery-nav {
-    display: none;
-  }
-
-  .experience-mobile-toolbar {
-    position: relative;
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 2px;
-  }
-
-  .experience-mobile-next-link {
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr) 16px;
-    min-width: 0;
-    max-width: 220px;
-    height: 54px;
-    flex: 1 1 auto;
-    align-items: center;
-    gap: 7px;
-    padding: 4px 9px 4px 5px;
-    overflow: hidden;
-    color: rgba(246, 247, 248, 0.94);
-    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgba(210, 215, 222, 0.22));
-    border-radius: 18px;
-    background: color-mix(in srgb, var(--next-world-accent) 7%, rgba(16, 18, 22, 0.76));
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
-    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.84);
-    backdrop-filter: blur(14px) saturate(0.75);
-    transition: border-color 150ms ease, background 150ms ease;
-  }
-
-  .experience-mobile-next-link:hover,
-  .experience-mobile-next-link:focus-visible {
-    border-color: color-mix(in srgb, var(--next-world-accent) 42%, rgba(232, 235, 240, 0.38));
-    background: color-mix(in srgb, var(--next-world-accent) 10%, rgba(24, 27, 32, 0.86));
-  }
-
-  .experience-mobile-next-link:focus-visible,
-  .experience-mobile-toolbar .experience-header-icon:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--next-world-accent) 42%, rgba(244, 246, 249, 0.88));
-    outline-offset: 2px;
-  }
-
-  .experience-mobile-next-thumb {
-    width: 28px;
-    height: 28px;
-    object-fit: cover;
-    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgba(225, 229, 235, 0.2));
-    border-radius: 50%;
-    filter: saturate(0.55);
-    opacity: 0.82;
-  }
-
-  .experience-mobile-next-copy {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 2px;
-    overflow: hidden;
-  }
-
-  .experience-mobile-next-copy small,
-  .experience-mobile-next-copy strong {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .experience-mobile-next-copy small {
-    color: color-mix(in srgb, var(--next-world-accent) 36%, rgba(220, 224, 230, 0.62));
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-  }
-
-  .experience-mobile-next-copy strong {
-    color: rgba(248, 249, 250, 0.94);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .experience-mobile-next-arrow {
-    color: color-mix(in srgb, var(--next-world-accent) 54%, rgba(232, 235, 240, 0.78));
-    font-size: 17px;
-    line-height: 1;
-  }
-
-  .experience-mobile-toolbar > .experience-header-icon {
-    width: 44px;
-    min-width: 44px;
-    height: 44px;
-    color: rgba(224, 228, 233, 0.78);
-    background: transparent;
-    opacity: 1;
-  }
-
-  .experience-mobile-toolbar > .experience-header-icon:hover,
-  .experience-mobile-toolbar > .experience-header-icon:focus-visible,
-  .experience-mobile-toolbar > .experience-header-icon[aria-pressed='true'],
-  .experience-mobile-toolbar > .experience-header-icon[aria-expanded='true'] {
-    color: rgba(250, 251, 252, 0.96);
-    background: rgba(125, 132, 141, 0.16);
-  }
-
-  .experience-mobile-more-button svg {
-    width: 23px;
-    height: 23px;
-  }
-
-  .experience-page:has(.guide-tour),
-  .experience-page:has(.guide-tour) .experience-stage {
-    --experience-safe-top: calc(64px + env(safe-area-inset-top, 0px) + 10px);
-  }
-
-  .experience-page[data-overlays-hidden='true'] .experience-mobile-toolbar {
+  /* The desktop cluster and the floating preview give way to the toolbar. */
+  :is(.experience-header-actions--desktop, .experience-discovery-nav) {
     display: none;
   }
 
   .experience-page[data-overlays-hidden='true'] .experience-header-actions--desktop {
     display: flex;
   }
+
+  .experience-mobile-toolbar {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .experience-page[data-overlays-hidden='true'] .experience-mobile-toolbar {
+    display: none;
+  }
+
+  /* Next-world capsule; every tint is mixed from the world accent. */
+  .experience-mobile-next-link {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) 16px;
+    align-items: center;
+    flex: 1 1 auto;
+    gap: 7px;
+    block-size: 54px;
+    min-inline-size: 0;
+    max-inline-size: 220px;
+    padding: 4px 9px 4px 5px;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgb(210 215 222 / 0.22));
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--next-world-accent) 7%, rgb(16 18 22 / 0.76));
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.24);
+    color: rgb(246 247 248 / 0.94);
+    text-shadow: 0 1px 10px rgb(0 0 0 / 0.84);
+    backdrop-filter: blur(14px) saturate(0.75);
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+
+  .experience-mobile-next-link:is(:hover, :focus-visible) {
+    border-color: color-mix(in srgb, var(--next-world-accent) 42%, rgb(232 235 240 / 0.38));
+    background: color-mix(in srgb, var(--next-world-accent) 10%, rgb(24 27 32 / 0.86));
+  }
+
+  .experience-mobile-next-link:focus-visible,
+  .experience-mobile-toolbar .experience-header-icon:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--next-world-accent) 42%, rgb(244 246 249 / 0.88));
+    outline-offset: 2px;
+  }
+
+  /* Keep the toolbar anchored while the preview is hidden. */
+  .experience-page:has(.guide-tour) .experience-mobile-next-link,
+  .experience-page[data-panel-open='true'] .experience-mobile-next-link {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .experience-mobile-next-thumb {
+    inline-size: 28px;
+    block-size: 28px;
+    object-fit: cover;
+    border: 1px solid color-mix(in srgb, var(--next-world-accent) 24%, rgb(225 229 235 / 0.2));
+    border-radius: 50%;
+    opacity: 0.82;
+    filter: saturate(0.55);
+  }
+
+  .experience-mobile-next-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-inline-size: 0;
+    overflow: hidden;
+  }
+
+  .experience-mobile-next-copy :is(small, strong) {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .experience-mobile-next-copy small {
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: color-mix(in srgb, var(--next-world-accent) 36%, rgb(220 224 230 / 0.62));
+  }
+
+  .experience-mobile-next-copy strong {
+    font-size: var(--fs-support);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: rgb(248 249 250 / 0.94);
+  }
+
+  .experience-mobile-next-arrow {
+    font-size: var(--fs-lead);
+    line-height: 1;
+    color: color-mix(in srgb, var(--next-world-accent) 54%, rgb(232 235 240 / 0.78));
+  }
+
+  /* Icon buttons in the toolbar are 44px touch targets. */
+  .experience-mobile-toolbar > .experience-header-icon {
+    inline-size: 44px;
+    block-size: 44px;
+    min-inline-size: 44px;
+    opacity: 1;
+    background: none;
+    color: rgb(224 228 233 / 0.78);
+  }
+
+  .experience-mobile-toolbar > .experience-header-icon:is(
+    :hover,
+    :focus-visible,
+    [aria-pressed='true'],
+    [aria-expanded='true']
+  ) {
+    background: rgb(125 132 141 / 0.16);
+    color: rgb(250 251 252 / 0.96);
+  }
+
+  .experience-mobile-more-button svg {
+    inline-size: 23px;
+    block-size: 23px;
+  }
 }
 
 @media (max-width: 359px) {
   .experience-header {
     gap: 2px;
-    padding-right: max(4px, env(safe-area-inset-right, 0px));
-    padding-left: max(4px, env(safe-area-inset-left, 0px));
+    padding-inline: max(4px, env(safe-area-inset-left, 0px)) max(4px, env(safe-area-inset-right, 0px));
   }
 
   .experience-mobile-toolbar {
     gap: 0;
   }
 
+  .experience-mobile-next-arrow {
+    font-size: var(--fs-body);
+  }
+}
+
+/* Keep primary controls at 44px on phones, with a compact next-world capsule. */
+@media (max-width: 480px) {
   .experience-mobile-next-link {
-    grid-template-columns: 28px minmax(0, 1fr) 14px;
-    gap: 5px;
-    padding-right: 6px;
+    width: 64px;
+    min-width: 64px;
+    max-width: 64px;
+    height: 44px;
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: 28px 16px;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 7px;
+    border-radius: 999px;
   }
 
-  .experience-mobile-next-copy small {
+  .experience-mobile-next-thumb {
+    display: block;
+    filter: none;
+    opacity: 1;
+  }
+
+  .experience-mobile-next-copy {
     display: none;
   }
 
-  .experience-mobile-next-copy strong {
-    font-size: 12px;
+  .experience-mobile-next-link > :is(svg, .experience-mobile-next-arrow) {
+    grid-column: 2;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* All desktop worlds share one header row, including tablet widths.
+ * The preview grows continuously on intent instead of reserving a second row. */
+@media (min-width: 721px) {
+  .experience-page, .experience-stage {
+    --experience-header-h: 56px;
+    --experience-safe-top: calc(56px + env(safe-area-inset-top, 0px) + 10px);
+  }
+  .experience-header {
+    height: calc(56px + env(safe-area-inset-top, 0px));
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .experience-discovery-nav { position: static; flex: 0 0 auto; }
+  .experience-next-link {
+    width: var(--experience-next-width, 80px);
+    max-width: none;
+    height: 44px;
+    grid-template-columns: 28px minmax(0, 1fr) 20px;
+    gap: 0;
+    padding: 0 10px 0 6px;
+    transform: none;
+    transition: width 240ms ease, background 160ms ease, border-color 160ms ease;
+  }
+  .experience-next-thumb { width: 28px; height: 28px; opacity: 1; }
+  .experience-next-link > .experience-next-copy {
+    padding: 0 8px;
+    opacity: var(--experience-next-copy-opacity, 0);
+    transition: opacity 120ms ease;
+  }
+  .experience-next-link:focus-visible {
+    --experience-next-width: min(260px, calc(100vw - 570px));
+    --experience-next-copy-opacity: 1;
+  }
+}
+@media (min-width: 721px) and (hover: hover) {
+  .experience-next-link:hover {
+    --experience-next-width: min(260px, calc(100vw - 570px));
+    --experience-next-copy-opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-next-link, .experience-next-link > .experience-next-copy { transition: none; }
+}
+
+/* The periodic atlas fills one viewport; its recommendation expands in place. */
+.experience-page[data-world-id='periodic-table'],
+.experience-page[data-world-id='periodic-table'] .experience-stage {
+  --experience-header-h: 56px;
+  --experience-safe-top: calc(56px + env(safe-area-inset-top, 0px) + 6px);
+}
+.experience-page[data-world-id='periodic-table'] .experience-discovery-nav {position:static;opacity:1;pointer-events:auto}
+.experience-page[data-world-id='periodic-table'] :is(.experience-next-link,.experience-mobile-next-link) {
+  width: var(--experience-next-width, 80px);
+  max-width: none;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  justify-content: end;
+  gap: 0;
+  padding: 0 10px 0 6px;
+  --experience-next-badge-bg: var(--paper, #f0eddf);
+  --experience-next-badge-ink: var(--ink, #26392f);
+  color: var(--ink, #26392f);
+  border: 1px solid color-mix(in srgb, var(--ink, #26392f) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper, #f0eddf) 85%, white);
+  box-shadow: 0 2px 8px rgba(38, 45, 34, 0.1), inset 0 1px rgba(255, 255, 255, 0.65);
+  opacity: 1;
+  pointer-events: auto;
+  text-shadow: none;
+  transform: none;
+  transition: width 240ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.experience-page[data-world-id='periodic-table'] .experience-mobile-next-copy {
+  display: none;
+}
+
+.experience-page[data-world-id='periodic-table'] :is(.experience-next-thumb, .experience-mobile-next-thumb) {
+  display: block;
+  width: 28px;
+  height: 28px;
+  filter: none;
+  opacity: 1;
+}
+
+.experience-page[data-world-id='periodic-table'] .experience-next-copy {
+  padding-left: 8px;
+  padding-right: 10px;
+  opacity: var(--experience-next-copy-opacity, 0);
+  transition: opacity 120ms ease;
+}
+
+.experience-page[data-world-id='periodic-table'] .experience-next-copy small {
+  color: color-mix(in srgb, var(--ink, #26392f) 75%, transparent);
+}
+
+.experience-page[data-world-id='periodic-table'] :is(.experience-next-link, .experience-mobile-next-link) > :is(svg, .experience-mobile-next-arrow) {
+  grid-column: 3;
+  width: 20px;
+  color: inherit;
+  text-align: center;
+}
+
+.experience-page[data-world-id='periodic-table'] .experience-next-link:focus-visible {
+  --experience-next-width: min(260px, calc(100vw - 570px));
+  --experience-next-copy-opacity: 1;
+  outline: 2px solid var(--ink, #26392f);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .experience-page[data-world-id='periodic-table'] .experience-next-link:hover {
+    --experience-next-width: min(260px, calc(100vw - 570px));
+    --experience-next-copy-opacity: 1;
+    border-color: color-mix(in srgb, var(--ink, #26392f) 50%, transparent);
+    background: color-mix(in srgb, var(--paper, #f0eddf) 60%, white);
+  }
+}
+
+@media (max-width: 720px) {
+  .experience-page[data-world-id='periodic-table'] .experience-mobile-next-link {
+    width: 64px;
+    min-width: 64px;
+    grid-template-columns: 28px 16px;
+    gap: 4px;
+    padding: 0 7px;
   }
 
-  .experience-mobile-next-arrow {
-    font-size: 15px;
+  .experience-page[data-world-id='periodic-table'] .experience-mobile-next-link > :is(svg, .experience-mobile-next-arrow) {
+    grid-column: 2;
+    width: 16px;
+    height: 16px;
   }
+}
+
+@media (max-width: 359px) {
+  .experience-mobile-next-link,
+  .experience-page[data-world-id='periodic-table'] .experience-mobile-next-link {
+    position: relative;
+    width: 44px;
+    min-width: 44px;
+    max-width: 44px;
+    padding: 0;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .experience-mobile-next-thumb {
+    justify-self: center;
+  }
+
+  .experience-mobile-next-link:has(.experience-mobile-next-thumb) > :is(svg, .experience-mobile-next-arrow),
+  .experience-page[data-world-id='periodic-table'] .experience-mobile-next-link:has(.experience-mobile-next-thumb) > :is(svg, .experience-mobile-next-arrow) {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    grid-column: 1;
+    display: grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--experience-next-badge-bg, #14181b);
+    color: var(--experience-next-badge-ink, #f8f4ec);
+    font-size: var(--fs-label);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-page[data-world-id='periodic-table'] :is(.experience-next-link, .experience-mobile-next-link, .experience-next-copy) {
+    transition: none;
+  }
+}
+.experience-page[data-world-id='periodic-table']:has(.pm-inspector) .experience-header{visibility:hidden;opacity:0;pointer-events:none}
+@media(max-width:720px){
+ .experience-page[data-world-id='periodic-table'],.experience-page[data-world-id='periodic-table'] .experience-stage{--experience-header-h:64px;--experience-safe-top:calc(64px + env(safe-area-inset-top,0px) + 4px)}
 }

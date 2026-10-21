@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-14",
+  "code": "SFX-FOLEY-14",
+  "title": {
+    "en": "Marble roll",
+    "zh": "弹珠滚动"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 13,
+  "seed": 2037196977,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized marble roll for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的弹珠滚动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.37,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2037196977,
+    "sha256": "0904fbbb62e262505aad4c3586582372776add51a601d3f6cfc4c6968ff49a5b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9961511c83a0ce937665c992777fb05838673f23b5837979ab951b64af7606b5",
+      "bytes": 6260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0904fbbb62e262505aad4c3586582372776add51a601d3f6cfc4c6968ff49a5b",
+      "bytes": 32678,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "550435781a8074983a9d1f4be299d73107347c64b108b68ac2181b080115e3b4",
+      "bytes": 8568,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6f9e54bf38b867e739934bd986a0d7524b01d9e8ab67978461be5498a9504b67",
+      "bytes": 1915,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 16317,
+    "duration": 0.37,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.45,
+    "dcOffset": -2.562302018217197e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.24247100830078072,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic clang sound effect.",
+      "zh": "一个短促、尖锐的金属撞击声效。"
+    },
+    "reason": "The sound is a clean, short, and distinct metallic clang, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:57.387436+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "9961511c83a0ce937665c992777fb05838673f23b5837979ab951b64af7606b5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 16317
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.866363+00:00"
+}

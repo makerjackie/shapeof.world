@@ -1,0 +1,166 @@
+{
+  "id": "promo-soul-35",
+  "code": "PROMO-10-35",
+  "title": {
+    "en": "Velvet Motion · 35",
+    "zh": "丝绒律动 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "warm bass guitar",
+    "crisp drums",
+    "muted trumpet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: instrumental soul with a warm short brass hook. Instruments: electric piano, warm bass guitar, crisp drums, muted trumpet. Tempo 102 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat, playful, and slightly retro-sounding instrumental track featuring a prominent brass section, a walking bassline, and a driving drum beat. It has a big band/jazz-funk feel.",
+    "zh": "一首欢快、俏皮且略带复古感的纯音乐，以突出的铜管乐器、行进的贝斯线和强劲的鼓点为特色。具有大乐队/爵士放克风格。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:28:43.099024+00:00",
+  "generation": {
+    "id": "bda37865-85ed-4ac3-bf2a-7984d8cc92c8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:28:00.491448+00:00",
+    "completedAt": "2026-09-10T05:28:43.099024+00:00",
+    "interactionId": "4T-iaprrCNW54vEPzPyHuAE",
+    "sha256": "33229d14470ae2b32f3c31ad49180402b8791ebe0d0cec46168b0409399783b7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat, playful, and slightly retro-sounding instrumental track featuring a prominent brass section, a walking bassline, and a driving drum beat. It has a big band/jazz-funk feel.",
+      "zh": "一首欢快、俏皮且略带复古感的纯音乐，以突出的铜管乐器、行进的贝斯线和强劲的鼓点为特色。具有大乐队/爵士放克风格。"
+    },
+    "instruments": [
+      "brass section",
+      "electric bass",
+      "drums",
+      "piano"
+    ],
+    "moods": [
+      "upbeat",
+      "playful",
+      "energetic",
+      "jazzy",
+      "funky",
+      "cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality, well-produced instrumental track with a clear structure and engaging arrangement, suitable for various promotional or background uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track begins immediately with a catchy brass melody and a driving rhythm section. It concludes with a distinct, resolved final chord and cymbal crash.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:08.883502+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "2dc7466cc5e369bd62f8a9b09f1b322b54186212292802067cc6d644df3204e8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.514208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and energetic big band swing piece featuring a prominent brass and woodwind section, driving rhythm, and a classic, danceable feel.",
+      "zh": "一首活泼而充满活力的大乐队摇摆乐曲，以突出的铜管和木管乐器部分、强劲的节奏以及经典的舞曲风格为特色。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Trumpet",
+      "Trombone",
+      "Clarinet",
+      "Saxophone"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Swing",
+      "Danceable",
+      "Celebratory",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 185,
+    "reason": "The audio is a clean, well-produced instrumental big band swing track, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:00.493678+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 23.514208000000004,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-soul-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-soul-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-soul-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:11.496851+00:00"
+}

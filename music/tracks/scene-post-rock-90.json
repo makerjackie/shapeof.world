@@ -1,0 +1,133 @@
+{
+  "id": "scene-post-rock-90",
+  "code": "SCENE-16-90",
+  "title": {
+    "en": "Open Windows · 90",
+    "zh": "打开窗户 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "uplifting architecture and open landscapes",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "clean guitar harmonics",
+    "bass",
+    "restrained acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. clean guitar harmonics, bass, restrained acoustic drums. 120 BPM, post-rock character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A smooth, relaxed instrumental track featuring a clean electric guitar playing a melodic line over a steady bass, drums, and a sustained organ/pad. It has a slightly jazzy and bluesy feel.",
+    "zh": "一首流畅、轻松的纯音乐曲目，电吉他弹奏着旋律线，伴随着稳定的贝斯、鼓和持续的管风琴/合成器音色。带有一丝爵士和布鲁斯的感觉。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "uplifting architecture and open landscapes"
+    ]
+  },
+  "duration": 82.39,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:31:57.489885+00:00",
+  "generation": {
+    "id": "2d747899-763c-4d9f-ba1d-822686417bbf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:31:15.480561+00:00",
+    "completedAt": "2026-09-22T09:31:57.489885+00:00",
+    "interactionId": "5EqyaqC9CLve694PlMeHuQ4",
+    "sha256": "428210ca0eadaf482ba1275f0d282db1610f1b096ae8630ff688e022ea7a7bcb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, relaxed instrumental track featuring a clean electric guitar playing a melodic line over a steady bass, drums, and a sustained organ/pad. It has a slightly jazzy and bluesy feel.",
+      "zh": "一首流畅、轻松的纯音乐曲目，电吉他弹奏着旋律线，伴随着稳定的贝斯、鼓和持续的管风琴/合成器音色。带有一丝爵士和布鲁斯的感觉。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Organ",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Mellow",
+      "Chill",
+      "Jazzy",
+      "Bluesy",
+      "Pleasant"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:32:09.480286+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-post-rock-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-post-rock-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-post-rock-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a54342631b8d6400aba8334ad073b7b2f060620d86af90689c5d88cf1b2ef0e2",
+      "bytes": 1154237,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "428210ca0eadaf482ba1275f0d282db1610f1b096ae8630ff688e022ea7a7bcb",
+      "bytes": 1985032,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "34b38cd7a89b2f834a9d50be54f5178b35ec2e92a61a6aac2b59e2ca97d6207f",
+      "bytes": 2816,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.469572+00:00"
+}

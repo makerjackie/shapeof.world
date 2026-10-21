@@ -1,0 +1,59 @@
+{
+  "id": "charge-split",
+  "code": "EAR-C01",
+  "title": {
+    "en": "Charge Split",
+    "zh": "电荷分裂"
+  },
+  "category": "earth-climate",
+  "archetype": "event",
+  "moods": [
+    "charged",
+    "waiting",
+    "blinding",
+    "aftershock"
+  ],
+  "topics": [
+    "lightning",
+    "charge",
+    "discharge"
+  ],
+  "energy": 5,
+  "bpm": 126,
+  "key": "C minor",
+  "instruments": [
+    "static grain",
+    "rising filtered noise",
+    "bright harmonic slash",
+    "low thunder-drone"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.2,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about charge separating in a cloud then splitting as lightning. Around 126 BPM felt as tension, C minor. Long static grain and rising filtered noise; the strike is a bright harmonic slash, not a cartoon thunderclap; aftershock is a low drone. Scientific, physical. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No trap 808, no horror stingers, no rain-sample bed.\n\n[00:00–00:40] Dry static grain, slowly widening spectrum, almost no pitch.\n[00:40–01:15] Filtered noise climbs; tiny clicks like corona.\n[01:15–01:25] Harmonic slash, very short, then hollow air.\n[01:25–02:00] Low thunder-drone rolls, no snare, no crash cymbal.\n[02:00–02:30] Static returns thinner, as if the field is resetting.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:09:03Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/charge-split/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/charge-split/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/charge-split/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:57.158301+00:00",
+  "generation": {
+    "id": "0419592f-1d47-4942-a781-a84dea635864",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:08:06Z",
+    "completedAt": "2026-08-25T10:09:03Z",
+    "durationMs": 57000,
+    "interactionId": "jGmNaqupEIHrjMwPk_bgoAE",
+    "clientRequestId": "6815d95a-9a9a-49d8-95d3-08719b134bb3",
+    "synthid": true,
+    "c2pa": "urn:c2pa:20c2b5b1-1d4e-179d-32ac-4b3377c0674f",
+    "sha256": "8eb8cb3693d7c1d653e45b8b383e0d0b7ec7dcdf2f4a4231e31347acabd28497"
+  }
+}

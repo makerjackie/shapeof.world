@@ -20,7 +20,10 @@ export function LocaleToggle({ compact = false }: { compact?: boolean }) {
       if (!rootRef.current?.contains(event.target as Node)) setOpen(false)
     }
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') {
+        setOpen(false)
+        rootRef.current?.querySelector('button')?.focus()
+      }
     }
     window.addEventListener('pointerdown', onPointer)
     window.addEventListener('keydown', onKey)
@@ -31,7 +34,9 @@ export function LocaleToggle({ compact = false }: { compact?: boolean }) {
   }, [open])
 
   return (
-    <span className="locale-toggle-wrap" ref={rootRef}>
+    <span className="locale-toggle-wrap" ref={rootRef} onBlur={(event) => {
+      if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false)
+    }}>
       <button
         type="button"
         className={compact ? 'locale-toggle locale-toggle--compact' : 'locale-toggle'}

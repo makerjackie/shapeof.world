@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-16",
+  "code": "SFX-UI-16",
+  "title": {
+    "en": "Save",
+    "zh": "保存"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 15,
+  "seed": 1661714530,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized save for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的保存合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1661714530,
+    "sha256": "83d106b72fced4dfa6a512e00bb76f503139a379f1964749c0f1bc9971567aa2",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "492ae13bfaa7e225d50485bb3d9ddee29779236f937d6b9e4952f44323c12cf7",
+      "bytes": 2603,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "83d106b72fced4dfa6a512e00bb76f503139a379f1964749c0f1bc9971567aa2",
+      "bytes": 10628,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e9544c3a236580a414859cbc3df45f0811fe319ecb37dffee4a8a2f04bc45c7b",
+      "bytes": 4564,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b15ca28f1ac20d9c365fa2f87a0f7442d95ff12e58696dabb2d1da4d24a2af96",
+      "bytes": 1877,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 5292,
+    "duration": 0.12,
+    "peakDbfs": -3.09,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.365420755976002e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.03854278564453126,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clean electronic 'ping' or 'blip' sound effect.",
+      "zh": "一个短促、高音、干净的电子“叮”或“哔”声效。"
+    },
+    "reason": "The audio is a clear, well-produced, isolated electronic sound effect with no audible defects, making it suitable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:41.481452+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "492ae13bfaa7e225d50485bb3d9ddee29779236f937d6b9e4952f44323c12cf7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 5292
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.908876+00:00"
+}

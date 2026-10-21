@@ -1,0 +1,64 @@
+[
+  {
+    "symbol": "At",
+    "asset": "/assets/worlds/periodic-table/display/At.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/At.webp",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Glow_from_a_sample_of_astatine_(cropped).jpg",
+    "credit": "NuclearAlex; cropped by Mithoron / Wikimedia Commons",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "sourceKind": "sample",
+    "visualTreatment": "Reference-based long-exposure experimental photograph presented as a dark photographic study on a white museum catalogue ground; both vials, conical inner geometry and observed right-vial blue ionisation glow retained. The cropped label fragment was removed. This is not a bright-room colour photograph or a bulk-astatine reconstruction.",
+    "prompt": "Use case: precise-object-edit. Asset type: square image for a white museum periodic-table display. Input image 1 is the REAL scientific photograph and the mandatory edit target, not just inspiration. Create a clean AI presentation adaptation of this photograph while rigorously preserving the actual observed scene. Keep BOTH upright capped glass vials side by side, left vial without appreciable glow and right vial with blue-white light strongest at its tapered inner bottom, exactly as in the input. Preserve their two separate transparent outer vials, conical inner geometry, dark caps, relative spacing, outlines, heights and all visible internal structure. This is a long-exposure photograph of ionisation luminescence associated with approximately 40 nanograms of astatine-211 in the RIGHT vial; the image is NOT a visible quantity of blue astatine material. Do not add blue liquid, a meniscus, solids, powder, new reflections, extra light rays, or new vessel parts. Preserve the observed weak blue tint and bottom glow without intensifying them. Since darkness is scientifically necessary to preserve the observed glow, retain a dark neutral photographic field immediately behind the vials. Present that original dark-field photograph as a neat vertical photographic study, centered on a seamless pure white museum-catalogue background with generous white margins and a very subtle soft paper shadow. The vials together and their dark photographic field should occupy about 60 percent canvas width and 78 percent canvas height; preserve the original photograph's aspect and front view. Outer background white, inner photo field black; do not pretend this is a new bright-room photograph. Remove only the cropped white label fragment at the extreme lower-right of the reference, replacing it with the existing dark background. No text, numbers, logos, decorative frame, other props or specimen additions. Do not invent details hidden or unresolved in the real input. The result must clearly remain a reference-based archival experimental image presented elegantly, not a reconstructed bulk specimen. One square image.",
+    "generator": "OpenAI imagegen",
+    "generatedFile": "exec-13a1bf6d-ba39-4ac2-9897-d88f6f93530a.png",
+    "generatedFilePath": "/Users/jackiexiao/.codex/generated_images/01a08b7b-1506-7e91-be40-bf29200742b9/exec-13a1bf6d-ba39-4ac2-9897-d88f6f93530a.png",
+    "referencedImagePaths": [
+      "/Users/jackiexiao/code/makerjackie/oneworld/public/assets/worlds/periodic-table/collection/At.webp"
+    ],
+    "date": "2026-09-10",
+    "sha256": "aa5868184d2de4a83d9cfba06963e5b3c69e970e0784480ee58f3d0fa50ea7c4",
+    "referenceSha256": "11ef059a7af9b1f701328f1304c091114d1a27e1113c34705a9bc31792bcf8a3",
+    "derivation": "AI-generated presentation adaptation based on the referenced real photograph; not an additional documented specimen photograph.",
+    "conditions": "An experimental photograph of approximately 40 nanograms of astatine-211 at Forschungszentrum Jülich. The blue glow on the right comes from radiation-induced ionisation, recorded with an approximately two-minute exposure; it is not astatine’s intrinsic colour or a vial filled with bulk astatine.",
+    "verification": {
+      "status": "passed",
+      "method": "Visual comparison of the mandatory real photo input and generated output using view_image; compressed WebP inspected separately.",
+      "scientificAppearance": "Both capped vials and their relative placement preserved; ionisation glow stays strongest at the right vial's inner tapered bottom. No invented blue liquid or bulk astatine.",
+      "presentation": "Square white museum catalogue ground with a dark photographic study and soft paper shadow.",
+      "limitation": "AI presentation is not evidence of exact dimensions, microstructure, emission intensity or measured geometry; use the preserved source photograph for scientific reference.",
+      "compressedAsset": "720x720 WebP q85; decoded and output/input SHA256 recorded."
+    }
+  },
+  {
+    "symbol": "Pa",
+    "asset": "/assets/worlds/periodic-table/display/Pa.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Pa.webp",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Protactinium-233.jpg",
+    "credit": "U.S. Department of Energy / ENERGY.GOV",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "sample",
+    "visualTreatment": "Reference-based monochrome archival experimental photograph presented as a photographic study on a white museum catalogue ground. Dark sample region, surrounding radiation-associated exposure and visible grain retained; no colourisation, 3D reconstruction or invented bulk metal.",
+    "prompt": "Use case: precise-object-edit. Asset type: square museum catalogue image for an educational periodic table. Input image 1 is the REAL historical black-and-white photograph of a protactinium-233 experimental sample and the mandatory edit target. Make a restrained AI display adaptation, preserving the entire scientific content of the input as a monochrome photographic study. The irregular dark circular sample region toward the upper center, its ragged outline, blurred mottling and grain, and the large pale circular region surrounding it must stay recognizably unchanged in arrangement, geometry and tones. This archival exposure records radiation-associated light around the sample; it does NOT show the material's natural colour, a glowing physical sphere or a polished metallic disc. Do not reconstruct the sample in 3D, sharpen indistinct texture into invented features, smooth it into a perfect circle, colourise it, add a container, invent a support or create any bulk metal chunk. Keep the original dark photographic background and the original landscape aspect ratio of the photo. The only change should be elegant presentation: place the historical monochrome photograph as a flat neatly cropped photographic print centered on a seamless pure white square museum catalogue background, with generous white breathing room and a very soft light grey paper shadow. The photographic area should occupy approximately 78 percent canvas width and keep its original aspect ratio. Keep every scientifically relevant feature inside the image; no labels, text, logos, decorative frame, scale bar, new objects or additional specimens. Preserve the visible grain rather than using fake high resolution detail. No new dramatic lighting inside the source photo. One square image, restrained archival-photograph presentation coherent with white-background specimen catalog images.",
+    "generator": "OpenAI imagegen",
+    "generatedFile": "exec-26516725-11ba-49b7-b868-2aa0320ee05a.png",
+    "generatedFilePath": "/Users/jackiexiao/.codex/generated_images/01a08b7b-1506-7e91-be40-bf29200742b9/exec-26516725-11ba-49b7-b868-2aa0320ee05a.png",
+    "referencedImagePaths": [
+      "/Users/jackiexiao/code/makerjackie/oneworld/public/assets/worlds/periodic-table/collection/Pa.webp"
+    ],
+    "date": "2026-09-10",
+    "sha256": "0920bec0522d2a1638e20bf50b2e3b8e9b5efe36104e3538e9359b7f24a3206f",
+    "referenceSha256": "b8a3fb48fc491337906e068fbaf42fdbc9b111725c73d481a732e5b1a744d86c",
+    "derivation": "AI-generated presentation adaptation based on the referenced real photograph; not an additional documented specimen photograph.",
+    "conditions": "A protactinium-233 sample photographed around 1969: the dark circular region is the sample, and the surrounding light comes from its own radioactivity. This black-and-white experimental photograph does not establish its colour under ordinary lighting.",
+    "verification": {
+      "status": "passed",
+      "method": "Visual comparison of the mandatory real photo input and generated output using view_image; compressed WebP inspected separately.",
+      "scientificAppearance": "Monochrome grainy archival sample and surrounding pale exposure region remain recognisable; not reinterpreted as a metal sphere, polished disc or normal-light colour.",
+      "presentation": "Square white museum catalogue ground with a dark photographic study and soft paper shadow.",
+      "limitation": "AI presentation is not evidence of exact dimensions, microstructure, emission intensity or measured geometry; use the preserved source photograph for scientific reference.",
+      "compressedAsset": "720x720 WebP q85; decoded and output/input SHA256 recorded."
+    }
+  }
+]

@@ -1,0 +1,129 @@
+{
+  "id": "scene-game-chiptune-menu",
+  "code": "GAME-02-1",
+  "title": {
+    "en": "Clock Tower · Menu",
+    "zh": "钟楼机关 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "light platforming and mechanical puzzles",
+    "menu"
+  ],
+  "energy": 3,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "pulse arpeggios",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for light platforming and mechanical puzzles, menu state. Instruments: pulse arpeggios, triangle bass, noise percussion. 132 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A cheerful and repetitive electronic track featuring a prominent synth melody, a driving bassline, and a steady electronic drum beat. It has a light, playful feel suitable for background music.",
+    "zh": "一首欢快且重复的电子音乐，以突出的合成器旋律、驱动的低音线和稳定的电子鼓点为特色。它具有轻松、俏皮的感觉，适合作为背景音乐。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 89.365,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:21:33.109416+00:00",
+  "generation": {
+    "id": "26347620-b5c7-4816-ad6a-ccec9dc7e2a8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:20:53.048532+00:00",
+    "completedAt": "2026-09-22T09:21:33.109416+00:00",
+    "interactionId": "dkiyau62K6ie7PkPitfrgAg",
+    "sha256": "f635d2c2dc0a80751f9ffdda8b90f11fc40733cd03a120a822f6990d79c684d1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A cheerful and repetitive electronic track featuring a prominent synth melody, a driving bassline, and a steady electronic drum beat. It has a light, playful feel suitable for background music.",
+      "zh": "一首欢快且重复的电子音乐，以突出的合成器旋律、驱动的低音线和稳定的电子鼓点为特色。它具有轻松、俏皮的感觉，适合作为背景音乐。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Playful",
+      "Light",
+      "Positive",
+      "Repetitive",
+      "Cheerful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:43.036718+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-menu/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5e855d744143b7b6be4e220021a0692d9b2f77a304630d25125111bcb7432bb6",
+      "bytes": 1251883,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f635d2c2dc0a80751f9ffdda8b90f11fc40733cd03a120a822f6990d79c684d1",
+      "bytes": 2152424,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "56f53d84487e805026b598d7074323554441ca1e6eb5dd0fbd49e177dc78258f",
+      "bytes": 2793,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.835707+00:00"
+}

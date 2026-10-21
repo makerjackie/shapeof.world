@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-chiptune-rest",
+  "code": "GAME-02-4",
+  "title": {
+    "en": "Clock Tower · Rest",
+    "zh": "钟楼机关 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "light platforming and mechanical puzzles",
+    "rest"
+  ],
+  "energy": 3,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "pulse arpeggios",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for light platforming and mechanical puzzles, rest state. Instruments: pulse arpeggios, triangle bass, noise percussion. 132 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A clean, melodic electronic track featuring synthesizers and a steady, light drum beat. It has a relaxed, slightly retro feel with a clear, repeating melody.",
+    "zh": "一首干净、旋律优美的电子音乐，以合成器和稳定、轻快的鼓点为特色。它带有一种轻松、略带复古的感觉，并伴有清晰、重复的旋律。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 88.529,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:21:45.794866+00:00",
+  "generation": {
+    "id": "97ee0350-2614-4ce4-b476-90595799479f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:21:00.965544+00:00",
+    "completedAt": "2026-09-22T09:21:45.794866+00:00",
+    "interactionId": "fUiyauSfLaST7PkPgYbWgAY",
+    "sha256": "22ecc10455d3441a39cf96738577248a364a97d03bd949ff55a7c5ffe0201628"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A clean, melodic electronic track featuring synthesizers and a steady, light drum beat. It has a relaxed, slightly retro feel with a clear, repeating melody.",
+      "zh": "一首干净、旋律优美的电子音乐，以合成器和稳定、轻快的鼓点为特色。它带有一种轻松、略带复古的感觉，并伴有清晰、重复的旋律。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Relaxed",
+      "Chill",
+      "Dreamy",
+      "Retro",
+      "Melodic",
+      "Atmospheric"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The audio is a well-produced, clean electronic track with a consistent mood and clear instrumentation, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:01.309464+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 36.457143,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1607760,
+    "sourceStartSeconds": 33.75,
+    "sourceEndSeconds": 70.32142857142857,
+    "crossfadeSeconds": 0.11428571428571428,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1607760,
+        "duration": 36.457143,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -13.99,
+        "dcOffset": 0.00396317174827696,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00634765625,
+        "internalStepP999": 0.09180426025390886,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1607760,
+        "duration": 36.457143,
+        "peakDbfs": -0.95,
+        "rmsDbfs": -14.02,
+        "dcOffset": 0.003778049332138056,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00286865234375,
+        "internalStepP999": 0.091766357421875,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, evolving, synthetic pad sound with a subtle high-frequency shimmer and a low-frequency drone, creating an atmospheric, slightly mysterious, or sci-fi ambiance.",
+        "zh": "一种持续的、不断变化的合成垫音，带有微妙的高频闪烁和低频嗡鸣，营造出一种氛围感、略带神秘或科幻的氛围。"
+      },
+      "reason": "The audio is a clean, well-produced synthetic texture suitable for background ambience. It loops perfectly as intended, with no audible seams or defects.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:29:31.075341+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "f066b4f0ce0d072dc5e1ecefeaa92acc19845b74dfddac138b81bb08d3ce0148"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are excellent across both joins. There are no audible fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. It is perfectly comfortable for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:36.845993+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "98a2095904f83c38470e926e378202b9d335716a6cd52ae8f1125e51b65a85f9",
+      "bytes": 1240180,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "22ecc10455d3441a39cf96738577248a364a97d03bd949ff55a7c5ffe0201628",
+      "bytes": 2132362,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "d1f50a67e7061287e1e8ef1ed55be0d22a32b734e6baa5366ef82b770c825042",
+      "bytes": 2811,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "cb39764845dc20392dfa4b923fde22b76b5ff41633f17ecebf0c828d3aecd7b2",
+      "bytes": 6431084,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "0bee70f0ccb563bd3666b87867145ddbe1c65572a4e947e05309f54121fa5fee",
+      "bytes": 390233,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.459220+00:00"
+}

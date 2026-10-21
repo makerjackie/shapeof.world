@@ -1,0 +1,62 @@
+{
+  "id": "event-horizon",
+  "code": "COS-A02",
+  "title": {
+    "en": "Event Horizon",
+    "zh": "事件视界"
+  },
+  "category": "cosmos",
+  "archetype": "ambient",
+  "moods": [
+    "solemn",
+    "slow",
+    "curved",
+    "dark-luminous"
+  ],
+  "topics": [
+    "black-hole",
+    "spacetime",
+    "light-deflection"
+  ],
+  "energy": 2,
+  "bpm": 52,
+  "key": "C# minor",
+  "instruments": [
+    "bowed metal",
+    "low cello",
+    "stretched harmonics",
+    "sub drone",
+    "sparse piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.547,
+  "prompt": "Create a 2 minute 30 second instrumental cinematic ambient piece about light grazing a black hole. Around 52 BPM, C# minor. Bowed metal, low cello drones, stretched string harmonics and a sub that never becomes a beat. Time feels delayed; pitches lean as if gravity is tuning them. Solemn and dark-luminous, not horror. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No sci-fi lasers, no abrupt impacts, no trailer drums, no brass fanfare.\n\n[00:00–00:35] Almost static sub drone and one long cello tone, very quiet.\n[00:35–01:10] Bowed metal harmonics drift sharp, then settle, like light on a curved path.\n[01:10–01:50] Sparse piano notes fall slowly in pitch, never resolving fully.\n[01:50–02:30] Texture thins toward the opening drone; a last harmonic hangs and fades.\n",
+  "recommendedWorldIds": [
+    "black-hole-flyby"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:13:07Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/event-horizon/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/event-horizon/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/event-horizon/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:02.765034+00:00",
+  "generation": {
+    "id": "56cbd894-9931-45f5-8126-14e792dbfc20",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:12:16Z",
+    "completedAt": "2026-08-25T10:13:07Z",
+    "durationMs": 51000,
+    "interactionId": "gWqNap_IJbWe7PkPio656A4",
+    "clientRequestId": "2181cee7-803f-423a-a4d6-0bc23e858878",
+    "synthid": true,
+    "c2pa": "urn:c2pa:caa2b7db-a550-29e5-9b0e-4bdf5d310d4b",
+    "sha256": "3cc9709fcd9d64b9f36aa943a0f05a1bb8fadc6804e45e376b60c7a11533a0d9"
+  }
+}

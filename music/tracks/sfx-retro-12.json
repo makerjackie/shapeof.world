@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-12",
+  "code": "SFX-RETRO-12",
+  "title": {
+    "en": "Extra life",
+    "zh": "增加生命"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 11,
+  "seed": 1652650656,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized extra life for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的增加生命合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.05,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1652650656,
+    "sha256": "37ef3ff905278b5d8b7de5ec55e86819709589780a3c571181f8320a4c352445",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "fb06a061aa736ce76ae70568c74424f7050566c46a80687c572861c037e2b695",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "37ef3ff905278b5d8b7de5ec55e86819709589780a3c571181f8320a4c352445",
+      "bytes": 92654,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "755867de143b2568d1a5d86689dfad7fe7982e58c511ba549a8c8c6c52cee0b0",
+      "bytes": 22101,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c4c1cfbf22819f88d97a930f19f589b2d197b5e516c1fd452a2ee85dacf47731",
+      "bytes": 1892,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46305,
+    "duration": 1.05,
+    "peakDbfs": -4.55,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.5738252146096533e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10455322265625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, cartoonish spring or boing sound effect with a distinct pitch bend, starting low, rising, and then falling quickly. It has a clean, synthesized quality.",
+      "zh": "一个短促、卡通化的弹簧或“boing”声效，带有明显的音高弯曲，从低音开始，上升然后迅速下降。它具有干净、合成的音质。"
+    },
+    "reason": "The sound is a clean, distinct, and well-produced cartoon spring or boing effect, free of defects and suitable for general sound design applications like UI feedback or game events.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:23.899524+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "fb06a061aa736ce76ae70568c74424f7050566c46a80687c572861c037e2b695"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46305
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.895918+00:00"
+}

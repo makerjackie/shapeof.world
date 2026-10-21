@@ -1,0 +1,101 @@
+{
+  "id": "lib-minimalism-celebrate",
+  "code": "LIB-04-10",
+  "title": {
+    "en": "First Light — Minimalism",
+    "zh": "初光 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 120,
+  "key": "C major",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic minimalism instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 120 BPM; C major. Main idea: a repeating five-note figure with space between phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A whimsical and slightly melancholic orchestral piece with a waltz-like rhythm, featuring piano, strings, and woodwinds. It evokes a sense of playful elegance and reflection.",
+    "zh": "一首异想天开又略带忧郁的管弦乐曲，带有华尔兹般的节奏，以钢琴、弦乐和木管乐器为主。它唤起了一种俏皮的优雅和沉思感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 57.861,
+  "generatedAt": "2026-09-09T07:55:23.502484+00:00",
+  "generation": {
+    "id": "d546347c-eb6d-489b-820c-7a0bcd45189a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:54:42.254716+00:00",
+    "completedAt": "2026-09-09T07:55:23.502484+00:00",
+    "interactionId": "wxChapf-Acy5jMwP4P3F-Qs",
+    "sha256": "7774ae741f07904277568356baef4e389803f7024574e797e5583fce14ee0ec7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A whimsical and slightly melancholic orchestral piece with a waltz-like rhythm, featuring piano, strings, and woodwinds. It evokes a sense of playful elegance and reflection.",
+      "zh": "一首异想天开又略带忧郁的管弦乐曲，带有华尔兹般的节奏，以钢琴、弦乐和木管乐器为主。它唤起了一种俏皮的优雅和沉思感。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Woodwinds",
+      "Percussion"
+    ],
+    "moods": [
+      "Whimsical",
+      "Melancholic",
+      "Elegant",
+      "Playful",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced instrumental piece with a clear musical theme and no technical issues, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:55:31.306026+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:56:56.645026+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

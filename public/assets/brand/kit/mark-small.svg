@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="body" cx="38%" cy="34%" r="72%">
+      <stop offset="0" stop-color="#121820"/>
+      <stop offset="1" stop-color="#040608"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="8.16" y1="44.68" x2="37.61" y2="5.59" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8cc4d4" stop-opacity="0"/>
+      <stop offset=".55" stop-color="#8cc4d4" stop-opacity=".85"/>
+      <stop offset="1" stop-color="#8cc4d4" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="arc" x1="15" y1="47" x2="59" y2="31" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e98f3c" stop-opacity=".3"/>
+      <stop offset=".45" stop-color="#ffbb68"/>
+      <stop offset="1" stop-color="#fff4de"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="58.20" y1="25.47" x2="44.68" y2="55.84" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd9a0" stop-opacity="0"/>
+      <stop offset=".3" stop-color="#ffe6bf"/>
+      <stop offset="1" stop-color="#ff9f45" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="1.9"/></filter>
+    <clipPath id="disc"><circle cx="32" cy="32" r="27"/></clipPath>
+  </defs>
+  <circle cx="32" cy="32" r="27" fill="url(#body)"/>
+  <path d="M8.16 44.68 A27 27 0 0 1 37.61 5.59" fill="none" stroke="url(#rim)" stroke-width="1.7" stroke-linecap="round"/>
+  <g clip-path="url(#disc)">
+    <path d="M58.20 25.47 A27 27 0 0 1 44.68 55.84" fill="none" stroke="url(#edge)" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M15 47.6 C 22 33.2, 41.5 25.2, 55.4 28.3 C 57.6 28.8, 58.9 30.6, 59 33.4 L 58.4 36.6 C 57.7 34.4, 56.3 33.1, 54.2 32.7 C 41 30.4, 23.4 37.6, 15 47.6 Z" fill="#ffae55" filter="url(#glow)" opacity=".75"/>
+    <path d="M15 47.6 C 22 33.2, 41.5 25.2, 55.4 28.3 C 57.6 28.8, 58.9 30.6, 59 33.4 L 58.4 36.6 C 57.7 34.4, 56.3 33.1, 54.2 32.7 C 41 30.4, 23.4 37.6, 15 47.6 Z" fill="url(#arc)"/>
+  </g>
+</svg>

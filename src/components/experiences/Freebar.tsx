@@ -308,10 +308,20 @@ export function Freebar({
       }
     }
 
+    // Observers must not resize an ancestor during the current layout delivery.
+    // Coalesce notifications and measure the latest layout in the next frame.
+    let countFrame: number | null = null
+    const scheduleCount = () => {
+      if (countFrame !== null) return
+      countFrame = window.requestAnimationFrame(() => {
+        countFrame = null
+        publishCount()
+      })
+    }
     publishCount()
-    const resizeObserver = new ResizeObserver(publishCount)
+    const resizeObserver = new ResizeObserver(scheduleCount)
     resizeObserver.observe(primary)
-    const mutationObserver = new MutationObserver(publishCount)
+    const mutationObserver = new MutationObserver(scheduleCount)
     mutationObserver.observe(primary, {
       attributes: true,
       childList: true,
@@ -321,6 +331,7 @@ export function Freebar({
     return () => {
       resizeObserver.disconnect()
       mutationObserver.disconnect()
+      if (countFrame !== null) window.cancelAnimationFrame(countFrame)
       root.style.removeProperty('--experience-freebar-primary-height')
     }
   }, [ariaLabel, primaryBudget])
@@ -339,11 +350,20 @@ export function Freebar({
       last = height
       stage.style.setProperty('--experience-freebar-height', `${height}px`)
     }
+    let heightFrame: number | null = null
+    const schedulePublish = () => {
+      if (heightFrame !== null) return
+      heightFrame = window.requestAnimationFrame(() => {
+        heightFrame = null
+        publish()
+      })
+    }
     publish()
-    const observer = new ResizeObserver(publish)
+    const observer = new ResizeObserver(schedulePublish)
     observer.observe(element)
     return () => {
       observer.disconnect()
+      if (heightFrame !== null) window.cancelAnimationFrame(heightFrame)
       stage.style.removeProperty('--experience-freebar-height')
     }
   }, [])

@@ -1,0 +1,130 @@
+{
+  "id": "ambience-machine-05",
+  "code": "AMB-MACHINE-05",
+  "title": {
+    "en": "Airship cabin · designed ambience",
+    "zh": "飞艇座舱 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "machine",
+  "designIndex": 4,
+  "seed": 3386471907,
+  "targetDuration": 45,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized airship cabin atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "飞艇座舱的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "machine",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-machine"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 45.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-machine-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-machine-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-machine-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-machine-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3386471907,
+    "sha256": "5dc1894c59eb9a404886cfc780df0d387b34af3aa014cc5549e7990783192c73",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "03e2d25c6ac182c7413f7d0063c11c7fa13347592a2150347e3b369f0d2524f1",
+      "bytes": 630900,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5dc1894c59eb9a404886cfc780df0d387b34af3aa014cc5549e7990783192c73",
+      "bytes": 3969044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1435e384fd4f019702b8ed8ab5185adf80257ed3cacc74bf385a45b9cb0eb095",
+      "bytes": 491150,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "32c706aeddca0a55507187c224a20ba373a18ccd9c8a13025a65866d8a6e9ecd",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1984500,
+    "duration": 45.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.38,
+    "dcOffset": 6.612526376291257e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.015411376953125,
+    "internalStepP999": 0.0689697265625,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A complex, evolving, and resonant synthesized texture with a metallic or mechanical quality, suitable for sci-fi or industrial soundscapes. It features a rich harmonic content that shifts and builds over time.",
+      "zh": "一种复杂、演变的共鸣合成纹理，带有金属或机械质感，适用于科幻或工业音景。它具有丰富谐波内容，随时间推移而变化和增强。"
+    },
+    "reason": "The audio is a clean, well-produced synthesized texture with no audible defects such as clipping, clicks, or glitches. Its evolving nature and seamless looping make it highly usable for creating immersive soundscapes in video games or film, particularly for sci-fi, industrial, or abstract environments.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:55.338762+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "14f71bd2860409c2dfca2416d1343f287a7200e03caaef7bd62f16fb37c5b5f0"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1984500
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.854563+00:00"
+}

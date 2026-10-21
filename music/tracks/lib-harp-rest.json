@@ -1,0 +1,100 @@
+{
+  "id": "lib-harp-rest",
+  "code": "LIB-03-03",
+  "title": {
+    "en": "Rest — Harp",
+    "zh": "休憩 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "harp"
+  ],
+  "energy": 2,
+  "bpm": 56,
+  "key": "F major",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second pastoral acoustic instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 56 BPM; F major. Main idea: a descending melody with an upward answer. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A gentle and melancholic instrumental piece featuring a prominent flute melody accompanied by classical guitar arpeggios and subtle string pads. It creates a peaceful and reflective atmosphere.",
+    "zh": "一首温柔而忧郁的器乐曲，以悠扬的长笛旋律为主，伴随着古典吉他的琶音和柔和的弦乐衬垫，营造出宁静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 177.868,
+  "generatedAt": "2026-09-09T07:47:46.980042+00:00",
+  "generation": {
+    "id": "6a185934-66c1-4e3d-949a-ee8b4304e246",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:46:58.734431+00:00",
+    "completedAt": "2026-09-09T07:47:46.980042+00:00",
+    "interactionId": "8w6havejNpDSi9sP696dkAg",
+    "sha256": "aa7c3edcb211fd2bd457c27c5d1eeb3b2289763bb835e45ce5a47d1e7efc3874"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic instrumental piece featuring a prominent flute melody accompanied by classical guitar arpeggios and subtle string pads. It creates a peaceful and reflective atmosphere.",
+      "zh": "一首温柔而忧郁的器乐曲，以悠扬的长笛旋律为主，伴随着古典吉他的琶音和柔和的弦乐衬垫，营造出宁静而沉思的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Classical Guitar",
+      "Strings"
+    ],
+    "moods": [
+      "Melancholic",
+      "Peaceful",
+      "Reflective",
+      "Calm",
+      "Gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "Well-produced instrumental piece with clear instrumentation and a consistent mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:48:05.838402+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:49:21.281347+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}
