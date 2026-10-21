@@ -18,6 +18,7 @@ import { Route as MakingRouteImport } from './routes/making'
 import { Route as LogoRouteImport } from './routes/logo'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FailuresRouteImport } from './routes/failures'
+import { Route as CollaborateRouteImport } from './routes/collaborate'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as WorldIdRouteImport } from './routes/$worldId'
@@ -76,6 +77,11 @@ const FeedbackRoute = FeedbackRouteImport.update({
 const FailuresRoute = FailuresRouteImport.update({
   id: '/failures',
   path: '/failures',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollaborateRoute = CollaborateRouteImport.update({
+  id: '/collaborate',
+  path: '/collaborate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChangelogRoute = ChangelogRouteImport.update({
@@ -154,6 +160,7 @@ export interface FileRoutesByFullPath {
   '/$worldId': typeof WorldIdRoute
   '/about': typeof AboutRoute
   '/changelog': typeof ChangelogRoute
+  '/collaborate': typeof CollaborateRoute
   '/failures': typeof FailuresRoute
   '/feedback': typeof FeedbackRoute
   '/logo': typeof LogoRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/$worldId': typeof WorldIdRoute
   '/about': typeof AboutRoute
   '/changelog': typeof ChangelogRoute
+  '/collaborate': typeof CollaborateRoute
   '/failures': typeof FailuresRoute
   '/feedback': typeof FeedbackRoute
   '/logo': typeof LogoRoute
@@ -204,6 +212,7 @@ export interface FileRoutesById {
   '/$worldId': typeof WorldIdRoute
   '/about': typeof AboutRoute
   '/changelog': typeof ChangelogRoute
+  '/collaborate': typeof CollaborateRoute
   '/failures': typeof FailuresRoute
   '/feedback': typeof FeedbackRoute
   '/logo': typeof LogoRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/$worldId'
     | '/about'
     | '/changelog'
+    | '/collaborate'
     | '/failures'
     | '/feedback'
     | '/logo'
@@ -256,6 +266,7 @@ export interface FileRouteTypes {
     | '/$worldId'
     | '/about'
     | '/changelog'
+    | '/collaborate'
     | '/failures'
     | '/feedback'
     | '/logo'
@@ -280,6 +291,7 @@ export interface FileRouteTypes {
     | '/$worldId'
     | '/about'
     | '/changelog'
+    | '/collaborate'
     | '/failures'
     | '/feedback'
     | '/logo'
@@ -306,6 +318,7 @@ export interface RootRouteChildren {
   WorldIdRoute: typeof WorldIdRoute
   AboutRoute: typeof AboutRoute
   ChangelogRoute: typeof ChangelogRoute
+  CollaborateRoute: typeof CollaborateRoute
   FailuresRoute: typeof FailuresRoute
   FeedbackRoute: typeof FeedbackRoute
   LogoRoute: typeof LogoRoute
@@ -388,6 +401,13 @@ declare module '@tanstack/react-router' {
       path: '/failures'
       fullPath: '/failures'
       preLoaderRoute: typeof FailuresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collaborate': {
+      id: '/collaborate'
+      path: '/collaborate'
+      fullPath: '/collaborate'
+      preLoaderRoute: typeof CollaborateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/changelog': {
@@ -509,6 +529,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorldIdRoute: WorldIdRoute,
   AboutRoute: AboutRoute,
   ChangelogRoute: ChangelogRoute,
+  CollaborateRoute: CollaborateRoute,
   FailuresRoute: FailuresRoute,
   FeedbackRoute: FeedbackRoute,
   LogoRoute: LogoRoute,

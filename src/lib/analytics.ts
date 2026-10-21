@@ -160,6 +160,7 @@ function isIpAddressHost(value: string): boolean {
 const knownExactPaths = new Set([
   '/',
   '/about',
+  '/collaborate',
   '/changelog',
   '/routes',
   '/failures',

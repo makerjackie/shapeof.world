@@ -39,6 +39,7 @@ if (
 const staticEntries = [
   ['/', 'daily', '1.0'],
   ['/about', 'monthly', '0.6'],
+  ['/collaborate', 'monthly', '0.5'],
   ['/feedback', 'monthly', '0.4'],
   ['/privacy', 'monthly', '0.4'],
   ['/logo', 'monthly', '0.5'],
