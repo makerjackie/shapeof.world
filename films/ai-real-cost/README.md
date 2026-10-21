@@ -52,5 +52,5 @@ node tools/stills.mjs out/s 1200 3176   # 指定帧的审片截图（半分辨�
 
 ## 发布
 
-- 上传用文件：1280×720、30fps、约 20 MB（`out/ai-real-cost-v5.1-720p.mp4`），由 1080p 成片缩放转码；发布套件 <https://press.shapeof.world/2026-10-21-ai-real-cost/>（`infra/press/kits/2026-10-21-ai-real-cost/kit.json`）。
+- 上传用文件：1920×1080、30fps、约 90 MB（`out/ai-real-cost-v5.1-1080p.mp4`，CRF 20）；发布套件 <https://press.shapeof.world/2026-10-21-ai-real-cost/>（`infra/press/kits/2026-10-21-ai-real-cost/kit.json`）。
 - v5.1：图表场景的年份改用 HTML 标签。居中对齐的 SVG 文字和图上的 CSS `filter` 在多标签页渲染时会逐帧漂移，单帧截图看不出来，要抽成片的帧检查。

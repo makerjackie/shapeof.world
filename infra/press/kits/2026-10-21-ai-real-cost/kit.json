@@ -6,12 +6,12 @@
   "status": "定稿",
   "summary": "按 API 单价，Claude Opus 5.5 是 DeepSeek 的 17 倍；可对包月用满的人，它反而更便宜。约 3 分钟，两个原因（包月、省 token）、给 DeepSeek 的公道话、两者叠加的证明，最后升华到“最贵的 token 是你的时间”。画面由代码逐帧生成，无配音，配乐为第三方曲目《千年之后（氛围版）》。数据截至 2026 年 10 月 21 日。",
   "video": {
-    "key": "ai-real-cost/2026-10-21/ai-real-cost-v5.1-720p.mp4",
-    "filename": "AI的真实价格-720p.mp4",
+    "key": "ai-real-cost/2026-10-21/ai-real-cost-v5.1-1080p.mp4",
+    "filename": "AI的真实价格-1080p.mp4",
     "duration": "2:58",
-    "spec": "1280×720 · 30fps · H.264 + AAC 160 kbps",
-    "bytes": 20430243,
-    "note": "抖音、B站、视频号、YouTube 都直接上传这一个文件；720p 够手机看，文件约 20 MB。"
+    "spec": "1920×1080 · 30fps · H.264 + AAC 192 kbps",
+    "bytes": 90230035,
+    "note": "抖音、B站、视频号、YouTube 都直接上传这一个文件，不用另外转码。"
   },
   "coversKey": "ai-real-cost/2026-10-21/covers",
   "titles": [
