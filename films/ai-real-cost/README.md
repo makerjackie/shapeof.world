@@ -1,4 +1,4 @@
-# AI 的真实价格（v5）
+# AI 的真实价格（v5.1）
 
 约 2 分 58 秒、1920×1080、30fps 的中文数据片，无旁白。论点：全球最聪明的 AI（Claude Opus 5.5），对包月用满的人来说比 DeepSeek 还便宜；最后升华到"最贵的 token 是你的时间"，结尾由片名"AI 的真实价格"翻成"世界的形状"。
 
@@ -23,6 +23,7 @@ curl -L -o public/music.m4a https://music.01mvp.com/audio/qian-nian-zhi-hou-bv1x
 npm install
 npm run studio                 # 预览，选 Film
 npm run render                 # 成片 → out/ai-real-cost.mp4
+node tools/covers.mjs          # 封面 → out/covers/cover-<A|B>-<4x3|16x9>.jpg
 node tools/stills.mjs out/s 1200 3176   # 指定帧的审片截图（半分辨率）
 ```
 
@@ -48,3 +49,8 @@ node tools/stills.mjs out/s 1200 3176   # 指定帧的审片截图（半分辨�
 | 56–72 | 升华 | 漏了最贵的一项：你的时间（87%）；AI 每年便宜 13 倍，用量两年 ×330；唯一不会变多的，是你的时间 |
 | 72–76 | 结论 | 最聪明的 AI，就是最便宜的 AI |
 | 76–82 | 片尾 | "AI 的真实价格"翻成"世界的形状"，标志、看见世界如何运行、shapeof.world、MakerJackie |
+
+## 发布
+
+- 上传用文件：1280×720、30fps、约 20 MB（`out/ai-real-cost-v5.1-720p.mp4`），由 1080p 成片缩放转码；发布套件 <https://press.shapeof.world/2026-10-21-ai-real-cost/>（`infra/press/kits/2026-10-21-ai-real-cost/kit.json`）。
+- v5.1：图表场景的年份改用 HTML 标签。居中对齐的 SVG 文字和图上的 CSS `filter` 在多标签页渲染时会逐帧漂移，单帧截图看不出来，要抽成片的帧检查。

@@ -154,13 +154,10 @@ export const Jevons: React.FC = () => {
       <svg width={CW + 400} height={CH + 120} style={{ position: "absolute", left: 210, top: 270, overflow: "visible", fontFamily: FONT }}>
         <g transform="translate(40, 20)">
           <line x1={0} x2={CW} y1={sy(1)} y2={sy(1)} stroke="rgba(255,255,255,0.18)" strokeWidth={2} strokeDasharray="8 10" />
-          {[2024, 2025, 2026].map((yr, i) => (
-            <text key={yr} x={sx(X0 + i)} y={CH + 60} textAnchor="middle" fontSize={30} fontWeight={700} fill={K.muted}>
-              {yr}
-            </text>
-          ))}
           <path d={path(price)} stroke={K.green} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <path d={path(usage)} stroke={K.gold} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 ${10 + 20 * labelU}px ${K.gold})` }} />
+          {/* Glow as a wide translucent stroke: a CSS filter here made the whole chart shift between frames. */}
+          <path d={path(usage)} stroke={K.gold} strokeOpacity={0.18 + 0.12 * labelU} strokeWidth={26} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d={path(usage)} stroke={K.gold} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
           {pp > 0 ? <circle cx={sx(pEnd[0])} cy={sy(pEnd[1])} r={12} fill={K.green} /> : null}
           {up > 0 ? <circle cx={sx(uEnd[0])} cy={sy(uEnd[1])} r={12 + 6 * labelU} fill={K.gold} /> : null}
           <text x={sx(X1) + 26} y={sy(1 / 169) + 12} fontSize={36} fontWeight={900} fill={K.green} opacity={labelP}>
@@ -171,6 +168,12 @@ export const Jevons: React.FC = () => {
           </text>
         </g>
       </svg>
+      {/* Year labels as HTML: centre-anchored SVG text drifted between frames in the full render. */}
+      {[2024, 2025, 2026].map((yr, i) => (
+        <div key={yr} style={{ position: "absolute", left: 210 + 40 + sx(X0 + i) - 60, top: 270 + 20 + CH + 32, width: 120, textAlign: "center", fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.muted }}>
+          {yr}
+        </div>
+      ))}
       <Shockwave at={PEAK} x={210 + 40 + sx(X1)} y={270 + 20 + sy(330)} color={K.gold} size={900} />
       <Note>价格：Epoch AI，同等能力的成本每年约降 13 倍 · 用量：Google 每月处理 token 9.7 万亿 → 3,200 万亿（2024.5 → 2026.5）· Claude Code 人均日花费也从 $6 涨到 $13</Note>
     </AbsoluteFill>
