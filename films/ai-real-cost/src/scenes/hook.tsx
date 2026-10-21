@@ -2,53 +2,43 @@ import React from "react";
 import { AbsoluteFill, random } from "remotion";
 import { Spark, Whale } from "../art";
 import { useBeatFrame } from "../kit";
-import { At, Badge, Chroma, EBACK, EIO, EO, Glass, In, Kinetic, lerp, Note, Odometer, progAt, Shockwave, Tag } from "../fx";
+import { At, Badge, Chroma, EBACK, EIO, EO, In, Kinetic, lerp, Note, Odometer, progAt, Shockwave, Tag } from "../fx";
 import { FONT, K, ModelKey } from "../theme3";
 
 // ───────── 1. The claim, stated flat out ─────────
 
+// Every word is already on the first frame: in a muted autoplay feed, and in the preview a link share shows,
+// frame 0 has to carry the whole claim. Only the characters and the accent on "便宜" move, on the beat.
 export const Claim: React.FC = () => {
   const frame = useBeatFrame();
-  const glow = progAt(frame, 2, 1.5);
+  const glow = progAt(frame, 0, 1.5) * (1 - 0.6 * progAt(frame, 2, 2));
+  const hit = Math.max(0, 1 - Math.abs(frame) / 6);
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ fontFamily: FONT }}>
       <At x={960} y={170} center>
-        <In at={0.5} from="down">
-          <Tag color={K.claude} size={30}>
-            Claude Opus 5.5 · 智能指数全球第 1
-          </Tag>
-        </In>
+        <Tag color={K.claude} size={30}>
+          Claude Opus 5.5 · 智能指数全球第 1
+        </Tag>
       </At>
       <At x={960} y={360} center>
-        <Kinetic at={-1.4} stagger={0.9} size={150} parts={["全球", { t: "最聪明", c: K.claudeHi }, "的 AI"]} />
+        <div style={{ fontSize: 150, fontWeight: 900, letterSpacing: -4, whiteSpace: "nowrap", color: K.fg }}>
+          全球<span style={{ color: K.claudeHi }}>最聪明</span>的 AI
+        </div>
       </At>
       <At x={960} y={580} center>
-        <Chroma at={2}>
-          <In at={2} from="slam" dur={0.6}>
-            <div
-              style={{
-                fontFamily: FONT,
-                fontSize: 176,
-                fontWeight: 900,
-                letterSpacing: -4,
-                whiteSpace: "nowrap",
-                color: K.fg,
-                textShadow: `0 0 ${60 * glow}px ${K.green}66`,
-              }}
-            >
-              比 <span style={{ color: K.deepseekHi }}>DeepSeek</span> 还<span style={{ color: K.green }}>便宜</span>
-            </div>
-          </In>
-        </Chroma>
+        <div style={{ fontSize: 176, fontWeight: 900, letterSpacing: -4, whiteSpace: "nowrap", color: K.fg }}>
+          比 <span style={{ color: K.deepseekHi }}>DeepSeek</span> 还
+          <span style={{ display: "inline-block", color: K.green, transform: `scale(${1 + 0.08 * hit})`, textShadow: `0 0 ${70 * glow}px ${K.green}aa` }}>便宜</span>
+        </div>
       </At>
-      <Shockwave at={2} y={580} color={K.green} />
+      <Shockwave at={0} x={1400} y={580} color={K.green} />
       <At x={150} y={820} center>
-        <In at={1} from="left">
+        <In at={0.5} from="left">
           <Spark size={170} mood="smug" />
         </In>
       </At>
       <At x={1770} y={820} center>
-        <In at={2.4} from="right">
+        <In at={1.5} from="right">
           <div style={{ position: "relative" }}>
             <Whale size={200} mood="shock" />
             <div style={{ position: "absolute", top: -50, left: 40, fontSize: 64, fontWeight: 900, color: K.gold, fontFamily: FONT }}>？！</div>
@@ -181,42 +171,7 @@ export const lerpColor = (a: string, b: string, t: number) => {
   return `#${[16, 8, 0].map((s) => ch(s).toString(16).padStart(2, "0")).join("")}`;
 };
 
-// ───────── 3. Two reasons ─────────
-
-const REASONS = [
-  { n: "1", t: "包月", sub: "订阅 = 批发价", c: K.claude },
-  { n: "2", t: "省 token", sub: "少绕路，少返工", c: K.gold },
-];
-
-export const Reasons: React.FC = () => {
-  const frame = useBeatFrame();
-  const zoom = progAt(frame, 6.6, 1.4, EIO);
-  return (
-    <AbsoluteFill style={{ transform: `scale(${1 + zoom * 0.5})`, opacity: 1 - zoom * 0.9 }}>
-      <At x={960} y={260} center>
-        <Kinetic at={0} size={120} parts={["凭什么？"]} />
-      </At>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 430, display: "flex", justifyContent: "center", gap: 80, perspective: 1600 }}>
-        {REASONS.map((r, i) => {
-          const p = progAt(frame, 1.8 + i * 1.4, 1.1, EBACK);
-          return (
-            <div key={r.n} style={{ transform: `rotateY(${(1 - p) * -90}deg)`, opacity: p > 0 ? 1 : 0, transformOrigin: "left center" }}>
-              <Glass glow={r.c} style={{ width: 520, height: 300, padding: "36px 48px", boxSizing: "border-box", display: "flex", alignItems: "center", gap: 36 }}>
-                <span style={{ fontSize: 180, fontWeight: 900, color: r.c, lineHeight: 1 }}>{r.n}</span>
-                <div>
-                  <div style={{ fontSize: 84, fontWeight: 900, whiteSpace: "nowrap" }}>{r.t}</div>
-                  <div style={{ fontSize: 34, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>{r.sub}</div>
-                </div>
-              </Glass>
-            </div>
-          );
-        })}
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-// ───────── 4. Title with warp-speed streaks ─────────
+// ───────── 3. Title with warp-speed streaks ─────────
 
 export const Title: React.FC = () => {
   const frame = useBeatFrame();
@@ -255,11 +210,6 @@ export const Title: React.FC = () => {
             AI 的<span style={{ color: K.claude }}>真实</span>价格
           </div>
         </Chroma>
-      </At>
-      <At x={960} y={680} center>
-        <In at={2}>
-          <div style={{ fontSize: 30, color: K.muted, fontWeight: 500, whiteSpace: "nowrap" }}>数据截至 2026 年 10 月 21 日</div>
-        </In>
       </At>
     </AbsoluteFill>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BeatOffset } from "./kit";
-import { barToFrame, FPB } from "./timing";
+import { barToFrame, FPB, MUSIC_SEGMENTS } from "./timing";
 import { Backdrop, Grain, Palette, Spectrum, Vignette } from "./bg";
 import { CL, EIO, EO } from "./fx";
 import { FILM_FRAMES, SCENES, Trans } from "./scenes";
@@ -51,8 +51,8 @@ const Shell: React.FC<{ tin: Trans; tout?: Trans; pre: number; total: number; ch
 };
 
 const CHAPTERS = [
-  { from: 10, to: 30, n: "1", t: "包月", c: K.claude },
-  { from: 30, to: 36, n: "2", t: "省 token", c: K.gold },
+  { from: 7, to: 17, n: "1", t: "包月", c: K.claude },
+  { from: 17, to: 22, n: "2", t: "省 token", c: K.gold },
 ];
 
 const Hud: React.FC = () => {
@@ -86,6 +86,33 @@ const Flash: React.FC = () => {
   return o > 0 ? <AbsoluteFill style={{ background: "#fff", opacity: o, pointerEvents: "none" }} /> : null;
 };
 
+const XF = 2; // crossfade half-length in frames at each music cut, centred on the downbeat
+const GAIN = 0.84; // −1.5 dB: the track's own peaks reach +0.8 dBTP after AAC encoding
+
+// The cut soundtrack: each segment overlaps its neighbours by XF frames with an equal-power fade.
+const Music: React.FC = () => (
+  <>
+    {MUSIC_SEGMENTS.map((m, i) => {
+      const from = Math.max(0, m.from - XF);
+      const to = Math.min(FILM_FRAMES, m.to + XF);
+      return (
+        <Sequence key={i} from={from} durationInFrames={to - from}>
+          <Audio
+            src={staticFile("music.m4a")}
+            trimBefore={from + m.offset}
+            volume={(f) => {
+              const t = f + from;
+              const fadeIn = i === 0 ? interpolate(t, [0, 3], [0.6, 1], CL) : Math.sin((Math.PI / 2) * interpolate(t, [m.from - XF, m.from + XF], [0, 1], CL));
+              const fadeOut = m.to === Infinity ? 1 : Math.cos((Math.PI / 2) * interpolate(t, [m.to - XF, m.to + XF], [0, 1], CL));
+              return GAIN * fadeIn * fadeOut * interpolate(t, [barToFrame(54), FILM_FRAMES - 2], [1, 0], CL);
+            }}
+          />
+        </Sequence>
+      );
+    })}
+  </>
+);
+
 const palKeys = SCENES.map((s, i) => ({ at: starts[i], pal: s.pal as Palette }));
 
 export const Film: React.FC = () => {
@@ -93,10 +120,7 @@ export const Film: React.FC = () => {
   const cur = SCENES[Math.max(0, starts.filter((s) => s <= frame).length - 1)];
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
-      <Audio
-        src={staticFile("music.m4a")}
-        volume={(f) => interpolate(f, [barToFrame(81), FILM_FRAMES - 2], [1, 0], CL)}
-      />
+      <Music />
       <Backdrop keys={palKeys} />
       {SCENES.map((s, i) => {
         const start = starts[i];

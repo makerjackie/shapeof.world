@@ -3,12 +3,15 @@ import React from "react";
 import { AbsoluteFill, interpolateColors, random, staticFile, useCurrentFrame } from "remotion";
 import audio from "./audio.json";
 import { K } from "./theme3";
+import { musicFrame } from "./timing";
 
 const spectrum = audio.spectrum as number[][];
 const bassEnv = audio.bass as number[];
 
-export const bassAt = (frame: number) => (bassEnv[Math.min(bassEnv.length - 1, Math.max(0, frame))] ?? 0) / 99;
-export const bandsAt = (frame: number) => spectrum[Math.min(spectrum.length - 1, Math.max(0, frame))] ?? [];
+// Indexed by film frame; the soundtrack is cut, so look up the track frame actually playing.
+const at = (frame: number) => Math.min(spectrum.length - 1, Math.max(0, musicFrame(frame)));
+export const bassAt = (frame: number) => (bassEnv[at(frame)] ?? 0) / 99;
+export const bandsAt = (frame: number) => spectrum[at(frame)] ?? [];
 
 export type Palette = [string, string, string];
 export type PaletteKey = { at: number; pal: Palette };

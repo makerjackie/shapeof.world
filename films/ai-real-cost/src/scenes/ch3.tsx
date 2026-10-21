@@ -1,49 +1,9 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { Whale } from "../art";
+import { Spark } from "../art";
 import { useBeatFrame } from "../kit";
-import { At, EBACK, EIO, EO, In, Kinetic, Note, Odometer, progAt } from "../fx";
+import { At, EBACK, EO, In, Kinetic, Note, Odometer, progAt } from "../fx";
 import { FONT, K } from "../theme3";
-
-// ───────── DeepSeek's books: cheap, and still profitable on paper ─────────
-
-export const DSBook: React.FC = () => {
-  const frame = useBeatFrame();
-  const n1 = progAt(frame, 2, 3, EIO);
-  const n2 = progAt(frame, 8.4, 2.4, EIO);
-  return (
-    <AbsoluteFill>
-      <At x={960} y={170} center>
-        <Kinetic at={0} size={80} parts={["而且它不是亏本卖：", { t: "便宜是真本事", c: K.deepseekHi }]} />
-      </At>
-      <At x={960} y={450} center>
-        <In at={1.6}>
-          <div style={{ textAlign: "center" }}>
-            <Odometer value={545 * n1} suffix="%" size={230} color={K.deepseekHi} />
-            <div style={{ fontSize: 40, fontWeight: 900, marginTop: 4 }}>理论成本利润率</div>
-          </div>
-        </In>
-      </At>
-      <At x={960} y={790} center>
-        <In at={8}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 18, whiteSpace: "nowrap" }}>
-            <span style={{ display: "inline-flex", alignItems: "baseline" }}>
-              <Odometer value={155 * n2} size={90} color={K.fg} />
-              <span style={{ fontFamily: FONT, fontSize: 52, fontWeight: 900 }}>万亿</span>
-            </span>
-            <span style={{ fontSize: 38, fontWeight: 700, color: K.muted }}>token / 天 · 一个集群</span>
-          </div>
-        </In>
-      </At>
-      <At x={1720} y={900} center>
-        <In at={3} from="right">
-          <Whale size={170} mood="party" />
-        </In>
-      </At>
-      <Note>545%：DeepSeek 2025 年开源周自曝，只算 GPU 租金 · 155 万亿：2026-10-20 DeepInfer 开源时披露（媒体转述，含缓存命中）· 但 8 月已涨价 50%–1100%</Note>
-    </AbsoluteFill>
-  );
-};
 
 // ───────── Relay stations ─────────
 
@@ -63,7 +23,7 @@ export const Relay: React.FC = () => {
       </At>
       <div style={{ position: "absolute", left: 120, top: 380 }}>
         {RELAY.map((r, i) => {
-          const p = progAt(frame, 1.6 + i * 0.9, 1.2, EO);
+          const p = progAt(frame, 1.2 + i * 0.7, 1.1, EO);
           const w = Math.max(12, (r.pct / 100) * W * p);
           return (
             <div key={r.label} style={{ display: "flex", alignItems: "center", height: 140, opacity: Math.min(1, p * 2) }}>
@@ -76,8 +36,13 @@ export const Relay: React.FC = () => {
           );
         })}
       </div>
+      <At x={1060} y={720} center>
+        <In at={3} from="scale">
+          <Spark size={130} mood="smug" />
+        </In>
+      </At>
       <At x={1430} y={610} center>
-        <Stamp at={6} color={K.red} size={58}>
+        <Stamp at={4.6} color={K.red} size={58}>
           比自己包月贵 7.5 倍
         </Stamp>
       </At>
@@ -130,7 +95,7 @@ export const Formula: React.FC = () => {
       <div style={{ position: "absolute", left: 0, right: 0, top: 380, display: "flex", justifyContent: "center", alignItems: "flex-start", gap: 30, fontFamily: FONT }}>
         {TERMS.map((x, i) => {
           const p = progAt(frame, 1.6 + i * 1.2, 0.8, EBACK);
-          const n = progAt(frame, 6 + i * 1.6, 0.8, EO);
+          const n = progAt(frame, 5.2 + i * 1.3, 0.8, EO);
           return (
             <React.Fragment key={x.t}>
               {i > 0 ? (
@@ -147,7 +112,7 @@ export const Formula: React.FC = () => {
         })}
       </div>
       <At x={960} y={860} center>
-        <In at={12}>
+        <In at={10}>
           <div style={{ fontSize: 52, fontWeight: 900, color: K.gold, whiteSpace: "nowrap" }}>只看单价，只看到了冰山一角</div>
         </In>
       </At>

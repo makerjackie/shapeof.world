@@ -1,4 +1,4 @@
-# 发布文案：AI 的真实价格（v5）
+# 发布文案：AI 的真实价格（v6，约 2 分钟）
 
 ## 标题
 
@@ -18,8 +18,9 @@
 
 这支片子把账拆开：
 - 包月：$200 的 Claude Max 20x，用满能用掉约 $7,121 的 API 额度（实测中位数），同价比 ChatGPT Pro 多 3–5 倍。
+- 中转站：「¥1 = $1 · 1.5 倍率」的中转站，反而比自己包月用满贵 7.5 倍。
 - 省 token：同一套考试，Opus 打出 4 行小票，DeepSeek V4 Pro 打出 33 行。
-- 说句公道话：只按 API 算，最新的 DeepSeek V4.1 Flash 是真便宜，而且 DeepSeek 并不亏本卖。
+- 说句公道话：只按 API 算，最新的 DeepSeek V4.1 Flash 是真便宜。
 - 两个原因叠在一起，最聪明的反而最便宜。
 - 最后：公式里还漏了最贵的一项——你的时间。
 
@@ -45,20 +46,12 @@
 - 跑完整套智能指数：Opus 5.5（low）输出 2,000 万 token、花费 $860、42 分；DeepSeek V4 Pro（max）1.63 亿 token、$1,122、36 分（按今日官方价）：Artificial Analysis 智能指数 v4.3，2026-10-21。
 - 平均每道题花费：DeepSeek V4.1 Flash $0.26（45 分），Claude Opus 5.5 默认档 $1.34（51 分）：同上。
 
-DeepSeek 的账本
-- 理论成本利润率 545%（1,814 张 H800，日均 7,760 亿 token，成本只算 $2 / 卡时租金）：DeepSeek 开源周 Day 6，2025-03-01。
-- 单个集群每天 155 万亿 token（含缓存命中），每卡每小时收入 $38（按闲时价）：2026-10-20 DeepInfer 开源时披露，转引自投资界 https://news.pedaily.cn/202610/570589.shtml 、Latent Space。原始报告未能打开。
-- 2026-08-17 起涨价 50%–1100% 并改为峰谷价：DeepSeek 更新日志。
-
 叠在一起
 - Opus 每题 $1.34 ÷ 36 ≈ $0.04；36 = Max 20x 用满时的实测倍数（wokey.ai）。
 
 你的时间
 - 写代码 Agent 解决一道题：Claude Code + Sonnet 5.5（high）每次 $1.24、通过率 55%，平均试 1.8 次：Artificial Analysis Coding Agent Index v1.5，2026-10-21。https://artificialanalysis.ai/agents/coding-agents
 - 每次人工检查按 5 分钟、时薪 $100 估算（本片假设），得出 token $2.25、你的时间 $15.15。
-- 同等能力的成本每年约降 13 倍：Epoch AI《The plunging price of thought》，2026-09-22。https://epoch.ai/publications/the-plunging-price-of-thought
-- Google 每月处理 token：9.7 万亿（2024 年 5 月）→ 3,200 万亿以上（2026 年 5 月）：Google I/O 2026。https://blog.google/innovation-and-ai/sundar-pichai-io-2026/
-- Claude Code 人均每活跃日花费约 $13（2025 年文档为 $6）：https://code.claude.com/docs/en/costs
 
 ## 配乐
 

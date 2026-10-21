@@ -6,7 +6,7 @@
 |---|---|---|---|
 | `house/` | 房子的形状 | 16:9 · 2:55 · 无旁白 | 2026-10-20 已发布 |
 | `ai-shape/` | AI 的形状 | 16:9 · 2:37 · 无旁白 | 2026-10-20 定稿 |
-| `ai-real-cost/` | AI 的真实价格 | 16:9 · 2:58 · 无旁白 · Remotion | 2026-10-21 v5.1 定稿 |
+| `ai-real-cost/` | AI 的真实价格 | 16:9 · 2:00 · 无旁白 · Remotion | 2026-10-21 v6 定稿 |
 
 - 成片、配乐音频和审片截图不进 Git。上传用的成片放 R2 桶 `shapeof-press`，见 [`infra/press`](../infra/press/README.md)。
 - Playwright 用仓库根目录装好的那份，先在根目录运行 `pnpm install`。`ai-shape/` 另有自己的依赖，在它的目录里运行 `npm install`。

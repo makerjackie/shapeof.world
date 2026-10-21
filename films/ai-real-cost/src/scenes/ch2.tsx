@@ -52,21 +52,21 @@ const Total: React.FC<{ at: number; tokens: string; cost: string; score: string;
 
 export const Receipts: React.FC = () => {
   const b = useBeatFrame() / FPB;
-  const dsMood = b < 6 ? "happy" : b < 10 ? "sweat" : "shock";
+  const dsMood = b < 5 ? "happy" : b < 8.5 ? "sweat" : "shock";
   return (
     <AbsoluteFill>
       <At x={960} y={120} center>
-        <Kinetic at={0} out={15.6} size={68} parts={["原因二：同一套考试，", { t: "各打一张小票", c: K.gold }]} />
+        <Kinetic at={0} out={12.6} size={68} parts={["原因二：同一套考试，", { t: "各打一张小票", c: K.gold }]} />
       </At>
       <At x={960} y={120} center>
-        <Stamp at={16} color={K.gold} size={62}>
+        <Stamp at={13} color={K.gold} size={62}>
           单价贵 5 倍，总价反而更低
         </Stamp>
       </At>
       <At x={150} y={200}>
         <In at={1} from="left">
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-            <Spark size={110} mood={b < 14 ? "happy" : "smug"} />
+            <Spark size={110} mood={b < 11.2 ? "happy" : "smug"} />
             <div>
               <div style={{ fontSize: 40, fontWeight: 900 }}>Claude Opus 5.5</div>
               <div style={{ fontSize: 28, fontWeight: 700, color: K.muted }}>单价 $20 / 百万 · 低推理档</div>
@@ -75,10 +75,10 @@ export const Receipts: React.FC = () => {
         </In>
       </At>
       <At x={150} y={350}>
-        <Receipt title="CLAUDE · 小票" color={K.claude} lines={OPUS_LINES} start={3} per={1} width={400} />
+        <Receipt title="CLAUDE · 小票" color={K.claude} lines={OPUS_LINES} start={2.5} per={0.8} width={400} />
       </At>
       <At x={150} y={700}>
-        <Total at={8} tokens="2,000 万" cost="$860" score="42 分" color={K.claudeHi} />
+        <Total at={6.4} tokens="2,000 万" cost="$860" score="42 分" color={K.claudeHi} />
       </At>
       <At x={800} y={200}>
         <In at={1.5} from="right">
@@ -92,10 +92,10 @@ export const Receipts: React.FC = () => {
         </In>
       </At>
       <At x={800} y={350}>
-        <Receipt title="DEEPSEEK · 小票" color={K.deepseek} lines={DS_LINES} start={3} per={0.3} width={400} />
+        <Receipt title="DEEPSEEK · 小票" color={K.deepseek} lines={DS_LINES} start={2.5} per={0.25} width={400} />
       </At>
       <At x={1360} y={520}>
-        <Total at={13.4} tokens="1.6 亿" cost="$1,122" score="36 分" color={K.deepseekHi} />
+        <Total at={11.2} tokens="1.6 亿" cost="$1,122" score="36 分" color={K.deepseekHi} />
       </At>
       <Note>Artificial Analysis 智能指数 v4.3 · 每行 = 500 万 token</Note>
     </AbsoluteFill>

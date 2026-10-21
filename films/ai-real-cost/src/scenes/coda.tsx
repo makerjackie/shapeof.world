@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Easing, Img, interpolate, random, staticFile } from "remotion";
+import { AbsoluteFill, Img, interpolate, random, staticFile } from "remotion";
 import { Spark, Whale } from "../art";
 import { useBeatFrame } from "../kit";
 import { FPB } from "../timing";
@@ -16,9 +16,9 @@ export const TimeCost: React.FC = () => {
   const frame = useBeatFrame();
   const W = 1400;
   const tokenShare = 2.25 / 17.4;
-  const a = progAt(frame, 7, 1, EO);
-  const b = progAt(frame, 8.4, 2.6, EIO);
-  const slam = progAt(frame, 3.6, 0.5, EBACK);
+  const a = progAt(frame, 5, 0.8, EO);
+  const b = progAt(frame, 5.8, 2.2, EIO);
+  const slam = progAt(frame, 3, 0.5, EBACK);
   return (
     <AbsoluteFill>
       <At x={960} y={170} center>
@@ -26,7 +26,7 @@ export const TimeCost: React.FC = () => {
       </At>
       <div style={{ position: "absolute", left: 0, right: 0, top: 290, display: "flex", justifyContent: "center", alignItems: "center", gap: 22, fontFamily: FONT }}>
         {TILES.map((t, i) => {
-          const p = progAt(frame, 1.6 + i * 0.25, 0.6);
+          const p = progAt(frame, 1.2 + i * 0.2, 0.6);
           const op = t === "×" || t === "÷";
           return (
             <div
@@ -66,7 +66,7 @@ export const TimeCost: React.FC = () => {
         </div>
       </div>
       <At x={260} y={500}>
-        <In at={6.4}>
+        <In at={4.6}>
           <div style={{ fontSize: 32, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>用 Claude 写代码，真正解决一道题的成本</div>
         </In>
       </At>
@@ -81,101 +81,13 @@ export const TimeCost: React.FC = () => {
         <div style={{ opacity: b, fontSize: 40, fontWeight: 900, color: K.bg, whiteSpace: "nowrap" }}>你检查、返工的时间 $15.15</div>
       </At>
       <At x={960} y={860} center>
-        <In at={11.6} from="slam" dur={0.5}>
+        <In at={9} from="slam" dur={0.5}>
           <div style={{ fontSize: 76, fontWeight: 900, whiteSpace: "nowrap" }}>
             <span style={{ color: TIME, fontSize: 110 }}>87%</span> 是你的时间
           </div>
         </In>
       </At>
       <Note>Artificial Analysis Coding Agent Index（Sonnet 5.5 high）：平均试 1.8 次才解决 · 每次人工检查按 5 分钟、时薪 $100 估算</Note>
-    </AbsoluteFill>
-  );
-};
-
-// ───────── Jevons: cheaper every year, used ever more ─────────
-
-const X0 = 2024.4;
-const X1 = 2026.4;
-const PRICE = [
-  [2024.4, 1],
-  [2025.4, 1 / 13],
-  [2026.4, 1 / 169],
-];
-const USAGE = [
-  [2024.4, 1],
-  [2025.4, 480 / 9.7],
-  [2026.4, 3200 / 9.7],
-];
-const CW = 1300;
-const CH = 520;
-const sx = (x: number) => ((x - X0) / (X1 - X0)) * CW;
-const sy = (v: number) => CH / 2 - (Math.log10(v) / Math.log10(400)) * (CH / 2);
-
-// Polyline points up to progress p (0–1 along x).
-const partial = (pts: number[][], p: number) => {
-  const xEnd = X0 + (X1 - X0) * p;
-  const out: number[][] = [];
-  for (let i = 0; i < pts.length; i++) {
-    if (pts[i][0] <= xEnd) out.push(pts[i]);
-    else {
-      const [xa, va] = pts[i - 1];
-      const [xb, vb] = pts[i];
-      const t = (xEnd - xa) / (xb - xa);
-      out.push([xEnd, Math.pow(10, lerp(Math.log10(va), Math.log10(vb), t))]);
-      break;
-    }
-  }
-  return out;
-};
-
-const PEAK = 12;
-
-export const Jevons: React.FC = () => {
-  const frame = useBeatFrame();
-  const pp = progAt(frame, 1.6, 3.4, EIO);
-  const up = progAt(frame, 8, PEAK - 8, Easing.in(Easing.cubic));
-  const price = partial(PRICE, pp);
-  const usage = partial(USAGE, up);
-  const pEnd = price[price.length - 1];
-  const uEnd = usage[usage.length - 1];
-  const path = (pts: number[][]) => pts.map(([x, v], i) => `${i ? "L" : "M"}${sx(x).toFixed(1)} ${sy(v).toFixed(1)}`).join(" ");
-  const labelP = progAt(frame, 4.6, 0.6);
-  const labelU = progAt(frame, PEAK, 0.5, EBACK);
-  return (
-    <AbsoluteFill>
-      <At x={960} y={150} center>
-        <Kinetic at={0} out={PEAK - 0.4} size={80} parts={["AI 每年便宜 ", { t: "13 倍", c: K.green }]} />
-      </At>
-      <At x={960} y={150} center>
-        <Chroma at={PEAK}>
-          <Kinetic at={PEAK} stagger={1} size={80} parts={["可我们，", { t: "用得更多", c: K.gold }]} />
-        </Chroma>
-      </At>
-      <svg width={CW + 400} height={CH + 120} style={{ position: "absolute", left: 210, top: 270, overflow: "visible", fontFamily: FONT }}>
-        <g transform="translate(40, 20)">
-          <line x1={0} x2={CW} y1={sy(1)} y2={sy(1)} stroke="rgba(255,255,255,0.18)" strokeWidth={2} strokeDasharray="8 10" />
-          <path d={path(price)} stroke={K.green} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          {/* Glow as a wide translucent stroke: a CSS filter here made the whole chart shift between frames. */}
-          <path d={path(usage)} stroke={K.gold} strokeOpacity={0.18 + 0.12 * labelU} strokeWidth={26} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <path d={path(usage)} stroke={K.gold} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          {pp > 0 ? <circle cx={sx(pEnd[0])} cy={sy(pEnd[1])} r={12} fill={K.green} /> : null}
-          {up > 0 ? <circle cx={sx(uEnd[0])} cy={sy(uEnd[1])} r={12 + 6 * labelU} fill={K.gold} /> : null}
-          <text x={sx(X1) + 26} y={sy(1 / 169) + 12} fontSize={36} fontWeight={900} fill={K.green} opacity={labelP}>
-            价格 ÷169
-          </text>
-          <text x={sx(X1) + 26} y={sy(330) + 12} fontSize={36} fontWeight={900} fill={K.gold} opacity={labelU}>
-            用量 ×330
-          </text>
-        </g>
-      </svg>
-      {/* Year labels as HTML: centre-anchored SVG text drifted between frames in the full render. */}
-      {[2024, 2025, 2026].map((yr, i) => (
-        <div key={yr} style={{ position: "absolute", left: 210 + 40 + sx(X0 + i) - 60, top: 270 + 20 + CH + 32, width: 120, textAlign: "center", fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.muted }}>
-          {yr}
-        </div>
-      ))}
-      <Shockwave at={PEAK} x={210 + 40 + sx(X1)} y={270 + 20 + sy(330)} color={K.gold} size={900} />
-      <Note>价格：Epoch AI，同等能力的成本每年约降 13 倍 · 用量：Google 每月处理 token 9.7 万亿 → 3,200 万亿（2024.5 → 2026.5）· Claude Code 人均日花费也从 $6 涨到 $13</Note>
     </AbsoluteFill>
   );
 };
@@ -214,8 +126,8 @@ const TOKEN_COLORS = [K.claude, K.gold, K.deepseek, K.fg, K.green];
 export const Scarce: React.FC = () => {
   const frame = useBeatFrame();
   const b = frame / FPB;
-  const n = Math.round(interpolate(b, [0, 10], [40, 260], CL));
-  const sand = progAt(frame, 0, 24, (t) => t);
+  const n = Math.round(interpolate(b, [0, 8], [60, 260], CL));
+  const sand = progAt(frame, 0, 16, (t) => t);
   return (
     <AbsoluteFill>
       {Array.from({ length: n }).map((_, i) => {
@@ -249,17 +161,14 @@ export const Scarce: React.FC = () => {
         </In>
       </At>
       <At x={960} y={170} center>
-        <Kinetic at={0} out={4.6} size={84} parts={["AI 会越来越", { t: "便宜", c: K.green }]} />
+        <Kinetic at={0} out={4.6} size={84} parts={["token 会越来越", { t: "多", c: K.gold }]} />
       </At>
       <At x={960} y={170} center>
-        <Kinetic at={5} out={9.6} size={84} parts={["token 会越来越", { t: "多", c: K.gold }]} />
-      </At>
-      <At x={960} y={170} center>
-        <Kinetic at={10} size={84} parts={["唯一不会变多的——"]} />
+        <Kinetic at={5} size={84} parts={["唯一不会变多的——"]} />
       </At>
       <At x={960} y={900} center>
-        <Chroma at={13}>
-          <In at={13} from="slam" dur={0.5}>
+        <Chroma at={8}>
+          <In at={8} from="slam" dur={0.5}>
             <div style={{ fontFamily: FONT, fontSize: 132, fontWeight: 900, color: TIME, whiteSpace: "nowrap", textShadow: `0 0 60px ${TIME}88` }}>是你的时间</div>
           </In>
         </Chroma>

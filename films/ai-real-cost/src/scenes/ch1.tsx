@@ -2,50 +2,9 @@ import React from "react";
 import { AbsoluteFill, random } from "remotion";
 import { useBeatFrame } from "../kit";
 import { FPB } from "../timing";
-import { RangeBars } from "../charts";
 import { PLAN } from "../data";
-import { At, Badge, Chroma, EBACK, EIO, EO, fmtMoney, Glass, In, Kinetic, lerp, Note, Odometer, progAt, Tag } from "../fx";
+import { At, Badge, Chroma, EIO, EO, fmtMoney, Glass, In, Kinetic, lerp, Note, Odometer, progAt, Tag } from "../fx";
 import { FONT, K } from "../theme3";
-
-// ───────── Plans: most people pay a flat monthly fee ─────────
-
-export const Plans: React.FC = () => {
-  const frame = useBeatFrame();
-  const plans = [
-    { name: "Pro", price: 20, sub: "", color: K.claudeHi },
-    { name: "Max 5x", price: 100, sub: "每 5 小时额度 ×5", color: K.claude },
-    { name: "Max 20x", price: 200, sub: "每 5 小时额度 ×20", color: K.gold },
-  ];
-  return (
-    <AbsoluteFill>
-      <At x={960} y={200} center>
-        <Kinetic at={0} size={84} parts={["大多数人用 Claude，是", { t: "包月", c: K.claudeHi }, "的"]} />
-      </At>
-      <div style={{ position: "absolute", top: 340, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 50, perspective: 1800 }}>
-        {plans.map((p, i) => {
-          const e = progAt(frame, 1.6 + i * 0.8, 1.1, EBACK);
-          const hero = i === 2;
-          return (
-            <div key={p.name} style={{ transform: `translateY(${hero ? -16 : 0}px) rotateX(${(1 - e) * 85}deg)`, transformOrigin: "50% 100%", opacity: e > 0 ? Math.min(1, e * 2) : 0 }}>
-              <Glass glow={hero ? p.color : undefined} style={{ width: 400, height: 300, padding: "34px 40px", boxSizing: "border-box", border: hero ? `2px solid ${p.color}` : undefined }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 46, fontWeight: 900, color: p.color }}>{p.name}</span>
-                  <Badge m="opus" size={50} />
-                </div>
-                <div style={{ marginTop: 18, display: "flex", alignItems: "baseline", gap: 8, whiteSpace: "nowrap" }}>
-                  <span style={{ fontSize: 110, fontWeight: 900, letterSpacing: -4 }}>${p.price}</span>
-                  <span style={{ fontSize: 32, color: K.muted, fontWeight: 700 }}>/ 月</span>
-                </div>
-                <div style={{ fontSize: 26, color: K.muted, fontWeight: 700, marginTop: 6 }}>{p.sub}</div>
-              </Glass>
-            </div>
-          );
-        })}
-      </div>
-      <Note>5x / 20x 指每 5 小时的额度；另有每周上限，三档每 1 美元换到的额度差不多（周额度约 1 : 5 : 10）· 来源：Anthropic 官方、wokey.ai、SemiAnalysis</Note>
-    </AbsoluteFill>
-  );
-};
 
 // ───────── Tower: what $200 buys at API prices ─────────
 
@@ -54,14 +13,11 @@ const BASE_Y = 930;
 
 export const Tower: React.FC = () => {
   const frame = useBeatFrame();
-  const grow = progAt(frame, 2, 8, (t) => 1 - Math.pow(1 - t, 2.6));
-  const ghostP = progAt(frame, 11, 2.4, EIO);
-  const zoom = progAt(frame, 14, 1.8, EIO);
+  const grow = progAt(frame, 1.2, 5.4, (t) => 1 - Math.pow(1 - t, 2.6));
+  const zoom = progAt(frame, 7, 1.6, EIO);
   const v = PLAN.max20.lo * grow;
-  const ghostV = (PLAN.max20.hi - PLAN.max20.lo) * ghostP;
   const towerH = v * PX_PER_USD;
-  const ghostH = ghostV * PX_PER_USD;
-  const camY = Math.max(0, towerH + ghostH - 600) * (1 - zoom);
+  const camY = Math.max(0, towerH - 600) * (1 - zoom);
   const scale = lerp(1, 0.24, zoom);
   const gridLines = Array.from({ length: 12 }).map((_, k) => (k + 1) * 1000);
   return (
@@ -75,7 +31,7 @@ export const Tower: React.FC = () => {
         <div style={{ position: "absolute", left: 1060, top: BASE_Y - 200 * PX_PER_USD, width: 200, height: 200 * PX_PER_USD, background: K.fg, borderRadius: 6, boxShadow: `0 0 30px ${K.fg}66` }} />
         <div style={{ position: "absolute", left: 1060, top: BASE_Y + 14, width: 200, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.fg }}>
           $200
-          <div style={{ fontSize: 24, color: K.muted, fontWeight: 700 }}>你付的</div>
+          <div style={{ fontSize: 24, color: K.muted, fontWeight: 700, whiteSpace: "nowrap" }}>你付的 · Max 20x</div>
         </div>
         <div
           style={{
@@ -91,34 +47,13 @@ export const Tower: React.FC = () => {
         >
           <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0 2px, transparent 2px 51px)" }} />
         </div>
-        {ghostH > 1 ? (
-          <div
-            style={{
-              position: "absolute",
-              left: 560,
-              top: BASE_Y - towerH - ghostH,
-              width: 300,
-              height: ghostH,
-              border: `4px dashed ${K.gold}`,
-              borderBottom: "none",
-              borderRadius: "14px 14px 0 0",
-              background: `repeating-linear-gradient(-45deg, ${K.gold}33 0 12px, transparent 12px 24px)`,
-              boxSizing: "border-box",
-            }}
-          />
-        ) : null}
         <div style={{ position: "absolute", left: 560, top: BASE_Y + 14, width: 300, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.claudeHi }}>
           API 等值
           <div style={{ fontSize: 24, color: K.muted, fontWeight: 700 }}>你用掉的</div>
         </div>
-        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 9.6, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
+        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 5.8, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
           <Tag color={K.claude} size={34}>
             实测中位数
-          </Tag>
-        </div>
-        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - ghostH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 12.6, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
-          <Tag color={K.gold} size={34}>
-            理论上限
           </Tag>
         </div>
       </div>
@@ -126,53 +61,35 @@ export const Tower: React.FC = () => {
         <Kinetic at={0} size={72} parts={["$200 包月，能用掉多少", { t: " API 钱", c: K.gold }, "？"]} />
       </At>
       <At x={1500} y={330} center style={{ opacity: 1 - zoom }}>
-        <In at={1.6}>
-          <Odometer value={v + ghostV} prefix="$" size={130} color={ghostP > 0 ? K.gold : K.claudeHi} />
+        <In at={1.2}>
+          <Odometer value={v} prefix="$" size={130} color={K.claudeHi} />
         </In>
       </At>
       {zoom > 0 ? (
         <>
           <At x={1340} y={440} center>
-            <Chroma at={15.2}>
-              <div style={{ opacity: progAt(frame, 15, 0.6), fontFamily: FONT, fontSize: 220, fontWeight: 900, color: K.gold, letterSpacing: -6, whiteSpace: "nowrap" }}>36 倍</div>
+            <Chroma at={8}>
+              <div style={{ opacity: progAt(frame, 7.8, 0.6), fontFamily: FONT, fontSize: 220, fontWeight: 900, color: K.gold, letterSpacing: -6, whiteSpace: "nowrap" }}>36 倍</div>
             </Chroma>
           </At>
           <At x={1340} y={610} center>
-            <In at={15.8}>
+            <In at={8.4}>
               <div style={{ fontSize: 46, fontWeight: 900, whiteSpace: "nowrap" }}>付 $200，用掉 $7,121</div>
+            </In>
+          </At>
+          <At x={1340} y={690} center>
+            <In at={9.4}>
+              <div style={{ fontSize: 34, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>
+                同样 $200，比 <span style={{ color: K.gpt }}>ChatGPT Pro</span> 多给 <span style={{ color: K.fg }}>3–5 倍</span>
+              </div>
             </In>
           </At>
         </>
       ) : null}
-      <Note>实测：wokey.ai 17 个用满的 Max 20x 账号中位数（2026-10）· 理论上限 $11,726（59 倍，SemiAnalysis）· 按 API 原价折算</Note>
+      <Note>实测：wokey.ai 17 个用满的 Max 20x 账号中位数（2026-10）· 理论上限 $11,726 · ChatGPT Pro $200 理论上限 $2,084–2,897 · 上限均为 SemiAnalysis · 按 API 原价折算</Note>
     </AbsoluteFill>
   );
 };
-
-// ───────── VsGPT: same $200, very different quota ─────────
-
-export const VsGPT: React.FC = () => (
-  <AbsoluteFill>
-    <At x={960} y={200} center>
-      <Kinetic at={0} size={80} parts={["同样 $200，Claude ", { t: "多给 3–5 倍", c: K.gold }]} />
-    </At>
-    <div style={{ position: "absolute", left: 90, top: 400 }}>
-      <RangeBars
-        at={1}
-        step={0.8}
-        max={12000}
-        width={720}
-        rowH={140}
-        labelW={480}
-        rows={[
-          { label: "Claude Max 20x", m: "opus", color: K.claude, lo: PLAN.max20.lo, hi: PLAN.max20.hi, text: "$7,121 – 11,726" },
-          { label: "ChatGPT Pro", m: "sol", color: K.gpt, lo: PLAN.gptPro200.lo, hi: PLAN.gptPro200.hi, text: "$2,084 – 2,897" },
-        ]}
-      />
-    </div>
-    <Note>每月 API 等值 · 实心 = 实测，虚线 = 理论上限（SemiAnalysis 2026-10）· ChatGPT Pro 9 月 29 日起降为 10× Plus · 顶配模型（Fable 5.1 vs GPT-6 Astra）两家相当</Note>
-  </AbsoluteFill>
-);
 
 // ───────── Elevator: the effective per-token price ─────────
 
@@ -185,8 +102,8 @@ const FLOORS = [
 ];
 const yOf = (v: number) => 260 + ((Math.log(20) - Math.log(v)) / (Math.log(20) - Math.log(0.45))) * 660;
 
-const DESCENT_AT = 3;
-const DESCENT_LEN = 9;
+const DESCENT_AT = 2;
+const DESCENT_LEN = 4.6;
 
 // Beat at which the car passes price v during the descent.
 const passBeat = (v: number) => {
