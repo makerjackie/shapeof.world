@@ -28,6 +28,7 @@ export function SiteFooter() {
         <div className="footer-group">
           <h2>{t('footer.contact')}</h2>
           <Link to="/about">{t('nav.about')}</Link>
+          <Link to="/collaborate">{t('collaborate.navLabel')}</Link>
           <Link to="/feedback">{t('feedback.title')}</Link>
           <div className="footer-social">
             <a href={SOURCE_REPOSITORY_URL} target="_blank" rel="noreferrer">GitHub</a>
