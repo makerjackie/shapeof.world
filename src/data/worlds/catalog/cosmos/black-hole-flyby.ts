@@ -50,7 +50,7 @@ export default {
     sources: [
       {label: 'Eric Bruneton Black Hole Shader（BSD-3-Clause）', labelEn: 'Eric Bruneton Black Hole Shader（BSD-3-Clause）', url: 'https://github.com/ebruneton/black_hole_shader'},
       {label: 'Bruneton 2020：非旋转黑洞与薄盘模型', labelEn: 'Bruneton 2020: non-rotating black hole and thin-disc model', url: 'https://arxiv.org/abs/2010.08735'},
-      {label: '项目程序生成星空（非真实星图）', labelEn: 'Project-generated sky (not a real star map)', url: 'https://github.com/makerjackie/shape-of-the-world/blob/main/scripts/generate-black-hole-sky.mjs'}
+      {label: '项目程序生成星空（非真实星图）', labelEn: 'Project-generated sky (not a real star map)', url: 'https://github.com/makerjackie/shapeof.world/blob/main/scripts/generate-black-hole-sky.mjs'}
     ],
     presentation: 'full-bleed',
     hasEmbeddedGuide: true,

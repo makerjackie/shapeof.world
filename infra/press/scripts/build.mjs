@@ -53,7 +53,7 @@ function build({ root, builtAt, commit }) {
   <a class="brand" href="/">世界的形状 · 发布套件</a>
 </div></header>
 <main>${body}</main>
-<footer>构建 ${esc(builtAt)} · ${esc(commit)} · 数据在 <code>shape-of-the-world/infra/press/kits/</code></footer>
+<footer>构建 ${esc(builtAt)} · ${esc(commit)} · 数据在 <code>shapeof.world/infra/press/kits/</code></footer>
 <script type="application/json" id="press-data">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>
 <script>${js}</script>
 </body>
