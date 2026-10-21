@@ -713,7 +713,7 @@
             "zh": "项目程序生成星空（非真实星图）",
             "en": "Project-generated sky (not a real star map)"
           },
-          "url": "https://github.com/makerjackie/shape-of-the-world/blob/main/scripts/generate-black-hole-sky.mjs"
+          "url": "https://github.com/makerjackie/shapeof.world/blob/main/scripts/generate-black-hole-sky.mjs"
         }
       ],
       "provenance": {
