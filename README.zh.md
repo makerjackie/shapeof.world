@@ -38,6 +38,8 @@ pnpm check
 2026-10-21 之前的旧版网站保留在 `v2.shapeof.world`，不被搜索引擎收录。统计
 （`infra/insights`）和视频发布套件（`infra/press`）各自是独立的 Worker。
 
+短片也是代码做的：`films/` 里是逐帧生成画面和配乐的源码，见 `films/README.md`。
+
 ```sh
 pnpm check
 pnpm build

@@ -85,3 +85,18 @@ apps/music/public/packs.json
 
 # Press kits keep only kit.json; covers and videos live in R2.
 infra/press/kits/*/covers/
+
+# The author's private repository (makerjackie/shapeof-world-dev) lives here so
+# one checkout holds both. It is its own Git repository; never commit it here.
+/private/
+
+# Film renders, audio and review frames stay local; finished videos live in R2
+# (bucket shapeof-press). The 17 MB Noto Sans SC font is downloaded, see
+# films/README.md.
+films/**/out/
+films/**/*.mp4
+films/**/*.mov
+films/**/*.wav
+films/**/*.mp3
+films/**/NotoSansSC-VF.ttf
+films/**/*.log
