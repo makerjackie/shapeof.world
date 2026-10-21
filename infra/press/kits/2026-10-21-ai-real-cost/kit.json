@@ -1,0 +1,84 @@
+{
+  "slug": "2026-10-21-ai-real-cost",
+  "name": "AI 的真实价格",
+  "subtitle": "全球最聪明的 AI，比 DeepSeek 还便宜？",
+  "finalizedAt": "2026-10-21",
+  "status": "定稿",
+  "summary": "按 API 单价，Claude Opus 5.5 是 DeepSeek 的 17 倍；可对包月用满的人，它反而更便宜。约 3 分钟，两个原因（包月、省 token）、给 DeepSeek 的公道话、两者叠加的证明，最后升华到“最贵的 token 是你的时间”。画面由代码逐帧生成，无配音，配乐为第三方曲目《千年之后（氛围版）》。数据截至 2026 年 10 月 21 日。",
+  "video": {
+    "key": "ai-real-cost/2026-10-21/ai-real-cost-v5.1-720p.mp4",
+    "filename": "AI的真实价格-720p.mp4",
+    "duration": "2:58",
+    "spec": "1280×720 · 30fps · H.264 + AAC 160 kbps",
+    "bytes": 20430243,
+    "note": "抖音、B站、视频号、YouTube 都直接上传这一个文件；720p 够手机看，文件约 20 MB。"
+  },
+  "coversKey": "ai-real-cost/2026-10-21/covers",
+  "titles": [
+    {
+      "id": "a",
+      "text": "全球最聪明的 AI，比 DeepSeek 还便宜？",
+      "for": "抖音、B站、视频号",
+      "note": "和开场第一帧同一句话，反常识，点进来马上解释。",
+      "recommended": true
+    },
+    {
+      "id": "b",
+      "text": "单价贵 17 倍的 AI，为什么反而最便宜",
+      "for": "B站、YouTube",
+      "note": "数字更具体，悬念在“为什么”。"
+    },
+    {
+      "id": "c",
+      "text": "付 200 美元，用掉 7121 美元：AI 订阅的真实价格",
+      "for": "B站、视频号",
+      "note": "用片中最直观的一组数字。"
+    },
+    {
+      "id": "d",
+      "text": "The smartest AI is the cheapest: the real price of AI tokens",
+      "for": "YouTube（英文）",
+      "note": "英文标题，片内文字仍是中文。"
+    }
+  ],
+  "descriptions": [
+    {
+      "id": "a",
+      "name": "反常识开头",
+      "recommended": true,
+      "text": "按 API 单价，全球智能指数第一的 Claude Opus 5.5 是 DeepSeek 的 17 倍。可大多数人是包月用的：$200 的 Max 20x，用满能用掉约 $7,121 的 API 额度；聪明的模型做同一套题，用的 token 也少得多。两个原因叠在一起，最聪明的反而最便宜。最后我们发现，公式里还漏了最贵的一项——你的时间。前提：订阅只对用得多的人划算。数据截至 2026 年 10 月 21 日，来源见下。不构成购买建议。"
+    },
+    {
+      "id": "b",
+      "name": "升华开头",
+      "text": "AI 每年便宜 13 倍，我们却用得更多。token 会越来越多，唯一不会变多的，是你的时间。这支约 3 分钟的数据片，从“Claude 和 DeepSeek 谁更便宜”算起：包月、token 用量、中转站、DeepSeek 的账本，最后算到你自己身上。数据截至 2026 年 10 月 21 日，来源见下。"
+    }
+  ],
+  "covers": [
+    {
+      "id": "a",
+      "name": "A · 全球最聪明的 AI，比 DeepSeek 还便宜",
+      "note": "和开场第一帧同一句话。",
+      "recommended": true
+    },
+    {
+      "id": "b",
+      "name": "B · $20 → $0.56",
+      "note": "包月用满后的单价，数字冲击力更强。"
+    }
+  ],
+  "chapters": "0:00 开场：全球最聪明的 AI，比 DeepSeek 还便宜\n0:22 原因一：包月\n1:05 原因二：省 token\n1:18 说句公道话\n1:35 两个原因叠在一起\n1:52 AI 的真实价格公式\n2:01 最贵的一项：你的时间\n2:44 世界的形状",
+  "tags": [
+    "AI",
+    "人工智能",
+    "Claude",
+    "DeepSeek",
+    "ChatGPT",
+    "token",
+    "AI 订阅",
+    "数据可视化",
+    "科普"
+  ],
+  "sourcesShort": "主要数据来源（截至 2026-10-21）\n· 价格：Anthropic、DeepSeek、OpenAI 等官方定价页；Artificial Analysis 智能指数 v4.3 与 Coding Agent Index v1.5\n· 订阅额度：Anthropic Max 计划说明；wokey.ai 实测（2026-10-12～19）；SemiAnalysis 2026-10-05\n· DeepSeek 账本：开源周 Day 6（2025-03-01）；DeepInfer 开源报道（2026-10-20）；DeepSeek 更新日志\n· 趋势：Epoch AI《The plunging price of thought》2026-09-22；Google I/O 2026；Anthropic Claude Code 文档\n“你的时间”按每次人工检查 5 分钟、时薪 $100 估算。配乐：《千年之后（氛围版）》，和乐府。",
+  "sourcesFull": "价格\n- Claude API 定价（Opus 5.5 $4 / $20，Sonnet 5.5 $2 / $10，每百万 token）：https://platform.claude.com/docs/en/about-claude/pricing\n- DeepSeek API 定价与更新日志（V4.1 Flash 高峰 $0.30 / $1.20，闲时五折；V4 Pro $1.32 / $3.96）：https://api-docs.deepseek.com/zh-cn/quick_start/pricing 、https://api-docs.deepseek.com/zh-cn/updates\n- 其余模型：各家官方定价页，2026-10-21。\n- Claude Opus 5.5（max）为 Artificial Analysis 智能指数 v4.3 第 1 名（57.6）：https://artificialanalysis.ai/leaderboards/models\n\n01 包月\n- Max 计划说明（5x / 20x 指每 5 小时的额度，另有每周上限）：https://support.claude.com/en/articles/11049741-what-is-the-max-plan\n- 实测：Max 20x 用满一周 $1,643 API 等值，17 个账号中位数，×4.33 周 ≈ $7,121 / 月：wokey.ai，2026-10-12～19 周。https://wokey.ai/claude-usage-limits\n- 理论上限：Max 20x $11,726 / 月；ChatGPT Pro $200 $2,084（GPT-6.1 Sol）～ $2,897（GPT-6 Astra）：SemiAnalysis 2026-10-05，转引自 https://explainx.ai/blog/semianalysis-claude-vs-chatgpt-subscription-api-value-limit-testing-2026\n- ChatGPT Pro $200 自 2026-09-29 起为 10× Plus（此前 20×）：OpenAI Codex 负责人公开说明，见 https://winbuzzer.com/2026/09/30/openai-adds-500-chatgpt-pro-cuts-allowance-new-200-subscribers-a005-xcxwbn/\n- 顶配模型（Fable 5.1 vs GPT-6 Astra）两家额度相当；2026 年 6 月时 ChatGPT Pro 曾多于 Claude Max：SemiAnalysis，转引自 GIGAZINE 2026-06-12。\n- 中转站计费公式（官方价 × 分组倍率 × 充值汇率 ÷ 市场汇率）：开源项目 new-api 文档；汇率按 1 USD ≈ 7.2 CNY。偷换模型的研究：arXiv 2504.04715。\n\n02 省 token\n- 跑完整套智能指数：Opus 5.5（low）输出 2,000 万 token、花费 $860、42 分；DeepSeek V4 Pro（max）1.63 亿 token、$1,122、36 分（按今日官方价）：Artificial Analysis 智能指数 v4.3，2026-10-21。\n- 平均每道题花费：DeepSeek V4.1 Flash $0.26（45 分），Claude Opus 5.5 默认档 $1.34（51 分）：同上。\n\nDeepSeek 的账本\n- 理论成本利润率 545%（1,814 张 H800，日均 7,760 亿 token，成本只算 $2 / 卡时租金）：DeepSeek 开源周 Day 6，2025-03-01。\n- 单个集群每天 155 万亿 token（含缓存命中），每卡每小时收入 $38（按闲时价）：2026-10-20 DeepInfer 开源时披露，转引自投资界 https://news.pedaily.cn/202610/570589.shtml 、Latent Space。原始报告未能打开。\n- 2026-08-17 起涨价 50%–1100% 并改为峰谷价：DeepSeek 更新日志。\n\n叠在一起\n- Opus 每题 $1.34 ÷ 36 ≈ $0.04；36 = Max 20x 用满时的实测倍数（wokey.ai）。\n\n你的时间\n- 写代码 Agent 解决一道题：Claude Code + Sonnet 5.5（high）每次 $1.24、通过率 55%，平均试 1.8 次：Artificial Analysis Coding Agent Index v1.5，2026-10-21。https://artificialanalysis.ai/agents/coding-agents\n- 每次人工检查按 5 分钟、时薪 $100 估算（本片假设），得出 token $2.25、你的时间 $15.15。\n- 同等能力的成本每年约降 13 倍：Epoch AI《The plunging price of thought》，2026-09-22。https://epoch.ai/publications/the-plunging-price-of-thought\n- Google 每月处理 token：9.7 万亿（2024 年 5 月）→ 3,200 万亿以上（2026 年 5 月）：Google I/O 2026。https://blog.google/innovation-and-ai/sundar-pichai-io-2026/\n- Claude Code 人均每活跃日花费约 $13（2025 年文档为 $6）：https://code.claude.com/docs/en/costs"
+}
