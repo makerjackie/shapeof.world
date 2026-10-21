@@ -1,0 +1,32 @@
+import http from "node:http";
+import { createReadStream, existsSync, statSync, writeFileSync } from "node:fs";
+import { extname, join, normalize, resolve } from "node:path";
+import { chromium } from "playwright";
+const root = resolve(import.meta.dirname, "..");
+const film = process.argv[2] ?? "deepinfer-open-source";
+const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".png": "image/png" };
+const server = http.createServer((req, res) => {
+  const u = decodeURIComponent((req.url ?? "/").split("?")[0]);
+  const p = normalize(join(root, u));
+  if (!p.startsWith(root) || !existsSync(p) || statSync(p).isDirectory()) return res.writeHead(404).end();
+  res.writeHead(200, { "content-type": MIME[extname(p)] ?? "application/octet-stream" });
+  createReadStream(p).pipe(res);
+});
+await new Promise((r) => server.listen(0, "127.0.0.1", r));
+const b = await chromium.launch();
+const page = await b.newPage({ viewport: { width: 1080, height: 1920 } });
+await page.goto(`http://127.0.0.1:${server.address().port}/cuts/${film}/index.html`, { waitUntil: "networkidle" });
+await page.waitForFunction(() => window.__film?.cues);
+const cues = await page.evaluate(() => window.__film.cues);
+await b.close(); server.close();
+const ts = (t) => {
+  const h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = Math.floor(t % 60), ms = Math.round((t - Math.floor(t)) * 1000);
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")},${String(ms).padStart(3, "0")}`;
+};
+const rows = [];
+for (const list of Object.values(cues)) for (const c of list) if (c.text.trim()) rows.push(c);
+rows.sort((a, b) => a.start - b.start);
+const srt = rows.map((c, i) => `${i + 1}\n${ts(c.start)} --> ${ts(c.end)}\n${c.text}\n`).join("\n");
+const out = join(root, "cuts", film, "output", "deepinfer-open-source.srt");
+writeFileSync(out, srt);
+console.log(`${rows.length} cues → ${out}`);

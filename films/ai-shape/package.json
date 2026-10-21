@@ -1,0 +1,17 @@
+{
+  "name": "ai-shape-v3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "music": "node tools/render-music.mjs",
+    "frames": "node tools/frames.mjs",
+    "render": "node tools/render.mjs"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "d3": "^7.9.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  }
+}

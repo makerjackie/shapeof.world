@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AI 的形状</title>
+<style>
+  @font-face { font-family: 'NotoSC'; src: url(fonts/NotoSansSC-VF.ttf) format('truetype'); font-weight: 100 900; }
+  @font-face { font-family: 'Anton'; src: url(fonts/Anton-Regular.ttf) format('truetype'); font-weight: 400; }
+  @font-face { font-family: 'Mono'; src: url(../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: 'Mono'; src: url(../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2) format('woff2'); font-weight: 700; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  canvas { position: absolute; inset: 0; margin: auto; max-width: 100vw; max-height: 100vh; aspect-ratio: 16 / 9; }
+  #bar { position: fixed; left: 0; right: 0; bottom: 0; display: flex; gap: 8px; padding: 6px 10px; background: rgba(0,0,0,.6); color: #ccc; font: 12px system-ui, sans-serif; }
+  #bar input { flex: 1; }
+  body.render #bar { display: none; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="bar"><button id="play">▶</button><input id="scrub" type="range" min="0" max="1000" value="0"><span id="time">0.00</span></div>
+<script src="../node_modules/d3/dist/d3.min.js"></script>
+<script src="../node_modules/topojson-client/dist/topojson-client.min.js"></script>
+<script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "house-100w",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node tools/serve.mjs",
+    "music": "node tools/render-music.mjs",
+    "frames": "node tools/frames.mjs",
+    "render": "node tools/render.mjs"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "shapeofworld-films",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "still": "node tools/still.mjs",
+    "render": "node tools/render.mjs",
+    "audio": "node tools/audio.mjs",
+    "check": "node tools/check.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}

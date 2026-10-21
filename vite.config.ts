@@ -21,7 +21,7 @@ export default defineConfig(({ command }) => ({
     allowedHosts: ['terminal.local'],
     // Local release copies contain their own tsconfig and HTML. Watching them
     // restarts the live site while unrelated packaging jobs are running.
-    watch: { ignored: ['**/.local/**', '**/.scratch/**'] },
+    watch: { ignored: ['**/.local/**', '**/.scratch/**', '**/private/**', '**/films/**'] },
   },
   resolve: {
     tsconfigPaths: true,
