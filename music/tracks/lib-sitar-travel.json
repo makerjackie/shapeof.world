@@ -1,0 +1,104 @@
+{
+  "id": "lib-sitar-travel",
+  "code": "LIB-21-06",
+  "title": {
+    "en": "Roaming — Sitar",
+    "zh": "漫游 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "sitar"
+  ],
+  "energy": 3,
+  "bpm": 98,
+  "key": "E minor",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Indian acoustic instrumental instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 98 BPM; E minor. Main idea: a compact three-note motif. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A serene and exotic piece featuring a prominent flute melody, accompanied by traditional Indian percussion (tabla-like) and plucked string instruments. The music evokes a calm, meditative atmosphere with a gentle rhythmic pulse.",
+    "zh": "一首宁静而异域的乐曲，以悠扬的长笛旋律为主，伴随着印度传统打击乐器（如塔布拉）和弹拨弦乐器。音乐营造出平静、冥想的氛围，并带有轻柔的节奏感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 110.237,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:56:09.574127+00:00",
+  "generation": {
+    "id": "04af3e0d-0ea9-45ec-b732-f0f92db8c019",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:55:26.598661+00:00",
+    "completedAt": "2026-09-09T08:56:09.574127+00:00",
+    "interactionId": "_x6haq6gNYq34vEP1ray8Q0",
+    "sha256": "ac083d349a3fd9670deab073173b0d9989c66c9bb5e6315f939018c4d70d26e2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and exotic piece featuring a prominent flute melody, accompanied by traditional Indian percussion (tabla-like) and plucked string instruments. The music evokes a calm, meditative atmosphere with a gentle rhythmic pulse.",
+      "zh": "一首宁静而异域的乐曲，以悠扬的长笛旋律为主，伴随着印度传统打击乐器（如塔布拉）和弹拨弦乐器。音乐营造出平静、冥想的氛围，并带有轻柔的节奏感。"
+    },
+    "instruments": [
+      "Flute",
+      "Tabla",
+      "Sitar",
+      "Drone",
+      "Percussion"
+    ],
+    "moods": [
+      "Meditative",
+      "Calm",
+      "Exotic",
+      "Traditional",
+      "Peaceful",
+      "Spiritual"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "Well-produced, clear instrumentation, and a distinct, appealing cultural theme suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:28:27.890395+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:29:01.783421+00:00"
+}

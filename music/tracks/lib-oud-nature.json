@@ -1,0 +1,104 @@
+{
+  "id": "lib-oud-nature",
+  "code": "LIB-20-04",
+  "title": {
+    "en": "Wildlands — Oud",
+    "zh": "山野 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "oud"
+  ],
+  "energy": 3,
+  "bpm": 94,
+  "key": "D dorian",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Middle Eastern acoustic instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 94 BPM; D dorian. Main idea: a repeating five-note figure with space between phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A lively and rhythmic Middle Eastern instrumental piece featuring oud, qanun, acoustic guitar, bass, and traditional percussion. The intricate melody creates an exotic and cultural atmosphere.",
+    "zh": "一首活泼且富有节奏感的中东器乐作品，以乌德琴、卡农琴、原声吉他、贝斯和传统打击乐器为特色。错综复杂的旋律营造出异域风情的文化氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 144.901,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:52:10.428680+00:00",
+  "generation": {
+    "id": "f8013bac-e1f4-4d72-8fcb-f6f24818d639",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:51:24.610778+00:00",
+    "completedAt": "2026-09-09T08:52:10.428680+00:00",
+    "interactionId": "DR6harzRMdW54vEPzPyHuAE",
+    "sha256": "280e4ebe4c593d9ce47d85595d7cd16122b92ee4606ebf7159d1930a1982fc15"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and rhythmic Middle Eastern instrumental piece featuring oud, qanun, acoustic guitar, bass, and traditional percussion. The intricate melody creates an exotic and cultural atmosphere.",
+      "zh": "一首活泼且富有节奏感的中东器乐作品，以乌德琴、卡农琴、原声吉他、贝斯和传统打击乐器为特色。错综复杂的旋律营造出异域风情的文化氛围。"
+    },
+    "instruments": [
+      "Oud",
+      "Qanun",
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Percussion",
+      "Strings"
+    ],
+    "moods": [
+      "Middle Eastern",
+      "Exotic",
+      "Lively",
+      "Rhythmic",
+      "Cultural",
+      "Traditional"
+    ],
+    "energy": 3,
+    "bpmEstimate": 106,
+    "reason": "Well-produced, clear instrumentation, and distinct cultural style.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:52:35.492923+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:54:02.910897+00:00"
+}

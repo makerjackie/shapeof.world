@@ -1,0 +1,101 @@
+{
+  "id": "lib-ambient-travel",
+  "code": "LIB-24-06",
+  "title": {
+    "en": "Roaming — Ambient",
+    "zh": "漫游 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "ambient"
+  ],
+  "energy": 2,
+  "bpm": 60,
+  "key": "E minor",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second ambient electronic instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 60 BPM; E minor. Main idea: alternating short and long phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A calm and atmospheric electronic track featuring a steady, driving beat, evolving synth pads, and a prominent, melodic plucked synth lead. It builds subtly with layers of electronic percussion and shimmering effects, creating a sense of gentle forward motion.",
+    "zh": "一首平静而富有氛围感的电子音乐，具有稳定而有力的节拍、不断演变的合成器铺垫和突出、旋律优美的拨弦合成器主音。它通过电子打击乐和闪烁效果的层次叠加，巧妙地构建出一种轻柔向前的动感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.047,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:04:40.348825+00:00",
+  "generation": {
+    "id": "26b97992-901a-422e-9ae6-0bdc9729db93",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:03:52.772884+00:00",
+    "completedAt": "2026-09-09T09:04:40.348825+00:00",
+    "interactionId": "-SChauqKKO67i9sP06HTyAM",
+    "sha256": "577bb5436c9a1972f67cde0036b9b769c9f39163ad68f6ae0ca095428c50a7f1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and atmospheric electronic track featuring a steady, driving beat, evolving synth pads, and a prominent, melodic plucked synth lead. It builds subtly with layers of electronic percussion and shimmering effects, creating a sense of gentle forward motion.",
+      "zh": "一首平静而富有氛围感的电子音乐，具有稳定而有力的节拍、不断演变的合成器铺垫和突出、旋律优美的拨弦合成器主音。它通过电子打击乐和闪烁效果的层次叠加，巧妙地构建出一种轻柔向前的动感。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Atmospheric",
+      "Ethereal",
+      "Reflective",
+      "Serene",
+      "Dreamy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 120,
+    "reason": "Well-produced electronic track with a clear, evolving structure and pleasant atmospheric qualities, suitable for background use or contemplative scenes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:04:47.886248+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:28:20.191473+00:00"
+}

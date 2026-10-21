@@ -1,0 +1,59 @@
+{
+  "id": "double-swing",
+  "code": "PHY-B01",
+  "title": {
+    "en": "Double Swing",
+    "zh": "双摆"
+  },
+  "category": "physics",
+  "archetype": "discovery",
+  "moods": [
+    "unsteady",
+    "playful",
+    "kinetic",
+    "precise"
+  ],
+  "topics": [
+    "double-pendulum",
+    "chaos",
+    "coupling"
+  ],
+  "energy": 3,
+  "bpm": 92,
+  "key": "C minor",
+  "instruments": [
+    "two pizzicato lines",
+    "woodblock",
+    "harp",
+    "light cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 144.692,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a double pendulum. Around 92 BPM, C minor. Two pizzicato lines start in phase, drift, whirl, briefly realign. Woodblock marks the outer period. Playful and precise, chaos without noise-music. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No drum kit, no risers.\n\n[00:00–00:25] Both pizzicato lines in unison, simple swinging meter.\n[00:25–01:05] Inner line speeds; phrases go out of phase; harp spatters.\n[01:05–01:45] Wild but bounded figuration; cello holds C.\n[01:45–02:30] Lines almost meet again, then miss, ending on a hung interval.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:12:36Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/double-swing/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/double-swing/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/double-swing/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:07.647153+00:00",
+  "generation": {
+    "id": "cdfee4e5-889c-4bed-b8ca-e3bbbcc63c46",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:11:42Z",
+    "completedAt": "2026-08-25T10:12:36Z",
+    "durationMs": 54000,
+    "interactionId": "YGqNaq3ABtvg8vUPhIaj4A8",
+    "clientRequestId": "6010210b-bc99-4e6d-aac1-17d536d419c7",
+    "synthid": true,
+    "c2pa": "urn:c2pa:806bacf6-de4c-977c-31a2-4e9e33a63fa2",
+    "sha256": "814f30faf5ef7ddd4b9a1c6652eabbe20dca230117047239662b08f900db22f4"
+  }
+}

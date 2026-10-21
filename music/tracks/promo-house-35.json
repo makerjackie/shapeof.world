@@ -1,0 +1,161 @@
+{
+  "id": "promo-house-35",
+  "code": "PROMO-04-35",
+  "title": {
+    "en": "Prism Dance · 35",
+    "zh": "棱镜舞步 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "rounded kick",
+    "electric piano stabs",
+    "bright synth bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: bright compact house; buoyant chord stabs with a memorable bass hook. Instruments: rounded kick, electric piano stabs, bright synth bass, shakers. Tempo 124 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and modern instrumental track featuring bright synthesizers, a driving electronic beat, and a positive, uplifting melody. It has a contemporary corporate pop feel.",
+    "zh": "一首欢快现代的纯音乐，以明亮的合成器、强劲的电子节拍和积极向上的旋律为特色。具有当代企业流行音乐的风格。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:23:35.772456+00:00",
+  "generation": {
+    "id": "d753d452-0029-4e2c-b06d-45fd621bc8de",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:22:57.486386+00:00",
+    "completedAt": "2026-09-10T05:23:35.772456+00:00",
+    "interactionId": "sj6iauGtGuTk694Pn6CxwQQ",
+    "sha256": "847b216995315edfe9ad734e4686965572918810afb2c88626bf5a68c47f93d1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and modern instrumental track featuring bright synthesizers, a driving electronic beat, and a positive, uplifting melody. It has a contemporary corporate pop feel.",
+      "zh": "一首欢快现代的纯音乐，以明亮的合成器、强劲的电子节拍和积极向上的旋律为特色。具有当代企业流行音乐的风格。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass",
+      "piano"
+    ],
+    "moods": [
+      "uplifting",
+      "positive",
+      "energetic",
+      "modern",
+      "corporate"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "A well-produced, energetic, and positive instrumental track with a clear structure and immediate appeal, suitable for corporate or promotional media.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens instantly with a bright, catchy synth melody and a driving beat. It concludes with a deliberate fade-out and a final resolved chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:24:19.949823+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a54b352e8a3f92d75176c99c5f20b258e1a213dfc0268f21cd47f28c29102bc6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.599958,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody over a tight rhythm section and synth pads. It has a groovy, funky fusion feel.",
+      "zh": "一首欢快且充满活力的纯音乐曲目，以突出的电吉他旋律为主，配以紧凑的节奏部分和合成器音垫。它具有律动感强烈的放克融合风格。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Electric Bass",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Groovy",
+      "Positive",
+      "Funky"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:23:50.399691+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 22.599958,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-house-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-house-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-house-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:52.278135+00:00"
+}

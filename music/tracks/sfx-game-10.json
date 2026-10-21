@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-10",
+  "code": "SFX-GAME-10",
+  "title": {
+    "en": "Item unequip",
+    "zh": "卸下物品"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 9,
+  "seed": 1170675250,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized item unequip for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的卸下物品合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.72,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1170675250,
+    "sha256": "d62dbe745eb1291a0132f9965fa6059a3223cfede328e5fd9e7d4ce95e6f5b39",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0bed6974815ce2e68f9e2f4983d22a47cbe71ff3983e0fcdfb066b4b634383c7",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d62dbe745eb1291a0132f9965fa6059a3223cfede328e5fd9e7d4ce95e6f5b39",
+      "bytes": 63548,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "374ef195196b37245da8f7de7eb795f39950aa91de022b81d5df75c857080bb7",
+      "bytes": 7106,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "da9ef5361c7b17e6e634114eb351e37a12f7dc79e363e7146e4c24aac82c9adb",
+      "bytes": 1933,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 31752,
+    "duration": 0.72,
+    "peakDbfs": -4.58,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.286176608953767e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.03387451171875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip or boop sound, with a quick attack and decay, resembling a notification or UI element.",
+      "zh": "一个短促、高音调的电子提示音或嘟嘟声，具有快速的起音和衰减，类似于通知或用户界面元素。"
+    },
+    "reason": "The sound is a clean, distinct electronic blip, well-suited for UI feedback, notifications, or simple game events. It has no audible defects or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:45.310269+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0bed6974815ce2e68f9e2f4983d22a47cbe71ff3983e0fcdfb066b4b634383c7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 31752
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.873463+00:00"
+}

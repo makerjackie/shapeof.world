@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-08",
+  "code": "SFX-UI-08",
+  "title": {
+    "en": "Panel close",
+    "zh": "面板收起"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 7,
+  "seed": 2227998764,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized panel close for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的面板收起合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2227998764,
+    "sha256": "985e2107e2a2a315ea2c332375683e0ca45c807fe0ed21a24e20f2376fa93c5f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "cb134b76a36df543abb60cb6b09292675595ded1183be208bac55761be5f0a1f",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "985e2107e2a2a315ea2c332375683e0ca45c807fe0ed21a24e20f2376fa93c5f",
+      "bytes": 22976,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b5f1430ea708fd4101bac4607f5faab16fd7bc6ed5e5bd1c396ee69d04817d89",
+      "bytes": 4982,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7fb93ddc776c870bcba1c6cf77561c8bf3b7f9d58fd079f8cd774c1e8e383eda",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11466,
+    "duration": 0.26,
+    "peakDbfs": -2.21,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.483246153028519e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.03839013671875002,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or blip sound effect.",
+      "zh": "一个短促、高音调的电子冲击或哔哔声效果。"
+    },
+    "reason": "Clean, isolated, and well-defined electronic sound effect suitable for UI or sci-fi elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:25.525975+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "cb134b76a36df543abb60cb6b09292675595ded1183be208bac55761be5f0a1f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11466
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.907305+00:00"
+}

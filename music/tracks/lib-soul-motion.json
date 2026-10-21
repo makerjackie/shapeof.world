@@ -1,0 +1,101 @@
+{
+  "id": "lib-soul-motion",
+  "code": "LIB-12-08",
+  "title": {
+    "en": "Motion — Soul",
+    "zh": "跃动 · 灵魂律动"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "soul"
+  ],
+  "energy": 4,
+  "bpm": 104,
+  "key": "B minor",
+  "instruments": [
+    "electric piano",
+    "electric bass",
+    "clean guitar",
+    "drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental neo-soul instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: electric piano, electric bass, clean guitar, drums. Style: pocket groove with syncopated seventh chords. Tempo approximately 104 BPM; B minor. Main idea: alternating short and long phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A lively and energetic instrumental track featuring prominent electric guitar melodies over a driving rhythm section. It has an upbeat, groovy feel with rock and funk influences.",
+    "zh": "一首活泼且充满活力的纯音乐曲目，以突出的电吉他旋律为主，配以强劲的节奏部分。它具有乐观、律动的氛围，并融合了摇滚和放克元素。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.801,
+  "generatedAt": "2026-09-09T08:21:34.275547+00:00",
+  "generation": {
+    "id": "f21b7924-dd66-4fe2-8497-63043ed86d58",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:20:48.774388+00:00",
+    "completedAt": "2026-09-09T08:21:34.275547+00:00",
+    "interactionId": "4Rahaqn-MO67i9sP06HTyAM",
+    "sha256": "788e518e43da1b237f3a7ce496ec79a467aa7709f01cfc27d4cf8bbfe234d32e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and energetic instrumental track featuring prominent electric guitar melodies over a driving rhythm section. It has an upbeat, groovy feel with rock and funk influences.",
+      "zh": "一首活泼且充满活力的纯音乐曲目，以突出的电吉他旋律为主，配以强劲的节奏部分。它具有乐观、律动的氛围，并融合了摇滚和放克元素。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Groovy",
+      "Driving",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:21:45.497141+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-soul-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-soul-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-soul-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:24:25.324609+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

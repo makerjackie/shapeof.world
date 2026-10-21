@@ -1,0 +1,131 @@
+{
+  "id": "scene-extra-organ",
+  "code": "SCENE-EXTRA-1",
+  "title": {
+    "en": "Evening Register",
+    "zh": "傍晚音栓"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 4,
+  "bpm": 70,
+  "key": "",
+  "instruments": [
+    "gentle pipe organ with quiet flute stops"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 45,
+  "prompt": "Original 45-second instrumental composition. Instruments exclusively: gentle pipe organ with quiet flute stops. 70 BPM. slow legato phrases with generous silence between notes. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "An epic and dramatic orchestral piece featuring a blend of woodwinds, strings, and percussion. It begins with a melancholic wind melody, gradually building in intensity and complexity with lush string arrangements and powerful percussion, creating a grand and cinematic atmosphere.",
+    "zh": "一首史诗般且富有戏剧性的管弦乐作品，融合了木管乐器、弦乐器和打击乐器。它以忧郁的木管旋律开场，随后逐渐增强强度和复杂性，伴随着华丽的弦乐编排和强劲的打击乐，营造出宏大而电影般的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 68.754,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:38:25.300361+00:00",
+  "generation": {
+    "id": "2f997a9d-71e3-413c-b213-5f16e4425c27",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:37:38.259951+00:00",
+    "completedAt": "2026-09-22T09:38:25.300361+00:00",
+    "interactionId": "Y0yyatbuLcjPk7QPkI-F2QE",
+    "sha256": "7ce4c8d16c9301eca9677e47e3d7a6c8d8f28ccab4450912c9f38bf44d1ae8a7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An epic and dramatic orchestral piece featuring a blend of woodwinds, strings, and percussion. It begins with a melancholic wind melody, gradually building in intensity and complexity with lush string arrangements and powerful percussion, creating a grand and cinematic atmosphere.",
+      "zh": "一首史诗般且富有戏剧性的管弦乐作品，融合了木管乐器、弦乐器和打击乐器。它以忧郁的木管旋律开场，随后逐渐增强强度和复杂性，伴随着华丽的弦乐编排和强劲的打击乐，营造出宏大而电影般的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Oboe",
+      "Strings",
+      "French Horn",
+      "Timpani",
+      "Cymbals"
+    ],
+    "moods": [
+      "Epic",
+      "Dramatic",
+      "Melancholic",
+      "Grand",
+      "Cinematic",
+      "Emotional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 68,
+    "reason": "Well-produced orchestral track with clear instrumentation and a dynamic emotional arc, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:38:36.832054+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-organ/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-organ/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-organ/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f6c2858360d2a341f7972fb1a9169c13e94a3174244fd462df663f05f488ba82",
+      "bytes": 963334,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7ce4c8d16c9301eca9677e47e3d7a6c8d8f28ccab4450912c9f38bf44d1ae8a7",
+      "bytes": 1657769,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "dfa5fbe7d7a4cad9fdd361fa6ff5ffad66644cc4935b2635132e6f6856492876",
+      "bytes": 2806,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.453914+00:00"
+}

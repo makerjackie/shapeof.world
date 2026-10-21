@@ -1,0 +1,130 @@
+{
+  "id": "ambience-room-04",
+  "code": "AMB-ROOM-04",
+  "title": {
+    "en": "Window draft · designed ambience",
+    "zh": "窗边穿堂风 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "room",
+  "designIndex": 3,
+  "seed": 4040783002,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized window draft atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "窗边穿堂风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "room",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-room"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-room-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-room-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-room-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-room-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4040783002,
+    "sha256": "e8cfa6e1676e83672f2abf1598c180f533ab2100b83c0aed57fca4ac5a9704da",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f3a6f42bbb577cf973d1ad7bbff7916a992ac574586ebc9982f25d37c66eb29b",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e8cfa6e1676e83672f2abf1598c180f533ab2100b83c0aed57fca4ac5a9704da",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f6835ae90bd96ddd471eaa0d95a2af12d51dcfdcec683408a8fa4bb141e0299d",
+      "bytes": 156762,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "203940a9c64d2b53cbb31f0600c5549bbe15f2540efea508e3b9e7f128054ece",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.23,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.797926114890401e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0059814453125,
+    "internalStepP999": 0.0196533203125,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, and slightly metallic hum or drone. It maintains a steady, continuous texture with a subtle, underlying rumble. The sound has an abstract, atmospheric quality.",
+      "zh": "一种深沉、共鸣且略带金属感的嗡嗡声或持续音。它保持着稳定、连续的质感，带有一丝不易察觉的低沉轰鸣。该声音具有抽象的氛围感。"
+    },
+    "reason": "The audio is a clean, well-produced ambient texture. It loops perfectly without any audible clicks, gaps, or changes in texture at the transition points, making it highly suitable for continuous background sound in games or video.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:43.796973+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "aa2b917e7bc0bb4d1258d012e1406686412e6c2def76c1b0c82107bacb4fc997"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.856242+00:00"
+}

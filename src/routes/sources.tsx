@@ -7,7 +7,8 @@ import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
 import { useI18n } from '~/i18n'
 import '~/styles/sources.css'
-import { getLocalizedSeo, localeFromRouteMatches, useLocalizedRouteSeo } from '~/i18n/seo'
+import { getLocalizedSeo, languageDiscoveryLinks, localeFromRouteMatches, useLocalizedRouteSeo } from '~/i18n/seo'
+import { localizedPublicUrl } from '~/lib/share-url'
 import { seo } from '~/utils/seo'
 
 const getSourcesArtifact = createServerFn({ method: 'GET' }).handler(async () => {
@@ -16,20 +17,23 @@ const getSourcesArtifact = createServerFn({ method: 'GET' }).handler(async () =>
 })
 
 export const Route = createFileRoute('/sources')({
-  loader: async () => {
+  loader: async ({ context }) => {
     const artifact = await getSourcesArtifact()
     if (!artifact) throw notFound()
-    return artifact
+    return { ...artifact, locale: context.locale }
   },
-  head: ({ matches }) => {
-    const copy = getLocalizedSeo('sources', localeFromRouteMatches(matches))
+  head: ({ loaderData, matches }) => {
+    const locale = loaderData?.locale ?? localeFromRouteMatches(matches)
+    const copy = getLocalizedSeo('sources', locale)
+    const pageUrl = 'https://shapeof.world/sources'
     return ({
       meta: seo({
       ...copy,
       image: 'https://shapeof.world/assets/oneworld-og.jpg',
-      url: 'https://shapeof.world/sources',
+      locale,
+      url: localizedPublicUrl(pageUrl, locale),
     }),
-    links: [{ rel: 'canonical', href: 'https://shapeof.world/sources' }],
+    links: languageDiscoveryLinks(pageUrl, locale),
     })
   },
   component: SourcesPage,
@@ -69,19 +73,15 @@ function SourcesPage() {
   return (
     <main className="editorial-page sources-page">
       <SiteHeader />
-      <header className="page-hero page-hero--narrow">
-        <p className="eyebrow">{t('sources.eyebrow')}</p>
-        <h1>{t('sources.title')}</h1>
-        <p>{t('sources.body')}</p>
+      <header className="page-head">
+        <h1 className="page-title">{t('sources.title')}</h1>
+        <p className="lead">{t('sources.body')}</p>
       </header>
 
       <section className="evidence-section sources-ledger-section">
         <div className="section-heading">
-          <div>
-            <p className="eyebrow">{t('sources.ledger')}</p>
-            <h2>{t('sources.evidence')}</h2>
-          </div>
-          <Link to="/changelog" className="sources-ledger-link">
+          <h2 className="section-title">{t('sources.evidence')}</h2>
+          <Link to="/changelog" className="btn-text sources-ledger-link">
             {t('nav.changelog')} <ArrowRight aria-hidden="true" />
           </Link>
         </div>

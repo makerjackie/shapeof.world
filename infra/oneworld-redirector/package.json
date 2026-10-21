@@ -1,0 +1,14 @@
+{
+  "name": "oneworld-redirector",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:rules": "node scripts/compile-rules.mjs",
+    "dns:sync": "node scripts/sync-dns.mjs",
+    "dns:sync:dry-run": "node scripts/sync-dns.mjs --dry-run",
+    "test": "node --test src/index.test.mjs",
+    "deploy": "pnpm run build:rules && pnpm --dir ../.. exec wrangler deploy --config infra/oneworld-redirector/wrangler.jsonc",
+    "deploy:dry-run": "pnpm run build:rules && pnpm --dir ../.. exec wrangler deploy --config infra/oneworld-redirector/wrangler.jsonc --dry-run"
+  }
+}

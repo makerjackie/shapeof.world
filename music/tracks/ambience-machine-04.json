@@ -1,0 +1,130 @@
+{
+  "id": "ambience-machine-04",
+  "code": "AMB-MACHINE-04",
+  "title": {
+    "en": "Electric train · designed ambience",
+    "zh": "电车行进 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "machine",
+  "designIndex": 3,
+  "seed": 4055281868,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized electric train atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "电车行进的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "machine",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-machine"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-machine-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-machine-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-machine-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-machine-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4055281868,
+    "sha256": "5f318064121d5eae1589e63a343597d4414b4c181f05ae5e9f0e3eca1c430d23",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7ee3495aa9c9fc61db29b7a151c79fc82ab59e644e74cb9dea77ba160e802fbf",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5f318064121d5eae1589e63a343597d4414b4c181f05ae5e9f0e3eca1c430d23",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "273403aa8c1e0e3268d04f5cfa6a3211ece9b80ba4209ee72c8f19ac7309a8f3",
+      "bytes": 305259,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "95781ac1d627982bb1bca3ac8fcc83ec48396f93cd5f8a92d814a502ab87b8b0",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.65,
+    "dcOffset": 6.804750980253212e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00579833984375,
+    "internalStepP999": 0.067626953125,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, and slightly metallic hum with a subtle, evolving high-frequency shimmer. It has a continuous, droning quality, suggesting a large, active, or vibrating mechanism.",
+      "zh": "低沉、共鸣且略带金属感的嗡鸣声，伴随着微妙、不断变化的高频闪烁。它具有持续的嗡嗡声特质，暗示着一个大型、活跃或振动的机械装置。"
+    },
+    "reason": "The sound is a clean, perfectly looping synthesized texture, free of defects, and suitable for background ambience or machine hum in sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:55.370435+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "f7f7f4f31a874db1e94626e08673cae4d05b5ebc62e8c74d42d0da6d60db1525"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.854317+00:00"
+}

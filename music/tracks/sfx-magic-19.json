@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-19",
+  "code": "SFX-MAGIC-19",
+  "title": {
+    "en": "Mystery shimmer",
+    "zh": "神秘闪烁"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 18,
+  "seed": 1259346656,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized mystery shimmer for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的神秘闪烁合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1259346656,
+    "sha256": "74a5987402be27ae792f53adcd31f9098ea6b966b36512f6812e73850fc99639",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "38474805b04276b3b0b480bb720224f38af33cf03bc35ae10feb35e85d5311e1",
+      "bytes": 30763,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "74a5987402be27ae792f53adcd31f9098ea6b966b36512f6812e73850fc99639",
+      "bytes": 187028,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e7cd9fda5ccc0973def6d237e766f5aa3d5e5b7f3ba6a24ebc008e0844a53de8",
+      "bytes": 43487,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "67db15a29d0b2b03755853071cb335dab65a17446ec34352a9aa377cc3a2ed08",
+      "bytes": 1948,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 93492,
+    "duration": 2.12,
+    "peakDbfs": -5.27,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.9170296656398405e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12426940917968654,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized whoosh or swish sound with a subtle metallic or electronic resonance, ending with a quick, soft chime-like decay. Sounds like a magical or UI transition.",
+      "zh": "一个短促、高音的合成嗖嗖声或刷刷声，带有微妙的金属或电子共鸣，以快速、柔和的钟声般衰减结束。听起来像魔法或用户界面过渡音效。"
+    },
+    "reason": "The audio is a clean, well-produced synthesized sound effect, suitable for various applications like UI feedback, magical effects, or transitions in games or video. No defects or unintended elements are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:55.472454+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "38474805b04276b3b0b480bb720224f38af33cf03bc35ae10feb35e85d5311e1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 93492
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.884466+00:00"
+}

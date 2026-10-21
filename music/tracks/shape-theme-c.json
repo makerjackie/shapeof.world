@@ -1,0 +1,63 @@
+{
+  "id": "shape-theme-c",
+  "code": "GLO-B03",
+  "title": {
+    "en": "Shape of the World · Walking",
+    "zh": "世界的形状 · 漫步"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "moods": [
+    "curious",
+    "light",
+    "rhythmic",
+    "walking"
+  ],
+  "topics": [
+    "pattern",
+    "knowledge-universe",
+    "exploration"
+  ],
+  "energy": 3,
+  "bpm": 118,
+  "key": "A minor",
+  "instruments": [
+    "muted guitar",
+    "synth blip",
+    "click percussion",
+    "rounded bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.398,
+  "prompt": "Create a 2 minute 30 second instrumental website theme. Light electronic groove, distinctive and a bit retro. Around 118 BPM. Muted clean guitar ostinato, analog synth blips, dry click percussion, rounded bass. Curious, walking, not heroic. Instrumental only. No vocals, no choir, no lyrics, no distorted guitars.\n\n[00:00-00:15] Guitar ostinato and clicks start at once.\n[00:15-01:05] Synth blips answer the guitar.\n[01:05-01:50] Bass holds a simple figure; groove stays even.\n[01:50-02:30] Thin back to guitar and clicks.\n",
+  "recommendedWorldIds": [
+    "fourier",
+    "cell-architecture",
+    "solar-system"
+  ],
+  "role": "library",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:47:00Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/shape-theme-c/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/shape-theme-c/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/shape-theme-c/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:54.938770+00:00",
+  "generation": {
+    "id": "9011ec20-694f-40e8-b7ff-2a244bca77f6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:46:06Z",
+    "completedAt": "2026-08-25T10:47:00Z",
+    "durationMs": 54000,
+    "interactionId": "b3KNavifNs6ui9sPlOrGCA",
+    "clientRequestId": "6653d65f-f955-437b-b9c3-d4b014bac9fa",
+    "synthid": true,
+    "c2pa": "urn:c2pa:e0b4949d-5236-e40f-5d2f-47a7dfcdcf4a",
+    "sha256": "27e65a3c2a93880b1970afcc0b40ffac88b0adfbdda2ad2ca064a0c8c8cd7b15"
+  }
+}

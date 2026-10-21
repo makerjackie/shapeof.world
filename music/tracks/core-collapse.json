@@ -1,0 +1,62 @@
+{
+  "id": "core-collapse",
+  "code": "COS-C01",
+  "title": {
+    "en": "Core Collapse",
+    "zh": "核心坍缩"
+  },
+  "category": "cosmos",
+  "archetype": "event",
+  "moods": [
+    "inward",
+    "tense",
+    "blinding",
+    "aftermath-quiet"
+  ],
+  "topics": [
+    "supernova",
+    "collapse",
+    "remnant"
+  ],
+  "energy": 5,
+  "bpm": 96,
+  "key": "D minor",
+  "instruments": [
+    "low brass drones",
+    "granular noise bloom",
+    "taiko-like skin (sparse)",
+    "distorted strings",
+    "high cluster"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 141.74,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about a stellar core collapsing then expanding as light. Around 96 BPM, D minor. Begin inward and heavy: low brass drones and a slow heartbeat of skin drum used sparsely, never as a trailer loop. Collapse is compression of spectrum; the burst is a granular harmonic bloom and a high cluster, then a thin remnant. Intense but scientific, not a battle cue. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No brass fanfare, no Hollywood drum corps, no electric guitar solo.\n\n[00:00–00:25] Low brass drone and rare skin hits, tempo felt as pressure.\n[00:25–01:00] Strings grind inward; rhythm tightens; register drops.\n[01:00–01:25] Sudden spectral bloom: granular noise plus high cluster, bright then hollow.\n[01:25–02:00] Expansion as long distorted-string tails, no more drums.\n[02:00–02:30] Thin remnant tone, almost a pulsar tick, fading.\n",
+  "recommendedWorldIds": [
+    "cassiopeia-a"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:10:25Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/core-collapse/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/core-collapse/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/core-collapse/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:03.997303+00:00",
+  "generation": {
+    "id": "9686a566-235c-4978-9416-2ce143b61d16",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:09:25Z",
+    "completedAt": "2026-08-25T10:10:25Z",
+    "durationMs": 60000,
+    "interactionId": "3GmNatGuBuz7rtoPtvi3yAk",
+    "clientRequestId": "176e142b-14a1-4a7f-8912-796e46f55704",
+    "synthid": true,
+    "c2pa": "urn:c2pa:a955a113-1c43-08f0-d3eb-41d63c875c0a",
+    "sha256": "ff76e0bf1908c9018c8ab623f602ffd0e2f5813e80605bababf5ba3b9c4dae48"
+  }
+}

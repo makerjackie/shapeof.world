@@ -1,0 +1,99 @@
+{
+  "id": "lib-lofi-focus",
+  "code": "LIB-11-02",
+  "title": {
+    "en": "Focus — Lofi",
+    "zh": "专注 · 低保真"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "lofi"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "A minor",
+  "instruments": [
+    "Rhodes piano",
+    "muted drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second lo-fi instrumental hip hop instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: Rhodes piano, muted drums, warm bass. Style: laid-back swung beat and hazy jazz harmony. Tempo approximately 78 BPM; A minor. Main idea: an ascending fourth answered by a stepwise descent. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A mellow electronic track featuring a prominent bassline, steady drum beat, and atmospheric synth melodies.",
+    "zh": "一首悠扬的电子音乐，以突出的低音线、稳定的鼓点和氛围合成器旋律为特色。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.95,
+  "generatedAt": "2026-09-09T08:15:50.398970+00:00",
+  "generation": {
+    "id": "be69ecb5-0402-49f0-8407-68a11b62f2cf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:15:09.572828+00:00",
+    "completedAt": "2026-09-09T08:15:50.398970+00:00",
+    "interactionId": "jhWhapqsNPLTi9sPs7ej0QE",
+    "sha256": "cd7f765548214ec3e55f1840e6d23afc100f9bf6fc09508912e79aaaef7beba6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A mellow electronic track featuring a prominent bassline, steady drum beat, and atmospheric synth melodies.",
+      "zh": "一首悠扬的电子音乐，以突出的低音线、稳定的鼓点和氛围合成器旋律为特色。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Chill",
+      "Relaxed",
+      "Atmospheric",
+      "Melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 106,
+    "reason": "Well-produced and clean audio.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:16:02.541628+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-lofi-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-lofi-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-lofi-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:17:00.513410+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

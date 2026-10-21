@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-06",
+  "code": "SFX-MECHANICAL-06",
+  "title": {
+    "en": "Gear shift",
+    "zh": "齿轮换挡"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 5,
+  "seed": 3789588417,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized gear shift for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的齿轮换挡合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.18,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3789588417,
+    "sha256": "a10e1cf85ea3ce99a2a6c38a12b2d3cd2655f7b576c567c3eeed5cb4a72c773f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1156173bd5fde8e26a8081b30b7c0b6909fb58d0e29571f8c9924d909b4b8d0c",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a10e1cf85ea3ce99a2a6c38a12b2d3cd2655f7b576c567c3eeed5cb4a72c773f",
+      "bytes": 104120,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "42028e70fc98089a751c59a79a5ae24bf3fdd455c6f32830fb5d6bb79c182425",
+      "bytes": 8507,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0fb3e2018ebf71cd31ad33da3f53e201a6b02f70b13a77a198c1ac1e8e6989e3",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52038,
+    "duration": 1.18,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -25.48,
+    "dcOffset": 7.190438244948403e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.129026123046875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized electronic ping or chime sound effect.",
+      "zh": "一个短促、高音调的合成电子提示音或钟声效果。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:22.123270+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1156173bd5fde8e26a8081b30b7c0b6909fb58d0e29571f8c9924d909b4b8d0c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52038
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.885914+00:00"
+}

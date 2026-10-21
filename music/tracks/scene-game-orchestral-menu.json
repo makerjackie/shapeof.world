@@ -1,0 +1,204 @@
+{
+  "id": "scene-game-orchestral-menu",
+  "code": "GAME-08-1",
+  "title": {
+    "en": "Copper Guardian · Menu",
+    "zh": "铜色守卫 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "energetic tactical combat",
+    "menu"
+  ],
+  "energy": 4,
+  "bpm": 140,
+  "key": "",
+  "instruments": [
+    "low strings",
+    "brass",
+    "tight cinematic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for energetic tactical combat, menu state. Instruments: low strings, brass, tight cinematic drums. 140 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "An energetic electronic track featuring a driving beat, prominent synth bass, and melodic synth lines. It has a consistent rhythm and builds slightly in intensity.",
+    "zh": "一首充满活力的电子音乐，具有强劲的节拍、突出的合成器低音和旋律优美的合成器线条。它节奏稳定，强度略有增强。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 86.726,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:25:34.332933+00:00",
+  "generation": {
+    "id": "04a9b932-3a57-4457-a3f3-140e20b0f175",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:24:40.663140+00:00",
+    "completedAt": "2026-09-22T09:25:34.332933+00:00",
+    "interactionId": "WUmyau7-LfibjMwPpd3CiQ0",
+    "sha256": "9cc61b3603321b800ee9be1f2e73a4ba2f838e9b1cb2e657da208d931838fda9"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic track featuring a driving beat, prominent synth bass, and melodic synth lines. It has a consistent rhythm and builds slightly in intensity.",
+      "zh": "一首充满活力的电子音乐，具有强劲的节拍、突出的合成器低音和旋律优美的合成器线条。它节奏稳定，强度略有增强。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Uplifting",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 124,
+    "reason": "Cleanly produced electronic track with a clear structure and good energy, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:25:43.523897+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 30.870952,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1361409,
+    "sourceStartSeconds": 48.5,
+    "sourceEndSeconds": 79.46773242630385,
+    "crossfadeSeconds": 0.09678004535147393,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1361409,
+        "duration": 30.870952,
+        "peakDbfs": -1.03,
+        "rmsDbfs": -15.13,
+        "dcOffset": 0.004671296237037901,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.000640869140625,
+        "internalStepP999": 0.096405029296875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1361409,
+        "duration": 30.870952,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.96,
+        "dcOffset": 0.004325715418078864,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00048828125,
+        "internalStepP999": 0.098968505859375,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "An electronic, atmospheric texture with a subtle rhythmic pulse, suitable for background ambiance or sci-fi sound design.",
+        "zh": "一种电子氛围纹理，带有微妙的节奏脉冲，适合作为背景环境音或科幻音效设计。"
+      },
+      "reason": "The audio is a clean, well-produced electronic texture with no audible defects or unintended elements. It loops perfectly without any clicks, gaps, or abrupt textural changes across repetitions.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:52.405791+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "77a59065aef2eef74065d169fb2189c90f43dc0fc85569e107f3477ec690be3b"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at both 30.871s and 1:01.742s. Rhythm, harmony, dynamics, and phrase continuity are excellent. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the join points. The loop is well-engineered for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:57.961978+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-orchestral-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ece3fc733cc4c30afb3a1120742e71728b9e1fc5ba8a1da2efcd29bcee289e9f",
+      "bytes": 1214946,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9cc61b3603321b800ee9be1f2e73a4ba2f838e9b1cb2e657da208d931838fda9",
+      "bytes": 2089103,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "58b68efa846ffcaf09613793422da481453cfef33e66d66e7ca94da11bc86c2d",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "549c447a60083f3c4cdaf3b3e6a55a0ecca700bdde7005b37188e1ac08d86784",
+      "bytes": 5445680,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "759279fb369f4192f56a32600b7e6f919c2e95adefc8b7ee405279596fb4b95b",
+      "bytes": 524655,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.465634+00:00"
+}

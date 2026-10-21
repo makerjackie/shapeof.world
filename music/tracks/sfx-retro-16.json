@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-16",
+  "code": "SFX-RETRO-16",
+  "title": {
+    "en": "Retro cursor",
+    "zh": "复古光标"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 15,
+  "seed": 2832659081,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized retro cursor for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的复古光标合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.73,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2832659081,
+    "sha256": "52b7ca844a2aa928466e18dcc60ffe496792f634667d6db124471b15b971a42b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "50721189777e91b074c53c0bf2b67a65bb6b9f63c13579e53bf9cb665a31f043",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "52b7ca844a2aa928466e18dcc60ffe496792f634667d6db124471b15b971a42b",
+      "bytes": 64430,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "cdf708e73d4689d7e8f506b160b0124a71762da52965d948cfc9dffcb78dda45",
+      "bytes": 14700,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "683e8424ff81c1aad075971d31f7520ee0959195fd492c68b78e14cb2f53982c",
+      "bytes": 1950,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 32193,
+    "duration": 0.73,
+    "peakDbfs": -4.51,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.910417006414438e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07147216796875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or blip sound effect, characterized by a sharp attack and quick decay. It has a synthetic, sci-fi quality.",
+      "zh": "一个短促、高音调的电子冲击或哔哔声效果，具有尖锐的起始和快速的衰减。它带有一种合成的、科幻的质感。"
+    },
+    "reason": "The audio is a clean, isolated electronic sound effect with no audible defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:30.223997+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "50721189777e91b074c53c0bf2b67a65bb6b9f63c13579e53bf9cb665a31f043"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 32193
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.896925+00:00"
+}

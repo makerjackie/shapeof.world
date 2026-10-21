@@ -1,0 +1,62 @@
+{
+  "id": "invisible-halo",
+  "code": "COS-A01",
+  "title": {
+    "en": "Invisible Halo",
+    "zh": "看不见的晕"
+  },
+  "category": "cosmos",
+  "archetype": "ambient",
+  "moods": [
+    "mysterious",
+    "scientific",
+    "elegant",
+    "vast",
+    "restrained"
+  ],
+  "topics": [
+    "dark-matter",
+    "cosmology",
+    "gravity"
+  ],
+  "energy": 2,
+  "bpm": 68,
+  "key": "D Dorian",
+  "instruments": [
+    "sub-bass",
+    "low strings",
+    "felt piano",
+    "glass harmonics",
+    "high strings",
+    "granular electronics"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.304,
+  "prompt": "Create a 2 minute 30 second instrumental cinematic ambient composition about dark matter. The central idea is invisible mass revealed only through the motion of visible galaxies. The unseen force should be felt rather than directly stated.\n\n68 BPM, ambiguous D Dorian tonality. Deep restrained sub-bass and very low strings form a nearly invisible gravitational presence underneath the entire piece. Above them, sparse felt piano notes, glass harmonics, delicate high strings and tiny granular electronic particles slowly trace orbital paths, as if visible stars are moving through an unseen halo.\n\n[00:00–00:25] Almost empty space. A very soft low-frequency drone and distant glass harmonics. Establish immense scale without menace.\n[00:25–00:55] Introduce a sparse three-note felt-piano motif. Subtle pulses appear underneath it, suggesting something massive that cannot be seen.\n[00:55–01:35] Low strings and granular synth textures begin slowly orbiting the motif. Add gentle asymmetric rhythmic motion, never becoming a conventional beat.\n[01:35–02:05] Gradually widen the stereo field. Visible high-frequency elements move more urgently while the low hidden foundation remains almost unchanged, creating the feeling that their trajectories are being shaped by an invisible mass.\n[02:05–02:30] Reach a restrained, awe-filled climax without becoming heroic or bombastic, then dissolve back toward the original low pulse and sparse piano.\n\nInstrumental only. No vocals, no choir, no lyrics. No huge trailer drums, no brass fanfare, no horror clichés, no sci-fi laser effects, no abrupt impacts. Mysterious, scientific, elegant, vast, restrained and beautiful. The listener should feel that something enormous is present precisely because it cannot be heard directly.\n",
+  "recommendedWorldIds": [],
+  "role": "flagship",
+  "status": "published",
+  "generatedAt": "2026-08-25T09:55:52Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/invisible-halo/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/invisible-halo/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/invisible-halo/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:42.999661+00:00",
+  "generation": {
+    "id": "90e47c01-54b9-4976-a199-00075fdecb4b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T09:55:02Z",
+    "completedAt": "2026-08-25T09:55:52Z",
+    "durationMs": 50000,
+    "interactionId": "d2aNapXXF667i9sP7--ZgA0",
+    "clientRequestId": "925ff2dc-5ee9-4ee0-be02-8b75e4a6179c",
+    "synthid": true,
+    "c2pa": "urn:c2pa:83fe85ef-56d5-8f0d-be02-4bd7dedf813d",
+    "sha256": "c1dfb57ded9cbc1fca3598ce574b50e0a9ff325202fd3221d2341a6a53340998"
+  }
+}

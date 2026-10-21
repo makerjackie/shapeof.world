@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-15",
+  "code": "SFX-WATER-15",
+  "title": {
+    "en": "Ice clink",
+    "zh": "冰块轻碰"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 14,
+  "seed": 3139026,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized ice clink for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的冰块轻碰合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.3,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3139026,
+    "sha256": "9eb2c2e2621965155c25c6df2784796e9774e200af8b8ba791d83f523da1d16a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0a89a668f93f8a65333d05cbb61854fc5cc97f5f6f536b97e4cf465b1174ae4e",
+      "bytes": 5163,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9eb2c2e2621965155c25c6df2784796e9774e200af8b8ba791d83f523da1d16a",
+      "bytes": 26504,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "eb4de97956f9036be060367cb9441bd304856d01f6d4ae0ae9a79615a9514693",
+      "bytes": 7372,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "be945bdd876be96667ca439405c6c3d8fd0e566d8006bdb09b0b6574bce6ffd5",
+      "bytes": 1925,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 13230,
+    "duration": 0.3,
+    "peakDbfs": -5.64,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.766738118858655e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.12006689453125041,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthetic whoosh or swish sound effect, with a quick attack and decay.",
+      "zh": "一个短促、尖锐的合成嗖嗖声或刷刷声效果，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is clean, isolated, and well-defined, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:42.106758+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0a89a668f93f8a65333d05cbb61854fc5cc97f5f6f536b97e4cf465b1174ae4e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 13230
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.913262+00:00"
+}

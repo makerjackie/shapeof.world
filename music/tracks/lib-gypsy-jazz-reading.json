@@ -1,0 +1,102 @@
+{
+  "id": "lib-gypsy-jazz-reading",
+  "code": "LIB-10-01",
+  "title": {
+    "en": "Reading — Gypsy Jazz",
+    "zh": "静读 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 136,
+  "key": "D major",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic swing jazz instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 136 BPM; D major. Main idea: a descending melody with an upward answer. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A lively and elegant string ensemble piece, featuring a prominent violin melody over a walking bass line and pizzicato accompaniment. The music has a traditional, almost folk-dance feel, with a clear structure and dynamic shifts.",
+    "zh": "一首活泼优雅的弦乐合奏曲，以小提琴为主旋律，配以行进的低音线和拨弦伴奏。音乐带有传统、近乎民间舞曲的感觉，结构清晰，富有动态变化。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.906,
+  "generatedAt": "2026-09-09T08:12:41.005532+00:00",
+  "generation": {
+    "id": "4bb01523-146e-4864-a101-9b308555b8bb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:11:54.065639+00:00",
+    "completedAt": "2026-09-09T08:12:41.005532+00:00",
+    "interactionId": "yxShatajFObq8vUPyqaQQA",
+    "sha256": "e2e54855167ab82b0905edfe5ff92dec40979bedf768bd9f8ef057efa11d90cd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant string ensemble piece, featuring a prominent violin melody over a walking bass line and pizzicato accompaniment. The music has a traditional, almost folk-dance feel, with a clear structure and dynamic shifts.",
+      "zh": "一首活泼优雅的弦乐合奏曲，以小提琴为主旋律，配以行进的低音线和拨弦伴奏。音乐带有传统、近乎民间舞曲的感觉，结构清晰，富有动态变化。"
+    },
+    "instruments": [
+      "violin",
+      "cello",
+      "double bass",
+      "viola",
+      "string ensemble"
+    ],
+    "moods": [
+      "lively",
+      "elegant",
+      "cheerful",
+      "traditional",
+      "playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-performed and recorded, with a clear, engaging melody and good dynamic range, making it suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:12:47.314347+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:13:26.650452+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

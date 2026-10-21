@@ -1,0 +1,102 @@
+{
+  "id": "lib-downtempo-suspense",
+  "code": "LIB-25-09",
+  "title": {
+    "en": "Shadows — Downtempo",
+    "zh": "暗影 · 缓拍电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "downtempo"
+  ],
+  "energy": 3,
+  "bpm": 82,
+  "key": "G minor",
+  "instruments": [
+    "analog bass",
+    "soft breakbeat",
+    "electric piano",
+    "pluck synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second downtempo electronica instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: analog bass, soft breakbeat, electric piano, pluck synth. Style: steady restrained broken beat with wide atmospheric space. Tempo approximately 82 BPM; G minor. Main idea: a repeating five-note figure with space between phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "downtempo"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A calm, atmospheric electronic track featuring evolving synth pads, a steady beat, and a melancholic piano melody. It builds subtly with additional synth layers and a driving bassline, creating a reflective and slightly somber mood.",
+    "zh": "一首平静、大气的电子乐曲，以不断变化的合成器铺底、稳定的节拍和忧郁的钢琴旋律为特色。它通过额外的合成器层和驱动的低音线巧妙地构建，营造出一种沉思而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 177.11,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:07:35.634973+00:00",
+  "generation": {
+    "id": "519d464c-6f9c-4252-b046-3caef03630a7",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:06:38.912723+00:00",
+    "completedAt": "2026-09-09T09:07:35.634973+00:00",
+    "interactionId": "oSGhaq2VG4TLk7QP7q-OwQ0",
+    "sha256": "3275b12e500cb08adc7af297e8d5a2507fa9e24a6e9319419c6beb383413bd66"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm, atmospheric electronic track featuring evolving synth pads, a steady beat, and a melancholic piano melody. It builds subtly with additional synth layers and a driving bassline, creating a reflective and slightly somber mood.",
+      "zh": "一首平静、大气的电子乐曲，以不断变化的合成器铺底、稳定的节拍和忧郁的钢琴旋律为特色。它通过额外的合成器层和驱动的低音线巧妙地构建，营造出一种沉思而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Piano",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Calm",
+      "Atmospheric",
+      "Melancholic",
+      "Reflective",
+      "Ethereal"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "The audio is a well-produced instrumental electronic track with clear instrumentation and no defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:29:09.430861+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-downtempo-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-downtempo-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-downtempo-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:30:03.712967+00:00"
+}

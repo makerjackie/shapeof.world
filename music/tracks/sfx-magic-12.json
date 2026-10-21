@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-12",
+  "code": "SFX-MAGIC-12",
+  "title": {
+    "en": "Dispel",
+    "zh": "解除法术"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 11,
+  "seed": 3268599810,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized dispel for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的解除法术合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3268599810,
+    "sha256": "2bde8add3db07381eb24515ecd8be2b026584833d93a7c041ae72b7d6338644a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e016b1f314a791a8b6725d5663d430bd8e12223172c1562a6618b765e0e41061",
+      "bytes": 30763,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2bde8add3db07381eb24515ecd8be2b026584833d93a7c041ae72b7d6338644a",
+      "bytes": 187028,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d29159167cc4aab61d8683f32fdefb59005bb1e38b749c89f4371e88d7cd2809",
+      "bytes": 44395,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "017a9ad8121c18cc2f6ba98a3902003f3fc4221e9974960ef0ac6b9bb7b765c1",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 93492,
+    "duration": 2.12,
+    "peakDbfs": -4.59,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.0445412441706242e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.17975036621093654,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized electronic whoosh sound effect with a rising pitch, ending with a brief, high-pitched chime or bell-like tone.",
+      "zh": "一个短促、干净的合成电子嗖嗖声，音高上升，以短暂的高音钟声或铃铛般的音调结束。"
+    },
+    "reason": "The sound is a clear, well-produced electronic sound effect, suitable for various UI or transition uses. No audible defects are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:43.660196+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e016b1f314a791a8b6725d5663d430bd8e12223172c1562a6618b765e0e41061"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 93492
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.882941+00:00"
+}

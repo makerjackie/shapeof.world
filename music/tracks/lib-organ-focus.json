@@ -1,0 +1,112 @@
+{
+  "id": "lib-organ-focus",
+  "code": "LIB-05-02",
+  "title": {
+    "en": "Focus — Organ",
+    "zh": "专注 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "organ"
+  ],
+  "energy": 4,
+  "bpm": 56,
+  "key": "A minor",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second contemporary organ music instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 56 BPM; A minor. Main idea: a compact three-note motif. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A grand and emotional orchestral piece, starting with a delicate melody on woodwinds and pizzicato strings, gradually building in intensity and instrumentation to a majestic and dramatic climax. Features rich string harmonies, soaring woodwind lines, and impactful percussion.",
+    "zh": "一首宏大而富有情感的管弦乐作品，以木管乐器和拨弦乐器奏出的精致旋律开篇，随后逐渐增强乐器配置和强度，最终达到雄伟而戏剧性的高潮。作品中包含丰富的弦乐和声、高亢的木管旋律线以及富有冲击力的打击乐。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.838,
+  "generatedAt": "2026-09-09T07:55:41.656886+00:00",
+  "generation": {
+    "id": "856cd68b-4e2f-4cb8-a8af-31c59f50e9e8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:54:55.413883+00:00",
+    "completedAt": "2026-09-09T07:55:41.656886+00:00",
+    "interactionId": "0RChatrYB_WJ88EPntfq6A4",
+    "sha256": "2b928149de1fd22e85241035343291c3d1365b70f604e4235e9b64dbf8640afd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and emotional orchestral piece, starting with a delicate melody on woodwinds and pizzicato strings, gradually building in intensity and instrumentation to a majestic and dramatic climax. Features rich string harmonies, soaring woodwind lines, and impactful percussion.",
+      "zh": "一首宏大而富有情感的管弦乐作品，以木管乐器和拨弦乐器奏出的精致旋律开篇，随后逐渐增强乐器配置和强度，最终达到雄伟而戏剧性的高潮。作品中包含丰富的弦乐和声、高亢的木管旋律线以及富有冲击力的打击乐。"
+    },
+    "instruments": [
+      "Strings",
+      "Woodwinds",
+      "Flute",
+      "Oboe",
+      "Clarinet",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Percussion",
+      "Timpani",
+      "Cymbals",
+      "Snare Drum"
+    ],
+    "moods": [
+      "Cinematic",
+      "Epic",
+      "Emotional",
+      "Grand",
+      "Dramatic",
+      "Hopeful",
+      "Majestic",
+      "Orchestral"
+    ],
+    "energy": 4,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:55:55.026619+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:56:53.868457+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

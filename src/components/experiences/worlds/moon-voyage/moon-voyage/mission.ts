@@ -182,7 +182,7 @@ export const APPROACH_VINF = 0.85 // km/s，Apollo 量级
 const A_HYP = MU_M / APPROACH_VINF ** 2
 const E_HYP = 1 + RP_LUNAR / A_HYP
 const P_HYP = A_HYP * (E_HYP * E_HYP - 1)
-const APPROACH_R0 = 25000 // km，进入月球影响球（脚本化选取）
+const APPROACH_R0 = 25000 // km，接近段拼接半径（非物理影响球边界）
 
 function hyperbolaTimeFromPerigee(nu: number): number {
   // ν < 0 接近段
@@ -219,7 +219,7 @@ export const APPROACH_DURATION = -hyperbolaTimeFromPerigee(NU_APPROACH0)
 // ---------------------------------------------------------------------------
 // 转移椭圆：解半长轴 a，使近地点 → r = 384400 km 的飞行时间 = 73 h − 接近段
 
-export const TLI_TO_LOI_S = 73 * 3600 // TLI 关机 → LOI 的总时间（与 Apollo 11 一致）
+export const TLI_TO_LOI_S = 73 * 3600 // TLI 关机 → LOI 的总时间（Apollo 量级，并非任务重建）
 export const COAST_TARGET_S = TLI_TO_LOI_S - APPROACH_DURATION
 
 function ellipseTimeToRadius(a: number, targetR: number): number {
@@ -324,14 +324,14 @@ function ascentTheta(t: number): number {
 export const T_COAST_END = T_TLI_END + COAST_TARGET_S // 到达 r=384400（进入影响球）
 export const T_LOI_START = T_COAST_END + APPROACH_DURATION
 export const T_LOI_END = T_LOI_START + T_LOI_BURN_S
-export const T_CIRC = T_LOI_END + 2 * T_LUNAR_ELLIPSE
+export const T_CIRC = T_LOI_START + 2 * T_LUNAR_ELLIPSE
 export const T_STABLE = T_CIRC + T_CIRC_BURN_S
 
 // 上升段起点（发射台）：任务平面内 θ=0 处（位于交点线上，世界坐标 = (R_E,0,0)）
 const PAD_THETA = 0
 // 入轨点角 = 下程角；TLI 近地点角 = 入轨点 + 停泊轨道转过角
 const THETA_INSERTION = PAD_THETA + ASCENT_DOWNRANGE_DEG * DEG
-const THETA_PERIGEE = THETA_INSERTION + N_PARK * (T_TLI_END - T_INSERTION)
+const THETA_PERIGEE = THETA_INSERTION + N_PARK * (T_TLI_START - T_INSERTION) + ((V_PARK + V_TLI) / (2 * PARK_R)) * (T_TLI_END - T_TLI_START)
 // 到达点（进入影响球）地心角
 const ALPHA_ARRIVAL = THETA_PERIGEE + NU_ARRIVAL
 // 月球相位：到达时月球在飞船前方 δ（对应 25000 km 月距）
@@ -375,8 +375,8 @@ export const MISSION_EVENTS: Array<MissionEvent> = [
   { id: 'tli-end', t: T_TLI_END, label: 'TLI 关机' },
   { id: 's4b-sep', t: T_S4B_SEP, label: 'S-IVB 分离' },
   { id: 'midcourse', t: T_MIDCOURSE, label: '中途修正' },
-  { id: 'equigrav', t: T_EQUIGRAV, label: '地月引力平衡点' },
-  { id: 'soi', t: T_COAST_END, label: '进入月球影响球' },
+  { id: 'equigrav', t: T_EQUIGRAV, label: '接近月球轨道' },
+  { id: 'soi', t: T_COAST_END, label: '近月接近段' },
   { id: 'loi-start', t: T_LOI_START, label: 'LOI 点火' },
   { id: 'loi-end', t: T_LOI_END, label: '进入环月轨道' },
   { id: 'circ', t: T_CIRC, label: '圆化燃烧' },
@@ -421,7 +421,7 @@ function hyperbolaRelPlane(t: number): Vec3 {
 }
 
 function lunarEllipseRelPlane(t: number): Vec3 {
-  const M = ((2 * Math.PI) / T_LUNAR_ELLIPSE) * (t - T_LOI_END)
+  const M = ((2 * Math.PI) / T_LUNAR_ELLIPSE) * (t - T_LOI_START)
   const E = solveKeplerElliptic(((M % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI), E_LUNAR)
   const nu = 2 * Math.atan(Math.sqrt((1 + E_LUNAR) / (1 - E_LUNAR)) * Math.tan(E / 2))
   const r = A_LUNAR * (1 - E_LUNAR * Math.cos(E))
@@ -429,7 +429,7 @@ function lunarEllipseRelPlane(t: number): Vec3 {
 }
 
 function lunarCircleRelPlane(t: number): Vec3 {
-  return circlePos(RP_LUNAR, PHI_PERILUNE + N_LUNAR_CIRCLE * (t - T_STABLE))
+  return circlePos(RP_LUNAR, PHI_PERILUNE + N_LUNAR_CIRCLE * (t - T_CIRC))
 }
 
 function moonPosPlane(t: number): Vec3 {
@@ -445,7 +445,20 @@ function moonCentricPosPlane(t: number, rel: Vec3): Vec3 {
 function posPlaneAt(t: number): Vec3 {
   if (t < T_LIFTOFF) return circlePos(R_E, PAD_THETA)
   if (t < T_INSERTION) return ascentPosPlane(t)
-  if (t < T_TLI_END) return parkPosPlane(t) // TLI 燃烧期间位置≈仍在圆轨道，关机即椭圆近地点
+  if (t < T_TLI_START) return parkPosPlane(t)
+  if (t < T_TLI_END) {
+    // Kinematic finite-burn bridge, not an integrated thrust solution.
+    // Match both endpoint positions and velocities; no velocity jump at cutoff.
+    const dt = T_TLI_END - T_TLI_START
+    const u = (t - T_TLI_START) / dt
+    const p0 = parkPosPlane(T_TLI_START)
+    const p1 = transferPosPlane(T_TLI_END)
+    const a0 = THETA_INSERTION + N_PARK * (T_TLI_START - T_INSERTION)
+    const v0: Vec3 = [-V_PARK * Math.sin(a0), 0, V_PARK * Math.cos(a0)]
+    const v1: Vec3 = [-V_TLI * Math.sin(THETA_PERIGEE), 0, V_TLI * Math.cos(THETA_PERIGEE)]
+    return p0.map((x, i) => (2*u**3-3*u*u+1)*x + (u**3-2*u*u+u)*dt*v0[i]
+      + (-2*u**3+3*u*u)*p1[i] + (u**3-u*u)*dt*v1[i]) as Vec3
+  }
 
   if (t < T_COAST_END + BLEND_SOI_S) {
     // 转移椭圆 → 月心双曲线混合
@@ -477,58 +490,10 @@ function posPlaneAt(t: number): Vec3 {
 }
 
 // ---------------------------------------------------------------------------
-// HUD 速度（主导天体参考系，解析）
-
-function ascentSpeed(t: number): number {
-  // 位置数值微分（上升剖面是 Hermite 样条，微分便宜且足够准）
-  const dt = 0.5
-  const a = posPlaneAt(Math.max(T_LIFTOFF, t - dt))
-  const b = posPlaneAt(Math.min(T_INSERTION, t + dt))
-  const span = Math.min(T_INSERTION, t + dt) - Math.max(T_LIFTOFF, t - dt)
-  return vLen(vScale(vSub(b, a), 1 / Math.max(span, 1e-6)))
-}
-
-function transferSpeed(t: number): number {
-  const r = vLen(transferPosPlane(t))
-  return Math.sqrt(MU_E * (2 / r - 1 / TRANSFER_A))
-}
-
-function hyperbolaSpeed(t: number): number {
-  const r = vLen(hyperbolaRelPlane(t))
-  return Math.sqrt(APPROACH_VINF ** 2 + (2 * MU_M) / r)
-}
-
-function lunarEllipseSpeed(t: number): number {
-  const r = vLen(lunarEllipseRelPlane(t))
-  return Math.sqrt(MU_M * (2 / r - 1 / A_LUNAR))
-}
-
-function displaySpeed(t: number): number {
-  if (t < T_LIFTOFF) return 0
-  if (t < T_INSERTION) return ascentSpeed(t)
-  if (t < T_TLI_START) return V_PARK
-  if (t < T_TLI_END) return lerp(V_PARK, V_TLI, (t - T_TLI_START) / (T_TLI_END - T_TLI_START))
-  if (t < T_COAST_END - BLEND_SOI_S) return transferSpeed(t)
-  if (t < T_COAST_END + BLEND_SOI_S) {
-    const w = smooth01((t - (T_COAST_END - BLEND_SOI_S)) / (2 * BLEND_SOI_S))
-    return lerp(transferSpeed(t), hyperbolaSpeed(t), w)
-  }
-  if (t < T_LOI_START) return hyperbolaSpeed(t)
-  if (t < T_LOI_END) {
-    const w = smooth01((t - T_LOI_START) / T_LOI_BURN_S)
-    return lerp(hyperbolaSpeed(t), lunarEllipseSpeed(t), w)
-  }
-  if (t < T_CIRC) return lunarEllipseSpeed(t)
-  if (t < T_STABLE) {
-    const w = smooth01((t - T_CIRC) / T_CIRC_BURN_S)
-    return lerp(lunarEllipseSpeed(t), Math.sqrt(MU_M / RP_LUNAR), w)
-  }
-  return Math.sqrt(MU_M / RP_LUNAR)
-}
-
 function burnAt(t: number): BurnKind {
   if (t >= T_LIFTOFF && t < T_S1_SEP) return 'launch'
   if (t >= T_S1_SEP && t < T_S2_SEP) return 'stage2'
+  if (t >= T_S2_SEP && t < T_INSERTION) return 'tli'
   if (t >= T_TLI_START && t < T_TLI_END) return 'tli'
   if (t >= T_MIDCOURSE - 20 && t <= T_MIDCOURSE + 20) return 'puff'
   if (t >= T_LOI_START && t < T_LOI_END) return 'loi'
@@ -554,14 +519,16 @@ export function sampleMission(t: number): MissionSample {
   const vel = vScale(vSub(v1, v0), 1 / (2 * eps))
   const distEarth = vLen(pos)
   const distMoon = vLen(vSub(pos, moonPos))
-  const nearBody = distEarth - R_E < distMoon - R_M ? 'earth' : 'moon'
+  const nearBody = t >= T_COAST_END ? 'moon' : 'earth'
+  const moonVel = vScale(vSub(moonPosKm(t + eps), moonPosKm(t - eps)), 1 / (2 * eps))
+  const relativeVel = nearBody === 'moon' ? vSub(vel, moonVel) : vel
   const alt = nearBody === 'earth' ? distEarth - R_E : distMoon - R_M
   return {
     t,
     phase: phaseAt(t),
     pos,
     vel,
-    speedKms: displaySpeed(t),
+    speedKms: vLen(relativeVel),
     altKm: alt,
     distEarthKm: distEarth,
     distMoonKm: distMoon,

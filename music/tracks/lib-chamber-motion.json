@@ -1,0 +1,107 @@
+{
+  "id": "lib-chamber-motion",
+  "code": "LIB-02-08",
+  "title": {
+    "en": "Motion — Chamber",
+    "zh": "跃动 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "chamber"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "B minor",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second chamber classical instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 102 BPM; B minor. Main idea: alternating short and long phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An elegant and dynamic orchestral piece with a classical, waltz-like character. It features rich string melodies, expressive woodwind passages, and builds in intensity with a sophisticated and slightly whimsical mood.",
+    "zh": "一首优雅而充满活力的管弦乐作品，具有古典华尔兹般的风格。它以丰富的弦乐旋律、富有表现力的木管乐段为特色，并以精致而略带异想天开的情绪逐渐增强强度。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.345,
+  "generatedAt": "2026-09-09T07:46:27.739910+00:00",
+  "generation": {
+    "id": "f41e43fa-1e81-41f4-80ea-1e94c64f6ae0",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:45:41.205578+00:00",
+    "completedAt": "2026-09-09T07:46:27.739910+00:00",
+    "interactionId": "pg6haubQEvWJ88EPntfq6A4",
+    "sha256": "13907bf6b882267c0c1fc1c623fcd9b971bd67f1e875096e0b1e399c418dae08"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An elegant and dynamic orchestral piece with a classical, waltz-like character. It features rich string melodies, expressive woodwind passages, and builds in intensity with a sophisticated and slightly whimsical mood.",
+      "zh": "一首优雅而充满活力的管弦乐作品，具有古典华尔兹般的风格。它以丰富的弦乐旋律、富有表现力的木管乐段为特色，并以精致而略带异想天开的情绪逐渐增强强度。"
+    },
+    "instruments": [
+      "Orchestral Strings",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Clarinet",
+      "Oboe",
+      "Flute",
+      "French Horn",
+      "Percussion"
+    ],
+    "moods": [
+      "Elegant",
+      "Sophisticated",
+      "Playful",
+      "Whimsical",
+      "Dramatic",
+      "Classical",
+      "Grand"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced orchestral piece with clear instrumentation and dynamic range, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:46:41.230248+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:48:53.559807+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

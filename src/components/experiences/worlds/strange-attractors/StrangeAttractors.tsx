@@ -446,10 +446,13 @@ export function StrangeAttractors({ controls }: { controls: ExperienceControls }
 
       const particles = particlesRef.current
       const dt = def.dt
+      // On phones in story mode the caption owns the top third, so the figure is a little smaller and sits lower.
+      const phoneStory = w < 720 && storyModeRef.current
       const stageScale = w < 720
-        ? 0.68
+        ? (phoneStory ? 0.55 : 0.68)
         : Math.max(0.84, Math.min(1, h / 900))
-      const scale = def.scale * stageScale
+      // The Langford shell is wide; keep it inside the phone frame below the caption.
+      const scale = def.scale * stageScale * (phoneStory && def.id === 'aizawa' ? 0.72 : 1)
 
       /* -- Physics step. Reuse one derivative buffer and ring-buffer trails. -- */
       const stepCount = reducedMotion ? 1 : def.stepsPerFrame
@@ -489,7 +492,7 @@ export function StrangeAttractors({ controls }: { controls: ExperienceControls }
       /* -- Keep the original luminous density while batching tens of
              thousands of trail segments by age, depth, and velocity. -- */
       const cx = w / 2
-      const cy = h * (w < 720 ? 0.4 : 0.45)
+      const cy = h * (w < 720 ? (phoneStory ? 0.63 : 0.4) : 0.45)
       const minDepth = CAM_DIST - 150
       const maxDepth = CAM_DIST + 150
       const trailPaths = Array.from(
@@ -862,8 +865,8 @@ export function StrangeAttractors({ controls }: { controls: ExperienceControls }
         stagePlan={[
           { position: 'top-left', mobilePosition: 'top-left', treatment: 'monumental', width: 'wide' },
           { position: 'top-right', mobilePosition: 'top-left', treatment: 'annotation', cue: 'left' },
-          { position: 'bottom-left', mobilePosition: 'bottom-left', treatment: 'caption', cue: 'right' },
-          { position: 'bottom-right', mobilePosition: 'bottom-left', treatment: 'editorial' },
+          { position: 'bottom-left', mobilePosition: 'top-left', treatment: 'caption', cue: 'right' },
+          { position: 'bottom-right', mobilePosition: 'top-left', treatment: 'editorial' },
           { position: 'top-left', mobilePosition: 'top-left', treatment: 'monumental' },
         ]}
         showReplayChip={false}

@@ -1,0 +1,101 @@
+{
+  "id": "lib-minimalism-travel",
+  "code": "LIB-04-06",
+  "title": {
+    "en": "Roaming — Minimalism",
+    "zh": "漫游 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 116,
+  "key": "E minor",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second acoustic minimalism instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 116 BPM; E minor. Main idea: alternating short and long phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A light and elegant instrumental piece featuring a prominent piano melody supported by pizzicato and bowed strings. It has a whimsical and slightly nostalgic feel, evolving with dynamic shifts and a cinematic quality.",
+    "zh": "一首轻快优雅的器乐曲，以突出的钢琴旋律为主，并由拨弦和弓弦乐器伴奏。它带有一种异想天开和略带怀旧的氛围，动态变化丰富，具有电影感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 111.909,
+  "generatedAt": "2026-09-09T07:53:44.293044+00:00",
+  "generation": {
+    "id": "7fdfdace-5b99-40ee-8731-2609273d37db",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:52:54.558963+00:00",
+    "completedAt": "2026-09-09T07:53:44.293044+00:00",
+    "interactionId": "VxChaoypKcy5jMwP4P3F-Qs",
+    "sha256": "1c42db3dcee83eda12d4531fef3e692b32d623be4f81cca1c2d799b07150e502"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and elegant instrumental piece featuring a prominent piano melody supported by pizzicato and bowed strings. It has a whimsical and slightly nostalgic feel, evolving with dynamic shifts and a cinematic quality.",
+      "zh": "一首轻快优雅的器乐曲，以突出的钢琴旋律为主，并由拨弦和弓弦乐器伴奏。它带有一种异想天开和略带怀旧的氛围，动态变化丰富，具有电影感。"
+    },
+    "instruments": [
+      "Piano",
+      "Pizzicato Strings",
+      "Bowed Strings"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Nostalgic",
+      "Elegant",
+      "Cinematic",
+      "Lighthearted"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, clear instrumental piece with a pleasant and versatile mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:53:53.671407+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:54:55.391046+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

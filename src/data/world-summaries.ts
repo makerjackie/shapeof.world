@@ -1,5 +1,4 @@
 import summaries from './generated/world-summaries.json'
-import type { AiModelId } from './ai-models'
 import type { WorldExperience, WorldLocalizedCopy } from './worlds/types'
 
 export type WorldSummary = Pick<
@@ -19,6 +18,7 @@ export type WorldSummary = Pick<
   | 'additionalCategoryIds'
   | 'renderer'
   | 'runtime'
+  | 'difficulty'
   | 'duration'
   | 'evidence'
   | 'accent'
@@ -26,7 +26,6 @@ export type WorldSummary = Pick<
   translations: {
     en: Pick<WorldLocalizedCopy, 'title' | 'posterTitle' | 'posterHook' | 'question' | 'topicLabel'>
   }
-  modelCredit?: AiModelId
 }
 
 export const worldSummaries = summaries as Array<WorldSummary>

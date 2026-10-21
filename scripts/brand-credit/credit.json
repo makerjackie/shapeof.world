@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "decidedAt": "2026-10-12",
+  "source": "User decision 2026-10-12: videos carry a text-only MakerJackie credit; no portrait, voice or sponsor logos.",
+  "master": "public/assets/brand/outro/brand-{lang}.mp4",
+  "fps": 30,
+  "frames": 54,
+  "locales": {
+    "zh": { "label": "制作", "name": "MakerJackie" },
+    "en": { "label": "by", "name": "MakerJackie" }
+  },
+  "layout": {
+    "centerY": 1246,
+    "brandBottom": 1147,
+    "minGap": 60,
+    "fontSize": 28,
+    "labelColor": "#76827d",
+    "nameColor": "#a3afaa"
+  },
+  "motion": { "delay": 0.4, "duration": 0.32, "rise": 5 },
+  "outputs": {
+    "9x16": { "width": 1080, "height": 1920, "suffix": "", "masterFilter": "setsar=1", "offsetY": 0 },
+    "16x9": { "width": 1920, "height": 1080, "suffix": "-16x9", "masterFilter": "crop=1080:1080:0:420,pad=1920:1080:420:0:color=0x080a0a,setsar=1", "offsetY": -420 }
+  }
+}

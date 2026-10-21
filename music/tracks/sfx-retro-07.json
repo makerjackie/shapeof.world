@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-07",
+  "code": "SFX-RETRO-07",
+  "title": {
+    "en": "Pixel shoot",
+    "zh": "像素射击"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 6,
+  "seed": 4123498161,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel shoot for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素射击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4123498161,
+    "sha256": "d7b17f37c837d95bad3bfeaa622db9ff873b13b31f3d0c34829f2eeaf3f436ee",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "78e1d523f29c5f8516307efc4ea12ec75176eb0cb247c7b062f38929a7015f4f",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d7b17f37c837d95bad3bfeaa622db9ff873b13b31f3d0c34829f2eeaf3f436ee",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "282d2a62da6f80483a78356483a27ac31f1830228762cf8abcbf6fdc44416b94",
+      "bytes": 7147,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ac30b3b908b302357b3d9e1a3759de0291840e851ab00fec3df70867c6f7a207",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -5.38,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.853103741496599e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05690615844726593,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized 'boing' or spring sound effect, with a playful and elastic quality.",
+      "zh": "短促的合成‘boing’或弹簧音效，带有俏皮和弹性的特质。"
+    },
+    "reason": "The audio is a clean, isolated, synthesized 'boing' sound effect, free from defects and suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:20.819944+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "78e1d523f29c5f8516307efc4ea12ec75176eb0cb247c7b062f38929a7015f4f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.894492+00:00"
+}

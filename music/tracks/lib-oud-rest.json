@@ -1,0 +1,102 @@
+{
+  "id": "lib-oud-rest",
+  "code": "LIB-20-03",
+  "title": {
+    "en": "Rest — Oud",
+    "zh": "休憩 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "oud"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "F major",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Middle Eastern acoustic instrumental instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 82 BPM; F major. Main idea: an ascending fourth answered by a stepwise descent. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A peaceful and meditative instrumental piece featuring a prominent East Asian flute melody over gentle pizzicato strings and light percussion. The arrangement is sparse and calming.",
+    "zh": "一首宁静而冥想的器乐作品，以悠扬的东方竹笛旋律为主，配以轻柔的拨弦乐和轻打击乐。编曲简约而舒缓。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.797,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:52:06.174990+00:00",
+  "generation": {
+    "id": "d517ac66-a5e9-4cc3-b286-8502baf49654",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:51:16.593145+00:00",
+    "completedAt": "2026-09-09T08:52:06.174990+00:00",
+    "interactionId": "Bh6haovjD9aN4vEPuMqSwQY",
+    "sha256": "996fb40acff57eeb920be9cc033b0c91ad03cde274a7ed421baafd3c8da7c096"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A peaceful and meditative instrumental piece featuring a prominent East Asian flute melody over gentle pizzicato strings and light percussion. The arrangement is sparse and calming.",
+      "zh": "一首宁静而冥想的器乐作品，以悠扬的东方竹笛旋律为主，配以轻柔的拨弦乐和轻打击乐。编曲简约而舒缓。"
+    },
+    "instruments": [
+      "Flute",
+      "Pizzicato Strings",
+      "Sustained Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Peaceful",
+      "Calm",
+      "Meditative",
+      "Serene",
+      "Traditional",
+      "Relaxing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:52:15.776896+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:53:41.810216+00:00"
+}

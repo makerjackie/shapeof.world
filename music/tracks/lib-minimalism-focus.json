@@ -1,0 +1,107 @@
+{
+  "id": "lib-minimalism-focus",
+  "code": "LIB-04-02",
+  "title": {
+    "en": "Focus — Minimalism",
+    "zh": "专注 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 108,
+  "key": "A minor",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second acoustic minimalism instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 108 BPM; A minor. Main idea: a descending melody with an upward answer. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A classical-style orchestral piece featuring piano, strings, and woodwinds. It begins with a gentle, reflective melody, gradually building in intensity and instrumentation to a more dramatic and grand section, before returning to a softer, contemplative ending.",
+    "zh": "一首古典风格的管弦乐作品，以钢琴、弦乐和木管乐器为主。它以一段轻柔、沉思的旋律开始，逐渐增强强度和乐器配置，进入一个更具戏剧性和宏大的部分，最后回归到柔和、沉思的结尾。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.152,
+  "generatedAt": "2026-09-09T07:52:43.423827+00:00",
+  "generation": {
+    "id": "b9a00714-0f6d-4d35-9971-c5fea70382e3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:51:57.794425+00:00",
+    "completedAt": "2026-09-09T07:52:43.423827+00:00",
+    "interactionId": "HxChapSnIJC9jMwPrKKKyAI",
+    "sha256": "e9e675d3b998a1ea4fe775a11a45f5c780b0419cc7b6cec303511fa626d648ea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style orchestral piece featuring piano, strings, and woodwinds. It begins with a gentle, reflective melody, gradually building in intensity and instrumentation to a more dramatic and grand section, before returning to a softer, contemplative ending.",
+      "zh": "一首古典风格的管弦乐作品，以钢琴、弦乐和木管乐器为主。它以一段轻柔、沉思的旋律开始，逐渐增强强度和乐器配置，进入一个更具戏剧性和宏大的部分，最后回归到柔和、沉思的结尾。"
+    },
+    "instruments": [
+      "Piano",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Flute",
+      "Clarinet",
+      "Oboe",
+      "French Horn"
+    ],
+    "moods": [
+      "Reflective",
+      "Melancholic",
+      "Dramatic",
+      "Grand",
+      "Cinematic",
+      "Elegant"
+    ],
+    "energy": 3,
+    "bpmEstimate": 80,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:52:55.964617+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:54:06.164389+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

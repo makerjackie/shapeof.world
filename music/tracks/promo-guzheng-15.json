@@ -1,0 +1,163 @@
+{
+  "id": "promo-guzheng-15",
+  "code": "PROMO-13-15",
+  "title": {
+    "en": "Jade Sparks · 15",
+    "zh": "玉石火花 · 15"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "reveal"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "",
+  "instruments": [
+    "guzheng plucks",
+    "electronic bass",
+    "dry kick",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: contemporary guzheng electronica with sharp plucked accents. Instruments: guzheng plucks, electronic bass, dry kick, woodblocks. Tempo 126 BPM. Distinct motif: descending pentatonic triplet. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 15-second reveal film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "The track opens with a driving, upbeat electronic beat and synth melody, transitioning into a more cinematic and orchestral section featuring strings and piano, maintaining an uplifting and dynamic feel throughout.",
+    "zh": "该曲目以充满活力的电子节拍和合成器旋律开场，随后过渡到更具电影感的管弦乐部分，包含弦乐和钢琴，整体保持积极向上和充满活力的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "reveal",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:29:55.556748+00:00",
+  "generation": {
+    "id": "e57e5ae6-7830-49b5-a773-ec9a256f66c6",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:29:42.181670+00:00",
+    "completedAt": "2026-09-10T05:29:55.556748+00:00",
+    "interactionId": "R0CiauXCEZDSi9sP696dkAg",
+    "sha256": "464cde9c181f75a41c7f532f880cadda7d81c9cae5460c19a33b1668d77df032"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "The track opens with a driving, upbeat electronic beat and synth melody, transitioning into a more cinematic and orchestral section featuring strings and piano, maintaining an uplifting and dynamic feel throughout.",
+      "zh": "该曲目以充满活力的电子节拍和合成器旋律开场，随后过渡到更具电影感的管弦乐部分，包含弦乐和钢琴，整体保持积极向上和充满活力的氛围。"
+    },
+    "instruments": [
+      "Electronic drums",
+      "Synthesizer",
+      "Strings",
+      "Piano",
+      "Percussion"
+    ],
+    "moods": [
+      "Uplifting",
+      "Energetic",
+      "Dynamic",
+      "Modern",
+      "Cinematic",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, dynamic, and versatile track with a clear structure suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track begins immediately with a strong, driving electronic beat and synth melody. It concludes with a distinct, sustained orchestral chord and percussion hit, providing a clear resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:13.807921+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "bc0d7b949be3903ef735f53dc6222a7ca2cb4d635a4e11c77939d6b498bf7c84"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A driving electronic dance track with a steady four-on-the-floor beat, prominent synth bassline, and evolving melodic synth layers. The track builds energy with a repetitive, hypnotic groove.",
+      "zh": "一首充满动感的电子舞曲，带有稳定的四四拍节奏、突出的合成器低音线和不断演变的旋律合成器层。这首曲子以重复、催眠般的律动积蓄能量。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass Synthesizer",
+      "Percussion"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Danceable",
+      "Hypnotic",
+      "Uplifting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, clean, and features a consistent, engaging electronic dance rhythm suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:05.366419+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.772167,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-guzheng-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-guzheng-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-guzheng-15/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:37.543009+00:00"
+}

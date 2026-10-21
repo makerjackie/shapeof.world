@@ -1,5 +1,17 @@
-# Pre-approve native build scripts needed to install and deploy this edition.
+packages:
+  - 'apps/music'
+
+# Pre-approve build scripts for the packages C3 itself installs that need
+# them: `workerd` downloads the platform binary, `esbuild` and `sharp`
+# (via miniflare) download/build native bindings. Without these, pnpm 11+
+# aborts the install with ERR_PNPM_IGNORED_BUILDS.
 allowBuilds:
   esbuild: true
   workerd: true
   sharp: true
+  '@scarf/scarf': false
+
+# Security floor for transitive consumers (Mermaid and Vite).
+overrides:
+  dompurify: 3.4.12
+  postcss: 8.5.18

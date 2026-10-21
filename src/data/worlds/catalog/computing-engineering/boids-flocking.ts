@@ -41,7 +41,7 @@ export default {
     duration: 300,
     evidence: 'modeled',
     accent: '#4dd0e1',
-    related: ['firefly-sync'],
+    related: [],
     sources: [
       {label: 'Craig Reynolds — Boids (1987)', labelEn: 'Craig Reynolds — Boids (1987)', url: 'https://www.red3d.com/cwr/boids/'},
       {label: 'Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)', labelEn: 'Reynolds, Flocks, Herds, and Schools (SIGGRAPH 1987)', url: 'https://www.red3d.com/cwr/papers/1987/boids.html'},

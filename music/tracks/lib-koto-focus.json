@@ -1,0 +1,101 @@
+{
+  "id": "lib-koto-focus",
+  "code": "LIB-19-02",
+  "title": {
+    "en": "Focus — Koto",
+    "zh": "专注 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "koto"
+  ],
+  "energy": 2,
+  "bpm": 68,
+  "key": "A minor",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Japanese acoustic instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 68 BPM; A minor. Main idea: a descending melody with an upward answer. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian instrumental piece featuring a melodic wind instrument, plucked strings, and subtle percussion. The music evokes a peaceful and reflective atmosphere.",
+    "zh": "一首宁静的传统东方器乐作品，以悠扬的管乐器、弹拨弦乐器和微妙的打击乐为特色。音乐营造出一种平和而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.663,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:49:07.353339+00:00",
+  "generation": {
+    "id": "7e4ffcd6-3f9d-4e05-a41d-ca0d7929cd9c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:48:24.030188+00:00",
+    "completedAt": "2026-09-09T08:49:07.353339+00:00",
+    "interactionId": "WR2haq2dF-67i9sP06HTyAM",
+    "sha256": "19e9364b150631542a42f24745848521ccd98393fb352e07ec57d27f5dcb07e5"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian instrumental piece featuring a melodic wind instrument, plucked strings, and subtle percussion. The music evokes a peaceful and reflective atmosphere.",
+      "zh": "一首宁静的传统东方器乐作品，以悠扬的管乐器、弹拨弦乐器和微妙的打击乐为特色。音乐营造出一种平和而沉思的氛围。"
+    },
+    "instruments": [
+      "Dizi",
+      "Guzheng",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Traditional",
+      "Reflective",
+      "Serene",
+      "Meditative"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "Well-produced traditional East Asian instrumental music with clear instrumentation and a calming atmosphere, suitable for background or meditative purposes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:49:16.036893+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:50:08.455994+00:00"
+}

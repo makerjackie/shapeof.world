@@ -1,0 +1,100 @@
+{
+  "id": "lib-chiptune-reading",
+  "code": "LIB-29-01",
+  "title": {
+    "en": "Reading — Chiptune",
+    "zh": "静读 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 128,
+  "key": "D major",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second melodic chiptune instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 128 BPM; D major. Main idea: alternating short and long phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "An upbeat and playful electronic track with a distinct chiptune or 8-bit aesthetic. It features bright, synthesized melodies, a driving bassline, and electronic percussion, creating a retro gaming feel.",
+    "zh": "一首欢快活泼的电子音乐，具有独特的芯片音乐或8位风格。它以明亮的合成器旋律、驱动的低音线和电子打击乐为特色，营造出复古游戏的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.331,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:15:00.351640+00:00",
+  "generation": {
+    "id": "a6a556b5-40a1-46ff-a0d0-34c3682e9964",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:14:21.912254+00:00",
+    "completedAt": "2026-09-09T09:15:00.351640+00:00",
+    "interactionId": "biOhauOBM5rSi9sPsKbCgAE",
+    "sha256": "c4e1e2b667f2fa4453947fd15e0a20209503b0a2c6fed1ed43aadaf51f97bf61"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and playful electronic track with a distinct chiptune or 8-bit aesthetic. It features bright, synthesized melodies, a driving bassline, and electronic percussion, creating a retro gaming feel.",
+      "zh": "一首欢快活泼的电子音乐，具有独特的芯片音乐或8位风格。它以明亮的合成器旋律、驱动的低音线和电子打击乐为特色，营造出复古游戏的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass Synthesizer"
+    ],
+    "moods": [
+      "Playful",
+      "Upbeat",
+      "Retro",
+      "Quirky",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:15:08.559779+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:15:41.215673+00:00"
+}

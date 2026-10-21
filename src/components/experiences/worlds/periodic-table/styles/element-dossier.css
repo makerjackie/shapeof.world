@@ -1,0 +1,230 @@
+/* A quick arrival, a readable hold, then one continuous landing into the dossier. */
+.pm-reveal :is(.pm-reveal-veil,.pm-reveal-halo,.pm-reveal-frame,.pm-reveal-heading,.pm-reveal-name,.pm-reveal-aura),.pm-reveal-card>.pm-reveal-discovery,.pm-reveal-frame::after{animation-duration:2.4s}
+.pm-world.is-extracting .pm-folio{animation:pm-dossier-arrive 2.4s both}
+@keyframes pm-dossier-arrive{0%,80%{opacity:0}100%{opacity:1}}
+@keyframes pm-reveal-veil{0%{opacity:0}10%,80%{opacity:1}100%{opacity:0}}
+@keyframes pm-reveal-chrome{0%,80%{opacity:1}95%,100%{opacity:0}}
+@keyframes pm-reveal-halo{0%,8%{opacity:0;transform:scale(.3) rotate(-35deg)}24%,76%{opacity:1}100%{opacity:0;transform:scale(1.25) rotate(25deg)}}
+@keyframes pm-rarity-rays{0%,8%{opacity:0;transform:scale(.3) rotate(-25deg)}24%{opacity:1}78%{opacity:.7}100%{opacity:0;transform:scale(1.1) rotate(20deg)}}
+@keyframes pm-reveal-sheen{0%,10%{transform:translateX(-45%)}32%,100%{transform:translateX(45%)}}
+.pm-world .pm-folio{max-width:1240px;border-radius:20px;background:linear-gradient(145deg,#f8f5e9,#eceedd);box-shadow:0 24px 90px #142d3033}
+.pm-folio .pm-folio-content{display:grid;grid-template-columns:minmax(320px,.88fr) minmax(0,1.12fr);gap:0;align-items:start}
+.pm-folio .pm-dossier-header{display:grid;grid-template-columns:90px minmax(0,1fr);column-gap:26px;row-gap:12px;padding:28px 84px 24px 30px;border-bottom:1px solid color-mix(in srgb,var(--rarity) 30%,transparent);background:radial-gradient(ellipse at 0 0,var(--rarity-light),transparent 70%)}
+.pm-folio .pm-dossier-badge{width:90px;justify-content:flex-start;padding-top:12px;border-color:color-mix(in srgb,var(--rarity) 40%,transparent)}
+.pm-folio .pm-dossier-badge b{font:54px/1.15 Georgia,serif;color:var(--rarity)}
+.pm-folio .pm-dossier-badge small{letter-spacing:.12em}
+.pm-folio .pm-dossier-header h2{font:500 42px/1.15 Georgia,'Songti SC',serif;letter-spacing:.02em;margin:4px 0 8px}
+.pm-dossier-subtitle{font-size:17px;line-height:1.5;margin:0 0 10px;color:#617060}
+.pm-folio .pm-dossier-intro{grid-column:1/-1;font-size:15px;line-height:1.85;margin:2px 0 0;max-width:940px;color:#4d6050}
+.pm-folio .pm-visuals{margin:20px 10px 20px 22px;padding:18px;border:1px solid color-mix(in srgb,var(--rarity) 25%,transparent);border-radius:14px;background:linear-gradient(140deg,#fff8,var(--rarity-light));min-width:0}
+.pm-folio .pm-hero{height:188px}
+.pm-folio .pm-inline-atom{border-top:1px solid color-mix(in srgb,var(--rarity) 25%,transparent);margin-top:10px}
+.pm-folio .pm-details{padding:20px 22px 18px 12px;max-height:none;overflow:visible}
+.pm-folio .pm-lab{margin:0}
+.pm-folio .pm-lab .pm-lab-stage{border-radius:14px;border-color:color-mix(in srgb,var(--rarity) 50%,#405d4a)}
+.pm-folio .pm-lab h3{font-size:28px}
+.pm-folio .pm-lab-partners button{border-radius:9px}
+.pm-folio .pm-reading{grid-column:1/-1;margin:0 22px 24px;padding:22px 26px;border:1px solid #a9b69e66;background:#fff7;border-radius:14px;min-width:0}
+.pm-folio:not(:has(.pm-lab)) .pm-details{display:none}
+.pm-folio:not(:has(.pm-lab)) .pm-reading{grid-column:2;grid-row:2;margin:20px 22px 20px 10px}
+.pm-reading .pm-detail-tabs{position:static;gap:8px;background:none;margin:0 0 20px;padding-bottom:15px;flex-wrap:wrap}
+.pm-folio .pm-detail-tabs button{border-radius:7px;transition:background .25s,color .25s,transform .25s}
+.pm-folio .pm-detail-tabs button[aria-pressed=true]{background:#344d40;box-shadow:0 3px 10px #25433320}
+.pm-reading .pm-copy,.pm-reading .pm-data,.pm-reading .pm-electrons{animation:pm-reading-in .3s ease both}
+.pm-reading .pm-copy{max-width:900px;margin:0}
+.pm-reading .pm-copy>h3{font-size:14px;color:#526747}
+.pm-reading .pm-neighbours{justify-content:center;margin-top:18px}
+.pm-reading .pm-neighbours button{border-color:var(--rarity);background:var(--rarity-light);transition:transform .25s}
+.pm-reading .pm-neighbours button:hover{transform:translateY(-2px)}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-reading{display:none}
+@keyframes pm-reading-in{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:700px){
+ .pm-world .pm-folio{border-radius:0}
+ .pm-folio .pm-folio-content,.pm-folio:has(.pm-lab) .pm-folio-content{display:flex;flex-direction:column}
+ .pm-folio .pm-dossier-header{width:100%;grid-template-columns:60px minmax(0,1fr);padding:22px 52px 20px 16px;gap:12px}
+ .pm-folio .pm-dossier-badge{width:60px}.pm-folio .pm-dossier-badge b{font-size:38px}
+ .pm-folio .pm-dossier-header h2{font-size:32px}.pm-dossier-subtitle{font-size:14px;margin-bottom:6px}
+ .pm-folio .pm-dossier-intro{font-size:14px;line-height:1.75;margin-right:-30px}
+ .pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{display:contents}
+ .pm-folio .pm-hero,.pm-folio:has(.pm-lab) .pm-hero{order:1;width:calc(100% - 32px);margin:16px;height:170px;border-bottom:1px solid #a7b19955}
+ .pm-folio .pm-details,.pm-folio:has(.pm-lab) .pm-details{display:contents}
+ .pm-folio .pm-details>.pm-lab,.pm-folio:has(.pm-lab) .pm-details>.pm-lab{order:2;width:calc(100% - 32px);margin:4px 16px 20px}
+ .pm-folio .pm-inline-atom,.pm-folio:has(.pm-lab) .pm-inline-atom{order:3;width:calc(100% - 32px);margin:0 16px;padding:16px 0 0}
+ .pm-folio .pm-isotope-caption{order:3;width:calc(100% - 32px);margin:12px 16px 18px}
+ .pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{order:4;width:calc(100% - 24px);margin:0 12px 18px;padding:16px 12px;border-radius:12px}
+ .pm-reading .pm-detail-tabs{gap:4px}.pm-folio .pm-detail-tabs button{padding:8px 7px}
+ .pm-folio .pm-lab h3{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){.pm-world.is-extracting .pm-folio,.pm-reading .pm-copy,.pm-reading .pm-data,.pm-reading .pm-electrons{animation:none}.pm-folio .pm-detail-tabs button,.pm-reading .pm-neighbours button{transition:none}}
+@media(min-width:701px){.pm-folio .pm-dossier-header{grid-template-columns:90px minmax(0,1fr) minmax(230px,.62fr);padding-top:22px;padding-bottom:18px}}
+.pm-dossier-stats{display:grid;grid-template-columns:1.4fr 1fr 1fr;align-self:center;gap:14px;margin:0;padding:18px 0 18px 22px;border-left:1px solid color-mix(in srgb,var(--rarity) 30%,transparent)}
+.pm-dossier-stats dt{font-size:11px;color:#6f7a65;margin-bottom:9px}.pm-dossier-stats dd{font:26px/1.25 Georgia,serif;color:var(--rarity);margin:0;white-space:nowrap}
+.pm-folio .pm-exhibit-name{gap:14px}.pm-folio .pm-exhibit-name>span{margin-left:0}
+@media(max-width:700px){.pm-dossier-stats{display:none}}
+/* A synthesis diagram uses the whole specimen stage, rather than the photo column. */
+.pm-folio .pm-hero[data-image-kind=diagram]{height:230px}
+.pm-folio .pm-hero[data-image-kind=diagram] .pm-hero-image{inset:26px 4px 2px}
+.pm-folio .pm-hero[data-image-kind=diagram] .pm-photo-caption{display:none}
+@media(min-width:701px) and (max-width:1050px){
+ .pm-folio .pm-dossier-header{grid-template-columns:72px minmax(0,1fr)}
+ .pm-folio .pm-dossier-badge{width:72px}
+ .pm-folio .pm-dossier-header h2{font-size:36px}
+ .pm-dossier-stats{grid-column:2;display:flex;gap:28px;border-left:0;padding:4px 0;margin:0}
+ .pm-dossier-stats dd{font-size:22px}
+}
+
+/* Card-local navigation stays available without the site's extra header rows. */
+.pm-folio .pm-close-anchor{height:auto;top:0;justify-content:space-between;align-items:center;padding:10px 22px;background:#f5f3e7ed;backdrop-filter:blur(12px);border-bottom:1px solid #71846a22;pointer-events:auto}
+.pm-folio .pm-close-anchor .pm-close-corner{display:flex;width:auto;height:36px;min-height:36px;padding:0 12px;gap:6px;box-shadow:none;background:transparent}
+.pm-folio .pm-close-corner>span{display:inline;margin:0}
+.pm-folio .pm-close-anchor .pm-neighbours{display:flex;align-items:center;gap:12px;margin:0;padding:0;border:0}
+.pm-close-anchor .pm-neighbours>span{font:11px ui-monospace,monospace;color:#71806a}
+.pm-folio .pm-close-anchor .pm-neighbours button{display:flex;align-items:center;gap:7px;width:auto;height:36px;padding:0 12px;border:1px solid #a1b09b55;border-radius:20px;font-size:12px;background:transparent;transition:background .2s,transform .2s}
+.pm-close-anchor .pm-neighbours b{font:17px Georgia,serif;color:var(--rarity)}
+.pm-folio .pm-close-anchor button:hover{background:var(--rarity-light)}
+.pm-folio .pm-dossier-header{padding-right:30px}
+.pm-folio .pm-hero:not([data-image-kind=diagram]) .pm-hero-image{inset:20px 32px 40px}
+.pm-folio .pm-photo-mode{left:0;right:36px;bottom:0;flex-direction:row;justify-content:center;gap:8px}
+.pm-folio .pm-photo-mode button{width:auto;min-height:32px}
+.pm-folio .pm-hero-label{left:auto;right:0;bottom:0}
+.pm-folio .pm-hero-label button{width:32px;height:32px}
+.pm-source-caption{font-size:13px;line-height:1.8}
+.pm-source-caption>a{display:block;margin-top:8px}
+.pm-reveal-skip{position:fixed;inset:0;z-index:100;width:100%;height:100%;border:0;background:transparent;cursor:pointer}
+.pm-reveal-hint{position:absolute;z-index:10;bottom:max(34px,env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:12px;letter-spacing:.08em;color:#e7dbb9;animation:pm-reading-in .4s .2s both}
+@media(max-width:700px){
+ .pm-folio .pm-close-anchor{padding:8px;gap:6px}
+ .pm-folio .pm-close-anchor .pm-close-corner{padding:0 8px;font-size:11px}
+ .pm-folio .pm-close-anchor .pm-neighbours{gap:5px}
+ .pm-folio .pm-close-anchor .pm-neighbours button{padding:0 9px;gap:5px}
+ .pm-close-anchor .pm-neighbours button>span{display:none}
+ .pm-close-anchor .pm-neighbours>span{font-size:10px}
+ .pm-folio .pm-dossier-header{padding-right:16px}
+ .pm-folio .pm-dossier-intro{margin-right:0}
+}
+
+.pm-folio .pm-dossier-header{animation:pm-reading-in .3s ease both}
+@media(prefers-reduced-motion:reduce){.pm-folio .pm-dossier-header{animation:none}}
+/* Expansion replaces the dossier stage; it is not a second floating panel. */
+.pm-world .pm-inspector:has(.pm-atom-studio.is-expanded){overflow:auto}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio{overflow:clip;min-height:calc(100dvh - 28px)}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio-content{display:block}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio .pm-visuals{display:block;width:100%;margin:0;padding:0;border:0;border-radius:0;background:none}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio .pm-inline-atom{position:relative;inset:auto;width:100%;height:auto;margin:0;padding:12px 24px 20px;overflow:visible;border:0;border-radius:0;background:none}
+@media(max-width:700px){
+ .pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio{min-height:100dvh}
+ .pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio .pm-inline-atom{padding:10px 12px 20px}
+}
+
+.pm-photo-zoom{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.pm-photo-zoom[aria-pressed=true]{cursor:zoom-out}
+.pm-photo-zoom:focus-visible{outline:2px solid var(--rarity);outline-offset:-3px;border-radius:8px}
+.pm-folio .pm-photo-mode{right:0}
+/* Collection dossier: a specimen stage beside a compact, continuous record. */
+.pm-folio .pm-folio-content{grid-template-columns:minmax(300px,.9fr) minmax(0,1.1fr);grid-template-rows:auto 1fr;align-items:start;min-height:calc(100dvh - 100px)}
+.pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{grid-column:1;grid-row:1/3;position:relative;display:block;margin:0;padding:18px 24px 20px;width:100%;min-width:0;border:0;border-right:1px solid color-mix(in srgb,var(--rarity) 22%,transparent);border-radius:0;background:radial-gradient(ellipse at 50% 22%,var(--rarity-light),transparent 62%);overflow:hidden}
+.pm-stage-symbol{position:absolute;top:18px;left:24px;font:120px/1 Georgia,serif;color:var(--rarity);opacity:.1;pointer-events:none}
+.pm-folio .pm-hero,.pm-folio:has(.pm-lab) .pm-hero{height:220px;margin:0;width:100%}
+.pm-folio .pm-hero-top{top:4px;left:0;right:0}.pm-folio .pm-hero-top>small{font-size:10px}
+.pm-folio .pm-hero:not([data-image-kind=diagram]) .pm-hero-image{inset:12px 18px 40px}
+.pm-folio .pm-inline-atom,.pm-folio:has(.pm-lab) .pm-inline-atom{width:100%;margin:20px 0 0;padding:18px 0 0;border-top:1px solid color-mix(in srgb,var(--rarity) 22%,transparent)}
+.pm-folio .pm-inline-atom .pm-atom-studio:not(.is-expanded) .pm-atom-touch{height:240px}
+.pm-folio .pm-isotope-caption{margin:12px 0 0;font-size:11px}
+.pm-folio .pm-dossier-header{grid-column:2;grid-row:1;grid-template-columns:56px minmax(0,1fr);gap:12px 16px;padding:26px 30px 18px;border:0;background:none;align-items:start}
+.pm-folio .pm-dossier-badge{width:56px;padding-top:7px;border:0}.pm-folio .pm-dossier-badge b{font-size:32px}.pm-folio .pm-dossier-badge small{font-size:10px}
+.pm-folio .pm-dossier-header h2{font-size:36px;margin:0 0 7px;overflow-wrap:anywhere}
+.pm-folio .pm-dossier-header .pm-kicker{display:none}
+.pm-dossier-subtitle{font-size:16px;margin:0 0 9px;line-height:1.4}
+.pm-folio .pm-exhibit-name{font-size:12px;gap:10px;flex-wrap:wrap}
+.pm-folio .pm-dossier-stats{grid-column:1/-1;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:16px;padding:14px 0 0;margin:0;border:0;border-top:1px solid #74846330}
+.pm-dossier-stats dt{font-size:11px;margin-bottom:5px}.pm-dossier-stats dd{font-size:24px}
+.pm-folio .pm-dossier-intro{font-size:14px;line-height:1.8;margin:0;grid-column:1/-1}
+.pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{grid-column:2;grid-row:2;margin:0;padding:0 30px 26px;width:100%;border:0;border-radius:0;background:none}
+.pm-reading .pm-detail-tabs{gap:4px;padding:0 0 10px;margin:0 0 18px;border-bottom:1px solid #74846330}
+.pm-folio .pm-detail-tabs button{font-size:12px;padding:9px 10px;background:none;border-radius:6px}
+.pm-folio .pm-reading .pm-details{padding:0;display:block;max-height:none;overflow:visible}
+.pm-folio .pm-reading .pm-details[hidden]{display:none}
+.pm-folio .pm-lab h3{font-size:24px;margin:10px 0 14px}
+.pm-folio .pm-lab .pm-lab-stage{min-height:220px;height:260px;aspect-ratio:auto}
+.pm-reading .pm-copy>h3{font-size:15px;margin:0 0 10px}.pm-reading .pm-copy>p{font-size:14px;line-height:1.85;margin:0 0 18px}
+.pm-reading .pm-copy .pm-small-note{font-size:11px;line-height:1.7}
+.pm-reading .pm-source-photo img{max-height:180px;width:auto}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-stage-symbol{display:none}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio-content{min-height:0}
+@media(max-width:850px) and (min-width:701px){
+ .pm-folio .pm-folio-content{grid-template-columns:minmax(280px,.95fr) minmax(0,1.05fr)}
+ .pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{padding:18px 14px}
+ .pm-folio .pm-dossier-header{padding:22px 18px 18px;grid-template-columns:44px minmax(0,1fr);column-gap:10px}
+ .pm-folio .pm-dossier-badge{width:44px}.pm-folio .pm-dossier-header h2{font-size:28px}
+ .pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{padding:0 18px 24px}
+}
+@media(max-width:700px){
+ .pm-folio .pm-folio-content,.pm-folio:has(.pm-lab) .pm-folio-content{display:flex;flex-direction:column;min-height:0}
+ .pm-folio .pm-dossier-header{order:0;padding:20px 20px 16px;grid-template-columns:44px minmax(0,1fr);gap:10px 14px}
+ .pm-folio .pm-dossier-badge{width:44px}.pm-folio .pm-dossier-header h2{font-size:30px}.pm-dossier-subtitle{font-size:14px}
+ .pm-folio .pm-dossier-stats{padding-top:12px}.pm-dossier-stats dd{font-size:21px}
+ .pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{display:contents}
+ .pm-stage-symbol{display:none}
+ .pm-folio .pm-hero,.pm-folio:has(.pm-lab) .pm-hero{order:1;width:calc(100% - 40px);height:185px;margin:0 20px 18px;border-bottom:0}
+ .pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{order:2;width:100%;margin:0;padding:0 20px 24px}
+ .pm-folio .pm-inline-atom,.pm-folio:has(.pm-lab) .pm-inline-atom{order:3;width:calc(100% - 40px);margin:0 20px;padding:18px 0 0}
+ .pm-folio .pm-isotope-caption{order:4;width:calc(100% - 40px);margin:12px 20px 20px}
+ .pm-folio .pm-detail-tabs button{padding:8px 7px;font-size:11px}
+ .pm-folio .pm-inline-atom .pm-atom-studio:not(.is-expanded) .pm-atom-touch{height:240px}
+}
+
+.pm-folio .pm-lab .pm-lab-stage{height:220px}
+.pm-story-properties{margin:22px 0}
+.pm-story-properties h3{font-size:13px;color:#5b6b50;margin:18px 0 12px}
+.pm-story-properties dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:14px 0;border-top:1px solid #74846330;border-bottom:1px solid #74846330}
+.pm-story-properties dt{font-size:11px;color:#718066;margin-bottom:8px}
+.pm-story-properties dd{font:24px/1.3 Georgia,serif;color:var(--rarity);margin:0}
+.pm-story-properties dd small{font:10px sans-serif;white-space:nowrap}
+.pm-story-properties p{font-size:10px;line-height:1.7;color:#78816a}
+.pm-story-properties .pm-configuration{font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+/* Quiet paper card; rarity is an accent, never a full-panel tint. */
+.pm-world .pm-inspector,.pm-world .pm-inspector:has(.pm-atom-studio.is-expanded){display:grid;place-items:center;padding:48px max(28px,7vw);overflow:hidden;background:#29312b50;backdrop-filter:blur(12px)}
+.pm-world .pm-folio,.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio{--paper:#f7f6f2;--rarity-light:#eeeee7;--rarity-glow:#55624e20;width:100%;max-width:1100px;height:min(780px,calc(100dvh - 96px));min-height:0;margin:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid #fff9;border-radius:18px;background:#f7f6f2;box-shadow:0 25px 80px #18251e30}
+.pm-folio .pm-close-anchor{position:relative;flex:none;padding:8px 18px;background:#f7f6f2;border-bottom:1px solid #283c2a18}
+.pm-folio .pm-folio-content{flex:1;min-height:0;overflow:hidden;grid-template-rows:auto minmax(0,1fr)}
+.pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{height:100%;min-height:0;padding:14px 20px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;background:none;border-color:#283c2a18}
+.pm-stage-symbol{display:none}
+.pm-folio .pm-dossier-header{background:none;padding:20px 24px 14px;row-gap:10px}
+.pm-folio .pm-dossier-header h2{font-size:32px}
+.pm-folio .pm-dossier-badge b,.pm-folio .pm-dossier-stats dd,.pm-folio .pm-story-properties dd,.pm-folio .pm-neighbours b{color:#414d43}
+.pm-folio .pm-dossier-stats{padding-top:10px;border-color:#283c2a18}.pm-folio .pm-dossier-stats dd{font-size:22px}
+.pm-folio .pm-dossier-intro{font-size:13px}
+.pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{min-height:0;height:100%;padding:0 24px 20px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.pm-folio .pm-detail-tabs{position:sticky;top:0;z-index:5;padding:0 0 10px;background:#f7f6f2}
+.pm-folio .pm-hero,.pm-folio:has(.pm-lab) .pm-hero{height:clamp(130px,20dvh,180px)}
+.pm-folio .pm-inline-atom,.pm-folio:has(.pm-lab) .pm-inline-atom{margin-top:12px;padding-top:12px;border-color:#283c2a18}
+.pm-folio .pm-inline-atom .pm-atom-studio:not(.is-expanded) .pm-atom-touch{height:clamp(135px,22dvh,195px)}
+.pm-folio .pm-inline-atom .pm-atom-exhibit.pm-atom-studio{background:none}
+.pm-folio .pm-story-properties{margin:16px 0}.pm-folio .pm-story-properties dl{padding:10px 0}
+.pm-folio .pm-photo-mode button[aria-pressed=true]{background:#e9ebe3;border-color:#a6afa155;color:#46533f}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio-content{display:block;overflow:auto}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio .pm-visuals{height:auto;overflow:visible}
+.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio .pm-inline-atom{padding:10px 24px 18px}
+.pm-folio .pm-inline-atom .pm-atom-studio.is-expanded .pm-atom-touch{height:clamp(170px,calc(100dvh - 450px),380px)}
+@media(max-width:700px){
+ .pm-world .pm-inspector,.pm-world .pm-inspector:has(.pm-atom-studio.is-expanded){padding:16px 10px}
+ .pm-world .pm-folio,.pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio{height:calc(100dvh - 32px);min-height:0;border-radius:14px}
+ .pm-folio .pm-close-anchor{padding:7px 6px}
+ .pm-folio .pm-folio-content,.pm-folio:has(.pm-lab) .pm-folio-content{overflow:auto;overscroll-behavior:contain;display:flex;flex:none;height:calc(100% - 53px)}
+ .pm-folio .pm-dossier-header{padding:18px 16px 14px;flex:none}
+ .pm-folio .pm-dossier-header h2{font-size:28px}
+ .pm-folio .pm-hero,.pm-folio:has(.pm-lab) .pm-hero{height:170px;flex:none}
+ .pm-folio .pm-reading,.pm-folio:not(:has(.pm-lab)) .pm-reading{height:auto;overflow:visible;padding:0 16px 20px;flex:none}
+ .pm-folio .pm-detail-tabs{position:static}
+ .pm-folio .pm-inline-atom,.pm-folio:has(.pm-lab) .pm-inline-atom{flex:none}
+ .pm-folio .pm-visuals,.pm-folio:has(.pm-lab) .pm-visuals{display:contents}
+ .pm-inspector:has(.pm-atom-studio.is-expanded) .pm-folio-content{display:block}
+}
+.pm-world .pm-inspector,.pm-world .pm-inspector:has(.pm-atom-studio.is-expanded){grid-template-columns:minmax(0,1fr);gap:0}
+.pm-world .pm-folio[data-stars]{--rarity-light:#eeeee7;--rarity-glow:#55624e20;border-top:1px solid #fff9}
+.pm-folio[data-stars] .pm-dossier-header{background:none}
+/* Keep the phenomenon and its playback controls visible together while experimenting. */
+.pm-folio[data-tab=lab] .pm-dossier-stats,.pm-folio[data-tab=lab] .pm-dossier-intro,.pm-folio[data-tab=lab] .pm-exhibit-name,.pm-folio[data-tab=lab] .pm-card-rating{display:none}
+.pm-folio[data-tab=lab] .pm-dossier-header{padding-bottom:6px}
+.pm-lab-observation{scroll-margin-top:52px}
+@media(max-width:700px){.pm-lab-observation{scroll-margin-top:8px}}

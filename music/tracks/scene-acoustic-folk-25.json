@@ -1,0 +1,179 @@
+{
+  "id": "scene-acoustic-folk-25",
+  "code": "SCENE-10-25",
+  "title": {
+    "en": "Handmade Map · 25",
+    "zh": "手作地图 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "optimistic craft and travel sequence",
+    "product-video"
+  ],
+  "energy": 3,
+  "bpm": 114,
+  "key": "",
+  "instruments": [
+    "fingerstyle guitar",
+    "mandolin",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 25,
+  "prompt": "Create a complete original 60-second instrumental cue in acoustic-folk style. Use fingerstyle guitar, mandolin, hand percussion. Tempo 114 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and positive acoustic instrumental track featuring a bright guitar melody, steady drums, and a warm bassline. It evokes a cheerful and lighthearted mood.",
+    "zh": "一首欢快积极的原声器乐曲，以明亮的吉他旋律、稳定的鼓点和温暖的贝斯线为特色。营造出一种愉悦轻松的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "optimistic craft and travel sequence"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:30:09.474883+00:00",
+  "generation": {
+    "id": "516ef5f9-efc3-4522-bcca-5673b12fef56",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:29:28.461684+00:00",
+    "completedAt": "2026-09-22T09:30:09.474883+00:00",
+    "interactionId": "eUqyapKcGZ3vv_gP1PPxsQc",
+    "sha256": "2d14e07f0740b56c62ca381d5a634554d52d426c245a6aa2fb5465529859dcdb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and positive acoustic instrumental track featuring a bright guitar melody, steady drums, and a warm bassline. It evokes a cheerful and lighthearted mood.",
+      "zh": "一首欢快积极的原声器乐曲，以明亮的吉他旋律、稳定的鼓点和温暖的贝斯线为特色。营造出一种愉悦轻松的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Positive",
+      "Cheerful",
+      "Lighthearted",
+      "Optimistic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "The track is well-produced, professionally mixed, and has a clear, engaging musical theme suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, bright acoustic guitar melody establishing the main theme. Ends with a clear, sustained final chord and strum, providing a definitive musical conclusion.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:25.787203+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6a03c93f2d36f98e5e1c4ce68fd6ff69d4835d9f6222666796666699eab51cbc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.141167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A cheerful and upbeat instrumental track featuring acoustic guitar, bass, and drums. It has a folk-pop or light country feel, creating a pleasant and lively atmosphere.",
+      "zh": "一首欢快活泼的纯器乐曲，以原声吉他、贝斯和鼓为主。带有民谣流行或轻乡村风格，营造出愉悦而生动的氛围。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "cheerful",
+      "upbeat",
+      "lively",
+      "pleasant",
+      "acoustic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear folk-pop/country style. No defects or vocals were detected, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:17.486276+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 34.141167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-acoustic-folk-25/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6a03c93f2d36f98e5e1c4ce68fd6ff69d4835d9f6222666796666699eab51cbc",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2d14e07f0740b56c62ca381d5a634554d52d426c245a6aa2fb5465529859dcdb",
+      "bytes": 1427056,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b8324cb3aef6281c3404c357e0d3a8b08be8bdfaa53be972d7b786cf5447d6b7",
+      "bytes": 2780,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.449608+00:00"
+}

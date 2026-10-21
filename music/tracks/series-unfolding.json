@@ -1,0 +1,61 @@
+{
+  "id": "series-unfolding",
+  "code": "MAT-B02",
+  "title": {
+    "en": "Series Unfolding",
+    "zh": "级数展开"
+  },
+  "category": "math-signals",
+  "archetype": "discovery",
+  "moods": [
+    "patient",
+    "additive",
+    "clarifying",
+    "gentle"
+  ],
+  "topics": [
+    "taylor-series",
+    "approximation",
+    "polynomial"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "G major",
+  "instruments": [
+    "music box",
+    "felt piano",
+    "cello",
+    "soft woodwinds"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.435,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a Taylor series adding terms. Around 78 BPM, G major. Start with one interval on music box; each new term adds a pitch of color until the phrase is a full warm melody on felt piano and cello. Patient, clarifying. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No sudden modulation shocks, no drums.\n\n[00:00–00:25] Two-note music-box kernel, repeating.\n[00:25–01:00] Third and fourth degrees appear; felt piano supports.\n[01:00–01:45] Cello and woodwinds add higher-order color; the kernel is still audible.\n[01:45–02:30] Extra terms recede; kernel remains, now understood as the whole tune.\n",
+  "recommendedWorldIds": [
+    "formula-bloom"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:22:53Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/series-unfolding/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/series-unfolding/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/series-unfolding/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:52.785544+00:00",
+  "generation": {
+    "id": "d478bfc1-088e-4d05-8c8f-ced17699d19e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:21:57Z",
+    "completedAt": "2026-08-25T10:22:53Z",
+    "durationMs": 56000,
+    "interactionId": "x2yNaqDoEeqAoLAP4OCjiQc",
+    "clientRequestId": "b0de3cfc-a1eb-4a2f-979a-b96d283797cb",
+    "synthid": true,
+    "c2pa": "urn:c2pa:ba31b2be-cd54-72fb-36ba-4d67f65778af",
+    "sha256": "780852b70a0b61507a0ed581b677a9c788477da2891df2dd5e53cd7d69d4afc3"
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-10",
+  "code": "SFX-FOOTSTEP-10",
+  "title": {
+    "en": "Hollow stairs",
+    "zh": "空心楼梯"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 9,
+  "seed": 57988899,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized hollow stairs for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的空心楼梯合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.36,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 57988899,
+    "sha256": "53cb93c2291c38421a6a772c64cbe527a98fa761d988a3b4184c5547ad565e9e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "17025447b658fcffdfeec4d9e1a99964c35faf43e4b73af0cb0f852603199de5",
+      "bytes": 5894,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "53cb93c2291c38421a6a772c64cbe527a98fa761d988a3b4184c5547ad565e9e",
+      "bytes": 31796,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "c44422ff0744201e2b8c0f55c92764c3a8e7d313bb556c170de0432097b184e0",
+      "bytes": 9632,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "9c13ba455b72a11b9cc01299f56f7ef175e9c39041fc1cac178c5b16c430f57a",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 15876,
+    "duration": 0.36,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.14,
+    "dcOffset": 3.460042871315193e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.17951593017578127,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing sound, reminiscent of a spring or cartoon bounce effect.",
+      "zh": "一个短促、高音的合成弹簧音效，类似于卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:07.087786+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "17025447b658fcffdfeec4d9e1a99964c35faf43e4b73af0cb0f852603199de5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 15876
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.869763+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-08",
+  "code": "SFX-NOTIFICATION-08",
+  "title": {
+    "en": "Calendar reminder",
+    "zh": "日程提醒"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 7,
+  "seed": 1982563080,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized calendar reminder for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的日程提醒合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.03,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-08/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-08/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-08/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-08/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1982563080,
+    "sha256": "3d4bbe0028a09915e812223ca7f6764b4fa4c639e1774ee0e3f9d6cc05246598",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "526cf8d19b856779360b2f832d98f9d8b8b2d3ccb06d3837949a0b3fbe3fe430",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3d4bbe0028a09915e812223ca7f6764b4fa4c639e1774ee0e3f9d6cc05246598",
+      "bytes": 90890,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "659ccaf7af3836287e9c9856e6249ac8a180c8d5d7abb6d822ddec20c478b9a7",
+      "bytes": 7588,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "96a5ed272522426f5f3b7cca23e333064a80201397acba33e2c3a7fc9b4c8ded",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 45423,
+    "duration": 1.03,
+    "peakDbfs": -4.91,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.5452618648592123e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.023141967773437244,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap followed by a quick, bright ping.",
+      "zh": "短促、高音的电子冲击声，随后是快速、明亮的提示音。"
+    },
+    "reason": "Clean, isolated, and distinct synthesized sound effect suitable for UI or sci-fi elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:34.374999+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "526cf8d19b856779360b2f832d98f9d8b8b2d3ccb06d3837949a0b3fbe3fe430"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 45423
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.890180+00:00"
+}

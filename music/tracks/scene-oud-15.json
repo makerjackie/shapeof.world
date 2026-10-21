@@ -1,0 +1,179 @@
+{
+  "id": "scene-oud-15",
+  "code": "SCENE-13-15",
+  "title": {
+    "en": "Copper Compass · 15",
+    "zh": "铜色罗盘 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "lively geographical discovery",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "bass guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for lively geographical discovery. Instruments: oud, darbuka, bass guitar. 120 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat jazz-funk track featuring a prominent walking bassline, bright piano chords, and a steady drum beat. The music has a positive and energetic feel.",
+    "zh": "一首活泼乐观的爵士放克音乐，以突出的行进贝斯线、明亮的钢琴和稳定的鼓点为特色。音乐整体感觉积极向上，充满活力。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "lively geographical discovery"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:16:06.031779+00:00",
+  "generation": {
+    "id": "29da75a4-cecf-4fa5-b104-b968a0e0576f",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:15:53.414323+00:00",
+    "completedAt": "2026-09-22T09:16:06.031779+00:00",
+    "interactionId": "SkeyatyBB7ve694PlMeHuQ4",
+    "sha256": "6a4fcbc54405696b04d124bda7f9197af15bbbde281b14a1ab8892a8c90a1cef"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat jazz-funk track featuring a prominent walking bassline, bright piano chords, and a steady drum beat. The music has a positive and energetic feel.",
+      "zh": "一首活泼乐观的爵士放克音乐，以突出的行进贝斯线、明亮的钢琴和稳定的鼓点为特色。音乐整体感觉积极向上，充满活力。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Piano",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Lively",
+      "Funky"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The track is well-produced, has a clear structure, and a positive, engaging sound suitable for various media uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a full, energetic jazz-funk groove featuring bass, piano, and drums. It concludes with a smooth, deliberate fade-out of the main instrumental arrangement.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:18.105873+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b4f2e0984485cd7cee8bfca4ef7ce4efdcaf7d0cde56053d292e58637d181910"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.648917,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental piece featuring acoustic guitar, bass, drums, and a wind instrument playing a cheerful melody.",
+      "zh": "一首活泼欢快的器乐曲，以原声吉他、贝斯、鼓和一件管乐器演奏着愉快的旋律。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Wind Instrument"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Cheerful",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean, well-produced instrumental track with a clear melody and good rhythm.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:11.483023+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 14.648917,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-oud-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-oud-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-oud-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b4f2e0984485cd7cee8bfca4ef7ce4efdcaf7d0cde56053d292e58637d181910",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6a4fcbc54405696b04d124bda7f9197af15bbbde281b14a1ab8892a8c90a1cef",
+      "bytes": 719242,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "edac04934d01b7d05e054c61a6f202d53ffe41383222f78e06275e9bab10eaff",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.849386+00:00"
+}

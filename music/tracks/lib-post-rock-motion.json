@@ -1,0 +1,101 @@
+{
+  "id": "lib-post-rock-motion",
+  "code": "LIB-30-08",
+  "title": {
+    "en": "Motion — Post Rock",
+    "zh": "跃动 · 后摇"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "post-rock"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "B minor",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental post-rock instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 112 BPM; B minor. Main idea: an ascending fourth answered by a stepwise descent. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A dynamic and energetic instrumental track featuring driving electric guitars, powerful drums, and uplifting synthesizers. It builds from a steady rock groove to a more complex and layered soundscape with arpeggiated synths and melodic leads.",
+    "zh": "一首充满活力和动感的纯音乐曲目，以强劲的电吉他、有力的鼓点和振奋人心的合成器为特色。它从稳定的摇滚律动发展到更复杂、层次丰富的音景，带有琶音合成器和旋律主音。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.737,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:20:18.834215+00:00",
+  "generation": {
+    "id": "55342829-81f6-4464-8964-b7e21b16a4cc",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:19:28.555930+00:00",
+    "completedAt": "2026-09-09T09:20:18.834215+00:00",
+    "interactionId": "oSShatb6OfWJ88EPntfq6A4",
+    "sha256": "3e8ac7b7dbb3b91ffa53a5e86952a913d778dc37393029a873ee1282a7fe60ed"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dynamic and energetic instrumental track featuring driving electric guitars, powerful drums, and uplifting synthesizers. It builds from a steady rock groove to a more complex and layered soundscape with arpeggiated synths and melodic leads.",
+      "zh": "一首充满活力和动感的纯音乐曲目，以强劲的电吉他、有力的鼓点和振奋人心的合成器为特色。它从稳定的摇滚律动发展到更复杂、层次丰富的音景，带有琶音合成器和旋律主音。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "synthesizer"
+    ],
+    "moods": [
+      "energetic",
+      "driving",
+      "uplifting",
+      "modern",
+      "powerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:20:30.543336+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:24:19.885964+00:00"
+}

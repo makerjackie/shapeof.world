@@ -1,0 +1,128 @@
+{
+  "id": "scene-funk-90",
+  "code": "SCENE-01-90",
+  "title": {
+    "en": "Pocket Camera · 90",
+    "zh": "口袋相机 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted guitar",
+    "elastic bass",
+    "dry drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for syncopated stop-motion product reveal. Instruments: muted guitar, elastic bass, dry drums. 112 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A clean, upbeat instrumental track featuring a prominent electric guitar melody over a steady bass and drum rhythm. It has a bright, slightly jazzy/bluesy feel.",
+    "zh": "一首干净、欢快的器乐曲，以突出的电吉他旋律为主，配以稳定的贝斯和鼓点节奏。整体感觉明亮，略带爵士/布鲁斯风格。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 88.581,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:10:37.234413+00:00",
+  "generation": {
+    "id": "95068989-fe71-4bed-aaa6-81394e57e975",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:09:58.193104+00:00",
+    "completedAt": "2026-09-22T09:10:37.234413+00:00",
+    "interactionId": "50WyavnqKpqE694P7omguQ0",
+    "sha256": "7e5d2bded214e79b77c019f50bc0750df9fc8445f5a98f90d26ea6c4c2fc63fd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A clean, upbeat instrumental track featuring a prominent electric guitar melody over a steady bass and drum rhythm. It has a bright, slightly jazzy/bluesy feel.",
+      "zh": "一首干净、欢快的器乐曲，以突出的电吉他旋律为主，配以稳定的贝斯和鼓点节奏。整体感觉明亮，略带爵士/布鲁斯风格。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "cheerful",
+      "groovy",
+      "relaxed"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "The audio is a well-produced, clean instrumental track with a clear melody and good rhythm, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:55.248860+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-funk-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-funk-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-funk-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2cfb12523f4fbe810acab2fc280d11b9ca0b97bbe866594ea81eb91a1238f530",
+      "bytes": 1240912,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "7e5d2bded214e79b77c019f50bc0750df9fc8445f5a98f90d26ea6c4c2fc63fd",
+      "bytes": 2133616,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3d815e390c64374e59abb994a2d2eaa73ab620eb6868b219bd369836a294899c",
+      "bytes": 2782,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.831076+00:00"
+}

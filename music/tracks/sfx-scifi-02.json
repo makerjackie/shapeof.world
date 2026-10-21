@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-02",
+  "code": "SFX-SCIFI-02",
+  "title": {
+    "en": "Plasma shot",
+    "zh": "等离子发射"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 1,
+  "seed": 2695119881,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized plasma shot for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的等离子发射合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.54,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2695119881,
+    "sha256": "a61f4abd3654db9b3264785a3640a9b0c6d0c596f02fe8405d78d3272282bf56",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "379614f55425df4b2ba0ea89ab0f551ae33d08b835eed141a2383064ff1f7ffa",
+      "bytes": 8454,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a61f4abd3654db9b3264785a3640a9b0c6d0c596f02fe8405d78d3272282bf56",
+      "bytes": 47672,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "58650949ac5b87790d91f642dce317e6f0c81a62af159241b2edc6f38896cf02",
+      "bytes": 11239,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f552f8f356b19089e85304042f78d924e2f9908963966c43a8ef419c69f9360e",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 23814,
+    "duration": 0.54,
+    "peakDbfs": -5.02,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.869689967036197e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.0742302246093749,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A fast, upward-sweeping whoosh or swoosh sound effect with a synthesized, slightly digital quality and a short decay.",
+      "zh": "快速上升的嗖嗖声，带有合成或电子音质，衰减迅速。"
+    },
+    "reason": "Clean, distinct, and versatile synthesized whoosh sound effect, free from defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:58.476952+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "379614f55425df4b2ba0ea89ab0f551ae33d08b835eed141a2383064ff1f7ffa"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 23814
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.898412+00:00"
+}

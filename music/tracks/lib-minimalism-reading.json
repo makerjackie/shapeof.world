@@ -1,0 +1,99 @@
+{
+  "id": "lib-minimalism-reading",
+  "code": "LIB-04-01",
+  "title": {
+    "en": "Reading — Minimalism",
+    "zh": "静读 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 100,
+  "key": "D major",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic minimalism instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 100 BPM; D major. Main idea: alternating short and long phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A classical-style instrumental piece featuring piano and strings, evolving from a gentle, reflective opening to a more dramatic and emotional section.",
+    "zh": "一首古典风格的器乐作品，以钢琴和弦乐为主，从柔和、沉思的开场发展到更具戏剧性和情感的段落。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.07,
+  "generatedAt": "2026-09-09T07:52:29.348748+00:00",
+  "generation": {
+    "id": "0ba7f4ff-5d6e-4053-81f5-ec6f02810a9c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:51:49.774169+00:00",
+    "completedAt": "2026-09-09T07:52:29.348748+00:00",
+    "interactionId": "FxChapCBEsy5jMwP4P3F-Qs",
+    "sha256": "933d190c4110c8c69c9d45a8ccd7a3b1e03dfe82a8ea444e6040cdc24250918b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style instrumental piece featuring piano and strings, evolving from a gentle, reflective opening to a more dramatic and emotional section.",
+      "zh": "一首古典风格的器乐作品，以钢琴和弦乐为主，从柔和、沉思的开场发展到更具戏剧性和情感的段落。"
+    },
+    "instruments": [
+      "piano",
+      "strings"
+    ],
+    "moods": [
+      "reflective",
+      "melancholic",
+      "emotional",
+      "dramatic",
+      "classical"
+    ],
+    "energy": 3,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-produced instrumental piece with clear instrumentation and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:52:37.743457+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:53:38.504531+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

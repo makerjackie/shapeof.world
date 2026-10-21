@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-03",
+  "code": "SFX-FOOTSTEP-03",
+  "title": {
+    "en": "Gravel step",
+    "zh": "碎石脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 2,
+  "seed": 1265426795,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized gravel step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的碎石脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.44,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1265426795,
+    "sha256": "cd947cfd89829dc78901aca361494eb6b9782cbd5e1263543474ad4d9ffb968c",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "749504cb9a1c3e1dab62c47d29ade817c37a09d406fbaac97f499283b36201e1",
+      "bytes": 6992,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cd947cfd89829dc78901aca361494eb6b9782cbd5e1263543474ad4d9ffb968c",
+      "bytes": 38852,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "93413de17500d24d656dc64890da41a70ced945f6eb331fc31c683cd146ab115",
+      "bytes": 10541,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6966dd94dbd99d2eebe38afc132eb87194aa229e8aa8e984c11432977fe25bf5",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19404,
+    "duration": 0.44,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.39,
+    "dcOffset": 1.572746759688724e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2253082275390652,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, percussive impact sound, like a quick slap or thwack.",
+      "zh": "短促、尖锐的打击声，类似于快速的拍打或重击声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined percussive impact, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:01.026914+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "749504cb9a1c3e1dab62c47d29ade817c37a09d406fbaac97f499283b36201e1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19404
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.868267+00:00"
+}

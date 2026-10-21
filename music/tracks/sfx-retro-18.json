@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-18",
+  "code": "SFX-RETRO-18",
+  "title": {
+    "en": "Retro cancel",
+    "zh": "复古取消"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 17,
+  "seed": 1354422258,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized retro cancel for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的复古取消合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.05,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1354422258,
+    "sha256": "6753543c59065423565f0c62b256914549db1d11a35aa45bd9c73ca8c0e4cb25",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c03dd20b51398c0f3e632c8e253ea2b626077e884e88a0bc8313da5cdaa9f558",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6753543c59065423565f0c62b256914549db1d11a35aa45bd9c73ca8c0e4cb25",
+      "bytes": 92654,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e12d4a66cf3b141903236e3a458f01ad0ebbdab1a20abfe8e9e28340f818a1f3",
+      "bytes": 19641,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "dec1686ae7440014f7cdef1dc9fe285f033c82d3a55a8f16c7266ff052bfb1f1",
+      "bytes": 1868,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46305,
+    "duration": 1.05,
+    "peakDbfs": -4.18,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.209601673010474e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.085205078125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh or swoosh sound effect with a distinct pitch sweep, starting higher, descending, and then rising again, resembling a quick pass or transition.",
+      "zh": "一个短促的合成嗖嗖声或呼啸声，具有明显的音高扫频，先从高音下降，然后再次上升，类似于快速经过或过渡的效果。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthetic sound effect, suitable for various sound design applications like transitions, impacts, or UI feedback. No defects or unintended elements are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:28.679839+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c03dd20b51398c0f3e632c8e253ea2b626077e884e88a0bc8313da5cdaa9f558"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46305
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.897422+00:00"
+}

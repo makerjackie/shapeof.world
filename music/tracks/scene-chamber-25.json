@@ -1,0 +1,182 @@
+{
+  "id": "scene-chamber-25",
+  "code": "SCENE-04-25",
+  "title": {
+    "en": "Tiny Inventions · 25",
+    "zh": "小小发明 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "witty tactile miniature mechanisms",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "bass clarinet",
+    "woodblock"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for witty tactile miniature mechanisms. Instruments: pizzicato cello, bass clarinet, woodblock. 116 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A playful and light orchestral piece featuring prominent woodwinds and pizzicato strings, creating a whimsical and slightly comedic atmosphere.",
+    "zh": "一首活泼轻快的管弦乐曲，以突出的木管乐器和拨弦乐器为主，营造出异想天开且略带喜剧色彩的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "witty tactile miniature mechanisms"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:11:21.757791+00:00",
+  "generation": {
+    "id": "305653f6-589e-406c-9199-8cb45a175299",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:11:08.390328+00:00",
+    "completedAt": "2026-09-22T09:11:21.757791+00:00",
+    "interactionId": "LUayaoWhLpaG694PsJfvuAI",
+    "sha256": "4a70c9d5e91cf5dfc4f4b074f4f3e7e94665ec4a5422891c61d4f860c7a8842e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A playful and light orchestral piece featuring prominent woodwinds and pizzicato strings, creating a whimsical and slightly comedic atmosphere.",
+      "zh": "一首活泼轻快的管弦乐曲，以突出的木管乐器和拨弦乐器为主，营造出异想天开且略带喜剧色彩的氛围。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Flute",
+      "Pizzicato Strings",
+      "Bowed Strings",
+      "French Horn",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Cheerful",
+      "Comedic",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is clean, well-produced, and features clear instrumentation without any defects, making it suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The piece opens immediately with a distinctive, playful clarinet melody accompanied by pizzicato strings, establishing a clear theme. It concludes with a full orchestral chord, providing a definitive and resolved musical finish.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:36.443932+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "465ee23b22b6724a5b273104d81119687b9c6a81ec803a56fc21ab0b53c94dbc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful instrumental piece featuring a prominent high-pitched wind melody over a plucked string accompaniment.",
+      "zh": "一段轻松活泼的器乐作品，以高音木管乐器演奏的主旋律为主，并伴有拨弦乐器的伴奏。"
+    },
+    "instruments": [
+      "Flute",
+      "Pizzicato Strings",
+      "Ukulele"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Light",
+      "Cheerful",
+      "Innocent"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:29.184636+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chamber-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chamber-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chamber-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "465ee23b22b6724a5b273104d81119687b9c6a81ec803a56fc21ab0b53c94dbc",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4a70c9d5e91cf5dfc4f4b074f4f3e7e94665ec4a5422891c61d4f860c7a8842e",
+      "bytes": 746200,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "edc1d6c40263df67fbe9fa9454e3654b62cc547a94387adce889a54079447703",
+      "bytes": 2797,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.827493+00:00"
+}

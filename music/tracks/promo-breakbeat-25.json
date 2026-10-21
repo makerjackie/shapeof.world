@@ -1,0 +1,159 @@
+{
+  "id": "promo-breakbeat-25",
+  "code": "PROMO-02-25",
+  "title": {
+    "en": "Fast Forward · 25",
+    "zh": "快进一格 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 136,
+  "key": "",
+  "instruments": [
+    "chopped acoustic drums",
+    "analog synth plucks",
+    "tight bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: crisp breakbeat; energetic drum edits and a two-note synth hook. Instruments: chopped acoustic drums, analog synth plucks, tight bass. Tempo 136 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and driving electronic track featuring a pulsating synth bass, punchy drums, and a catchy, uplifting synth melody. It builds in intensity with a riser before a dynamic drop.",
+    "zh": "一首充满活力和驱动力的电子音乐，以脉动的合成器低音、强劲的鼓点和抓耳、振奋的合成器旋律为特色。通过上升音效增强强度，随后迎来一个充满活力的爆发。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:20:54.070433+00:00",
+  "generation": {
+    "id": "6b384900-099c-42c7-abf9-4b16161ad9c8",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:20:41.067495+00:00",
+    "completedAt": "2026-09-10T05:20:54.070433+00:00",
+    "interactionId": "KT6iapXiOaLijNAPs_zQyQE",
+    "sha256": "0171f4dd6499e6b421ab6dc52f52165c7bd964da0c30a47904103f1549bf2768"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving electronic track featuring a pulsating synth bass, punchy drums, and a catchy, uplifting synth melody. It builds in intensity with a riser before a dynamic drop.",
+      "zh": "一首充满活力和驱动力的电子音乐，以脉动的合成器低音、强劲的鼓点和抓耳、振奋的合成器旋律为特色。通过上升音效增强强度，随后迎来一个充满活力的爆发。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Electronic Percussion"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Driving",
+      "Modern",
+      "Dynamic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, dynamic, and suitable for various media applications requiring an energetic electronic sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a strong, driving electronic beat and a catchy synth melody. It concludes with a smooth, relatively quick fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:30.628615+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "f40032496aeb3f2b16646ce89e952e283af39e7cb9ccae1fbf1e7649a3e25b9d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 28.342792,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic dance track featuring a driving beat, pulsing synth bass, and repetitive synth melodies, creating a dynamic and rhythmic atmosphere.",
+      "zh": "一首充满活力的电子舞曲，具有强劲的节拍、脉动的合成器低音和重复的合成器旋律，营造出动感十足的节奏氛围。"
+    },
+    "instruments": [
+      "Electronic drums",
+      "Synthesizer",
+      "Bass synthesizer"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Danceable",
+      "Rhythmic",
+      "Upbeat"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:21.885279+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 3.3427919999999993,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-breakbeat-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:40.323506+00:00"
+}

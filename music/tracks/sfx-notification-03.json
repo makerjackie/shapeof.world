@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-03",
+  "code": "SFX-NOTIFICATION-03",
+  "title": {
+    "en": "Warning pair",
+    "zh": "双音警告"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 2,
+  "seed": 562910860,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized warning pair for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的双音警告合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.03,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 562910860,
+    "sha256": "9bd3b2111df1fc7f06de3dd78dcaa8687d5e139c3d81e239142b44d831389aca",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "738227a23cab09a46c1f24bd7b923f8841a3acebbe624004c831917a43a32d67",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9bd3b2111df1fc7f06de3dd78dcaa8687d5e139c3d81e239142b44d831389aca",
+      "bytes": 90890,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a060b9b83723d245f49f8eca69d15d5ebdd7f4165b067320e3b955b2761c9359",
+      "bytes": 9030,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "68cb2925b90273f9bbe93eb9f4627c76a91e13c55c24767de6adb5f6d85afad6",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 45423,
+    "duration": 1.03,
+    "peakDbfs": -4.71,
+    "rmsDbfs": -17.08,
+    "dcOffset": -8.532532905961738e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04559326171875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic ping or chime sound with a slight downward pitch bend. It is clean and digital.",
+      "zh": "短促、高音的电子“叮”声或“提示音”，带有一点点下行的音高弯曲。声音干净，数字化。"
+    },
+    "reason": "The audio is a clean, well-produced electronic sound effect, suitable for various UI or notification purposes. No defects or unintended elements were detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:16.732913+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "738227a23cab09a46c1f24bd7b923f8841a3acebbe624004c831917a43a32d67"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 45423
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.889128+00:00"
+}

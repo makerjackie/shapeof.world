@@ -1,0 +1,101 @@
+{
+  "id": "lib-synthwave-suspense",
+  "code": "LIB-26-09",
+  "title": {
+    "en": "Shadows — Synthwave",
+    "zh": "暗影 · 合成器浪潮"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "synthwave"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "G minor",
+  "instruments": [
+    "analog arpeggiator",
+    "synth bass",
+    "electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second instrumental synthwave instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: analog arpeggiator, synth bass, electronic drums. Style: steady retro pulse with luminous melodic synth phrases. Tempo approximately 100 BPM; G minor. Main idea: alternating short and long phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A dark, atmospheric electronic track with a driving beat, featuring synth pads, arpeggiated melodies, and a strong rhythmic foundation. It builds tension and has a slightly melancholic yet energetic feel.",
+    "zh": "一首黑暗、大气的电子音乐，带有强劲的节拍，以合成器铺垫、琶音旋律和坚实的节奏基础为特色。它营造出紧张感，并带有一丝忧郁而充满活力的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 172.931,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:08:36.796874+00:00",
+  "generation": {
+    "id": "664a7ee2-2f53-4ab5-8b4e-ca2ba5073dfd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:07:45.468748+00:00",
+    "completedAt": "2026-09-09T09:08:36.796874+00:00",
+    "interactionId": "4yGhat_CFPvQk7QP1oSVuAc",
+    "sha256": "87ad69df660e98599c1133915be497a9ff6a05e026871ad8ef0d34e8f1de5e0d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dark, atmospheric electronic track with a driving beat, featuring synth pads, arpeggiated melodies, and a strong rhythmic foundation. It builds tension and has a slightly melancholic yet energetic feel.",
+      "zh": "一首黑暗、大气的电子音乐，带有强劲的节拍，以合成器铺垫、琶音旋律和坚实的节奏基础为特色。它营造出紧张感，并带有一丝忧郁而充满活力的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Dark",
+      "Atmospheric",
+      "Melancholic",
+      "Driving",
+      "Tense",
+      "Futuristic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The track is well-produced, free of defects, and suitable for various media applications requiring an atmospheric electronic background.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:08:49.438286+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-synthwave-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-synthwave-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-synthwave-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:10:24.817177+00:00"
+}

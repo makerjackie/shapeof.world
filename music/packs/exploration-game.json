@@ -1,0 +1,100 @@
+{
+  "id": "exploration-game",
+  "title": {
+    "en": "Exploration game starter",
+    "zh": "探索游戏入门套件"
+  },
+  "description": {
+    "en": "Looping music, designed rain ambience and two event sounds. A 30-second mix demonstrates the balance.",
+    "zh": "循环配乐、合成细雨与两种事件音效。30 秒混音示范背景与交互声音的配合。"
+  },
+  "duration": 30,
+  "schemaVersion": 1,
+  "kind": "scene-kit",
+  "isIndependentComposition": false,
+  "events": [
+    {
+      "id": "scene-game-ambient-exploration",
+      "role": "loop",
+      "use": "music-loop",
+      "atSeconds": 0,
+      "gainDb": -9,
+      "url": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-exploration/v1/loop.wav",
+      "sha256": "edcaa6cf473a9bd8749fe3b47f7013305ca6e721ce252369bca10861b5f33593",
+      "file": "audio/scene-game-ambient-exploration-loop.wav"
+    },
+    {
+      "id": "ambience-rain-01",
+      "role": "master",
+      "use": "ambience",
+      "atSeconds": 0,
+      "gainDb": -20,
+      "url": "https://music-cdn.shapeof.world/tracks/ambience-rain-01/v1/master.wav",
+      "sha256": "ad8801e18f3260c01fb8d694a401172145f41fb4f8a349a8720c53858be94fd2",
+      "file": "audio/ambience-rain-01-master.wav"
+    },
+    {
+      "id": "sfx-ui-01",
+      "role": "master",
+      "use": "interaction",
+      "atSeconds": 8,
+      "gainDb": -5,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-ui-01/v1/master.wav",
+      "sha256": "1d34a61b23227718f303e8e2ab69865018ed33adb59b265d162b0d5a6485fb33",
+      "file": "audio/sfx-ui-01-master.wav"
+    },
+    {
+      "id": "sfx-impact-01",
+      "role": "master",
+      "use": "event",
+      "atSeconds": 19,
+      "gainDb": -5,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-impact-01/v1/master.wav",
+      "sha256": "e2268a19e55b2dc87d932f7167ba8183b6e079c83b22b9e6eea4d9c197fcece7",
+      "file": "audio/sfx-impact-01-master.wav"
+    }
+  ],
+  "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and melancholic piano melody accompanied by soft, sustained string pads, creating a peaceful and reflective atmosphere.",
+      "zh": "宁静而忧郁的钢琴旋律，伴随着柔和、持续的弦乐衬底，营造出平和而沉思的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "string pads"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "melancholic",
+      "reflective",
+      "serene"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:55:21.211792+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "assets": {
+    "preview": {
+      "url": "https://music-cdn.shapeof.world/kits/exploration-game/641aaf9f8efc8e12/preview.mp3",
+      "sha256": "641aaf9f8efc8e124d7b6a9dc4df33263f137ff346c15cf4a4b8a156760ed0e5",
+      "bytes": 601382
+    },
+    "download": {
+      "url": "https://music-cdn.shapeof.world/kits/exploration-game/427c1e47966f11c8/kit.zip",
+      "sha256": "427c1e47966f11c8241da9b0f904061ca3aeb3ca7739e28f69e117e0ca8d926a",
+      "bytes": 13162321
+    }
+  },
+  "status": "published",
+  "verifiedAt": "2026-09-22T09:55:45.366090+00:00"
+}

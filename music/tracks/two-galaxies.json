@@ -1,0 +1,61 @@
+{
+  "id": "two-galaxies",
+  "code": "COS-C02",
+  "title": {
+    "en": "Two Galaxies",
+    "zh": "两个星系"
+  },
+  "category": "cosmos",
+  "archetype": "event",
+  "moods": [
+    "kinetic",
+    "tidal",
+    "dual",
+    "luminous"
+  ],
+  "topics": [
+    "galaxy-collision",
+    "tidal-tails",
+    "merger"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "F# minor",
+  "instruments": [
+    "layered strings",
+    "pulsing analog bass",
+    "metallic percussion",
+    "wide synth choir-substitute pads"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.442,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about two galaxies approaching, distorting and beginning to merge. Around 100 BPM, F# minor. Two distinct string motifs in different keys lean toward each other; analog bass pulses like rotating cores; metallic percussion marks close passage. Kinetic and tidal, not militaristic. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No choir, use wordless synth pads only as atmosphere, never as a sung line. No trailer drums.\n\n[00:00–00:30] Motif A left, motif B right, both slow, unaware.\n[00:30–01:10] Motifs accelerate; bass pulses start; pitches bend as if tidally stretched.\n[01:10–01:50] Close passage: metallic hits, overlapping strings, brief dissonance, then a shared pulse.\n[01:50–02:30] A single merged figure, still restless, thinning into two lingering tails.\n",
+  "recommendedWorldIds": [
+    "galaxy-collision"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:26:24Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/two-galaxies/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/two-galaxies/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/two-galaxies/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:12.548872+00:00",
+  "generation": {
+    "id": "8d7850b8-2904-4d90-a53f-8ecf3338ff3a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:25:29Z",
+    "completedAt": "2026-08-25T10:26:24Z",
+    "durationMs": 55000,
+    "interactionId": "m22Nat65AfXq8vUPq5OsgAM",
+    "clientRequestId": "6a822505-deb2-4c95-b3c4-c7ccdfcde97c",
+    "synthid": true,
+    "c2pa": "urn:c2pa:1a55b6f3-2ca6-57ec-6c46-42c93dba3ca8",
+    "sha256": "57d8e0fe83b68a4fd1c50450304ff5448ac437dc674d782f45cace65ac62b8f9"
+  }
+}

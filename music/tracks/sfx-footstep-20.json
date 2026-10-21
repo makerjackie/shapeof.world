@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-20",
+  "code": "SFX-FOOTSTEP-20",
+  "title": {
+    "en": "Heavy stomp",
+    "zh": "沉重跺脚"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 19,
+  "seed": 3608452889,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized heavy stomp for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的沉重跺脚合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3608452889,
+    "sha256": "6c21dec8bc5fa2f85a57f9ea41cdde43c7f9623838ce9c726129d40d0d7fd990",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "716c4b0fe9daaef5be076e666b6cb8fd758594c36fff59699db149918a2d44e6",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6c21dec8bc5fa2f85a57f9ea41cdde43c7f9623838ce9c726129d40d0d7fd990",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8cf2a138ba438ccfe701d8bd57b0b9a59573fec8cda087f74d75b1ca96698249",
+      "bytes": 9320,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "228646b1df41df7ccccdf226bcb685c257f97e4e1bcadfa756398d1004b3b546",
+      "bytes": 1946,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.4,
+    "dcOffset": 7.053164314604047e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.20655487060546807,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or whoosh sound effect, with a quick attack and decay.",
+      "zh": "一个短促、尖锐、高音调的电子冲击或嗖嗖声效果，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct electronic sound effect, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:17.730156+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "716c4b0fe9daaef5be076e666b6cb8fd758594c36fff59699db149918a2d44e6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.871566+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-13",
+  "code": "SFX-GAME-13",
+  "title": {
+    "en": "Door unlock",
+    "zh": "解锁门锁"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 12,
+  "seed": 456842718,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized door unlock for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的解锁门锁合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.2,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 456842718,
+    "sha256": "b64c355371fada7754ff0852d04b0ea929f39034681d2ef2b001240793be4c6c",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a5003e13bc2f1b14c2106a9b42383b48eafd4d717123a656b2da114267fbf3dc",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b64c355371fada7754ff0852d04b0ea929f39034681d2ef2b001240793be4c6c",
+      "bytes": 105884,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5fe3c799f7b0e5c5c1c9384e4296f64c86b0597aecc1de1a67157d8c703885af",
+      "bytes": 9773,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "27142d50f27f7a85efaf9837b1a355991671460f6365559da110d7fdc2cda181",
+      "bytes": 1898,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52920,
+    "duration": 1.2,
+    "peakDbfs": -3.72,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.9848160401313303e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.067291259765625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing sound effect, reminiscent of a spring or cartoon bounce.",
+      "zh": "一个短促的合成弹簧音效，类似于弹簧或卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, intentionally synthesized effect with no defects, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:48.493167+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a5003e13bc2f1b14c2106a9b42383b48eafd4d717123a656b2da114267fbf3dc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52920
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.874089+00:00"
+}

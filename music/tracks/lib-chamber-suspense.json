@@ -1,0 +1,99 @@
+{
+  "id": "lib-chamber-suspense",
+  "code": "LIB-02-09",
+  "title": {
+    "en": "Shadows — Chamber",
+    "zh": "暗影 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "chamber"
+  ],
+  "energy": 3,
+  "bpm": 76,
+  "key": "G minor",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second chamber classical instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 76 BPM; G minor. Main idea: a descending melody with an upward answer. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A classical-style instrumental piece featuring a piano playing a melancholic yet elegant melody, supported by a rich string section with both bowed and pizzicato elements. The piece has a dynamic range, moving from reflective passages to more dramatic and flowing sections, evoking a sense of grace and introspection.",
+    "zh": "一首古典风格的器乐曲，以钢琴演奏忧郁而优雅的旋律为主，并由丰富的弦乐部分（包括弓弦和拨弦）伴奏。该曲具有动态范围，从沉思的段落过渡到更具戏剧性和流畅的乐章，唤起一种优雅和内省的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 174.942,
+  "generatedAt": "2026-09-09T07:46:38.368678+00:00",
+  "generation": {
+    "id": "a6cbfeb2-d056-4fba-8018-efe4b889872b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:45:43.406310+00:00",
+    "completedAt": "2026-09-09T07:46:38.368678+00:00",
+    "interactionId": "qA6havD0L5C9jMwPrKKKyAI",
+    "sha256": "103ff662a9cc003f8a14b17fa1ee36326c9030ef6e6b9d10877e16fa19c06da3"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style instrumental piece featuring a piano playing a melancholic yet elegant melody, supported by a rich string section with both bowed and pizzicato elements. The piece has a dynamic range, moving from reflective passages to more dramatic and flowing sections, evoking a sense of grace and introspection.",
+      "zh": "一首古典风格的器乐曲，以钢琴演奏忧郁而优雅的旋律为主，并由丰富的弦乐部分（包括弓弦和拨弦）伴奏。该曲具有动态范围，从沉思的段落过渡到更具戏剧性和流畅的乐章，唤起一种优雅和内省的感觉。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings"
+    ],
+    "moods": [
+      "Classical",
+      "Elegant",
+      "Melancholic",
+      "Reflective",
+      "Dramatic",
+      "Graceful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:46:52.477681+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:49:03.118879+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

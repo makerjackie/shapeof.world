@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-16",
+  "code": "SFX-MECHANICAL-16",
+  "title": {
+    "en": "Tool spin",
+    "zh": "工具旋转"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 15,
+  "seed": 3757913266,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized tool spin for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的工具旋转合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3757913266,
+    "sha256": "86f55ec713df961c1cfda1b5cdea9595374524b78e304789221925483691754d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b2a253f5e949b3a35b769d3d804b28253697bd053d5f1a5a0619073a55737636",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "86f55ec713df961c1cfda1b5cdea9595374524b78e304789221925483691754d",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6b9a8bcc7e903b108de300c057ae02515261a96327a5467d781f06a078ea1a50",
+      "bytes": 7755,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "72ac710d5f454e45e0284a65f597221368bd96732b5b3b9f8647800674d88ab0",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.44,
+    "dcOffset": -5.32314287894645e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.17731262207031162,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or blip sound effect, resembling a digital notification or a small energy burst.",
+      "zh": "一个短促、高音调的电子“zap”或“blip”音效，类似于数字通知或小型能量爆发声。"
+    },
+    "reason": "The sound is a clean, isolated, and intentionally synthesized effect, suitable for various sound design applications like UI feedback or sci-fi elements. No defects detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:31.446556+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b2a253f5e949b3a35b769d3d804b28253697bd053d5f1a5a0619073a55737636"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.887800+00:00"
+}

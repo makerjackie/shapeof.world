@@ -176,11 +176,15 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
         }
       }
       if (event.data?.type === 'oneworld:black-hole:interaction') {
+        returnToFree()
         controlsRef.current.registerInteraction()
         startMusicOnFirstGesture()
         return
       }
       if (event.data?.type !== 'oneworld:black-hole:ready') return
+      window.dispatchEvent(new CustomEvent('shapeofworld:frame-ready', {
+        detail: { worldId: 'black-hole-flyby' },
+      }))
       setReady(true)
       setStats(getBridge(frameRef.current)?.getStats())
       controlsRef.current.completeOnboarding()
@@ -188,11 +192,11 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
 
     window.addEventListener('message', receiveMessage)
     return () => window.removeEventListener('message', receiveMessage)
-  }, [sceneIndex])
+  }, [returnToFree, sceneIndex])
 
   useEffect(() => {
     // Some embedded WebKit builds can render the scene but never complete the
-    // optional high-resolution Gaia tile readiness signal. Do not leave the
+    // optional high-resolution sky tile readiness signal. Do not leave the
     // branded loading veil over an otherwise interactive canvas forever; the
     // vendor keeps its own progress/error UI underneath until it is usable.
     const fallback = window.setTimeout(() => {
@@ -307,7 +311,7 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
         <div className="bh-flyby-loading" role="status">
           <i />
           <span>{tx('正在铺设光路')}</span>
-          <small>{tx('载入相对论光线模型与 Gaia 星空')}</small>
+          <small>{tx('载入相对论光线模型与程序生成星空')}</small>
         </div>
       )}
 
@@ -516,9 +520,9 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
         steps={guideSteps}
         placement="stage"
         stagePlan={[
-          {position: 'top-left', mobilePosition: 'top-left', motion: 'rise', tone: 'light', width: 'wide', treatment: 'editorial'},
+          {position: 'top-left', mobilePosition: 'top-left', motion: 'rise', tone: 'light', width: 'wide', treatment: 'annotation'},
           {position: 'top-right', mobilePosition: 'top-right', motion: 'drift-left', tone: 'light', width: 'normal', treatment: 'annotation'},
-          {position: 'bottom-left', mobilePosition: 'bottom-left', motion: 'drift-right', tone: 'light', width: 'normal', treatment: 'monumental'},
+          {position: 'bottom-left', mobilePosition: 'bottom-left', motion: 'drift-right', tone: 'light', width: 'wide', treatment: 'annotation'},
           {position: 'bottom-right', mobilePosition: 'bottom-right', motion: 'fade', tone: 'light', width: 'normal', treatment: 'caption'},
         ]}
         defaultOpen={storyMode}

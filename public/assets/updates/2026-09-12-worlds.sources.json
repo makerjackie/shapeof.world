@@ -1,0 +1,248 @@
+{
+  "date": "2026-09-12",
+  "description": "Contact sheet of existing world posters. Labels distinguish public worlds and works in progress. Source rights remain governed by the adjacent poster and world records.",
+  "layout": "1800px width, 5 columns, 6 rows; Chromium HTML capture; cwebp quality 86",
+  "sha256": "1ca56034a95c2e67acb74e97c4f952b55358c9e51cd31addf727d500a1f41a74",
+  "sources": [
+    {
+      "id": "earth-spin-orbit",
+      "label": "交互地球仪",
+      "state": "public",
+      "source": "public/assets/posters/desktop/earth-spin-orbit.webp",
+      "url": "https://shapeof.world/explore/earth-spin-orbit",
+      "sha256": "73635db4fa2200bdbad01e1c4d32724b4711f2ecea8a1b2fce8e0672838f3d4e"
+    },
+    {
+      "id": "moon-voyage",
+      "label": "四天抵达月球",
+      "state": "public",
+      "source": "public/assets/posters/desktop/moon-voyage.webp",
+      "url": "https://shapeof.world/explore/moon-voyage",
+      "sha256": "4fc0e6d05d3d9ae43ddd280ae455b827294f4bb8eae5e09e7ba0d4f0e80c544c"
+    },
+    {
+      "id": "stellar-life",
+      "label": "恒星的一生",
+      "state": "public",
+      "source": "public/assets/posters/desktop/stellar-life.webp",
+      "url": "https://shapeof.world/explore/stellar-life",
+      "sha256": "8c384e6ae4c998a3b9d1b012cccd1a194652864d59106bcacd208c3b91e0e92c"
+    },
+    {
+      "id": "diffusion-denoising",
+      "label": "扩散模型",
+      "state": "public",
+      "source": "public/assets/posters/desktop/diffusion-denoising.webp",
+      "url": "https://shapeof.world/explore/diffusion-denoising",
+      "sha256": "b4de276a0bfe72ccd7ac864647d9d5dd6b6ad6fd0f8f117c805f9f0aab5a4bb6"
+    },
+    {
+      "id": "periodic-table",
+      "label": "元素周期表",
+      "state": "public",
+      "source": "public/assets/posters/desktop/periodic-table.webp",
+      "url": "https://shapeof.world/explore/periodic-table",
+      "sha256": "ecf47792c2857107b000633876e0606947295f3cad26efed819829bba2c93c9c"
+    },
+    {
+      "id": "p-versus-np",
+      "label": "P 与 NP",
+      "state": "public",
+      "source": "public/assets/posters/desktop/p-versus-np.webp",
+      "url": "https://shapeof.world/explore/p-versus-np",
+      "sha256": "7f8c002c724d5da99e25912cc43bee7a2a4dc4d9e940e50ec321181d16fdeb10"
+    },
+    {
+      "id": "riemann-primes",
+      "label": "黎曼猜想",
+      "state": "public",
+      "source": "public/assets/posters/desktop/riemann-primes.webp",
+      "url": "https://shapeof.world/explore/riemann-primes",
+      "sha256": "a25358d47c73259283e66c6841d97eedfec1430c9e2f904501543b590a6587c5"
+    },
+    {
+      "id": "poincare-loops",
+      "label": "庞加莱猜想",
+      "state": "public",
+      "source": "public/assets/posters/desktop/poincare-loops.webp",
+      "url": "https://shapeof.world/explore/poincare-loops",
+      "sha256": "ca32c8bbfbb518a7addd77b94ba6e830afe6a092a8fd5f865949b07945ee052e"
+    },
+    {
+      "id": "hodge-cycles",
+      "label": "霍奇猜想",
+      "state": "public",
+      "source": "public/assets/posters/desktop/hodge-cycles.webp",
+      "url": "https://shapeof.world/explore/hodge-cycles",
+      "sha256": "dd1e027ec67ad5745847bfa49a0c7647b8c1b3e225f1f808f8389a428e56d6db"
+    },
+    {
+      "id": "birch-swinnerton-dyer",
+      "label": "BSD 猜想",
+      "state": "public",
+      "source": "public/assets/posters/desktop/birch-swinnerton-dyer.webp",
+      "url": "https://shapeof.world/explore/birch-swinnerton-dyer",
+      "sha256": "931a859283d55511584640233ef48c1360cf97942575c1d86bb0ec4439c4c238"
+    },
+    {
+      "id": "yang-mills-gap",
+      "label": "杨–米尔斯",
+      "state": "public",
+      "source": "public/assets/posters/desktop/yang-mills-gap.webp",
+      "url": "https://shapeof.world/explore/yang-mills-gap",
+      "sha256": "7854476e402e34316c9603340a72ed5df38929e429bc985702c5931e4aa350b0"
+    },
+    {
+      "id": "navier-stokes-core",
+      "label": "纳维–斯托克斯",
+      "state": "public",
+      "source": "public/assets/posters/desktop/navier-stokes-core.webp",
+      "url": "https://shapeof.world/explore/navier-stokes-core",
+      "sha256": "9410b777b30d83513713f9f5f295faa14ee5bb895a6839d68896eb2533c4a5f1"
+    },
+    {
+      "id": "fluid-sim",
+      "label": "流体与涡旋",
+      "state": "public",
+      "source": "public/assets/posters/desktop/fluid-sim.webp",
+      "url": "https://shapeof.world/explore/fluid-sim",
+      "sha256": "7f0c819b1db8d4b1f338bb67998811c494bc5bd0030c8f5eca873c3e93af32bf"
+    },
+    {
+      "id": "photon",
+      "label": "光子",
+      "state": "public",
+      "source": "public/assets/posters/desktop/photon.webp",
+      "url": "https://shapeof.world/explore/photon",
+      "sha256": "34cdffdf501e4dcd487ccc339c90441f9e1b180503d27079c1a6910ab41d233a"
+    },
+    {
+      "id": "chemical-bonds",
+      "label": "化学键",
+      "state": "making",
+      "source": "public/assets/posters/desktop/chemical-bonds.webp",
+      "url": "https://shapeof.world/explore/chemical-bonds",
+      "sha256": "1f1e0067b78023cf398655c78395427a5cf18c97eea8323bdc0d947f6df6607d"
+    },
+    {
+      "id": "fire-gravity",
+      "label": "烛火的内部",
+      "state": "making",
+      "source": "public/assets/posters/desktop/fire-gravity.webp",
+      "url": "https://shapeof.world/explore/fire-gravity",
+      "sha256": "855eba76a573e10dbe0711b1152e3f1f1519a7d17506d6004b9b43974d977a49"
+    },
+    {
+      "id": "flybody",
+      "label": "果蝇的脑内世界",
+      "state": "making",
+      "source": "public/assets/posters/desktop/flybody.webp",
+      "url": "https://shapeof.world/explore/flybody",
+      "sha256": "c0f1aabba61803a908ce5ba54dc5d5ccf60a41c5af0c0e1446052f8ede2b14bc"
+    },
+    {
+      "id": "conic-distance",
+      "label": "椭圆镜",
+      "state": "making",
+      "source": "public/assets/posters/desktop/conic-distance.webp",
+      "url": "https://shapeof.world/explore/conic-distance",
+      "sha256": "0c2ef18d657868eb4f151c74854c7c50e12c9a6eadc0bc01b3e1f7d2c5986d25"
+    },
+    {
+      "id": "eddy-current-brake",
+      "label": "涡流制动",
+      "state": "making",
+      "source": "public/assets/posters/desktop/eddy-current-brake.webp",
+      "url": "https://shapeof.world/explore/eddy-current-brake",
+      "sha256": "86784b1f6f41dbe45010705093342ec3f6fecb272c0893cbaa29ec42484463c5"
+    },
+    {
+      "id": "induction-generator",
+      "label": "电磁发电机",
+      "state": "making",
+      "source": "public/assets/posters/desktop/induction-generator.webp",
+      "url": "https://shapeof.world/explore/induction-generator",
+      "sha256": "9f816e7f2a50af891f21e9889904be8aa89d4b088c7c7566c178ce6498118940"
+    },
+    {
+      "id": "transformer",
+      "label": "变压器",
+      "state": "making",
+      "source": "public/assets/posters/desktop/transformer.webp",
+      "url": "https://shapeof.world/explore/transformer",
+      "sha256": "f004843764e7e6c6bba6c6b15e47165af876d78df60ac6d4c0a95b94feaf32a3"
+    },
+    {
+      "id": "light-speed",
+      "label": "为什么追不上光",
+      "state": "making",
+      "source": "public/assets/posters/desktop/light-speed.webp",
+      "url": "https://shapeof.world/explore/light-speed",
+      "sha256": "c217197617e8495e973eab4c26c7adcade095c39a64c1a88a698d29466516de5"
+    },
+    {
+      "id": "standard-model",
+      "label": "基本粒子",
+      "state": "making",
+      "source": "public/assets/posters/desktop/standard-model.webp",
+      "url": "https://shapeof.world/explore/standard-model",
+      "sha256": "e28336f0c626690dce6066c0a6dd8155b1b73563119808d8e4009f43609460d8"
+    },
+    {
+      "id": "tshirt-world",
+      "label": "一件 T 恤的世界",
+      "state": "making",
+      "source": "public/assets/posters/desktop/tshirt-world.webp",
+      "url": "https://shapeof.world/explore/tshirt-world",
+      "sha256": "a0914a5fb2df055b8365a403986b5e472f983ecb57e55d50bf967081c92fe9c8"
+    },
+    {
+      "id": "gravitational-waves",
+      "label": "黑洞碰撞与引力波",
+      "state": "making",
+      "source": "public/assets/posters/desktop/gravitational-waves.webp",
+      "url": "https://shapeof.world/explore/gravitational-waves",
+      "sha256": "fc78d905bb163a5ac6b0147e4dc7edbea33bee0a226c668adab0a6a000be0570"
+    },
+    {
+      "id": "economic-cycles",
+      "label": "经济周期",
+      "state": "making",
+      "source": "public/assets/posters/desktop/economic-cycles.webp",
+      "url": "https://shapeof.world/explore/economic-cycles",
+      "sha256": "3e4555bf84a084c1c2e204a7676bacf47e37177f3406495290cf8bd441653551"
+    },
+    {
+      "id": "folding-beat",
+      "label": "让音乐作画",
+      "state": "making",
+      "source": "public/assets/posters/desktop/folding-beat.webp",
+      "url": "https://shapeof.world/explore/folding-beat",
+      "sha256": "77e74d3a0badc2e6d5691ce03667eed84b85be64cec280eec5db64d7ef9eec05"
+    },
+    {
+      "id": "groove-creature",
+      "label": "小兽的节拍",
+      "state": "making",
+      "source": "public/assets/posters/desktop/groove-creature.webp",
+      "url": "https://shapeof.world/explore/groove-creature",
+      "sha256": "16c94518edf4b9e9250f06ab1013d5e03ea495a40419ff30846440f5823aed2a"
+    },
+    {
+      "id": "music-silk",
+      "label": "音乐织成光",
+      "state": "making",
+      "source": "public/assets/posters/desktop/music-silk.webp",
+      "url": "https://shapeof.world/explore/music-silk",
+      "sha256": "e843d77a6696f57f59f8d9d1c73466f530799bcd52f8e04154e61458217798fb"
+    },
+    {
+      "id": "atomic-chain-reaction",
+      "label": "原子链式反应",
+      "state": "making",
+      "source": "public/assets/posters/desktop/atomic-chain-reaction.webp",
+      "url": "https://shapeof.world/explore/atomic-chain-reaction",
+      "sha256": "b0ef8203bd2677142f4a49ff1ceee06c3d5f326e35f077e8153f751474de03e9"
+    }
+  ]
+}

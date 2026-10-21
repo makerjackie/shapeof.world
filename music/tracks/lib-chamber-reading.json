@@ -1,0 +1,104 @@
+{
+  "id": "lib-chamber-reading",
+  "code": "LIB-02-01",
+  "title": {
+    "en": "Reading — Chamber",
+    "zh": "静读 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "chamber"
+  ],
+  "energy": 3,
+  "bpm": 78,
+  "key": "D major",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second chamber classical instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 78 BPM; D major. Main idea: an ascending fourth answered by a stepwise descent. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A classical chamber piece featuring strings and woodwinds, with a melancholic yet hopeful and dramatic progression. It transitions between slower, reflective passages and more dynamic, expressive sections.",
+    "zh": "一首古典室内乐作品，以弦乐和木管乐器为主，情感上从忧郁到充满希望，并带有戏剧性的发展。乐曲在缓慢、沉思的段落和更具活力、表现力的部分之间切换。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.775,
+  "generatedAt": "2026-09-09T07:42:40.138369+00:00",
+  "generation": {
+    "id": "f70b7e70-6cf7-468c-a501-cb1964d423be",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:42:04.289062+00:00",
+    "completedAt": "2026-09-09T07:42:40.138369+00:00",
+    "interactionId": "zQ2harjXF6KsrtoP65a1oAo",
+    "sha256": "a59c5c331bd2251312fb7dc10b7f2add94347cdd840be979beafc51a72dd2c55"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical chamber piece featuring strings and woodwinds, with a melancholic yet hopeful and dramatic progression. It transitions between slower, reflective passages and more dynamic, expressive sections.",
+      "zh": "一首古典室内乐作品，以弦乐和木管乐器为主，情感上从忧郁到充满希望，并带有戏剧性的发展。乐曲在缓慢、沉思的段落和更具活力、表现力的部分之间切换。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Viola",
+      "Flute",
+      "Clarinet",
+      "Oboe",
+      "Double Bass"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Hopeful",
+      "Dramatic",
+      "Elegant",
+      "Classical"
+    ],
+    "energy": 3,
+    "bpmEstimate": 88,
+    "reason": "The audio is a well-produced instrumental classical piece featuring a chamber ensemble. It has clear instrumentation, no defects, and a dynamic emotional range, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:42:47.442024+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:44:08.121029+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

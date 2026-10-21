@@ -1,0 +1,102 @@
+{
+  "id": "lib-orchestral-explain",
+  "code": "LIB-06-05",
+  "title": {
+    "en": "Discovery — Orchestral",
+    "zh": "发现 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "orchestral"
+  ],
+  "energy": 4,
+  "bpm": 104,
+  "key": "G major",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second orchestral adventure instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 104 BPM; G major. Main idea: a descending melody with an upward answer. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A light and playful orchestral piece with a prominent flute/piccolo melody, supported by pizzicato strings and light percussion. It has a whimsical, classical feel, reminiscent of a ballet or waltz, building in intensity before a gentle fade.",
+    "zh": "一首轻快活泼的管弦乐曲，以长笛/短笛为主旋律，由拨弦乐器和轻柔的打击乐器伴奏。它具有异想天开的古典风格，让人联想到芭蕾舞或华尔兹，强度逐渐增强后又轻柔地淡出。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 86.7,
+  "generatedAt": "2026-09-09T08:00:36.608938+00:00",
+  "generation": {
+    "id": "199afdb6-9d79-4811-8e05-2ce2107f87ce",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:59:55.769112+00:00",
+    "completedAt": "2026-09-09T08:00:36.608938+00:00",
+    "interactionId": "_BGhatXCJf6WjMwPtfeJmQQ",
+    "sha256": "1fcc3c53e43ed1494a21a660d4bc1fdc18db720e51b31c8607786ea6858ca82e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful orchestral piece with a prominent flute/piccolo melody, supported by pizzicato strings and light percussion. It has a whimsical, classical feel, reminiscent of a ballet or waltz, building in intensity before a gentle fade.",
+      "zh": "一首轻快活泼的管弦乐曲，以长笛/短笛为主旋律，由拨弦乐器和轻柔的打击乐器伴奏。它具有异想天开的古典风格，让人联想到芭蕾舞或华尔兹，强度逐渐增强后又轻柔地淡出。"
+    },
+    "instruments": [
+      "Flute",
+      "Piccolo",
+      "Strings (Pizzicato)",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Elegant",
+      "Joyful",
+      "Classical"
+    ],
+    "energy": 4,
+    "bpmEstimate": 120,
+    "reason": "Well-produced orchestral piece with clear instrumentation and engaging melodic content.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:00:51.064616+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:02:28.812822+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

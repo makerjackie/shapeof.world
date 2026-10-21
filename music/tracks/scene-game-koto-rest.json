@@ -1,0 +1,128 @@
+{
+  "id": "scene-game-koto-rest",
+  "code": "GAME-09-4",
+  "title": {
+    "en": "Moonlit Courtyard · Rest",
+    "zh": "月下庭院 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "quiet courtyard exploration",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "",
+  "instruments": [
+    "koto",
+    "bamboo flute",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for quiet courtyard exploration, rest state. Instruments: koto, bamboo flute, soft bass. 82 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A serene and peaceful instrumental piece featuring a blend of wind instruments and strings, creating a calm and reflective atmosphere.",
+    "zh": "一首宁静祥和的器乐作品，融合了管乐器和弦乐，营造出平静而沉思的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 89.835,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:06:49.614550+00:00",
+  "generation": {
+    "id": "9512b0bc-5c34-4578-8867-d3eaa8fbcb81",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:06:09.762433+00:00",
+    "completedAt": "2026-09-22T09:06:49.614550+00:00",
+    "interactionId": "AkWyapy3Jrve694PlMeHuQ4",
+    "sha256": "1f935382f1f30399f6b8f7b9a64dbea081f2fe064ad1d84085dc8f5ce4fe4ab4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and peaceful instrumental piece featuring a blend of wind instruments and strings, creating a calm and reflective atmosphere.",
+      "zh": "一首宁静祥和的器乐作品，融合了管乐器和弦乐，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Clarinet",
+      "Strings",
+      "Pizzicato Strings"
+    ],
+    "moods": [
+      "Peaceful",
+      "Calm",
+      "Serene",
+      "Reflective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean, well-produced instrumental track with a clear mood and instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:07:03.293047+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-koto-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-koto-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-koto-rest/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "243903e7e3fb0c76b46f1f38e75b6ab0dc58d8bea9490613e0d21fa98cc33d02",
+      "bytes": 1258466,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1f935382f1f30399f6b8f7b9a64dbea081f2fe064ad1d84085dc8f5ce4fe4ab4",
+      "bytes": 2163709,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "224902d1043f727b69c0eea4ed1d2f7585e2c256a4cc1a63204bfd7a0abeb542",
+      "bytes": 2807,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.838093+00:00"
+}

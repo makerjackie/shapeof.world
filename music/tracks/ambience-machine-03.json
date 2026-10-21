@@ -1,0 +1,130 @@
+{
+  "id": "ambience-machine-03",
+  "code": "AMB-MACHINE-03",
+  "title": {
+    "en": "Factory hum · designed ambience",
+    "zh": "工厂低鸣 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "machine",
+  "designIndex": 2,
+  "seed": 3889360682,
+  "targetDuration": 60,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized factory hum atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "工厂低鸣的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "machine",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-machine"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 60.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-machine-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-machine-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-machine-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-machine-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3889360682,
+    "sha256": "c173a26e84120d96e996af5bbdf929d5afc1683b3c60aabc69884a01809e4bef",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0d0b9c852371db75502e4efef9c04cfc30256c563fb05a69af59628560c1427c",
+      "bytes": 840820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c173a26e84120d96e996af5bbdf929d5afc1683b3c60aabc69884a01809e4bef",
+      "bytes": 5292044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "da076090a5250d3be439f0839ed5bd903caab46c9cc475d9c8ec9d652aaa7ce9",
+      "bytes": 560796,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "11decd6da437d71e7105b95b81addf03710327569071c0bd6a9f39298079e30c",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 2646000,
+    "duration": 60.0,
+    "peakDbfs": -2.18,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.255852731717687e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.023193359375,
+    "internalStepP999": 0.06353759765625,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A continuous, complex, and evolving synthesized texture featuring a low hum, mid-frequency whirring, and higher-frequency metallic or electronic elements. It evokes the sound of a futuristic machine, engine, or energy field, with a consistent rhythmic pulse.",
+      "zh": "一种连续、复杂且不断演变的合成纹理，具有低沉的嗡嗡声、中频的旋转声以及高频的金属或电子元素。它唤起了未来机器、引擎或能量场的声音，并带有持续的节奏脉动。"
+    },
+    "reason": "The sound is a clean, well-produced, and seamlessly looping synthesized texture. Its complex yet consistent nature makes it highly suitable for various sound design applications, particularly for sci-fi or mechanical environments, without any audible defects or unintended elements.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:53.468794+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "61ccab0779cfd4aeeafbf8f0abfa6c0d838d586c56868230aaa61e0bfea65192"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2646000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.854080+00:00"
+}

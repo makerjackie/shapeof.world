@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-07",
+  "code": "SFX-WATER-07",
+  "title": {
+    "en": "Small splash",
+    "zh": "小水花"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 6,
+  "seed": 2221919756,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized small splash for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的小水花合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.44,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2221919756,
+    "sha256": "aa01266340b8ed3ae5e422fd89558bea1aaeb71b95694cc3f0972e92e9ad3239",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d3162ffb3923688dbdbde24deab2578467fa3fc320838333c95dfd564710a6fe",
+      "bytes": 21254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "aa01266340b8ed3ae5e422fd89558bea1aaeb71b95694cc3f0972e92e9ad3239",
+      "bytes": 127052,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5371beef329c9687c60e9d7a43261784401f8027b7be63e730d86bd490ac5c15",
+      "bytes": 21784,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3b01832159485fdd29b7781f98e0d692f1c6ff5a562e5441b1f2a00f0968830d",
+      "bytes": 1922,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 63504,
+    "duration": 1.44,
+    "peakDbfs": -2.8,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.7964359282486143e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1381069946289062,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A clean, high-pitched, synthesized upward whoosh or sweep sound with a metallic or electronic texture, ending with a subtle shimmering resonance. It evokes a sci-fi or magical transition.",
+      "zh": "一个干净、高音调、合成的向上扫频嗖嗖声，带有金属或电子质感，结尾处有微妙的闪烁共鸣。它唤起科幻或魔法过渡的感觉。"
+    },
+    "reason": "The audio is a well-produced, distinct synthesized sound effect with a clear upward sweep and electronic/metallic character. It is free of technical defects such as clipping, hum, or unwanted noise, making it highly usable for various sound design applications like UI, magic, or sci-fi effects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:37.609543+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d3162ffb3923688dbdbde24deab2578467fa3fc320838333c95dfd564710a6fe"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 63504
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.911188+00:00"
+}

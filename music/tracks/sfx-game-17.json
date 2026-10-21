@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-17",
+  "code": "SFX-GAME-17",
+  "title": {
+    "en": "Double jump",
+    "zh": "二段跳"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 16,
+  "seed": 3398648573,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized double jump for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的二段跳合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.72,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3398648573,
+    "sha256": "c7753bf999e1ba247afe415b2095223c414be45489e096b50dba26723af653f9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a4fceb3299b118aeed2828ccef7acc1a615a97872eb98ac6e91755a0d9e69926",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c7753bf999e1ba247afe415b2095223c414be45489e096b50dba26723af653f9",
+      "bytes": 63548,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "897fa19b2cd7c38933ca0a79f85048052491a1f027af0a713111b6878ecd3f64",
+      "bytes": 6637,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ff5d87b4e9eb4aa909d954eeb6ba5bd8cdedb36614c092e6ccaa540616d53ac5",
+      "bytes": 1908,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 31752,
+    "duration": 0.72,
+    "peakDbfs": -3.91,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.0312850002558895e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.03479766845703125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing sound effect, reminiscent of a spring or cartoon bounce.",
+      "zh": "短促、高音的合成弹簧音效，类似于卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced sound effect without any technical flaws, suitable for game or video sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:52.277740+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a4fceb3299b118aeed2828ccef7acc1a615a97872eb98ac6e91755a0d9e69926"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 31752
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.874973+00:00"
+}

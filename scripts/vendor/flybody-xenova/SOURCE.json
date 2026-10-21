@@ -1,0 +1,15 @@
+{
+  "source": "https://huggingface.co/spaces/Xenova/fruit-fly-simulation",
+  "revision": "776d115ee5aa934578a87fd6d260d138084f59c1",
+  "changes": "Source modules copied unchanged; repository scripts compute and compress replay outputs offline.",
+  "files": {
+    "stimulus.js": "f8fd76fa135e11bbbcd751b3b05653ce27efc281c7f3d20443c1e2c2e720137c",
+    "LICENSE": "ea115798b167e6c995a322a3c9bb714f410df3a2ab49dcba166941ee347907bf",
+    "wings.js": "138989dc0c53536a6d928a1f6180a33a0201c93bef430fa6e501dcfbdf1eb5dc",
+    "controller.js": "591d0bac71181236ccf84b741cf43916ca4a8a27e4ca48606ce8cbd97f282a19",
+    "gait.js": "285cb0ece243d146272ac4d046b5bdca6d06094587d992562b6688ec5e75eed0",
+    "brain.js": "2dc6fdd9407c9dfb52eb8536a1192d3a320951dfa4e7777807c8657c4f4bf9c2",
+    "body/LICENSE": "28d0000d8857280206c926237c256ae8fe190e121415f1f17991586b7fb7d9e7",
+    "body/fk.js": "6613f6e8f9b79222cfd48f1c6c8c84fd077972289d3f1511a08c9cef76fe03d8"
+  }
+}

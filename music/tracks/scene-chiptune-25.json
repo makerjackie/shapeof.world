@@ -1,0 +1,177 @@
+{
+  "id": "scene-chiptune-25",
+  "code": "SCENE-05-25",
+  "title": {
+    "en": "Pocket Planet · 25",
+    "zh": "口袋星球 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "playful original pixel-art motion",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 142,
+  "key": "",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "crisp electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for playful original pixel-art motion. Instruments: pulse-wave lead, triangle bass, crisp electronic drums. 142 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track with a driving beat, synth melodies, and a disco-house feel.",
+    "zh": "一首欢快且充满活力的电子音乐，带有强劲的节拍、合成器旋律和迪斯科浩室风格。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "playful original pixel-art motion"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:11:49.593545+00:00",
+  "generation": {
+    "id": "5a19bdf9-121f-4633-8774-1a4d93d9a4eb",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:11:36.448725+00:00",
+    "completedAt": "2026-09-22T09:11:49.593545+00:00",
+    "interactionId": "SUayatzFFe7i694Pjazv0QI",
+    "sha256": "85feb67fe77d2066f4cf51427ac771a4d7e0ecbe953103bdbee490a61680cfb2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track with a driving beat, synth melodies, and a disco-house feel.",
+      "zh": "一首欢快且充满活力的电子音乐，带有强劲的节拍、合成器旋律和迪斯科浩室风格。"
+    },
+    "instruments": [
+      "synthesizer",
+      "drum machine",
+      "bass guitar"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "dance",
+      "groovy",
+      "positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 124,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a synth melody and a driving beat, and concludes with a smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:05.494134+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "5443bacb5ff03736a83a240f8ed5eb0b7dda2edfccb190e1075c7e82cf79b929"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.533,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "Upbeat electronic track with a chiptune-like melody, prominent bassline, and a steady drum beat.",
+      "zh": "欢快的电子音乐，带有芯片音乐般的旋律，突出的低音线和稳定的鼓点。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Clean production and clear musical structure.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:57.344393+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 2.5330000000000013,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chiptune-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chiptune-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chiptune-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5443bacb5ff03736a83a240f8ed5eb0b7dda2edfccb190e1075c7e82cf79b929",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "85feb67fe77d2066f4cf51427ac771a4d7e0ecbe953103bdbee490a61680cfb2",
+      "bytes": 668460,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b15a49b175d2e673ca3ce1162f34d91f05e2389b6b832c7df5bbf35774f3cb38",
+      "bytes": 2802,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.828234+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-17",
+  "code": "SFX-SCIFI-17",
+  "title": {
+    "en": "Power down",
+    "zh": "系统断电"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 16,
+  "seed": 2289464353,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized power down for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的系统断电合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2289464353,
+    "sha256": "bfe8edcf4171b01b07e35273d7ab9e0e39d42295806963a224406e65aeba5e1f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "53e20c34fd110f1c54f73838fd7010cce5ac6a24456ec77bd7010a69bb95b848",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bfe8edcf4171b01b07e35273d7ab9e0e39d42295806963a224406e65aeba5e1f",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "62345025a01f43be2ee1bfe70e116f2316375f8e286e4d93e0aa687f522f1d43",
+      "bytes": 15072,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "655873eeb8ce5c003ef3e51eb48499d20ca303da5a62d3706ea5c8ba7c6ae77a",
+      "bytes": 1927,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -4.25,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.06462857578929e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15619775390624957,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing or spring sound effect.",
+      "zh": "一个短促、高音调的合成弹簧或弹跳音效。"
+    },
+    "reason": "The sound is a clean, distinct, and well-produced synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:11.396115+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "53e20c34fd110f1c54f73838fd7010cce5ac6a24456ec77bd7010a69bb95b848"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.901764+00:00"
+}

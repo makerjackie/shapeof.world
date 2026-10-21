@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-17",
+  "code": "SFX-FOOTSTEP-17",
+  "title": {
+    "en": "Heel click",
+    "zh": "鞋跟轻响"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 16,
+  "seed": 4105038752,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized heel click for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的鞋跟轻响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4105038752,
+    "sha256": "5d32f3cd06c659c203aaabe77fde22539624267acd0166469ec921e8b29095e8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5bf0c4bbd27c301cd7e9c9fcdb400befe103c21ced42c56b2dbd0cabe6ebc9e4",
+      "bytes": 4797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5d32f3cd06c659c203aaabe77fde22539624267acd0166469ec921e8b29095e8",
+      "bytes": 24740,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f79a91782465145c7318942e478ec62db4cc6996ed85023a7a75205ea52a6c4b",
+      "bytes": 9659,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2c85785ea30a56eae5078b7388d08f0c48b208c70d65e5acfba1a4a71437c18f",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 12348,
+    "duration": 0.28,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.4,
+    "dcOffset": -7.908669420149012e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.28445922851562555,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic impact sound, like a small 'clink' or 'ding'.",
+      "zh": "短促、尖锐的金属撞击声，类似于“叮”或“咔嗒”声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-recorded metallic impact, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:13.784227+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5bf0c4bbd27c301cd7e9c9fcdb400befe103c21ced42c56b2dbd0cabe6ebc9e4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 12348
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.871022+00:00"
+}

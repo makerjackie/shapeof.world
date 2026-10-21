@@ -41,7 +41,7 @@ export default {
     duration: 420,
     evidence: 'modeled',
     accent: '#4dd0e1',
-    related: ['double-pendulum'],
+    related: [],
     sources: [
       {label: 'Navier-Stokes 方程（Wikipedia）', labelEn: 'Navier-Stokes equations (Wikipedia)', url: 'https://zh.wikipedia.org/wiki/纳维-斯托克斯方程'}
     ],

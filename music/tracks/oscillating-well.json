@@ -1,0 +1,59 @@
+{
+  "id": "oscillating-well",
+  "code": "CHE-C01",
+  "title": {
+    "en": "Oscillating Well",
+    "zh": "振荡的井"
+  },
+  "category": "chem-materials",
+  "archetype": "event",
+  "moods": [
+    "cyclic",
+    "chemical",
+    "hypnotic",
+    "spreading"
+  ],
+  "topics": [
+    "bz-waves",
+    "oscillation",
+    "fronts"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "A minor",
+  "instruments": [
+    "tuned toms as color fronts",
+    "bubbling analog",
+    "marimba",
+    "soft noise fizz"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 140.539,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about Belousov–Zhabotinsky chemical waves. Around 108 BPM, A minor. Tuned toms travel as color fronts in concentric circles; bubbling analog and marimba fill the well. Hypnotic, chemical, spreading. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No rock fill, no acid-house cliché.\n\n[00:00–00:22] Quiet fizz, one tom in the center.\n[00:22–01:00] Concentric tom rings expand; marimba answers.\n[01:00–01:40] Fronts collide and reset; analog bubbles denser.\n[01:40–02:30] Rings slow; fizz remains in the well.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:19:15Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/oscillating-well/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/oscillating-well/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/oscillating-well/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:05.187486+00:00",
+  "generation": {
+    "id": "28cdb854-4763-436f-8fea-ade6fd2ffcfe",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:18:25Z",
+    "completedAt": "2026-08-25T10:19:15Z",
+    "durationMs": 50000,
+    "interactionId": "8muNaqOXNdLk694PtoTvoAw",
+    "clientRequestId": "10476f8d-4e1a-48d9-8fef-9510be430614",
+    "synthid": true,
+    "c2pa": "urn:c2pa:383f9266-c4eb-1e75-34a6-48cebf1c9e3d",
+    "sha256": "f33082f2f842d44fe8aceb46ba5e0d8589f5105d9f9ad4e985c482c3e58a9a83"
+  }
+}

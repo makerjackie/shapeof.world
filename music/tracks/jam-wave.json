@@ -1,0 +1,59 @@
+{
+  "id": "jam-wave",
+  "code": "CMP-C01",
+  "title": {
+    "en": "Jam Wave",
+    "zh": "拥堵波"
+  },
+  "category": "computing-engineering",
+  "archetype": "event",
+  "moods": [
+    "flowing",
+    "interrupted",
+    "propagating",
+    "tense"
+  ],
+  "topics": [
+    "phantom-jam",
+    "traffic",
+    "waves"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "E minor",
+  "instruments": [
+    "steady analog pulse",
+    "stuttering percussion",
+    "low brass swell (not fanfare)",
+    "reverse cymbal as brake"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.286,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about free-flowing traffic hit by a phantom jam that travels backward. Around 120 BPM, E minor. A steady analog pulse is the flow; stuttering percussion is braking; a reverse cymbal is the backward-propagating wave; low brass is pressure, not a fanfare melody. Tense, physical. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No car-horn samples, no police sirens, no trailer drum corps.\n\n[00:00–00:25] Smooth analog pulse, even, confident.\n[00:25–00:50] One hitch; percussion stutters; pulse bunches.\n[00:50–01:25] Jam wave travels: density moves backward through the stereo field.\n[01:25–02:00] Release downstream; pulse recovers unevenly.\n[02:00–02:30] Flow returns, a little more cautious.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:16:19Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/jam-wave/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/jam-wave/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/jam-wave/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:47.573557+00:00",
+  "generation": {
+    "id": "5b5b2f3c-5c2d-458b-bdb5-b47ff97804eb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:15:25Z",
+    "completedAt": "2026-08-25T10:16:19Z",
+    "durationMs": 54000,
+    "interactionId": "P2uNar2NF863i9sP7piIkAo",
+    "clientRequestId": "32b9a2e8-21d7-4e44-aa31-1baffca27582",
+    "synthid": true,
+    "c2pa": "urn:c2pa:178981fb-3a41-502c-5027-46f6c4d3de36",
+    "sha256": "98e71ab72de2909f3a3457fdd12228551a2ac6c0866e4d480969f6f06841a910"
+  }
+}

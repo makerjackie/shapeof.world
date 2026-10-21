@@ -48,6 +48,7 @@ const allCategoryById = uniqueById(allCategories, 'category')
 uniqueById(allPaths, 'path')
 const categoryById = uniqueById(categories, 'public category')
 const pathById = uniqueById(paths, 'public path')
+const publicPathBySlug = new Map(paths.map((path) => [path.slug, path]))
 
 function parentIds(category: Category): ReadonlyArray<CategoryId> {
   return [category.primaryParentId, ...(category.additionalParentIds ?? [])]
@@ -84,11 +85,20 @@ function assertCategoryGraph(): void {
   for (const category of allCategories) visit(category.id)
 }
 
+const PATH_SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
 function assertPaths(): void {
+  const slugs = new Set<string>()
   for (const path of allPaths) {
     if (path.worldIds.length === 0) throw new Error(`Path ${path.id} is empty`)
     if (new Set(path.worldIds).size !== path.worldIds.length) {
       throw new Error(`Path ${path.id} repeats a World`)
+    }
+    if (!PATH_SLUG.test(path.slug)) throw new Error(`Path ${path.id} has an invalid slug: ${path.slug}`)
+    if (slugs.has(path.slug)) throw new Error(`Duplicate path slug: ${path.slug}`)
+    slugs.add(path.slug)
+    if (path.stopLabels && path.stopLabels.length !== path.worldIds.length) {
+      throw new Error(`Path ${path.id} stopLabels length must match worldIds`)
     }
   }
 }
@@ -161,6 +171,15 @@ export function getPath(id: PathId): Path | undefined {
   return pathById.get(id)
 }
 
+export function getPathBySlug(slug: string): Path | undefined {
+  return publicPathBySlug.get(slug)
+}
+
+/** Opt-in experiment routes only; ordinary author drafts remain inaccessible. */
+export function getExperimentalPathBySlug(slug: string): Path | undefined {
+  return allPaths.find(path => path.slug === slug && path.experimental === true && path.publication === 'draft')
+}
+
 export function getPathContext(pathId: PathId, worldId: string): PathContext | undefined {
   const path = getPath(pathId)
   if (!path) return undefined
@@ -182,4 +201,5 @@ export type {
   Path,
   PathContext,
   PathId,
+  PathStopLabel,
 } from './types'

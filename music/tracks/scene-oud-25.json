@@ -1,0 +1,182 @@
+{
+  "id": "scene-oud-25",
+  "code": "SCENE-13-25",
+  "title": {
+    "en": "Copper Compass · 25",
+    "zh": "铜色罗盘 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "lively geographical discovery",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "bass guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 25,
+  "prompt": "Create a complete original 60-second instrumental cue in oud style. Use oud, darbuka, bass guitar. Tempo 120 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by rhythmic percussion and a bowed string instrument. It has an energetic and authentic feel.",
+    "zh": "一首活泼的传统中东器乐曲，以突出的乌德琴旋律为主，辅以富有节奏感的打击乐和弓弦乐器。它具有活力和地道的风情。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "lively geographical discovery"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:31:07.286291+00:00",
+  "generation": {
+    "id": "2a1aa296-94d5-4578-833f-590679fb575d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:30:25.791049+00:00",
+    "completedAt": "2026-09-22T09:31:07.286291+00:00",
+    "interactionId": "skqyauevGOG5694P9qvy2Ag",
+    "sha256": "c6f9e1eb0af166954766a5ddebe08e20b518b76d55b735600b617d8a364177e9"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by rhythmic percussion and a bowed string instrument. It has an energetic and authentic feel.",
+      "zh": "一首活泼的传统中东器乐曲，以突出的乌德琴旋律为主，辅以富有节奏感的打击乐和弓弦乐器。它具有活力和地道的风情。"
+    },
+    "instruments": [
+      "Oud",
+      "Percussion",
+      "Bowed String Instrument"
+    ],
+    "moods": [
+      "Lively",
+      "Traditional",
+      "Energetic",
+      "Exotic",
+      "Authentic",
+      "Uplifting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a clear oud melody and percussion. It ends with a natural fade-out and decay of the final notes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:23.016887+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a0b90c4c1b21f2c7ea38d61cea256de46095332ea03472043ac80bd670af7f38"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.932167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by a rhythmic percussion section including darbuka and frame drum, and occasional melodic lines from a wind instrument like a ney. The music has a melancholic yet engaging feel, characteristic of Arabic folk music.",
+      "zh": "一首传统中东器乐曲，以突出的乌德琴旋律为主，辅以达布卡鼓和手鼓等打击乐器，以及类似奈伊笛的管乐器偶尔出现的旋律线。音乐带有忧郁而引人入胜的感觉，是阿拉伯民间音乐的典型特征。"
+    },
+    "instruments": [
+      "Oud",
+      "Darbuka",
+      "Frame Drum",
+      "Ney",
+      "Percussion"
+    ],
+    "moods": [
+      "Traditional",
+      "Folk",
+      "Melancholy",
+      "Reflective",
+      "Exotic",
+      "Calm"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "Well-produced and performed, this track is a clear example of traditional Middle Eastern instrumental music, suitable for various media applications requiring an authentic ethnic sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:14.953055+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 33.932167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-oud-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-oud-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-oud-25/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a0b90c4c1b21f2c7ea38d61cea256de46095332ea03472043ac80bd670af7f38",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c6f9e1eb0af166954766a5ddebe08e20b518b76d55b735600b617d8a364177e9",
+      "bytes": 1422040,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3f72f32d0baacfeb625da690a99b261ad06c87ad5945162c23b57770498f8286",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.469345+00:00"
+}

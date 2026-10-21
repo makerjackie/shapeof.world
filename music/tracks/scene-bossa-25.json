@@ -1,0 +1,180 @@
+{
+  "id": "scene-bossa-25",
+  "code": "SCENE-06-25",
+  "title": {
+    "en": "Window Garden · 25",
+    "zh": "窗边花园 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "sunny home and lifestyle demonstration",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "brushed percussion",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for sunny home and lifestyle demonstration. Instruments: nylon guitar, brushed percussion, upright bass. 106 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively instrumental track featuring a prominent electric guitar melody over a driving drum and bass rhythm. The music has a positive and energetic feel, suitable for promotional content.",
+    "zh": "一首欢快活泼的器乐曲，以突出的电吉他旋律为主，配以强劲的鼓点和贝斯节奏。音乐充满积极和活力，适合宣传内容。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "sunny home and lifestyle demonstration"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:12:19.768409+00:00",
+  "generation": {
+    "id": "93b09c21-fe17-42c2-9bd3-c73b2a52b297",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:06.713665+00:00",
+    "completedAt": "2026-09-22T09:12:19.768409+00:00",
+    "interactionId": "Z0ayarvEM5yA694PvP-84Q0",
+    "sha256": "fa4e7570bb2f097a3dbee70fd0239e68aacaaf2494e26e7b6fdbac62505f3c21"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a prominent electric guitar melody over a driving drum and bass rhythm. The music has a positive and energetic feel, suitable for promotional content.",
+      "zh": "一首欢快活泼的器乐曲，以突出的电吉他旋律为主，配以强劲的鼓点和贝斯节奏。音乐充满积极和活力，适合宣传内容。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "synthesizer"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "lively",
+      "cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "High-quality production, clear instrumentation, and a consistent, engaging musical theme suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy electric guitar melody and a driving drum beat, establishing the main groove. It concludes with a smooth fade-out of the main musical theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:36.109568+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "842b4dc9a406713d7f0e3a9cc2f9aac62004c91df9666af5a6c9f2ef65d4c669"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.910167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth jazz piece featuring a saxophone melody over a relaxed rhythm section with piano, bass, and drums.",
+      "zh": "一首流畅的爵士乐曲，以萨克斯风旋律为主，配以轻松的钢琴、贝斯和鼓的节奏部分。"
+    },
+    "instruments": [
+      "Saxophone",
+      "Piano",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Jazzy",
+      "Chill",
+      "Mellow"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "Well-produced instrumental jazz track with clear instrumentation and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:28.011451+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.910167000000001,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-bossa-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-bossa-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-bossa-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "842b4dc9a406713d7f0e3a9cc2f9aac62004c91df9666af5a6c9f2ef65d4c669",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fa4e7570bb2f097a3dbee70fd0239e68aacaaf2494e26e7b6fdbac62505f3c21",
+      "bytes": 725512,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b76f6ad3c1d5ff3a38f052ecf5248ffa7777f8576e0744ffc45b173338b200cc",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.825453+00:00"
+}

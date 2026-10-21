@@ -1,0 +1,99 @@
+{
+  "id": "lib-lofi-celebrate",
+  "code": "LIB-11-10",
+  "title": {
+    "en": "First Light — Lofi",
+    "zh": "初光 · 低保真"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "lofi"
+  ],
+  "energy": 2,
+  "bpm": 90,
+  "key": "C major",
+  "instruments": [
+    "Rhodes piano",
+    "muted drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second lo-fi instrumental hip hop instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: Rhodes piano, muted drums, warm bass. Style: laid-back swung beat and hazy jazz harmony. Tempo approximately 90 BPM; C major. Main idea: a descending melody with an upward answer. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A smooth and sophisticated instrumental piece featuring a piano melody over a steady bassline and light drum rhythm. It has a relaxed, jazzy feel.",
+    "zh": "一段流畅而精致的器乐作品，以钢琴旋律为主，配以稳定的贝斯线和轻快的鼓点。它带有一种轻松、爵士的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.324,
+  "generatedAt": "2026-09-09T08:18:19.322777+00:00",
+  "generation": {
+    "id": "054549fe-a7a3-47ce-928f-21c46c76e651",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:17:40.627108+00:00",
+    "completedAt": "2026-09-09T08:18:19.322777+00:00",
+    "interactionId": "JhahavnaCbGejMwP1PWpyAg",
+    "sha256": "59bc1073f1e20c67ef2e050e2d997e547503062bb0742868afc35eb285882f92"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and sophisticated instrumental piece featuring a piano melody over a steady bassline and light drum rhythm. It has a relaxed, jazzy feel.",
+      "zh": "一段流畅而精致的器乐作品，以钢琴旋律为主，配以稳定的贝斯线和轻快的鼓点。它带有一种轻松、爵士的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Jazzy",
+      "Relaxed",
+      "Smooth",
+      "Sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Well-produced, clean, and pleasant instrumental music suitable for background use or as a standalone track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:18:27.065475+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-lofi-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-lofi-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-lofi-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:19:48.164688+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

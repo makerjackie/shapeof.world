@@ -41,7 +41,7 @@ export default {
     duration: 420,
     evidence: 'modeled',
     accent: '#b15cff',
-    related: ['double-pendulum', 'three-body'],
+    related: ['three-body'],
     sources: [
       {label: '奇异吸引子（Wikipedia）', labelEn: 'Strange attractor (Wikipedia)', url: 'https://zh.wikipedia.org/wiki/吸引子#奇异吸引子'},
       {label: '洛伦兹《确定性非周期流》（1963）', labelEn: 'Lorenz, “Deterministic Nonperiodic Flow” (1963)', url: 'https://journals.ametsoc.org/abstract/journals/atsc/20/2/1520-0469_1963_020_0130_dnf_2_0_co_2.xml'},

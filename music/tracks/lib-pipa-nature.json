@@ -1,0 +1,104 @@
+{
+  "id": "lib-pipa-nature",
+  "code": "LIB-18-04",
+  "title": {
+    "en": "Wildlands — Pipa",
+    "zh": "山野 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "pipa"
+  ],
+  "energy": 2,
+  "bpm": 102,
+  "key": "D dorian",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Chinese plucked-string ensemble instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 102 BPM; D dorian. Main idea: a compact three-note motif. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian instrumental piece featuring a prominent guzheng-like plucked string melody, accompanied by a gentle flute and subtle percussion. The mood is calm and contemplative.",
+    "zh": "一首宁静的东亚传统器乐曲，以古筝般的弹拨弦乐器为主旋律，辅以悠扬的笛子和轻柔的打击乐。氛围平静而富有沉思感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 149.029,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:47:12.892159+00:00",
+  "generation": {
+    "id": "513b6eeb-d7e6-49fa-af63-4e04a5b390e2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:46:27.489068+00:00",
+    "completedAt": "2026-09-09T08:47:12.892159+00:00",
+    "interactionId": "5Byhap2bIMO3i9sP57WLuQM",
+    "sha256": "2c0a913161d144265fc969cd01f629ca9a1956be134cc30d1859fcdd1b29bb1e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian instrumental piece featuring a prominent guzheng-like plucked string melody, accompanied by a gentle flute and subtle percussion. The mood is calm and contemplative.",
+      "zh": "一首宁静的东亚传统器乐曲，以古筝般的弹拨弦乐器为主旋律，辅以悠扬的笛子和轻柔的打击乐。氛围平静而富有沉思感。"
+    },
+    "instruments": [
+      "guzheng",
+      "flute",
+      "percussion",
+      "wood block"
+    ],
+    "moods": [
+      "traditional",
+      "peaceful",
+      "contemplative",
+      "serene",
+      "calm",
+      "meditative",
+      "oriental"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "Clean, well-produced instrumental track with clear traditional East Asian instrumentation and a peaceful mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:47:21.859730+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:48:24.005161+00:00"
+}

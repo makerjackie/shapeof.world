@@ -1,0 +1,93 @@
+import type {WorldExperience} from '../../types'
+
+export default {
+  id: 'human-atlas',
+  title: '人体可以一件一件拆开',
+  poster: '/assets/posters/human-atlas.webp',
+  posterMobile: '/assets/posters/mobile/human-atlas.webp',
+  posterDesktop: '/assets/posters/desktop/human-atlas.webp',
+  posterTitle: '把人体拆成两千多个零件',
+  posterHook: '点一件结构，把它从完整身体里抽出来；再把滑杆拉到头，看两千多个零件摊成一张清单。',
+  posterSource: 'BodyParts3D 4.0 · CC BY 4.0 · ashemag/human-atlas',
+  posterPosition: '50% 42%',
+  question: '身体里的器官、骨骼和血管，究竟怎样叠在一起？',
+  hook: '绕着一具成年男性参照身体旋转，点开心脏、股骨或一条动脉。系统可以单独点亮，身体也可以被拆成 2,234 件可点的结构。',
+  payoff: '这是一套成年男性参照解剖，不是某一个真人，也不能用来看病。名称来自解剖概念，一件网格可以属于多个名称；颜色按系统分组，便于浏览，不是手术标记。',
+  topicLabel: '人体',
+  translations: {
+    en: {
+      title: 'The body can be taken apart, piece by piece',
+      posterTitle: 'A body taken apart into two thousand pieces',
+      posterHook: 'Tap a structure and lift it out of the assembled body, then drag the slider all the way and watch more than two thousand pieces spread into an inventory.',
+      posterSource: 'BodyParts3D 4.0 · CC BY 4.0 · ashemag/human-atlas',
+      question: 'How do organs, bones, and vessels actually stack inside the body?',
+      hook: 'Orbit an adult male reference body and tap the heart, a femur, or an artery. Systems can be lit on their own, and the body can be taken apart into 2,234 selectable meshes.',
+      payoff: 'This is an adult male reference anatomy, not one living person, and not a clinical tool. Names come from anatomical concepts, and one mesh can belong to several names. Colors group systems for exploration; they are not surgical marks.',
+      topicLabel: 'Human body',
+    },
+  },
+  publication: 'public',
+  primaryCategoryId: 'body-atlas',
+  experiencePolicy: {
+    entryMode: 'direct',
+    shellMode: 'standard',
+  },
+  runtime: 'scene-3d',
+  difficulty: 'standard',
+  lane: 'structure',
+  renderer: 'human-atlas',
+  duration: 600,
+  evidence: 'verified',
+  accent: '#d4b896',
+  related: ['cow-anatomy'],
+  sources: [
+    {
+      label: 'ashemag/human-atlas（MIT）',
+      labelEn: 'ashemag/human-atlas (MIT)',
+      url: 'https://github.com/ashemag/human-atlas',
+      note: '三维浏览、拆开布局和点选核来自该开源查看器，提交 7a383d3。',
+      noteEn: 'The 3D browsing, explosion layout, and picking kernel come from this open-source viewer at commit 7a383d3.',
+    },
+    {
+      label: 'BodyParts3D 4.0（CC BY 4.0）',
+      labelEn: 'BodyParts3D 4.0 (CC BY 4.0)',
+      url: 'https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html',
+      note: '成年男性参照解剖网格与英语名称。完整署名见世界资产旁的 ATTRIBUTION。',
+      noteEn: 'Adult male reference anatomy meshes and English names. Full credit is in ATTRIBUTION beside the world assets.',
+    },
+    {
+      label: 'BodyParts3D 许可证',
+      labelEn: 'BodyParts3D license',
+      url: 'https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html',
+    },
+    {
+      label: 'Mitsuhashi 等，2009，BodyParts3D',
+      labelEn: 'Mitsuhashi et al., 2009, BodyParts3D',
+      url: 'https://doi.org/10.1093/nar/gkn613',
+    },
+  ],
+  fieldNotes: [
+    {
+      label: '这是什么',
+      labelEn: 'What this is',
+      body: 'BodyParts3D 把解剖概念做成可分开的三维网格。这里保留全部 2,234 件源网格和 3,432 个命名概念，按 15 个显示系统着色。',
+      bodyEn: 'BodyParts3D turns anatomical concepts into separable 3D meshes. This world keeps all 2,234 source meshes and 3,432 named concepts, colored by 15 display systems.',
+    },
+    {
+      label: '模型边界',
+      labelEn: 'Model limits',
+      body: '这是基于 TARO MRI 和解剖图修订的成年男性参照，不是完整人体变异，也不是诊断或手术工具。几何为浏览器做了简化，每件结构的相对误差上限为 0.2%。',
+      bodyEn: 'This is an adult male reference based on TARO MRI and anatomical illustration, not a complete account of human variation, and not a diagnostic or surgical tool. Geometry is simplified for the browser, with a 0.2% relative error limit per structure.',
+    },
+  ],
+  provenance: {
+    origin: 'open-source-adaptation',
+    sourceProject: 'ashemag/human-atlas',
+    sourceUrl: 'https://github.com/ashemag/human-atlas',
+    adaptationModel: 'grok-4.6',
+  },
+  presentation: 'full-bleed',
+  // Gzipped BodyParts3D 4.0 atlas is ~33 MB; first-session budget is an explicit exception.
+  transferBudgetMb: 36,
+  fallback: 'poster',
+} satisfies WorldExperience

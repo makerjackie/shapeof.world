@@ -1,0 +1,179 @@
+{
+  "id": "scene-chamber-40",
+  "code": "SCENE-04-40",
+  "title": {
+    "en": "Tiny Inventions · 40",
+    "zh": "小小发明 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "witty tactile miniature mechanisms",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "bass clarinet",
+    "woodblock"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for witty tactile miniature mechanisms. Instruments: pizzicato cello, bass clarinet, woodblock. 116 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and playful swing jazz piece featuring a prominent clarinet melody, supported by piano, bass, and drums.",
+    "zh": "一首活泼俏皮的摇摆爵士乐曲，以突出的单簧管旋律为主，辅以钢琴、贝斯和鼓。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "witty tactile miniature mechanisms"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:04:05.432888+00:00",
+  "generation": {
+    "id": "9f2392d0-e6ce-4509-a12a-8be946669fec",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:03:21.502038+00:00",
+    "completedAt": "2026-09-22T09:04:05.432888+00:00",
+    "interactionId": "W0Syas-VN7bi694PucGn6Ac",
+    "sha256": "4d771a405863065637c477c96d74d8f58e828a0b33273cf38e7de4797dabdef4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful swing jazz piece featuring a prominent clarinet melody, supported by piano, bass, and drums.",
+      "zh": "一首活泼俏皮的摇摆爵士乐曲，以突出的单簧管旋律为主，辅以钢琴、贝斯和鼓。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Piano",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Playful",
+      "Upbeat",
+      "Jazzy",
+      "Cheerful",
+      "Lighthearted"
+    ],
+    "energy": 4,
+    "bpmEstimate": 145,
+    "reason": "Well-produced and clear audio.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, catchy clarinet melody and ends with a clear, deliberate final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:04:27.804435+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "e72ad5e59904b92b748845de9302d3ff2a132f3fe8be7707a46cf504da8a8ec1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.036667,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful orchestral piece featuring a prominent clarinet melody, supported by pizzicato strings and subtle percussion. The music has a whimsical and cheerful character.",
+      "zh": "一首轻快活泼的管弦乐曲，以单簧管的突出旋律为主，辅以拨弦乐器和轻柔的打击乐。音乐充满奇思妙想和欢快的特质。"
+    },
+    "instruments": [
+      "Clarinet",
+      "Oboe",
+      "Pizzicato Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Cheerful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "Well-produced, clear instrumentation with a distinct melody and a pleasant, lighthearted mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:04:19.749555+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.036667,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chamber-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chamber-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chamber-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e72ad5e59904b92b748845de9302d3ff2a132f3fe8be7707a46cf504da8a8ec1",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4d771a405863065637c477c96d74d8f58e828a0b33273cf38e7de4797dabdef4",
+      "bytes": 1424548,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "521034a07ad101fcdc6f0fefc32a4bad2306bdf6f85419d6f8924c5953d56c0a",
+      "bytes": 2796,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:24:08.207914+00:00"
+}

@@ -1,0 +1,101 @@
+{
+  "id": "lib-harp-reading",
+  "code": "LIB-03-01",
+  "title": {
+    "en": "Reading — Harp",
+    "zh": "静读 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "harp"
+  ],
+  "energy": 2,
+  "bpm": 64,
+  "key": "D major",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second pastoral acoustic instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 64 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A serene and contemplative piece featuring a plucked string instrument, likely a guzheng or zither, playing a delicate melody, accompanied by a wind instrument, possibly a flute or dizi, providing harmonious counter-melodies. The music evokes a traditional East Asian atmosphere.",
+    "zh": "一首宁静而沉思的乐曲，以古筝或古琴等弹拨乐器演奏优美旋律，并由笛子或箫等管乐器伴奏，提供和谐的对位旋律。音乐营造出传统的东亚氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.115,
+  "generatedAt": "2026-09-09T07:47:00.986775+00:00",
+  "generation": {
+    "id": "0a04b921-bf96-4de3-bc83-5ce397962a6a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:46:18.937321+00:00",
+    "completedAt": "2026-09-09T07:47:00.986775+00:00",
+    "interactionId": "zA6haoPxDcO3i9sP57WLuQM",
+    "sha256": "a7ee7ce407b34ba40bca3e67174653e505bea14f58a2738b7417896235da3721"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and contemplative piece featuring a plucked string instrument, likely a guzheng or zither, playing a delicate melody, accompanied by a wind instrument, possibly a flute or dizi, providing harmonious counter-melodies. The music evokes a traditional East Asian atmosphere.",
+      "zh": "一首宁静而沉思的乐曲，以古筝或古琴等弹拨乐器演奏优美旋律，并由笛子或箫等管乐器伴奏，提供和谐的对位旋律。音乐营造出传统的东亚氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Zither",
+      "Flute",
+      "Dizi"
+    ],
+    "moods": [
+      "Serene",
+      "Contemplative",
+      "Peaceful",
+      "Traditional",
+      "Calming"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is clean, well-performed, and clearly evokes a traditional East Asian atmosphere, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:47:09.615868+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:48:40.802732+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

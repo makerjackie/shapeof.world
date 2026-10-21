@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-11",
+  "code": "SFX-FOLEY-11",
+  "title": {
+    "en": "Velcro pull",
+    "zh": "魔术贴撕开"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 10,
+  "seed": 2331844778,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized velcro pull for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的魔术贴撕开合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.82,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2331844778,
+    "sha256": "ff268e62600abf8dd2ab35f15e979540d1cb0f66df6ba32cb731fd5efd81e628",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1aeb796b77791ba778a6e0ef73e659c5fd77401c0a4343564f63b7f3b69d0337",
+      "bytes": 12477,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ff268e62600abf8dd2ab35f15e979540d1cb0f66df6ba32cb731fd5efd81e628",
+      "bytes": 72368,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7f13126bfd13ff1fd12e68c8aadfeb1bcf998688c3aaad5a6754845b69b52aae",
+      "bytes": 12944,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "dc3c6e2303656347c46aa5e857d064463b4a5db9d506d9c5d40d99542956a95b",
+      "bytes": 1702,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 36162,
+    "duration": 0.82,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -23.04,
+    "dcOffset": -1.1645997957109673e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.180922851562495,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, electronic static burst or zap sound effect.",
+      "zh": "短促、尖锐的电子静电爆发或电击音效。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced electronic sound effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:55.611363+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "1aeb796b77791ba778a6e0ef73e659c5fd77401c0a4343564f63b7f3b69d0337"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 36162
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.865481+00:00"
+}

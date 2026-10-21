@@ -1,0 +1,109 @@
+{
+  "id": "lib-sitar-motion",
+  "code": "LIB-21-08",
+  "title": {
+    "en": "Motion — Sitar",
+    "zh": "跃动 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "sitar"
+  ],
+  "energy": 4,
+  "bpm": 106,
+  "key": "B minor",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Indian acoustic instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 106 BPM; B minor. Main idea: a repeating five-note figure with space between phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A vibrant and melodic world music piece with a distinct Middle Eastern/Mediterranean folk influence. It features a prominent plucked string melody, supported by rhythmic hand percussion, a reedy wind instrument, and atmospheric string pads, creating an evocative and lively soundscape.",
+    "zh": "一首充满活力和旋律的世界音乐作品，带有明显的中东/地中海民间音乐风格。它以突出的拨弦乐器旋律为主，辅以富有节奏感的手鼓、簧片管乐器和氛围弦乐，营造出一种引人入胜且生动的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.749,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:56:42.343165+00:00",
+  "generation": {
+    "id": "1c59d1d3-0556-43db-a178-6842981a8cb3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:55:57.083700+00:00",
+    "completedAt": "2026-09-09T08:56:42.343165+00:00",
+    "interactionId": "Hh-hav_gDIq34vEP1ray8Q0",
+    "sha256": "5f017f8de32b88f46cf16f4232f02eff0ac835183470f02802948f8a5d1545bf"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A vibrant and melodic world music piece with a distinct Middle Eastern/Mediterranean folk influence. It features a prominent plucked string melody, supported by rhythmic hand percussion, a reedy wind instrument, and atmospheric string pads, creating an evocative and lively soundscape.",
+      "zh": "一首充满活力和旋律的世界音乐作品，带有明显的中东/地中海民间音乐风格。它以突出的拨弦乐器旋律为主，辅以富有节奏感的手鼓、簧片管乐器和氛围弦乐，营造出一种引人入胜且生动的音景。"
+    },
+    "instruments": [
+      "Oud",
+      "Bouzouki",
+      "Mandolin",
+      "Frame drum",
+      "Darbuka",
+      "Duduk",
+      "Bass",
+      "String pads",
+      "Triangle"
+    ],
+    "moods": [
+      "World Music",
+      "Folk",
+      "Melodic",
+      "Evocative",
+      "Traditional",
+      "Lively",
+      "Reflective"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality recording with clear instrumentation, well-balanced mix, and a distinct cultural flavor, making it suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:56:53.396627+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:57:35.746870+00:00"
+}

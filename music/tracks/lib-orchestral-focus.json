@@ -1,0 +1,103 @@
+{
+  "id": "lib-orchestral-focus",
+  "code": "LIB-06-02",
+  "title": {
+    "en": "Focus — Orchestral",
+    "zh": "专注 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "orchestral"
+  ],
+  "energy": 4,
+  "bpm": 104,
+  "key": "A minor",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second orchestral adventure instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 104 BPM; A minor. Main idea: an ascending fourth answered by a stepwise descent. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A lively and elegant classical piece, featuring a string ensemble with a prominent, engaging melody. It evokes a sophisticated and somewhat playful atmosphere.",
+    "zh": "一首活泼优雅的古典乐曲，由弦乐合奏演奏，旋律突出且引人入胜。营造出精致而略带俏皮的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 115.174,
+  "generatedAt": "2026-09-09T07:59:33.662203+00:00",
+  "generation": {
+    "id": "2facf85d-d29d-423d-aa58-099605dea554",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:58:45.266729+00:00",
+    "completedAt": "2026-09-09T07:59:33.662203+00:00",
+    "interactionId": "thGhaubSB8y5jMwP4P3F-Qs",
+    "sha256": "7f3c54bf33c3162bd42fe56aeecbb7e3a61f22beac71cf99e450aa7c4f8ff243"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical piece, featuring a string ensemble with a prominent, engaging melody. It evokes a sophisticated and somewhat playful atmosphere.",
+      "zh": "一首活泼优雅的古典乐曲，由弦乐合奏演奏，旋律突出且引人入胜。营造出精致而略带俏皮的氛围。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "String Ensemble"
+    ],
+    "moods": [
+      "Elegant",
+      "Lively",
+      "Classical",
+      "Playful",
+      "Sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality performance and recording, suitable for classical music libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:59:51.896376+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:01:49.058227+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

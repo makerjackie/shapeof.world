@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-17",
+  "code": "SFX-IMPACT-17",
+  "title": {
+    "en": "Soft cushion",
+    "zh": "软垫落物"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 16,
+  "seed": 791033902,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized soft cushion for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的软垫落物合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.93,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 791033902,
+    "sha256": "4f2c7ab38c0e332317e85b04b4b0b9a333537d4f67a11653a2f90bd69516c2f7",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "fbb561bd3774a28cc20eb8bd1df508e7c6c01a415f6178f2137ed4b1e070b943",
+      "bytes": 13940,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4f2c7ab38c0e332317e85b04b4b0b9a333537d4f67a11653a2f90bd69516c2f7",
+      "bytes": 82070,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "062fc20ad120c91a3371168cd024f2865dec30285789d952130ec4652aa213ad",
+      "bytes": 11743,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e0ff6a0709a16cf9223fe91f01cf32161ce8905f74d8fe4aa66792918d7aaa2f",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 41013,
+    "duration": 0.93,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.24,
+    "dcOffset": 2.753152392229293e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.22747232055664135,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clear, high-pitched metallic chime or ding sound.",
+      "zh": "一个短促、清晰、高音的金属提示音或叮当声。"
+    },
+    "reason": "The sound is clean, well-isolated, and free of technical defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:08.144758+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "fbb561bd3774a28cc20eb8bd1df508e7c6c01a415f6178f2137ed4b1e070b943"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 41013
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.879176+00:00"
+}

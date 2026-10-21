@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-19",
+  "code": "SFX-FOLEY-19",
+  "title": {
+    "en": "Clap accent",
+    "zh": "拍手重音"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 18,
+  "seed": 531820087,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized clap accent for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的拍手重音合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.22,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 531820087,
+    "sha256": "0e8f622c915f850921ef43aeafb5876b76968e9afefdcfc6725e56d8dcf90def",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ff3102062bcdcfd00ce08ce45f7f56e18a1aab5a0a1095a368d9e36fbc19d319",
+      "bytes": 4066,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0e8f622c915f850921ef43aeafb5876b76968e9afefdcfc6725e56d8dcf90def",
+      "bytes": 19448,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0ca80d439b46a8bf6dda54ff51cf89879f62e8fbe9601bfcd2d7cae555958c69",
+      "bytes": 7422,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "101e009e1fe33d1bfbbb01a3aeaaa134c81c5490c6e5920bf668e6d7fd4efc14",
+      "bytes": 1716,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 9702,
+    "duration": 0.22,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.26,
+    "dcOffset": -6.920085742630386e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2661682128906202,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp metallic impact sound, like a clang or strike on metal.",
+      "zh": "一个短促、尖锐的金属撞击声，类似于叮当声或敲击金属的声音。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:01.506183+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ff3102062bcdcfd00ce08ce45f7f56e18a1aab5a0a1095a368d9e36fbc19d319"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 9702
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.867523+00:00"
+}

@@ -1,0 +1,175 @@
+{
+  "id": "promo-chamber-40",
+  "code": "PROMO-06-40",
+  "title": {
+    "en": "Paper Kites · 40",
+    "zh": "纸鸢起飞 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lighthearted and playful orchestral piece featuring prominent strings and woodwinds, with a whimsical and slightly comedic character. It has a lively tempo and clear melodic lines, reminiscent of classical cartoon scores or light theatrical music.",
+    "zh": "一首轻松愉快的管弦乐作品，以突出的弦乐和木管乐器为主，带有异想天开和略带喜剧色彩的特点。节奏活泼，旋律清晰，让人联想到古典卡通配乐或轻松的戏剧音乐。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:25:42.704509+00:00",
+  "generation": {
+    "id": "676fc37e-9f6e-4af9-a0dd-0aaf156b58bf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:25:03.440461+00:00",
+    "completedAt": "2026-09-10T05:25:42.704509+00:00",
+    "interactionId": "MD-iasnSAvTyk7QPmu_A4Q0",
+    "sha256": "e36f699e156012dde0b431373eb313a4c3f6d7fe0924d5b8410d35ff02614ebd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lighthearted and playful orchestral piece featuring prominent strings and woodwinds, with a whimsical and slightly comedic character. It has a lively tempo and clear melodic lines, reminiscent of classical cartoon scores or light theatrical music.",
+      "zh": "一首轻松愉快的管弦乐作品，以突出的弦乐和木管乐器为主，带有异想天开和略带喜剧色彩的特点。节奏活泼，旋律清晰，让人联想到古典卡通配乐或轻松的戏剧音乐。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Clarinet",
+      "Flute",
+      "Oboe",
+      "Bassoon",
+      "Pizzicato Strings"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Cheerful",
+      "Lively",
+      "Elegant",
+      "Comedic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 138,
+    "reason": "High-quality, well-produced orchestral piece with a clear theme and no audible defects, suitable for various media applications requiring a light and playful mood.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a playful pizzicato string and clarinet melody, establishing a clear theme. It concludes with a deliberate, resolved orchestral flourish and final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:07.526529+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "3be518ff9fa2ad29e510d1e5d9ffb3c35bf474550a31009e2d2f5b8e771e9fa8"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.443208,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful classical-style piece featuring pizzicato strings, woodwinds, and percussion. It has a light, whimsical, and slightly comedic feel, reminiscent of a cartoon or a lighthearted chase scene. The arrangement is dynamic with clear melodic lines.",
+      "zh": "一首活泼俏皮的古典风格乐曲，以拨弦乐器、木管乐器和打击乐器为主。它带有一种轻松、异想天开且略带喜剧色彩的感觉，让人联想到卡通片或轻松的追逐场景。编曲充满活力，旋律线条清晰。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Flute",
+      "Clarinet",
+      "Oboe",
+      "Bassoon",
+      "Xylophone",
+      "Glockenspiel",
+      "Snare Drum",
+      "Bass Drum",
+      "Cymbals"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lively",
+      "Lighthearted",
+      "Comedic",
+      "Energetic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 130,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:25:57.776222+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.443208,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-chamber-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-chamber-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-chamber-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:24.400078+00:00"
+}

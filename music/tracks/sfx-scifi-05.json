@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-05",
+  "code": "SFX-SCIFI-05",
+  "title": {
+    "en": "Shield on",
+    "zh": "护盾开启"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 4,
+  "seed": 784785469,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized shield on for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的护盾开启合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 784785469,
+    "sha256": "c152fd7f6f299213a24eeac12e8bd293397b82474f13be0be462f5999dc35b4e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a110ddf029c7142e501138124e85779ef091d65eddea62e8a7087cf811e36c66",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c152fd7f6f299213a24eeac12e8bd293397b82474f13be0be462f5999dc35b4e",
+      "bytes": 111176,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "caab7594a15dabd5a0c6517ea28654607d8c98f641b045a667abfac8dbe59813",
+      "bytes": 21356,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e5538476e02fb89b5cddfe14a8bae0418ca40cf93623b742967ba50080aa1d65",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55566,
+    "duration": 1.26,
+    "peakDbfs": -4.36,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.569885502150596e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08539758300781264,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized whoosh or zap sound effect with a distinct electronic character, reminiscent of a quick energy burst or teleportation.",
+      "zh": "一个短促、尖锐的合成嗖嗖声或电击声，具有独特的电子特性，类似于快速能量爆发或瞬间移动。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect, free from defects, and suitable for various sound design applications like transitions, sci-fi effects, or magical zaps.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:02.455973+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a110ddf029c7142e501138124e85779ef091d65eddea62e8a7087cf811e36c66"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55566
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.899140+00:00"
+}

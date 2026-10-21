@@ -1,0 +1,105 @@
+{
+  "id": "lib-cool-jazz-explain",
+  "code": "LIB-09-05",
+  "title": {
+    "en": "Discovery — Cool Jazz",
+    "zh": "发现 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "cool-jazz"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "G major",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second cool jazz instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 82 BPM; G major. Main idea: a repeating five-note figure with space between phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A smooth and sophisticated jazz ensemble piece featuring a prominent trumpet melody, complemented by a clarinet counter-melody, over a gentle swing rhythm section.",
+    "zh": "一首流畅而精致的爵士乐合奏曲，以小号为主旋律，单簧管为副旋律，配以轻柔的摇摆节奏。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.745,
+  "generatedAt": "2026-09-09T08:10:58.747314+00:00",
+  "generation": {
+    "id": "3ed23438-ba70-43ac-9aab-282a4b65ef9a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:10:10.196202+00:00",
+    "completedAt": "2026-09-09T08:10:58.747314+00:00",
+    "interactionId": "YxShauWNK8O3i9sP57WLuQM",
+    "sha256": "beabbbfb47137ce314d3168922bcc0cb3350db23a61af0257241a6d5fdfd65b6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and sophisticated jazz ensemble piece featuring a prominent trumpet melody, complemented by a clarinet counter-melody, over a gentle swing rhythm section.",
+      "zh": "一首流畅而精致的爵士乐合奏曲，以小号为主旋律，单簧管为副旋律，配以轻柔的摇摆节奏。"
+    },
+    "instruments": [
+      "Trumpet",
+      "Clarinet",
+      "Piano",
+      "Double bass",
+      "Drums",
+      "Trombone"
+    ],
+    "moods": [
+      "Smooth",
+      "Relaxed",
+      "Sophisticated",
+      "Nostalgic",
+      "Elegant",
+      "Jazzy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:11:08.655956+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:11:51.940700+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

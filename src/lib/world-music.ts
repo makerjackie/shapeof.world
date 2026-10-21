@@ -41,7 +41,7 @@ export function soundtrackPreviewUrl(trackId: string): string {
   const track = soundtrackCatalog.tracks[trackId as keyof typeof soundtrackCatalog.tracks]
   const id = track ? trackId : FALLBACK_SOUNDTRACK_ID
   const version = soundtrackCatalog.tracks[id as keyof typeof soundtrackCatalog.tracks].version
-  return `${soundtrackCatalog.cdnOrigin}/tracks/${id}/${version}/preview.mp3`
+  return `/media/music/${id}/${version}/preview.mp3`
 }
 
 export function soundtrackSrcForWorld(worldId: string | undefined): string {

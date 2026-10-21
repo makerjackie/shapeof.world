@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-11",
+  "code": "SFX-RETRO-11",
+  "title": {
+    "en": "Pixel win",
+    "zh": "像素胜利"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 10,
+  "seed": 4089944086,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel win for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素胜利合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.89,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4089944086,
+    "sha256": "3ec4ba7447f0704d6da1413b2efcd280ba930c89a1da67486ff58a6d9028ca97",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b742df77effe3df690b2d4163ac6b1e3c8bfc0b3a97b13a5a84c35d884c05056",
+      "bytes": 13574,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3ec4ba7447f0704d6da1413b2efcd280ba930c89a1da67486ff58a6d9028ca97",
+      "bytes": 78542,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8fbe382535a6dc9d517753900ed4584a2519af8427c390fc7aa0c48af890a87a",
+      "bytes": 17679,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "5eddc91d494e05ed99826524db3e0ae4524b4cdc59ca9252e46f2232239d12b7",
+      "bytes": 1947,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 39249,
+    "duration": 0.89,
+    "peakDbfs": -4.44,
+    "rmsDbfs": -17.08,
+    "dcOffset": 8.926133070269306e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.097900390625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, and quick whoosh sound effect, with a slightly electronic or metallic resonance at the end. It has a rapid attack and decay.",
+      "zh": "一个短促、尖锐、快速的嗖嗖声效果，结尾带有一点电子或金属共鸣。它具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized effect, free of technical defects. Its short duration and clear character make it highly usable for various sound design applications like UI feedback, transitions, or quick actions.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:23.124957+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b742df77effe3df690b2d4163ac6b1e3c8bfc0b3a97b13a5a84c35d884c05056"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 39249
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.895642+00:00"
+}

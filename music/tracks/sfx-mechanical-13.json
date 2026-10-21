@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-13",
+  "code": "SFX-MECHANICAL-13",
+  "title": {
+    "en": "Printer feed",
+    "zh": "进纸机构"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 12,
+  "seed": 707417148,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized printer feed for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的进纸机构合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.18,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 707417148,
+    "sha256": "4e78332075dfbe922bc421c749125ec6be5931fb661c869b64b3e37dee35cc5f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4d4559e125900fade144182043ebf3ea8b62770663941dfd38347fdb091a5dd9",
+      "bytes": 3334,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4e78332075dfbe922bc421c749125ec6be5931fb661c869b64b3e37dee35cc5f",
+      "bytes": 15920,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1a028549f2c2712a3e1d676157244b749ba0978070ce9dc04357585af80cc10e",
+      "bytes": 5759,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ae2f15a9f62e320c4bda2dc5a1c48cb2a4a7800c1f5b0d33291376e8f4398c00",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 7938,
+    "duration": 0.18,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.84,
+    "dcOffset": 7.07386542579995e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.19147338867187547,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, sharp electronic zap or blip sound effect. It has a quick attack and decay, resembling a brief energy burst or UI feedback.",
+      "zh": "一个短促、高音、尖锐的电子冲击或哔哔声效果。它具有快速的起音和衰减，类似于短暂的能量爆发或UI反馈音。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined electronic effect, suitable for various UI, sci-fi, or game sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:30.274318+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "4d4559e125900fade144182043ebf3ea8b62770663941dfd38347fdb091a5dd9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 7938
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.887204+00:00"
+}

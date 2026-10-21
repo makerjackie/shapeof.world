@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-18",
+  "code": "SFX-TRANSITION-18",
+  "title": {
+    "en": "Downward sweep",
+    "zh": "下降扫频"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 17,
+  "seed": 1542336355,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized downward sweep for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的下降扫频合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.2,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1542336355,
+    "sha256": "cc69c3eb61e09d73ef7eba1e5e9f7bd652d8e59bc3a48117387b1bcf871d566f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "718af67623034747b1a9b57425b5829949cce9d319432ba021de25021170dfd1",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cc69c3eb61e09d73ef7eba1e5e9f7bd652d8e59bc3a48117387b1bcf871d566f",
+      "bytes": 105884,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ff42e598a2261b70dae868abcb614b50f3fb311356f48c0337190c543e415ed1",
+      "bytes": 24773,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "520d3f0cde6e1f98eff08c78e7f9bad847e6070e3af3549dc116820f92ac8e47",
+      "bytes": 1924,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52920,
+    "duration": 1.2,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.93,
+    "dcOffset": -2.8833690594293274e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.25466119384765684,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic whoosh or sweep sound, followed by a lower-pitched, slightly distorted electronic buzz or hum. It has a sci-fi or futuristic character.",
+      "zh": "短促、高音调的电子嗖嗖声或扫过声，随后是低音调、略带失真的电子嗡嗡声。具有科幻或未来感。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect with no technical flaws, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:40.014472+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "718af67623034747b1a9b57425b5829949cce9d319432ba021de25021170dfd1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52920
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.905594+00:00"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "scene-orchestral-90",
+  "code": "SCENE-20-90",
+  "title": {
+    "en": "First Flight · 90",
+    "zh": "初次飞行 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "small-scale adventurous discovery without epic bombast",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 128,
+  "key": "",
+  "instruments": [
+    "staccato strings",
+    "French horn",
+    "timpani",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. staccato strings, French horn, timpani, harp. 128 BPM, orchestral character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A light and elegant classical piece featuring a prominent violin melody, accompanied by piano, pizzicato strings, and subtle woodwind elements. The music has a playful and whimsical character.",
+    "zh": "一首轻快优雅的古典乐曲，以小提琴为主旋律，伴有钢琴、拨弦乐器和微妙的木管乐器。音乐具有俏皮和异想天开的特点。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "small-scale adventurous discovery without epic bombast"
+    ]
+  },
+  "duration": 82.886,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:32:52.882090+00:00",
+  "generation": {
+    "id": "7ef6e8e2-8750-4834-9e5e-36018bb6f92f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:32:09.486297+00:00",
+    "completedAt": "2026-09-22T09:32:52.882090+00:00",
+    "interactionId": "GkuyaoqBEJyA694PvP-84Q0",
+    "sha256": "95fceb83dae85654c0443b4b0bfd2766af04a792e792df443d9c9d81acf2d25c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and elegant classical piece featuring a prominent violin melody, accompanied by piano, pizzicato strings, and subtle woodwind elements. The music has a playful and whimsical character.",
+      "zh": "一首轻快优雅的古典乐曲，以小提琴为主旋律，伴有钢琴、拨弦乐器和微妙的木管乐器。音乐具有俏皮和异想天开的特点。"
+    },
+    "instruments": [
+      "Violin",
+      "Piano",
+      "Cello",
+      "Flute",
+      "Clarinet"
+    ],
+    "moods": [
+      "Elegant",
+      "Playful",
+      "Classical",
+      "Whimsical",
+      "Lighthearted"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:33:04.873952+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-orchestral-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-orchestral-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-orchestral-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "72f93b52de2f39cbe21c167839766ee605c08fb4624156e247e705af33657f60",
+      "bytes": 1161186,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "95fceb83dae85654c0443b4b0bfd2766af04a792e792df443d9c9d81acf2d25c",
+      "bytes": 1996943,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "f2a624c0959000b2b1803fc6c4ceeac37fd0fa8dde26d940729789308e94952c",
+      "bytes": 2807,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.469101+00:00"
+}

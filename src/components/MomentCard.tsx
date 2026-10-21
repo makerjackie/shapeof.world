@@ -1,9 +1,10 @@
+import { trackEvent } from '~/lib/analytics'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Check, Copy, DownloadSimple, ShareNetwork, X } from '@phosphor-icons/react'
 
 import { useI18n } from '~/i18n'
 
-import { FollowStayPrompt } from '~/components/FollowStayPrompt'
+import { worldThumbnail } from '~/lib/posters'
 
 import './MomentCard.css'
 
@@ -22,6 +23,7 @@ const CARD_HEIGHT = 1350
 
 export type MomentCardProps = {
   open: boolean
+  worldId?: string
   onClose: () => void
   /** World-supplied redraw-and-read, for canvases that cannot be read later. */
   capture?: (() => string | null) | null
@@ -34,7 +36,7 @@ export type MomentCardProps = {
   /** Fallback artwork when the live canvas cannot be read. */
   posterUrl?: string
   accent?: string
-  onShared?: () => void
+  onShared?: (method: 'copy' | 'native' | 'download') => void
 }
 
 /**
@@ -128,6 +130,7 @@ function wrapText(
 
 export function MomentCard({
   open,
+  worldId,
   onClose,
   capture,
   url,
@@ -143,15 +146,20 @@ export function MomentCard({
   const [copied, setCopied] = useState(false)
   const blobRef = useRef<Blob | null>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const generationRef = useRef(0)
+  const [buildError, setBuildError] = useState(false)
 
   const build = useCallback(async () => {
+    const generation = ++generationRef.current
     setBusy(true)
+    setBuildError(false)
     try {
       const card = document.createElement('canvas')
       card.width = CARD_WIDTH
       card.height = CARD_HEIGHT
       const context = card.getContext('2d')
-      if (!context) return
+      if (!context) throw new Error('Canvas unavailable')
 
       context.fillStyle = '#07090d'
       context.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT)
@@ -230,10 +238,13 @@ export function MomentCard({
       context.textAlign = 'left'
 
       const blob = await new Promise<Blob | null>((resolve) => card.toBlob(resolve, 'image/png'))
+      if (generation !== generationRef.current) return
       blobRef.current = blob
       setPreview(card.toDataURL('image/png'))
+    } catch {
+      if (generation === generationRef.current) setBuildError(true)
     } finally {
-      setBusy(false)
+      if (generation === generationRef.current) setBusy(false)
     }
   }, [accent, capture, posterUrl, question, summary, t])
 
@@ -244,27 +255,31 @@ export function MomentCard({
   }, [open, build])
 
   useEffect(() => {
-    if (!open) return
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        event.preventDefault()
-        onClose()
-      }
+    const dialog = dialogRef.current
+    if (!open || !dialog) return
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    dialog.showModal()
+    return () => {
+      generationRef.current += 1
+      dialog.close()
+      if (previous?.isConnected) previous.focus({ preventScroll: true })
     }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [open, onClose])
+  }, [open])
+
+  const [copyError, setCopyError] = useState(false)
 
   const copyLink = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(url)
+      setCopyError(false)
       setCopied(true)
-      onShared?.()
+      onShared?.('copy')
       window.setTimeout(() => setCopied(false), 2200)
     } catch {
-      /* clipboard can be blocked; the link stays visible for manual copying */
+      trackEvent({ event: 'share_error', worldId, value: 'clipboard' })
+      setCopyError(true)
     }
-  }, [url, onShared])
+  }, [url, onShared, worldId])
 
   const download = useCallback(() => {
     if (!preview) return
@@ -272,7 +287,7 @@ export function MomentCard({
     link.href = preview
     link.download = 'shapeof-world.png'
     link.click()
-    onShared?.()
+    onShared?.('download')
   }, [preview, onShared])
 
   const shareNative = useCallback(async () => {
@@ -287,18 +302,21 @@ export function MomentCard({
         await copyLink()
         return
       }
-      onShared?.()
+      onShared?.('native')
     } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return
+      if (error instanceof DOMException && error.name === 'AbortError') { trackEvent({ event: 'share_cancel', worldId, value: 'native' }); return }
+      trackEvent({ event: 'share_error', worldId, value: 'native' })
       await copyLink()
     }
-  }, [copyLink, onShared, question, summary, url])
+  }, [copyLink, onShared, question, summary, url, worldId])
 
   if (!open) return null
 
   return (
-    <div className="moment-card" role="dialog" aria-modal="true" aria-label={t('experience.share')}>
+    <dialog ref={dialogRef} className="moment-card" aria-label={t('experience.share')} onCancel={event => { event.preventDefault(); onClose() }}>
       <div className="moment-card-sheet" style={{ ['--moment-accent' as string]: accent }}>
+        {buildError && <p role="alert">{t('share.previewError')} <button type="button" onClick={() => void build()}>{t('system.retry')}</button></p>}
+        {copyError && <p role="alert">{t('share.copyError')}</p>}
         <button
           ref={closeRef}
           type="button"
@@ -312,26 +330,27 @@ export function MomentCard({
         <div className="moment-card-preview">
           {preview
             ? <img src={preview} alt={summary ? `${summary} — ${question}` : question} />
-            : <div className="moment-card-skeleton" aria-hidden="true" />}
+            : worldId
+              ? <img className="moment-card-placeholder" src={worldThumbnail({ id: worldId })} alt="" width={384} height={256} />
+              : <div className="moment-card-skeleton" aria-hidden="true" />}
         </div>
 
         <div className="moment-card-actions">
-          <button type="button" className="moment-card-primary" onClick={() => void shareNative()} disabled={busy}>
+          <button type="button" className="btn-primary moment-card-primary" onClick={() => void shareNative()} disabled={busy}>
             <ShareNetwork weight="bold" /> {t('experience.share')}
           </button>
-          <button type="button" onClick={() => void copyLink()}>
+          <button type="button" className="btn-secondary" onClick={() => void copyLink()}>
             {copied ? <Check weight="bold" /> : <Copy weight="bold" />}
             {copied ? t('moment.copied') : t('moment.copyLink')}
           </button>
-          <button type="button" onClick={download} disabled={!preview}>
+          <button type="button" className="btn-secondary" onClick={download} disabled={!preview}>
             <DownloadSimple weight="bold" /> {t('moment.save')}
           </button>
         </div>
 
         <p className="moment-card-note">{t('moment.note')}</p>
-        <FollowStayPrompt origin="share_card" />
       </div>
       <button type="button" className="moment-card-scrim" onClick={onClose} aria-hidden="true" tabIndex={-1} />
-    </div>
+    </dialog>
   )
 }

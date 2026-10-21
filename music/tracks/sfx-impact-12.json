@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-12",
+  "code": "SFX-IMPACT-12",
+  "title": {
+    "en": "Tiny drop",
+    "zh": "小物掉落"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 11,
+  "seed": 3103516365,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized tiny drop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的小物掉落合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.1,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3103516365,
+    "sha256": "5a6ed744bf6f9b61bff489c7801e5890693900365430dad61c93984fdd7f8b99",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "50bd7d075b33cf674e0d24a0dfd8a4ca51340c6a80959aae8b9aa8ae1d4d11a9",
+      "bytes": 16500,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5a6ed744bf6f9b61bff489c7801e5890693900365430dad61c93984fdd7f8b99",
+      "bytes": 97064,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b4bd2245b9b9eca6a9068e918ccc07c039edf3e87ab5ace742f4fab0fc2caf69",
+      "bytes": 12506,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "fbf90ea6096e5d735943f6408138c05e259635aae2694ab700c43db0adeeeeeb",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 48510,
+    "duration": 1.1,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.13,
+    "dcOffset": 1.509836889301175e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1372666015624997,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched metallic ping or ding sound, like a small chime or bell.",
+      "zh": "短促、高音的金属叮当声，类似于小铃铛或钟声。"
+    },
+    "reason": "The sound is a clear, isolated metallic ping, suitable for various sound design applications without defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:04.901727+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "50bd7d075b33cf674e0d24a0dfd8a4ca51340c6a80959aae8b9aa8ae1d4d11a9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 48510
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.877939+00:00"
+}

@@ -10,63 +10,46 @@ import {
 } from 'react'
 
 import { trackEvent } from '~/lib/analytics'
-import { getEditorialDayKey } from '~/data/editorial-date'
 import { safeLocalStorage, type SafeStorage } from '~/lib/storage'
 
+/** Minimal on-device record of what the visitor has opened and finished. */
 export type AtlasState = {
-  saved: Array<string>
   completed: Array<string>
   visited: Array<string>
+  lastVisitedWorldId?: string
   completedIssues: Array<string>
   visitedIssues: Array<string>
-  visitDays: Array<string>
   issueCompletionDates: Record<string, string>
 }
 
 type AtlasContextValue = AtlasState & {
   ready: boolean
-  streak: number
-  saveWorld: (id: string) => void
-  removeWorld: (id: string) => void
+  storageAvailable: boolean
   visitWorld: (id: string) => void
   visitIssue: (id: string) => void
   completeWorld: (id: string) => void
   completeIssue: (issueId: string, worldId: string) => void
-  isSaved: (id: string) => boolean
   isComplete: (id: string) => boolean
   isIssueComplete: (id: string) => boolean
 }
 
-const storageKey = 'oneworld.atlas.v2'
+export const atlasStorageKey = 'oneworld.atlas.v2'
+const storageKey = atlasStorageKey
 const legacyStorageKey = 'oneworld.atlas.v1'
-
-const emptyState: AtlasState = {
-  saved: [],
-  completed: [],
-  visited: [],
-  completedIssues: [],
-  visitedIssues: [],
-  visitDays: [],
-  issueCompletionDates: {},
-}
 
 const AtlasContext = createContext<AtlasContextValue | null>(null)
 
 function freshEmptyState(): AtlasState {
   return {
-    saved: [],
     completed: [],
     visited: [],
     completedIssues: [],
     visitedIssues: [],
-    visitDays: [],
     issueCompletionDates: {},
   }
 }
 
-function todayKey(date = new Date()): string {
-  return getEditorialDayKey(date)
-}
+const emptyState: AtlasState = freshEmptyState()
 
 function unique(items: Array<string>): Array<string> {
   return Array.from(new Set(items))
@@ -88,12 +71,12 @@ function parseAtlasState(raw: string | null): AtlasState | undefined {
     const parsed = JSON.parse(raw) as Partial<AtlasState>
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return
     return {
-      saved: stringItems(parsed.saved),
       completed: stringItems(parsed.completed),
       visited: stringItems(parsed.visited),
+      ...(typeof parsed.lastVisitedWorldId === 'string' && /^[a-z0-9-]{1,100}$/.test(parsed.lastVisitedWorldId)
+        ? { lastVisitedWorldId: parsed.lastVisitedWorldId } : {}),
       completedIssues: stringItems(parsed.completedIssues),
       visitedIssues: stringItems(parsed.visitedIssues),
-      visitDays: stringItems(parsed.visitDays),
       issueCompletionDates: completionDates(parsed.issueCompletionDates),
     }
   } catch {
@@ -117,59 +100,73 @@ export function applyPersistedAtlasUpdate(
   current: AtlasState,
   update: (state: AtlasState) => AtlasState,
   storage: SafeStorage = safeLocalStorage,
+  onPersist?: (saved: boolean) => void,
 ): AtlasState {
-  const next = update(current)
-  storage.set(storageKey, JSON.stringify(next))
+  // Callers serialize this read/modify/write with a Web Lock across tabs.
+  const latest = parseAtlasState(storage.get(storageKey)) ?? current
+  const next = update(latest)
+  const saved = storage.set(storageKey, JSON.stringify(next))
+  onPersist?.(saved)
   return next
 }
 
-function calculateStreak(days: Array<string>, now = new Date()): number {
-  const keys = new Set(days)
-  let streak = 0
-  const [year, month, day] = todayKey(now).split('-').map(Number)
-  const currentDayNumber = Math.floor(Date.UTC(year, month - 1, day) / 86_400_000)
-
-  for (let index = 0; index < 365; index += 1) {
-    const key = new Date((currentDayNumber - index) * 86_400_000).toISOString().slice(0, 10)
-    if (!keys.has(key)) {
-      if (index === 0) continue
-      break
-    }
-    streak += 1
-  }
-  return streak
+export async function serializeAtlasUpdate<T>(operation: () => T, locks: Pick<LockManager, 'request'> | undefined = navigator.locks): Promise<T> {
+  if (!locks) throw new Error('Safe shared storage is unavailable')
+  return locks.request(storageKey, { mode: 'exclusive' }, operation)
 }
 
 export function AtlasProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AtlasState>(emptyState)
   const stateRef = useRef<AtlasState>(emptyState)
+  const [storageAvailable, setStorageAvailable] = useState(true)
   const [ready, setReady] = useState(false)
+  const pendingRef = useRef(Promise.resolve())
 
   useEffect(() => {
     const loaded = loadAtlasState()
     stateRef.current = loaded
     setState(loaded)
     setReady(true)
+    const synchronize = (event: StorageEvent) => {
+      if (event.key !== null && event.key !== storageKey) return
+      const next = loadAtlasState()
+      stateRef.current = next
+      setState(next)
+    }
+    window.addEventListener('storage', synchronize)
+    return () => window.removeEventListener('storage', synchronize)
   }, [])
 
-  const updateState = useCallback((update: (current: AtlasState) => AtlasState) => {
-    const next = applyPersistedAtlasUpdate(stateRef.current, update)
-    stateRef.current = next
-    setState(next)
+  const persistUpdate = useCallback((update: (current: AtlasState) => AtlasState, requirePersistence = false) => {
+    const work = pendingRef.current.then(async () => {
+      try {
+        await serializeAtlasUpdate(() => {
+          let persisted = false
+          const next = applyPersistedAtlasUpdate(stateRef.current, update, safeLocalStorage, value => { persisted = value })
+          setStorageAvailable(persisted)
+          if (!persisted) throw new Error('Atlas storage unavailable')
+          stateRef.current = next
+          setState(next)
+        })
+      } catch (error) {
+        setStorageAvailable(false)
+        if (requirePersistence) throw error
+      }
+    })
+    pendingRef.current = work.catch(() => undefined)
+    return work
   }, [])
+  const updateState = useCallback((update: (current: AtlasState) => AtlasState) => { void persistUpdate(update) }, [persistUpdate])
 
   const updateList = useCallback(
     (
-      key: 'saved' | 'completed' | 'visited' | 'completedIssues' | 'visitedIssues',
+      key: 'completed' | 'visited' | 'completedIssues' | 'visitedIssues',
       id: string,
-      event?: Parameters<typeof trackEvent>[0]['event'],
-      worldId?: string,
     ) => {
       updateState((current) => ({
         ...current,
         [key]: unique([...(current[key] ?? []), id]),
       }))
-      if (event) trackEvent({ event, worldId: worldId ?? id, issueId: worldId ? id : undefined })
     },
     [updateState],
   )
@@ -177,25 +174,18 @@ export function AtlasProvider({ children }: { children: ReactNode }) {
   const value = useMemo<AtlasContextValue>(() => ({
     ...state,
     ready,
-    streak: calculateStreak(state.visitDays),
-    saveWorld: (id) => updateList('saved', id, 'atlas_save'),
-    removeWorld: (id) =>
-      updateState((current) => ({
-        ...current,
-        saved: current.saved.filter((item) => item !== id),
-      })),
+    storageAvailable,
     visitWorld: (id) =>
       updateState((current) => ({
         ...current,
         visited: unique([...(current.visited ?? []), id]),
-        visitDays: unique([...(current.visitDays ?? []), todayKey()]),
+        lastVisitedWorldId: id,
       })),
     visitIssue: (id) => updateList('visitedIssues', id),
     completeWorld: (id) => {
       updateState((current) => ({
         ...current,
         completed: unique([...(current.completed ?? []), id]),
-        visitDays: unique([...(current.visitDays ?? []), todayKey()]),
       }))
       trackEvent({ event: 'experience_complete', worldId: id })
     },
@@ -204,17 +194,15 @@ export function AtlasProvider({ children }: { children: ReactNode }) {
         ...current,
         completed: unique([...(current.completed ?? []), worldId]),
         completedIssues: unique([...(current.completedIssues ?? []), issueId]),
-        visitDays: unique([...(current.visitDays ?? []), todayKey()]),
         issueCompletionDates: current.issueCompletionDates[issueId]
           ? current.issueCompletionDates
           : { ...current.issueCompletionDates, [issueId]: new Date().toISOString() },
       }))
       trackEvent({ event: 'experience_complete', worldId, issueId })
     },
-    isSaved: (id) => state.saved.includes(id),
     isComplete: (id) => state.completed.includes(id),
     isIssueComplete: (id) => (state.completedIssues ?? []).includes(id),
-  }), [ready, state, updateList, updateState])
+  }), [ready, storageAvailable, state, updateList, updateState])
 
   return <AtlasContext.Provider value={value}>{children}</AtlasContext.Provider>
 }
@@ -224,5 +212,3 @@ export function useAtlas(): AtlasContextValue {
   if (!context) throw new Error('useAtlas must be used within AtlasProvider')
   return context
 }
-
-export { calculateStreak }

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-13",
+  "code": "SFX-MAGIC-13",
+  "title": {
+    "en": "Crystal resonate",
+    "zh": "水晶共鸣"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 12,
+  "seed": 2091402171,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized crystal resonate for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的水晶共鸣合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2091402171,
+    "sha256": "6bfc16f5d8bb07c128ed17e4aa65c3e6d8aa6ffb3bda402d7d456ec80473cf2c",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ac435271c449a5f7f7b430bc361d3bbf1afbc944562f591c3b71d8c104456ea7",
+      "bytes": 34420,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6bfc16f5d8bb07c128ed17e4aa65c3e6d8aa6ffb3bda402d7d456ec80473cf2c",
+      "bytes": 211724,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a2567f3a1abaf9449663efb0bf6a8192d7eb19c225ca513ac9a6051b11e1fa7a",
+      "bytes": 49904,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "cf96f488ee1ffc22a316e39331cb5684b044dbcde39ff7c4035b445a0bfe55de",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 105840,
+    "duration": 2.4,
+    "peakDbfs": -5.19,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.701187745063303e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13815222167968688,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized whoosh sound effect with a rising and falling pitch, featuring a metallic or electronic texture, suitable for sci-fi transitions or UI elements.",
+      "zh": "一个简短的合成嗖嗖声效果，音高先升后降，带有金属或电子质感，适用于科幻过渡或用户界面元素。"
+    },
+    "reason": "The sound is a clean, well-produced, isolated sound effect with no technical defects, making it highly suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:45.281418+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ac435271c449a5f7f7b430bc361d3bbf1afbc944562f591c3b71d8c104456ea7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 105840
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.883192+00:00"
+}

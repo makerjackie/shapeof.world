@@ -1,0 +1,180 @@
+{
+  "id": "scene-dub-15",
+  "code": "SCENE-09-15",
+  "title": {
+    "en": "Floating Objects · 15",
+    "zh": "漂浮物件 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "spacious playful object transformations",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 94,
+  "key": "",
+  "instruments": [
+    "organ stabs",
+    "deep bass",
+    "rimshot",
+    "short tape echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for spacious playful object transformations. Instruments: organ stabs, deep bass, rimshot, short tape echo. 94 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and playful electronic track with a driving beat, featuring a prominent arpeggiated synth melody and a retro video game aesthetic. The music is energetic and has a clear, consistent rhythm.",
+    "zh": "一首欢快俏皮的电子音乐，带有驱动节拍，突出的琶音合成器旋律和复古视频游戏美学。音乐充满活力，节奏清晰连贯。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "spacious playful object transformations"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:46.140509+00:00",
+  "generation": {
+    "id": "6fc6fdf8-ef20-47d2-80e4-21bca800a18a",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:13:33.708932+00:00",
+    "completedAt": "2026-09-22T09:13:46.140509+00:00",
+    "interactionId": "vkayatD9Irbi694PucGn6Ac",
+    "sha256": "d57a6db5acc0e206cf80c5cbe164333182f673b9476c35241cea33e30c5245f0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and playful electronic track with a driving beat, featuring a prominent arpeggiated synth melody and a retro video game aesthetic. The music is energetic and has a clear, consistent rhythm.",
+      "zh": "一首欢快俏皮的电子音乐，带有驱动节拍，突出的琶音合成器旋律和复古视频游戏美学。音乐充满活力，节奏清晰连贯。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Playful",
+      "Energetic",
+      "Fun",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic instrumental track with a clear structure and no audible defects, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with its main arpeggiated synth melody and driving beat. It concludes with a clear, deliberate musical flourish and a slight fade-out, providing a resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:03.025292+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "56f44cb312b66040178dbc394d0f905bb6bc7607d91e1b5358e1e87f9465b4bb"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.066875,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy electronic track featuring a driving synth bassline, crisp electronic drums, and playful synth melodies. It has a danceable, energetic vibe.",
+      "zh": "一首欢快且律动感十足的电子音乐，以强劲的合成器贝斯线、清脆的电子鼓和活泼的合成器旋律为特色。整体氛围充满舞动感和活力。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synthesizer",
+      "synth bass"
+    ],
+    "moods": [
+      "upbeat",
+      "groovy",
+      "energetic",
+      "danceable",
+      "playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 126,
+    "reason": "Clean production, clear instrumentation, and a consistent, engaging rhythm suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:55.233459+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.066875,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-dub-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-dub-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-dub-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "56f44cb312b66040178dbc394d0f905bb6bc7607d91e1b5358e1e87f9465b4bb",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d57a6db5acc0e206cf80c5cbe164333182f673b9476c35241cea33e30c5245f0",
+      "bytes": 729273,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "dd60740a95e2d1ea7dc356b5379aaa505ff442d4f834484076b5ad87e0bebbab",
+      "bytes": 2739,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.829355+00:00"
+}

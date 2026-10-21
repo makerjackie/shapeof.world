@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-03",
+  "code": "SFX-GAME-03",
+  "title": {
+    "en": "Health restore",
+    "zh": "恢复生命"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 2,
+  "seed": 1505621483,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized health restore for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的恢复生命合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.72,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1505621483,
+    "sha256": "41cb8385e15bc116c7d1f213c314e2188389d33933263cf4b5722d374e98b196",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d01c16d9cec1f941661aded14d69ff30fc25f8eda9ea916d42b66c61dce0a262",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "41cb8385e15bc116c7d1f213c314e2188389d33933263cf4b5722d374e98b196",
+      "bytes": 63548,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0d52e86e3f255c3112f6f90fac213ab0b31be714fc927b4aade79d8f19d8f958",
+      "bytes": 7410,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3922207ea03cdd45528a5a5fe364cb67475c4fd108c45628d50346496c20a539",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 31752,
+    "duration": 0.72,
+    "peakDbfs": -4.99,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.5377968316956414e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04419708251953125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic ping or chime sound.",
+      "zh": "一个短促、高音的电子提示音或叮当声。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect with no audible defects, making it suitable for various UI or notification sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:34.589737+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d01c16d9cec1f941661aded14d69ff30fc25f8eda9ea916d42b66c61dce0a262"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 31752
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.872164+00:00"
+}

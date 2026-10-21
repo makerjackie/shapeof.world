@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-05",
+  "code": "SFX-FOLEY-05",
+  "title": {
+    "en": "Bag rustle",
+    "zh": "袋子沙响"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 4,
+  "seed": 2872072848,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized bag rustle for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的袋子沙响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.82,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2872072848,
+    "sha256": "44de144e1fbeef58b0c5512a00267e1d61b70e4f39b2f6eade67239006dd6240",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e433115f1e67307bea97e74ebbc94b5d9c44331e5bb5aaaaba0fa62f885a8a21",
+      "bytes": 12477,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "44de144e1fbeef58b0c5512a00267e1d61b70e4f39b2f6eade67239006dd6240",
+      "bytes": 72368,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "418a7a59c681c2fc363daac947e3947d4ca13f30397cd8198b7b1aa2401cda68",
+      "bytes": 12507,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "80e4a5aa5a02f66a7072818ad4a4e58ccf89abab94b8ece9afd1658ce8101f03",
+      "bytes": 1703,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 36162,
+    "duration": 0.82,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -24.23,
+    "dcOffset": 3.2068690026823735e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14043579101561754,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized electronic whoosh or swipe sound effect with a quick attack and decay.",
+      "zh": "一个短促、尖锐的合成电子嗖嗖声或滑动音效，具有快速的起音和衰减。"
+    },
+    "reason": "Clean, well-produced, and versatile electronic sound effect suitable for various UI or transition needs in video/game sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:51.112661+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e433115f1e67307bea97e74ebbc94b5d9c44331e5bb5aaaaba0fa62f885a8a21"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 36162
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.863723+00:00"
+}

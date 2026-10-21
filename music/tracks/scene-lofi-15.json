@@ -1,0 +1,179 @@
+{
+  "id": "scene-lofi-15",
+  "code": "SCENE-18-15",
+  "title": {
+    "en": "Small Desk · 15",
+    "zh": "小小书桌 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "quiet study and tutorial backdrop without vinyl noise",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 86,
+  "key": "",
+  "instruments": [
+    "soft electric piano",
+    "restrained drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for quiet study and tutorial backdrop without vinyl noise. Instruments: soft electric piano, restrained drums, warm bass. 86 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A bright, upbeat, and modern electronic track featuring a catchy synth melody, driving drums, and a clean bassline. It has a positive and energetic feel, suitable for promotional content.",
+    "zh": "一首明亮、欢快、现代的电子音乐，具有抓耳的合成器旋律、强劲的鼓点和清晰的贝斯线。整体感觉积极且充满活力，适合宣传内容。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "quiet study and tutorial backdrop without vinyl noise"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:18:47.371212+00:00",
+  "generation": {
+    "id": "d8b58e43-ff6c-47e6-90e6-17905f2ea8ae",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:18:33.081501+00:00",
+    "completedAt": "2026-09-22T09:18:47.371212+00:00",
+    "interactionId": "6keyat_ROM7ojNAPzs-CwQ0",
+    "sha256": "d122c43f86c7449b4b8f3cd49125b813d24e9f7f2cc2f4676250b407a3eb8d6a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A bright, upbeat, and modern electronic track featuring a catchy synth melody, driving drums, and a clean bassline. It has a positive and energetic feel, suitable for promotional content.",
+      "zh": "一首明亮、欢快、现代的电子音乐，具有抓耳的合成器旋律、强劲的鼓点和清晰的贝斯线。整体感觉积极且充满活力，适合宣传内容。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Bright",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, clean, and versatile electronic track with a clear structure and positive mood, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main synth melody, drums, and bass, establishing the core groove. It concludes with a smooth, gradual fade-out of all instruments.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:01.364057+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "68f434cc5236702ed9608e8e7340432fec2cb501a8c229185137ef9417a95b41"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 26.958292,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A synth-driven electronic track featuring a prominent melodic synthesizer, a steady electronic drum beat, and a deep synth bassline. It evokes a retro, dreamy atmosphere.",
+      "zh": "一首合成器驱动的电子音乐，以突出的旋律合成器、稳定的电子鼓点和深沉的合成器贝斯线为特色。营造出复古、梦幻的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Chill",
+      "Dreamy",
+      "Retro",
+      "Electronic",
+      "Melancholic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:54.215182+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 11.958292,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-lofi-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-lofi-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-lofi-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "68f434cc5236702ed9608e8e7340432fec2cb501a8c229185137ef9417a95b41",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d122c43f86c7449b4b8f3cd49125b813d24e9f7f2cc2f4676250b407a3eb8d6a",
+      "bytes": 654667,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "df44e9690090e4efdcaf3e0fa954fb6291830b597db39124478c158fa32076bc",
+      "bytes": 2792,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.846555+00:00"
+}

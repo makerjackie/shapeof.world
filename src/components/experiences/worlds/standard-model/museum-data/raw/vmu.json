@@ -1,0 +1,20 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:15 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S066MNM",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S066MNM/2024",
+  "description": "nu MASS (muon based)",
+  "pdg_values": [
+    {
+      "value_text": "<0.19",
+      "is_limit": true,
+      "is_upper_limit": true,
+      "unit": "MeV",
+      "confidence_level": 90.0,
+      "type": "OUR EVALUATION"
+    }
+  ]
+}

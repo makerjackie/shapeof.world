@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-14",
+  "code": "SFX-MAGIC-14",
+  "title": {
+    "en": "Fairy dust",
+    "zh": "微光粉尘"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 13,
+  "seed": 4104175829,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized fairy dust for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的微光粉尘合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.68,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4104175829,
+    "sha256": "37baf0ddb5d4d967f5e4fd9615e1d685df2469ba0999b2b706e5fc7c51d6dd14",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c73977595de124a817af7677bbbe0877f7136c72963808cfdeea54bb7e346f5f",
+      "bytes": 38443,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "37baf0ddb5d4d967f5e4fd9615e1d685df2469ba0999b2b706e5fc7c51d6dd14",
+      "bytes": 236420,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7fd40e4e7a7d260e8d6cbd6c2f92d4b1c7cd3501e8dc0ee896b17bc49df482ba",
+      "bytes": 56257,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "273694dbfde4af9a93bc8ec37a75e0998ccc1c905176273e964a60798edcffd4",
+      "bytes": 1932,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 118188,
+    "duration": 2.68,
+    "peakDbfs": -4.8,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.382579224942465e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1662484130859374,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A descending, shimmering whoosh sound effect with a magical or sci-fi character.",
+      "zh": "一个下降的、闪烁的嗖嗖声效果，带有魔法或科幻色彩。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect suitable for transitions, magical spells, or sci-fi elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:47.147758+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "c73977595de124a817af7677bbbe0877f7136c72963808cfdeea54bb7e346f5f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 118188
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.883470+00:00"
+}

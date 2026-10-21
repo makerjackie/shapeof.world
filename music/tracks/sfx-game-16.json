@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-16",
+  "code": "SFX-GAME-16",
+  "title": {
+    "en": "Jump",
+    "zh": "跳跃"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 15,
+  "seed": 2534345515,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized jump for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的跳跃合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.56,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2534345515,
+    "sha256": "b24a08ed20ffb64a64dd3f1130c17a358a319d5bf9ff11a2b30b4792d472ac11",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "964821494f22347e3ff6cd59bf933fec22e5c8167931d15bfb8c754b47b5a592",
+      "bytes": 8820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b24a08ed20ffb64a64dd3f1130c17a358a319d5bf9ff11a2b30b4792d472ac11",
+      "bytes": 49436,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "157b1e99bc366a98f87d1ffd5d488ff2f0c6589a85f5bbfafec9979ceafae928",
+      "bytes": 5961,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "134f3f68e34f58be8434715db70cc9ff784f54ef0f8b5d66480da6e84ac897a2",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 24696,
+    "duration": 0.56,
+    "peakDbfs": -4.86,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.954334710074506e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.01843444824218765,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, high-pitched electronic blip sound effect.",
+      "zh": "短促、清晰、高音调的电子提示音效。"
+    },
+    "reason": "The sound is a clean, distinct electronic blip, suitable for UI feedback or small event notifications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:50.779473+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "964821494f22347e3ff6cd59bf933fec22e5c8167931d15bfb8c754b47b5a592"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 24696
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.874719+00:00"
+}

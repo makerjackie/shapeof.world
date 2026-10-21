@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-11",
+  "code": "SFX-MECHANICAL-11",
+  "title": {
+    "en": "Valve turn",
+    "zh": "阀门转动"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 10,
+  "seed": 442965388,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized valve turn for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的阀门转动合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.98,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 442965388,
+    "sha256": "db5808da1d11959112c37a8ee5ce7638faa62eb39e8e61d163c5ef5b34dfccfe",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b3c922b2d771341979683ddfad16551cb9f2d7217a41e84fe2cd2c8fb0ac938b",
+      "bytes": 14672,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "db5808da1d11959112c37a8ee5ce7638faa62eb39e8e61d163c5ef5b34dfccfe",
+      "bytes": 86480,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "62eacb61bf19280d42bf7d8c81fb6dfc1954cdfc55ae5985dacf52e7a45c3e60",
+      "bytes": 8042,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d174c980fb046216011bc4b82ed7e6884be22e73a1a5862d42a28fb6af9d6714",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 43218,
+    "duration": 0.98,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -25.78,
+    "dcOffset": 7.638927302426073e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13818945312499986,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "Two distinct, short, high-pitched electronic blips or beeps, sounding like digital user interface feedback.",
+      "zh": "两个清晰、短促、高音调的电子提示音或蜂鸣声，听起来像是数字用户界面反馈。"
+    },
+    "reason": "The audio provides a clean, isolated, and well-defined electronic sound effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:26.977790+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b3c922b2d771341979683ddfad16551cb9f2d7217a41e84fe2cd2c8fb0ac938b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 43218
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.886852+00:00"
+}

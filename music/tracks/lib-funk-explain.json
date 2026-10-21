@@ -1,0 +1,101 @@
+{
+  "id": "lib-funk-explain",
+  "code": "LIB-13-05",
+  "title": {
+    "en": "Discovery — Funk",
+    "zh": "发现 · 放克"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "funk"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "G major",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental funk instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 114 BPM; G major. Main idea: an ascending fourth answered by a stepwise descent. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat instrumental track featuring electric guitar, bass, and drums, with a driving rhythm and catchy melody.",
+    "zh": "一首活泼欢快的器乐曲，以电吉他、贝斯和鼓为主，节奏感强，旋律动听。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.04,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:24:45.985992+00:00",
+  "generation": {
+    "id": "b8507482-25ad-4f51-b85b-9ee21b56f13b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:24:01.469982+00:00",
+    "completedAt": "2026-09-09T08:24:45.985992+00:00",
+    "interactionId": "ohehauSVK-bq8vUPyqaQQA",
+    "sha256": "f25fd06e8e98b8bc844ae6b31c2e42376f0b0d4bdae8709c216f3429c4408ae8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental track featuring electric guitar, bass, and drums, with a driving rhythm and catchy melody.",
+      "zh": "一首活泼欢快的器乐曲，以电吉他、贝斯和鼓为主，节奏感强，旋律动听。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "groovy",
+      "energetic",
+      "lively",
+      "cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Good quality recording, well-performed and produced.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:37:24.685690+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:39:00.298470+00:00"
+}

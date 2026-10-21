@@ -1,0 +1,130 @@
+{
+  "id": "ambience-rain-02",
+  "code": "AMB-RAIN-02",
+  "title": {
+    "en": "Roof rain · designed ambience",
+    "zh": "屋顶雨声 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "rain",
+  "designIndex": 1,
+  "seed": 3495759947,
+  "targetDuration": 45,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized roof rain atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "屋顶雨声的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "rain",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-rain"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 45.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-rain-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-rain-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-rain-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-rain-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3495759947,
+    "sha256": "f725cd1ca9683571becb7ce35a7769bcd71641baaaa9c84d73076d404511865a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "da6dc2bf9b2c417078463f96f38c5ed89457eab8229b3eb88dc2434a004a6ec6",
+      "bytes": 630900,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f725cd1ca9683571becb7ce35a7769bcd71641baaaa9c84d73076d404511865a",
+      "bytes": 3969044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9f1cd50a05f8d6606737cd7895ca78d1376c63207102c87f14190a4a8ff14465",
+      "bytes": 1048059,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b2256252965bd7a25aa5adda14137102ca91ba9aca28b94a053250b7d42f1113",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1984500,
+    "duration": 45.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.74,
+    "dcOffset": -4.321209097064752e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.068939208984375,
+    "internalStepP999": 0.30299383544922165,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A dynamic, swirling, whooshing environmental sound texture, reminiscent of wind or water, with a consistent, evolving character.",
+      "zh": "一种动态的、旋转的、呼啸的环境声音纹理，类似于风或水，具有持续演变的特征。"
+    },
+    "reason": "The audio is a clean, well-produced, and dynamic texture that loops perfectly without any audible seams, clicks, or abrupt changes. It is ideal for creating immersive background or atmospheric soundscapes in video or game design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:12.178062+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "84ed8e8ac14d4699bb5c913f13e16cfaea29dbe7cceb117b6fc046e718875796"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1984500
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.854787+00:00"
+}

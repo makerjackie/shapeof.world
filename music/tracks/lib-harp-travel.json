@@ -1,0 +1,101 @@
+{
+  "id": "lib-harp-travel",
+  "code": "LIB-03-06",
+  "title": {
+    "en": "Roaming — Harp",
+    "zh": "漫游 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "harp"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "E minor",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second pastoral acoustic instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 80 BPM; E minor. Main idea: a repeating five-note figure with space between phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A serene and melancholic orchestral piece, primarily featuring strings, woodwinds, and harp, with a gentle, flowing melody.",
+    "zh": "一首宁静而忧郁的管弦乐曲，主要以弦乐、木管乐器和竖琴为主，旋律轻柔流畅。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.413,
+  "generatedAt": "2026-09-09T07:49:39.282263+00:00",
+  "generation": {
+    "id": "19860101-2377-4e84-8b09-f9ae3f23ecde",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:48:53.570153+00:00",
+    "completedAt": "2026-09-09T07:49:39.282263+00:00",
+    "interactionId": "Zg-hauDIL7GejMwP1PWpyAg",
+    "sha256": "bbca9af5c8663a7409f6cf4b7a9eb46a6a3e5ed0296ab8f976399e0a22972c2d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and melancholic orchestral piece, primarily featuring strings, woodwinds, and harp, with a gentle, flowing melody.",
+      "zh": "一首宁静而忧郁的管弦乐曲，主要以弦乐、木管乐器和竖琴为主，旋律轻柔流畅。"
+    },
+    "instruments": [
+      "Strings",
+      "Woodwinds",
+      "Harp",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Melancholic",
+      "Peaceful",
+      "Reflective",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is of high quality with clear instrumentation and no audible defects. Its serene and melancholic mood makes it suitable for various library uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:49:47.853229+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:51:57.779882+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

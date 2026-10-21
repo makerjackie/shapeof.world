@@ -1,0 +1,161 @@
+{
+  "id": "short-chamber-25",
+  "code": "SHORT-06-25",
+  "title": {
+    "en": "Paper Sprint · 25",
+    "zh": "纸上疾行 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 3,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM, 4/4. Main hook: a repeated note followed by a playful octave leap. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A light and playful orchestral piece featuring pizzicato strings, woodwinds, and brass, creating an elegant and whimsical atmosphere. It has a clear, driving rhythm suitable for promotional content.",
+    "zh": "一首轻快活泼的管弦乐曲，以拨弦乐器、木管乐器和铜管乐器为主，营造出优雅而异想天开的氛围。节奏清晰，适合宣传内容。"
+  },
+  "batch": "short-promos-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 16,
+      "logo": 29
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T02:39:22.211189+00:00",
+  "generation": {
+    "id": "211f6c9b-d259-4143-ba15-bc88b6ab3933",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T02:39:08.924235+00:00",
+    "completedAt": "2026-09-10T02:39:22.211189+00:00",
+    "interactionId": "TRiiaqK3LoTLk7QP7q-OwQ0",
+    "sha256": "e78c16f3eb7c77bbe35fc37ccbc74caf66898dd64000ffcca67a36c566da25d0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful orchestral piece featuring pizzicato strings, woodwinds, and brass, creating an elegant and whimsical atmosphere. It has a clear, driving rhythm suitable for promotional content.",
+      "zh": "一首轻快活泼的管弦乐曲，以拨弦乐器、木管乐器和铜管乐器为主，营造出优雅而异想天开的氛围。节奏清晰，适合宣传内容。"
+    },
+    "instruments": [
+      "strings",
+      "woodwinds",
+      "brass",
+      "percussion"
+    ],
+    "moods": [
+      "playful",
+      "light",
+      "elegant",
+      "whimsical",
+      "bright",
+      "sophisticated"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear mix, and suitable for various media applications requiring a light orchestral feel.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, catchy pizzicato string melody. Ends with a clear, deliberate orchestral flourish.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:42:33.795603+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "5f511113fae733a4f87cb8e12fa6993546467bb6efb850ed45e7ee06800c8f35"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical piece featuring a prominent violin melody, accompanied by pizzicato strings and a harpsichord. It evokes a Baroque or early Classical chamber music style.",
+      "zh": "一首活泼优雅的古典乐曲，以小提琴为主旋律，伴有拨弦乐器和大键琴。它唤起了巴洛克或早期古典室内乐的风格。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Harpsichord"
+    ],
+    "moods": [
+      "Classical",
+      "Baroque",
+      "Elegant",
+      "Lively",
+      "Stately"
+    ],
+    "energy": 4,
+    "bpmEstimate": 130,
+    "reason": "The audio is a well-performed and clean recording of a classical piece, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:39:39.744009+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/short-chamber-25/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/short-chamber-25/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/short-chamber-25/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T02:46:26.549705+00:00"
+}

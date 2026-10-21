@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "shape-of-world-music",
+  "compatibility_date": "2026-08-12",
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "html_handling": "drop-trailing-slash"
+  },
+  "routes": [
+    {
+      "pattern": "music.shapeof.world",
+      "custom_domain": true
+    }
+  ]
+}

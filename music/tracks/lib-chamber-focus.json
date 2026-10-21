@@ -1,0 +1,101 @@
+{
+  "id": "lib-chamber-focus",
+  "code": "LIB-02-02",
+  "title": {
+    "en": "Focus — Chamber",
+    "zh": "专注 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "chamber"
+  ],
+  "energy": 3,
+  "bpm": 86,
+  "key": "A minor",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second chamber classical instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 86 BPM; A minor. Main idea: a repeating five-note figure with space between phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A dramatic and melancholic instrumental piece featuring a string ensemble, reminiscent of classical or film score music. It has a rich, emotional texture with varying dynamics and tempos.",
+    "zh": "一首戏剧性且忧郁的器乐作品，以弦乐合奏为主，让人联想到古典音乐或电影配乐。它具有丰富的情感质感，动态和节奏多变。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 116.663,
+  "generatedAt": "2026-09-09T07:42:50.962799+00:00",
+  "generation": {
+    "id": "4465bb03-4e4f-4d97-9e4b-5744cda0628f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:42:07.049913+00:00",
+    "completedAt": "2026-09-09T07:42:50.962799+00:00",
+    "interactionId": "0A2hateACqKsrtoP65a1oAo",
+    "sha256": "14cb4b969f918623b5ca2e63d250e4deb64b7c2a2edeccdd01262b5c5cb45fcb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dramatic and melancholic instrumental piece featuring a string ensemble, reminiscent of classical or film score music. It has a rich, emotional texture with varying dynamics and tempos.",
+      "zh": "一首戏剧性且忧郁的器乐作品，以弦乐合奏为主，让人联想到古典音乐或电影配乐。它具有丰富的情感质感，动态和节奏多变。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "String Ensemble"
+    ],
+    "moods": [
+      "Melancholic",
+      "Dramatic",
+      "Emotional",
+      "Reflective",
+      "Classical"
+    ],
+    "energy": 3,
+    "bpmEstimate": 90,
+    "reason": "Well-performed and recorded, suitable for a classical or film score library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:43:00.179458+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:45:41.199021+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

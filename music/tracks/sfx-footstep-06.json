@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-06",
+  "code": "SFX-FOOTSTEP-06",
+  "title": {
+    "en": "Grass step",
+    "zh": "草地脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 5,
+  "seed": 2939445144,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized grass step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的草地脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.36,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2939445144,
+    "sha256": "b177c99ed94125da7bb74e87fb5ebdbf3c2b2a6de12554da39381c331ae1d4aa",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d3b4ca95b025a475f2e30eb29f495bbb16160970bb638715263555f1305c63d6",
+      "bytes": 5894,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b177c99ed94125da7bb74e87fb5ebdbf3c2b2a6de12554da39381c331ae1d4aa",
+      "bytes": 31796,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "db217ab12a8a5b920c138334825a95c7c7388478d2c27ea5a090479bc9c94166",
+      "bytes": 11465,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f8db1f4a77e023240b6d93d47ef31f2c3574096fa7caf732d6787aa7a515527f",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 15876,
+    "duration": 0.36,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.57,
+    "dcOffset": -4.036716683201058e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2762716674804703,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, and airy whoosh or swish sound effect, characterized by a quick attack and rapid decay, suggesting a fast movement or quick pass-by.",
+      "zh": "一个短促、尖锐、带有空气感的“嗖”或“唰”声效，具有快速的起始和迅速的衰减，暗示着快速移动或掠过。"
+    },
+    "reason": "The sound is a clean, isolated whoosh/swish effect with no audible defects, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:05.103015+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d3b4ca95b025a475f2e30eb29f495bbb16160970bb638715263555f1305c63d6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 15876
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.869030+00:00"
+}

@@ -1,0 +1,99 @@
+{
+  "id": "lib-gamelan-reading",
+  "code": "LIB-23-01",
+  "title": {
+    "en": "Reading — Gamelan",
+    "zh": "静读 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "gamelan"
+  ],
+  "energy": 1,
+  "bpm": 72,
+  "key": "D major",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second gamelan-inspired instrumental instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 72 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring a plucked string instrument (like a zither or harp) playing a repeating arpeggiated pattern, accompanied by a soft, sustained wind instrument (flute or recorder) carrying the main melody. The music evokes a calm and peaceful atmosphere.",
+    "zh": "一首轻柔而旋律优美的纯音乐作品，以拨弦乐器（如扬琴或竖琴）演奏重复的琶音模式为主，并伴有柔和、持续的管乐器（长笛或竖笛）演奏主旋律。音乐营造出平静祥和的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.462,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:00:32.153404+00:00",
+  "generation": {
+    "id": "1002db8c-cc58-468d-b582-78b11083fc18",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:59:48.623385+00:00",
+    "completedAt": "2026-09-09T09:00:32.153404+00:00",
+    "interactionId": "BiChav_VB4u3i9sP7uehmQM",
+    "sha256": "f1f01ea6333539e2075fe5f6c863c1fe2ee7b29ac772200697bb75f27c718680"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring a plucked string instrument (like a zither or harp) playing a repeating arpeggiated pattern, accompanied by a soft, sustained wind instrument (flute or recorder) carrying the main melody. The music evokes a calm and peaceful atmosphere.",
+      "zh": "一首轻柔而旋律优美的纯音乐作品，以拨弦乐器（如扬琴或竖琴）演奏重复的琶音模式为主，并伴有柔和、持续的管乐器（长笛或竖笛）演奏主旋律。音乐营造出平静祥和的氛围。"
+    },
+    "instruments": [
+      "Harp",
+      "Flute",
+      "Zither"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": "A well-produced, gentle instrumental piece with clear melodic lines and a tranquil mood, suitable for various background applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:00:40.802035+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:01:15.470965+00:00"
+}

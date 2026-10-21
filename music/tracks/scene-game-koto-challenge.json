@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-koto-challenge",
+  "code": "GAME-09-3",
+  "title": {
+    "en": "Moonlit Courtyard · Challenge",
+    "zh": "月下庭院 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "quiet courtyard exploration",
+    "challenge"
+  ],
+  "energy": 4,
+  "bpm": 82,
+  "key": "",
+  "instruments": [
+    "koto",
+    "bamboo flute",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for quiet courtyard exploration, challenge state. Instruments: koto, bamboo flute, soft bass. 82 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "A dramatic and epic cinematic track featuring powerful percussion, sustained and pizzicato strings, prominent brass, and melodic woodwinds. The piece builds in intensity, creating a sense of tension and grandeur.",
+    "zh": "一首戏剧性且史诗般的电影配乐，以强劲的打击乐、持续和拨奏的弦乐、突出的铜管乐器以及旋律优美的木管乐器为特色。乐曲强度逐渐增强，营造出紧张而宏伟的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 86.413,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:26:44.118165+00:00",
+  "generation": {
+    "id": "4ee1c76b-a770-41ec-b642-4c17960cd619",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:25:58.503723+00:00",
+    "completedAt": "2026-09-22T09:26:44.118165+00:00",
+    "interactionId": "p0myasvDCv6N88EPy_v08Ac",
+    "sha256": "4beb2796b3136b6ba9859d7657854f623518099e44697a08b0083098545d7296"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dramatic and epic cinematic track featuring powerful percussion, sustained and pizzicato strings, prominent brass, and melodic woodwinds. The piece builds in intensity, creating a sense of tension and grandeur.",
+      "zh": "一首戏剧性且史诗般的电影配乐，以强劲的打击乐、持续和拨奏的弦乐、突出的铜管乐器以及旋律优美的木管乐器为特色。乐曲强度逐渐增强，营造出紧张而宏伟的氛围。"
+    },
+    "instruments": [
+      "Percussion",
+      "Strings",
+      "Brass",
+      "Woodwinds"
+    ],
+    "moods": [
+      "Epic",
+      "Dramatic",
+      "Cinematic",
+      "Intense",
+      "Powerful",
+      "Mysterious"
+    ],
+    "energy": 4,
+    "bpmEstimate": 105,
+    "reason": "The audio is a well-produced, high-quality instrumental track with a clear cinematic theme, suitable for various media applications requiring a dramatic and epic mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:55.036150+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 36.457143,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1607760,
+    "sourceStartSeconds": 10.0,
+    "sourceEndSeconds": 46.57142857142857,
+    "crossfadeSeconds": 0.11428571428571428,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1607760,
+        "duration": 36.457143,
+        "peakDbfs": -0.95,
+        "rmsDbfs": -15.11,
+        "dcOffset": 0.003939179623904629,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.000152587890625,
+        "internalStepP999": 0.093719482421875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1607760,
+        "duration": 36.457143,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.75,
+        "dcOffset": 0.003357060351715566,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.001953125,
+        "internalStepP999": 0.0947265625,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A metallic, resonant, and percussive environmental sound texture. It features sustained, slightly dissonant metallic drones combined with periodic, impactful gong-like strikes and shimmering overtones, creating an atmospheric and somewhat tense soundscape.",
+        "zh": "一种金属质感、共鸣且富有打击乐元素的氛围音效。它包含持续的、略带不和谐的金属嗡鸣声，并伴有周期性的、有冲击力的锣声敲击和闪烁的泛音，营造出一种富有气氛且略带紧张感的声景。"
+      },
+      "reason": "The audio provides a well-produced, complex metallic texture suitable for various sound design applications. It is free from common audio defects like clipping or unwanted noise.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:29:48.125240+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "9237879e0ad90a190e5340990beb9da1d8601a7842ee594288c0ba8b2d939c72"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music maintains consistent rhythm, harmony, and dynamics across all join points. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The phrases flow naturally, making it comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:54.206965+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-koto-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-koto-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-koto-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-koto-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-koto-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "418801d57ada6add806184b371d47bd97384686df69f10b8b9f7cadeb9d5a6c8",
+      "bytes": 1210557,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4beb2796b3136b6ba9859d7657854f623518099e44697a08b0083098545d7296",
+      "bytes": 2081580,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1a1cd5430d001d8cb691f0c6f23f3bab4848399f36c6b3b5a36f75de602ebada",
+      "bytes": 2799,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "12c2d10d1e2080fac8db660746cd1d2fc4729de46efaa1fa8313b7ec5ad4c737",
+      "bytes": 6431084,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "e52fb2a2b381364cb2323663003d29d284796690ea2361b59023d2805a819efb",
+      "bytes": 516388,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.460856+00:00"
+}

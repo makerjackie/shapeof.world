@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-07",
+  "code": "SFX-MAGIC-07",
+  "title": {
+    "en": "Teleport",
+    "zh": "瞬间传送"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 6,
+  "seed": 755876192,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized teleport for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的瞬间传送合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 2.68,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 755876192,
+    "sha256": "ad5f3eaa34f8b2e6686f63ad494f8668c34075b5db12a18f6cfc630395704de0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "38561cf4cfe1ed62c0bfc9116fcd3688c05beb22273c7d8e20824cef6c86229d",
+      "bytes": 38443,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ad5f3eaa34f8b2e6686f63ad494f8668c34075b5db12a18f6cfc630395704de0",
+      "bytes": 236420,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "c6d49dfce238647c56f1cd721b96bd329a8c27c65212c8260f37a241bc8d587a",
+      "bytes": 50335,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7f0cc9a1d7250a464017b470bcf468b3213c8e3e76d57ff522f921fef3ed6de1",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 118188,
+    "duration": 2.68,
+    "peakDbfs": -5.08,
+    "rmsDbfs": -17.08,
+    "dcOffset": 6.093806847987951e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11431884765625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A shimmering, swirling, and whooshing magical or ethereal sound effect with a high-frequency sparkle.",
+      "zh": "一种闪烁、旋转和呼啸的魔法或空灵音效，带有高频的闪光感。"
+    },
+    "reason": "The sound is clean, well-produced, and suitable for fantasy or sci-fi sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:43.879080+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "38561cf4cfe1ed62c0bfc9116fcd3688c05beb22273c7d8e20824cef6c86229d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 118188
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.881601+00:00"
+}

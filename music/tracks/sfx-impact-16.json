@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-16",
+  "code": "SFX-IMPACT-16",
+  "title": {
+    "en": "Sub hit",
+    "zh": "低频重击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 15,
+  "seed": 3777052821,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized sub hit for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的低频重击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.76,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3777052821,
+    "sha256": "757fcec408efdee5464bde3c3e7f54e278d84ef852de536bb1b661105f7a96c8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "932819d127af47d090d07f56c36b7b95296d21866828dde3e292a93f708e7d9f",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "757fcec408efdee5464bde3c3e7f54e278d84ef852de536bb1b661105f7a96c8",
+      "bytes": 67076,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ea09ed37549bfde1584e8761aba1d1d708c6cc658303e5e677d462382d8d65cf",
+      "bytes": 8078,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "852beef6f5ac6662f777e3e657dafb2a2dbdbcc5f4cabfe378842f212c3c450f",
+      "bytes": 1941,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 33516,
+    "duration": 0.76,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.07,
+    "dcOffset": -3.36898911154374e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08143316650390564,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A sustained, high-pitched, resonant electronic tone with a clear attack and a gradual decay, reminiscent of a digital chime or a pure sine wave with a slight metallic quality.",
+      "zh": "一个持续的、高音调的、共鸣的电子音，具有清晰的起音和逐渐衰减的尾音，类似于数字钟声或带有轻微金属质感的纯正弦波。"
+    },
+    "reason": "The sound is a clean, distinct, and versatile electronic tone. Its sustained nature and clear timbre make it suitable for various sound design applications, such as UI feedback, alerts, or atmospheric elements in games or videos.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:59.336000+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "932819d127af47d090d07f56c36b7b95296d21866828dde3e292a93f708e7d9f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 33516
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.878942+00:00"
+}

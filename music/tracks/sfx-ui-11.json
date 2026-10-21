@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-11",
+  "code": "SFX-UI-11",
+  "title": {
+    "en": "Drag start",
+    "zh": "开始拖拽"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 10,
+  "seed": 461578716,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized drag start for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的开始拖拽合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.12,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 461578716,
+    "sha256": "d0129c98fac0b218f7a6c4f59a5fc92c98c2383b28bef63c333644eae0b5acaa",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "704f1f72514597674bbbdd224b9fd5d0181b6d4b1d5710090caeec617f32e75b",
+      "bytes": 2603,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d0129c98fac0b218f7a6c4f59a5fc92c98c2383b28bef63c333644eae0b5acaa",
+      "bytes": 10628,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "650e0ec29ae7c6678334876e52789bb25a9291430389fec53b2e354c3e4c3443",
+      "bytes": 4574,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "babbe673d77a837885fb1eb516706abc6e30790b5ebc03eeb98259591ff3a4ff",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 5292,
+    "duration": 0.12,
+    "peakDbfs": -3.01,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.496759554516251e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.0847186279296876,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized 'boing' sound, reminiscent of a spring or cartoon bounce effect.",
+      "zh": "一个短促、高音的合成“boing”声，类似于弹簧或卡通弹跳音效。"
+    },
+    "reason": "The sound is a clean, well-produced, and isolated sound effect, technically suitable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:46.121740+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "704f1f72514597674bbbdd224b9fd5d0181b6d4b1d5710090caeec617f32e75b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 5292
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.907844+00:00"
+}

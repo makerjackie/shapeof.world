@@ -1,0 +1,385 @@
+/* Trade chokepoints · 世界贸易的咽喉
+   舞台是整张夜航海图，底区是 freebar，中间只留点题铭牌与被动读数。 */
+
+.choke-experience {
+  --world-accent: #e8c27a;
+  --choke-amber: #ecb24f;
+  --choke-brass: #ddba8a;
+  --choke-shut: #e55642;
+  --choke-ink: #f4ead8;
+  --freebar-accent: var(--choke-amber);
+  --experience-panel-surface:
+    linear-gradient(160deg, rgba(10, 16, 18, 0.62), rgba(2, 6, 10, 0.58));
+  --experience-panel-border: rgba(236, 178, 79, 0.22);
+  --experience-panel-shadow:
+    0 14px 38px rgba(0, 0, 0, 0.48),
+    inset 0 1px 0 rgba(236, 178, 79, 0.1);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.15;
+  background: #02060a;
+}
+
+.choke-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+/* —— 载入 / 失败态 —— */
+.choke-status {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  color: rgba(244, 234, 216, 0.62);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
+/* —— 点题铭牌 —— */
+.choke-plate {
+  position: absolute;
+  z-index: 9;
+  top: max(76px, var(--experience-safe-top, 78px));
+  left: 26px;
+  width: min(440px, calc(100% - 190px));
+  pointer-events: none;
+}
+
+.choke-plate > span {
+  color: var(--choke-amber);
+  font-size: 10px;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.choke-plate h1 {
+  margin: 8px 0 0;
+  color: var(--choke-ink);
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.8vw, 39px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  text-shadow: 0 3px 26px rgba(0, 0, 0, 0.8);
+}
+
+/* —— 被动读数：只读数据带，不是控件坞 —— */
+.choke-readout {
+  position: absolute;
+  z-index: 9;
+  bottom: calc(var(--choke-dock, 128px) + 4px);
+  left: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: flex-end;
+  width: min(680px, calc(100% - 52px));
+  pointer-events: none;
+}
+
+.choke-readout-row {
+  display: grid;
+  gap: 1px;
+}
+
+/* 读数直接压在海图上，靠字影而不是玻璃面板保证可读 */
+.choke-readout-row small,
+.choke-readout-row b,
+.choke-readout > p {
+  text-shadow:
+    0 1px 3px rgba(2, 6, 10, 0.95),
+    0 0 12px rgba(2, 6, 10, 0.8);
+}
+
+.choke-readout-row small {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.choke-readout-row b {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+  color: var(--choke-ink);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.choke-readout-row.is-key b {
+  color: var(--choke-amber);
+}
+
+.choke-readout-row b i {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.choke-readout > p {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.26);
+  font-size: 9.5px;
+  line-height: 1.5;
+}
+
+/* 故事进行时：铭牌收起，读数移到左上并只留关键行，把注意力还给画面 */
+.choke-experience.is-story .choke-readout {
+  top: max(80px, var(--experience-safe-top, 78px));
+  bottom: auto;
+  width: min(600px, calc(100% - 52px));
+  opacity: 0.84;
+}
+
+.choke-experience.is-story .choke-readout-row:not(.is-key),
+.choke-experience.is-story .choke-readout > p {
+  display: none;
+}
+
+/* —— 自由底栏 —— */
+.choke-experience .experience-freebar-main {
+  width: min(940px, 100%);
+}
+
+.choke-tray {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 8px;
+}
+.choke-gate-chips,
+.choke-layer-chips,
+.choke-chip-rail {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.choke-gate-chips::-webkit-scrollbar,
+.choke-layer-chips::-webkit-scrollbar,
+.choke-chip-rail::-webkit-scrollbar {
+  display: none;
+}
+.choke-gate-chips > *,
+.choke-layer-chips > *,
+.choke-chip-rail > * {
+  flex: 0 0 auto;
+}
+.choke-main-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.choke-gate,
+.choke-layer {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 11px;
+  color: rgba(248, 244, 236, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* 闸门指示：开=横向通道，关=红色断口 */
+.choke-gate > i {
+  position: relative;
+  display: block;
+  width: 11px;
+  height: 11px;
+  border: 1px solid rgba(221, 186, 138, 0.7);
+  border-radius: 50%;
+}
+
+.choke-gate > i::before {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  left: 0;
+  height: 1.5px;
+  background: rgba(221, 186, 138, 0.85);
+  content: '';
+}
+
+.choke-gate.is-shut > i {
+  border-color: var(--choke-shut);
+}
+
+.choke-gate.is-shut > i::before {
+  background: var(--choke-shut);
+}
+
+.choke-gate.is-shut > i::after {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 4px;
+  width: 1.5px;
+  background: var(--choke-shut);
+  content: '';
+}
+
+.choke-gate:hover,
+.choke-layer:hover {
+  color: var(--choke-ink);
+  border-color: rgba(236, 178, 79, 0.5);
+  background: rgba(236, 178, 79, 0.12);
+}
+
+.choke-gate.is-shut {
+  color: #2a0d09;
+  border-color: var(--choke-shut);
+  background: var(--choke-shut);
+}
+
+.choke-gate.is-shut > i {
+  border-color: rgba(42, 13, 9, 0.75);
+}
+
+.choke-gate.is-shut > i::before,
+.choke-gate.is-shut > i::after {
+  background: rgba(42, 13, 9, 0.85);
+}
+
+.choke-layer.is-on {
+  color: #17120a;
+  border-color: var(--choke-amber);
+  background: var(--choke-amber);
+}
+
+/* 货种芯片：未选中时用自己的颜色描一道边，图层与画面同色 */
+.choke-layer-container { border-color: rgba(236, 178, 79, 0.34); }
+.choke-layer-crude { border-color: rgba(226, 108, 58, 0.4); }
+.choke-layer-lng { border-color: rgba(108, 208, 214, 0.4); }
+.choke-layer-grain { border-color: rgba(204, 206, 136, 0.4); }
+
+.choke-layer-crude.is-on {
+  color: #200a04;
+  border-color: #e26c3a;
+  background: #e26c3a;
+}
+
+.choke-layer-lng.is-on {
+  color: #04201f;
+  border-color: #6cd0d6;
+  background: #6cd0d6;
+}
+
+.choke-layer-grain.is-on {
+  color: #17180a;
+  border-color: #ccce88;
+  background: #ccce88;
+}
+
+/* 「全部打开」「播放/暂停」与 Freebar.css 的通用按钮同住 dock-actions */
+.choke-experience .experience-freebar .choke-action {
+  min-height: 32px;
+  padding: 0 12px;
+  color: rgba(248, 244, 236, 0.86);
+  border-color: rgba(221, 186, 138, 0.32);
+  background: rgba(221, 186, 138, 0.07);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.choke-experience .experience-freebar .choke-action:hover:not(:disabled) {
+  border-color: rgba(221, 186, 138, 0.7);
+  background: rgba(221, 186, 138, 0.16);
+}
+
+.choke-experience .experience-freebar .choke-action:disabled {
+  opacity: 0.36;
+  cursor: default;
+}
+
+.choke-experience .experience-freebar .choke-action svg {
+  font-size: 13px;
+}
+
+/* Play chrome comes from shared .experience-freebar-play */
+
+@media (max-width: 720px) {
+  .choke-plate {
+    top: max(66px, var(--experience-safe-top, 70px));
+    left: 18px;
+    width: calc(100% - 112px);
+  }
+
+  .choke-plate h1 {
+    font-size: 18px;
+    line-height: 1.16;
+  }
+
+  .choke-readout {
+    left: 18px;
+    gap: 5px 14px;
+    width: calc(100% - 36px);
+  }
+
+  .choke-readout-row:not(.is-key) {
+    display: none;
+  }
+
+  .choke-readout > p {
+    display: none;
+  }
+
+  /* Story chapters keep their caption in the top band, so the readout stays above the story bar. */
+  .choke-experience.is-story .choke-readout {
+    top: auto;
+    bottom: calc(var(--choke-dock, 72px) + 4px);
+  }
+
+  /* 芯片横滑：右缘渐隐，明确告诉用户后面还有 */
+  .choke-gate-chips,
+  .choke-layer-chips {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    mask-image: linear-gradient(90deg, #000 0 90%, transparent 100%);
+  }
+
+  .choke-gate-chips::-webkit-scrollbar,
+  .choke-layer-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .choke-gate,
+  .choke-layer {
+    padding: 0 10px;
+    font-size: 11px;
+  }
+}

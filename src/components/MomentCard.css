@@ -9,7 +9,16 @@
   align-items: center;
   justify-content: center;
   padding: max(20px, env(safe-area-inset-top, 0px)) 20px max(20px, env(safe-area-inset-bottom, 0px));
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: #e4ebf3;
 }
+.moment-card::backdrop { background: transparent; }
 
 .moment-card-scrim {
   position: absolute;
@@ -31,7 +40,7 @@
   width: min(380px, 100%);
   max-height: 100%;
   padding: 18px;
-  border-radius: 22px;
+  border-radius: var(--radius-card);
   border: 1px solid rgba(255, 255, 255, 0.13);
   background: rgba(9, 12, 17, 0.96);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
@@ -44,8 +53,8 @@
   top: 12px;
   right: 12px;
   z-index: 2;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(8, 11, 16, 0.82);
@@ -62,7 +71,7 @@
 }
 
 .moment-card-preview {
-  border-radius: 14px;
+  border-radius: var(--radius-card);
   overflow: hidden;
   background: #0a0d12;
   aspect-ratio: 1080 / 1350;
@@ -73,6 +82,8 @@
   height: 100%;
   object-fit: cover;
 }
+
+.moment-card-placeholder { opacity: 0.72; filter: saturate(0.9); }
 
 .moment-card-skeleton {
   width: 100%;
@@ -94,22 +105,7 @@
 .moment-card-actions button {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 6px;
-  min-height: 42px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(230, 238, 247, 0.9);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: border-color 0.18s, color 0.18s, background 0.18s;
-}
-.moment-card-actions button:hover:not(:disabled) {
-  border-color: var(--moment-accent, #e8c27a);
-  color: var(--moment-accent, #e8c27a);
 }
 .moment-card-actions button:disabled {
   opacity: 0.5;
@@ -118,15 +114,12 @@
 
 .moment-card-primary {
   grid-column: 1 / -1;
-  border-color: var(--moment-accent, #e8c27a) !important;
-  background: color-mix(in srgb, var(--moment-accent, #e8c27a) 18%, transparent) !important;
-  color: #fff8e8 !important;
 }
 
 .moment-card-note {
   margin: 0;
   text-align: center;
-  font-size: 11.5px;
+  font-size: var(--fs-label);
   line-height: 1.6;
   color: rgba(148, 166, 186, 0.8);
 }

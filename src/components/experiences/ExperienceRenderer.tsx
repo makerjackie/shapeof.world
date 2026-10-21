@@ -4,12 +4,14 @@ import { createClientOnlyFn } from '@tanstack/react-start'
 import { ClientOnly } from '~/components/ClientOnly'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { ExperienceFallback } from '~/components/experiences/ExperienceFallback'
+import { ExperienceLoading } from '~/components/experiences/ExperienceLoading'
 import { ExperienceOpeningPoster } from '~/components/experiences/ExperienceOpeningPoster'
 import type { DailyIssue } from '~/data/issues'
 import type { WorldExperience } from '~/data/worlds/types'
 import { trackEvent } from '~/lib/analytics'
 import { afterNextPaint } from '~/lib/after-next-paint'
 import { detectWebglSupport, runtimeNeedsWebgl } from '~/lib/webgl'
+import { holdWorldWarmups, releaseWorldWarmups } from '~/lib/world-prefetch'
 
 const loadClientExperienceRenderer = createClientOnlyFn(() =>
   import('~/components/experiences/ExperienceRenderer.client').then((module) => ({
@@ -17,24 +19,6 @@ const loadClientExperienceRenderer = createClientOnlyFn(() =>
   })),
 )
 const ClientExperienceRenderer = lazy(loadClientExperienceRenderer)
-
-/** 超过这个时间还没换掉加载态，就认为用户已经卡住了，给出口。 */
-const LOAD_TIMEOUT_MS = 12_000
-
-function ExperienceLoading({ world }: { world: WorldExperience }) {
-  const [timedOut, setTimedOut] = useState(false)
-
-  useEffect(() => {
-    const timeout = window.setTimeout(() => {
-      setTimedOut(true)
-      trackEvent({ event: 'experience_load_timeout', worldId: world.id })
-    }, LOAD_TIMEOUT_MS)
-    return () => window.clearTimeout(timeout)
-  }, [world.id])
-
-  if (timedOut) return <ExperienceFallback world={world} reason="slow" />
-  return <ExperienceOpeningPoster world={world} />
-}
 
 /**
  * Keep browser-only experience engines out of the Cloudflare SSR worker.
@@ -53,7 +37,16 @@ export function ExperienceRenderer({
   controls: ExperienceControls
 }) {
   const [rendererReady, setRendererReady] = useState(false)
-  useEffect(() => afterNextPaint(() => setRendererReady(true)), [])
+  // Runs before the shell's own effects, so warming the next world waits for
+  // this renderer's first paint instead of sharing its download.
+  useEffect(() => {
+    holdWorldWarmups(world.id)
+    return () => releaseWorldWarmups(world.id)
+  }, [world.id])
+  useEffect(() => {
+    void loadClientExperienceRenderer()
+    afterNextPaint(() => setRendererReady(true))
+  }, [])
 
   // SSR 与首次渲染必须和服务端一致，所以能力探测放在 mount 之后。
   const [webglBlocked, setWebglBlocked] = useState(false)
@@ -61,6 +54,7 @@ export function ExperienceRenderer({
     if (!runtimeNeedsWebgl(world.runtime)) return
     if (detectWebglSupport() !== 'unavailable') return
     setWebglBlocked(true)
+    releaseWorldWarmups(world.id)
     trackEvent({ event: 'experience_error', worldId: world.id, value: 'webgl-unavailable' })
   }, [world.id, world.runtime])
 
@@ -70,7 +64,7 @@ export function ExperienceRenderer({
 
   return (
     <ClientOnly fallback={<ExperienceOpeningPoster world={world} />}>
-      <Suspense fallback={<ExperienceLoading world={world} />}>
+      <Suspense fallback={<ExperienceLoading key={world.id} world={world} />}>
         <ClientExperienceRenderer world={world} issue={issue} controls={controls} />
       </Suspense>
     </ClientOnly>

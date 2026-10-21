@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-01",
+  "code": "SFX-MAGIC-01",
+  "title": {
+    "en": "Spark cast",
+    "zh": "施放火花"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 0,
+  "seed": 1242795232,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized spark cast for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的施放火花合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.0,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1242795232,
+    "sha256": "efb42124cda69622cbdcdb3c0c7a63cda4a6c751d4b0f2dc2f97c3ff2ab0a2c9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a63f098f11c82d6d25af410ac9d4e62492d008c56d64015e37ab8acf30e9b85e",
+      "bytes": 15037,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "efb42124cda69622cbdcdb3c0c7a63cda4a6c751d4b0f2dc2f97c3ff2ab0a2c9",
+      "bytes": 88244,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e24082b8a345980e85df6b0941610f624f0171ef84afc205aa1716e1ece4afc4",
+      "bytes": 21537,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "bba105a8f1049e01c1eea81c8558fffdb00b9266f543a03b06f3f793f88c212e",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 44100,
+    "duration": 1.0,
+    "peakDbfs": -4.7,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.1764145762471655e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11576574707031284,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic sparkle or chime sound effect with a slight upward pitch.",
+      "zh": "一个短促、高音的电子闪光或提示音效，带有轻微的音高上升。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:44.787714+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a63f098f11c82d6d25af410ac9d4e62492d008c56d64015e37ab8acf30e9b85e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 44100
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.880118+00:00"
+}

@@ -1,0 +1,102 @@
+{
+  "id": "lib-gamelan-nature",
+  "code": "LIB-23-04",
+  "title": {
+    "en": "Wildlands — Gamelan",
+    "zh": "山野 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "gamelan"
+  ],
+  "energy": 2,
+  "bpm": 76,
+  "key": "D dorian",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second gamelan-inspired instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 76 BPM; D dorian. Main idea: a compact three-note motif. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A serene and gentle instrumental piece featuring wind instruments like flute and clarinet, accompanied by plucked strings and light percussion, creating a calming and reflective atmosphere.",
+    "zh": "一首宁静而温柔的器乐曲，以长笛和单簧管等管乐器为主，伴随着拨弦乐器和轻柔的打击乐，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.599,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:01:34.375464+00:00",
+  "generation": {
+    "id": "eeff8b24-8f78-4920-88ce-461e2bfe6969",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:00:44.923440+00:00",
+    "completedAt": "2026-09-09T09:01:34.375464+00:00",
+    "interactionId": "PiChaonPCMzRi9sPrKHS-AM",
+    "sha256": "63de413c5a9aea26460bd0e7a77839501d8038b1d81955be752bc11a747d141c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and gentle instrumental piece featuring wind instruments like flute and clarinet, accompanied by plucked strings and light percussion, creating a calming and reflective atmosphere.",
+      "zh": "一首宁静而温柔的器乐曲，以长笛和单簧管等管乐器为主，伴随着拨弦乐器和轻柔的打击乐，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Clarinet",
+      "Harp",
+      "Zither",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Calm",
+      "Reflective",
+      "Peaceful",
+      "Gentle"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:01:42.047763+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:03:23.222906+00:00"
+}

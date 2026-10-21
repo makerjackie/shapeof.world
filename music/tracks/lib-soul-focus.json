@@ -1,0 +1,102 @@
+{
+  "id": "lib-soul-focus",
+  "code": "LIB-12-02",
+  "title": {
+    "en": "Focus — Soul",
+    "zh": "专注 · 灵魂律动"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "soul"
+  ],
+  "energy": 2,
+  "bpm": 88,
+  "key": "A minor",
+  "instruments": [
+    "electric piano",
+    "electric bass",
+    "clean guitar",
+    "drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second instrumental neo-soul instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: electric piano, electric bass, clean guitar, drums. Style: pocket groove with syncopated seventh chords. Tempo approximately 88 BPM; A minor. Main idea: a repeating five-note figure with space between phrases. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz-funk track featuring a Rhodes-like electric piano melody, a steady drum beat, and a walking bass line, complemented by subtle synth pads.",
+    "zh": "一首流畅轻松的爵士放克乐曲，以罗德斯电钢琴般的旋律为主，配以稳定的鼓点和行进的贝斯线，并辅以微妙的合成器铺垫。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.047,
+  "generatedAt": "2026-09-09T08:18:34.213893+00:00",
+  "generation": {
+    "id": "2ccdced1-3555-4b75-af3e-be0e1ee9bf0e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:17:48.856219+00:00",
+    "completedAt": "2026-09-09T08:18:34.213893+00:00",
+    "interactionId": "LRahat_ZKrGejMwP1PWpyAg",
+    "sha256": "77783ee96be6b363b336daeb15dbc160511bad919746c608383b5467f195d676"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz-funk track featuring a Rhodes-like electric piano melody, a steady drum beat, and a walking bass line, complemented by subtle synth pads.",
+      "zh": "一首流畅轻松的爵士放克乐曲，以罗德斯电钢琴般的旋律为主，配以稳定的鼓点和行进的贝斯线，并辅以微妙的合成器铺垫。"
+    },
+    "instruments": [
+      "Electric Piano",
+      "Drums",
+      "Electric Bass",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Jazzy",
+      "Lounge",
+      "Chill"
+    ],
+    "energy": 2,
+    "bpmEstimate": 92,
+    "reason": "Clean, well-produced instrumental track with a clear genre and mood, suitable for background music or specific library needs.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:18:52.468899+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-soul-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-soul-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-soul-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:20:35.513718+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

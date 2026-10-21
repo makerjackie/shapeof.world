@@ -1,0 +1,98 @@
+{
+  "id": "lib-gamelan-puzzle",
+  "code": "LIB-23-07",
+  "title": {
+    "en": "Clues — Gamelan",
+    "zh": "线索 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "gamelan"
+  ],
+  "energy": 2,
+  "bpm": 84,
+  "key": "C lydian",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second gamelan-inspired instrumental instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 84 BPM; C lydian. Main idea: alternating short and long phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A calm and reflective piece featuring a prominent flute-like wind instrument melody over a gentle piano accompaniment. The music has a flowing, somewhat melancholic feel.",
+    "zh": "一首平静而沉思的乐曲，以突出的长笛般管乐器旋律为主，配以轻柔的钢琴伴奏。音乐带有一种流畅、略带忧郁的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 71.001,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:01:50.741649+00:00",
+  "generation": {
+    "id": "4fcc7a35-831e-4ddb-9c87-9636173257fd",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:01:13.231279+00:00",
+    "completedAt": "2026-09-09T09:01:50.741649+00:00",
+    "interactionId": "WiChapDnBPbQi9sPmYO72AI",
+    "sha256": "c583315c3b08f0654492936434180206a9f28b786725d74948aa44c97ae956df"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective piece featuring a prominent flute-like wind instrument melody over a gentle piano accompaniment. The music has a flowing, somewhat melancholic feel.",
+      "zh": "一首平静而沉思的乐曲，以突出的长笛般管乐器旋律为主，配以轻柔的钢琴伴奏。音乐带有一种流畅、略带忧郁的感觉。"
+    },
+    "instruments": [
+      "Flute",
+      "Piano"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Melancholy",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Good quality, well-produced track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:02:00.290523+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:03:11.499492+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "lib-breakbeat-explain",
+  "code": "LIB-28-05",
+  "title": {
+    "en": "Discovery — Breakbeat",
+    "zh": "发现 · 碎拍"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "breakbeat"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "G major",
+  "instruments": [
+    "breakbeat drums",
+    "rounded bass",
+    "shimmering synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second melodic breakbeat electronica instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: breakbeat drums, rounded bass, shimmering synth. Style: syncopated chopped drum rhythm under an evolving melody. Tempo approximately 132 BPM; G major. Main idea: an ascending fourth answered by a stepwise descent. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic dance track featuring a prominent synth melody, driving bassline, and steady electronic drums. It has a bright and positive feel.",
+    "zh": "一首欢快且充满活力的电子舞曲，以突出的合成器旋律、强劲的低音线和稳定的电子鼓点为特色。整体感觉明亮积极。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.98,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:12:53.397877+00:00",
+  "generation": {
+    "id": "32268ef2-4790-4942-ba98-233b3e8fa186",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:12:10.026132+00:00",
+    "completedAt": "2026-09-09T09:12:53.397877+00:00",
+    "interactionId": "6yKhauz7A8SDoLAP8OO9wA8",
+    "sha256": "6fe05d96c0c64841070006fc1d9122a1656cd86eb0d94b56c6b813b89e029476"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic dance track featuring a prominent synth melody, driving bassline, and steady electronic drums. It has a bright and positive feel.",
+      "zh": "一首欢快且充满活力的电子舞曲，以突出的合成器旋律、强劲的低音线和稳定的电子鼓点为特色。整体感觉明亮积极。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean production, clear musical intent, and no audible defects make this track suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:13:06.235742+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:14:21.893820+00:00"
+}

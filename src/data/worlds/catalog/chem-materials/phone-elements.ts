@@ -1,0 +1,76 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'phone-elements',
+    publication: 'public',
+    index: '249',
+    title: '把一部手机拆到只剩元素，它散落在半个地球上',
+    poster: '/assets/posters/phone-elements.webp',
+    posterMobile: '/assets/posters/mobile/phone-elements.webp',
+    posterDesktop: '/assets/posters/desktop/phone-elements.webp',
+    posterTitle: '一部手机的元素来自许多国家',
+    posterHook: '拆到最后，是 53 种金属。钴有 76% 出自一个国家，镓有 98% 出自另一个——供应链风险，是可以画在地图上的。',
+    posterSource: 'Canvas 2D · Bookhagen 2020 实测成分 · USGS 2025 产量',
+    posterPosition: '50% 50%',
+    question: '你手里这块玻璃，是从多少个国家挖出来的？',
+    hook: '点开手机的任意一层，看它用到的元素在周期表上依次点亮；再点一个元素，看它从世界哪些角落被挖出来，划着弧线汇回你手上。',
+    payoff: '一部手机被逐层拆开、溶解、送进质谱仪后，能数出 53 种金属：铁最多，有 16 克；金只有 16.8 毫克，却占了整机金属价值的七成。真正让人愣住的不是种类，而是产地——钴的 76% 来自刚果（金），镓的 98% 来自中国，钽的六成出自刚果（金）与卢旺达。「供应链风险」这个抽象词，说的就是地图上那几个刺眼的光点。反过来看，它也是一座城市矿山：整机里的金比富金矿石还要浓 34 倍，只算主板则是 234 倍。',
+    topicLabel: '材料与供应链',
+    translations: {
+      en: {
+        title: 'Take a phone apart down to the elements, and it scatters across half the planet',
+        posterTitle: 'The elements in one phone come from many countries',
+        posterHook: 'Strip it down and 53 metals are left. Cobalt is 76% one country, gallium 98% another—supply-chain risk you can draw on a map.',
+        posterSource: 'Canvas 2D · measured composition (Bookhagen 2020) · USGS 2025 production',
+        question: 'How many countries were mined to make the glass in your hand?',
+        hook: 'Open any layer of the phone and watch its elements light up across the periodic table; pick an element and watch it rise from the corners of the world and arc back into your hand.',
+        payoff: 'Peel a smartphone apart layer by layer, dissolve each one and run it through a mass spectrometer, and 53 metals come out. Iron leads with 16 grams; gold amounts to just 16.8 milligrams yet carries about seventy percent of the metal value. What stops you is not the variety but the geography—76% of cobalt comes from the Democratic Republic of the Congo, 98% of gallium from China, and about sixty percent of tantalum from the DRC and Rwanda. “Supply-chain risk” is simply the name for those few glaring dots on the map. Read it the other way and the phone is an urban mine: gold in a whole handset is 34 times more concentrated than in rich primary ore, and 234 times on the circuit board alone.',
+        topicLabel: 'Materials and supply chains',
+      },
+    },
+    primaryCategoryId: 'materials-lab',
+    runtime: 'diagram-2d',
+    difficulty: 'standard',
+    lane: 'structure',
+    renderer: 'phone-elements',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'compiled',
+    accent: '#7cc4ff',
+    related: ['periodic-table'],
+    sources: [
+      {
+        label: 'USGS《矿产品概要 2025》（2024 年产量，公有领域）',
+        labelEn: 'USGS Mineral Commodity Summaries 2025 (2024 production, public domain)',
+        url: 'https://pubs.usgs.gov/publication/mcs2025',
+      },
+      {
+        label: 'Bookhagen 2020 — 智能手机中的金属资源（维也纳大学博士论文，实测 53 种金属）',
+        labelEn: 'Bookhagen 2020 — Metallic resources in smartphones (University of Vienna PhD thesis, 53 metals measured)',
+        url: 'https://doi.org/10.25365/thesis.66189',
+      },
+      {
+        label: 'Bookhagen 等 2020《Resources Policy》— 智能手机中的金属资源',
+        labelEn: 'Bookhagen et al. 2020, Resources Policy — Metallic resources in smartphones',
+        url: 'https://doi.org/10.1016/j.resourpol.2020.101750',
+      },
+      {
+        label: '英国皇家化学会 — 手机里那些告急的元素',
+        labelEn: 'Royal Society of Chemistry — Elements in danger',
+        url: 'https://www.rsc.org/new-perspectives/sustainability/elements-in-danger/',
+      },
+      {
+        label: 'Natural Earth 1:110m 国界底图（公有领域）',
+        labelEn: 'Natural Earth 1:110m country outlines (public domain)',
+        url: 'https://www.naturalearthdata.com/about/terms-of-use/',
+      }
+    ],
+    presentation: 'full-bleed',
+    provenance: { origin: 'ai-prototype', initialModel: 'claude-opus-5' },
+    transferBudgetMb: 2,
+    fallback: 'poster',
+  } satisfies WorldExperience

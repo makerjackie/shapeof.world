@@ -1,0 +1,160 @@
+{
+  "id": "promo-bossa-35",
+  "code": "PROMO-07-35",
+  "title": {
+    "en": "Sunlit Steps · 35",
+    "zh": "日光步伐 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "rim clicks",
+    "upright bass",
+    "shaker"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: brisk bossa nova with clipped sunny guitar answers. Instruments: nylon guitar, rim clicks, upright bass, shaker. Tempo 108 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and cheerful instrumental track featuring a prominent electric guitar melody over a driving rhythm section of bass and drums. It has a bright, positive, and lively feel, suitable for promotional content or background music.",
+    "zh": "一首欢快活泼的纯音乐，以突出的电吉他旋律为主，配以富有动感的贝斯和鼓点。整体感觉明亮、积极、充满活力，适合宣传内容或背景音乐使用。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:19:01.851662+00:00",
+  "generation": {
+    "id": "80c3257f-c859-463b-9874-b959ba493b1b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:18:15.844523+00:00",
+    "completedAt": "2026-09-10T05:19:01.851662+00:00",
+    "interactionId": "mT2iav7sDaLijNAPs_zQyQE",
+    "sha256": "4719f88e8c501b102376449506360de15b75e5b13f0c541381f0e25322fa477d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful instrumental track featuring a prominent electric guitar melody over a driving rhythm section of bass and drums. It has a bright, positive, and lively feel, suitable for promotional content or background music.",
+      "zh": "一首欢快活泼的纯音乐，以突出的电吉他旋律为主，配以富有动感的贝斯和鼓点。整体感觉明亮、积极、充满活力，适合宣传内容或背景音乐使用。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums"
+    ],
+    "moods": [
+      "upbeat",
+      "cheerful",
+      "positive",
+      "lively",
+      "bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "This is a well-produced, clean instrumental track with a clear musical theme and structure, making it highly suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens instantly with a catchy electric guitar melody and a clear drum beat, establishing an immediate groove. It concludes with a deliberate, final chord and drum hit, providing a distinct musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:19:21.485665+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "f7b1ded67393a909c83cb14a295a4e31a067280e976f626cbe7d53e1798f37be"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.835042,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat Latin-influenced instrumental track featuring a prominent flute-like melody, supported by a rhythmic piano, walking bass, and energetic drums.",
+      "zh": "一首活泼欢快的拉丁风格器乐曲，以长笛般的旋律为主，配以富有节奏感的钢琴、行进贝斯和充满活力的鼓点。"
+    },
+    "instruments": [
+      "Piano",
+      "Bass",
+      "Drums",
+      "Flute"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Joyful",
+      "Latin"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean recording of an energetic Latin-style instrumental piece.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:19:12.212469+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 22.835042,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-bossa-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-bossa-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-bossa-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:24.074494+00:00"
+}

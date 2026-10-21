@@ -1,0 +1,97 @@
+{
+  "id": "lib-organ-travel",
+  "code": "LIB-05-06",
+  "title": {
+    "en": "Roaming — Organ",
+    "zh": "漫游 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "organ"
+  ],
+  "energy": 4,
+  "bpm": 64,
+  "key": "E minor",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second contemporary organ music instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 64 BPM; E minor. Main idea: a descending melody with an upward answer. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A melancholic and grand orchestral piece with a classical feel, featuring prominent strings and woodwinds, evoking a sense of drama and contemplation.",
+    "zh": "一首忧郁而宏大的管弦乐作品，具有古典风格，以突出的弦乐和木管乐器为主，营造出戏剧性和沉思感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.465,
+  "generatedAt": "2026-09-09T07:57:38.838956+00:00",
+  "generation": {
+    "id": "0ec6638c-8bb2-4733-af09-a15063385b5e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:56:53.897792+00:00",
+    "completedAt": "2026-09-09T07:57:38.838956+00:00",
+    "interactionId": "RxGharmeB8SDoLAP8OO9wA8",
+    "sha256": "4a155a59e8f661ee9201a33bfd164b0ed063c9675a486585896807f5fe047511"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and grand orchestral piece with a classical feel, featuring prominent strings and woodwinds, evoking a sense of drama and contemplation.",
+      "zh": "一首忧郁而宏大的管弦乐作品，具有古典风格，以突出的弦乐和木管乐器为主，营造出戏剧性和沉思感。"
+    },
+    "instruments": [
+      "strings",
+      "woodwinds"
+    ],
+    "moods": [
+      "classical",
+      "melancholic",
+      "dramatic",
+      "emotional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 65,
+    "reason": "Well-produced orchestral piece with clear instrumentation and emotional depth, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:57:51.282190+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:58:55.797551+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "ice-retreat",
+  "code": "EAR-B02",
+  "title": {
+    "en": "Ice Retreat",
+    "zh": "冰的后退"
+  },
+  "category": "earth-climate",
+  "archetype": "discovery",
+  "moods": [
+    "crystalline",
+    "melancholy",
+    "slow",
+    "documentary-quiet"
+  ],
+  "topics": [
+    "glacier",
+    "climate",
+    "time"
+  ],
+  "energy": 2,
+  "bpm": 64,
+  "key": "F minor",
+  "instruments": [
+    "ice-like glass textures",
+    "descending piano",
+    "high bells",
+    "creaking bow noise"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.349,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a glacier thinning over time. Around 64 BPM, F minor. Descending piano lines, glass textures, high bells that grow sparser, and a faint creaking bow as ice stress. Melancholy without sermon. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No ominous brass, no ticking-clock doom.\n\n[00:00–00:30] High bells in a tight cluster, bright ice.\n[00:30–01:10] Piano descends by steps; glass textures widen as meltwater.\n[01:10–01:50] Density thins; creaking bow appears; bells fewer.\n[01:50–02:30] A last mid-register piano phrase, more water than ice, fading.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:15:35Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ice-retreat/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ice-retreat/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ice-retreat/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:07.647905+00:00",
+  "generation": {
+    "id": "09948f15-410c-49d4-96ff-442d787c77a9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:14:41Z",
+    "completedAt": "2026-08-25T10:15:35Z",
+    "durationMs": 54000,
+    "interactionId": "E2uNau61C4-IoLAPg7CayQ4",
+    "clientRequestId": "0ddfe224-b399-4462-be39-9fbf3ce354c9",
+    "synthid": true,
+    "c2pa": "urn:c2pa:f399a172-2e74-d6b3-0b9a-4a9119e241f5",
+    "sha256": "347d8adb1b7b38dabf9529b411539258f1a7194268773a436f7f0d42e1fc5d5a"
+  }
+}

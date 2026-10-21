@@ -1,0 +1,130 @@
+{
+  "id": "ambience-space-02",
+  "code": "AMB-SPACE-02",
+  "title": {
+    "en": "Reactor chamber · designed ambience",
+    "zh": "反应堆舱 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "space",
+  "designIndex": 1,
+  "seed": 377346496,
+  "targetDuration": 45,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized reactor chamber atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "反应堆舱的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "space",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-space"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 45.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-space-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-space-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-space-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-space-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 377346496,
+    "sha256": "ce0c0e23a119aee6ca094a35948441f24b501a9b8f4e98804c65067fa801e55f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "760984566a243ec489d8bb45859b28266f83c3d95a6c98b4a9c2365f34c2216e",
+      "bytes": 630900,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ce0c0e23a119aee6ca094a35948441f24b501a9b8f4e98804c65067fa801e55f",
+      "bytes": 3969044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9b4b69bbf7bada360e36923ca9af4789dedafae9e137060ca6da436e9480bee8",
+      "bytes": 245304,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "92f66e10d724e257e94b6e22a67f5242fbd80ea6ff8d873466066a7caad35580",
+      "bytes": 1932,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1984500,
+    "duration": 45.0,
+    "peakDbfs": -2.36,
+    "rmsDbfs": -17.08,
+    "dcOffset": -8.150323207986898e-10,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0006103515625,
+    "internalStepP999": 0.016845703125,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant electronic hum with a shimmering, high-frequency metallic or airy layer. The texture is continuous and evolves subtly over time, creating a sense of sustained, atmospheric energy.",
+      "zh": "深沉、共鸣的电子嗡鸣声，伴有闪烁的高频金属或空灵层。音色持续不断，随时间微妙演变，营造出一种持续、大气的能量感。"
+    },
+    "reason": "The audio is a clean, well-produced electronic texture suitable for background ambience or sci-fi elements. It loops perfectly without any audible seams or defects, making it highly usable for sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:02.505437+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "ff4d890d811ac14fd13793e8a6b2a271a3917754c1627a27d5f8b46b18df7521"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1984500
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.856927+00:00"
+}

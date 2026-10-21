@@ -1,0 +1,104 @@
+{
+  "id": "lib-sitar-suspense",
+  "code": "LIB-21-09",
+  "title": {
+    "en": "Shadows — Sitar",
+    "zh": "暗影 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "sitar"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "G minor",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Indian acoustic instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 80 BPM; G minor. Main idea: alternating short and long phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A serene and meditative piece featuring traditional Indian-inspired instrumentation. A plucked string instrument (sitar-like) carries the main melody, accompanied by a gentle flute and subtle percussion, creating a calm and reflective atmosphere.",
+    "zh": "一首宁静而冥想的乐曲，采用印度传统乐器风格。拨弦乐器（类似西塔琴）演奏主旋律，伴随着柔和的长笛和微妙的打击乐，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 165.433,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:56:58.277769+00:00",
+  "generation": {
+    "id": "e7bbfaf9-0a72-4304-855d-a1777ecc847b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:56:12.123864+00:00",
+    "completedAt": "2026-09-09T08:56:58.277769+00:00",
+    "interactionId": "LR-hasyhFdW54vEPzPyHuAE",
+    "sha256": "feeeda92450bc3f7ececff2b2cd8e67a5742b04c7be4503a6e65976c7b7c95bd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and meditative piece featuring traditional Indian-inspired instrumentation. A plucked string instrument (sitar-like) carries the main melody, accompanied by a gentle flute and subtle percussion, creating a calm and reflective atmosphere.",
+      "zh": "一首宁静而冥想的乐曲，采用印度传统乐器风格。拨弦乐器（类似西塔琴）演奏主旋律，伴随着柔和的长笛和微妙的打击乐，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Sitar",
+      "Flute",
+      "Tabla",
+      "Percussion",
+      "Plucked Strings"
+    ],
+    "moods": [
+      "Calm",
+      "Meditative",
+      "Serene",
+      "Traditional",
+      "Ethnic",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "The audio is a well-produced and clear instrumental piece with no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:57:22.675218+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:58:30.152403+00:00"
+}

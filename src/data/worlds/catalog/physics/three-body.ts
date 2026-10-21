@@ -36,7 +36,7 @@ export default {
     duration: 480,
     evidence: 'modeled',
     accent: '#ff922b',
-    related: ['double-pendulum', 'gravity-assist'],
+    related: [],
     experiencePolicy: {
       entryMode: 'direct',
       shellMode: 'standard',

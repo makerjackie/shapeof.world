@@ -1,0 +1,101 @@
+{
+  "id": "lib-sitar-nature",
+  "code": "LIB-21-04",
+  "title": {
+    "en": "Wildlands — Sitar",
+    "zh": "山野 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "sitar"
+  ],
+  "energy": 4,
+  "bpm": 86,
+  "key": "D dorian",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Indian acoustic instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 86 BPM; D dorian. Main idea: alternating short and long phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A lively and traditional Indian instrumental piece featuring prominent sitar melodies, tabla rhythms, and a drone-like accompaniment, creating a vibrant and energetic atmosphere.",
+    "zh": "一首活泼的传统印度器乐曲，以突出的西塔琴旋律、塔布拉鼓节奏和嗡嗡作响的伴奏为特色，营造出充满活力和能量的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.502,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:55:52.678059+00:00",
+  "generation": {
+    "id": "c295bc56-bb32-4755-b299-8dbc327c5c1d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:55:04.889219+00:00",
+    "completedAt": "2026-09-09T08:55:52.678059+00:00",
+    "interactionId": "6h6hatGDGdW54vEPzPyHuAE",
+    "sha256": "57d179547d9697f613c44f57ff695c725156d2bb4f3de008fab8ae5d9dfdce04"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and traditional Indian instrumental piece featuring prominent sitar melodies, tabla rhythms, and a drone-like accompaniment, creating a vibrant and energetic atmosphere.",
+      "zh": "一首活泼的传统印度器乐曲，以突出的西塔琴旋律、塔布拉鼓节奏和嗡嗡作响的伴奏为特色，营造出充满活力和能量的氛围。"
+    },
+    "instruments": [
+      "Sitar",
+      "Tabla",
+      "Tanpura"
+    ],
+    "moods": [
+      "Lively",
+      "Traditional",
+      "Energetic",
+      "Uplifting",
+      "Exotic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced traditional Indian instrumental music.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:56:02.297997+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:56:48.104443+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-05",
+  "code": "SFX-NOTIFICATION-05",
+  "title": {
+    "en": "Task complete",
+    "zh": "任务完成"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 4,
+  "seed": 1554584328,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized task complete for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的任务完成合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1554584328,
+    "sha256": "616a3173f8d98250a82cde859fbedc3f6a8a6fea8fe96a791b0676b74d33ae1a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ff175b8f844f997e441cdfd3c256394a64eae1243a995a52d88de8a7982f7efe",
+      "bytes": 20523,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "616a3173f8d98250a82cde859fbedc3f6a8a6fea8fe96a791b0676b74d33ae1a",
+      "bytes": 124406,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d4ec89a6263fa402ba742e7e19067ddcf88e720f71f56cc7008a8c9e5bf3f66b",
+      "bytes": 10620,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "73b83cd27638857ac7dae15638b5125ac731f3ee58991843a06b9abc9736e2a4",
+      "bytes": 1898,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 62181,
+    "duration": 1.41,
+    "peakDbfs": -3.77,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.864987646950033e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.09332275390625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip or boop sound effect, followed by a quick, decaying whistle-like tone. It has a clean, synthesized quality.",
+      "zh": "短促、高音调的电子提示音或嘟嘟声，随后是快速衰减的哨声般的音调。具有干净、合成的音质。"
+    },
+    "reason": "The sound is a clear, isolated, and well-produced electronic sound effect, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:18.107402+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ff175b8f844f997e441cdfd3c256394a64eae1243a995a52d88de8a7982f7efe"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 62181
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.889551+00:00"
+}

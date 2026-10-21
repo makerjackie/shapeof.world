@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-synthwave-exploration",
+  "code": "GAME-05-2",
+  "title": {
+    "en": "Orbital Dock · Exploration",
+    "zh": "轨道船坞 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "science-fiction navigation",
+    "exploration"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "analog sequencer",
+    "filtered bass",
+    "restrained drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for science-fiction navigation, exploration state. Instruments: analog sequencer, filtered bass, restrained drums. 112 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "An energetic electronic track featuring a driving beat, arpeggiated synthesizers, and a melodic lead synth. The arrangement builds with layers of synths and a consistent rhythm.",
+    "zh": "一首充满活力的电子音乐，具有强劲的节拍、琶音合成器和旋律主音合成器。编曲通过合成器层和一致的节奏进行构建。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 87.249,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:23:30.159422+00:00",
+  "generation": {
+    "id": "b516c3ee-5dbe-40e2-9712-6fda4da3f0de",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:44.048014+00:00",
+    "completedAt": "2026-09-22T09:23:30.159422+00:00",
+    "interactionId": "5EiyaoS_MqrirtoPpLv_sA4",
+    "sha256": "a772ab720704002a5d42abad2e9b02b39f4ca4ca23aaca7666d9ff3f0708c134"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic track featuring a driving beat, arpeggiated synthesizers, and a melodic lead synth. The arrangement builds with layers of synths and a consistent rhythm.",
+      "zh": "一首充满活力的电子音乐，具有强劲的节拍、琶音合成器和旋律主音合成器。编曲通过合成器层和一致的节奏进行构建。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Modern",
+      "Driving",
+      "Electronic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:41.877140+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 31.377052,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1383728,
+    "sourceStartSeconds": 8.0,
+    "sourceEndSeconds": 39.475419501133786,
+    "crossfadeSeconds": 0.09836734693877551,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -1.33,
+        "rmsDbfs": -14.25,
+        "dcOffset": 0.005859433885802408,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00384521484375,
+        "internalStepP999": 0.081298828125,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1383728,
+        "duration": 31.377052,
+        "peakDbfs": -1.14,
+        "rmsDbfs": -14.33,
+        "dcOffset": 0.005629649068064169,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.001190185546875,
+        "internalStepP999": 0.080078125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A continuous, evolving electronic texture featuring a low, sustained hum, shimmering high-frequency elements, and a subtle, rhythmic electronic pulse. It evokes a sense of futuristic ambiance or magical energy.",
+        "zh": "持续演变的电子音效纹理，包含低沉的嗡鸣声、闪烁的高频元素和微妙的电子脉冲节奏。营造出未来感或魔法能量的氛围。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture with no audible defects. It loops perfectly seamlessly, making it highly suitable for continuous background use in video or game sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:59.939923+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "8c58c50dd0757c294307637f3ae6c027bed6905afbf7a177764f694ebb8f5420"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified boundaries. Rhythm, harmony, dynamics, and phrase continuity are excellent across the joins. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits, making it suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:31:06.256295+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-synthwave-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7f55a43df4bde90ae1c1cccd6e89e39cb4fce9377eeda7f5783c16f014aa2c8b",
+      "bytes": 1222260,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a772ab720704002a5d42abad2e9b02b39f4ca4ca23aaca7666d9ff3f0708c134",
+      "bytes": 2101642,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "dfad8ec8be3f0eb1a6d915f6911a463deb5651203d9275f6c4bf2dcab5fe8626",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "2861b52be1db5209b947843ff9ea70afb5d5f800c76cb275280366b2451e4796",
+      "bytes": 5534956,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "8d3a7640dd4da0afe9fd5798a95fc82338eab6629b51efed22b6b1ff1c72db1c",
+      "bytes": 410443,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.466589+00:00"
+}

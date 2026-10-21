@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-12",
+  "code": "SFX-SCIFI-12",
+  "title": {
+    "en": "Computer blip",
+    "zh": "计算机短音"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 11,
+  "seed": 1160529584,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized computer blip for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的计算机短音合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1160529584,
+    "sha256": "a9a5989cba16e16c167276fd0089e6c5f3123920e8ebc2341c63ab9b23aec9a9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4bc425b3654082e540b00fa6d7eec0b791fa646a60be41645dd0a810a0f522cb",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a9a5989cba16e16c167276fd0089e6c5f3123920e8ebc2341c63ab9b23aec9a9",
+      "bytes": 111176,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ec904a111206b30df31409b0561526d1c07f332849d8c7db75ce3aaa261ee442",
+      "bytes": 21775,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "06dbb2860ca47127d30c6cbc2102135bdc01a9dea81b194623097a3768ae1b60",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55566,
+    "duration": 1.26,
+    "peakDbfs": -4.16,
+    "rmsDbfs": -17.08,
+    "dcOffset": 5.492131541770147e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11250585937500102,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic whoosh sound effect with a quick upward sweep and a slight resonant tail.",
+      "zh": "一个短促、高音的电子嗖嗖声，带有快速的向上扫频和轻微的共鸣尾音。"
+    },
+    "reason": "The sound is a clean, well-defined synthesized effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:07.251895+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "4bc425b3654082e540b00fa6d7eec0b791fa646a60be41645dd0a810a0f522cb"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55566
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.900853+00:00"
+}

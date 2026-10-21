@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-18",
+  "code": "SFX-MECHANICAL-18",
+  "title": {
+    "en": "Elevator stop",
+    "zh": "升降停止"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 17,
+  "seed": 379583374,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized elevator stop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的升降停止合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.18,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 379583374,
+    "sha256": "4391502e6ca48d52a937f75cd4e7796e886078cd836521761019bfa8f28f91d4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ccb9c76f4f921fd4f5beba52ad07fac655c11c45dd87a9d0f2baf77009d7b177",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4391502e6ca48d52a937f75cd4e7796e886078cd836521761019bfa8f28f91d4",
+      "bytes": 104120,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1146a074891098b7f5cdf5ccbaf744d4aabbfaa1ac124eb1903ac907640ac3bf",
+      "bytes": 10232,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d92c52bb594f32231d7116d2da0cb74c7ec6f55b9a0282a63fc243f06f67119a",
+      "bytes": 1944,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52038,
+    "duration": 1.18,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.03,
+    "dcOffset": -7.271954509204813e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11968749999999995,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, stylized boing sound followed by a soft impact.",
+      "zh": "一个短促、风格化的弹簧声，随后是轻微的撞击声。"
+    },
+    "reason": "Clean, isolated, and well-produced sound effect suitable for cartoon or game sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:34.366684+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ccb9c76f4f921fd4f5beba52ad07fac655c11c45dd87a9d0f2baf77009d7b177"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52038
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.888198+00:00"
+}

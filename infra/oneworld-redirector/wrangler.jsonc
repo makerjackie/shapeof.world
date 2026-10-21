@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "oneworld-short-domain",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-15",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "world.01mvp.com/*",
+      "zone_name": "01mvp.com"
+    },
+    {
+      "pattern": "oneworld.01mvp.com",
+      "custom_domain": true
+    }
+  ]
+}

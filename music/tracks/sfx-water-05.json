@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-05",
+  "code": "SFX-WATER-05",
+  "title": {
+    "en": "Bubble pop",
+    "zh": "气泡破裂"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 4,
+  "seed": 4206718181,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized bubble pop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的气泡破裂合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.06,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4206718181,
+    "sha256": "4dc94b686d8e6eec8d30a5179eeda2d9d52eb83ab61426aee6778c4e746950b9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "964e1c8d20ce492597e3f07860632b51cc9c46ff170a461e87468d35f7aa9dae",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4dc94b686d8e6eec8d30a5179eeda2d9d52eb83ab61426aee6778c4e746950b9",
+      "bytes": 93536,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "33d52e8dd1fc2f74e2d5ebf8fc889a1208674cd58aaa988b68393a166292da70",
+      "bytes": 8223,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f317e3b0079891e1f93d77c58069a2296ec0139ca0081b7bfc91fbf396cbff60",
+      "bytes": 1853,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46746,
+    "duration": 1.06,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.21,
+    "dcOffset": 1.9585148328199203e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07965087890625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, cartoonish spring or boing sound, followed by a soft, percussive pop.",
+      "zh": "短促的卡通弹簧声或“boing”声，随后是一个轻柔的敲击声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced sound effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:35.618694+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "964e1c8d20ce492597e3f07860632b51cc9c46ff170a461e87468d35f7aa9dae"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46746
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.910831+00:00"
+}

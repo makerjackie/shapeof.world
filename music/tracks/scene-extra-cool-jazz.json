@@ -1,0 +1,130 @@
+{
+  "id": "scene-extra-cool-jazz",
+  "code": "SCENE-EXTRA-7",
+  "title": {
+    "en": "Blue Notebook",
+    "zh": "蓝色笔记"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 4,
+  "bpm": 94,
+  "key": "",
+  "instruments": [
+    "muted trumpet",
+    "brushed drums and upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 45,
+  "prompt": "Original 45-second instrumental composition. Instruments exclusively: muted trumpet, brushed drums and upright bass. 94 BPM. relaxed sparse melodic conversation. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A lively and cheerful swing jazz piece featuring a prominent brass section with trumpet and trombone, accompanied by clarinet and a steady drum beat. The track has a playful and upbeat feel, reminiscent of classic big band or Dixieland jazz.",
+    "zh": "一首活泼欢快的摇摆爵士乐曲，以小号和长号为主的铜管乐部分突出，并伴有单簧管和稳定的鼓点。这首曲子充满俏皮和乐观的氛围，让人联想到经典的大乐队或迪克西兰爵士乐。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 73.43,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:39:31.383179+00:00",
+  "generation": {
+    "id": "f4a2d76c-9a1c-41cf-b5b1-24c809aea08f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:38:42.074465+00:00",
+    "completedAt": "2026-09-22T09:39:31.383179+00:00",
+    "interactionId": "okyyateLMdvi8vUPwd3swAU",
+    "sha256": "691becd2fb1316c73287816b86ef3321b03382c83b4eb1149c19697f2ed56349"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and cheerful swing jazz piece featuring a prominent brass section with trumpet and trombone, accompanied by clarinet and a steady drum beat. The track has a playful and upbeat feel, reminiscent of classic big band or Dixieland jazz.",
+      "zh": "一首活泼欢快的摇摆爵士乐曲，以小号和长号为主的铜管乐部分突出，并伴有单簧管和稳定的鼓点。这首曲子充满俏皮和乐观的氛围，让人联想到经典的大乐队或迪克西兰爵士乐。"
+    },
+    "instruments": [
+      "Trumpet",
+      "Trombone",
+      "Clarinet",
+      "Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Jazzy",
+      "Playful",
+      "Cheerful",
+      "Lively",
+      "Upbeat"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:39:51.258854+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-cool-jazz/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-cool-jazz/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-cool-jazz/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1638509fc772ea76f52bf0b41727abf214c23fd8cdd70e35cb8fc1ad93ae510b",
+      "bytes": 1028797,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "691becd2fb1316c73287816b86ef3321b03382c83b4eb1149c19697f2ed56349",
+      "bytes": 1769992,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "6bab28dd5bf4498f935373330a9ba44da86522f38f48ed280009fcf2a42558bf",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.452800+00:00"
+}

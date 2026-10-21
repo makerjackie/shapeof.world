@@ -1,3 +1,6 @@
+import { worldRoute } from '~/lib/world-urls'
+import { trackEvent } from '~/lib/analytics'
+import '~/styles/site-forms.css'
 import {
   createContext,
   useCallback,
@@ -13,12 +16,12 @@ import {
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowRight, MagnifyingGlass, X } from '@phosphor-icons/react'
 
-import { worldSearchIndexPath, type WorldSearchDocument } from '~/data/world-artifacts'
-import { useI18n, type Locale } from '~/i18n'
+import { useI18n } from '~/i18n'
 import { isSiteSearchShortcut } from '~/lib/site-search-shortcut'
 import { normalizeWorldSearch, worldMatchesSearch } from '~/lib/world-search'
+import { useWorldSearchIndex } from '~/lib/world-search-index'
 import { worldThumbnail } from '~/lib/posters'
-import { warmWorldOnIntent } from '~/lib/world-prefetch'
+import { worldIntentHandlers } from '~/lib/world-prefetch'
 
 type SiteSearchContextValue = {
   open: boolean
@@ -64,8 +67,7 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [indexes, setIndexes] = useState<Partial<Record<Locale, ReadonlyArray<WorldSearchDocument>>>>({})
-  const [failedLocales, setFailedLocales] = useState<Partial<Record<Locale, boolean>>>({})
+  const searchIndex = useWorldSearchIndex(locale, open)
   const dialogRef = useRef<HTMLDialogElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const previousFocusRef = useRef<HTMLElement | null>(null)
@@ -87,6 +89,7 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
       ? document.activeElement
       : null
     setQuery(currentHomeQuery())
+    trackEvent({ event: 'search_open' })
     setOpen(true)
   }, [])
 
@@ -119,27 +122,8 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
     return () => window.cancelAnimationFrame(frame)
   }, [open])
 
-  useEffect(() => {
-    if (!open || indexes[locale]) return
-    const controller = new AbortController()
-    setFailedLocales((current) => ({ ...current, [locale]: false }))
-    void fetch(worldSearchIndexPath(locale), {
-      headers: { accept: 'application/json' },
-      signal: controller.signal,
-    }).then((response) => {
-      if (!response.ok) throw new Error(`Search index request failed: ${response.status}`)
-      return response.json<ReadonlyArray<WorldSearchDocument>>()
-    }).then((documents) => {
-      setIndexes((current) => ({ ...current, [locale]: documents }))
-    }).catch((error: unknown) => {
-      if (error instanceof DOMException && error.name === 'AbortError') return
-      setFailedLocales((current) => ({ ...current, [locale]: true }))
-    })
-    return () => controller.abort()
-  }, [indexes, locale, open])
-
   const normalizedQuery = normalizeWorldSearch(query)
-  const currentIndex = indexes[locale]
+  const currentIndex = searchIndex.documents
   const matchingDocuments = useMemo(() => {
     if (!normalizedQuery || !currentIndex) return []
     return currentIndex.filter((document) => (
@@ -148,7 +132,12 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
     ))
   }, [currentIndex, normalizedQuery])
   const visibleDocuments = matchingDocuments.slice(0, VISIBLE_RESULT_COUNT)
-  const loading = Boolean(normalizedQuery && !currentIndex && !failedLocales[locale])
+  const loading = Boolean(normalizedQuery && searchIndex.loading)
+  useEffect(() => {
+    if (!open || !normalizedQuery || !currentIndex) return
+    const timer = window.setTimeout(() => trackEvent({ event: 'search_results', value: matchingDocuments.length === 0 ? 'none' : matchingDocuments.length <= 6 ? 'few' : 'many' }), 800)
+    return () => window.clearTimeout(timer)
+  }, [open, normalizedQuery, currentIndex, matchingDocuments.length])
 
   const goToAllResults = useCallback((event?: FormEvent) => {
     event?.preventDefault()
@@ -237,7 +226,12 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
 
           <div id={statusId} className="site-search-status" aria-live="polite">
             {loading && <span>{t('header.search.loading')}</span>}
-            {normalizedQuery && failedLocales[locale] && <span>{t('header.search.unavailable')}</span>}
+            {normalizedQuery && searchIndex.error && (
+              <>
+                <span>{t('header.search.unavailable')}</span>
+                <button type="button" onClick={searchIndex.retry}>{t('system.retry')}</button>
+              </>
+            )}
             {normalizedQuery && currentIndex && (
               <span>{t('worlds.results', { value: matchingDocuments.length })}</span>
             )}
@@ -248,11 +242,10 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
               {visibleDocuments.map(({ world }) => (
                 <li key={world.id}>
                   <Link
-                    to="/explore/$worldId"
+                    to={worldRoute}
                     params={{ worldId: world.id }}
-                    onClick={closeSearch}
-                    onMouseEnter={() => warmWorldOnIntent(world.id)}
-                    onFocus={() => warmWorldOnIntent(world.id)}
+                    onClick={() => { trackEvent({ event: 'search_result_click', worldId: world.id }); closeSearch() }}
+                    {...worldIntentHandlers(world.id)}
                   >
                     <img src={worldThumbnail(world)} alt="" loading="lazy" decoding="async" />
                     <span>
@@ -266,7 +259,14 @@ export function SiteSearchProvider({ children }: { children: ReactNode }) {
           )}
 
           {normalizedQuery && currentIndex && matchingDocuments.length === 0 && (
-            <p className="site-search-empty">{t('worlds.empty')}</p>
+            <div>
+              <p className="site-search-empty">{t('worlds.empty')}</p>
+              <div className="site-search-empty-actions">
+                <button type="button" className="btn-text" onClick={() => { setQuery(''); inputRef.current?.focus() }}>{t('worlds.clearSearch')}</button>
+                <Link className="btn-text" to="/" hash="home-worlds" search={{}} onClick={closeSearch}>{t('search.browse')}</Link>
+                <Link className="btn-text" to="/feedback" search={{ kind: 'topic' }} onClick={closeSearch}>{t('search.suggest')}</Link>
+              </div>
+            </div>
           )}
 
           {matchingDocuments.length > VISIBLE_RESULT_COUNT && (

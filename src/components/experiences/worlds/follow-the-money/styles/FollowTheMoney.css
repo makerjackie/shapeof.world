@@ -1,0 +1,144 @@
+.ftm-world {
+  --experience-panel-surface: rgba(8, 13, 11, 0.9);
+  --experience-panel-border: rgba(217, 181, 108, 0.22);
+  --experience-panel-shadow: 0 14px 38px rgba(0, 0, 0, 0.5);
+  --experience-panel-blur: 18px;
+  --experience-panel-saturation: 1.1;
+  --experience-panel-radius: 14px;
+  --freebar-accent: #d9b56c;
+  --freebar-ink: rgba(244, 236, 218, 0.92);
+  --freebar-text-shadow: none;
+  --ftm-cream: #f4ecda;
+  --ftm-gold: #d9b56c;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0b100e;
+  color: var(--ftm-cream);
+}
+
+.ftm-world .guide-stage-title {
+  white-space: pre-line;
+}
+
+.ftm-world {
+  --guide-stage-width: 480px;
+}
+
+.ftm-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.ftm-world[data-mode='ruler'].is-free .ftm-canvas {
+  cursor: ns-resize;
+}
+
+.ftm-safe-probe {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.ftm-plaque {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: clamp(16px, 3vw, 40px);
+  max-width: min(330px, calc(100% - 32px));
+  pointer-events: none;
+}
+
+.ftm-plaque span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--ftm-gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ftm-plaque h1 {
+  margin: 0;
+  color: var(--ftm-cream);
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.12;
+}
+
+.ftm-plaque:lang(zh) h1 {
+  font-family: 'Songti SC', 'STSong', 'Noto Serif SC', serif;
+}
+
+.ftm-plaque p {
+  margin: 10px 0 0;
+  color: rgba(244, 236, 218, 0.7);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ftm-tray.experience-freebar-rail {
+  align-items: center;
+  max-width: min(92vw, 1120px);
+}
+
+/* Groups ride inside one horizontal rail; they must not wrap into a button tower. */
+.ftm-world .ftm-tray .ftm-picks,
+.ftm-world .ftm-tray .ftm-profile {
+  display: flex;
+  flex: 0 0 auto;
+  /* Shared group rules ask chip groups to wrap; inside a rail that would stack them. */
+  flex-wrap: nowrap !important;
+  gap: 6px;
+  max-width: none !important;
+}
+
+.ftm-sep {
+  flex: 0 0 auto;
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: rgba(244, 236, 218, 0.16);
+}
+
+.ftm-world .ftm-tray button[aria-pressed='true'] {
+  border-color: rgba(217, 181, 108, 0.75);
+  background: rgba(217, 181, 108, 0.18);
+  color: #fff6e2;
+}
+
+@media (max-width: 720px) {
+  .ftm-plaque {
+    max-width: calc(100% - 32px);
+  }
+
+  .ftm-plaque h1 {
+    font-size: 20px;
+  }
+
+  .ftm-plaque p {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .ftm-tray.experience-freebar-rail {
+    max-width: calc(100vw - 40px);
+  }
+}
+
+
+.ftm-canvas:focus-visible {
+  outline: 2px solid rgba(217, 181, 108, 0.6);
+  outline-offset: -6px;
+}

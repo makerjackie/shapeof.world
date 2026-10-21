@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-acoustic-folk-challenge",
+  "code": "GAME-06-3",
+  "title": {
+    "en": "Village Market · Challenge",
+    "zh": "村庄集市 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "friendly village and shop",
+    "challenge"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "acoustic guitar",
+    "flute",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for friendly village and shop, challenge state. Instruments: acoustic guitar, flute, hand percussion. 106 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "A mellow and relaxed acoustic jazz/folk piece featuring fingerpicked guitar, a smooth bassline, and light, brushed drums. It creates a calm and pleasant atmosphere.",
+    "zh": "一首悠扬轻松的原声爵士/民谣乐曲，以指弹吉他、流畅的贝斯线和轻柔的鼓点为特色。营造出平静愉悦的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 91.428,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:24:21.264548+00:00",
+  "generation": {
+    "id": "73e086ef-fd93-4737-856c-39fe681276ce",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:23:41.881562+00:00",
+    "completedAt": "2026-09-22T09:24:21.264548+00:00",
+    "interactionId": "Hkmyap2PI_6N88EPy_v08Ac",
+    "sha256": "2d6c36a41bda4e8234c54f9818cf4d04b37eb59189917b16550be5e31a48ba0d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A mellow and relaxed acoustic jazz/folk piece featuring fingerpicked guitar, a smooth bassline, and light, brushed drums. It creates a calm and pleasant atmosphere.",
+      "zh": "一首悠扬轻松的原声爵士/民谣乐曲，以指弹吉他、流畅的贝斯线和轻柔的鼓点为特色。营造出平静愉悦的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Mellow",
+      "Calm",
+      "Pleasant",
+      "Easy-listening",
+      "Smooth"
+    ],
+    "energy": 2,
+    "bpmEstimate": 102,
+    "reason": "The audio is clean, well-produced, and suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:35.568588+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 37.52941,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1655047,
+    "sourceStartSeconds": 13.25,
+    "sourceEndSeconds": 50.89705215419501,
+    "crossfadeSeconds": 0.11764172335600907,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1655047,
+        "duration": 37.52941,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.79,
+        "dcOffset": 0.002494008873643392,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.002044677734375,
+        "internalStepP999": 0.0947848510742233,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1655047,
+        "duration": 37.52941,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -16.41,
+        "dcOffset": 0.002287736482025699,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 9.1552734375e-05,
+        "internalStepP999": 0.11892562866211165,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A continuous, evolving electronic texture with a shimmering, slightly metallic and airy quality, featuring subtle rhythmic pulses and a sustained, atmospheric drone. It creates a sense of subtle movement and an otherworldly ambiance.",
+        "zh": "一种持续演变的电子纹理，带有闪烁、略带金属感和空灵的特质，伴有微妙的节奏脉冲和持续的大气嗡鸣声。它营造出一种微妙的运动感和超凡脱俗的氛围。"
+      },
+      "reason": "The audio is a well-produced, clean electronic texture. It has no audible defects like clipping, clicks, or unintended silence. Its continuous and evolving nature makes it highly suitable for background ambiance in video games or film, particularly in sci-fi or abstract contexts.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:40.818540+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "1dbe0582cf085115b2e5f7e7c8e1b367905500c44af454bb4e6a642dc8ab4741"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are excellent across the join points. There are no fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. It is well-suited for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:28:49.131510+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7011b35bcbed0b03eef2b97f504706ba1283781c4d3ae8be197cac07794e4039",
+      "bytes": 1280774,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2d6c36a41bda4e8234c54f9818cf4d04b37eb59189917b16550be5e31a48ba0d",
+      "bytes": 2201952,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "65f0de98c60ff4765faebee95347e3e9592335c63fc6907b034e974bb9762385",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "4178f40acaedf89f811a24605ad5738e3383a6a664b8f9b9bc400ddc21ad3692",
+      "bytes": 6620232,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "0762d287027eeac9615dfe8e5650e2d35cbbd710af71883889a6459e0549fb51",
+      "bytes": 559490,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.454749+00:00"
+}

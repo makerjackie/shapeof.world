@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-02",
+  "code": "SFX-GAME-02",
+  "title": {
+    "en": "Gem pickup",
+    "zh": "拾取宝石"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 1,
+  "seed": 721992687,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized gem pickup for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的拾取宝石合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.56,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 721992687,
+    "sha256": "fd225fbf8668e9fa3f2f1161ed17d764c738b0b16236215cf2cbd80f20f69699",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "bd59c6b6cf0c6beea38b8adb025a8e63cb325d432f462fc70afbbe5a1e228d51",
+      "bytes": 8820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "fd225fbf8668e9fa3f2f1161ed17d764c738b0b16236215cf2cbd80f20f69699",
+      "bytes": 49436,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "54316e2dcaf6fd665609946d28858974bcc803d5affb014ae5eb944c2ddfae61",
+      "bytes": 6206,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "bcfa947fd6ccfb143b7a3068797adf0b8ef0e6d5a72f935c6947ab11511268a1",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 24696,
+    "duration": 0.56,
+    "peakDbfs": -4.47,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.8535943953474247e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04516101074218759,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clean electronic blip sound, suitable for UI feedback or notification.",
+      "zh": "短促、高音、清晰的电子提示音，适用于用户界面反馈或通知。"
+    },
+    "reason": "The sound is a clean, well-defined electronic blip, perfect for UI/game sound design without any defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:34.424405+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "bd59c6b6cf0c6beea38b8adb025a8e63cb325d432f462fc70afbbe5a1e228d51"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 24696
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.871952+00:00"
+}

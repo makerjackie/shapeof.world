@@ -1,0 +1,164 @@
+{
+  "id": "promo-kora-20",
+  "code": "PROMO-16-20",
+  "title": {
+    "en": "Golden Threads · 20",
+    "zh": "金色丝线 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 3,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "kora",
+    "calabash percussion",
+    "soft bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: buoyant interlocking kora ostinatos and crisp percussion. Instruments: kora, calabash percussion, soft bass, shakers. Tempo 116 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A light and groovy tropical house track featuring a steady beat, warm synth pads, and a simple, catchy synth melody.",
+    "zh": "一首轻快而律动的热带浩室音乐，具有稳定的节拍、温暖的合成器衬底和简单悦耳的合成器旋律。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:31:49.330693+00:00",
+  "generation": {
+    "id": "c04b5832-3019-4b37-bdd3-6745cd959d82",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:31:37.792526+00:00",
+    "completedAt": "2026-09-10T05:31:49.330693+00:00",
+    "interactionId": "ukCiasqLFYu3i9sP7uehmQM",
+    "sha256": "e6ceb426d9edcfe9b18fa660be09056bfd7fa2dc68c5f802fa12caa80861ffea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and groovy tropical house track featuring a steady beat, warm synth pads, and a simple, catchy synth melody.",
+      "zh": "一首轻快而律动的热带浩室音乐，具有稳定的节拍、温暖的合成器衬底和简单悦耳的合成器旋律。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass",
+      "Synthesizer",
+      "Percussion",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Upbeat",
+      "Groovy",
+      "Relaxed",
+      "Summery",
+      "Positive"
+    ],
+    "energy": 3,
+    "bpmEstimate": 112,
+    "reason": "Clean production, clear mix, and suitable for background or promotional use.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a rhythmic and melodic intro and concludes with a smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:32:05.690643+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b0d64446e8d37bfa4d1eebcfc4d6ee324e85989ac6ac2de1cd9d5a188e0a40a6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 22.778708,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A relaxed, groovy instrumental track featuring a clean electric guitar melody over a steady drum beat and a smooth bassline. The overall feel is laid-back and chill.",
+      "zh": "一首轻松、律动感强的纯音乐曲目，以干净的电吉他旋律为主，配以稳定的鼓点和流畅的贝斯线。整体感觉悠闲放松。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "hi-hats",
+      "kick drum",
+      "snare drum"
+    ],
+    "moods": [
+      "relaxed",
+      "groovy",
+      "chill",
+      "laid-back",
+      "mellow"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Cleanly produced instrumental track with a pleasant, relaxed groove, suitable for background music or chill playlists.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:31:57.287371+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 2.7787080000000017,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-kora-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-kora-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-kora-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:12.775084+00:00"
+}

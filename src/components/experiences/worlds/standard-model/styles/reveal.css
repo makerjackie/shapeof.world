@@ -1,0 +1,49 @@
+/* The one dark moment in the room: a collectible card flight, timed to the
+   star-rating chime. Rarity colours ride on [data-stars]. */
+
+:is(.sm-reveal,.sm-folio,.sm-album-grid>button,.sm-album-filters button,.sm-card-rating)[data-stars='1']{--rarity:#7c8b91;--rarity-light:#e4e9e8;--rarity-glow:#cfdfdf}
+:is(.sm-reveal,.sm-folio,.sm-album-grid>button,.sm-album-filters button,.sm-card-rating)[data-stars='2']{--rarity:#4e8970;--rarity-light:#dfede1;--rarity-glow:#aee7c1}
+:is(.sm-reveal,.sm-folio,.sm-album-grid>button,.sm-album-filters button,.sm-card-rating)[data-stars='3']{--rarity:#4a81b0;--rarity-light:#deeaf2;--rarity-glow:#a5d9ff}
+:is(.sm-reveal,.sm-folio,.sm-album-grid>button,.sm-album-filters button,.sm-card-rating)[data-stars='4']{--rarity:#9370ad;--rarity-light:#eae0f0;--rarity-glow:#dfbaff}
+:is(.sm-reveal,.sm-folio,.sm-album-grid>button,.sm-album-filters button,.sm-card-rating)[data-stars='5']{--rarity:#ad8439;--rarity-light:#f2e7c9;--rarity-glow:#ffe3a0}
+
+.sm-reveal{position:fixed;inset:0;z-index:90;pointer-events:none;display:grid;place-items:center;perspective:1100px;font-family:inherit}
+.sm-reveal-hint{position:absolute;top:26px;left:0;right:0;text-align:center;font:10px ui-monospace,monospace;letter-spacing:.22em;color:#e8e2cc66;z-index:6}
+.sm-reveal-veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,#4a4230e0,#221d10f2);animation:sm-reveal-veil 1.85s both}
+.sm-reveal-halo{position:absolute;width:min(76vw,560px);aspect-ratio:1;border:1px solid var(--rarity-glow,#ffe3a0)66;border-radius:50%;box-shadow:0 0 90px var(--rarity-glow,#ffe3a0)2b,inset 0 0 80px #ffffff12;animation:sm-reveal-halo 1.85s both}
+.sm-reveal-halo::before,.sm-reveal-halo::after{content:'';position:absolute;inset:25px;border:1px solid #fff3;border-radius:50%;transform:rotateX(65deg) rotate(-25deg)}
+.sm-reveal-halo::after{inset:-22px;transform:rotateY(65deg) rotate(20deg)}
+.sm-reveal-constellation{position:absolute;width:0;height:0}
+.sm-reveal-constellation i{position:absolute;left:0;top:0;width:var(--spark-size);height:var(--spark-size);border-radius:50%;transform:rotate(var(--angle)) translateX(var(--radius));background:var(--rarity-glow,#ffe3a0);filter:drop-shadow(0 0 5px var(--rarity-glow,#ffe3a0));animation:sm-reveal-spark 1.5s var(--delay) both}
+.sm-reveal-aura{position:absolute;width:min(90vw,750px);aspect-ratio:1;border-radius:50%;background:repeating-conic-gradient(from 20deg,transparent 0deg 17deg,color-mix(in srgb,var(--rarity-glow,#ffe3a0) 16%,transparent) 19deg 20deg,transparent 22deg 40deg);mask-image:radial-gradient(transparent 16%,#000 34%,transparent 68%);animation:sm-reveal-rays 1.85s ease both;pointer-events:none}
+.sm-reveal-card{position:relative;width:280px;height:380px;transform-style:preserve-3d;will-change:transform,opacity}
+.sm-reveal-frame{position:absolute;inset:0;border:1px solid #fff9;border-radius:15px;background:linear-gradient(130deg,#fbf8ecf5,#efe9d5eb 65%,#ddd2b2dc);box-shadow:inset 3px 0 2px #ffffffe0,inset -4px 0 3px #4a3c1a40,0 24px 65px #0006;overflow:hidden;animation:sm-reveal-chrome 1.85s both}
+.sm-reveal-frame::after{content:'';position:absolute;inset:-70%;background:linear-gradient(110deg,transparent 44%,#fff9 49%,transparent 54%);animation:sm-reveal-sheen 1.85s both}
+.sm-reveal-frame::before{content:'';position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--rarity,#ad8439) 45%,transparent);border-radius:9px;pointer-events:none}
+.sm-reveal[data-stars] .sm-reveal-frame{border-color:var(--rarity-glow);background:linear-gradient(130deg,#fffdf1,var(--rarity-light) 75%);box-shadow:inset 2px 0 2px #fff,0 0 65px color-mix(in srgb,var(--rarity-glow) 24%,transparent),0 25px 65px #0005}
+.sm-reveal[data-stars] .sm-reveal-halo{border-color:color-mix(in srgb,var(--rarity-glow) 65%,transparent);box-shadow:0 0 100px color-mix(in srgb,var(--rarity-glow) 18%,transparent)}
+.sm-reveal[data-stars] .sm-reveal-stars{color:var(--rarity)}
+.sm-reveal-discovery{position:absolute;top:-32px;left:0;right:0;text-align:center;font:10px ui-monospace,monospace;letter-spacing:.24em;color:var(--rarity-glow);animation:sm-reveal-chrome 1.85s both}
+.sm-reveal-heading{position:absolute;top:24px;left:24px;right:24px;display:grid;grid-template-columns:1fr auto;align-items:start;animation:sm-reveal-chrome 1.85s both;color:#544a30}
+.sm-reveal-heading>span{font:11px ui-monospace,monospace;letter-spacing:.1em}
+.sm-reveal-heading>b{font-size:46px;line-height:1;font-weight:450;grid-column:1;grid-row:2;font-family:Georgia,'Songti SC',serif}
+.sm-reveal-heading>small{font-size:9px;grid-column:2;grid-row:1/3;max-width:96px;text-align:right;letter-spacing:.05em}
+.sm-reveal-object{position:absolute;inset:22% 12%;width:76%;height:56%;display:grid;place-items:center}
+.sm-reveal-object .sm-glyph{width:100%;height:100%}
+.sm-reveal-name{position:absolute;bottom:26px;left:24px;right:24px;font-size:24px;color:#3f3720;animation:sm-reveal-chrome 1.85s both}
+.sm-reveal-name span{display:block;font:10px ui-monospace,monospace;letter-spacing:.15em;margin-top:9px;opacity:.62}
+.sm-reveal-stars{color:#ad8439}
+.sm-reveal-stars i{display:inline-block;font-style:normal;animation:sm-reveal-star .5s both;transform-box:border-box}
+.sm-reveal[data-stars] .sm-reveal-constellation i{background:var(--rarity-glow);filter:drop-shadow(0 0 5px var(--rarity-glow))}
+.sm-reveal-skip{position:fixed;inset:0;z-index:89;border:0;background:transparent;cursor:pointer}
+
+@keyframes sm-reveal-veil{0%{opacity:0}18%,65%{opacity:1}100%{opacity:0}}
+@keyframes sm-reveal-halo{0%,16%{opacity:0;transform:scale(.3) rotate(-35deg)}42%{opacity:1}76%,100%{opacity:0;transform:scale(1.25) rotate(25deg)}}
+@keyframes sm-reveal-chrome{0%,69%{opacity:1}90%,100%{opacity:0}}
+@keyframes sm-reveal-sheen{0%,22%{transform:translateX(-45%)}58%,100%{transform:translateX(45%)}}
+@keyframes sm-reveal-spark{0%,12%{opacity:0;transform:rotate(var(--angle)) translateX(calc(var(--radius)*.3)) scale(.3)}45%{opacity:1}100%{opacity:0;transform:rotate(var(--angle)) translateX(var(--radius)) scale(1)}}
+@keyframes sm-reveal-rays{0%,15%{opacity:0;transform:scale(.3) rotate(-25deg)}40%{opacity:1}70%{opacity:.7}100%{opacity:0;transform:scale(1.1) rotate(20deg)}}
+@keyframes sm-reveal-star{0%{opacity:0;transform:translateY(9px) scale(1.7)}100%{opacity:1;transform:none}}
+
+@media(prefers-reduced-motion:reduce){.sm-reveal,.sm-reveal-skip{display:none}}
+@media(max-width:700px){.sm-reveal-card{width:240px;height:330px}.sm-reveal-hint{top:18px}}

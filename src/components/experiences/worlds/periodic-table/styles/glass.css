@@ -1,0 +1,43 @@
+/* A thin optical sheet around each specimen, without cabinet architecture. */
+.pm-cell{
+ --glass-rx:0deg;--glass-ry:0deg;--glass-light:38%;
+ background:linear-gradient(132deg,#ffffff52 0%,#ffffff0a 46%,#d7e4db24 100%);
+ border:1px solid #ffffffb3;border-right-color:#8aa59954;border-bottom-color:#819b8b61;border-radius:6px;
+ box-shadow:inset 0 1px 1px #ffffffc2,inset -1px -1px 1px #668b7721,1px 2px 0 #76988725,2px 4px 9px #294b3520;
+ transform:perspective(580px) rotateX(var(--glass-rx)) rotateY(var(--glass-ry));
+ transition:transform .5s cubic-bezier(.18,.8,.22,1),box-shadow .4s,border-color .35s,opacity .25s,background .4s;
+}
+.pm-cell:after{
+ content:'';position:absolute;inset:1px;border-radius:4px;pointer-events:none;z-index:3;
+ background:linear-gradient(127deg,#ffffff00 15%,#ffffff24 16%,#ffffff08 39%,#ffffff00 40%),radial-gradient(ellipse at var(--glass-light) 0%,#ffffff4a,transparent 75%);
+ border:1px solid #ffffff36;opacity:.65;transition:opacity .35s;
+}
+.pm-cell>b,.pm-cell>small,.pm-cell>span,.pm-cell-kind,.pm-collected-mark{z-index:4}
+.pm-cell:hover,.pm-cell:focus-visible{
+ transform:perspective(580px) translateY(-4px) rotateX(var(--glass-rx)) rotateY(var(--glass-ry)) scale(1.035);
+ background:linear-gradient(135deg,#ffffff80,#e8eee437 60%,#d3e5d854);
+ border-color:#ffffffdc;border-right-color:#73938088;border-bottom-color:#739380a6;
+ box-shadow:inset 0 1px 1px #fff,inset -1px -1px 1px #668b7740,2px 4px 0 #6f927b30,4px 9px 18px #25462e25;
+}
+.pm-cell.is-featured{border-color:#8da68c9c;background:linear-gradient(135deg,#ffffff65,#dce8d842);box-shadow:inset 0 1px #fff,1px 2px 0 #66896640,2px 5px 10px #284e321c}
+.pm-cell:hover:after,.pm-cell:focus-visible:after{opacity:1}
+.pm-cell img{filter:drop-shadow(1px 3px 2px #23452c26);transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+.pm-cell:hover img{transform:translateY(-1px) scale(1.06)}
+.pm-table.is-heatmap .pm-cell:after{opacity:.25}
+.pm-feature-photo{
+ background:linear-gradient(138deg,#ffffff42,#ffffff05 50%,#cddfce26);border:1px solid #ffffffad;border-right-color:#8ba59852;border-bottom-color:#8ba59872;border-radius:11px;
+ box-shadow:inset 0 1px 1px #fff,2px 3px 0 #73987b25,4px 9px 19px #33503716;
+}
+.pm-feature-photo img{width:93%;height:93%;filter:drop-shadow(2px 7px 4px #28433226)}
+.pm-feature-photo:after{content:'';position:absolute;inset:2px;border-radius:8px;border:1px solid #ffffff32;background:linear-gradient(130deg,#ffffff2a 0%,#ffffff00 37%,#ffffff20 38%,#ffffff00 61%);pointer-events:none}
+.pm-hero{background:linear-gradient(133deg,#ffffff46,#ffffff06 48%,#d7e5d422);border-color:#ffffffa3;border-right-color:#97ad9580;border-bottom-color:#879d8770;box-shadow:inset 0 1px 1px #fff,2px 3px 0 #7e9b7a1f,4px 10px 22px #304a3212}
+.pm-hero:after{content:'';display:block;position:absolute;inset:2px;border-radius:6px;border:1px solid #ffffff3a;pointer-events:none;background:linear-gradient(132deg,#ffffff20,#ffffff00 30%);z-index:0}
+.pm-hero-image{z-index:1}.pm-hero-label,.pm-photo-caption{z-index:2}
+@media(max-width:700px){
+ .pm-cell{border-radius:4px;box-shadow:inset 0 1px #ffffffb3,1px 2px 0 #76988725,1px 3px 5px #294b351a}
+ .pm-cell:after{inset:0;border-radius:3px;opacity:.4}.pm-cell img{filter:drop-shadow(0 1px 1px #23452c20)}
+ .pm-feature-photo{border-radius:8px}.pm-feature-photo img{filter:drop-shadow(1px 4px 3px #28433226)}
+}
+@media(prefers-reduced-motion:reduce){.pm-cell:hover,.pm-cell:focus-visible{transform:none}.pm-cell:hover img{transform:none}}
+/* Alpha lives in the delivered files. Preserve the specimen's original colour. */
+.pm-cell img,.pm-feature-photo img,.pm-hero-image{mix-blend-mode:normal}

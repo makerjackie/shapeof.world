@@ -1,0 +1,160 @@
+{
+  "id": "promo-funk-40",
+  "code": "PROMO-01-40",
+  "title": {
+    "en": "Magnetic Click · 40",
+    "zh": "磁力轻响 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "",
+  "instruments": [
+    "muted rhythm guitar",
+    "elastic electric bass",
+    "dry claps",
+    "tight kick"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: playful electro-funk; syncopated bass answers clipped guitar. Instruments: muted rhythm guitar, elastic electric bass, dry claps, tight kick. Tempo 112 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring driving synth melodies, a prominent synth bass, and a steady, modern drum beat. The music has a positive and dynamic feel, suitable for promotional content.",
+    "zh": "一首欢快且充满活力的电子音乐，以驱动性的合成器旋律、突出的合成器贝斯和稳定现代的鼓点为特色。音乐呈现出积极动感的氛围，适合宣传内容。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:21:11.303036+00:00",
+  "generation": {
+    "id": "942249fc-8f5a-44a4-b64e-86979154001b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:20:29.501717+00:00",
+    "completedAt": "2026-09-10T05:21:11.303036+00:00",
+    "interactionId": "Hj6ias-TEKLijNAPs_zQyQE",
+    "sha256": "d1c52f5a744456e67c7e7343cf37d37589163044156e8eb55fb5815e78c2ccb7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring driving synth melodies, a prominent synth bass, and a steady, modern drum beat. The music has a positive and dynamic feel, suitable for promotional content.",
+      "zh": "一首欢快且充满活力的电子音乐，以驱动性的合成器旋律、突出的合成器贝斯和稳定现代的鼓点为特色。音乐呈现出积极动感的氛围，适合宣传内容。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth bass"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "driving",
+      "modern"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens immediately with a catchy synth melody and driving beat. Ends with a fading synth chord and final drum hit, providing a clear musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:30.637620+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "9a5c256c9fb8cdad5339dfc945ea5bdeb7eb779df2a208910668a26cc665ce8d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.1485,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving beat, prominent synth bass, and catchy synth melodies. The arrangement is dynamic, building and releasing energy with various synth layers.",
+      "zh": "一首欢快且充满活力的电子音乐，具有强劲的节拍、突出的合成器贝斯和抓耳的合成器旋律。编曲富有动感，通过不同的合成器层次构建和释放能量。"
+    },
+    "instruments": [
+      "Electronic drums",
+      "Synth bass",
+      "Synth pads",
+      "Synth lead"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Danceable",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The audio is clean, well-produced, and free of defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:21:22.712451+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 18.1485,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-funk-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-funk-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-funk-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:35:40.707896+00:00"
+}

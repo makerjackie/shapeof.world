@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-10",
+  "code": "SFX-MECHANICAL-10",
+  "title": {
+    "en": "Hydraulic release",
+    "zh": "液压泄放"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 9,
+  "seed": 1064031886,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized hydraulic release for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的液压泄放合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.78,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1064031886,
+    "sha256": "35861e57cc4d1c10ebf9899132854d40ce5c65ed4b0c75146fe2f5a054aba5eb",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e105002ed2f3df03138b2c2a72c555dcf4ae9297af6932c5c77cd79f7d7fdb03",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "35861e57cc4d1c10ebf9899132854d40ce5c65ed4b0c75146fe2f5a054aba5eb",
+      "bytes": 68840,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9e74b286a103b5aa6a61c81350944a040de2865e56a65babaabe24fcf877c904",
+      "bytes": 8240,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "aaba20d382d4d6d7328ab4583f81b8d4f2012deaef214143cc6ff5048375b066",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 34398,
+    "duration": 0.78,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.76,
+    "dcOffset": -5.154576687779813e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15789526367187445,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, high-pitched electronic boing or spring sound effect, resembling a UI feedback or cartoon bounce.",
+      "zh": "一个短促、清晰、高音调的电子弹簧或弹跳音效，类似于用户界面反馈或卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect with no audible defects, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:27.191304+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e105002ed2f3df03138b2c2a72c555dcf4ae9297af6932c5c77cd79f7d7fdb03"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 34398
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.886660+00:00"
+}

@@ -1,0 +1,103 @@
+{
+  "id": "lib-lofi-explain",
+  "code": "LIB-11-05",
+  "title": {
+    "en": "Discovery — Lofi",
+    "zh": "发现 · 低保真"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "lofi"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "G major",
+  "instruments": [
+    "Rhodes piano",
+    "muted drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second lo-fi instrumental hip hop instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: Rhodes piano, muted drums, warm bass. Style: laid-back swung beat and hazy jazz harmony. Tempo approximately 78 BPM; G major. Main idea: a descending melody with an upward answer. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring a melancholic piano melody, supported by pizzicato and sustained strings, a gentle acoustic bass, and subtle brush drums. It evokes a sophisticated and cinematic atmosphere.",
+    "zh": "一首平静而沉思的器乐作品，以忧郁的钢琴旋律为主，辅以拨弦和持续的弦乐、柔和的低音提琴和细微的刷子鼓。营造出精致而电影般的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 87.171,
+  "generatedAt": "2026-09-09T08:16:53.789945+00:00",
+  "generation": {
+    "id": "2adaea5f-aed7-4d69-a8e3-4a92f1ae7831",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:16:11.999988+00:00",
+    "completedAt": "2026-09-09T08:16:53.789945+00:00",
+    "interactionId": "zRWhavGPG_6WjMwPtfeJmQQ",
+    "sha256": "c11be461adcf55ea42e9df009d25ba897d61748f888047d3ba35f91fac3aac43"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring a melancholic piano melody, supported by pizzicato and sustained strings, a gentle acoustic bass, and subtle brush drums. It evokes a sophisticated and cinematic atmosphere.",
+      "zh": "一首平静而沉思的器乐作品，以忧郁的钢琴旋律为主，辅以拨弦和持续的弦乐、柔和的低音提琴和细微的刷子鼓。营造出精致而电影般的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "strings",
+      "acoustic bass",
+      "drums",
+      "cymbals"
+    ],
+    "moods": [
+      "calm",
+      "reflective",
+      "melancholic",
+      "peaceful",
+      "sophisticated",
+      "cinematic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "High-quality instrumental track with clear production and well-defined musical elements, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:17:03.404396+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-lofi-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-lofi-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-lofi-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:17:40.623968+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

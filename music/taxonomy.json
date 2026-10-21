@@ -1,0 +1,2064 @@
+{
+  "styles": {
+    "felt-piano": {
+      "en": "Neoclassical Felt Piano",
+      "zh": "毡音钢琴"
+    },
+    "chamber": {
+      "en": "Chamber Classical",
+      "zh": "室内乐"
+    },
+    "harp": {
+      "en": "Pastoral Acoustic",
+      "zh": "竖琴"
+    },
+    "minimalism": {
+      "en": "Acoustic Minimalism",
+      "zh": "极简主义"
+    },
+    "organ": {
+      "en": "Contemporary Organ Music",
+      "zh": "管风琴"
+    },
+    "orchestral": {
+      "en": "Orchestral Adventure",
+      "zh": "管弦乐"
+    },
+    "jazz-trio": {
+      "en": "Acoustic Jazz",
+      "zh": "爵士三重奏"
+    },
+    "bossa": {
+      "en": "Bossa Nova",
+      "zh": "波萨诺瓦"
+    },
+    "cool-jazz": {
+      "en": "Cool Jazz",
+      "zh": "冷爵士"
+    },
+    "gypsy-jazz": {
+      "en": "Acoustic Swing Jazz",
+      "zh": "吉普赛爵士"
+    },
+    "lofi": {
+      "en": "Lo-Fi Instrumental Hip Hop",
+      "zh": "低保真"
+    },
+    "soul": {
+      "en": "Instrumental Neo-Soul",
+      "zh": "灵魂律动"
+    },
+    "funk": {
+      "en": "Instrumental Funk",
+      "zh": "放克"
+    },
+    "dub": {
+      "en": "Instrumental Dub",
+      "zh": "回声律动"
+    },
+    "acoustic-folk": {
+      "en": "Fingerstyle Acoustic Folk",
+      "zh": "原声民谣"
+    },
+    "celtic": {
+      "en": "Celtic Acoustic Instrumental",
+      "zh": "凯尔特"
+    },
+    "guzheng": {
+      "en": "Chinese Chamber Instrumental",
+      "zh": "古筝"
+    },
+    "pipa": {
+      "en": "Chinese Plucked-String Ensemble",
+      "zh": "琵琶"
+    },
+    "koto": {
+      "en": "Japanese Acoustic Instrumental",
+      "zh": "筝与尺八"
+    },
+    "oud": {
+      "en": "Middle Eastern Acoustic Instrumental",
+      "zh": "乌德琴"
+    },
+    "sitar": {
+      "en": "Indian Acoustic Instrumental",
+      "zh": "西塔琴"
+    },
+    "kora": {
+      "en": "West African Acoustic Instrumental",
+      "zh": "科拉琴"
+    },
+    "gamelan": {
+      "en": "Gamelan-Inspired Instrumental",
+      "zh": "甘美兰"
+    },
+    "ambient": {
+      "en": "Ambient Electronic",
+      "zh": "氛围电子"
+    },
+    "downtempo": {
+      "en": "Downtempo Electronica",
+      "zh": "缓拍电子"
+    },
+    "synthwave": {
+      "en": "Instrumental Synthwave",
+      "zh": "合成器浪潮"
+    },
+    "house": {
+      "en": "Deep Instrumental House",
+      "zh": "浩室"
+    },
+    "breakbeat": {
+      "en": "Melodic Breakbeat Electronica",
+      "zh": "碎拍"
+    },
+    "chiptune": {
+      "en": "Melodic Chiptune",
+      "zh": "芯片音乐"
+    },
+    "post-rock": {
+      "en": "Instrumental Post-Rock",
+      "zh": "后摇"
+    },
+    "sfx-ui": {
+      "en": "Interface",
+      "zh": "界面"
+    },
+    "sfx-transition": {
+      "en": "Transitions",
+      "zh": "转场"
+    },
+    "sfx-impact": {
+      "en": "Impacts",
+      "zh": "撞击"
+    },
+    "sfx-notification": {
+      "en": "Notifications",
+      "zh": "提示"
+    },
+    "sfx-game": {
+      "en": "Game actions",
+      "zh": "游戏动作"
+    },
+    "sfx-footstep": {
+      "en": "Footsteps",
+      "zh": "脚步"
+    },
+    "sfx-mechanical": {
+      "en": "Mechanisms",
+      "zh": "机械"
+    },
+    "sfx-magic": {
+      "en": "Magic",
+      "zh": "魔法"
+    },
+    "sfx-scifi": {
+      "en": "Science fiction",
+      "zh": "科幻"
+    },
+    "sfx-retro": {
+      "en": "Retro arcade",
+      "zh": "复古街机"
+    },
+    "sfx-water": {
+      "en": "Water",
+      "zh": "水声"
+    },
+    "sfx-foley": {
+      "en": "Designed foley",
+      "zh": "合成拟音"
+    },
+    "ambience-wind": {
+      "en": "Wind ambience",
+      "zh": "风声"
+    },
+    "ambience-rain": {
+      "en": "Rain ambience",
+      "zh": "雨声"
+    },
+    "ambience-water": {
+      "en": "Water ambience",
+      "zh": "水声"
+    },
+    "ambience-forest": {
+      "en": "Forest ambience",
+      "zh": "林间合成声"
+    },
+    "ambience-room": {
+      "en": "Room ambience",
+      "zh": "室内"
+    },
+    "ambience-machine": {
+      "en": "Machine ambience",
+      "zh": "机械环境"
+    },
+    "ambience-space": {
+      "en": "Space ambience",
+      "zh": "科幻空间"
+    },
+    "ambience-texture": {
+      "en": "Texture ambience",
+      "zh": "抽象声纹"
+    }
+  },
+  "scenarios": {
+    "reading": {
+      "en": "Reading",
+      "zh": "阅读"
+    },
+    "focus": {
+      "en": "Focus",
+      "zh": "专注工作"
+    },
+    "rest": {
+      "en": "Rest & relaxation",
+      "zh": "休息放松"
+    },
+    "nature": {
+      "en": "Nature & landscape",
+      "zh": "自然风景"
+    },
+    "explain": {
+      "en": "Explainers & tutorials",
+      "zh": "讲解教程"
+    },
+    "travel": {
+      "en": "Travel",
+      "zh": "旅行漫游"
+    },
+    "puzzle": {
+      "en": "Puzzles & strategy",
+      "zh": "解谜策略"
+    },
+    "motion": {
+      "en": "Motion & exercise",
+      "zh": "运动节奏"
+    },
+    "suspense": {
+      "en": "Mystery & suspense",
+      "zh": "悬念探索"
+    },
+    "celebrate": {
+      "en": "Celebration",
+      "zh": "庆祝收尾"
+    },
+    "game-menu": {
+      "en": "Game menu",
+      "zh": "游戏菜单"
+    },
+    "game-exploration": {
+      "en": "Game exploration",
+      "zh": "游戏探索"
+    },
+    "game-challenge": {
+      "en": "Game challenge",
+      "zh": "游戏挑战"
+    },
+    "game-rest": {
+      "en": "Game rest",
+      "zh": "游戏休息"
+    },
+    "ui": {
+      "en": "Interface",
+      "zh": "界面交互"
+    },
+    "video-transition": {
+      "en": "Video transition",
+      "zh": "视频转场"
+    },
+    "impact": {
+      "en": "Impact and reveal",
+      "zh": "撞击与揭晓"
+    },
+    "gameplay": {
+      "en": "Gameplay events",
+      "zh": "游戏事件"
+    },
+    "mechanism": {
+      "en": "Mechanisms",
+      "zh": "机械动作"
+    },
+    "fantasy": {
+      "en": "Fantasy",
+      "zh": "奇幻"
+    },
+    "science-fiction": {
+      "en": "Science fiction",
+      "zh": "科幻"
+    },
+    "arcade": {
+      "en": "Arcade",
+      "zh": "街机"
+    },
+    "water": {
+      "en": "Water",
+      "zh": "水声"
+    },
+    "foley": {
+      "en": "Designed foley",
+      "zh": "合成拟音"
+    },
+    "environment": {
+      "en": "Environments",
+      "zh": "环境氛围"
+    }
+  },
+  "tags": {
+    "French horn": {
+      "en": "French horn",
+      "zh": "圆号"
+    },
+    "Rhodes piano": {
+      "en": "Rhodes piano",
+      "zh": "罗兹电钢琴"
+    },
+    "acoustic guitar": {
+      "en": "acoustic guitar",
+      "zh": "木吉他"
+    },
+    "acoustic guitar harmonics": {
+      "en": "acoustic guitar harmonics",
+      "zh": "木吉他泛音"
+    },
+    "additive": {
+      "en": "additive",
+      "zh": "叠加"
+    },
+    "aftermath-quiet": {
+      "en": "aftermath-quiet",
+      "zh": "宁静余韵"
+    },
+    "aftershock": {
+      "en": "aftershock",
+      "zh": "余震"
+    },
+    "air pads": {
+      "en": "air pads",
+      "zh": "空灵铺底"
+    },
+    "airborne": {
+      "en": "airborne",
+      "zh": "飘逸"
+    },
+    "airy pads": {
+      "en": "airy pads",
+      "zh": "空灵铺底"
+    },
+    "alert": {
+      "en": "alert",
+      "zh": "警示"
+    },
+    "aligning": {
+      "en": "aligning",
+      "zh": "协调"
+    },
+    "alive": {
+      "en": "alive",
+      "zh": "活泼"
+    },
+    "analog arpeggiator": {
+      "en": "analog arpeggiator",
+      "zh": "模拟琶音器"
+    },
+    "analog bass": {
+      "en": "analog bass",
+      "zh": "模拟贝斯"
+    },
+    "analog pad": {
+      "en": "analog pad",
+      "zh": "模拟铺底"
+    },
+    "analog pads": {
+      "en": "analog pads",
+      "zh": "模拟铺底"
+    },
+    "ancient": {
+      "en": "ancient",
+      "zh": "古老"
+    },
+    "angular": {
+      "en": "angular",
+      "zh": "棱角分明"
+    },
+    "answering pianos": {
+      "en": "answering pianos",
+      "zh": "呼应钢琴"
+    },
+    "architectural": {
+      "en": "architectural",
+      "zh": "结构感"
+    },
+    "asymmetric drums": {
+      "en": "asymmetric drums",
+      "zh": "不对称鼓"
+    },
+    "awake": {
+      "en": "awake",
+      "zh": "清醒"
+    },
+    "balafon": {
+      "en": "balafon",
+      "zh": "巴拉丰木琴"
+    },
+    "balanced": {
+      "en": "balanced",
+      "zh": "平衡"
+    },
+    "bamboo flute": {
+      "en": "bamboo flute",
+      "zh": "竹笛"
+    },
+    "bansuri": {
+      "en": "bansuri",
+      "zh": "班苏里笛"
+    },
+    "bass clarinet": {
+      "en": "bass clarinet",
+      "zh": "低音单簧管"
+    },
+    "bass clarinet valves": {
+      "en": "bass clarinet valves",
+      "zh": "低音单簧管阀键"
+    },
+    "bass flute": {
+      "en": "bass flute",
+      "zh": "低音长笛"
+    },
+    "bass pulse": {
+      "en": "bass pulse",
+      "zh": "低音脉冲"
+    },
+    "bassoon": {
+      "en": "bassoon",
+      "zh": "巴松管"
+    },
+    "bifurcating": {
+      "en": "bifurcating",
+      "zh": "分叉"
+    },
+    "blinding": {
+      "en": "blinding",
+      "zh": "炫目"
+    },
+    "bodhran": {
+      "en": "bodhran",
+      "zh": "博德兰鼓"
+    },
+    "bowed bass": {
+      "en": "bowed bass",
+      "zh": "弓拉贝斯"
+    },
+    "bowed metal": {
+      "en": "bowed metal",
+      "zh": "弓拉金属"
+    },
+    "branching": {
+      "en": "branching",
+      "zh": "分支"
+    },
+    "breakbeat drums": {
+      "en": "breakbeat drums",
+      "zh": "碎拍鼓"
+    },
+    "bright": {
+      "en": "bright",
+      "zh": "明亮"
+    },
+    "bright harmonic slash": {
+      "en": "bright harmonic slash",
+      "zh": "明亮泛音切片"
+    },
+    "bright piano stabs": {
+      "en": "bright piano stabs",
+      "zh": "明亮钢琴短促音"
+    },
+    "brushed drums": {
+      "en": "brushed drums",
+      "zh": "刷奏鼓"
+    },
+    "brushed snare (color only)": {
+      "en": "brushed snare (color only)",
+      "zh": "刷奏小军鼓 (仅音色)"
+    },
+    "brushes": {
+      "en": "brushes",
+      "zh": "刷奏"
+    },
+    "bubbling analog": {
+      "en": "bubbling analog",
+      "zh": "气泡模拟"
+    },
+    "calabash percussion": {
+      "en": "calabash percussion",
+      "zh": "葫芦打击乐"
+    },
+    "calm": {
+      "en": "calm",
+      "zh": "平静"
+    },
+    "celesta": {
+      "en": "celesta",
+      "zh": "钢片琴"
+    },
+    "cello": {
+      "en": "cello",
+      "zh": "大提琴"
+    },
+    "cello sustain": {
+      "en": "cello sustain",
+      "zh": "大提琴延音"
+    },
+    "chain of piano notes": {
+      "en": "chain of piano notes",
+      "zh": "钢琴音符链"
+    },
+    "chamber strings": {
+      "en": "chamber strings",
+      "zh": "室内弦乐"
+    },
+    "charged": {
+      "en": "charged",
+      "zh": "充满能量"
+    },
+    "chemical": {
+      "en": "chemical",
+      "zh": "化学"
+    },
+    "circular": {
+      "en": "circular",
+      "zh": "循环"
+    },
+    "circulatory": {
+      "en": "circulatory",
+      "zh": "循环"
+    },
+    "civil": {
+      "en": "civil",
+      "zh": "平稳"
+    },
+    "clarifying": {
+      "en": "clarifying",
+      "zh": "清晰"
+    },
+    "clarinet": {
+      "en": "clarinet",
+      "zh": "单簧管"
+    },
+    "clavinet": {
+      "en": "clavinet",
+      "zh": "克拉维内电击弦琴"
+    },
+    "clean": {
+      "en": "clean",
+      "zh": "干净"
+    },
+    "clean electric guitars": {
+      "en": "clean electric guitars",
+      "zh": "干净电吉他"
+    },
+    "clean guitar": {
+      "en": "clean guitar",
+      "zh": "干净吉他"
+    },
+    "clear": {
+      "en": "clear",
+      "zh": "清澈"
+    },
+    "clever": {
+      "en": "clever",
+      "zh": "巧妙"
+    },
+    "click chain": {
+      "en": "click chain",
+      "zh": "咔嗒链"
+    },
+    "click percussion": {
+      "en": "click percussion",
+      "zh": "咔嗒打击乐"
+    },
+    "closed hi-hat": {
+      "en": "closed hi-hat",
+      "zh": "闭合踩镲"
+    },
+    "clustered analog oscillators": {
+      "en": "clustered analog oscillators",
+      "zh": "模拟振荡器簇"
+    },
+    "cold": {
+      "en": "cold",
+      "zh": "冰冷"
+    },
+    "concert harp": {
+      "en": "concert harp",
+      "zh": "音乐会竖琴"
+    },
+    "continuous": {
+      "en": "continuous",
+      "zh": "持续"
+    },
+    "cool": {
+      "en": "cool",
+      "zh": "酷"
+    },
+    "crafted": {
+      "en": "crafted",
+      "zh": "精巧"
+    },
+    "creaking bow noise": {
+      "en": "creaking bow noise",
+      "zh": "弓弦吱呀声"
+    },
+    "creased": {
+      "en": "creased",
+      "zh": "有褶皱感"
+    },
+    "crystalline": {
+      "en": "crystalline",
+      "zh": "水晶般"
+    },
+    "curious": {
+      "en": "curious",
+      "zh": "好奇"
+    },
+    "curved": {
+      "en": "curved",
+      "zh": "曲线"
+    },
+    "cyclic": {
+      "en": "cyclic",
+      "zh": "循环"
+    },
+    "darbuka": {
+      "en": "darbuka",
+      "zh": "达布卡鼓"
+    },
+    "dark pad bed": {
+      "en": "dark pad bed",
+      "zh": "幽暗铺底"
+    },
+    "dark-luminous": {
+      "en": "dark-luminous",
+      "zh": "幽暗发光"
+    },
+    "decisive": {
+      "en": "decisive",
+      "zh": "果断"
+    },
+    "delay copies": {
+      "en": "delay copies",
+      "zh": "延迟复制"
+    },
+    "delay line": {
+      "en": "delay line",
+      "zh": "延迟线"
+    },
+    "delay-multiplied mallets": {
+      "en": "delay-multiplied mallets",
+      "zh": "延迟倍增槌"
+    },
+    "delay-scattered bells": {
+      "en": "delay-scattered bells",
+      "zh": "延迟散射钟声"
+    },
+    "delay-scattered harp": {
+      "en": "delay-scattered harp",
+      "zh": "延迟散射竖琴"
+    },
+    "delicate": {
+      "en": "delicate",
+      "zh": "细腻"
+    },
+    "descending piano": {
+      "en": "descending piano",
+      "zh": "下行钢琴"
+    },
+    "determined": {
+      "en": "determined",
+      "zh": "坚定"
+    },
+    "detuned analog oscillators": {
+      "en": "detuned analog oscillators",
+      "zh": "失谐模拟振荡器"
+    },
+    "diffuse": {
+      "en": "diffuse",
+      "zh": "弥散"
+    },
+    "diffuse high harmonics": {
+      "en": "diffuse high harmonics",
+      "zh": "弥散高泛音"
+    },
+    "digital ticks": {
+      "en": "digital ticks",
+      "zh": "数字滴答声"
+    },
+    "dissonant piano": {
+      "en": "dissonant piano",
+      "zh": "不和谐钢琴"
+    },
+    "distant": {
+      "en": "distant",
+      "zh": "遥远"
+    },
+    "distant water texture (abstract)": {
+      "en": "distant water texture (abstract)",
+      "zh": "遥远水纹理 (抽象)"
+    },
+    "distorted strings": {
+      "en": "distorted strings",
+      "zh": "失真弦乐"
+    },
+    "dizi": {
+      "en": "dizi",
+      "zh": "笛子"
+    },
+    "documentary-quiet": {
+      "en": "documentary-quiet",
+      "zh": "纪录片式宁静"
+    },
+    "double bass": {
+      "en": "double bass",
+      "zh": "低音提琴"
+    },
+    "driving": {
+      "en": "driving",
+      "zh": "驱动感"
+    },
+    "drums": {
+      "en": "drums",
+      "zh": "鼓"
+    },
+    "dry analog sequence": {
+      "en": "dry analog sequence",
+      "zh": "干性模拟序列"
+    },
+    "dry wood ticks": {
+      "en": "dry wood ticks",
+      "zh": "干木敲击"
+    },
+    "dual": {
+      "en": "dual",
+      "zh": "双重"
+    },
+    "echo guitar": {
+      "en": "echo guitar",
+      "zh": "回声吉他"
+    },
+    "electric": {
+      "en": "electric",
+      "zh": "电声"
+    },
+    "electric bass": {
+      "en": "electric bass",
+      "zh": "电贝斯"
+    },
+    "electric piano": {
+      "en": "electric piano",
+      "zh": "电钢琴"
+    },
+    "electronic drums": {
+      "en": "electronic drums",
+      "zh": "电子鼓"
+    },
+    "elegant": {
+      "en": "elegant",
+      "zh": "优雅"
+    },
+    "emergent": {
+      "en": "emergent",
+      "zh": "涌现"
+    },
+    "emerging": {
+      "en": "emerging",
+      "zh": "浮现"
+    },
+    "emerging piano": {
+      "en": "emerging piano",
+      "zh": "浮现钢琴"
+    },
+    "endless": {
+      "en": "endless",
+      "zh": "无尽"
+    },
+    "energetic": {
+      "en": "energetic",
+      "zh": "活力"
+    },
+    "expectant": {
+      "en": "expectant",
+      "zh": "期待"
+    },
+    "felt piano": {
+      "en": "felt piano",
+      "zh": "毡音钢琴"
+    },
+    "fiddle": {
+      "en": "fiddle",
+      "zh": "小提琴"
+    },
+    "filtered noise": {
+      "en": "filtered noise",
+      "zh": "滤波噪音"
+    },
+    "filtered noise streams": {
+      "en": "filtered noise streams",
+      "zh": "滤波噪音流"
+    },
+    "flowing": {
+      "en": "flowing",
+      "zh": "流畅"
+    },
+    "fluid": {
+      "en": "fluid",
+      "zh": "流动"
+    },
+    "flute": {
+      "en": "flute",
+      "zh": "长笛"
+    },
+    "flute dabs": {
+      "en": "flute dabs",
+      "zh": "长笛点缀"
+    },
+    "flute harmonics": {
+      "en": "flute harmonics",
+      "zh": "长笛泛音"
+    },
+    "focused": {
+      "en": "focused",
+      "zh": "专注"
+    },
+    "four-on-floor drums": {
+      "en": "four-on-floor drums",
+      "zh": "四拍落地鼓"
+    },
+    "fragile": {
+      "en": "fragile",
+      "zh": "脆弱"
+    },
+    "frame drum": {
+      "en": "frame drum",
+      "zh": "框鼓"
+    },
+    "fresh": {
+      "en": "fresh",
+      "zh": "清新"
+    },
+    "generational": {
+      "en": "generational",
+      "zh": "世代"
+    },
+    "gentle": {
+      "en": "gentle",
+      "zh": "温和"
+    },
+    "geometric": {
+      "en": "geometric",
+      "zh": "几何"
+    },
+    "glass bowls": {
+      "en": "glass bowls",
+      "zh": "玻璃碗"
+    },
+    "glass harmonica": {
+      "en": "glass harmonica",
+      "zh": "玻璃琴"
+    },
+    "glass harmonics": {
+      "en": "glass harmonics",
+      "zh": "玻璃泛音"
+    },
+    "glass mallet grid": {
+      "en": "glass mallet grid",
+      "zh": "玻璃槌网格"
+    },
+    "granular dust": {
+      "en": "granular dust",
+      "zh": "颗粒尘埃"
+    },
+    "granular electronics": {
+      "en": "granular electronics",
+      "zh": "颗粒电子乐"
+    },
+    "granular noise bloom": {
+      "en": "granular noise bloom",
+      "zh": "颗粒噪音绽放"
+    },
+    "granular synth": {
+      "en": "granular synth",
+      "zh": "颗粒合成器"
+    },
+    "green-quiet": {
+      "en": "green-quiet",
+      "zh": "绿色宁静"
+    },
+    "guzheng": {
+      "en": "guzheng",
+      "zh": "古筝"
+    },
+    "half-time kick": {
+      "en": "half-time kick",
+      "zh": "半速底鼓"
+    },
+    "harp": {
+      "en": "harp",
+      "zh": "竖琴"
+    },
+    "hazy": {
+      "en": "hazy",
+      "zh": "朦胧"
+    },
+    "heavy-soft": {
+      "en": "heavy-soft",
+      "zh": "厚重柔和"
+    },
+    "hi-hat": {
+      "en": "hi-hat",
+      "zh": "踩镲"
+    },
+    "high bells": {
+      "en": "high bells",
+      "zh": "高音钟"
+    },
+    "high cluster": {
+      "en": "high cluster",
+      "zh": "高音簇"
+    },
+    "high sine tones": {
+      "en": "high sine tones",
+      "zh": "高频正弦音"
+    },
+    "high strings": {
+      "en": "high strings",
+      "zh": "高音弦乐"
+    },
+    "hopeful": {
+      "en": "hopeful",
+      "zh": "充满希望"
+    },
+    "hypnotic": {
+      "en": "hypnotic",
+      "zh": "催眠"
+    },
+    "ice-like glass textures": {
+      "en": "ice-like glass textures",
+      "zh": "冰晶玻璃质感"
+    },
+    "ingenious": {
+      "en": "ingenious",
+      "zh": "精巧"
+    },
+    "interfering": {
+      "en": "interfering",
+      "zh": "干扰"
+    },
+    "interior": {
+      "en": "interior",
+      "zh": "内部"
+    },
+    "interlocking": {
+      "en": "interlocking",
+      "zh": "环环相扣"
+    },
+    "interrupted": {
+      "en": "interrupted",
+      "zh": "中断"
+    },
+    "intimate": {
+      "en": "intimate",
+      "zh": "亲密"
+    },
+    "invisible": {
+      "en": "invisible",
+      "zh": "无形"
+    },
+    "inviting": {
+      "en": "inviting",
+      "zh": "诱人"
+    },
+    "inward": {
+      "en": "inward",
+      "zh": "内向"
+    },
+    "irregular": {
+      "en": "irregular",
+      "zh": "不规则"
+    },
+    "iterative": {
+      "en": "iterative",
+      "zh": "迭代"
+    },
+    "joyful": {
+      "en": "joyful",
+      "zh": "欢乐"
+    },
+    "kalimba": {
+      "en": "kalimba",
+      "zh": "卡林巴琴"
+    },
+    "kalimba gears": {
+      "en": "kalimba gears",
+      "zh": "卡林巴齿轮"
+    },
+    "kinetic": {
+      "en": "kinetic",
+      "zh": "动感"
+    },
+    "kora": {
+      "en": "kora",
+      "zh": "科拉琴"
+    },
+    "koto": {
+      "en": "koto",
+      "zh": "日本筝"
+    },
+    "layered": {
+      "en": "layered",
+      "zh": "分层"
+    },
+    "layered strings": {
+      "en": "layered strings",
+      "zh": "分层弦乐"
+    },
+    "layered swell pads": {
+      "en": "layered swell pads",
+      "zh": "分层渐强铺底"
+    },
+    "light": {
+      "en": "light",
+      "zh": "轻盈"
+    },
+    "light analog click": {
+      "en": "light analog click",
+      "zh": "轻微模拟咔嗒声"
+    },
+    "light cello": {
+      "en": "light cello",
+      "zh": "轻柔大提琴"
+    },
+    "light click metronome": {
+      "en": "light click metronome",
+      "zh": "轻微咔嗒节拍器"
+    },
+    "light hand percussion": {
+      "en": "light hand percussion",
+      "zh": "轻柔手打击乐"
+    },
+    "light shaker": {
+      "en": "light shaker",
+      "zh": "轻柔沙锤"
+    },
+    "light triangle": {
+      "en": "light triangle",
+      "zh": "轻柔三角铁"
+    },
+    "live drums": {
+      "en": "live drums",
+      "zh": "现场鼓"
+    },
+    "locked": {
+      "en": "locked",
+      "zh": "锁定"
+    },
+    "low analog growl": {
+      "en": "low analog growl",
+      "zh": "低沉模拟咆哮"
+    },
+    "low brass drones": {
+      "en": "low brass drones",
+      "zh": "低音铜管持续音"
+    },
+    "low brass swell (not fanfare)": {
+      "en": "low brass swell (not fanfare)",
+      "zh": "低音铜管渐强 (非号角)"
+    },
+    "low cello": {
+      "en": "low cello",
+      "zh": "低沉大提琴"
+    },
+    "low clarinet": {
+      "en": "low clarinet",
+      "zh": "低音单簧管"
+    },
+    "low drone": {
+      "en": "low drone",
+      "zh": "低沉持续音"
+    },
+    "low drum as surf (rare)": {
+      "en": "low drum as surf (rare)",
+      "zh": "低鼓如海浪 (罕见)"
+    },
+    "low organ-like pad": {
+      "en": "low organ-like pad",
+      "zh": "低沉风琴铺底"
+    },
+    "low sine pedal": {
+      "en": "low sine pedal",
+      "zh": "低频正弦踏板"
+    },
+    "low strings": {
+      "en": "low strings",
+      "zh": "低音弦乐"
+    },
+    "low thunder-drone": {
+      "en": "low thunder-drone",
+      "zh": "低沉雷鸣持续音"
+    },
+    "lucid": {
+      "en": "lucid",
+      "zh": "清晰"
+    },
+    "luminous": {
+      "en": "luminous",
+      "zh": "明亮"
+    },
+    "lyrical": {
+      "en": "lyrical",
+      "zh": "抒情"
+    },
+    "mallet ring": {
+      "en": "mallet ring",
+      "zh": "槌环"
+    },
+    "mandolin": {
+      "en": "mandolin",
+      "zh": "曼陀林"
+    },
+    "many small pizzicato voices": {
+      "en": "many small pizzicato voices",
+      "zh": "密集拨弦"
+    },
+    "many-bodied": {
+      "en": "many-bodied",
+      "zh": "多体"
+    },
+    "marimba": {
+      "en": "marimba",
+      "zh": "马林巴"
+    },
+    "mechanical": {
+      "en": "mechanical",
+      "zh": "机械"
+    },
+    "melancholy": {
+      "en": "melancholy",
+      "zh": "忧郁"
+    },
+    "metallic percussion": {
+      "en": "metallic percussion",
+      "zh": "金属打击乐"
+    },
+    "metallophones": {
+      "en": "metallophones",
+      "zh": "铁琴"
+    },
+    "modern": {
+      "en": "modern",
+      "zh": "现代"
+    },
+    "moving": {
+      "en": "moving",
+      "zh": "动人"
+    },
+    "multiplicative": {
+      "en": "multiplicative",
+      "zh": "倍增"
+    },
+    "music box": {
+      "en": "music box",
+      "zh": "八音盒"
+    },
+    "muted bass": {
+      "en": "muted bass",
+      "zh": "弱音贝斯"
+    },
+    "muted brass stabs": {
+      "en": "muted brass stabs",
+      "zh": "弱音铜管刺音"
+    },
+    "muted drums": {
+      "en": "muted drums",
+      "zh": "弱音鼓"
+    },
+    "muted guitar": {
+      "en": "muted guitar",
+      "zh": "弱音吉他"
+    },
+    "muted piano": {
+      "en": "muted piano",
+      "zh": "弱音钢琴"
+    },
+    "muted strings": {
+      "en": "muted strings",
+      "zh": "弱音弦乐"
+    },
+    "muted trumpet": {
+      "en": "muted trumpet",
+      "zh": "弱音小号"
+    },
+    "mysterious": {
+      "en": "mysterious",
+      "zh": "神秘"
+    },
+    "nascent": {
+      "en": "nascent",
+      "zh": "初生"
+    },
+    "nested": {
+      "en": "nested",
+      "zh": "嵌套"
+    },
+    "nested music boxes": {
+      "en": "nested music boxes",
+      "zh": "嵌套八音盒"
+    },
+    "nocturnal": {
+      "en": "nocturnal",
+      "zh": "夜曲"
+    },
+    "noise percussion": {
+      "en": "noise percussion",
+      "zh": "噪音打击乐"
+    },
+    "noise ticks": {
+      "en": "noise ticks",
+      "zh": "噪音滴答"
+    },
+    "nylon guitar": {
+      "en": "nylon guitar",
+      "zh": "尼龙吉他"
+    },
+    "observational": {
+      "en": "observational",
+      "zh": "观察性"
+    },
+    "open": {
+      "en": "open",
+      "zh": "开放"
+    },
+    "orderly": {
+      "en": "orderly",
+      "zh": "有序"
+    },
+    "organ": {
+      "en": "organ",
+      "zh": "风琴"
+    },
+    "organic": {
+      "en": "organic",
+      "zh": "有机"
+    },
+    "organic-geometric": {
+      "en": "organic-geometric",
+      "zh": "有机几何"
+    },
+    "oud": {
+      "en": "oud",
+      "zh": "乌德琴"
+    },
+    "paper-soft brushes": {
+      "en": "paper-soft brushes",
+      "zh": "纸柔刷"
+    },
+    "patient": {
+      "en": "patient",
+      "zh": "沉着"
+    },
+    "patterned": {
+      "en": "patterned",
+      "zh": "模式化"
+    },
+    "peaceful": {
+      "en": "peaceful",
+      "zh": "平静"
+    },
+    "perfect-fifth synths": {
+      "en": "perfect-fifth synths",
+      "zh": "纯五度合成器"
+    },
+    "piano": {
+      "en": "piano",
+      "zh": "钢琴"
+    },
+    "piano in folded registers": {
+      "en": "piano in folded registers",
+      "zh": "叠音区钢琴"
+    },
+    "piano octaves": {
+      "en": "piano octaves",
+      "zh": "钢琴八度"
+    },
+    "pipa": {
+      "en": "pipa",
+      "zh": "琵琶"
+    },
+    "pipe organ": {
+      "en": "pipe organ",
+      "zh": "管风琴"
+    },
+    "pizzicato": {
+      "en": "pizzicato",
+      "zh": "拨弦"
+    },
+    "pizzicato strings": {
+      "en": "pizzicato strings",
+      "zh": "拨弦弦乐"
+    },
+    "pizzicato viola": {
+      "en": "pizzicato viola",
+      "zh": "拨弦中提琴"
+    },
+    "planetary": {
+      "en": "planetary",
+      "zh": "行星"
+    },
+    "playful": {
+      "en": "playful",
+      "zh": "俏皮"
+    },
+    "pluck arpeggio": {
+      "en": "pluck arpeggio",
+      "zh": "拨奏琶音"
+    },
+    "pluck synth": {
+      "en": "pluck synth",
+      "zh": "拨弦合成器"
+    },
+    "precise": {
+      "en": "precise",
+      "zh": "精准"
+    },
+    "prepared piano": {
+      "en": "prepared piano",
+      "zh": "预置钢琴"
+    },
+    "prismatic": {
+      "en": "prismatic",
+      "zh": "棱镜"
+    },
+    "propagating": {
+      "en": "propagating",
+      "zh": "传播"
+    },
+    "pulse-wave lead": {
+      "en": "pulse-wave lead",
+      "zh": "脉冲波主音"
+    },
+    "pulsing": {
+      "en": "pulsing",
+      "zh": "脉动"
+    },
+    "pulsing analog bass": {
+      "en": "pulsing analog bass",
+      "zh": "脉动模拟贝斯"
+    },
+    "pure": {
+      "en": "pure",
+      "zh": "纯净"
+    },
+    "pure sine synths": {
+      "en": "pure sine synths",
+      "zh": "纯正弦合成器"
+    },
+    "qanun": {
+      "en": "qanun",
+      "zh": "卡农琴"
+    },
+    "quiet": {
+      "en": "quiet",
+      "zh": "安静"
+    },
+    "recursive": {
+      "en": "recursive",
+      "zh": "递归"
+    },
+    "relaxed": {
+      "en": "relaxed",
+      "zh": "放松"
+    },
+    "resonant": {
+      "en": "resonant",
+      "zh": "共鸣"
+    },
+    "resonant metal": {
+      "en": "resonant metal",
+      "zh": "共鸣金属"
+    },
+    "restless": {
+      "en": "restless",
+      "zh": "躁动"
+    },
+    "restrained": {
+      "en": "restrained",
+      "zh": "克制"
+    },
+    "reverse cymbal as brake": {
+      "en": "reverse cymbal as brake",
+      "zh": "反向镲片制动"
+    },
+    "reverse piano": {
+      "en": "reverse piano",
+      "zh": "反向钢琴"
+    },
+    "rhodes": {
+      "en": "rhodes",
+      "zh": "罗兹电钢琴"
+    },
+    "rhodes piano": {
+      "en": "rhodes piano",
+      "zh": "罗兹电钢琴"
+    },
+    "rhythm guitar": {
+      "en": "rhythm guitar",
+      "zh": "节奏吉他"
+    },
+    "rhythmic": {
+      "en": "rhythmic",
+      "zh": "有节奏"
+    },
+    "ribbon noise": {
+      "en": "ribbon noise",
+      "zh": "带状噪音"
+    },
+    "rim": {
+      "en": "rim",
+      "zh": "鼓边"
+    },
+    "rimshot": {
+      "en": "rimshot",
+      "zh": "鼓边击"
+    },
+    "rising filtered noise": {
+      "en": "rising filtered noise",
+      "zh": "上升滤波噪音"
+    },
+    "rising synth arpeggio": {
+      "en": "rising synth arpeggio",
+      "zh": "上升合成器琶音"
+    },
+    "roomy analog bass": {
+      "en": "roomy analog bass",
+      "zh": "宽广模拟贝斯"
+    },
+    "rotating": {
+      "en": "rotating",
+      "zh": "旋转"
+    },
+    "rotating synth pan": {
+      "en": "rotating synth pan",
+      "zh": "旋转合成器声像"
+    },
+    "round electric bass": {
+      "en": "round electric bass",
+      "zh": "圆润电贝斯"
+    },
+    "rounded bass": {
+      "en": "rounded bass",
+      "zh": "圆润贝斯"
+    },
+    "rule-bound": {
+      "en": "rule-bound",
+      "zh": "循规蹈矩"
+    },
+    "scattered mallets": {
+      "en": "scattered mallets",
+      "zh": "散落槌击"
+    },
+    "scientific": {
+      "en": "scientific",
+      "zh": "科学"
+    },
+    "searching": {
+      "en": "searching",
+      "zh": "探索"
+    },
+    "searching piano figure": {
+      "en": "searching piano figure",
+      "zh": "探索性钢琴乐句"
+    },
+    "settling": {
+      "en": "settling",
+      "zh": "沉淀"
+    },
+    "shaker": {
+      "en": "shaker",
+      "zh": "沙锤"
+    },
+    "shakuhachi": {
+      "en": "shakuhachi",
+      "zh": "尺八"
+    },
+    "shimmering synth": {
+      "en": "shimmering synth",
+      "zh": "闪烁合成器"
+    },
+    "short bass hits": {
+      "en": "short bass hits",
+      "zh": "短促贝斯"
+    },
+    "short synth sparks": {
+      "en": "short synth sparks",
+      "zh": "短促合成器火花"
+    },
+    "sitar": {
+      "en": "sitar",
+      "zh": "西塔琴"
+    },
+    "slap bass": {
+      "en": "slap bass",
+      "zh": "拍击贝斯"
+    },
+    "slow": {
+      "en": "slow",
+      "zh": "慢"
+    },
+    "slow kick": {
+      "en": "slow kick",
+      "zh": "慢速底鼓"
+    },
+    "small piano spark": {
+      "en": "small piano spark",
+      "zh": "钢琴微光"
+    },
+    "soft": {
+      "en": "soft",
+      "zh": "柔和"
+    },
+    "soft analog bass": {
+      "en": "soft analog bass",
+      "zh": "柔和模拟贝斯"
+    },
+    "soft analog wash": {
+      "en": "soft analog wash",
+      "zh": "柔和模拟泛音"
+    },
+    "soft bass": {
+      "en": "soft bass",
+      "zh": "柔和贝斯"
+    },
+    "soft breakbeat": {
+      "en": "soft breakbeat",
+      "zh": "柔和碎拍"
+    },
+    "soft cello": {
+      "en": "soft cello",
+      "zh": "柔和大提琴"
+    },
+    "soft clarinet": {
+      "en": "soft clarinet",
+      "zh": "柔和单簧管"
+    },
+    "soft flute": {
+      "en": "soft flute",
+      "zh": "柔和长笛"
+    },
+    "soft gong": {
+      "en": "soft gong",
+      "zh": "柔和锣"
+    },
+    "soft granular cloud": {
+      "en": "soft granular cloud",
+      "zh": "柔和颗粒云"
+    },
+    "soft hand drum": {
+      "en": "soft hand drum",
+      "zh": "柔和手鼓"
+    },
+    "soft kick": {
+      "en": "soft kick",
+      "zh": "柔和底鼓"
+    },
+    "soft kick as heartbeat": {
+      "en": "soft kick as heartbeat",
+      "zh": "心跳般柔和底鼓"
+    },
+    "soft kick as puff": {
+      "en": "soft kick as puff",
+      "zh": "轻吹般柔和底鼓"
+    },
+    "soft low-pass pad": {
+      "en": "soft low-pass pad",
+      "zh": "柔和低通铺底"
+    },
+    "soft mallet pulses": {
+      "en": "soft mallet pulses",
+      "zh": "柔和槌击脉冲"
+    },
+    "soft mallets": {
+      "en": "soft mallets",
+      "zh": "柔和槌击"
+    },
+    "soft marimba": {
+      "en": "soft marimba",
+      "zh": "柔和马林巴"
+    },
+    "soft membrane pulses": {
+      "en": "soft membrane pulses",
+      "zh": "柔和膜鸣脉冲"
+    },
+    "soft modular blips": {
+      "en": "soft modular blips",
+      "zh": "柔和模块蜂鸣"
+    },
+    "soft noise fizz": {
+      "en": "soft noise fizz",
+      "zh": "柔和噪音嘶嘶"
+    },
+    "soft pads": {
+      "en": "soft pads",
+      "zh": "柔和铺底"
+    },
+    "soft piano": {
+      "en": "soft piano",
+      "zh": "柔和钢琴"
+    },
+    "soft sine bed": {
+      "en": "soft sine bed",
+      "zh": "柔和正弦铺底"
+    },
+    "soft square-wave dots": {
+      "en": "soft square-wave dots",
+      "zh": "柔和方波点"
+    },
+    "soft strings": {
+      "en": "soft strings",
+      "zh": "柔和弦乐"
+    },
+    "soft sub bass": {
+      "en": "soft sub bass",
+      "zh": "柔和次低音"
+    },
+    "soft tom": {
+      "en": "soft tom",
+      "zh": "柔和嗵鼓"
+    },
+    "soft wooden percussion": {
+      "en": "soft wooden percussion",
+      "zh": "柔和木质打击乐"
+    },
+    "soft woodwinds": {
+      "en": "soft woodwinds",
+      "zh": "柔和木管"
+    },
+    "solemn": {
+      "en": "solemn",
+      "zh": "庄重"
+    },
+    "spacious": {
+      "en": "spacious",
+      "zh": "宽广"
+    },
+    "sparse": {
+      "en": "sparse",
+      "zh": "稀疏"
+    },
+    "sparse harp": {
+      "en": "sparse harp",
+      "zh": "稀疏竖琴"
+    },
+    "sparse piano": {
+      "en": "sparse piano",
+      "zh": "稀疏钢琴"
+    },
+    "sparse vibraphone": {
+      "en": "sparse vibraphone",
+      "zh": "稀疏颤音琴"
+    },
+    "split percussion": {
+      "en": "split percussion",
+      "zh": "分裂打击乐"
+    },
+    "spotlight": {
+      "en": "spotlight",
+      "zh": "聚光"
+    },
+    "spreading": {
+      "en": "spreading",
+      "zh": "蔓延"
+    },
+    "stable": {
+      "en": "stable",
+      "zh": "稳定"
+    },
+    "staccato": {
+      "en": "staccato",
+      "zh": "断奏"
+    },
+    "static grain": {
+      "en": "static grain",
+      "zh": "静态颗粒"
+    },
+    "steady": {
+      "en": "steady",
+      "zh": "稳健"
+    },
+    "steady analog pulse": {
+      "en": "steady analog pulse",
+      "zh": "稳健模拟脉冲"
+    },
+    "steel-string guitar": {
+      "en": "steel-string guitar",
+      "zh": "钢弦吉他"
+    },
+    "stepping analog bass": {
+      "en": "stepping analog bass",
+      "zh": "步进模拟贝斯"
+    },
+    "stepwise": {
+      "en": "stepwise",
+      "zh": "阶梯式"
+    },
+    "still": {
+      "en": "still",
+      "zh": "静止"
+    },
+    "stretched harmonics": {
+      "en": "stretched harmonics",
+      "zh": "延伸泛音"
+    },
+    "string quartet": {
+      "en": "string quartet",
+      "zh": "弦乐四重奏"
+    },
+    "strings": {
+      "en": "strings",
+      "zh": "弦乐"
+    },
+    "stuttering percussion": {
+      "en": "stuttering percussion",
+      "zh": "颤动打击乐"
+    },
+    "sub bass": {
+      "en": "sub bass",
+      "zh": "次低音"
+    },
+    "sub drone": {
+      "en": "sub drone",
+      "zh": "次低音嗡鸣"
+    },
+    "sub-bass": {
+      "en": "sub-bass",
+      "zh": "次低音"
+    },
+    "sudden": {
+      "en": "sudden",
+      "zh": "突然"
+    },
+    "swirling": {
+      "en": "swirling",
+      "zh": "旋转"
+    },
+    "synth bass": {
+      "en": "synth bass",
+      "zh": "合成器贝斯"
+    },
+    "synth blip": {
+      "en": "synth blip",
+      "zh": "合成器蜂鸣"
+    },
+    "systemic": {
+      "en": "systemic",
+      "zh": "系统性"
+    },
+    "tabla": {
+      "en": "tabla",
+      "zh": "塔布拉鼓"
+    },
+    "tactile": {
+      "en": "tactile",
+      "zh": "触感"
+    },
+    "taiko-like skin (sparse)": {
+      "en": "taiko-like skin (sparse)",
+      "zh": "稀疏太鼓皮"
+    },
+    "tanpura": {
+      "en": "tanpura",
+      "zh": "坦普拉琴"
+    },
+    "taut": {
+      "en": "taut",
+      "zh": "紧绷"
+    },
+    "tense": {
+      "en": "tense",
+      "zh": "紧张"
+    },
+    "thin synth line": {
+      "en": "thin synth line",
+      "zh": "纤细合成器线"
+    },
+    "thoughtful": {
+      "en": "thoughtful",
+      "zh": "沉思"
+    },
+    "tidal": {
+      "en": "tidal",
+      "zh": "潮汐"
+    },
+    "tight drums": {
+      "en": "tight drums",
+      "zh": "紧凑鼓组"
+    },
+    "tight low tom": {
+      "en": "tight low tom",
+      "zh": "紧凑低音嗵鼓"
+    },
+    "timpani": {
+      "en": "timpani",
+      "zh": "定音鼓"
+    },
+    "tin whistle": {
+      "en": "tin whistle",
+      "zh": "锡哨"
+    },
+    "tiny clicks": {
+      "en": "tiny clicks",
+      "zh": "微小咔嗒声"
+    },
+    "tiny electric clicks": {
+      "en": "tiny electric clicks",
+      "zh": "微小电击声"
+    },
+    "transparent": {
+      "en": "transparent",
+      "zh": "透明"
+    },
+    "traveling": {
+      "en": "traveling",
+      "zh": "行进"
+    },
+    "triangle bass": {
+      "en": "triangle bass",
+      "zh": "三角贝斯"
+    },
+    "trio of staccato strings": {
+      "en": "trio of staccato strings",
+      "zh": "断奏弦乐三重奏"
+    },
+    "tuned gongs": {
+      "en": "tuned gongs",
+      "zh": "调音锣"
+    },
+    "tuned toms as color fronts": {
+      "en": "tuned toms as color fronts",
+      "zh": "作为色彩前沿的调音嗵鼓"
+    },
+    "twilight": {
+      "en": "twilight",
+      "zh": "暮光"
+    },
+    "two delayed pianos": {
+      "en": "two delayed pianos",
+      "zh": "两个延迟钢琴"
+    },
+    "two pizzicato lines": {
+      "en": "two pizzicato lines",
+      "zh": "两条拨弦线"
+    },
+    "uncanny-gentle": {
+      "en": "uncanny-gentle",
+      "zh": "诡异柔和"
+    },
+    "uncertain": {
+      "en": "uncertain",
+      "zh": "不确定"
+    },
+    "undulating": {
+      "en": "undulating",
+      "zh": "起伏"
+    },
+    "unhurried": {
+      "en": "unhurried",
+      "zh": "从容"
+    },
+    "unsettled": {
+      "en": "unsettled",
+      "zh": "不安"
+    },
+    "unstable": {
+      "en": "unstable",
+      "zh": "不稳定"
+    },
+    "unsteady": {
+      "en": "unsteady",
+      "zh": "不稳"
+    },
+    "uplifting": {
+      "en": "uplifting",
+      "zh": "振奋"
+    },
+    "upright bass": {
+      "en": "upright bass",
+      "zh": "低音提琴"
+    },
+    "urgent": {
+      "en": "urgent",
+      "zh": "紧急"
+    },
+    "vast": {
+      "en": "vast",
+      "zh": "广阔"
+    },
+    "vibraphone": {
+      "en": "vibraphone",
+      "zh": "颤音琴"
+    },
+    "viola": {
+      "en": "viola",
+      "zh": "中提琴"
+    },
+    "viola drones": {
+      "en": "viola drones",
+      "zh": "中提琴持续音"
+    },
+    "violin": {
+      "en": "violin",
+      "zh": "小提琴"
+    },
+    "waiting": {
+      "en": "waiting",
+      "zh": "等待"
+    },
+    "walking": {
+      "en": "walking",
+      "zh": "行进"
+    },
+    "warm": {
+      "en": "warm",
+      "zh": "温暖"
+    },
+    "warm bass": {
+      "en": "warm bass",
+      "zh": "温暖低音"
+    },
+    "warm pad": {
+      "en": "warm pad",
+      "zh": "温暖铺底"
+    },
+    "warm pads": {
+      "en": "warm pads",
+      "zh": "温暖铺底"
+    },
+    "warm strings": {
+      "en": "warm strings",
+      "zh": "温暖弦乐"
+    },
+    "warm synth chords": {
+      "en": "warm synth chords",
+      "zh": "温暖合成器和弦"
+    },
+    "warped": {
+      "en": "warped",
+      "zh": "扭曲"
+    },
+    "whooshing filtered noise": {
+      "en": "whooshing filtered noise",
+      "zh": "呼啸滤波噪音"
+    },
+    "wide pad": {
+      "en": "wide pad",
+      "zh": "宽广铺底"
+    },
+    "wide synth choir-substitute pads": {
+      "en": "wide synth choir-substitute pads",
+      "zh": "宽广合成器合唱替代铺底"
+    },
+    "witty": {
+      "en": "witty",
+      "zh": "机智"
+    },
+    "woodblock": {
+      "en": "woodblock",
+      "zh": "木鱼"
+    },
+    "woodblock (sparse)": {
+      "en": "woodblock (sparse)",
+      "zh": "稀疏木鱼"
+    },
+    "xiao": {
+      "en": "xiao",
+      "zh": "箫"
+    },
+    "yangqin": {
+      "en": "yangqin",
+      "zh": "扬琴"
+    },
+    "muted rhythm guitar": {
+      "en": "muted rhythm guitar",
+      "zh": "闷音节奏吉他"
+    },
+    "elastic electric bass": {
+      "en": "elastic electric bass",
+      "zh": "弹性电贝斯"
+    },
+    "dry claps": {
+      "en": "dry claps",
+      "zh": "干脆拍手"
+    },
+    "tight kick": {
+      "en": "tight kick",
+      "zh": "紧实底鼓"
+    },
+    "chopped acoustic drums": {
+      "en": "chopped acoustic drums",
+      "zh": "切分原声鼓"
+    },
+    "analog synth plucks": {
+      "en": "analog synth plucks",
+      "zh": "模拟合成器拨音"
+    },
+    "tight bass": {
+      "en": "tight bass",
+      "zh": "紧实贝斯"
+    },
+    "woodblocks": {
+      "en": "woodblocks",
+      "zh": "木鱼"
+    },
+    "brushed snare": {
+      "en": "brushed snare",
+      "zh": "刷奏军鼓"
+    },
+    "rounded kick": {
+      "en": "rounded kick",
+      "zh": "圆润底鼓"
+    },
+    "electric piano stabs": {
+      "en": "electric piano stabs",
+      "zh": "电钢琴短和弦"
+    },
+    "bright synth bass": {
+      "en": "bright synth bass",
+      "zh": "明亮合成器贝斯"
+    },
+    "shakers": {
+      "en": "shakers",
+      "zh": "沙锤"
+    },
+    "square-wave arpeggios": {
+      "en": "square-wave arpeggios",
+      "zh": "方波琶音"
+    },
+    "crunchy electronic drums": {
+      "en": "crunchy electronic drums",
+      "zh": "颗粒感电子鼓"
+    },
+    "pizzicato cello": {
+      "en": "pizzicato cello",
+      "zh": "拨奏大提琴"
+    },
+    "staccato violin": {
+      "en": "staccato violin",
+      "zh": "断奏小提琴"
+    },
+    "dry hand percussion": {
+      "en": "dry hand percussion",
+      "zh": "干音手打击乐"
+    },
+    "confident": {
+      "en": "confident",
+      "zh": "自信"
+    }
+  }
+}

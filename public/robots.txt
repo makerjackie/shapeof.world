@@ -1,4 +1,46 @@
+# Shape of the World / 世界的形状
+#
+# As a condition of accessing this website, you agree to abide by the
+# following content signals:
+#
+# (a)  If a content-signal = yes, you may collect content for the
+#      corresponding use.
+# (b)  If a content-signal = no, you may not collect content for the
+#      corresponding use.
+# (c)  If the website operator does not include a content signal for a
+#      corresponding use, the website operator neither grants nor restricts
+#      permission via content signal with respect to that use.
+#
+# search: building a search index and providing search results.
+# ai-input: inputting content into AI models at query time (answers, RAG).
+# ai-train: training or fine-tuning AI models.
+#
+# This is a "why is this" product. Search and answering may use the pages.
+# Training may not.
+
 User-agent: *
+Allow: /
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
 Allow: /
 
 Sitemap: https://shapeof.world/sitemap.xml

@@ -1,0 +1,61 @@
+{
+  "id": "three-bodies",
+  "code": "PHY-C01",
+  "title": {
+    "en": "Three Bodies",
+    "zh": "三体"
+  },
+  "category": "physics",
+  "archetype": "event",
+  "moods": [
+    "unstable",
+    "urgent",
+    "interlocking",
+    "cold"
+  ],
+  "topics": [
+    "three-body",
+    "gravity",
+    "unpredictability"
+  ],
+  "energy": 5,
+  "bpm": 118,
+  "key": "E minor",
+  "instruments": [
+    "trio of staccato strings",
+    "prepared piano",
+    "asymmetric drums",
+    "low analog growl"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.846,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about a three-body gravitational dance that never quite repeats. Around 118 BPM, E minor. Three staccato string voices, each with its own meter, attract, sling, and scatter. Asymmetric drums appear only in close encounters. Urgent and cold, not a battle anthem. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No brass fanfare, no regular four-on-the-floor.\n\n[00:00–00:20] Three sparse voices, separate tempos.\n[00:20–00:55] Mutual pull: phrases shorten, drums enter irregularly.\n[00:55–01:35] Close triple encounter: densest moment, still contrapuntal, then a sling outward.\n[01:35–02:05] One voice ejected to high register; the other two orbit shakily.\n[02:05–02:30] All three still moving, no cadence, cut on an unfinished interval.\n",
+  "recommendedWorldIds": [
+    "three-body"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:25:10Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/three-bodies/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/three-bodies/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/three-bodies/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:17.344269+00:00",
+  "generation": {
+    "id": "87e01850-de24-4f7a-b0fd-242ad3d49298",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:24:17Z",
+    "completedAt": "2026-08-25T10:25:10Z",
+    "durationMs": 53000,
+    "interactionId": "U22NavvvFq2IoLAPkPi_wQs",
+    "clientRequestId": "5f54999a-7ed2-48a3-be07-5245bac65e00",
+    "synthid": true,
+    "c2pa": "urn:c2pa:ce7a977b-46b8-3186-5ad1-47dbef173f43",
+    "sha256": "aca0837775ac18d45a47a13ecd26a0d40f966257557945339d3e11fb973bc183"
+  }
+}

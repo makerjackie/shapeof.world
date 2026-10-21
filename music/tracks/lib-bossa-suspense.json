@@ -1,0 +1,103 @@
+{
+  "id": "lib-bossa-suspense",
+  "code": "LIB-08-09",
+  "title": {
+    "en": "Shadows — Bossa",
+    "zh": "暗影 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "bossa"
+  ],
+  "energy": 2,
+  "bpm": 102,
+  "key": "G minor",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second bossa nova instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 102 BPM; G minor. Main idea: a compact three-note motif. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A gentle and relaxing acoustic piece featuring fingerpicked guitar, soft piano chords, a steady bassline, and light brush drums. It creates a calm and peaceful atmosphere.",
+    "zh": "一首轻柔放松的器乐作品，以指弹吉他、柔和的钢琴和弦、稳定的贝斯线和轻柔的鼓点为特色。营造出平静祥和的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.849,
+  "generatedAt": "2026-09-09T08:09:16.365457+00:00",
+  "generation": {
+    "id": "25e743e0-37bf-468c-b8c6-18dd14915bdc",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:08:24.319895+00:00",
+    "completedAt": "2026-09-09T08:09:16.365457+00:00",
+    "interactionId": "-ROhatz4Nu67i9sP06HTyAM",
+    "sha256": "76878ba1a292b8f9ef8307d2df6892320ee6d037f41ec6cb83fdb6a607c21154"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and relaxing acoustic piece featuring fingerpicked guitar, soft piano chords, a steady bassline, and light brush drums. It creates a calm and peaceful atmosphere.",
+      "zh": "一首轻柔放松的器乐作品，以指弹吉他、柔和的钢琴和弦、稳定的贝斯线和轻柔的鼓点为特色。营造出平静祥和的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Piano",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxing",
+      "Peaceful",
+      "Calm",
+      "Gentle",
+      "Reflective",
+      "Mellow"
+    ],
+    "energy": 2,
+    "bpmEstimate": 88,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:09:27.224940+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:10:30.740029+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

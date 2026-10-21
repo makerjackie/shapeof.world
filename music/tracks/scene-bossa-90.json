@@ -1,0 +1,130 @@
+{
+  "id": "scene-bossa-90",
+  "code": "SCENE-06-90",
+  "title": {
+    "en": "Window Garden · 90",
+    "zh": "窗边花园 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "sunny home and lifestyle demonstration",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "brushed percussion",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for sunny home and lifestyle demonstration. Instruments: nylon guitar, brushed percussion, upright bass. 106 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A mellow and relaxed instrumental piece featuring acoustic guitar, bass, and light percussion. It has a smooth, slightly jazzy feel with a gentle rhythm.",
+    "zh": "一首柔和放松的器乐作品，以原声吉他、贝斯和轻柔的打击乐为主。它具有流畅、略带爵士乐的感觉和轻快的节奏。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "sunny home and lifestyle demonstration"
+    ]
+  },
+  "duration": 87.797,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:04:43.472826+00:00",
+  "generation": {
+    "id": "025e174a-1b38-4e87-9fb3-f7c6b3975e1a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:03:52.261180+00:00",
+    "completedAt": "2026-09-22T09:04:43.472826+00:00",
+    "interactionId": "ekSyaoXLDJOE694Pyb3WcQ",
+    "sha256": "c284ca00c400b8f3ea23960028f27875519b88d212e52e4d2f074aef68683a72"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A mellow and relaxed instrumental piece featuring acoustic guitar, bass, and light percussion. It has a smooth, slightly jazzy feel with a gentle rhythm.",
+      "zh": "一首柔和放松的器乐作品，以原声吉他、贝斯和轻柔的打击乐为主。它具有流畅、略带爵士乐的感觉和轻快的节奏。"
+    },
+    "instruments": [
+      "Acoustic guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Relaxed",
+      "Mellow",
+      "Calm",
+      "Peaceful",
+      "Smooth",
+      "Jazzy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Clean recording, well-performed, and suitable for background or relaxed settings.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:05:01.592736+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-bossa-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-bossa-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-bossa-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d1f96c471cb16c367c2c56ab67756c9c28d4872849cd7f98e53c4453b6ed25fd",
+      "bytes": 1229940,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c284ca00c400b8f3ea23960028f27875519b88d212e52e4d2f074aef68683a72",
+      "bytes": 2114808,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "a6e8cd99137e7ebffd23a9a702a8f29c7c508b1bbec7e0d6f05e7bbb712997f1",
+      "bytes": 2798,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:24:08.207154+00:00"
+}

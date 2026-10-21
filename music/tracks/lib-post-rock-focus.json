@@ -1,0 +1,99 @@
+{
+  "id": "lib-post-rock-focus",
+  "code": "LIB-30-02",
+  "title": {
+    "en": "Focus — Post Rock",
+    "zh": "专注 · 后摇"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "post-rock"
+  ],
+  "energy": 2,
+  "bpm": 96,
+  "key": "A minor",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second instrumental post-rock instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 96 BPM; A minor. Main idea: a compact three-note motif. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A clean, melodic instrumental piece featuring electric guitar, bass, and drums. It has a reflective and calm atmosphere.",
+    "zh": "一段干净、旋律优美的器乐作品，以电吉他、贝斯和鼓为主。营造出一种沉思而平静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 120.085,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:17:54.568708+00:00",
+  "generation": {
+    "id": "999eba44-8774-43db-9803-79ef5630198c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:17:00.610112+00:00",
+    "completedAt": "2026-09-09T09:17:54.568708+00:00",
+    "interactionId": "DSShaufMN4u3i9sP7uehmQM",
+    "sha256": "591de9337fe758aad74aa7e6694d74dfa6b728a812db4c05d3bcf6217f78dad6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A clean, melodic instrumental piece featuring electric guitar, bass, and drums. It has a reflective and calm atmosphere.",
+      "zh": "一段干净、旋律优美的器乐作品，以电吉他、贝斯和鼓为主。营造出一种沉思而平静的氛围。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "Well-produced instrumental track with clear instrumentation and a pleasant, reflective mood, suitable for background use.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:18:03.026168+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:19:28.536319+00:00"
+}

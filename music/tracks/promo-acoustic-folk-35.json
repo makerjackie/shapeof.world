@@ -1,0 +1,161 @@
+{
+  "id": "promo-acoustic-folk-35",
+  "code": "PROMO-12-35",
+  "title": {
+    "en": "Little Workshop · 35",
+    "zh": "小小工坊 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "fingerpicked guitar",
+    "handclaps",
+    "mandolin",
+    "kick drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: tactile upbeat acoustic folk with a nimble mandolin hook. Instruments: fingerpicked guitar, handclaps, mandolin, kick drum. Tempo 118 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat folk-pop track featuring acoustic guitar, mandolin, and percussion, with a catchy melody and a bright, energetic feel.",
+    "zh": "一首活泼欢快的民谣流行乐曲，以原声吉他、曼陀林和打击乐为主，旋律动听，充满明亮活力的感觉。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:30:11.636499+00:00",
+  "generation": {
+    "id": "0d77a770-9503-42b1-a77b-c1cd0a6529a9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:29:29.066850+00:00",
+    "completedAt": "2026-09-10T05:30:11.636499+00:00",
+    "interactionId": "OUCiatXGOpDSi9sP696dkAg",
+    "sha256": "1254c363258faf44ec6b5d194d3a4d2abe1ff14f0ddee071e6dd87629a5f8a94"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat folk-pop track featuring acoustic guitar, mandolin, and percussion, with a catchy melody and a bright, energetic feel.",
+      "zh": "一首活泼欢快的民谣流行乐曲，以原声吉他、曼陀林和打击乐为主，旋律动听，充满明亮活力的感觉。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Mandolin",
+      "Bass Guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Cheerful",
+      "Energetic",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic, and catchy folk-pop track with clear instrumentation and a positive mood, suitable for various promotional uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy acoustic guitar and mandolin melody, establishing a lively folk-pop feel. It concludes with a clear, resolved final chord and a short fade-out, providing a deliberate musical ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:32.093368+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "2ec6cfe75e48c365af2a3328331e60a352398276c0c2c145f86bacee4b4cc3d1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.756667,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a prominent mandolin melody, supported by a driving electric bass and rhythmic drums. The music has a folk-inspired, possibly Celtic or bluegrass feel, with a cheerful and energetic vibe.",
+      "zh": "一首欢快活泼的纯音乐，以突出的曼陀林旋律为主，配以有力的电贝斯和富有节奏感的鼓点。音乐带有民谣风格，可能融合了凯尔特或蓝草音乐的元素，整体氛围欢快且充满活力。"
+    },
+    "instruments": [
+      "Mandolin",
+      "Electric Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Folk",
+      "Energetic",
+      "Cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Well-produced, clear, and engaging instrumental track with a distinct folk character, suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:23.529210+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 22.756667,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-acoustic-folk-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:35.776886+00:00"
+}

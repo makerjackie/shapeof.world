@@ -1,0 +1,100 @@
+{
+  "id": "lib-breakbeat-reading",
+  "code": "LIB-28-01",
+  "title": {
+    "en": "Reading — Breakbeat",
+    "zh": "静读 · 碎拍"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "breakbeat"
+  ],
+  "energy": 3,
+  "bpm": 124,
+  "key": "D major",
+  "instruments": [
+    "breakbeat drums",
+    "rounded bass",
+    "shimmering synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second melodic breakbeat electronica instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: breakbeat drums, rounded bass, shimmering synth. Style: syncopated chopped drum rhythm under an evolving melody. Tempo approximately 124 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "An electronic track featuring a steady beat, atmospheric synth pads, and a melancholic lead melody. The music has a chill, somewhat spacey vibe with a consistent rhythm.",
+    "zh": "一首电子音乐，具有稳定的节拍、氛围感合成器音垫和忧郁的主旋律。音乐营造出一种轻松、略带太空感的氛围，节奏连贯。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 54.596,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:11:29.148902+00:00",
+  "generation": {
+    "id": "4cf1ed74-b42d-4b94-8479-92016205f423",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:10:47.585703+00:00",
+    "completedAt": "2026-09-09T09:11:29.148902+00:00",
+    "interactionId": "mCKhaunONoq34vEP1ray8Q0",
+    "sha256": "ae9ad1ceb01e827fb1435386a60c5a53204888ea7031f8f07026641c1607b47d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An electronic track featuring a steady beat, atmospheric synth pads, and a melancholic lead melody. The music has a chill, somewhat spacey vibe with a consistent rhythm.",
+      "zh": "一首电子音乐，具有稳定的节拍、氛围感合成器音垫和忧郁的主旋律。音乐营造出一种轻松、略带太空感的氛围，节奏连贯。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Bass"
+    ],
+    "moods": [
+      "Electronic",
+      "Chill",
+      "Atmospheric",
+      "Melancholy",
+      "Spacey"
+    ],
+    "energy": 3,
+    "bpmEstimate": 120,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:11:36.072041+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:12:14.334915+00:00"
+}

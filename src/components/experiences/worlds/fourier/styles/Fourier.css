@@ -390,6 +390,22 @@
     padding: 10px 12px;
     gap: 7px;
   }
+  /* Story chapters: the counters become one slim row under the wave instead of covering it. */
+  .fourier-experience.is-story .fourier-readout {
+    top: auto;
+    bottom: calc(max(78px, env(safe-area-inset-bottom, 0px) + 72px));
+    left: 12px;
+    right: 12px;
+    width: auto;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+    row-gap: 6px;
+    padding: 8px 14px;
+  }
+  .fourier-experience.is-story .fourier-error-bar,
+  .fourier-experience.is-story .fourier-success {
+    grid-column: 1 / -1;
+  }
   .fourier-controls {
     flex-wrap: wrap;
     gap: 10px;

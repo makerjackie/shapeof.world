@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-05",
+  "code": "SFX-GAME-05",
+  "title": {
+    "en": "Level up",
+    "zh": "等级提升"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 4,
+  "seed": 1141306539,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized level up for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的等级提升合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.04,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1141306539,
+    "sha256": "097d1fdb8e70cf41f045819f88b2b19507a075997c140996f3516f634813d2d0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8f22e4da18b47cd81b4a180c757cf12a3f6c28bb4261eb4e7565d65e466af959",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "097d1fdb8e70cf41f045819f88b2b19507a075997c140996f3516f634813d2d0",
+      "bytes": 91772,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f32a59833285e3c149988a503534d4961e9c56059b4965f0d0f26c2cb274c5e8",
+      "bytes": 8934,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6af596643bfbaf7d3d0dda516a9cb761c417d5930c5ab2767ef2c96326a358f9",
+      "bytes": 1904,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 45864,
+    "duration": 1.04,
+    "peakDbfs": -3.92,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.724289305064975e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.09500018310546854,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip or beep sound, reminiscent of a digital notification or UI element.",
+      "zh": "一个短促、高音调的电子提示音或哔哔声，类似于数字通知或用户界面元素。"
+    },
+    "reason": "The sound is a clear, well-produced electronic blip, suitable for various digital notification or UI sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:38.442486+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "8f22e4da18b47cd81b4a180c757cf12a3f6c28bb4261eb4e7565d65e466af959"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 45864
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.872540+00:00"
+}

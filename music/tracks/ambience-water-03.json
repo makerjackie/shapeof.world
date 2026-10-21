@@ -1,0 +1,130 @@
+{
+  "id": "ambience-water-03",
+  "code": "AMB-WATER-03",
+  "title": {
+    "en": "Small stream · designed ambience",
+    "zh": "细小溪流 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "water",
+  "designIndex": 2,
+  "seed": 228130965,
+  "targetDuration": 60,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized small stream atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "细小溪流的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "water",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-water"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 60.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-water-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-water-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-water-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-water-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 228130965,
+    "sha256": "50b719740456f280e8b54bf3f591f0329abbd0857d08120734ac66580bcd2871",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e5366b1c1055f6b402847247869d4e9bfeaec12c8e6d08844247755c0c200dcb",
+      "bytes": 840820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "50b719740456f280e8b54bf3f591f0329abbd0857d08120734ac66580bcd2871",
+      "bytes": 5292044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "6f48a7d16e102e0afe8590c94b0bdf838c75b74a89facb2b51268908f0acfa76",
+      "bytes": 928009,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "f628d309dc3fff53efdebe02d705ccd8032b55e9a9a756fc4fdfee90962bf49f",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 2646000,
+    "duration": 60.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.96,
+    "dcOffset": -2.87183558319161e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.064117431640625,
+    "internalStepP999": 0.10760498046875,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthetic, swirling, whooshing texture with a resonant, metallic undertone, creating an abstract, atmospheric sound.",
+      "zh": "一种合成的、旋转的、呼啸的纹理，带有共鸣的金属底色，营造出一种抽象的氛围音效。"
+    },
+    "reason": "The sound is clean, well-produced, and loops perfectly, making it highly suitable for background ambience or special effects in games and video.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:23.118164+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "d17ad578daf41c425ea0958cbf7f4df770fe94bc23a67d555071a0523e653719"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2646000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.859931+00:00"
+}

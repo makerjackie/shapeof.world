@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-10",
+  "code": "SFX-RETRO-10",
+  "title": {
+    "en": "Pixel lose",
+    "zh": "像素失败"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 9,
+  "seed": 2288168302,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel lose for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素失败合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.73,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2288168302,
+    "sha256": "92eba67e86acb8a67af8e20abadf278d585eb82d0b2a9dccbd59c4fe965c2782",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6e865077ec6336d0d40dc9c88ee4f384838c52f4fa6bf89610878b18ed74211d",
+      "bytes": 11014,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "92eba67e86acb8a67af8e20abadf278d585eb82d0b2a9dccbd59c4fe965c2782",
+      "bytes": 64430,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "799af3d3811cecdf410e42d15e25c89a32975690a25da51b0c494dcef641ff56",
+      "bytes": 14725,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0db853cac2a9c0f765850be68323e0476a36faa28253fd579fae64dfb4244bf2",
+      "bytes": 1859,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 32193,
+    "duration": 0.73,
+    "peakDbfs": -4.03,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.5574932705673595e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08577566528320424,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, bouncy spring sound effect, followed by a low-frequency impact. It has a stylized, cartoon-like quality.",
+      "zh": "一个短促、高音的弹簧声效，随后是一个低频的撞击声。具有风格化的卡通质感。"
+    },
+    "reason": "The sound effect is clean, distinct, and well-isolated, making it highly usable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:22.379789+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6e865077ec6336d0d40dc9c88ee4f384838c52f4fa6bf89610878b18ed74211d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 32193
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.895268+00:00"
+}

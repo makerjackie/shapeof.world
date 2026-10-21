@@ -1,0 +1,106 @@
+{
+  "id": "lib-ambient-puzzle",
+  "code": "LIB-24-07",
+  "title": {
+    "en": "Clues — Ambient",
+    "zh": "线索 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "ambient"
+  ],
+  "energy": 4,
+  "bpm": 56,
+  "key": "C lydian",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second ambient electronic instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 56 BPM; C lydian. Main idea: a descending melody with an upward answer. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A grand and evolving orchestral piece, starting with ethereal pads and strings, gradually building in complexity and intensity with the introduction of brass, percussion, and arpeggiated synthesizers. It transitions from a calm, majestic opening to a more epic and dramatic soundscape, maintaining a cinematic feel throughout before a serene fade-out.",
+    "zh": "一首宏大且不断演进的管弦乐作品，以空灵的合成器音色和弦乐开场，随后逐渐加入铜管乐、打击乐和琶音合成器，层层递进，增强复杂性和强度。音乐从平静、庄严的开场过渡到更具史诗感和戏剧性的音景，始终保持电影般的氛围，最终以宁静的淡出结束。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 85.473,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:04:42.725140+00:00",
+  "generation": {
+    "id": "c3be1cd2-9d2f-42e5-bd4c-22b75b56fd1e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:04:06.248322+00:00",
+    "completedAt": "2026-09-09T09:04:42.725140+00:00",
+    "interactionId": "ByGhao75GfbQi9sPmYO72AI",
+    "sha256": "99b47014e6944f1597d010aac0798ef11c5108609aac4e0891fa38ad40ef27dc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and evolving orchestral piece, starting with ethereal pads and strings, gradually building in complexity and intensity with the introduction of brass, percussion, and arpeggiated synthesizers. It transitions from a calm, majestic opening to a more epic and dramatic soundscape, maintaining a cinematic feel throughout before a serene fade-out.",
+      "zh": "一首宏大且不断演进的管弦乐作品，以空灵的合成器音色和弦乐开场，随后逐渐加入铜管乐、打击乐和琶音合成器，层层递进，增强复杂性和强度。音乐从平静、庄严的开场过渡到更具史诗感和戏剧性的音景，始终保持电影般的氛围，最终以宁静的淡出结束。"
+    },
+    "instruments": [
+      "Strings",
+      "Synthesizer",
+      "Brass",
+      "Percussion",
+      "Pads",
+      "Arpeggiator"
+    ],
+    "moods": [
+      "Ethereal",
+      "Majestic",
+      "Epic",
+      "Dramatic",
+      "Suspenseful",
+      "Hopeful",
+      "Inspiring",
+      "Cinematic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 90,
+    "reason": "Well-produced, dynamic orchestral piece with a clear narrative arc, suitable for various media requiring an epic or dramatic underscore.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:04:49.540538+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:05:52.149590+00:00"
+}

@@ -1,0 +1,63 @@
+{
+  "id": "pattern-lock",
+  "code": "GLO-C01",
+  "title": {
+    "en": "Pattern Lock",
+    "zh": "形状咬合"
+  },
+  "category": "global",
+  "archetype": "event",
+  "moods": [
+    "focused",
+    "geometric",
+    "decisive",
+    "bright"
+  ],
+  "topics": [
+    "insight",
+    "alignment",
+    "structure"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "A minor",
+  "instruments": [
+    "pizzicato strings",
+    "marimba",
+    "prepared piano",
+    "muted brass stabs",
+    "tight low tom"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.312,
+  "prompt": "Create a 2 minute 30 second instrumental event cue for the instant a hidden structure snaps into place. Around 108 BPM, A minor moving to A Dorian. Staccato pizzicato, marimba ostinato, prepared-piano clicks and one tight low tom used as a lock, not a trailer hit. Geometric, decisive, clean. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No brass fanfare, no huge drums, no riser-then-boom cliché.\n\n[00:00–00:20] Offset marimba cells that almost line up, plus dry prepared-piano ticks.\n[00:20–00:55] Pizzicato enters in competing meters; tension is rhythmic, not loud.\n[00:55–01:35] Parts lock into a single grid; a muted brass stab marks the click, then holds.\n[01:35–02:10] Ostinato brightens into A Dorian; still tight, still small-scale.\n[02:10–02:30] Grid thins to two pitches and the lock-tom, then silence with ring-out.\n",
+  "recommendedWorldIds": [
+    "kakeya-needle",
+    "mandelbrot-zoom"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:20:34Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pattern-lock/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pattern-lock/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pattern-lock/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:51.392640+00:00",
+  "generation": {
+    "id": "0f76c285-9e85-48b2-979a-68dc3fa46bba",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:19:36Z",
+    "completedAt": "2026-08-25T10:20:34Z",
+    "durationMs": 58000,
+    "interactionId": "OWyNarHXJfuJ694Pp9LCuAY",
+    "clientRequestId": "60150dd0-d5f1-42c9-a03b-a2f23020d4c3",
+    "synthid": true,
+    "c2pa": "urn:c2pa:627e895f-bd03-9f53-2db9-4de75c452aa0",
+    "sha256": "205893fc6471bccc39fa57cd39fbd4ee8f38d88c33577effdfd784a02764907f"
+  }
+}

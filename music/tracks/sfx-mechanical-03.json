@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-03",
+  "code": "SFX-MECHANICAL-03",
+  "title": {
+    "en": "Key press",
+    "zh": "键盘按键"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 2,
+  "seed": 2652749517,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized key press for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的键盘按键合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.58,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2652749517,
+    "sha256": "ecc1a1f64a37d1e565a87e285228afc7d5ea4d34163b7d376bac20cf457a29af",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f48e7c887a7c7feda552e6f7138326d87048d12a851d01a8f9a566ee8b615b8f",
+      "bytes": 9186,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ecc1a1f64a37d1e565a87e285228afc7d5ea4d34163b7d376bac20cf457a29af",
+      "bytes": 51200,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "fc8a757dbe813029934dc62ccd0c4abed632a201ed68a1cd0776deb54e0ee8fa",
+      "bytes": 6665,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e9a6a8d0d69c64f8f89fd5b567911101381014b7872f3ff535252ee994dff9dd",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 25578,
+    "duration": 0.58,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.89,
+    "dcOffset": -9.49722112264446e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13428247070312338,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or laser sound effect.",
+      "zh": "短促、高音调的电子“滋啦”声或激光音效。"
+    },
+    "reason": "This is a clean, isolated, and well-produced electronic sound effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:19.025382+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "f48e7c887a7c7feda552e6f7138326d87048d12a851d01a8f9a566ee8b615b8f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 25578
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.885280+00:00"
+}

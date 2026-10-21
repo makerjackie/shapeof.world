@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-12",
+  "code": "SFX-FOLEY-12",
+  "title": {
+    "en": "Chain jingle",
+    "zh": "链条轻响"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 11,
+  "seed": 2776531688,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized chain jingle for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的链条轻响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.97,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-12/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-12/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-12/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-12/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2776531688,
+    "sha256": "995bb44102b356c89b1e468f1147bc45610c5ae1388d5ceee8b0de52c896c078",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d6bf43a8992ed5da6856ad023934069e893ede8ef68325a881c15ca8b19c9c81",
+      "bytes": 14672,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "995bb44102b356c89b1e468f1147bc45610c5ae1388d5ceee8b0de52c896c078",
+      "bytes": 85598,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8fc7af87bd312a11f434cd594cf165071594d4a96e1e09280825490e8c1e4640",
+      "bytes": 15719,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3a1e19d6bbbbb11544263d48f76eb0f120b24e0a200dcaf8fe57128eba6b8da4",
+      "bytes": 1892,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 42777,
+    "duration": 0.97,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.39,
+    "dcOffset": -4.137783227552189e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1989517211914058,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or burst sound effect. It has a quick attack and decay, characteristic of a digital impact or energy release.",
+      "zh": "一个短促、尖锐、高音调的电子“zap”或“爆发”音效。它具有快速的起音和衰减，类似于数字冲击或能量释放的特征。"
+    },
+    "reason": "The sound is a clean, well-defined electronic effect, free from defects, and suitable for various sound design applications like UI feedback, energy bursts, or sci-fi elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:56.076301+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d6bf43a8992ed5da6856ad023934069e893ede8ef68325a881c15ca8b19c9c81"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 42777
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.865751+00:00"
+}

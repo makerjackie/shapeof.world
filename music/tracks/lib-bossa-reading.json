@@ -1,0 +1,102 @@
+{
+  "id": "lib-bossa-reading",
+  "code": "LIB-08-01",
+  "title": {
+    "en": "Reading — Bossa",
+    "zh": "静读 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "bossa"
+  ],
+  "energy": 2,
+  "bpm": 104,
+  "key": "D major",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second bossa nova instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 104 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz instrumental featuring a prominent piano melody, supported by a walking upright bass line and light, brush-driven drums. The track has a sophisticated and calm atmosphere.",
+    "zh": "一首流畅轻松的爵士乐器曲，以突出的钢琴旋律为主，配以行走的低音提琴和轻柔的鼓点。这首曲子营造出精致而平静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.246,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:05:56.143694+00:00",
+  "generation": {
+    "id": "cf94dd0a-67c3-4baf-bc0a-19a82a57da25",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:05:16.810613+00:00",
+    "completedAt": "2026-09-09T08:05:56.143694+00:00",
+    "interactionId": "PhOhaphq04mgsA_B35aIBA",
+    "sha256": "24c1d844e70e006b089d5d19be342a491ee2c9d0d069523b0a25d28b266903a9"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz instrumental featuring a prominent piano melody, supported by a walking upright bass line and light, brush-driven drums. The track has a sophisticated and calm atmosphere.",
+      "zh": "一首流畅轻松的爵士乐器曲，以突出的钢琴旋律为主，配以行走的低音提琴和轻柔的鼓点。这首曲子营造出精致而平静的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "upright bass",
+      "drums",
+      "cymbals"
+    ],
+    "moods": [
+      "relaxed",
+      "smooth",
+      "jazzy",
+      "calm",
+      "sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "High-quality instrumental jazz track with clear instrumentation and no audible defects, suitable for background music or relaxation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:25:55.549499+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:26:30.994520+00:00"
+}

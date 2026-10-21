@@ -1,0 +1,42 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:21 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S000",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S000/2024",
+  "description": "gamma",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "S000M/2024",
+        "description": "gamma MASS",
+        "pdg_values": [
+          {
+            "value": 1e-18,
+            "value_text": "<1 E-18",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "unit": "eV",
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S000Q/2024",
+        "description": "gamma CHARGE",
+        "pdg_values": [
+          {
+            "value": 1e-46,
+            "value_text": "<1 E-46",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "unit": "e",
+            "type": "BEST LIMIT"
+          }
+        ]
+      }
+    ]
+  }
+}

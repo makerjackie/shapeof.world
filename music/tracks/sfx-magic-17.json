@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-17",
+  "code": "SFX-MAGIC-17",
+  "title": {
+    "en": "Wand flick",
+    "zh": "挥动魔杖"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 16,
+  "seed": 3508086831,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized wand flick for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的挥动魔杖合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.56,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3508086831,
+    "sha256": "d480169861c7846f377e435834cbbd7c70ccd57ea33c6f489f1c0e416a1a25fd",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "a8e66df68c75a07de0d8b4b65c10e5ef09655b85b6aa4080b568c77edb5d6d8b",
+      "bytes": 22717,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d480169861c7846f377e435834cbbd7c70ccd57ea33c6f489f1c0e416a1a25fd",
+      "bytes": 137636,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1b5d5aa94255dea1f7342c9a61c46d5e4c94880e44a2700bc3b42e96c82f895c",
+      "bytes": 31672,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c55880d905251e0679e30792d78f56ce77ea15f058beeac1f9d7938a01648d3b",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 68796,
+    "duration": 1.56,
+    "peakDbfs": -4.61,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.6856619116663758e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.11689489746093784,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized magical sparkle or shimmer sound effect with a rising pitch and airy, ethereal texture.",
+      "zh": "一个短促的、合成的魔法闪光或微光音效，带有上升的音高和空灵的质感。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:51.249048+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "a8e66df68c75a07de0d8b4b65c10e5ef09655b85b6aa4080b568c77edb5d6d8b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 68796
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.884055+00:00"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "lib-minimalism-suspense",
+  "code": "LIB-04-09",
+  "title": {
+    "en": "Shadows — Minimalism",
+    "zh": "暗影 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "minimalism"
+  ],
+  "energy": 3,
+  "bpm": 98,
+  "key": "G minor",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second acoustic minimalism instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 98 BPM; G minor. Main idea: an ascending fourth answered by a stepwise descent. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and dramatic orchestral piece featuring prominent piano and string melodies, building in intensity with a grand, emotional feel.",
+    "zh": "一首忧郁而富有戏剧性的管弦乐作品，以突出的钢琴和弦乐旋律为主，逐渐增强，营造出宏大而情感丰富的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.431,
+  "generatedAt": "2026-09-09T07:55:31.308163+00:00",
+  "generation": {
+    "id": "b4cab9a2-03af-4540-bb6a-a995f76c5c8c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:54:42.082019+00:00",
+    "completedAt": "2026-09-09T07:55:31.308163+00:00",
+    "interactionId": "wxChasqwFMy5jMwP4P3F-Qs",
+    "sha256": "16a570fb2e64b637874a7f79c913c12927a2e5f01eb5860203095da100dc2230"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and dramatic orchestral piece featuring prominent piano and string melodies, building in intensity with a grand, emotional feel.",
+      "zh": "一首忧郁而富有戏剧性的管弦乐作品，以突出的钢琴和弦乐旋律为主，逐渐增强，营造出宏大而情感丰富的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Orchestral Percussion"
+    ],
+    "moods": [
+      "Melancholy",
+      "Dramatic",
+      "Emotional",
+      "Grand",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:55:43.574200+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:56:57.716935+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

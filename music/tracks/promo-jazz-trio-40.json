@@ -1,0 +1,164 @@
+{
+  "id": "promo-jazz-trio-40",
+  "code": "PROMO-08-40",
+  "title": {
+    "en": "Pocket Swing · 40",
+    "zh": "口袋摇摆 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: nimble swinging jazz trio with dry piano accents. Instruments: acoustic piano, upright bass, brushed drums. Tempo 132 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and sophisticated instrumental track with a jazzy swing feel. Features a prominent piano melody, walking bass, light drums, and a smooth saxophone solo. The arrangement is clean and energetic.",
+    "zh": "一首欢快而精致的纯音乐，带有爵士摇摆乐风格。以突出的钢琴旋律、行进贝斯、轻快鼓点和流畅的萨克斯独奏为特色。编曲干净且充满活力。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:27:28.881462+00:00",
+  "generation": {
+    "id": "7daef665-c669-4c49-8ddb-301a51d94f83",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:45.983901+00:00",
+    "completedAt": "2026-09-10T05:27:28.881462+00:00",
+    "interactionId": "lj-iapv-Hr2p4vEPtLXW2AM",
+    "sha256": "7906e91e7f5b1795f171a8d1380fd326dbfb4cf4bdd81100f5393ebfbeff914f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and sophisticated instrumental track with a jazzy swing feel. Features a prominent piano melody, walking bass, light drums, and a smooth saxophone solo. The arrangement is clean and energetic.",
+      "zh": "一首欢快而精致的纯音乐，带有爵士摇摆乐风格。以突出的钢琴旋律、行进贝斯、轻快鼓点和流畅的萨克斯独奏为特色。编曲干净且充满活力。"
+    },
+    "instruments": [
+      "Piano",
+      "Double Bass",
+      "Drums",
+      "Saxophone"
+    ],
+    "moods": [
+      "Upbeat",
+      "Jazzy",
+      "Playful",
+      "Energetic",
+      "Sophisticated",
+      "Smooth"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clean production, clear instrumentation, engaging melody, and a consistent upbeat mood make it suitable for various background uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy piano melody, walking bass, and light drums, establishing a clear jazzy swing feel. It concludes with a deliberate, sustained final chord, providing a clear and satisfying resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:48.659907+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "6d956dd250bcf7b71938134ba868614e7087a05c0cb4ad8dab68ed39af5089e9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.1485,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic big band jazz piece featuring a lively brass and woodwind section, supported by a driving rhythm section of piano, bass, and drums. A subtle synth pad adds depth.",
+      "zh": "一首欢快活泼的大乐队爵士乐曲，以生动的铜管和木管乐器为主，配以钢琴、贝斯和鼓组成的强劲节奏部分。细微的合成器音垫增添了深度。"
+    },
+    "instruments": [
+      "Piano",
+      "Bass",
+      "Drums",
+      "Trumpet",
+      "Trombone",
+      "Saxophone",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Jazzy",
+      "Energetic",
+      "Lively",
+      "Sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and suitable for various media applications requiring an upbeat instrumental jazz track.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:27:41.069310+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 18.1485,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:58.389888+00:00"
+}

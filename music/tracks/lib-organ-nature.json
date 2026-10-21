@@ -1,0 +1,98 @@
+{
+  "id": "lib-organ-nature",
+  "code": "LIB-05-04",
+  "title": {
+    "en": "Wildlands — Organ",
+    "zh": "山野 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "organ"
+  ],
+  "energy": 3,
+  "bpm": 52,
+  "key": "D dorian",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second contemporary organ music instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 52 BPM; D dorian. Main idea: a repeating five-note figure with space between phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A melancholic and dramatic orchestral piece featuring prominent strings and piano, building in intensity before a reflective conclusion.",
+    "zh": "一首忧郁而富有戏剧性的管弦乐作品，以突出的弦乐和钢琴为主，强度逐渐增强后回归沉思的结局。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.364,
+  "generatedAt": "2026-09-09T07:57:10.504397+00:00",
+  "generation": {
+    "id": "a911096c-13b1-49d3-ba63-50b95e788a89",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:56:20.380378+00:00",
+    "completedAt": "2026-09-09T07:57:10.504397+00:00",
+    "interactionId": "JRGhat_OLLGejMwP1PWpyAg",
+    "sha256": "087775dfea0a9215574e3b0e728698c625a04671c546e8e52c8cfe3db597f456"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and dramatic orchestral piece featuring prominent strings and piano, building in intensity before a reflective conclusion.",
+      "zh": "一首忧郁而富有戏剧性的管弦乐作品，以突出的弦乐和钢琴为主，强度逐渐增强后回归沉思的结局。"
+    },
+    "instruments": [
+      "Strings",
+      "Piano"
+    ],
+    "moods": [
+      "Melancholic",
+      "Dramatic",
+      "Classical",
+      "Emotional",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 75,
+    "reason": "Well-produced instrumental piece with clear orchestral instrumentation, suitable for various media applications requiring a classical and emotional tone.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:57:20.037160+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:58:31.399324+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

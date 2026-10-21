@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-19",
+  "code": "SFX-WATER-19",
+  "title": {
+    "en": "Foam burst",
+    "zh": "泡沫破裂"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 18,
+  "seed": 2644845973,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized foam burst for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的泡沫破裂合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.06,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2644845973,
+    "sha256": "46b69a2093f7ee03f5a43a564ba89e8cd880b38b0b56c2962a68db49d4f746db",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "37f4fde509ce854b095d56b910ab6ab15cd006d98008535dc6a50b6afa96a9a5",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "46b69a2093f7ee03f5a43a564ba89e8cd880b38b0b56c2962a68db49d4f746db",
+      "bytes": 93536,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "cb23f330d6b886e3a5a8e688fdd1abfe31aad97879c663c93de0b445a42c401b",
+      "bytes": 16936,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c45e2cceb6a0d4a12b14690f31f389bf336c9ee8a9a3bec64edb350733e25561",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46746,
+    "duration": 1.06,
+    "peakDbfs": -2.41,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.050653398151713e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.13947680664062578,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched whoosh or swish sound with an electronic or metallic quality, ending with a quick, percussive snap or impact.",
+      "zh": "一个短促、尖锐、高音的嗖嗖声或刷刷声，带有电子或金属质感，以快速的敲击或冲击声结束。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced sound effect with no audible defects, making it highly usable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:47.979849+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "37f4fde509ce854b095d56b910ab6ab15cd006d98008535dc6a50b6afa96a9a5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46746
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.914138+00:00"
+}

@@ -1,0 +1,130 @@
+{
+  "id": "ambience-machine-01",
+  "code": "AMB-MACHINE-01",
+  "title": {
+    "en": "Engine room · designed ambience",
+    "zh": "机舱底噪 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "machine",
+  "designIndex": 0,
+  "seed": 312457554,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized engine room atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "机舱底噪的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "machine",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-machine"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-machine-01/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-machine-01/v2/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-machine-01/v2/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-machine-01/v2/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 312457554,
+    "sha256": "55fd451c7005b8e3e87739d1fd4e4554b2c7f0563b92cfb34e8a90d38f31b691",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "330c98fd8db8f377020310103419b344d100e2e8c3c01cc28e8723561044059a",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "55fd451c7005b8e3e87739d1fd4e4554b2c7f0563b92cfb34e8a90d38f31b691",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7ff61ea8dfdca1091cdbd435af99d0d2b1bdc6748b0058ae8792402cd929e716",
+      "bytes": 234833,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "882221dc7bf73b66abbd9fa501726108f7149445cbbd9a7e77d02de559fc3369",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.18,
+    "dcOffset": 9.319048800075586e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0191650390625,
+    "internalStepP999": 0.042022705078125,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A low-frequency, resonant, synthesized hum with a subtle, rhythmic, metallic texture, evoking a constant machine or energy presence.",
+      "zh": "低頻、共鳴的合成嗡嗡聲，帶有微妙、有節奏的金屬質感，喚起持續的機械或能量存在感。"
+    },
+    "reason": "The audio provides a clean, consistent, and versatile synthesized texture that loops seamlessly, making it highly suitable for continuous background sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:56.628157+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "f87f5c97365b3e2fc007c12b6d3ec5cf2f5885d604df9182f77c870f5aea6901"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.853664+00:00"
+}

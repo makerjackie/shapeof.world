@@ -1,0 +1,16 @@
+{
+  "right-poses.bin.gz": "b1477e1b4e26eda18cc381c834696f2fee626d2c86ddf8343f65075cd81e6eda",
+  "right-activity.bin.gz": "0e4ad8801a7c10886038e531250f8aa27ea101f622b923b9d8da8837a9e860a7",
+  "walk-frames.bin.gz": "4e6b691975b7126465076a17c6061134a94f9b64d67e18201165fd76a11ff446",
+  "right-frames.bin.gz": "1671835b5da736e260c14af731760cf1b6e9ac4e4c2563955b67e722b7ac7f9b",
+  "left-offsets.bin.gz": "f7456ec89fe106183582cb820068ad46306235f8106862d089b0a30bc6724c4e",
+  "right-offsets.bin.gz": "ab5159a8c3069f6f3fa30f45641fadd6395a8c8c93068b7cccc1ea4265922a8f",
+  "walk-activity.bin.gz": "fd959ad996b91efe836ff53a11f6a1944d894a6c0234da4937366f40250ca897",
+  "manifest.json": "f91a17c6437711137aff41044b4a2eb393fb32acbf52003989233ba07bd9243a",
+  "left-poses.bin.gz": "1e0faaca9bece309336419b11d80c7e030c1fc3c91de7ec6f0094a9e4cc9c561",
+  "left-frames.bin.gz": "fbf8350300194a5ced461d5a3395cc621ae42fefff1ad37ab7e4d1d842f4c684",
+  "left-activity.bin.gz": "c1ea607db5a01add2e94dd1a422ba3c953461d987807b9011abc96e238113134",
+  "body.glb": "9c7b10e3057b2d261df112629261cd4bdc3f42cba6c5ba31f17e49204051a3a2",
+  "walk-offsets.bin.gz": "13ae71d71faed046e6cf0fe92b292bdb3131d1c6646edc2a9e18de0fba5efb5b",
+  "walk-poses.bin.gz": "2801193c13aefeca1c66b2c3037d40a52d628dbfb1033cfc49e4b6bfc012fdb7"
+}

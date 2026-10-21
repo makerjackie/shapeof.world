@@ -1,0 +1,103 @@
+{
+  "id": "lib-kora-motion",
+  "code": "LIB-22-08",
+  "title": {
+    "en": "Motion — Kora",
+    "zh": "跃动 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "kora"
+  ],
+  "energy": 2,
+  "bpm": 122,
+  "key": "B minor",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second West African acoustic instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 122 BPM; B minor. Main idea: alternating short and long phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A smooth, laid-back instrumental track featuring a prominent vibraphone melody, gentle acoustic guitar strumming, a walking bass line, and light jazz drumming. It evokes a relaxed lounge atmosphere.",
+    "zh": "一首流畅、轻松的纯音乐曲目，以突出的颤音琴旋律为主，配以轻柔的木吉他扫弦、行进的贝斯线和轻快的爵士鼓点。营造出轻松的休闲氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.461,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:59:33.266450+00:00",
+  "generation": {
+    "id": "87e617f1-ac6e-406d-978c-7a32cbd665db",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:58:45.906028+00:00",
+    "completedAt": "2026-09-09T08:59:33.266450+00:00",
+    "interactionId": "xx-hatilBMq5i9sPtKam8QQ",
+    "sha256": "79b9ff18b2efb3dc30e6e18dc57ac1c678e5c34ef26d12cd15acec094444aba2"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, laid-back instrumental track featuring a prominent vibraphone melody, gentle acoustic guitar strumming, a walking bass line, and light jazz drumming. It evokes a relaxed lounge atmosphere.",
+      "zh": "一首流畅、轻松的纯音乐曲目，以突出的颤音琴旋律为主，配以轻柔的木吉他扫弦、行进的贝斯线和轻快的爵士鼓点。营造出轻松的休闲氛围。"
+    },
+    "instruments": [
+      "Vibraphone",
+      "Acoustic Guitar",
+      "Electric Bass",
+      "Drums",
+      "Synthesizer Pad"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Lounge",
+      "Jazzy",
+      "Chill",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 106,
+    "reason": "Well-produced, pleasant instrumental track with a clear musical theme and no technical flaws, suitable for background or lounge music.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:59:56.941957+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:00:47.003777+00:00"
+}

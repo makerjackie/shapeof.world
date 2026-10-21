@@ -1,0 +1,106 @@
+{
+  "id": "lib-bossa-travel",
+  "code": "LIB-08-06",
+  "title": {
+    "en": "Roaming — Bossa",
+    "zh": "漫游 · 波萨诺瓦"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "bossa"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "E minor",
+  "instruments": [
+    "nylon guitar",
+    "shaker",
+    "upright bass",
+    "electric piano"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second bossa nova instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: nylon guitar, shaker, upright bass, electric piano. Style: syncopated guitar chords with gentle Latin groove. Tempo approximately 120 BPM; E minor. Main idea: a repeating five-note figure with space between phrases. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "An upbeat and lively big band swing piece featuring a prominent brass and saxophone section, supported by a driving rhythm section of piano, upright bass, and drums. The track has a classic, energetic feel.",
+    "zh": "一首欢快活泼的大乐队摇摆乐曲，以突出的铜管和萨克斯管部分为主，并由钢琴、低音提琴和鼓组成的强劲节奏部分支撑。这首曲子具有经典、充满活力的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 117.734,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:07:35.167418+00:00",
+  "generation": {
+    "id": "139604b1-722a-474f-a335-6598dd05c563",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:06:45.878942+00:00",
+    "completedAt": "2026-09-09T08:07:35.167418+00:00",
+    "interactionId": "lhOhav-iLczRi9sPrKHS-AM",
+    "sha256": "07b0b0ab742449b967aeea93d29fc37ed35362056dde1ac4a7a74743c85d705d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively big band swing piece featuring a prominent brass and saxophone section, supported by a driving rhythm section of piano, upright bass, and drums. The track has a classic, energetic feel.",
+      "zh": "一首欢快活泼的大乐队摇摆乐曲，以突出的铜管和萨克斯管部分为主，并由钢琴、低音提琴和鼓组成的强劲节奏部分支撑。这首曲子具有经典、充满活力的感觉。"
+    },
+    "instruments": [
+      "Drums",
+      "Upright Bass",
+      "Piano",
+      "Trumpet",
+      "Trombone",
+      "Saxophone"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Swing",
+      "Energetic",
+      "Classic",
+      "Danceable",
+      "Sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 192,
+    "reason": "Clean, well-performed, and well-produced big band swing music with clear instrumentation and a consistent energetic mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:36:05.415318+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-bossa-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-bossa-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-bossa-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:38:03.626714+00:00"
+}

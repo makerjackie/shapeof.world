@@ -1,0 +1,102 @@
+{
+  "id": "lib-post-rock-travel",
+  "code": "LIB-30-06",
+  "title": {
+    "en": "Roaming — Post Rock",
+    "zh": "漫游 · 后摇"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "moving",
+    "bright",
+    "relaxed"
+  ],
+  "topics": [
+    "travel",
+    "post-rock"
+  ],
+  "energy": 2,
+  "bpm": 104,
+  "key": "E minor",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second instrumental post-rock instrumental composition for travel montage, walking and urban exploration. Mood: moving, bright, relaxed. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 104 BPM; E minor. Main idea: a descending melody with an upward answer. Use a forward-moving motif and recurring short instrumental answers. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "travel"
+  ],
+  "description": {
+    "en": "A mellow and reflective instrumental track featuring acoustic and electric guitars, bass, drums, and subtle synth pads, creating a relaxed and dreamy atmosphere.",
+    "zh": "一首柔和而富有沉思感的纯音乐，以原声吉他、电吉他、贝斯、鼓和微妙的合成器铺底为主，营造出轻松梦幻的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 115.957,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:19:37.163422+00:00",
+  "generation": {
+    "id": "d3c0b216-6ed7-4445-a7ef-ecb40effb166",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:18:56.904495+00:00",
+    "completedAt": "2026-09-09T09:19:37.163422+00:00",
+    "interactionId": "giShaoe7BqKsrtoP65a1oAo",
+    "sha256": "991ebe37c09afad0c433b715549335dd9378c1b23ae51375f58663a232fa801e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A mellow and reflective instrumental track featuring acoustic and electric guitars, bass, drums, and subtle synth pads, creating a relaxed and dreamy atmosphere.",
+      "zh": "一首柔和而富有沉思感的纯音乐，以原声吉他、电吉他、贝斯、鼓和微妙的合成器铺底为主，营造出轻松梦幻的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Mellow",
+      "Relaxing",
+      "Reflective",
+      "Dreamy",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 102,
+    "reason": "The audio is a well-produced instrumental track with clear instrumentation and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:19:56.233944+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-travel/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-travel/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-travel/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:22:21.017208+00:00"
+}

@@ -1,0 +1,101 @@
+{
+  "id": "lib-cool-jazz-suspense",
+  "code": "LIB-09-09",
+  "title": {
+    "en": "Shadows — Cool Jazz",
+    "zh": "暗影 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "cool-jazz"
+  ],
+  "energy": 2,
+  "bpm": 72,
+  "key": "G minor",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second cool jazz instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 72 BPM; G minor. Main idea: an ascending fourth answered by a stepwise descent. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz piece featuring a prominent saxophone melody, supported by a classic jazz trio of piano, upright bass, and brushed drums.",
+    "zh": "一首流畅轻松的爵士乐曲，以萨克斯风为主旋律，配以钢琴、低音提琴和刷子鼓的经典爵士三重奏。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.797,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:12:18.616291+00:00",
+  "generation": {
+    "id": "fefb8911-435c-44e1-b280-5d68f836bc6c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:11:28.561962+00:00",
+    "completedAt": "2026-09-09T08:12:18.616291+00:00",
+    "interactionId": "sRShaoHyK8O3i9sP57WLuQM",
+    "sha256": "70f777f7332a37172ff798934a566872343fabf08029b0b666d4ec4d7a8a2f3d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz piece featuring a prominent saxophone melody, supported by a classic jazz trio of piano, upright bass, and brushed drums.",
+      "zh": "一首流畅轻松的爵士乐曲，以萨克斯风为主旋律，配以钢琴、低音提琴和刷子鼓的经典爵士三重奏。"
+    },
+    "instruments": [
+      "saxophone",
+      "piano",
+      "upright bass",
+      "drums"
+    ],
+    "moods": [
+      "smooth jazz",
+      "relaxed",
+      "jazzy",
+      "sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 106,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:36:05.670379+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:38:38.371288+00:00"
+}

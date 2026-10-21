@@ -1,0 +1,110 @@
+{
+  "id": "explainer-60",
+  "title": {
+    "en": "60-second explainer bed",
+    "zh": "60 秒讲解背景"
+  },
+  "description": {
+    "en": "A quiet music bed and sparse chapter cues. The demo contains no narration; adjust music under your own voice.",
+    "zh": "低音量背景音乐与少量章节提示。示例没有旁白，使用时根据自己的人声调整音量。"
+  },
+  "duration": 60,
+  "schemaVersion": 1,
+  "kind": "scene-kit",
+  "isIndependentComposition": false,
+  "events": [
+    {
+      "id": "scene-bossa-90",
+      "role": "preview",
+      "use": "music",
+      "atSeconds": 0,
+      "gainDb": -14,
+      "url": "https://music-cdn.shapeof.world/tracks/scene-bossa-90/v1/preview.mp3",
+      "sha256": "d1f96c471cb16c367c2c56ab67756c9c28d4872849cd7f98e53c4453b6ed25fd",
+      "file": "audio/scene-bossa-90-preview.mp3"
+    },
+    {
+      "id": "sfx-ui-01",
+      "role": "master",
+      "use": "chapter",
+      "atSeconds": 5,
+      "gainDb": -8,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-ui-01/v1/master.wav",
+      "sha256": "1d34a61b23227718f303e8e2ab69865018ed33adb59b265d162b0d5a6485fb33",
+      "file": "audio/sfx-ui-01-master.wav"
+    },
+    {
+      "id": "sfx-ui-01",
+      "role": "master",
+      "use": "chapter",
+      "atSeconds": 25,
+      "gainDb": -8,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-ui-01/v1/master.wav",
+      "sha256": "1d34a61b23227718f303e8e2ab69865018ed33adb59b265d162b0d5a6485fb33",
+      "file": "audio/sfx-ui-01-master.wav"
+    },
+    {
+      "id": "sfx-ui-01",
+      "role": "master",
+      "use": "chapter",
+      "atSeconds": 45,
+      "gainDb": -8,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-ui-01/v1/master.wav",
+      "sha256": "1d34a61b23227718f303e8e2ab69865018ed33adb59b265d162b0d5a6485fb33",
+      "file": "audio/sfx-ui-01-master.wav"
+    },
+    {
+      "id": "sfx-transition-01",
+      "role": "master",
+      "use": "ending",
+      "atSeconds": 58,
+      "gainDb": -10,
+      "url": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/master.wav",
+      "sha256": "be5ecddcd0b307b5466fc036915aa83bbd333a53ab094cf8c88460c9fddc40b4",
+      "file": "audio/sfx-transition-01-master.wav"
+    }
+  ],
+  "licenseUrl": "https://music.shapeof.world/audio-license.txt",
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic solo classical guitar piece, featuring a clear and expressive performance.",
+      "zh": "一首温柔而旋律优美的古典吉他独奏曲，演奏清晰且富有表现力。"
+    },
+    "instruments": [
+      "Classical Guitar"
+    ],
+    "moods": [
+      "Relaxing",
+      "Peaceful",
+      "Calm",
+      "Gentle",
+      "Melodic",
+      "Soothing"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:38:08.310660+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "assets": {
+    "preview": {
+      "url": "https://music-cdn.shapeof.world/kits/explainer-60/3d982d174917cf50/preview.mp3",
+      "sha256": "3d982d174917cf50e7860c9df5a8a63603e4dbc6a347919b2876082693dd77df",
+      "bytes": 1201154
+    },
+    "download": {
+      "url": "https://music-cdn.shapeof.world/kits/explainer-60/7bb5f0036f1a79a4/kit.zip",
+      "sha256": "7bb5f0036f1a79a482ed2477cecbbcd80fe2629601bbdfd34c09ddb19f58bf63",
+      "bytes": 2476877
+    }
+  },
+  "status": "published",
+  "verifiedAt": "2026-09-22T09:55:10.910009+00:00"
+}

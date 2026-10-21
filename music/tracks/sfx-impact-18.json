@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-18",
+  "code": "SFX-IMPACT-18",
+  "title": {
+    "en": "Spring boing",
+    "zh": "弹簧回弹"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 17,
+  "seed": 2309656797,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized spring boing for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的弹簧回弹合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.1,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2309656797,
+    "sha256": "48948c2b564c35d41921a7822d5d5509a8c4793751548981550b90fba394e3b2",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7b8305c4bb54e86207bfeb92c88903aa5032860a3cb1e1c5235457ea152ed388",
+      "bytes": 16500,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "48948c2b564c35d41921a7822d5d5509a8c4793751548981550b90fba394e3b2",
+      "bytes": 97064,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "117f19ae7e31abd37ca6ed93f4e49637ef311dc10135ebc95fe9fa3e9fb51f26",
+      "bytes": 11784,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ad824edf96aa407c839ef04c6ef76e1e69c28ddf6c82da91297c1c25d3f0be26",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 48510,
+    "duration": 1.1,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.44,
+    "dcOffset": -5.2844291125541125e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14268176269531185,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized sound effect combining a springy 'boing' with a light metallic 'clink' or 'ping'.",
+      "zh": "一个短促的合成音效，结合了弹簧般的“boing”声和轻微的金属“叮”声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthetic effect, suitable for various sound design applications like UI feedback, small impacts, or cartoonish actions.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:11.148230+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7b8305c4bb54e86207bfeb92c88903aa5032860a3cb1e1c5235457ea152ed388"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 48510
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.879425+00:00"
+}

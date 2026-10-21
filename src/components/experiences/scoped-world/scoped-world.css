@@ -1,0 +1,2 @@
+.scoped-world-stage { position: absolute; inset: var(--experience-safe-top, 78px) 0 0; overflow: hidden; contain: layout style; container-type: size; }
+.experience-page[data-overlays-hidden='true'] .scoped-world-stage { inset: 0; }

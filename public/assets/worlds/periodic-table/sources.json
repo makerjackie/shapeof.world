@@ -1,0 +1,86 @@
+[
+  {
+    "symbol": "Cu",
+    "file": "Cu.jpg",
+    "source": "https://images-of-elements.com/copper.php",
+    "original": "https://images-of-elements.com/copper.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "c5e2f4703c8b39429861633a0286a3a9effbb25d34fe50a021ea1bae0b52cf3d",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "S",
+    "file": "S.jpg",
+    "source": "https://images-of-elements.com/sulfur.php",
+    "original": "https://images-of-elements.com/sulfur.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "351d38bf5a54616a623f1ed0138c87b07f2b58f78815619ef9816d4dc0c4a8f2",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "Si",
+    "file": "Si.jpg",
+    "source": "https://images-of-elements.com/silicon.php",
+    "original": "https://images-of-elements.com/silicon.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "744693255126805f28fdbe45cf70f3a0fb588a2a56ff240213c4813e8fce3f27",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "Bi",
+    "file": "Bi.jpg",
+    "source": "https://images-of-elements.com/bismuth.php",
+    "original": "https://images-of-elements.com/bismuth-4.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "9b3fc6d309d6f9a6e390d0b602da73de842558cc860c3c395484bd91ff79ed72",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "Hg",
+    "file": "Hg.jpg",
+    "source": "https://images-of-elements.com/mercury.php",
+    "original": "https://images-of-elements.com/hydrargyrum.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "44d56a2076deb7a89f12f1e1d47b69f3c6aa22d67d96f2086c0c760a5ee0c1ec",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "Br",
+    "file": "Br.jpg",
+    "source": "https://images-of-elements.com/bromine.php",
+    "original": "https://images-of-elements.com/bromine.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "19124b189b7e605ca52e4116660c5e4358de968a5732cf065aad8ace8e0f9bb6",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  },
+  {
+    "symbol": "O",
+    "file": "O.jpg",
+    "source": "https://images-of-elements.com/oxygen.php",
+    "original": "https://images-of-elements.com/oxygen.jpg",
+    "credit": "Chemical Elements \u2014 A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "retrieved": "2026-09-10",
+    "sha256": "e8344628d2a8ac7b84986d5257aef27a185e3f9ae06d1ed53c9f915aa96261a6",
+    "changes": "Original JPEG; displayed with CSS sizing, no AI reconstruction."
+  }
+]

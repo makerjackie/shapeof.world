@@ -1,0 +1,163 @@
+{
+  "id": "promo-chiptune-35",
+  "code": "PROMO-05-35",
+  "title": {
+    "en": "Pixel Bounce · 35",
+    "zh": "像素弹跳 · 35"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 5,
+  "bpm": 144,
+  "key": "",
+  "instruments": [
+    "square-wave arpeggios",
+    "triangle bass",
+    "crunchy electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 35,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: playful modern chiptune; original arcade-like call and response. Instruments: square-wave arpeggios, triangle bass, crunchy electronic drums. Tempo 144 BPM. Distinct motif: a dotted rhythmic question and short answer. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 35-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and upbeat electronic dance track with a driving beat, synth melodies, and a clear pop sensibility, featuring a dynamic build-up and breakdown structure.",
+    "zh": "一首充满活力和乐观的电子舞曲，具有强劲的节拍、合成器旋律和清晰的流行感，结构上包含动态的构建和分解。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 35,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 35.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:24:38.561425+00:00",
+  "generation": {
+    "id": "9d23866f-c675-4c11-b8bf-4113b1f58bc2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:23:55.663106+00:00",
+    "completedAt": "2026-09-10T05:24:38.561425+00:00",
+    "interactionId": "7D6iavb8G4q34vEP1ray8Q0",
+    "sha256": "ae92ceddcca41fb3bd26bfdd01ed0b31472773ce11b26438d5ee36f382e57f69"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat electronic dance track with a driving beat, synth melodies, and a clear pop sensibility, featuring a dynamic build-up and breakdown structure.",
+      "zh": "一首充满活力和乐观的电子舞曲，具有强劲的节拍、合成器旋律和清晰的流行感，结构上包含动态的构建和分解。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Energetic",
+      "Upbeat",
+      "Driving",
+      "Exciting",
+      "Modern",
+      "Danceable"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, high-energy electronic track with clear structure and no audible defects, suitable for various media applications requiring an upbeat mood.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a prominent synth melody and driving electronic drums. It concludes with a deliberate fade-out of the main theme and beat, ending on a sustained synth chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:25:37.939905+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "210b87e2cc104e2c13e277cd56622566249ccbd6aa9c702f4addda11310e8d76"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.697083,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving drum beat, prominent synth bass, and catchy, arpeggiated synth melodies. The arrangement builds with layers of pads and leads, creating a positive and dynamic atmosphere.",
+      "zh": "一首欢快且充满活力的电子音乐，具有强劲的鼓点、突出的合成器低音以及朗朗上口、琶音的合成器旋律。编曲通过层层叠加的衬底和主旋律进行构建，营造出积极动感的氛围。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synth bass",
+      "synth lead",
+      "synth pads",
+      "arpeggiator"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "driving",
+      "positive",
+      "dance",
+      "electronic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": "A well-produced, high-energy electronic track with clear instrumentation and a consistent, engaging rhythm, making it suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:24:52.706474+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 23.697083,
+    "requestedSeconds": 35,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-chiptune-35/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-chiptune-35/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-chiptune-35/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:11.141208+00:00"
+}

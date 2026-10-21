@@ -1,0 +1,102 @@
+{
+  "id": "lib-jazz-trio-puzzle",
+  "code": "LIB-07-07",
+  "title": {
+    "en": "Clues — Jazz Trio",
+    "zh": "线索 · 爵士三重奏"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "jazz-trio"
+  ],
+  "energy": 2,
+  "bpm": 100,
+  "key": "C lydian",
+  "instruments": [
+    "piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second acoustic jazz instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: piano, upright bass, brushed drums. Style: relaxed swing, walking bass and conversational piano. Tempo approximately 100 BPM; C lydian. Main idea: a repeating five-note figure with space between phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz instrumental featuring a prominent piano melody, supported by a walking bass, light drums, and subtle electric guitar chords, creating a sophisticated and mellow atmosphere.",
+    "zh": "一首流畅轻松的爵士乐器乐曲，以突出的钢琴旋律为主，辅以行进的贝斯、轻柔的鼓和微妙的电吉他和弦，营造出精致而柔和的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 89.182,
+  "generatedAt": "2026-09-09T08:05:08.490531+00:00",
+  "generation": {
+    "id": "79e296c7-35c6-4724-beac-129f43e6a397",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:04:27.409341+00:00",
+    "completedAt": "2026-09-09T08:05:08.490531+00:00",
+    "interactionId": "DBOhavz5D6KsrtoP65a1oAo",
+    "sha256": "9da7b31cdfafd69640e85f9eba8b2979dd3ab2ae008420dc2514407e601711aa"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz instrumental featuring a prominent piano melody, supported by a walking bass, light drums, and subtle electric guitar chords, creating a sophisticated and mellow atmosphere.",
+      "zh": "一首流畅轻松的爵士乐器乐曲，以突出的钢琴旋律为主，辅以行进的贝斯、轻柔的鼓和微妙的电吉他和弦，营造出精致而柔和的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Upright Bass",
+      "Drums",
+      "Electric Guitar"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Jazzy",
+      "Mellow",
+      "Sophisticated",
+      "Chill"
+    ],
+    "energy": 2,
+    "bpmEstimate": 102,
+    "reason": "Well-produced and pleasant instrumental, suitable for background use.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:05:18.012393+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-jazz-trio-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:06:33.666842+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,59 @@
+{
+  "id": "noise-to-form",
+  "code": "AIM-A01",
+  "title": {
+    "en": "Noise to Form",
+    "zh": "噪声成形"
+  },
+  "category": "ai-ml",
+  "archetype": "ambient",
+  "moods": [
+    "emerging",
+    "hazy",
+    "patient",
+    "uncanny-gentle"
+  ],
+  "topics": [
+    "diffusion",
+    "denoising",
+    "generative"
+  ],
+  "energy": 1,
+  "bpm": 66,
+  "key": "Eb Lydian",
+  "instruments": [
+    "filtered noise",
+    "emerging piano",
+    "soft pads",
+    "granular dust"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 147.775,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about an image emerging from noise. Around 66 BPM, Eb Lydian. Begin as filtered noise; a piano contour becomes recognizable, then slightly re-noises, then clarifies. Patient, hazy, gently uncanny. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No glitch vocals, no drop.\n\n[00:00–00:30] Band-limited noise, no pitch center.\n[00:30–01:15] Faint piano contour inside the noise, like a half-formed object.\n[01:15–01:50] Pads support a Lydian chord; dust still present.\n[01:50–02:30] Image clarifies, then a last grain of noise reminds it was generated.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:17:38Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/noise-to-form/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/noise-to-form/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/noise-to-form/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:12.259735+00:00",
+  "generation": {
+    "id": "d885d94c-19d2-408e-908b-3e9d4aa2a751",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:16:46Z",
+    "completedAt": "2026-08-25T10:17:38Z",
+    "durationMs": 52000,
+    "interactionId": "j2uNaovYJeLC694Pz7qDoAY",
+    "clientRequestId": "295ea49b-4b7b-4793-ae26-54079b53b976",
+    "synthid": true,
+    "c2pa": "urn:c2pa:0fbe910a-0b1c-7aef-8220-44d557fa0e6a",
+    "sha256": "ca33f9fd0cebfd286b2cf7cf904e6f62044e98463033d8d044480ad8c59121d4"
+  }
+}

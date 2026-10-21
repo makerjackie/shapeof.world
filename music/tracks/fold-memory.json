@@ -1,0 +1,59 @@
+{
+  "id": "fold-memory",
+  "code": "CMP-B03",
+  "title": {
+    "en": "Fold Memory",
+    "zh": "折叠记忆"
+  },
+  "category": "computing-engineering",
+  "archetype": "discovery",
+  "moods": [
+    "creased",
+    "tactile",
+    "patient",
+    "clever"
+  ],
+  "topics": [
+    "origami",
+    "folding",
+    "crease-pattern"
+  ],
+  "energy": 2,
+  "bpm": 74,
+  "key": "Bb major",
+  "instruments": [
+    "piano in folded registers",
+    "paper-soft brushes",
+    "harp",
+    "low clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.376,
+  "prompt": "Create a 2 minute 30 second instrumental discovery piece about a sheet remembering its creases. Around 74 BPM, Bb major. Piano phrases fold into inner registers, unfold, fold again; harp is a crease pattern; clarinet holds the finished form. Tactile, patient, clever. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No snare rolls, no cinematic paper-rip sample as joke.\n\n[00:00–00:22] Open piano voicing, flat like a sheet.\n[00:22–01:05] Inner notes tuck; brushes mark creases; phrase becomes denser.\n[01:05–01:45] Unfold (more open), then a sharper fold; harp maps the pattern.\n[01:45–02:30] Compact finished form on clarinet and piano, still, as if the model sits on a table.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:14:58Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/fold-memory/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/fold-memory/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/fold-memory/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:47.286485+00:00",
+  "generation": {
+    "id": "1f0ddcf1-a9ef-44ab-959d-6e9e7321e945",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:14:07Z",
+    "completedAt": "2026-08-25T10:14:58Z",
+    "durationMs": 51000,
+    "interactionId": "8GqNarzcHLjj8vUP4dHv2Ao",
+    "clientRequestId": "b5a6f47b-930f-44a0-b31e-a0f6b7c7dbd4",
+    "synthid": true,
+    "c2pa": "urn:c2pa:07d497a7-3af0-8c2f-eac8-4201b88e65dc",
+    "sha256": "fc97788c393e0fb1d118234b7562597d9505ecb1ca318f496193df07ba9b1906"
+  }
+}

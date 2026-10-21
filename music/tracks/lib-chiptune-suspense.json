@@ -1,0 +1,101 @@
+{
+  "id": "lib-chiptune-suspense",
+  "code": "LIB-29-09",
+  "title": {
+    "en": "Shadows — Chiptune",
+    "zh": "暗影 · 芯片音乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "chiptune"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "G minor",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second melodic chiptune instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: pulse-wave lead, triangle bass, noise percussion. Style: clear arpeggiated game-like melody and concise rhythmic phrases. Tempo approximately 126 BPM; G minor. Main idea: an ascending fourth answered by a stepwise descent. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a prominent synth melody, driving synth bass, and dynamic electronic drums. It has a retro-futuristic vibe with evolving synth layers and a strong rhythmic pulse.",
+    "zh": "一首欢快且充满活力的电子音乐，以突出的合成器旋律、强劲的合成器贝斯和动感的电子鼓为特色。它具有复古未来主义的氛围，合成器层层递进，节奏感强烈。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.3,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:17:24.667433+00:00",
+  "generation": {
+    "id": "dc8dff96-f312-4851-b9b6-ded486bf642d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:16:34.589967+00:00",
+    "completedAt": "2026-09-09T09:17:24.667433+00:00",
+    "interactionId": "8yOhavLUNeuCoLAP9_u-qAs",
+    "sha256": "060a1afe75cb48d2f2ff019758a36d0fd913034640ecfee21e2fb3e2a4ad71e8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a prominent synth melody, driving synth bass, and dynamic electronic drums. It has a retro-futuristic vibe with evolving synth layers and a strong rhythmic pulse.",
+      "zh": "一首欢快且充满活力的电子音乐，以突出的合成器旋律、强劲的合成器贝斯和动感的电子鼓为特色。它具有复古未来主义的氛围，合成器层层递进，节奏感强烈。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Retro-futuristic",
+      "Driving",
+      "Melodic",
+      "Dynamic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced electronic track with clear instrumentation, no audible defects, and a consistent energetic mood suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:17:34.148400+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chiptune-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chiptune-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chiptune-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:19:17.099991+00:00"
+}

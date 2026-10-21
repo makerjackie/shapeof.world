@@ -1,0 +1,101 @@
+{
+  "id": "lib-synthwave-motion",
+  "code": "LIB-26-08",
+  "title": {
+    "en": "Motion — Synthwave",
+    "zh": "跃动 · 合成器浪潮"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "synthwave"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "B minor",
+  "instruments": [
+    "analog arpeggiator",
+    "synth bass",
+    "electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental synthwave instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: analog arpeggiator, synth bass, electronic drums. Style: steady retro pulse with luminous melodic synth phrases. Tempo approximately 126 BPM; B minor. Main idea: a repeating five-note figure with space between phrases. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An energetic electronic dance track featuring driving synth bass, arpeggiated synthesizers, and a steady, upbeat drum beat. It has a modern, uplifting feel suitable for background music or dance.",
+    "zh": "一首充满活力的电子舞曲，以强劲的合成器低音、琶音合成器和稳定、欢快的鼓点为特色。它具有现代、振奋人心的感觉，适合作为背景音乐或舞曲。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 112.771,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:07:55.327926+00:00",
+  "generation": {
+    "id": "af3c67cd-8804-42e3-900d-2a116f1c562f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:07:12.188491+00:00",
+    "completedAt": "2026-09-09T09:07:55.327926+00:00",
+    "interactionId": "wSGhavuQLtW54vEPzPyHuAE",
+    "sha256": "5ce7d981a4b47c9adc78308a5d58370b5167b4dc8db311c4d2041c08bc947329"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic electronic dance track featuring driving synth bass, arpeggiated synthesizers, and a steady, upbeat drum beat. It has a modern, uplifting feel suitable for background music or dance.",
+      "zh": "一首充满活力的电子舞曲，以强劲的合成器低音、琶音合成器和稳定、欢快的鼓点为特色。它具有现代、振奋人心的感觉，适合作为背景音乐或舞曲。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synth bass",
+      "synthesizer",
+      "arpeggiator"
+    ],
+    "moods": [
+      "energetic",
+      "driving",
+      "uplifting",
+      "modern",
+      "danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 124,
+    "reason": "Well-produced, clean electronic track with a consistent energetic vibe, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:29:13.099436+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-synthwave-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-synthwave-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-synthwave-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:29:58.750462+00:00"
+}

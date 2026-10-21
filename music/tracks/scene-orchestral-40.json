@@ -1,0 +1,187 @@
+{
+  "id": "scene-orchestral-40",
+  "code": "SCENE-20-40",
+  "title": {
+    "en": "First Flight · 40",
+    "zh": "初次飞行 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "small-scale adventurous discovery without epic bombast",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 128,
+  "key": "",
+  "instruments": [
+    "staccato strings",
+    "French horn",
+    "timpani",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for small-scale adventurous discovery without epic bombast. Instruments: staccato strings, French horn, timpani, harp. 128 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and elegant classical-style piece featuring a string ensemble. It begins with a playful pizzicato melody, gradually building in complexity and energy with arco passages and dynamic shifts. The arrangement is sophisticated and engaging, evoking a whimsical yet refined atmosphere.",
+    "zh": "一首活泼优雅的古典风格乐曲，由弦乐合奏呈现。它以俏皮的拨弦旋律开场，通过弓弦乐段和动态变化逐渐增强复杂性和能量。编曲精致引人入胜，营造出一种异想天开而又不失精致的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "small-scale adventurous discovery without epic bombast"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:20:24.954287+00:00",
+  "generation": {
+    "id": "2a45ceae-3649-4b62-8345-f5cbbf1c9e0a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:19:45.688068+00:00",
+    "completedAt": "2026-09-22T09:20:24.954287+00:00",
+    "interactionId": "M0iyaueIFruL694P-9X7wAk",
+    "sha256": "05a0f87684f428e37361ebae4f03b45c6e6b5bae49a62743ee88dc69677028ee"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical-style piece featuring a string ensemble. It begins with a playful pizzicato melody, gradually building in complexity and energy with arco passages and dynamic shifts. The arrangement is sophisticated and engaging, evoking a whimsical yet refined atmosphere.",
+      "zh": "一首活泼优雅的古典风格乐曲，由弦乐合奏呈现。它以俏皮的拨弦旋律开场，通过弓弦乐段和动态变化逐渐增强复杂性和能量。编曲精致引人入胜，营造出一种异想天开而又不失精致的氛围。"
+    },
+    "instruments": [
+      "Strings",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Pizzicato"
+    ],
+    "moods": [
+      "Playful",
+      "Elegant",
+      "Whimsical",
+      "Lighthearted",
+      "Sophisticated",
+      "Lively",
+      "Adventurous"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear instrumentation, engaging melody, and dynamic arrangement suitable for various media applications requiring a sophisticated and playful classical feel.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a distinct, playful pizzicato string melody. It concludes with a definitive, short, final string chord, providing a clear and intentional ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:53.045863+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "13436655f207409efb7bcdc1746f4e39384189286e8b240ef930fadfbe40d38e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 56.084833,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical piece, featuring a string ensemble with a clear, engaging melody and rich harmonies. The composition has a sophisticated yet playful character, reminiscent of chamber music.",
+      "zh": "一首活泼优雅的古典乐曲，由弦乐合奏团演奏，旋律清晰动听，和声丰富。作品具有精致而俏皮的特点，让人联想到室内乐。"
+    },
+    "instruments": [
+      "strings",
+      "violin",
+      "viola",
+      "cello",
+      "double bass"
+    ],
+    "moods": [
+      "elegant",
+      "lively",
+      "playful",
+      "sophisticated",
+      "classical",
+      "whimsical"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:43.606449+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 16.084833000000003,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-orchestral-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-orchestral-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-orchestral-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "13436655f207409efb7bcdc1746f4e39384189286e8b240ef930fadfbe40d38e",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "05a0f87684f428e37361ebae4f03b45c6e6b5bae49a62743ee88dc69677028ee",
+      "bytes": 1353704,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "55beae37ed3bc6d8af1ebfb0fe425a892ba8d8b3b5b95db9e2ef71ec69ac071c",
+      "bytes": 2798,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.849070+00:00"
+}

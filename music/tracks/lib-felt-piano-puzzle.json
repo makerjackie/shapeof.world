@@ -1,0 +1,98 @@
+{
+  "id": "lib-felt-piano-puzzle",
+  "code": "LIB-01-07",
+  "title": {
+    "en": "Clues — Felt Piano",
+    "zh": "线索 · 毡音钢琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "felt-piano"
+  ],
+  "energy": 2,
+  "bpm": 68,
+  "key": "C lydian",
+  "instruments": [
+    "felt piano",
+    "soft cello"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second neoclassical felt piano instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: felt piano, soft cello. Style: spacious broken chords, intimate close room. Tempo approximately 68 BPM; C lydian. Main idea: an ascending fourth answered by a stepwise descent. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "felt-piano"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A gentle and melancholic piano melody is accompanied by a lush string section, creating a reflective and serene atmosphere. The piece features a slow tempo and a rich, harmonious arrangement.",
+    "zh": "一段轻柔而忧郁的钢琴旋律，伴随着华丽的弦乐部分，营造出一种沉思而宁静的氛围。这首曲子节奏缓慢，编排丰富和谐。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 84.689,
+  "generatedAt": "2026-09-09T07:40:40.085740+00:00",
+  "generation": {
+    "id": "e43301b1-5a9f-4336-a08e-a1b8c39871f3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:39:50.020043+00:00",
+    "completedAt": "2026-09-09T07:40:40.085740+00:00",
+    "interactionId": "Rw2has29Ef6WjMwPtfeJmQQ",
+    "sha256": "a8c63e9d0373c3cbc720b059d841f0ecd2bdf39e6f19d6497c7ffc20020b8b9b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic piano melody is accompanied by a lush string section, creating a reflective and serene atmosphere. The piece features a slow tempo and a rich, harmonious arrangement.",
+      "zh": "一段轻柔而忧郁的钢琴旋律，伴随着华丽的弦乐部分，营造出一种沉思而宁静的氛围。这首曲子节奏缓慢，编排丰富和谐。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Serene",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "The audio is clean, well-produced, and free of defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:40:51.039537+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-felt-piano-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:42:07.045220+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

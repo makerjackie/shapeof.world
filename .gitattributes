@@ -1,0 +1,3 @@
+# Exported JavaScript includes upstream GLSL strings. Preserve their bytes;
+# whitespace checks apply to source files, not these hashed build artifacts.
+public/vendor/**/*.js -whitespace linguist-generated=true

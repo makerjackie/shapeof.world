@@ -1,0 +1,61 @@
+{
+  "id": "ordinary-constellation",
+  "code": "GLO-A01",
+  "title": {
+    "en": "Ordinary Constellation",
+    "zh": "寻常星座"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "moods": [
+    "quiet",
+    "clear",
+    "nocturnal",
+    "unhurried"
+  ],
+  "topics": [
+    "atlas",
+    "browsing",
+    "everyday-knowledge"
+  ],
+  "energy": 1,
+  "bpm": 60,
+  "key": "G Mixolydian",
+  "instruments": [
+    "rhodes piano",
+    "airy pads",
+    "sparse harp",
+    "soft analog bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.062,
+  "prompt": "Create a 2 minute 30 second instrumental nocturnal ambient piece for quietly browsing a map of knowledge. Around 60 BPM, G Mixolydian. Soft Rhodes piano, airy analog pads, a few harp harmonics and a warm sub that barely moves. The mood is desk-lamp calm: many small facts belonging to one sky, not an epic voyage. Spacious, low-dynamics, loop-friendly. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No trailer percussion, no brass, no arpeggiator fireworks.\n\n[00:00–00:30] Rhodes voicings alone, slow and slightly dusty, with a faint room tone.\n[00:30–01:10] Airy pads bloom under the Rhodes; harp harmonics mark distant points like faint stars.\n[01:10–01:55] Soft analog bass holds a pedal. Harmony tilts once toward the Mixolydian seventh, then settles.\n[01:55–02:30] Thin back to Rhodes and a single pad so a loop into the opening feels natural.\n",
+  "recommendedWorldIds": [
+    "formula-bloom"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:34:26Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ordinary-constellation/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ordinary-constellation/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ordinary-constellation/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:51.706363+00:00",
+  "generation": {
+    "id": "a3753cca-c792-4b66-b250-64d904bb7ce1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:33:36Z",
+    "completedAt": "2026-08-25T10:34:26Z",
+    "durationMs": 50000,
+    "interactionId": "gm-NavznBNn1jMwPlcOF0Qw",
+    "clientRequestId": "d41ec6ac-55fd-4939-ae91-1a9a4795b8e4",
+    "synthid": true,
+    "c2pa": "urn:c2pa:87bca271-35cf-ded3-2e74-4457e07a101f",
+    "sha256": "e3e4749f391fa1893aad3178265945c33b9cf8fcb458c5e362641b7f79b084b8"
+  }
+}

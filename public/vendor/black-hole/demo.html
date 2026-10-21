@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'">
 <!--
  * Copyright (c) 2020 Eric Bruneton
  * All rights reserved.
@@ -254,7 +255,7 @@ html, body {
   height: 12px;
   background: #00F;
   box-shadow: -100vw 0 0 100vw #00F;
-  box-sizing: border-box;     
+  box-sizing: border-box;
 }
 
 .sp-slider-container input[type="range"][disabled] {
@@ -282,7 +283,7 @@ html, body {
 
 .sp-target-container {
   width: 200px;
-  margin: 4px 0;        
+  margin: 4px 0;
   line-height: 0;
 }
 
@@ -317,7 +318,7 @@ html, body {
 
 .sp-play-container {
   width: 192px;
-  margin: 4px 0;        
+  margin: 4px 0;
   line-height: 0;
 }
 
@@ -415,8 +416,8 @@ class QuantizedValue {
   getDefaultIndex() { return this.defaultIndex; }
   getIndex() { return this.index; }
   getValue() { return this.values[this.index]; }
-  setIndex(index) { 
-    this.index = Math.max(0, Math.min(index, this.values.length - 1)); 
+  setIndex(index) {
+    this.index = Math.max(0, Math.min(index, this.values.length - 1));
     this.model.notifyListeners();
   }
   setValue(value) {
@@ -483,27 +484,27 @@ const vectorMatrixProduct = function(v, m) {
 
 class Model {
   constructor() {
-    this.cameraTarget = 
+    this.cameraTarget =
         new QuantizedValue(this, (x) => 4 * x, 0, 4);
-    this.cameraYaw = 
+    this.cameraYaw =
         new QuantizedValue(this, (x) => 2 * Math.PI * x, 0, 36000);
     this.cameraPitch =
         new QuantizedValue(this, (x) => Math.PI * (x - 0.5), 9000, 18000);
-    this.exposure = 
+    this.exposure =
         new QuantizedValue(this, (x) => Math.pow(10, 3 * x - 3), 500);
-    this.bloom = 
+    this.bloom =
         new QuantizedValue(this, (x) => x, 500);
     this.highDefinition =
         new BooleanValue(this, false);
     this.highContrast =
         new BooleanValue(this, false);
-    this.startRadius = 
+    this.startRadius =
         new QuantizedValue(this, (x) => Math.max(1 + 39 * x * x, 1.01), 940);
-    this.startDirection = 
+    this.startDirection =
         new QuantizedValue(this, (x) => Math.PI * (x - 0.5), 1800, 1800);
-    this.startSpeed = 
+    this.startSpeed =
         new QuantizedValue(this, (x) => Math.min(x * x, 0.99), 347);
-    this.orbitInclination = 
+    this.orbitInclination =
         new QuantizedValue(this, (x) => Math.PI * (x - 0.5), 970, 1799);
     this.lensing =
         new BooleanValue(this, true);
@@ -511,23 +512,23 @@ class Model {
         new BooleanValue(this, true);
     this.grid =
         new BooleanValue(this, false);
-    this.blackHoleMass = 
+    this.blackHoleMass =
         new QuantizedValue(this, (x) => 10 * Math.pow(10, 6 * x), 384);
-    this.discDensity = 
+    this.discDensity =
         new QuantizedValue(this, (x) => 100 * Math.pow(x, 10), 500);
     this.discOpacity =
         new QuantizedValue(this, (x) => x, 300);
-    this.discTemperature = 
+    this.discTemperature =
         new QuantizedValue(this, (x) => 1000 * Math.pow(10, x), 430);
     this.rocketDistance =
         new QuantizedValue(this, (x) => 30 + 50 * x, 500);
     this.rocket =
         new BooleanValue(this, false);
-    this.starsYaw = 
+    this.starsYaw =
         new QuantizedValue(this, (x) => 2 * Math.PI * (x - 0.5), 1800, 3600);
-    this.starsPitch = 
+    this.starsPitch =
         new QuantizedValue(this, (x) => Math.PI * (x - 0.5), 900, 1800);
-    this.starsRoll = 
+    this.starsRoll =
         new QuantizedValue(this, (x) => 2 * Math.PI * (x - 0.5), 1800, 3600);
     this.stars =
         new BooleanValue(this, true);
@@ -555,7 +556,7 @@ class Model {
     // The current value of the Schwarzschild's phi coordinate of the camera (in
     // rotated coordinates such that its orbit is in the equatorial plane).
     this.phi = undefined;
-    // The Lorentz transformation matrix specifying the current camera 
+    // The Lorentz transformation matrix specifying the current camera
     // orientation and velocity.
     this.lorentz = undefined;
     // The camera position, in (pseudo-)Cartesian coordinates.
@@ -619,7 +620,7 @@ class Model {
     let u = 1 / this.r;
     const e = this.e;
     const l = this.l;
-    const dtOverDtau = 
+    const dtOverDtau =
         this.state == State.PLAYING ? e / (1 - u) : 1 / Math.sqrt(1 - u);
     this.t += dtOverDtau * dTau;
     this.localElapsedTimeSeconds += dTauSeconds;
@@ -743,9 +744,9 @@ class Model {
       [0, 0, ca, -sa],
       [0, 0, sa,  ca]];
 
-    // Compute the 4-velocity of the camera in the *rotated* reference frame of 
+    // Compute the 4-velocity of the camera in the *rotated* reference frame of
     // a STATIC observer at this location.
-    const k_s = 
+    const k_s =
         [k[0] * Math.sqrt(1 - u), k[1] / Math.sqrt(1 - u), k[2] / u, k[3] / u];
     // Compute the speed vector of the camera in the *rotated* reference frame
     // of a STATIC observer at this location.
@@ -800,7 +801,7 @@ class Model {
         [0,      0, -1,     0],
         [0,  cosRy,  0, sinRy]];
     // The final Lorentz transform is the product of the 3 above matrices.
-    this.rocketLorentz = 
+    this.rocketLorentz =
         matrixProduct(rocketRot, matrixProduct(boost, orbitRot));
   }
 
@@ -1083,7 +1084,7 @@ const DOWNSAMPLE_SHADER =
   uniform sampler2D source;
   uniform vec2 source_delta_uv;
   layout(location=0) out vec4 frag_color;
-  void main() { 
+  void main() {
     vec2 ij = floor(gl_FragCoord.xy);
     vec2 source_ij = ij * 2.0 - vec2(1.5);
     vec2 source_uv = source_ij * source_delta_uv;
@@ -1106,7 +1107,7 @@ const BLOOM_SHADER =
   uniform vec2 source_delta_uv;
   uniform vec3 source_samples_uvw[SIZE];
   layout(location=0) out vec4 frag_color;
-  void main() { 
+  void main() {
     vec2 source_uv = (gl_FragCoord.xy + vec2(1.0)) * source_delta_uv;
     vec3 color = vec3(0.0);
     for (int i = 0; i < SIZE; ++i) {
@@ -1157,7 +1158,7 @@ const RENDER_SHADER =
   vec3 toneMap(vec3 color) {
     return pow(vec3(1.0) - exp(-color), vec3(1.0 / 2.2));
   }
-  
+
   // ACES tone map, see
   // https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
   vec3 toneMapACES(vec3 color) {
@@ -1223,59 +1224,59 @@ class Bloom {
     gl.bufferData(gl.ARRAY_BUFFER,
        new Float32Array([-1, -1, +1, -1, -1, +1, +1, +1]), gl.STATIC_DRAW);
 
-    const vertexShader = 
+    const vertexShader =
         createShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
 
     this.downsampleProgram = gl.createProgram();
     gl.attachShader(this.downsampleProgram, vertexShader);
-    gl.attachShader(this.downsampleProgram, 
+    gl.attachShader(this.downsampleProgram,
         createShader(gl, gl.FRAGMENT_SHADER, DOWNSAMPLE_SHADER));
     gl.linkProgram(this.downsampleProgram);
     gl.useProgram(this.downsampleProgram);
     gl.uniform1i(gl.getUniformLocation(this.downsampleProgram, 'source'), 0);
-    this.downsampleProgram.sourceDeltaUvUniform = 
+    this.downsampleProgram.sourceDeltaUvUniform =
         gl.getUniformLocation(this.downsampleProgram, 'source_delta_uv');
 
     this.bloomProgram = gl.createProgram();
     gl.attachShader(this.bloomProgram, vertexShader);
-    gl.attachShader(this.bloomProgram, 
-        createShader(gl, gl.FRAGMENT_SHADER, 
+    gl.attachShader(this.bloomProgram,
+        createShader(gl, gl.FRAGMENT_SHADER,
             BLOOM_SHADER.replace(/SIZE/g, 25)));
     gl.linkProgram(this.bloomProgram);
     gl.useProgram(this.bloomProgram);
     gl.uniform1i(gl.getUniformLocation(this.bloomProgram, 'source'), 0);
-    this.bloomProgram.sourceDeltaUvUniform = 
+    this.bloomProgram.sourceDeltaUvUniform =
         gl.getUniformLocation(this.bloomProgram, 'source_delta_uv');
 
     this.upsampleProgram = gl.createProgram();
     gl.attachShader(this.upsampleProgram, vertexShader);
-    gl.attachShader(this.upsampleProgram, 
+    gl.attachShader(this.upsampleProgram,
         createShader(gl, gl.FRAGMENT_SHADER, UPSAMPLE_SHADER));
     gl.linkProgram(this.upsampleProgram);
     gl.useProgram(this.upsampleProgram);
     gl.uniform1i(gl.getUniformLocation(this.upsampleProgram, 'source'), 0);
-    this.upsampleProgram.sourceDeltaUvUniform = 
+    this.upsampleProgram.sourceDeltaUvUniform =
         gl.getUniformLocation(this.upsampleProgram, 'source_delta_uv');
 
     this.renderProgram = gl.createProgram();
     gl.attachShader(this.renderProgram, vertexShader);
-    gl.attachShader(this.renderProgram, 
-        createShader(gl, gl.FRAGMENT_SHADER, 
+    gl.attachShader(this.renderProgram,
+        createShader(gl, gl.FRAGMENT_SHADER,
             RENDER_SHADER.replace(/SIZE/g, 25)));
     gl.linkProgram(this.renderProgram);
     gl.useProgram(this.renderProgram);
     gl.uniform1i(gl.getUniformLocation(this.renderProgram, 'source'), 0);
     gl.uniform1i(gl.getUniformLocation(this.renderProgram, 'bloom'), 1);
-    this.renderProgram.intensityUniform = 
+    this.renderProgram.intensityUniform =
         gl.getUniformLocation(this.renderProgram, 'intensity');
-    this.renderProgram.exposureUniform = 
+    this.renderProgram.exposureUniform =
         gl.getUniformLocation(this.renderProgram, 'exposure');
-    this.renderProgram.highContrastUniform = 
+    this.renderProgram.highContrastUniform =
         gl.getUniformLocation(this.renderProgram, 'high_contrast');
-    this.renderProgram.sourceDeltaUvUniform = 
+    this.renderProgram.sourceDeltaUvUniform =
         gl.getUniformLocation(this.renderProgram, 'source_delta_uv');
-    this.renderProgram.bloomDeltaUvUniform = 
-        gl.getUniformLocation(this.renderProgram, 'bloom_delta_uv'); 
+    this.renderProgram.bloomDeltaUvUniform =
+        gl.getUniformLocation(this.renderProgram, 'bloom_delta_uv');
 
     this.numLevels = 0;
     this.mipmapTextures = [];
@@ -1303,13 +1304,13 @@ class Bloom {
       const mipmapFbo = gl.createFramebuffer();
       this.mipmapFbos.push(mipmapFbo);
       gl.bindFramebuffer(gl.FRAMEBUFFER, mipmapFbo);
-      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, 
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
           gl.TEXTURE_2D, this.mipmapTextures[i], 0);
       if (i > 0) {
         const filterFbo = gl.createFramebuffer();
         this.filterFbos.push(filterFbo);
         gl.bindFramebuffer(gl.FRAMEBUFFER, filterFbo);
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, 
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
             gl.TEXTURE_2D, this.filterTextures[i], 0);
       } else {
         this.depthBuffer = gl.createRenderbuffer();
@@ -1338,7 +1339,7 @@ class Bloom {
     while (h > 2 && level < MAX_LEVELS) {
       gl.bindTexture(gl.TEXTURE_2D, this.mipmapTextures[level]);
       gl.texImage2D(
-          gl.TEXTURE_2D, 0, gl.RGBA16F, w + 2, h + 2, 0, gl.RGBA, gl.FLOAT, 
+          gl.TEXTURE_2D, 0, gl.RGBA16F, w + 2, h + 2, 0, gl.RGBA, gl.FLOAT,
           null);
       this.mipmapTextures[level].width = w + 2;
       this.mipmapTextures[level].height = h + 2;
@@ -1363,7 +1364,7 @@ class Bloom {
     let nearest_size = BLOOM_FILTERS[nearest_size_index];
     for (let i = 2; i < BLOOM_FILTERS.length; i += 2) {
       const size = BLOOM_FILTERS[i]
-      if (Math.abs(BLOOM_FILTERS[i] - height) < 
+      if (Math.abs(BLOOM_FILTERS[i] - height) <
           Math.abs(nearest_size - height)) {
         nearest_size_index = i;
         nearest_size = BLOOM_FILTERS[i];
@@ -1379,7 +1380,7 @@ class Bloom {
         const iy = Math.abs(y);
         for (let x = -2; x <= 2; ++x) {
           const ix = Math.abs(x);
-          const index = 
+          const index =
               ix < iy ? (iy * (iy + 1)) / 2 + ix : (ix * (ix + 1)) / 2 + iy;
           const w = filters[i][index];
           bloomFilter.push([x / width, y / height, w]);
@@ -1392,7 +1393,7 @@ class Bloom {
   begin() {
     const gl = this.gl;
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.mipmapFbos[0]);
-    gl.viewport(1, 1, this.mipmapTextures[0].width - 2, 
+    gl.viewport(1, 1, this.mipmapTextures[0].width - 2,
         this.mipmapTextures[0].height - 2);
   }
 
@@ -1407,7 +1408,7 @@ class Bloom {
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.mipmapFbos[level]);
       gl.viewport(1, 1, targetTexture.width - 2, targetTexture.height - 2);
       gl.bindTexture(gl.TEXTURE_2D, this.mipmapTextures[level - 1]);
-      gl.uniform2f(program.sourceDeltaUvUniform, 
+      gl.uniform2f(program.sourceDeltaUvUniform,
           1.0 / this.mipmapTextures[level - 1].width,
           1.0 / this.mipmapTextures[level - 1].height);
       this.drawQuad(program);
@@ -1420,13 +1421,13 @@ class Bloom {
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.filterFbos[level]);
       gl.viewport(0, 0, targetTexture.width, targetTexture.height);
       gl.bindTexture(gl.TEXTURE_2D, this.mipmapTextures[level]);
-      gl.uniform2f(program.sourceDeltaUvUniform, 
+      gl.uniform2f(program.sourceDeltaUvUniform,
           1.0 / this.mipmapTextures[level].width,
           1.0 / this.mipmapTextures[level].height);
       for (let i = 0; i < 25; ++i) {
         gl.uniform3f(gl.getUniformLocation(program, `source_samples_uvw[${i}]`),
             this.bloomFilters[level][i][0],
-            this.bloomFilters[level][i][1], 
+            this.bloomFilters[level][i][1],
             this.bloomFilters[level][i][2]);
       }
       this.drawQuad(program);
@@ -1443,7 +1444,7 @@ class Bloom {
       gl.bindFramebuffer(gl.FRAMEBUFFER, this.filterFbos[level]);
       gl.viewport(0, 0, targetTexture.width, targetTexture.height);
       gl.bindTexture(gl.TEXTURE_2D, this.filterTextures[level + 1]);
-      gl.uniform2f(program.sourceDeltaUvUniform, 
+      gl.uniform2f(program.sourceDeltaUvUniform,
           1.0 / this.filterTextures[level + 1].width,
           1.0 / this.filterTextures[level + 1].height);
       this.drawQuad(program);
@@ -1459,17 +1460,17 @@ class Bloom {
     gl.bindTexture(gl.TEXTURE_2D, this.mipmapTextures[0]);
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, this.filterTextures[1]);
-    gl.uniform2f(program.sourceDeltaUvUniform, 
-        1.0 / this.mipmapTextures[0].width, 
+    gl.uniform2f(program.sourceDeltaUvUniform,
+        1.0 / this.mipmapTextures[0].width,
         1.0 / this.mipmapTextures[0].height);
-    gl.uniform2f(program.bloomDeltaUvUniform, 
+    gl.uniform2f(program.bloomDeltaUvUniform,
         1.0 / this.filterTextures[1].width,
         1.0 / this.filterTextures[1].height);
     if (this.numLevels > 0) {
       for (let i = 0; i < 25; ++i) {
         gl.uniform3f(gl.getUniformLocation(program, `source_samples_uvw[${i}]`),
             this.bloomFilters[0][i][0],
-            this.bloomFilters[0][i][1], 
+            this.bloomFilters[0][i][1],
             this.bloomFilters[0][i][2]);
       }
     }
@@ -1531,7 +1532,7 @@ const loadRocketMesh = function(rocketDataUrl, callback) {
       vertices[i] =
           data.getFloat32(i * Float32Array.BYTES_PER_ELEMENT + offset, true);
     }
- 
+
     offset += numVertexFloats * Float32Array.BYTES_PER_ELEMENT;
     const indices = new Uint32Array(numIndices);
     for (let i = 0; i < numIndices; ++i) {
@@ -1553,7 +1554,7 @@ const loadRocketTexture = function(gl, textureUrl) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
                    gl.LINEAR_MIPMAP_LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameterf(gl.TEXTURE_2D, glExt.TEXTURE_MAX_ANISOTROPY_EXT, 
+  gl.texParameterf(gl.TEXTURE_2D, glExt.TEXTURE_MAX_ANISOTROPY_EXT,
                    gl.getParameter(glExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
   const image = new Image();
   image.addEventListener('load', function() {
@@ -1585,7 +1586,7 @@ class RocketManager {
     this.createRocketProgram(gl);
     this.createExhaustProgram(gl);
     this.createEnvMap(gl);
-    loadRocketMesh('rocket.dat', 
+    loadRocketMesh('rocket.dat',
         (vertices, indices) => this.createRocketBuffers(vertices, indices));
     this.createExhaustBuffers(gl);
   }
@@ -1601,19 +1602,19 @@ class RocketManager {
                      gl.LINEAR_MIPMAP_LINEAR);
     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     const glExt = gl.getExtension('EXT_texture_filter_anisotropic');
-    gl.texParameterf(gl.TEXTURE_CUBE_MAP, glExt.TEXTURE_MAX_ANISOTROPY_EXT, 
+    gl.texParameterf(gl.TEXTURE_CUBE_MAP, glExt.TEXTURE_MAX_ANISOTROPY_EXT,
                      gl.getParameter(glExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
 
     this.envMapFbo = gl.createFramebuffer();
     gl.bindFramebuffer(gl.FRAMEBUFFER, this.envMapFbo);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_POSITIVE_X, this.envMapTexture, 0);
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
   }
 
   createRocketProgram(gl) {
     const vertexShader = createShader(
-        gl, 
+        gl,
         gl.VERTEX_SHADER,
         `#version 300 es
         precision highp float;
@@ -1628,7 +1629,7 @@ class RocketManager {
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);    
+    gl.linkProgram(program);
 
     program.positionAttrib =
         gl.getAttribLocation(program, 'position_attribute');
@@ -1642,7 +1643,7 @@ class RocketManager {
         gl.getAttribLocation(program, 'ambient_occlusion_attribute');
     program.modelViewProjMatrix =
         gl.getUniformLocation(program, 'model_view_proj_matrix');
-    program.camera = 
+    program.camera =
         gl.getUniformLocation(program, 'camera');
     program.baseColorTexture =
         gl.getUniformLocation(program, 'base_color_texture');
@@ -1657,7 +1658,7 @@ class RocketManager {
 
   createExhaustProgram(gl) {
     const vertexShader = createShader(
-        gl, 
+        gl,
         gl.VERTEX_SHADER,
         `#version 300 es
         precision highp float;
@@ -1674,7 +1675,7 @@ class RocketManager {
     const program = gl.createProgram();
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);    
+    gl.linkProgram(program);
 
     program.positionAttrib =
         gl.getAttribLocation(program, 'position_attribute');
@@ -1697,7 +1698,7 @@ class RocketManager {
     this.rocketIndexBuffer = gl.createBuffer();
     this.rocketIndexBuffer.size = indices.length;
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.rocketIndexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);    
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
   }
 
   createExhaustBuffers(gl) {
@@ -1707,12 +1708,12 @@ class RocketManager {
     for (let i = 0; i <= NUM_CIRCUMFERENCE_SAMPLES; ++i) {
       const r = i == 0 ? 0 : EXHAUST_RADIUS;
       const alpha = (2 * Math.PI * i) / NUM_CIRCUMFERENCE_SAMPLES;
-      vertices[6 * i] = r * Math.cos(alpha); 
-      vertices[6 * i + 1] = r * Math.sin(alpha); 
+      vertices[6 * i] = r * Math.cos(alpha);
+      vertices[6 * i + 1] = r * Math.sin(alpha);
       vertices[6 * i + 2] = EXHAUST_Z_MIN;
-      vertices[6 * i + 3] = r * Math.cos(alpha); 
-      vertices[6 * i + 4] = r * Math.sin(alpha); 
-      vertices[6 * i + 5] = EXHAUST_Z_MAX;     
+      vertices[6 * i + 3] = r * Math.cos(alpha);
+      vertices[6 * i + 4] = r * Math.sin(alpha);
+      vertices[6 * i + 5] = EXHAUST_Z_MAX;
     }
 
     this.exhaustVertexBuffer = gl.createBuffer();
@@ -1734,11 +1735,11 @@ class RocketManager {
       indices[12 * i - 3] = 1;
       indices[12 * i - 2] = 2 * i + 1;
       indices[12 * i - 1] = 2 * j + 1;
-    }    
+    }
     this.exhaustIndexBuffer = gl.createBuffer();
     this.exhaustIndexBuffer.size = indices.length;
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.exhaustIndexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);    
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
   }
 
   renderEnvMap(program, quadVertexBuffer) {
@@ -1751,7 +1752,7 @@ class RocketManager {
     gl.viewport(0, 0, ENV_MAP_SIZE, ENV_MAP_SIZE);
 
     gl.useProgram(program);
-    gl.uniform3f(program.cameraSize, 
+    gl.uniform3f(program.cameraSize,
         ENV_MAP_SIZE / 2, ENV_MAP_SIZE / 2, ENV_MAP_SIZE / 2);
     gl.uniform3f(program.eTau,
         model.rocketTau[1], model.rocketTau[2], model.rocketTau[3]);
@@ -1760,7 +1761,7 @@ class RocketManager {
     gl.vertexAttribPointer(program.vertexAttrib, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(program.vertexAttrib);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_POSITIVE_X, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         -model.rocketD[1], -model.rocketD[2], -model.rocketD[3]);
@@ -1770,7 +1771,7 @@ class RocketManager {
         -model.rocketW[1], -model.rocketW[2], -model.rocketW[3]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_NEGATIVE_X, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         model.rocketD[1], model.rocketD[2], model.rocketD[3]);
@@ -1780,7 +1781,7 @@ class RocketManager {
         model.rocketW[1], model.rocketW[2], model.rocketW[3]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_POSITIVE_Y, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         model.rocketW[1], model.rocketW[2], model.rocketW[3]);
@@ -1790,7 +1791,7 @@ class RocketManager {
         -model.rocketH[1], -model.rocketH[2], -model.rocketH[3]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         model.rocketW[1], model.rocketW[2], model.rocketW[3]);
@@ -1800,7 +1801,7 @@ class RocketManager {
         model.rocketH[1], model.rocketH[2], model.rocketH[3]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_POSITIVE_Z, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         model.rocketW[1], model.rocketW[2], model.rocketW[3]);
@@ -1810,7 +1811,7 @@ class RocketManager {
         -model.rocketD[1], -model.rocketD[2], -model.rocketD[3]);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,   
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0,
         gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, this.envMapTexture, 0);
     gl.uniform3f(program.eW,
         -model.rocketW[1], -model.rocketW[2], -model.rocketW[3]);
@@ -1897,7 +1898,7 @@ class RocketManager {
     gl.useProgram(program);
 
     const intensity = 0.1 * Math.pow(gForce, 0.75);
-    gl.uniform3f(program.intensity, 
+    gl.uniform3f(program.intensity,
         46 / 255 * intensity, 176 / 255 * intensity, intensity);
 
     time *= 100;
@@ -1964,7 +1965,7 @@ class RocketManager {
       [    0, 0, -1, 0]
     ];
 
-    const modelViewProjMatrix = 
+    const modelViewProjMatrix =
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (let i = 0; i < 4; ++i) {
       for (let j = 0; j < 4; ++j) {
@@ -2060,7 +2061,7 @@ const loadNoiseTexture = function(gl, glExt, textureUrl) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
                    gl.LINEAR_MIPMAP_LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-  gl.texParameterf(gl.TEXTURE_2D, glExt.TEXTURE_MAX_ANISOTROPY_EXT, 
+  gl.texParameterf(gl.TEXTURE_2D, glExt.TEXTURE_MAX_ANISOTROPY_EXT,
                    gl.getParameter(glExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
   const image = new Image();
   image.addEventListener('load', function() {
@@ -2100,7 +2101,7 @@ class TextureManager {
     this.loadStarTextures(ext);
     this.noiseTexture = loadNoiseTexture(gl, ext, 'noise_texture.png');
 
-    document.body.addEventListener('keypress', (e) => this.onKeyPress(e)); 
+    document.body.addEventListener('keypress', (e) => this.onKeyPress(e));
   }
 
   loadTextures(ext) {
@@ -2110,7 +2111,7 @@ class TextureManager {
       this.rayDeflectionTexture = createTexture(gl, gl.TEXTURE_2D);
       this.rayDeflectionTexture.width = data[0];
       this.rayDeflectionTexture.height = data[1];
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RG32F, data[0], data[1], 0, 
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RG32F, data[0], data[1], 0,
                     gl.RG, gl.FLOAT, data.slice(2));
       this.markCoreTextureLoaded();
     });
@@ -2131,7 +2132,7 @@ class TextureManager {
     loadTextureData('doppler.dat', (data) => {
       gl.activeTexture(gl.TEXTURE0);
       gl.bindTexture(gl.TEXTURE_3D, this.dopplerTexture);
-      gl.texImage3D(gl.TEXTURE_3D, 0, gl.RGB32F, 64, 32, 64, 0, 
+      gl.texImage3D(gl.TEXTURE_3D, 0, gl.RGB32F, 64, 32, 64, 0,
                     gl.RGB, gl.FLOAT, data);
       this.markCoreTextureLoaded();
     });
@@ -2149,10 +2150,10 @@ class TextureManager {
 
     this.gridTexture = createTexture(gl, gl.TEXTURE_CUBE_MAP);
     gl.texStorage2D(gl.TEXTURE_CUBE_MAP, 10, gl.R8, 512, 512);
-    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, 
+    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER,
                      gl.LINEAR_MIPMAP_LINEAR);
-    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);   
-    gl.texParameterf(gl.TEXTURE_CUBE_MAP, ext.TEXTURE_MAX_ANISOTROPY_EXT, 
+    gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameterf(gl.TEXTURE_CUBE_MAP, ext.TEXTURE_MAX_ANISOTROPY_EXT,
                      gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
     const gridData = new Uint8Array(512 * 512);
     for (let j = 0; j < 512; ++j) {
@@ -2163,7 +2164,7 @@ class TextureManager {
       }
     }
     for (let target of cubeMapTargets(gl)) {
-      gl.texSubImage2D(target, 0, 0, 0, 512, 512, 
+      gl.texSubImage2D(target, 0, 0, 0, 512, 512,
                        gl.RED, gl.UNSIGNED_BYTE, gridData, 0);
     }
     gl.generateMipmap(gl.TEXTURE_CUBE_MAP);
@@ -2204,11 +2205,11 @@ class TextureManager {
     gl.texParameterf(gl.TEXTURE_CUBE_MAP, glExt.TEXTURE_MAX_ANISOTROPY_EXT,
                      gl.getParameter(glExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT));
 
-    const base = 'gaia';
+    const base = 'sky';
     const prefixes = ['pos-x', 'neg-x', 'pos-y', 'neg-y', 'pos-z', 'neg-z'];
     const targets = cubeMapTargets(gl);
     // OneWorld intentionally keeps only the two lowest sky-map levels. The
-    // upstream progressive demo can fetch 433 MB across 516 Gaia tiles; these
+    // upstream progressive demo uses hundreds of sky tiles; these
     // 12 local tiles preserve the full relativistic shader within an 8 MB
     // first-session budget.
     for (let l = 3; l <= 4; ++l) {
@@ -2301,7 +2302,7 @@ class TextureManager {
     this.readyPosted = true;
     this.loadingPanel.classList.add('cv-loaded');
     window.parent.postMessage({type: 'oneworld:black-hole:ready'}, window.location.origin);
-  } 
+  }
 
   getMinLoadedStarTextureLod() {
     if (this.numTilesLoadedPerLevel[0] == 384) {
@@ -2407,7 +2408,7 @@ class ShaderManager {
       return this.program;
     }
 
-    const header = 
+    const header =
         `#version 300 es
         precision highp float;
         #define IN(x) const in x
@@ -2415,13 +2416,13 @@ class ShaderManager {
         ${options}
         const float pi = ${Math.PI};
         const float rad = 1.0;
-        const int RAY_DEFLECTION_TEXTURE_WIDTH = 
+        const int RAY_DEFLECTION_TEXTURE_WIDTH =
             ${this.textureManager.rayDeflectionTexture.width};
         const int RAY_DEFLECTION_TEXTURE_HEIGHT =
             ${this.textureManager.rayDeflectionTexture.height};
-        const int RAY_INVERSE_RADIUS_TEXTURE_WIDTH = 
+        const int RAY_INVERSE_RADIUS_TEXTURE_WIDTH =
             ${this.textureManager.rayInverseRadiusTexture.width};
-        const int RAY_INVERSE_RADIUS_TEXTURE_HEIGHT = 
+        const int RAY_INVERSE_RADIUS_TEXTURE_HEIGHT =
             ${this.textureManager.rayInverseRadiusTexture.height};
         const float STARS_CUBE_MAP_SIZE =
             float(${this.model.grid.getValue() ? 128 : 2048});
@@ -2431,7 +2432,7 @@ class ShaderManager {
 
     const gl = this.gl;
     const vertexShader = createShader(
-        gl, 
+        gl,
         gl.VERTEX_SHADER,
         `#version 300 es
         precision highp float;
@@ -2441,7 +2442,7 @@ class ShaderManager {
         gl,
         gl.FRAGMENT_SHADER,
         `${header}
-        ${generateDiscParticleParams()} 
+        ${generateDiscParticleParams()}
         ${document.querySelector("#black_hole_shader").innerHTML}
         ${document.querySelector("#fragment_shader").innerHTML}`);
 
@@ -2449,7 +2450,7 @@ class ShaderManager {
     gl.attachShader(program, vertexShader);
     gl.attachShader(program, fragmentShader);
     gl.linkProgram(program);
-    
+
     program.vertexAttrib = gl.getAttribLocation(program, 'vertex');
     program.cameraSize =
         gl.getUniformLocation(program, 'camera_size');
@@ -2467,25 +2468,25 @@ class ShaderManager {
         gl.getUniformLocation(program, 'e_h');
     program.eD =
         gl.getUniformLocation(program, 'e_d');
-    program.rayDeflectionTexture = 
+    program.rayDeflectionTexture =
         gl.getUniformLocation(program, 'ray_deflection_texture');
-    program.rayInverseRadiusTexture = 
+    program.rayInverseRadiusTexture =
         gl.getUniformLocation(program, 'ray_inverse_radius_texture');
-    program.galaxyCubeTexture = 
+    program.galaxyCubeTexture =
         gl.getUniformLocation(program, 'galaxy_cube_texture');
-    program.starCubeTexture = 
+    program.starCubeTexture =
         gl.getUniformLocation(program, 'star_cube_texture');
-    program.starCubeTexture2 = 
+    program.starCubeTexture2 =
         gl.getUniformLocation(program, 'star_cube_texture2');
     program.starsOrientation =
         gl.getUniformLocation(program, 'stars_orientation');
-    program.minStarsLod = 
+    program.minStarsLod =
         gl.getUniformLocation(program, 'min_stars_lod');
-    program.blackBodyTexture = 
+    program.blackBodyTexture =
         gl.getUniformLocation(program, 'black_body_texture');
     program.dopplerTexture =
         gl.getUniformLocation(program, 'doppler_texture');
-    program.noiseTexture = 
+    program.noiseTexture =
         gl.getUniformLocation(program, 'noise_texture');
     program.discParams =
         gl.getUniformLocation(program, 'disc_params');
@@ -2579,7 +2580,7 @@ class CameraView {
         !this.gl.getExtension('EXT_texture_filter_anisotropic') ||
         !this.gl.getExtension('EXT_color_buffer_float') ||
         !this.gl.getExtension('EXT_float_blend')) {
-      this.errorPanel.innerHTML = 'Unfortunately your browser doesn\'t ' + 
+      this.errorPanel.innerHTML = 'Unfortunately your browser doesn\'t ' +
           'support WebGL 2 or the WebGL 2 extensions required for this demo.';
       this.errorPanel.classList.toggle('cv-hidden');
       return false;
@@ -2677,9 +2678,11 @@ class CameraView {
     }
 
     renderFallbackPose();
-    window.requestAnimationFrame(() => window.parent.postMessage(
+    // Send from this iframe's task: embedded WebKit can attribute a RAF
+    // callback's postMessage to the parent window. The host waits for paint.
+    window.parent.postMessage(
         {type: 'oneworld:black-hole:ready', fallback: true},
-        window.location.origin));
+        window.location.origin);
   }
 
   onRender() {
@@ -2692,7 +2695,7 @@ class CameraView {
       return;
     }
     if (this.devicePixelRatio != this.getDevicePixelRatio()) {
-      this.onResize();      
+      this.onResize();
     }
 
     const tauSeconds = Date.now() / 1000.0;
@@ -2702,9 +2705,9 @@ class CameraView {
     const tanFovY = Math.tan(this.model.fovY / 2);
     const focalLength = this.canvas.height / (2 * tanFovY);
 
-    const gl = this.gl; 
+    const gl = this.gl;
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, this.textureManager.rayDeflectionTexture);      
+    gl.bindTexture(gl.TEXTURE_2D, this.textureManager.rayDeflectionTexture);
 
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, this.textureManager.rayInverseRadiusTexture);
@@ -2735,12 +2738,12 @@ class CameraView {
     gl.bindTexture(gl.TEXTURE_2D, this.textureManager.noiseTexture);
 
     gl.useProgram(program);
-    gl.uniform3f(program.cameraSize, 
+    gl.uniform3f(program.cameraSize,
         this.canvas.width / 2, this.canvas.height / 2, focalLength);
-    gl.uniform4f(program.cameraPosition, 
+    gl.uniform4f(program.cameraPosition,
         this.model.t, this.model.r, this.model.worldTheta, this.model.worldPhi);
     gl.uniform3f(program.p, this.model.p[0], this.model.p[1], this.model.p[2]);
-    gl.uniform4f(program.kS, 
+    gl.uniform4f(program.kS,
         this.model.kS[0], this.model.kS[1], this.model.kS[2], this.model.kS[3]);
     gl.uniform3f(program.eTau,
         this.model.eTau[1], this.model.eTau[2], this.model.eTau[3]);
@@ -2751,19 +2754,19 @@ class CameraView {
     gl.uniform3f(program.eD,
         this.model.eD[1], this.model.eD[2], this.model.eD[3]);
     gl.uniform1i(program.rayDeflectionTexture, 0);
-    gl.uniform1i(program.rayInverseRadiusTexture, 1); 
+    gl.uniform1i(program.rayInverseRadiusTexture, 1);
     gl.uniform1i(program.galaxyCubeTexture, 2);
     gl.uniform1i(program.starCubeTexture, 3);
     gl.uniform1i(program.starCubeTexture2, 4);
-    gl.uniformMatrix3fv(program.starsOrientation, false, 
+    gl.uniformMatrix3fv(program.starsOrientation, false,
         this.model.starsMatrix);
     gl.uniform1f(program.minStarsLod, minLod);
     gl.uniform1i(program.blackBodyTexture, 5);
     gl.uniform1i(program.dopplerTexture, 6);
     gl.uniform1i(program.noiseTexture, 7);
-    gl.uniform3f(program.discParams, 
+    gl.uniform3f(program.discParams,
         this.model.discDensity.getValue(),
-        this.model.discOpacity.getValue(), 
+        this.model.discOpacity.getValue(),
         this.model.discTemperature.getValue());
 
     this.bloom.begin();
@@ -2799,7 +2802,7 @@ class CameraView {
       this.numFrames = 0;
     }
     if (time > this.lastFrameTime + 1000) {
-      if (this.numFrames <= 10 && this.model.stars.getValue() && 
+      if (this.numFrames <= 10 && this.model.stars.getValue() &&
           !this.errorPanelShown) {
         this.model.stars.setValue(false);
         // The host experience owns the UI. Fall back silently on slow devices
@@ -2978,7 +2981,7 @@ class Context3d {
   }
 
   clipTo(cameraPt, move) {
-    const t = (this.nearPlane - this.lastCameraPt[2]) / 
+    const t = (this.nearPlane - this.lastCameraPt[2]) /
         (cameraPt[2] - this.lastCameraPt[2]);
     const nearPlanePt = [
         this.lastCameraPt[0] + t * (cameraPt[0] - this.lastCameraPt[0]),
@@ -3029,7 +3032,7 @@ class OrbitPanel {
     for (let i = 0; i <= 8; ++i) {
       this.frustum.push(rootElement.querySelector(`#op_frustum${i}`));
     }
-    this.numberFormat = 
+    this.numberFormat =
         new Intl.NumberFormat('en-US', {maximumFractionDigits : 1});
 
     this.lastStartRadius = undefined;
@@ -3064,7 +3067,7 @@ class OrbitPanel {
     this.context.strokeStyle = '#AAA';
     this.context.beginPath();
     this.drawGrid(100, 12, this.model.orbitInclination.getValue());
-    this.context.stroke();    
+    this.context.stroke();
     this.drawAxes();
     this.drawDisc();
     this.drawOrbit();
@@ -3075,17 +3078,17 @@ class OrbitPanel {
     const radiusMeters = model.r * model.blackHoleRadiusMeters;
     this.blackHoleRadius.innerText =
         `${this.numberFormat.format(model.blackHoleRadiusMeters / 1000)}km`;
-    this.radius.innerText = 
+    this.radius.innerText =
         `${this.numberFormat.format(radiusMeters / 1000)}km`;
-    this.speed.innerText = 
+    this.speed.innerText =
         `${this.numberFormat.format(model.speedMetersPerSecond / 1000)}km/s`;
-    this.gforce.innerText = 
+    this.gforce.innerText =
         `${this.numberFormat.format(model.gForce / 9.80665)}g`;
-    this.localTime.innerText = 
+    this.localTime.innerText =
         `${model.localElapsedTimeSeconds.toFixed(2)}s`;
-    this.globalTime.innerText = 
+    this.globalTime.innerText =
         `${model.globalElapsedTimeSeconds.toFixed(2)}s`;
-    this.timeDilation.innerText = 
+    this.timeDilation.innerText =
         `${model.timeDilationFactor.toFixed(3)}`;
 
     this.drawDotAndFrustum();
@@ -3102,7 +3105,7 @@ class OrbitPanel {
     const screenPt = context3d.toScreenPt(context3d.toCameraPt(worldPt));
     this.dot.style.left = `${screenPt[0]}px`;
     this.dot.style.top = `${screenPt[1]}px`;
- 
+
     const tanFovY = Math.tan(model.fovY / 2);
     const focalLength = 1 / (2 * tanFovY);
     const aspectRatio = document.body.clientWidth / document.body.clientHeight;
@@ -3135,7 +3138,7 @@ class OrbitPanel {
     ];
     for (let i = 0; i < 4; ++i) {
       this.setLine(this.frustum[i], screenPt, frustumScreenPts[i]);
-      this.setLine(this.frustum[i + 4], frustumScreenPts[i], 
+      this.setLine(this.frustum[i + 4], frustumScreenPts[i],
           frustumScreenPts[(i + 1) % 4]);
     }
     this.setLine(this.frustum[8], screenPt, frustumScreenPts[4]);
@@ -3174,17 +3177,17 @@ class OrbitPanel {
     context.beginPath();
     context3d.moveTo(0, 0, 0);
     context3d.lineTo(40, 0, 0);
-    context.stroke(); 
+    context.stroke();
     context.strokeStyle = '#0F0';
     context.beginPath();
     context3d.moveTo(0, 0, 0);
     context3d.lineTo(0, 40, 0);
-    context.stroke(); 
+    context.stroke();
     context.strokeStyle = '#00F';
     context.beginPath();
     context3d.moveTo(0, 0, 0);
     context3d.lineTo(0, 0, 40);
-    context.stroke(); 
+    context.stroke();
   }
 
   drawDisc() {
@@ -3245,7 +3248,7 @@ class OrbitPanel {
         const y = r * Math.sin(phi);
         this.context3d.lineTo(ci * x, y, si * x);
         if (Math.abs(phi) > 5 * Math.PI && !dashes) {
-          context.stroke(); 
+          context.stroke();
           context.beginPath();
           this.context3d.moveTo(ci * x, y, si * x);
           context.setLineDash([5, 5]);
@@ -3253,7 +3256,7 @@ class OrbitPanel {
         }
       }
     }
-    context.stroke(); 
+    context.stroke();
     context.lineWidth = 1;
     context.setLineDash([]);
     context.shadowOffsetX = 0;
@@ -3316,7 +3319,7 @@ class Slider {
     this.slider.disabled = !enabled;
     this.slider.previousElementSibling.disabled = !enabled;
     this.slider.nextElementSibling.disabled = !enabled;
-  }  
+  }
   update(format) {
     this.slider.value = this.model.getIndex();
     this.value.innerText = format(this.model.getValue());
@@ -3384,27 +3387,27 @@ class SettingsPanel {
     this.cameraTarget = this.rootElement.querySelector('#sp_target_container');
     this.exposure =
         new Slider(rootElement, 'exposure', model.exposure);
-    this.bloom = 
+    this.bloom =
         new Slider(rootElement, 'bloom', model.bloom);
     this.highDefinition =
         new Checkbox(rootElement, 'high_definition', model.highDefinition);
     this.highContrast =
         new Checkbox(rootElement, 'high_contrast', model.highContrast);
-    this.startRadius = 
+    this.startRadius =
         new Slider(rootElement, 'start_radius', model.startRadius);
-    this.startDirection = 
+    this.startDirection =
         new Slider(rootElement, 'start_direction', model.startDirection);
-    this.startSpeed = 
+    this.startSpeed =
         new Slider(rootElement, 'start_speed', model.startSpeed);
-    this.orbitInclination = 
+    this.orbitInclination =
         new Slider(rootElement, 'orbit_inclination', model.orbitInclination);
     this.lensing =
         new Checkbox(rootElement, 'lensing', model.lensing);
-    this.doppler = 
+    this.doppler =
         new Checkbox(rootElement, 'doppler', model.doppler);
-    this.grid = 
+    this.grid =
         new Checkbox(rootElement, 'grid', model.grid);
-    this.blackHoleMass = 
+    this.blackHoleMass =
         new Slider(rootElement, 'black_hole_mass', model.blackHoleMass);
     this.discDensity =
         new Slider(rootElement, 'disc_density', model.discDensity);
@@ -3414,7 +3417,7 @@ class SettingsPanel {
         new Slider(rootElement, 'disc_temperature', model.discTemperature);
     this.rocketDistance =
         new Slider(rootElement, 'rocket_distance', model.rocketDistance);
-    this.rocket = 
+    this.rocket =
         new Checkbox(rootElement, 'rocket', model.rocket);
     this.starsYaw =
         new Slider(rootElement, 'stars_yaw', model.starsYaw);
@@ -3422,7 +3425,7 @@ class SettingsPanel {
         new Slider(rootElement, 'stars_pitch', model.starsPitch);
     this.starsRoll =
         new Slider(rootElement, 'stars_roll', model.starsRoll);
-    this.stars = 
+    this.stars =
         new Checkbox(rootElement, 'stars', model.stars);
     this.previousMouseX = undefined;
     this.previousMouseY = undefined;
@@ -3452,9 +3455,9 @@ class SettingsPanel {
   }
 
   onSettingsChange() {
-    this.cameraTarget.setAttribute('select', 
-        this.model.cameraYaw.getValue() == 0 && 
-        this.model.cameraPitch.getValue() == 0 ? 
+    this.cameraTarget.setAttribute('select',
+        this.model.cameraYaw.getValue() == 0 &&
+        this.model.cameraPitch.getValue() == 0 ?
             `${this.model.cameraTarget.getValue()}` : '');
     this.exposure.update((v) => `${(Math.log2(v * 1000)).toPrecision(3)}`);
     this.bloom.update((v) => `${(v * 100).toFixed(0)}%`);
@@ -3497,7 +3500,7 @@ class SettingsPanel {
       this.exposure.setValue(this.exposure.getValue() / 1.1);
     } else if (key == 'p') {
       this.model.setState(
-          this.model.state == State.PLAYING ? State.PAUSED : State.PLAYING); 
+          this.model.state == State.PLAYING ? State.PAUSED : State.PLAYING);
     } else if (key == 'd') {
       this.setCameraTarget(0);
     } else if (key == 'b') {
@@ -3538,8 +3541,8 @@ class SettingsPanel {
       const y = (this.previousMouseY - mouseY) / kScale;
       const qx = quaternionFromAxisAngle(0, 0, 1, -x);
       const qy = quaternionFromAxisAngle(0, 1, 0, y);
-      let q = quaternionFromEulerAngles(this.model.starsYaw.getValue(), 
-          this.model.starsPitch.getValue(), this.model.starsRoll.getValue());    
+      let q = quaternionFromEulerAngles(this.model.starsYaw.getValue(),
+          this.model.starsPitch.getValue(), this.model.starsRoll.getValue());
       q = quaternionProduct(q, qx);
       q = quaternionProduct(q, qy);
       const euler = quaternionToEulerAngles(q[0], q[1], q[2], q[3]);
@@ -3728,7 +3731,7 @@ Surface ComputeSurface() {
   vec3 color = texture(base_color_texture, uv).rgb;
   surface.albedo = mix(color * (1.0 - DIELECTRIC_F0), METAL_ALBEDO, metallic);
   surface.f0 = mix(vec3(DIELECTRIC_F0), color, metallic);
-  
+
   return surface;
 }
 
@@ -3760,7 +3763,7 @@ float MicroFacetDistribution(float alpha_sq, float n_dot_h) {
 }
 
 vec3 ImageBasedLighting(Surface surface, vec3 v) {
-  // Compute the lighting integral with N_Z * N_PHI samples of the light 
+  // Compute the lighting integral with N_Z * N_PHI samples of the light
   // direction l, all having the same solid angle OMEGA_SAMPLE. This is used for
   // the diffuse component, and for the specular component when the roughness is
   // "large".
@@ -4212,7 +4215,7 @@ vec3 StarTextureColor(vec3 dir, float lod, out vec2 sub_position);
 // - color of the stars in the footprint of the pixel in direction 'dir', times
 //   the given gravitational lensing amplification factor.
 vec3 StarColor(vec3 dir, float lensing_amplification_factor);
-// - noise function used in the default accretion disc shading function 
+// - noise function used in the default accretion disc shading function
 //   'DefaultDiscColor()'.
 float Noise(vec2 uv);
 // - color and opacity of the accretion disc at 'p', and at time 't', for the
@@ -4322,7 +4325,7 @@ vec3 BlackBodyColor(sampler2D black_body_texture, float temperature) {
 }
 
 
-// Returns the light emitted by the accretion disc at 'p', at time 'p_t', 
+// Returns the light emitted by the accretion disc at 'p', at time 'p_t',
 // shifted by the given Doppler factor. The 1D texture should contain the light
 // emitted by a black body at temperature T at texture coord log(T / 100) / 6.
 // The following constants must be provided by the user:
@@ -4480,26 +4483,13 @@ vec3 SceneColor(vec4 camera_position, vec3 p, vec4 k_s, vec3 e_tau, vec3 e_w,
       <div id="cv_error_panel" class="cv-error-panel cv-hidden">
       </div>
       <div id="cv_loading_panel" class="cv-loading-panel">
-        <span>正在装载时空与星光</span>
+        <span id="cv_loading_title">正在装载时空与星光</span>
         <div class="cv-loading-bar">
           <div id="cv_loading_bar" class="cv-loading-bar-value"></div>
         </div>
-        <span>基于真实相对论光线追踪</span>
+        <span id="cv_loading_detail">相对论光线模型与程序生成星空</span>
       </div>
-      <div class="cv-copyright">@2020 Eric Bruneton. 
-        <a href="https://github.com/ebruneton/black_hole_shader"
-           target="_blank">
-          GitHub project
-        </a>. Star data from 
-        <a href="https://www.cosmos.esa.int/web/gaia/dr2" 
-           target="_blank">
-          Gaia DR2
-        </a> and 
-        <a href="https://www.cosmos.esa.int/web/hipparcos/tycho-2" 
-           target="_blank">
-          Tycho 2
-        </a>
-      </div>
+
     </div>
     <div id="orbit_panel" class="op-panel op-hidden">
       <canvas id="canvas" width="400" height="400"></canvas>
@@ -4520,16 +4510,16 @@ vec3 SceneColor(vec4 camera_position, vec3 p, vec4 k_s, vec3 e_tau, vec3 e_w,
          </div>
          <div title="Distance of the observer from the black hole center, in kilometers
 (i.e. the Schwarzschild 'r' coordinate)">
-           Distance: 
+           Distance:
            <span id="op_radius"></span>
          </div>
          <div title="Speed of the observer, in kilometers per second
 (with respect to a static observer at the current location)">
-           Speed: 
+           Speed:
            <span id="op_speed"></span>
          </div>
          <div title="The g-force experienced by the observer">
-           G-force: 
+           G-force:
            <span id="op_gforce"></span>
          </div>
          <div title="Proper time of the observer, in seconds">
@@ -4537,7 +4527,7 @@ vec3 SceneColor(vec4 camera_position, vec3 p, vec4 k_s, vec3 e_tau, vec3 e_w,
            <span id="op_local_time"></span>
          </div>
          <div title="Time on Earth, in seconds">
-           Earth time: 
+           Earth time:
            <span id="op_global_time"></span>
          </div>
          <div title="Time dilation factor
@@ -4551,7 +4541,7 @@ vec3 SceneColor(vec4 camera_position, vec3 p, vec4 k_s, vec3 e_tau, vec3 e_w,
       <details open="true" class="sp-settings-container">
         <summary>Camera</summary>
 
-        <div class="sp-setting" 
+        <div class="sp-setting"
              title="Camera exposure, in stops
 (one stop = doubling or halving the amount of light you let in)
 
@@ -4577,7 +4567,7 @@ Shortcut keys: '+' / '-' to increase / decrease exposure.">
           <span id="sp_bloom_value" class="sp-value"></span>
         </div>
 
-        <div class="sp-setting" 
+        <div class="sp-setting"
              title="Enables a higher image resolution (decreases performance)"
              id="sp_high_definition_div">
           <label for="sp_high_definition">High Definition</label>
@@ -4613,7 +4603,7 @@ Shortcut key: 'r'">▸</button>
         <h3>Orbit</h3>
 
         <div class="sp-settings-container">
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Initial distance of the observer from the black hole center
 (i.e. the Schwarzschild 'r' coordinate, divided by the black hole radius)
 
@@ -4639,7 +4629,7 @@ Shortcut: use the mouse wheel to increase / decrease the initial distance">
             <span id="sp_start_direction_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Initial speed of the observer
 (with respect to a static observer, as a fraction of the speed of light)">
             <label>Initial speed</label>
@@ -4651,7 +4641,7 @@ Shortcut: use the mouse wheel to increase / decrease the initial distance">
             <span id="sp_start_speed_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Inclination of the observer's orbit plane
 (with respect to the accretion disc, in degrees)">
             <label>Inclination</label>
@@ -4670,11 +4660,11 @@ Shortcut: use the mouse wheel to increase / decrease the initial distance">
                       title="Play
 
 Shortcut key: 'p'">⏵</button>
-              <button id="sp_pause" type="button" class="sp-pause" 
+              <button id="sp_pause" type="button" class="sp-pause"
                       title="Pause
 
 Shortcut key: 'p'">⏸</button>
-              <button id="sp_stop" type="button" class="sp-stop" 
+              <button id="sp_stop" type="button" class="sp-stop"
                       title="Stop">⏹</button>
             </span>
           </div>
@@ -4684,7 +4674,7 @@ Shortcut key: 'p'">⏸</button>
       <details open="true" class="sp-settings-container">
         <summary>Physics</summary>
 
-        <div class="sp-setting" 
+        <div class="sp-setting"
              title="Enables the bending of light by the gravitational field">
           <label for="sp_lensing">Lensing</label>
           <input type="checkbox" id="sp_lensing">
@@ -4700,14 +4690,14 @@ Shortcut key: 'p'">⏸</button>
       <details open="true" class="sp-settings-container">
         <summary>Scene</summary>
 
-        <div class="sp-setting" 
+        <div class="sp-setting"
              title="Enables non-realistic grid patterns
 (to better illustrate the physical phenomena)">
           <label for="sp_grid">Grid</label>
           <input type="checkbox" id="sp_grid">
         </div>
 
-        <div class="sp-setting" 
+        <div class="sp-setting"
              title="Black hole mass (in Solar mass)">
           <label>Black hole mass</label>
           <span class="sp-slider-container">
@@ -4743,7 +4733,7 @@ Shortcut key: 'p'">⏸</button>
             <span id="sp_disc_opacity_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Maximum temperature of the accretion disc (in Kelvins)">
             <label>Temperature</label>
             <span class="sp-slider-container">
@@ -4758,7 +4748,7 @@ Shortcut key: 'p'">⏸</button>
         <h3>Rocket</h3>
 
         <div class="sp-settings-container">
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Average distance from the rocket (in meters)">
             <label>Distance</label>
             <span class="sp-slider-container">
@@ -4769,7 +4759,7 @@ Shortcut key: 'p'">⏸</button>
             <span id="sp_rocket_distance_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Shows the observer's rocket">
             <label for="sp_rocket">Enabled</label>
             <input type="checkbox" id="sp_rocket">
@@ -4779,7 +4769,7 @@ Shortcut key: 'p'">⏸</button>
         <h3>Stars</h3>
 
         <div class="sp-settings-container">
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Orientation of the star field (yaw)
 
 Shortcut: CTRL + mouse drag">
@@ -4805,7 +4795,7 @@ Shortcut: CTRL + mouse drag">
             <span id="sp_stars_pitch_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting" 
+          <div class="sp-setting"
                title="Orientation of the star field (roll)
 
 Shortcut: CTRL + mouse drag">
@@ -4818,7 +4808,7 @@ Shortcut: CTRL + mouse drag">
             <span id="sp_stars_roll_value" class="sp-value"></span>
           </div>
 
-          <div class="sp-setting sp-last" 
+          <div class="sp-setting sp-last"
                title="Enables stars">
             <label for="sp_stars">Enabled</label>
             <input type="checkbox" id="sp_stars" checked>
@@ -4858,7 +4848,7 @@ Shortcut: CTRL + mouse drag">
             target: 1, radius: 18, mobileRadius: 34,
             direction: 1.136, speed: 0.174,
             inclination: 0.499, lensing: true, doppler: true, grid: false,
-            yaw: 0.363, pitch: 0.146, moving: true, mass: 12800, view: 0,
+            yaw: 0.363, mobileYaw: 0.05, pitch: 0.146, moving: true, mass: 12800, view: 0,
             exposure: 0.09, bloom: 0.3,
             density: 0.00715, opacity: 0.3, temperature: 2000,
             rocketDistance: 55, timeScale: 1,
@@ -4874,11 +4864,11 @@ Shortcut: CTRL + mouse drag">
             timeScale: 1,
           },
           {
-            // Unbound geodesic: approach from deep space, pass at ~4.3 event
-            // horizon radii, then recede until the observer reaches r = 100.
+            // Unbound geodesic: approach, turn at the radius determined by
+            // the quantized initial orbit, then recede until r = 100.
             key: 'journey', target: 1, radius: 42, mobileRadius: 86,
             direction: 0.35, speed: 0.2,
-            closestRadius: 4.26, inclination: 0.22,
+            inclination: 0.22,
             lensing: true, doppler: true, grid: false,
             yaw: 0, pitch: 0, moving: true, mass: 12800, view: 1,
             exposure: 0.047, bloom: 0.26,
@@ -4898,6 +4888,37 @@ Shortcut: CTRL + mouse drag">
         let currentSceneIndex = 0;
         let currentViewIndex = 1;
         let rocketVisible = false;
+        let journeyStartRadius = 0;
+        let journeyClosestRadius = null;
+
+        // In horizon-radius units, (dr/dtau)^2 = e^2 - (1 - 1/r)(1 + l^2/r^2).
+        // The first zero reached inward is the outer turning point. Solve after
+        // the upstream controls quantize the requested radius, speed and angle;
+        // a hard-coded closest radius need not belong to the orbit being flown.
+        // Captured radial orbits have no exterior turning point and return null.
+        function findJourneyClosestRadius(startRadius, energy, angularMomentum) {
+          if (![startRadius, energy, angularMomentum].every(Number.isFinite) ||
+              startRadius <= 1 || energy <= 0) return null;
+          const radialSpeedSquared = (r) => energy * energy -
+              (1 - 1 / r) * (1 + angularMomentum * angularMomentum / (r * r));
+          let outer = startRadius;
+          if (radialSpeedSquared(outer) < -1e-12) return null;
+          for (let i = 1; i <= 2048; ++i) {
+            const inner = 1 + (startRadius - 1) * (1 - i / 2048);
+            if (radialSpeedSquared(inner) <= 0) {
+              let lower = inner;
+              let upper = outer;
+              for (let iteration = 0; iteration < 64; ++iteration) {
+                const middle = (lower + upper) / 2;
+                if (radialSpeedSquared(middle) > 0) upper = middle;
+                else lower = middle;
+              }
+              return (lower + upper) / 2;
+            }
+            outer = inner;
+          }
+          return null;
+        }
 
         function applyScene(index) {
           const scene = scenes[index] || scenes[0];
@@ -4909,7 +4930,8 @@ Shortcut: CTRL + mouse drag">
           currentViewIndex = scene.view ?? 1;
           model.setState(State.STOPPED);
           model.cameraTarget.setValue(scene.target);
-          model.cameraYaw.setValue(scene.yaw);
+          model.cameraYaw.setValue(window.matchMedia('(max-width: 640px)').matches
+              ? scene.mobileYaw ?? scene.yaw : scene.yaw);
           model.cameraPitch.setValue(scene.pitch);
           model.startRadius.setValue(sceneRadius);
           model.startDirection.setValue(scene.direction);
@@ -4931,6 +4953,10 @@ Shortcut: CTRL + mouse drag">
           model.starsYaw.setValue(scene.starsYaw ?? 0);
           model.starsPitch.setValue(scene.starsPitch ?? 0);
           model.starsRoll.setValue(scene.starsRoll ?? 0);
+          if (scene.key === 'journey') {
+            journeyStartRadius = model.r;
+            journeyClosestRadius = findJourneyClosestRadius(model.r, model.e, model.l);
+          }
           if (scene.moving) model.setState(State.PLAYING);
           return getStats();
         }
@@ -4942,15 +4968,12 @@ Shortcut: CTRL + mouse drag">
           let journeyPhase = null;
           let journeyProgress = null;
           if (scene.key === 'journey') {
-            const closest = scene.closestRadius;
-            const startRadius =
-                window.matchMedia('(max-width: 640px)').matches && scene.mobileRadius
-                    ? scene.mobileRadius
-                    : scene.radius;
+            const closest = journeyClosestRadius;
+            const startRadius = journeyStartRadius;
             const inward = model.drOverDtau < 0;
-            const nearClosest = model.r <= closest + 0.75;
+            const nearClosest = closest !== null && model.r <= closest + 0.75;
             journeyPhase = nearClosest ? 'periapsis' : inward ? 'approach' : 'departure';
-            journeyProgress = inward
+            journeyProgress = closest === null ? null : inward
               ? 0.48 * Math.max(0, Math.min(1,
                   (startRadius - model.r) / (startRadius - closest)))
               : 0.52 + 0.48 * Math.max(0, Math.min(1,
@@ -5019,6 +5042,23 @@ Shortcut: CTRL + mouse drag">
           }
         });
         window.addEventListener('DOMContentLoaded', function() {
+          const updateLanguage = () => {
+            const language = new URLSearchParams(location.search).get('lang')
+              || window.parent.document.documentElement.lang || 'zh';
+            const english = language.startsWith('en');
+            const lang = english ? 'en' : 'zh-CN';
+            if (document.documentElement.lang !== lang) document.documentElement.lang = lang;
+            document.title = english ? 'Black-hole flyby' : '黑洞掠过';
+            document.querySelector('#cv_loading_title').textContent = english
+              ? 'Loading light paths and starlight' : '正在装载时空与星光';
+            document.querySelector('#cv_loading_detail').textContent = english
+              ? 'Relativistic light model and procedurally generated sky'
+              : '相对论光线模型与程序生成星空';
+          };
+          updateLanguage();
+          new MutationObserver(updateLanguage).observe(window.parent.document.documentElement, {
+            attributes: true, attributeFilter: ['lang'],
+          });
           applyScene(0);
           window.parent.postMessage({type: 'oneworld:black-hole:bridge-ready'}, window.location.origin);
         });

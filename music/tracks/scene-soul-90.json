@@ -1,0 +1,132 @@
+{
+  "id": "scene-soul-90",
+  "code": "SCENE-08-90",
+  "title": {
+    "en": "Warm Circuit · 90",
+    "zh": "温暖电路 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "warm human-centered product story",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 100,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "muted brass",
+    "electric bass",
+    "snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for warm human-centered product story. Instruments: electric piano, muted brass, electric bass, snare. 100 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring piano, strings, and light percussion. It has a melancholic yet hopeful atmosphere, building gently with a sustained melody.",
+    "zh": "一首平静而富有反思性的器乐作品，以钢琴、弦乐和轻柔的打击乐为主。它营造出一种忧郁而又充满希望的氛围，旋律缓慢而持续地发展。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "warm human-centered product story"
+    ]
+  },
+  "duration": 89.522,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:14:11.793975+00:00",
+  "generation": {
+    "id": "c5606a42-f4af-4575-9a5f-c9625183fddf",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:13:30.939006+00:00",
+    "completedAt": "2026-09-22T09:14:11.793975+00:00",
+    "interactionId": "vEayarbMF5aG694PsJfvuAI",
+    "sha256": "8d9a0cc263af4b386936b844f6c39a30d0b1867f4caba241fd9a8541da26f91d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring piano, strings, and light percussion. It has a melancholic yet hopeful atmosphere, building gently with a sustained melody.",
+      "zh": "一首平静而富有反思性的器乐作品，以钢琴、弦乐和轻柔的打击乐为主。它营造出一种忧郁而又充满希望的氛围，旋律缓慢而持续地发展。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Percussion",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Melancholic",
+      "Hopeful",
+      "Serene",
+      "Peaceful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:24.687117+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-soul-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-soul-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-soul-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "957f02ea9ee916daaaa78af78ad9981d43708be374108b53ab110f89b68b71d1",
+      "bytes": 1254077,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8d9a0cc263af4b386936b844f6c39a30d0b1867f4caba241fd9a8541da26f91d",
+      "bytes": 2156186,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "9c7427a012e4d3d2c38cbff5b9b2c0f291651d8c81361c4ac9758d5e384ee810",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.851638+00:00"
+}

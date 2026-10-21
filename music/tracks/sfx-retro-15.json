@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-15",
+  "code": "SFX-RETRO-15",
+  "title": {
+    "en": "Countdown beep",
+    "zh": "倒数蜂鸣"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 14,
+  "seed": 3514799084,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized countdown beep for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的倒数蜂鸣合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.57,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3514799084,
+    "sha256": "e08be55bf7831f6a9a85b38ccf3791c79ad2d85ca6841508c9b5019bd06912b9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "022c7012fdff4f42a21196dd4ea1358516464cc477233ab38f62abca01058d2a",
+      "bytes": 8820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e08be55bf7831f6a9a85b38ccf3791c79ad2d85ca6841508c9b5019bd06912b9",
+      "bytes": 50318,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7258669328c97e92905980661efb756ff37b9164c6af81e3019ba193659e8bfb",
+      "bytes": 11479,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "ee78cbd4773e1caea66681f47f0120600f146b548f3c3423ba617547683676db",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 25137,
+    "duration": 0.57,
+    "peakDbfs": -4.3,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.747018137481601e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05417037963867222,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized electronic zap or whoosh sound effect, with a quick attack and decay.",
+      "zh": "一个短促的、合成的电子冲击或嗖嗖声效果，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:26.416882+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "022c7012fdff4f42a21196dd4ea1358516464cc477233ab38f62abca01058d2a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 25137
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.896674+00:00"
+}

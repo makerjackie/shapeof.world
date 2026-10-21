@@ -1,0 +1,130 @@
+{
+  "id": "scene-game-chamber-exploration",
+  "code": "GAME-04-2",
+  "title": {
+    "en": "Library Puzzle · Exploration",
+    "zh": "书库谜题 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "thoughtful puzzle solving",
+    "exploration"
+  ],
+  "energy": 4,
+  "bpm": 98,
+  "key": "",
+  "instruments": [
+    "pizzicato quartet",
+    "clarinet",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for thoughtful puzzle solving, exploration state. Instruments: pizzicato quartet, clarinet, woodblocks. 98 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A lively and elegant classical piece featuring a prominent violin melody, supported by pizzicato strings and piano. It evokes a playful and sophisticated atmosphere.",
+    "zh": "一首活泼优雅的古典乐曲，以突出的小提琴旋律为主，由拨弦乐器和钢琴伴奏。营造出一种俏皮而精致的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 88.973,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:43.585935+00:00",
+  "generation": {
+    "id": "d8c20576-5d52-4db2-89d6-8ad0f622b97d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:01.311295+00:00",
+    "completedAt": "2026-09-22T09:22:43.585935+00:00",
+    "interactionId": "ukiyas-LKJPb8vUP5MGu6Ac",
+    "sha256": "e9c24af60a9f6a27c0f14baf207c3f533d39b1d83fc2a1f58f21fabd0aad5734"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical piece featuring a prominent violin melody, supported by pizzicato strings and piano. It evokes a playful and sophisticated atmosphere.",
+      "zh": "一首活泼优雅的古典乐曲，以突出的小提琴旋律为主，由拨弦乐器和钢琴伴奏。营造出一种俏皮而精致的氛围。"
+    },
+    "instruments": [
+      "violin",
+      "cello",
+      "piano",
+      "pizzicato strings"
+    ],
+    "moods": [
+      "elegant",
+      "playful",
+      "lively",
+      "classical",
+      "whimsical",
+      "sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced instrumental piece with clear instrumentation and a pleasant, engaging mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:54.796623+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-exploration/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "35a19822230bedb8178478a57fa92d283f40768c21babd8e29041217bc9c6bd6",
+      "bytes": 1246397,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e9c24af60a9f6a27c0f14baf207c3f533d39b1d83fc2a1f58f21fabd0aad5734",
+      "bytes": 2143020,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "ab5a8efbef218118ef5843f9f7433ff7a35aaf958682ad8e65f1bd6ad5bd4b13",
+      "bytes": 2813,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.834389+00:00"
+}

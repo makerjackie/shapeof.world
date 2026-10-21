@@ -1,4 +1,4 @@
-import { createContext, createElement, useCallback, useContext, type ReactNode } from 'react'
+import { createContext, createElement, useCallback, useContext, useRef, type ReactNode } from 'react'
 
 import { useI18n, type Locale } from './index'
 
@@ -9,8 +9,6 @@ const ExperienceDictionaryContext = createContext<ExperienceDictionary>({})
 
 const editorialOverrides: Record<string, string> = {
   '这个世界暂时没有打开': 'This world could not open',
-  '吊龙': 'ribeye cap',
-  '匙仁': 'chuck flap',
   '胸口捞': 'brisket fat',
   '牛腱': 'beef shank',
   '吊龙、匙仁和牛腱，究竟分别长在哪里？': 'Where do ribeye cap, chuck flap, and beef shank come from?',
@@ -20,8 +18,7 @@ const editorialOverrides: Record<string, string> = {
   '重置': 'Reset',
   '重新开始': 'Start over',
   '开始探索': 'Start the story',
-  '向下滚动继续': 'Scroll down to continue',
-  '进入自由探索': 'Enter free explore',
+  '进入自由探索': 'Explore',
   '退出故事': 'Exit story',
   '暂停': 'Pause',
   '继续': 'Continue',
@@ -77,6 +74,7 @@ const dynamicPatterns: Array<DynamicPattern> = [
   { source: /^(\d+)\s*岁$/, target: '$1 years old' },
   { source: /^第\s*(\d+)\s*步$/, target: 'Step $1' },
   { source: /^第\s*(\d+)\s*课$/, target: 'Lesson $1' },
+  { source: /^第\s*(\d+)\s*\/\s*(\d+)\s*带$/, target: 'Belt $1 of $2' },
   { source: /^第\s*(\d+)\s*周$/, target: 'Week $1' },
   { source: /^共\s*(\d+)\s*步$/, target: '$1 steps' },
   { source: /^(\d+)\s*个世界$/, target: '$1 worlds' },
@@ -299,18 +297,6 @@ const dynamicPatterns: Array<DynamicPattern> = [
   // company-from-one：人数、月序与同龄存活读数
   { source: /^(\d+) 人 · 第 (\d+) 月$/, target: '$1 people · month $2' },
   { source: /^同龄公司大约还剩 (\d+)%$/, target: 'About $1% of same-age firms remain' },
-  // package-station：驿站被动读数
-  { source: /^占用 (\d+)\/(\d+)$/, target: '$1 / $2 slots in use' },
-  { source: /^今日 (\d+)$/, target: '$1 arrived today' },
-  { source: /^平均找件 (\d+) 步$/, target: 'avg $1 steps to fetch' },
-  { source: /^滞留 (\d+)$/, target: '$1 overdue' },
-  { source: /^最优 (.+) · ([\d.]+)$/, target: 'best $1 · $2' },
-  { source: /^你选 ([\d.]+) · 最优 (.+) ([\d.]+)$/, target: 'yours $1 · best $2 $3' },
-  { source: /^(.+) 排 · 第 (\d+) 层 · 第 (\d+) 位$/, target: 'row $1 · layer $2 · spot $3' },
-  {
-    source: /^四项加权相加，A27 以 ([\d.]+) 险胜 (.+) 的 ([\d.]+)。$/,
-    target: (_translate, _all, winner, label, loser) => `All four weighted terms together, A27 beats ${label}, ${winner} to ${loser}.`,
-  },
   // rag-open-book：检索读数、上下文窗口头注与主题扇区标签
   { source: /^已检索 (\d+) 段，最高相似度 ([\d.]+)$/, target: '$1 passages retrieved, best similarity $2' },
   { source: /^库内 (\d+) 段$/, target: '$1 chunks in the library' },
@@ -380,5 +366,13 @@ export function ExperienceI18nProvider({
 export function useExperienceI18n(): ExperienceTextTranslator {
   const { locale } = useI18n()
   const dictionary = useContext(ExperienceDictionaryContext)
-  return useCallback(<T,>(value: T) => translateExperienceText(locale, value, dictionary), [dictionary, locale])
+  const current = useRef({ locale, dictionary })
+  current.current = { locale, dictionary }
+  // Long-lived canvas loops may retain an earlier callback. Keep their text
+  // current without remounting the simulation. Identity still changes with
+  // the locale so existing memoized labels and effects update as before.
+  return useCallback(<T,>(value: T) => {
+    const latest = current.current
+    return translateExperienceText(latest.locale, value, latest.dictionary)
+  }, [dictionary, locale])
 }

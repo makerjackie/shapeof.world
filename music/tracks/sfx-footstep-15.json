@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-15",
+  "code": "SFX-FOOTSTEP-15",
+  "title": {
+    "en": "Barefoot step",
+    "zh": "赤足脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 14,
+  "seed": 2115355918,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized barefoot step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的赤足脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.44,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2115355918,
+    "sha256": "da099012980b134751fd55ce960b21bcc5755413ff23fdf4f08f3c8212dcb55c",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "269ba317af21b3422ebdfcbe31e3e4be8d4b89e5484c25bee36aca5beaa511a9",
+      "bytes": 6992,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "da099012980b134751fd55ce960b21bcc5755413ff23fdf4f08f3c8212dcb55c",
+      "bytes": 38852,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7e1fd289542182ca1f1a5540b4796193f6a691546cb4ee61761194df0dbf703d",
+      "bytes": 10753,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0951f1a879c232d3007522516806c9fbeed90ab3743a6032c053d56326235693",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19404,
+    "duration": 0.44,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.09,
+    "dcOffset": -4.5609656030972996e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2241270751953126,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, metallic impact sound, resembling a clank or clang.",
+      "zh": "一个短促、尖锐的金属撞击声，类似于叮当声或铿锵声。"
+    },
+    "reason": "The sound is a clean, intentional, and well-produced short metallic impact effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:12.849343+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "269ba317af21b3422ebdfcbe31e3e4be8d4b89e5484c25bee36aca5beaa511a9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19404
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.870687+00:00"
+}

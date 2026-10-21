@@ -1,0 +1,101 @@
+{
+  "id": "lib-organ-suspense",
+  "code": "LIB-05-09",
+  "title": {
+    "en": "Shadows — Organ",
+    "zh": "暗影 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "organ"
+  ],
+  "energy": 2,
+  "bpm": 48,
+  "key": "G minor",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second contemporary organ music instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 48 BPM; G minor. Main idea: a repeating five-note figure with space between phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and expressive classical piece featuring a solo cello with piano accompaniment. The cello carries a rich, resonant melody that evokes a range of emotions from somber reflection to moments of passionate intensity. The piano provides a supportive harmonic foundation and occasional counter-melodies. The tempo is generally slow to moderate, allowing the intricate melodies to unfold gracefully. The overall mood is contemplative and elegant, suitable for dramatic or reflective scenes.",
+    "zh": "一首忧郁而富有表现力的古典乐曲，以大提琴独奏为主，钢琴伴奏。大提琴演奏着丰富、共鸣的旋律，唤起从沉思反省到激情迸发等多种情感。钢琴提供和声支持和偶尔的对位旋律。节奏通常缓慢到中等，使复杂的旋律得以优雅地展开。整体氛围沉思而优雅，适合戏剧性或反思性的场景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 144.3,
+  "generatedAt": "2026-09-09T07:58:30.068341+00:00",
+  "generation": {
+    "id": "3e790ccd-bcf7-4307-9f6a-7a5677eb3acb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:57:39.972663+00:00",
+    "completedAt": "2026-09-09T07:58:30.068341+00:00",
+    "interactionId": "dRGhau_2CPWJ88EPntfq6A4",
+    "sha256": "e082a4ceb3d944378dfc301e7f94afdc6300ff489f7bdfbcd6190dc10c88ead7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and expressive classical piece featuring a solo cello with piano accompaniment. The cello carries a rich, resonant melody that evokes a range of emotions from somber reflection to moments of passionate intensity. The piano provides a supportive harmonic foundation and occasional counter-melodies. The tempo is generally slow to moderate, allowing the intricate melodies to unfold gracefully. The overall mood is contemplative and elegant, suitable for dramatic or reflective scenes.",
+      "zh": "一首忧郁而富有表现力的古典乐曲，以大提琴独奏为主，钢琴伴奏。大提琴演奏着丰富、共鸣的旋律，唤起从沉思反省到激情迸发等多种情感。钢琴提供和声支持和偶尔的对位旋律。节奏通常缓慢到中等，使复杂的旋律得以优雅地展开。整体氛围沉思而优雅，适合戏剧性或反思性的场景。"
+    },
+    "instruments": [
+      "Cello",
+      "Piano"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Expressive",
+      "Somber",
+      "Contemplative",
+      "Elegant",
+      "Dramatic",
+      "Romantic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "High-quality instrumental classical music, well-produced and free of defects, suitable for various library applications requiring emotive or background scores.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:58:44.064426+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:59:59.444888+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

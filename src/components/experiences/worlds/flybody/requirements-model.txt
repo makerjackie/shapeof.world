@@ -1,0 +1,5 @@
+trimesh==4.7.4
+numpy==2.2.6
+fast-simplification==0.1.12
+pillow==11.3.0
+scipy==1.16.1

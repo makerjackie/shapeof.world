@@ -1,0 +1,48 @@
+export type Study = {
+  color: string; kind: 'thermal' | 'neon' | 'carbon' | 'metal';
+  melt?: number; min?: number; max?: number;
+  title: string; description: string; background: string; boundary: string;
+}
+export const studies: Record<string, Study> = {
+  Ga: {color:'#bbc4ca',kind:'thermal',melt:29.7646,min:10,max:45,
+    title:'一点温暖，金属就流动了',
+    description:'镓在约 29.8°C 熔化。把温度调高一点，银白色的固体就会变成液体。',
+    background:'1875 年，布瓦博德朗发现了镓。此前，门捷列夫已根据周期表的空位预测过它的存在和部分性质。砷化镓和氮化镓用于半导体器件。',
+    boundary:'展示纯镓的平衡状态，省略过冷与表面氧化。形状为原创材质示意，不是实测晶形。'},
+  Hg: {color:'#c5ccd1',kind:'thermal',melt:-38.829,min:-60,max:40,
+    title:'液态的金属，也能凝固',
+    description:'20°C 时，汞是银白色液体。降到约 −38.8°C 以下，它也会成为固体。',
+    background:'汞曾用于温度计和气压计。它的毒性使许多用途受到限制；这里的观察全部在虚拟环境中进行。',
+    boundary:'省略蒸气、毒性过程与容器。不要把画面当成现实操作示范。'},
+  Cs: {color:'#d7b76a',kind:'thermal',melt:28.5,min:10,max:45,
+    title:'这块金色金属，不是金',
+    description:'铯呈淡金色，约 28.5°C 就会熔化。与镓比较，看看谁先变成液体。',
+    background:'铯原子的特定跃迁用于定义秒。铯在空气中容易反应，遇水反应剧烈，真实样品需要隔绝反应物保存。',
+    boundary:'假定惰性环境，省略与空气、水的反应。画面不是开放空气中的真实样品。'},
+  Br: {color:'#711f0f',kind:'thermal',melt:-7.2,min:-20,max:40,
+    title:'常温液体，也可以不是金属',
+    description:'溴在 20°C 时是深红色液体。把温度降到约 −7.2°C 以下，它会凝固。',
+    background:'1826 年，巴拉尔在研究盐水时发现了溴。溴化银曾广泛用于感光胶片；单质溴有毒，具有刺激性。',
+    boundary:'省略蒸气与容器，只比较固液状态。外观是风格化示意，不用于识别真实化学品。'},
+  Ne: {color:'#f25c22',kind:'neon',
+    title:'光亮来自放电，不是气体本色',
+    description:'氖平常是无色气体。接通低压放电管后，它才发出橙红色的光。',
+    background:'霓虹招牌有许多颜色，但纯氖放电主要呈橙红色。其他颜色还可能来自不同气体或荧光涂层。',
+    boundary:'光色与亮度为屏幕近似；不模拟完整光谱、电压、电流或放电动力学。'},
+  C: {color:'#414346',kind:'carbon',
+    title:'同一种元素，两种模样',
+    description:'石墨与金刚石都由碳构成。原子的连接方式不同，外观和性质也不同。',
+    background:'石墨的碳原子形成层状结构，层间容易滑动；金刚石具有三维共价网络。铅笔芯中的石墨与首饰中的金刚石是同素异形体。',
+    boundary:'按钮切换两件样本，不表示常温下互相转化。外形是示意，不是原子结构图。'},
+  Cu: {color:'#c47c53',kind:'metal',
+    title:'电线里的暖红色',
+    description:'铜的表面呈红金色。转动样本，观察光线在金属表面移动。',
+    background:'铜易被拉成细线，也善于传导电和热，因此常见于电线与电机。铜与锡形成的青铜，在人类制造工具的历史中留下了名字。',
+    boundary:'展示理想化的新鲜表面，省略氧化。反光是渲染结果，不是光谱测量。'},
+  Au: {color:'#e5b653',kind:'metal',
+    title:'颜色之外，还有延展性',
+    description:'金具有独特的黄色金属光泽。转动样本，看亮面与暗面如何交替。',
+    background:'金能被锤成很薄的金箔。它的导电性和耐腐蚀性，也让它用于一些电气连接部件。纯金较软，首饰常使用合金。',
+    boundary:'展示理想化的纯金表面；形状、尺度和灯光是艺术设计，不是实物扫描。'},
+}
+export const featured = ['Ga','Ne','C','Hg','Cs','Br','Cu','Au']

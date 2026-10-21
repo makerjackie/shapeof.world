@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-06",
+  "code": "SFX-RETRO-06",
+  "title": {
+    "en": "Pixel hit",
+    "zh": "像素受击"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 5,
+  "seed": 3380368703,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel hit for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素受击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.05,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3380368703,
+    "sha256": "d51a9ad28753875a9713c6d6b260c60f0756e674fc01551444bc49efe535a02b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "973d3d51bf3ac995c3aeca4a58349e9814214fa3dd4c64229752ad2c2acba712",
+      "bytes": 15769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d51a9ad28753875a9713c6d6b260c60f0756e674fc01551444bc49efe535a02b",
+      "bytes": 92654,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0b876a284e4cfa94eca040ea99f4fc772d9f1bbce0aee05c6b6baaaa1b25888c",
+      "bytes": 22577,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8fdc95ce4b1c8767751ac60c21a6a1317d45a03555a48a631b4d93c39bbad5f8",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 46305,
+    "duration": 1.05,
+    "peakDbfs": -4.17,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.1252425325288847e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.15372259521484377,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, cartoon-style spring or boing sound followed by a quick swish or whoosh effect.",
+      "zh": "一个短促的卡通风格弹簧或“嘣”声，随后是一个快速的“嗖”或“呼”声效果。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced synthesized sound effect, free of defects, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:17.788119+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "973d3d51bf3ac995c3aeca4a58349e9814214fa3dd4c64229752ad2c2acba712"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 46305
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.894266+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-04",
+  "code": "SFX-NOTIFICATION-04",
+  "title": {
+    "en": "New message",
+    "zh": "新消息"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 3,
+  "seed": 945606036,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized new message for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的新消息合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.22,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 945606036,
+    "sha256": "a7b4509fab3c9d35032ff002ed5913443f8aede809aa5966eb899daa6d1ce011",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2f3d2bfcc4b7dc80ed014f008ed4af065076cf955107b91c601774a094e02181",
+      "bytes": 17963,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a7b4509fab3c9d35032ff002ed5913443f8aede809aa5966eb899daa6d1ce011",
+      "bytes": 107648,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e5384217b35bbed5f07c044f1865607beeeaeff2a8c6747957ad6a525dc4dae6",
+      "bytes": 10766,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "4399ef25487559b149e3b82da0796f17ad0dc032c206f6f035b12c642e207527",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 53802,
+    "duration": 1.22,
+    "peakDbfs": -4.77,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.0629887713282035e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.058068847656249645,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized sound effect featuring a bouncy 'boing' followed by a bright, metallic 'ding' or chime. It has a playful, electronic character.",
+      "zh": "一个短促的合成音效，包含一个弹跳的“boing”声，随后是一个明亮、金属感的“叮”或钟声。它具有一种俏皮的电子音色。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, ideal for use in video games or user interfaces without any technical defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:17.790251+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "2f3d2bfcc4b7dc80ed014f008ed4af065076cf955107b91c601774a094e02181"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 53802
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.889332+00:00"
+}

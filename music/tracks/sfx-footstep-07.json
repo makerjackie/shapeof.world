@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-07",
+  "code": "SFX-FOOTSTEP-07",
+  "title": {
+    "en": "Mud step",
+    "zh": "泥地脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 6,
+  "seed": 2486567860,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized mud step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的泥地脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.44,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-07/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-07/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-07/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-07/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2486567860,
+    "sha256": "224222bf7ab84fc2e3af301b59f1a2d85e14dd4b335c78dd40029c08ff0cb323",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "971870aca843134575c0d639d2bae99b42816bc4b2109d532f07ee70476da652",
+      "bytes": 6992,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "224222bf7ab84fc2e3af301b59f1a2d85e14dd4b335c78dd40029c08ff0cb323",
+      "bytes": 38852,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "265e293d3995812687aa3cb0419dbb6a544431cc4bfa6d19dd2706f4a20ff74b",
+      "bytes": 7657,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "1683564d84044972d4b8d6b006fe306d74f479434ff9f5a1611c9de4f3556d27",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19404,
+    "duration": 0.44,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.62,
+    "dcOffset": 1.1638326021696558e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.18927709960937955,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized electronic zap or whoosh sound effect.",
+      "zh": "一个短促、尖锐的合成电子冲击或嗖嗖声效果。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:05.131974+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "971870aca843134575c0d639d2bae99b42816bc4b2109d532f07ee70476da652"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19404
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.869224+00:00"
+}

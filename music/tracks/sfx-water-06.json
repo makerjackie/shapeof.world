@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-06",
+  "code": "SFX-WATER-06",
+  "title": {
+    "en": "Water plop",
+    "zh": "落入水中"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 5,
+  "seed": 2480642509,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized water plop for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的落入水中合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2480642509,
+    "sha256": "c053547b10c5e9bc6a0206368b9e7234014abffe1405e2c2d7717ec47072e8f0",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "96b8c379d0b94200cd613d9d13522ca9f2ba524810e1e924485165c03829c3e7",
+      "bytes": 18329,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c053547b10c5e9bc6a0206368b9e7234014abffe1405e2c2d7717ec47072e8f0",
+      "bytes": 110294,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "72770dbb30eea1d0f1dffb3a3d3963d417af69877d1ea003d5788d271a890691",
+      "bytes": 6107,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "975d494901fc395b5497ad431c7a0851c2136c63caa05d9e904f6eae79b75bf5",
+      "bytes": 1592,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55125,
+    "duration": 1.25,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.63,
+    "dcOffset": -1.197451636904762e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08631921386718755,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing sound, reminiscent of a spring or cartoon bounce.",
+      "zh": "短促、高音调的合成弹簧声，类似于卡通弹跳音效。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized effect, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:35.598425+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "96b8c379d0b94200cd613d9d13522ca9f2ba524810e1e924485165c03829c3e7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55125
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.911001+00:00"
+}

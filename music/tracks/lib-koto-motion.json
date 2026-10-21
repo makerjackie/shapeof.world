@@ -1,0 +1,104 @@
+{
+  "id": "lib-koto-motion",
+  "code": "LIB-19-08",
+  "title": {
+    "en": "Motion — Koto",
+    "zh": "跃动 · 筝与尺八"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "koto"
+  ],
+  "energy": 4,
+  "bpm": 84,
+  "key": "B minor",
+  "instruments": [
+    "koto",
+    "shakuhachi",
+    "soft hand drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Japanese acoustic instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: koto, shakuhachi, soft hand drum. Style: sparse plucked phrases and gentle breathy flute, no voice. Tempo approximately 84 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A dramatic and evocative orchestral piece with strong East Asian influences. It features traditional plucked strings, flutes, and percussion, building from a serene melody to a powerful, cinematic arrangement with strings and brass, concluding with a reflective fade-out.",
+    "zh": "一首充满戏剧性和感染力的管弦乐作品，带有浓厚的东亚风情。它以传统弹拨乐器、笛子和打击乐器为特色，从宁静的旋律逐渐发展成宏大、电影般的弦乐和铜管乐编排，最后以沉思的淡出结束。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 113.58,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:50:52.309101+00:00",
+  "generation": {
+    "id": "f722523e-4e48-44c4-9f46-218b989397af",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:50:08.485908+00:00",
+    "completedAt": "2026-09-09T08:50:52.309101+00:00",
+    "interactionId": "wR2hau2HOe67i9sP06HTyAM",
+    "sha256": "2b36641ea8dda1a6eab8d0857734cc5f144d9e9da4f8c51679e31c5e95ee3c10"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dramatic and evocative orchestral piece with strong East Asian influences. It features traditional plucked strings, flutes, and percussion, building from a serene melody to a powerful, cinematic arrangement with strings and brass, concluding with a reflective fade-out.",
+      "zh": "一首充满戏剧性和感染力的管弦乐作品，带有浓厚的东亚风情。它以传统弹拨乐器、笛子和打击乐器为特色，从宁静的旋律逐渐发展成宏大、电影般的弦乐和铜管乐编排，最后以沉思的淡出结束。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Dizi",
+      "Orchestral Percussion",
+      "Strings",
+      "Brass",
+      "Pads"
+    ],
+    "moods": [
+      "Dramatic",
+      "Epic",
+      "East Asian",
+      "Cinematic",
+      "Powerful",
+      "Reflective"
+    ],
+    "energy": 4,
+    "bpmEstimate": 120,
+    "reason": "Well-produced, high-quality instrumental piece with clear East Asian orchestral themes, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:51:09.427382+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-koto-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-koto-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-koto-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:52:09.133235+00:00"
+}

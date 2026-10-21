@@ -1,0 +1,102 @@
+{
+  "id": "lib-orchestral-celebrate",
+  "code": "LIB-06-10",
+  "title": {
+    "en": "First Light — Orchestral",
+    "zh": "初光 · 管弦乐"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "orchestral"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "C major",
+  "instruments": [
+    "strings",
+    "French horn",
+    "timpani",
+    "flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second orchestral adventure instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: strings, French horn, timpani, flute. Style: rising motifs, dynamic arcs and clear melodic development. Tempo approximately 116 BPM; C major. Main idea: a descending melody with an upward answer. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and grand orchestral piece with a big band feel, featuring prominent brass, woodwinds, and dynamic percussion. It evokes a celebratory and festive atmosphere.",
+    "zh": "一首活泼宏伟的管弦乐曲，具有大乐队风格，以突出的铜管乐、木管乐和充满活力的打击乐为特色。营造出欢快喜庆的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.906,
+  "generatedAt": "2026-09-09T08:03:13.601657+00:00",
+  "generation": {
+    "id": "d7677161-8657-492b-9911-6a6c1777c3ec",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:02:34.303769+00:00",
+    "completedAt": "2026-09-09T08:03:13.601657+00:00",
+    "interactionId": "mxKhaqS3GJC9jMwPrKKKyAI",
+    "sha256": "59453836b4dbb2219b92654c813e0729ccfc05b2896bf14ec3a9029885d90e00"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and grand orchestral piece with a big band feel, featuring prominent brass, woodwinds, and dynamic percussion. It evokes a celebratory and festive atmosphere.",
+      "zh": "一首活泼宏伟的管弦乐曲，具有大乐队风格，以突出的铜管乐、木管乐和充满活力的打击乐为特色。营造出欢快喜庆的氛围。"
+    },
+    "instruments": [
+      "brass",
+      "woodwinds",
+      "percussion",
+      "orchestral strings"
+    ],
+    "moods": [
+      "upbeat",
+      "celebratory",
+      "grand",
+      "festive",
+      "cheerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "High-quality, well-produced orchestral piece with a clear, dynamic arrangement and no audible defects.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:03:24.252565+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-orchestral-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-orchestral-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-orchestral-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:04:27.404095+00:00",
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review"
+}

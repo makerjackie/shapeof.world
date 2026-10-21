@@ -40,7 +40,7 @@ export function FollowStayPrompt({
 
   function dismiss() {
     dismissFollowPrompt()
-    trackEvent({ event: 'follow_prompt_click', value: 'dismiss' })
+    trackEvent({ event: 'follow_prompt_dismiss' })
     onDismiss?.()
   }
 
@@ -57,7 +57,7 @@ export function FollowStayPrompt({
         {locale === 'zh' && (
           <button
             type="button"
-            className="follow-stay-action"
+            className="btn-secondary follow-stay-action"
             aria-expanded={qrOpen}
             onClick={() => {
               setQrOpen((open) => !open)
@@ -68,7 +68,7 @@ export function FollowStayPrompt({
           </button>
         )}
         <a
-          className="follow-stay-action"
+          className="btn-secondary follow-stay-action"
           href={AUTHOR_X_URL}
           target="_blank"
           rel="noreferrer"

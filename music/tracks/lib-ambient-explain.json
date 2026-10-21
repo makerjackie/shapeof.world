@@ -1,0 +1,102 @@
+{
+  "id": "lib-ambient-explain",
+  "code": "LIB-24-05",
+  "title": {
+    "en": "Discovery — Ambient",
+    "zh": "发现 · 氛围电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "ambient"
+  ],
+  "energy": 2,
+  "bpm": 52,
+  "key": "G major",
+  "instruments": [
+    "analog pads",
+    "granular synth",
+    "soft sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second ambient electronic instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: analog pads, granular synth, soft sub bass. Style: slow evolving textures without drums or a beat. Tempo approximately 52 BPM; G major. Main idea: a repeating five-note figure with space between phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A calm and atmospheric electronic track featuring synth pads, a gentle beat, and a reflective melody. It evokes a peaceful and slightly melancholic mood.",
+    "zh": "一首平静而富有氛围感的电子乐曲，以合成器铺底、轻柔的节拍和沉思的旋律为特色。营造出一种宁静而略带忧郁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 85.107,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:04:38.996860+00:00",
+  "generation": {
+    "id": "2b0ee2c0-44c9-43c6-948e-29bab8fef81b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:03:50.632030+00:00",
+    "completedAt": "2026-09-09T09:04:38.996860+00:00",
+    "interactionId": "9yCharG2H8zRi9sPrKHS-AM",
+    "sha256": "04e4e50f229f24ba0c946e16fbd48a9f18c6c540b52b3dd67351f3671e9d0384"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and atmospheric electronic track featuring synth pads, a gentle beat, and a reflective melody. It evokes a peaceful and slightly melancholic mood.",
+      "zh": "一首平静而富有氛围感的电子乐曲，以合成器铺底、轻柔的节拍和沉思的旋律为特色。营造出一种宁静而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "synth pad",
+      "synth bass",
+      "bell"
+    ],
+    "moods": [
+      "calm",
+      "peaceful",
+      "reflective",
+      "atmospheric",
+      "melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "The track is well-produced with a clear, consistent atmospheric electronic sound, suitable for background use or contemplative scenes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:04:46.800006+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-ambient-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-ambient-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-ambient-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:05:30.323580+00:00"
+}

@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-lofi-challenge",
+  "code": "GAME-01-3",
+  "title": {
+    "en": "Garden Workshop · Challenge",
+    "zh": "花园工坊 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "cozy crafting and management",
+    "challenge"
+  ],
+  "energy": 3,
+  "bpm": 84,
+  "key": "",
+  "instruments": [
+    "Rhodes",
+    "muted bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for cozy crafting and management, challenge state. Instruments: Rhodes, muted bass, brushed drums. 84 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "A smooth, laid-back electronic track with a prominent groovy bassline, relaxed drums, and a melodic synth lead. It evokes a chill, lounge-like atmosphere with a touch of retro-futuristic jazz.",
+    "zh": "一首流畅、轻松的电子音乐，带有突出的律动贝斯线、慵懒的鼓点和旋律优美的合成器主音。营造出一种放松、休闲的氛围，并带有一丝复古未来主义爵士的韵味。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 89.992,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:20:49.212914+00:00",
+  "generation": {
+    "id": "45c66e84-6911-49c4-a35b-d4ed7e7405a2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:20:08.786382+00:00",
+    "completedAt": "2026-09-22T09:20:49.212914+00:00",
+    "interactionId": "SUiyauPlJZjf8vUPkvy52QQ",
+    "sha256": "401ba144020d60bd07da3d0ffbe6d75e9270565d0e954d3f79579841da4c7974"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, laid-back electronic track with a prominent groovy bassline, relaxed drums, and a melodic synth lead. It evokes a chill, lounge-like atmosphere with a touch of retro-futuristic jazz.",
+      "zh": "一首流畅、轻松的电子音乐，带有突出的律动贝斯线、慵懒的鼓点和旋律优美的合成器主音。营造出一种放松、休闲的氛围，并带有一丝复古未来主义爵士的韵味。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "bass guitar"
+    ],
+    "moods": [
+      "relaxed",
+      "chill",
+      "smooth",
+      "groovy",
+      "lounge",
+      "calm"
+    ],
+    "energy": 3,
+    "bpmEstimate": 98,
+    "reason": "Well-produced, clean audio with a pleasant, versatile mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:02.627179+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 39.061224,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1722600,
+    "sourceStartSeconds": 12.5,
+    "sourceEndSeconds": 51.683673469387756,
+    "crossfadeSeconds": 0.12244897959183673,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1722600,
+        "duration": 39.061224,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.2,
+        "dcOffset": 0.004932614756865077,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00347900390625,
+        "internalStepP999": 0.1318299560546876,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1722600,
+        "duration": 39.061224,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -15.13,
+        "dcOffset": 0.004778631235350996,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.001251220703125,
+        "internalStepP999": 0.12310791015625,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, shimmering, and slightly dissonant electronic texture with metallic and airy qualities, featuring a consistent, evolving drone.",
+        "zh": "持续的、闪烁的、略带不和谐的电子音效纹理，具有金属感和空灵感，呈现出一致且不断演变的嗡鸣声。"
+      },
+      "reason": "The audio is a clean, well-produced, and perfectly looping synthesized texture suitable for background ambiance or atmospheric sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:05.081123+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "e2d261df530b6159dc3c3fd5c06ed45f3f7ecb59f1a22e98a8ef2c8b595d40d8"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The rhythm, harmony, dynamics, and phrase continuity are excellent. The loop points are seamless, with no noticeable abrupt changes, skipped beats, fade-ins, ending cadences, or conspicuous edits. The music flows naturally from the end of one segment to the beginning of the next, making it comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:29.416993+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-lofi-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0976a75a9741d27612810272064345ddeef30e61ba20ad380919e08444dfbda9",
+      "bytes": 1260660,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "401ba144020d60bd07da3d0ffbe6d75e9270565d0e954d3f79579841da4c7974",
+      "bytes": 2167471,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8d35b0d425b598c7eaef0b1bb50144e32f3bc2b784af7aead6c90a3725a95da4",
+      "bytes": 2802,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "f8ec67c5c05766e5e6f20e97aa651441f3b9cdec0ce2b5e59f339da048da931c",
+      "bytes": 6890444,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "a236cc42c1423cfdb511a21afa7d2c2a226ca1acf79a44ad25046c2c8b25e0b5",
+      "bytes": 672405,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.462349+00:00"
+}

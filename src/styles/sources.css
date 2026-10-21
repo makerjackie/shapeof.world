@@ -3,8 +3,10 @@
    台账条目（.source-ledger/.evidence-*）的基线样式在 app.css 全局，
    这里只放本页布局：标题区、节奏与「更新日志」入口链接。
    ============================================================ */
-.sources-ledger-section {
-  padding-top: 84px;
+.sources-page .sources-ledger-section {
+  width: min(var(--site-content-width), calc(100% - 2 * var(--site-gutter)));
+  margin: 0 auto;
+  padding: var(--space-8) 0 var(--space-9);
 }
 
 .sources-page .section-heading {
@@ -15,12 +17,7 @@
 }
 
 .sources-ledger-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   margin: 0 0 6px;
-  font-size: 13px;
-  font-weight: 700;
   white-space: nowrap;
 }
 .sources-ledger-link svg {
@@ -33,8 +30,8 @@
 }
 
 @media (max-width: 900px) {
-  .sources-ledger-section {
-    padding-top: 56px;
+  .sources-page .sources-ledger-section {
+    padding-top: var(--space-7);
   }
   .sources-page .section-heading {
     flex-direction: column;
@@ -42,9 +39,6 @@
     gap: 18px;
   }
   /* 窄屏收小标题字号，避免「可搜可筛」折出孤字 */
-  .sources-page .evidence-section h2 {
-    font-size: clamp(30px, 8.6vw, 40px);
-  }
   .sources-ledger-link {
     margin: 0;
   }

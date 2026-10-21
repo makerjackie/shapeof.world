@@ -1,0 +1,185 @@
+{
+  "id": "scene-ambient-40",
+  "code": "SCENE-19-40",
+  "title": {
+    "en": "Glass Observatory · 40",
+    "zh": "玻璃观测站 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "calm scientific observation with a gentle clear pulse",
+    "product-video"
+  ],
+  "energy": 3,
+  "bpm": 80,
+  "key": "",
+  "instruments": [
+    "soft analog pads",
+    "felt piano",
+    "sparse bell",
+    "light pulse"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for calm scientific observation with a gentle clear pulse. Instruments: soft analog pads, felt piano, sparse bell, light pulse. 80 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A bright and uplifting modern instrumental track featuring a clean mix of synth melodies, piano chords, and a steady drum beat, creating a positive and professional atmosphere.",
+    "zh": "一首明亮而振奋的现代器乐曲，融合了合成器旋律、钢琴和稳定的鼓点，营造出积极专业的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "calm scientific observation with a gentle clear pulse"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:20:11.972447+00:00",
+  "generation": {
+    "id": "2ad5730c-589d-4ff5-87a8-5bb30ffdb032",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:19:32.122400+00:00",
+    "completedAt": "2026-09-22T09:20:11.972447+00:00",
+    "interactionId": "JUiyasOwO6eA694PtMejkAU",
+    "sha256": "11022bd9a784aca2277e84512513986061fbb10cc12f6a6404a31e53fb585650"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A bright and uplifting modern instrumental track featuring a clean mix of synth melodies, piano chords, and a steady drum beat, creating a positive and professional atmosphere.",
+      "zh": "一首明亮而振奋的现代器乐曲，融合了合成器旋律、钢琴和稳定的鼓点，营造出积极专业的氛围。"
+    },
+    "instruments": [
+      "Plucked synth",
+      "Synth pad",
+      "Drums",
+      "Synth lead",
+      "Bass",
+      "Piano"
+    ],
+    "moods": [
+      "Uplifting",
+      "Positive",
+      "Bright",
+      "Corporate",
+      "Modern",
+      "Light"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "This is a well-produced, clean instrumental track with a positive and modern feel, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with a distinctive plucked synth melody. Ends with a smooth fade-out on a sustained chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:28.081572+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "d279b2b510440bb4c0c63182e9ca994a38576771fee92b1a9ee007a2818e9ca9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.338708,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic synth-pop track featuring a driving electronic drum beat, prominent synth melodies, and a retro-futuristic atmosphere. The arrangement is clean and dynamic.",
+      "zh": "一首欢快且充满活力的合成器流行音乐，具有强劲的电子鼓点、突出的合成器旋律和复古未来主义的氛围。编曲干净且富有动感。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Pads"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Retro",
+      "Melodic",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:20.012737+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.338707999999997,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-ambient-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-ambient-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-ambient-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d279b2b510440bb4c0c63182e9ca994a38576771fee92b1a9ee007a2818e9ca9",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "11022bd9a784aca2277e84512513986061fbb10cc12f6a6404a31e53fb585650",
+      "bytes": 1383797,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "838b19c8a8a6397c67e04bed5d5f00f805bcfd90228cb0d270d0e39e0071e31c",
+      "bytes": 2781,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.823879+00:00"
+}

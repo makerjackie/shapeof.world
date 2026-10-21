@@ -1,0 +1,101 @@
+{
+  "id": "lib-sitar-rest",
+  "code": "LIB-21-03",
+  "title": {
+    "en": "Rest — Sitar",
+    "zh": "休憩 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "sitar"
+  ],
+  "energy": 3,
+  "bpm": 74,
+  "key": "F major",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Indian acoustic instrumental instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 74 BPM; F major. Main idea: a repeating five-note figure with space between phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A serene and meditative piece featuring a prominent sitar melody over a tabla rhythm and a subtle bassline, evoking a traditional Indian atmosphere.",
+    "zh": "一首宁静而冥想的乐曲，以西塔琴旋律为主，配以塔布拉鼓节奏和低沉的贝斯线，营造出传统的印度氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 127.033,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:55:03.340775+00:00",
+  "generation": {
+    "id": "162e6adf-9051-4312-b69f-4faff9a57589",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:54:21.910992+00:00",
+    "completedAt": "2026-09-09T08:55:03.340775+00:00",
+    "interactionId": "vx6harbMD9K44vEPhZWJ4A0",
+    "sha256": "10e01192cf1f962c6f33faead0b52971830fe839ff26eb37cd9ad896752f2729"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and meditative piece featuring a prominent sitar melody over a tabla rhythm and a subtle bassline, evoking a traditional Indian atmosphere.",
+      "zh": "一首宁静而冥想的乐曲，以西塔琴旋律为主，配以塔布拉鼓节奏和低沉的贝斯线，营造出传统的印度氛围。"
+    },
+    "instruments": [
+      "Sitar",
+      "Tabla",
+      "Bass"
+    ],
+    "moods": [
+      "Meditative",
+      "Traditional",
+      "Exotic",
+      "Calm",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The audio is clean, well-produced, and features clear instrumentation with a distinct cultural feel, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:55:26.277095+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:56:12.115608+00:00"
+}

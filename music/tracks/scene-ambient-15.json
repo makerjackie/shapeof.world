@@ -1,0 +1,180 @@
+{
+  "id": "scene-ambient-15",
+  "code": "SCENE-19-15",
+  "title": {
+    "en": "Glass Observatory · 15",
+    "zh": "玻璃观测站 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "calm scientific observation with a gentle clear pulse",
+    "product-video"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "",
+  "instruments": [
+    "soft analog pads",
+    "felt piano",
+    "sparse bell",
+    "light pulse"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 15,
+  "prompt": "Create a complete original 60-second instrumental cue in ambient style. Use soft analog pads, felt piano, sparse bell, light pulse. Tempo 80 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A smooth, atmospheric, and slightly melancholic electronic track featuring a prominent synth melody, pads, and a subtle beat. It has a reflective and calm feel.",
+    "zh": "这是一个流畅、大气且略带忧郁的电子音乐片段，以突出的合成器旋律、衬底音和微妙的节拍为特色。它给人一种沉思和平静的感觉。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "calm scientific observation with a gentle clear pulse"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:32:08.700447+00:00",
+  "generation": {
+    "id": "2b05d2f4-aa94-4b89-afe1-4b0fa1ae0a76",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:31:26.515775+00:00",
+    "completedAt": "2026-09-22T09:32:08.700447+00:00",
+    "interactionId": "70qyarfmC7bi694PucGn6Ac",
+    "sha256": "d34de66db690b2789f4d681f88d860390d7bda2762602cd68efa66ac950a7f5e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, atmospheric, and slightly melancholic electronic track featuring a prominent synth melody, pads, and a subtle beat. It has a reflective and calm feel.",
+      "zh": "这是一个流畅、大气且略带忧郁的电子音乐片段，以突出的合成器旋律、衬底音和微妙的节拍为特色。它给人一种沉思和平静的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Pads"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Atmospheric",
+      "Smooth",
+      "Melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Well-produced, clear, and emotionally evocative, suitable for background or reflective content.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a clear synth melody and pads. It ends with a deliberate fade-out of synth pads and a final soft note.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:32:32.742299+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1269071df930abd0ffae4edbccee9811a39f2f95004be7a457730c9ddf7d9243"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.488125,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, atmospheric electronic track featuring synth pads, arpeggios, and a steady beat, creating a calm and slightly futuristic vibe.",
+      "zh": "这是一首流畅、大气的电子音乐，以合成器铺垫、琶音和稳定的节拍为特色，营造出平静而略带未来感的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Uplifting",
+      "Dreamy",
+      "Futuristic",
+      "Chill",
+      "Atmospheric",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:32:24.685967+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 43.488125,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-ambient-15/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-ambient-15/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-ambient-15/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1269071df930abd0ffae4edbccee9811a39f2f95004be7a457730c9ddf7d9243",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d34de66db690b2789f4d681f88d860390d7bda2762602cd68efa66ac950a7f5e",
+      "bytes": 1411383,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8e7e28b528266206b4f8c6208b2b7ba3cde14643f225e40d9d055977844b4f9f",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.451086+00:00"
+}

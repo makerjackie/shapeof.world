@@ -1,0 +1,311 @@
+.ew-experience {
+  --ew-amber: #ffab5e;
+  --ew-amber-hot: #ffd9a3;
+  --ew-ink: #060309;
+  --world-accent: var(--ew-amber);
+
+  /* 壳层面板材质：不透明近黑 + 一点暖边，与星空气质一致 */
+  --experience-panel-surface: rgba(10, 7, 12, 0.92);
+  --experience-panel-border: rgba(255, 178, 108, 0.16);
+  --experience-panel-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  --experience-panel-blur: 20px;
+  --experience-panel-saturation: 1.15;
+  --experience-panel-radius: 16px;
+  --freebar-accent: var(--ew-amber);
+  --freebar-ink: rgba(255, 246, 234, 0.94);
+}
+
+.ew-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+.ew-canvas:active {
+  cursor: grabbing;
+}
+
+/* 电影感暗角：属于舞台调度，不是 overlay，沉浸模式下保留 */
+.ew-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 78% 68% at 44% 46%, transparent 58%, rgba(3, 4, 10, 0.42) 100%);
+}
+
+/* ===== 顶左铭牌 ===== */
+.ew-plaque {
+  position: absolute;
+  z-index: 10;
+  top: var(--experience-safe-top);
+  left: 22px;
+  max-width: 320px;
+  pointer-events: none;
+}
+.ew-plaque h1 {
+  margin: 0;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: clamp(18px, 2.3vw, 26px);
+  font-weight: 500;
+  color: #fdf6ec;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+  letter-spacing: 0.02em;
+}
+.ew-plaque p {
+  margin: 7px 0 0;
+  color: rgba(255, 240, 222, 0.62);
+  font-size: 12px;
+  line-height: 1.6;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* ===== 公式卡片 ===== */
+.ew-card-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 2, 8, 0.35);
+}
+.ew-card {
+  position: relative;
+  width: min(430px, 100%);
+  max-height: min(72dvh, 560px);
+  overflow-y: auto;
+  padding: 22px 24px 20px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(255, 150, 60, 0.13), transparent 55%),
+    rgba(12, 8, 14, 0.94);
+  border: 1px solid rgba(255, 178, 108, 0.22);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 220, 180, 0.08);
+  backdrop-filter: blur(18px) saturate(1.2);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  animation: ew-card-in 0.28s cubic-bezier(0.2, 0.9, 0.25, 1.2);
+}
+@keyframes ew-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.ew-card-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 244, 230, 0.85);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.ew-card-close:hover {
+  background: rgba(255, 170, 90, 0.2);
+}
+.ew-card-formula {
+  display: flex;
+  justify-content: center;
+  padding: 16px 10px 14px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 178, 108, 0.12);
+  overflow-x: auto;
+}
+.ew-formula-view {
+  max-width: 100%;
+  height: auto;
+}
+.ew-card-name {
+  margin: 4px 0 0;
+  font-family: var(--serif, 'Noto Serif SC', serif);
+  font-size: 21px;
+  font-weight: 600;
+  color: #fff4e4;
+  letter-spacing: 0.01em;
+}
+.ew-card-by {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--ew-amber);
+  letter-spacing: 0.03em;
+}
+.ew-card-what {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255, 240, 224, 0.82);
+}
+
+/* ===== Freebar 业务控件 ===== */
+.ew-freebar .experience-freebar-primary {
+  flex-wrap: nowrap;
+}
+.ew-freebar .experience-freebar-primary > .ew-scenes,
+.ew-freebar .experience-freebar-primary > .ew-speed-field {
+  order: 0;
+}
+.ew-chip-rail {
+  align-items: center;
+}
+.ew-scenes {
+  gap: 4px;
+  scroll-padding-inline: 4px;
+}
+.ew-scene-button {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(255, 240, 224, 0.7);
+  font: inherit;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ew-scene-button.is-active {
+  background: rgba(255, 178, 108, 0.12);
+  border-color: rgba(255, 178, 108, 0.32);
+  color: #ffe0b4;
+}
+.ew-scene-button:focus-visible {
+  outline: 2px solid #ffe0b4;
+  outline-offset: -3px;
+}
+.ew-freebar .ew-speed-field {
+  grid-template-columns: 1fr auto;
+  gap: 0 6px;
+  flex: 1 1 140px;
+  min-width: 110px;
+  max-width: 250px;
+}
+.ew-speed-field input {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  min-width: 0;
+}
+.ew-speed-field b {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--ew-amber-hot);
+  font-size: 11px;
+}
+.ew-freebar .ew-chip-rail {
+  flex-wrap: nowrap;
+}
+@media (max-width: 720px) {
+  .ew-freebar .experience-freebar-primary {
+    flex-wrap: wrap;
+  }
+  .ew-freebar .experience-freebar-primary > .ew-scenes {
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: calc(100vw - 48px);
+  }
+  .ew-scene-button { padding-inline: 11px; }
+  .ew-freebar .ew-speed-field {
+    min-width: 90px;
+    flex-basis: 100px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ew-card {
+    animation: none;
+  }
+  .ew-fly {
+    transition: none;
+  }
+}
+.ew-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 210, 170, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 240, 224, 0.78);
+  font-size: 12.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.ew-chip:hover {
+  border-color: rgba(255, 178, 108, 0.45);
+  color: #ffe9d2;
+}
+.ew-chip.is-active {
+  background: rgba(255, 154, 60, 0.18);
+  border-color: rgba(255, 154, 60, 0.55);
+  color: var(--ew-amber-hot);
+}
+
+/* 故事（高光）模式：舞台文字位置微调，避开黑洞口左下的视觉重心 */
+.ew-experience.is-story .guide-tour[data-guide-world='equation-wormhole'] .guide-stage-title {
+  max-width: 13em;
+  font-size: clamp(26px, 3vw, 44px);
+  line-height: 1.12;
+}
+.ew-experience.is-story .guide-tour[data-guide-world='equation-wormhole'] .guide-stage-body {
+  max-width: 30em;
+  margin-top: 12px;
+}
+
+@media (max-width: 720px) {
+  .ew-plaque {
+    left: 16px;
+    max-width: 240px;
+  }
+  .ew-card-wrap {
+    align-items: flex-end;
+    padding: 12px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+  .ew-card {
+    width: 100%;
+    max-height: 62dvh;
+    padding: 18px 18px 16px;
+  }
+}
+
+/* ===== 公式从墙里飞出 ===== */
+.ew-fly {
+  position: absolute;
+  z-index: 40;
+  pointer-events: none;
+  transition: left 0.52s cubic-bezier(0.22, 0.9, 0.24, 1), top 0.52s cubic-bezier(0.22, 0.9, 0.24, 1),
+    width 0.52s cubic-bezier(0.22, 0.9, 0.24, 1), opacity 0.3s ease 0.28s;
+}
+
+/* Phones: bright lines and formulas run under the story caption, so it gets a soft dark backing. */
+@media (max-width: 720px) {
+  .ew-experience.is-story .guide-stage-copy::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -16px -12px -14px;
+    border-radius: 26px;
+    background: rgba(2, 3, 8, 0.74);
+    filter: blur(13px);
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "id": "scene-soul-15",
+  "code": "SCENE-08-15",
+  "title": {
+    "en": "Warm Circuit · 15",
+    "zh": "温暖电路 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "warm human-centered product story",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "muted brass",
+    "electric bass",
+    "snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for warm human-centered product story. Instruments: electric piano, muted brass, electric bass, snare. 100 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively big band jazz track featuring a prominent brass section, walking bass, and drums, creating a cheerful and energetic atmosphere.",
+    "zh": "一首欢快活泼的大乐队爵士乐曲，以突出的铜管乐器、行进贝斯和鼓点为特色，营造出愉悦而充满活力的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "warm human-centered product story"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:13:15.422516+00:00",
+  "generation": {
+    "id": "6577c9d3-5506-4747-a75a-66b4d7a1ec30",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:12:59.551506+00:00",
+    "completedAt": "2026-09-22T09:13:15.422516+00:00",
+    "interactionId": "nEayasO8FpqE694P7omguQ0",
+    "sha256": "6e3a6b915f65f37c9db0dac919382d6550a2def594354f8aca39bc88b3f6db9b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively big band jazz track featuring a prominent brass section, walking bass, and drums, creating a cheerful and energetic atmosphere.",
+      "zh": "一首欢快活泼的大乐队爵士乐曲，以突出的铜管乐器、行进贝斯和鼓点为特色，营造出愉悦而充满活力的氛围。"
+    },
+    "instruments": [
+      "Brass section",
+      "Drums",
+      "Bass",
+      "Piano"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Cheerful",
+      "Energetic",
+      "Jazzy",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, dynamic, and catchy big band jazz, suitable for various positive and energetic media placements.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a full, energetic brass melody and rhythmic drive. It concludes with a smooth, deliberate fade-out of the main musical theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:30.932453+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "f3c5c5fdef9a9216b6b126e8ef8f68cc22f128b2203e9125da6370fde5e000d9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.126458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful instrumental track featuring a prominent brass section, lively drums, and a driving bassline. It has a celebratory and slightly retro feel, reminiscent of big band or funk-pop.",
+      "zh": "一首欢快活泼的纯音乐，以突出的铜管乐器、活泼的鼓点和有力的贝斯线为特色。它带有一种庆祝和略带复古的感觉，让人联想到大乐队或放克流行乐。"
+    },
+    "instruments": [
+      "Brass Section",
+      "Drums",
+      "Bass Guitar",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Celebratory",
+      "Energetic",
+      "Funky",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:13:23.067102+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 14.126458,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-soul-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-soul-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-soul-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f3c5c5fdef9a9216b6b126e8ef8f68cc22f128b2203e9125da6370fde5e000d9",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6e3a6b915f65f37c9db0dac919382d6550a2def594354f8aca39bc88b3f6db9b",
+      "bytes": 706703,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "19d376c96b59b0054cec096bea5779caccb2cf259925233bb225923814297933",
+      "bytes": 2805,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.850987+00:00"
+}

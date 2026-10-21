@@ -1,0 +1,103 @@
+{
+  "id": "lib-oud-focus",
+  "code": "LIB-20-02",
+  "title": {
+    "en": "Focus — Oud",
+    "zh": "专注 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "focused",
+    "steady",
+    "precise"
+  ],
+  "topics": [
+    "focus",
+    "oud"
+  ],
+  "energy": 3,
+  "bpm": 98,
+  "key": "A minor",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Create an original 120 second Middle Eastern acoustic instrumental instrumental composition for coding, deep work and analytical tasks. Mood: focused, steady, precise. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 98 BPM; A minor. Main idea: a compact three-note motif. Keep a stable repeating texture with very few distracting fills. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:40] Establish the main idea immediately with the core ensemble. [00:40-01:20] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:20-02:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "focus"
+  ],
+  "description": {
+    "en": "A traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by acoustic bass, rhythmic percussion, and sustained string harmonies.",
+    "zh": "一首传统中东器乐曲，以突出的乌德琴旋律为主，辅以原声贝斯、有节奏的打击乐和持续的弦乐和声。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 118.779,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:51:39.371543+00:00",
+  "generation": {
+    "id": "4fe41303-2fd0-4213-8e2f-5169a2c259b3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:50:50.339022+00:00",
+    "completedAt": "2026-09-09T08:51:39.371543+00:00",
+    "interactionId": "6x2haoGjDNOJoLAPwd-WiAQ",
+    "sha256": "f0ca46a98de85d56598b933c89902cb1a008a595058307ce3e22f7e00be7c9f7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A traditional Middle Eastern instrumental piece featuring a prominent oud melody, supported by acoustic bass, rhythmic percussion, and sustained string harmonies.",
+      "zh": "一首传统中东器乐曲，以突出的乌德琴旋律为主，辅以原声贝斯、有节奏的打击乐和持续的弦乐和声。"
+    },
+    "instruments": [
+      "Oud",
+      "Acoustic Bass",
+      "Frame Drum",
+      "Darbuka",
+      "Violin"
+    ],
+    "moods": [
+      "Middle Eastern",
+      "Traditional",
+      "Folk",
+      "Contemplative",
+      "Rhythmic",
+      "Melancholic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:52:07.414960+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-focus/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-focus/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-focus/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:53:03.978399+00:00"
+}

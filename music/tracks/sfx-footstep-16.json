@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-16",
+  "code": "SFX-FOOTSTEP-16",
+  "title": {
+    "en": "Sneak",
+    "zh": "轻声潜行"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 15,
+  "seed": 198474154,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized sneak for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的轻声潜行合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 198474154,
+    "sha256": "b3fcd3f9a724ccea304a53a077cc4716b1e1e59867dffa2814e6daaea4614871",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "33eb04b9e615998993cc59e070c1a14ce5b6042a17c716a53b9bd895e71cf568",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b3fcd3f9a724ccea304a53a077cc4716b1e1e59867dffa2814e6daaea4614871",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ec394541c5ca5b796048fee125b48511f4563fdf4a906036e167bdf0922d0402",
+      "bytes": 10306,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "416ae6e31a15933dc0a4be56f0fe335efe074cb9dcad87f9364d3238d27debdf",
+      "bytes": 1935,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.74,
+    "dcOffset": -1.3307857197366126e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.21121398925781198,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or whoosh sound effect, with a quick attack and decay.",
+      "zh": "一个短促、高音调的电子“滋啦”或“嗖”声效果，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:13.233572+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "33eb04b9e615998993cc59e070c1a14ce5b6042a17c716a53b9bd895e71cf568"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.870853+00:00"
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>元素的四种秩序 · OneWorld</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<meta property="og:title" content="元素的四种秩序 · OneWorld">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://threejs.org/examples/css3d_periodictable.html">
+		<meta property="og:image" content="https://threejs.org/examples/screenshots/css3d_periodictable.jpg">
+		<style>
+			html, body {
+				height: 100%;
+				overflow: hidden;
+				background: radial-gradient(circle at 50% 45%, #062a2f 0%, #02090b 42%, #000 72%);
+			}
+
+			a {
+				color: #8ff;
+			}
+
+			#menu {
+				position: absolute;
+				z-index: 8;
+				bottom: 24px;
+				width: 100%;
+				text-align: center;
+			}
+
+			#info {
+				top: 18px;
+				left: 22px;
+				width: auto;
+				padding: 0;
+				text-align: left;
+				font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+				letter-spacing: .04em;
+			}
+
+			#info strong { display: block; font-family: Georgia, "Songti SC", serif; font-size: 22px; font-weight: 400; }
+			#info span { display: block; margin-top: 5px; color: rgba(175, 242, 238, .58); font-size: 11px; }
+
+			.element {
+				width: 120px;
+				height: 160px;
+				box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+				border: 1px solid rgba(127,255,255,0.25);
+				font-family: Helvetica, sans-serif;
+				text-align: center;
+				line-height: normal;
+				cursor: pointer;
+				transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+			}
+
+			.element:hover {
+				box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+				border: 1px solid rgba(127,255,255,0.75);
+			}
+
+			.element:focus-visible,
+			.element.is-selected {
+				border-color: rgba(255, 218, 137, .95);
+				box-shadow: 0 0 0 2px rgba(255, 218, 137, .24), 0 0 28px rgba(0, 255, 255, .72);
+				outline: none;
+			}
+
+				.element .number {
+					position: absolute;
+					top: 20px;
+					right: 20px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+				.element .symbol {
+					position: absolute;
+					top: 40px;
+					left: 0px;
+					right: 0px;
+					font-size: 60px;
+					font-weight: bold;
+					color: rgba(255,255,255,0.75);
+					text-shadow: 0 0 10px rgba(0,255,255,0.95);
+				}
+
+				.element .details {
+					position: absolute;
+					bottom: 15px;
+					left: 0px;
+					right: 0px;
+					font-size: 12px;
+					color: rgba(127,255,255,0.75);
+				}
+
+			button {
+				color: rgba(127,255,255,0.75);
+				min-height: 42px;
+				margin: 0 3px;
+				background: rgba(0, 18, 21, .72);
+				outline: 1px solid rgba(127,255,255,0.75);
+				border: 0px;
+				padding: 8px 14px;
+				cursor: pointer;
+				font-size: 12px;
+				letter-spacing: .08em;
+			}
+
+			button:hover {
+				background-color: rgba(0,255,255,0.5);
+			}
+
+			button:active {
+				color: #000000;
+				background-color: rgba(0,255,255,0.75);
+			}
+
+			button.is-active { color: #001416; background: rgba(127,255,255,.9); }
+
+			#detail {
+				position: absolute;
+				z-index: 9;
+				top: 86px;
+				right: 22px;
+				width: min(310px, calc(100vw - 44px));
+				box-sizing: border-box;
+				padding: 20px 22px 18px;
+				color: rgba(222, 251, 248, .84);
+				border: 1px solid rgba(127,255,255,.28);
+				background: rgba(1, 16, 19, .86);
+				box-shadow: 0 22px 70px rgba(0,0,0,.48);
+				backdrop-filter: blur(18px);
+				font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+				opacity: 0;
+				pointer-events: none;
+				transform: translateY(-8px);
+				transition: opacity 180ms ease, transform 180ms ease;
+			}
+
+			#detail.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+			#detail small { color: rgba(127,255,255,.58); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+			#detail h2 { margin: 8px 0 4px; color: #fff; font-family: Georgia, "Songti SC", serif; font-size: 36px; font-weight: 400; line-height: 1; }
+			#detail h2 span { margin-left: 8px; color: #8ff; font-family: Helvetica, sans-serif; font-size: 17px; }
+			#detail dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 17px 0 14px; }
+			#detail dt { color: rgba(127,255,255,.5); font-size: 9px; }
+			#detail dd { margin: 4px 0 0; color: #fff; font-size: 13px; }
+			#detail p { margin: 0; font-size: 13px; line-height: 1.7; }
+			#detail a { display: inline-flex; margin-top: 14px; font-size: 11px; }
+			#detail .data-note { margin-top: 10px; color: rgba(222, 251, 248, .52); font-size: 10px; line-height: 1.55; }
+			#detail .data-note a { display: inline; margin: 0; color: rgba(127,255,255,.72); }
+
+			@media (max-width: 720px) {
+				#info { top: 14px; left: 16px; }
+				#info strong { font-size: 18px; }
+				#menu { bottom: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; box-sizing: border-box; padding: 0 12px; }
+				#menu button { min-width: 0; margin: 0; padding: 7px 4px; font-size: 10px; }
+				#detail { top: auto; right: 12px; bottom: 66px; left: 12px; width: auto; padding: 15px 16px; }
+				#detail h2 { font-size: 28px; }
+				#detail p { font-size: 12px; line-height: 1.55; }
+				.element { width: 100px; height: 132px; }
+				.element .symbol { top: 35px; font-size: 48px; }
+			}
+		</style>
+		<script type="module" crossorigin src="/vendor/periodic-table/assets/index-CIki_Sa2.js"></script>
+		<link rel="stylesheet" crossorigin href="/vendor/periodic-table/assets/index-Bf2yGvuS.css">
+	</head>
+	<body>
+
+		<div id="info"><strong>元素的四种秩序</strong><span>拖动空间，点击任一元素</span></div>
+		<div id="container"></div>
+		<aside id="detail" aria-live="polite" aria-label="元素资料">
+			<small id="detail-kicker">第 1 号元素</small>
+			<h2 id="detail-title">Hydrogen <span>H</span></h2>
+			<dl>
+				<div><dt>原子序数</dt><dd id="detail-number">1</dd></div>
+				<div><dt id="detail-mass-label">相对原子质量</dt><dd id="detail-mass">1.0080 ± 0.0002</dd></div>
+				<div><dt>位置</dt><dd id="detail-position">第 1 周期 · 第 1 族</dd></div>
+			</dl>
+			<p id="detail-story">宇宙中最丰富、也最轻的元素；恒星正通过聚变把它变成更重的元素。</p>
+			<a id="detail-source" href="https://zh.wikipedia.org/wiki/氢" target="_blank" rel="noopener">继续查阅资料 →</a>
+			<p class="data-note">原子量采用 <a href="https://ciaaw.org/abridged-atomic-weights.htm" target="_blank" rel="noopener">CIAAW 2024</a>；方括号表示代表性同位素质量数。</p>
+		</aside>
+		<div id="menu">
+			<button id="table" type="button">周期表</button>
+			<button id="sphere" type="button">球体</button>
+			<button id="helix" type="button">螺旋</button>
+			<button id="grid" type="button">晶格</button>
+		</div>
+
+	</body>
+</html>

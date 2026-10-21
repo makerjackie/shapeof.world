@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-10",
+  "code": "SFX-IMPACT-10",
+  "title": {
+    "en": "Plastic snap",
+    "zh": "塑料卡扣"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 9,
+  "seed": 1190993705,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized plastic snap for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的塑料卡扣合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.76,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1190993705,
+    "sha256": "8ef256ba466ec3972dc92096f5bf30fa9574162e6f270ce90a995610c5800833",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2ade1799e03d3c6778c45edd95bf3bb9897224749fb2947fdaed2ef8e73aaf1e",
+      "bytes": 11746,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8ef256ba466ec3972dc92096f5bf30fa9574162e6f270ce90a995610c5800833",
+      "bytes": 67076,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b8133dee19fcce098acc28fcd273f972cbc44ba7d8634801a14d968f329c2ded",
+      "bytes": 8121,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "6f3db6aa2d1d32014a16e54b52efda180fa5f5e74e8ed6e0c8e94a9fc3e6d6c2",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 33516,
+    "duration": 0.76,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.09,
+    "dcOffset": -5.4632255862871465e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.06882513427734227,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, resonant metallic impact sound, like a small bell or chime.",
+      "zh": "一个短促、有共鸣的金属撞击声，类似于小铃铛或钟琴。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined metallic impact, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:03.949795+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "2ade1799e03d3c6778c45edd95bf3bb9897224749fb2947fdaed2ef8e73aaf1e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 33516
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.877529+00:00"
+}

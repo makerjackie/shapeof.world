@@ -1,0 +1,103 @@
+{
+  "id": "lib-downtempo-reading",
+  "code": "LIB-25-01",
+  "title": {
+    "en": "Reading — Downtempo",
+    "zh": "静读 · 缓拍电子"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "downtempo"
+  ],
+  "energy": 1,
+  "bpm": 84,
+  "key": "D major",
+  "instruments": [
+    "analog bass",
+    "soft breakbeat",
+    "electric piano",
+    "pluck synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second downtempo electronica instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: analog bass, soft breakbeat, electric piano, pluck synth. Style: steady restrained broken beat with wide atmospheric space. Tempo approximately 84 BPM; D major. Main idea: a descending melody with an upward answer. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "downtempo"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A serene and meditative ambient piece featuring gentle piano melodies, soft synth pads, and subtle percussion, creating a peaceful and calming atmosphere.",
+    "zh": "一首宁静冥想的环境音乐，以柔和的钢琴旋律、轻柔的合成器衬垫和微妙的打击乐器为特色，营造出平和安宁的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 57.208,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:06:13.064930+00:00",
+  "generation": {
+    "id": "35bcb32b-7784-4810-8d99-5021fba66a56",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:05:30.438578+00:00",
+    "completedAt": "2026-09-09T09:06:13.064930+00:00",
+    "interactionId": "WyGhapb7GfLTi9sPs7ej0QE",
+    "sha256": "155385e5cd7a4e97fb1e5bea20a39ad62116e5a094b0e6b983a67f82702ae60d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and meditative ambient piece featuring gentle piano melodies, soft synth pads, and subtle percussion, creating a peaceful and calming atmosphere.",
+      "zh": "一首宁静冥想的环境音乐，以柔和的钢琴旋律、轻柔的合成器衬垫和微妙的打击乐器为特色，营造出平和安宁的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Synthesizer",
+      "Percussion",
+      "Bass"
+    ],
+    "moods": [
+      "Peaceful",
+      "Serene",
+      "Calm",
+      "Meditative",
+      "Ambient",
+      "Relaxing"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:28:41.120194+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-downtempo-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-downtempo-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-downtempo-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:29:05.393620+00:00"
+}

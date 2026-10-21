@@ -1,0 +1,130 @@
+{
+  "id": "ambience-space-04",
+  "code": "AMB-SPACE-04",
+  "title": {
+    "en": "Deep-space vessel · designed ambience",
+    "zh": "深空飞船 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "space",
+  "designIndex": 3,
+  "seed": 1056737880,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized deep-space vessel atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "深空飞船的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "space",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-space"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-space-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-space-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-space-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-space-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1056737880,
+    "sha256": "6e919ad77af4f102e3dce4162e2035bcc535c762e30c2b1d59f36267d86bfb5f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e3d246670d220759aa1ac84aec17ebd369bc5abfea93a8cd007a83bbb398b644",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6e919ad77af4f102e3dce4162e2035bcc535c762e30c2b1d59f36267d86bfb5f",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "d5dd39404ce98db7df39a55ede2e616514c55a526379842cfce8ae2ed09432d3",
+      "bytes": 185608,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0d447b9bb3246d52e743df5ddda843a4055f4da2cbbc8671a388e694e5469828",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.79,
+    "rmsDbfs": -17.08,
+    "dcOffset": -3.875248015873016e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.000244140625,
+    "internalStepP999": 0.01995849609375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthetic, evolving, and somewhat metallic ambient texture. It features a high-frequency shimmer or hiss layered over a subtly shifting low-frequency drone, creating a sense of internal movement and digital atmosphere. The sound is continuous and without abrupt changes.",
+      "zh": "一种合成的、不断演变的、略带金属感的环境纹理。它具有高频的闪烁或嘶嘶声，叠加在微妙变化的低频嗡鸣声之上，营造出一种内部运动和数字氛围。声音连续且没有突然的变化。"
+    },
+    "reason": "The audio provides a clean, evolving synthetic texture suitable for various sound design applications, particularly for ambient or sci-fi contexts. No defects like clipping or unwanted noise were detected. The loop points are perfectly seamless, making it ideal for continuous background elements.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:04.755586+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "ddd98c77b3f38b84ddf3a599bb72d6f04912e38e2cc0d1dfb033d34d9b2ef50d"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.857398+00:00"
+}

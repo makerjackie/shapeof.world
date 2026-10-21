@@ -1,0 +1,64 @@
+{
+  "id": "hidden-shapes",
+  "code": "GLO-B01",
+  "title": {
+    "en": "Shape of the World",
+    "zh": "世界的形状"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "moods": [
+    "curious",
+    "light",
+    "vast",
+    "steady"
+  ],
+  "topics": [
+    "pattern",
+    "knowledge-universe",
+    "discovery"
+  ],
+  "energy": 3,
+  "bpm": 130,
+  "key": "C major",
+  "instruments": [
+    "rising synth arpeggio",
+    "half-time kick",
+    "closed hi-hat",
+    "rim",
+    "wide pad"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 143.047,
+  "prompt": "Create a 2 minute 30 second instrumental. Half-time grandeur plus a light fast groove.\n\nCount it as 130 BPM on the hats, but the kick lands in half-time so the body of the song feels like 65 BPM walking through a large space. Bright rising synth arpeggio. Soft snare or rim on the slow backbeat. Warm wide pad, low. Optimistic, not ominous. Website theme, not a trailer.\n\nInstrumental only. No vocals. No choir. No sudden climax. The half-time kick must keep beating from the first bar to the last.\n\n[00:00-00:12] Half-time kick, hats, arpeggio all in.\n[00:12-01:10] Groove locked. A short lead sings without covering the kick.\n[01:10-01:55] Pads a bit wider. Kick still on the slow grid.\n[01:55-02:30] Opening texture, pulse intact.",
+  "recommendedWorldIds": [
+    "fourier",
+    "cell-architecture",
+    "solar-system"
+  ],
+  "role": "main-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T12:28:27Z",
+  "generation": {
+    "id": "477b7eb0-7d6b-4262-8984-5ec257f1b8bb",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T12:27:32Z",
+    "completedAt": "2026-08-25T12:28:27Z",
+    "durationMs": 55000,
+    "interactionId": "OYqNavuLLNSIoLAPiazGWA",
+    "clientRequestId": "91812246-501f-4449-bc31-a4f4a79d7211",
+    "synthid": true,
+    "c2pa": "urn:c2pa:c024a67e-bce4-6aa2-3987-4c28c44dc6c7",
+    "sha256": "1da3b9e3b6b4ea94109f91f58fd040fe6e7ab368bec9e0f41e61ee1e5376c09b"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/hidden-shapes/v3/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/hidden-shapes/v3/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/hidden-shapes/v3/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:16.969648+00:00"
+}

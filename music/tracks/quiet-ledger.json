@@ -1,0 +1,58 @@
+{
+  "id": "quiet-ledger",
+  "code": "SOC-A01",
+  "title": {
+    "en": "Quiet Ledger",
+    "zh": "安静的账本"
+  },
+  "category": "economy-society",
+  "archetype": "ambient",
+  "moods": [
+    "circular",
+    "civil",
+    "balanced",
+    "soft"
+  ],
+  "topics": [
+    "money-circulation",
+    "exchange",
+    "balance"
+  ],
+  "energy": 1,
+  "bpm": 62,
+  "key": "F major",
+  "instruments": [
+    "answering pianos",
+    "soft strings",
+    "muted bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.547,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about money circulating as answering payments. Around 62 BPM, F major. Two pianos exchange short phrases like double-entry; muted bass keeps a balanced pedal; strings are the town around the ledger. Civil, circular, soft. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No luxury-brand gloss, no tense thriller ostinato.\n\n[00:00–00:25] Piano A states a three-note payment.\n[00:25–01:05] Piano B answers; phrases circulate; bass enters.\n[01:05–01:50] Strings widen; the exchange continues, never accumulating loudness.\n[01:50–02:30] Back to one piano, books closed.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:21:36Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/quiet-ledger/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/quiet-ledger/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/quiet-ledger/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:00.433316+00:00",
+  "generation": {
+    "id": "b69f3b0d-0a7c-4f62-8853-289c6df33bae",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:20:50Z",
+    "completedAt": "2026-08-25T10:21:36Z",
+    "durationMs": 46000,
+    "interactionId": "g2yNapPFOK_9694PitypwQg",
+    "clientRequestId": "9a77397d-9565-485b-bcbf-b3c0aa1ab487",
+    "synthid": true,
+    "c2pa": "urn:c2pa:be078a66-bbb4-6f46-476d-47ffb8814921",
+    "sha256": "d2013982a82aeefd09573ed10deb40557a3155dc6a44a5be50440c4211bd90fc"
+  }
+}

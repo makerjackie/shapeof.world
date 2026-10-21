@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-02",
+  "code": "SFX-WATER-02",
+  "title": {
+    "en": "Twin drops",
+    "zh": "双滴水声"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 1,
+  "seed": 1172982596,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized twin drops for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的双滴水声合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.49,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-02/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-02/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-02/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-02/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1172982596,
+    "sha256": "518cfee6035b877469bbb69721e4acd4432cbac2286a240a8898e3e197248239",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "5b9d380e4c60687d116e978ce56c597cda1d62009d5d0733b0b2d7baa54bc6ac",
+      "bytes": 7723,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "518cfee6035b877469bbb69721e4acd4432cbac2286a240a8898e3e197248239",
+      "bytes": 43262,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "28d449a16fdab4b880cd70b029898a8f7521e636e5587837a9a452786f6f5641",
+      "bytes": 5855,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d30150ae59e98404754fd624e867f727859ded7423572397d3aedc137f0660bc",
+      "bytes": 1910,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 21609,
+    "duration": 0.49,
+    "peakDbfs": -2.66,
+    "rmsDbfs": -17.08,
+    "dcOffset": -9.60338429589523e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.05658505249023438,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic blip or boop sound effect.",
+      "zh": "一个短促、高音调的电子提示音或嘟嘟声效果。"
+    },
+    "reason": "The sound is a clear, clean, and intentionally synthesized electronic effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:31.821473+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "5b9d380e4c60687d116e978ce56c597cda1d62009d5d0733b0b2d7baa54bc6ac"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 21609
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.910232+00:00"
+}

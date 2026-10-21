@@ -1,0 +1,1299 @@
+{
+  "schemaVersion": 1,
+  "batch": "scene-audio-2026-09",
+  "candidate": "c2",
+  "tracks": [
+    {
+      "id": "scene-funk-25",
+      "code": "SCENE-01-25",
+      "title": {
+        "en": "Pocket Camera · 25",
+        "zh": "口袋相机 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "syncopated stop-motion product reveal",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 112,
+      "key": "",
+      "instruments": [
+        "muted guitar",
+        "elastic bass",
+        "dry drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in funk style. Use muted guitar, elastic bass, dry drums. Tempo 112 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "funk"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "syncopated stop-motion product reveal",
+        "zh": "口袋相机，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "syncopated stop-motion product reveal"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-breakbeat-15",
+      "code": "SCENE-02-15",
+      "title": {
+        "en": "Rapid Assembly · 15",
+        "zh": "快速组装 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "precise fast-cut making-of montage",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 138,
+      "key": "",
+      "instruments": [
+        "breakbeat drums",
+        "marimba",
+        "rounded synth bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in breakbeat style. Use breakbeat drums, marimba, rounded synth bass. Tempo 138 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "breakbeat"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "precise fast-cut making-of montage",
+        "zh": "快速组装，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "precise fast-cut making-of montage"
+        ]
+      },
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-chiptune-15",
+      "code": "SCENE-05-15",
+      "title": {
+        "en": "Pocket Planet · 15",
+        "zh": "口袋星球 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "playful original pixel-art motion",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 142,
+      "key": "",
+      "instruments": [
+        "pulse-wave lead",
+        "triangle bass",
+        "crisp electronic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in chiptune style. Use pulse-wave lead, triangle bass, crisp electronic drums. Tempo 142 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chiptune"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "playful original pixel-art motion",
+        "zh": "口袋星球，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "playful original pixel-art motion"
+        ]
+      },
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-chiptune-90",
+      "code": "SCENE-05-90",
+      "title": {
+        "en": "Pocket Planet · 90",
+        "zh": "口袋星球 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "playful original pixel-art motion",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 142,
+      "key": "",
+      "instruments": [
+        "pulse-wave lead",
+        "triangle bass",
+        "crisp electronic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. pulse-wave lead, triangle bass, crisp electronic drums. 142 BPM, chiptune character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "chiptune"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "playful original pixel-art motion",
+        "zh": "口袋星球，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "playful original pixel-art motion"
+        ]
+      }
+    },
+    {
+      "id": "scene-jazz-trio-15",
+      "code": "SCENE-07-15",
+      "title": {
+        "en": "Morning Notes · 15",
+        "zh": "清晨笔记 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "nimble elegant process film",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 124,
+      "key": "",
+      "instruments": [
+        "acoustic piano",
+        "brushed drums",
+        "double bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in jazz-trio style. Use acoustic piano, brushed drums, double bass. Tempo 124 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "jazz-trio"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "nimble elegant process film",
+        "zh": "清晨笔记，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "nimble elegant process film"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-jazz-trio-25",
+      "code": "SCENE-07-25",
+      "title": {
+        "en": "Morning Notes · 25",
+        "zh": "清晨笔记 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "nimble elegant process film",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 124,
+      "key": "",
+      "instruments": [
+        "acoustic piano",
+        "brushed drums",
+        "double bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in jazz-trio style. Use acoustic piano, brushed drums, double bass. Tempo 124 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "jazz-trio"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "nimble elegant process film",
+        "zh": "清晨笔记，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "nimble elegant process film"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-dub-40",
+      "code": "SCENE-09-40",
+      "title": {
+        "en": "Floating Objects · 40",
+        "zh": "漂浮物件 · 40"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "spacious playful object transformations",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 94,
+      "key": "",
+      "instruments": [
+        "organ stabs",
+        "deep bass",
+        "rimshot",
+        "short tape echo"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 40,
+      "prompt": "Create a complete original 60-second instrumental cue in dub style. Use organ stabs, deep bass, rimshot, short tape echo. Tempo 94 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "dub"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "spacious playful object transformations",
+        "zh": "漂浮物件，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "spacious playful object transformations"
+        ]
+      },
+      "shortForm": {
+        "use": "lifestyle",
+        "targetSeconds": 40,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-acoustic-folk-25",
+      "code": "SCENE-10-25",
+      "title": {
+        "en": "Handmade Map · 25",
+        "zh": "手作地图 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "optimistic craft and travel sequence",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 114,
+      "key": "",
+      "instruments": [
+        "fingerstyle guitar",
+        "mandolin",
+        "hand percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in acoustic-folk style. Use fingerstyle guitar, mandolin, hand percussion. Tempo 114 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "acoustic-folk"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "optimistic craft and travel sequence",
+        "zh": "手作地图，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "optimistic craft and travel sequence"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-guzheng-15",
+      "code": "SCENE-11-15",
+      "title": {
+        "en": "Porcelain Steps · 15",
+        "zh": "瓷器轻步 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "modern material and design close-ups",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 118,
+      "key": "",
+      "instruments": [
+        "guzheng",
+        "plucked bass",
+        "dry electronic percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in guzheng style. Use guzheng, plucked bass, dry electronic percussion. Tempo 118 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "guzheng"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "modern material and design close-ups",
+        "zh": "瓷器轻步，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "modern material and design close-ups"
+        ]
+      },
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-guzheng-25",
+      "code": "SCENE-11-25",
+      "title": {
+        "en": "Porcelain Steps · 25",
+        "zh": "瓷器轻步 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "modern material and design close-ups",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 118,
+      "key": "",
+      "instruments": [
+        "guzheng",
+        "plucked bass",
+        "dry electronic percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in guzheng style. Use guzheng, plucked bass, dry electronic percussion. Tempo 118 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "guzheng"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "modern material and design close-ups",
+        "zh": "瓷器轻步，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "modern material and design close-ups"
+        ]
+      },
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-guzheng-90",
+      "code": "SCENE-11-90",
+      "title": {
+        "en": "Porcelain Steps · 90",
+        "zh": "瓷器轻步 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "modern material and design close-ups",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 118,
+      "key": "",
+      "instruments": [
+        "guzheng",
+        "plucked bass",
+        "dry electronic percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. guzheng, plucked bass, dry electronic percussion. 118 BPM, guzheng character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "guzheng"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "modern material and design close-ups",
+        "zh": "瓷器轻步，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "modern material and design close-ups"
+        ]
+      }
+    },
+    {
+      "id": "scene-koto-25",
+      "code": "SCENE-12-25",
+      "title": {
+        "en": "Paper Architecture · 25",
+        "zh": "纸上建筑 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "careful precise construction reveal",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 108,
+      "key": "",
+      "instruments": [
+        "koto",
+        "soft synth bass",
+        "bamboo percussion"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in koto style. Use koto, soft synth bass, bamboo percussion. Tempo 108 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "koto"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "careful precise construction reveal",
+        "zh": "纸上建筑，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "careful precise construction reveal"
+        ]
+      },
+      "shortForm": {
+        "use": "lifestyle",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-oud-25",
+      "code": "SCENE-13-25",
+      "title": {
+        "en": "Copper Compass · 25",
+        "zh": "铜色罗盘 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "lively geographical discovery",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 120,
+      "key": "",
+      "instruments": [
+        "oud",
+        "darbuka",
+        "bass guitar"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in oud style. Use oud, darbuka, bass guitar. Tempo 120 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "oud"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "lively geographical discovery",
+        "zh": "铜色罗盘，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "lively geographical discovery"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-kora-15",
+      "code": "SCENE-14-15",
+      "title": {
+        "en": "Woven Sunlight · 15",
+        "zh": "编织日光 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "interlocking patterns and natural motion",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 112,
+      "key": "",
+      "instruments": [
+        "kora",
+        "calabash",
+        "shakers",
+        "soft bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in kora style. Use kora, calabash, shakers, soft bass. Tempo 112 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "kora"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "interlocking patterns and natural motion",
+        "zh": "编织日光，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "interlocking patterns and natural motion"
+        ]
+      },
+      "shortForm": {
+        "use": "process",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-synthwave-90",
+      "code": "SCENE-15-90",
+      "title": {
+        "en": "Night Transit · 90",
+        "zh": "夜间穿行 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "original retro-futuristic transport montage",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 126,
+      "key": "",
+      "instruments": [
+        "analog arpeggios",
+        "rounded bass",
+        "tight gated snare"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. analog arpeggios, rounded bass, tight gated snare. 126 BPM, synthwave character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "synthwave"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "original retro-futuristic transport montage",
+        "zh": "夜间穿行，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "original retro-futuristic transport montage"
+        ]
+      }
+    },
+    {
+      "id": "scene-post-rock-90",
+      "code": "SCENE-16-90",
+      "title": {
+        "en": "Open Windows · 90",
+        "zh": "打开窗户 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "uplifting architecture and open landscapes",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 120,
+      "key": "",
+      "instruments": [
+        "clean guitar harmonics",
+        "bass",
+        "restrained acoustic drums"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. clean guitar harmonics, bass, restrained acoustic drums. 120 BPM, post-rock character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "post-rock"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "uplifting architecture and open landscapes",
+        "zh": "打开窗户，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "uplifting architecture and open landscapes"
+        ]
+      }
+    },
+    {
+      "id": "scene-lofi-25",
+      "code": "SCENE-18-25",
+      "title": {
+        "en": "Small Desk · 25",
+        "zh": "小小书桌 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "quiet study and tutorial backdrop without vinyl noise",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 86,
+      "key": "",
+      "instruments": [
+        "soft electric piano",
+        "restrained drums",
+        "warm bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in lofi style. Use soft electric piano, restrained drums, warm bass. Tempo 86 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "lofi"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "quiet study and tutorial backdrop without vinyl noise",
+        "zh": "小小书桌，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "quiet study and tutorial backdrop without vinyl noise"
+        ]
+      },
+      "shortForm": {
+        "use": "lifestyle",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-lofi-90",
+      "code": "SCENE-18-90",
+      "title": {
+        "en": "Small Desk · 90",
+        "zh": "小小书桌 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "quiet study and tutorial backdrop without vinyl noise",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 86,
+      "key": "",
+      "instruments": [
+        "soft electric piano",
+        "restrained drums",
+        "warm bass"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. soft electric piano, restrained drums, warm bass. 86 BPM, lofi character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "lofi"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "quiet study and tutorial backdrop without vinyl noise",
+        "zh": "小小书桌，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "quiet study and tutorial backdrop without vinyl noise"
+        ]
+      }
+    },
+    {
+      "id": "scene-ambient-15",
+      "code": "SCENE-19-15",
+      "title": {
+        "en": "Glass Observatory · 15",
+        "zh": "玻璃观测站 · 15"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "calm scientific observation with a gentle clear pulse",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 80,
+      "key": "",
+      "instruments": [
+        "soft analog pads",
+        "felt piano",
+        "sparse bell",
+        "light pulse"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 15,
+      "prompt": "Create a complete original 60-second instrumental cue in ambient style. Use soft analog pads, felt piano, sparse bell, light pulse. Tempo 80 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "ambient"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "calm scientific observation with a gentle clear pulse",
+        "zh": "玻璃观测站，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "calm scientific observation with a gentle clear pulse"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 15,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-ambient-25",
+      "code": "SCENE-19-25",
+      "title": {
+        "en": "Glass Observatory · 25",
+        "zh": "玻璃观测站 · 25"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "rhythmic",
+        "playful"
+      ],
+      "topics": [
+        "calm scientific observation with a gentle clear pulse",
+        "product-video"
+      ],
+      "energy": 3,
+      "bpm": 80,
+      "key": "",
+      "instruments": [
+        "soft analog pads",
+        "felt piano",
+        "sparse bell",
+        "light pulse"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 25,
+      "prompt": "Create a complete original 60-second instrumental cue in ambient style. Use soft analog pads, felt piano, sparse bell, light pulse. Tempo 80 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "ambient"
+      ],
+      "scenarios": [
+        "motion",
+        "explain"
+      ],
+      "description": {
+        "en": "calm scientific observation with a gentle clear pulse",
+        "zh": "玻璃观测站，适合短片剪辑。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "short-promos"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": false,
+        "placement": "background",
+        "tags": [
+          "calm scientific observation with a gentle clear pulse"
+        ]
+      },
+      "shortForm": {
+        "use": "product-demo",
+        "targetSeconds": 25,
+        "structureBasis": "source-prompt-intent",
+        "delivery": "ending-excerpt"
+      }
+    },
+    {
+      "id": "scene-orchestral-90",
+      "code": "SCENE-20-90",
+      "title": {
+        "en": "First Flight · 90",
+        "zh": "初次飞行 · 90"
+      },
+      "category": "global",
+      "archetype": "library",
+      "role": "library",
+      "kind": "music",
+      "moods": [
+        "calm",
+        "warm"
+      ],
+      "topics": [
+        "small-scale adventurous discovery without epic bombast",
+        "narration"
+      ],
+      "energy": 2,
+      "bpm": 128,
+      "key": "",
+      "instruments": [
+        "staccato strings",
+        "French horn",
+        "timpani",
+        "harp"
+      ],
+      "instrumental": true,
+      "model": "lyria-3-pro-preview",
+      "targetDuration": 90,
+      "prompt": "Original instrumental background composition for a clear spoken tutorial. staccato strings, French horn, timpani, harp. 128 BPM, orchestral character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+      "recommendedWorldIds": [],
+      "styles": [
+        "orchestral"
+      ],
+      "scenarios": [
+        "explain",
+        "focus"
+      ],
+      "description": {
+        "en": "small-scale adventurous discovery without epic bombast",
+        "zh": "初次飞行，适合旁白讲解。"
+      },
+      "batch": "scene-audio-2026-09",
+      "status": "prompt-ready",
+      "collections": [
+        "narration"
+      ],
+      "rightsProfile": "lyria-commercial-2026-09",
+      "usage": {
+        "narrationFriendly": true,
+        "placement": "background",
+        "tags": [
+          "small-scale adventurous discovery without epic bombast"
+        ]
+      }
+    }
+  ]
+}

@@ -2,21 +2,21 @@
   display: grid;
   gap: 10px;
   padding: 12px 14px;
-  border-radius: 16px;
+  border-radius: var(--radius-card);
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
 }
 
 .follow-stay-title {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--fs-support);
   font-weight: 700;
   color: #f2f6fb;
 }
 
 .follow-stay-body {
   margin: 4px 0 0;
-  font-size: 12px;
+  font-size: var(--fs-label);
   line-height: 1.55;
   color: rgba(160, 176, 194, 0.92);
 }
@@ -31,22 +31,6 @@
 .follow-stay-action {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.05);
-  color: #e8eef6;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.follow-stay-action:hover {
-  border-color: var(--moment-accent, var(--world-accent, #e8c27a));
-  color: var(--moment-accent, var(--world-accent, #e8c27a));
 }
 
 .follow-stay-dismiss {
@@ -64,7 +48,7 @@
   width: 180px;
   height: auto;
   justify-self: center;
-  border-radius: 12px;
+  border-radius: var(--radius-card);
 }
 
 .follow-stay--chip {

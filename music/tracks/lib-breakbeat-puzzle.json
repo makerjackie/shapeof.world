@@ -1,0 +1,101 @@
+{
+  "id": "lib-breakbeat-puzzle",
+  "code": "LIB-28-07",
+  "title": {
+    "en": "Clues — Breakbeat",
+    "zh": "线索 · 碎拍"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "breakbeat"
+  ],
+  "energy": 2,
+  "bpm": 136,
+  "key": "C lydian",
+  "instruments": [
+    "breakbeat drums",
+    "rounded bass",
+    "shimmering synth"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second melodic breakbeat electronica instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: breakbeat drums, rounded bass, shimmering synth. Style: syncopated chopped drum rhythm under an evolving melody. Tempo approximately 136 BPM; C lydian. Main idea: alternating short and long phrases. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "breakbeat"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A chill electronic track featuring a steady beat, evolving synth pads, and a melodic lead. The atmosphere is relaxed and slightly dreamy, with a consistent groove.",
+    "zh": "一首轻松的电子音乐，具有稳定的节拍、不断变化的合成器音垫和旋律主音。氛围轻松，略带梦幻感，节奏感始终如一。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 84.062,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:13:02.027019+00:00",
+  "generation": {
+    "id": "bedb8306-01dc-4dc1-8908-75bdc6b453d4",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:12:19.130608+00:00",
+    "completedAt": "2026-09-09T09:13:02.027019+00:00",
+    "interactionId": "9CKharLeGMO3i9sP57WLuQM",
+    "sha256": "32856d06b3acace12a01bf715e8edecfb894ddd3c69ce531d592752421f14ec8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A chill electronic track featuring a steady beat, evolving synth pads, and a melodic lead. The atmosphere is relaxed and slightly dreamy, with a consistent groove.",
+      "zh": "一首轻松的电子音乐，具有稳定的节拍、不断变化的合成器音垫和旋律主音。氛围轻松，略带梦幻感，节奏感始终如一。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Pad",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Chill",
+      "Relaxed",
+      "Dreamy",
+      "Atmospheric",
+      "Groovy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 120,
+    "reason": "Clean, well-produced electronic track with a pleasant, consistent mood and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:13:10.135223+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-breakbeat-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:14:22.651194+00:00"
+}

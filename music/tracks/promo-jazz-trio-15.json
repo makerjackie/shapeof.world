@@ -1,0 +1,161 @@
+{
+  "id": "promo-jazz-trio-15",
+  "code": "PROMO-08-15",
+  "title": {
+    "en": "Pocket Swing · 15",
+    "zh": "口袋摇摆 · 15"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble swinging jazz trio with dry piano accents. Instruments: acoustic piano, upright bass, brushed drums. Tempo 132 BPM. Distinct motif: descending pentatonic triplet. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 15-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively big band swing piece featuring a prominent piano melody, supported by a walking bass, crisp drums, and a brass section with trumpets, trombones, and saxophones. The music has a cheerful and sophisticated feel.",
+    "zh": "一首欢快活泼的大乐队摇摆乐曲，以突出的钢琴旋律为主，配以行进贝斯、清脆的鼓点以及由小号、长号和萨克斯组成的铜管乐部分。音乐充满欢快和精致感。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:26:25.833962+00:00",
+  "generation": {
+    "id": "8dce8038-8ea3-442e-904d-849657e652a0",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:12.839362+00:00",
+    "completedAt": "2026-09-10T05:26:25.833962+00:00",
+    "interactionId": "dT-iatnMJ4q34vEP1ray8Q0",
+    "sha256": "c75909a4b23c9e14ff4d6f4bd5f73999aa3e67d496a25373a4b177b93c430a02"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively big band swing piece featuring a prominent piano melody, supported by a walking bass, crisp drums, and a brass section with trumpets, trombones, and saxophones. The music has a cheerful and sophisticated feel.",
+      "zh": "一首欢快活泼的大乐队摇摆乐曲，以突出的钢琴旋律为主，配以行进贝斯、清脆的鼓点以及由小号、长号和萨克斯组成的铜管乐部分。音乐充满欢快和精致感。"
+    },
+    "instruments": [
+      "piano",
+      "upright bass",
+      "drums",
+      "trumpet",
+      "trombone",
+      "saxophone"
+    ],
+    "moods": [
+      "upbeat",
+      "lively",
+      "cheerful",
+      "sophisticated",
+      "jazzy",
+      "swing"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "High-quality, well-produced instrumental track with clear instrumentation and a consistent, engaging musical theme.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a clear, rhythmic piano melody. It concludes with a smooth fade-out.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:45.975647+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "98948242fa261c6ccbd65768ef6649bd3b437e56b4d2084ef3d2629aff516720"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.615458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and groovy jazz-funk instrumental featuring a prominent electric bassline, Rhodes-style electric piano chords and melodies, and a tight drum beat.",
+      "zh": "这是一个流畅而有律动的爵士放克纯音乐，以突出的电贝斯线、罗德斯风格的电钢琴和紧凑的鼓点为特色。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Electric Piano",
+      "Drums"
+    ],
+    "moods": [
+      "Funky",
+      "Groovy",
+      "Smooth",
+      "Upbeat"
+    ],
+    "energy": 4,
+    "bpmEstimate": 115,
+    "reason": "Well-produced track with clear audio quality and engaging musicality.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:37.171508+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.615458,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-15/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:53.993285+00:00"
+}

@@ -1,0 +1,103 @@
+{
+  "id": "lib-dub-celebrate",
+  "code": "LIB-14-10",
+  "title": {
+    "en": "First Light — Dub",
+    "zh": "初光 · 回声律动"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "dub"
+  ],
+  "energy": 4,
+  "bpm": 88,
+  "key": "C major",
+  "instruments": [
+    "round electric bass",
+    "organ",
+    "rimshot",
+    "echo guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second instrumental dub instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: round electric bass, organ, rimshot, echo guitar. Style: spacious offbeat chords with restrained tape delay. Tempo approximately 88 BPM; C major. Main idea: a repeating five-note figure with space between phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "An upbeat and groovy instrumental track featuring a prominent electric guitar melody, a driving bassline, and a steady drum beat. It has a retro funk/soul feel with a clean, polished production.",
+    "zh": "一首欢快而富有律动的纯音乐曲目，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它具有复古的放克/灵魂乐风格，制作精良。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.253,
+  "generatedAt": "2026-09-09T08:29:11.847862+00:00",
+  "generation": {
+    "id": "bd21530d-0323-446a-b517-900be058cd69",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:28:29.177080+00:00",
+    "completedAt": "2026-09-09T08:29:11.847862+00:00",
+    "interactionId": "rhihaqWxFPbQi9sPmYO72AI",
+    "sha256": "89f79582842210ce2f378852e785ffdd55b8db38d266d3739d244bc46db9e33f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy instrumental track featuring a prominent electric guitar melody, a driving bassline, and a steady drum beat. It has a retro funk/soul feel with a clean, polished production.",
+      "zh": "一首欢快而富有律动的纯音乐曲目，以突出的电吉他旋律、强劲的贝斯线和稳定的鼓点为特色。它具有复古的放克/灵魂乐风格，制作精良。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Groovy",
+      "Funky",
+      "Upbeat",
+      "Energetic",
+      "Retro",
+      "Cool"
+    ],
+    "energy": 4,
+    "bpmEstimate": 105,
+    "reason": "Well-produced, clear instrumentation, and engaging rhythm suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:29:20.103219+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-dub-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-dub-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-dub-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:30:52.297214+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

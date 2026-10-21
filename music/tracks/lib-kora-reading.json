@@ -1,0 +1,100 @@
+{
+  "id": "lib-kora-reading",
+  "code": "LIB-22-01",
+  "title": {
+    "en": "Reading — Kora",
+    "zh": "静读 · 科拉琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "kora"
+  ],
+  "energy": 2,
+  "bpm": 98,
+  "key": "D major",
+  "instruments": [
+    "kora",
+    "balafon",
+    "calabash percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second West African acoustic instrumental instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: kora, balafon, calabash percussion. Style: interlocking plucked patterns and buoyant polyrhythm. Tempo approximately 98 BPM; D major. Main idea: an ascending fourth answered by a stepwise descent. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian-inspired piece featuring a plucked zither (likely guzheng or koto) playing a melodic line, accompanied by a gentle flute and subtle percussion. The music evokes a sense of calm and reflection.",
+    "zh": "一首宁静的东方传统风格乐曲，以弹拨古筝或古琴为主旋律，辅以悠扬的笛声和轻柔的打击乐。音乐营造出一种平静和沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 54.805,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:57:28.709097+00:00",
+  "generation": {
+    "id": "b99d5d20-362d-4de4-aff6-645e65cf39d1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:56:48.170708+00:00",
+    "completedAt": "2026-09-09T08:57:28.709097+00:00",
+    "interactionId": "UR-haoqMGOuCoLAP9_u-qAs",
+    "sha256": "e83de8f8c12e24e488f106c742d697541eef42dbc2b4517848ff89ed959e7bea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian-inspired piece featuring a plucked zither (likely guzheng or koto) playing a melodic line, accompanied by a gentle flute and subtle percussion. The music evokes a sense of calm and reflection.",
+      "zh": "一首宁静的东方传统风格乐曲，以弹拨古筝或古琴为主旋律，辅以悠扬的笛声和轻柔的打击乐。音乐营造出一种平静和沉思的氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Flute",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Traditional",
+      "East Asian"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "The audio is clean, well-performed, and free of defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:57:36.675658+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-kora-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-kora-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-kora-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:58:15.671604+00:00"
+}

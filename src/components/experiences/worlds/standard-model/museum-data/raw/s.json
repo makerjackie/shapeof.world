@@ -1,0 +1,29 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:12:48 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/Q003",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "Q003/2024",
+  "description": "s",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "Q003M/2024",
+        "description": "s-QUARK MASS",
+        "pdg_values": [
+          {
+            "value": 93.5,
+            "error_positive": 0.8,
+            "error_negative": 0.8,
+            "value_text": "93.5+-0.8",
+            "unit": "MeV",
+            "confidence_level": 90.0,
+            "type": "OUR EVALUATION"
+          }
+        ]
+      }
+    ]
+  }
+}

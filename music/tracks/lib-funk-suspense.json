@@ -1,0 +1,101 @@
+{
+  "id": "lib-funk-suspense",
+  "code": "LIB-13-09",
+  "title": {
+    "en": "Shadows — Funk",
+    "zh": "暗影 · 放克"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "funk"
+  ],
+  "energy": 4,
+  "bpm": 104,
+  "key": "G minor",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second instrumental funk instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 104 BPM; G minor. Main idea: a compact three-note motif. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "An energetic instrumental track featuring a driving drum beat, groovy bassline, and prominent electric guitars with both rhythmic and melodic parts, including a lead solo. It has a modern rock/funk fusion feel.",
+    "zh": "一首充满活力的器乐曲，以强劲的鼓点、律动的贝斯线和突出的电吉他为主，包含节奏和旋律部分，并有电吉他独奏。整体风格融合了现代摇滚和放克元素。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 174.759,
+  "generatedAt": "2026-09-09T08:25:44.775544+00:00",
+  "generation": {
+    "id": "675e091d-797f-4b64-adf7-ed3f4cec4b5a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:24:56.109483+00:00",
+    "completedAt": "2026-09-09T08:25:44.775544+00:00",
+    "interactionId": "2RehavxW9tCL2w-Zg7vYAg",
+    "sha256": "1506fe555d09ece91f109116a482d0d696e1d07fe762632e65d5434cec045a4b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic instrumental track featuring a driving drum beat, groovy bassline, and prominent electric guitars with both rhythmic and melodic parts, including a lead solo. It has a modern rock/funk fusion feel.",
+      "zh": "一首充满活力的器乐曲，以强劲的鼓点、律动的贝斯线和突出的电吉他为主，包含节奏和旋律部分，并有电吉他独奏。整体风格融合了现代摇滚和放克元素。"
+    },
+    "instruments": [
+      "Drums",
+      "Electric Bass",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Energetic",
+      "Groovy",
+      "Upbeat",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The audio is a well-produced instrumental track with clear instrumentation and no defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:25:55.078448+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:26:50.374350+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

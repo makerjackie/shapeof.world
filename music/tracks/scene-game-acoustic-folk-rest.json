@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-acoustic-folk-rest",
+  "code": "GAME-06-4",
+  "title": {
+    "en": "Village Market · Rest",
+    "zh": "村庄集市 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "friendly village and shop",
+    "rest"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "acoustic guitar",
+    "flute",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for friendly village and shop, rest state. Instruments: acoustic guitar, flute, hand percussion. 106 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A serene and melancholic instrumental piece featuring bowed strings, flute, plucked strings, and light percussion. It evokes a peaceful yet slightly somber atmosphere.",
+    "zh": "一首宁静而略带忧郁的器乐曲，包含弓弦乐器、长笛、拨弦乐器和轻柔的打击乐。营造出平和而略显沉重的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 91.167,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:24:29.454750+00:00",
+  "generation": {
+    "id": "53327ea4-34d5-42fe-a8e6-6335daa029fe",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:23:46.861398+00:00",
+    "completedAt": "2026-09-22T09:24:29.454750+00:00",
+    "interactionId": "I0myat36H_6N88EPy_v08Ac",
+    "sha256": "dcb8be3e07c8448bcdee7050b7e30c1326554b9c7639dc985724ef9d4be1ded8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and melancholic instrumental piece featuring bowed strings, flute, plucked strings, and light percussion. It evokes a peaceful yet slightly somber atmosphere.",
+      "zh": "一首宁静而略带忧郁的器乐曲，包含弓弦乐器、长笛、拨弦乐器和轻柔的打击乐。营造出平和而略显沉重的氛围。"
+    },
+    "instruments": [
+      "Bowed Strings",
+      "Flute",
+      "Plucked Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Melancholic",
+      "Peaceful",
+      "Reflective"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "Clean recording with clear instrumentation and a consistent, pleasant mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:40.659355+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 45.035283,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1986056,
+    "sourceStartSeconds": 22.875011337868482,
+    "sourceEndSeconds": 68.05147392290249,
+    "crossfadeSeconds": 0.14117913832199547,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1986056,
+        "duration": 45.035283,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.99,
+        "dcOffset": 0.001919539800286425,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.011871337890625,
+        "internalStepP999": 0.096588134765625,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1986056,
+        "duration": 45.035283,
+        "peakDbfs": -1.02,
+        "rmsDbfs": -15.07,
+        "dcOffset": 0.0016072219853980152,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.010162353515625,
+        "internalStepP999": 0.09496905517578114,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthesized, ethereal atmospheric pad with a gentle, melancholic flute melody and subtle percussive accents. It evokes a mystical or contemplative mood.",
+        "zh": "合成的空灵氛围音垫，带有柔和忧郁的长笛旋律和细微的打击乐点缀。营造出神秘或沉思的氛围。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized atmospheric texture with a clear melodic and rhythmic structure that loops perfectly without any audible seams or defects. It is suitable for background ambiance or thematic elements in games/video.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:46.830592+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "459c8603a1378531af6ffae7bbc9d4657161577fa44490eddbedac2a93005dcd"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music maintains consistent rhythm, harmony, dynamics, and phrase continuity across both loop points. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The transitions are smooth and suitable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:04.044186+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-rest/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-rest/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-rest/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "90fbca6614fb527eab86a14d83bcd3ab4f440696c128047c921563d10d9d45ae",
+      "bytes": 1277117,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "dcb8be3e07c8448bcdee7050b7e30c1326554b9c7639dc985724ef9d4be1ded8",
+      "bytes": 2195683,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "df2ae9ec03e6d13f9a18a9a6263d0dce47af4cd1306e65dc3229484bc4f5eb66",
+      "bytes": 2786,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "42ce7099ddc1a10616bf68662eb65dd0bab91d355fd1435bcedd051784c5cd99",
+      "bytes": 7944268,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "19b469922ebc5d91eb996ac4964676bc15c803239d21d6d17c087682c44fea2d",
+      "bytes": 614789,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.456153+00:00"
+}

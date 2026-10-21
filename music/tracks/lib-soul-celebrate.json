@@ -1,0 +1,104 @@
+{
+  "id": "lib-soul-celebrate",
+  "code": "LIB-12-10",
+  "title": {
+    "en": "First Light — Soul",
+    "zh": "初光 · 灵魂律动"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "soul"
+  ],
+  "energy": 4,
+  "bpm": 100,
+  "key": "C major",
+  "instruments": [
+    "electric piano",
+    "electric bass",
+    "clean guitar",
+    "drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second instrumental neo-soul instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: electric piano, electric bass, clean guitar, drums. Style: pocket groove with syncopated seventh chords. Tempo approximately 100 BPM; C major. Main idea: a compact three-note motif. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody over a driving rhythm section of bass and drums, complemented by synth pads and keyboard. The music has a bright, positive, and slightly retro feel.",
+    "zh": "一首欢快且充满活力的纯音乐曲目，以突出的电吉他旋律为主，搭配贝斯和鼓组成的强劲节奏部分，并辅以合成器铺垫和键盘音色。音乐整体感觉明亮、积极，略带复古风情。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 56.895,
+  "generatedAt": "2026-09-09T08:21:44.776647+00:00",
+  "generation": {
+    "id": "5f91771e-f69a-419a-9076-3ff550936af1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:21:00.501574+00:00",
+    "completedAt": "2026-09-09T08:21:44.776647+00:00",
+    "interactionId": "7RahapiiLuq6i9sPx5K0uAY",
+    "sha256": "cb271da2ca98ede234657974b81b7356a258d45fe15ab9b4c2e0bc3baadb268c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a prominent electric guitar melody over a driving rhythm section of bass and drums, complemented by synth pads and keyboard. The music has a bright, positive, and slightly retro feel.",
+      "zh": "一首欢快且充满活力的纯音乐曲目，以突出的电吉他旋律为主，搭配贝斯和鼓组成的强劲节奏部分，并辅以合成器铺垫和键盘音色。音乐整体感觉明亮、积极，略带复古风情。"
+    },
+    "instruments": [
+      "electric guitar",
+      "bass guitar",
+      "drums",
+      "synthesizer",
+      "keyboard"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "bright",
+      "driving",
+      "melodic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clean instrumental track with a clear musical theme and good energy, suitable for various media uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:21:55.171427+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-soul-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-soul-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-soul-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:24:01.465313+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

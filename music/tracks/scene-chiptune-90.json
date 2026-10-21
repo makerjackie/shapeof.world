@@ -1,0 +1,131 @@
+{
+  "id": "scene-chiptune-90",
+  "code": "SCENE-05-90",
+  "title": {
+    "en": "Pocket Planet · 90",
+    "zh": "口袋星球 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "playful original pixel-art motion",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 142,
+  "key": "",
+  "instruments": [
+    "pulse-wave lead",
+    "triangle bass",
+    "crisp electronic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. pulse-wave lead, triangle bass, crisp electronic drums. 142 BPM, chiptune character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A light and playful instrumental piece featuring a clear, melodic flute or recorder lead over a gentle acoustic guitar, bass, and drum rhythm section. It has a cheerful and slightly whimsical feel.",
+    "zh": "一首轻快活泼的器乐曲，以清晰、旋律优美的长笛或竖笛为主奏，配以柔和的木吉他、贝斯和鼓的节奏部分。整体感觉欢快而略带奇思妙想。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "playful original pixel-art motion"
+    ]
+  },
+  "duration": 86.126,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:29:23.639127+00:00",
+  "generation": {
+    "id": "93d422b1-fa58-41d2-85a3-8563132860a6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:28:28.667300+00:00",
+    "completedAt": "2026-09-22T09:29:23.639127+00:00",
+    "interactionId": "Pkqyaph3tbGgsA_imu6RCg",
+    "sha256": "2ae3f50d3c4b505250d913be46bcaa3ab0c3598297aae417f04df712bb8e3f00"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and playful instrumental piece featuring a clear, melodic flute or recorder lead over a gentle acoustic guitar, bass, and drum rhythm section. It has a cheerful and slightly whimsical feel.",
+      "zh": "一首轻快活泼的器乐曲，以清晰、旋律优美的长笛或竖笛为主奏，配以柔和的木吉他、贝斯和鼓的节奏部分。整体感觉欢快而略带奇思妙想。"
+    },
+    "instruments": [
+      "Flute",
+      "Recorder",
+      "Acoustic Guitar",
+      "Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Playful",
+      "Cheerful",
+      "Whimsical",
+      "Light",
+      "Relaxing"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The music is well-produced, clear, and evokes a pleasant, light atmosphere suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:29:33.331246+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chiptune-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chiptune-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chiptune-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b1a73d50c5dc7703ab47560514aec1080d4111fd794f85c42a8e93f07f4cfe66",
+      "bytes": 1206534,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2ae3f50d3c4b505250d913be46bcaa3ab0c3598297aae417f04df712bb8e3f00",
+      "bytes": 2074684,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "74d29ee85628971811be63d9bdacf61c359d49009edf1e05f70d0bb2a2ece15d",
+      "bytes": 2813,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.451936+00:00"
+}

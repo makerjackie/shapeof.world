@@ -1,0 +1,59 @@
+{
+  "id": "spacetime-ripple",
+  "code": "COS-A03",
+  "title": {
+    "en": "Spacetime Ripple",
+    "zh": "时空涟漪"
+  },
+  "category": "cosmos",
+  "archetype": "ambient",
+  "moods": [
+    "undulating",
+    "distant",
+    "precise",
+    "vast"
+  ],
+  "topics": [
+    "gravitational-waves",
+    "spacetime",
+    "binary-stars"
+  ],
+  "energy": 2,
+  "bpm": 64,
+  "key": "Eb major",
+  "instruments": [
+    "detuned analog oscillators",
+    "soft membrane pulses",
+    "viola",
+    "high sine tones"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 146.913,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about spacetime ringing after two compact objects spiral together. Around 64 BPM, Eb major with slow beating. Two slightly detuned analog oscillators create an audible ripple; viola traces a long orbit; high sine tones chirp only at the end, gently. Scientific and precise, not catastrophic. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No explosion, no trailer drums, no alarm pulses.\n\n[00:00–00:28] Two detuned oscillators, almost inaudible beating, wide stereo.\n[00:28–01:05] Viola enters with a circular phrase; membrane pulses mark an irregular orbit.\n[01:05–01:50] Beating quickens almost imperceptibly; high sines appear as faint overtones.\n[01:50–02:30] A small chirp of rising sines, then the beating slows and the field goes still.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:23:14Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/spacetime-ripple/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/spacetime-ripple/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/spacetime-ripple/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:43.728103+00:00",
+  "generation": {
+    "id": "e164b73d-25c0-4817-b8aa-0295a5fce92d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:22:19Z",
+    "completedAt": "2026-08-25T10:23:14Z",
+    "durationMs": 55000,
+    "interactionId": "3WyNaozfAYGd8vUP2tKj8QM",
+    "clientRequestId": "a18922e1-ff0a-4145-b470-b49fdc885ef2",
+    "synthid": true,
+    "c2pa": "urn:c2pa:499aa82c-829e-ed74-63e3-49734e41a880",
+    "sha256": "3819659d184be9d96c6aefa88fbc94da6eecae70cf9a1380023f2a0ce7972c13"
+  }
+}

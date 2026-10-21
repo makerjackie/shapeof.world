@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-03",
+  "code": "SFX-WATER-03",
+  "title": {
+    "en": "Small bubble",
+    "zh": "小气泡"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 2,
+  "seed": 2730638306,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized small bubble for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的小气泡合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.68,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2730638306,
+    "sha256": "43caa416e5c471f7baa6b68fc3a2a143e75d3a04e587f26bcf0bdc064968e761",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4f0c24e5b952617b5108146ce8f45fd0c44fdd4360df84879891e3ef56a7808f",
+      "bytes": 10649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "43caa416e5c471f7baa6b68fc3a2a143e75d3a04e587f26bcf0bdc064968e761",
+      "bytes": 60020,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "64d0a34356922fa2568fdefb4aa46c5062226d5f881481df260307acafb8a70e",
+      "bytes": 6753,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "829829445e944abf3408aaabf4ea6cc52313079ca42f03bf53c04aa29c77af49",
+      "bytes": 1885,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 29988,
+    "duration": 0.68,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.6,
+    "dcOffset": 7.785096460459184e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.06683349609375,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing or spring sound effect.",
+      "zh": "短促、高音的合成弹簧或“boing”音效。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized sound effect, suitable for general sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:32.829425+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "4f0c24e5b952617b5108146ce8f45fd0c44fdd4360df84879891e3ef56a7808f"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 29988
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.910450+00:00"
+}

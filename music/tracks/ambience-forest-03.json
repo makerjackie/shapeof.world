@@ -1,0 +1,130 @@
+{
+  "id": "ambience-forest-03",
+  "code": "AMB-FOREST-03",
+  "title": {
+    "en": "Night clearing · designed ambience",
+    "zh": "夜间空地 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "forest",
+  "designIndex": 2,
+  "seed": 265810868,
+  "targetDuration": 60,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized night clearing atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "夜间空地的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "forest",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-forest"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 60.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-forest-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-forest-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-forest-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-forest-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 265810868,
+    "sha256": "8e112d2e1efd9d8722814a1f64c153dae46eefdf2d8b56bac9b45950a9a55cce",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8f6ebe4f90236a6c1946334bd8b6da26d317e4e6e6937a342539d3b68669eb6e",
+      "bytes": 840820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8e112d2e1efd9d8722814a1f64c153dae46eefdf2d8b56bac9b45950a9a55cce",
+      "bytes": 5292044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "10d0e15bddcc6d04077c28733d438b91e5a61e0b4ffaecd9a38ee748cd1ccbc4",
+      "bytes": 1011856,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c82e1057e1311ebad06a5c20b87b3bf4bf43785420ebc9fdd13227d8bee1d15c",
+      "bytes": 1933,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 2646000,
+    "duration": 60.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.63,
+    "dcOffset": -6.574081455498866e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.019775390625,
+    "internalStepP999": 0.1473388671875,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A continuous, low-frequency mechanical hum with a metallic, grinding texture, suggesting heavy machinery or industrial processes.",
+      "zh": "持续的低频机械嗡鸣声，带有金属摩擦的质感，暗示重型机械或工业过程。"
+    },
+    "reason": "The audio presents a clean, consistent mechanical texture with no audible defects. The loop points are seamless across repetitions, making it highly suitable for continuous background sound.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:34.800254+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "816d9930c692d06faedc27729fa0913bb77d44d9a28c3c4548895b993720e42b"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2646000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.853004+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-01",
+  "code": "SFX-TRANSITION-01",
+  "title": {
+    "en": "Air swipe",
+    "zh": "空气划过"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 0,
+  "seed": 653247886,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized air swipe for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的空气划过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 653247886,
+    "sha256": "be5ecddcd0b307b5466fc036915aa83bbd333a53ab094cf8c88460c9fddc40b4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7f12125021a76ecd7573cd3c39ab60d49e35ed98e1e3bd2a3c5c11ef7d7f6311",
+      "bytes": 7357,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "be5ecddcd0b307b5466fc036915aa83bbd333a53ab094cf8c88460c9fddc40b4",
+      "bytes": 39734,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "749dcb19131cd6a411ab1dfc70867f35d565196aad4df14d21c4489c12cabce2",
+      "bytes": 7214,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "66cc5acf4ea6433ba8d064ead1c421f4a6f63429cff5b18b3b35762860dece40",
+      "bytes": 1946,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19845,
+    "duration": 0.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.31,
+    "dcOffset": -3.536932712899975e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.07633175659179625,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or laser sound effect.",
+      "zh": "短促、尖锐的电子“滋啦”声或激光音效。"
+    },
+    "reason": "The sound is a clean, well-produced, short electronic effect suitable for various sound design applications like UI feedback, sci-fi weapons, or power-ups.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:24.863276+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "7f12125021a76ecd7573cd3c39ab60d49e35ed98e1e3bd2a3c5c11ef7d7f6311"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19845
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:24:08.210930+00:00"
+}

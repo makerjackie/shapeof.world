@@ -1,0 +1,105 @@
+{
+  "id": "lib-soul-suspense",
+  "code": "LIB-12-09",
+  "title": {
+    "en": "Shadows — Soul",
+    "zh": "暗影 · 灵魂律动"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "soul"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "G minor",
+  "instruments": [
+    "electric piano",
+    "electric bass",
+    "clean guitar",
+    "drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second instrumental neo-soul instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: electric piano, electric bass, clean guitar, drums. Style: pocket groove with syncopated seventh chords. Tempo approximately 78 BPM; G minor. Main idea: a descending melody with an upward answer. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A smooth and relaxed jazz-fusion track featuring a prominent piano melody, supported by a walking electric bass, light drums, and subtle synth pads and electric guitar fills. It has a sophisticated and chill lounge atmosphere.",
+    "zh": "一首流畅轻松的爵士融合乐曲，以突出的钢琴旋律为主，配以行进的电贝斯、轻柔的鼓点以及微妙的合成器铺垫和电吉他填充。营造出精致而悠闲的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 178.364,
+  "generatedAt": "2026-09-09T08:21:47.939924+00:00",
+  "generation": {
+    "id": "5d35a2b2-86a8-46e7-b0ae-ffa406ee6117",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:20:56.770607+00:00",
+    "completedAt": "2026-09-09T08:21:47.939924+00:00",
+    "interactionId": "6RaharG6J4u3i9sP7uehmQM",
+    "sha256": "86da898621d8285308d67bcc928b52855322ee62ae5aced577cf1db72a759182"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and relaxed jazz-fusion track featuring a prominent piano melody, supported by a walking electric bass, light drums, and subtle synth pads and electric guitar fills. It has a sophisticated and chill lounge atmosphere.",
+      "zh": "一首流畅轻松的爵士融合乐曲，以突出的钢琴旋律为主，配以行进的电贝斯、轻柔的鼓点以及微妙的合成器铺垫和电吉他填充。营造出精致而悠闲的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Electric Bass",
+      "Drums",
+      "Synthesizer",
+      "Electric Guitar",
+      "Strings"
+    ],
+    "moods": [
+      "Relaxed",
+      "Smooth",
+      "Sophisticated",
+      "Chill",
+      "Lounge",
+      "Jazzy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "The audio is a well-produced instrumental track with no defects, clear instrumentation, and a consistent mood, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:22:02.177894+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-soul-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-soul-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-soul-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:24:36.659789+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

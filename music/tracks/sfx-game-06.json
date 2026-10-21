@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-06",
+  "code": "SFX-GAME-06",
+  "title": {
+    "en": "Checkpoint",
+    "zh": "到达检查点"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 5,
+  "seed": 4279169948,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized checkpoint for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的到达检查点合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.2,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4279169948,
+    "sha256": "4c47a69108489abc13950e778a35f205cdb5e07ddc656f6ed76534dc828c1893",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "145bb1cac223b1e3b0f474e9377cf8fb48fa5ced29657db2cf1507213f2fbda2",
+      "bytes": 17597,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4c47a69108489abc13950e778a35f205cdb5e07ddc656f6ed76534dc828c1893",
+      "bytes": 105884,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "fb64206e3e4853d02cdcde07e3f9edd52a9f5cae468439a64398111335aa05ad",
+      "bytes": 11384,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "eda73b8bdfd5690e2fd88cdd6fc38dd9fd16423d32919a72a1a0ed31017c7502",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 52920,
+    "duration": 1.2,
+    "peakDbfs": -4.5,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.2110150049603175e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08768450927734395,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clear, high-pitched electronic chime or ding sound effect, with a distinct attack and quick decay.",
+      "zh": "一个短促、清晰、高音的电子提示音或叮当声效果，具有明显的起音和快速衰减。"
+    },
+    "reason": "The sound is a clean, well-produced electronic chime, suitable for alerts, notifications, or UI feedback in video games or applications. No defects or unintended elements are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:43.701723+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "145bb1cac223b1e3b0f474e9377cf8fb48fa5ced29657db2cf1507213f2fbda2"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 52920
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.872719+00:00"
+}

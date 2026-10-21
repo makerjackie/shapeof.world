@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-11",
+  "code": "SFX-IMPACT-11",
+  "title": {
+    "en": "Heavy landing",
+    "zh": "重物落地"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 10,
+  "seed": 212206737,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized heavy landing for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的重物落地合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.93,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-11/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-11/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-11/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-11/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 212206737,
+    "sha256": "32c13671255e7745ef0a7864ba48989999cbc9f3a9f851c56753bac2b2ffe338",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e7f789fd879c0b5e87c10b13385dd3134330a7dd6555a2d3f0f1ab08fe835401",
+      "bytes": 13940,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "32c13671255e7745ef0a7864ba48989999cbc9f3a9f851c56753bac2b2ffe338",
+      "bytes": 82070,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "e0d67f2fdf8e732e162ca52e3194807963dec27929bf47e05d187219486284ad",
+      "bytes": 11775,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "4bbffce29065e85413dcc0fefec4050cffca590fb8a0f8fcae95cc6f3b36b1e5",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 41013,
+    "duration": 0.93,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.74,
+    "dcOffset": -7.440952411430522e-10,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.20339797973632834,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clear, and bright synthesized chime or ping sound effect, resembling a digital notification or a small bell.",
+      "zh": "一个短促、高音、清晰明亮的合成提示音或叮咚声，类似于数字通知或小铃铛的声音效果。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, suitable for various sound design applications like notifications, UI feedback, or small impacts.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:04.303587+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e7f789fd879c0b5e87c10b13385dd3134330a7dd6555a2d3f0f1ab08fe835401"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 41013
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.877744+00:00"
+}

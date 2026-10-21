@@ -1,0 +1,177 @@
+{
+  "id": "scene-chamber-15",
+  "code": "SCENE-04-15",
+  "title": {
+    "en": "Tiny Inventions · 15",
+    "zh": "小小发明 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "witty tactile miniature mechanisms",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "bass clarinet",
+    "woodblock"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose an original complete 30-second instrumental cue for witty tactile miniature mechanisms. Instruments: pizzicato cello, bass clarinet, woodblock. 116 BPM in 4/4. Motif: a clipped falling fifth answered by two repeated notes. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A bright and upbeat orchestral pop track featuring pizzicato strings, piano, and light percussion, creating a positive and lively atmosphere.",
+    "zh": "一首明亮欢快的管弦流行乐曲，以拨弦乐器、钢琴和轻快打击乐为主，营造出积极活泼的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "witty tactile miniature mechanisms"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:11:11.213300+00:00",
+  "generation": {
+    "id": "07445069-a7bf-4738-9af0-81a19538807a",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:10:58.529649+00:00",
+    "completedAt": "2026-09-22T09:11:11.213300+00:00",
+    "interactionId": "I0ayauKtF87ojNAPzs-CwQ0",
+    "sha256": "95a1a0c4bd0266f191f1fc9a3b4abad14711dcc25b2b03500aa99bfe40116a8e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A bright and upbeat orchestral pop track featuring pizzicato strings, piano, and light percussion, creating a positive and lively atmosphere.",
+      "zh": "一首明亮欢快的管弦流行乐曲，以拨弦乐器、钢琴和轻快打击乐为主，营造出积极活泼的氛围。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Piano",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Positive",
+      "Playful",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 126,
+    "reason": "Well-produced, clean, and engaging promotional music.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a bright, rhythmic pizzicato string and piano melody, and concludes with a smooth, deliberate fade-out of the main theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:27.714841+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b5ea88e808f4f27d1e4e90cf11adea63c30118143ca2e5f875eb1c6db4bf14f9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat folk tune featuring a prominent string melody, supported by plucked strings and light percussion. It has a cheerful and traditional feel.",
+      "zh": "一首活泼欢快的民谣曲调，以突出的弦乐旋律为主，辅以拨弦乐器和轻快的打击乐。整体感觉欢快而传统。"
+    },
+    "instruments": [
+      "Fiddle",
+      "Mandolin",
+      "Percussion"
+    ],
+    "moods": [
+      "Cheerful",
+      "Upbeat",
+      "Lively",
+      "Traditional",
+      "Folk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Clear, well-produced folk music with distinct instrumentation and an engaging melody.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:18.804513+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 15.772167,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chamber-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chamber-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chamber-15/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b5ea88e808f4f27d1e4e90cf11adea63c30118143ca2e5f875eb1c6db4bf14f9",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "95a1a0c4bd0266f191f1fc9a3b4abad14711dcc25b2b03500aa99bfe40116a8e",
+      "bytes": 746200,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "c14c83267bcb20b4b338043586e5480f6076cf86271a9e163620f455849ba3b6",
+      "bytes": 2795,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.827185+00:00"
+}

@@ -1,0 +1,104 @@
+{
+  "id": "lib-minimalism-puzzle",
+  "code": "LIB-04-07",
+  "title": {
+    "en": "Clues — Minimalism",
+    "zh": "线索 · 极简主义"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "curious",
+    "playful",
+    "precise"
+  ],
+  "topics": [
+    "puzzle",
+    "minimalism"
+  ],
+  "energy": 4,
+  "bpm": 112,
+  "key": "C lydian",
+  "instruments": [
+    "marimba",
+    "piano",
+    "muted strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second acoustic minimalism instrumental composition for puzzle game, strategy and patient problem solving. Mood: curious, playful, precise. Instruments: marimba, piano, muted strings. Style: phase-shifted repeating figures with small harmonic changes. Tempo approximately 112 BPM; C lydian. Main idea: a descending melody with an upward answer. Use offset accents and question-and-answer motifs without dramatic shocks. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "minimalism"
+  ],
+  "scenarios": [
+    "puzzle"
+  ],
+  "description": {
+    "en": "A cheerful and lively orchestral piece with a light, playful character. It features prominent piano melodies, pizzicato strings, and a blend of woodwind and brass sections, creating an upbeat and whimsical atmosphere.",
+    "zh": "一首欢快活泼的管弦乐曲，带有轻松俏皮的特点。它以突出的钢琴旋律、拨弦乐器以及木管和铜管乐器的融合为特色，营造出一种积极向上、异想天开的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.294,
+  "generatedAt": "2026-09-09T07:54:38.921627+00:00",
+  "generation": {
+    "id": "89832ab7-a7fa-4cf2-853a-3b7bef6466f2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:53:38.511586+00:00",
+    "completedAt": "2026-09-09T07:54:38.921627+00:00",
+    "interactionId": "gxChavv1KP6WjMwPtfeJmQQ",
+    "sha256": "b3d2ad033235f066b92bfe12dee39042eb6e6d1101fd6244597d8676dbd3c9a7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A cheerful and lively orchestral piece with a light, playful character. It features prominent piano melodies, pizzicato strings, and a blend of woodwind and brass sections, creating an upbeat and whimsical atmosphere.",
+      "zh": "一首欢快活泼的管弦乐曲，带有轻松俏皮的特点。它以突出的钢琴旋律、拨弦乐器以及木管和铜管乐器的融合为特色，营造出一种积极向上、异想天开的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "strings",
+      "woodwinds",
+      "brass",
+      "drums",
+      "bass"
+    ],
+    "moods": [
+      "cheerful",
+      "playful",
+      "lively",
+      "upbeat",
+      "whimsical",
+      "lighthearted"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality recording with clear instrumentation and a well-arranged, engaging composition suitable for various positive and lighthearted contexts.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:54:47.190942+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-minimalism-puzzle/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-minimalism-puzzle/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-minimalism-puzzle/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:55:30.467896+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

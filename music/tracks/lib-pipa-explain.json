@@ -1,0 +1,103 @@
+{
+  "id": "lib-pipa-explain",
+  "code": "LIB-18-05",
+  "title": {
+    "en": "Discovery — Pipa",
+    "zh": "发现 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "pipa"
+  ],
+  "energy": 3,
+  "bpm": 106,
+  "key": "G major",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second Chinese plucked-string ensemble instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 106 BPM; G major. Main idea: an ascending fourth answered by a stepwise descent. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A charming and melodic folk-style instrumental piece featuring a prominent flute melody over a gentle accompaniment of pizzicato and bowed strings, with subtle acoustic guitar. It evokes a traditional, light, and peaceful atmosphere.",
+    "zh": "一首迷人且旋律优美的民谣风格器乐曲，以悠扬的长笛旋律为主，配以拨弦和弓弦乐器轻柔的伴奏，并带有细微的原声吉他声。营造出传统、轻快、宁静的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 88.764,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:34:06.166130+00:00",
+  "generation": {
+    "id": "b07bd915-8a5d-4597-ba88-59abfa1576f9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:33:13.598669+00:00",
+    "completedAt": "2026-09-09T08:34:06.166130+00:00",
+    "interactionId": "yhmhaunzNeONk7QPyufS2Ao",
+    "sha256": "7288a0ffdff15c7920d19790ac99e130100c3905dc8f1b12a7a1cd1faad38daf"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A charming and melodic folk-style instrumental piece featuring a prominent flute melody over a gentle accompaniment of pizzicato and bowed strings, with subtle acoustic guitar. It evokes a traditional, light, and peaceful atmosphere.",
+      "zh": "一首迷人且旋律优美的民谣风格器乐曲，以悠扬的长笛旋律为主，配以拨弦和弓弦乐器轻柔的伴奏，并带有细微的原声吉他声。营造出传统、轻快、宁静的氛围。"
+    },
+    "instruments": [
+      "Flute",
+      "Pizzicato strings",
+      "Bowed strings",
+      "Acoustic guitar"
+    ],
+    "moods": [
+      "Folkloric",
+      "Traditional",
+      "Melodic",
+      "Gentle",
+      "Peaceful",
+      "Lighthearted",
+      "Nostalgic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:46:50.878118+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:47:32.622485+00:00"
+}

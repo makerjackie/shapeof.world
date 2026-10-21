@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-10",
+  "code": "SFX-TRANSITION-10",
+  "title": {
+    "en": "Digital scan",
+    "zh": "数字扫描"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 9,
+  "seed": 3184153684,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized digital scan for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的数字扫描合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.95,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3184153684,
+    "sha256": "a01ac460cd7b6ecb86573d53106231e714c4e6bd7d436e6e7b34e68da3841cbc",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6456266d82f651bffdbb9f7cc2c87992169cd08f89f217b1813dbdb471d6040d",
+      "bytes": 14306,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "a01ac460cd7b6ecb86573d53106231e714c4e6bd7d436e6e7b34e68da3841cbc",
+      "bytes": 83834,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "10fab43561b8ac5d1fa3f89d56a82d1773a055cfdebb6469b86d30c326e9b3fa",
+      "bytes": 16471,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "4f05f0cd9dbb560ced368707279bb909bf8c1799b1a05a33e168b799b60c6e95",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 41895,
+    "duration": 0.95,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.55,
+    "dcOffset": 2.5495052736006682e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.14517538452148426,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized spring or boing sound followed by a soft, dull impact. It has a cartoonish quality.",
+      "zh": "一个短促的、合成的弹簧或‘boing’声，随后是一个轻柔、沉闷的撞击声。具有卡通般的特质。"
+    },
+    "reason": "The sound is clean, isolated, and free of defects, making it highly usable. It's a clear, intentional sound effect.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:35.754735+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6456266d82f651bffdbb9f7cc2c87992169cd08f89f217b1813dbdb471d6040d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 41895
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904058+00:00"
+}

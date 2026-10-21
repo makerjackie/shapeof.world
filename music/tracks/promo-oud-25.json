@@ -1,0 +1,161 @@
+{
+  "id": "promo-oud-25",
+  "code": "PROMO-15-25",
+  "title": {
+    "en": "Copper Steps · 25",
+    "zh": "铜色脚步 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "fast-montage"
+  ],
+  "energy": 4,
+  "bpm": 122,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "electric bass",
+    "handclaps"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble oud-led groove with syncopated hand percussion. Instruments: oud, darbuka, electric bass, handclaps. Tempo 122 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second fast-montage film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and rhythmic Middle Eastern instrumental piece featuring a prominent plucked string melody, dynamic percussion, and a soaring wind instrument.",
+    "zh": "一首活泼且富有节奏感的中东器乐曲，以突出的拨弦乐器旋律、动感的打击乐和高亢的管乐为特色。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "fast-montage",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:31:17.758827+00:00",
+  "generation": {
+    "id": "409dd5b6-657f-446c-9aae-3473c7ce6c16",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:31:05.642317+00:00",
+    "completedAt": "2026-09-10T05:31:17.758827+00:00",
+    "interactionId": "mkCiasTXDubRi9sPvtzDgAc",
+    "sha256": "b19096e6d7ca54c27a56041abe67499d1113a0d1b46bdf0cfb04f56347ca7fb4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and rhythmic Middle Eastern instrumental piece featuring a prominent plucked string melody, dynamic percussion, and a soaring wind instrument.",
+      "zh": "一首活泼且富有节奏感的中东器乐曲，以突出的拨弦乐器旋律、动感的打击乐和高亢的管乐为特色。"
+    },
+    "instruments": [
+      "Oud",
+      "Darbuka",
+      "Percussion",
+      "Clarinet"
+    ],
+    "moods": [
+      "Lively",
+      "Exotic",
+      "Energetic",
+      "Traditional",
+      "Upbeat"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "High-quality, well-produced instrumental track with a clear cultural identity and energetic feel, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main melodic and rhythmic theme, establishing its character from the first beat. It concludes with a clear, deliberate final chord, providing a satisfying resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:31:37.261434+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "f11efee101754e937695f990bd14d410144ca5b55440e4811f1a23263a8a3fe9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.126458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and energetic traditional Middle Eastern folk piece featuring a prominent oud melody, driving percussion, and a distinctive wind instrument. The music is danceable and evokes a festive atmosphere.",
+      "zh": "一首活泼而充满活力的中东传统民谣乐曲，以突出的乌德琴旋律、强劲的打击乐和独特的管乐器为特色。音乐富有舞动感，营造出节日气氛。"
+    },
+    "instruments": [
+      "Oud",
+      "Darbuka",
+      "Ney",
+      "Frame Drum"
+    ],
+    "moods": [
+      "Lively",
+      "Energetic",
+      "Traditional",
+      "Festive",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Clean, well-produced, and authentic traditional Middle Eastern folk music, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:31:28.621733+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 4.1264579999999995,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-oud-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-oud-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-oud-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:01.863788+00:00"
+}

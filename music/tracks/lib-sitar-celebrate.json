@@ -1,0 +1,104 @@
+{
+  "id": "lib-sitar-celebrate",
+  "code": "LIB-21-10",
+  "title": {
+    "en": "First Light — Sitar",
+    "zh": "初光 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "sitar"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "C major",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Indian acoustic instrumental instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 102 BPM; C major. Main idea: a descending melody with an upward answer. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and exotic instrumental piece featuring a prominent flute-like melody over traditional Indian percussion and plucked string instruments, supported by a subtle bass and synth pads.",
+    "zh": "一首活泼异域风情的纯音乐，以突出的笛子般旋律为主，配以传统印度打击乐器和拨弦乐器，并有低音和合成器衬底。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.54,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:57:25.144955+00:00",
+  "generation": {
+    "id": "459d8e53-9d0b-476f-8d5e-fdb8f5bae700",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:56:45.399853+00:00",
+    "completedAt": "2026-09-09T08:57:25.144955+00:00",
+    "interactionId": "Th-harasKKzTi9sPx8r-kAE",
+    "sha256": "ed203d6b59e46eb07e9596da5631d5a3863473765d9aa6ca538f4b7aa66532b1"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and exotic instrumental piece featuring a prominent flute-like melody over traditional Indian percussion and plucked string instruments, supported by a subtle bass and synth pads.",
+      "zh": "一首活泼异域风情的纯音乐，以突出的笛子般旋律为主，配以传统印度打击乐器和拨弦乐器，并有低音和合成器衬底。"
+    },
+    "instruments": [
+      "Flute",
+      "Tabla",
+      "Sitar",
+      "Bass",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Exotic",
+      "Lively",
+      "Joyful",
+      "Rhythmic",
+      "Traditional",
+      "Uplifting"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The audio is a well-produced, clean instrumental track with clear instrumentation and a pleasant, consistent mood, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:57:35.013548+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:58:14.990068+00:00"
+}

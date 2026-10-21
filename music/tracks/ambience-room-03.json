@@ -1,0 +1,130 @@
+{
+  "id": "ambience-room-03",
+  "code": "AMB-ROOM-03",
+  "title": {
+    "en": "Soft fan · designed ambience",
+    "zh": "柔和风扇 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "room",
+  "designIndex": 2,
+  "seed": 1923235305,
+  "targetDuration": 60,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized soft fan atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "柔和风扇的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "room",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-room"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 60.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-room-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-room-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-room-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-room-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1923235305,
+    "sha256": "ec7b3b86eba50f8d28ed9243904e9c0e5a262646a5aab08553eafc3d9916add8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f567f150bbf951bf616009e0041ac9fc03cde375ad69a6be68524b4c25347506",
+      "bytes": 840820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ec7b3b86eba50f8d28ed9243904e9c0e5a262646a5aab08553eafc3d9916add8",
+      "bytes": 5292044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "63da4a036e56b6ace1b40dba33ed3ab281fdd770cffb9ae97b88a2470dea25a8",
+      "bytes": 294223,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "4a71e5c9cf5620d9d516e0093fab692b268a2e144681d8a89bdfa37052f337ec",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 2646000,
+    "duration": 60.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.16,
+    "dcOffset": -3.667645443594104e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00604248046875,
+    "internalStepP999": 0.017425537109375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, and evolving synthesized drone with a metallic or mechanical undertone, creating a sense of powerful, distant energy or machinery. It has a consistent, smooth texture.",
+      "zh": "一種深沉、共鳴且不斷變化的合成嗡鳴聲，帶有金屬或機械的底蘊，營造出強大、遙遠的能量或機械感。它具有一致、流暢的質感。"
+    },
+    "reason": "The audio is a well-produced, clean synthesized drone texture. It exhibits no technical defects such as clipping, clicks, or glitches. The looping is perfectly seamless, with no audible clicks, gaps, or abrupt textural changes at the repetition points, making it highly suitable for continuous background use in video or game sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:46.305901+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "3517d0f6a572ec3fe01943234da03bb2c937f1b45b04e7532999d51a5700e5df"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2646000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.856027+00:00"
+}

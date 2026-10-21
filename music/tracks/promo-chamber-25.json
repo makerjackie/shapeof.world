@@ -1,0 +1,162 @@
+{
+  "id": "promo-chamber-25",
+  "code": "PROMO-06-25",
+  "title": {
+    "en": "Paper Kites · 25",
+    "zh": "纸鸢起飞 · 25"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM. Distinct motif: two staccato notes and an octave leap. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 25-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and playful jazz-inspired track featuring a lively piano melody, walking bass, and light percussion, complemented by a cheerful clarinet/saxophone.",
+    "zh": "一首欢快活泼的爵士风格曲目，以生动的钢琴旋律、行进贝斯和轻快打击乐为主，并辅以愉悦的单簧管/萨克斯风。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:24:31.730017+00:00",
+  "generation": {
+    "id": "6a132947-eb7e-4948-b59b-2037dff71775",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:24:19.958063+00:00",
+    "completedAt": "2026-09-10T05:24:31.730017+00:00",
+    "interactionId": "BD-iauWQKPTyk7QPmu_A4Q0",
+    "sha256": "69146c55811bfb757315a826a8c88ce661031f1247c322598fee2002c345b4bd"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and playful jazz-inspired track featuring a lively piano melody, walking bass, and light percussion, complemented by a cheerful clarinet/saxophone.",
+      "zh": "一首欢快活泼的爵士风格曲目，以生动的钢琴旋律、行进贝斯和轻快打击乐为主，并辅以愉悦的单簧管/萨克斯风。"
+    },
+    "instruments": [
+      "piano",
+      "upright bass",
+      "drums",
+      "clarinet",
+      "saxophone"
+    ],
+    "moods": [
+      "upbeat",
+      "playful",
+      "lighthearted",
+      "cheerful",
+      "sophisticated"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "The audio is a well-produced, clean, and engaging instrumental track with a clear musical theme and structure, making it highly suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens with an immediate, catchy piano melody and rhythm, establishing a clear upbeat mood. It concludes with a deliberate, playful musical flourish and a final chord, providing a resolved and satisfying ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:24:51.718040+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "08a6bf07aad97345b3f81f16d84288abfad352859e3d5c26c7363380392d45e4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 27.48075,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and melodic instrumental piece featuring acoustic guitar, bass, drums, and a wind instrument, with a relaxed, slightly Latin-influenced feel.",
+      "zh": "一首轻快旋律的纯音乐，以原声吉他、贝斯、鼓和一件管乐器为主，带有轻松、略带拉丁风情的感觉。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Flute"
+    ],
+    "moods": [
+      "Relaxed",
+      "Light",
+      "Melodic",
+      "Playful",
+      "Latin-influenced"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "Clean production, clear instrumentation, pleasant melody, and good audio quality make it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:24:41.619683+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 2.4807500000000005,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-chamber-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-chamber-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-chamber-25/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:14.974899+00:00"
+}

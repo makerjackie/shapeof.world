@@ -1,0 +1,157 @@
+{
+  "id": "promo-jazz-trio-20",
+  "code": "PROMO-08-20",
+  "title": {
+    "en": "Pocket Swing · 20",
+    "zh": "口袋摇摆 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "process"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "upright bass",
+    "brushed drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: nimble swinging jazz trio with dry piano accents. Instruments: acoustic piano, upright bass, brushed drums. Tempo 132 BPM. Distinct motif: syncopated rising fourth. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 20-second process film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and groovy funk-rock track featuring a prominent, catchy bassline, clean electric guitar melody, and driving drums. Energetic and positive.",
+    "zh": "一首欢快而有律动的放克摇滚乐曲，以突出且抓耳的贝斯线、清晰的电吉他旋律和强劲的鼓点为特色。充满活力和积极向上。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:26:29.225495+00:00",
+  "generation": {
+    "id": "d0fd3e60-cab2-4aeb-a0c7-7a731236c673",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:26:14.205273+00:00",
+    "completedAt": "2026-09-10T05:26:29.225495+00:00",
+    "interactionId": "dz-iapbzBNW54vEPzPyHuAE",
+    "sha256": "c72dd4265cea31d38f4bf5f35db5c5f9e9b3fc0f6f5712f8293a5af3c3ce3cf4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy funk-rock track featuring a prominent, catchy bassline, clean electric guitar melody, and driving drums. Energetic and positive.",
+      "zh": "一首欢快而有律动的放克摇滚乐曲，以突出且抓耳的贝斯线、清晰的电吉他旋律和强劲的鼓点为特色。充满活力和积极向上。"
+    },
+    "instruments": [
+      "electric bass",
+      "drums",
+      "electric guitar"
+    ],
+    "moods": [
+      "upbeat",
+      "groovy",
+      "energetic",
+      "positive",
+      "funky"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced with a clear mix, no audible defects, and a strong, consistent groove suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy bass and drum groove, establishing a clear rhythm and melody. It concludes with a deliberate, musical ending featuring a final chord and drum hit, providing a satisfying resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:49.844458+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "92c219a5a6bfb5980c59c6f87884c83df8702a5264267c1bf689b95c61cef6d9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.518292,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and cheerful jazz piece featuring a prominent vibraphone melody, supported by a walking upright bass line and a driving drum kit.",
+      "zh": "一首充满活力和欢快的爵士乐曲，以突出的颤音琴旋律为主，配以行走的低音提琴和富有节奏感的鼓点。"
+    },
+    "instruments": [
+      "Vibraphone",
+      "Upright Bass",
+      "Drum Kit"
+    ],
+    "moods": [
+      "Upbeat",
+      "Jazzy",
+      "Playful",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "Clean recording of an upbeat jazz instrumental, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:40.504499+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 9.518291999999999,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-20/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-jazz-trio-20/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:49.870057+00:00"
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "oneworld-insights",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "insights.shapeof.world",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "triggers": {
+    // Copies Analytics Engine rows into the permanent D1 archive (src/archive.ts).
+    "crons": ["*/10 * * * *"]
+  },
+  "d1_databases": [
+    {
+      "binding": "ANALYTICS_ARCHIVE",
+      "database_name": "shapeof-analytics",
+      "database_id": "c890ef13-1743-4063-b97c-c5f70bdcf44e",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "ANALYTICS_DATASET": "oneworld_events",
+    // Analytics Engine datasets archived into D1, in priority order.
+    "ARCHIVE_DATASETS": "oneworld_events,shape_of_world_app_events",
+    "PUBLIC_SITE_ORIGIN": "https://shapeof.world",
+    "DEEPSEEK_BASE_URL": "https://api.deepseek.com",
+    "DEEPSEEK_MODEL": "deepseek-v4-flash"
+  },
+  "secrets": {
+    "required": [
+      "INSIGHTS_PASSWORD",
+      "INSIGHTS_SESSION_SECRET",
+      "CLOUDFLARE_ACCOUNT_ID",
+      "CLOUDFLARE_ANALYTICS_TOKEN",
+      "DEEPSEEK_API_KEY"
+    ]
+  },
+  "ratelimits": [
+    {
+      "name": "INSIGHTS_AUTH_RATE_LIMITER",
+      "namespace_id": "31006",
+      "simple": {
+        "limit": 12,
+        "period": 60
+      }
+    },
+    {
+      "name": "INSIGHTS_AI_RATE_LIMITER",
+      "namespace_id": "31004",
+      "simple": {
+        "limit": 4,
+        "period": 60
+      }
+    },
+    {
+      "name": "INSIGHTS_CHAT_RATE_LIMITER",
+      "namespace_id": "31005",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 0.1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.01
+    }
+  }
+}

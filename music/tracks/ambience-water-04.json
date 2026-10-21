@@ -1,0 +1,130 @@
+{
+  "id": "ambience-water-04",
+  "code": "AMB-WATER-04",
+  "title": {
+    "en": "Waterfall mist · designed ambience",
+    "zh": "瀑布水雾 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "water",
+  "designIndex": 3,
+  "seed": 877519414,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized waterfall mist atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "瀑布水雾的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "water",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-water"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-water-04/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-water-04/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-water-04/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-water-04/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 877519414,
+    "sha256": "d33fb0470dc27f9032bbe77c3f1004813f3cd4a6a82b1a45538351375b72940c",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0695e6ab0a6946fe021e279ec090a6238da56648377fc89ec1bcf3c172b1baaa",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d33fb0470dc27f9032bbe77c3f1004813f3cd4a6a82b1a45538351375b72940c",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "947d9c0268473f5ebe7dcdd8b691d8fd0866b577c52698fe7db6c521d2c9dfb3",
+      "bytes": 501496,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3c50bdefb2177c924598effcd5840ddb6b782e01ef9f4adc2856cdefca5eb5d5",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.1,
+    "dcOffset": -4.4057879228080124e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.040618896484375,
+    "internalStepP999": 0.12835699462890915,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A dynamic, swirling, and resonant synthesized texture with a metallic or electronic quality, featuring a build-up and decay within each loop cycle.",
+      "zh": "一种动态的、旋转的、共鸣的合成音效纹理，带有金属或电子质感，每个循环周期内都有起伏和衰减。"
+    },
+    "reason": "The sound is a well-produced, clean synthesized texture suitable for various sound design applications. It demonstrates excellent looping capabilities.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:30.723854+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "41b7b2f2a55fcf13a81a324ddd6c5941a059258f5402c0c8db1ee5b1590965d1"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.860199+00:00"
+}

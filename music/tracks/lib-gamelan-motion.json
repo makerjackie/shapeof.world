@@ -1,0 +1,102 @@
+{
+  "id": "lib-gamelan-motion",
+  "code": "LIB-23-08",
+  "title": {
+    "en": "Motion — Gamelan",
+    "zh": "跃动 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "gamelan"
+  ],
+  "energy": 3,
+  "bpm": 96,
+  "key": "B minor",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second gamelan-inspired instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 96 BPM; B minor. Main idea: a descending melody with an upward answer. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A lighthearted and whimsical orchestral piece featuring prominent pizzicato strings, playful woodwind melodies, and a steady, rhythmic bass. The arrangement builds gently, creating an atmosphere of gentle movement and curiosity.",
+    "zh": "一首轻松愉快的管弦乐曲，以突出的拨弦乐器、俏皮的木管旋律和稳定有节奏的低音为特色。编曲逐渐展开，营造出一种轻柔律动和好奇的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.789,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:02:08.281550+00:00",
+  "generation": {
+    "id": "79105a5a-4a9e-4eaf-b501-11b44230da2b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:01:15.503807+00:00",
+    "completedAt": "2026-09-09T09:02:08.281550+00:00",
+    "interactionId": "XCChasChKtOJoLAPwd-WiAQ",
+    "sha256": "72f4e8cb098201366fa5b1bb156d2d19657f9f093b7c3f92a91bc021694df25e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lighthearted and whimsical orchestral piece featuring prominent pizzicato strings, playful woodwind melodies, and a steady, rhythmic bass. The arrangement builds gently, creating an atmosphere of gentle movement and curiosity.",
+      "zh": "一首轻松愉快的管弦乐曲，以突出的拨弦乐器、俏皮的木管旋律和稳定有节奏的低音为特色。编曲逐渐展开，营造出一种轻柔律动和好奇的氛围。"
+    },
+    "instruments": [
+      "Pizzicato Strings",
+      "Woodwinds",
+      "Bass",
+      "Percussion",
+      "Bowed Strings"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Intriguing",
+      "Gentle"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "This is a well-produced, clear orchestral piece with a distinct and pleasant mood. It has no audible defects and is suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:02:26.443264+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:03:52.728666+00:00"
+}

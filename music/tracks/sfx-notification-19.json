@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-19",
+  "code": "SFX-NOTIFICATION-19",
+  "title": {
+    "en": "Welcome",
+    "zh": "欢迎提示"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 18,
+  "seed": 3865914540,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized welcome for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的欢迎提示合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.22,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3865914540,
+    "sha256": "86617bc517358482e76f24f0c6083d33bab5b117ba51adc71a3e44aadf4a118e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "da720505cbacb68eebbc189ebc674d59864c370bf64b4e2dd178b368a8215fed",
+      "bytes": 17963,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "86617bc517358482e76f24f0c6083d33bab5b117ba51adc71a3e44aadf4a118e",
+      "bytes": 107648,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "89ad2389604a961657a9fec97e11c083a9f3ab231b68f17b7663fa3046e67eb7",
+      "bytes": 9968,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "676a20a675f413a0445b7db3a0ada905efdc31a2c184fe40a996d4c3d9d8af42",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 53802,
+    "duration": 1.22,
+    "peakDbfs": -4.67,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.0839850284376045e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04493408203124982,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, clean electronic ping sound with a quick decay.",
+      "zh": "一个短促、高音、干净的电子提示音，带有快速衰减。"
+    },
+    "reason": "The sound is a clear, well-produced electronic ping, suitable for UI feedback or notification in games/video.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:31.254175+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "da720505cbacb68eebbc189ebc674d59864c370bf64b4e2dd178b368a8215fed"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 53802
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.892588+00:00"
+}

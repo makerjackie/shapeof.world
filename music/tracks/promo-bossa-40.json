@@ -1,0 +1,161 @@
+{
+  "id": "promo-bossa-40",
+  "code": "PROMO-07-40",
+  "title": {
+    "en": "Sunlit Steps · 40",
+    "zh": "日光步伐 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 3,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "nylon guitar",
+    "rim clicks",
+    "upright bass",
+    "shaker"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: brisk bossa nova with clipped sunny guitar answers. Instruments: nylon guitar, rim clicks, upright bass, shaker. Tempo 108 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "bossa"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and light instrumental track with a Latin-inspired, Bossa Nova feel, featuring acoustic guitar, bass, drums, and a melodic wind instrument.",
+    "zh": "一首欢快轻松的器乐曲，带有拉丁风格的巴萨诺瓦感觉，以原声吉他、贝斯、鼓和旋律优美的管乐器为特色。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:26:24.131036+00:00",
+  "generation": {
+    "id": "d204ae5c-31df-4898-9cdf-d2e03a33850f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:25:39.000426+00:00",
+    "completedAt": "2026-09-10T05:26:24.131036+00:00",
+    "interactionId": "Uz-iar_-PNK44vEPhZWJ4A0",
+    "sha256": "b361303bbd75b7d222ca4f07641462749c52095eb14234943d12e6c71d92acf7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and light instrumental track with a Latin-inspired, Bossa Nova feel, featuring acoustic guitar, bass, drums, and a melodic wind instrument.",
+      "zh": "一首欢快轻松的器乐曲，带有拉丁风格的巴萨诺瓦感觉，以原声吉他、贝斯、鼓和旋律优美的管乐器为特色。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "bass guitar",
+      "drums",
+      "flute"
+    ],
+    "moods": [
+      "upbeat",
+      "light",
+      "cheerful",
+      "relaxed",
+      "latin",
+      "bossa nova"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "High-quality, well-produced instrumental with a clear genre and mood, suitable for various light-hearted applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a clear melodic and rhythmic hook from the acoustic guitar and drums. It concludes with a deliberate, sustained chord and a final melodic flourish, providing a clear resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:45.746663+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "8822209b5de3ee9958f199955f6973f6b96634b4f2b97baa3d351b313d8a21ce"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.010542,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental piece featuring acoustic guitar, bass, and drums, with a distinct Latin/Flamenco influence.",
+      "zh": "一首欢快活泼的纯音乐，以原声吉他、贝斯和鼓为主，带有明显的拉丁/弗拉门戈风格。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Energetic",
+      "Latin",
+      "Flamenco"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced instrumental track with clear genre characteristics, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:26:38.591093+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.010542,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-bossa-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-bossa-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-bossa-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:36:25.925863+00:00"
+}

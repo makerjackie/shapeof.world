@@ -1,0 +1,102 @@
+{
+  "id": "lib-cool-jazz-nature",
+  "code": "LIB-09-04",
+  "title": {
+    "en": "Wildlands — Cool Jazz",
+    "zh": "山野 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "cool-jazz"
+  ],
+  "energy": 2,
+  "bpm": 78,
+  "key": "D dorian",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second cool jazz instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 78 BPM; D dorian. Main idea: an ascending fourth answered by a stepwise descent. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A smooth and melancholic jazz piece featuring a lead trumpet with a warm tone, accompanied by a gentle piano, walking bass, and brushed drums. The track evokes a relaxed and nostalgic atmosphere.",
+    "zh": "一首流畅而忧郁的爵士乐曲，以音色温暖的小号为主奏，伴随着轻柔的钢琴、行走的低音提琴和刷奏的鼓点。这首曲子营造出一种放松而怀旧的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 148.402,
+  "generatedAt": "2026-09-09T08:10:45.443714+00:00",
+  "generation": {
+    "id": "4456baf7-0051-4390-bef0-8dac7650fe49",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:09:55.526437+00:00",
+    "completedAt": "2026-09-09T08:10:45.443714+00:00",
+    "interactionId": "VBShas-hGNOJoLAPwd-WiAQ",
+    "sha256": "cdc9a13c80f0640abaebec49cafd87c1b7fc2c596fe064e3cdfdd19efdf8cb22"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth and melancholic jazz piece featuring a lead trumpet with a warm tone, accompanied by a gentle piano, walking bass, and brushed drums. The track evokes a relaxed and nostalgic atmosphere.",
+      "zh": "一首流畅而忧郁的爵士乐曲，以音色温暖的小号为主奏，伴随着轻柔的钢琴、行走的低音提琴和刷奏的鼓点。这首曲子营造出一种放松而怀旧的氛围。"
+    },
+    "instruments": [
+      "Trumpet",
+      "Piano",
+      "Upright Bass",
+      "Drums"
+    ],
+    "moods": [
+      "Melancholic",
+      "Smooth",
+      "Relaxed",
+      "Nostalgic",
+      "Jazzy"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "The audio is a well-produced, clean instrumental jazz track with a clear melodic structure and consistent quality, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:10:55.136119+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:11:54.034957+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,99 @@
+{
+  "id": "lib-gypsy-jazz-nature",
+  "code": "LIB-10-04",
+  "title": {
+    "en": "Wildlands — Gypsy Jazz",
+    "zh": "山野 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 140,
+  "key": "D dorian",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second acoustic swing jazz instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 140 BPM; D dorian. Main idea: a repeating five-note figure with space between phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A lively and intricate acoustic guitar piece with a strong folk/Celtic influence. Features a melodic lead guitar over a rhythmic accompaniment, creating a danceable and energetic atmosphere. The tone is bright and clear.",
+    "zh": "一首活泼而复杂的原声吉他乐曲，带有浓厚的民谣/凯尔特风格。旋律主奏吉他与节奏伴奏相得益彰，营造出舞动而充满活力的氛围。音色明亮清晰。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.756,
+  "generatedAt": "2026-09-09T08:13:35.978309+00:00",
+  "generation": {
+    "id": "bade9ef8-adb7-4e0c-a4a1-5de5aa14a21c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:12:46.462861+00:00",
+    "completedAt": "2026-09-09T08:13:35.978309+00:00",
+    "interactionId": "_xSharDyFuuCoLAP9_u-qAs",
+    "sha256": "69ec3ea788b3e8333059897938d9748123ecadcce61837dcf3fd5dc592c6d110"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and intricate acoustic guitar piece with a strong folk/Celtic influence. Features a melodic lead guitar over a rhythmic accompaniment, creating a danceable and energetic atmosphere. The tone is bright and clear.",
+      "zh": "一首活泼而复杂的原声吉他乐曲，带有浓厚的民谣/凯尔特风格。旋律主奏吉他与节奏伴奏相得益彰，营造出舞动而充满活力的氛围。音色明亮清晰。"
+    },
+    "instruments": [
+      "Acoustic Guitar"
+    ],
+    "moods": [
+      "Lively",
+      "Folk",
+      "Energetic",
+      "Danceable",
+      "Joyful",
+      "Traditional"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:13:48.822642+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:15:09.567548+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

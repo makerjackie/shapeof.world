@@ -1,0 +1,106 @@
+{
+  "id": "lib-cool-jazz-motion",
+  "code": "LIB-09-08",
+  "title": {
+    "en": "Motion — Cool Jazz",
+    "zh": "跃动 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "cool-jazz"
+  ],
+  "energy": 4,
+  "bpm": 98,
+  "key": "B minor",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second cool jazz instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 98 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A lively and upbeat big band jazz piece with a strong swing feel. Features dynamic brass sections, a prominent piano, walking bass, and energetic drums, creating a sophisticated and engaging atmosphere.",
+    "zh": "一首活泼欢快的爵士大乐队作品，具有强烈的摇摆乐风格。以充满活力的铜管乐部分、突出的钢琴、行进贝斯和充满能量的鼓点为特色，营造出精致而引人入胜的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 147.278,
+  "generatedAt": "2026-09-09T08:11:37.223374+00:00",
+  "generation": {
+    "id": "8cf263bf-e928-404b-a1a0-a09ad169a567",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:10:53.314736+00:00",
+    "completedAt": "2026-09-09T08:11:37.223374+00:00",
+    "interactionId": "jhShaqO4IPKc8vUPttiuwAE",
+    "sha256": "1082bbbf1a380e10a7b5b697232bb265642fd26242cdc39abf23f565ea6f1a97"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat big band jazz piece with a strong swing feel. Features dynamic brass sections, a prominent piano, walking bass, and energetic drums, creating a sophisticated and engaging atmosphere.",
+      "zh": "一首活泼欢快的爵士大乐队作品，具有强烈的摇摆乐风格。以充满活力的铜管乐部分、突出的钢琴、行进贝斯和充满能量的鼓点为特色，营造出精致而引人入胜的氛围。"
+    },
+    "instruments": [
+      "Drums",
+      "Electric Bass",
+      "Piano",
+      "Trumpet",
+      "Trombone",
+      "Saxophone",
+      "Electric Guitar"
+    ],
+    "moods": [
+      "Jazzy",
+      "Upbeat",
+      "Lively",
+      "Swing",
+      "Sophisticated",
+      "Playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality instrumental big band jazz with clear instrumentation and a well-defined mood, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:11:52.747564+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:12:46.455282+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

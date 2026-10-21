@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-03",
+  "code": "SFX-RETRO-03",
+  "title": {
+    "en": "Pixel jump",
+    "zh": "像素跳跃"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 2,
+  "seed": 758740327,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel jump for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素跳跃合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.57,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 758740327,
+    "sha256": "6324e4beb2e4f84cb6217bcbe5df27e1b1c2ae18067822e99044aa96bc1f4006",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d1143f3f3d3081416f74f3e4758d07cd35f63e07b27ddb397d8c3cff99da7349",
+      "bytes": 8820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6324e4beb2e4f84cb6217bcbe5df27e1b1c2ae18067822e99044aa96bc1f4006",
+      "bytes": 50318,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "50407153d909b891a8825c3fdc9b32f242eb2221204f73d735c4143c7d58dfbd",
+      "bytes": 13197,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "0ab1bafc5000b95f4a98ee522a5c4f1bf07bf83fc25e11e67671c041b60708dd",
+      "bytes": 1890,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 25137,
+    "duration": 0.57,
+    "peakDbfs": -4.12,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.53979287255838e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.084075927734375,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing sound effect, reminiscent of a spring or cartoon bounce.",
+      "zh": "短促、高音的合成弹簧音效，类似于卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized sound effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:14.479881+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d1143f3f3d3081416f74f3e4758d07cd35f63e07b27ddb397d8c3cff99da7349"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 25137
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.893620+00:00"
+}

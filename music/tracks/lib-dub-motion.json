@@ -1,0 +1,100 @@
+{
+  "id": "lib-dub-motion",
+  "code": "LIB-14-08",
+  "title": {
+    "en": "Motion — Dub",
+    "zh": "跃动 · 回声律动"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "dub"
+  ],
+  "energy": 4,
+  "bpm": 92,
+  "key": "B minor",
+  "instruments": [
+    "round electric bass",
+    "organ",
+    "rimshot",
+    "echo guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental dub instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: round electric bass, organ, rimshot, echo guitar. Style: spacious offbeat chords with restrained tape delay. Tempo approximately 92 BPM; B minor. Main idea: a compact three-note motif. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An energetic instrumental rock track featuring electric guitar, bass, and drums. It has a driving rhythm and a clean, polished sound.",
+    "zh": "一首充满活力的器乐摇滚乐曲，以电吉他、贝斯和鼓为主。它具有强劲的节奏和干净、精致的声音。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.424,
+  "generatedAt": "2026-09-09T08:28:32.027591+00:00",
+  "generation": {
+    "id": "1c1bcf7e-3345-42ac-b972-f3a0aee4cbef",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:27:45.059984+00:00",
+    "completedAt": "2026-09-09T08:28:32.027591+00:00",
+    "interactionId": "ghihaoq1Eu67i9sP06HTyAM",
+    "sha256": "999329be5e69ab812b62417d0e798fae38aa6d4b17d54d47c5fce85463241075"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic instrumental rock track featuring electric guitar, bass, and drums. It has a driving rhythm and a clean, polished sound.",
+      "zh": "一首充满活力的器乐摇滚乐曲，以电吉他、贝斯和鼓为主。它具有强劲的节奏和干净、精致的声音。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Uplifting",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is a well-produced instrumental track with clear instrumentation and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:28:41.180368+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-dub-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-dub-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-dub-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:30:02.934636+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

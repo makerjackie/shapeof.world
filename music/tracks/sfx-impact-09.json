@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-09",
+  "code": "SFX-IMPACT-09",
+  "title": {
+    "en": "Stone hit",
+    "zh": "石块碰撞"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 8,
+  "seed": 2457127462,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized stone hit for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的石块碰撞合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.59,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2457127462,
+    "sha256": "9883fa1b5060a4a5875e9d79d664c8c0ea5c8259e9520c19c929b38a659be0f9",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "49e6b49a15f60a97e8c2113c386e716cd7da52d27e1117062f94f8c4fb2611ad",
+      "bytes": 9186,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9883fa1b5060a4a5875e9d79d664c8c0ea5c8259e9520c19c929b38a659be0f9",
+      "bytes": 52082,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1804a3bf342bce9949d2959449ded45819d56acd208c811da298b778f024cc82",
+      "bytes": 9377,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "809c5ee683a5d2777fa4325b909d1b21d340144311181b8f3d49aaf3fd5b7e51",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 26019,
+    "duration": 0.59,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.16,
+    "dcOffset": -1.876633421730274e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2416531372070314,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, percussive thwack sound, resembling a quick, forceful hit or impact. It has a dry, immediate quality.",
+      "zh": "一个短促、尖锐的打击声，类似于快速有力的敲击或撞击。音质干脆、直接。"
+    },
+    "reason": "The sound is a clean, isolated percussive effect, free from defects, making it highly suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:03.440526+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "49e6b49a15f60a97e8c2113c386e716cd7da52d27e1117062f94f8c4fb2611ad"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 26019
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.877306+00:00"
+}

@@ -1,0 +1,184 @@
+{
+  "id": "scene-dub-25",
+  "code": "SCENE-09-25",
+  "title": {
+    "en": "Floating Objects · 25",
+    "zh": "漂浮物件 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "spacious playful object transformations",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 94,
+  "key": "",
+  "instruments": [
+    "organ stabs",
+    "deep bass",
+    "rimshot",
+    "short tape echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for spacious playful object transformations. Instruments: organ stabs, deep bass, rimshot, short tape echo. 94 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and lively instrumental track featuring a prominent brass section, driving rhythm, and a playful, energetic melody. It has a retro big band or jazz-funk feel, suitable for promotional content or lighthearted scenes.",
+    "zh": "一首欢快活泼的纯音乐，以突出的铜管乐器、强劲的节奏和俏皮、充满活力的旋律为特色。具有复古大乐队或爵士放克风格，适合宣传内容或轻松愉快的场景。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "spacious playful object transformations"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:14:08.913055+00:00",
+  "generation": {
+    "id": "4f577c6d-1fce-49dc-8b17-04b6746052b4",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:13:55.170997+00:00",
+    "completedAt": "2026-09-22T09:14:08.913055+00:00",
+    "interactionId": "1EayatO0ELve694PlMeHuQ4",
+    "sha256": "cc9969417979f9963ea9cc50b9c173e10aa68657c8225806693409a8f3709096"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and lively instrumental track featuring a prominent brass section, driving rhythm, and a playful, energetic melody. It has a retro big band or jazz-funk feel, suitable for promotional content or lighthearted scenes.",
+      "zh": "一首欢快活泼的纯音乐，以突出的铜管乐器、强劲的节奏和俏皮、充满活力的旋律为特色。具有复古大乐队或爵士放克风格，适合宣传内容或轻松愉快的场景。"
+    },
+    "instruments": [
+      "Brass",
+      "Drums",
+      "Bass guitar",
+      "Piano"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Playful",
+      "Energetic",
+      "Retro",
+      "Jazzy",
+      "Fun"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic, and clearly structured instrumental track with a distinct retro-jazz feel, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens with an immediate, catchy brass melody and a strong rhythmic pulse. It concludes with a definitive, bright musical flourish, providing a clear and satisfying resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:25.426155+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "1732372824052216888c86a09725d4f7592b9c703d75a3ff8907e94da75ac73c"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 28.813,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and sophisticated jazz-funk track featuring a prominent piano melody, a tight rhythm section, and a bright brass ensemble. The arrangement is dynamic and engaging.",
+      "zh": "一首活泼精致的爵士放克乐曲，以突出的钢琴旋律、紧凑的节奏部分和明亮的铜管乐团为特色。编曲充满活力且引人入胜。"
+    },
+    "instruments": [
+      "piano",
+      "drums",
+      "bass guitar",
+      "brass section",
+      "synthesizer"
+    ],
+    "moods": [
+      "upbeat",
+      "lively",
+      "cheerful",
+      "sophisticated",
+      "playful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced instrumental track with clear instrumentation and no defects, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:14:17.725103+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 3.812999999999999,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-dub-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-dub-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-dub-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1732372824052216888c86a09725d4f7592b9c703d75a3ff8907e94da75ac73c",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cc9969417979f9963ea9cc50b9c173e10aa68657c8225806693409a8f3709096",
+      "bytes": 699180,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "4a6f4c93feb725924c5d9aa5e8cbbb134453f1f716b40a7452f7690d65b976e7",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.829788+00:00"
+}

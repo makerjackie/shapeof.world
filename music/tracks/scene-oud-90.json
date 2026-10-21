@@ -1,0 +1,132 @@
+{
+  "id": "scene-oud-90",
+  "code": "SCENE-13-90",
+  "title": {
+    "en": "Copper Compass · 90",
+    "zh": "铜色罗盘 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "lively geographical discovery",
+    "narration"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "oud",
+    "darbuka",
+    "bass guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for lively geographical discovery. Instruments: oud, darbuka, bass guitar. 120 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A lively and melodic Middle Eastern instrumental piece featuring a prominent oud melody, supported by traditional percussion, bass, and a soulful wind instrument. A string instrument (violin/rababa) later joins, adding to the rich, traditional soundscape.",
+    "zh": "一首活泼而旋律优美的中东器乐作品，以突出的乌德琴旋律为主，辅以传统打击乐、贝斯和悠扬的管乐器。随后弦乐器（小提琴/拉巴布）加入，丰富了传统音景。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "lively geographical discovery"
+    ]
+  },
+  "duration": 86.988,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:03.923106+00:00",
+  "generation": {
+    "id": "75cdaab2-5a16-4b1d-bfa6-679aafaf953c",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:16:18.108427+00:00",
+    "completedAt": "2026-09-22T09:17:03.923106+00:00",
+    "interactionId": "YkeyapzlNOG5694P9qvy2Ag",
+    "sha256": "772e2f72ac59da7c58479ed7eaa6e87b4646c60b91202ab01b7b32c5a391685c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and melodic Middle Eastern instrumental piece featuring a prominent oud melody, supported by traditional percussion, bass, and a soulful wind instrument. A string instrument (violin/rababa) later joins, adding to the rich, traditional soundscape.",
+      "zh": "一首活泼而旋律优美的中东器乐作品，以突出的乌德琴旋律为主，辅以传统打击乐、贝斯和悠扬的管乐器。随后弦乐器（小提琴/拉巴布）加入，丰富了传统音景。"
+    },
+    "instruments": [
+      "Oud",
+      "Percussion",
+      "Bass Guitar",
+      "Wind Instrument",
+      "Violin"
+    ],
+    "moods": [
+      "Middle Eastern",
+      "Traditional",
+      "Lively",
+      "Melodic",
+      "Exotic",
+      "Folk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:14.716684+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-oud-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-oud-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-oud-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c67290813a40d96aa6ec77125542970b2fae3083330cb93dc37503ccdcd68e94",
+      "bytes": 1218603,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "772e2f72ac59da7c58479ed7eaa6e87b4646c60b91202ab01b7b32c5a391685c",
+      "bytes": 2095373,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "4ba42e66332433bd23995a5862ca9bb7c2184ed14cbe62320192dea4d7bf66e7",
+      "bytes": 2805,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.850035+00:00"
+}

@@ -1,0 +1,2 @@
+/* At narrow widths, move secondary actions into More instead of growing a second header row. */
+.experience-more-action.experience-more-narrow-only { display: none; }

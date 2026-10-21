@@ -1,0 +1,102 @@
+{
+  "id": "lib-gamelan-suspense",
+  "code": "LIB-23-09",
+  "title": {
+    "en": "Shadows — Gamelan",
+    "zh": "暗影 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "gamelan"
+  ],
+  "energy": 3,
+  "bpm": 70,
+  "key": "G minor",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second gamelan-inspired instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 70 BPM; G minor. Main idea: a compact three-note motif. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A melancholic and reflective instrumental piece that begins with a sparse piano and pizzicato strings, gradually building in emotional depth with sustained strings and a more cinematic feel. It maintains a gentle, flowing rhythm throughout.",
+    "zh": "一首忧郁而富有沉思感的器乐作品，以稀疏的钢琴和拨弦乐器开场，随后逐渐加入持续的弦乐，情感深度增强，营造出电影般的氛围。整体保持着轻柔流畅的节奏。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 176.98,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:02:31.461391+00:00",
+  "generation": {
+    "id": "f7afdf02-0cb8-4177-9a84-766c6c5cb32d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:01:46.980322+00:00",
+    "completedAt": "2026-09-09T09:02:31.461391+00:00",
+    "interactionId": "fCChatLcDu67i9sP06HTyAM",
+    "sha256": "73cda205ff789edd8a9e14068b2310860cd784c56c7960da914bae47ce3d344b"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A melancholic and reflective instrumental piece that begins with a sparse piano and pizzicato strings, gradually building in emotional depth with sustained strings and a more cinematic feel. It maintains a gentle, flowing rhythm throughout.",
+      "zh": "一首忧郁而富有沉思感的器乐作品，以稀疏的钢琴和拨弦乐器开场，随后逐渐加入持续的弦乐，情感深度增强，营造出电影般的氛围。整体保持着轻柔流畅的节奏。"
+    },
+    "instruments": [
+      "Piano",
+      "Strings",
+      "Pizzicato strings",
+      "Synth pads"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Hopeful",
+      "Emotional",
+      "Cinematic",
+      "Peaceful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 70,
+    "reason": "Well-produced, emotionally evocative instrumental music with a clear progression and no audible defects, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:02:44.299210+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:04:06.237815+00:00"
+}

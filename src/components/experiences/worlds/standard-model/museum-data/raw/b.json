@@ -1,0 +1,43 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:12:55 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/Q005",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "Q005/2024",
+  "description": "b",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "Q005M/2024",
+        "description": "b-QUARK MASS",
+        "pdg_values": [
+          {
+            "value": 4.183,
+            "error_positive": 0.007,
+            "error_negative": 0.007,
+            "value_text": "4.183+-0.007",
+            "unit": "GeV",
+            "confidence_level": 90.0,
+            "comment": "of MSbar Mass.",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q005A00/2024",
+        "description": "mass(b)/mass(s) MASS RATIO",
+        "pdg_values": [
+          {
+            "value": 53.87683811928053,
+            "error_positive": 0.1172418913691991,
+            "error_negative": 0.1172418913691991,
+            "value_text": "53.88+-0.12",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ]
+  }
+}

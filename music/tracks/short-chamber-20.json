@@ -1,0 +1,160 @@
+{
+  "id": "short-chamber-20",
+  "code": "SHORT-06-20",
+  "title": {
+    "en": "Paper Sprint · 20",
+    "zh": "纸上疾行 · 20"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "staccato violin",
+    "bass clarinet",
+    "dry hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 20,
+  "prompt": "Compose a COMPLETE original 30-second instrumental micro-score for a short product promotional video. Exactly one short cue, not a full-length song. Sound: nimble chamber pop; surprising offbeat accents and precise short phrases. Instruments: pizzicato cello, staccato violin, bass clarinet, dry hand percussion. Tempo 116 BPM, 4/4. Main hook: a rising fourth with a syncopated answer. [00:00] Immediate confident musical hook and beat within the first half-second, no intro or fade-in. [00:02] Establish a catchy clear groove with space for visual edits. [00:16] One crisp stop-and-restart or timbral switch, then a slightly fuller reprise. [00:26] A concise resolving fill. [00:29] A decisive final musical button for a logo reveal. [00:30] End completely after the brief natural decay. Total duration 30 seconds. Maintain the hook throughout, usable from any downbeat. Punchy but not harsh, audible melody and rhythm on phone speakers, controlled sub-bass, no long riser, no slow build or repeated sections. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and grand orchestral piece with a classical feel, featuring prominent strings, brass, and percussion. It builds in intensity, conveying an uplifting and celebratory mood.",
+    "zh": "一首活泼宏伟的管弦乐曲，具有古典风格，突出弦乐、铜管和打击乐。音乐强度逐渐增强，传达出振奋和庆祝的氛围。"
+  },
+  "batch": "short-promos-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 20,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 16,
+      "logo": 29
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 20.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T02:39:20.997364+00:00",
+  "generation": {
+    "id": "2f110b81-1dd7-4fbc-92cb-79270b5fd2d6",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T02:39:07.023897+00:00",
+    "completedAt": "2026-09-10T02:39:20.997364+00:00",
+    "interactionId": "TBiiavnRBOONk7QPyufS2Ao",
+    "sha256": "36df0e1a297644f0c5b8c15babbd21d7c10d539e827e131e6a26c7f504a4f9b6"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and grand orchestral piece with a classical feel, featuring prominent strings, brass, and percussion. It builds in intensity, conveying an uplifting and celebratory mood.",
+      "zh": "一首活泼宏伟的管弦乐曲，具有古典风格，突出弦乐、铜管和打击乐。音乐强度逐渐增强，传达出振奋和庆祝的氛围。"
+    },
+    "instruments": [
+      "strings",
+      "brass",
+      "woodwinds",
+      "percussion"
+    ],
+    "moods": [
+      "uplifting",
+      "celebratory",
+      "grand",
+      "majestic",
+      "lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-produced, engaging orchestral piece with a clear theme and dynamic progression, suitable for various media requiring an uplifting and grand classical sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "Opens with an immediate, bright orchestral theme. Ends with a grand, conclusive orchestral hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:42:23.216916+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "a11214402206abf5df77e35be20aaf6509ffaab01c3c91c90b262e24ee05eb9a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 29.962375,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant orchestral piece with a classical waltz feel, featuring prominent string and woodwind sections.",
+      "zh": "一首活泼优雅的管弦乐曲，具有古典华尔兹风格，以突出的弦乐和木管乐部分为特色。"
+    },
+    "instruments": [
+      "Strings",
+      "Woodwinds",
+      "Double Bass"
+    ],
+    "moods": [
+      "Classical",
+      "Elegant",
+      "Lively",
+      "Playful",
+      "Graceful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 155,
+    "reason": "The audio is a well-produced, clear orchestral piece with no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T02:39:37.386613+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 9.962375000000002,
+    "requestedSeconds": 20,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/short-chamber-20/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/short-chamber-20/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/short-chamber-20/v2/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T02:46:26.066022+00:00"
+}

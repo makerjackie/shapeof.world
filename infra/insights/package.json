@@ -1,0 +1,15 @@
+{
+  "name": "oneworld-insights",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "catalog": "node scripts/generate-catalog.mjs",
+    "cf-typegen": "WRANGLER_LOG_PATH=/tmp/oneworld-insights-wrangler.log pnpm --dir ../.. exec wrangler types infra/insights/worker-configuration.d.ts --config infra/insights/wrangler.jsonc --env-interface InsightsEnv",
+    "typecheck": "pnpm run catalog && pnpm run cf-typegen && pnpm --dir ../.. exec tsc --project infra/insights/tsconfig.json --noEmit",
+    "test": "pnpm run catalog && pnpm --dir ../.. exec vitest run --config infra/insights/vitest.config.ts",
+    "check": "pnpm run typecheck && pnpm run test && pnpm run deploy:dry-run",
+    "deploy:dry-run": "WRANGLER_LOG_PATH=/tmp/oneworld-insights-wrangler.log pnpm --dir ../.. exec wrangler deploy --config infra/insights/wrangler.jsonc --dry-run",
+    "deploy": "pnpm run check && WRANGLER_LOG_PATH=/tmp/oneworld-insights-wrangler.log pnpm --dir ../.. exec wrangler deploy --config infra/insights/wrangler.jsonc --strict"
+  }
+}

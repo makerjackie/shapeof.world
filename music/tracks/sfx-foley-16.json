@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-16",
+  "code": "SFX-FOLEY-16",
+  "title": {
+    "en": "Book close",
+    "zh": "合上书本"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 15,
+  "seed": 3070649051,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized book close for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的合上书本合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.67,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3070649051,
+    "sha256": "6512ec2523af5e6f27e9b25d4a157d5a2453b9ca99e806fbf53f1d2b05e4d510",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b57a85dd160807338e21289e7cd6470144fd9b83d0834108ac7f7692bb1b25a9",
+      "bytes": 10283,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6512ec2523af5e6f27e9b25d4a157d5a2453b9ca99e806fbf53f1d2b05e4d510",
+      "bytes": 59138,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5b3b04c2eb19a44fc02aacf99bd016367284518884a3d1ea27506be357b0fa04",
+      "bytes": 15266,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "c5491ace3b97493d6cbc800b2a91639610c639cfb13908a5b77808a36c6dc680",
+      "bytes": 1736,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 29547,
+    "duration": 0.67,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -21.71,
+    "dcOffset": -6.741402931663959e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.20624954223633063,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp electronic static burst or zap sound effect.",
+      "zh": "一个短促、尖锐的电子静电爆发或电击音效。"
+    },
+    "reason": "The sound is a clean, isolated electronic effect with no technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:58.911613+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b57a85dd160807338e21289e7cd6470144fd9b83d0834108ac7f7692bb1b25a9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 29547
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.866878+00:00"
+}

@@ -1,0 +1,70 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:12:45 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/Q004",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "Q004/2024",
+  "description": "c",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "Q004M/2024",
+        "description": "c-QUARK MASS",
+        "pdg_values": [
+          {
+            "value": 1.273,
+            "error_positive": 0.0046,
+            "error_negative": 0.0046,
+            "value_text": "1.2730+-0.0046",
+            "unit": "GeV",
+            "confidence_level": 90.0,
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q004MSR/2024",
+        "description": "mass(c)/mass(s) MASS RATIO",
+        "pdg_values": [
+          {
+            "value": 11.761,
+            "error_positive": 0.047,
+            "error_negative": 0.047,
+            "value_text": "11.761+-0.047",
+            "confidence_level": 90.0,
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q004MBR/2024",
+        "description": "mass(b)/mass(c) MASS RATIO",
+        "pdg_values": [
+          {
+            "value": 4.58,
+            "error_positive": 0.01,
+            "error_negative": 0.01,
+            "value_text": "4.58+-0.01",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "Q004MDB/2024",
+        "description": "mass(b)-mass(c) QUARK MASS DIFFERENCE",
+        "pdg_values": [
+          {
+            "value": 3.45,
+            "error_positive": 0.05,
+            "error_negative": 0.05,
+            "value_text": "3.45+-0.05",
+            "unit": "GeV",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      }
+    ]
+  }
+}

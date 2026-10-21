@@ -1,0 +1,101 @@
+{
+  "id": "lib-post-rock-explain",
+  "code": "LIB-30-05",
+  "title": {
+    "en": "Discovery — Post Rock",
+    "zh": "发现 · 后摇"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "curious",
+    "clear",
+    "thoughtful"
+  ],
+  "topics": [
+    "explain",
+    "post-rock"
+  ],
+  "energy": 2,
+  "bpm": 96,
+  "key": "G major",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Create an original 90 second instrumental post-rock instrumental composition for science explainer, tutorial and educational narration. Mood: curious, clear, thoughtful. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 96 BPM; G major. Main idea: alternating short and long phrases. Keep the lead sparse and the midrange uncluttered for spoken narration. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:30] Establish the main idea immediately with the core ensemble. [00:30-01:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:00-01:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "explain"
+  ],
+  "description": {
+    "en": "A smooth, laid-back instrumental track featuring a clean electric guitar melody over a steady drum beat and bassline, with subtle synth pads providing atmosphere. The track has a relaxed, jazzy feel.",
+    "zh": "一首流畅、悠闲的纯音乐曲目，以干净的电吉他旋律为主，配以稳定的鼓点和贝斯线，并有微妙的合成器衬垫营造氛围。这首曲子带有一种轻松、爵士的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 89.26,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:19:14.872199+00:00",
+  "generation": {
+    "id": "578d84e3-842f-4294-b055-918f40107d8e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:18:32.802026+00:00",
+    "completedAt": "2026-09-09T09:19:14.872199+00:00",
+    "interactionId": "aSShapzHOqKsrtoP65a1oAo",
+    "sha256": "3c0f778cbe9fcc84d9c71754cc8e3017beebe1263430259a85788dbc3b6cd1bb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A smooth, laid-back instrumental track featuring a clean electric guitar melody over a steady drum beat and bassline, with subtle synth pads providing atmosphere. The track has a relaxed, jazzy feel.",
+      "zh": "一首流畅、悠闲的纯音乐曲目，以干净的电吉他旋律为主，配以稳定的鼓点和贝斯线，并有微妙的合成器衬垫营造氛围。这首曲子带有一种轻松、爵士的感觉。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Smooth",
+      "Jazzy",
+      "Relaxed",
+      "Chill",
+      "Sophisticated"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:19:23.205507+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-explain/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-explain/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-explain/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:21:29.831649+00:00"
+}

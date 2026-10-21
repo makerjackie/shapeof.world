@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-19",
+  "code": "SFX-RETRO-19",
+  "title": {
+    "en": "Retro alarm",
+    "zh": "复古警报"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 18,
+  "seed": 3017629434,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized retro alarm for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的复古警报合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3017629434,
+    "sha256": "1c8249f6142f6ce4949888293bfca2feccdcf5d0296f471581d007b86612d6e7",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6889548833465d9070bcd87c52e786c9edb25cf07768a0956ef901151f719b18",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1c8249f6142f6ce4949888293bfca2feccdcf5d0296f471581d007b86612d6e7",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "3dde6a93c92b41bb3f4c1d2d000ebdb515af9ae974e380747af430b5f6f35e8f",
+      "bytes": 8237,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8e9e17adacdccd2b7bddaad7fb75865109af57154ef645ae32268d1328b0cc3d",
+      "bytes": 1949,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -4.87,
+    "rmsDbfs": -17.08,
+    "dcOffset": -2.7929466057256234e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08666921997070315,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing or spring sound effect, reminiscent of a cartoon bounce or a UI interaction.",
+      "zh": "一个短促的、合成的弹簧或“boing”音效，类似于卡通弹跳或用户界面互动音效。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized effect suitable for game or UI sound design. No defects detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:28.529246+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6889548833465d9070bcd87c52e786c9edb25cf07768a0956ef901151f719b18"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.897668+00:00"
+}

@@ -1,0 +1,447 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:25 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S043",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S043/2024",
+  "description": "W",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "S043M/2024",
+        "description": "W MASS",
+        "pdg_values": [
+          {
+            "value": 80.377,
+            "error_positive": 0.012,
+            "error_negative": 0.012,
+            "value_text": "80.3692 +- 0.0133 ",
+            "unit": "GeV",
+            "comment": "(AMOROSO 2024)",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043MR/2024",
+        "description": "W/Z MASS RATIO",
+        "pdg_values": [
+          {
+            "value": 0.88136,
+            "error_positive": 0.00015,
+            "error_negative": 0.00015,
+            "value_text": "0.88136+-0.00015",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043MDZ/2024",
+        "description": "mass(Z)-mass(W)",
+        "pdg_values": [
+          {
+            "value": 10.818,
+            "error_positive": 0.013,
+            "error_negative": 0.013,
+            "value_text": "10.818+-0.013",
+            "unit": "GeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043MD/2024",
+        "description": "mass(W+)-mass(W-)",
+        "pdg_values": [
+          {
+            "value": -0.02937911113483633,
+            "error_positive": 0.028144810291221,
+            "error_negative": 0.028144810291221,
+            "value_text": "-0.029+-0.028",
+            "unit": "GeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043W/2024",
+        "description": "W WIDTH",
+        "pdg_values": [
+          {
+            "value": 2.085,
+            "error_positive": 0.042,
+            "error_negative": 0.042,
+            "value_text": "2.085 +- 0.042",
+            "unit": "GeV",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043PIC/2024",
+        "description": "<N(pi+-)>",
+        "pdg_values": [
+          {
+            "value": 15.7,
+            "error_positive": 0.35,
+            "error_negative": 0.35,
+            "value_text": "15.70+-0.35",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043KC/2024",
+        "description": "<N(K+-)>",
+        "pdg_values": [
+          {
+            "value": 2.2,
+            "error_positive": 0.19,
+            "error_negative": 0.19,
+            "value_text": "2.20+-0.19",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043PRO/2024",
+        "description": "<N(p)>",
+        "pdg_values": [
+          {
+            "value": 0.92,
+            "error_positive": 0.14,
+            "error_negative": 0.14,
+            "value_text": "0.92+-0.14",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043CHG/2024",
+        "description": "<N(charged)>",
+        "pdg_values": [
+          {
+            "value": 19.38879699516598,
+            "error_positive": 0.08049261989605691,
+            "error_negative": 0.08049261989605691,
+            "value_text": "19.39+-0.08",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043DG1/2024",
+        "description": "g(1)**Z",
+        "pdg_values": [
+          {
+            "value": 0.984,
+            "error_positive": 0.018,
+            "error_negative": 0.02,
+            "value_text": "0.984 +0.018-0.020",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043DKG/2024",
+        "description": "kappa(gamma)",
+        "pdg_values": [
+          {
+            "value": 0.982,
+            "error_positive": 0.042,
+            "error_negative": 0.042,
+            "value_text": "0.982 +-0.042",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043LG/2024",
+        "description": "lambda(gamma)",
+        "pdg_values": [
+          {
+            "value": -0.022,
+            "error_positive": 0.019,
+            "error_negative": 0.019,
+            "value_text": "-0.022 +-0.019",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043DKZ/2024",
+        "description": "kappa(Z)",
+        "pdg_values": [
+          {
+            "value": 0.924,
+            "error_positive": 0.06369458375717671,
+            "error_negative": 0.06092618484691126,
+            "value_text": "0.92+-0.06",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043LZ/2024",
+        "description": "lambda(Z)",
+        "pdg_values": [
+          {
+            "value": -0.088,
+            "error_positive": 0.06425729530566937,
+            "error_negative": 0.06146543744251724,
+            "value_text": "-0.09+-0.06",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043DG5/2024",
+        "description": "g(5)**Z",
+        "pdg_values": [
+          {
+            "value": -0.0694425926823425,
+            "error_positive": 0.09664011145706075,
+            "error_negative": 0.09255238444861531,
+            "value_text": "-0.07+-0.09",
+            "scale_factor": 1.082959,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043GZ4/2024",
+        "description": "g(4)**Z",
+        "pdg_values": [
+          {
+            "value": -0.295739106691793,
+            "error_positive": 0.1633724013297396,
+            "error_negative": 0.1710395663108036,
+            "value_text": "-0.30+-0.17",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043KAZ/2024",
+        "description": "kappatilde(Z)",
+        "pdg_values": [
+          {
+            "value": -0.1169777884139463,
+            "error_positive": 0.06246950475544243,
+            "error_negative": 0.04068667356033676,
+            "value_text": "-0.12+0.06-0.04",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043LAZ/2024",
+        "description": "lambdatilde(Z)",
+        "pdg_values": [
+          {
+            "value": -0.09000051028312182,
+            "error_positive": 0.06720000000000001,
+            "error_negative": 0.06413101344315325,
+            "value_text": "-0.09+-0.07",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043WMG/2024",
+        "description": "W ANOMALOUS MAGNETIC MOMENT",
+        "pdg_values": [
+          {
+            "value": 2.22,
+            "error_positive": 0.2,
+            "error_negative": 0.19,
+            "value_text": "2.22+-0.20",
+            "unit": "e/2mass(W)",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043A00/2024",
+        "description": "c_{WWW}/Lambda**2, c_{W}/Lambda**2, c_{B}/Lambda**2"
+      },
+      {
+        "pdgid": "S043AQC/2024",
+        "description": "a_0/Lambda**2, a_c/Lambda**2, a_n/Lambda**2, kappa_0^W/Lambda**2, kappa_c^W/Lambda**2, f(T,0)/Lambda**4, f(M,i)/Lambda**4, alpha_4, alpha_5, F(S,i)/Lambda**4, F(M,i)/Lambda**4, F(T,i)/Lambda**4"
+      }
+    ],
+    "branching_fractions": [
+      {
+        "pdgid": "S043.7/2024",
+        "description": "W+ --> lepton+ nu",
+        "mode_number": 1,
+        "pdg_values": [
+          {
+            "value": 0.1086,
+            "error_positive": 0.0009,
+            "error_negative": 0.0009,
+            "value_text": "(10.86+-0.09)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.1/2024",
+        "description": "W+ --> e+ nu",
+        "mode_number": 2,
+        "pdg_values": [
+          {
+            "value": 0.1071,
+            "error_positive": 0.0016,
+            "error_negative": 0.0016,
+            "value_text": "(10.71+-0.16)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.2/2024",
+        "description": "W+ --> mu+ nu",
+        "mode_number": 3,
+        "pdg_values": [
+          {
+            "value": 0.1063,
+            "error_positive": 0.0015,
+            "error_negative": 0.0015,
+            "value_text": "(10.63+-0.15)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.5/2024",
+        "description": "W+ --> tau+ nu",
+        "mode_number": 4,
+        "pdg_values": [
+          {
+            "value": 0.1138,
+            "error_positive": 0.0021,
+            "error_negative": 0.0021,
+            "value_text": "(11.38+-0.21)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.8/2024",
+        "description": "W+ --> hadrons",
+        "mode_number": 5,
+        "pdg_values": [
+          {
+            "value": 0.6741,
+            "error_positive": 0.0027,
+            "error_negative": 0.0027,
+            "value_text": "(67.41+-0.27)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.6/2024",
+        "description": "W+ --> pi+ gamma",
+        "mode_number": 6,
+        "pdg_values": [
+          {
+            "value": 7e-06,
+            "value_text": "<7 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.14/2024",
+        "description": "W+ --> rho+ gamma",
+        "mode_number": 7,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S043.15/2024",
+        "description": "W+ --> K+ gamma",
+        "mode_number": 8,
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S043.9/2024",
+        "description": "W+ --> D_s()+ gamma",
+        "mode_number": 9,
+        "pdg_values": [
+          {
+            "value": 0.0006,
+            "value_text": "<6 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.12/2024",
+        "description": "W+ --> c X",
+        "mode_number": 10,
+        "pdg_values": [
+          {
+            "value": 0.3330498461538461,
+            "error_positive": 0.02641736050362535,
+            "error_negative": 0.02641736050362535,
+            "value_text": "(33.3+-2.6)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.10/2024",
+        "description": "W+ --> c sbar",
+        "mode_number": 11,
+        "pdg_values": [
+          {
+            "value": 0.310086,
+            "error_positive": 0.1301962586904864,
+            "error_negative": 0.1055206492066835,
+            "value_text": "(31+13-11)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.11/2024",
+        "description": "W+ --> invisible",
+        "mode_number": 12,
+        "pdg_values": [
+          {
+            "value": 0.01438848920863309,
+            "error_positive": 0.02953971279244695,
+            "error_negative": 0.02793889602510466,
+            "value_text": "(1.4+-2.9)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S043.13/2024",
+        "description": "W+ --> pi+ pi+ pi-",
+        "mode_number": 13,
+        "pdg_values": [
+          {
+            "value": 1.01e-06,
+            "value_text": "<1.01 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ]
+  }
+}

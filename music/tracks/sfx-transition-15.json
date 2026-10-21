@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-15",
+  "code": "SFX-TRANSITION-15",
+  "title": {
+    "en": "Fold",
+    "zh": "折叠转场"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 14,
+  "seed": 1014460087,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized fold for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的折叠转场合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1014460087,
+    "sha256": "97d1d20e23b0fb0d1687d2c3b3c3fbb62235f33806a804b5d879083d6bb415b4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f344e25c3f05fce06b5b672ce4c8f20c914640034d94f26b988628a52027dcb2",
+      "bytes": 7357,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "97d1d20e23b0fb0d1687d2c3b3c3fbb62235f33806a804b5d879083d6bb415b4",
+      "bytes": 39734,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b79e1c765edb42afaf7d22c10a2182b2aa67d27ebe8cee3560c19b95a88d8bee",
+      "bytes": 11181,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "60a6d783a971d7391fb6a600d5617fe80b9e278b527c4665a9814590c6532d50",
+      "bytes": 1927,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 19845,
+    "duration": 0.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.16,
+    "dcOffset": -5.5360685941043087e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.23320773315429588,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, springy 'boing' sound effect, reminiscent of a cartoon bounce or a small spring.",
+      "zh": "一个短促、高音、弹簧般的“boing”音效，类似于卡通弹跳声或小弹簧的声音。"
+    },
+    "reason": "The sound is a clean, isolated, and well-produced synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:53.166112+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "f344e25c3f05fce06b5b672ce4c8f20c914640034d94f26b988628a52027dcb2"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 19845
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904981+00:00"
+}

@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-chamber-challenge",
+  "code": "GAME-04-3",
+  "title": {
+    "en": "Library Puzzle · Challenge",
+    "zh": "书库谜题 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "thoughtful puzzle solving",
+    "challenge"
+  ],
+  "energy": 3,
+  "bpm": 98,
+  "key": "",
+  "instruments": [
+    "pizzicato quartet",
+    "clarinet",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for thoughtful puzzle solving, challenge state. Instruments: pizzicato quartet, clarinet, woodblocks. 98 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "A lively and charming instrumental piece featuring a prominent accordion melody, supported by acoustic guitar, upright bass, and light percussion, evoking a cafe or waltz atmosphere.",
+    "zh": "一首活泼迷人的纯音乐，以手风琴为主旋律，配以原声吉他、低音提琴和轻柔的打击乐，营造出咖啡馆或华尔兹的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 88.895,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:52.377930+00:00",
+  "generation": {
+    "id": "ba0942df-7974-43a4-ac8c-0bf32d116c95",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:22:07.680943+00:00",
+    "completedAt": "2026-09-22T09:22:52.377930+00:00",
+    "interactionId": "wEiyat76LJiu7PkP37y0EQ",
+    "sha256": "6e6acf5eea8f5585cf3858f0146ad095839e358d648e1378341c0b2b0e3b9f85"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and charming instrumental piece featuring a prominent accordion melody, supported by acoustic guitar, upright bass, and light percussion, evoking a cafe or waltz atmosphere.",
+      "zh": "一首活泼迷人的纯音乐，以手风琴为主旋律，配以原声吉他、低音提琴和轻柔的打击乐，营造出咖啡馆或华尔兹的氛围。"
+    },
+    "instruments": [
+      "Accordion",
+      "Acoustic Guitar",
+      "Upright Bass",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lighthearted",
+      "Charming",
+      "Lively"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "High-quality recording with clear instrumentation and a pleasant, engaging musical theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:04.758474+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 30.623991,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1350518,
+    "sourceStartSeconds": 23.5,
+    "sourceEndSeconds": 54.22,
+    "crossfadeSeconds": 0.09600907029478457,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1350518,
+        "duration": 30.623991,
+        "peakDbfs": -0.95,
+        "rmsDbfs": -15.9,
+        "dcOffset": 0.0023412193819233275,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01092529296875,
+        "internalStepP999": 0.092987060546875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1350518,
+        "duration": 30.623991,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.69,
+        "dcOffset": 0.0019216348720497317,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.000335693359375,
+        "internalStepP999": 0.09898327636718562,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthesized, metallic, and rhythmic texture with percussive elements, creating an atmospheric and somewhat industrial or sci-fi feel.",
+        "zh": "一种合成的、金属感的、有节奏的纹理，带有打击乐元素，营造出一种氛围感，略带工业或科幻的感觉。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture with no audible defects or unintended elements. It loops perfectly, making it highly suitable for background or environmental sound design.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:29:08.541985+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "5041e3a4eecafe1417314b1e15dc971d1f6b1a8403e99704537f690912a0a7e5"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, dynamics, and phrase continuity are maintained across both joins. There are no fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:18.915347+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0d16f4cfc12e97ae9585bb53c1383cb51f83be7b8ce61c6eee082a9f01c41f6a",
+      "bytes": 1245300,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6e6acf5eea8f5585cf3858f0146ad095839e358d648e1378341c0b2b0e3b9f85",
+      "bytes": 2141139,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "3c003a2234fd2cf6fcb104ebc4497c2d3d46cf0c0cf8b0eb6394f36daa9608ae",
+      "bytes": 2789,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "d32456289ab79205fcda138f1de8e3d8be0b878292a4b8f0eec4a75b9781edf5",
+      "bytes": 5402116,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "cc3ed6907f6b53fadb695b3b689e9031b39b17ee91adeef212fa2f74ad5a6f3d",
+      "bytes": 437238,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.457476+00:00"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "scene-dub-90",
+  "code": "SCENE-09-90",
+  "title": {
+    "en": "Floating Objects · 90",
+    "zh": "漂浮物件 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "spacious playful object transformations",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 94,
+  "key": "",
+  "instruments": [
+    "organ stabs",
+    "deep bass",
+    "rimshot",
+    "short tape echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for spacious playful object transformations. Instruments: organ stabs, deep bass, rimshot, short tape echo. 94 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A calm and reflective electronic piece featuring a sustained, melancholic piano melody over gentle synth pads and a light, steady percussive beat. The track evokes a serene and thoughtful atmosphere.",
+    "zh": "一首平静而沉思的电子乐曲，以持续、忧郁的钢琴旋律为主，伴随着柔和的合成器音垫和轻快稳定的打击乐节拍。营造出宁静而富有思想的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "spacious playful object transformations"
+    ]
+  },
+  "duration": 87.693,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:14:48.849795+00:00",
+  "generation": {
+    "id": "e6c91ec9-b6e3-4968-9799-b780686f5f59",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:14:03.027491+00:00",
+    "completedAt": "2026-09-22T09:14:48.849795+00:00",
+    "interactionId": "20ayaqThLpyA694PvP-84Q0",
+    "sha256": "e74a89e5d4d65223b6f19f8ca2432ce03f0e0467d2047056dcfe65520c93b903"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective electronic piece featuring a sustained, melancholic piano melody over gentle synth pads and a light, steady percussive beat. The track evokes a serene and thoughtful atmosphere.",
+      "zh": "一首平静而沉思的电子乐曲，以持续、忧郁的钢琴旋律为主，伴随着柔和的合成器音垫和轻快稳定的打击乐节拍。营造出宁静而富有思想的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Synthesizer",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Reflective",
+      "Melancholic",
+      "Peaceful",
+      "Serene",
+      "Thoughtful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 102,
+    "reason": "Clean production, clear melodic structure, and consistent, evocative mood make it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:00.450488+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-dub-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-dub-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-dub-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e5a983a07a4e2894f342183ba3901dfb6f470085eb2034cab50176bb3e567d87",
+      "bytes": 1228477,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e74a89e5d4d65223b6f19f8ca2432ce03f0e0467d2047056dcfe65520c93b903",
+      "bytes": 2112300,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "86cd739d3bf7e1cfc07211f73ec63b3e0f4f65a9ff58026c9edbfe829f5e51bb",
+      "bytes": 2792,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.830164+00:00"
+}

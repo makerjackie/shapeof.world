@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <meta name="theme-color" content="#eee9df">
+    <title>AI 分析 · Shape of the World Insights</title>
+    <link rel="stylesheet" href="/styles.css?v=20260809-7">
+    <script src="/report/report.js?v=20260809-7" defer></script>
+  </head>
+  <body>
+    <section class="login-shell" id="login-shell" aria-labelledby="login-title">
+      <div class="login-mark" aria-hidden="true">AI</div>
+      <form class="login-card" id="login-form">
+        <p class="eyebrow">Shape of the World · Private Insights</p>
+        <h1 id="login-title">AI 分析</h1>
+        <p class="login-copy">输入共享访问密码，查看最新分析并继续追问。</p>
+        <label for="password">访问密码</label>
+        <div class="password-row">
+          <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128">
+          <button type="submit">进入后台</button>
+        </div>
+        <p class="form-status" id="login-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="dashboard report-dashboard" id="report-dashboard" hidden>
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="返回网站分析">
+          <span class="brand-mark">S</span>
+          <span><b>Shape of the World</b><small>Insights</small></span>
+        </a>
+        <nav class="topnav" aria-label="后台页面">
+          <a href="/">网站分析</a>
+          <a href="/report/" aria-current="page">AI 分析</a>
+        </nav>
+        <div class="top-actions">
+          <a class="report-back-link" href="/">返回数据</a>
+          <div class="range-switch" aria-label="统计周期">
+            <button type="button" data-days="7" aria-pressed="true">7 天</button>
+            <button type="button" data-days="30" aria-pressed="false">30 天</button>
+            <button type="button" data-days="90" aria-pressed="false">90 天</button>
+          </div>
+          <button class="quiet-button" id="logout" type="button">退出</button>
+        </div>
+      </header>
+
+      <div class="report-page-body">
+        <section class="report-page-header">
+          <div><p class="eyebrow">DeepSeek · 最新汇总数据</p><h1>AI 分析</h1></div>
+          <p>基于当前统计周期的最新数据生成，可继续追问具体变化与优化方向。</p>
+        </section>
+
+        <section class="ai-report-section report-page-panel">
+          <header class="ai-report-head">
+            <div><p class="eyebrow">分析报告</p><h2>最新结论</h2></div>
+            <button type="button" class="report-refresh" id="refresh-report">重新生成</button>
+          </header>
+          <div class="report-state" id="report-state" aria-live="polite">正在检查 AI 分析配置…</div>
+          <article class="report-content" id="report-content" hidden></article>
+          <section class="ai-chat" id="chat-panel" hidden>
+            <header><div><p class="eyebrow">基于最新数据</p><h3>继续追问</h3></div><span id="chat-model"></span></header>
+            <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+            <div class="chat-suggestions" id="chat-suggestions"></div>
+            <form class="chat-form" id="chat-form">
+              <textarea id="chat-question" rows="2" maxlength="600" placeholder="例如：哪些主题最值得优先优化？" required></textarea>
+              <button type="submit" id="chat-submit">提问</button>
+            </form>
+          </section>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

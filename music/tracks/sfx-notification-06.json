@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-06",
+  "code": "SFX-NOTIFICATION-06",
+  "title": {
+    "en": "Timer ready",
+    "zh": "计时就绪"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 5,
+  "seed": 1243366233,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized timer ready for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的计时就绪合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.65,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-06/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-06/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-06/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-06/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1243366233,
+    "sha256": "1349a61e8913de4863817dee99db146b75546162ef0179f7009fad3626e3e459",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b3b2cec49ade999b4bff1ee37cd03093e12428b9795e6b56e1c6a552a8b7a844",
+      "bytes": 9917,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1349a61e8913de4863817dee99db146b75546162ef0179f7009fad3626e3e459",
+      "bytes": 57374,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "53a26ec9a532e406c1b76183b66ff8cc1cb9cadae95458ef73877c175258991d",
+      "bytes": 7899,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "e3bcd5fb2b806927c9e08d2794bffacd156bffc404dfab92354e70518b49c970",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 28665,
+    "duration": 0.65,
+    "peakDbfs": -4.62,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.0007508612419326e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.08665997314453122,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic 'ding' sound, resembling a notification or alert.",
+      "zh": "短促、高音的电子“叮”声，类似于通知或警报。"
+    },
+    "reason": "The audio is a clean, well-produced electronic sound effect, free from defects, and suitable for use as a notification or UI element in sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:18.788798+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b3b2cec49ade999b4bff1ee37cd03093e12428b9795e6b56e1c6a552a8b7a844"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 28665
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.889755+00:00"
+}

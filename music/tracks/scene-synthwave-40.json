@@ -1,0 +1,181 @@
+{
+  "id": "scene-synthwave-40",
+  "code": "SCENE-15-40",
+  "title": {
+    "en": "Night Transit · 40",
+    "zh": "夜间穿行 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "original retro-futuristic transport montage",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "",
+  "instruments": [
+    "analog arpeggios",
+    "rounded bass",
+    "tight gated snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for original retro-futuristic transport montage. Instruments: analog arpeggios, rounded bass, tight gated snare. 126 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring driving synth melodies, a strong beat, and a modern, positive vibe. Ideal for promotional content or dynamic media.",
+    "zh": "一首充满活力和动感的电子音乐，以强劲的合成器旋律、鲜明的节拍和现代积极的氛围为特色。非常适合宣传内容或动态媒体。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "original retro-futuristic transport montage"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:04:46.248981+00:00",
+  "generation": {
+    "id": "096da60e-931b-4319-b417-5e73e1c6b3db",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:04:08.005244+00:00",
+    "completedAt": "2026-09-22T09:04:46.248981+00:00",
+    "interactionId": "iESyaujqN6eA694PtMejkAU",
+    "sha256": "db906720dab6f779af0a162c5af5cfe1fdee8f8110639a0c61a5001cce113ba7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring driving synth melodies, a strong beat, and a modern, positive vibe. Ideal for promotional content or dynamic media.",
+      "zh": "一首充满活力和动感的电子音乐，以强劲的合成器旋律、鲜明的节拍和现代积极的氛围为特色。非常适合宣传内容或动态媒体。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving",
+      "Modern",
+      "Motivational"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, high-energy electronic track with a clear structure and positive mood, suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main synth melody and a driving electronic beat. It concludes with a deliberate fade-out and a final synth flourish.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:05:06.240499+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "466e7c2aa4e3df90d531f182f01b095a650d740f72eebd949fe8f34729faeee1"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.286458,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving electronic dance track featuring pulsating synth bass, dynamic drum programming, and layered synthesizers creating an uplifting and modern atmosphere.",
+      "zh": "一首充满活力和驱动力的电子舞曲，以脉动的合成器贝斯、动感的鼓点编排和分层合成器为特色，营造出一种振奋人心的现代氛围。"
+    },
+    "instruments": [
+      "Electronic Drums",
+      "Synthesizer",
+      "Synth Bass",
+      "Electronic Percussion"
+    ],
+    "moods": [
+      "Energetic",
+      "Uplifting",
+      "Driving",
+      "Danceable",
+      "Modern"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, high-energy electronic track with clear instrumentation and no defects, suitable for various media applications requiring an upbeat modern sound.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:04:57.619633+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.286458000000003,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-synthwave-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-synthwave-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-synthwave-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "466e7c2aa4e3df90d531f182f01b095a650d740f72eebd949fe8f34729faeee1",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "db906720dab6f779af0a162c5af5cfe1fdee8f8110639a0c61a5001cce113ba7",
+      "bytes": 1382543,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "b271015b70c5c600d1fb87f1c0231c13fd50e22ec36f418836982e235eb338cd",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.852319+00:00"
+}

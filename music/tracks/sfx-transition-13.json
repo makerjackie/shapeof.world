@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-13",
+  "code": "SFX-TRANSITION-13",
+  "title": {
+    "en": "Wind rush",
+    "zh": "疾风掠过"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 12,
+  "seed": 3547976784,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized wind rush for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的疾风掠过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.7,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3547976784,
+    "sha256": "2c4b7799d7de9a573c5233a956e3c394ff230eb5bdadf313b166c90952698b2d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "cdde47affe4dbb66ea6fedebfe0b9adba35591076f0a28242d7231062f0ec817",
+      "bytes": 24912,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2c4b7799d7de9a573c5233a956e3c394ff230eb5bdadf313b166c90952698b2d",
+      "bytes": 149984,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "db8a5e237b1ff316de444fde342dc2c11d707367f9d173dd160c4b713659966c",
+      "bytes": 29764,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "5768f1daf2fe5aba13d376be11180dd25c63134be0def8a549d0f515e25c3ec9",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 74970,
+    "duration": 1.7,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -20.43,
+    "dcOffset": -6.920085742630386e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1590358886718768,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized sound effect featuring a rising, high-pitched electronic whine or whoosh that transitions into a sustained, buzzing, and slightly distorted energy hum before ending abruptly.",
+      "zh": "一个简短的合成音效，包含一个上升的、高音调的电子嗡鸣或嗖嗖声，随后转变为持续的、嗡嗡作响且略带失真的能量嗡鸣声，然后突然结束。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized effect suitable for various sci-fi or electronic sound design applications, such as power-ups, energy charges, or futuristic device activations.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:52.302396+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "cdde47affe4dbb66ea6fedebfe0b9adba35591076f0a28242d7231062f0ec817"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 74970
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.904627+00:00"
+}

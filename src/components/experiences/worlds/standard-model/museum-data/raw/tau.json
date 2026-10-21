@@ -1,0 +1,4305 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:06 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S035",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S035/2024",
+  "description": "tau",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "S035M/2024",
+        "description": "tau MASS",
+        "pdg_values": [
+          {
+            "value": 1776.93246513409,
+            "error_positive": 0.08491495391323055,
+            "error_negative": 0.08758019173411406,
+            "value_text": "1776.93+-0.09",
+            "unit": "MeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035MDF/2024",
+        "description": "(mass(tau+)-mass(tau-))/m(average)",
+        "pdg_values": [
+          {
+            "value": 0.00028,
+            "value_text": "<2.8 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035T/2024",
+        "description": "tau MEAN LIFE",
+        "pdg_values": [
+          {
+            "value": 2.902908481725749e-13,
+            "error_positive": 5.252136673846729e-16,
+            "error_negative": 5.252136673846729e-16,
+            "value_text": "(2.903+-0.005)E-13",
+            "unit": "s",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035TDF/2024",
+        "description": "(meanlife(tau+)-meanlife(tau-))/meanlife(average)",
+        "pdg_values": [
+          {
+            "value": 0.007,
+            "value_text": "< 7.0 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035MM/2024",
+        "description": "mu_tau/(ehbar/2m_tau)-1 = (g_tau-2)/2",
+        "pdg_values": [
+          {
+            "value": -0.0165,
+            "error_positive": 0.0405,
+            "error_negative": 0.0405,
+            "value_text": "-0.057 to 0.024",
+            "is_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035EDM/2024",
+        "description": "Re(d(tau))",
+        "pdg_values": [
+          {
+            "value": -6.500000000000001e-18,
+            "error_positive": 1.25e-17,
+            "error_negative": 1.25e-17,
+            "value_text": "-1.85E-17 to 6.1E-18",
+            "is_limit": true,
+            "unit": "e cm",
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035EDI/2024",
+        "description": "Im(d(tau))",
+        "pdg_values": [
+          {
+            "value": -3.85e-18,
+            "error_positive": 6.15e-18,
+            "error_negative": 6.15e-18,
+            "value_text": "-1.03E-17 to 2.30E-18",
+            "is_limit": true,
+            "unit": "e cm",
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035WDM/2024",
+        "description": "Re(d(tau)**w)",
+        "pdg_values": [
+          {
+            "value": 5e-18,
+            "value_text": "<0.50 E-17",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "unit": "e cm",
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035WDI/2024",
+        "description": "Im(d(tau)**w)",
+        "pdg_values": [
+          {
+            "value": 1.1e-17,
+            "value_text": "<1.1 E-17",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "unit": "e cm",
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035WMM/2024",
+        "description": "Re(alpha(tau)**w)",
+        "pdg_values": [
+          {
+            "value": 0.0011,
+            "value_text": "<1.1 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035WMI/2024",
+        "description": "Im(alpha(tau)**w)",
+        "pdg_values": [
+          {
+            "value": 0.0027,
+            "value_text": "<2.7 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035DR1/2024",
+        "description": "tau+- --> pi+- K0S nu_tau (RATE DIFFERENCE) / (RATE SUM)",
+        "pdg_values": [
+          {
+            "value": -0.0036,
+            "error_positive": 0.002549509756796392,
+            "error_negative": 0.002549509756796392,
+            "value_text": "-0.0036+-0.0025",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035RHO/2024",
+        "description": "rho(e or mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.745,
+            "error_positive": 0.008,
+            "error_negative": 0.008,
+            "value_text": "0.745+-0.008",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035RHE/2024",
+        "description": "rho(e) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.747,
+            "error_positive": 0.01,
+            "error_negative": 0.01,
+            "value_text": "0.747+-0.010",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035RHM/2024",
+        "description": "rho(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.763,
+            "error_positive": 0.02,
+            "error_negative": 0.02,
+            "value_text": "0.763+-0.020",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XI/2024",
+        "description": "xi(e or mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.985,
+            "error_positive": 0.03,
+            "error_negative": 0.03,
+            "value_text": "0.985+-0.030",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XE/2024",
+        "description": "xi(e) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.994,
+            "error_positive": 0.04,
+            "error_negative": 0.04,
+            "value_text": "0.994+-0.040",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XM/2024",
+        "description": "xi(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 1.03,
+            "error_positive": 0.059,
+            "error_negative": 0.059,
+            "value_text": "1.030+-0.059",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035ETA/2024",
+        "description": "eta(e or mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.013,
+            "error_positive": 0.02,
+            "error_negative": 0.02,
+            "value_text": "0.013+-0.020",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035ETM/2024",
+        "description": "eta(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.094,
+            "error_positive": 0.073,
+            "error_negative": 0.073,
+            "value_text": "0.094+-0.073",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035DXI/2024",
+        "description": "(deltaxi)(e or mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.746,
+            "error_positive": 0.021,
+            "error_negative": 0.021,
+            "value_text": "0.746+-0.021",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035DXE/2024",
+        "description": "(deltaxi)(e) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.734,
+            "error_positive": 0.028,
+            "error_negative": 0.028,
+            "value_text": "0.734+-0.028",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035DXM/2024",
+        "description": "(deltaxi)(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.778,
+            "error_positive": 0.037,
+            "error_negative": 0.037,
+            "value_text": "0.778+-0.037",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XPI/2024",
+        "description": "xi(pi) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.993,
+            "error_positive": 0.022,
+            "error_negative": 0.022,
+            "value_text": "0.993+-0.022",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XRH/2024",
+        "description": "xi(rho) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.994,
+            "error_positive": 0.008,
+            "error_negative": 0.008,
+            "value_text": "0.994+-0.008",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XA1/2024",
+        "description": "xi(a_1) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 1.001,
+            "error_positive": 0.027,
+            "error_negative": 0.027,
+            "value_text": "1.001+-0.027",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XAL/2024",
+        "description": "xi(all hadronic modes) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.995,
+            "error_positive": 0.007,
+            "error_negative": 0.007,
+            "value_text": "0.995+-0.007",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035A00/2024",
+        "description": "xi'(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.22,
+            "error_positive": 1.0295630140987,
+            "error_negative": 1.0295630140987,
+            "value_text": "0.2+-1.0",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035BEM/2024",
+        "description": "etabar(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": -1.3,
+            "error_positive": 1.7,
+            "error_negative": 1.7,
+            "value_text": "-1.3+-1.7",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XIK/2024",
+        "description": "(xikappa)(e or mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.5,
+            "error_positive": 0.447213595499958,
+            "error_negative": 0.447213595499958,
+            "value_text": "0.5+-0.4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XKE/2024",
+        "description": "(xikappa)(e) PARAMETER",
+        "pdg_values": [
+          {
+            "value": -0.4,
+            "error_positive": 1.20415945787923,
+            "error_negative": 1.20415945787923,
+            "value_text": "-0.4+-1.2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035XKM/2024",
+        "description": "(xikappa)(mu) PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.8,
+            "error_positive": 0.5830951894845301,
+            "error_negative": 0.5830951894845301,
+            "value_text": "0.8+-0.6",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ],
+    "branching_fractions": [
+      {
+        "pdgid": "S035.219/2024",
+        "description": "tau- --> particle->=0 neutrals >=0K0 nu_tau (``1-prong'')",
+        "mode_number": 1,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.8523573853,
+            "error_positive": 0.0006170980716,
+            "error_negative": 0.0006170980716,
+            "value_text": "(85.24+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.191/2024",
+        "description": "tau- --> particle->=0 neutrals >=0K(L)0 nu_tau",
+        "mode_number": 2,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.8457667237,
+            "error_positive": 0.0006284661468,
+            "error_negative": 0.0006284661468,
+            "value_text": "(84.58+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.1/2024",
+        "description": "tau- --> mu- nubar_mu nu_tau",
+        "mode_number": 3,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1739355875,
+            "error_positive": 0.0003844087238,
+            "error_negative": 0.0003844087238,
+            "value_text": "(17.39+-0.04)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.76/2024",
+        "description": "tau- --> mu- nubar_mu nu_tau gamma",
+        "mode_number": 4,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.00366777021305745,
+            "error_positive": 8.38698843629748e-05,
+            "error_negative": 8.38698843629748e-05,
+            "value_text": "(3.67+-0.08)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.2/2024",
+        "description": "tau- --> e- nubar_e nu_tau",
+        "mode_number": 5,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1781732597,
+            "error_positive": 0.0003989600748,
+            "error_negative": 0.0003989600748,
+            "value_text": "(17.82+-0.04)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.274/2024",
+        "description": "tau- --> e- nubar_e nu_tau gamma",
+        "mode_number": 6,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.0182892456898365,
+            "error_positive": 0.000462084056083431,
+            "error_negative": 0.000462084056083431,
+            "value_text": "(1.83+-0.05)E-2",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.181/2024",
+        "description": "tau- --> h- >=0K(L)0 nu_tau",
+        "mode_number": 7,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1202960852,
+            "error_positive": 0.0005279551841,
+            "error_negative": 0.0005279551841,
+            "value_text": "(12.03+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.217/2024",
+        "description": "tau- --> h- nu_tau",
+        "mode_number": 8,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1151263045,
+            "error_positive": 0.0005251981481,
+            "error_negative": 0.0005251981481,
+            "value_text": "(11.51+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.12/2024",
+        "description": "tau- --> pi- nu_tau",
+        "mode_number": 9,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1081624298,
+            "error_positive": 0.0005118626143,
+            "error_negative": 0.0005118626143,
+            "value_text": "(10.82+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.7/2024",
+        "description": "tau- --> K- nu_tau",
+        "mode_number": 10,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.006963874641,
+            "error_positive": 9.586072628e-05,
+            "error_negative": 9.586072628e-05,
+            "value_text": "(6.96+-0.10)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.192/2024",
+        "description": "tau- --> h- >=1 neutrals nu_tau",
+        "mode_number": 11,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.3700438764,
+            "error_positive": 0.0008760254922,
+            "error_negative": 0.0008760254922,
+            "value_text": "(37.00+-0.09)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.299/2024",
+        "description": "tau- --> h- >= 1pi0 nu_tau (ex.K0)",
+        "mode_number": 12,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.3650492769,
+            "error_positive": 0.000879372881,
+            "error_negative": 0.000879372881,
+            "value_text": "(36.50+-0.09)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.171/2024",
+        "description": "tau- --> h- pi0 nu_tau",
+        "mode_number": 13,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.2592673803,
+            "error_positive": 0.0008927703453,
+            "error_negative": 0.0008927703453,
+            "value_text": "(25.93+-0.09)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.16/2024",
+        "description": "tau- --> pi- pi0 nu_tau",
+        "mode_number": 14,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.2549389902,
+            "error_positive": 0.0008932486413,
+            "error_negative": 0.0008932486413,
+            "value_text": "(25.49+-0.09)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.24/2024",
+        "description": "tau- --> pi- pi0 non-rho(770) nu_tau",
+        "mode_number": 15,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.003,
+            "error_positive": 0.00316227766016838,
+            "error_negative": 0.00316227766016838,
+            "value_text": "(3.0+-3.2)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.182/2024",
+        "description": "tau- --> K- pi0 nu_tau",
+        "mode_number": 16,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.004328390051,
+            "error_positive": 0.0001478949347,
+            "error_negative": 0.0001478949347,
+            "value_text": "(4.33+-0.15)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.19/2024",
+        "description": "tau- --> h- >= 2pi0 nu_tau",
+        "mode_number": 17,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.1081361306,
+            "error_positive": 0.0009217011387,
+            "error_negative": 0.0009217011387,
+            "value_text": "(10.81+-0.09)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.218/2024",
+        "description": "tau- --> h- 2pi0 nu_tau",
+        "mode_number": 18,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.09475407862,
+            "error_positive": 0.0009677954467,
+            "error_negative": 0.0009677954467,
+            "value_text": "(9.48+-0.10)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.27/2024",
+        "description": "tau- --> h- 2pi0 nu_tau (ex.K0)",
+        "mode_number": 19,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.09323957267,
+            "error_positive": 0.0009681221531,
+            "error_negative": 0.0009681221531,
+            "value_text": "(9.32+-0.10)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.201/2024",
+        "description": "tau- --> pi- 2pi0 nu_tau (ex.K0)",
+        "mode_number": 20,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.09259248807,
+            "error_positive": 0.0009642293036,
+            "error_negative": 0.0009642293036,
+            "value_text": "(9.26+-0.10)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.282/2024",
+        "description": "tau- --> pi- 2pi0 nu_tau (ex.K0), scalar",
+        "mode_number": 21,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.009,
+            "value_text": "<9 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.283/2024",
+        "description": "tau- --> pi- 2pi0 nu_tau (ex.K0), vector",
+        "mode_number": 22,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.007,
+            "value_text": "<7 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.115/2024",
+        "description": "tau- --> K- 2pi0 nu_tau (ex.K0)",
+        "mode_number": 23,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.0006470845992,
+            "error_positive": 0.0002179558114,
+            "error_negative": 0.0002179558114,
+            "value_text": "(6.5+-2.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.79/2024",
+        "description": "tau- --> h- >= 3pi0 nu_tau",
+        "mode_number": 24,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.01338674196,
+            "error_positive": 0.0006544024502,
+            "error_negative": 0.0006544024502,
+            "value_text": "(1.34+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.300/2024",
+        "description": "tau- --> h- >= 3pi0 nu_tau (ex. K0)",
+        "mode_number": 25,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.01254232393,
+            "error_positive": 0.0006544451739,
+            "error_negative": 0.0006544451739,
+            "value_text": "(1.25+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.26/2024",
+        "description": "tau- --> h- 3pi0 nu_tau",
+        "mode_number": 26,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.01177177607,
+            "error_positive": 0.0007163365853,
+            "error_negative": 0.0007163365853,
+            "value_text": "(1.18+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.203/2024",
+        "description": "tau- --> pi- 3pi0 nu_tau (ex.K0)",
+        "mode_number": 27,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.01042793147,
+            "error_positive": 0.0007070412327,
+            "error_negative": 0.0007070412327,
+            "value_text": "(1.04+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.116/2024",
+        "description": "tau- --> K- 3pi0 nu_tau (ex.K0, eta)",
+        "mode_number": 28,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.000477557877,
+            "error_positive": 0.0002122211692,
+            "error_negative": 0.0002122211692,
+            "value_text": "(4.8+-2.1)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.220/2024",
+        "description": "tau- --> h- 4pi0 nu_tau (ex.K0)",
+        "mode_number": 29,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.001586433281,
+            "error_positive": 0.0003909650145,
+            "error_negative": 0.0003909650145,
+            "value_text": "(1.6+-0.4)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.110/2024",
+        "description": "tau- --> h- 4pi0 nu_tau (ex.K0,eta)",
+        "mode_number": 30,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.001118432668,
+            "error_positive": 0.0003907202848,
+            "error_negative": 0.0003907202848,
+            "value_text": "(1.1+-0.4)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.344/2024",
+        "description": "tau- --> a_1(1260) nu_tau --> pi- gamma nu_tau",
+        "mode_number": 31,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.0003969393134,
+            "error_positive": 0.0001451173085,
+            "error_negative": 0.0001451173085,
+            "value_text": "(4.0+-1.5)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.198/2024",
+        "description": "tau- --> K- >=0pi0 >=0K0 >=0gamma nu_tau",
+        "mode_number": 32,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.01551863061,
+            "error_positive": 0.0002882973664,
+            "error_negative": 0.0002882973664,
+            "value_text": "(1.552+-0.029)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.11/2024",
+        "description": "tau- --> K- >=1 (pi0 or K0 or gamma) nu_tau",
+        "mode_number": 33,
+        "section": "Modes with one charged particle",
+        "pdg_values": [
+          {
+            "value": 0.008589534978,
+            "error_positive": 0.000276898768,
+            "error_negative": 0.000276898768,
+            "value_text": "(8.59+-0.28)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.127/2024",
+        "description": "tau- --> K0S (particles)- nu_tau",
+        "mode_number": 34,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.009431273295,
+            "error_positive": 0.0002759147489,
+            "error_negative": 0.0002759147489,
+            "value_text": "(9.43+-0.28)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.212/2024",
+        "description": "tau- --> h- Kbar0 nu_tau",
+        "mode_number": 35,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.009869703142,
+            "error_positive": 0.0001376491423,
+            "error_negative": 0.0001376491423,
+            "value_text": "(9.87+-0.14)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.117/2024",
+        "description": "tau- --> pi- Kbar0 nu_tau",
+        "mode_number": 36,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.00838388964,
+            "error_positive": 0.0001384422662,
+            "error_negative": 0.0001384422662,
+            "value_text": "(8.38+-0.14)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.142/2024",
+        "description": "tau- --> pi- Kbar0 (non-K^*(892)-) nu_tau",
+        "mode_number": 37,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.00054,
+            "error_positive": 0.00021,
+            "error_negative": 0.00021,
+            "value_text": "(5.4+-2.1)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.62/2024",
+        "description": "tau- --> K- K0 nu_tau",
+        "mode_number": 38,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.001485813502,
+            "error_positive": 3.442341335e-05,
+            "error_negative": 3.442341335e-05,
+            "value_text": "(1.486+-0.034)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.273/2024",
+        "description": "tau- --> K- K0 >=0pi0 nu_tau",
+        "mode_number": 39,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.002985761646,
+            "error_positive": 7.329991019e-05,
+            "error_negative": 7.329991019e-05,
+            "value_text": "(2.99+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.213/2024",
+        "description": "tau- --> h- Kbar0 pi0 nu_tau",
+        "mode_number": 40,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.005316946342,
+            "error_positive": 0.0001335705047,
+            "error_negative": 0.0001335705047,
+            "value_text": "(5.32+-0.13)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.118/2024",
+        "description": "tau- --> pi- Kbar0 pi0 nu_tau",
+        "mode_number": 41,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.003816998198,
+            "error_positive": 0.0001286369988,
+            "error_negative": 0.0001286369988,
+            "value_text": "(3.82+-0.13)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.249/2024",
+        "description": "tau- --> Kbar0 rho- nu_tau",
+        "mode_number": 42,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.00216320586694604,
+            "error_positive": 0.000486664489998027,
+            "error_negative": 0.000486664489998027,
+            "value_text": "(2.2+-0.5)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.119/2024",
+        "description": "tau- --> K- K0 pi0 nu_tau",
+        "mode_number": 43,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.001499948144,
+            "error_positive": 6.979474813e-05,
+            "error_negative": 6.979474813e-05,
+            "value_text": "(1.50+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.272/2024",
+        "description": "tau- --> pi- Kbar0 >=1pi0 nu_tau",
+        "mode_number": 44,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.004079901629,
+            "error_positive": 0.0002536172851,
+            "error_negative": 0.0002536172851,
+            "value_text": "(4.08+-0.25)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.238/2024",
+        "description": "tau- --> pi- Kbar0 pi0 pi0 nu_tau (ex.K0)",
+        "mode_number": 45,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.0002629034311,
+            "error_positive": 0.000226137928,
+            "error_negative": 0.000226137928,
+            "value_text": "(2.6+-2.3)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.239/2024",
+        "description": "tau- --> K- K0 pi0 pi0 nu_tau",
+        "mode_number": 46,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.00016,
+            "value_text": "<1.6 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.141/2024",
+        "description": "tau- --> pi- K0 Kbar0 nu_tau",
+        "mode_number": 47,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.001549813162,
+            "error_positive": 0.0002417802606,
+            "error_negative": 0.0002417802606,
+            "value_text": "(1.55+-0.24)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.214/2024",
+        "description": "tau- --> pi- K0S K0S nu_tau",
+        "mode_number": 48,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.0002349291223,
+            "error_positive": 6.469117668e-06,
+            "error_negative": 6.469117668e-06,
+            "value_text": "(2.35+-0.06)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.240/2024",
+        "description": "tau- --> pi- K0S K0L nu_tau",
+        "mode_number": 49,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.001079954918,
+            "error_positive": 0.0002415109189,
+            "error_negative": 0.0002415109189,
+            "value_text": "(1.08+-0.24)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.342/2024",
+        "description": "tau- --> pi- K0L K0L nu_tau",
+        "mode_number": 50,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.0002349291223,
+            "error_positive": 6.469117668e-06,
+            "error_negative": 6.469117668e-06,
+            "value_text": "(2.35+-0.06)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.278/2024",
+        "description": "tau- --> pi- K0 Kbar0 pi0 nu_tau",
+        "mode_number": 51,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.000361054185,
+            "error_positive": 0.0001187999479,
+            "error_negative": 0.0001187999479,
+            "value_text": "(3.6+-1.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.241/2024",
+        "description": "tau- --> pi- K0S K0S pi0 nu_tau",
+        "mode_number": 52,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 1.821089052e-05,
+            "error_positive": 2.066119645e-06,
+            "error_negative": 2.066119645e-06,
+            "value_text": "(1.82+-0.21)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.336/2024",
+        "description": "tau- --> K^*()- K0 pi0 nu_tau --> pi- K0S K0S pi0 nu_tau",
+        "mode_number": 53,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 1.08e-05,
+            "error_positive": 2.05182845286832e-06,
+            "error_negative": 2.05182845286832e-06,
+            "value_text": "(1.08+-0.21)E-5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.337/2024",
+        "description": "tau- --> f_1(1285) pi- nu_tau --> pi- K0S K0S pi0 nu_tau",
+        "mode_number": 54,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 6.8e-06,
+            "error_positive": 1.47648230602334e-06,
+            "error_negative": 1.47648230602334e-06,
+            "value_text": "(6.8+-1.5)E-6",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.338/2024",
+        "description": "tau- --> f_1(1420) pi- nu_tau --> pi- K0S K0S pi0 nu_tau",
+        "mode_number": 55,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 2.4e-06,
+            "error_positive": 7.81024967590666e-07,
+            "error_negative": 7.81024967590666e-07,
+            "value_text": "(2.4+-0.8)E-6",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.242/2024",
+        "description": "tau- --> pi- K0S K0L pi0 nu_tau",
+        "mode_number": 56,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.000324632404,
+            "error_positive": 0.0001187352506,
+            "error_negative": 0.0001187352506,
+            "value_text": "(3.2+-1.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.343/2024",
+        "description": "tau- --> pi- K0L K0L pi0 nu_tau",
+        "mode_number": 57,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 1.821089052e-05,
+            "error_positive": 2.066119645e-06,
+            "error_negative": 2.066119645e-06,
+            "value_text": "(1.82+-0.21)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.332/2024",
+        "description": "tau- --> K- K0S K0S nu_tau",
+        "mode_number": 58,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 6.3e-07,
+            "value_text": "<6.3 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.333/2024",
+        "description": "tau- --> K- K0S K0S pi0 nu_tau",
+        "mode_number": 59,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 4e-07,
+            "value_text": "<4.0 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.29/2024",
+        "description": "tau- --> K0 h+ h- h- >=0 neutrals nu_tau",
+        "mode_number": 60,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.0017,
+            "value_text": "<1.7 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.244/2024",
+        "description": "tau- --> K0 h+ h- h- nu_tau",
+        "mode_number": 61,
+        "section": "Modes with K0's",
+        "pdg_values": [
+          {
+            "value": 0.0002468538032,
+            "error_positive": 0.0001986796913,
+            "error_negative": 0.0001986796913,
+            "value_text": "(2.5+-2.0)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.194/2024",
+        "description": "tau- --> h- h- h+ >=0 neutrals >=0K(L)0 nu_tau",
+        "mode_number": 62,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.1520436253,
+            "error_positive": 0.0006014221413,
+            "error_negative": 0.0006014221413,
+            "value_text": "(15.20+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.209/2024",
+        "description": "tau- --> h- h- h+ >=0 neutrals nu_tau (ex. K0S --> pi+ pi-)(``3-prong'')",
+        "mode_number": 63,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.1455131675,
+            "error_positive": 0.000574350675,
+            "error_negative": 0.000574350675,
+            "value_text": "(14.55+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.17/2024",
+        "description": "tau- --> h- h- h+ nu_tau",
+        "mode_number": 64,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.09797046181,
+            "error_positive": 0.000534943468,
+            "error_negative": 0.000534943468,
+            "value_text": "(9.80+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.208/2024",
+        "description": "tau- --> h- h- h+ nu_tau (ex.K0)",
+        "mode_number": 65,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.09455554452,
+            "error_positive": 0.0005336472996,
+            "error_negative": 0.0005336472996,
+            "value_text": "(9.46+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.215/2024",
+        "description": "tau- --> h- h- h+ nu_tau (ex.K0,omega)",
+        "mode_number": 66,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.09425101225,
+            "error_positive": 0.0005344658512,
+            "error_negative": 0.0005344658512,
+            "value_text": "(9.43+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.257/2024",
+        "description": "tau- --> pi- pi+ pi- nu_tau",
+        "mode_number": 67,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.09306614279,
+            "error_positive": 0.0005130153724,
+            "error_negative": 0.0005130153724,
+            "value_text": "(9.31+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.258/2024",
+        "description": "tau- --> pi- pi+ pi- nu_tau (ex.K0)",
+        "mode_number": 68,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.09016531698,
+            "error_positive": 0.0005119652319,
+            "error_negative": 0.0005119652319,
+            "value_text": "(9.02+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.284/2024",
+        "description": "tau- --> pi- pi+ pi- nu_tau (ex.K0), non-axial vector",
+        "mode_number": 69,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.024,
+            "value_text": "<2.4 E-2",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.259/2024",
+        "description": "tau- --> pi- pi+ pi- nu_tau (ex.K0,omega)",
+        "mode_number": 70,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.08986705848,
+            "error_positive": 0.0005127801296,
+            "error_negative": 0.0005127801296,
+            "value_text": "(8.99+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.18/2024",
+        "description": "tau- --> h- h- h+ >=1 neutrals nu_tau",
+        "mode_number": 71,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.05293220947,
+            "error_positive": 0.0005174960618,
+            "error_negative": 0.0005174960618,
+            "value_text": "(5.29+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.222/2024",
+        "description": "tau- --> h- h- h+ >=1 pi0 nu_tau (ex. K0)",
+        "mode_number": 72,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.05087772196,
+            "error_positive": 0.0005153712119,
+            "error_negative": 0.0005153712119,
+            "value_text": "(5.09+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.25/2024",
+        "description": "tau- --> h- h- h+ pi0 nu_tau",
+        "mode_number": 73,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.04755122956,
+            "error_positive": 0.0005401323702,
+            "error_negative": 0.0005401323702,
+            "value_text": "(4.76+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.143/2024",
+        "description": "tau- --> h- h- h+ pi0 nu_tau (ex.K0)",
+        "mode_number": 74,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.04571156612,
+            "error_positive": 0.0005379393408,
+            "error_negative": 0.0005379393408,
+            "value_text": "(4.57+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.202/2024",
+        "description": "tau- --> h- h- h+ pi0 nu_tau (ex. K0, omega)",
+        "mode_number": 75,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.02789464183,
+            "error_positive": 0.0007049691626,
+            "error_negative": 0.0007049691626,
+            "value_text": "(2.79+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.261/2024",
+        "description": "tau- --> pi- pi+ pi- pi0 nu_tau",
+        "mode_number": 76,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.04617659699,
+            "error_positive": 0.0005385256215,
+            "error_negative": 0.0005385256215,
+            "value_text": "(4.62+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.262/2024",
+        "description": "tau- --> pi- pi+ pi- pi0 nu_tau (ex.K0)",
+        "mode_number": 77,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.04485591561,
+            "error_positive": 0.0005364642584,
+            "error_negative": 0.0005364642584,
+            "value_text": "(4.49+-0.05)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.263/2024",
+        "description": "tau- --> pi- pi+ pi- pi0 nu_tau (ex.K0,omega)",
+        "mode_number": 78,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.02740475635,
+            "error_positive": 0.0007103006775,
+            "error_negative": 0.0007103006775,
+            "value_text": "(2.74+-0.07)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.91/2024",
+        "description": "tau- --> h- rho pi0 nu_tau",
+        "mode_number": 79,
+        "section": "Modes with three charged particles",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S035.92/2024",
+        "description": "tau- --> h- rho+ h- nu_tau",
+        "mode_number": 80,
+        "section": "Modes with three charged particles",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S035.93/2024",
+        "description": "tau- --> h- rho- h+ nu_tau",
+        "mode_number": 81,
+        "section": "Modes with three charged particles",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S035.301/2024",
+        "description": "tau- --> h- h- h+ >= 2pi0 nu_tau (ex. K0)",
+        "mode_number": 82,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.005166155836,
+            "error_positive": 0.0003111296391,
+            "error_negative": 0.0003111296391,
+            "value_text": "(5.17+-0.31)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.221/2024",
+        "description": "tau- --> h- h- h+ 2pi0 nu_tau",
+        "mode_number": 83,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.005053227388,
+            "error_positive": 0.0003101123111,
+            "error_negative": 0.0003101123111,
+            "value_text": "(5.05+-0.31)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.112/2024",
+        "description": "tau- --> h- h- h+ 2pi0 nu_tau (ex.K0)",
+        "mode_number": 84,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.004953441338,
+            "error_positive": 0.0003101095785,
+            "error_negative": 0.0003101095785,
+            "value_text": "(4.95+-0.31)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.216/2024",
+        "description": "tau- --> h- h- h+ 2pi0 nu_tau (ex.K0,omega,eta)",
+        "mode_number": 85,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0009792354789,
+            "error_positive": 0.0003565012711,
+            "error_negative": 0.0003565012711,
+            "value_text": "(10+-4)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.204/2024",
+        "description": "tau- --> h- h- h+ 3pi0 nu_tau",
+        "mode_number": 86,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0002127144984,
+            "error_positive": 2.983901621e-05,
+            "error_negative": 2.983901621e-05,
+            "value_text": "(2.13+-0.30)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.318/2024",
+        "description": "tau- --> 2pi- pi+ 3pi0 nu_tau (ex.K0)",
+        "mode_number": 87,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0001944044833,
+            "error_positive": 2.982236654e-05,
+            "error_negative": 2.982236654e-05,
+            "value_text": "(1.94+-0.30)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.319/2024",
+        "description": "tau- --> 2pi- pi+ 3pi0 nu_tau (ex.K0, eta, f_1(1285))",
+        "mode_number": 88,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.000169,
+            "error_positive": 4.37378554572581e-05,
+            "error_negative": 4.37378554572581e-05,
+            "value_text": "(1.7+-0.4)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.320/2024",
+        "description": "tau- --> 2pi- pi+ 3pi0 nu_tau (ex.K0, eta, omega, f_1(1285))",
+        "mode_number": 89,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 1.380967574e-05,
+            "error_positive": 2.682400563e-05,
+            "error_negative": 2.682400563e-05,
+            "value_text": "(1.4+-2.7)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.28/2024",
+        "description": "tau- --> K- h+ h- >=0 neutrals nu_tau",
+        "mode_number": 90,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.006286719913,
+            "error_positive": 0.0001386026926,
+            "error_negative": 0.0001386026926,
+            "value_text": "(6.29+-0.14)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.270/2024",
+        "description": "tau- --> K- h+ pi- nu_tau (ex.K0)",
+        "mode_number": 91,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.004368492959,
+            "error_positive": 7.306677458e-05,
+            "error_negative": 7.306677458e-05,
+            "value_text": "(4.37+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.271/2024",
+        "description": "tau- --> K- h+ pi- pi0 nu_tau (ex.K0)",
+        "mode_number": 92,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0008556505114,
+            "error_positive": 0.000116569636,
+            "error_negative": 0.000116569636,
+            "value_text": "(8.6+-1.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.6/2024",
+        "description": "tau- --> K- pi+ pi- >=0 neutrals nu_tau",
+        "mode_number": 93,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.004769140071,
+            "error_positive": 0.0001351102489,
+            "error_negative": 0.0001351102489,
+            "value_text": "(4.77+-0.14)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.275/2024",
+        "description": "tau- --> K- pi+ pi- >=0pi0 nu_tau (ex.K0)",
+        "mode_number": 94,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.003728298209,
+            "error_positive": 0.0001327833208,
+            "error_negative": 0.0001327833208,
+            "value_text": "(3.73+-0.13)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.245/2024",
+        "description": "tau- --> K- pi+ pi- nu_tau",
+        "mode_number": 95,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.003447547766,
+            "error_positive": 6.869411286e-05,
+            "error_negative": 6.869411286e-05,
+            "value_text": "(3.45+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.260/2024",
+        "description": "tau- --> K- pi+ pi- nu_tau (ex.K0)",
+        "mode_number": 96,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.002933456294,
+            "error_positive": 6.768664242e-05,
+            "error_negative": 6.768664242e-05,
+            "value_text": "(2.93+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.340/2024",
+        "description": "tau- --> K- pi+ pi- nu_tau (ex.K0,omega)",
+        "mode_number": 97,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.002927182522,
+            "error_positive": 6.770145366e-05,
+            "error_negative": 6.770145366e-05,
+            "value_text": "(2.93+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.286/2024",
+        "description": "tau- --> K- rho0 nu_tau --> K- pi+ pi- nu_tau",
+        "mode_number": 98,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.00140805902112,
+            "error_positive": 0.0005057355849499132,
+            "error_negative": 0.0005057355849499132,
+            "value_text": "(1.4+-0.5)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.246/2024",
+        "description": "tau- --> K- pi+ pi- pi0 nu_tau",
+        "mode_number": 99,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.001313823972,
+            "error_positive": 0.0001181742192,
+            "error_negative": 0.0001181742192,
+            "value_text": "(1.31+-0.12)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.264/2024",
+        "description": "tau- --> K- pi+ pi- pi0 nu_tau (ex.K0)",
+        "mode_number": 100,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0007948419146,
+            "error_positive": 0.0001157076185,
+            "error_negative": 0.0001157076185,
+            "value_text": "(7.9+-1.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.285/2024",
+        "description": "tau- --> K- pi+ pi- pi0 nu_tau (ex.K0,eta)",
+        "mode_number": 101,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0007592190053,
+            "error_positive": 0.0001157248609,
+            "error_negative": 0.0001157248609,
+            "value_text": "(7.6+-1.2)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.294/2024",
+        "description": "tau- --> K- pi+ pi- pi0 nu_tau (ex.K0,omega)",
+        "mode_number": 102,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.00037,
+            "error_positive": 9.4339811320566e-05,
+            "error_negative": 9.4339811320566e-05,
+            "value_text": "(3.7+-0.9)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.341/2024",
+        "description": "tau- --> K- pi+ pi- pi0 nu_tau (ex.K0,omega,eta)",
+        "mode_number": 103,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0003934539732,
+            "error_positive": 0.0001419612646,
+            "error_negative": 0.0001419612646,
+            "value_text": "(3.9+-1.4)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.123/2024",
+        "description": "tau- --> K- pi+ K- >=0 neut. nu_tau",
+        "mode_number": 104,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0009,
+            "value_text": "<9 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.122/2024",
+        "description": "tau- --> K- K+ pi- >=0 neut. nu_tau",
+        "mode_number": 105,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.001495845262,
+            "error_positive": 3.27916754e-05,
+            "error_negative": 3.27916754e-05,
+            "value_text": "(1.496+-0.033)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.5/2024",
+        "description": "tau- --> K- K+ pi- nu_tau",
+        "mode_number": 106,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.001435036665,
+            "error_positive": 2.728614437e-05,
+            "error_negative": 2.728614437e-05,
+            "value_text": "(1.435+-0.027)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.247/2024",
+        "description": "tau- --> K- K+ pi- pi0 nu_tau",
+        "mode_number": 107,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 6.080859675e-05,
+            "error_positive": 1.828889757e-05,
+            "error_negative": 1.828889757e-05,
+            "value_text": "(6.1+-1.8)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.248/2024",
+        "description": "tau- --> K- K+ K- nu_tau",
+        "mode_number": 108,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 2.173458083e-05,
+            "error_positive": 8.000247063e-06,
+            "error_negative": 8.000247063e-06,
+            "value_text": "(2.2+-0.8)E-5",
+            "scale_factor": 5.4353,
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.303/2024",
+        "description": "tau- --> K- K+ K- nu_tau (ex. phi)",
+        "mode_number": 109,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 2.5e-06,
+            "value_text": "<2.5 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.296/2024",
+        "description": "tau- --> K- K+ K- pi0 nu_tau",
+        "mode_number": 110,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 4.8e-06,
+            "value_text": "<4.8 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.121/2024",
+        "description": "tau- --> pi- K+ pi- >=0 neut. nu_tau",
+        "mode_number": 111,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 0.0025,
+            "value_text": "<2.5 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.210/2024",
+        "description": "tau- --> e- e- e+ nubar_e nu_tau",
+        "mode_number": 112,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 2.8e-05,
+            "error_positive": 1.4560219778561e-05,
+            "error_negative": 1.4560219778561e-05,
+            "value_text": "(2.8+-1.5)E-5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.211/2024",
+        "description": "tau- --> mu- e- e+ nubar_mu nu_tau",
+        "mode_number": 113,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 3.2e-05,
+            "value_text": "<3.2 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.350/2024",
+        "description": "tau- --> pi- e- e+ nu_tau",
+        "mode_number": 114,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value_text": "seen",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.349/2024",
+        "description": "tau- --> pi- mu- mu+ nu_tau",
+        "mode_number": 115,
+        "section": "Modes with three charged particles",
+        "pdg_values": [
+          {
+            "value": 1.14e-05,
+            "value_text": "<1.14 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.20/2024",
+        "description": "tau- --> 3h- 2h+ >=0 neutrals nu_tau (ex. K0S --> pi- pi+)(``5-prong'')",
+        "mode_number": 116,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.0009937965215,
+            "error_positive": 3.677267589e-05,
+            "error_negative": 3.677267589e-05,
+            "value_text": "(9.9+-0.4)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.3/2024",
+        "description": "tau- --> 3h- 2h+ nu_tau (ex.K0)",
+        "mode_number": 117,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.0008290534071,
+            "error_positive": 3.137441829e-05,
+            "error_negative": 3.137441829e-05,
+            "value_text": "(8.29+-0.31)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.321/2024",
+        "description": "tau- --> 3pi- 2pi+ nu_tau (ex.K0, omega)",
+        "mode_number": 118,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.000827171389,
+            "error_positive": 3.133209808e-05,
+            "error_negative": 3.133209808e-05,
+            "value_text": "(8.27+-0.31)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.322/2024",
+        "description": "tau- --> 3pi- 2pi+ nu_tau (ex.K0, omega, f_1(1285))",
+        "mode_number": 119,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.0007747358703,
+            "error_positive": 2.953100067e-05,
+            "error_negative": 2.953100067e-05,
+            "value_text": "(7.75+-0.30)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.327/2024",
+        "description": "tau- --> K- 2pi- 2pi+ nu_tau (ex.K0)",
+        "mode_number": 120,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 5.928045994e-07,
+            "error_positive": 1.208109771e-06,
+            "error_negative": 1.208109771e-06,
+            "value_text": "(6+-12)E-7",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.328/2024",
+        "description": "tau- --> K+ 3pi- pi+ nu_tau",
+        "mode_number": 121,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 5e-06,
+            "value_text": "<5.0 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.329/2024",
+        "description": "tau- --> K+ K- 2pi- pi+ nu_tau",
+        "mode_number": 122,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 4.5e-07,
+            "value_text": "<4.5 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.4/2024",
+        "description": "tau- --> 3h- 2h+ pi0 nu_tau (ex.K0)",
+        "mode_number": 123,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.0001647431144,
+            "error_positive": 1.13547157e-05,
+            "error_negative": 1.13547157e-05,
+            "value_text": "(1.65+-0.11)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.323/2024",
+        "description": "tau- --> 3pi- 2pi+ pi0 nu_tau (ex.K0)",
+        "mode_number": 124,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.0001636361743,
+            "error_positive": 1.13466621e-05,
+            "error_negative": 1.13466621e-05,
+            "value_text": "(1.64+-0.11)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.324/2024",
+        "description": "tau- --> 3pi- 2pi+ pi0 nu_tau (ex.K0, eta, f_1(1285))",
+        "mode_number": 125,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 0.000111,
+            "error_positive": 9.8488578017961e-06,
+            "error_negative": 9.8488578017961e-06,
+            "value_text": "(1.11+-0.10)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.325/2024",
+        "description": "tau- --> 3pi- 2pi+ pi0 nu_tau (ex.K0, eta, omega, f_1(1285))",
+        "mode_number": 126,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 3.773384687e-05,
+            "error_positive": 8.743344369e-06,
+            "error_negative": 8.743344369e-06,
+            "value_text": "(3.8+-0.9)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.330/2024",
+        "description": "tau- --> K- 2pi- 2pi+ pi0 nu_tau (ex.K0)",
+        "mode_number": 127,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 1.106940107e-06,
+            "error_positive": 5.655809686e-07,
+            "error_negative": 5.655809686e-07,
+            "value_text": "(1.1+-0.6)E-6",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.331/2024",
+        "description": "tau- --> K+ 3pi- pi+ pi0 nu_tau",
+        "mode_number": 128,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 8e-07,
+            "value_text": "<8 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.128/2024",
+        "description": "tau- --> 3h- 2h+ 2pi0 nu_tau",
+        "mode_number": 129,
+        "section": "Modes with five charged particles Decay parameters See these Particle Listings   for a note concerning tau-decay parameters.",
+        "pdg_values": [
+          {
+            "value": 3.4e-06,
+            "value_text": "<3.4 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.129/2024",
+        "description": "tau- --> (5pi)- nu_tau",
+        "mode_number": 130,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.007831868548,
+            "error_positive": 0.0005306942631,
+            "error_negative": 0.0005306942631,
+            "value_text": "(7.8+-0.5)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.61/2024",
+        "description": "tau- --> 4h- 3h+ >=0 neutrals nu_tau (``7-prong'')",
+        "mode_number": 131,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 3e-07,
+            "value_text": "<3.0 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.290/2024",
+        "description": "tau- --> 4h- 3h+ nu_tau",
+        "mode_number": 132,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 4.3e-07,
+            "value_text": "<4.3 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.291/2024",
+        "description": "tau- --> 4h- 3h+ pi0 nu_tau",
+        "mode_number": 133,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 2.5e-07,
+            "value_text": "<2.5 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.281/2024",
+        "description": "tau- --> X- (S=-1) nu_tau",
+        "mode_number": 134,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.02919359759,
+            "error_positive": 0.0004416692943,
+            "error_negative": 0.0004416692943,
+            "value_text": "(2.92+-0.04)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.23/2024",
+        "description": "tau- --> K^*(892)- >=0 neutrals >=0K(L)0 nu_tau",
+        "mode_number": 135,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0141940291811642,
+            "error_positive": 0.00172376312614313,
+            "error_negative": 0.00181889163932078,
+            "value_text": "(1.42+-0.18)E-2",
+            "scale_factor": 1.44576,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.21/2024",
+        "description": "tau- --> K^*(892)- nu_tau",
+        "mode_number": 136,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0120448791854538,
+            "error_positive": 0.000666826620746659,
+            "error_negative": 0.000666826620746659,
+            "value_text": "(1.20+-0.07)E-2",
+            "scale_factor": 1.787189,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.304/2024",
+        "description": "tau- --> K^*(892)- nu_tau --> pi- Kbar0 nu_tau",
+        "mode_number": 137,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00782216903412,
+            "error_positive": 0.0002606245227131228,
+            "error_negative": 0.0002606245227131228,
+            "value_text": "(7.82+-0.26)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.97/2024",
+        "description": "tau- --> K^*(892)0 K- >=0 neutrals nu_tau",
+        "mode_number": 138,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0032,
+            "error_positive": 0.0014422205101856,
+            "error_negative": 0.0014422205101856,
+            "value_text": "(3.2+-1.4)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.206/2024",
+        "description": "tau- --> K^*(892)0 K- nu_tau",
+        "mode_number": 139,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00208322923173017,
+            "error_positive": 0.000384067451914683,
+            "error_negative": 0.000384067451914683,
+            "value_text": "(2.1+-0.4)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.98/2024",
+        "description": "tau- --> Kbar^*(892)0 pi- >=0 neutrals nu_tau",
+        "mode_number": 140,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0038,
+            "error_positive": 0.00170293863659264,
+            "error_negative": 0.00170293863659264,
+            "value_text": "(3.8+-1.7)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.205/2024",
+        "description": "tau- --> Kbar^*(892)0 pi- nu_tau",
+        "mode_number": 141,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00217694150277357,
+            "error_positive": 0.000514845177928773,
+            "error_negative": 0.000514845177928773,
+            "value_text": "(2.2+-0.5)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.250/2024",
+        "description": "tau- --> (Kbar^*(892) pi)- nu_tau --> pi- Kbar0 pi0 nu_tau",
+        "mode_number": 142,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.001021712,
+            "error_positive": 0.000370805153985516,
+            "error_negative": 0.000370805153985516,
+            "value_text": "(1.0+-0.4)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.125/2024",
+        "description": "tau- --> K_1(1270)- nu_tau",
+        "mode_number": 143,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00474977638217342,
+            "error_positive": 0.00106443559389173,
+            "error_negative": 0.00105297116346682,
+            "value_text": "(4.7+-1.1)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.126/2024",
+        "description": "tau- --> K_1(1400)- nu_tau",
+        "mode_number": 144,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00165404949381327,
+            "error_positive": 0.00267567580327125,
+            "error_negative": 0.00261952688621915,
+            "value_text": "(1.7+-2.6)E-3",
+            "scale_factor": 1.683808,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.279/2024",
+        "description": "tau- --> K^*(1410)- nu_tau",
+        "mode_number": 145,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0015,
+            "error_positive": 0.0014,
+            "error_negative": 0.001,
+            "value_text": "(1.5+1.4-1.0)E-3",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.280/2024",
+        "description": "tau- --> K_0^*(1430)- nu_tau",
+        "mode_number": 146,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0005,
+            "value_text": "<5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.22/2024",
+        "description": "tau- --> K_2^*(1430)- nu_tau",
+        "mode_number": 147,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.003,
+            "value_text": "<3 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.99/2024",
+        "description": "tau- --> a_0(980)- >=0 neutrals nu_tau",
+        "mode_number": 148,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": "no summary value"
+      },
+      {
+        "pdgid": "S035.14/2024",
+        "description": "tau- --> eta pi- nu_tau",
+        "mode_number": 149,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 9.899999999999998e-05,
+            "value_text": "<9.9 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.58/2024",
+        "description": "tau- --> eta pi- pi0 nu_tau",
+        "mode_number": 150,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.001388575984,
+            "error_positive": 7.240456344e-05,
+            "error_negative": 7.240456344e-05,
+            "value_text": "(1.39+-0.07)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.68/2024",
+        "description": "tau- --> eta pi- pi0 pi0 nu_tau",
+        "mode_number": 151,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0001944757148,
+            "error_positive": 3.761652289e-05,
+            "error_negative": 3.761652289e-05,
+            "value_text": "(1.9+-0.4)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.109/2024",
+        "description": "tau- --> eta K- nu_tau",
+        "mode_number": 152,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0001547476513,
+            "error_positive": 8.011216667e-06,
+            "error_negative": 8.011216667e-06,
+            "value_text": "(1.55+-0.08)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.265/2024",
+        "description": "tau- --> eta K^*(892)- nu_tau",
+        "mode_number": 153,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.000138184050542377,
+            "error_positive": 1.4797476532089e-05,
+            "error_negative": 1.4797476532089e-05,
+            "value_text": "(1.38+-0.15)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.266/2024",
+        "description": "tau- --> eta K- pi0 nu_tau",
+        "mode_number": 154,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 4.833102527e-05,
+            "error_positive": 1.16068307e-05,
+            "error_negative": 1.16068307e-05,
+            "value_text": "(4.8+-1.2)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.309/2024",
+        "description": "tau- --> eta K- pi0 (non-K^*(892)) nu_tau",
+        "mode_number": 155,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 3.5e-05,
+            "value_text": "<3.5 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.267/2024",
+        "description": "tau- --> eta Kbar0 pi- nu_tau",
+        "mode_number": 156,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 9.383920619e-05,
+            "error_positive": 1.490522785e-05,
+            "error_negative": 1.490522785e-05,
+            "value_text": "(9.4+-1.5)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.310/2024",
+        "description": "tau- --> eta Kbar0 pi- pi0 nu_tau",
+        "mode_number": 157,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 5e-05,
+            "value_text": "<5.0 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.311/2024",
+        "description": "tau- --> eta K- K0 nu_tau",
+        "mode_number": 158,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 9e-06,
+            "value_text": "<9.0 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.66/2024",
+        "description": "tau- --> eta pi+ pi- pi- >=0 neutrals nu_tau",
+        "mode_number": 159,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.003,
+            "value_text": "<3 E-3",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.230/2024",
+        "description": "tau- --> eta pi- pi+ pi- nu_tau (ex.K0)",
+        "mode_number": 160,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0002204184929,
+            "error_positive": 1.291477715e-05,
+            "error_negative": 1.291477715e-05,
+            "value_text": "(2.20+-0.13)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.314/2024",
+        "description": "tau- --> eta pi- pi+ pi- nu_tau (ex.K0,f_1(1285))",
+        "mode_number": 161,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 9.9e-05,
+            "error_positive": 1.58113883008419e-05,
+            "error_negative": 1.58113883008419e-05,
+            "value_text": "(9.9+-1.6)E-5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.231/2024",
+        "description": "tau- --> eta a_1(1260)- nu_tau --> eta pi- rho0 nu_tau",
+        "mode_number": 162,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00039,
+            "value_text": "<3.9 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.69/2024",
+        "description": "tau- --> eta eta pi- nu_tau",
+        "mode_number": 163,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 7.4e-06,
+            "value_text": "<7.4 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.70/2024",
+        "description": "tau- --> eta eta pi- pi0 nu_tau",
+        "mode_number": 164,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0002,
+            "value_text": "<2.0 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.312/2024",
+        "description": "tau- --> eta eta K- nu_tau",
+        "mode_number": 165,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 3e-06,
+            "value_text": "<3.0 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.232/2024",
+        "description": "tau- --> eta^'(958) pi- nu_tau",
+        "mode_number": 166,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 4e-06,
+            "value_text": "<4.0 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.233/2024",
+        "description": "tau- --> eta^'(958) pi- pi0 nu_tau",
+        "mode_number": 167,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 1.2e-05,
+            "value_text": "<1.2 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.326/2024",
+        "description": "tau- --> eta^'(958) K- nu_tau",
+        "mode_number": 168,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 2.4e-06,
+            "value_text": "<2.4 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.207/2024",
+        "description": "tau- --> phi pi- nu_tau",
+        "mode_number": 169,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 3.42e-05,
+            "error_positive": 6.04152298679729e-06,
+            "error_negative": 6.04152298679729e-06,
+            "value_text": "(3.4+-0.6)E-5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.223/2024",
+        "description": "tau- --> phi K- nu_tau",
+        "mode_number": 170,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 4.426594873e-05,
+            "error_positive": 1.629378221e-05,
+            "error_negative": 1.629378221e-05,
+            "value_text": "(4.4+-1.6)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.234/2024",
+        "description": "tau- --> f_1(1285) pi- nu_tau",
+        "mode_number": 171,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.000386321409066084,
+            "error_positive": 4.77650764447835e-05,
+            "error_negative": 4.77650764447835e-05,
+            "value_text": "(3.9+-0.5)E-4",
+            "scale_factor": 1.867322,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.235/2024",
+        "description": "tau- --> f_1(1285) pi- nu_tau --> eta pi- pi+ pi- nu_tau",
+        "mode_number": 172,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00011787969924812,
+            "error_positive": 7.4743041457248e-06,
+            "error_negative": 7.4743041457248e-06,
+            "value_text": "(1.18+-0.07)E-4",
+            "scale_factor": 1.300665,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.315/2024",
+        "description": "tau- --> f_1(1285) pi- nu_tau --> 3pi- 2pi+ nu_tau",
+        "mode_number": 173,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 5.24355187e-05,
+            "error_positive": 4.436416311e-06,
+            "error_negative": 4.436416311e-06,
+            "value_text": "(5.2+-0.4)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.276/2024",
+        "description": "tau- --> pi(1300)- nu_tau --> (rho pi)- nu_tau --> (3pi)- nu_tau",
+        "mode_number": 174,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0001,
+            "value_text": "<1.0 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.277/2024",
+        "description": "tau- --> pi(1300)- nu_tau --> ((pi pi)(S-wave) pi)- nu_tau --> (3pi)- nu_tau",
+        "mode_number": 175,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00019,
+            "value_text": "<1.9 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.71/2024",
+        "description": "tau- --> h- omega >=0 neutrals nu_tau",
+        "mode_number": 176,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.02398863268,
+            "error_positive": 0.0007516219941,
+            "error_negative": 0.0007516219941,
+            "value_text": "(2.40+-0.08)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.8/2024",
+        "description": "tau- --> h- omega nu_tau",
+        "mode_number": 177,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.01990407005,
+            "error_positive": 0.0006387881336,
+            "error_negative": 0.0006387881336,
+            "value_text": "(1.99+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.339/2024",
+        "description": "tau- --> pi- omega nu_tau",
+        "mode_number": 178,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.01949401956,
+            "error_positive": 0.0006453996793,
+            "error_negative": 0.0006453996793,
+            "value_text": "(1.95+-0.06)E-2",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.295/2024",
+        "description": "tau- --> K- omega nu_tau",
+        "mode_number": 179,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.0004100504844,
+            "error_positive": 9.219533253e-05,
+            "error_negative": 9.219533253e-05,
+            "value_text": "(4.1+-0.9)E-4",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.113/2024",
+        "description": "tau- --> h- omega pi0 nu_tau",
+        "mode_number": 180,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.004084562629,
+            "error_positive": 0.0004193857636,
+            "error_negative": 0.0004193857636,
+            "value_text": "(4.1+-0.4)E-3",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.237/2024",
+        "description": "tau- --> h- omega 2pi0 nu_tau",
+        "mode_number": 181,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00014,
+            "error_positive": 5e-05,
+            "error_negative": 5e-05,
+            "value_text": "(1.4+-0.5)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.317/2024",
+        "description": "tau- --> pi- omega 2pi0 nu_tau",
+        "mode_number": 182,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 7.178945617e-05,
+            "error_positive": 1.585645858e-05,
+            "error_negative": 1.585645858e-05,
+            "value_text": "(7.2+-1.6)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.302/2024",
+        "description": "tau- --> h- 2omega nu_tau",
+        "mode_number": 183,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 5.4e-07,
+            "value_text": "<5.4 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.287/2024",
+        "description": "tau- --> 2h- h+ omega nu_tau",
+        "mode_number": 184,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 0.00012,
+            "error_positive": 2.23606797749979e-05,
+            "error_negative": 2.23606797749979e-05,
+            "value_text": "(1.20+-0.22)E-4",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.316/2024",
+        "description": "tau- --> 2pi- pi+ omega nu_tau (ex.K0)",
+        "mode_number": 185,
+        "section": "Miscellaneous other allowed modes",
+        "pdg_values": [
+          {
+            "value": 8.4262321e-05,
+            "error_positive": 6.243134734e-06,
+            "error_negative": 6.243134734e-06,
+            "value_text": "(8.4+-0.6)E-5",
+            "type": "OUR FIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.32/2024",
+        "description": "tau- --> e- gamma",
+        "mode_number": 186,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.3e-08,
+            "value_text": "<3.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.355/2024",
+        "description": "tau- --> e- gamma gamma",
+        "mode_number": 187,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 0.00025,
+            "value_text": "<2.5 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.31/2024",
+        "description": "tau- --> mu- gamma",
+        "mode_number": 188,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.2e-08,
+            "value_text": "<4.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.356/2024",
+        "description": "tau- --> mu- gamma gamma",
+        "mode_number": 189,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 0.00058,
+            "value_text": "<5.8 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.40/2024",
+        "description": "tau- --> e- pi0",
+        "mode_number": 190,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 8e-08,
+            "value_text": "<8.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.39/2024",
+        "description": "tau- --> mu- pi0",
+        "mode_number": 191,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.1e-07,
+            "value_text": "<1.1 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.42/2024",
+        "description": "tau- --> e- K0S",
+        "mode_number": 192,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.6e-08,
+            "value_text": "<2.6 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.41/2024",
+        "description": "tau- --> mu- K0S",
+        "mode_number": 193,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.3e-08,
+            "value_text": "<2.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.67/2024",
+        "description": "tau- --> e- eta",
+        "mode_number": 194,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 9.200000000000002e-08,
+            "value_text": "<9.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.114/2024",
+        "description": "tau- --> mu- eta",
+        "mode_number": 195,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 6.5e-08,
+            "value_text": "<6.5 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.44/2024",
+        "description": "tau- --> e- rho0",
+        "mode_number": 196,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.2e-08,
+            "value_text": "<2.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.43/2024",
+        "description": "tau- --> mu- rho0",
+        "mode_number": 197,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.7e-08,
+            "value_text": "<1.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.305/2024",
+        "description": "tau- --> e- omega",
+        "mode_number": 198,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.4e-08,
+            "value_text": "<2.4 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.306/2024",
+        "description": "tau- --> mu- omega",
+        "mode_number": 199,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.9e-08,
+            "value_text": "<3.9 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.53/2024",
+        "description": "tau- --> e- K^*(892)0",
+        "mode_number": 200,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.9e-08,
+            "value_text": "<1.9 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.54/2024",
+        "description": "tau- --> mu- K^*(892)0",
+        "mode_number": 201,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.9e-08,
+            "value_text": "<2.9 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.131/2024",
+        "description": "tau- --> e- Kbar^*(892)0",
+        "mode_number": 202,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.7e-08,
+            "value_text": "<1.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.132/2024",
+        "description": "tau- --> mu- Kbar^*(892)0",
+        "mode_number": 203,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.3e-08,
+            "value_text": "<4.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.292/2024",
+        "description": "tau- --> e- eta^'(958)",
+        "mode_number": 204,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.6e-07,
+            "value_text": "<1.6 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.293/2024",
+        "description": "tau- --> mu- eta^'(958)",
+        "mode_number": 205,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.3e-07,
+            "value_text": "<1.3 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.307/2024",
+        "description": "tau- --> e- f_0(980) --> e- pi+ pi-",
+        "mode_number": 206,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.2e-08,
+            "value_text": "<3.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.308/2024",
+        "description": "tau- --> mu- f_0(980) --> mu- pi+ pi-",
+        "mode_number": 207,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.4e-08,
+            "value_text": "<3.4 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.255/2024",
+        "description": "tau- --> e- phi",
+        "mode_number": 208,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2e-08,
+            "value_text": "<2.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.256/2024",
+        "description": "tau- --> mu- phi",
+        "mode_number": 209,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.3e-08,
+            "value_text": "<2.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.38/2024",
+        "description": "tau- --> e- e+ e-",
+        "mode_number": 210,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.7e-08,
+            "value_text": "<2.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.36/2024",
+        "description": "tau- --> e- mu+ mu-",
+        "mode_number": 211,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.7e-08,
+            "value_text": "<2.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.55/2024",
+        "description": "tau- --> e+ mu- mu-",
+        "mode_number": 212,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.7e-08,
+            "value_text": "<1.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.37/2024",
+        "description": "tau- --> mu- e+ e-",
+        "mode_number": 213,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.8e-08,
+            "value_text": "<1.8 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.56/2024",
+        "description": "tau- --> mu+ e- e-",
+        "mode_number": 214,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.5e-08,
+            "value_text": "<1.5 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.35/2024",
+        "description": "tau- --> mu- mu+ mu-",
+        "mode_number": 215,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.1e-08,
+            "value_text": "<2.1 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.45/2024",
+        "description": "tau- --> e- pi+ pi-",
+        "mode_number": 216,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.3e-08,
+            "value_text": "<2.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.46/2024",
+        "description": "tau- --> e+ pi- pi-",
+        "mode_number": 217,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2e-08,
+            "value_text": "<2.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.47/2024",
+        "description": "tau- --> mu- pi+ pi-",
+        "mode_number": 218,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.1e-08,
+            "value_text": "<2.1 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.48/2024",
+        "description": "tau- --> mu+ pi- pi-",
+        "mode_number": 219,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.9e-08,
+            "value_text": "<3.9 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.49/2024",
+        "description": "tau- --> e- pi+ K-",
+        "mode_number": 220,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.7e-08,
+            "value_text": "<3.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.77/2024",
+        "description": "tau- --> e- pi- K+",
+        "mode_number": 221,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.1e-08,
+            "value_text": "<3.1 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.50/2024",
+        "description": "tau- --> e+ pi- K-",
+        "mode_number": 222,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.2e-08,
+            "value_text": "<3.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.288/2024",
+        "description": "tau- --> e- K0S K0S",
+        "mode_number": 223,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 7.1e-08,
+            "value_text": "<7.1 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.251/2024",
+        "description": "tau- --> e- K+ K-",
+        "mode_number": 224,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.4e-08,
+            "value_text": "<3.4 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.252/2024",
+        "description": "tau- --> e+ K- K-",
+        "mode_number": 225,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.3e-08,
+            "value_text": "<3.3 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.51/2024",
+        "description": "tau- --> mu- pi+ K-",
+        "mode_number": 226,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 8.6e-08,
+            "value_text": "<8.6 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.78/2024",
+        "description": "tau- --> mu- pi- K+",
+        "mode_number": 227,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.5e-08,
+            "value_text": "<4.5 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.52/2024",
+        "description": "tau- --> mu+ pi- K-",
+        "mode_number": 228,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.8e-08,
+            "value_text": "<4.8 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.289/2024",
+        "description": "tau- --> mu- K0S K0S",
+        "mode_number": 229,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 8e-08,
+            "value_text": "<8.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.253/2024",
+        "description": "tau- --> mu- K+ K-",
+        "mode_number": 230,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.4e-08,
+            "value_text": "<4.4 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.254/2024",
+        "description": "tau- --> mu+ K- K-",
+        "mode_number": 231,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4.7e-08,
+            "value_text": "<4.7 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.224/2024",
+        "description": "tau- --> e- pi0 pi0",
+        "mode_number": 232,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 6.5e-06,
+            "value_text": "<6.5 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.225/2024",
+        "description": "tau- --> mu- pi0 pi0",
+        "mode_number": 233,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.4e-05,
+            "value_text": "<1.4 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.226/2024",
+        "description": "tau- --> e- eta eta",
+        "mode_number": 234,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.5e-05,
+            "value_text": "<3.5 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.227/2024",
+        "description": "tau- --> mu- eta eta",
+        "mode_number": 235,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 6e-05,
+            "value_text": "<6.0 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.228/2024",
+        "description": "tau- --> e- pi0 eta",
+        "mode_number": 236,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.4e-05,
+            "value_text": "<2.4 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.229/2024",
+        "description": "tau- --> mu- pi0 eta",
+        "mode_number": 237,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.2e-05,
+            "value_text": "<2.2 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.351/2024",
+        "description": "tau- --> p e- e-",
+        "mode_number": 238,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3e-08,
+            "value_text": "<3.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.352/2024",
+        "description": "tau- --> pbar e+ e-",
+        "mode_number": 239,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3e-08,
+            "value_text": "<3.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.353/2024",
+        "description": "tau- --> pbar e+ mu-",
+        "mode_number": 240,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2e-08,
+            "value_text": "<2.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.354/2024",
+        "description": "tau- --> pbar e- mu+",
+        "mode_number": 241,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.8e-08,
+            "value_text": "<1.8 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.334/2024",
+        "description": "tau- --> p mu- mu-",
+        "mode_number": 242,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 4e-08,
+            "value_text": "<4.0 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.335/2024",
+        "description": "tau- --> pbar mu+ mu-",
+        "mode_number": 243,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.8e-08,
+            "value_text": "<1.8 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.104/2024",
+        "description": "tau- --> pbar gamma",
+        "mode_number": 244,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.5e-06,
+            "value_text": "<3.5 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.105/2024",
+        "description": "tau- --> pbar pi0",
+        "mode_number": 245,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.5e-05,
+            "value_text": "<1.5 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.268/2024",
+        "description": "tau- --> pbar 2pi0",
+        "mode_number": 246,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 3.3e-05,
+            "value_text": "<3.3 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.106/2024",
+        "description": "tau- --> pbar eta",
+        "mode_number": 247,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 8.900000000000001e-06,
+            "value_text": "<8.9 E-6",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.269/2024",
+        "description": "tau- --> pbar pi0 eta",
+        "mode_number": 248,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 2.7e-05,
+            "value_text": "<2.7 E-5",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.297/2024",
+        "description": "tau- --> Lambda pi-",
+        "mode_number": 249,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 7.2e-08,
+            "value_text": "<7.2 E-8",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.298/2024",
+        "description": "tau- --> Lambdabar pi-",
+        "mode_number": 250,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 1.4e-07,
+            "value_text": "<1.4 E-7",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.102/2024",
+        "description": "tau- --> e- light boson",
+        "mode_number": 251,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 0.0009,
+            "value_text": "<9 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S035.103/2024",
+        "description": "tau- --> mu- light boson",
+        "mode_number": 252,
+        "section": "Lepton Family number (LF), Lepton number (L), L means lepton number violation (e.g. tau- --> e+ pi- pi-). or Baryon number (B) violating modes (In the modes below, lepton means a sum over e and mu modes) Following common usage, LF means lepton family violation and not lepton number violation (e.g. tau- --> e- pi+ pi-). B means baryon number violation.",
+        "pdg_values": [
+          {
+            "value": 0.0006,
+            "value_text": "<6 E-4",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 95.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ]
+  }
+}

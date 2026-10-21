@@ -1,0 +1,53 @@
+{
+	"schemaVersion": 1,
+	"worlds": {
+		"black-hole-flyby": {
+			"packId": "world.shapeof.starter",
+			"worldId": "black-hole-flyby"
+		},
+		"solar-system": {
+			"packId": "world.shapeof.starter",
+			"worldId": "solar-system"
+		},
+		"aurora": {
+			"packId": "world.shapeof.starter",
+			"worldId": "aurora"
+		},
+		"formula-bloom": {
+			"packId": "world.shapeof.starter",
+			"worldId": "formula-bloom"
+		},
+		"rainbow": {
+			"packId": "world.shapeof.starter",
+			"worldId": "rainbow"
+		},
+		"butterfly-effect": {
+			"packId": "world.shapeof.starter",
+			"worldId": "butterfly-effect"
+		},
+		"fluid-sim": {
+			"packId": "world.shapeof.starter",
+			"worldId": "fluid-sim"
+		},
+		"neural-playground": {
+			"packId": "world.shapeof.starter",
+			"worldId": "neural-playground"
+		},
+		"mandelbrot-zoom": {
+			"packId": "world.shapeof.starter",
+			"worldId": "mandelbrot-zoom"
+		},
+		"three-body": {
+			"packId": "world.shapeof.starter",
+			"worldId": "three-body"
+		},
+		"fourier": {
+			"packId": "world.shapeof.starter",
+			"worldId": "fourier"
+		},
+		"boids-flocking": {
+			"packId": "world.shapeof.starter",
+			"worldId": "boids-flocking"
+		}
+	}
+}

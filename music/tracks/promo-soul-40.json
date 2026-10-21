@@ -1,0 +1,163 @@
+{
+  "id": "promo-soul-40",
+  "code": "PROMO-10-40",
+  "title": {
+    "en": "Velvet Motion · 40",
+    "zh": "丝绒律动 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 4,
+  "bpm": 102,
+  "key": "",
+  "instruments": [
+    "electric piano",
+    "warm bass guitar",
+    "crisp drums",
+    "muted trumpet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: instrumental soul with a warm short brass hook. Instruments: electric piano, warm bass guitar, crisp drums, muted trumpet. Tempo 102 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "soul"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic modern pop-rock instrumental track featuring a prominent electric guitar melody, driving drums, and a solid bassline, complemented by synth textures. It has a bright and positive feel.",
+    "zh": "一首欢快且充满活力的现代流行摇滚纯音乐，以突出的电吉他旋律为主，配以强劲的鼓点和扎实的贝斯线，并辅以合成器音色。整体感觉明亮积极。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:28:59.665294+00:00",
+  "generation": {
+    "id": "b6c2f0f0-78f2-4c31-b461-f56136fabe74",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:28:19.664316+00:00",
+    "completedAt": "2026-09-10T05:28:59.665294+00:00",
+    "interactionId": "9D-iaq6cI-67i9sP06HTyAM",
+    "sha256": "4bb0e2dfe114f6602dc4a87c836dda9a4b04edf3fa7f6e90fff5133d0df9454e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic modern pop-rock instrumental track featuring a prominent electric guitar melody, driving drums, and a solid bassline, complemented by synth textures. It has a bright and positive feel.",
+      "zh": "一首欢快且充满活力的现代流行摇滚纯音乐，以突出的电吉他旋律为主，配以强劲的鼓点和扎实的贝斯线，并辅以合成器音色。整体感觉明亮积极。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Drums",
+      "Bass Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Modern",
+      "Driving",
+      "Bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "Well-produced, dynamic, and versatile track suitable for various media applications requiring an energetic and modern sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a catchy electric guitar riff and driving drums, establishing the main groove. It concludes with a smooth, deliberate fade-out of the main theme.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:29.058765+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "b2751745bdee0901a5833e3c724dddcb14a72a2ea7ecaa5d456b810bcb8d6fc4"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.12975,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "Upbeat and groovy funk track with a prominent bassline, electric guitar, drums, and synth. It has a retro disco feel.",
+      "zh": "欢快而有律动的放克音乐，带有突出的贝斯线、电吉他、鼓和合成器。它有一种复古迪斯科的感觉。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Funky",
+      "Groovy",
+      "Upbeat",
+      "Energetic",
+      "Retro",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:11.630358+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.12975,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-soul-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-soul-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-soul-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:11.266514+00:00"
+}

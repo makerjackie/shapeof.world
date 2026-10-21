@@ -1,0 +1,128 @@
+{
+  "id": "scene-chamber-90",
+  "code": "SCENE-04-90",
+  "title": {
+    "en": "Tiny Inventions · 90",
+    "zh": "小小发明 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "witty tactile miniature mechanisms",
+    "narration"
+  ],
+  "energy": 3,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "pizzicato cello",
+    "bass clarinet",
+    "woodblock"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for witty tactile miniature mechanisms. Instruments: pizzicato cello, bass clarinet, woodblock. 116 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A classical-style string ensemble piece featuring a prominent cello melody, accompanied by pizzicato bass and violin. The tempo is moderate, creating a graceful and somewhat melancholic atmosphere.",
+    "zh": "一首古典风格的弦乐合奏曲，以大提琴为主旋律，配以拨奏低音提琴和提琴。节奏适中，营造出一种优雅而略带忧郁的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "witty tactile miniature mechanisms"
+    ]
+  },
+  "duration": 89.835,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:12:04.313798+00:00",
+  "generation": {
+    "id": "b0ec66c3-262e-48fd-96c4-9e84c8ce4a74",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:11:22.293701+00:00",
+    "completedAt": "2026-09-22T09:12:04.313798+00:00",
+    "interactionId": "O0ayasPIJrve694PlMeHuQ4",
+    "sha256": "747db82402cffb89dd9cc0b650b36ebd6fa8bebb98d65d399d254e5874dbdded"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical-style string ensemble piece featuring a prominent cello melody, accompanied by pizzicato bass and violin. The tempo is moderate, creating a graceful and somewhat melancholic atmosphere.",
+      "zh": "一首古典风格的弦乐合奏曲，以大提琴为主旋律，配以拨奏低音提琴和提琴。节奏适中，营造出一种优雅而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "Cello",
+      "Double Bass",
+      "Violin"
+    ],
+    "moods": [
+      "Graceful",
+      "Melancholic",
+      "Elegant",
+      "Reflective"
+    ],
+    "energy": 3,
+    "bpmEstimate": 105,
+    "reason": "The audio is a clean, well-performed classical string ensemble piece with clear instrumentation and a consistent mood, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:12:27.356508+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-chamber-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-chamber-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-chamber-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e54cc2cca313565d36385db67bc2806f3c97ba59524eb2883081d0ec279419fa",
+      "bytes": 1258466,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "747db82402cffb89dd9cc0b650b36ebd6fa8bebb98d65d399d254e5874dbdded",
+      "bytes": 2163709,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1cc0f53b0d783791d262aa516f71606aa86bc021132851b161c58ccf601deed3",
+      "bytes": 2798,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.827818+00:00"
+}

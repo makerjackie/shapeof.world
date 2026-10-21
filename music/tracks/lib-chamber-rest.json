@@ -1,0 +1,107 @@
+{
+  "id": "lib-chamber-rest",
+  "code": "LIB-02-03",
+  "title": {
+    "en": "Rest — Chamber",
+    "zh": "休憩 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "chamber"
+  ],
+  "energy": 3,
+  "bpm": 70,
+  "key": "F major",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second chamber classical instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 70 BPM; F major. Main idea: alternating short and long phrases. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A classical orchestral piece featuring prominent strings, woodwinds, and brass. The melody is expressive and somewhat melancholic, building in intensity and complexity throughout the track.",
+    "zh": "一首古典管弦乐作品，以突出的弦乐、木管乐和铜管乐为特色。旋律富有表现力，略带忧郁，在整个曲目中强度和复杂性逐渐增强。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 153.522,
+  "generatedAt": "2026-09-09T07:43:03.394444+00:00",
+  "generation": {
+    "id": "78a0a168-3f45-460e-bcd7-163a04aa1766",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:42:11.933557+00:00",
+    "completedAt": "2026-09-09T07:43:03.394444+00:00",
+    "interactionId": "1Q2hatvpDcy5jMwP4P3F-Qs",
+    "sha256": "9474b56569e962b72890594f16b979263edc112535de37ee39b2a1c7b5bc2d07"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A classical orchestral piece featuring prominent strings, woodwinds, and brass. The melody is expressive and somewhat melancholic, building in intensity and complexity throughout the track.",
+      "zh": "一首古典管弦乐作品，以突出的弦乐、木管乐和铜管乐为特色。旋律富有表现力，略带忧郁，在整个曲目中强度和复杂性逐渐增强。"
+    },
+    "instruments": [
+      "Strings",
+      "Violin",
+      "Cello",
+      "Viola",
+      "Woodwinds",
+      "Flute",
+      "Clarinet",
+      "Oboe",
+      "Brass",
+      "French Horn",
+      "Trumpet"
+    ],
+    "moods": [
+      "Melancholic",
+      "Grand",
+      "Reflective",
+      "Dramatic",
+      "Classical"
+    ],
+    "energy": 3,
+    "bpmEstimate": 65,
+    "reason": "The audio is a well-performed and recorded instrumental classical piece with no detectable defects or vocals, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:43:15.035907+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:23.488068+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

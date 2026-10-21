@@ -1,0 +1,129 @@
+{
+  "id": "scene-game-house-rest",
+  "code": "GAME-10-4",
+  "title": {
+    "en": "Neon Workshop · Rest",
+    "zh": "霓虹工坊 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "rhythmic building and automation",
+    "rest"
+  ],
+  "energy": 4,
+  "bpm": 122,
+  "key": "",
+  "instruments": [
+    "muted synth plucks",
+    "steady electronic drums",
+    "rubber bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for rhythmic building and automation, rest state. Instruments: muted synth plucks, steady electronic drums, rubber bass. 122 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "house"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "An upbeat electronic track featuring a prominent synth bassline, rhythmic electronic drums, and a catchy, arpeggiated synth melody. It has a driving, retro-futuristic feel.",
+    "zh": "一首欢快的电子音乐，以突出的合成器贝斯线、有节奏的电子鼓和一段抓耳的琶音合成器旋律为特色。它带有一种驱动感和复古未来主义的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 88.006,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:27:22.357321+00:00",
+  "generation": {
+    "id": "cebae14a-bea3-4cba-a58d-381cb28f73db",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:26:39.981348+00:00",
+    "completedAt": "2026-09-22T09:27:22.357321+00:00",
+    "interactionId": "0Umyap-pEN6trtoP_5G08QE",
+    "sha256": "83c9028df2cd2c1283580c8ce0ea13c394202c84e1e2e4bc7e9a3d8348f2ee4f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat electronic track featuring a prominent synth bassline, rhythmic electronic drums, and a catchy, arpeggiated synth melody. It has a driving, retro-futuristic feel.",
+      "zh": "一首欢快的电子音乐，以突出的合成器贝斯线、有节奏的电子鼓和一段抓耳的琶音合成器旋律为特色。它带有一种驱动感和复古未来主义的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Driving",
+      "Retro",
+      "Electronic",
+      "Groovy"
+    ],
+    "energy": 4,
+    "bpmEstimate": 124,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:27:32.477103+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-house-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-house-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-house-rest/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9ed1ebdc1453e4ffe2bf54332dcab0e5515f9cf8150b2e18d7197985fecc7b69",
+      "bytes": 1232866,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "83c9028df2cd2c1283580c8ce0ea13c394202c84e1e2e4bc7e9a3d8348f2ee4f",
+      "bytes": 2119823,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "5008b7bc2c434dcf70baacd52c39d04790478360f5ce197928ac7babc3a52211",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.837039+00:00"
+}

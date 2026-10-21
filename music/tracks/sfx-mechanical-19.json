@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-19",
+  "code": "SFX-MECHANICAL-19",
+  "title": {
+    "en": "Magnet snap",
+    "zh": "磁铁吸合"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 18,
+  "seed": 1057076534,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized magnet snap for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的磁铁吸合合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.18,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1057076534,
+    "sha256": "0c1f562d81d17305864b59020ffb3f60bf38b692c63b1426030c0fd817fd982b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ccb939b078ced33adc79a3f1d474c97352188dfbcf1a9e45e96eaed6efa06c17",
+      "bytes": 3334,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "0c1f562d81d17305864b59020ffb3f60bf38b692c63b1426030c0fd817fd982b",
+      "bytes": 15920,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8d43215979629145915c034495402571664010a652ef07b178fa9fafde43fd57",
+      "bytes": 5767,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "98f353ff5503d944cc4b4c69acfe904f75dc59bcfda5b7fe8b27208e55810d23",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 7938,
+    "duration": 0.18,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.51,
+    "dcOffset": -3.613822554484757e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.24716455078125016,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized 'boing' sound, reminiscent of a spring or cartoon bounce effect.",
+      "zh": "一个短促的合成“boing”声，类似于弹簧或卡通弹跳音效。"
+    },
+    "reason": "The sound is a clean, well-produced, isolated sound effect suitable for various game or video sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:35.135866+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ccb939b078ced33adc79a3f1d474c97352188dfbcf1a9e45e96eaed6efa06c17"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 7938
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.888382+00:00"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-15",
+  "code": "SFX-GAME-15",
+  "title": {
+    "en": "Respawn",
+    "zh": "重新出现"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 14,
+  "seed": 2879411923,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized respawn for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的重新出现合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2879411923,
+    "sha256": "bc9e5fc7e54f6add3862a8fc6479edbcb0b54dfb48017aa78260349db7d9770b",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "188dc9c33d5398cad29df3b30f6a5b9adb0a846df515d7375df902e442125aae",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bc9e5fc7e54f6add3862a8fc6479edbcb0b54dfb48017aa78260349db7d9770b",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "73cad12cbc289f921328bad262b915e966c8ad62a983a84d922ce08e30a6145d",
+      "bytes": 5427,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b111c7797c14e9c2c03d06822db0c93a8897946243d1c413cbd94486cbdb9604",
+      "bytes": 1930,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -5.34,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.7300214356575964e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.01975012207031268,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp electronic zap or whoosh sound followed by a distinct, low-frequency impact or thump.",
+      "zh": "短促、尖锐的电子“滋啦”声或“嗖”声，随后是一个清晰的低频撞击或“砰”声。"
+    },
+    "reason": "The audio is a clean, isolated, and well-produced synthesized sound effect, suitable for various sound design applications such as sci-fi weapons or magic spells.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:50.623389+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "188dc9c33d5398cad29df3b30f6a5b9adb0a846df515d7375df902e442125aae"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.874529+00:00"
+}

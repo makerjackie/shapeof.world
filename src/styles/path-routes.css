@@ -1,0 +1,117 @@
+.path-routes-page {
+  min-height: 100svh;
+  background: #08080b;
+}
+
+.path-routes-page .site-header {
+  position: sticky;
+  top: 0;
+}
+
+.path-routes-hero {
+  padding-top: 48px;
+}
+
+.path-routes-page .home-section-head h1,
+.path-routes-page .home-section-head h2 {
+  color: var(--home-ink, #f4efe6);
+}
+
+.path-routes-back {
+  margin: 0 0 18px;
+  font-family: var(--home-font-ui, inherit);
+  font-size: var(--home-type-support, 14px);
+}
+
+.path-routes-back a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--home-muted, #8f8a82);
+  text-decoration: none;
+}
+
+.path-routes-back a:hover {
+  color: var(--home-gold, #e8b652);
+}
+
+.path-routes-share {
+  margin: 0 0 28px;
+}
+
+.path-routes-share button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.path-routes-others {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid var(--home-line, rgba(244, 239, 230, 0.14));
+}
+
+.path-routes-others h2 {
+  margin: 0 0 16px;
+  color: var(--home-ink, #f4efe6);
+  font-family: var(--home-face-title, inherit);
+  font-size: var(--home-type-card-title, 20px);
+  font-weight: 500;
+}
+
+.path-routes-others ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.path-routes-others a {
+  color: var(--home-muted, #8f8a82);
+  text-decoration: none;
+}
+
+.path-routes-others a:hover {
+  color: var(--home-gold, #e8b652);
+}
+
+.path-journey .path-accordion-collapse {
+  display: none;
+}
+
+.path-routes-page .path-accordion-identity,
+.path-routes-page .path-accordion-info > p {
+  display: none;
+}
+
+.path-routes-page .path-accordion-info {
+  padding-top: 0;
+}
+
+@media (max-width: 720px) {
+  .path-routes-hero {
+    padding-top: 28px;
+  }
+}
+
+/* Standalone series keep all stops readable; hover never changes card widths. */
+.path-journey .path-accordion-expanded { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.path-journey .path-accordion-info { order: 2; min-height: 0; }
+.path-journey .path-accordion-foot { max-width: 400px; }
+.path-journey .path-storyboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); width: 100%; gap: 16px; }
+.path-journey .path-storyboard > li { min-width: 0; }
+.path-journey .path-storyboard-item,
+.path-journey .path-storyboard-item.is-active { width: 100%; min-height: 320px; transition: border-color 200ms ease; }
+.path-journey .path-storyboard-copy,
+.path-journey .path-storyboard-item:not(.is-active) .path-storyboard-copy { padding: 20px 16px; }
+.path-journey .path-storyboard-copy strong,
+.path-journey .path-storyboard-item:not(.is-active) .path-storyboard-copy strong { display: block; font-size: var(--home-type-card-title); line-height: 1.4; }
+@media (max-width: 720px) {
+  .path-journey .path-storyboard { grid-template-columns: minmax(0, 1fr); }
+  .path-journey .path-storyboard-item,
+  .path-journey .path-storyboard-item.is-active { min-height: 240px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .path-journey .path-storyboard-item { transition: none; }
+}

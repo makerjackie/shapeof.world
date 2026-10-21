@@ -1,0 +1,125 @@
+{
+  "id": "sfx-ui-15",
+  "code": "SFX-UI-15",
+  "title": {
+    "en": "Refresh",
+    "zh": "刷新"
+  },
+  "kind": "sfx",
+  "family": "ui",
+  "designIndex": 14,
+  "seed": 1430018735,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized refresh for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的刷新合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "ui",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-ui"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-ui-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-ui-15/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-ui-15/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-ui-15/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1430018735,
+    "sha256": "259c59eb9ceb84f5339f89d0d6f7ecdba2c6e2196359a7c8900c5dbbc1e24402",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f891243408db932e268a594054649d194a8779e6b0565b63c9221a335af14a64",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "259c59eb9ceb84f5339f89d0d6f7ecdba2c6e2196359a7c8900c5dbbc1e24402",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1691292ca0b07336fcfbb0f181e9121f9b56fed5ece9c7f220326159bdd4004f",
+      "bytes": 5222,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b969f3180971b519b939442816f0b6a583b17ed8d6f99212fcff5bf780f9bf5c",
+      "bytes": 1944,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -2.52,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.309578616602891e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.0257815551757814,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized boing sound effect, reminiscent of a spring or cartoon bounce.",
+      "zh": "一个短促的合成弹簧音效，类似于弹簧或卡通弹跳声。"
+    },
+    "reason": "The sound is a clean, well-produced synthesized boing effect with no audible defects or unintended elements, making it suitable for sound design libraries.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:40.357062+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "f891243408db932e268a594054649d194a8779e6b0565b63c9221a335af14a64"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.908686+00:00"
+}

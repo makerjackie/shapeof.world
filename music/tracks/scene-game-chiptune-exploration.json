@@ -1,0 +1,128 @@
+{
+  "id": "scene-game-chiptune-exploration",
+  "code": "GAME-02-2",
+  "title": {
+    "en": "Clock Tower · Exploration",
+    "zh": "钟楼机关 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "light platforming and mechanical puzzles",
+    "exploration"
+  ],
+  "energy": 4,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "pulse arpeggios",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for light platforming and mechanical puzzles, exploration state. Instruments: pulse arpeggios, triangle bass, noise percussion. 132 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A bright, upbeat electronic track featuring a synth melody, arpeggiated bassline, and a driving drum beat. It has a playful and energetic feel.",
+    "zh": "一首明亮、欢快的电子音乐，以合成器旋律、琶音贝斯线和强劲的鼓点为特色。它给人一种活泼而充满活力的感觉。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 87.928,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:21:39.337608+00:00",
+  "generation": {
+    "id": "09809a3e-4b76-4693-b5d8-768ed8f6569e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:20:54.262341+00:00",
+    "completedAt": "2026-09-22T09:21:39.337608+00:00",
+    "interactionId": "d0iyatLAGaie7PkPitfrgAg",
+    "sha256": "f3d6628c17fc62e0768b28a7e90745105ba9adf9a4999a26919a1b43c0121776"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A bright, upbeat electronic track featuring a synth melody, arpeggiated bassline, and a driving drum beat. It has a playful and energetic feel.",
+      "zh": "一首明亮、欢快的电子音乐，以合成器旋律、琶音贝斯线和强劲的鼓点为特色。它给人一种活泼而充满活力的感觉。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Electronic percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Bright",
+      "Electronic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced, clear, and fits the specified criteria for library inclusion.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:49.253293+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-exploration/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b2027dc3ba6d4a83dda58d8c780a2ceb9dc13a860f3a4f7572cc70bd00dc3118",
+      "bytes": 1231769,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f3d6628c17fc62e0768b28a7e90745105ba9adf9a4999a26919a1b43c0121776",
+      "bytes": 2117943,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "187f32031c48d19770239f2e6ce18d8678295f5a5d46e152452b5cf4a6d07b07",
+      "bytes": 2792,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.835457+00:00"
+}

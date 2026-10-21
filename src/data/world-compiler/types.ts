@@ -5,7 +5,6 @@ export type RuntimeCapability =
   | 'canvas-2d'
   | 'webgl'
   | 'three'
-  | 'cesium'
   | 'maplibre'
   | 'audio'
   | 'wasm'

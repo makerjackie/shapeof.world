@@ -1,0 +1,117 @@
+[
+  {
+    "symbol": "F",
+    "asset": "/assets/worlds/periodic-table/display/F-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/F.webp",
+    "sourceUrl": "https://images-of-elements.com/fluorine.php",
+    "credit": "Chemical Elements — A Virtual Museum / images-of-elements.com",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "sourceKind": "mineral",
+    "visualTreatment": "Use case: scientific-educational. Create an elegant photographic museum display image of the exact polished fluorite specimen in the real reference photograph. Preserve its irregular rounded triangular silhouette, smoky purple translucent appearance and internal texture. This is calcium fluoride mineral, NOT elemental fluorine gas. Do not invent a bottle or gas or glow. Isolate the complete specimen on perfectly uniform pure white #ffffff background, soft accurate top-left lighting, no broad shadow, no plinth, no border, no text, no painted transparency checkerboard. 80 percent centered square composition. Only refine lighting and background; keep mineral identity.",
+    "prompt": "Use case: scientific-educational. Create an elegant photographic museum display image of the exact polished fluorite specimen in the real reference photograph. Preserve its irregular rounded triangular silhouette, smoky purple translucent appearance and internal texture. This is calcium fluoride mineral, NOT elemental fluorine gas. Do not invent a bottle or gas or glow. Isolate the complete specimen on perfectly uniform pure white #ffffff background, soft accurate top-left lighting, no broad shadow, no plinth, no border, no text, no painted transparency checkerboard. 80 percent centered square composition. Only refine lighting and background; keep mineral identity.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-e3d8e109-8265-49c6-be7d-f3665d1ab440.png",
+    "date": "2026-09-11",
+    "sha256": "6253321968c47d97abcedeebe8b35e930f595a757087065977b86702175f6cb4",
+    "referenceSha256": "14a7e366fd9b5a170211c54b19994a14b75d3a3d8badc47e320efe11ed0777e3",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Calcium fluoride mineral, not fluorine gas. Form and colour retain reference appearance.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    }
+  },
+  {
+    "symbol": "Tc",
+    "asset": "/assets/worlds/periodic-table/display/Tc-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Tc.webp",
+    "sourceUrl": "https://images-of-elements.com/technetium.php",
+    "credit": "Chemical Elements — A Virtual Museum / images-of-elements.com; source page marks this image public domain",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "specimen",
+    "visualTreatment": "Use case: scientific-educational. Make a photo-referenced museum specimen display of the supplied real technetium metal image. Preserve this same irregular silver metallic fragment silhouette, creased reflective surfaces and proportions. Do not invent crystal growth, colors, radiation glow, bottles or equipment. Center the fragment at 78 percent canvas size with generous absolutely pure white #ffffff space on all sides. Clean premium product photography lighting from upper left. No floor, stand, shadow outside the object, text, labels, borders or checkerboard. Interpretive AI reference rendering, not a new measurement. Square.",
+    "prompt": "Use case: scientific-educational. Make a photo-referenced museum specimen display of the supplied real technetium metal image. Preserve this same irregular silver metallic fragment silhouette, creased reflective surfaces and proportions. Do not invent crystal growth, colors, radiation glow, bottles or equipment. Center the fragment at 78 percent canvas size with generous absolutely pure white #ffffff space on all sides. Clean premium product photography lighting from upper left. No floor, stand, shadow outside the object, text, labels, borders or checkerboard. Interpretive AI reference rendering, not a new measurement. Square.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-68a9b9f0-af9d-443d-b0de-aeb9c8369dfb.png",
+    "date": "2026-09-11",
+    "sha256": "0545eb42960cd9f8149e777f5c09c32a4c116b81051fad005bac1a5a8c721764",
+    "referenceSha256": "ed8281fb368a75cdcc6149feb10082890e7ee7d637b88b5197304b0e13b093aa",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Metal fragment retains reference silhouette. Generated detail is not measurement evidence.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    }
+  },
+  {
+    "symbol": "Np",
+    "asset": "/assets/worlds/periodic-table/display/Np-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Np.webp",
+    "sourceUrl": "https://images-of-elements.com/neptunium.php",
+    "credit": "Los Alamos National Laboratory (2002) · via Chemical Elements — A Virtual Museum",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "specimen",
+    "visualTreatment": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: Only the shiny neptunium sphere in the foreground, seated in its original black bowl on the original cylindrical brown support. Preserve those three objects and their material distinction. Remove the surrounding lab, hands and other bowls. Do not imply the support is neptunium. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "prompt": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: Only the shiny neptunium sphere in the foreground, seated in its original black bowl on the original cylindrical brown support. Preserve those three objects and their material distinction. Remove the surrounding lab, hands and other bowls. Do not imply the support is neptunium. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-fd41103c-04ce-41a1-b675-0a670e81aaa3.png",
+    "date": "2026-09-11",
+    "sha256": "fe2e7b2dfce55098463fed456f564786a13a9289a30be24f5288128fbd5d242f",
+    "referenceSha256": "cab1f82d2c1a0720f6ad341d6db77d6efc777e90be8a72348d1b48948230543e",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Photo subject and its support, where present, retain their original distinction. Generated surface detail is not measurement evidence; specimens are not shown to scale.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    }
+  },
+  {
+    "symbol": "Am",
+    "asset": "/assets/worlds/periodic-table/display/Am-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Am.webp",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Americium_Metal_Chunks.jpg",
+    "credit": "Los Alamos National Laboratory · via Wikimedia Commons",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "specimen",
+    "visualTreatment": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: The same four small irregular silvery americium fragments, preserving their positions, relative sizes and foil-like shapes. Remove only the blue-grey background. Do not merge them or invent a large crystal. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "prompt": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: The same four small irregular silvery americium fragments, preserving their positions, relative sizes and foil-like shapes. Remove only the blue-grey background. Do not merge them or invent a large crystal. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-864a9fcd-c498-4856-9b4a-e57960577a1b.png",
+    "date": "2026-09-11",
+    "sha256": "a0a14b3b7184fa94f32477cb452bfb265e67423a2808dfa38e46efdcef29a6e5",
+    "referenceSha256": "43e5d684b9c5de4282c6ca493ca616c0de346753bfcdcc672e24155950d1e592",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Photo subject and its support, where present, retain their original distinction. Generated surface detail is not measurement evidence; specimens are not shown to scale.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    }
+  },
+  {
+    "symbol": "Cf",
+    "asset": "/assets/worlds/periodic-table/display/Cf-museum.webp",
+    "referenceAsset": "/assets/worlds/periodic-table/collection/Cf.webp",
+    "sourceUrl": "https://images-of-elements.com/californium.php",
+    "credit": "U.S. Department of Energy · via Chemical Elements — A Virtual Museum",
+    "license": "Public Domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourceKind": "specimen",
+    "visualTreatment": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: The same small round californium disc shown in the reference, retaining its mottled monochrome surface and irregular round edge. The real disc is only about 1 mm; do not add scale bars or imply a large specimen. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "prompt": "Use case: scientific-educational. Create a conservative real-photo-referenced museum display illustration. Subject: The same small round californium disc shown in the reference, retaining its mottled monochrome surface and irregular round edge. The real disc is only about 1 mm; do not add scale bars or imply a large specimen. Keep the authentic form and do not invent new scientific detail. Center the subject with ample clean pure WHITE #ffffff space. No floor, framing, labels, text, checkerboard, decorative props, colored radiation glow, atom symbols or gas. Photographic upper-left soft lighting. This is an interpretive illustration, not documentary measurement. Square canvas.",
+    "generator": "OpenAI imagegen built-in",
+    "generatedFile": "exec-5085b13f-19d2-421c-bbb7-eab00e0c9d1e.png",
+    "date": "2026-09-11",
+    "sha256": "7cf530598b7836c5240438562d288bac770329e1817ee3d5883a1e0f029082e4",
+    "referenceSha256": "57b43e927345604d3786b592b362232524c5dc488a3a690650299181d36cdad5",
+    "verification": {
+      "status": "passed",
+      "method": "Viewed actual reference and generated output; checked scientific subject and containment. Converted with ImageMagick to 720px WebP q82.",
+      "boundary": "Photo subject and its support, where present, retain their original distinction. Generated surface detail is not measurement evidence; specimens are not shown to scale.",
+      "background": "Opaque white output. Blended into the illuminated stone in the UI; not claimed as RGBA transparency."
+    }
+  }
+]

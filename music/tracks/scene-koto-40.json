@@ -1,0 +1,183 @@
+{
+  "id": "scene-koto-40",
+  "code": "SCENE-12-40",
+  "title": {
+    "en": "Paper Architecture · 40",
+    "zh": "纸上建筑 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "careful precise construction reveal",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "",
+  "instruments": [
+    "koto",
+    "soft synth bass",
+    "bamboo percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for careful precise construction reveal. Instruments: koto, soft synth bass, bamboo percussion. 108 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A light and upbeat instrumental track featuring a prominent plucked string melody, supported by a steady rhythm section and synth pads. It has a cheerful and slightly whimsical feel.",
+    "zh": "一首轻快活泼的纯音乐，以突出的拨弦旋律为主，配以稳定的节奏部分和合成器衬底。整体感觉欢快而略带奇思妙想。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "careful precise construction reveal"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:16:23.941530+00:00",
+  "generation": {
+    "id": "c7c8c22a-5c88-4119-be1e-7b704b19f7d9",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:15:42.127207+00:00",
+    "completedAt": "2026-09-22T09:16:23.941530+00:00",
+    "interactionId": "P0eyaouQBrve694PlMeHuQ4",
+    "sha256": "865a304db7d9b2ed3308601bb0a34e51f985a5df9748b5a4c62e47d78af56f95"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and upbeat instrumental track featuring a prominent plucked string melody, supported by a steady rhythm section and synth pads. It has a cheerful and slightly whimsical feel.",
+      "zh": "一首轻快活泼的纯音乐，以突出的拨弦旋律为主，配以稳定的节奏部分和合成器衬底。整体感觉欢快而略带奇思妙想。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Drums",
+      "Bass",
+      "Synthesizer Pads",
+      "Synth Wind"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Playful",
+      "Lighthearted",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Clean production, clear instrumentation, and well-defined musical structure suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main plucked string melody and rhythm section, establishing the theme quickly. It concludes with a sustained final chord that fades out naturally, providing a clear and resolved musical ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:41.373651+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "0a6a59b8140b0087c508e665cbb768d41c87f6ec75ac93a4107cd200bd6ea99d"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.051375,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and whimsical instrumental track featuring a prominent plucked string melody, supported by a bright woodwind counter-melody and light, rhythmic percussion. It has a cheerful and playful folk-dance feel.",
+      "zh": "一首活泼而异想天开的纯音乐曲目，以突出的拨弦乐器旋律为主，辅以明亮的木管乐器对位旋律和轻快的节奏打击乐。它带有一种欢快、俏皮的民间舞蹈感。"
+    },
+    "instruments": [
+      "Plucked String Instrument",
+      "Flute",
+      "Piccolo",
+      "Percussion",
+      "Drums"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Lively",
+      "Cheerful",
+      "Folk",
+      "Dance"
+    ],
+    "energy": 4,
+    "bpmEstimate": 130,
+    "reason": "Clean, well-produced instrumental track with clear musical themes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:16:33.156105+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.051375,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-koto-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-koto-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-koto-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0a6a59b8140b0087c508e665cbb768d41c87f6ec75ac93a4107cd200bd6ea99d",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "865a304db7d9b2ed3308601bb0a34e51f985a5df9748b5a4c62e47d78af56f95",
+      "bytes": 1376901,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "cef60b2264f09cfc6c43caa720a488e2c920b7a179780d8c6a76f7dbc9962d46",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.845948+00:00"
+}

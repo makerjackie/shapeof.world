@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-01",
+  "code": "SFX-GAME-01",
+  "title": {
+    "en": "Coin pickup",
+    "zh": "拾取金币"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 0,
+  "seed": 3186414714,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized coin pickup for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的拾取金币合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.4,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3186414714,
+    "sha256": "d92c715f43d08c999a97c42bd9873d3f33eaa4652bba1dcc00d49ad04a6964b2",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "05e807d14962e0f4179fd6b41b4612b6d65a1f294b312cd5396a431a80268871",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d92c715f43d08c999a97c42bd9873d3f33eaa4652bba1dcc00d49ad04a6964b2",
+      "bytes": 35324,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "a987a875d84d2b2e9acb11500663933aafae41729fedacc0b13eb0b9ce62e41f",
+      "bytes": 5612,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3987d83b0d9c706d923982ae8e77d7065db4a52f5e5c13991f70eddbac2ca1ee",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 17640,
+    "duration": 0.4,
+    "peakDbfs": -4.12,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.1072137188208617e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.02638928222656256,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized chime or ding sound effect, suitable for UI feedback or notification.",
+      "zh": "一个短促、高音的合成提示音或叮咚声，适用于用户界面反馈或通知。"
+    },
+    "reason": "The sound is a clean, well-produced, and isolated synthesized effect, ideal for game or UI sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:10:35.808456+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "05e807d14962e0f4179fd6b41b4612b6d65a1f294b312cd5396a431a80268871"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 17640
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.871745+00:00"
+}

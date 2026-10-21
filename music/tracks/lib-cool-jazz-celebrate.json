@@ -1,0 +1,105 @@
+{
+  "id": "lib-cool-jazz-celebrate",
+  "code": "LIB-09-10",
+  "title": {
+    "en": "First Light — Cool Jazz",
+    "zh": "初光 · 冷爵士"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "cool-jazz"
+  ],
+  "energy": 4,
+  "bpm": 94,
+  "key": "C major",
+  "instruments": [
+    "muted trumpet",
+    "vibraphone",
+    "double bass",
+    "brushes"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second cool jazz instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: muted trumpet, vibraphone, double bass, brushes. Style: spare melodic answers, extended chords and unhurried swing. Tempo approximately 94 BPM; C major. Main idea: a repeating five-note figure with space between phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "cool-jazz"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and playful big band jazz piece featuring prominent brass and woodwind melodies over a swinging rhythm section. The arrangement is dynamic with call-and-response sections and a clear, bright sound.",
+    "zh": "一首活泼俏皮的大乐队爵士乐曲，以突出的铜管和木管旋律为主，配以摇摆的节奏部分。编曲充满活力，有呼应段落，音色清晰明亮。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.141,
+  "generatedAt": "2026-09-09T08:12:33.581392+00:00",
+  "generation": {
+    "id": "5dc73fd7-2d51-4fda-aa3a-c62da4df1c02",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:11:51.963580+00:00",
+    "completedAt": "2026-09-09T08:12:33.581392+00:00",
+    "interactionId": "yRShasnHD4u3i9sP7uehmQM",
+    "sha256": "fd0b90c9c5ecfa1915150120837dd496f71922288f5b7077a712d19280098f3a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and playful big band jazz piece featuring prominent brass and woodwind melodies over a swinging rhythm section. The arrangement is dynamic with call-and-response sections and a clear, bright sound.",
+      "zh": "一首活泼俏皮的大乐队爵士乐曲，以突出的铜管和木管旋律为主，配以摇摆的节奏部分。编曲充满活力，有呼应段落，音色清晰明亮。"
+    },
+    "instruments": [
+      "trumpet",
+      "trombone",
+      "clarinet",
+      "drums",
+      "bass",
+      "piano"
+    ],
+    "moods": [
+      "lively",
+      "playful",
+      "upbeat",
+      "cheerful",
+      "swinging",
+      "nostalgic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-recorded and performed big band jazz with a clear, engaging melody and solid rhythm, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:12:45.545918+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-cool-jazz-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:13:25.484223+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

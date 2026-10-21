@@ -1,0 +1,447 @@
+.ha-experience {
+  --ha-ink: #f4efe6;
+  --ha-muted: rgba(244, 239, 230, 0.62);
+  --ha-accent: #d4b896;
+  --world-accent: #d4b896;
+  --freebar-accent: #d4b896;
+  --experience-panel-surface: linear-gradient(180deg, rgba(14, 16, 22, 0.48), rgba(8, 10, 14, 0.4));
+  --experience-panel-border: rgba(212, 184, 150, 0.2);
+  --experience-panel-shadow: 0 18px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --experience-panel-blur: 20px;
+  --experience-panel-saturation: 1.12;
+  --experience-panel-radius: 16px;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  color: var(--ha-ink);
+  background: #07080c;
+  isolation: isolate;
+}
+
+.ha-scene,
+.ha-scene canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.ha-scene {
+  z-index: 1;
+}
+
+.ha-scene canvas {
+  cursor: grab;
+}
+
+.ha-scene canvas:active {
+  cursor: grabbing;
+}
+
+.ha-hover {
+  position: absolute;
+  z-index: 8;
+  max-width: 240px;
+  padding: 6px 10px;
+  color: var(--ha-ink);
+  font-size: 12px;
+  line-height: 1.35;
+  pointer-events: none;
+  background: rgba(8, 10, 14, 0.82);
+  border: 1px solid rgba(212, 184, 150, 0.28);
+  border-radius: 8px;
+}
+
+.ha-systems,
+.ha-search,
+.ha-detail,
+.ha-loading {
+  position: absolute;
+  z-index: 6;
+  color: var(--ha-ink);
+  background: var(--experience-panel-surface);
+  border: 1px solid var(--experience-panel-border);
+  border-radius: var(--experience-panel-radius);
+  box-shadow: var(--experience-panel-shadow);
+  backdrop-filter: blur(var(--experience-panel-blur)) saturate(var(--experience-panel-saturation));
+  -webkit-backdrop-filter: blur(var(--experience-panel-blur)) saturate(var(--experience-panel-saturation));
+}
+
+.ha-systems {
+  top: var(--experience-safe-top, 78px);
+  left: max(16px, env(safe-area-inset-left, 0px));
+  display: flex;
+  flex-direction: column;
+  width: min(248px, 30vw);
+  max-height: min(68vh, calc(100% - var(--experience-safe-top, 78px) - 132px));
+  padding: 12px 12px 10px;
+}
+
+.ha-systems-head,
+.ha-search-head,
+.ha-detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--ha-muted);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.ha-icon-button.ha-systems-close {
+  display: none;
+}
+
+.ha-presets,
+.ha-detail-actions,
+.ha-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ha-presets button,
+.ha-detail-actions button,
+.ha-members button,
+.ha-search button,
+.ha-systems-foot button,
+.ha-tool,
+.ha-icon-button {
+  color: inherit;
+  font: inherit;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.ha-presets button,
+.ha-tool {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.ha-presets button[aria-pressed='true'],
+.ha-tool[aria-pressed='true'],
+.ha-detail-actions button.is-on {
+  color: #1b140c;
+  background: var(--ha-accent);
+  border-color: transparent;
+}
+
+.ha-system-list {
+  overflow: auto;
+  min-height: 0;
+  flex: 1;
+}
+
+.ha-system-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.ha-system-name {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.ha-system-name i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.ha-system-name span {
+  margin-left: auto;
+  color: var(--ha-muted);
+  font-size: 11px;
+}
+
+.ha-system-row input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--ha-accent);
+}
+
+.ha-systems-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--ha-muted);
+  font-size: 11px;
+}
+
+.ha-search {
+  top: var(--experience-safe-top, 78px);
+  left: 50%;
+  width: min(420px, calc(100% - 32px));
+  max-height: min(70vh, calc(100% - 160px));
+  padding: 14px;
+  overflow: auto;
+  transform: translateX(-50%);
+}
+
+.ha-search input {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  color: var(--ha-ink);
+  font: inherit;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+
+.ha-search ul {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ha-search li button {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.ha-search small,
+.ha-search p,
+.ha-search-empty {
+  color: var(--ha-muted);
+  font-size: 12px;
+}
+
+.ha-caption {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: calc(var(--experience-freebar-height, 72px) + 10px);
+  left: 0;
+  margin: 0;
+  color: var(--ha-muted);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
+}
+
+.ha-detail {
+  top: var(--experience-safe-top, 78px);
+  right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(320px, 36vw);
+  max-height: min(70vh, calc(100% - var(--experience-safe-top, 78px) - 132px));
+  padding: 14px 16px 16px;
+  overflow: auto;
+}
+
+.ha-detail-head {
+  align-items: flex-start;
+}
+
+.ha-detail-head > div {
+  flex: 1;
+}
+
+.ha-detail-head i {
+  width: 8px;
+  height: 42px;
+  border-radius: 99px;
+}
+
+.ha-detail-head small {
+  display: block;
+  color: var(--ha-muted);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.ha-detail-head strong {
+  display: block;
+  font: 400 22px/1.15 var(--serif);
+}
+
+.ha-detail p,
+.ha-detail small {
+  margin: 0;
+  color: var(--ha-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.ha-detail dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+}
+
+.ha-detail dt {
+  color: var(--ha-muted);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.ha-detail dd {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.ha-members {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ha-members h3 {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.ha-members button {
+  justify-content: flex-start;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+.ha-detail-actions button {
+  min-height: 36px;
+  padding: 0 12px;
+}
+
+.ha-loading {
+  top: 50%;
+  left: 50%;
+  display: grid;
+  gap: 6px;
+  width: min(320px, calc(100% - 40px));
+  padding: 18px 20px;
+  transform: translate(-50%, -50%);
+}
+
+.ha-loading i {
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+}
+
+.ha-loading b {
+  display: block;
+  height: 100%;
+  background: var(--ha-accent);
+}
+
+.ha-icon-button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.ha-explode {
+  min-width: min(280px, 58vw);
+}
+
+.ha-explode label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ha-secondary {
+  align-items: center;
+}
+
+.ha-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (min-width: 721px) {
+  .ha-experience .ha-systems-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .ha-systems {
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(var(--experience-freebar-height, 72px) + 12px);
+    left: max(16px, env(safe-area-inset-left, 0px));
+    top: auto;
+    width: auto;
+    max-height: min(48vh, 340px);
+    display: none;
+  }
+
+  .ha-systems.is-open {
+    display: flex;
+  }
+
+  .ha-icon-button.ha-systems-close {
+    display: grid;
+  }
+
+  .ha-experience .ha-tool.ha-systems-toggle {
+    display: inline-flex;
+  }
+
+  .ha-detail {
+    top: auto;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: calc(var(--experience-freebar-height, 72px) + 12px);
+    left: max(12px, env(safe-area-inset-left, 0px));
+    width: auto;
+    max-height: min(42vh, 320px);
+  }
+
+  .ha-search {
+    top: var(--experience-safe-top, 78px);
+  }
+
+  .ha-caption {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ha-experience * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

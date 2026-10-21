@@ -1,0 +1,164 @@
+{
+  "id": "promo-dub-15",
+  "code": "PROMO-11-15",
+  "title": {
+    "en": "Rubber Orbit · 15",
+    "zh": "弹性轨道 · 15"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 96,
+  "key": "",
+  "instruments": [
+    "deep bass guitar",
+    "rimshot drums",
+    "organ stabs",
+    "spring echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 15,
+  "prompt": "Compose one complete original 30-second instrumental promotional score. Sound: spacious rhythmic dub with playful bass and short echoes. Instruments: deep bass guitar, rimshot drums, organ stabs, spring echo. Tempo 96 BPM. Distinct motif: descending pentatonic triplet. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 15-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:28, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and energetic funk-jazz instrumental track featuring a prominent, driving electric bassline, tight drums, and a punchy brass section. It has a groovy, upbeat feel with a strong rhythmic pulse.",
+    "zh": "一首活泼且充满活力的放克爵士纯音乐，以突出、强劲的电贝斯线、紧凑的鼓点和有力的铜管乐器为特色。它具有律动感强、欢快且节奏感十足的氛围。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 15,
+      "logo": 28
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:28:46.089605+00:00",
+  "generation": {
+    "id": "d3a0b9e0-d8fe-475c-9e91-418991ff7e60",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:28:32.248150+00:00",
+    "completedAt": "2026-09-10T05:28:46.089605+00:00",
+    "interactionId": "AUCiasGOD8O3i9sP57WLuQM",
+    "sha256": "639e76703a77e6e8ecf1629ee560658cf56767701db3f53df2f147184fcaee29"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and energetic funk-jazz instrumental track featuring a prominent, driving electric bassline, tight drums, and a punchy brass section. It has a groovy, upbeat feel with a strong rhythmic pulse.",
+      "zh": "一首活泼且充满活力的放克爵士纯音乐，以突出、强劲的电贝斯线、紧凑的鼓点和有力的铜管乐器为特色。它具有律动感强、欢快且节奏感十足的氛围。"
+    },
+    "instruments": [
+      "Electric Bass",
+      "Drums",
+      "Brass Section",
+      "Trumpet",
+      "Trombone",
+      "Saxophone"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Funky",
+      "Groovy",
+      "Lively",
+      "Positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, energetic, and catchy instrumental track with a clear funk-jazz style, suitable for various media applications requiring an upbeat and driving sound.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens instantly with a driving funk bassline and drum groove, immediately establishing a strong rhythmic hook. It concludes with a definitive, punchy brass and drum hit, providing a clear and satisfying musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:04.877668+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "5fb33b37cdd5d94f8dbbc762448b3eebd10eae4edc50faa39db62fd1be988246"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 25.626083,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and funky instrumental track featuring a prominent electric guitar melody, a driving bassline, and lively drums. The overall feel is energetic and groovy, suitable for dancing or background music.",
+      "zh": "一首欢快而时髦的纯音乐，以突出的电吉他旋律、强劲的贝斯线和活泼的鼓点为特色。整体感觉充满活力和律动感，适合跳舞或作为背景音乐。"
+    },
+    "instruments": [
+      "Electric guitar",
+      "Bass guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Funky",
+      "Energetic",
+      "Groovy",
+      "Danceable"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:28:55.875412+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 10.626083000000001,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-dub-15/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-dub-15/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-dub-15/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:11.352647+00:00"
+}

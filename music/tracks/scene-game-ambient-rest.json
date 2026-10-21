@@ -1,0 +1,128 @@
+{
+  "id": "scene-game-ambient-rest",
+  "code": "GAME-03-4",
+  "title": {
+    "en": "Underwater Archive · Rest",
+    "zh": "水下档案馆 · 休息"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "rest"
+  ],
+  "topics": [
+    "game",
+    "unhurried underwater exploration",
+    "rest"
+  ],
+  "energy": 1,
+  "bpm": 72,
+  "key": "",
+  "instruments": [
+    "soft pads",
+    "glass marimba",
+    "muted sub bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for unhurried underwater exploration, rest state. Instruments: soft pads, glass marimba, muted sub bass. 72 BPM, exact steady 4/4. Energy 1/5. Use a repeating eight-bar harmonic cycle. Variation: long warm notes and very sparse softly plucked answers. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "game-rest"
+  ],
+  "description": {
+    "en": "A calm, cinematic orchestral piece featuring plucked strings, sustained strings, and a deep, resonant synth pad. It evokes a sense of mystery and contemplation.",
+    "zh": "一首平静、电影感的管弦乐曲，以拨弦乐器、持续的弦乐和深沉、共鸣的合成器衬底为主。它唤起一种神秘和沉思的感觉。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "rest"
+  },
+  "duration": 88.999,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:25.732912+00:00",
+  "generation": {
+    "id": "2868729a-8e73-4f23-8edf-c868909327c1",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:21:43.038444+00:00",
+    "completedAt": "2026-09-22T09:22:25.732912+00:00",
+    "interactionId": "p0iyapiJK8-77PkPz4_vuAQ",
+    "sha256": "6ea2b5b8c94dcf0466caf4b8d6237cbab0880b4a01eebb3905d531579c7603eb"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm, cinematic orchestral piece featuring plucked strings, sustained strings, and a deep, resonant synth pad. It evokes a sense of mystery and contemplation.",
+      "zh": "一首平静、电影感的管弦乐曲，以拨弦乐器、持续的弦乐和深沉、共鸣的合成器衬底为主。它唤起一种神秘和沉思的感觉。"
+    },
+    "instruments": [
+      "Strings",
+      "Synth pad",
+      "Harp"
+    ],
+    "moods": [
+      "Calm",
+      "Mysterious",
+      "Contemplative",
+      "Cinematic",
+      "Peaceful"
+    ],
+    "energy": 1,
+    "bpmEstimate": 65,
+    "reason": "Clean, well-produced orchestral piece with a clear, calm, and mysterious atmosphere.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:38.013598+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-ambient-rest/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "39206d92c20e924fe9bb7b1206dfe413a234ac1b3cb781257c6a903e85899220",
+      "bytes": 1246763,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6ea2b5b8c94dcf0466caf4b8d6237cbab0880b4a01eebb3905d531579c7603eb",
+      "bytes": 2143647,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "d7b3078ec0c1ea6640f53022ff2bce86108a119959f945d722f8307ec7dc49ce",
+      "bytes": 2798,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.833853+00:00"
+}

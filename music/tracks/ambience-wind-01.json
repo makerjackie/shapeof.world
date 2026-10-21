@@ -1,0 +1,130 @@
+{
+  "id": "ambience-wind-01",
+  "code": "AMB-WIND-01",
+  "title": {
+    "en": "Meadow breeze · designed ambience",
+    "zh": "草地微风 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "wind",
+  "designIndex": 0,
+  "seed": 980868473,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized meadow breeze atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "草地微风的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "wind",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-wind"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-wind-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-wind-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-wind-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-wind-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 980868473,
+    "sha256": "92306d63264afa947e64b6567be3870f5441919679f4601585eddbe7032ac6c5",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9241e8a4138b58ad8a6762dd30ca7671eddf482f314069fb45d1bd4f87e5281b",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "92306d63264afa947e64b6567be3870f5441919679f4601585eddbe7032ac6c5",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "31b7b759c3cf50fa466a67061782e79cacd542650f09e02b598f066d53321492",
+      "bytes": 162068,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8dd246f1d6b7b32692ec6e026a06b440e50856b791498091d3b7e7a00a751239",
+      "bytes": 1934,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.19,
+    "dcOffset": 3.5292437287414968e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00341796875,
+    "internalStepP999": 0.019256591796875,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, and evolving electronic hum or drone, with a subtle metallic or mechanical texture. It has a sustained, atmospheric quality.",
+      "zh": "深沉、共鸣且不断变化的电子嗡鸣声或无人机声，带有微妙的金属或机械质感。具有持续、大气的特质。"
+    },
+    "reason": "The audio is a clean, well-produced synthesized drone texture. It exhibits no audible defects such as clipping, clicks, or unintended speech. The repetitions are perfectly seamless, making it ideal for looping in sound design.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:11:10.937872+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "39d31e2ea602502e6e750dedeec070826a44aff6bdfbfbaf2736314482af98c4"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.860641+00:00"
+}

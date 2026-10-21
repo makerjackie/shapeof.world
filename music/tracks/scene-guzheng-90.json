@@ -1,0 +1,130 @@
+{
+  "id": "scene-guzheng-90",
+  "code": "SCENE-11-90",
+  "title": {
+    "en": "Porcelain Steps · 90",
+    "zh": "瓷器轻步 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "modern material and design close-ups",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "plucked bass",
+    "dry electronic percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Original instrumental background composition for a clear spoken tutorial. guzheng, plucked bass, dry electronic percussion. 118 BPM, guzheng character. Restrained dynamics, sparse lead melody, gentle repeating phrases with subtle variation. About 90 seconds, clean natural ending. Instruments exclusively throughout. Absolutely no speech, vocal exclamations, singing, humming, choir or vocal samples at any point. Clean studio sound without feedback, noise or distortion.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A calm and reflective instrumental piece featuring a plucked string melody, supported by gentle percussion, bass, and synth pads. The track has a clean, clear sound with a serene atmosphere.",
+    "zh": "一首平静而富有沉思感的器乐作品，以拨弦乐器旋律为主，辅以轻柔的打击乐、贝斯和合成器铺垫。音轨音质干净清晰，营造出宁静的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "modern material and design close-ups"
+    ]
+  },
+  "duration": 86.23,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:31:04.902338+00:00",
+  "generation": {
+    "id": "772f321a-3d38-402e-849f-3e0c2adecdc4",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:30:20.536008+00:00",
+    "completedAt": "2026-09-22T09:31:04.902338+00:00",
+    "interactionId": "rUqyav6FK7bi694PucGn6Ac",
+    "sha256": "76088d7dae5048fc09e73464d0ec6c649d849a839256aa6210d63c70f03cc76a"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm and reflective instrumental piece featuring a plucked string melody, supported by gentle percussion, bass, and synth pads. The track has a clean, clear sound with a serene atmosphere.",
+      "zh": "一首平静而富有沉思感的器乐作品，以拨弦乐器旋律为主，辅以轻柔的打击乐、贝斯和合成器铺垫。音轨音质干净清晰，营造出宁静的氛围。"
+    },
+    "instruments": [
+      "Plucked Strings",
+      "Synth Pad",
+      "Bass Guitar",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 85,
+    "reason": "The audio is a clean, well-produced instrumental track with no audible defects or vocal content, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:31:15.477231+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-guzheng-90/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-guzheng-90/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-guzheng-90/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "1b36f2f5fe6ad5d919236ed6b0e36e1e28571e02e4414aa8e0716f42ef4c4193",
+      "bytes": 1207997,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "76088d7dae5048fc09e73464d0ec6c649d849a839256aa6210d63c70f03cc76a",
+      "bytes": 2077192,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "fb15a345eb90a7243eba69feb05e7bf82f772e86daf98c4ffa58728375dd9dfb",
+      "bytes": 2811,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.467984+00:00"
+}

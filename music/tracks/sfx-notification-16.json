@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-16",
+  "code": "SFX-NOTIFICATION-16",
+  "title": {
+    "en": "Progress step",
+    "zh": "进度推进"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 15,
+  "seed": 2526582277,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized progress step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的进度推进合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.65,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-16/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-16/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-16/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-16/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2526582277,
+    "sha256": "241fc2ed4e06f95c9dfe517f9fa069cccbe7fc99ed43642ca6351d1f7e69d165",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "6016ecc6310d79e3bc9756e3c7d9aaa9eaf904a2eabc1e1e11daf3d35222c1c0",
+      "bytes": 9917,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "241fc2ed4e06f95c9dfe517f9fa069cccbe7fc99ed43642ca6351d1f7e69d165",
+      "bytes": 57374,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "8199449ae8c4e22f703a02aae58f43d050be696ae371e0140397f8acaeb6e0f0",
+      "bytes": 6255,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "95f0c407ef7c858a41e4a7038fc9ba605312f0edc78b23efab3e89d314e436cd",
+      "bytes": 1938,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 28665,
+    "duration": 0.65,
+    "peakDbfs": -4.95,
+    "rmsDbfs": -17.08,
+    "dcOffset": -7.878251460840747e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.019012451171875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized 'boing' sound effect, resembling a spring or elastic snap. It has a clear, resonant quality.",
+      "zh": "一个短促的、合成的“嘣”声效果，类似于弹簧或橡皮筋弹开的声音。它具有清晰、共鸣的音质。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined synthesized effect, suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:29.779165+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "6016ecc6310d79e3bc9756e3c7d9aaa9eaf904a2eabc1e1e11daf3d35222c1c0"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 28665
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.891878+00:00"
+}

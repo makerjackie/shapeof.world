@@ -1,0 +1,125 @@
+{
+  "id": "sfx-scifi-19",
+  "code": "SFX-SCIFI-19",
+  "title": {
+    "en": "Gravity pulse",
+    "zh": "重力脉冲"
+  },
+  "kind": "sfx",
+  "family": "scifi",
+  "designIndex": 18,
+  "seed": 2796669401,
+  "scenarios": [
+    "science-fiction"
+  ],
+  "description": {
+    "en": "Original synthesized gravity pulse for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的重力脉冲合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "scifi",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-scifi"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.26,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-scifi-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-scifi-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-scifi-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-scifi-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2796669401,
+    "sha256": "c3bff4276eb2a4db28696c4bf17094b327170bacc2b1068d3049c4da50f396b8",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0d55118afc5c58dd1e3ddc243ba9863fa353dac23e5660dd9f447e2fbedd164b",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c3bff4276eb2a4db28696c4bf17094b327170bacc2b1068d3049c4da50f396b8",
+      "bytes": 111176,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b9bcd7e8ee3328445dc392b522beeec82e4d7bc2b17436f371e050e0c6009c51",
+      "bytes": 23891,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3e425df231bf519b0d7675e687f0dc02cc1f89c5351ceb8dbcf56b2d075e2d08",
+      "bytes": 1937,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55566,
+    "duration": 1.26,
+    "peakDbfs": -4.13,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.86732472420185e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1788026123046893,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A sharp, resonant metallic clang with a brief, decaying sustain.",
+      "zh": "尖锐、有共鸣的金属撞击声，带有短暂的衰减余音。"
+    },
+    "reason": "Clean, isolated, and well-defined metallic impact sound with no technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:13.787970+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "0d55118afc5c58dd1e3ddc243ba9863fa353dac23e5660dd9f447e2fbedd164b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55566
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.902107+00:00"
+}

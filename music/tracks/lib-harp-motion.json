@@ -1,0 +1,114 @@
+{
+  "id": "lib-harp-motion",
+  "code": "LIB-03-08",
+  "title": {
+    "en": "Motion — Harp",
+    "zh": "跃动 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "harp"
+  ],
+  "energy": 4,
+  "bpm": 88,
+  "key": "B minor",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second pastoral acoustic instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 88 BPM; B minor. Main idea: a descending melody with an upward answer. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A dramatic and evolving orchestral piece in a classical style. It begins with a melancholic solo violin, gradually building in complexity and intensity with the full orchestra, featuring prominent string melodies, woodwind flourishes, and powerful brass sections. The piece transitions through various emotional landscapes, from somber to grand and epic, showcasing dynamic shifts and rich harmonies.",
+    "zh": "一首戏剧性且不断发展的古典风格管弦乐曲。它以忧郁的小提琴独奏开始，随后管弦乐团逐渐加入，增强了复杂性和强度，其中包含突出的弦乐旋律、木管乐器的华彩乐段和强劲的铜管乐部分。乐曲在不同的情感景观中穿梭，从沉郁到宏大史诗，展现了动态变化和丰富的和声。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.416,
+  "generatedAt": "2026-09-09T07:49:54.360034+00:00",
+  "generation": {
+    "id": "6f5574b1-995e-47e6-8437-957104bc1f7e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:49:03.123766+00:00",
+    "completedAt": "2026-09-09T07:49:54.360034+00:00",
+    "interactionId": "cA-haqHxIebRi9sPvtzDgAc",
+    "sha256": "209105eca0cd903825e7d46b820a628b4808dfaf115e9aef07866226a6f8729d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dramatic and evolving orchestral piece in a classical style. It begins with a melancholic solo violin, gradually building in complexity and intensity with the full orchestra, featuring prominent string melodies, woodwind flourishes, and powerful brass sections. The piece transitions through various emotional landscapes, from somber to grand and epic, showcasing dynamic shifts and rich harmonies.",
+      "zh": "一首戏剧性且不断发展的古典风格管弦乐曲。它以忧郁的小提琴独奏开始，随后管弦乐团逐渐加入，增强了复杂性和强度，其中包含突出的弦乐旋律、木管乐器的华彩乐段和强劲的铜管乐部分。乐曲在不同的情感景观中穿梭，从沉郁到宏大史诗，展现了动态变化和丰富的和声。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Flute",
+      "Oboe",
+      "Clarinet",
+      "Bassoon",
+      "French Horn",
+      "Trumpet",
+      "Trombone",
+      "Tuba",
+      "Timpani",
+      "Harp"
+    ],
+    "moods": [
+      "Dramatic",
+      "Epic",
+      "Emotional",
+      "Grand",
+      "Majestic",
+      "Classical",
+      "Romantic",
+      "Melancholic"
+    ],
+    "energy": 4,
+    "bpmEstimate": 100,
+    "reason": "The music is a well-produced and emotionally rich orchestral piece, suitable for various media applications requiring a classical, dramatic, or epic score. It features a wide range of orchestral colors and dynamic shifts.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:50:09.119684+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:52:35.054108+00:00",
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review"
+}

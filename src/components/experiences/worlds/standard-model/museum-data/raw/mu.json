@@ -1,0 +1,576 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:02 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S004",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S004/2024",
+  "description": "mu",
+  "summaries": {
+    "properties": [
+      {
+        "pdgid": "S004AMU/2024",
+        "description": "mu MASS (atomic mass units u)",
+        "pdg_values": [
+          {
+            "value": 0.1134289259,
+            "error_positive": 2.5e-09,
+            "error_negative": 2.5e-09,
+            "value_text": "0.1134289259+-0.0000000025",
+            "unit": "u",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004M/2024",
+        "description": "mu MASS",
+        "pdg_values": [
+          {
+            "value": 105.6583755,
+            "error_positive": 2.3e-06,
+            "error_negative": 2.3e-06,
+            "value_text": "105.6583755+-0.0000023",
+            "unit": "MeV",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004T/2024",
+        "description": "mu MEAN LIFE tau",
+        "pdg_values": [
+          {
+            "value": 2.196981148893498e-06,
+            "error_positive": 2.196152998470871e-12,
+            "error_negative": 2.196152998470871e-12,
+            "value_text": "(2.1969811+-0.0000022)E-6",
+            "unit": "s",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004DT/2024",
+        "description": "meanlife(mu+)/meanlife(mu-) MEAN LIFE RATIO",
+        "pdg_values": [
+          {
+            "value": 1.000024,
+            "error_positive": 7.8e-05,
+            "error_negative": 7.8e-05,
+            "value_text": "1.00002+-0.00008",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004DTT/2024",
+        "description": "(meanlife(mu+)-meanlife(mu-))/meanlife(average)",
+        "pdg_values": [
+          {
+            "value": 2.399971200347996e-05,
+            "error_positive": 7.799812803369546e-05,
+            "error_negative": 7.799812803369546e-05,
+            "value_text": "(2+-8)E-5",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004MPR/2024",
+        "description": "mu/p MAGNETIC MOMENT RATIO",
+        "pdg_values": [
+          {
+            "value": 3.183345142,
+            "error_positive": 7.1e-08,
+            "error_negative": 7.1e-08,
+            "value_text": "3.18334514+-0.00000007",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004MM/2024",
+        "description": "mu_mu/(ehbar/2m_mu)-1 = (g_mu-2)/2",
+        "pdg_values": [
+          {
+            "value": 0.00116592059,
+            "error_positive": 2.2e-10,
+            "error_negative": 2.2e-10,
+            "value_text": "0.00116592059+-0.00000000022",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004MMR/2024",
+        "description": "(electron g-factor(mu+)-electron g-factor(mu-))/electron g-factor(average)",
+        "pdg_values": [
+          {
+            "value": -1.1e-09,
+            "error_positive": 1.2e-09,
+            "error_negative": 1.2e-09,
+            "value_text": "(-1.1+-1.2)E-9",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004EDM/2024",
+        "description": "mu ELECTRIC DIPOLE MOMENT (d)",
+        "pdg_values": [
+          {
+            "value": 1.8e-19,
+            "value_text": "< 1.8 E-19",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "unit": "e cm",
+            "confidence_level": 95.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004MEC/2024",
+        "description": "MUON-ELECTRON CHARGE RATIO ANOMALY q(mu+)/q(e-) + 1",
+        "pdg_values": [
+          {
+            "value": 1.1e-09,
+            "error_positive": 2.1e-09,
+            "error_negative": 2.1e-09,
+            "value_text": "(1.1+-2.1)E-9",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RE/2024",
+        "description": "sigma(mu- 32S --> e- 32S) / sigma(mu- 32S --> nu_mu 32P*)",
+        "pdg_values": [
+          {
+            "value": 6.999999999999999e-11,
+            "value_text": "<7 E-11",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RF/2024",
+        "description": "sigma(mu- Cu --> e- Cu) / sigma(mu- Cu --> capture)"
+      },
+      {
+        "pdgid": "S004RG/2024",
+        "description": "sigma(mu- Ti --> e- Ti) / sigma(mu- Ti --> capture)",
+        "pdg_values": [
+          {
+            "value": 4.3e-12,
+            "value_text": "<4.3 E-12",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RH/2024",
+        "description": "sigma(mu- Pb --> e- Pb) / sigma(mu- Pb --> capture)",
+        "pdg_values": [
+          {
+            "value": 4.6e-11,
+            "value_text": "<4.6 E-11",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RA/2024",
+        "description": "sigma(mu- Au --> e- Au) / sigma(mu- Au --> capture)",
+        "pdg_values": [
+          {
+            "value": 7e-13,
+            "value_text": "<7 E-13",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RP1/2024",
+        "description": "sigma(mu- 32S --> e+ 32Si*) / sigma(mu- 32S --> nu_mu 32P*)",
+        "pdg_values": [
+          {
+            "value": 9e-10,
+            "value_text": "<9 E-10",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RP2/2024",
+        "description": "sigma(mu- 127I --> e+ 127Sb*) / sigma(mu- 127I --> anything)",
+        "pdg_values": [
+          {
+            "value": 3e-10,
+            "value_text": "<3 E-10",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RP3/2024",
+        "description": "sigma(mu- Cu --> e+ Co) / sigma(mu- Cu --> nu_mu Ni)"
+      },
+      {
+        "pdgid": "S004RP4/2024",
+        "description": "sigma(mu- Ti --> e+ Ca) / sigma(mu- Ti --> capture)",
+        "pdg_values": [
+          {
+            "value": 3.6e-11,
+            "value_text": "<3.6 E-11",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004MC/2024",
+        "description": "R(g) = G(C) / G(F)",
+        "pdg_values": [
+          {
+            "value": 0.003,
+            "value_text": "<0.0030",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "BEST LIMIT"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004RHO/2024",
+        "description": "rho PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.7497900106923675,
+            "error_positive": 0.0002581406425417332,
+            "error_negative": 0.0002581406425417332,
+            "value_text": "0.74979+-0.00026",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004ETA/2024",
+        "description": "eta PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.05662789417316096,
+            "error_positive": 0.03374424067714395,
+            "error_negative": 0.03374424067714395,
+            "value_text": "0.057+-0.034",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004DEL/2024",
+        "description": "delta PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.7504749745192635,
+            "error_positive": 0.0003406902569673786,
+            "error_negative": 0.0003406902569673786,
+            "value_text": "0.75047+-0.00034",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004XI/2024",
+        "description": "|(xi PARAMETER)*(mu LONGITUDINAL POLARIZATION)|",
+        "pdg_values": [
+          {
+            "value": 1.000865244374813,
+            "error_positive": 0.001643309060077973,
+            "error_negative": 0.0006912176073794817,
+            "value_text": "1.0009+0.0016-0.0007",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004XID/2024",
+        "description": "xi * (mu LONGITUDINAL POLARIZATION) * delta / rho",
+        "pdg_values": [
+          {
+            "value": 1.00179,
+            "error_positive": 0.00156,
+            "error_negative": 0.00071,
+            "value_text": "1.0018+0.0016-0.0007",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004PL/2024",
+        "description": "xi' = LONGITUDINAL POLARIZATION OF e+",
+        "pdg_values": [
+          {
+            "value": 0.9981707721776482,
+            "error_positive": 0.04242918602978883,
+            "error_negative": 0.04242918602978883,
+            "value_text": "1.00+-0.04",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004XPP/2024",
+        "description": "xi'' PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.9758854095446465,
+            "error_positive": 0.04475009233948214,
+            "error_negative": 0.04475009233948214,
+            "value_text": "0.98+-0.04",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004PT1/2024",
+        "description": "TRANSVERSE e+ POLARIZATION IN PLANE OF mu SPIN, e+ MOMENTUM",
+        "pdg_values": [
+          {
+            "value": 0.0074232246465637,
+            "error_positive": 0.00791491176361887,
+            "error_negative": 0.00791491176361887,
+            "value_text": "0.007+-0.008",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004PT2/2024",
+        "description": "TRANSVERSE e+ POLARIZATION NORMAL TO PLANE OF mu SPIN, e+ MOMENTUM",
+        "pdg_values": [
+          {
+            "value": -0.002444564047362755,
+            "error_positive": 0.007908042533151654,
+            "error_negative": 0.007908042533151654,
+            "value_text": "-0.002+-0.008",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004AL/2024",
+        "description": "alpha/A",
+        "pdg_values": [
+          {
+            "value": 0.0004,
+            "error_positive": 0.0043,
+            "error_negative": 0.0043,
+            "value_text": "0.000+-0.004",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004ALP/2024",
+        "description": "alpha'/A",
+        "pdg_values": [
+          {
+            "value": -0.009962598859375492,
+            "error_positive": 0.0201444135521377,
+            "error_negative": 0.0201444135521377,
+            "value_text": "-0.010+-0.020",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004BT/2024",
+        "description": "beta/A",
+        "pdg_values": [
+          {
+            "value": 0.0039,
+            "error_positive": 0.006200000000000001,
+            "error_negative": 0.006200000000000001,
+            "value_text": "0.004+-0.006",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004BTP/2024",
+        "description": "beta'/A",
+        "pdg_values": [
+          {
+            "value": 0.002382183612624653,
+            "error_positive": 0.007316164780238394,
+            "error_negative": 0.007316164780238394,
+            "value_text": "0.002+-0.007",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004SA/2024",
+        "description": "a/A"
+      },
+      {
+        "pdgid": "S004SAP/2024",
+        "description": "a'/A"
+      },
+      {
+        "pdgid": "S004SBP/2024",
+        "description": "(b'+b)/A"
+      },
+      {
+        "pdgid": "S004SC/2024",
+        "description": "c/A"
+      },
+      {
+        "pdgid": "S004SCP/2024",
+        "description": "c'/A"
+      },
+      {
+        "pdgid": "S004ETB/2024",
+        "description": "etabar PARAMETER",
+        "pdg_values": [
+          {
+            "value": 0.01641155234657039,
+            "error_positive": 0.07570606278388982,
+            "error_negative": 0.07570606278388982,
+            "value_text": "0.02+-0.08",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ],
+    "branching_fractions": [
+      {
+        "pdgid": "S004.1/2024",
+        "description": "mu- --> e- nubar_e nu_mu",
+        "mode_number": 1,
+        "pdg_values": [
+          {
+            "value_text": "~100E-2",
+            "type": "OUR EVALUATION"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.2/2024",
+        "description": "mu- --> e- nubar_e nu_mu gamma",
+        "mode_number": 2,
+        "pdg_values": [
+          {
+            "value": 6.03e-08,
+            "error_positive": 5.4817880294663e-09,
+            "error_negative": 5.4817880294663e-09,
+            "value_text": "(6.0+-0.5)E-8",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.7/2024",
+        "description": "mu- --> e- nubar_e nu_mu e+ e-",
+        "mode_number": 3,
+        "pdg_values": [
+          {
+            "value": 3.4e-05,
+            "error_positive": 3.60555127546399e-06,
+            "error_negative": 3.60555127546399e-06,
+            "value_text": "(3.4+-0.4)E-5",
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.3/2024",
+        "description": "mu- --> e- nu_e nubar_mu",
+        "mode_number": 4,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 0.012,
+            "value_text": "<1.2 E-2",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.4/2024",
+        "description": "mu- --> e- gamma",
+        "mode_number": 5,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 4.2e-13,
+            "value_text": "<4.2 E-13",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.5/2024",
+        "description": "mu- --> e- e+ e-",
+        "mode_number": 6,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 1e-12,
+            "value_text": "<1.0 E-12",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      },
+      {
+        "pdgid": "S004.6/2024",
+        "description": "mu- --> e- 2gamma",
+        "mode_number": 7,
+        "section": "Lepton Family number (LF) violating modes",
+        "pdg_values": [
+          {
+            "value": 7.2e-11,
+            "value_text": "<7.2 E-11",
+            "is_limit": true,
+            "is_upper_limit": true,
+            "confidence_level": 90.0,
+            "type": "OUR AVERAGE"
+          }
+        ]
+      }
+    ]
+  }
+}

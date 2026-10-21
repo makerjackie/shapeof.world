@@ -1,0 +1,125 @@
+{
+  "id": "sfx-notification-10",
+  "code": "SFX-NOTIFICATION-10",
+  "title": {
+    "en": "Connection found",
+    "zh": "连接成功"
+  },
+  "kind": "sfx",
+  "family": "notification",
+  "designIndex": 9,
+  "seed": 2660350612,
+  "scenarios": [
+    "ui"
+  ],
+  "description": {
+    "en": "Original synthesized connection found for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的连接成功合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "notification",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-notification"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-notification-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-notification-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-notification-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-notification-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2660350612,
+    "sha256": "5243f9ef782f9685e41bb742f508090749963c2df25f0bcd2570a6554cea2bc6",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "d9d477301e3ed3f169237b42aff7402b76124ceecb1fcaf060b5c5e2ec584ed2",
+      "bytes": 20523,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5243f9ef782f9685e41bb742f508090749963c2df25f0bcd2570a6554cea2bc6",
+      "bytes": 124406,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "2f07be034d79e956e2e710cf8abbd0089eb5c88014972376450db344b4bc4dd1",
+      "bytes": 10303,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8316355da6034c4570d63d61a8d66ea8a5989c00fc2cd14cf109f67432533789",
+      "bytes": 1944,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 62181,
+    "duration": 1.41,
+    "peakDbfs": -4.37,
+    "rmsDbfs": -17.08,
+    "dcOffset": -1.0797296903394927e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.033477783203125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, two-tone electronic notification or UI blip sound, reminiscent of retro arcade effects.",
+      "zh": "一个短促的双音电子通知或UI提示音，类似于复古街机音效。"
+    },
+    "reason": "The sound is a clean, well-produced electronic effect suitable for UI feedback or game events.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:22.303854+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "d9d477301e3ed3f169237b42aff7402b76124ceecb1fcaf060b5c5e2ec584ed2"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 62181
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.890559+00:00"
+}

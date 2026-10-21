@@ -1,0 +1,104 @@
+{
+  "id": "lib-guzheng-suspense",
+  "code": "LIB-17-09",
+  "title": {
+    "en": "Shadows — Guzheng",
+    "zh": "暗影 · 古筝"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "guzheng"
+  ],
+  "energy": 3,
+  "bpm": 60,
+  "key": "G minor",
+  "instruments": [
+    "guzheng",
+    "xiao",
+    "soft wooden percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second Chinese chamber instrumental instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: guzheng, xiao, soft wooden percussion. Style: pentatonic melodic arcs, plucked ornament and spacious breath. Tempo approximately 60 BPM; G minor. Main idea: a descending melody with an upward answer. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A serene and reflective traditional Asian-inspired instrumental piece featuring plucked strings, a melodic flute, and subtle percussion, building to an emotional and slightly dramatic middle section before returning to a calm close.",
+    "zh": "一首宁静而富有内省的亚洲风格器乐曲，以拨弦乐器、悠扬的笛声和轻柔的打击乐为主，中段情感渐浓，略带戏剧性，随后回归平静的结尾。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 121.234,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:45:56.521810+00:00",
+  "generation": {
+    "id": "c63a5584-d058-4f43-bdec-37907631cb8b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:45:08.981809+00:00",
+    "completedAt": "2026-09-09T08:45:56.521810+00:00",
+    "interactionId": "lhyharSIEIu3i9sP7uehmQM",
+    "sha256": "3efc73062fc19acdb996753538d7f23d3fac68a2004d0fc7566f690bb695c854"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and reflective traditional Asian-inspired instrumental piece featuring plucked strings, a melodic flute, and subtle percussion, building to an emotional and slightly dramatic middle section before returning to a calm close.",
+      "zh": "一首宁静而富有内省的亚洲风格器乐曲，以拨弦乐器、悠扬的笛声和轻柔的打击乐为主，中段情感渐浓，略带戏剧性，随后回归平静的结尾。"
+    },
+    "instruments": [
+      "Pizzicato strings",
+      "Flute",
+      "Bowed strings",
+      "Percussion",
+      "Guzheng"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Melancholic",
+      "Emotional",
+      "Traditional",
+      "Serene"
+    ],
+    "energy": 3,
+    "bpmEstimate": 80,
+    "reason": "High-quality, well-composed, and emotionally engaging instrumental piece suitable for various media.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:46:06.635213+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-guzheng-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-guzheng-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-guzheng-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:46:48.985242+00:00"
+}

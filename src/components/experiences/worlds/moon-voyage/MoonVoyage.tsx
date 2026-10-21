@@ -1,32 +1,16 @@
 import './styles/MoonVoyage.css'
+import { journeyCamera, type CameraMode } from './journey-camera'
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Html, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
-import {
-  ArrowCounterClockwise,
-  FastForward,
-  FilmStrip,
-  Globe,
-  MapTrifold,
-  Moon,
-  Mountains,
-  Pause,
-  Play,
-  Rocket,
-  RocketLaunch,
-  Ruler,
-  SketchLogo,
-} from '@phosphor-icons/react'
+import { ArrowCounterClockwise, FilmStrip, Pause, Play } from '@phosphor-icons/react'
 
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { Freebar } from '~/components/experiences/Freebar'
-import { GhostHint } from '~/components/experiences/GhostHint'
-import { GuideTour, replayGuide, type GuideStep } from '~/components/experiences/GuideTour'
-import { useStoryFreeMode } from '~/components/experiences/useStoryFreeMode'
+import { CHAPTERS, JOURNEY_DURATION, chapterAt, journeyPositionAt, missionTimeAt } from './journey'
 import {
-  EARTH_CLOUDS_TEXTURE_URL,
   EARTH_NIGHT_TEXTURE_URL,
   useLazyTexture,
 } from '~/components/experiences/solar-system-textures'
@@ -74,47 +58,7 @@ const EARTH_DAY_4K_URL = '/assets/solar-system/earth-bmng-4k.jpg'
 const MOON_LROC_4K_URL = '/assets/solar-system/moon-lroc-4k.jpg'
 const MOON_LDEM_BUMP_URL = '/assets/solar-system/moon-ldem-bump.jpg'
 
-/** 任务阶段默认时间倍率（真实秒 / 玩家秒） */
-const PHASE_SPEED: Record<MissionPhase, number> = {
-  pad: 1,
-  ascent: 30,
-  orbit: 120,
-  tli: 30,
-  coast: 3000,
-  approach: 1500,
-  loi: 30,
-  lunar: 600,
-}
 
-/** 跟随飞船时的相机默认距离（单位，1 = 100 km） */
-const PHASE_CAM_DIST: Record<MissionPhase, number> = {
-  pad: 0.012,
-  ascent: 0.02,
-  orbit: 6.2,
-  tli: 5.5,
-  coast: 6,
-  approach: 2.4,
-  loi: 5,
-  lunar: 4.5,
-}
-
-const PHASE_NAME: Record<MissionPhase, string> = {
-  pad: '发射台待命',
-  ascent: '点火升空',
-  orbit: '地球停泊轨道',
-  tli: '地月转移点火',
-  coast: '地月航行',
-  approach: '接近月球',
-  loi: '进入环月轨道',
-  lunar: '环月轨道',
-}
-
-const SPEED_OPTIONS = [1, 60, 600, 6000]
-
-type CameraMode = 'craft' | 'earth' | 'moon' | 'wide' | 'top'
-/** 电影化镜头（覆盖机位选择，用户输入即打断） */
-type CinematicShot = 'lookback' | 'earthrise'
-type Shot = CameraMode | CinematicShot
 
 type SimRefs = {
   t: number
@@ -122,6 +66,8 @@ type SimRefs = {
   speed: number
   launched: boolean
   sample: MissionSample
+  position: number
+  revision: number
 }
 
 function kmToUnits(v: [number, number, number], out: THREE.Vector3) {
@@ -256,12 +202,15 @@ function SkyDome() {
             vec3 dir = normalize(vWorldPos - cameraPosition);
             vec3 up = normalize(uCamPos);
             float e = dot(dir, up);
-            float h = smoothstep(-0.02, 0.4, e);
-            vec3 horizon = vec3(0.66, 0.78, 0.93);
-            vec3 zenith = vec3(0.15, 0.35, 0.68);
-            vec3 atmo = mix(horizon, zenith, h);
-            vec3 space = vec3(0.006, 0.01, 0.026);
-            gl_FragColor = vec4(mix(atmo, space, uSpace), 1.0);
+            float height = max(0.0, length(uCamPos) - 63.71);
+            float dip = -sqrt(max(0.0, 1.0 - pow(63.71 / length(uCamPos), 2.0)));
+            float horizonBand = exp(-pow((e - dip) / mix(0.3, 0.045, uSpace), 2.0));
+            float sun = max(0.0, dot(dir, normalize(vec3(.656,.5,.755))));
+            vec3 zenith = mix(vec3(.025,.16,.39), vec3(.002,.005,.015), uSpace);
+            vec3 haze = mix(vec3(.39,.57,.72), vec3(.08,.28,.61), uSpace);
+            vec3 atmo = mix(zenith, haze, horizonBand * exp(-height * .4));
+            atmo += vec3(.14,.11,.07) * pow(sun, 14.0) * (1.0-uSpace);
+            gl_FragColor = vec4(atmo, 1.0);
             #include <tonemapping_fragment>
             #include <colorspace_fragment>
           }`,
@@ -274,7 +223,7 @@ function SkyDome() {
     if (!mesh) return
     mesh.position.copy(camera.position)
     const altUnits = Math.max(0, camera.position.length() - EARTH_R)
-    material.uniforms.uSpace.value = THREE.MathUtils.smoothstep(altUnits, 0.25, 1.5)
+    material.uniforms.uSpace.value = THREE.MathUtils.smoothstep(altUnits, 0.04, 0.8)
     material.uniforms.uCamPos.value.copy(camera.position)
     mesh.scale.setScalar(camera.far * 0.5)
   })
@@ -285,11 +234,10 @@ function SkyDome() {
   )
 }
 
-/** 地球：BMNG 4K 白昼 + Black Marble 夜光混合 + 独立云层 + 大气边缘光 */
+/** 地球：BMNG 白昼、Black Marble 夜光、近地空气透视与大气边缘光。 */
 function Earth() {
   const dayTex = useLazyTexture(EARTH_DAY_4K_URL)
   const nightTex = useLazyTexture(EARTH_NIGHT_TEXTURE_URL)
-  const cloudsTex = useLazyTexture(EARTH_CLOUDS_TEXTURE_URL, false)
 
   const surface = useMemo(
     () =>
@@ -348,6 +296,16 @@ function Earth() {
               + mix(flatCol, dayTex, uMix) * 0.03 * nightW;
             float dayW = smoothstep(-0.12, 0.22, d);
             vec3 col = dayCol * dayW + nightCol * (1.0 - dayW);
+            // Aerial perspective hides coarse distant terrain at low altitude.
+            float height = max(0.0, length(uCamPos)-63.71);
+            float air = exp(-height * 3.5);
+            float distanceFog = 1.0-exp(-length(uCamPos-vWorldPos)*2.2);
+            vec3 ray = normalize(vWorldPos-uCamPos);
+            float space = smoothstep(.04,.8,height);
+            float dip = -sqrt(max(0.0,1.0-pow(63.71/length(uCamPos),2.0)));
+            float band = exp(-pow((dot(ray,normalize(uCamPos))-dip)/mix(.3,.045,space),2.0));
+            vec3 haze = mix(mix(vec3(.025,.16,.39),vec3(.002,.005,.015),space),mix(vec3(.39,.57,.72),vec3(.08,.28,.61),space),band*exp(-height*.4));
+            col = mix(col,haze,distanceFog*air);
             gl_FragColor = vec4(col, 1.0);
             #include <tonemapping_fragment>
             #include <colorspace_fragment>
@@ -396,7 +354,7 @@ function Earth() {
             float day = smoothstep(-0.35, 0.5, dot(normalize(vNormalW), normalize(uSunDir)));
             f *= 0.2 + 0.8 * day;
             // 仅当相机真正飞出壳层之外才点亮，避免低轨相机在壳层内部被泛白洗屏
-            float outside = smoothstep(76.5, 82.0, uCamDist);
+            float outside = smoothstep(65.4, 66.0, uCamDist);
             gl_FragColor = vec4(uColor * f * 1.5, f * 0.55 * outside);
             #include <tonemapping_fragment>
             #include <colorspace_fragment>
@@ -406,8 +364,6 @@ function Earth() {
   )
 
   const fadeRef = useRef(0)
-  const cloudsRef = useRef<THREE.Mesh>(null)
-  const cloudsMatRef = useRef<THREE.MeshStandardMaterial>(null)
   useEffect(() => {
     if (dayTex) surface.uniforms.uDay.value = dayTex
   }, [dayTex, surface])
@@ -420,12 +376,6 @@ function Earth() {
       const f = fadeRef.current
       surface.uniforms.uMix.value = f * f * (3 - 2 * f)
     }
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.004
-    // 低轨附近减弱云层：近处看是蓝海+薄纱，远看才是白云盖顶
-    if (cloudsMatRef.current) {
-      const alt = Math.max(0, camera.position.length() - EARTH_R)
-      cloudsMatRef.current.opacity = THREE.MathUtils.lerp(0.16, 0.5, THREE.MathUtils.smoothstep(alt, 0.6, 14))
-    }
     surface.uniforms.uCamPos.value.copy(camera.position)
     atmosphere.uniforms.uCamDist.value = camera.position.length()
   })
@@ -435,17 +385,11 @@ function Earth() {
       {/* 轴倾角 23.44°（自转忽略，见 ⓘ 模型边界） */}
       <group rotation={[0, 0, (23.44 * Math.PI) / 180]}>
         <mesh material={surface}>
-          <sphereGeometry args={[EARTH_R, 96, 64]} />
+          <sphereGeometry args={[EARTH_R, 512, 256]} />
         </mesh>
-        {cloudsTex && (
-          <mesh ref={cloudsRef}>
-            <sphereGeometry args={[EARTH_R * 1.003, 64, 48]} />
-            <meshStandardMaterial ref={cloudsMatRef} alphaMap={cloudsTex} transparent opacity={0.3} depthWrite={false} roughness={1} />
-          </mesh>
-        )}
       </group>
       <mesh material={atmosphere}>
-        <sphereGeometry args={[EARTH_R * 1.18, 64, 48]} />
+        <sphereGeometry args={[EARTH_R * 1.025, 128, 96]} />
       </mesh>
     </group>
   )
@@ -503,28 +447,6 @@ function MoonBody({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
 }
 
 /** 月球轨道圆（任务平面，淡显） */
-function MoonOrbitLine({ visible }: { visible: boolean }) {
-  const line = useMemo(() => {
-    const pts = new Float32Array(257 * 3)
-    const tilt = (5.14 * Math.PI) / 180
-    const radius = 384400 / KM_PER_UNIT
-    for (let i = 0; i <= 256; i++) {
-      const theta = (i / 256) * Math.PI * 2
-      const x = Math.cos(theta) * radius
-      const zPlane = Math.sin(theta) * radius
-      pts[i * 3] = x
-      pts[i * 3 + 1] = -zPlane * Math.sin(tilt)
-      pts[i * 3 + 2] = zPlane * Math.cos(tilt)
-    }
-    const geometry = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pts, 3))
-    const line = new THREE.LineLoop(geometry, new THREE.LineBasicMaterial({ color: '#3d4b6b', transparent: true, opacity: 0.4 }))
-    line.frustumCulled = false
-    return line
-  }, [])
-  return <primitive object={line} visible={visible} />
-}
-
-/** 「三天后月球在这里」幽灵标记：半透明月球 + 缓慢脉冲圆环（LOI 时刻月球的真实位置） */
 function GhostMoon({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
   const ghostPos = useMemo(() => {
     const p = moonPosKm(T_LOI_START)
@@ -557,15 +479,15 @@ function GhostMoon({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
   useFrame(({ clock }) => {
     const s = simRef.current.sample
     const show = s.t > 400 && s.t < T_COAST_END + 3600
-    const wave = Math.sin(clock.elapsedTime * 2.4)
+    const wave = Math.sin(simRef.current.position * 2.4)
     const pulse = 0.26 + 0.08 * wave
     const target = show ? pulse : 0
-    if (matRef.current) matRef.current.opacity += (target - matRef.current.opacity) * 0.08
-    if (spriteRef.current) spriteRef.current.opacity += ((show ? 0.5 + 0.15 * wave : 0) - spriteRef.current.opacity) * 0.08
+    if (matRef.current) matRef.current.opacity = target
+    if (spriteRef.current) spriteRef.current.opacity = show ? 0.5 + 0.15 * wave : 0
     // 缓慢脉冲圆环：呼吸式放大 + 明暗
     if (ringMatRef.current && ringRef.current) {
       const ringTarget = show ? 0.75 + 0.2 * wave : 0
-      ringMatRef.current.opacity += (ringTarget - ringMatRef.current.opacity) * 0.08
+      ringMatRef.current.opacity = ringTarget
       const sc = MOON_R * (4.6 + 0.5 * wave)
       ringRef.current.scale.set(sc, sc, 1)
     }
@@ -597,13 +519,21 @@ function TrajectoryLine({ simRef, visible }: { simRef: React.MutableRefObject<Si
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 4))
     const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.95 }))
     line.frustumCulled = false
-    return { line, times, count, geometry }
+    return { line, times, count, geometry, original: points.slice(), moonPositions: Array.from(times, t => moonPosKm(t)), lunarStart: Array.from(times).findIndex(t => t >= T_LOI_START) }
   }, [])
   const bright = useMemo(() => new THREE.Color('#c4ecff'), [])
   const dim = useMemo(() => new THREE.Color('#5b7699'), [])
   useFrame(({ camera }) => {
     if (!visible) return
     const now = simRef.current.t
+    const local = now >= T_LOI_START
+    const positions = line.geometry.attributes.position as THREE.BufferAttribute
+    const currentMoon = simRef.current.sample.moonPos
+    for(let i=0;i<line.count;i++) for(let j=0;j<3;j++) {
+      (positions.array as Float32Array)[i*3+j] = line.original[i*3+j] + (local ? (currentMoon[j]-line.moonPositions[i][j])/KM_PER_UNIT : 0)
+    }
+    positions.needsUpdate=true
+    line.geometry.setDrawRange(local ? line.lunarStart : 0, local ? line.count-line.lunarStart : line.count)
     const attr = line.geometry.attributes.color as THREE.BufferAttribute
     const arr = attr.array as Float32Array
     for (let i = 0; i < line.count; i++) {
@@ -622,46 +552,6 @@ function TrajectoryLine({ simRef, visible }: { simRef: React.MutableRefObject<Si
   return <primitive object={line.line} visible={visible} />
 }
 
-/** 事件光点：级间分离、TLI、平衡点、LOI 等；近地面淡出 */
-const LABELED_EVENT_IDS: Array<MissionEventId> = [
-  's1-sep',
-  's2-sep',
-  'insertion',
-  'tli-start',
-  'midcourse',
-  'loi-start',
-  'circ',
-]
-
-function EventMarkers() {
-  const geometry = useMemo(() => {
-    const picked = MISSION_EVENTS.filter((e) => e.id !== 'ignition' && e.id !== 'maxq')
-    const pts = new Float32Array(picked.length * 3)
-    picked.forEach((e, i) => {
-      const p = sampleMission(e.t).pos
-      pts[i * 3] = p[0] / KM_PER_UNIT
-      pts[i * 3 + 1] = p[1] / KM_PER_UNIT
-      pts[i * 3 + 2] = p[2] / KM_PER_UNIT
-    })
-    return new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pts, 3))
-  }, [])
-  const matRef = useRef<THREE.PointsMaterial>(null)
-  useFrame(({ camera }) => {
-    const alt = Math.max(0, camera.position.length() - EARTH_R)
-    if (matRef.current) matRef.current.opacity = 0.8 * THREE.MathUtils.smoothstep(alt, 0.06, 0.5)
-  })
-  return (
-    <points geometry={geometry}>
-      <pointsMaterial ref={matRef} color="#ffd27a" size={3} sizeAttenuation={false} transparent opacity={0.8} depthWrite={false} />
-    </points>
-  )
-}
-
-/**
- * 天体方位标签：wide/top 大尺度机位下，地球和月球只有几到几十像素，
- * 用户常常找不到月亮在哪。给两个天体（以及「三天后的月球」幽灵位置）
- * 挂屏幕空间小标签，锚点跟随天体，CSS 偏移让标签落在球体旁边。
- */
 function BodyLabels({ simRef, visible }: { simRef: React.MutableRefObject<SimRefs>; visible: boolean }) {
   const tx = useExperienceI18n()
   const posterMode = useMemo(
@@ -703,91 +593,8 @@ function BodyLabels({ simRef, visible }: { simRef: React.MutableRefObject<SimRef
 }
 
 /** 事件文字标签：相机靠近事件点时显示双语名称，同屏最多 3 个，远了淡出 */
-function EventLabels({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
-  const tx = useExperienceI18n()
-  // 海报/深链模式（?ghost=0）不渲染，与 GhostHint 同一约定
-  const posterMode = useMemo(
-    () => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('ghost') === '0',
-    [],
-  )
-  const events = useMemo(
-    () =>
-      MISSION_EVENTS.filter((e) => LABELED_EVENT_IDS.includes(e.id)).map((e) => {
-        const p = sampleMission(e.t).pos
-        return {
-          id: e.id,
-          pos: new THREE.Vector3(p[0] / KM_PER_UNIT, p[1] / KM_PER_UNIT, p[2] / KM_PER_UNIT),
-        }
-      }),
-    [],
-  )
-  const [shown, setShown] = useState<Array<{ id: MissionEventId; opacity: number }>>([])
-  const shownKeyRef = useRef('')
-  const throttleRef = useRef(0)
-  useFrame(({ camera }, delta) => {
-    throttleRef.current -= delta
-    if (throttleRef.current > 0) return
-    throttleRef.current = 0.25
-    // 近地面（白天发射场）不显示
-    const alt = Math.max(0, camera.position.length() - EARTH_R)
-    if (alt < 0.08) {
-      if (shownKeyRef.current !== '') {
-        shownKeyRef.current = ''
-        setShown([])
-      }
-      return
-    }
-    const scored = events
-      .map((e) => ({ id: e.id, d: camera.position.distanceTo(e.pos) }))
-      .filter((x) => x.d < 700)
-      .sort((a, b) => a.d - b.d)
-      .slice(0, 3)
-      .map((x) => ({ id: x.id, opacity: 1 - THREE.MathUtils.smoothstep(x.d, 300, 700) }))
-    const key = scored.map((x) => `${x.id}:${x.opacity.toFixed(2)}`).join('|')
-    if (key !== shownKeyRef.current) {
-      shownKeyRef.current = key
-      setShown(scored)
-    }
-  })
-  const labelFor = (id: MissionEventId): string => {
-    switch (id) {
-      case 's1-sep':
-        return tx('一级分离')
-      case 's2-sep':
-        return tx('二级分离')
-      case 'insertion':
-        return tx('进入地球轨道')
-      case 'tli-start':
-        return tx('TLI 点火')
-      case 'midcourse':
-        return tx('中途修正')
-      case 'loi-start':
-        return tx('LOI 点火')
-      default:
-        return tx('圆化燃烧')
-    }
-  }
-  if (posterMode || shown.length === 0) return null
-  return (
-    <>
-      {shown.map(({ id, opacity }) => {
-        const e = events.find((x) => x.id === id)!
-        return (
-          <Html key={id} position={e.pos} center zIndexRange={[5, 0]} wrapperClass="mv-event-label-wrap">
-            <span className="mv-event-label" style={{ opacity }}>
-              {labelFor(id)}
-            </span>
-          </Html>
-        )
-      })}
-    </>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// 火箭模型（程序化 Saturn V 风格；米制建模，渲染时换算）
-
 function Flame({
+  simRef,
   length,
   radius,
   core,
@@ -798,6 +605,7 @@ function Flame({
   radius: number
   core: string
   edge: string
+  simRef: React.MutableRefObject<SimRefs>
   /** 每帧写入 0..1 强度；>0 即显示 */
   visibleRef: React.MutableRefObject<number>
 }) {
@@ -833,10 +641,17 @@ function Flame({
           void main() {
             #include <logdepthbuf_fragment>
             if (uIntensity < 0.01) discard;
-            float flick = 0.86 + 0.14 * sin(uTime * 43.0 + vUv.y * 21.0) * sin(uTime * 29.0);
-            float axial = smoothstep(0.0, 0.25, vUv.y) * (1.0 - smoothstep(0.55, 1.0, vUv.y));
-            vec3 col = mix(uEdge, uCore, pow(1.0 - vUv.y, 2.0));
-            gl_FragColor = vec4(col * flick * 3.2, axial * uIntensity * flick);
+            float y = 1.0-vUv.y;
+            float x = (vUv.x-.5)*2.0;
+            float turbulence = sin(y*37.0-uTime*25.0)*sin(y*19.0+uTime*17.0);
+            x += turbulence*.06*y;
+            float width = .13 + .3*sin(y*2.7);
+            float soft = exp(-pow(x/width,2.0)*3.0);
+            float tip = 1.0-smoothstep(.45,1.0,y);
+            float core = exp(-pow(x/(width*.45),2.0)*2.0)*(1.0-y);
+            float cells = .84+.16*sin(y*70.0-uTime*32.0);
+            vec3 col = mix(uEdge,uCore,core);
+            gl_FragColor = vec4(col*(1.2+core),soft*tip*cells*uIntensity*.42);
             #include <tonemapping_fragment>
             #include <colorspace_fragment>
           }`,
@@ -844,14 +659,15 @@ function Flame({
     [core, edge],
   )
   useFrame(({ clock }) => {
-    material.uniforms.uTime.value = clock.elapsedTime
-    material.uniforms.uIntensity.value += (visibleRef.current - material.uniforms.uIntensity.value) * 0.25
+    material.uniforms.uTime.value = simRef.current.position
+    material.uniforms.uIntensity.value = visibleRef.current
   })
   return (
-    <mesh material={material} rotation={[Math.PI, 0, 0]} position={[0, -length * 0.5, 0]}>
-      {/* 开口锥：uv.y 从喷口(0)到尾端(1) */}
-      <coneGeometry args={[radius, length, 20, 1, true]} />
-    </mesh>
+    <group position={[0, -length * .5, 0]}>
+      {[0,Math.PI/3,Math.PI*2/3].map(angle=><mesh key={angle} material={material} rotation={[0,angle,0]}>
+        <planeGeometry args={[radius*5,length]} />
+      </mesh>)}
+    </group>
   )
 }
 
@@ -862,7 +678,8 @@ type StageRefs = {
   csm: React.RefObject<THREE.Group | null>
 }
 
-function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
+function SaturnV({ simRef, stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
+  simRef: React.MutableRefObject<SimRefs>
   stageRefs: StageRefs
   flameS1: React.MutableRefObject<number>
   flameS2: React.MutableRefObject<number>
@@ -871,7 +688,9 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
 }) {
   const white = useMemo(() => new THREE.MeshStandardMaterial({ color: '#f5f4ef', roughness: 0.48, metalness: 0.12 }), [])
   const black = useMemo(() => new THREE.MeshStandardMaterial({ color: '#141519', roughness: 0.55, metalness: 0.25 }), [])
-  const metal = useMemo(() => new THREE.MeshStandardMaterial({ color: '#9aa1ab', roughness: 0.32, metalness: 0.75 }), [])
+  const metal = useMemo(() => new THREE.MeshStandardMaterial({ color: '#bfc5cc', roughness: 0.42, metalness: 0.35 }), [])
+  const escapeRef=useRef<THREE.Group>(null)
+  useFrame(()=>{if(escapeRef.current)escapeRef.current.visible=simRef.current.t<190})
   const bell = useMemo(() => new THREE.MeshStandardMaterial({ color: '#3a3d42', roughness: 0.45, metalness: 0.8, side: THREE.DoubleSide }), [])
   // F-1 引擎喷口：1 台中央 + 4 台外圈（尾端大喇叭锥）
   const f1Positions = useMemo<Array<[number, number, number]>>(
@@ -906,7 +725,7 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
             <coneGeometry args={[1.75, 3.6, 14, 1, true]} />
           </mesh>
         ))}
-        <Flame length={60} radius={5.2} core="#fff3d0" edge="#ff7a26" visibleRef={flameS1} />
+        <Flame simRef={simRef} length={60} radius={5.2} core="#fff3d0" edge="#ff7a26" visibleRef={flameS1} />
       </group>
       {/* S-II 二级：42–67 m，白体 + 顶部黑环 */}
       <group ref={stageRefs.s2}>
@@ -920,7 +739,7 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
           <cylinderGeometry args={[4.2, 4.9, 2.4, 24]} />
         </mesh>
         <group position={[0, 42, 0]}>
-          <Flame length={34} radius={4.2} core="#f4f8ff" edge="#5d8fff" visibleRef={flameS2} />
+          <Flame simRef={simRef} length={34} radius={4.2} core="#f4f8ff" edge="#5d8fff" visibleRef={flameS2} />
         </group>
       </group>
       {/* S-IVB 三级 + SLA：67–96 m */}
@@ -936,7 +755,7 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
           <cylinderGeometry args={[1.95, 3.3, 8, 20]} />
         </mesh>
         <group position={[0, 67, 0]}>
-          <Flame length={22} radius={2.6} core="#f4f8ff" edge="#4d7dff" visibleRef={flameS3} />
+          <Flame simRef={simRef} length={22} radius={2.6} core="#f4f8ff" edge="#4d7dff" visibleRef={flameS3} />
         </group>
       </group>
       {/* CSM + 逃逸塔：96–111 m（银色服务舱 + 指令舱锥 + 白色逃逸塔） */}
@@ -947,6 +766,7 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
         <mesh material={white} position={[0, 105.2, 0]}>
           <cylinderGeometry args={[0.5, 1.95, 3.6, 16]} />
         </mesh>
+        <group ref={escapeRef}>
         <mesh material={white} position={[0, 109, 0]}>
           <cylinderGeometry args={[0.35, 0.35, 4.4, 8]} />
         </mesh>
@@ -957,8 +777,13 @@ function SaturnV({ stageRefs, flameS1, flameS2, flameS3, flameCsm }: {
         <mesh material={white} position={[0, 107.6, 0]} rotation={[0, 0, Math.PI / 4]}>
           <boxGeometry args={[2.4, 0.5, 0.12]} />
         </mesh>
+        </group>
+        <mesh material={bell} position={[0,94.8,0]}>
+          <cylinderGeometry args={[.8,1.5,2.6,24,1,true]}/>
+        </mesh>
+        {[0,Math.PI/2,Math.PI,Math.PI*1.5].map(angle=><mesh key={angle} material={white} position={[Math.cos(angle)*1.93,99.6,Math.sin(angle)*1.93]} rotation={[0,-angle,0]}><boxGeometry args={[.1,5.6,1.1]}/></mesh>)}
         <group position={[0, 96, 0]}>
-          <Flame length={55} radius={3.2} core="#f6f9ff" edge="#3d6dff" visibleRef={flameCsm} />
+          <Flame simRef={simRef} length={22} radius={1.8} core="#f6f9ff" edge="#3d6dff" visibleRef={flameCsm} />
         </group>
       </group>
     </group>
@@ -1023,10 +848,18 @@ function Craft({ simRef, trueScale }: { simRef: React.MutableRefObject<SimRefs>;
 
     // 姿态：发射台/起飞初段沿径向；之后沿速度方向；LOI 刹车时掉头（发动机朝前）
     kmToUnits(s.vel, tmpVel.current)
+    if(s.t>=T_COAST_END) {
+      const before=sampleMission(s.t-.5), after=sampleMission(s.t+.5)
+      tmpVel.current.set(...after.pos).sub(new THREE.Vector3(...before.pos)).sub(new THREE.Vector3(...after.moonPos).sub(new THREE.Vector3(...before.moonPos)))
+    }
     const speedLen = tmpVel.current.length()
     if (s.phase === 'pad' || (s.phase === 'ascent' && s.t < 12) || speedLen < 1e-6) {
       dirVec.current.copy(PAD_DIR)
-    } else if (s.burn === 'loi') {
+    } else if (s.phase === 'ascent') {
+      dirVec.current.copy(tmpPos.current).normalize().lerp(tmpVel.current.clone().normalize(),THREE.MathUtils.smoothstep(s.t,12,150)).normalize()
+    } else if (s.burn === 'loi' || (s.burn === 'puff' && s.t >= T_CIRC)) {
+      const before=sampleMission(s.t-.5), after=sampleMission(s.t+.5)
+      tmpVel.current.set(...after.pos).sub(new THREE.Vector3(...before.pos)).sub(new THREE.Vector3(...after.moonPos).sub(new THREE.Vector3(...before.moonPos)))
       dirVec.current.copy(tmpVel.current).normalize().negate()
     } else {
       dirVec.current.copy(tmpVel.current).normalize()
@@ -1034,7 +867,7 @@ function Craft({ simRef, trueScale }: { simRef: React.MutableRefObject<SimRefs>;
     targetQuat.current.setFromUnitVectors(upVec.current, dirVec.current)
     // 发射台上立即就位（故事开场就是立好的火箭），之后平滑转向
     if (s.phase === 'pad') root.quaternion.copy(targetQuat.current)
-    else root.quaternion.slerp(targetQuat.current, 0.06)
+    else root.quaternion.copy(targetQuat.current)
 
     // 屏幕空间恒尺寸：真实尺寸在地月尺度不可见，按「当前船体长度」归一化放大，
     // 使全箭 / 末级 / CSM 在各阶段都保持相近的屏幕主角尺寸（分离时平滑过渡）；
@@ -1042,12 +875,12 @@ function Craft({ simRef, trueScale }: { simRef: React.MutableRefObject<SimRefs>;
     camVec.current.copy(camera.position).sub(tmpPos.current)
     const dist = camVec.current.length()
     const targetLen = s.stage >= 3 ? 111 : s.stage >= 2 ? 69 : s.stage >= 1 ? 44 : 15
-    lenRef.current += (targetLen - lenRef.current) * Math.min(1, delta * 2.5)
-    const boost = trueScale ? 1 : Math.max(1, (dist * 6450) / lenRef.current)
+    lenRef.current = targetLen
+    const boost = trueScale ? 1 : Math.max(1, (dist * (s.phase==='ascent'?9500:6000) * Math.min(1, (camera as THREE.PerspectiveCamera).aspect / 1.1)) / lenRef.current)
     const scale = 0.00001 * boost
     model.scale.setScalar(scale)
     const targetCenter = s.stage >= 3 ? 55 : s.stage >= 2 ? 76.5 : s.stage >= 1 ? 89 : 103.5
-    centerRef.current += (targetCenter - centerRef.current) * Math.min(1, delta * 2.5)
+    centerRef.current = targetCenter
     // 真实比例（scale=1e-5）时锚点即箭底（发射台站姿），放大时过渡到船体中心
     model.position.y = -centerRef.current * (scale - 0.00001)
     if (import.meta.env.DEV) {
@@ -1078,10 +911,10 @@ function Craft({ simRef, trueScale }: { simRef: React.MutableRefObject<SimRefs>;
       const store = debrisRef.current
       if (s.t >= tSep && !store[key]) {
         store[key] = {
-          posKm: [...s.pos] as [number, number, number],
-          velKms: [...s.vel] as [number, number, number],
+          posKm: sampleMission(tSep).pos,
+          velKms: sampleMission(tSep).vel,
           tSep,
-          tumble: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
+          tumble: new THREE.Vector3(Math.sin(tSep), .4, Math.cos(tSep)).normalize(),
         }
       }
       if (s.t < tSep) delete store[key]
@@ -1113,7 +946,7 @@ function Craft({ simRef, trueScale }: { simRef: React.MutableRefObject<SimRefs>;
     <>
       <group ref={rootRef}>
         <group ref={modelRef}>
-          <SaturnV stageRefs={{ s1, s2, s3, csm }} flameS1={flameS1} flameS2={flameS2} flameS3={flameS3} flameCsm={flameCsm} />
+          <SaturnV simRef={simRef} stageRefs={{ s1, s2, s3, csm }} flameS1={flameS1} flameS2={flameS2} flameS3={flameS3} flameCsm={flameCsm} />
         </group>
         <pointLight ref={lightRef} color="#ffb268" intensity={0} decay={0} />
       </group>
@@ -1163,7 +996,7 @@ function DebrisStage({
       (d.posKm[2] + d.velKms[2] * since * 0.8) / KM_PER_UNIT,
     )
     g.position.copy(tmp.current)
-    g.rotateOnAxis(d.tumble, 0.004)
+    g.quaternion.setFromAxisAngle(d.tumble, since * .008)
     const fade = Math.max(0, 1 - since / 420)
     mats.white.opacity = fade
     mats.black.opacity = fade
@@ -1439,13 +1272,14 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
   const clouds = useMemo(() => {
     const arr: Array<{ pos: [number, number, number]; scale: number; mat: THREE.SpriteMaterial }> = []
     for (let i = 0; i < 14; i++) {
-      const a = Math.random() * Math.PI * 2
-      const r = 0.012 + Math.random() * 0.05
+      const seed=(n:number)=>{const v=Math.sin(n*127.1+1.7)*43758.5453;return v-Math.floor(v)}
+      const a = seed(i+1) * Math.PI * 2
+      const r = 0.012 + seed(i+21) * 0.05
       const mat = new THREE.SpriteMaterial({ map: cloudTex, transparent: true, opacity: 0.15, depthWrite: false })
       fadeMats.push({ mat, base: 0.15 })
       arr.push({
-        pos: [Math.cos(a) * r, 0.009 + Math.random() * 0.016, Math.sin(a) * r],
-        scale: 0.005 + Math.random() * 0.006,
+        pos: [Math.cos(a) * r, 0.009 + seed(i+41) * 0.016, Math.sin(a) * r],
+        scale: 0.005 + seed(i+61) * 0.006,
         mat,
       })
     }
@@ -1490,7 +1324,7 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
           #include <logdepthbuf_fragment>
           vec4 tex = texture2D(uMap, gl_PointCoord);
           // 灰褐烟尘（真实发射烟不是纯白）
-          gl_FragColor = vec4(tex.rgb * vec3(0.78, 0.74, 0.7), tex.a * vAlpha * uFade);
+          gl_FragColor = vec4(tex.rgb * mix(vec3(.34,.39,.45),vec3(.91,.86,.77),(1.0-smoothstep(.15,.9,gl_PointCoord.y))), tex.a * vAlpha * uFade);
           #include <tonemapping_fragment>
           #include <colorspace_fragment>
         }`,
@@ -1507,22 +1341,22 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
   }, [])
 
   const reducedMotion = useRef(
-    typeof window !== 'undefined' && false,
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   )
   const glowRef = useRef<THREE.SpriteMaterial>(null)
 
   useFrame(({ camera, size, viewport }, delta) => {
     const s = simRef.current.sample
-    const dt = Math.min(delta, 0.1)
+    const dt = simRef.current.playing ? Math.min(delta, 0.1) : 0
     const spawning =
       s.burn === 'launch' && s.t < 40 && simRef.current.playing && !reducedMotion.current
     const persp = camera as THREE.PerspectiveCamera
     smoke.mat.uniforms.uPxScale.value =
       (size.height * viewport.dpr) / (2 * Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2))
 
-    // 高度淡出：~14 km 开始透明，~80 km 完全隐藏（只在地表附近存在的人工场景）
+    // 发射场近景在升空后淡出，避免地面切片变成悬浮圆盘。
     const altKm = s.nearBody === 'earth' ? s.altKm : 1e9
-    const fade = 1 - THREE.MathUtils.smoothstep(altKm, 14, 80)
+    const fade = 1 - THREE.MathUtils.smoothstep(altKm, .3, 4)
     smoke.mat.uniforms.uFade.value = fade
     for (const { mat, base } of fadeMats) {
       ;(mat as THREE.MeshStandardMaterial).opacity = base * fade
@@ -1530,8 +1364,8 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
     if (groupRef.current) groupRef.current.visible = fade > 0.002
 
     if (glowRef.current) {
-      const glowTarget = s.burn === 'launch' && s.altKm < 1.5 ? 0.38 + 0.14 * Math.random() : 0
-      glowRef.current.opacity += (glowTarget - glowRef.current.opacity) * 0.2
+      const glowTarget = s.burn === 'launch' && s.altKm < 1.5 ? 0.38 + 0.14 * Math.sin(s.t) : 0
+      glowRef.current.opacity = glowTarget
     }
     const posAttr = smoke.geo.attributes.position as THREE.BufferAttribute
     const alphaAttr = smoke.geo.attributes.aAlpha as THREE.BufferAttribute
@@ -1540,42 +1374,19 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
     const alphaArr = alphaAttr.array as Float32Array
     const sizeArr = sizeAttr.array as Float32Array
 
-    if (spawning) {
-      let toSpawn = Math.floor(210 * dt)
-      while (toSpawn-- > 0) {
-        const p = smoke.particles[smoke.cursor]
-        smoke.cursor = (smoke.cursor + 1) % SMOKE_N
-        const a = Math.random() * Math.PI * 2
-        // 在火箭底部外圈生成、贴地向四周翻滚，中间留出看清箭体与火焰的通道
-        const r = 0.0005 + Math.random() * 0.001
-        p.pos.set(Math.cos(a) * r, 0.00005, Math.sin(a) * r)
-        const speed = 0.00025 + Math.random() * 0.0004
-        p.vel.set(Math.cos(a) * speed, 0.00003 + Math.random() * 0.00007, Math.sin(a) * speed)
-        p.life = 0
-        p.maxLife = 1.6 + Math.random() * 1.6
-        p.size = 0.00022 + Math.random() * 0.00038
-      }
-    }
+    // Analytic exhaust ages: scrubbing and replay never inherit old particles.
     for (let i = 0; i < SMOKE_N; i++) {
-      const p = smoke.particles[i]
-      if (p.life < 0) {
-        alphaArr[i] = 0
-        continue
-      }
-      p.life += dt
-      if (p.life >= p.maxLife) {
-        p.life = -1
-        alphaArr[i] = 0
-        continue
-      }
-      p.pos.addScaledVector(p.vel, dt)
-      p.vel.y *= 0.995
-      const u = p.life / p.maxLife
-      posArr[i * 3] = p.pos.x
-      posArr[i * 3 + 1] = p.pos.y
-      posArr[i * 3 + 2] = p.pos.z
-      alphaArr[i] = 0.16 * (1 - u) * Math.min(1, u * 8)
-      sizeArr[i] = p.size * (0.7 + u * 1.1)
+      const seed=(n:number)=>{const x=Math.sin(n*127.1+3.7)*43758.5453;return x-Math.floor(x)}
+      const born=i/SMOKE_N*2.2
+      const age=simRef.current.position-born
+      if(age<0 || age>3 || reducedMotion.current){alphaArr[i]=0;continue}
+      const angle=seed(i+1)*Math.PI*2
+      const radius=.0005+age*(.0003+seed(i+3)*.0004)
+      posArr[i*3]=Math.cos(angle)*radius
+      posArr[i*3+1]=.00005+age*.0001
+      posArr[i*3+2]=Math.sin(angle)*radius
+      alphaArr[i]=.32*(1-age/3)*Math.min(1,age*8)
+      sizeArr[i]=(.0003+seed(i+5)*.0004)*(1+age*.65)
     }
     posAttr.needsUpdate = true
     alphaAttr.needsUpdate = true
@@ -1649,439 +1460,51 @@ function LaunchPad({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
 // ---------------------------------------------------------------------------
 // 相机
 
-function CameraRig({
-  simRef,
-  mode,
-  phase,
-  followDist,
-  autoOrbit,
-  lastInputRef,
-  onUserControl,
-}: {
-  simRef: React.MutableRefObject<SimRefs>
-  mode: Shot
-  phase: MissionPhase
-  followDist: number
-  /** 自由模式空闲自动环绕开关 */
-  autoOrbit: boolean
-  /** 最后一次用户输入时间戳（performance.now()） */
-  lastInputRef: React.MutableRefObject<number>
-  onUserControl: () => void
+function CameraRig({ simRef, mode, storyMode, onUserControl }: {
+  simRef: React.MutableRefObject<SimRefs>; mode: CameraMode; storyMode: boolean; onUserControl: () => void
 }) {
-  const controlsRef = useRef<ComponentRef<typeof OrbitControls>>(null)
-  const { camera } = useThree()
-  const tweenRef = useRef<{
-    fromPos: THREE.Vector3
-    toPos: THREE.Vector3
-    fromTgt: THREE.Vector3
-    toTgt: THREE.Vector3
-    t: number
-    dur: number
-  } | null>(null)
-  const userZoomedRef = useRef(false)
-  const lastModeRef = useRef<Shot | null>(null)
-  const lastPhaseRef = useRef<MissionPhase | null>(null)
-  const lastDistRef = useRef(0)
-  const pushRef = useRef(1)
-  const riseRef = useRef<{ elapsed: number; u: THREE.Vector3; perp: THREE.Vector3 } | null>(null)
-  const tmp = useRef(new THREE.Vector3())
-  const tmp2 = useRef(new THREE.Vector3())
-  // 相机 up 过渡与 wide 机位方位锁定用的暂存向量
-  const upDesired = useRef(new THREE.Vector3(1, 0, 0))
-  const upQuat = useRef(new THREE.Quaternion())
-  const upIdentity = useRef(new THREE.Quaternion())
-  const lockMoon = useRef(new THREE.Vector3())
-  const lockIdeal = useRef(new THREE.Vector3())
-  const lockCur = useRef(new THREE.Vector3())
-  const distTmp = useRef(new THREE.Vector3())
-  const reducedMotion = useRef(
-    typeof window !== 'undefined' && false,
-  )
-
-  const targetPos = useCallback(
-    (out: THREE.Vector3) => {
-      const s = simRef.current.sample
-      if (mode === 'earth' || mode === 'lookback' || mode === 'earthrise') return out.set(0, 0, 0)
-      if (mode === 'moon') return kmToUnits(s.moonPos, out)
-      if (mode === 'wide') {
-        kmToUnits(s.moonPos, out)
-        return out.multiplyScalar(0.5)
-      }
-      if (mode === 'top') return out.set(0, 0, 0)
-      return kmToUnits(s.pos, out)
-    },
-    [mode, simRef],
-  )
-
-  const desiredDist = useCallback(() => {
-    if (mode === 'earth') return EARTH_R * 3.2
-    if (mode === 'moon') return MOON_R * 4
-    if (mode === 'wide') {
-      // 按视口宽高比装下整个地月跨度：竖屏水平半视角很窄，需要远得多的机位
-      const persp = camera as THREE.PerspectiveCamera
-      const tanV = Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2)
-      const half = kmToUnits(simRef.current.sample.moonPos, distTmp.current).length() * 0.5
-      return Math.max(2600, (half * 1.35) / (tanV * persp.aspect))
-    }
-    if (mode === 'top') {
-      const persp = camera as THREE.PerspectiveCamera
-      const tanV = Math.tan(THREE.MathUtils.degToRad(persp.fov) / 2)
-      const orbitR = kmToUnits(simRef.current.sample.moonPos, distTmp.current).length()
-      return Math.max(8600, (orbitR * 1.12) / (tanV * persp.aspect))
-    }
-    if (mode === 'lookback') {
-      const s = simRef.current.sample
-      return s.distEarthKm / KM_PER_UNIT + EARTH_R * 1.15
-    }
-    if (mode === 'earthrise') return 3800
-    return followDist
-  }, [mode, followDist, simRef, camera])
-
-  /** 机位方向：craft 月心段让月球入画；wide 垂直于地月连线且站到向阳一侧，让地球呈蓝球 */
-  const viewDir = useCallback(
-    (out: THREE.Vector3) => {
-      const s = simRef.current.sample
-      if (mode === 'top') {
-        // 俯视：黄道面斜上方正交感，一屏装下地球 + 月球轨道圆 + 转移椭圆
-        return out.set(0.28, 1, 0.34).normalize()
-      }
-      if (mode === 'lookback') {
-        // 回望地球：站在飞船外侧，越过飞船看蓝色新月地球居中
-        const radial = kmToUnits(s.pos, new THREE.Vector3()).normalize()
-        return out.copy(radial).addScaledVector(new THREE.Vector3(0, 1, 0), 0.14).normalize()
-      }
-      if (mode === 'earthrise') return out.set(0.5, 0.42, 0.76).normalize() // 占位，实际由地出扫描驱动
-      if (mode === 'wide') {
-        // 地月连线的水平垂线机位，站到向阳一侧：两个天体都以被照亮的一面入画。
-        // 配合 camera.up = −y 的 180° 滚转，画面里地球在左、月亮在右。
-        const moon = kmToUnits(s.moonPos, new THREE.Vector3())
-        const side = new THREE.Vector3(moon.z, 0, -moon.x)
-        if (side.lengthSq() < 1e-9) side.set(0, 0, 1)
-        return out.copy(side.normalize()).addScaledVector(UP_Y, 0.22).normalize()
-      }
-      if (mode === 'craft' && s.phase === 'pad') {
-        // 发射台设计机位：略高的侧向俯视（向阳一侧看亮面箭体；点火烟团沉在画面下缘）
-        return out.set(0.001, 0.0042, 0.0052).normalize()
-      }
-      if (mode === 'craft' && s.phase === 'ascent') {
-        // 上升段：起飞初段保持发射台低角度（火箭从镜头前升起），随后过渡到
-        // 侧向追逐，高空再抬到外侧俯视——火箭衬着地球弧线。
-        const radial = kmToUnits(s.pos, new THREE.Vector3()).normalize()
-        const east = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), radial)
-        if (east.lengthSq() < 1e-9) east.set(0, 0, 1)
-        east.normalize()
-        const side = new THREE.Vector3().crossVectors(radial, east).normalize()
-        // 径向系数按高度门控：>2 km 才允许抬到火箭外侧，永远不穿到地面以下
-        const k = THREE.MathUtils.smoothstep(s.altKm, 2, 60)
-        const radialK = THREE.MathUtils.lerp(0.04, 0.52, k)
-        const chase = new THREE.Vector3()
-          .copy(east)
-          .multiplyScalar(-0.9)
-          .addScaledVector(radial, radialK)
-          .addScaledVector(side, 0.3)
-          .normalize()
-        // 0–4 km 从发射台机位平滑混入追逐机位
-        const blend = THREE.MathUtils.smoothstep(s.altKm, 0.5, 4)
-        return out.set(0.001, 0.0042, 0.0052).normalize().lerp(chase, blend).normalize()
-      }
-      if (mode === 'craft' && (s.phase === 'orbit' || s.phase === 'tli')) {
-        // 停泊轨道/TLI：略高于飞船的外侧俯视，地球在脚下占下半屏——
-        // 视角更俯视可减轻地表贴图在掠射角的 mip 模糊与彩色拖影
-        const radial = kmToUnits(s.pos, new THREE.Vector3()).normalize()
-        const east = new THREE.Vector3().crossVectors(new THREE.Vector3(0, 1, 0), radial)
-        if (east.lengthSq() < 1e-9) east.set(0, 0, 1)
-        east.normalize()
-        const side = new THREE.Vector3().crossVectors(radial, east).normalize()
-        return out
-          .copy(radial)
-          .multiplyScalar(0.58)
-          .addScaledVector(east, -0.68)
-          .addScaledVector(side, 0.34)
-          .normalize()
-      }
-      if (mode === 'craft' && (s.phase === 'approach' || s.phase === 'loi' || s.phase === 'lunar')) {
-        const craft = kmToUnits(s.pos, new THREE.Vector3())
-        const moon = kmToUnits(s.moonPos, new THREE.Vector3())
-        const away = craft.clone().sub(moon).normalize()
-        const velDir = kmToUnits(s.vel, new THREE.Vector3())
-        if (velDir.lengthSq() < 1e-12) velDir.copy(away)
-        velDir.normalize()
-        // 月心段：侧后机位——LOI 刹车时发动机朝前、尾焰沿速度方向喷出，
-        // 从侧后方能看到逆向尾焰锥；月球保持在背景里，向阳侧优先
-        const sideV = new THREE.Vector3().crossVectors(velDir, away)
-        if (sideV.lengthSq() < 1e-9) sideV.set(0, 1, 0)
-        sideV.normalize()
-        if (sideV.dot(SUN_DIR) < 0) sideV.negate()
-        return out
-          .copy(sideV)
-          .multiplyScalar(0.72)
-          .addScaledVector(away, 0.5)
-          .addScaledVector(velDir, -0.32)
-          .add(new THREE.Vector3(0, 0.22, 0))
-          .normalize()
-      }
-      if (mode === 'craft') return out.set(0.55, 0.45, 0.72).normalize()
-      return out.set(0.5, 0.42, 0.76).normalize()
-    },
-    [mode, simRef],
-  )
-
-  // 模式/阶段切换：缓动转场；首次挂载直接落位（初始机位已是发射台近景）
-  useEffect(() => {
-    const controls = controlsRef.current
-    if (!controls) return
-    const tgt = targetPos(new THREE.Vector3())
-    const dist = desiredDist()
-    if (lastModeRef.current === null) {
-      controls.target.copy(tgt)
-      controls.update()
-      lastModeRef.current = mode
-      lastPhaseRef.current = phase
-      return
-    }
-    const modeChanged = lastModeRef.current !== mode
-    const phaseChanged = lastPhaseRef.current !== null && lastPhaseRef.current !== phase
-    if (!modeChanged && !phaseChanged) return
-    // 仅阶段变化：craft 模式下用户没手动动过相机才顺新机位
-    if (!modeChanged) {
-      if (mode !== 'craft' || userZoomedRef.current) {
-        lastPhaseRef.current = phase
-        return
-      }
-    }
-    userZoomedRef.current = false
-    const dir = viewDir(new THREE.Vector3())
-    const toPos = tgt.clone().add(dir.multiplyScalar(dist))
-    tweenRef.current = {
-      fromPos: camera.position.clone(),
-      toPos,
-      fromTgt: controls.target.clone(),
-      toTgt: tgt,
-      t: 0,
-      dur: 1.6,
-    }
-    lastModeRef.current = mode
-    lastPhaseRef.current = phase
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode, phase])
-
-  // 跟随距离随阶段变化（用户未缩放时）
-  useEffect(() => {
-    if (Math.abs(followDist - lastDistRef.current) / Math.max(followDist, 1e-6) > 0.4) {
-      userZoomedRef.current = false
-    }
-    lastDistRef.current = followDist
-  }, [followDist])
-
-  useFrame((_, delta) => {
-    const controls = controlsRef.current
-    if (!controls) return
-    const s = simRef.current.sample
-
-    // 相机 up 分场景平滑过渡（OrbitControls.update 每帧用当前 up 重建参考系）：
-    // 发射台/上升段沿当地径向（地平线自然在下方）；wide 用 −y 滚转，与向阳机位
-    // 配合得到「地球左 · 月亮右」；地出贴月面用当地月面法线，保持月平线水平；
-    // 其余机位一律世界 +y（任务平面在画面里保持水平，地月连线不再竖过来）。
-    if (mode === 'earthrise') {
-      kmToUnits(s.moonPos, tmp.current)
-      upDesired.current.copy(camera.position).sub(tmp.current).normalize()
-    } else if (mode === 'wide') {
-      upDesired.current.set(0, -1, 0)
-    } else if (mode === 'craft' && (s.phase === 'pad' || s.phase === 'ascent')) {
-      upDesired.current.set(s.pos[0], s.pos[1], s.pos[2]).normalize()
+  const orbit = useRef<ComponentRef<typeof OrbitControls>>(null)
+  const user = useRef(false)
+  const revision = useRef(-1)
+  const priorTarget = useRef(new THREE.Vector3())
+  useEffect(() => { user.current = false }, [mode])
+  useFrame(({ camera, size }) => {
+    const sim = simRef.current, s = sim.sample
+    if (revision.current !== sim.revision) { user.current = false; revision.current = sim.revision }
+    const {position:cameraPosition,target,up}=journeyCamera(s,sim.position,size.width/size.height,mode,storyMode)
+    if (!user.current) {
+      camera.up.copy(up)
+      camera.position.copy(cameraPosition)
+      camera.lookAt(target)
+      orbit.current?.target.copy(target)
     } else {
-      upDesired.current.copy(UP_Y)
+      const delta=target.clone().sub(priorTarget.current)
+      camera.position.add(delta); orbit.current?.target.add(delta)
     }
-    if (camera.up.distanceToSquared(upDesired.current) > 1e-6) {
-      upQuat.current.setFromUnitVectors(camera.up, upDesired.current)
-      upIdentity.current.identity().slerp(upQuat.current, Math.min(1, delta * 1.6))
-      camera.up.applyQuaternion(upIdentity.current).normalize()
-    }
-
-    // 地出机位：贴近月面、盯住地球，相机沿月平线缓慢扫出让地球升起
-    if (mode === 'earthrise') {
-      tweenRef.current = null
-      const moonC = kmToUnits(s.moonPos, tmp.current)
-      if (!riseRef.current) {
-        const u = moonC.clone().negate().normalize() // 月球 → 地球
-        const perp = new THREE.Vector3().crossVectors(u, new THREE.Vector3(0, 1, 0))
-        if (perp.lengthSq() < 1e-9) perp.set(1, 0, 0)
-        perp.normalize()
-        // 取向阳侧的切点，保证脚下月面被太阳照亮
-        if (perp.dot(SUN_DIR) < 0) perp.negate()
-        riseRef.current = { elapsed: 0, u, perp }
-      }
-      const rise = riseRef.current
-      rise.elapsed += delta
-      const sweep = THREE.MathUtils.smoothstep(Math.min(1, rise.elapsed / 5), 0, 1)
-      const theta = THREE.MathUtils.lerp((-5 * Math.PI) / 180, (2.2 * Math.PI) / 180, sweep)
-      tmp2.current
-        .copy(rise.perp)
-        .multiplyScalar(Math.cos(theta))
-        .addScaledVector(rise.u, Math.sin(theta))
-        .multiplyScalar(MOON_R + 0.4)
-        .add(moonC)
-      // 入场 1.5 s 内平滑飞入，之后锁定在随月球移动的扫描轨道上
-      const k = rise.elapsed < 1.5 ? Math.min(1, delta * 2.4) : 1
-      camera.position.lerp(tmp2.current, k)
-      controls.target.set(0, 0, 0)
-      controls.update()
-      return
-    }
-    riseRef.current = null
-
-    if (tweenRef.current) {
-      const tw = tweenRef.current
-      // 缓动两端整体跟随移动中的飞船：阶段切换的转场只插值相机相对位移，
-      // 不被上升的火箭甩开（from/to 同步平移，转场期间飞船保持居中）
-      targetPos(tmp.current)
-      tmp2.current.copy(tmp.current).sub(tw.toTgt)
-      if (tmp2.current.lengthSq() > 0) {
-        tw.toTgt.add(tmp2.current)
-        tw.toPos.add(tmp2.current)
-        tw.fromTgt.add(tmp2.current)
-        tw.fromPos.add(tmp2.current)
-      }
-      tw.t += delta / tw.dur
-      const u = Math.min(tw.t, 1)
-      const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2
-      camera.position.lerpVectors(tw.fromPos, tw.toPos, e)
-      controls.target.lerpVectors(tw.fromTgt, tw.toTgt, e)
-      if (tw.t >= 1) tweenRef.current = null
-    } else {
-      targetPos(tmp.current)
-      const gap = tmp.current.distanceTo(controls.target)
-      // 自愈：OrbitControls 被重建（HMR / 重挂载）或任务时间被跳段后，
-      // 目标点与相机出现不可能的大偏移——整体重落位，而不是拖着旧偏移平移
-      if (gap > Math.max(desiredDist() * 4, 0.02)) {
-        const dir = viewDir(new THREE.Vector3())
-        controls.target.copy(tmp.current)
-        camera.position.copy(tmp.current).addScaledVector(dir, desiredDist())
-        userZoomedRef.current = false
-      } else {
-        // 目标跟随：相机与目标一起平移，用户可绕动
-        tmp2.current.copy(tmp.current).sub(controls.target)
-        if (tmp2.current.lengthSq() > 0) {
-          controls.target.add(tmp2.current)
-          camera.position.add(tmp2.current)
-        }
-        // wide 方位锁定：滑行三天里月球公转约 40°，缓慢偏航追随，
-        // 全程保持「地球左 · 月亮右」；用户拖拽/缩放后立即让位
-        if (mode === 'wide' && !userZoomedRef.current) {
-          kmToUnits(s.moonPos, lockMoon.current)
-          lockIdeal.current.set(lockMoon.current.z, 0, -lockMoon.current.x)
-          if (lockIdeal.current.lengthSq() > 1e-9) {
-            lockIdeal.current.normalize()
-            lockCur.current.copy(camera.position).sub(controls.target)
-            lockCur.current.y = 0
-            if (lockCur.current.lengthSq() > 1e-6) {
-              lockCur.current.normalize()
-              const sinA = lockCur.current.z * lockIdeal.current.x - lockCur.current.x * lockIdeal.current.z
-              const angle = Math.atan2(sinA, lockCur.current.dot(lockIdeal.current))
-              const step = angle * Math.min(1, delta * 1.2)
-              camera.position.sub(controls.target).applyAxisAngle(UP_Y, step).add(controls.target)
-            }
-          }
-        }
-        // 自动距离（用户缩放后不再干预，直到下次模式/阶段变化）
-        // 点火推近：TLI / LOI / 中途修正燃烧时轻微推进（+ 尾焰高亮），增加段落感
-        const burning = s.burn === 'tli' || s.burn === 'loi' || s.burn === 'puff'
-        const pushTarget = burning && mode === 'craft' && !userZoomedRef.current ? 0.93 : 1
-        pushRef.current += (pushTarget - pushRef.current) * Math.min(1, delta * 1.8)
-        if (!userZoomedRef.current) {
-          const want = desiredDist() * pushRef.current
-          const have = camera.position.distanceTo(controls.target)
-          if (Math.abs(have - want) / want > 0.12) {
-            tmp2.current.copy(camera.position).sub(controls.target).normalize()
-            const next = THREE.MathUtils.lerp(have, want, Math.min(1, delta * 1.5))
-            camera.position.copy(controls.target).addScaledVector(tmp2.current, next)
-          }
-        }
-        // 空闲自动环绕：8 秒无输入后极缓慢绕目标旋转，任何输入即停。
-        // wide/top 有固定构图职责（方位锁定/全览），不参与空闲环绕
-        if (
-          autoOrbit &&
-          !reducedMotion.current &&
-          mode !== 'lookback' &&
-          mode !== 'wide' &&
-          mode !== 'top' &&
-          performance.now() - lastInputRef.current > 8000
-        ) {
-          tmp2.current.copy(camera.position).sub(controls.target)
-          tmp2.current.applyAxisAngle(camera.up, 0.04 * delta)
-          camera.position.copy(controls.target).add(tmp2.current)
-        }
-      }
-    }
-
-    controls.update()
-
-    // 点火镜头震动（尊重减少动态偏好）
-    if (!reducedMotion.current && s.burn === 'launch' && s.altKm < 30 && mode === 'craft') {
-      const amp = 0.00004 * Math.max(0, 1 - s.altKm / 30)
-      camera.position.x += (Math.random() - 0.5) * amp
-      camera.position.y += (Math.random() - 0.5) * amp
-      camera.position.z += (Math.random() - 0.5) * amp
-    }
-  })
-
-  return (
-    <OrbitControls
-      ref={controlsRef}
-      makeDefault
-      enableDamping
-      dampingFactor={0.08}
-      enablePan={false}
-      minDistance={0.00012}
-      maxDistance={60000}
-      onStart={() => {
-        userZoomedRef.current = true
-        tweenRef.current = null
-        onUserControl()
-      }}
-    />
-  )
+    priorTarget.current.copy(target)
+    orbit.current?.update()
+  }, -0.5)
+  return <OrbitControls ref={orbit} enablePan={false} enableDamping={false} minDistance={.001} maxDistance={30000}
+    onStart={() => { user.current=true; onUserControl() }} />
 }
 
-/** 任务时钟推进（rAF 内写 ref，不触发 React 渲染） */
+/** One authoritative, reversible clock; no phase callback can change its rate. */
 function MissionDriver({ simRef }: { simRef: React.MutableRefObject<SimRefs> }) {
   useFrame(({ camera }, delta) => {
-    const sim = simRef.current
-    const dt = Math.min(delta, 0.1)
-    if (sim.playing) {
-      sim.t = Math.min(sim.t + sim.speed * dt, T_STABLE + 3_000_000)
+    const sim=simRef.current
+    if(sim.playing) {
+      sim.position=Math.min(JOURNEY_DURATION,sim.position+Math.min(delta,.1)*sim.speed)
+      if(sim.position>=JOURNEY_DURATION) sim.playing=false
     }
-    sim.sample = sampleMission(sim.t)
-    if (import.meta.env.DEV) {
-      ;(window as unknown as { __mvCam?: () => number[] }).__mvCam = () => camera.position.toArray()
-      const w = window as unknown as { __mvProbe?: () => unknown }
-      w.__mvProbe = () => {
-        const v = new THREE.Vector3(
-          sim.sample.pos[0] / KM_PER_UNIT,
-          sim.sample.pos[1] / KM_PER_UNIT,
-          sim.sample.pos[2] / KM_PER_UNIT,
-        )
-        const ndc = v.clone().project(camera)
-        const moon = new THREE.Vector3(
-          sim.sample.moonPos[0] / KM_PER_UNIT,
-          sim.sample.moonPos[1] / KM_PER_UNIT,
-          sim.sample.moonPos[2] / KM_PER_UNIT,
-        )
-        const moonNdc = moon.clone().project(camera)
-        const sun = new THREE.Vector3(0.656, 0.5, 0.755).normalize()
-        const viewToMoon = moon.clone().sub(camera.position).normalize()
-        return {
-          craft: v.toArray(),
-          cam: camera.position.toArray(),
-          ndc: ndc.toArray(),
-          moonNdc: moonNdc.toArray(),
-          moonCamDist: moon.distanceTo(camera.position),
-          visLitDot: viewToMoon.dot(sun),
-          phase: sim.sample.phase,
-        }
-      }
+    sim.t=missionTimeAt(sim.position); sim.sample=sampleMission(sim.t)
+    if(import.meta.env.DEV) {
+      ;(window as unknown as { __mvProbe: () => unknown }).__mvProbe=()=>({
+        t:sim.t, position:sim.position, playing:sim.playing, phase:sim.sample.phase,
+        craft:sim.sample.pos, camera:camera.position.toArray(), up:camera.up.toArray(),
+        projected:kmToUnits(sim.sample.pos,new THREE.Vector3()).project(camera).toArray(),
+      })
     }
-  })
+  }, -1)
   return null
 }
 
@@ -2098,604 +1521,102 @@ type HudState = {
   nearBody: 'earth' | 'moon'
 }
 
-function useHudSync(simRef: React.MutableRefObject<SimRefs>, onPhase: (p: MissionPhase, prev: MissionPhase) => void) {
-  const [hud, setHud] = useState<HudState>(() => ({
-    phase: 'pad',
-    t: simRef.current.t,
-    speed: 0,
-    altKm: 0,
-    distMoonKm: 0,
-    distEarthKm: 0,
-    nearBody: 'earth',
-  }))
-  const phaseRef = useRef<MissionPhase>('pad')
-  const onPhaseRef = useRef(onPhase)
-  onPhaseRef.current = onPhase
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      const s = simRef.current.sample
-      if (s.phase !== phaseRef.current) {
-        const prev = phaseRef.current
-        phaseRef.current = s.phase
-        onPhaseRef.current(s.phase, prev)
-      }
-      setHud({
-        phase: s.phase,
-        t: s.t,
-        speed: s.speedKms,
-        altKm: s.altKm,
-        distMoonKm: s.distMoonKm,
-        distEarthKm: s.distEarthKm,
-        nearBody: s.nearBody,
-      })
-    }, 200)
-    return () => window.clearInterval(id)
-  }, [simRef])
-  return hud
+function useHudSync(simRef: React.MutableRefObject<SimRefs>) {
+  const read=useCallback(():HudState=>{
+    const s=simRef.current.sample
+    return {phase:s.phase,t:s.t,speed:s.speedKms,altKm:s.altKm,distMoonKm:s.distMoonKm,distEarthKm:s.distEarthKm,nearBody:s.nearBody}
+  },[simRef])
+  const [hud,setHud]=useState(read)
+  const sync=useCallback(()=>setHud(read()),[read])
+  useEffect(()=>{const id=window.setInterval(sync,200);return()=>window.clearInterval(id)},[sync])
+  return [hud,sync] as const
 }
 
 // ---------------------------------------------------------------------------
 // 主组件
 
 export function MoonVoyage({ controls }: { controls: ExperienceControls }) {
-  const tx = useExperienceI18n()
-  // 自由优先：首次进入即发射台待命，故事只从 Freebar「故事」药丸重播
-  const { storyMode, enterFree, enterStory } = useStoryFreeMode(WORLD_ID, { firstVisit: 'free' })
-  const storyModeRef = useRef(storyMode)
-  useEffect(() => {
-    storyModeRef.current = storyMode
-  }, [storyMode])
-
-  const simRef = useRef<SimRefs>({
-    t: -5,
-    playing: false,
-    speed: 1,
-    launched: false,
-    sample: sampleMission(-5),
-  })
-  const [playing, setPlayingState] = useState(false)
-  const [speed, setSpeedState] = useState(1)
-  const [launched, setLaunched] = useState(false)
-  const [cameraMode, setCameraMode] = useState<CameraMode>('craft')
-  const [showTraj, setShowTraj] = useState(true)
-  const [trueScale, setTrueScale] = useState(false)
-  const [finished, setFinished] = useState(false)
-  const finishedRef = useRef(false)
-  const interactedRef = useRef(false)
-  // 电影化镜头（回望地球 / 地出）与空闲环绕的输入计时
-  const [cinematic, setCinematic] = useState<CinematicShot | null>(null)
-  const cinematicRef = useRef<CinematicShot | null>(null)
-  const cinematicTimerRef = useRef(0)
-  const lastInputRef = useRef(0)
-  const lookbackDoneRef = useRef(false)
-
-  const clearCinematic = useCallback(() => {
-    cinematicRef.current = null
-    setCinematic(null)
-    if (cinematicTimerRef.current) {
-      window.clearTimeout(cinematicTimerRef.current)
-      cinematicTimerRef.current = 0
-    }
-  }, [])
-  const playCinematic = useCallback((shot: CinematicShot, holdMs: number) => {
-    cinematicRef.current = shot
-    setCinematic(shot)
-    if (cinematicTimerRef.current) window.clearTimeout(cinematicTimerRef.current)
-    cinematicTimerRef.current = window.setTimeout(() => {
-      cinematicTimerRef.current = 0
-      if (cinematicRef.current === shot) {
-        cinematicRef.current = null
-        setCinematic(null)
-      }
-    }, holdMs)
-  }, [])
-
-  const setPlaying = useCallback((v: boolean) => {
-    simRef.current.playing = v
-    setPlayingState(v)
-  }, [])
-  const setSpeed = useCallback((v: number) => {
-    simRef.current.speed = v
-    setSpeedState(v)
-  }, [])
-  const setTime = useCallback((t: number) => {
-    simRef.current.t = t
-    simRef.current.sample = sampleMission(t)
-  }, [])
-  const setLaunchedBoth = useCallback((v: boolean) => {
-    simRef.current.launched = v
-    setLaunched(v)
-  }, [])
-
-  const handlePhase = useCallback(
-    (phase: MissionPhase, prev: MissionPhase) => {
-      setSpeed(PHASE_SPEED[phase])
-      if (phase === 'lunar' && !finishedRef.current && simRef.current.t >= T_STABLE) {
-        finishedRef.current = true
-        setFinished(true)
-        controls.finish()
-      }
-      // TLI 关机瞬间（自由模式、每次任务首次）：自动回望地球 3 秒
-      if (prev === 'tli' && phase === 'coast' && !lookbackDoneRef.current && !storyModeRef.current) {
-        lookbackDoneRef.current = true
-        playCinematic('lookback', 3200)
-      }
-    },
-    [controls, setSpeed, playCinematic],
-  )
-  const hud = useHudSync(simRef, handlePhase)
-
-  // 抵达稳定环月轨道：自然完成时刻（只调用一次）
-  useEffect(() => {
-    if (!finishedRef.current && hud.t >= T_STABLE) {
-      finishedRef.current = true
-      setFinished(true)
-      controls.finish()
-      // 完成态 payoff：自动切到贴月面的「地出机位」5 秒
-      if (!storyModeRef.current) playCinematic('earthrise', 5600)
-    }
-  }, [hud.t, controls, playCinematic])
-
-  const ignite = useCallback(() => {
-    clearCinematic()
-    if (!simRef.current.launched) {
-      setLaunchedBoth(true)
-      setTime(-5)
-      setPlaying(true)
-      setSpeed(1)
-      setCameraMode('craft')
-      lookbackDoneRef.current = false
-    } else {
-      setPlaying(!simRef.current.playing)
-    }
-    lastInputRef.current = performance.now()
-    controls.registerInteraction()
-  }, [controls, clearCinematic, setLaunchedBoth, setPlaying, setSpeed, setTime])
-
-  const relaunch = useCallback(() => {
-    clearCinematic()
-    setLaunchedBoth(true)
-    setTime(-5)
-    setPlaying(true)
-    setSpeed(1)
-    setCameraMode('craft')
-    finishedRef.current = false
-    setFinished(false)
-    lookbackDoneRef.current = false
-    lastInputRef.current = performance.now()
-    controls.registerInteraction()
-  }, [controls, clearCinematic, setLaunchedBoth, setPlaying, setSpeed, setTime])
-
-  const skipToNextEvent = useCallback(() => {
-    const now = simRef.current.t
-    const next = MISSION_EVENTS.find((e) => e.t > now + 1)
-    if (!next) return
-    const gap = next.t - now
-    setTime(next.t - (gap > 400 ? 240 : 5))
-    setPlaying(true)
-    controls.registerInteraction()
-  }, [controls, setPlaying, setTime])
-
-  const handleUserControl = useCallback(() => {
-    lastInputRef.current = performance.now()
-    if (cinematicRef.current) clearCinematic()
-    if (interactedRef.current) return
-    interactedRef.current = true
-    controls.registerInteraction()
-  }, [controls, clearCinematic])
-
-  // 任何鼠标 / 触摸 / 键盘输入：停止空闲环绕、打断电影化镜头
-  useEffect(() => {
-    const mark = () => {
-      lastInputRef.current = performance.now()
-      if (cinematicRef.current) clearCinematic()
-      if (!interactedRef.current) {
-        interactedRef.current = true
-        controls.registerInteraction()
-      }
-    }
-    window.addEventListener('pointerdown', mark, true)
-    window.addEventListener('wheel', mark, true)
-    window.addEventListener('touchstart', mark, true)
-    window.addEventListener('keydown', mark, true)
-    return () => {
-      window.removeEventListener('pointerdown', mark, true)
-      window.removeEventListener('wheel', mark, true)
-      window.removeEventListener('touchstart', mark, true)
-      window.removeEventListener('keydown', mark, true)
-    }
-  }, [controls, clearCinematic])
-
-  const resetToPad = useCallback(() => {
-    clearCinematic()
-    setLaunchedBoth(false)
-    setTime(-5)
-    setPlaying(false)
-    setSpeed(1)
-    setCameraMode('craft')
-    finishedRef.current = false
-    setFinished(false)
-    lookbackDoneRef.current = false
-  }, [clearCinematic, setLaunchedBoth, setPlaying, setSpeed, setTime])
-
-  const handleGuideExit = useCallback(() => {
-    // 故事开场第一步会自动点火；若用户在火箭尚未升空时就退出引导，
-    // 自由模式应回到「静立待命、时钟未启动」的初始状态，把点火权交给用户。
-    if (simRef.current.t < 2) resetToPad()
-    enterFree()
-  }, [enterFree, resetToPad])
-
-  const handleReplay = useCallback(() => {
-    clearCinematic()
-    controls.registerInteraction()
-    enterStory()
-    replayGuide(WORLD_ID)
-  }, [controls, clearCinematic, enterStory])
-
-  // 开发态调试钩子：截图/自验脚本用（生产构建不包含）
-  useEffect(() => {
-    if (!import.meta.env.DEV) return
-    const api = {
-      jump: (t: number, opts?: { playing?: boolean; mode?: CameraMode; speed?: number }) => {
-        if (t >= 0 && !simRef.current.launched) setLaunchedBoth(true)
-        setTime(t)
-        if (opts?.mode) setCameraMode(opts.mode)
-        if (opts?.speed !== undefined) setSpeed(opts.speed)
-        setPlaying(opts?.playing ?? false)
-      },
-      state: () => ({ t: simRef.current.t, phase: simRef.current.sample.phase, launched: simRef.current.launched }),
-    }
-    ;(window as unknown as { __mv?: typeof api }).__mv = api
-    return () => {
-      delete (window as unknown as { __mv?: typeof api }).__mv
-    }
-  }, [setLaunchedBoth, setPlaying, setSpeed, setTime])
-
-  const guideSteps = useMemo<Array<GuideStep>>(
-    () => [
-      {
-        title: '去月球，为什么不能直着飞？',
-        body: '倒计时结束，土星五号点火升空。它并不朝月球直冲，而是先直上、再慢慢倾倒——真正的奔月路线，要先学会绕开地球。',
-        durationMs: 11000,
-        action: () => {
-          clearCinematic()
-          setLaunchedBoth(true)
-          setTime(-5)
-          setPlaying(true)
-          setSpeed(1)
-          setCameraMode('craft')
-        },
-      },
-      {
-        title: '抛掉烧空的油箱',
-        body: '两分半后一级火箭烧完，直接分离、坠回大海；再过四分钟，二级也抛掉。去月球不背空油箱——每扔一级，剩下的火箭就更轻、更快。',
-        durationMs: 26000,
-        action: () => {
-          clearCinematic()
-          // 从 100 秒起：一级分离（161 s）→ 二级分离（550 s）连看
-          if (simRef.current.t < 100) setTime(100)
-          setSpeed(22)
-          setPlaying(true)
-          setCameraMode('craft')
-        },
-      },
-      {
-        title: '先横着飞，不急着去月球',
-        body: '火箭并不直接奔向月球。它先横着加速到每秒 7.8 公里，进入 190 公里高的地球轨道——轨道不是悬浮不动，而是一边下坠、一边错过地面。',
-        durationMs: 16000,
-        action: () => {
-          clearCinematic()
-          if (simRef.current.t < 640) setTime(640)
-          setSpeed(60)
-          setPlaying(true)
-          setCameraMode('craft')
-        },
-      },
-      {
-        title: '瞄准三天后的月球',
-        body: '绕地球一圈半后，TLI 点火六分钟，把速度提到每秒 11 公里甩向月球。注意：此刻月球并不在终点——半透明的影子，标出三天后它才会到达的位置。',
-        durationMs: 16000,
-        action: () => {
-          clearCinematic()
-          // 俯视：转移椭圆在月球轨道圆里展开，幽灵月球在终点等待
-          if (simRef.current.t < 9500) setTime(9500)
-          setSpeed(120)
-          setPlaying(true)
-          setCameraMode('top')
-        },
-      },
-      {
-        title: '回头看，地球在变小',
-        body: 'TLI 关机后，末级火箭也分离了——剩下的旅程，宇航员只有小小的指令舱。回头看一眼：完整的地球挂在身后，像一弯蓝色新月，而且一天比一天小。',
-        durationMs: 18000,
-        action: () => {
-          clearCinematic()
-          if (simRef.current.t < T_S4B_SEP + 300) setTime(T_S4B_SEP + 300)
-          setSpeed(600)
-          setPlaying(true)
-          // 回望机位跟随整幕；用户输入或下一步会打断
-          playCinematic('lookback', 25000)
-        },
-      },
-      {
-        title: '地月之间，空旷得超乎想象',
-        body: '接下来是约三天的滑行，几乎不烧燃料。地球在身后缩成一颗蓝点——画面里地球、月球的大小和距离全是真实比例，中间是真的什么都没有。',
-        durationMs: 16000,
-        action: () => {
-          clearCinematic()
-          if (simRef.current.t < T_TLI_END + 600) setTime(T_TLI_END + 600)
-          setSpeed(3000)
-          setPlaying(true)
-          setCameraMode('wide')
-        },
-      },
-      {
-        title: '被月球抓住',
-        body: '第三天，月球引力接手。在月球背面——地球看不见的地方——发动机反向点火六分钟，把速度降到每秒 1.7 公里，滑入环月轨道。从点火到这一刻，三天出头。',
-        durationMs: 22000,
-        action: () => {
-          clearCinematic()
-          if (simRef.current.t < T_COAST_END - 1800) setTime(T_COAST_END - 1800)
-          setSpeed(1500)
-          setPlaying(true)
-          setCameraMode('craft')
-        },
-      },
-      {
-        title: '现在，你是月球的卫星',
-        body: '环月两圈后再点一次火，轨道圆化到 110 公里——此后每两小时绕月一圈。转到合适的位置，还会遇见著名的「地出」：蓝色地球从月平线上升起。从点火到此刻：第四天。',
-        durationMs: 22000,
-        action: () => {
-          clearCinematic()
-          // 直接快进到圆化燃烧前：掠过两圈椭圆，落进稳定环月轨道
-          if (simRef.current.t < T_STABLE - 1200) setTime(T_STABLE - 1200)
-          setSpeed(600)
-          setPlaying(true)
-          setCameraMode('craft')
-        },
-      },
-    ],
-    [clearCinematic, playCinematic, setLaunchedBoth, setPlaying, setSpeed, setTime],
-  )
-
-  const phaseCaption = (() => {
-    switch (hud.phase) {
-      case 'pad':
-        return tx('发射台上 · 等待点火')
-      case 'ascent':
-        return tx('正在爬出大气层')
-      case 'orbit':
-        return tx('先绕地球飞，不急着去月球')
-      case 'tli':
-        return tx('点火离开地球轨道')
-      case 'coast': {
-        // 天数从点火算起（与 GET 时钟一致）：第 1 天出发，第 4 天抵达
-        const day = Math.max(1, Math.floor(hud.t / 86400) + 1)
-        // 整句过 tx：英文模板规则「第 N 天 · …」→ "Day N · …"
-        return tx(`第 ${day} 天 · 正在滑向月球`)
-      }
-      case 'approach':
-        return tx('月球引力接手了')
-      case 'loi':
-        return tx('在月球背面刹车')
-      case 'lunar':
-        return tx('抵达：环绕月球飞行')
-    }
-  })()
-
-  // 抵达倒计时：直接回答铭牌上的「去月球要几天？」（LOI 点火 = 抵达月球背面）
-  const etaText = (() => {
-    if (hud.phase !== 'coast' && hud.phase !== 'approach') return null
-    const eta = T_LOI_START - hud.t
-    if (eta <= 0) return null
-    if (eta >= 86400) return tx(`距抵达还有 ${Math.floor(eta / 86400)} 天 ${Math.floor((eta % 86400) / 3600)} 小时`)
-    if (eta >= 3600) return tx(`距抵达还有 ${Math.max(1, Math.round(eta / 3600))} 小时`)
-    return tx(`距抵达还有 ${Math.max(1, Math.round(eta / 60))} 分钟`)
-  })()
-
-  const secondary = (
-    <div className="mv-secondary experience-freebar-chips" role="group" aria-label={tx('相机视角')}>
-      <button type="button" className={cameraMode === 'craft' ? 'is-active' : undefined} aria-pressed={cameraMode === 'craft'} onClick={() => { setCameraMode('craft'); controls.registerInteraction() }}>
-        <Rocket weight="bold" />
-        <span>{tx('跟随飞船')}</span>
-      </button>
-      <button type="button" className={cameraMode === 'earth' ? 'is-active' : undefined} aria-pressed={cameraMode === 'earth'} onClick={() => { setCameraMode('earth'); controls.registerInteraction() }}>
-        <Globe weight="bold" />
-        <span>{tx('地球')}</span>
-      </button>
-      <button type="button" className={cameraMode === 'moon' ? 'is-active' : undefined} aria-pressed={cameraMode === 'moon'} onClick={() => { setCameraMode('moon'); controls.registerInteraction() }}>
-        <Moon weight="bold" />
-        <span>{tx('月球')}</span>
-      </button>
-      <button type="button" className={cameraMode === 'wide' ? 'is-active' : undefined} aria-pressed={cameraMode === 'wide'} onClick={() => { setCameraMode('wide'); controls.registerInteraction() }}>
-        <Mountains weight="bold" />
-        <span>{tx('远景')}</span>
-      </button>
-      <button type="button" className={cameraMode === 'top' ? 'is-active' : undefined} aria-pressed={cameraMode === 'top'} onClick={() => { setCameraMode('top'); controls.registerInteraction() }}>
-        <MapTrifold weight="bold" />
-        <span>{tx('俯视')}</span>
-      </button>
-      <span className="mv-chip-divider" aria-hidden="true" />
-      <button type="button" className={showTraj ? 'is-active' : undefined} aria-pressed={showTraj} onClick={() => { setShowTraj((v) => !v); controls.registerInteraction() }} title={tx('轨迹线')}>
-        <SketchLogo weight="bold" />
-        <span>{tx('轨迹线')}</span>
-      </button>
-      <button type="button" className={trueScale ? 'is-active' : undefined} aria-pressed={trueScale} onClick={() => { setTrueScale((v) => !v); controls.registerInteraction() }} title={tx('真实尺寸（默认放大显示）')}>
-        <Ruler weight="bold" />
-        <span>{tx('真实尺寸')}</span>
-      </button>
-      <button type="button" onClick={skipToNextEvent} disabled={!launched} title={tx('跳到下一事件')}>
-        <FastForward weight="bold" />
-        <span>{tx('跳到下一事件')}</span>
-      </button>
-      <button type="button" className="experience-freebar-reset" aria-label={tx('重新发射')} onClick={relaunch}>
-        <ArrowCounterClockwise weight="bold" aria-hidden="true" />
-        <span>{tx('重新发射')}</span>
-      </button>
-    </div>
-  )
-
-  return (
-    <div className={`mv-experience${storyMode ? ' is-story' : ' is-free'}`}>
-      <Canvas
-        className="mv-canvas"
-        role="img"
-        aria-label={tx('奔月三维场景')}
-        camera={{ position: [EARTH_R + 0.00178, 0.00746, 0.00923], up: [1, 0, 0], fov: 55, near: 0.00002, far: 300000 }}
-        dpr={[1, 1.75]}
-        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance', logarithmicDepthBuffer: true }}
-        frameloop="always"
-      >
-        <color attach="background" args={['#04070f']} />
-        <MissionDriver simRef={simRef} />
-        <StarField />
-        <Sun />
-        <SkyDome />
-        <Earth />
-        <MoonBody simRef={simRef} />
-        <MoonOrbitLine visible={hud.phase !== 'pad' && hud.phase !== 'ascent'} />
-        <GhostMoon simRef={simRef} />
-        <TrajectoryLine simRef={simRef} visible={showTraj} />
-        <EventMarkers />
-        <EventLabels simRef={simRef} />
-        <BodyLabels simRef={simRef} visible={(cinematic ?? cameraMode) === 'wide' || (cinematic ?? cameraMode) === 'top'} />
-        <LaunchPad simRef={simRef} />
-        <Craft simRef={simRef} trueScale={trueScale} />
-        <CameraRig
-          simRef={simRef}
-          mode={cinematic ?? cameraMode}
-          phase={hud.phase}
-          followDist={
-            hud.phase === 'ascent'
-              ? Math.min(2.6, 0.012 + (hud.altKm / KM_PER_UNIT) * 0.6)
-              : PHASE_CAM_DIST[hud.phase]
-          }
-          autoOrbit={!storyMode}
-          lastInputRef={lastInputRef}
-          onUserControl={handleUserControl}
-        />
+  const tx=useExperienceI18n()
+  const [storyMode,setStoryMode]=useState(true)
+  const simRef=useRef<SimRefs>({ t:0, position:0, revision:0, playing:false, speed:1, launched:true, sample:sampleMission(0) })
+  const [playing,setPlayingState]=useState(false)
+  const [playbackSpeed,setPlaybackSpeed]=useState(1)
+  const [cameraMode,setCameraMode]=useState<CameraMode>('journey')
+  const [showTraj,setShowTraj]=useState(true)
+  const [trueScale,setTrueScale]=useState(false)
+  const finishRef=useRef(false)
+  const [hud,syncHud]=useHudSync(simRef)
+  const position=journeyPositionAt(hud.t)
+  const chapter=chapterAt(position)
+  useEffect(()=>{
+    const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    simRef.current.playing=!reduce; setPlayingState(!reduce)
+  },[])
+  useEffect(()=>{
+    setPlayingState(simRef.current.playing)
+    if(position>=JOURNEY_DURATION && !finishRef.current) { finishRef.current=true; controls.finish() }
+  },[position,controls])
+  const seek=useCallback((value:number)=>{
+    const sim=simRef.current
+    sim.position=Math.max(0,Math.min(JOURNEY_DURATION,value)); sim.t=missionTimeAt(sim.position)
+    sim.sample=sampleMission(sim.t); sim.playing=false; sim.revision++; setPlayingState(false)
+    if(sim.position<JOURNEY_DURATION) finishRef.current=false
+    syncHud()
+  },[syncHud])
+  const replay=()=>{ seek(0); setStoryMode(true); setCameraMode('journey'); simRef.current.playing=true;setPlayingState(true);controls.registerInteraction() }
+  const toggle=()=>{ if(simRef.current.position>=JOURNEY_DURATION) seek(0);simRef.current.playing=!simRef.current.playing;setPlayingState(simRef.current.playing);controls.registerInteraction() }
+  useEffect(()=>{
+    if(!import.meta.env.DEV)return
+    const w=window as unknown as {__mv?:unknown}
+    w.__mv={ jump:(t:number)=>seek(journeyPositionAt(t)), state:()=>simRef.current }
+    return()=>{delete w.__mv}
+  },[seek])
+  const playLabel=tx(position>=JOURNEY_DURATION?'重播故事':playing?'暂停':'播放')
+  const transport=<>
+    <button type="button" className="experience-freebar-play mv-play" data-playing={playing} aria-label={playLabel} title={playLabel} onClick={toggle}>
+      {position>=JOURNEY_DURATION?<ArrowCounterClockwise/>:playing?<Pause weight="fill"/>:<Play weight="fill"/>}<span>{tx(position>=JOURNEY_DURATION?'重播':playing?'暂停':'播放')}</span>
+    </button>
+    <label className="mv-scrub"><span>{tx('航程定位')} <output>{formatGet(hud.t)}</output></span>
+      <input type="range" min="0" max={JOURNEY_DURATION} step="0.05" value={position} aria-label={tx('航程定位')}
+        aria-valuetext={`${tx(CHAPTERS[chapter].label)} ${formatGet(hud.t)}`} onChange={event=>{seek(Number(event.target.value));controls.registerInteraction()}} />
+    </label>
+    <select className="mv-speed" aria-label={tx('播放速度')} title={tx('播放速度')} value={playbackSpeed} onChange={event=>{
+      const speed=Number(event.target.value);setPlaybackSpeed(speed);simRef.current.speed=speed;controls.registerInteraction()
+    }}>
+      {[.25,.5,1,2,4].map(speed=><option key={speed} value={speed}>{speed}×</option>)}
+    </select>
+  </>
+  const secondary=<div className="mv-secondary experience-freebar-chips">
+    {(['journey','craft','earth','moon','wide'] as const).map((mode,i)=><button type="button" key={mode} aria-pressed={cameraMode===mode} className={cameraMode===mode?'is-active':''} onClick={()=>{setCameraMode(mode);simRef.current.revision++;controls.registerInteraction()}}>{tx(['旅程镜头','跟随飞船','地球','月球','全程'][i])}</button>)}
+    <button type="button" aria-pressed={showTraj} onClick={()=>{setShowTraj(!showTraj);controls.registerInteraction()}}>{tx('轨迹线')}</button>
+    <button type="button" aria-pressed={trueScale} onClick={()=>{setTrueScale(!trueScale);controls.registerInteraction()}}>{tx(trueScale?'飞船原尺寸':'飞船放大')}</button>
+    <button type="button" className="experience-freebar-story" onClick={replay} aria-label={tx('重播故事')}><FilmStrip/><span>{tx('故事')}</span></button>
+  </div>
+  return <div className={`mv-experience ${storyMode?'is-story':'is-free'} ${hud.nearBody==='earth' && hud.t>20 && hud.t<150?'is-atmosphere':''}`} >
+    <div className="mv-stage">
+      <Canvas className="mv-canvas" role="img" aria-label={tx('奔月三维场景')}
+        camera={{position:[EARTH_R+.00178,.00746,.00923],up:[1,0,0],fov:55,near:.00002,far:300000}}
+        dpr={[1,1.5]} gl={{antialias:true,alpha:false,powerPreference:'high-performance',logarithmicDepthBuffer:true}}>
+        <color attach="background" args={['#04070f']}/>
+        <MissionDriver simRef={simRef}/><StarField/><Sun/><SkyDome/><Earth/><MoonBody simRef={simRef}/>
+        <TrajectoryLine simRef={simRef} visible={showTraj}/>
+        <GhostMoon simRef={simRef}/>
+        <BodyLabels simRef={simRef} visible={!storyMode && cameraMode==='wide'}/>
+        <LaunchPad simRef={simRef}/><Craft simRef={simRef} trueScale={trueScale}/>
+        <CameraRig simRef={simRef} mode={cameraMode} storyMode={storyMode} onUserControl={()=>{setStoryMode(false);controls.registerInteraction()}}/>
       </Canvas>
-
-      {!storyMode && (
-        <div className="mv-plaque" data-experience-overlay="true">
-          <strong>{tx('去月球要几天？')}</strong>
-          <span>{phaseCaption}</span>
-        </div>
-      )}
-
-      {!storyMode && (
-        <div className="mv-hud" data-experience-overlay="true" data-freebar-clearance="true" aria-live="polite">
-          <div className="mv-hud-top">
-            <strong>{tx(PHASE_NAME[hud.phase])}</strong>
-            <em>{formatGet(hud.t)}</em>
-          </div>
-          <div className="mv-hud-row">
-            <span>{tx('速度')} {hud.speed.toFixed(2)} km/s</span>
-            {hud.altKm < 4000 ? (
-              <span>{tx('高度')} {formatKm(hud.altKm)}</span>
-            ) : (
-              <>
-                <span>{tx('距月球')} {formatKm(hud.distMoonKm)}</span>
-                <span>{tx('距地球')} {formatKm(hud.distEarthKm)}</span>
-              </>
-            )}
-            {etaText && <span className="mv-hud-eta">{etaText}</span>}
-          </div>
-        </div>
-      )}
-
-      {!storyMode && (
-        <Freebar
-          className="mv-freebar"
-          ariaLabel={tx('发射控制')}
-          primaryControlBudget={5}
-          secondaryDefault="closed"
-          secondary={secondary}
-        >
-          {!launched ? (
-            <button
-              type="button"
-              className="mv-ignite-btn"
-              onClick={ignite}
-              aria-label={tx('点火')}
-            >
-              <RocketLaunch weight="fill" aria-hidden="true" />
-              <span>{tx('点火')}</span>
-            </button>
-          ) : finished ? (
-            <button
-              type="button"
-              className="mv-ignite-btn"
-              onClick={relaunch}
-              aria-label={tx('重新发射')}
-            >
-              <RocketLaunch weight="fill" aria-hidden="true" />
-              <span>{tx('重新发射')}</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="experience-freebar-play"
-              data-playing={playing ? 'true' : 'false'}
-              onClick={() => { setPlaying(!playing); controls.registerInteraction() }}
-              aria-label={tx(playing ? '暂停' : '继续')}
-            >
-              {playing ? <Pause weight="fill" aria-hidden="true" /> : <Play weight="fill" aria-hidden="true" />}
-            </button>
-          )}
-          <div className="experience-freebar-seg mv-speed-seg" role="group" aria-label={tx('时间加速')}>
-            {SPEED_OPTIONS.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={speed === option ? 'is-active' : undefined}
-                aria-pressed={speed === option}
-                onClick={() => { setSpeed(option); setPlaying(true); controls.registerInteraction() }}
-              >
-                {option}×
-              </button>
-            ))}
-          </div>
-          <button type="button" className="experience-freebar-story" aria-label={tx('重播故事')} onClick={handleReplay}>
-            <FilmStrip weight="fill" aria-hidden="true" />
-            <span>{tx('故事')}</span>
-          </button>
-        </Freebar>
-      )}
-
-      <GuideTour
-        worldId={WORLD_ID}
-        steps={guideSteps}
-        defaultOpen={storyMode}
-        placement="stage"
-        stagePlan={[
-          { position: 'bottom-left', mobilePosition: 'bottom-left', motion: 'rise', tone: 'light', treatment: 'monumental', width: 'normal', cue: 'up' },
-          { position: 'top-left', mobilePosition: 'top-left', motion: 'drift-right', tone: 'light', treatment: 'editorial', width: 'normal' },
-          { position: 'top-left', mobilePosition: 'top-left', motion: 'fade', tone: 'light', treatment: 'editorial', width: 'normal' },
-          { position: 'top-right', mobilePosition: 'top-right', motion: 'scale', tone: 'light', treatment: 'caption', width: 'normal', cue: 'left' },
-          { position: 'bottom-right', mobilePosition: 'bottom-right', motion: 'fade', tone: 'light', treatment: 'annotation', width: 'normal' },
-          { position: 'top-left', mobilePosition: 'top-left', motion: 'fade', tone: 'light', treatment: 'annotation', width: 'wide' },
-          { position: 'top-center', mobilePosition: 'bottom-center', motion: 'rise', tone: 'light', treatment: 'editorial', width: 'wide' },
-          { position: 'bottom-left', mobilePosition: 'bottom-left', motion: 'rise', tone: 'light', treatment: 'editorial', width: 'normal' },
-        ]}
-        replayLabel={tx('重播故事')}
-        showReplayChip={false}
-        onExit={handleGuideExit}
-      />
-
-      {!storyMode && !launched && (
-        <GhostHint
-          worldId="moon-voyage-launch"
-          gesture={{ type: 'tap', target: '.mv-ignite-btn', label: '点击点火，开始奔月之旅' }}
-        />
-      )}
-      {!storyMode && launched && !interactedRef.current && (
-        <GhostHint
-          worldId="moon-voyage-orbit"
-          gesture={{ type: 'drag', target: '.mv-canvas', label: '拖动旋转视角，看地球慢慢变小' }}
-        />
-      )}
-      {finished && <span className="mv-finished-sr" role="status">{tx('抵达：环绕月球飞行')}</span>}
     </div>
-  )
+    <section className="mv-narrative" data-experience-overlay="true">
+      <div className="mv-kicker">{tx('四天抵达月球')} <span>{String(chapter+1).padStart(2,'0')} / 07</span></div>
+      <h1>{tx(CHAPTERS[chapter].title)}</h1>
+      <p>{tx(CHAPTERS[chapter].body)}</p>
+      <div className="mv-readout"><strong>{formatGet(hud.t)}</strong><span>{tx(hud.nearBody==='earth'?'相对地球速度':'相对月球速度')} · {hud.speed.toFixed(2)} km/s</span></div>
+      <small>{tx('时间分段压缩 · 天体与间距同比例 · 飞船放大示意')}</small>
+    </section>
+    {storyMode?<div className="mv-story-controls" data-experience-overlay="true">
+      <nav aria-label={tx('航程章节')}>{CHAPTERS.map((item,i)=><button type="button" key={item.at} aria-current={i===chapter?'step':undefined} onClick={()=>{seek(item.at);controls.registerInteraction()}}>{tx(item.label)}</button>)}</nav>
+      <div className="mv-transport">{transport}<button type="button" className="mv-replay" aria-label={tx('重播故事')} onClick={replay}><ArrowCounterClockwise/></button>
+      <button type="button" className="mv-handoff" onClick={()=>{setStoryMode(false);controls.registerInteraction()}}>{tx('自由探索')}</button></div>
+    </div>:<Freebar className="mv-freebar" ariaLabel={tx('航程控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={secondary}>{transport}</Freebar>}
+  </div>
 }

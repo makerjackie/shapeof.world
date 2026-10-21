@@ -1,0 +1,164 @@
+{
+  "id": "promo-kora-40",
+  "code": "PROMO-16-40",
+  "title": {
+    "en": "Golden Threads · 40",
+    "zh": "金色丝线 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "lifestyle"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "",
+  "instruments": [
+    "kora",
+    "calabash percussion",
+    "soft bass",
+    "shakers"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: buoyant interlocking kora ostinatos and crisp percussion. Instruments: kora, calabash percussion, soft bass, shakers. Tempo 116 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second lifestyle film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "kora"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and cheerful acoustic folk-pop track featuring a prominent accordion melody, acoustic guitar, bass, and drums. It has a lively and playful feel.",
+    "zh": "一首欢快活泼的民谣流行乐曲，以手风琴为主旋律，搭配原声吉他、贝斯和鼓。整体感觉充满活力和趣味。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:32:46.269546+00:00",
+  "generation": {
+    "id": "3b0c902b-d348-4000-800b-77073fde4d25",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:32:05.694475+00:00",
+    "completedAt": "2026-09-10T05:32:46.269546+00:00",
+    "interactionId": "1kCiatWuD9Di8vUPubf2-QQ",
+    "sha256": "66cad7f4c97f02472345b888a6dabac8781cf601772b36d30e5409c9d05eebc4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and cheerful acoustic folk-pop track featuring a prominent accordion melody, acoustic guitar, bass, and drums. It has a lively and playful feel.",
+      "zh": "一首欢快活泼的民谣流行乐曲，以手风琴为主旋律，搭配原声吉他、贝斯和鼓。整体感觉充满活力和趣味。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Accordion",
+      "Bass Guitar",
+      "Drums"
+    ],
+    "moods": [
+      "Upbeat",
+      "Cheerful",
+      "Playful",
+      "Lively",
+      "Whimsical",
+      "Folk-Pop"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality production, clear instrumentation, and an engaging, positive mood make it suitable for various lighthearted promotional uses.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy acoustic guitar melody and a clear rhythmic pulse. It concludes with a deliberate, resolved final chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:33:14.657998+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "ae6c1df762e4cecfb9fe874cfe6fe1a6a1f55c9fb0b6aa14ef0a85c3f2ae2f70"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.350167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental piece featuring a prominent accordion melody, supported by a walking bassline and light percussion. The music has a cheerful, folk-dance feel, reminiscent of European or French cafe music.",
+      "zh": "一首活泼欢快的器乐曲，以手风琴为主旋律，配以行进的低音线和轻快的打击乐。音乐充满愉悦的民间舞曲氛围，让人联想到欧洲或法国咖啡馆的音乐风格。"
+    },
+    "instruments": [
+      "Accordion",
+      "Bass",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Joyful",
+      "Energetic",
+      "Folk",
+      "Danceable",
+      "Whimsical"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality, well-produced instrumental track with a clear, engaging melody and rhythm, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:33:05.889616+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.350167,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-kora-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-kora-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-kora-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:38:19.564887+00:00"
+}

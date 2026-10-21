@@ -1,0 +1,129 @@
+{
+  "id": "scene-extra-harp",
+  "code": "SCENE-EXTRA-3",
+  "title": {
+    "en": "Pebble Path",
+    "zh": "卵石小路"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "syncopated stop-motion product reveal",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 92,
+  "key": "",
+  "instruments": [
+    "harp",
+    "wooden flute and soft hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 120,
+  "prompt": "Original 120-second instrumental composition. Instruments exclusively: harp, wooden flute and soft hand percussion. 92 BPM. light interlocking plucked patterns. A distinctive concise motif, moderate variation every eight bars, no long introduction, clean resolved ending. Designed as a restrained background for a narrated video. No human voices, speech, singing, humming, choir or vocal samples. Clear natural instrument timbres with no feedback or clipping.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A serene and contemplative instrumental piece featuring a flute-like melody, plucked strings, and light percussion, evoking a traditional East Asian soundscape.",
+    "zh": "一首宁静而沉思的器乐曲，以长笛般的旋律、拨弦乐器和轻柔的打击乐为主，营造出传统的东亚音景。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "syncopated stop-motion product reveal"
+    ]
+  },
+  "duration": 118.413,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:38:26.148942+00:00",
+  "generation": {
+    "id": "e0673db8-cef0-4970-b446-bd9c7d7fa9ae",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:37:38.259514+00:00",
+    "completedAt": "2026-09-22T09:38:26.148942+00:00",
+    "interactionId": "Y0yyat-6H5mEoLAPmvSFkQY",
+    "sha256": "1480c3bbb75a52aaa22b6b5c6ad163d1b4bf76341e0440c1d5fd2406294c404f"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and contemplative instrumental piece featuring a flute-like melody, plucked strings, and light percussion, evoking a traditional East Asian soundscape.",
+      "zh": "一首宁静而沉思的器乐曲，以长笛般的旋律、拨弦乐器和轻柔的打击乐为主，营造出传统的东亚音景。"
+    },
+    "instruments": [
+      "Flute",
+      "Zither",
+      "Percussion"
+    ],
+    "moods": [
+      "Serene",
+      "Peaceful",
+      "Contemplative",
+      "Traditional",
+      "Asian",
+      "Calm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 75,
+    "reason": "The audio is a well-produced instrumental piece with clear instrumentation and a consistent mood, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:38:37.673705+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-extra-harp/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-extra-harp/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-extra-harp/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7aed633700f3cdc01c6edfc83ce97f85232a3d08a414ba83d9a3ff97b98be6cb",
+      "bytes": 1658557,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "1480c3bbb75a52aaa22b6b5c6ad163d1b4bf76341e0440c1d5fd2406294c404f",
+      "bytes": 2849580,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "edc061efed69aa40f22748abbc3b9a9ce386d5091288f7d1c29328843dda1317",
+      "bytes": 2756,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.453666+00:00"
+}

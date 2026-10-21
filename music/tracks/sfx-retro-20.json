@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-20",
+  "code": "SFX-RETRO-20",
+  "title": {
+    "en": "Retro boot",
+    "zh": "复古开机"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 19,
+  "seed": 2869198581,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized retro boot for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的复古开机合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.41,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2869198581,
+    "sha256": "d8066ec14bad121ca5a9f1c32663c62cdf908ce268e5e976c4cc5ccb9fcc122e",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "884e398b538d7a6240d910b6be4a8640b94b35bd2ca3e820405c329d3d335701",
+      "bytes": 6626,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d8066ec14bad121ca5a9f1c32663c62cdf908ce268e5e976c4cc5ccb9fcc122e",
+      "bytes": 36206,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "5ead95bb97f8517dc123e72e34bcd061b240ebb016525500e3b3cdccfbc3e41c",
+      "bytes": 10432,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "223e89fab64cb5cd714f7c6e149ff28830b4acfb6a731873e86aaf8cd805cc56",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 18081,
+    "duration": 0.41,
+    "peakDbfs": -4.51,
+    "rmsDbfs": -17.08,
+    "dcOffset": 8.996111465419501e-07,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.10560446166992155,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing or spring sound effect, with a quick attack and short decay.",
+      "zh": "短促、高音的合成弹簧或“boing”声效，具有快速的起音和短促的衰减。"
+    },
+    "reason": "Clean, distinct, synthesized sound effect, well-suited for UI feedback or cartoon-style game elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:31.772335+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "884e398b538d7a6240d910b6be4a8640b94b35bd2ca3e820405c329d3d335701"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 18081
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.897916+00:00"
+}

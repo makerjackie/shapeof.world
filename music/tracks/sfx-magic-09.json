@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-09",
+  "code": "SFX-MAGIC-09",
+  "title": {
+    "en": "Portal close",
+    "zh": "传送门关闭"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 8,
+  "seed": 3115890325,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized portal close for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的传送门关闭合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.28,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-09/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-09/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-09/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-09/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3115890325,
+    "sha256": "cf9576102cce2129194503190d1bf5c213f5882c708805698b144f0752d6aca7",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2c4278cec293d50449b898325cb9bb4ba3d2e8639dced7ae0661c1d045d66c70",
+      "bytes": 18694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "cf9576102cce2129194503190d1bf5c213f5882c708805698b144f0752d6aca7",
+      "bytes": 112940,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b6ca319d8fdb529d9bec38e558d9238513fd95bddf4aadc411152d3538fac45f",
+      "bytes": 26495,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "4ad7444cc2ca973503d055aac9e29583a49eb6bf18beed48eec8c28ec91f79bc",
+      "bytes": 1936,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 56448,
+    "duration": 1.28,
+    "peakDbfs": -4.95,
+    "rmsDbfs": -17.08,
+    "dcOffset": 1.892210945250496e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1133010253906237,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, bright, ascending synthesized chime or sparkle sound effect with a magical or whimsical quality.",
+      "zh": "一个短促、明亮、上升的合成音效，听起来像铃声或闪光，带有魔法或奇幻的特质。"
+    },
+    "reason": "The sound is a clean, well-produced, and distinct synthesized effect suitable for various UI or magical event applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:40.758166+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "2c4278cec293d50449b898325cb9bb4ba3d2e8639dced7ae0661c1d045d66c70"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 56448
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.882174+00:00"
+}

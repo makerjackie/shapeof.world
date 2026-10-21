@@ -1,0 +1,130 @@
+{
+  "id": "ambience-space-01",
+  "code": "AMB-SPACE-01",
+  "title": {
+    "en": "Orbital station · designed ambience",
+    "zh": "轨道空间站 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "space",
+  "designIndex": 0,
+  "seed": 1970705440,
+  "targetDuration": 30,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized orbital station atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "轨道空间站的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "space",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-space"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 30.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-space-01/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-space-01/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-space-01/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-space-01/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1970705440,
+    "sha256": "31c062000833ceaa92e16e2b787594e71299935383b52de2c67720d9d7131c6a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "45c532f4fd5aef79aee6d0d77f682cabf5924fd6475d6b5c1bc55ffd355b2991",
+      "bytes": 420980,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "31c062000833ceaa92e16e2b787594e71299935383b52de2c67720d9d7131c6a",
+      "bytes": 2646044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "b10ab6171cbd3c941e2658b4f5c0e2cf256a2d4fe522726a0a93826b874113bf",
+      "bytes": 152832,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "5f5d32a7def32ea870a76f5513b50decf88c5a3bfec7fa1eae9057db91cf9f6e",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 1323000,
+    "duration": 30.0,
+    "peakDbfs": -2.31,
+    "rmsDbfs": -17.08,
+    "dcOffset": -4.636457447562359e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0006103515625,
+    "internalStepP999": 0.014495849609375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A deep, resonant, synthesized atmospheric hum with a dynamic, sweeping character, reminiscent of a large, airy space or a sci-fi engine. It has a consistent texture that builds and decays within each cycle.",
+      "zh": "低沉、共鳴的合成氛圍嗡鳴聲，帶有動態、掃掠的特徵，類似於廣闊的空間或科幻引擎聲。其紋理一致，在每個循環中都有起伏變化。"
+    },
+    "reason": "The audio is a clean, well-produced, and perfectly looping atmospheric sound texture. There are no audible defects such as clipping, clicks, or glitches, and the loop transitions are seamless.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:23:56.801465+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "ea7923d20e34a11a9d7fa08f471868c9daffeb2fab75aadd49eb5a2c25d30906"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1323000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.856667+00:00"
+}

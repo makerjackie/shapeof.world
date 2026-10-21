@@ -1,0 +1,205 @@
+{
+  "id": "scene-game-koto-menu",
+  "code": "GAME-09-1",
+  "title": {
+    "en": "Moonlit Courtyard · Menu",
+    "zh": "月下庭院 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "quiet courtyard exploration",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "",
+  "instruments": [
+    "koto",
+    "bamboo flute",
+    "soft bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for quiet courtyard exploration, menu state. Instruments: koto, bamboo flute, soft bass. 82 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "koto"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A peaceful and reflective orchestral piece featuring a prominent flute melody over a gentle string accompaniment with pizzicato elements.",
+    "zh": "一首宁静而沉思的管弦乐作品，以悠扬的长笛旋律为主，伴随着柔和的拨弦和弦乐伴奏。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 87.562,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:26:08.057920+00:00",
+  "generation": {
+    "id": "e395745f-4dc7-4b2f-8cfe-2b72f2ff434f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:25:28.594192+00:00",
+    "completedAt": "2026-09-22T09:26:08.057920+00:00",
+    "interactionId": "iUmyauiQEqrirtoPpLv_sA4",
+    "sha256": "f512a586d7f0ec8a22773f84521550d4eac74feeab6224bbbe926a6826e42246"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A peaceful and reflective orchestral piece featuring a prominent flute melody over a gentle string accompaniment with pizzicato elements.",
+      "zh": "一首宁静而沉思的管弦乐作品，以悠扬的长笛旋律为主，伴随着柔和的拨弦和弦乐伴奏。"
+    },
+    "instruments": [
+      "Flute",
+      "Strings",
+      "Pizzicato strings"
+    ],
+    "moods": [
+      "Peaceful",
+      "Calm",
+      "Reflective",
+      "Gentle",
+      "Melancholic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:26:28.611712+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 12.5,
+    "sourceEndSeconds": 71.57691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.43,
+        "dcOffset": 0.002121460814314571,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.018035888671875,
+        "internalStepP999": 0.088348388671875,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.98,
+        "rmsDbfs": -14.6,
+        "dcOffset": 0.0016566288320588526,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01348876953125,
+        "internalStepP999": 0.083282470703125,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A sustained, synthesized, ethereal pad sound with a melancholic or contemplative mood. It features evolving harmonic layers, reminiscent of a slow, airy synth choir or strings, maintaining a consistent texture throughout.",
+        "zh": "持续的、合成的、空灵的衬底音效，带有忧郁或沉思的氛围。它具有不断演变的和声层，类似于缓慢、飘渺的合成器合唱或弦乐，在整个过程中保持一致的音色。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture with no audible defects. It loops seamlessly, making it highly suitable for background ambiance in games or video.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:30:04.966616+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "ee959cd7d5b61dd37b06d79365d1a2ae8390614431523c0221f69502ff7d26e0"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified boundaries. Rhythm, harmony, dynamics, and phrase continuity are excellent. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the joins. It is very comfortable for continuous game background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:30:12.725687+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-koto-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-koto-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-koto-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-koto-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-koto-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "53f8abb3cd90549d357b5d82aaaaf801e9ffea35c5ada9c6ba1f8a037e367c0e",
+      "bytes": 1226649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f512a586d7f0ec8a22773f84521550d4eac74feeab6224bbbe926a6826e42246",
+      "bytes": 2109165,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "fffd98e61e5e5684da4b050a0452c1956b2ae6e833fa27afdeda1f1518829681",
+      "bytes": 2815,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "cedb9ab37c7107e8d3c65c0364ccefe0ab152dc31ad152329b50a31c5be3862b",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "ea1d46345a81e42ae21f29ffd62e7cf8111a41b54f87cc23ffc07a1a681b140f",
+      "bytes": 743507,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.461726+00:00"
+}

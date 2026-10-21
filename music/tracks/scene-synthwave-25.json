@@ -1,0 +1,177 @@
+{
+  "id": "scene-synthwave-25",
+  "code": "SCENE-15-25",
+  "title": {
+    "en": "Night Transit · 25",
+    "zh": "夜间穿行 · 25"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "original retro-futuristic transport montage",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 126,
+  "key": "",
+  "instruments": [
+    "analog arpeggios",
+    "rounded bass",
+    "tight gated snare"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-clip-preview",
+  "targetDuration": 25,
+  "prompt": "Compose an original complete 30-second instrumental cue for original retro-futuristic transport montage. Instruments: analog arpeggios, rounded bass, tight gated snare. 126 BPM in 4/4. Motif: an offbeat three-note arch and held answer. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "synthwave"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An energetic and driving electronic track featuring a prominent synth melody, pulsing bass, and a steady electronic drum beat. It has a modern, upbeat feel suitable for promotional content.",
+    "zh": "一首充满活力和动感的电子音乐，以突出的合成器旋律、脉动的低音和稳定的电子鼓点为特色。它具有现代、欢快的氛围，适合宣传内容。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "original retro-futuristic transport montage"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 25,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 25.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:17:20.217619+00:00",
+  "generation": {
+    "id": "3d3fdbb9-44bb-47b2-9d90-1267d05fb3b6",
+    "model": "lyria-3-clip-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:17:07.258748+00:00",
+    "completedAt": "2026-09-22T09:17:20.217619+00:00",
+    "interactionId": "lEeyarr6E5qE694P7omguQ0",
+    "sha256": "ad119fbbebe40593ea8efa5ae10f2c89404fd673d156ba556c535d215f56cde8"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and driving electronic track featuring a prominent synth melody, pulsing bass, and a steady electronic drum beat. It has a modern, upbeat feel suitable for promotional content.",
+      "zh": "一首充满活力和动感的电子音乐，以突出的合成器旋律、脉动的低音和稳定的电子鼓点为特色。它具有现代、欢快的氛围，适合宣传内容。"
+    },
+    "instruments": [
+      "synthesizer",
+      "electronic drums",
+      "bass synthesizer"
+    ],
+    "moods": [
+      "energetic",
+      "upbeat",
+      "driving",
+      "modern",
+      "positive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The audio is well-produced, clean, and features a clear, engaging electronic soundscape without any defects, making it highly suitable for a music library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens with an immediate, driving electronic beat and a catchy synth melody. It concludes with a deliberate fade-out and a final sustained synth chord, providing a clear and resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:32.947365+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "0347986a92562b63ad673d78531ddc732aeeeabc3b54a382aeb0e11d9845e4fb"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 30.772167,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and driving electronic dance track featuring pulsating synth melodies, a strong rhythmic beat, and a dynamic arrangement.",
+      "zh": "一首充满活力和动感的电子舞曲，具有脉动的合成器旋律、强劲的节奏和动态的编排。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Electronic Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Danceable",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 132,
+    "reason": "Clean, well-produced electronic track suitable for various media.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:17:27.534095+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 5.772167,
+    "requestedSeconds": 25,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-synthwave-25/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-synthwave-25/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-synthwave-25/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0347986a92562b63ad673d78531ddc732aeeeabc3b54a382aeb0e11d9845e4fb",
+      "bytes": 351129,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "ad119fbbebe40593ea8efa5ae10f2c89404fd673d156ba556c535d215f56cde8",
+      "bytes": 746200,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "2e0a5bd73178225d8385cac0f160453362b6f2bc91b794c735949069e9bbee60",
+      "bytes": 2802,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.852093+00:00"
+}

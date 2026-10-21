@@ -1,0 +1,59 @@
+{
+  "id": "attention-flash",
+  "code": "AIM-C01",
+  "title": {
+    "en": "Attention Flash",
+    "zh": "注意力闪光"
+  },
+  "category": "ai-ml",
+  "archetype": "event",
+  "moods": [
+    "spotlight",
+    "staccato",
+    "modern",
+    "alert"
+  ],
+  "topics": [
+    "attention",
+    "tokens",
+    "transformers"
+  ],
+  "energy": 4,
+  "bpm": 116,
+  "key": "C# minor",
+  "instruments": [
+    "dark pad bed",
+    "bright piano stabs",
+    "digital ticks",
+    "short bass hits"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.789,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about attention jumping across a bed of tokens. Around 116 BPM, C# minor. A dark pad is the whole sequence; bright piano stabs are the current head looking; digital ticks are other tokens waiting. Alert, modern, staccato. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No rap vocal chops, no trailer brass.\n\n[00:00–00:20] Dark pad of clustered pitches, unfocused.\n[00:20–00:55] Piano stabs spotlight single pitches; ticks answer.\n[00:55–01:35] Multiple stabs in quick patterns, as if several heads; bass hits on key alignments.\n[01:35–02:10] Spotlight slows on one pitch, then jumps.\n[02:10–02:30] Pad remains; stabs cease.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:07:50Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/attention-flash/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/attention-flash/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/attention-flash/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:49.563547+00:00",
+  "generation": {
+    "id": "19a9a2fa-2793-4aeb-aac8-9e94ec27c55e",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:06:50Z",
+    "completedAt": "2026-08-25T10:07:50Z",
+    "durationMs": 60000,
+    "interactionId": "PGmNar7eCdn1jMwPlcOF0Qw",
+    "clientRequestId": "6b87447d-2985-440b-9a86-1578a971c6df",
+    "synthid": true,
+    "c2pa": "urn:c2pa:7e00ac20-f6ec-1715-5404-40ef2f2504d7",
+    "sha256": "920a12593e804c550676055011fd60b36d79a59ef0946a4171c4cb908d90e7f8"
+  }
+}

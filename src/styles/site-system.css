@@ -1,0 +1,214 @@
+/* Shared site system: type roles, buttons, work card and page layout.
+   Pages compose these classes instead of restating sizes, colours or radii.
+   Tokens come from :root in app.css. */
+
+/* ---- Type roles ---- */
+.page-title,
+.section-title {
+  max-width: 14em;
+  margin: 0;
+  color: inherit;
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  line-break: strict;
+}
+html[lang^='zh'] .page-title,
+html[lang^='zh'] .section-title,
+html[lang^='zh'] .work-card-title {
+  /* break after punctuation first; only fall back to any character when a
+     phrase cannot fit the line */
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+.page-title { font-size: var(--fs-page); line-height: 1.2; }
+.section-title { font-size: var(--fs-section); line-height: 1.2; }
+html[lang^='zh'] .page-title,
+html[lang^='zh'] .section-title { letter-spacing: 0; }
+
+.lead {
+  max-width: 36em;
+  margin: 0;
+  color: inherit;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  opacity: 0.74;
+}
+.label {
+  color: inherit;
+  opacity: 0.6;
+  font-size: var(--fs-label);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* ---- Page head: title and lead at the left edge of the content column ---- */
+.page-head {
+  display: grid;
+  gap: var(--space-4);
+  width: min(var(--site-content-width), calc(100% - 2 * var(--site-gutter)));
+  margin: 0 auto;
+  padding: clamp(72px, 10vw, 112px) 0 var(--space-7);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ---- Buttons: four kinds only ---- */
+.btn-primary,
+.btn-secondary,
+.btn-text,
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  font-family: var(--sans);
+  font-size: var(--fs-support);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--dur-hover) ease-out, border-color var(--dur-hover) ease-out, color var(--dur-hover) ease-out, opacity var(--dur-hover) ease-out;
+}
+.btn-primary svg,
+.btn-secondary svg,
+.btn-text svg,
+.icon-btn svg { flex: none; width: 16px; height: 16px; }
+.btn-primary {
+  padding: 0 var(--space-5);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn-primary:hover:not(:disabled) { background: #ffdd8c; border-color: #ffdd8c; }
+.btn-secondary {
+  padding: 0 var(--space-5);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+}
+.btn-secondary:hover:not(:disabled) { border-color: currentColor; }
+.btn-text {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 4px;
+}
+.btn-text:hover { text-decoration-color: currentColor; }
+.icon-btn {
+  width: 44px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+}
+.icon-btn:hover:not(:disabled) { border-color: currentColor; }
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.icon-btn:disabled { opacity: 0.5; cursor: default; }
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-text:focus-visible,
+.icon-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.page-title.page-title + p { margin-top: var(--space-4); }
+
+/* ---- Work card: one card for every list of worlds ---- */
+.work-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform var(--dur-hover) ease-out, border-color var(--dur-hover) ease-out;
+}
+.work-card:hover,
+.work-card:focus-visible {
+  border-color: color-mix(in srgb, var(--text) 38%, transparent);
+  transform: translateY(-2px);
+}
+.work-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.work-card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--bg);
+}
+.work-card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--world-poster-position, 50% 50%);
+}
+.work-card-viewed {
+  position: absolute;
+  bottom: var(--space-3);
+  left: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(7, 9, 11, 0.86);
+  color: var(--text);
+  font-size: var(--fs-label);
+  font-weight: 500;
+}
+.work-card-viewed svg { width: 12px; height: 12px; }
+.work-card-body {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+.work-card-title {
+  font-family: var(--serif);
+  font-size: var(--fs-card);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.work-card-label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-3);
+  font-size: var(--fs-label);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.work-card--small .work-card-body { padding: var(--space-3); }
+.work-card--small .work-card-title { font-size: var(--fs-lead); }
+.work-card--large .work-card-body { padding: var(--space-4) var(--space-5) var(--space-5); }
+.work-card--large .work-card-title { font-size: var(--fs-section); }
+
+.work-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 640px) {
+  .work-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card { transition: none; }
+  .work-card:hover, .work-card:focus-visible { transform: none; }
+}

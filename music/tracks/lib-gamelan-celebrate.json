@@ -1,0 +1,100 @@
+{
+  "id": "lib-gamelan-celebrate",
+  "code": "LIB-23-10",
+  "title": {
+    "en": "First Light — Gamelan",
+    "zh": "初光 · 甘美兰"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "gamelan"
+  ],
+  "energy": 2,
+  "bpm": 92,
+  "key": "C major",
+  "instruments": [
+    "metallophones",
+    "soft gong",
+    "bamboo flute"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second gamelan-inspired instrumental instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: metallophones, soft gong, bamboo flute. Style: cyclic interlocking metallic patterns with long gong punctuation. Tempo approximately 92 BPM; C major. Main idea: an ascending fourth answered by a stepwise descent. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gamelan"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A gentle and melodic instrumental piece featuring a prominent flute melody over a bed of pizzicato and bowed strings, with light percussion. The mood is calm and reflective, reminiscent of a folk or classical chamber ensemble.",
+    "zh": "一段轻柔而旋律优美的纯音乐，以长笛为主旋律，伴随着拨弦和弓弦乐器，以及轻快的打击乐。氛围平静而富有沉思感，让人联想到民间或古典室内乐团。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.462,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:03:33.499337+00:00",
+  "generation": {
+    "id": "5261ae3b-5126-4a74-8b13-706ec6886499",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:02:53.963848+00:00",
+    "completedAt": "2026-09-09T09:03:33.499337+00:00",
+    "interactionId": "vyChatzJDebq8vUPyqaQQA",
+    "sha256": "888b3540fc190a1c83e23df671b70c3d1d2637ccbc0c21f56ebc524620c936f3"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic instrumental piece featuring a prominent flute melody over a bed of pizzicato and bowed strings, with light percussion. The mood is calm and reflective, reminiscent of a folk or classical chamber ensemble.",
+      "zh": "一段轻柔而旋律优美的纯音乐，以长笛为主旋律，伴随着拨弦和弓弦乐器，以及轻快的打击乐。氛围平静而富有沉思感，让人联想到民间或古典室内乐团。"
+    },
+    "instruments": [
+      "Flute",
+      "Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Gentle",
+      "Reflective",
+      "Whimsical"
+    ],
+    "energy": 2,
+    "bpmEstimate": 95,
+    "reason": "The music is well-produced, clear, and has a pleasant, consistent theme suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:03:40.701521+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gamelan-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gamelan-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gamelan-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:04:17.059924+00:00"
+}

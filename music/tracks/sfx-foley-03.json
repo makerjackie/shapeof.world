@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-03",
+  "code": "SFX-FOLEY-03",
+  "title": {
+    "en": "Cloth swish",
+    "zh": "布料擦过"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 2,
+  "seed": 4253128620,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized cloth swish for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的布料擦过合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.52,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4253128620,
+    "sha256": "dcc507da9f50c89202a89e09d6390bf04855436edb4185b038f8cfe420b7d034",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "10f34aea7847d37fd98a5888a17642b999c0466e46a4fbd560f43d670cbc0cf0",
+      "bytes": 8089,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "dcc507da9f50c89202a89e09d6390bf04855436edb4185b038f8cfe420b7d034",
+      "bytes": 45908,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "0f4f4bb7008c40a4a202dc89a961d22c9d2632d0f68af5dc7617552b4de64709",
+      "bytes": 11687,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "8a4c9a8827ca9abb439b541fb1debf0f39d527ba7b2c9061fefe2d29d4fa80f2",
+      "bytes": 1712,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 22932,
+    "duration": 0.52,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -22.83,
+    "dcOffset": -2.7946500114468864e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.22803741455078108,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic zap or laser sound effect with a quick attack and decay.",
+      "zh": "短促、高音调的电子“滋啦”声或激光音效，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, well-defined electronic effect, suitable for various game or UI applications. No technical defects are present.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:49.459161+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "10f34aea7847d37fd98a5888a17642b999c0466e46a4fbd560f43d670cbc0cf0"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 22932
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.862913+00:00"
+}

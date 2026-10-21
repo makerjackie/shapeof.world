@@ -1,0 +1,125 @@
+{
+  "id": "sfx-transition-19",
+  "code": "SFX-TRANSITION-19",
+  "title": {
+    "en": "Lift",
+    "zh": "向上抬升"
+  },
+  "kind": "sfx",
+  "family": "transition",
+  "designIndex": 18,
+  "seed": 3786938428,
+  "scenarios": [
+    "video-transition"
+  ],
+  "description": {
+    "en": "Original synthesized lift for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的向上抬升合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "transition",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-transition"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.45,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-transition-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-transition-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-transition-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-transition-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3786938428,
+    "sha256": "b88fba80cd8ea76e22a3cabd0f62d31367755c9e9a3c06bd5ef9f27c20de509d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "ff4c141103e765e2c77bbaf8b3102c9298eca60846c526cb01a761039e1beb67",
+      "bytes": 21254,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b88fba80cd8ea76e22a3cabd0f62d31367755c9e9a3c06bd5ef9f27c20de509d",
+      "bytes": 127934,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "9127255aa66f95c09e6df0823dd3f4e640916f467767744658616fbfca0a5159",
+      "bytes": 30789,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "eb0c43d400f15c62eed15a4100c0a82df7c3b43af7fd3587cf0e72dd759ce225",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 63945,
+    "duration": 1.45,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.91,
+    "dcOffset": 9.06769855930878e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2566876220703129,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A fast, high-pitched whoosh sound effect, resembling a quick pass-by or a rapid movement, with a slightly metallic or electronic texture.",
+      "zh": "一个快速、高音调的嗖嗖声效果，类似于快速经过或迅速移动，带有一点金属或电子质感。"
+    },
+    "reason": "The sound is a clean, isolated whoosh effect with no technical defects, making it suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:55.233112+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "ff4c141103e765e2c77bbaf8b3102c9298eca60846c526cb01a761039e1beb67"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 63945
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.905762+00:00"
+}

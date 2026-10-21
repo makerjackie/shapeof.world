@@ -1,0 +1,101 @@
+{
+  "id": "lib-post-rock-nature",
+  "code": "LIB-30-04",
+  "title": {
+    "en": "Wildlands — Post Rock",
+    "zh": "山野 · 后摇"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "post-rock"
+  ],
+  "energy": 4,
+  "bpm": 92,
+  "key": "D dorian",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second instrumental post-rock instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 92 BPM; D dorian. Main idea: a repeating five-note figure with space between phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A dynamic and energetic instrumental track featuring a prominent electric guitar melody, supported by a driving rhythm section of bass and drums. The arrangement builds with layered guitars, including a lead guitar solo, and subtle synth pads, creating an uplifting and powerful sound.",
+    "zh": "一首充满活力和动感的纯音乐曲目，以突出的电吉他旋律为主，并由贝斯和鼓组成的强劲节奏部分支撑。编曲通过分层吉他（包括主音吉他独奏）和微妙的合成器铺垫逐渐增强，营造出一种振奋人心且充满力量的声音。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.782,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:19:15.260372+00:00",
+  "generation": {
+    "id": "ec5af544-fa1e-4c33-a051-ba64a1cf0d55",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:18:21.141103+00:00",
+    "completedAt": "2026-09-09T09:19:15.260372+00:00",
+    "interactionId": "XiShavCGFv6WjMwPtfeJmQQ",
+    "sha256": "23b6d2ff540f09ad08a04077dc05a5421f53137e08efb5df791982b8fbab9852"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A dynamic and energetic instrumental track featuring a prominent electric guitar melody, supported by a driving rhythm section of bass and drums. The arrangement builds with layered guitars, including a lead guitar solo, and subtle synth pads, creating an uplifting and powerful sound.",
+      "zh": "一首充满活力和动感的纯音乐曲目，以突出的电吉他旋律为主，并由贝斯和鼓组成的强劲节奏部分支撑。编曲通过分层吉他（包括主音吉他独奏）和微妙的合成器铺垫逐渐增强，营造出一种振奋人心且充满力量的声音。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Uplifting",
+      "Dynamic",
+      "Powerful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "The track is well-produced with clear instrumentation, a strong melodic presence, and a consistent energetic feel, making it highly suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:19:25.846151+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:22:23.333465+00:00"
+}

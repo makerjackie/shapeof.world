@@ -1,4 +1,637 @@
-Shape of the World curated open-source edition
-Worlds: moon-voyage, black-hole-flyby, formula-bloom, double-slit, pendulum-wave, double-pendulum, firefly-sync, chemical-garden, neural-playground, robot-ik, solar-system, three-body, gravity-assist, mandelbrot-zoom, newton-fractal, clifford-dust, kakeya-needle, strange-attractors, fluid-sim, electric-field, magnetic-lines, fourier, ferrofluid, soap-bubble, pool-caustics, pinhole-canopy, lightning-lab, snow-crystal, boids-flocking, phyllotaxis
+ONEWORLD THIRD-PARTY NOTICES
+Last updated: August 10, 2026
 
-See OSS_NOTICES.md, DATA_SOURCES.md, and public/assets/oss-source/ for license texts.
+OneWorld is an independent educational project. Source names identify
+provenance only and do not imply sponsorship, certification, or endorsement.
+
+CONTENT AND DATA
+
+earth.nullschool live Earth
+  Official Simplified Chinese experience embedded at runtime.
+  Source code: https://github.com/cambecc/earth (MIT)
+  Data sources are declared per layer by earth.nullschool and include NOAA,
+  NASA and Copernicus products. OneWorld does not redistribute those feeds.
+
+Boston Public Library / Digital Commonwealth — Hammond's complete map of
+New York City, 1917
+  https://www.digitalcommonwealth.org/search/commonwealth:4m90f212r
+  The item record states “No known copyright restrictions” and “No known
+  restrictions on use.” Allmaps georeference annotation data are CC0.
+
+NASA Earth imagery
+  Files: /assets/earth-blue-marble.jpg,
+         /assets/posters/living-earth.webp,
+         /assets/posters/living-earth-desktop.webp,
+         /assets/posters/earth-cutaway.webp,
+         /assets/posters/scale-portal.webp,
+         /assets/posters/epic-earth.webp, and epic-earth-mobile.webp
+  Blue Marble provenance: NASA Visible Earth
+  https://visibleearth.nasa.gov/collection/1484/blue-marble
+  earth-blue-marble.jpg is a byte-for-byte copy of earth_atmos_2048.jpg
+  from the Three.js r185 example textures.
+  https://github.com/mrdoob/three.js/blob/r185/examples/textures/planets/earth_atmos_2048.jpg
+  EPIC source and API: NASA / NOAA DSCOVR EPIC
+  https://epic.gsfc.nasa.gov/about
+  https://epic.gsfc.nasa.gov/about/api
+  The EPIC Team makes its published material, including imagery, available
+  for reproduction and reuse, including commercial purposes, and requests
+  credit to the NASA EPIC Team. NASA's broader media guidelines, protected
+  marks, third-party rights, and no-endorsement conditions still apply.
+
+Smithsonian Apollo 11 Command Module
+  Historical record only: the local scan parts and OneWorld poster renders were
+  removed from the deployable release on 2026-08-09 with the other Smithsonian
+  resources.
+  Source: Smithsonian National Air and Space Museum
+  https://3d.si.edu/object/3d/d8c63e8a-4ebc-11ea-b77f-2e728ce88125
+  Designated CC0 1.0 Universal by the Smithsonian.
+  https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+RCSB Protein Data Bank structures
+  Files: /assets/flagships/2dn1.bcif, 2dn1-heme.pdb, 2dn2.bcif,
+         and 2hbs.bcif. The PDB file is a OneWorld extraction from 2DN1.
+  Records: https://www.rcsb.org/structure/2DN1
+           https://www.rcsb.org/structure/2DN2
+           https://www.rcsb.org/structure/2HBS
+  PDB archive data is made available under CC0 1.0 Universal.
+  https://www.rcsb.org/pages/usage-policy
+
+Poly Haven HDRIs
+  File: /assets/flagships/mars-sky.hdr
+  Source: Kloppenheim 06 (Pure Sky)
+  Creators: Greg Zaal and Jarod Guest
+  Released under CC0 1.0 Universal.
+  https://polyhaven.com/license
+
+SCI Institute CT_Electrodes volume
+  Files: /assets/volume/CT_Electrodes.nii.gz, LICENSE, NOTICE.md, and
+         /assets/posters/cranial-volume.webp (OneWorld NiiVue render)
+  Source: Scientific Computing and Imaging Institute, University of Utah
+  https://github.com/CIBC-Internal/Seg3DData
+  Pinned mirror and exact MIT terms: /assets/volume/NOTICE.md and LICENSE
+  SHA-256: 0566942708ff451458d0fdb1f61c4611187bb5cc0efa516c8500f1ff3c142e57
+
+
+USGS Earthquake Hazards Program
+  Runtime feed:
+  https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+  USGS-authored or produced data and information are generally considered
+  public domain in the United States; separately identified third-party
+  material can have different terms. USGS requests source credit.
+  https://www.usgs.gov/faqs/are-usgs-reportspublications-copyrighted
+
+World Bank indicators
+  Population, total (SP.POP.TOTL), 2023
+  GDP, current US$ (NY.GDP.MKTP.CD), 2023
+  Forest area, sq. km (AG.LND.FRST.K2), 2022
+  /assets/posters/world-treemap.webp is a OneWorld render of these stored
+  values and the d3-hierarchy layout.
+  https://data.worldbank.org/indicator/SP.POP.TOTL
+  https://data.worldbank.org/indicator/NY.GDP.MKTP.CD
+  https://data.worldbank.org/indicator/AG.LND.FRST.K2
+  The World Bank says CC BY 4.0, with additional terms, is the default for
+  World Bank-produced open datasets. Some records have different terms; the
+  current indicator or catalog record controls.
+  https://datacatalog.worldbank.org/public-licenses
+  https://www.worldbank.org/en/about/legal/permissions
+
+NOAA and NIST factual references
+  NOAA Ocean Exploration supports the compiled ocean-depth story.
+  https://oceanexplorer.noaa.gov/ocean-fact/light-distributed/
+  https://oceanexplorer.noaa.gov/ocean-fact/animal-pressure/
+  NIST SI length material supports the modeled powers-of-ten story.
+  https://www.nist.gov/pml/owm/si-units-length
+  OneWorld does not redistribute a standalone NOAA or NIST dataset for these
+  experiences. Their own current source pages and terms control reuse.
+  /assets/posters/ocean-descent.webp is an application-generated capture,
+  not a reproduction of NOAA media.
+  https://oceanservice.noaa.gov/about/faq.html
+  https://www.nist.gov/copyrights-disclaimers
+
+SOFTWARE
+
+Phosphor Icons 2.1.10 — MIT
+  Phosphor icons are used in the site interface under the MIT License.
+  The product logo is the app orb in /assets/brand/app-icon.png, not a Phosphor glyph.
+  https://phosphoricons.com/
+  Full license: /assets/oss-source/LICENSE-phosphor-icons.txt
+
+Manrope / Cormorant Garamond via Fontsource 5.3.0 — OFL-1.1
+  Unmodified web fonts used by the site interface. The font files remain under
+  OFL-1.1 and are not relicensed under the site's software license.
+  Copyright notices and full license: /assets/oss-source/LICENSE-fonts-ofl.txt
+
+MapLibre GL JS 5.24.0 — BSD-3-Clause
+  https://github.com/maplibre/maplibre-gl-js
+  Full license: /assets/oss-source/LICENSE-maplibre.txt
+
+Allmaps MapLibre plugin 1.0.0-beta.43 — MIT
+  https://github.com/allmaps/allmaps
+  Full license: /assets/oss-source/LICENSE-allmaps.md
+
+earth.nullschool / cambecc/earth — MIT
+  https://github.com/cambecc/earth
+  Full license: /assets/oss-source/LICENSE-earth-nullschool.md
+
+Three.js 0.185.1
+  Used to render OneWorld's interactive 3D scenes.
+  Source: https://github.com/mrdoob/three.js
+  License: MIT (full text below)
+
+Google Draco decoder
+  Files: /draco/draco_decoder.js, draco_decoder.wasm, and
+         draco_wasm_wrapper.js
+  Source: https://github.com/google/draco
+  License: Apache License 2.0 (full text below)
+
+Swiper 12.2.0
+  Used for the vertical poster magazine.
+  Source: https://github.com/nolimits4web/swiper
+  License: MIT (full text below)
+
+NiiVue 0.69.0
+  Used to render the archived NIfTI CT volume.
+  Source: https://github.com/niivue/niivue
+  License: BSD 2-Clause (full text below)
+
+d3-hierarchy 3.1.2
+  Used to calculate treemap layout.
+  Source: https://github.com/d3/d3-hierarchy
+  License: ISC (full text below)
+
+Eric Bruneton Black Hole Shader — BSD-3-Clause
+  Files: /vendor/black-hole/ (real-time relativistic black hole demo)
+  Renders the black hole flyby world; project-generated background sky (scripts/generate-black-hole-sky.mjs).
+  Source: https://github.com/ebruneton/black_hole_shader
+  Full license: /assets/oss-source/LICENSE-black-hole-shader.txt
+
+-------------------------------------------------------------------------------
+MOL* — MIT LICENSE
+-------------------------------------------------------------------------------
+THREE.JS — MIT LICENSE
+-------------------------------------------------------------------------------
+
+The MIT License
+
+Copyright © 2010-2026 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+-------------------------------------------------------------------------------
+GOOGLE DRACO — APACHE LICENSE 2.0
+-------------------------------------------------------------------------------
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+Draco authors for copyright purposes include Google Inc. and other
+contributors. OneWorld redistributes the decoder without modification from
+the glTF decoder build included with three@0.185.1.
+
+-------------------------------------------------------------------------------
+SWIPER 12.2.0 — MIT LICENSE
+-------------------------------------------------------------------------------
+
+Copyright (c) 2019 Vladimir Kharlampidi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+NIIVUE 0.69.0 — BSD 2-CLAUSE LICENSE
+-------------------------------------------------------------------------------
+
+BSD 2-Clause License
+
+Copyright (c) 2021, Niivue
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+-------------------------------------------------------------------------------
+D3-HIERARCHY 3.1.2 — ISC LICENSE
+-------------------------------------------------------------------------------
+
+Copyright 2010-2021 Mike Bostock
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+-------------------------------------------------------------------------------
+D3-SHAPE 3.2.0 — ISC LICENSE
+-------------------------------------------------------------------------------
+
+Copyright 2010-2022 Mike Bostock
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+-------------------------------------------------------------------------------
+OPEN TREE OF LIFE DATA — CC0 1.0 PUBLIC DOMAIN DEDICATION
+-------------------------------------------------------------------------------
+
+The Tree of Life experience queries the official Open Tree of Life v3 API.
+Open Tree states that, where not limited by pre-existing terms, its published
+data use the CC0 public-domain dedication. OneWorld does not redistribute the
+upstream web application. Source and license details:
+https://tree.opentreeoflife.org/about/licenses
+
+NO ENDORSEMENT
+-------------------------------------------------------------------------------
+
+NASA, JPL, Smithsonian, National Air and Space Museum, RCSB PDB, wwPDB,
+Poly Haven, Google, Three.js, Swiper, NiiVue, d3, World Bank, USGS,
+NOAA, NIST, SCI Institute, ESA/Hubble, OpenFlights, Open Tree of Life, Natural Earth,
+OpenSeadragon, Flowmap.gl, deck.gl, WorldWide Telescope, and the cited record
+authors do not sponsor or endorse OneWorld.
+
+-------------------------------------------------------------------------------
+CURRENT OPEN-SOURCE EXPERIENCE ENGINES
+-------------------------------------------------------------------------------
+
+Google model-viewer 4.3.1 — Apache-2.0
+Exact license: /assets/oss-source/LICENSE-model-viewer.txt
+
+OpenSeadragon 6.0.2 — BSD-3-Clause
+Exact license: /assets/oss-source/LICENSE-openseadragon.txt
+
+Flowmap.gl 9.4.0 — Apache-2.0
+Exact license: /assets/oss-source/LICENSE-flowmap.txt
+
+WorldWide Telescope WebGL engine — MIT
+Exact inspected upstream license: /assets/oss-source/LICENSE-worldwide-telescope.txt
+
+deck.gl 9.3.6 — MIT
+Exact license: /assets/oss-source/LICENSE-deck-gl.txt
+
+Three.js CSS3D Periodic Table — MIT
+Exact inspected upstream license: /assets/oss-source/LICENSE-three-periodic-table.txt
+Source snapshot: /vendor/periodic-table/LICENSE.txt
+
+The Andromeda deep-zoom experience uses ESA/Hubble image heic2501a and its
+publisher-hosted Zoomify tile pyramid. Credit: NASA, ESA, B. Williams
+(University of Washington). Source: https://esahubble.org/images/heic2501a/
+
+The historical flight network is a derivative of the OpenFlights airport and
+route databases, available under ODbL-1.0 / DbCL-1.0. The derived JSON remains
+available under those terms. Source: https://openflights.org/data
+
+--------------------------------------------------------------------------------
+ashemag/human-atlas — MIT
+Exact license: /assets/oss-source/LICENSE-human-atlas.txt
+Source: https://github.com/ashemag/human-atlas
+Commit: 7a383d3ee2759e3ddf157c704fb8814fd0c50bcb
+Used by the human-atlas world (batched Three.js anatomy renderer, explosion
+layout, and picking). Surrounding UI rewritten for Shape of the World.
+
+BodyParts3D 4.0 adult male reference anatomy
+© The Database Center for Life Science
+License: CC BY 4.0
+https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html
+Local files: /assets/human-atlas/models/
+Attribution: /assets/human-atlas/ATTRIBUTION.md
+This anatomy data is not relicensed under AGPL.
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Site ambient audio
+--------------------------------------------------------------------------------
+
+Default bed: GLO-B01 hidden-shapes (Shape of the World original soundtrack).
+File: /assets/audio/hidden-shapes.mp3
+Canonical stream: https://music-cdn.shapeof.world/tracks/hidden-shapes/v3/preview.mp3
+The previous uncleared site-bgm.mp3 file has been removed.
+--------------------------------------------------------------------------------
+
+
+
+## uqr 0.1.2 — payment QR rendering
+Source: https://github.com/unjs/uqr
+Distribution: https://registry.npmjs.org/uqr/0.1.2
+
+MIT License
+
+Copyright (c) Project Nayuki
+Copyright (c) 2023 Anthony Fu <https://github.com/antfu>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+D3-GEO 3.1.1 — ISC / GEOGRAPHICLIB MIT NOTICES
+Source: https://github.com/d3/d3-geo/tree/v3.1.1
+
+Copyright 2010-2024 Mike Bostock
+
+Permission to use, copy, modify, and/or distribute this software for any purpose
+with or without fee is hereby granted, provided that the above copyright notice
+and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
+OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+THIS SOFTWARE.
+
+This license applies to GeographicLib, versions 1.12 and later.
+
+Copyright 2008-2012 Charles Karney
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

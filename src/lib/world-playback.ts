@@ -17,12 +17,20 @@ type PendingFrame = {
   nativeId: number | null
 }
 
+type AudioTransition = {
+  target: 'running' | 'suspended'
+  promise: Promise<void>
+}
+
 const pauseListeners = new Set<() => void>()
 const resumeListeners = new Set<() => void>()
 const pendingFrames = new Map<number, PendingFrame>()
-const trackedAudioContexts = new Set<AudioContext>()
-const trackedMedia = new Set<HTMLMediaElement>()
-const mediaToResume = new Set<HTMLMediaElement>()
+const trackedAudioContexts = new Set<{ synchronizePlayback: () => Promise<void> }>()
+const trackedMedia = new Set<WeakRef<HTMLMediaElement>>()
+const collectedMedia = new FinalizationRegistry<WeakRef<HTMLMediaElement>>((reference) => {
+  trackedMedia.delete(reference)
+})
+let mediaPlayback = new WeakMap<HTMLMediaElement, { suspend: () => void; resume: () => void }>()
 
 let paused = false
 let muted = false
@@ -94,27 +102,20 @@ function audioBlocked(): boolean {
   return paused || muted
 }
 
-function suspendAudio() {
+function synchronizeAudio() {
   for (const context of trackedAudioContexts) {
-    if (context.state !== 'closed') void context.suspend()
+    void context.synchronizePlayback().catch(() => {})
   }
-  for (const media of trackedMedia) {
-    if (!media.paused) {
-      mediaToResume.add(media)
-      media.pause()
+  for (const reference of trackedMedia) {
+    const media = reference.deref()
+    if (!media) {
+      trackedMedia.delete(reference)
+      continue
     }
+    const playback = mediaPlayback.get(media)
+    if (audioBlocked()) playback?.suspend()
+    else playback?.resume()
   }
-}
-
-function resumeAudio() {
-  if (audioBlocked()) return
-  for (const context of trackedAudioContexts) {
-    if (context.state !== 'closed') void context.resume()
-  }
-  for (const media of mediaToResume) {
-    void media.play()?.catch(() => {})
-  }
-  mediaToResume.clear()
 }
 
 export function isWorldPaused(): boolean {
@@ -128,8 +129,7 @@ export function isWorldAudioMuted(): boolean {
 export function setWorldAudioMuted(next: boolean): void {
   if (muted === next) return
   muted = next
-  if (audioBlocked()) suspendAudio()
-  else resumeAudio()
+  synchronizeAudio()
 }
 
 export function requestWorldFrame(callback: FrameRequestCallback): number {
@@ -170,12 +170,12 @@ export function setWorldPaused(next: boolean): void {
         entry.nativeId = null
       }
     }
-    suspendAudio()
+    synchronizeAudio()
     for (const listener of pauseListeners) listener()
     dispatchWindowEvent('shapeofworld:pause')
     return
   }
-  resumeAudio()
+  synchronizeAudio()
   for (const listener of resumeListeners) listener()
   dispatchWindowEvent('shapeofworld:resume')
   for (const id of pendingFrames.keys()) arm(id)
@@ -185,18 +185,68 @@ function installAudioContextGuard(host: WorldPlaybackHost) {
   const NativeAudioContext = host.AudioContext
   if (!NativeAudioContext) return () => {}
   class GuardedAudioContext extends NativeAudioContext {
+    #wantsPlayback: boolean
+    #blocked = false
+    #closing = false
+    #transition: AudioTransition | null = null
+
     constructor(options?: AudioContextOptions) {
       super(options)
+      this.#wantsPlayback = this.state === 'running'
       trackedAudioContexts.add(this)
-      if (audioBlocked()) void super.suspend()
+      void this.synchronizePlayback().catch(() => {})
+    }
+
+    synchronizePlayback(): Promise<void> {
+      const nextBlocked = audioBlocked()
+      if (nextBlocked && !this.#blocked && !this.#transition) {
+        // Browser/autoplay suspension is not a request for the shell to resume it.
+        this.#wantsPlayback = this.state === 'running'
+      }
+      this.#blocked = nextBlocked
+      return this.#reconcile()
+    }
+
+    #reconcile(explicitResume = false): Promise<void> {
+      if (this.#closing || this.state === 'closed') return Promise.resolve()
+      const target = this.#wantsPlayback && !this.#blocked ? 'running' : 'suspended'
+      if (this.#transition?.target === target && !(explicitResume && target === 'running')) {
+        return this.#transition.promise
+      }
+      if (!this.#transition && this.state === target) return Promise.resolve()
+      // An autoplay-blocked resume can remain pending until another user gesture.
+      // Forward explicit resumes and changed targets without waiting for that promise.
+      const operation = target === 'running' ? super.resume() : super.suspend()
+      const transition: AudioTransition = { target, promise: operation }
+      transition.promise = operation.then(() => {
+        if (this.#transition === transition) this.#transition = null
+        const desired = this.#wantsPlayback && !this.#blocked ? 'running' : 'suspended'
+        if (target !== desired) void this.#reconcile().catch(() => {})
+      }, (error: unknown) => {
+        if (this.#transition === transition) this.#transition = null
+        const desired = this.#wantsPlayback && !this.#blocked ? 'running' : 'suspended'
+        if (target !== desired) void this.#reconcile().catch(() => {})
+        throw error
+      })
+      this.#transition = transition
+      return transition.promise
     }
 
     override resume(): Promise<void> {
-      if (audioBlocked()) return Promise.resolve()
-      return super.resume()
+      if (this.#closing || this.state === 'closed') return super.resume()
+      this.#wantsPlayback = true
+      return this.#reconcile(true)
+    }
+
+    override suspend(): Promise<void> {
+      if (this.#closing || this.state === 'closed') return super.suspend()
+      this.#wantsPlayback = false
+      return this.#reconcile()
     }
 
     override close(): Promise<void> {
+      this.#closing = true
+      this.#wantsPlayback = false
       trackedAudioContexts.delete(this)
       return super.close()
     }
@@ -212,8 +262,37 @@ function installMediaGuard(host: WorldPlaybackHost) {
   if (!NativeAudio) return () => {}
   const GuardedAudio = function GuardedAudio(this: HTMLAudioElement, src?: string) {
     const element = src === undefined ? new NativeAudio() : new NativeAudio(src)
-    trackedMedia.add(element)
-    if (audioBlocked()) element.pause()
+    const reference = new WeakRef(element)
+    trackedMedia.add(reference)
+    collectedMedia.register(element, reference)
+    const nativePlay = element.play.bind(element)
+    const nativePause = element.pause.bind(element)
+    let resumeAfterBlock = false
+    element.play = () => {
+      if (audioBlocked()) {
+        resumeAfterBlock = true
+        return Promise.resolve()
+      }
+      resumeAfterBlock = false
+      return nativePlay()
+    }
+    element.pause = () => {
+      resumeAfterBlock = false
+      nativePause()
+    }
+    mediaPlayback.set(element, {
+      suspend() {
+        if (element.paused) return
+        resumeAfterBlock = true
+        nativePause()
+      },
+      resume() {
+        if (!resumeAfterBlock) return
+        resumeAfterBlock = false
+        void element.play()?.catch(() => {})
+      },
+    })
+    if (audioBlocked()) nativePause()
     return element
   } as unknown as typeof Audio
   GuardedAudio.prototype = NativeAudio.prototype
@@ -256,5 +335,5 @@ export function resetWorldPlaybackForTests(): void {
   pendingFrames.clear()
   trackedAudioContexts.clear()
   trackedMedia.clear()
-  mediaToResume.clear()
+  mediaPlayback = new WeakMap()
 }

@@ -1,0 +1,101 @@
+{
+  "id": "lib-post-rock-celebrate",
+  "code": "LIB-30-10",
+  "title": {
+    "en": "First Light — Post Rock",
+    "zh": "初光 · 后摇"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "post-rock"
+  ],
+  "energy": 4,
+  "bpm": 108,
+  "key": "C major",
+  "instruments": [
+    "clean electric guitars",
+    "electric bass",
+    "live drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second instrumental post-rock instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: clean electric guitars, electric bass, live drums. Style: delay guitar figures and patient layered crescendos. Tempo approximately 108 BPM; C major. Main idea: alternating short and long phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "An energetic synth-wave track featuring driving drums, a prominent bassline, layered synthesizers with arpeggiated melodies, and electric guitar leads. It evokes a retro 80s feel.",
+    "zh": "一首充满活力的合成器波音乐，以强劲的鼓点、突出的贝斯线、带有琶音旋律的分层合成器和电吉他主音为特色。它唤起了80年代的复古感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.402,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T09:22:08.771384+00:00",
+  "generation": {
+    "id": "336dcdf2-4a03-4fae-822e-5418d8b647e2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T09:21:29.849552+00:00",
+    "completedAt": "2026-09-09T09:22:08.771384+00:00",
+    "interactionId": "GyWhapiMDZC9jMwPrKKKyAI",
+    "sha256": "0107df56edf6a80a1dff413ab69791444cba94de982245f2a14c7b7715810dc4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic synth-wave track featuring driving drums, a prominent bassline, layered synthesizers with arpeggiated melodies, and electric guitar leads. It evokes a retro 80s feel.",
+      "zh": "一首充满活力的合成器波音乐，以强劲的鼓点、突出的贝斯线、带有琶音旋律的分层合成器和电吉他主音为特色。它唤起了80年代的复古感。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass Guitar",
+      "Electric Guitar",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Energetic",
+      "Driving",
+      "Nostalgic",
+      "Uplifting",
+      "Cool"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:22:17.271923+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-post-rock-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-post-rock-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-post-rock-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:23:45.402857+00:00"
+}

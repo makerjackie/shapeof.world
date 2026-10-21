@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "decidedAt": "2026-10-12",
+  "fps": 30,
+  "frames": 54,
+  "seconds": 1.8,
+  "audio": "none",
+  "config": "6401a925a1f7a939b0e9336d9eb64b7309670486f28c2588eccdc03a73cbc762",
+  "template": "c8cd0299d2cc2a7b2397215357f8e8cbc8c9d7da2dc4962c4b46c31967481dfc",
+  "videos": [
+    {
+      "file": "brand-credit-zh.mp4",
+      "lang": "zh",
+      "aspect": "9x16",
+      "width": 1080,
+      "height": 1920,
+      "frames": 54,
+      "seconds": 1.8,
+      "bytes": 71278,
+      "sha256": "ec8fd797898766dc3ebd025d960e9354e95c9fad7e0f5a3dcc1bd63df5d90821",
+      "master": {
+        "file": "public/assets/brand/outro/brand-zh.mp4",
+        "sha256": "b24a7d921116cf9f461bb73698e74781c2e3eddae1cfe1665105fffa6ea8eca8"
+      },
+      "credit": {
+        "text": "制作 MakerJackie",
+        "box": {
+          "x": 422.484375,
+          "y": 1225,
+          "w": 235.015625,
+          "h": 42
+        }
+      },
+      "brandRegionPsnr": 59.472934
+    },
+    {
+      "file": "brand-credit-zh-16x9.mp4",
+      "lang": "zh",
+      "aspect": "16x9",
+      "width": 1920,
+      "height": 1080,
+      "frames": 54,
+      "seconds": 1.8,
+      "bytes": 80430,
+      "sha256": "2054085a541a0631ea42c5a8b6be7ba70d1b308035aa8e50ede5490ccc1c0011",
+      "master": {
+        "file": "public/assets/brand/outro/brand-zh.mp4",
+        "sha256": "b24a7d921116cf9f461bb73698e74781c2e3eddae1cfe1665105fffa6ea8eca8"
+      },
+      "credit": {
+        "text": "制作 MakerJackie",
+        "box": {
+          "x": 842.484375,
+          "y": 805,
+          "w": 235.015625,
+          "h": 42
+        }
+      },
+      "brandRegionPsnr": 59.439045
+    },
+    {
+      "file": "brand-credit-en.mp4",
+      "lang": "en",
+      "aspect": "9x16",
+      "width": 1080,
+      "height": 1920,
+      "frames": 54,
+      "seconds": 1.8,
+      "bytes": 65612,
+      "sha256": "0cc1e617471043c277c2e702b47f2606f3bdc081ab6ba033d3e700214882ffbb",
+      "master": {
+        "file": "public/assets/brand/outro/brand-en.mp4",
+        "sha256": "dda554549a8a0b376aff4ecf11c2c2191b14cb25579b239a00f767d0d387797d"
+      },
+      "credit": {
+        "text": "by MakerJackie",
+        "box": {
+          "x": 437.9375,
+          "y": 1225,
+          "w": 204.109375,
+          "h": 42
+        }
+      },
+      "brandRegionPsnr": 59.79836
+    },
+    {
+      "file": "brand-credit-en-16x9.mp4",
+      "lang": "en",
+      "aspect": "16x9",
+      "width": 1920,
+      "height": 1080,
+      "frames": 54,
+      "seconds": 1.8,
+      "bytes": 77667,
+      "sha256": "4aa985b18117136a9fccd4576d57dc704690264b3a1f0df3c2c2ec725380087c",
+      "master": {
+        "file": "public/assets/brand/outro/brand-en.mp4",
+        "sha256": "dda554549a8a0b376aff4ecf11c2c2191b14cb25579b239a00f767d0d387797d"
+      },
+      "credit": {
+        "text": "by MakerJackie",
+        "box": {
+          "x": 857.9375,
+          "y": 805,
+          "w": 204.109375,
+          "h": 42
+        }
+      },
+      "brandRegionPsnr": 59.443195
+    }
+  ]
+}

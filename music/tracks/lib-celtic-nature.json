@@ -1,0 +1,102 @@
+{
+  "id": "lib-celtic-nature",
+  "code": "LIB-16-04",
+  "title": {
+    "en": "Wildlands — Celtic",
+    "zh": "山野 · 凯尔特"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "organic",
+    "open",
+    "fresh"
+  ],
+  "topics": [
+    "nature",
+    "celtic"
+  ],
+  "energy": 4,
+  "bpm": 104,
+  "key": "D dorian",
+  "instruments": [
+    "fiddle",
+    "tin whistle",
+    "bodhran",
+    "harp"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Celtic acoustic instrumental instrumental composition for nature documentary, landscape and gentle exploration. Mood: organic, open, fresh. Instruments: fiddle, tin whistle, bodhran, harp. Style: lilting compound-meter dance and modal melody. Tempo approximately 104 BPM; D dorian. Main idea: alternating short and long phrases. Introduce a gently rising motif and a sense of open air. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "celtic"
+  ],
+  "scenarios": [
+    "nature"
+  ],
+  "description": {
+    "en": "A lively and elegant classical-style piece featuring a prominent string ensemble and harpsichord. The music has a dance-like, jig feel, with a clear melody and driving rhythm.",
+    "zh": "一首活泼优雅的古典风格乐曲，以突出的弦乐合奏和大键琴为特色。音乐带有舞曲般的吉格舞曲感，旋律清晰，节奏感强。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 148.114,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:39:54.799388+00:00",
+  "generation": {
+    "id": "75afacb0-19bc-4614-be82-818fe4ab8cf3",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:39:00.389991+00:00",
+    "completedAt": "2026-09-09T08:39:54.799388+00:00",
+    "interactionId": "JRuhaqPlItDi8vUPubf2-QQ",
+    "sha256": "87bf68ad5e2a638ffec10e94eab3c25c42df9e2c5499d8be0a8d5a86a539498d"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical-style piece featuring a prominent string ensemble and harpsichord. The music has a dance-like, jig feel, with a clear melody and driving rhythm.",
+      "zh": "一首活泼优雅的古典风格乐曲，以突出的弦乐合奏和大键琴为特色。音乐带有舞曲般的吉格舞曲感，旋律清晰，节奏感强。"
+    },
+    "instruments": [
+      "Violin",
+      "Cello",
+      "Double Bass",
+      "Harpsichord"
+    ],
+    "moods": [
+      "Lively",
+      "Joyful",
+      "Elegant",
+      "Traditional",
+      "Festive"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and engaging instrumental piece with a distinct classical/folk character, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:40:09.316464+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-celtic-nature/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-celtic-nature/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-celtic-nature/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:42:56.448139+00:00"
+}

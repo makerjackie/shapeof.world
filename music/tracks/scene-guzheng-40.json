@@ -1,0 +1,182 @@
+{
+  "id": "scene-guzheng-40",
+  "code": "SCENE-11-40",
+  "title": {
+    "en": "Porcelain Steps · 40",
+    "zh": "瓷器轻步 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "modern material and design close-ups",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 118,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "plucked bass",
+    "dry electronic percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for modern material and design close-ups. Instruments: guzheng, plucked bass, dry electronic percussion. 118 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A lively and upbeat instrumental track featuring a prominent accordion melody over a driving drum beat and bassline, complemented by pizzicato strings and light percussion. It evokes a festive, folk-dance atmosphere with a playful and energetic feel.",
+    "zh": "一首活泼欢快的器乐曲，手风琴旋律突出，配以强劲的鼓点和低音线，并辅以拨弦乐器和轻快的打击乐。整体营造出节日般的民间舞蹈氛围，充满俏皮和活力。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "modern material and design close-ups"
+    ]
+  },
+  "shortForm": {
+    "use": "process",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:15:36.891616+00:00",
+  "generation": {
+    "id": "a79f72b8-39fa-4245-b0ef-c47a6a5965e2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:14:54.902056+00:00",
+    "completedAt": "2026-09-22T09:15:36.891616+00:00",
+    "interactionId": "EEeyari1Au7i694Pjazv0QI",
+    "sha256": "204a4331a4b73b7f927582264921d0c79def5fb112bc23c1787a18d273931357"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and upbeat instrumental track featuring a prominent accordion melody over a driving drum beat and bassline, complemented by pizzicato strings and light percussion. It evokes a festive, folk-dance atmosphere with a playful and energetic feel.",
+      "zh": "一首活泼欢快的器乐曲，手风琴旋律突出，配以强劲的鼓点和低音线，并辅以拨弦乐器和轻快的打击乐。整体营造出节日般的民间舞蹈氛围，充满俏皮和活力。"
+    },
+    "instruments": [
+      "Accordion",
+      "Drums",
+      "Bass",
+      "Strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Lively",
+      "Playful",
+      "Festive",
+      "Energetic",
+      "Joyful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 135,
+    "reason": "High-quality recording with clear instrumentation and a well-defined, engaging musical theme suitable for various media applications.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with the main accordion melody and full instrumentation, establishing an energetic mood. It concludes with a smooth, controlled fade-out of all instruments.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:54.572574+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "71b707cddfb5713e1a5b235a37736d34558c16c4768d6e52a0657486854c3c80"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.991792,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving synth bass, a catchy plucked synth melody, and a steady drum beat. It has a playful and positive vibe.",
+      "zh": "一首欢快且充满活力的电子音乐，以强劲的合成器贝斯、抓耳的拨弦合成器旋律和稳定的鼓点为特色。它带有一种俏皮和积极的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Synth Bass",
+      "Drums",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Playful",
+      "Positive",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 126,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:15:47.412251+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.991791999999997,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-guzheng-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-guzheng-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-guzheng-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "71b707cddfb5713e1a5b235a37736d34558c16c4768d6e52a0657486854c3c80",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "204a4331a4b73b7f927582264921d0c79def5fb112bc23c1787a18d273931357",
+      "bytes": 1399471,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "df034b649f0d625b5d46c5cc0fc0da72e26ddc617c23800580299a3aa47053a8",
+      "bytes": 2803,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.842700+00:00"
+}

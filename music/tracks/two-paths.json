@@ -1,0 +1,58 @@
+{
+  "id": "two-paths",
+  "code": "PHY-A01",
+  "title": {
+    "en": "Two Paths",
+    "zh": "两条路径"
+  },
+  "category": "physics",
+  "archetype": "ambient",
+  "moods": [
+    "interfering",
+    "quiet",
+    "dual",
+    "mysterious"
+  ],
+  "topics": [
+    "double-slit",
+    "interference",
+    "quantum"
+  ],
+  "energy": 1,
+  "bpm": 58,
+  "key": "D Mixolydian",
+  "instruments": [
+    "two delayed pianos",
+    "soft sine bed",
+    "ribbon noise"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 148.14,
+  "prompt": "Create a 2 minute 30 second instrumental ambient piece about a particle taking two paths and interfering. Around 58 BPM, D Mixolydian. Two nearly identical piano phrases, one delayed a few milliseconds and slightly filtered, constructively and destructively overlapping. Quiet, dual, mysterious. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No glitch stutter as gimmick, no drums.\n\n[00:00–00:30] Single piano phrase, dry.\n[00:30–01:10] Duplicate enters delayed; some notes bloom, some cancel into ribbon noise.\n[01:10–01:50] Sine bed holds D; interference pattern slowly drifts.\n[01:50–02:30] Duplicate fades; one path remains.\n",
+  "recommendedWorldIds": [],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:26:20Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/two-paths/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/two-paths/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/two-paths/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:08.817327+00:00",
+  "generation": {
+    "id": "475a4246-ba4a-4950-957c-df574c73d46d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:25:33Z",
+    "completedAt": "2026-08-25T10:26:20Z",
+    "durationMs": 47000,
+    "interactionId": "nm2NasfmM6O6i9sPq6C5wAI",
+    "clientRequestId": "bc5a3e0e-46a4-40b7-9c78-b76a5e6f537e",
+    "synthid": true,
+    "c2pa": "urn:c2pa:9ac285f2-8965-45f9-5708-404c5ae3b461",
+    "sha256": "e12a1cd197b1b0c554846b74d37f002fda254f2e0a83dcc0137ae4b3d86d9b11"
+  }
+}

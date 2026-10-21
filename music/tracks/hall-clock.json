@@ -1,0 +1,63 @@
+{
+  "id": "hall-clock",
+  "code": "CMP-A02",
+  "title": {
+    "en": "Hall Clock",
+    "zh": "大厅时钟"
+  },
+  "category": "computing-engineering",
+  "archetype": "ambient",
+  "moods": [
+    "vast",
+    "steady",
+    "light",
+    "curious"
+  ],
+  "topics": [
+    "clock",
+    "time",
+    "systems"
+  ],
+  "energy": 2,
+  "bpm": 65,
+  "key": "C major",
+  "instruments": [
+    "slow kick",
+    "pluck arpeggio",
+    "hi-hat",
+    "analog pad",
+    "bass pulse"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 145.319,
+  "prompt": "Create a 2 minute 30 second instrumental. Dual tempo: a slow monumental 64-66 BPM kick-and-bass pulse underneath a light 128-132 BPM electronic surface.\n\nThe slow pulse is like a large clock in a big room: round, steady, always there. The surface is bright pluck arpeggio and eighth-note hats. Light on top, vast underneath. Major key, clean, not dark, not tragic.\n\nInstrumental only. No vocals. No choir. No film-trailer drums. No drop. The slow pulse must be audible in every bar.\n\n[00:00-00:10] Slow kick pulse from beat 1, arpeggio and hats on top immediately.\n[00:10-01:05] Soft analog pad blooms behind the pulse; hats stay busy.\n[01:05-01:50] A simple mid synth motif, still over the slow heartbeat. Do not remove the pulse.\n[01:50-02:30] Pulse and arpeggio only, wide and steady.",
+  "recommendedWorldIds": [
+    "tick-escape",
+    "cellular-night",
+    "fourier"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T12:28:22Z",
+  "generation": {
+    "id": "25cc3afa-8018-4093-a5d1-fa6f381a6a0d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T12:27:32Z",
+    "completedAt": "2026-08-25T12:28:22Z",
+    "durationMs": 50000,
+    "interactionId": "N4qNavHlA7ye7PkPpd_HuQk",
+    "clientRequestId": "db0d6a89-5a3b-46d5-82dd-af79ac086b46",
+    "synthid": true,
+    "c2pa": "urn:c2pa:3eb9bdc6-4607-7e40-4f38-408b6a6182e4"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/hall-clock/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/hall-clock/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/hall-clock/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:46:57.338101+00:00"
+}

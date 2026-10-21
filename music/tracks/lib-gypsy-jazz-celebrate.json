@@ -1,0 +1,103 @@
+{
+  "id": "lib-gypsy-jazz-celebrate",
+  "code": "LIB-10-10",
+  "title": {
+    "en": "First Light — Gypsy Jazz",
+    "zh": "初光 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "gypsy-jazz"
+  ],
+  "energy": 4,
+  "bpm": 156,
+  "key": "C major",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second acoustic swing jazz instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 156 BPM; C major. Main idea: alternating short and long phrases. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and intricate classical-style piece featuring a prominent violin melody, supported by other strings and a plucked string instrument. It has a folk-dance feel.",
+    "zh": "一首活泼精致的古典风格乐曲，以小提琴旋律为主，辅以其他弦乐器和拨弦乐器。具有民间舞曲的感觉。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 59.167,
+  "generatedAt": "2026-09-09T08:15:29.522890+00:00",
+  "generation": {
+    "id": "e94b4518-5621-491f-8da6-28307d200ec6",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:14:51.227397+00:00",
+    "completedAt": "2026-09-09T08:15:29.522890+00:00",
+    "interactionId": "fBWhatHlHubRi9sPvtzDgAc",
+    "sha256": "3dd45cf0bbf476a1dd5359872598fd785ec293d70f0cbf4517463b556fd8fe7c"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and intricate classical-style piece featuring a prominent violin melody, supported by other strings and a plucked string instrument. It has a folk-dance feel.",
+      "zh": "一首活泼精致的古典风格乐曲，以小提琴旋律为主，辅以其他弦乐器和拨弦乐器。具有民间舞曲的感觉。"
+    },
+    "instruments": [
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass",
+      "Mandolin"
+    ],
+    "moods": [
+      "Lively",
+      "Energetic",
+      "Playful",
+      "Folkloric",
+      "Classical",
+      "Joyful"
+    ],
+    "energy": 4,
+    "bpmEstimate": 145,
+    "reason": "Well-performed and recorded string ensemble piece with a lively, folk-dance character.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:15:38.008613+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:16:11.995711+00:00",
+  "targetEnergy": 5,
+  "energyBasis": "automated-audio-review"
+}

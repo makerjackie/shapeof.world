@@ -1,0 +1,101 @@
+{
+  "id": "lib-oud-motion",
+  "code": "LIB-20-08",
+  "title": {
+    "en": "Motion — Oud",
+    "zh": "跃动 · 乌德琴"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "oud"
+  ],
+  "energy": 4,
+  "bpm": 114,
+  "key": "B minor",
+  "instruments": [
+    "oud",
+    "qanun",
+    "darbuka"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second Middle Eastern acoustic instrumental instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: oud, qanun, darbuka. Style: ornamented modal melody with rolling hand-drum rhythm. Tempo approximately 114 BPM; B minor. Main idea: an ascending fourth answered by a stepwise descent. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "oud"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "An upbeat and energetic instrumental track featuring a driving drum beat, prominent bass, electric guitar, and a catchy flute-like synth melody. It has a lively and positive vibe.",
+    "zh": "一首欢快活泼的器乐曲，以强劲的鼓点、突出的贝斯、电吉他以及一段抓耳的笛声合成器旋律为特色。整体氛围充满活力和积极。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.73,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:53:48.898959+00:00",
+  "generation": {
+    "id": "bcdef7d9-b74d-4092-970f-3e9d2509f308",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:53:04.037676+00:00",
+    "completedAt": "2026-09-09T08:53:48.898959+00:00",
+    "interactionId": "cR6hatKXCfvQk7QP1oSVuAc",
+    "sha256": "ea5b6ba1b8ae8bb07ab2f4a4e4a67addad7344ba1ad7f74847b6bdaf6b1ab021"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic instrumental track featuring a driving drum beat, prominent bass, electric guitar, and a catchy flute-like synth melody. It has a lively and positive vibe.",
+      "zh": "一首欢快活泼的器乐曲，以强劲的鼓点、突出的贝斯、电吉他以及一段抓耳的笛声合成器旋律为特色。整体氛围充满活力和积极。"
+    },
+    "instruments": [
+      "Drums",
+      "Bass Guitar",
+      "Electric Guitar",
+      "Synthesizer",
+      "Percussion"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Lively"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The audio is a well-produced instrumental track with clear instrumentation and no audible defects, making it suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T09:26:42.912516+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-oud-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-oud-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-oud-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T09:27:34.630613+00:00"
+}

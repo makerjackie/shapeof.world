@@ -1,0 +1,135 @@
+{
+  "id": "scene-ambient-90",
+  "code": "SCENE-19-90",
+  "title": {
+    "en": "Glass Observatory · 90",
+    "zh": "玻璃观测站 · 90"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "calm",
+    "warm"
+  ],
+  "topics": [
+    "calm scientific observation with a gentle clear pulse",
+    "narration"
+  ],
+  "energy": 2,
+  "bpm": 80,
+  "key": "",
+  "instruments": [
+    "soft analog pads",
+    "felt piano",
+    "sparse bell",
+    "light pulse"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original complete 90-second instrumental cue for calm scientific observation with a gentle clear pulse. Instruments: soft analog pads, felt piano, sparse bell, light pulse. 80 BPM in 4/4. Motif: a restrained two-note motif separated by spacious pauses. A restrained background score for spoken explanation: sparse midrange, no busy lead, no sharp accents or sudden loudness changes. Establish the texture in four seconds, add a subtle counter-pattern at 30 seconds, simplify at 60 seconds, resolve naturally in the last four seconds. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "ambient"
+  ],
+  "scenarios": [
+    "explain",
+    "focus"
+  ],
+  "description": {
+    "en": "A calm, atmospheric electronic track featuring synth pads, a steady drum beat, bass, and melodic electric guitar. It builds subtly with additional synth layers and piano, creating a reflective and slightly melancholic mood.",
+    "zh": "一首平静、大气的电子音乐，以合成器铺底、稳定的鼓点、贝斯和旋律性电吉他为主。通过增加合成器层和钢琴，音乐逐渐发展，营造出一种沉思而略带忧郁的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "narration"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "calm scientific observation with a gentle clear pulse"
+    ]
+  },
+  "duration": 87.51,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:05:46.096509+00:00",
+  "generation": {
+    "id": "ee2663b5-6c4b-406f-8af9-cbc2b1e5e596",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:05:01.598099+00:00",
+    "completedAt": "2026-09-22T09:05:46.096509+00:00",
+    "interactionId": "vkSyar_6Obbi694PucGn6Ac",
+    "sha256": "bbe27a36cc1d6f8e5d35f485deb059f8ddd54cf43b6f4bbc669a04ca14c38d3e"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A calm, atmospheric electronic track featuring synth pads, a steady drum beat, bass, and melodic electric guitar. It builds subtly with additional synth layers and piano, creating a reflective and slightly melancholic mood.",
+      "zh": "一首平静、大气的电子音乐，以合成器铺底、稳定的鼓点、贝斯和旋律性电吉他为主。通过增加合成器层和钢琴，音乐逐渐发展，营造出一种沉思而略带忧郁的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Bass guitar",
+      "Electric guitar",
+      "Piano",
+      "Synth strings",
+      "Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Atmospheric",
+      "Reflective",
+      "Melancholic",
+      "Dreamy",
+      "Mellow"
+    ],
+    "energy": 2,
+    "bpmEstimate": 68,
+    "reason": "Well-produced, clean instrumental track with a consistent atmospheric mood, suitable for background use or contemplative scenes.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:06:09.757869+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-ambient-90/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-ambient-90/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-ambient-90/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "13da1888017781b7a114c0c2ffc543e0db1bee5b05df452c936f6375ff9e34bf",
+      "bytes": 1225917,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "bbe27a36cc1d6f8e5d35f485deb059f8ddd54cf43b6f4bbc669a04ca14c38d3e",
+      "bytes": 2107912,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "2ab6b11e95a72652aae4031857ed0ce9f58dfe27f475f641f895d76bfe4769c0",
+      "bytes": 2792,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.824497+00:00"
+}

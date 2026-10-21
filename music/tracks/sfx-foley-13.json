@@ -1,0 +1,125 @@
+{
+  "id": "sfx-foley-13",
+  "code": "SFX-FOLEY-13",
+  "title": {
+    "en": "Key jingle",
+    "zh": "钥匙轻响"
+  },
+  "kind": "sfx",
+  "family": "foley",
+  "designIndex": 12,
+  "seed": 700053454,
+  "scenarios": [
+    "foley"
+  ],
+  "description": {
+    "en": "Original synthesized key jingle for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的钥匙轻响合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "foley",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-foley"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.22,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-foley-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-foley-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-foley-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-foley-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 700053454,
+    "sha256": "9019f3b3d47e722f97a03bb903dbcfa80c9c536216302ec5814f015c5576b90a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "543fe06259dd136509b1fea5241046c23f77efaf99af97d0e33c04d6297e9ef9",
+      "bytes": 4066,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "9019f3b3d47e722f97a03bb903dbcfa80c9c536216302ec5814f015c5576b90a",
+      "bytes": 19448,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "1f8b4b5858e7235988c3aa3f827fdfeecf0be2e338050236439f97800f955a6c",
+      "bytes": 6176,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "18bb645fe5aa3bddafff64438fdbfa1b85bcf81162f72356029a3276c53cf74b",
+      "bytes": 1909,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 9702,
+    "duration": 0.22,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.01,
+    "dcOffset": -1.138668654014636e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.17827453613281186,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, synthesized electronic zap or whoosh sound effect, with a quick attack and decay.",
+      "zh": "一个短促、尖锐的合成电子冲击或嗖嗖声效果，具有快速的起音和衰减。"
+    },
+    "reason": "The sound is a clean, well-produced electronic effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:57.443214+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "543fe06259dd136509b1fea5241046c23f77efaf99af97d0e33c04d6297e9ef9"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 9702
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.866065+00:00"
+}

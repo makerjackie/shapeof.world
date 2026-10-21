@@ -1,0 +1,101 @@
+{
+  "id": "lib-pipa-reading",
+  "code": "LIB-18-01",
+  "title": {
+    "en": "Reading — Pipa",
+    "zh": "静读 · 琵琶"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "pipa"
+  ],
+  "energy": 2,
+  "bpm": 98,
+  "key": "D major",
+  "instruments": [
+    "pipa",
+    "yangqin",
+    "dizi",
+    "frame drum"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Chinese plucked-string ensemble instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: pipa, yangqin, dizi, frame drum. Style: crisp plucked ostinato with bright bamboo-flute answers. Tempo approximately 98 BPM; D major. Main idea: a repeating five-note figure with space between phrases. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "pipa"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A serene and traditional East Asian instrumental piece featuring a plucked zither (Guzheng) and a melodic flute, creating a peaceful and reflective atmosphere.",
+    "zh": "一首宁静的东方传统器乐曲，以弹拨古筝和悠扬的笛子为主，营造出平和而富有沉思感的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.175,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:33:46.673701+00:00",
+  "generation": {
+    "id": "e50e7707-2513-4ae9-8ace-06fcce716219",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:33:00.254204+00:00",
+    "completedAt": "2026-09-09T08:33:46.673701+00:00",
+    "interactionId": "vRmhapuIK-ONk7QPyufS2Ao",
+    "sha256": "92179dad4c34652e793f12a68b684b17331c932664b17b03a9bd77e1172427d0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and traditional East Asian instrumental piece featuring a plucked zither (Guzheng) and a melodic flute, creating a peaceful and reflective atmosphere.",
+      "zh": "一首宁静的东方传统器乐曲，以弹拨古筝和悠扬的笛子为主，营造出平和而富有沉思感的氛围。"
+    },
+    "instruments": [
+      "Guzheng",
+      "Flute",
+      "Light Percussion"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Traditional",
+      "Reflective",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clean, well-performed traditional East Asian instrumental music with clear instrumentation and a peaceful mood, suitable for a music library.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:45:58.478993+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-pipa-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-pipa-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-pipa-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:46:27.177978+00:00"
+}

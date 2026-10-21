@@ -1,0 +1,106 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+    id: 'radio-spectrum',
+    publication: 'public',
+    index: '251',
+    title: '无线电波在频谱中的位置',
+    poster: '/assets/posters/radio-spectrum.webp',
+    posterMobile: '/assets/posters/mobile/radio-spectrum.webp',
+    posterDesktop: '/assets/posters/desktop/radio-spectrum.webp',
+    posterTitle: '为什么 2.4G 穿得过墙，5G 更快？',
+    posterHook: '一条可以无限放大的频谱街道：从长波广播一路飞到可见光，看每一种电波住在哪、波长有多长、为什么有的绕得过墙角。',
+    posterSource: 'Canvas 2D · ITU 无线电规则频率划分表 · ITU-R P.2040 / P.526 传播模型',
+    posterPosition: '50% 50%',
+    question: '此刻穿过你身体的电波有几十种，它们各自住在频谱的哪一段？',
+    hook: '在一条跨越十一个数量级的频谱街道上飞行：中波、短波、调频、电视、GPS、WiFi、微波炉、5G 毫米波、热成像，直到尽头那一小段可见光。缩放到任意街区，看它内部被切成多少个信道；切到波长图层，用日常物体量一量一个波长真的有多长。',
+    payoff: '频率与波长互为倒数：λ = c / f。波长越长越容易绕过墙角、穿墙损耗也越小，所以 2.4 GHz 比 5 GHz 更能穿墙；而频率越高，能划给你的带宽越宽，所以 5 GHz 更快——这不是两种技术，而是同一条标尺的两端。频谱还是有限且被切好卖掉的地产：2021 年美国把 3.7–3.98 GHz 拍出 811.7 亿美元。整条标尺跨了十一个数量级，你的眼睛只看得见不到一个。',
+    topicLabel: '无线电与频谱',
+    translations: {
+      en: {
+        title: 'Where radio waves sit on the spectrum',
+        posterTitle: 'Why does 2.4 GHz get through walls while 5 GHz is faster?',
+        posterHook: 'An infinitely zoomable spectrum street: fly from longwave broadcasting all the way to visible light and see where each wave lives, how long it is, and why some bend around corners.',
+        posterSource: 'Canvas 2D · ITU Radio Regulations allocation table · ITU-R P.2040 / P.526 propagation models',
+        question: 'Dozens of radio waves are passing through your body right now — which stretch of the spectrum does each one live on?',
+        hook: 'Fly down a spectrum street eleven orders of magnitude long: medium wave, shortwave, FM, television, GPS, Wi-Fi, the microwave oven, 5G millimetre wave, thermal imaging, and finally the sliver of visible light at the end. Zoom into any block to see how it is cut into channels, or switch to the wavelength layer and measure one wave against everyday objects.',
+        payoff: 'Frequency and wavelength are reciprocals: λ = c / f. Longer waves bend around corners more easily and lose less energy crossing a wall, which is why 2.4 GHz reaches through a house better than 5 GHz; higher frequencies can be granted wider blocks, which is why 5 GHz is faster. These are not two technologies but two ends of one ruler. The spectrum is also finite real estate that gets carved up and sold: in 2021 the United States auctioned 3.7–3.98 GHz for $81.17 billion. The whole ruler spans eleven orders of magnitude, and your eyes receive less than one of them.',
+        topicLabel: 'Radio and spectrum',
+      },
+    },
+    primaryCategoryId: 'physics',
+    runtime: 'diagram-2d',
+    difficulty: 'standard',
+    lane: 'structure',
+    renderer: 'radio-spectrum',
+    experiencePolicy: {
+      entryMode: 'guided',
+      guideStyle: 'story',
+      shellMode: 'standard',
+    },
+    duration: 360,
+    evidence: 'verified',
+    accent: '#b28dff',
+    related: [],
+    sources: [
+      {
+        label: 'ITU《无线电规则》第 5 条 — 频率划分表（2020 年版）',
+        labelEn: 'ITU Radio Regulations, Article 5 — Frequency allocation table (2020 edition)',
+        url: 'https://www.itu.int/pub/R-REG-RR',
+      },
+      {
+        label: 'ITU-R V.431-8 — 无线电与雷达频段命名',
+        labelEn: 'ITU-R V.431-8 — Nomenclature of the frequency and wavelength bands',
+        url: 'https://www.itu.int/rec/R-REC-V.431/en',
+      },
+      {
+        label: 'ITU-R P.2040 — 建筑材料电特性与平板穿透模型',
+        labelEn: 'ITU-R P.2040 — Building material electrical properties and slab penetration model',
+        url: 'https://www.itu.int/rec/R-REC-P.2040/en',
+      },
+      {
+        label: 'ITU-R P.526 — 绕射传播（单刃近似）',
+        labelEn: 'ITU-R P.526 — Propagation by diffraction (single knife-edge approximation)',
+        url: 'https://www.itu.int/rec/R-REC-P.526/en',
+      },
+      {
+        label: 'IS-GPS-200 — GPS 空间段接口控制文件（L1 = 1575.42 MHz）',
+        labelEn: 'IS-GPS-200 — GPS space segment interface control document (L1 = 1575.42 MHz)',
+        url: 'https://www.gps.gov/technical/icwg/',
+      },
+      {
+        label: 'IEEE 802.11 — 无线局域网信道划分',
+        labelEn: 'IEEE 802.11 — Wireless LAN channel plans',
+        url: 'https://standards.ieee.org/ieee/802.11/7028/',
+      },
+      {
+        label: 'NTIA — 美国频率划分图（美国政府作品，公有领域）',
+        labelEn: 'NTIA — United States frequency allocation chart (a U.S. Government work, public domain)',
+        url: 'https://www.ntia.gov/page/united-states-frequency-allocation-chart',
+      },
+      {
+        label: 'FCC — 频谱拍卖结果（Auction 97 / 102 / 103 / 107 与 600 MHz 激励拍卖）',
+        labelEn: 'FCC — Spectrum auction results (Auctions 97, 102, 103, 107 and the 600 MHz incentive auction)',
+        url: 'https://www.fcc.gov/auctions',
+      },
+      {
+        label: '英国国家审计署 — 第三代移动通信频谱拍卖（2000 年，225 亿英镑）',
+        labelEn: 'UK National Audit Office — The auction of radio spectrum for the third generation of mobile telephones (2000, £22.5 billion)',
+        url: 'https://www.nao.org.uk/reports/the-auction-of-radio-spectrum-for-the-third-generation-of-mobile-telephones/',
+      },
+      {
+        label: '模型边界 — 频率划分以 ITU 全球划分为准；Region 1/2/3 与各国主管部门（美国 NTIA/FCC、中国工信部等）的实际划分并不相同，画面上标出的区域差异只是其中最常见的几条。本世界只保留普通人能对上号的主要业务，省略了固定、军用、气象辅助等大量划分',
+        labelEn: 'Model boundary — allocations follow the global ITU table; Regions 1, 2 and 3 and individual administrations (the U.S. NTIA and FCC, China’s MIIT and others) allocate differently, and the regional notes shown here are only the most common cases. This world keeps the services an ordinary person can recognise and omits a great many fixed, military and meteorological-aid allocations',
+        url: 'https://www.itu.int/en/ITU-R/conferences/wrc/Pages/default.aspx',
+      },
+      {
+        label: '模型边界 — 穿墙曲线是 ITU-R P.2040 的均匀平板法向入射解，真实墙体有钢筋、龙骨、空腔与多层结构；绕射曲线是 ITU-R P.526 的单刃近似，几何固定为墙角高 3 m、发射端 30 m、接收端 20 m。两条曲线给的是量级与趋势，属于示意，不是实测；建议书适用范围之外的部分在画面上画成虚线',
+        labelEn: 'Model boundary — the wall curve is the uniform-slab normal-incidence solution from ITU-R P.2040, while real walls contain rebar, studs, cavities and multiple layers; the diffraction curve is the single knife-edge approximation from ITU-R P.526 with a fixed geometry of a 3 m edge, 30 m to the transmitter and 20 m to the receiver. Both curves give order of magnitude and trend — they are illustrative, not measured — and the parts outside each Recommendation’s stated range are drawn dashed',
+        url: 'https://www.itu.int/rec/R-REC-P/en',
+      }
+    ],
+    presentation: 'full-bleed',
+    provenance: { origin: 'ai-prototype', initialModel: 'claude-opus-5' },
+    transferBudgetMb: 1,
+    fallback: 'poster',
+  } satisfies WorldExperience

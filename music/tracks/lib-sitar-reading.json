@@ -1,0 +1,103 @@
+{
+  "id": "lib-sitar-reading",
+  "code": "LIB-21-01",
+  "title": {
+    "en": "Reading — Sitar",
+    "zh": "静读 · 西塔琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "calm",
+    "intimate",
+    "warm"
+  ],
+  "topics": [
+    "reading",
+    "sitar"
+  ],
+  "energy": 2,
+  "bpm": 82,
+  "key": "D major",
+  "instruments": [
+    "sitar",
+    "bansuri",
+    "tabla",
+    "tanpura"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second Indian acoustic instrumental instrumental composition for quiet reading and reflective study. Mood: calm, intimate, warm. Instruments: sitar, bansuri, tabla, tanpura. Style: gradually unfolding modal melody and intricate tabla. Tempo approximately 82 BPM; D major. Main idea: a compact three-note motif. Keep the arrangement sparse and dynamics even; leave space for thought. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "sitar"
+  ],
+  "scenarios": [
+    "reading"
+  ],
+  "description": {
+    "en": "A traditional instrumental piece featuring a prominent wind instrument melody, likely a shehnai or similar, over a rhythmic percussion and drone-like string accompaniment. The music evokes a meditative and calm atmosphere with an exotic, possibly Indian, feel.",
+    "zh": "一段传统器乐作品，以突出的管乐器（可能是唢呐或类似乐器）旋律为主，伴随着有节奏的打击乐和持续的弦乐伴奏。音乐营造出一种冥想而平静的氛围，带有异域风情，可能源自印度。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 58.384,
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:54:51.279640+00:00",
+  "generation": {
+    "id": "4b33ed2e-9592-41d5-be48-f844511f486b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:54:09.125534+00:00",
+    "completedAt": "2026-09-09T08:54:51.279640+00:00",
+    "interactionId": "sR6hapW5OdW54vEPzPyHuAE",
+    "sha256": "af72d423d02ae9fab24d8723d998f3f4bfa3bf5f9ede1db581f4fef578921539"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A traditional instrumental piece featuring a prominent wind instrument melody, likely a shehnai or similar, over a rhythmic percussion and drone-like string accompaniment. The music evokes a meditative and calm atmosphere with an exotic, possibly Indian, feel.",
+      "zh": "一段传统器乐作品，以突出的管乐器（可能是唢呐或类似乐器）旋律为主，伴随着有节奏的打击乐和持续的弦乐伴奏。音乐营造出一种冥想而平静的氛围，带有异域风情，可能源自印度。"
+    },
+    "instruments": [
+      "Shehnai",
+      "Flute",
+      "Percussion",
+      "Sitar",
+      "Tanpura"
+    ],
+    "moods": [
+      "Meditative",
+      "Calm",
+      "Traditional",
+      "Exotic",
+      "Spiritual"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clear, well-recorded traditional instrumental music with a distinct cultural sound, suitable for various media applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:55:08.200618+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-sitar-reading/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-sitar-reading/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-sitar-reading/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:55:32.934613+00:00"
+}

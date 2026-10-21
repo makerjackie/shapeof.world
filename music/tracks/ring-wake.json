@@ -1,0 +1,61 @@
+{
+  "id": "ring-wake",
+  "code": "PHY-C02",
+  "title": {
+    "en": "Ring Wake",
+    "zh": "涡环尾迹"
+  },
+  "category": "physics",
+  "archetype": "event",
+  "moods": [
+    "swirling",
+    "sudden",
+    "fluid",
+    "clean"
+  ],
+  "topics": [
+    "vortex-ring",
+    "fluid",
+    "momentum"
+  ],
+  "energy": 4,
+  "bpm": 110,
+  "key": "B minor",
+  "instruments": [
+    "bass clarinet",
+    "whooshing filtered noise",
+    "mallet ring",
+    "soft kick as puff"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "duration": 135.367,
+  "prompt": "Create a 2 minute 30 second instrumental event piece about a vortex ring forming and traveling. Around 110 BPM, B minor. Bass clarinet swirls a circular figure; a filtered-noise whoosh is the puff; mallets strike a clean ring when the torus stabilizes. Fluid and sudden, then strangely stable. Instrumental only. No vocals, no choir, no lyrics, no hummed melody-as-voice, no singing, no whispered speech. No brass fanfare, no water-splash sample comedy.\n\n[00:00–00:18] Inhalation of noise, no pitch yet.\n[00:18–00:50] Bass clarinet coil; soft kick as the puff; stereo spins once.\n[00:50–01:30] Mallet ring locks the torus; motion becomes forward, not spinning-in-place.\n[01:30–02:10] Ring travels, slightly wobbling; clarinet long tones.\n[02:10–02:30] Diffusion: ring loses edge and fades.\n",
+  "recommendedWorldIds": [
+    "fluid-sim"
+  ],
+  "role": "world-theme",
+  "status": "published",
+  "generatedAt": "2026-08-25T10:35:48Z",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ring-wake/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ring-wake/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ring-wake/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:47:13.255637+00:00",
+  "generation": {
+    "id": "10062993-42c8-43ad-8e6b-e40f5c803372",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-08-25T10:35:01Z",
+    "completedAt": "2026-08-25T10:35:48Z",
+    "durationMs": 47000,
+    "interactionId": "1m-NaqmZOez7rtoPtvi3yAk",
+    "clientRequestId": "76d1f392-5f75-42b0-bbf9-fa977cb7797e",
+    "synthid": true,
+    "c2pa": "urn:c2pa:1eecb0df-990f-4a8a-1a66-48454334b107",
+    "sha256": "46e339302a3d4a42c7405c76cc57d7eff621f8083d712c1966be7988b3c73057"
+  }
+}

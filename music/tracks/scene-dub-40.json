@@ -1,0 +1,179 @@
+{
+  "id": "scene-dub-40",
+  "code": "SCENE-09-40",
+  "title": {
+    "en": "Floating Objects · 40",
+    "zh": "漂浮物件 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "spacious playful object transformations",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 94,
+  "key": "",
+  "instruments": [
+    "organ stabs",
+    "deep bass",
+    "rimshot",
+    "short tape echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Create a complete original 60-second instrumental cue in dub style. Use organ stabs, deep bass, rimshot, short tape echo. Tempo 94 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic track featuring a catchy synth melody, driving drums, and a solid bassline. The production is clean and polished.",
+    "zh": "一首欢快且充满活力的电子音乐，具有抓耳的合成器旋律、强劲的鼓点和扎实的贝斯线。制作干净且精致。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "spacious playful object transformations"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:30:04.922188+00:00",
+  "generation": {
+    "id": "715fa4b9-beec-49fc-8c43-b9ffbbcb4d86",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:29:24.868626+00:00",
+    "completedAt": "2026-09-22T09:30:04.922188+00:00",
+    "interactionId": "dUqyavPII5aG694PsJfvuAI",
+    "sha256": "5ed3f9f1a55841b0817ac0089c1413f4ae3e97407b4aa9c030068459796fdf43"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a catchy synth melody, driving drums, and a solid bassline. The production is clean and polished.",
+      "zh": "一首欢快且充满活力的电子音乐，具有抓耳的合成器旋律、强劲的鼓点和扎实的贝斯线。制作干净且精致。"
+    },
+    "instruments": [
+      "synthesizer",
+      "drums",
+      "bass"
+    ],
+    "moods": [
+      "upbeat",
+      "energetic",
+      "positive",
+      "driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a catchy synth melody and driving beat. It concludes with a clear, deliberate final chord and drum hit.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:22.241295+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "65e50204524a874da9306cae28142d669a763f5ce8072779f3b790f7c63153fd"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.312583,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A groovy, upbeat funk track featuring a prominent electric guitar melody, supported by a solid bassline and tight drum beat. It has a retro feel with a modern production.",
+      "zh": "一首律动感十足、欢快的放克音乐，以突出的电吉他旋律为主，配以扎实的贝斯线和紧凑的鼓点。它具有复古感和现代制作风格。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Groovy",
+      "Upbeat",
+      "Funky",
+      "Energetic",
+      "Retro"
+    ],
+    "energy": 4,
+    "bpmEstimate": 115,
+    "reason": "Well-produced and engaging funk track suitable for various media.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:30:13.617080+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.312582999999997,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-dub-40/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-dub-40/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-dub-40/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "65e50204524a874da9306cae28142d669a763f5ce8072779f3b790f7c63153fd",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "5ed3f9f1a55841b0817ac0089c1413f4ae3e97407b4aa9c030068459796fdf43",
+      "bytes": 1383170,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "07277b9f8ec308bbf73c1e8318f326a9f3a23cd5da4efe2bccce2da8294707b7",
+      "bytes": 2794,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.452249+00:00"
+}

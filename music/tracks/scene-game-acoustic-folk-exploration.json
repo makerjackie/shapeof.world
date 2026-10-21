@@ -1,0 +1,206 @@
+{
+  "id": "scene-game-acoustic-folk-exploration",
+  "code": "GAME-06-2",
+  "title": {
+    "en": "Village Market · Exploration",
+    "zh": "村庄集市 · 探索"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "exploration"
+  ],
+  "topics": [
+    "game",
+    "friendly village and shop",
+    "exploration"
+  ],
+  "energy": 2,
+  "bpm": 106,
+  "key": "",
+  "instruments": [
+    "acoustic guitar",
+    "flute",
+    "hand percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for friendly village and shop, exploration state. Instruments: acoustic guitar, flute, hand percussion. 106 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: interlocking low and high motifs over a steady ostinato. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "acoustic-folk"
+  ],
+  "scenarios": [
+    "game-exploration"
+  ],
+  "description": {
+    "en": "A gentle and melodic acoustic piece featuring acoustic guitar, pizzicato strings, flute, and light percussion. It evokes a peaceful and relaxing atmosphere.",
+    "zh": "一首轻柔旋律的纯音乐，以原声吉他为主，辅以拨弦乐器、长笛和轻柔的打击乐。营造出宁静放松的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "exploration"
+  },
+  "duration": 91.298,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:24:12.956740+00:00",
+  "generation": {
+    "id": "4f674f8c-2e4d-4933-b45f-a0d73f75d3f2",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:23:29.129332+00:00",
+    "completedAt": "2026-09-22T09:24:12.956740+00:00",
+    "interactionId": "EkmyatmdEsqP7PkPhKj7kAI",
+    "sha256": "d2616f0cb0bff9a8e8feb168c2f7cc71dcf9a483f97805530cd5b599ba754eea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melodic acoustic piece featuring acoustic guitar, pizzicato strings, flute, and light percussion. It evokes a peaceful and relaxing atmosphere.",
+      "zh": "一首轻柔旋律的纯音乐，以原声吉他为主，辅以拨弦乐器、长笛和轻柔的打击乐。营造出宁静放松的氛围。"
+    },
+    "instruments": [
+      "Acoustic Guitar",
+      "Pizzicato Strings",
+      "Flute",
+      "Light Percussion"
+    ],
+    "moods": [
+      "Relaxing",
+      "Peaceful",
+      "Gentle",
+      "Calm",
+      "Melodic"
+    ],
+    "energy": 2,
+    "bpmEstimate": 102,
+    "reason": "Clean, well-produced instrumental track with a clear melodic structure and pleasant instrumentation.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:24.958788+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 37.52941,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1655047,
+    "sourceStartSeconds": 5.25,
+    "sourceEndSeconds": 42.89705215419501,
+    "crossfadeSeconds": 0.11764172335600907,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1655047,
+        "duration": 37.52941,
+        "peakDbfs": -1.08,
+        "rmsDbfs": -14.92,
+        "dcOffset": 0.0014986451659893382,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.012786865234375,
+        "internalStepP999": 0.0791015625,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1655047,
+        "duration": 37.52941,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.97,
+        "dcOffset": 0.001281338982526582,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.01318359375,
+        "internalStepP999": 0.089569091796875,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A shimmering, ethereal synthesized pad with a delicate, melancholic arpeggiated melody. It has a sustained, airy texture.",
+        "zh": "一种闪烁、空灵的合成衬底音效，带有精致、忧郁的琶音旋律。它具有持续、飘渺的音色质感。"
+      },
+      "reason": "The audio is a clean, well-produced synthesized texture with a clear arpeggiated melody. It loops perfectly without any audible clicks, gaps, or abrupt changes, making it highly suitable for continuous background use in video or game sound design. No defects or unintended sounds were detected.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:28:44.412472+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "0f5363ef75c9fd7dbf0543eb91a89d0b2e57b7b2f632a9c1517282fc11a23c56"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly. Rhythm, harmony, and dynamics are consistent across the joins. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits at the loop points. The phrase continuity is excellent, making it comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:28:56.291617+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-exploration/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-exploration/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-exploration/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-exploration/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-acoustic-folk-exploration/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "c75ff4211db7cd8528775a15d84817c7d61c70592e23cba22f347b1d9f146fbc",
+      "bytes": 1278946,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "d2616f0cb0bff9a8e8feb168c2f7cc71dcf9a483f97805530cd5b599ba754eea",
+      "bytes": 2198818,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "8cc5a3d79fcb765fd5ea6962fcbe012731c6fd1ad4daa195182a97254b3b68b4",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "bf3eb70d367494c2c653dd0e57f01dea5eb5c3781b329ce48d34df891c9b6403",
+      "bytes": 6620232,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "48131017692edf884c9820593a7503aa32a052719b7d1bd12b2150c1709a2693",
+      "bytes": 430886,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.455452+00:00"
+}

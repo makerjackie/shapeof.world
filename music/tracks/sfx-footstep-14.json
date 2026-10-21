@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-14",
+  "code": "SFX-FOOTSTEP-14",
+  "title": {
+    "en": "Boot landing",
+    "zh": "靴子落地"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 13,
+  "seed": 3784179349,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized boot landing for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的靴子落地合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.36,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-14/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-14/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-14/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-14/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3784179349,
+    "sha256": "8d5416ea0eb529c5b2709431e7b429bbf72f7677351911546dbe6229e8b74d5f",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e5ab223b3c0ed68d9b4a4a0024e3887525b342c23c2dccd0a479b37dc785d45e",
+      "bytes": 5894,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "8d5416ea0eb529c5b2709431e7b429bbf72f7677351911546dbe6229e8b74d5f",
+      "bytes": 31796,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "49b5915395409b8bc41fffba55ae3895a65ac1904a6476604f81ad68ab878486",
+      "bytes": 8435,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "d9a82da306f12d976a81f2cbd66b2e00e734ffea4d1de3f710744fd0b6c4d4fe",
+      "bytes": 1942,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 15876,
+    "duration": 0.36,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -17.57,
+    "dcOffset": -1.9222460396195517e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.18834466552734408,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched metallic impact sound with a quick, ringing decay, reminiscent of a stylized hit or ricochet.",
+      "zh": "一个短促、尖锐、高音调的金属撞击声，带有快速的余音，类似于风格化的打击或跳弹声。"
+    },
+    "reason": "The sound is a clean, isolated, and well-defined synthesized effect. It has a clear attack and decay, making it suitable for various impact or hit scenarios in sound design without any audible defects or unintended elements.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:11.513407+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e5ab223b3c0ed68d9b4a4a0024e3887525b342c23c2dccd0a479b37dc785d45e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 15876
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.870509+00:00"
+}

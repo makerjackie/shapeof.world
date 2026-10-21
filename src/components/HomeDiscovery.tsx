@@ -1,3 +1,4 @@
+import { parseWorldPath, worldRoute } from '~/lib/world-urls'
 import {
   useCallback,
   useEffect,
@@ -5,104 +6,54 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type MouseEvent,
 } from 'react'
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
-import { ArrowDown, ArrowRight, Check, MagnifyingGlass, Minus, Play, Plus, Shuffle, X } from '@phosphor-icons/react'
+import { ArrowDown, ArrowLeft, ArrowRight, Check, MagnifyingGlass, Shuffle, X } from '@phosphor-icons/react'
 
-import { HomeUniverse } from '~/components/HomeUniverse'
+import { HomeSeries } from '~/components/HomeSeries'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
 import { getWorldReleaseDate } from '~/data/world-freshness'
+import { getWorldFirstSeen } from '~/data/world-order'
 import {
   worldArtifactManifest,
-  worldCatalogPagePath,
-  worldSearchIndexPath,
   type HomeBootstrapArtifact,
   type WorldCatalogSort,
-  type WorldSearchDocument,
 } from '~/data/world-artifacts'
-import { getRootCategory, paths, rootCategories, type CategoryId } from '~/data/content-graph'
-import { worldOfTheWeek } from '~/data/world-of-the-week'
-import { flagshipWorldIds } from '~/data/world-tiers'
+import { compareDefaultCatalogOrder } from '~/data/world-default-rank'
+import { getRootCategory, rootCategories, type CategoryId } from '~/data/content-graph'
+import { recommendedWorldIds } from '~/data/home-recommended'
 import type { WorldSummary } from '~/data/world-summaries'
 import { useI18n } from '~/i18n'
 import { useLocalizedRouteSeo } from '~/i18n/seo'
-import { selectHomeWorld } from '~/lib/next-world'
+import { formatCompactMonthDay, HOME_FRESH_LIMIT } from '~/lib/path-progress'
+import { useResumeWorld } from '~/lib/use-resume-world'
+import { loadExplorationIds, selectUnvisitedId } from '~/lib/exploration'
 import { worldThumbnail } from '~/lib/posters'
-import { safeLocalStorage } from '~/lib/storage'
+import { heroPoster, heroWorldId } from '~/lib/home-hero'
+import { safeLocalStorage, safeSessionStorage } from '~/lib/storage'
 import { normalizeWorldSearch, worldMatchesSearch } from '~/lib/world-search'
-import { warmWorldOnIntent } from '~/lib/world-prefetch'
+import { useWorldSearchIndex } from '~/lib/world-search-index'
+import { useWorldCatalog } from '~/lib/use-world-catalog'
+import { worldIntentHandlers } from '~/lib/world-prefetch'
 import { useScrollReveal } from '~/lib/useScrollReveal'
 import { useAtlas } from '~/state/atlas'
+import { WorldCard } from '~/components/WorldCard'
+import { trackEvent } from '~/lib/analytics'
 
 import './HomeDiscovery.css'
 
 const rootCategoryById = new Map(rootCategories.map((category) => [category.id, category]))
 const CATEGORY_FILTER_KEY = 'oneworld.home.category.v1'
-/** 首页只完整展开前几条探索路线，其余收进「查看全部」。Paths 的顺序即编辑顺位。 */
-const FEATURED_PATH_COUNT = 5
+const VIEW_FILTER_KEY = 'oneworld.home.viewed.v1'
+const SORT_KEY = 'oneworld.home.sort.v1'
+const RETURN_POSITION_KEY = 'oneworld.home.return.v1'
 
 function rootCategoryId(world: Pick<WorldSummary, 'primaryCategoryId'>): CategoryId {
   return getRootCategory(world.primaryCategoryId).id
 }
 
-function pathMembers(pathId: string, worldById: ReadonlyMap<string, WorldSummary>): WorldSummary[] {
-  const path = paths.find((item) => item.id === pathId)
-  if (!path) return []
-  return path.worldIds
-    .map((id) => worldById.get(id))
-    .filter((item): item is WorldSummary => Boolean(item))
-}
-
-/** 路线内按编辑顺序找到第一个未探索世界；全部探索完则回到 01。 */
-function firstUnexploredWorldIndex(members: WorldSummary[], visited: string[]): number {
-  const index = members.findIndex((world) => !visited.includes(world.id))
-  return index >= 0 ? index : 0
-}
-
-/** 按 Paths 顺序打开第一条仍有未探索世界的路线。 */
-function firstUnexploredPathId(visited: string[], worldById: ReadonlyMap<string, WorldSummary>): string {
-  for (const path of paths) {
-    const members = pathMembers(path.id, worldById)
-    if (members.some((world) => !visited.includes(world.id))) return path.id
-  }
-  return paths[0]?.id ?? ''
-}
-
-function scrollStoryboardTo(viewport: HTMLDivElement | null, index: number) {
-  const item = viewport?.querySelectorAll<HTMLElement>('[role="listitem"]')[index]
-  if (!viewport || !item) return
-  viewport.scrollLeft = item.offsetLeft
-}
-
-/** 与更新日志一致的日期格式：zh「2026 年 7 月 27 日」 / en「July 27, 2026」。 */
-function formatWeeklySince(date: string, locale: 'zh' | 'en') {
-  const [year, month, day] = date.split('-').map(Number)
-  if (!year || !month || !day) return date
-  if (locale === 'zh') return `${year} 年 ${month} 月 ${day} 日`
-  return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    timeZone: 'UTC',
-  })
-}
-
 type HomeSortOrder = WorldCatalogSort
-
-type CatalogState = {
-  key: string
-  page: number
-  worlds: ReadonlyArray<WorldSummary>
-  loading: boolean
-}
-
-async function fetchJson<T>(path: string): Promise<T> {
-  const response = await fetch(path, { headers: { accept: 'application/json' } })
-  if (!response.ok) throw new Error(`Catalogue request failed: ${response.status}`)
-  return response.json<T>()
-}
 
 function readSavedCategory(): CategoryId | 'all' {
   const saved = safeLocalStorage.get(CATEGORY_FILTER_KEY)
@@ -113,216 +64,32 @@ function readSavedCategory(): CategoryId | 'all' {
 function HomeWorldCard({
   world,
   position = 0,
+  viewed = false,
+  searched = false,
+  recent = false,
 }: {
   world: WorldSummary
   position?: number
+  viewed?: boolean
+  searched?: boolean
+  recent?: boolean
 }) {
-  const { worldText, categoryText } = useI18n()
+  const { t, worldText, categoryText } = useI18n()
   const worldCategory = rootCategoryById.get(rootCategoryId(world))
+  const releasedOn = recent ? getWorldReleaseDate(world.id) : undefined
 
   return (
-    <Link
-      to="/explore/$worldId"
-      params={{ worldId: world.id }}
-      className="world-card"
-      style={{
-        '--world-accent': world.accent,
-        '--world-poster-position': world.posterPosition ?? '50% 50%',
-        '--reveal-delay': `${(position % 9) * 45}ms`,
-      } as CSSProperties}
-      onMouseEnter={() => warmWorldOnIntent(world.id)}
-      onFocus={() => warmWorldOnIntent(world.id)}
-      onPointerDown={() => warmWorldOnIntent(world.id)}
-    >
-      <span className="world-card-media">
-        <img
-          src={worldThumbnail(world)}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
-        />
-        <span className="world-card-shade" aria-hidden="true" />
-        <span className="world-card-number">{world.index}</span>
-        <span className="world-card-meta">
-          {worldCategory ? categoryText(worldCategory, 'title') : worldText(world, 'topicLabel')}
-        </span>
-      </span>
-      <span className="world-card-copy">
-        <span className="world-card-title">{worldText(world, 'posterTitle')}</span>
-        <ArrowRight aria-hidden="true" weight="thin" />
-      </span>
-    </Link>
-  )
-}
-
-/** 电影分镜风琴：保留路线顺序、进度与下一站，同时降低首页纵向密度。 */
-function PathAccordion({
-  pathId,
-  order,
-  isOpen,
-  onToggle,
-  worldById,
-}: {
-  pathId: string
-  order: number
-  isOpen: boolean
-  onToggle: () => void
-  worldById: ReadonlyMap<string, WorldSummary>
-}) {
-  const { t, pathText, worldText } = useI18n()
-  const atlas = useAtlas()
-  const storyboardRef = useRef<HTMLDivElement>(null)
-  const path = paths.find((item) => item.id === pathId)
-  const members = pathMembers(pathId, worldById)
-  const nextWorldIndex = firstUnexploredWorldIndex(members, atlas.visited)
-  const [activeWorldIndex, setActiveWorldIndex] = useState(nextWorldIndex)
-  const visitedKey = atlas.visited.join('\0')
-
-  useEffect(() => {
-    if (!isOpen || !atlas.ready) return
-    const worlds = pathMembers(pathId, worldById)
-    if (worlds.length === 0) return
-    const visited = visitedKey ? visitedKey.split('\0') : []
-    const target = firstUnexploredWorldIndex(worlds, visited)
-    setActiveWorldIndex(target)
-    const viewport = storyboardRef.current
-    const frame = window.requestAnimationFrame(() => {
-      scrollStoryboardTo(viewport, target)
-    })
-    return () => window.cancelAnimationFrame(frame)
-  }, [atlas.ready, isOpen, pathId, visitedKey, worldById])
-
-  if (!path) return null
-  const exploredCount = members.filter((world) => atlas.visited.includes(world.id)).length
-  const nextWorld = members[nextWorldIndex] ?? members[0]
-  if (!nextWorld) return null
-  const nextIndex = nextWorldIndex + 1
-
-  const moveStoryboardWithPointer = (event: MouseEvent<HTMLDivElement>) => {
-    const viewport = storyboardRef.current
-    if (!viewport || viewport.scrollWidth <= viewport.clientWidth) return
-    const bounds = viewport.getBoundingClientRect()
-    const pointerProgress = Math.min(1, Math.max(0, (event.clientX - bounds.left) / bounds.width))
-    const maxScroll = viewport.scrollWidth - viewport.clientWidth
-    viewport.scrollLeft = maxScroll * pointerProgress
-  }
-
-  const resetStoryboard = () => {
-    setActiveWorldIndex(nextWorldIndex)
-    scrollStoryboardTo(storyboardRef.current, nextWorldIndex)
-  }
-
-  return (
-    <article className={isOpen ? 'path-accordion is-open' : 'path-accordion'}>
-      {!isOpen ? (
-        <button
-          type="button"
-          className="path-accordion-trigger"
-          aria-expanded="false"
-          aria-controls={`path-panel-${path.id}`}
-          onClick={onToggle}
-        >
-          <span className="path-accordion-order">{String(order).padStart(2, '0')}</span>
-          <span className="path-accordion-name">
-            <strong>{pathText(path, 'title')}</strong>
-            <small>{t('home.paths.label')} · {t('home.paths.exploredCount', { current: exploredCount, total: members.length })}</small>
-          </span>
-          <span className="path-accordion-symbol" aria-hidden="true"><Plus /></span>
-        </button>
-      ) : (
-        <div className="path-accordion-expanded" id={`path-panel-${path.id}`}>
-          <button
-            type="button"
-            className="path-accordion-collapse"
-            aria-expanded="true"
-            aria-controls={`path-panel-${path.id}`}
-            aria-label={pathText(path, 'title')}
-            onClick={onToggle}
-          >
-            <Minus aria-hidden="true" />
-          </button>
-          <aside className="path-accordion-info">
-            <div className="path-accordion-identity">
-              <span className="path-accordion-order">{String(order).padStart(2, '0')}</span>
-              <span className="path-accordion-name">
-                <strong>{pathText(path, 'title')}</strong>
-                <em>{path.titleEn}</em>
-                <small>{t('home.paths.label')} · {t('home.paths.exploredCount', { current: exploredCount, total: members.length })}</small>
-              </span>
-            </div>
-            <p>{pathText(path, 'description')}</p>
-            <div className="path-accordion-foot">
-              <div className="path-accordion-progress" aria-hidden="true">
-                {members.map((world, position) => (
-                  <i key={world.id} className={position < exploredCount ? 'is-done' : position === nextIndex - 1 ? 'is-next' : undefined} />
-                ))}
-              </div>
-              <Link
-                to="/explore/$worldId"
-                params={{ worldId: nextWorld.id }}
-                search={{ path: path.id }}
-                className="path-accordion-cta"
-                onMouseEnter={() => warmWorldOnIntent(nextWorld.id)}
-                onFocus={() => warmWorldOnIntent(nextWorld.id)}
-              >
-                <Play aria-hidden="true" weight="fill" />
-                {exploredCount === 0
-                  ? t('home.paths.start')
-                  : exploredCount >= members.length
-                    ? t('home.paths.again')
-                    : t('home.paths.continue', { value: nextIndex })}
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </div>
-          </aside>
-          <div className="path-accordion-panel">
-            <div
-              ref={storyboardRef}
-              className="path-storyboard-viewport"
-              onMouseMove={moveStoryboardWithPointer}
-              onMouseLeave={resetStoryboard}
-            >
-              <div className="path-storyboard" role="list" aria-label={pathText(path, 'title')}>
-                {members.map((world, position) => {
-                  const explored = atlas.visited.includes(world.id)
-                  return (
-                    <Link
-                      role="listitem"
-                      key={world.id}
-                      to="/explore/$worldId"
-                      params={{ worldId: world.id }}
-                      search={{ path: path.id }}
-                      className={`${explored ? 'path-storyboard-item is-explored' : 'path-storyboard-item'}${activeWorldIndex === position ? ' is-active' : ''}`}
-                      onMouseEnter={() => {
-                        setActiveWorldIndex(position)
-                        warmWorldOnIntent(world.id)
-                      }}
-                      onFocus={(event) => {
-                        setActiveWorldIndex(position)
-                        event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
-                        warmWorldOnIntent(world.id)
-                      }}
-                      onPointerDown={() => warmWorldOnIntent(world.id)}
-                    >
-                      <span className="path-storyboard-media">
-                        <img src={worldThumbnail(world)} alt="" loading="lazy" decoding="async" fetchPriority="low" />
-                        <span className="path-storyboard-order" aria-hidden="true">{String(position + 1).padStart(2, '0')}</span>
-                        {explored && <span className="path-storyboard-done" aria-hidden="true"><Check weight="bold" /></span>}
-                      </span>
-                      <span className="path-storyboard-copy">
-                        <strong>{worldText(world, 'posterTitle')}</strong>
-                        {position === nextIndex - 1 && <small>{t('home.paths.continue', { value: nextIndex })}</small>}
-                      </span>
-                    </Link>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </article>
+    <WorldCard
+      world={world}
+      viewed={viewed}
+      delay={(position % 9) * 45}
+      label={releasedOn ? (
+        <time className="home-recent-date" dateTime={releasedOn}>
+          {t(releasedOn === getWorldFirstSeen(world.id) ? 'home.fresh.added' : 'home.fresh.updated')} · {formatCompactMonthDay(releasedOn)}
+        </time>
+      ) : worldCategory ? categoryText(worldCategory, 'title') : worldText(world, 'topicLabel')}
+      onClick={() => { if (searched) trackEvent({ event: 'search_result_click', worldId: world.id, value: 'home' }) }}
+    />
   )
 }
 
@@ -338,26 +105,46 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
     .map((id) => bootstrapWorldById.get(id))
     .filter((world): world is WorldSummary => Boolean(world)),
   [bootstrap.initialPageIds, bootstrapWorldById])
-  const weeklyPicks = useMemo(() => worldOfTheWeek.picks
-    .map((pick) => {
-      const world = bootstrapWorldById.get(pick.worldId)
-      return world ? { world, coverTitle: pick.coverTitle } : null
-    })
-    .filter((item): item is { world: WorldSummary; coverTitle: { zh: string; en: string } } => Boolean(item)),
-  [bootstrapWorldById])
 
-  // 回访访客：至少玩过一个世界才在首屏显示细进度条；首次访问不打扰
-  const { ready: atlasReady, visited } = useAtlas()
-  const exploredCount = atlasReady ? Math.min(visited.length, worldArtifactManifest.total) : 0
+  const { ready: atlasReady, visited, lastVisitedWorldId } = useAtlas()
+  const [publicIds, setPublicIds] = useState<readonly string[]>()
+  const [explorationBusy, setExplorationBusy] = useState(false)
+  const [explorationError, setExplorationError] = useState(false)
+  const visitedSet = useMemo(() => new Set(visited), [visited])
+  const exploredCount = atlasReady && publicIds ? publicIds.filter((id) => visitedSet.has(id)).length : 0
+  const progressReady = atlasReady && Boolean(publicIds)
+  const totalWorlds = publicIds?.length ?? worldArtifactManifest.total
+  const [progressAttempt, setProgressAttempt] = useState(0)
+  const [newWorldCount, setNewWorldCount] = useState(0)
+  const featuredPoolIds = useMemo(() => recommendedWorldIds.filter((id) => bootstrapWorldById.has(id)), [bootstrapWorldById])
+  const heroWorld = bootstrapWorldById.get(heroWorldId(Date.now(), new Set(bootstrapWorldById.keys()))) ?? bootstrap.worlds[0]
+  const resumeWorld = useResumeWorld(atlasReady ? lastVisitedWorldId ?? visited.at(-1) : undefined, publicIds, bootstrapWorldById)
+  useEffect(() => {
+    if (!atlasReady) return
+    let cancelled = false
+    setExplorationError(false)
+    void loadExplorationIds().then((ids) => {
+      if (cancelled) return
+      setPublicIds(ids)
+      const previous = safeLocalStorage.get('oneworld.home.public-ids.v1')
+      if (previous) {
+        try {
+          const seen: unknown = JSON.parse(previous)
+          if (Array.isArray(seen)) setNewWorldCount(ids.filter((id) => !seen.includes(id)).length)
+        } catch { /* Invalid browser storage must not block the public directory. */ }
+      }
+      safeLocalStorage.set('oneworld.home.public-ids.v1', JSON.stringify(ids))
+    }).catch(() => { if (!cancelled) setExplorationError(true) })
+    return () => { cancelled = true }
+  }, [atlasReady, progressAttempt])
 
-  // 最近上新：公开世界按首次出现日期新→旧；失败馆与归档世界不会出现
-  const freshWorlds = useMemo(() => bootstrap.freshWorldIds
-    .map((id) => bootstrapWorldById.get(id))
-    .filter((world): world is WorldSummary => Boolean(world)),
-  [bootstrap.freshWorldIds, bootstrapWorldById])
-  // 搜索词与 URL ?q= 同步：顶栏搜索框提交后直达结果，刷新/分享链接不丢状态。
-  // IME 组字（中/日/韩）期间禁止回写 URL 或用 URL 覆盖输入，否则受控 value 会打断候选。
-  const urlQuery = useSearch({ from: '/' }).q ?? ''
+  // Worlds added or updated in the last 30 days carry a date on their card.
+  const recentIds = useMemo(() => new Set(bootstrap.freshWorldIds.slice(0, HOME_FRESH_LIMIT).filter((id) => {
+    const releasedOn = getWorldReleaseDate(id)
+    return Boolean(releasedOn) && Date.now() - Date.parse(releasedOn!) < 30 * 86_400_000
+  })), [bootstrap.freshWorldIds])
+  const homeSearch = useSearch({ from: '/' })
+  const urlQuery = homeSearch.q ?? ''
   const [query, setQuery] = useState(urlQuery)
   const isComposingRef = useRef(false)
   const syncSearchQuery = useCallback((value: string) => {
@@ -387,108 +174,103 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
 
   const [category, setCategoryState] = useState<CategoryId | 'all'>('all')
   const [sortOrder, setSortOrder] = useState<HomeSortOrder>('recommended')
-  const [pathExpanded, setPathExpanded] = useState(false)
-  const [openPathId, setOpenPathId] = useState(paths[0]?.id ?? '')
-  const locatedPathRef = useRef(false)
-  const [catalogState, setCatalogState] = useState<CatalogState>({
-    key: 'all\0recommended',
-    page: 1,
-    worlds: initialPage,
-    loading: false,
-  })
-  const [searchDocuments, setSearchDocuments] = useState<ReadonlyArray<WorldSearchDocument>>([])
+  const [viewFilter, setViewFilterState] = useState<'all' | 'unviewed' | 'viewed'>('all')
+  const [preferencesReady, setPreferencesReady] = useState(false)
+  const [resultLimit, setResultLimit] = useState(worldArtifactManifest.pageSize)
 
   useEffect(() => {
     setCategoryState(readSavedCategory())
+    const savedView = homeSearch.viewed ?? safeLocalStorage.get(VIEW_FILTER_KEY)
+    if (savedView === 'viewed' || savedView === 'unviewed') setViewFilterState(savedView)
+    const savedSort = safeLocalStorage.get(SORT_KEY)
+    if (savedSort === 'newest' || savedSort === 'catalogue') setSortOrder(savedSort)
+    const savedLimit = Number(safeSessionStorage.get('oneworld.home.limit.v1'))
+    if (savedLimit > 0) setResultLimit(savedLimit)
+    if (safeSessionStorage.get(RETURN_POSITION_KEY) && !homeSearch.viewed) {
+      try {
+        const saved = JSON.parse(safeSessionStorage.get('oneworld.home.return-state.v1') ?? '{}')
+        if (typeof saved.query === 'string') setQuery(saved.query)
+      } catch { /* A malformed return snapshot must not prevent browsing. */ }
+    }
+    setPreferencesReady(true)
   }, [])
 
   useEffect(() => {
-    if (!atlasReady || locatedPathRef.current) return
-    locatedPathRef.current = true
-    const pathId = firstUnexploredPathId(visited, bootstrapWorldById)
-    const pathIndex = paths.findIndex((item) => item.id === pathId)
-    setOpenPathId(pathId)
-    if (pathIndex >= FEATURED_PATH_COUNT) setPathExpanded(true)
-  }, [atlasReady, bootstrapWorldById, visited])
+    if (homeSearch.viewed) setViewFilterState(homeSearch.viewed)
+  }, [homeSearch.viewed])
+
+  const setViewFilter = (next: 'all' | 'unviewed' | 'viewed') => {
+    setViewFilterState(next)
+    safeLocalStorage.set(VIEW_FILTER_KEY, next)
+    setResultLimit(worldArtifactManifest.pageSize)
+    void navigate({ to: '/', search: (prev) => ({ ...prev, viewed: next }), replace: true, resetScroll: false })
+  }
+  const changeSort = (next: HomeSortOrder) => {
+    setSortOrder(next)
+    safeLocalStorage.set(SORT_KEY, next)
+  }
 
   const setCategory = (next: CategoryId | 'all') => {
     setCategoryState(next)
     safeLocalStorage.set(CATEGORY_FILTER_KEY, next)
   }
   const normalizedQuery = normalizeWorldSearch(query)
-  // 有搜索词时跨全站目录查找：学科筛选只在「浏览」时生效。
-  // 否则 localStorage 里残留的「物理」等域会把「台风」等结果滤成空。
-  const activeCategory: CategoryId | 'all' = normalizedQuery ? 'all' : category
+  const activeCategory = category
   const catalogKey = `${activeCategory}\u0000${sortOrder}`
   const catalogTotal = activeCategory === 'all'
     ? worldArtifactManifest.total
     : worldArtifactManifest.categories.find((item) => item.id === activeCategory)?.count ?? 0
 
-  useEffect(() => {
-    if (normalizedQuery) return
-    if (catalogKey === 'all\0recommended') {
-      setCatalogState({ key: catalogKey, page: 1, worlds: initialPage, loading: false })
-      return
-    }
-    let cancelled = false
-    setCatalogState({ key: catalogKey, page: 0, worlds: [], loading: true })
-    void fetchJson<ReadonlyArray<WorldSummary>>(
-      worldCatalogPagePath(1, activeCategory === 'all' ? undefined : activeCategory, sortOrder),
-    ).then((nextWorlds) => {
-      if (!cancelled) setCatalogState({ key: catalogKey, page: 1, worlds: nextWorlds, loading: false })
-    }).catch(() => {
-      if (!cancelled) setCatalogState({ key: catalogKey, page: 0, worlds: [], loading: false })
-    })
-    return () => { cancelled = true }
-  }, [activeCategory, catalogKey, initialPage, normalizedQuery, sortOrder])
-
-  useEffect(() => {
-    if (!normalizedQuery) {
-      setSearchDocuments([])
-      return
-    }
-    let cancelled = false
-    void fetchJson<ReadonlyArray<WorldSearchDocument>>(worldSearchIndexPath(locale))
-      .then((documents) => {
-        if (!cancelled) setSearchDocuments(documents)
-      })
-      .catch(() => {
-        if (!cancelled) setSearchDocuments([])
-      })
-    return () => { cancelled = true }
-  }, [locale, normalizedQuery])
-
-  const matchingWorlds = useMemo(() => normalizedQuery
-    ? searchDocuments
-        .filter((document) => document.text.includes(normalizedQuery) || worldMatchesSearch(document.world, normalizedQuery))
-        .map((document) => document.world)
-    : catalogState.key === catalogKey ? catalogState.worlds : [],
-  [catalogKey, catalogState, normalizedQuery, searchDocuments])
-  const visibleWorlds = matchingWorlds
-  const matchingTotal = normalizedQuery ? matchingWorlds.length : catalogTotal
-  const hasMoreWorlds = !normalizedQuery && visibleWorlds.length < catalogTotal
-  const worldWindowKey = `${catalogKey}\u0000${normalizedQuery}`
+  const catalog = useWorldCatalog({
+    category: activeCategory, sort: sortOrder, initialPage,
+    enabled: !normalizedQuery && viewFilter === 'all', total: catalogTotal,
+  })
+  const useIndexedResults = Boolean(normalizedQuery) || viewFilter !== 'all'
+  const searchIndex = useWorldSearchIndex(locale, useIndexedResults)
+  const matchingWorlds = useMemo(() => {
+    if (!useIndexedResults) return catalog.worlds
+    return (searchIndex.documents ?? [])
+      .filter(({ world, text }) => (!normalizedQuery || text.includes(normalizedQuery) || worldMatchesSearch(world, normalizedQuery))
+        && (activeCategory === 'all' || [world.primaryCategoryId, ...(world.additionalCategoryIds ?? [])].some((id) => getRootCategory(id).id === activeCategory))
+        && (viewFilter === 'all' || visitedSet.has(world.id) === (viewFilter === 'viewed')))
+      .map(({ world }) => world)
+      .sort((a, b) => sortOrder === 'newest'
+        ? (getWorldReleaseDate(b.id) ?? '').localeCompare(getWorldReleaseDate(a.id) ?? '') || a.id.localeCompare(b.id)
+        : sortOrder === 'recommended'
+          ? compareDefaultCatalogOrder(a, b)
+          : Number(a.index) - Number(b.index))
+  }, [activeCategory, catalog.worlds, normalizedQuery, searchIndex.documents, sortOrder, useIndexedResults, viewFilter, visitedSet])
+  const indexedLimit = matchingWorlds.length - resultLimit <= worldArtifactManifest.tailAbsorb ? matchingWorlds.length : resultLimit
+  const visibleWorlds = useIndexedResults ? matchingWorlds.slice(0, indexedLimit) : matchingWorlds
+  const matchingTotal = useIndexedResults ? matchingWorlds.length : catalogTotal
+  const hasMoreWorlds = visibleWorlds.length < matchingTotal
+  const worldWindowKey = `${catalogKey}\u0000${normalizedQuery}\u0000${viewFilter}`
+  const directoryLoading = useIndexedResults ? searchIndex.loading : catalog.loading
+  const directoryError = useIndexedResults ? searchIndex.error : catalog.error
+  const directoryLoadingText = t('home.collection.loading')
+  const directoryErrorText = t('home.collection.unavailable')
+  const retryDirectory = useIndexedResults ? searchIndex.retry : catalog.retry
   const revealMoreWorlds = useCallback(() => {
-    if (normalizedQuery || catalogState.loading || catalogState.key !== catalogKey) return
-    const nextPage = catalogState.page + 1
-    setCatalogState((current) => ({ ...current, loading: true }))
-    void fetchJson<ReadonlyArray<WorldSummary>>(
-      worldCatalogPagePath(nextPage, activeCategory === 'all' ? undefined : activeCategory, sortOrder),
-    ).then((nextWorlds) => {
-      setCatalogState((current) => current.key === catalogKey
-        ? {
-            key: catalogKey,
-            page: nextPage,
-            worlds: [...current.worlds, ...nextWorlds],
-            loading: false,
-          }
-        : current)
-    }).catch(() => {
-      setCatalogState((current) => current.key === catalogKey ? { ...current, loading: false } : current)
+    if (useIndexedResults) setResultLimit((limit) => {
+      const next = limit + worldArtifactManifest.pageSize
+      safeSessionStorage.set('oneworld.home.limit.v1', String(next))
+      return next
     })
-  }, [activeCategory, catalogKey, catalogState, normalizedQuery, sortOrder])
+    else catalog.loadMore()
+  }, [catalog.loadMore, useIndexedResults])
 
-  const gridRef = useScrollReveal<HTMLDivElement>('.world-card', {
+  useEffect(() => {
+    if (!preferencesReady || directoryLoading || directoryError) return
+    const saved = safeSessionStorage.get(RETURN_POSITION_KEY)
+    if (!saved) return
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo({ top: Number(saved), behavior: 'instant' })
+      safeSessionStorage.remove(RETURN_POSITION_KEY)
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [preferencesReady, directoryLoading, directoryError, visibleWorlds.length])
+
+  const gridRef = useScrollReveal<HTMLDivElement>('.work-card', {
     contentKey: worldWindowKey,
   })
   const filterRef = useRef<HTMLDivElement>(null)
@@ -525,7 +307,7 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
 
   useEffect(() => {
     const trigger = loadMoreRef.current
-    if (!trigger || !hasMoreWorlds || typeof IntersectionObserver === 'undefined') return
+    if (!trigger || !hasMoreWorlds || directoryLoading || directoryError || typeof IntersectionObserver === 'undefined') return
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -535,249 +317,99 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
     )
     observer.observe(trigger)
     return () => observer.disconnect()
-  }, [hasMoreWorlds, revealMoreWorlds])
+  }, [directoryError, directoryLoading, hasMoreWorlds, revealMoreWorlds])
 
-  const visitRandomWorld = () => {
-    const target = selectHomeWorld(bootstrap.worlds, visited, flagshipWorldIds)
-    if (target) navigate({ to: '/explore/$worldId', params: { worldId: target.id } })
+  const visitRandomWorld = async () => {
+    if (explorationBusy || !atlasReady) return
+    setExplorationBusy(true)
+    setExplorationError(false)
+    try {
+      const ids = await loadExplorationIds()
+      setPublicIds(ids)
+      const candidates = recommendedWorldIds.filter((id) => ids.includes(id))
+      const id = selectUnvisitedId(candidates, visited)
+      if (id) {
+        saveHomePosition()
+        await navigate({ to: worldRoute, params: { worldId: id }, search: { collection: 'featured' } })
+      }
+    } catch { setExplorationError(true) }
+    finally { setExplorationBusy(false) }
   }
 
-  const scrollToWorlds = () => {
-    document.getElementById('home-worlds')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const scrollToId = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const scrollToGrid = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
-    scrollToWorlds()
+  const scrollToWorlds = () => scrollToId('home-worlds')
+  const saveHomePosition = () => {
+    safeSessionStorage.set(RETURN_POSITION_KEY, String(window.scrollY))
+    safeSessionStorage.set('oneworld.home.return-state.v1', JSON.stringify({ query }))
   }
 
   return (
-    <main className="home-page">
+    <main className="home-page" onClickCapture={(event) => {
+      const link = (event.target as Element).closest('a')
+      if ((Boolean(link && parseWorldPath(link.pathname)) || link?.pathname.includes('/routes')) && !event.metaKey && !event.ctrlKey && !event.shiftKey) {
+        saveHomePosition()
+      }
+    }}>
       <section className="home-hero" aria-labelledby="home-hero-title">
-        <SiteHeader inverse />
-
-        <div className="home-stars" aria-hidden="true" />
-        <HomeUniverse worlds={bootstrap.worlds} />
+        <SiteHeader />
 
         <div className="home-hero-copy">
           <p className="home-hero-eyebrow">
             <i aria-hidden="true" /> {t('common.interactiveWorlds', { value: worldArtifactManifest.total })}
           </p>
           <h1 id="home-hero-title">{t('home.title')}</h1>
-          <p className="home-hero-sub">
-            {t('home.body')}
-          </p>
+          <p className="home-hero-lead">{t('home.lead')}</p>
           <div className="home-hero-actions">
-            <button type="button" className="home-hero-primary" onClick={visitRandomWorld}>
-              <Shuffle aria-hidden="true" /> {t('home.random')}
+            {heroWorld && <Link to={worldRoute} params={{ worldId: heroWorld.id }} search={{ collection: 'featured' }}
+              className="btn-primary home-hero-primary" {...worldIntentHandlers(heroWorld.id)}>
+              {t('home.hero.enter')} <ArrowRight aria-hidden="true" />
+            </Link>}
+            <button type="button" className="home-hero-random" onClick={visitRandomWorld} disabled={explorationBusy || !atlasReady}>
+              <Shuffle aria-hidden="true" /> {t(explorationBusy ? 'home.collection.loading' : 'home.random')}
             </button>
-            <a href="#home-worlds" className="home-hero-secondary" onClick={scrollToGrid}>
-              {t('home.pickCategory')} <ArrowDown aria-hidden="true" />
-            </a>
           </div>
-          {exploredCount > 0 && (
-            <Link to="/atlas" className="home-hero-progress">
-              <span className="home-hero-progress-row">
-                <span className="home-hero-progress-text">
-                  {t('home.progress.explored', { done: exploredCount, total: worldArtifactManifest.total })}
-                </span>
-                <span className="home-hero-progress-cta">
-                  {t('home.progress.cta')} <ArrowRight aria-hidden="true" />
-                </span>
-              </span>
-              <span className="home-hero-progress-track" aria-hidden="true">
-                <i style={{ width: `${Math.min(100, (exploredCount / Math.max(1, worldArtifactManifest.total)) * 100)}%` }} />
-              </span>
-            </Link>
-          )}
-        </div>
-
-        <p className="home-hero-hint" aria-hidden="true">
-          <ArrowDown aria-hidden="true" /> {t('home.drag')}
-        </p>
-      </section>
-
-      <section className="home-galaxy" aria-labelledby="home-galaxy-title">
-        <h2 id="home-galaxy-title" className="home-galaxy-heading">{t('home.galaxy.title')}</h2>
-        <div className="home-galaxy-track">
-          {rootCategories.map((item) => (
-            <Link
-              key={item.id}
-              to="/category/$categoryId"
-              params={{ categoryId: item.id }}
-              className="home-galaxy-node"
-              style={{ '--galaxy-accent': item.accent } as CSSProperties}
-            >
-              <span className="home-galaxy-star" aria-hidden="true"><i /></span>
-              <span className="home-galaxy-name">{categoryText(item, 'title')}</span>
-              <span className="home-galaxy-tagline">{categoryText(item, 'description')}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {weeklyPicks.length > 0 && (
-        <section
-          className="home-section home-weekly"
-          aria-labelledby="home-weekly-title"
-          style={{ '--weekly-accent': weeklyPicks[0]?.world.accent } as CSSProperties}
-        >
-          <header className="home-section-head">
-            <h2 id="home-weekly-title">{t('home.weekly.kicker')}</h2>
-            <p>{formatWeeklySince(worldOfTheWeek.since, locale)}</p>
-          </header>
-          <div className="home-weekly-grid">
-            {weeklyPicks.map(({ world, coverTitle }, index) => (
-              <Link
-                key={world.id}
-                to="/explore/$worldId"
-                params={{ worldId: world.id }}
-                className="home-weekly-card"
-                style={{ '--world-accent': world.accent } as CSSProperties}
-                onMouseEnter={() => warmWorldOnIntent(world.id)}
-                onFocus={() => warmWorldOnIntent(world.id)}
-              >
-                <span className="home-weekly-card-media">
-                  <img
-                    src={worldThumbnail(world)}
-                    alt=""
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    decoding="async"
-                    fetchPriority="low"
-                    width={384}
-                    height={256}
-                  />
-                  <span className="home-weekly-card-label">
-                    {coverTitle[locale]}
-                  </span>
-                </span>
-                <span className="home-weekly-card-body">
-                  <span className="home-weekly-card-desc">
-                    {worldText(world, 'posterTitle')}
-                  </span>
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="home-section home-path-section" aria-labelledby="home-path-title">
-        <header className="home-section-head">
-          <h2 id="home-path-title">{t('home.paths.title')}</h2>
-          <button
-            type="button"
-            className={pathExpanded
-              ? 'home-section-more home-path-toggle is-expanded'
-              : 'home-section-more home-path-toggle'}
-            aria-expanded={pathExpanded}
-            onClick={() => setPathExpanded((value) => !value)}
-          >
-            {pathExpanded
-              ? t('home.paths.collapse')
-              : t('home.paths.viewAll', { value: paths.length })}
+          {explorationError && <p role="alert" className="home-exploration-error">{t('exploration.loadError')} <button onClick={() => setProgressAttempt((attempt) => attempt + 1)}>{t('system.retry')}</button></p>}
+          {resumeWorld && <Link to={worldRoute} params={{ worldId: resumeWorld.id }}
+            search={featuredPoolIds.some((id) => id === resumeWorld.id) ? { collection: 'featured' } : {}}
+            className="home-resume" {...worldIntentHandlers(resumeWorld.id)}>
+            <img src={worldThumbnail(resumeWorld)} alt="" width={72} height={48} />
+            <span><small>{t('home.featured.resume')}</small><strong>{worldText(resumeWorld, 'title')}</strong></span>
             <ArrowRight aria-hidden="true" />
-          </button>
-        </header>
-        <div className="home-path-accordion">
-          {(pathExpanded ? paths : paths.slice(0, FEATURED_PATH_COUNT)).map((path, index) => (
-            <PathAccordion
-              key={path.id}
-              pathId={path.id}
-              order={index + 1}
-              isOpen={openPathId === path.id}
-              onToggle={() => setOpenPathId((current) => current === path.id ? '' : path.id)}
-              worldById={bootstrapWorldById}
-            />
-          ))}
+          </Link>}
+          {newWorldCount > 0 && <p className="home-new-worlds">{t('home.newWorlds', { value: newWorldCount })}</p>}
         </div>
-        {!pathExpanded && paths.length > FEATURED_PATH_COUNT && (
-          <div className="home-path-foot">
-            <p className="home-path-foot-note">
-              {t('home.paths.moreFoot', {
-                shown: FEATURED_PATH_COUNT,
-                total: paths.length,
-              })}
-            </p>
-            <button
-              type="button"
-              className="home-path-foot-cta"
-              onClick={() => setPathExpanded(true)}
-            >
-              {t('home.paths.expandFoot', {
-                value: paths.length - FEATURED_PATH_COUNT,
-              })}
-              <ArrowRight aria-hidden="true" />
-            </button>
-          </div>
-        )}
-        {pathExpanded && (
-          <div className="home-path-foot">
-            <button
-              type="button"
-              className="home-path-foot-cta is-quiet"
-              onClick={() => setPathExpanded(false)}
-            >
-              {t('home.paths.collapse')}
-            </button>
-          </div>
-        )}
+
+        {heroWorld && <figure className="home-hero-media">
+          <Link to={worldRoute} params={{ worldId: heroWorld.id }} search={{ collection: 'featured' }}
+            className="home-hero-poster" aria-label={worldText(heroWorld, 'title')} {...worldIntentHandlers(heroWorld.id)}>
+            <img src={heroPoster(heroWorld.id)} alt="" width={2560} height={1600} fetchPriority="high" decoding="async" />
+          </Link>
+          <figcaption>
+            <span>{t('home.hero.today')}</span>
+            <Link to={worldRoute} params={{ worldId: heroWorld.id }} search={{ collection: 'featured' }}>{worldText(heroWorld, 'title')}</Link>
+          </figcaption>
+        </figure>}
       </section>
 
-      {freshWorlds.length > 0 && (
-        <section className="home-section home-fresh-section" aria-labelledby="home-fresh-title">
-          <header className="home-section-head">
-            <h2 id="home-fresh-title">{t('home.fresh.title')}</h2>
-            <Link to="/changelog" className="home-section-more">
-              {t('home.fresh.more')}
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </header>
-          <div className="home-fresh-world-rail" role="list" aria-label={t('home.fresh.title')}>
-            {freshWorlds.slice(0, 10).map((world, position) => {
-              const releasedOn = getWorldReleaseDate(world.id)
-              return (
-                <Link
-                  role="listitem"
-                  key={world.id}
-                  to="/explore/$worldId"
-                  params={{ worldId: world.id }}
-                  className={position === 0 ? 'home-fresh-world is-latest' : 'home-fresh-world'}
-                  onMouseEnter={() => warmWorldOnIntent(world.id)}
-                  onFocus={() => warmWorldOnIntent(world.id)}
-                >
-                  <span className="home-fresh-world-media">
-                    <img
-                      src={worldThumbnail(world)}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <span className="home-fresh-world-order" aria-hidden="true">{String(position + 1).padStart(2, '0')}</span>
-                  </span>
-                  <span className="home-fresh-world-copy">
-                    <span className="home-fresh-world-meta">
-                      <small>{categoryText(rootCategoryById.get(rootCategoryId(world))!, 'title')}</small>
-                      {releasedOn && (
-                        <time dateTime={releasedOn}>
-                          {formatWeeklySince(releasedOn, locale)}
-                        </time>
-                      )}
-                    </span>
-                    <strong>{worldText(world, 'posterTitle')}</strong>
-                  </span>
-                </Link>
-              )
-            })}
-          </div>
-        </section>
-      )}
+      <HomeSeries worldById={bootstrapWorldById} />
+
+
 
       <section className="home-section" id="home-worlds" aria-labelledby="home-worlds-title">
         <header className="home-section-head">
-          <h2 id="home-worlds-title">{t('home.collection.title')}</h2>
-          <p>{t('home.collection.body')}</p>
+          <div>
+            <h2 id="home-worlds-title" tabIndex={-1}>{t('home.collection.title')}</h2>
+          </div>
         </header>
+        <div className="home-view-filter" role="group" aria-label={t('home.viewStatus')}>
+          {(['all', 'unviewed', 'viewed'] as const).map((value) => <button key={value} aria-pressed={viewFilter === value} onClick={() => setViewFilter(value)}>
+            {t(value === 'all' ? 'common.all' : value === 'viewed' ? 'home.viewed' : 'home.unviewed')}
+            <span>{value === 'all' ? totalWorlds : progressReady ? value === 'viewed' ? exploredCount : totalWorlds - exploredCount : '—'}</span>
+          </button>)}
+        </div>
         <div className="home-discovery-search" role="search">
           <div className="home-search-field">
             <MagnifyingGlass aria-hidden="true" />
@@ -792,7 +424,6 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
                 isComposingRef.current = false
                 const next = event.currentTarget.value
                 setQuery(next)
-                // 组字期间 debounce 被跳过；结束后立刻同步最终词，避免只靠 onChange 时 effect 不再触发
                 syncSearchQuery(next)
               }}
               placeholder={t('worlds.search')}
@@ -806,13 +437,13 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
             )}
           </div>
           <div className="home-discovery-meta">
-            <span aria-live="polite">{t('worlds.results', { value: matchingTotal })}</span>
+            <span aria-live="polite">{directoryLoading ? directoryLoadingText : directoryError ? directoryErrorText : t('worlds.results', { value: matchingTotal })}</span>
             <div className="home-sort" role="group" aria-label={t('home.sort.label')}>
               <button
                 type="button"
                 className={sortOrder === 'recommended' ? 'is-active' : undefined}
                 aria-pressed={sortOrder === 'recommended'}
-                onClick={() => setSortOrder('recommended')}
+                onClick={() => changeSort('recommended')}
               >
                 {t('home.sort.recommended')}
               </button>
@@ -820,7 +451,7 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
                 type="button"
                 className={sortOrder === 'newest' ? 'is-active' : undefined}
                 aria-pressed={sortOrder === 'newest'}
-                onClick={() => setSortOrder('newest')}
+                onClick={() => changeSort('newest')}
               >
                 {t('home.sort.newest')}
               </button>
@@ -828,7 +459,7 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
                 type="button"
                 className={sortOrder === 'catalogue' ? 'is-active' : undefined}
                 aria-pressed={sortOrder === 'catalogue'}
-                onClick={() => setSortOrder('catalogue')}
+                onClick={() => changeSort('catalogue')}
               >
                 {t('home.sort.catalogue')}
               </button>
@@ -854,7 +485,6 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
                   className={activeCategory === item.id ? 'is-active' : undefined}
                   aria-pressed={activeCategory === item.id}
                   onClick={() => setCategory(item.id)}
-                  disabled={Boolean(normalizedQuery)}
                 >
                   {categoryText(item, 'title')} <b>{count}</b>
                 </button>
@@ -864,20 +494,31 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
         </div>
         {matchingWorlds.length > 0 ? (
           <div className="home-collection-layout">
-            <div className="world-card-grid" ref={gridRef}>
+            <div className="work-card-grid" ref={gridRef}>
               {visibleWorlds.map((world, position) => (
-                <HomeWorldCard key={world.id} world={world} position={position} />
+                <HomeWorldCard key={world.id} world={world} position={position} viewed={visitedSet.has(world.id)} recent={recentIds.has(world.id)} />
               ))}
             </div>
+          </div>
+        ) : directoryLoading ? (
+          <div className="home-search-empty" role="status" aria-busy="true">
+            <p>{directoryLoadingText}</p>
+          </div>
+        ) : directoryError ? (
+          <div className="home-search-empty" role="status">
+            <p>{directoryErrorText}</p>
+            <button type="button" onClick={retryDirectory}>{t('system.retry')}</button>
           </div>
         ) : (
           <div className="home-search-empty">
             <MagnifyingGlass aria-hidden="true" />
             <p>{t('worlds.empty')}</p>
+            <div className="site-search-empty-actions"><button type="button" className="btn-text" onClick={() => setQuery('')}>{t('worlds.clearSearch')}</button><Link className="btn-text" to="/feedback" search={{ kind: 'topic' }}>{t('search.suggest')}</Link></div>
             <button type="button" onClick={() => {
               setQuery('')
               setCategory('all')
-              setSortOrder('recommended')
+              changeSort('recommended')
+              setViewFilter('all')
             }}>
               {t('worlds.resetFilters')}
             </button>
@@ -899,8 +540,8 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
               })}
             </span>
             {hasMoreWorlds && (
-              <button type="button" className="home-collection-more-btn" onClick={revealMoreWorlds}>
-                {t('home.collection.more', {
+              <button type="button" className="btn-secondary home-collection-more-btn" onClick={directoryError ? retryDirectory : revealMoreWorlds} disabled={directoryLoading}>
+                {directoryLoading ? directoryLoadingText : directoryError ? t('system.retry') : t('home.collection.more', {
                   value: Math.min(worldArtifactManifest.pageSize, matchingTotal - visibleWorlds.length),
                 })}
                 <ArrowDown aria-hidden="true" />

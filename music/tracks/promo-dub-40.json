@@ -1,0 +1,164 @@
+{
+  "id": "promo-dub-40",
+  "code": "PROMO-11-40",
+  "title": {
+    "en": "Rubber Orbit · 40",
+    "zh": "弹性轨道 · 40"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "playful",
+    "rhythmic",
+    "confident"
+  ],
+  "topics": [
+    "short-promo",
+    "product-demo"
+  ],
+  "energy": 4,
+  "bpm": 96,
+  "key": "",
+  "instruments": [
+    "deep bass guitar",
+    "rimshot drums",
+    "organ stabs",
+    "spring echo"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose one complete original 60-second instrumental promotional score. Sound: spacious rhythmic dub with playful bass and short echoes. Instruments: deep bass guitar, rimshot drums, organ stabs, spring echo. Tempo 96 BPM. Distinct motif: a bright five-note arch. Immediate catchy hook and clear beat at 00:00, with no slow introduction. Maintain a strong compact groove from every downbeat, suitable for a 40-second product-demo film. Use short two-bar melodic gestures, crisp edit accents, mobile-speaker-friendly midrange and space for narration. Vary the timbre halfway through while keeping the pulse. Keep the musical hook and full groove active until the last two seconds. At 00:58, play a decisive resolving tonic button, followed by less than one second of natural decay, then end completely. No fade-out, extended outro, breakdown, long riser or silent gap. Punchy and tuneful, never harsh. Instrumental only. No vocals, choir, humming, singing, speech, lyrics or vocal samples. Do not imitate any artist, existing song or brand jingle.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "dub"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A vibrant and energetic instrumental track driven by a prominent electric guitar melody, supported by a solid bassline and dynamic drums. It features a bright, positive mood suitable for promotional content.",
+    "zh": "一首充满活力和能量的器乐曲，由突出的电吉他旋律驱动，辅以坚实的贝斯线和动感的鼓点。它具有明亮、积极的氛围，适合宣传内容。"
+  },
+  "batch": "promo-library-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "structure": {
+      "hook": 0,
+      "change": 30,
+      "logo": 58
+    },
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-10T05:29:42.147935+00:00",
+  "generation": {
+    "id": "8c6d9a71-f945-4693-a32c-70f64c8b1c12",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-10T05:29:04.884032+00:00",
+    "completedAt": "2026-09-10T05:29:42.147935+00:00",
+    "interactionId": "IUCiatizH-uCoLAP9_u-qAs",
+    "sha256": "59d5205dbdd76c95e12a71cc4c37f730efe62bf6be8275f0f39726bdc53ebc70"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A vibrant and energetic instrumental track driven by a prominent electric guitar melody, supported by a solid bassline and dynamic drums. It features a bright, positive mood suitable for promotional content.",
+      "zh": "一首充满活力和能量的器乐曲，由突出的电吉他旋律驱动，辅以坚实的贝斯线和动感的鼓点。它具有明亮、积极的氛围，适合宣传内容。"
+    },
+    "instruments": [
+      "Electric Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Lively",
+      "Driving",
+      "Bright"
+    ],
+    "energy": 4,
+    "bpmEstimate": 125,
+    "reason": "High production quality, clear musical structure, and positive energy make it suitable for a library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens instantly with a catchy electric guitar riff and full band, and concludes with a sustained, resolved chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:30:08.659109+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "73c6fe9773edf1c1fddfbbcaacb16e32bf720509fdc81df0ac106f71de4f2d66"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.167292,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and groovy electronic track with a strong disco-funk influence. Features a prominent bassline, crisp drums, melodic synthesizers, and clean electric guitar riffs, creating a positive and energetic atmosphere.",
+      "zh": "一首充满活力的电子乐曲，带有浓厚的迪斯科放克（disco-funk）风格。特点是突出的贝斯线、清脆的鼓点、旋律优美的合成器和干净的电吉他即兴演奏，营造出积极而充满能量的氛围。"
+    },
+    "instruments": [
+      "drums",
+      "bass guitar",
+      "electric guitar",
+      "synthesizer",
+      "percussion"
+    ],
+    "moods": [
+      "upbeat",
+      "groovy",
+      "energetic",
+      "positive",
+      "disco",
+      "funk"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "Well-produced, high-quality instrumental track with a clear genre and mood. No defects detected.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-10T05:29:55.043824+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.167292000000003,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/promo-dub-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/promo-dub-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/promo-dub-40/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-10T05:37:26.992010+00:00"
+}

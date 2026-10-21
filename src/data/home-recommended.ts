@@ -1,32 +1,27 @@
+/**
+ * 用户确认的首页精选池：前 10 个为首选，其余为次选。
+ * 精选卡片、海报球与精选连续探索共用本名单；完整目录保持独立。
+ */
 export const recommendedWorldIds = [
-  'moon-voyage',
+  'equation-wormhole',
   'black-hole-flyby',
+  'periodic-table',
   'formula-bloom',
-  'double-slit',
-  'pendulum-wave',
-  'double-pendulum',
-  'firefly-sync',
-  'chemical-garden',
-  'neural-playground',
-  'robot-ik',
-  'solar-system',
-  'three-body',
-  'gravity-assist',
-  'mandelbrot-zoom',
-  'newton-fractal',
-  'clifford-dust',
+  'eclipses',
+  'cow-anatomy',
   'kakeya-needle',
-  'strange-attractors',
+  'galaxy-collision',
+  'aurora',
+  'butterfly-effect',
+  'moon-voyage',
   'fluid-sim',
-  'electric-field',
-  'magnetic-lines',
+  'mandelbrot-zoom',
   'fourier',
-  'ferrofluid',
-  'soap-bubble',
-  'pool-caustics',
-  'pinhole-canopy',
-  'lightning-lab',
-  'snow-crystal',
-  'boids-flocking',
-  'phyllotaxis',
-]
+  'riemann-primes',
+] as const
+
+export const HOME_PRIMARY_COUNT = 10
+
+export const recommendedWorldRank = new Map<string, number>(
+  recommendedWorldIds.map((worldId, index) => [worldId, index]),
+)

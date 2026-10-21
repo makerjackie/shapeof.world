@@ -1,0 +1,202 @@
+{
+  "id": "scene-game-chamber-menu",
+  "code": "GAME-04-1",
+  "title": {
+    "en": "Library Puzzle · Menu",
+    "zh": "书库谜题 · 菜单"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "menu"
+  ],
+  "topics": [
+    "game",
+    "thoughtful puzzle solving",
+    "menu"
+  ],
+  "energy": 2,
+  "bpm": 98,
+  "key": "",
+  "instruments": [
+    "pizzicato quartet",
+    "clarinet",
+    "woodblocks"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for thoughtful puzzle solving, menu state. Instruments: pizzicato quartet, clarinet, woodblocks. 98 BPM, exact steady 4/4. Energy 2/5. Use a repeating eight-bar harmonic cycle. Variation: gentle suspended chords and sparse upper notes. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "game-menu"
+  ],
+  "description": {
+    "en": "A solo violin plays a melancholic and reflective melody, characterized by a slow tempo and expressive bowing. The piece has a classical or folk-inspired feel.",
+    "zh": "小提琴独奏，演奏着忧郁而沉思的旋律，节奏缓慢，弓法富有表现力。这首曲子带有古典或民间音乐的风格。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "gameState": "menu"
+  },
+  "duration": 88.738,
+  "targetEnergy": 2,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:22:33.867371+00:00",
+  "generation": {
+    "id": "a6d26842-044a-487d-b2c6-227b76504cb8",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:21:49.255290+00:00",
+    "completedAt": "2026-09-22T09:22:33.867371+00:00",
+    "interactionId": "rUiyavSXOrWxoLAP4prukQo",
+    "sha256": "4e1ee4712db54350d37b163dbf7ba470852b90516d8a17f3ec8bf0c795a6b507"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A solo violin plays a melancholic and reflective melody, characterized by a slow tempo and expressive bowing. The piece has a classical or folk-inspired feel.",
+      "zh": "小提琴独奏，演奏着忧郁而沉思的旋律，节奏缓慢，弓法富有表现力。这首曲子带有古典或民间音乐的风格。"
+    },
+    "instruments": [
+      "Violin"
+    ],
+    "moods": [
+      "Melancholic",
+      "Reflective",
+      "Calm",
+      "Wistful"
+    ],
+    "energy": 2,
+    "bpmEstimate": 65,
+    "reason": "Clear recording of a well-played solo violin piece, suitable for various reflective or emotional contexts.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:44.046470+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 58.926916,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2598677,
+    "sourceStartSeconds": 19.5,
+    "sourceEndSeconds": 78.57691609977324,
+    "crossfadeSeconds": 0.15,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -15.09,
+        "dcOffset": 0.0016446574319017367,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.006683349609375,
+        "internalStepP999": 0.087677001953125,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 2598677,
+        "duration": 58.926916,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -14.95,
+        "dcOffset": 0.0012053235363662632,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.007476806640625,
+        "internalStepP999": 0.09124755859375,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A synthesized, melancholic string texture with a sustained, evolving quality. Features pizzicato or staccato-like elements creating a somewhat mysterious or contemplative atmosphere.",
+        "zh": "一种合成的、忧郁的弦乐音色，具有持续演变的感觉。包含拨弦或断奏般的元素，营造出一种神秘或沉思的氛围。"
+      },
+      "reason": "The sound is a clean, well-produced synthesized texture without any technical flaws. Its consistent quality and perfect loop make it highly suitable for background ambiance or mood setting in media.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:29:19.943606+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "f43d69e0985ecf4adbc9e1d433aece7938d1e8d51c25deacef78a58779295b7a"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The music loops seamlessly at the specified boundaries. Rhythm, harmony, and dynamics are perfectly continuous across the joins. There are no noticeable fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The musical phrase resolves naturally before looping back to the beginning, making it comfortable for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:29:30.670902+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-menu/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-menu/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-menu/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-menu/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-chamber-menu/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "0b3ebab5efb3c8fdf0e60e7e9f82af4060ce789bfbd429a47cf81add2628c301",
+      "bytes": 1243106,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4e1ee4712db54350d37b163dbf7ba470852b90516d8a17f3ec8bf0c795a6b507",
+      "bytes": 2137378,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "e527dc3ca8f5cd23daa2a8ae55a59d9ab3d5c3f57dd3cb50217dbfd102a2e0d8",
+      "bytes": 2810,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "65af33aa0fa1b6994b0f5c579efeff73625381b10d727b9cfdde47795a17b2dc",
+      "bytes": 10394752,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "b1f092eb96f56d93cfaf4fdd88c4a10685d1c69c40e7729cd8d1be2c66b769c6",
+      "bytes": 671959,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.457927+00:00"
+}

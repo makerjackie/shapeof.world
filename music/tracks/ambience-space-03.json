@@ -1,0 +1,130 @@
+{
+  "id": "ambience-space-03",
+  "code": "AMB-SPACE-03",
+  "title": {
+    "en": "Alien cavern · designed ambience",
+    "zh": "异星洞穴 · 合成环境声"
+  },
+  "kind": "ambience",
+  "family": "space",
+  "designIndex": 2,
+  "seed": 725930071,
+  "targetDuration": 60,
+  "scenarios": [
+    "environment",
+    "game-exploration"
+  ],
+  "description": {
+    "en": "Synthesized alien cavern atmosphere. A designed looping texture, not an authentic location or wildlife recording.",
+    "zh": "异星洞穴的合成循环氛围，用于营造场景，不是真实地点或动物的录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [
+    "atmospheric"
+  ],
+  "topics": [
+    "space",
+    "ambience"
+  ],
+  "styles": [
+    "ambience-space"
+  ],
+  "energy": 2,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 60.0,
+  "collections": [
+    "environment-audio"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/ambience-space-03/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/ambience-space-03/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/ambience-space-03/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/ambience-space-03/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 725930071,
+    "sha256": "c889c8c2020d8ebeee0745bb6ea778ac3b83a64d783db5f430fa8ec25243b609",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "875521a89565c66faebf8fb2179a246d4f07a7cc7db4d20ca1595e8ae8d222d2",
+      "bytes": 840820,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "c889c8c2020d8ebeee0745bb6ea778ac3b83a64d783db5f430fa8ec25243b609",
+      "bytes": 5292044,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "815328af8e791fe0c1ac291acc9760541af820774f9dbddbe73dcb898a0c8b53",
+      "bytes": 347838,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3dee50f3de16ca17cb3f926b61327f88a046b5a895cb0649924c752dd5437a1e",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 2646000,
+    "duration": 60.0,
+    "peakDbfs": -2.36,
+    "rmsDbfs": -17.08,
+    "dcOffset": -9.065312322845804e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.00067138671875,
+    "internalStepP999": 0.01849365234375,
+    "seamPassed": true
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A synthetic, evolving, resonant drone texture with subtle metallic qualities and a sense of internal movement. It has a smooth, sustained character.",
+      "zh": "一种合成的、不断演变的共鸣无人机纹理，带有微妙的金属质感和内部运动感。它具有平滑、持续的特性。"
+    },
+    "reason": "The audio provides a clean, evolving synthetic texture suitable for various sound design applications. It loops perfectly without any audible seams or defects.",
+    "seamlessLoop": true,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:24:03.150054+00:00",
+    "method": "automated-audio-review",
+    "scope": "three-complete-repetitions",
+    "sha256": "1005124bee2ea75a4e28259edfffd98063fbc456e263e264dfc78b6db8264d0e"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "full-pcm seam analysis and automated listening to three repetitions",
+    "asset": "master",
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 2646000
+  },
+  "usage": {
+    "placement": "background",
+    "narrationFriendly": true
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.857159+00:00"
+}

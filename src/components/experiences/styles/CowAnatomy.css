@@ -1,0 +1,531 @@
+.beef-atlas-experience {
+  --world-accent: #e99a73;
+  --freebar-accent: #e99a73;
+  --freebar-ink: rgba(250, 242, 231, 0.94);
+  --experience-panel-border: rgba(240, 185, 138, 0.22);
+  --experience-panel-surface:
+    linear-gradient(160deg, rgba(24, 17, 13, 0.62), rgba(8, 9, 8, 0.72));
+  --experience-panel-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.46),
+    inset 0 1px 0 rgba(255, 230, 198, 0.1);
+  --experience-panel-blur: 22px;
+  --experience-panel-saturation: 1.12;
+  --experience-panel-radius: 18px;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 31% 43%, rgba(89, 52, 34, 0.2), transparent 30%),
+    linear-gradient(135deg, #080908, #0e0b09 52%, #050706);
+}
+
+.beef-atlas-experience::before {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px) 0 0 / 84px 84px,
+    linear-gradient(rgba(255, 255, 255, 0.014) 1px, transparent 1px) 0 0 / 84px 84px;
+  content: '';
+  pointer-events: none;
+  mask-image: radial-gradient(circle at center, #000, transparent 74%);
+}
+
+.beef-atlas-experience canvas {
+  transition: opacity 700ms ease, filter 700ms ease;
+}
+
+.beef-atlas-experience.is-atlas canvas {
+  opacity: 0;
+  filter: blur(10px) saturate(0.5);
+}
+
+.beef-atlas-plate {
+  position: absolute;
+  z-index: 7;
+  top: var(--experience-safe-top, 92px);
+  left: clamp(18px, 3.2vw, 52px);
+  width: min(360px, calc(100% - 40px));
+  color: #f8eee2;
+  pointer-events: none;
+}
+
+.beef-atlas-plate > span {
+  color: #e7a376;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.beef-atlas-plate h1 {
+  max-width: 330px;
+  margin: 8px 0 7px;
+  font-family: var(--serif);
+  font-size: clamp(23px, 2.35vw, 38px);
+  font-weight: 400;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+
+.beef-atlas-plate p {
+  margin: 0;
+  color: rgba(248, 238, 226, 0.56);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.beef-atlas-specimen {
+  position: absolute;
+  z-index: 4;
+  top: 24%;
+  right: clamp(36px, 7vw, 120px);
+  width: clamp(230px, 27vw, 410px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  animation: beef-specimen-arrive 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes beef-specimen-arrive {
+  from { opacity: 0; transform: translate3d(30px, 18px, 0) scale(0.86) rotate(2deg); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(0); }
+}
+
+.beef-atlas-specimen-halo {
+  position: absolute;
+  inset: 13%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--cut-color, #e99a73) 28%, transparent);
+  filter: blur(44px);
+  opacity: 0.48;
+  animation: beef-halo-breathe 4.8s ease-in-out infinite;
+}
+
+@keyframes beef-halo-breathe {
+  50% { opacity: 0.72; transform: scale(1.08); }
+}
+
+.beef-atlas-specimen-image {
+  background-repeat: no-repeat;
+  background-position: var(--beef-atlas-x) var(--beef-atlas-y);
+  background-size: 400% 300%;
+}
+
+.beef-atlas-specimen-image {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  filter: drop-shadow(0 26px 36px rgba(0, 0, 0, 0.58));
+  mask-image: radial-gradient(circle at 50% 50%, #000 46%, transparent 73%);
+  transform: rotate(-2deg);
+}
+
+.beef-atlas-specimen::after {
+  position: absolute;
+  inset: 5%;
+  border: 1px solid rgba(255, 226, 197, 0.12);
+  border-radius: 50%;
+  box-shadow: inset 0 0 46px rgba(255, 211, 167, 0.05);
+  content: '';
+}
+
+.beef-atlas-fiber-map {
+  position: absolute;
+  inset: 25% 21%;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transform: rotate(-4deg);
+}
+
+.beef-atlas-fiber-map i {
+  position: absolute;
+  left: 4%;
+  width: 92%;
+  height: 1px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, transparent, rgba(255, 222, 197, 0.62), transparent);
+  animation: beef-fiber-trace 3.4s ease-in-out infinite;
+}
+
+.beef-atlas-fiber-map i:nth-child(1) { top: 12%; animation-delay: -0.3s; }
+.beef-atlas-fiber-map i:nth-child(2) { top: 31%; animation-delay: -1.7s; }
+.beef-atlas-fiber-map i:nth-child(3) { top: 50%; animation-delay: -0.9s; }
+.beef-atlas-fiber-map i:nth-child(4) { top: 69%; animation-delay: -2.1s; }
+.beef-atlas-fiber-map i:nth-child(5) { top: 88%; animation-delay: -1.2s; }
+
+@keyframes beef-fiber-trace {
+  0%, 100% { opacity: 0.18; transform: scaleX(0.72); }
+  50% { opacity: 0.92; transform: scaleX(1); }
+}
+
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map {
+  inset: 23%;
+  border: 1px solid rgba(255, 231, 205, 0.5);
+  border-radius: 50%;
+  transform: none;
+}
+
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i {
+  top: 50%;
+  left: 50%;
+  width: 68%;
+  border: 1px solid rgba(255, 231, 205, 0.36);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i:nth-child(1) { height: 24%; transform: translate(-50%, -50%); }
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i:nth-child(2) { height: 38%; transform: translate(-50%, -50%) rotate(36deg); }
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i:nth-child(3) { height: 54%; transform: translate(-50%, -50%) rotate(72deg); }
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i:nth-child(4),
+.beef-atlas-specimen[data-structure='tendon'] .beef-atlas-fiber-map i:nth-child(5) { display: none; }
+
+.beef-atlas-specimen[data-structure='collagen'] .beef-atlas-fiber-map {
+  opacity: 0.28;
+  filter: blur(1px);
+}
+
+.beef-atlas-specimen[data-structure='long'] .beef-atlas-fiber-map {
+  inset: 24% 13%;
+  transform: rotate(-10deg);
+}
+
+.beef-atlas-specimen[data-structure='dense'] .beef-atlas-fiber-map {
+  inset: 25%;
+  opacity: 0.28;
+  transform: rotate(84deg);
+}
+
+.beef-atlas-specimen[data-structure='honeycomb'] .beef-atlas-fiber-map {
+  inset: 25%;
+  border: 1px dashed rgba(242, 204, 158, 0.5);
+  border-radius: 42% 58% 51% 49%;
+  opacity: 0.42;
+  transform: rotate(14deg);
+}
+
+.beef-atlas-overview {
+  position: absolute;
+  z-index: 4;
+  inset: calc(var(--experience-safe-top, 76px) - 10px) 18px calc(var(--experience-freebar-height, 82px) + 10px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  animation: beef-atlas-overview-arrive 820ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.beef-atlas-overview picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.beef-atlas-overview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 54px rgba(0, 0, 0, 0.55));
+}
+
+@keyframes beef-atlas-overview-arrive {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.beef-atlas-specimen-copy {
+  position: absolute;
+  right: 7%;
+  bottom: 7%;
+  display: grid;
+  justify-items: end;
+  color: #fff5e9;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+}
+
+.beef-atlas-specimen-copy span {
+  color: rgba(255, 238, 220, 0.56);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
+.beef-atlas-specimen-copy strong {
+  margin-top: 3px;
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.2vw, 32px);
+  font-weight: 400;
+}
+
+.beef-atlas-specimen-copy em {
+  margin-top: 4px;
+  color: #f1b486;
+  font-size: 11px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.beef-atlas-marker {
+  pointer-events: none;
+}
+
+.beef-atlas-marker span {
+  display: block;
+  min-width: max-content;
+  padding: 5px 8px;
+  color: #1a0d08;
+  border-radius: 999px;
+  background: var(--world-accent);
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.42);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.beef-atlas-readout {
+  position: absolute;
+  z-index: 7;
+  left: clamp(18px, 3.2vw, 52px);
+  bottom: calc(var(--experience-freebar-height, 82px) + 20px);
+  width: min(380px, calc(100% - 40px));
+  color: #f6ecdf;
+  pointer-events: none;
+  transition: bottom 240ms ease;
+}
+
+.beef-atlas-readout > span {
+  color: #e7a376;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+
+.beef-atlas-readout strong {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.32;
+}
+
+.beef-atlas-readout p {
+  margin: 7px 0 0;
+  color: rgba(246, 236, 223, 0.58);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.beef-atlas-readout .beef-atlas-overcook {
+  color: rgba(246, 236, 223, 0.68);
+}
+
+.beef-atlas-overcook b {
+  display: inline-block;
+  margin-right: 7px;
+  color: #f1b486;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.beef-atlas-readout small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(246, 236, 223, 0.38);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.beef-atlas-freebar .experience-freebar-primary {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.beef-atlas-freebar .experience-freebar-main {
+  width: min(1040px, calc(100vw - 24px));
+}
+
+.beef-atlas-freebar .beef-atlas-mode-switch {
+  position: static;
+  inset: auto;
+  display: inline-grid;
+  grid-template-columns: repeat(2, auto);
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  transform: none;
+}
+
+.beef-atlas-freebar .beef-atlas-mode-switch button {
+  min-height: 34px;
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.5);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.beef-atlas-freebar .beef-atlas-mode-switch button.is-active {
+  color: #170d09;
+  background: var(--world-accent);
+}
+
+.beef-atlas-overview-dot {
+  background: conic-gradient(from 25deg, #ef8e68, #e7a85b, #d8b06e, #c89a70, #ef8e68) !important;
+}
+
+.beef-atlas-freebar .beef-atlas-cut-rail {
+  display: flex;
+  flex: 1 1 0 !important;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 0;
+  min-width: 0 !important;
+  margin: 0;
+  overflow-x: auto !important;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.beef-atlas-freebar .beef-atlas-cut-rail::-webkit-scrollbar {
+  display: none;
+}
+
+.beef-atlas-freebar .beef-atlas-cut-rail button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  color: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: transparent;
+  cursor: pointer;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.beef-atlas-freebar .beef-atlas-cut-rail button i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  box-shadow: 0 0 9px currentColor;
+}
+
+.beef-atlas-freebar .beef-atlas-cut-rail button.is-active {
+  color: #180e09;
+  border-color: var(--world-accent);
+  background: var(--world-accent);
+}
+
+@media (max-width: 960px) {
+  .beef-atlas-specimen {
+    top: 32%;
+    right: 3vw;
+    width: clamp(210px, 35vw, 330px);
+  }
+
+  .beef-atlas-readout {
+    width: min(330px, 45vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .beef-atlas-experience::before {
+    background-size: 58px 58px;
+  }
+
+  .beef-atlas-plate {
+    top: var(--experience-safe-top, 118px);
+    left: 18px;
+    width: calc(100% - 36px);
+  }
+
+  .beef-atlas-plate h1 {
+    max-width: 290px;
+    font-size: clamp(22px, 7vw, 29px);
+  }
+
+  .beef-atlas-plate p {
+    max-width: 280px;
+    font-size: 10px;
+  }
+
+  .beef-atlas-specimen {
+    top: 43%;
+    right: 2%;
+    width: min(52vw, 238px);
+  }
+
+  .beef-atlas-specimen-copy {
+    right: 7%;
+    bottom: 5%;
+  }
+
+  .beef-atlas-specimen-copy strong {
+    font-size: 20px;
+  }
+
+  .beef-atlas-readout {
+    left: 18px;
+    bottom: max(calc(var(--experience-freebar-height, 128px) + 12px), 92px);
+    width: min(47vw, 190px);
+  }
+
+  .beef-atlas-readout strong {
+    font-size: 15px;
+  }
+
+  .beef-atlas-readout p {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 9px;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .beef-atlas-readout small {
+    display: none;
+  }
+
+  .beef-atlas-freebar .experience-freebar-primary {
+    flex-wrap: wrap;
+    row-gap: 7px;
+  }
+
+  .beef-atlas-freebar .beef-atlas-mode-switch {
+    order: 1;
+  }
+
+  .beef-atlas-freebar .experience-freebar-story {
+    order: 2;
+  }
+
+  .beef-atlas-freebar .beef-atlas-cut-rail {
+    order: 3;
+    flex: 0 0 100% !important;
+    width: 100%;
+  }
+
+  .beef-atlas-freebar .beef-atlas-cut-rail button {
+    min-height: 34px;
+    padding: 0 9px;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .beef-atlas-specimen {
+    top: 45%;
+    right: 1%;
+    width: 52vw;
+  }
+
+  .beef-atlas-readout {
+    width: 48vw;
+  }
+}

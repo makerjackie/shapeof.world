@@ -1,0 +1,103 @@
+{
+  "id": "lib-harp-suspense",
+  "code": "LIB-03-09",
+  "title": {
+    "en": "Shadows — Harp",
+    "zh": "暗影 · 竖琴"
+  },
+  "category": "global",
+  "archetype": "ambient",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "harp"
+  ],
+  "energy": 3,
+  "bpm": 62,
+  "key": "G minor",
+  "instruments": [
+    "concert harp",
+    "flute",
+    "viola"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second pastoral acoustic instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: concert harp, flute, viola. Style: rolling harp figures and long woodwind answers. Tempo approximately 62 BPM; G minor. Main idea: a compact three-note motif. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "harp"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A serene and contemplative orchestral piece with a distinct East Asian influence, featuring plucked strings, woodwinds, and a full string section. It gradually builds in intensity and emotional depth, transitioning from a calm opening to a more dramatic and cinematic soundscape.",
+    "zh": "一首宁静而沉思的管弦乐作品，带有独特的东亚风情，以弹拨弦乐、木管乐器和完整的弦乐部分为特色。它逐渐增强强度和情感深度，从平静的开场过渡到更具戏剧性和电影感的音景。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 134.322,
+  "generatedAt": "2026-09-09T07:50:06.239919+00:00",
+  "generation": {
+    "id": "b445df41-6fe5-4897-9a81-d618ff83e72f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:49:21.287636+00:00",
+    "completedAt": "2026-09-09T07:50:06.239919+00:00",
+    "interactionId": "gg-hat7eEe67i9sP06HTyAM",
+    "sha256": "e34d688370b630799188e637230ea76287ad19a53445613b05d86284cdbb44ea"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A serene and contemplative orchestral piece with a distinct East Asian influence, featuring plucked strings, woodwinds, and a full string section. It gradually builds in intensity and emotional depth, transitioning from a calm opening to a more dramatic and cinematic soundscape.",
+      "zh": "一首宁静而沉思的管弦乐作品，带有独特的东亚风情，以弹拨弦乐、木管乐器和完整的弦乐部分为特色。它逐渐增强强度和情感深度，从平静的开场过渡到更具戏剧性和电影感的音景。"
+    },
+    "instruments": [
+      "koto",
+      "strings",
+      "woodwinds",
+      "percussion",
+      "harp"
+    ],
+    "moods": [
+      "serene",
+      "contemplative",
+      "melancholic",
+      "dramatic",
+      "cinematic",
+      "epic"
+    ],
+    "energy": 3,
+    "bpmEstimate": 70,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:50:21.743804+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-harp-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-harp-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-harp-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:52:40.076392+00:00",
+  "targetEnergy": 1,
+  "energyBasis": "automated-audio-review"
+}

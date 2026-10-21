@@ -1,0 +1,180 @@
+{
+  "id": "scene-jazz-trio-15",
+  "code": "SCENE-07-15",
+  "title": {
+    "en": "Morning Notes · 15",
+    "zh": "清晨笔记 · 15"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "nimble elegant process film",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 124,
+  "key": "",
+  "instruments": [
+    "acoustic piano",
+    "brushed drums",
+    "double bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 15,
+  "prompt": "Create a complete original 60-second instrumental cue in jazz-trio style. Use acoustic piano, brushed drums, double bass. Tempo 124 BPM. Immediate short melodic hook and steady rhythm from the first beat. Keep this groove present until the final bar. In the final second, all instruments play one resolved tonic chord and stop together, allowing a short clean natural tail. This must end musically, with no fade and no abrupt unfinished phrase. No slow intro, silent gap, long outro or atmospheric wash. Pure instrumental performance: instruments exclusively. No human voice, speech, singing, humming, choir, vocal samples or crowd sounds anywhere.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "jazz-trio"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and sophisticated jazz piece featuring a lively piano melody, walking bass, and light drums. It has a cheerful and elegant lounge feel.",
+    "zh": "一首欢快而精致的爵士乐曲，以活泼的钢琴旋律、行进贝斯和轻快的鼓点为特色。它带有一种愉悦优雅的休闲氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "nimble elegant process film"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 15,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 15.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:29:08.324820+00:00",
+  "generation": {
+    "id": "3d54d7d6-2cd2-4582-b4a1-2fb4bfb58f25",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:28:28.667309+00:00",
+    "completedAt": "2026-09-22T09:29:08.324820+00:00",
+    "interactionId": "PkqyauDzCrve694PlMeHuQ4",
+    "sha256": "979887d3a89d529e1a76e47a6879aac42819705ce16c2877fc3ece527b5e6531"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and sophisticated jazz piece featuring a lively piano melody, walking bass, and light drums. It has a cheerful and elegant lounge feel.",
+      "zh": "一首欢快而精致的爵士乐曲，以活泼的钢琴旋律、行进贝斯和轻快的鼓点为特色。它带有一种愉悦优雅的休闲氛围。"
+    },
+    "instruments": [
+      "piano",
+      "upright bass",
+      "drums",
+      "strings"
+    ],
+    "moods": [
+      "upbeat",
+      "cheerful",
+      "sophisticated",
+      "light",
+      "elegant"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "High-quality production, clear instrumentation, and a well-defined musical theme make it suitable for a library.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The audio opens immediately with a clear, engaging piano melody and rhythm section. It concludes with a smooth, deliberate fade-out on a sustained chord.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:29:23.623723+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "32591dc6f24af7361c8abcb7a7b7a6479a658d113272d446595ecceddf026247"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 58.827708,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light and sophisticated jazz piece featuring a prominent piano melody, walking bass, and brush drums, creating a relaxed and elegant atmosphere.",
+      "zh": "一首轻快精致的爵士乐曲，以突出的钢琴旋律、行进贝斯和刷子鼓为主，营造出轻松优雅的氛围。"
+    },
+    "instruments": [
+      "piano",
+      "upright bass",
+      "drums",
+      "cymbals"
+    ],
+    "moods": [
+      "jazzy",
+      "light",
+      "sophisticated",
+      "relaxed",
+      "elegant"
+    ],
+    "energy": 3,
+    "bpmEstimate": 125,
+    "reason": "Clean, well-produced jazz track with clear instrumentation and a pleasant mood.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:29:15.690068+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 43.827708,
+    "requestedSeconds": 15,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-15/v2/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-15/v2/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-jazz-trio-15/v2/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "32591dc6f24af7361c8abcb7a7b7a6479a658d113272d446595ecceddf026247",
+      "bytes": 211060,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "979887d3a89d529e1a76e47a6879aac42819705ce16c2877fc3ece527b5e6531",
+      "bytes": 1419533,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "80c91e0478d803c7821138206848d299a11399470ab5490c84d857112b00a7ba",
+      "bytes": 2791,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.468177+00:00"
+}

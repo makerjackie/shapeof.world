@@ -1,0 +1,125 @@
+{
+  "id": "sfx-retro-05",
+  "code": "SFX-RETRO-05",
+  "title": {
+    "en": "Pixel coin",
+    "zh": "像素金币"
+  },
+  "kind": "sfx",
+  "family": "retro",
+  "designIndex": 4,
+  "seed": 1775231216,
+  "scenarios": [
+    "arcade"
+  ],
+  "description": {
+    "en": "Original synthesized pixel coin for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的像素金币合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "retro",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-retro"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.89,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-retro-05/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-retro-05/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-retro-05/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-retro-05/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 1775231216,
+    "sha256": "18bb72ace6f9b2426cf95a125b78f612e274cc7c7c2701525440701d86b12497",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "daa5e2d982d9e9098b0ad4411b2a5bda6cf1bc6ba5603448417b98ab06cf8027",
+      "bytes": 13574,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "18bb72ace6f9b2426cf95a125b78f612e274cc7c7c2701525440701d86b12497",
+      "bytes": 78542,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ff63d37d5ac06836fe2401208c7e1eb5fa37b78db16d78d48b310c897205e51c",
+      "bytes": 16797,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3729b51fe0d70c9bc62f5e75ae3ad12ae8dcd9981436e5750354dff636a5df69",
+      "bytes": 1801,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 39249,
+    "duration": 0.89,
+    "peakDbfs": -3.39,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.1986172219355904e-06,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.16270465087890607,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, synthesized electronic boing sound followed by a high-pitched electronic tone.",
+      "zh": "短促的合成电子弹簧音，随后是高音调的电子音。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:17.685381+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "daa5e2d982d9e9098b0ad4411b2a5bda6cf1bc6ba5603448417b98ab06cf8027"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 39249
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.894051+00:00"
+}

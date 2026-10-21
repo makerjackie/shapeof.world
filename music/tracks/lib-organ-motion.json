@@ -1,0 +1,111 @@
+{
+  "id": "lib-organ-motion",
+  "code": "LIB-05-08",
+  "title": {
+    "en": "Motion — Organ",
+    "zh": "跃动 · 管风琴"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "energetic",
+    "driving",
+    "determined"
+  ],
+  "topics": [
+    "motion",
+    "organ"
+  ],
+  "energy": 5,
+  "bpm": 72,
+  "key": "B minor",
+  "instruments": [
+    "pipe organ",
+    "low strings"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 150,
+  "prompt": "Create an original 150 second contemporary organ music instrumental composition for exercise, action montage and energetic motion. Mood: energetic, driving, determined. Instruments: pipe organ, low strings. Style: slow pedal tones and open suspended harmony. Tempo approximately 72 BPM; B minor. Main idea: an ascending fourth answered by a stepwise descent. Use strong rhythmic articulation and maintain momentum from the first bar. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:50] Establish the main idea immediately with the core ensemble. [00:50-01:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [01:40-02:30] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 02:30.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "organ"
+  ],
+  "scenarios": [
+    "motion"
+  ],
+  "description": {
+    "en": "A grand and majestic orchestral piece with a classical and cinematic feel. It features a rich tapestry of strings, brass, woodwinds, and percussion, building from a stately opening to a powerful and triumphant climax. The composition evokes a sense of epic adventure and historical grandeur.",
+    "zh": "一首宏伟庄严的管弦乐作品，具有古典和电影般的氛围。它融合了丰富的弦乐、铜管乐、木管乐和打击乐，从庄重的开场逐渐发展到强大而胜利的高潮。这首作品唤起史诗般的冒险和历史的宏伟感。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 146.312,
+  "generatedAt": "2026-09-09T07:57:46.179150+00:00",
+  "generation": {
+    "id": "3d88b9a1-b6f3-411e-b03e-15f686b94c8f",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:56:57.776946+00:00",
+    "completedAt": "2026-09-09T07:57:46.179150+00:00",
+    "interactionId": "SxGhaoWBDrGejMwP1PWpyAg",
+    "sha256": "f5527009e47b93a4a4252fdad03096eaabff9149f0c620b3ad9ed713b9e53e24"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A grand and majestic orchestral piece with a classical and cinematic feel. It features a rich tapestry of strings, brass, woodwinds, and percussion, building from a stately opening to a powerful and triumphant climax. The composition evokes a sense of epic adventure and historical grandeur.",
+      "zh": "一首宏伟庄严的管弦乐作品，具有古典和电影般的氛围。它融合了丰富的弦乐、铜管乐、木管乐和打击乐，从庄重的开场逐渐发展到强大而胜利的高潮。这首作品唤起史诗般的冒险和历史的宏伟感。"
+    },
+    "instruments": [
+      "Strings",
+      "Brass",
+      "Woodwinds",
+      "Percussion",
+      "Timpani",
+      "Cymbals",
+      "Horns",
+      "Trumpets",
+      "Trombones",
+      "Flutes",
+      "Clarinets",
+      "Oboes"
+    ],
+    "moods": [
+      "Epic",
+      "Grand",
+      "Majestic",
+      "Triumphant",
+      "Dramatic",
+      "Inspiring",
+      "Adventurous",
+      "Heroic"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:57:58.323385+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-organ-motion/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-organ-motion/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-organ-motion/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:59:08.044825+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

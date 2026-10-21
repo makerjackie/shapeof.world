@@ -1,0 +1,180 @@
+{
+  "id": "scene-lofi-40",
+  "code": "SCENE-18-40",
+  "title": {
+    "en": "Small Desk · 40",
+    "zh": "小小书桌 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "quiet study and tutorial backdrop without vinyl noise",
+    "product-video"
+  ],
+  "energy": 3,
+  "bpm": 86,
+  "key": "",
+  "instruments": [
+    "soft electric piano",
+    "restrained drums",
+    "warm bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for quiet study and tutorial backdrop without vinyl noise. Instruments: soft electric piano, restrained drums, warm bass. 86 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "lofi"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "A light, upbeat, and playful electronic track with a catchy, bright melody. Features pizzicato-like synths, a simple drum beat, and a warm synth bass, creating a positive and cheerful atmosphere.",
+    "zh": "一首轻快、活泼且充满趣味的电子乐曲，旋律明亮抓耳。以拨弦合成器、简洁的鼓点和温暖的合成器贝斯为主，营造出积极愉快的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "quiet study and tutorial backdrop without vinyl noise"
+    ]
+  },
+  "shortForm": {
+    "use": "lifestyle",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:19:27.373943+00:00",
+  "generation": {
+    "id": "5301c292-542f-4570-988e-03b5bc080a0b",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:18:48.281775+00:00",
+    "completedAt": "2026-09-22T09:19:27.373943+00:00",
+    "interactionId": "-UeyatrNE72M694PrPnDiAo",
+    "sha256": "e3f0d8921d1881d4f55cc556e850afcca0cb8c72aa2ac00a302d1b229ba3c5a0"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light, upbeat, and playful electronic track with a catchy, bright melody. Features pizzicato-like synths, a simple drum beat, and a warm synth bass, creating a positive and cheerful atmosphere.",
+      "zh": "一首轻快、活泼且充满趣味的电子乐曲，旋律明亮抓耳。以拨弦合成器、简洁的鼓点和温暖的合成器贝斯为主，营造出积极愉快的氛围。"
+    },
+    "instruments": [
+      "Synthesizer",
+      "Drums",
+      "Synth Bass"
+    ],
+    "moods": [
+      "Upbeat",
+      "Playful",
+      "Positive",
+      "Light",
+      "Cheerful"
+    ],
+    "energy": 3,
+    "bpmEstimate": 128,
+    "reason": "Well-produced, clear, and engaging, this track is suitable for various light-hearted media and promotional content.",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with its main melodic theme and rhythmic pulse. It concludes with a gentle fade-out on the main melody and a sustained chord, providing a soft, resolved ending.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:45.683697+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "e03ea5541ddf8d9d6eb13d7d371537f8fbd9e0169cb070c9904ccf76aeaceb81"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 59.6375,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A light, playful, and whimsical jazz-influenced piece featuring piano, upright bass, drums, and subtle synth textures, with a charming glockenspiel melody.",
+      "zh": "一首轻快、俏皮、异想天开的爵士风格乐曲，以钢琴、低音提琴、鼓和微妙的合成器音色为主，并带有迷人的钟琴旋律。"
+    },
+    "instruments": [
+      "Piano",
+      "Upright Bass",
+      "Drums",
+      "Glockenspiel",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Playful",
+      "Whimsical",
+      "Light",
+      "Cheerful",
+      "Relaxed"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Clean, well-produced instrumental track with a clear, pleasant mood suitable for various lighthearted applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:19:36.493046+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 19.637500000000003,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-lofi-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-lofi-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-lofi-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e03ea5541ddf8d9d6eb13d7d371537f8fbd9e0169cb070c9904ccf76aeaceb81",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "e3f0d8921d1881d4f55cc556e850afcca0cb8c72aa2ac00a302d1b229ba3c5a0",
+      "bytes": 1438968,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "d7453e9d9a68f038665d94765f5025855701fbffdf4b176fc8e23cd98bd07ab6",
+      "bytes": 2807,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.846863+00:00"
+}

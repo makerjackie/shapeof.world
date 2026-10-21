@@ -1,0 +1,125 @@
+{
+  "id": "sfx-mechanical-17",
+  "code": "SFX-MECHANICAL-17",
+  "title": {
+    "en": "Scanner pass",
+    "zh": "扫描机构"
+  },
+  "kind": "sfx",
+  "family": "mechanical",
+  "designIndex": 16,
+  "seed": 3025439901,
+  "scenarios": [
+    "mechanism"
+  ],
+  "description": {
+    "en": "Original synthesized scanner pass for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的扫描机构合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "mechanical",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-mechanical"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.98,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-17/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-17/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-17/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-mechanical-17/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3025439901,
+    "sha256": "6e92c6e82e0820f955318dbd4d7231e8456f02d31125bf5e40c24fc5ac99096a",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "58b33c1025b9085c4cfca9a4354f053166411cbc165f6ff60ee74be09feb01d7",
+      "bytes": 14672,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "6e92c6e82e0820f955318dbd4d7231e8456f02d31125bf5e40c24fc5ac99096a",
+      "bytes": 86480,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "fa23cf5b7e5d04ab6821a5af9eb9a54878a01f7cebff4da3d4ebd940b8759547",
+      "bytes": 8867,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "b321e6e7da0bc73863d971706bca6156835bbfdd7f1c1553f351e8df3fbb5b37",
+      "bytes": 1940,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 43218,
+    "duration": 0.98,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -18.46,
+    "dcOffset": -2.2596198343282892e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.165496826171875,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, clean, synthesized whoosh sound effect with a slight electronic or metallic quality, suitable for transitions or UI feedback.",
+      "zh": "短促、干净的合成嗖嗖声，带有一丝电子或金属质感，适合用于转场或UI反馈。"
+    },
+    "reason": "The sound is a clear, well-produced synthesized effect without any technical flaws, making it highly usable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:34.584563+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "58b33c1025b9085c4cfca9a4354f053166411cbc165f6ff60ee74be09feb01d7"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 43218
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.888008+00:00"
+}

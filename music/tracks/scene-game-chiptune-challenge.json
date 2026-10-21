@@ -1,0 +1,207 @@
+{
+  "id": "scene-game-chiptune-challenge",
+  "code": "GAME-02-3",
+  "title": {
+    "en": "Clock Tower · Challenge",
+    "zh": "钟楼机关 · 挑战"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "focused",
+    "challenge"
+  ],
+  "topics": [
+    "game",
+    "light platforming and mechanical puzzles",
+    "challenge"
+  ],
+  "energy": 5,
+  "bpm": 132,
+  "key": "",
+  "instruments": [
+    "pulse arpeggios",
+    "triangle bass",
+    "noise percussion"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 90,
+  "prompt": "Compose an original 90-second instrumental game background cue for light platforming and mechanical puzzles, challenge state. Instruments: pulse arpeggios, triangle bass, noise percussion. 132 BPM, exact steady 4/4. Energy 4/5. Use a repeating eight-bar harmonic cycle. Variation: more active low percussion with syncopated short accents. Stable consistent texture from the first bar through the last bar, no intro, no build, no breaks, no final cadence or fade. No tempo changes. Keep the lead sparse so repeated playback is comfortable. Original composition for a reusable game loop. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chiptune"
+  ],
+  "scenarios": [
+    "game-challenge"
+  ],
+  "description": {
+    "en": "An energetic and upbeat electronic track with a strong retro-futuristic synthwave feel. It features driving electronic drums, a prominent synth bassline, melodic synthesizers, and rhythmic electric guitar chords, creating a vibrant and dynamic atmosphere.",
+    "zh": "一首充满活力和乐观的电子音乐，带有浓厚的复古未来合成波风格。它以强劲的电子鼓点、突出的合成器贝斯线、旋律优美的合成器以及有节奏的电吉他和弦为特色，营造出充满活力和动感的氛围。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "game-audio"
+  ],
+  "loopRequested": true,
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "gameState": "challenge"
+  },
+  "duration": 89.182,
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:05:50.818215+00:00",
+  "generation": {
+    "id": "0f4ec822-f9b9-4095-956b-03da0b0b0438",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:05:06.249876+00:00",
+    "completedAt": "2026-09-22T09:05:50.818215+00:00",
+    "interactionId": "w0Syar_kBZOE694Pyb3WcQ",
+    "sha256": "68ddd65475a61ba37860d4bbe71ac5a748de5e9ba178fb5ed5efebb55e8379e4"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An energetic and upbeat electronic track with a strong retro-futuristic synthwave feel. It features driving electronic drums, a prominent synth bassline, melodic synthesizers, and rhythmic electric guitar chords, creating a vibrant and dynamic atmosphere.",
+      "zh": "一首充满活力和乐观的电子音乐，带有浓厚的复古未来合成波风格。它以强劲的电子鼓点、突出的合成器贝斯线、旋律优美的合成器以及有节奏的电吉他和弦为特色，营造出充满活力和动感的氛围。"
+    },
+    "instruments": [
+      "electronic drums",
+      "synth bass",
+      "synthesizers",
+      "electric guitar"
+    ],
+    "moods": [
+      "energetic",
+      "upbeat",
+      "retro",
+      "driving",
+      "futuristic",
+      "synthwave"
+    ],
+    "energy": 5,
+    "bpmEstimate": 128,
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:06:13.853002+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": true,
+    "basis": "PCM seam analysis plus automated texture and musical-phrase listening across three repetitions",
+    "asset": "loop",
+    "duration": 29.906259,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 1318866,
+    "sourceStartSeconds": 38.37501133786848,
+    "sourceEndSeconds": 68.37501133786849,
+    "crossfadeSeconds": 0.09374149659863945,
+    "sourceEncoding": "MP3-derived PCM, not a lossless original",
+    "technicalReview": [
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1318866,
+        "duration": 29.906259,
+        "peakDbfs": -0.92,
+        "rmsDbfs": -15.16,
+        "dcOffset": 0.002836687937359337,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.004486083984375,
+        "internalStepP999": 0.20850024414062318,
+        "seamPassed": true
+      },
+      {
+        "method": "full-pcm-analysis",
+        "sampleRate": 44100,
+        "channels": 1,
+        "samples": 1318866,
+        "duration": 29.906259,
+        "peakDbfs": -0.93,
+        "rmsDbfs": -15.13,
+        "dcOffset": 0.0027747398680387403,
+        "finite": true,
+        "clippedSamples": 0,
+        "boundaryStep": 0.00433349609375,
+        "internalStepP999": 0.20721850585937318,
+        "seamPassed": true
+      }
+    ],
+    "audioReview": {
+      "suitableForLibrary": true,
+      "voicesDetected": false,
+      "audibleDefect": false,
+      "description": {
+        "en": "A high-pitched, metallic, buzzing and whirring electronic texture with a distinct rhythmic pulse, evoking a sci-fi or mechanical atmosphere. Bright and active.",
+        "zh": "高频、略带金属感的嗡嗡声和旋转声，电子音效纹理。具有明显的节奏感，略带科幻或机械感。声音明亮且活跃。"
+      },
+      "reason": "The audio is a clean, perfectly looping electronic texture with a distinct character, free from any audible defects or unwanted elements. Its consistent quality and rhythmic nature make it highly usable for various sound design applications.",
+      "seamlessLoop": true,
+      "model": "gemini-2.5-flash",
+      "reviewedAt": "2026-09-22T09:15:20.314554+00:00",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "sha256": "f45cc865f9fb6e9503602e60e7227a19809e5e829b71be4d7d4e32b803412bce"
+    },
+    "musicalReview": {
+      "musicalLoop": true,
+      "reason": "The rhythm, harmony, dynamics, and phrase continuity are excellent across both joins. There are no obvious fade-ins, ending cadences, abrupt chord changes, skipped beats, or conspicuous edits. The music flows seamlessly for continuous background playback.",
+      "model": "gemini-2.5-flash",
+      "method": "automated-audio-review",
+      "scope": "three-complete-repetitions",
+      "reviewedAt": "2026-09-22T09:15:27.965700+00:00"
+    }
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-challenge/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-challenge/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-challenge/v1/waveform.json",
+    "loop": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-challenge/v1/loop.wav",
+    "loopOgg": "https://music-cdn.shapeof.world/tracks/scene-game-chiptune-challenge/v1/loop.ogg"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "71fc187232395421e265d9dbaa88ea9f2669646c8fef3e7504c6882ae22f68fe",
+      "bytes": 1249323,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "68ddd65475a61ba37860d4bbe71ac5a748de5e9ba178fb5ed5efebb55e8379e4",
+      "bytes": 2148036,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "13f2a41bdaf5654e9b9ad4125266532834e0b2bf4e897cb43e1ca3cee68c8e8e",
+      "bytes": 2800,
+      "mimeType": "application/json"
+    },
+    "loop": {
+      "sha256": "939f7695563085a130a293130f634be49ad2a84384e7d365c1a29da510c3566f",
+      "bytes": 5275508,
+      "mimeType": "audio/wav"
+    },
+    "loopOgg": {
+      "sha256": "51f3a505eb67b3d2213b1a7074174d373df1955ca65e9c4b5dc630ef5a48f16d",
+      "bytes": 531882,
+      "mimeType": "audio/ogg"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:54:27.458724+00:00"
+}

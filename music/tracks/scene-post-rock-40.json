@@ -1,0 +1,178 @@
+{
+  "id": "scene-post-rock-40",
+  "code": "SCENE-16-40",
+  "title": {
+    "en": "Open Windows · 40",
+    "zh": "打开窗户 · 40"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "rhythmic",
+    "playful"
+  ],
+  "topics": [
+    "uplifting architecture and open landscapes",
+    "product-video"
+  ],
+  "energy": 4,
+  "bpm": 120,
+  "key": "",
+  "instruments": [
+    "clean guitar harmonics",
+    "bass",
+    "restrained acoustic drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 40,
+  "prompt": "Compose an original complete 60-second instrumental cue for uplifting architecture and open landscapes. Instruments: clean guitar harmonics, bass, restrained acoustic drums. 120 BPM in 4/4. Motif: a rising fourth followed by a descending step. Start the hook and beat immediately; maintain a clear pulse and concise two-bar phrases. One fresh timbral answer halfway through. Keep the groove throughout, then a decisive tonic ending during the last second with a very short natural decay. No slow intro, long outro, riser, silence or fade-out. Mobile-speaker-friendly bass. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. No imitation of any artist, song, film, game or brand. ",
+  "recommendedWorldIds": [],
+  "styles": [
+    "post-rock"
+  ],
+  "scenarios": [
+    "motion",
+    "explain"
+  ],
+  "description": {
+    "en": "An upbeat and energetic electronic pop track featuring a driving synth bass, steady drums, and a catchy synth melody.",
+    "zh": "一首欢快且充满活力的电子流行乐曲，以强劲的合成器贝斯、稳定的鼓点和抓耳的合成器旋律为特色。"
+  },
+  "batch": "scene-audio-2026-09",
+  "status": "published",
+  "collections": [
+    "short-promos"
+  ],
+  "rightsProfile": "lyria-commercial-2026-09",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "background",
+    "tags": [
+      "uplifting architecture and open landscapes"
+    ]
+  },
+  "shortForm": {
+    "use": "product-demo",
+    "targetSeconds": 40,
+    "structureBasis": "source-prompt-intent",
+    "delivery": "ending-excerpt"
+  },
+  "duration": 40.0,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-22T09:18:30.324075+00:00",
+  "generation": {
+    "id": "e54dc4d9-e5ea-4255-9cdc-2b7209486539",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-22T09:17:49.423691+00:00",
+    "completedAt": "2026-09-22T09:18:30.324075+00:00",
+    "interactionId": "vkeyarWJH7ve694PlMeHuQ4",
+    "sha256": "2d498567d2a3b96f4e1e29f5940acb464aa77e54c9f690954e709387e9be6668"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic pop track featuring a driving synth bass, steady drums, and a catchy synth melody.",
+      "zh": "一首欢快且充满活力的电子流行乐曲，以强劲的合成器贝斯、稳定的鼓点和抓耳的合成器旋律为特色。"
+    },
+    "instruments": [
+      "Synth Bass",
+      "Drums",
+      "Synthesizer",
+      "Synth Pad"
+    ],
+    "moods": [
+      "Upbeat",
+      "Energetic",
+      "Positive",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": "",
+    "immediateHook": true,
+    "clearPulse": true,
+    "resolvedEnding": true,
+    "shortFormReason": "The track opens immediately with a driving synth bass and drum beat, quickly joined by a catchy synth melody. It concludes with a sustained synth chord and a final drum hit, providing a clear musical resolution.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:48.277943+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review",
+    "asset": "preview",
+    "sha256": "00a22cbf4b1b20a4106250e02a202f5bd8eea232e5a68d8f09c514588be5943b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "sourceDuration": 57.756667,
+  "sourceAudioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "An upbeat and energetic electronic track featuring a driving synth bass, arpeggiated synthesizers, and a clean electric guitar melody over a steady drum beat. It has a modern and positive feel.",
+      "zh": "一首欢快且充满活力的电子音乐，以强劲的合成器贝斯、琶音合成器和干净的电吉他旋律为主，配以稳定的鼓点。整体感觉现代而积极。"
+    },
+    "instruments": [
+      "Drums",
+      "Synthesizer",
+      "Bass Guitar",
+      "Electric Guitar"
+    ],
+    "moods": [
+      "Uplifting",
+      "Energetic",
+      "Positive",
+      "Driving"
+    ],
+    "energy": 4,
+    "bpmEstimate": 122,
+    "reason": "The track is well-produced, free of defects, and has a clear musical structure suitable for various media uses. Its energetic and positive mood makes it versatile.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:18:40.572989+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "edit": {
+    "kind": "ending-excerpt",
+    "startSeconds": 17.756667,
+    "requestedSeconds": 40,
+    "fadeInSeconds": 0.04,
+    "fadeOutSeconds": 0.08
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/scene-post-rock-40/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/scene-post-rock-40/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/scene-post-rock-40/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "00a22cbf4b1b20a4106250e02a202f5bd8eea232e5a68d8f09c514588be5943b",
+      "bytes": 561049,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "2d498567d2a3b96f4e1e29f5940acb464aa77e54c9f690954e709387e9be6668",
+      "bytes": 1393828,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "e4b80f1c03330c013c2a0611dfa1157558327be7a90a7e0fc284464bbc1a5f8b",
+      "bytes": 2784,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-09-22T09:47:34.850773+00:00"
+}

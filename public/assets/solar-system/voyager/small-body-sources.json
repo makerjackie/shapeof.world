@@ -1,0 +1,79 @@
+[
+  {
+    "id": "pluto",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=134340&full-prec=true&phys-par=true",
+    "solutionDate": null,
+    "epochJD": "2457588.5",
+    "sha256": "9d069716452bc85fc92ffecf58e836ef2c1fba4fff62f90114392a35dd0bfd05"
+  },
+  {
+    "id": "ceres",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=1&full-prec=true&phys-par=true",
+    "solutionDate": "2021-04-13 11:04:44",
+    "epochJD": "2461200.5",
+    "sha256": "e3abcfe6376b6502f01ab4992e723240c1809644b0b58d7937442a11b9d0aade"
+  },
+  {
+    "id": "eris",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=136199&full-prec=true&phys-par=true",
+    "solutionDate": "2026-06-06 21:06:42",
+    "epochJD": "2461200.5",
+    "sha256": "6a10df1b9d4aa60d5724ef4da462718769c27881ff1ec12807948bc25176ac94"
+  },
+  {
+    "id": "haumea",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=136108&full-prec=true&phys-par=true",
+    "solutionDate": "2026-06-06 21:06:04",
+    "epochJD": "2461200.5",
+    "sha256": "5d3d6fa3a32d76e053f00cbfe76e6f64f7be59f3ad69420d854ab6cf85e4e664"
+  },
+  {
+    "id": "makemake",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=136472&full-prec=true&phys-par=true",
+    "solutionDate": "2026-06-06 21:09:02",
+    "epochJD": "2461200.5",
+    "sha256": "4b0840eb9ac6a7ea6bfd682897c4d781c4977fd20e97cf0434118260878539ea"
+  },
+  {
+    "id": "vesta",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=4&full-prec=true&phys-par=true",
+    "solutionDate": "2021-04-13 11:15:57",
+    "epochJD": "2461200.5",
+    "sha256": "216324cdd0b5ba9a087188173013b17f54bc01170fa2325c54d00da78bcbd3b3"
+  },
+  {
+    "id": "pallas",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=2&full-prec=true&phys-par=true",
+    "solutionDate": "2026-06-05 03:03:25",
+    "epochJD": "2461200.5",
+    "sha256": "ea983b2e3ae575a60403a4ac2e2cb9ca64dc340f9df64c7613218ce19f219dc7"
+  },
+  {
+    "id": "halley",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=1P&full-prec=true&phys-par=true",
+    "solutionDate": "2025-11-21 15:57:34",
+    "epochJD": "2439875.5",
+    "sha256": "d30716c17f7a5d2effa6b1d5ed5587d1c6a71d999f7299fd321b871669b091ce"
+  },
+  {
+    "id": "encke",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=2P&full-prec=true&phys-par=true",
+    "solutionDate": "2026-09-16 06:42:18",
+    "epochJD": "2459993.5",
+    "sha256": "31db77f3ebd4798620e0e569907e16ed42c40d825fc7e951c3865f08dbd61149"
+  },
+  {
+    "id": "67p",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=67P&full-prec=true&phys-par=true",
+    "solutionDate": "2026-09-04 10:25:07",
+    "epochJD": "2457305.5",
+    "sha256": "d1d2c77f7742a45a4c9a6618a18f3f9f5583bf73f9a32d9faa5fff649110e0bb"
+  },
+  {
+    "id": "hale-bopp",
+    "url": "https://ssd-api.jpl.nasa.gov/sbdb.api?des=C%2F1995+O1&full-prec=true&phys-par=true",
+    "solutionDate": "2022-08-01 01:56:46",
+    "epochJD": "2459837.5",
+    "sha256": "db0f7d713e3c6ee79f1d4334d6dc105b0a64579e39d11b26e89fbdff87730b73"
+  }
+]

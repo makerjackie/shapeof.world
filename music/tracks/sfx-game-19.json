@@ -1,0 +1,125 @@
+{
+  "id": "sfx-game-19",
+  "code": "SFX-GAME-19",
+  "title": {
+    "en": "Shield block",
+    "zh": "护盾格挡"
+  },
+  "kind": "sfx",
+  "family": "game",
+  "designIndex": 18,
+  "seed": 2749587733,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized shield block for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的护盾格挡合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "game",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-game"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.04,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-game-19/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-game-19/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-game-19/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-game-19/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2749587733,
+    "sha256": "703ab2c2fe3552108b72a3d64da89d60fed182532b534c2a5f6baee472c54a26",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "4c9d0f21edcfdc2abf26323d3566c49658997aee4899bcdb54ad3be7484d5a21",
+      "bytes": 15403,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "703ab2c2fe3552108b72a3d64da89d60fed182532b534c2a5f6baee472c54a26",
+      "bytes": 91772,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "89969bca88b7ed75a15a3cb5de86e5a985653a6bd27cc11d89327b846216e474",
+      "bytes": 8948,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "a635cda759fe6c3ce539bef3bf736383ee372c6286d0fc8457a0925c0449d920",
+      "bytes": 1945,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 45864,
+    "duration": 1.04,
+    "peakDbfs": -4.78,
+    "rmsDbfs": -17.08,
+    "dcOffset": 3.859278587236177e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04559747314453122,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched electronic ding sound, resembling a notification or alert.",
+      "zh": "短促、高音调的电子提示音，类似于通知或警报声。"
+    },
+    "reason": "The sound is a clean, well-produced electronic effect suitable for various sound design applications.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:54.279087+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "4c9d0f21edcfdc2abf26323d3566c49658997aee4899bcdb54ad3be7484d5a21"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 45864
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.875480+00:00"
+}

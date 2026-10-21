@@ -1,0 +1,125 @@
+{
+  "id": "sfx-magic-10",
+  "code": "SFX-MAGIC-10",
+  "title": {
+    "en": "Magic shield",
+    "zh": "魔法护罩"
+  },
+  "kind": "sfx",
+  "family": "magic",
+  "designIndex": 9,
+  "seed": 2103787559,
+  "scenarios": [
+    "fantasy"
+  ],
+  "description": {
+    "en": "Original synthesized magic shield for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的魔法护罩合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "magic",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-magic"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.56,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-magic-10/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-magic-10/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-magic-10/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-magic-10/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2103787559,
+    "sha256": "15a39f9945b43352e9db339d7de4fbd99328bdc6b827bda21a1114c5f4edfc43",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "8c3449217eb19997e90a0b6d88100e4c4c73d53cc5137ec373f0bac87293b941",
+      "bytes": 22717,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "15a39f9945b43352e9db339d7de4fbd99328bdc6b827bda21a1114c5f4edfc43",
+      "bytes": 137636,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "f83cbc4cc503d224431bc3bb19adca8659ddee0f846a55ea2bfa0d96d4df63c1",
+      "bytes": 32615,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "3395e868faa02a3e0c2c85440a4ed00593a1fcc9ed2abc2a7adfe585bedaa709",
+      "bytes": 1943,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 68796,
+    "duration": 1.56,
+    "peakDbfs": -4.97,
+    "rmsDbfs": -17.08,
+    "dcOffset": 4.435952399122042e-09,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.1256732177734392,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, synthesized boing or spring sound effect.",
+      "zh": "一个短促、高音调的合成弹簧或弹跳音效。"
+    },
+    "reason": "",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:01.064627+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "8c3449217eb19997e90a0b6d88100e4c4c73d53cc5137ec373f0bac87293b941"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 68796
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.882463+00:00"
+}

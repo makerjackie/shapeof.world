@@ -1,0 +1,101 @@
+{
+  "id": "lib-gypsy-jazz-suspense",
+  "code": "LIB-10-09",
+  "title": {
+    "en": "Shadows — Gypsy Jazz",
+    "zh": "暗影 · 吉普赛爵士"
+  },
+  "category": "global",
+  "archetype": "event",
+  "role": "library",
+  "moods": [
+    "mysterious",
+    "tense",
+    "nocturnal"
+  ],
+  "topics": [
+    "suspense",
+    "gypsy-jazz"
+  ],
+  "energy": 2,
+  "bpm": 134,
+  "key": "G minor",
+  "instruments": [
+    "acoustic guitar",
+    "violin",
+    "upright bass"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second acoustic swing jazz instrumental composition for mystery, nocturnal exploration and restrained suspense. Mood: mysterious, tense, nocturnal. Instruments: acoustic guitar, violin, upright bass. Style: crisp rhythmic guitar and playful violin phrases. Tempo approximately 134 BPM; G minor. Main idea: a repeating five-note figure with space between phrases. Use unresolved suspended harmony, careful space and subtle low-register movement; no jump scares. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "gypsy-jazz"
+  ],
+  "scenarios": [
+    "suspense"
+  ],
+  "description": {
+    "en": "A gentle and melancholic acoustic piece featuring a prominent acoustic guitar melody supported by warm, expressive strings (violin, cello). The arrangement is delicate and evokes a nostalgic or reflective mood.",
+    "zh": "一首温柔而忧郁的器乐曲，以突出的原声吉他旋律为主，并由温暖而富有表现力的弦乐（小提琴、大提琴）伴奏。编曲精致，营造出怀旧或沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 175.491,
+  "generatedAt": "2026-09-09T08:15:36.051837+00:00",
+  "generation": {
+    "id": "d7924885-206e-4def-95c3-5cbcbfc6e76d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:14:45.244250+00:00",
+    "completedAt": "2026-09-09T08:15:36.051837+00:00",
+    "interactionId": "dhWhauzwCpDSi9sP696dkAg",
+    "sha256": "f9818296bea0ee9d6a17419ac6598e589a0789f7ad71bb7b5333bd1cf8b58abc"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic acoustic piece featuring a prominent acoustic guitar melody supported by warm, expressive strings (violin, cello). The arrangement is delicate and evokes a nostalgic or reflective mood.",
+      "zh": "一首温柔而忧郁的器乐曲，以突出的原声吉他旋律为主，并由温暖而富有表现力的弦乐（小提琴、大提琴）伴奏。编曲精致，营造出怀旧或沉思的氛围。"
+    },
+    "instruments": [
+      "acoustic guitar",
+      "violin",
+      "cello",
+      "double bass"
+    ],
+    "moods": [
+      "melancholy",
+      "nostalgic",
+      "reflective",
+      "gentle",
+      "warm"
+    ],
+    "energy": 2,
+    "bpmEstimate": 105,
+    "reason": "Well-produced, clear instrumental piece with a consistent, pleasant mood suitable for various background uses.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:15:46.283452+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-suspense/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-suspense/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-gypsy-jazz-suspense/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:16:54.092346+00:00",
+  "targetEnergy": 4,
+  "energyBasis": "automated-audio-review"
+}

@@ -1,0 +1,125 @@
+{
+  "id": "sfx-impact-13",
+  "code": "SFX-IMPACT-13",
+  "title": {
+    "en": "Anvil strike",
+    "zh": "铁砧敲击"
+  },
+  "kind": "sfx",
+  "family": "impact",
+  "designIndex": 12,
+  "seed": 4020264002,
+  "scenarios": [
+    "impact"
+  ],
+  "description": {
+    "en": "Original synthesized anvil strike for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的铁砧敲击合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "impact",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-impact"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-impact-13/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-impact-13/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-impact-13/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-impact-13/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 4020264002,
+    "sha256": "3efdf97b0b777b6f1989a4f143fb6825eb2a60b2e1f0085afa81e1b27e89f39d",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "e98c4a4d6c8cca22321585ba6492a461014422d782da4bcbf78141697a6af60b",
+      "bytes": 4432,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "3efdf97b0b777b6f1989a4f143fb6825eb2a60b2e1f0085afa81e1b27e89f39d",
+      "bytes": 22094,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "50db1c4e6ff4699ffa165566ecd627f6fdb9ad8f7699124467f25950ad720f7c",
+      "bytes": 5258,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "7c60d0307cf42afe1d886c9eb7d0d3b76531b6823e85ec7ed95f5f5fde9505e7",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 11025,
+    "duration": 0.25,
+    "peakDbfs": -2.6,
+    "rmsDbfs": -17.08,
+    "dcOffset": -5.812872023809524e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.04432727050781504,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, high-pitched, sharp electronic zap or laser sound effect.",
+      "zh": "短促、高音、尖锐的电子冲击或激光音效。"
+    },
+    "reason": "N/A",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:20:07.620119+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "e98c4a4d6c8cca22321585ba6492a461014422d782da4bcbf78141697a6af60b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 11025
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.878123+00:00"
+}

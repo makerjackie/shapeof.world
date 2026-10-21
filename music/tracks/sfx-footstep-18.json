@@ -1,0 +1,125 @@
+{
+  "id": "sfx-footstep-18",
+  "code": "SFX-FOOTSTEP-18",
+  "title": {
+    "en": "Robot step",
+    "zh": "机械脚步"
+  },
+  "kind": "sfx",
+  "family": "footstep",
+  "designIndex": 17,
+  "seed": 2733602853,
+  "scenarios": [
+    "gameplay"
+  ],
+  "description": {
+    "en": "Original synthesized robot step for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的机械脚步合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "footstep",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-footstep"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 0.36,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-footstep-18/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-footstep-18/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-footstep-18/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-footstep-18/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 2733602853,
+    "sha256": "f4d858768ac7fee64a80e529e93a5b9cdc167e874ec31084d561ac5f66a34090",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "b8b41d1f90efbb48baa279e4981867cc6114174a2addb5c89d7e41526a10cda5",
+      "bytes": 5894,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "f4d858768ac7fee64a80e529e93a5b9cdc167e874ec31084d561ac5f66a34090",
+      "bytes": 31796,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "7f033a98b3ae215cd2e4285f4398d8b775a85850f10b5fcf156908c93aafa8a0",
+      "bytes": 10360,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "9f4f0ed4157c263467f9fd0282c830e0b61c53613840d3a8b127ff57c62296e7",
+      "bytes": 1939,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 15876,
+    "duration": 0.36,
+    "peakDbfs": -2.16,
+    "rmsDbfs": -19.43,
+    "dcOffset": -2.306695247543462e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.2409901123046876,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or whoosh sound effect, reminiscent of a quick energy burst or a sci-fi weapon. It has a distinct, clean attack and a rapid decay.",
+      "zh": "一个短促、尖锐、高音调的电子冲击或嗖嗖声效果，类似于快速的能量爆发或科幻武器。它具有清晰的起音和快速的衰减。"
+    },
+    "reason": "The sound is a clean, intentionally synthesized effect with no audible defects, making it suitable for sound design.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:21:15.487280+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "b8b41d1f90efbb48baa279e4981867cc6114174a2addb5c89d7e41526a10cda5"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 15876
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.871192+00:00"
+}

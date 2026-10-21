@@ -1,0 +1,125 @@
+{
+  "id": "sfx-water-20",
+  "code": "SFX-WATER-20",
+  "title": {
+    "en": "Deep bubble",
+    "zh": "深水气泡"
+  },
+  "kind": "sfx",
+  "family": "water",
+  "designIndex": 19,
+  "seed": 3439450818,
+  "scenarios": [
+    "water"
+  ],
+  "description": {
+    "en": "Original synthesized deep bubble for editing and interactive projects. Designed sound, not a field recording.",
+    "zh": "用于剪辑与交互的深水气泡合成音效，非实地录音。"
+  },
+  "status": "published",
+  "batch": "sound-design-2026-09",
+  "role": "library",
+  "category": "global",
+  "archetype": "library",
+  "moods": [],
+  "topics": [
+    "water",
+    "sfx"
+  ],
+  "styles": [
+    "sfx-water"
+  ],
+  "energy": 3,
+  "energyBasis": "design-intent",
+  "bpm": 0,
+  "key": "",
+  "instruments": [],
+  "instrumental": true,
+  "model": "procedural-dsp",
+  "prompt": "",
+  "duration": 1.25,
+  "collections": [
+    "sound-effects"
+  ],
+  "rightsProfile": "original-synthesis-cc0",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/sfx-water-20/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/sfx-water-20/v1/master.wav",
+    "game": "https://music-cdn.shapeof.world/tracks/sfx-water-20/v1/game.ogg",
+    "waveform": "https://music-cdn.shapeof.world/tracks/sfx-water-20/v1/waveform.json"
+  },
+  "generation": {
+    "generator": "Shape of the World procedural sound design",
+    "model": "procedural-dsp",
+    "recipe": "sow-dsp-1",
+    "seed": 3439450818,
+    "sha256": "31bf8da28ab6fd52001a710fa4ad89db6e787cde7b6ca600b5198b0516c25cc4",
+    "externalSamples": false
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "06a8f0c766cade7664e0586cb2d6886b4407b1e038de94dfa77f62fff14a525b",
+      "bytes": 18329,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "31bf8da28ab6fd52001a710fa4ad89db6e787cde7b6ca600b5198b0516c25cc4",
+      "bytes": 110294,
+      "mimeType": "audio/wav"
+    },
+    "game": {
+      "sha256": "ee79745e943ff6613c7156ddf07030ce274916f801692c23182facb03e13c5eb",
+      "bytes": 19199,
+      "mimeType": "audio/ogg"
+    },
+    "waveform": {
+      "sha256": "2690a6c26bfda76fa493c80dca4d9d6db7091476b9b2c6c1ae6d9df6d368253c",
+      "bytes": 1932,
+      "mimeType": "application/json"
+    }
+  },
+  "technicalReview": {
+    "method": "full-pcm-analysis",
+    "sampleRate": 44100,
+    "channels": 1,
+    "samples": 55125,
+    "duration": 1.25,
+    "peakDbfs": -2.48,
+    "rmsDbfs": -17.08,
+    "dcOffset": 2.048345379818594e-08,
+    "finite": true,
+    "clippedSamples": 0,
+    "boundaryStep": 0.0,
+    "internalStepP999": 0.145782470703125,
+    "seamPassed": false
+  },
+  "audioReview": {
+    "suitableForLibrary": true,
+    "voicesDetected": false,
+    "audibleDefect": false,
+    "description": {
+      "en": "A short, sharp, high-pitched electronic zap or laser sound, immediately followed by a lower-pitched, slightly distorted impact or thud.",
+      "zh": "短促、尖锐的电子冲击或激光声，紧接着是一个较低沉、略带失真的撞击或砰击声。"
+    },
+    "reason": "The sound is a clean, well-produced, and isolated synthesized effect, suitable for various sound design applications without any technical flaws.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-22T09:22:45.957733+00:00",
+    "method": "automated-audio-review",
+    "scope": "full-audio",
+    "sha256": "06a8f0c766cade7664e0586cb2d6886b4407b1e038de94dfa77f62fff14a525b"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-reviewed",
+    "asset": null,
+    "sampleRate": 44100,
+    "startSample": 0,
+    "endSample": 55125
+  },
+  "usage": {
+    "placement": "event",
+    "narrationFriendly": false
+  },
+  "metadataBasis": "Event labels and energy are design intent; duration and PCM metrics are measured; audioReview is model inference. All audio is synthesis, not field recording.",
+  "verifiedAt": "2026-09-22T09:47:34.914353+00:00"
+}

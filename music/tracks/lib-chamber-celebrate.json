@@ -1,0 +1,102 @@
+{
+  "id": "lib-chamber-celebrate",
+  "code": "LIB-02-10",
+  "title": {
+    "en": "First Light — Chamber",
+    "zh": "初光 · 室内乐"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "hopeful",
+    "joyful",
+    "uplifting"
+  ],
+  "topics": [
+    "celebrate",
+    "chamber"
+  ],
+  "energy": 4,
+  "bpm": 98,
+  "key": "C major",
+  "instruments": [
+    "string quartet",
+    "clarinet"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 60,
+  "prompt": "Create an original 60 second chamber classical instrumental composition for celebration, positive conclusion and project reveal. Mood: hopeful, joyful, uplifting. Instruments: string quartet, clarinet. Style: interlocking counterpoint and expressive legato. Tempo approximately 98 BPM; C major. Main idea: a compact three-note motif. Introduce a memorable rising motif, develop it, and end with a confident resolved cadence. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-00:20] Establish the main idea immediately with the core ensemble. [00:20-00:40] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [00:40-01:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 01:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "chamber"
+  ],
+  "scenarios": [
+    "celebrate"
+  ],
+  "description": {
+    "en": "A lively and elegant classical piece featuring a string ensemble, characterized by its intricate melodies, dynamic shifts, and a playful, sophisticated atmosphere.",
+    "zh": "一首活泼优雅的古典乐曲，以弦乐合奏为主，旋律错综复杂，动态变化丰富，营造出一种俏皮而精致的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 56.66,
+  "generatedAt": "2026-09-09T07:46:47.870727+00:00",
+  "generation": {
+    "id": "91e4f778-2e13-49a7-b8ae-a0adb5fed58a",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T07:46:04.812566+00:00",
+    "completedAt": "2026-09-09T07:46:47.870727+00:00",
+    "interactionId": "vQ6hasCfOJDSi9sP696dkAg",
+    "sha256": "e39ce6dfd753e5618d3ca4dffe50caae398123aa953c01c4e0e1b05f96ad3890"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A lively and elegant classical piece featuring a string ensemble, characterized by its intricate melodies, dynamic shifts, and a playful, sophisticated atmosphere.",
+      "zh": "一首活泼优雅的古典乐曲，以弦乐合奏为主，旋律错综复杂，动态变化丰富，营造出一种俏皮而精致的氛围。"
+    },
+    "instruments": [
+      "String Ensemble",
+      "Violin",
+      "Viola",
+      "Cello",
+      "Double Bass"
+    ],
+    "moods": [
+      "Classical",
+      "Elegant",
+      "Lively",
+      "Playful",
+      "Sophisticated",
+      "Whimsical"
+    ],
+    "energy": 4,
+    "bpmEstimate": 128,
+    "reason": null,
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T07:46:56.807889+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-chamber-celebrate/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-chamber-celebrate/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-chamber-celebrate/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T07:48:34.708497+00:00",
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review"
+}

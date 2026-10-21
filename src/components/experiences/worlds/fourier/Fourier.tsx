@@ -76,6 +76,8 @@ export function Fourier({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { storyMode, enterFree, enterStory } = useStoryFreeMode('fourier')
+  const storyRef = useRef(storyMode)
+  storyRef.current = storyMode
   const [terms, setTerms] = useState(3)
   const [kind, setKind] = useState<WaveKind>('square')
   const [playing, setPlaying] = useState(true)
@@ -171,12 +173,14 @@ export function Fourier({ controls }: { controls: ExperienceControls }) {
       ctx.fillRect(0, 0, w, h)
 
       const mobile = w < 720
+      // Phone story chapters keep their caption in the top band, so the circle chain sits lower and a little smaller.
+      const phoneStory = mobile && storyRef.current
       const cycX = mobile ? w * 0.5 : w * 0.23
-      const cycY = mobile ? h * 0.28 : h * 0.46
-      const baseR = mobile ? Math.min(w * 0.3, h * 0.13) : Math.min(w * 0.14, h * 0.16)
+      const cycY = mobile ? h * (phoneStory ? 0.4 : 0.28) : h * 0.46
+      const baseR = mobile ? (phoneStory ? Math.min(w * 0.2, h * 0.09) : Math.min(w * 0.3, h * 0.13)) : Math.min(w * 0.14, h * 0.16)
       const waveLeft = mobile ? w * 0.07 : w * 0.46
       const waveRight = w * 0.96
-      const waveMidY = mobile ? h * 0.66 : h * 0.46 // 桌面端与圆链同一条水平基线
+      const waveMidY = mobile ? h * (phoneStory ? 0.69 : 0.66) : h * 0.46 // 桌面端与圆链同一条水平基线
       const waveAmpPx = baseR // 振幅像素严格 1:1 —— 圆的高度就是波的高度
       const hs = harmonicsRef.current
       const target = targetRef.current
@@ -576,9 +580,9 @@ export function Fourier({ controls }: { controls: ExperienceControls }) {
         placement="stage"
         stagePlan={[
           { position: 'top-left', mobilePosition: 'top-center', motion: 'rise', width: 'normal', treatment: 'editorial', cue: 'right' },
-          { position: 'bottom-left', mobilePosition: 'bottom-center', motion: 'drift-right', width: 'normal', treatment: 'caption', cue: 'right' },
+          { position: 'bottom-left', mobilePosition: 'top-center', motion: 'drift-right', width: 'normal', treatment: 'caption', cue: 'right' },
           { position: 'top-right', mobilePosition: 'top-center', motion: 'fade', width: 'normal', treatment: 'annotation', cue: 'left' },
-          { position: 'bottom-right', mobilePosition: 'bottom-center', motion: 'scale', width: 'wide', treatment: 'monumental', cue: 'up' },
+          { position: 'bottom-right', mobilePosition: 'top-center', motion: 'scale', width: 'wide', treatment: 'monumental', cue: 'up' },
         ]}
         onExit={enterFree}
       />

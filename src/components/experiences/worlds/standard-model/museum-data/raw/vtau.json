@@ -1,0 +1,21 @@
+{
+  "status_code": 200,
+  "status_message": "OK",
+  "request_timestamp": "2026-09-14 02:13:18 PST",
+  "request_url": "https://pdgapi.lbl.gov/summaries/S066MNT",
+  "edition": "2026",
+  "about": "For further information see https://pdg.lbl.gov/api",
+  "pdgid": "S066MNT/2024",
+  "description": "nu MASS (tau based)",
+  "pdg_values": [
+    {
+      "value": 18.2,
+      "value_text": "<18.2",
+      "is_limit": true,
+      "is_upper_limit": true,
+      "unit": "MeV",
+      "confidence_level": 95.0,
+      "type": "BEST LIMIT"
+    }
+  ]
+}

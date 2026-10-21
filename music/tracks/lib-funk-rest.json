@@ -1,0 +1,104 @@
+{
+  "id": "lib-funk-rest",
+  "code": "LIB-13-03",
+  "title": {
+    "en": "Rest — Funk",
+    "zh": "休憩 · 放克"
+  },
+  "category": "global",
+  "archetype": "discovery",
+  "role": "library",
+  "moods": [
+    "peaceful",
+    "soft",
+    "spacious"
+  ],
+  "topics": [
+    "rest",
+    "funk"
+  ],
+  "energy": 2,
+  "bpm": 98,
+  "key": "F major",
+  "instruments": [
+    "clavinet",
+    "slap bass",
+    "tight drums",
+    "rhythm guitar"
+  ],
+  "instrumental": true,
+  "model": "lyria-3-pro-preview",
+  "targetDuration": 180,
+  "prompt": "Create an original 180 second instrumental funk instrumental composition for rest, unwinding and breathing exercises. Mood: peaceful, soft, spacious. Instruments: clavinet, slap bass, tight drums, rhythm guitar. Style: sixteenth-note syncopation with short call-and-response riffs. Tempo approximately 98 BPM; F major. Main idea: a descending melody with an upward answer. Use a restrained arrangement, soft attacks, no sudden accents. Instrumental only. No vocals, no choir, no humming, no singing, no speech, no lyrics, no vocal samples. Do not imitate any existing artist or melody. [00:00-01:00] Establish the main idea immediately with the core ensemble. [01:00-02:00] Develop the motif with a complementary instrumental counterline, preserving the intended energy. [02:00-03:00] Return to the main idea and give a musically resolved ending with a short natural tail. Finish around 03:00.",
+  "recommendedWorldIds": [],
+  "styles": [
+    "funk"
+  ],
+  "scenarios": [
+    "rest"
+  ],
+  "description": {
+    "en": "A gentle and melancholic instrumental piece featuring piano, acoustic guitar, bass, light drums, and subtle string pads, creating a calm and reflective atmosphere.",
+    "zh": "一首温柔而忧郁的纯音乐作品，以钢琴、原声吉他、贝斯、轻柔的鼓点和细微的弦乐铺垫为主，营造出平静而沉思的氛围。"
+  },
+  "metadataBasis": "style/scenario/tempo/key/moods are prompt intent; duration is measured; energy and audioReview are model inference when energyBasis is automated-audio-review",
+  "batch": "library-2026-09",
+  "status": "published",
+  "duration": 145.815,
+  "targetEnergy": 3,
+  "energyBasis": "automated-audio-review",
+  "generatedAt": "2026-09-09T08:23:59.563666+00:00",
+  "generation": {
+    "id": "8761d3b1-cc36-494e-8b19-f73749fa045d",
+    "model": "lyria-3-pro-preview",
+    "generator": "Google Lyria 3",
+    "api": "Vertex AI Interactions API",
+    "endpoint": "https://aiplatform.googleapis.com/v1beta1/projects/project-302b2deb-58d4-4358-830/locations/global/interactions",
+    "requestedAt": "2026-09-09T08:23:07.947661+00:00",
+    "completedAt": "2026-09-09T08:23:59.563666+00:00",
+    "interactionId": "bRehavffDuq6i9sPx5K0uAY",
+    "sha256": "6e29e9a8f31454ad74303535393f031f58f9972653a5245701b804eb195f43a7"
+  },
+  "audioReview": {
+    "instrumental": true,
+    "vocalsDetected": false,
+    "audibleDefect": false,
+    "suitableForLibrary": true,
+    "description": {
+      "en": "A gentle and melancholic instrumental piece featuring piano, acoustic guitar, bass, light drums, and subtle string pads, creating a calm and reflective atmosphere.",
+      "zh": "一首温柔而忧郁的纯音乐作品，以钢琴、原声吉他、贝斯、轻柔的鼓点和细微的弦乐铺垫为主，营造出平静而沉思的氛围。"
+    },
+    "instruments": [
+      "Piano",
+      "Acoustic Guitar",
+      "Bass Guitar",
+      "Drums",
+      "Strings",
+      "Synthesizer"
+    ],
+    "moods": [
+      "Calm",
+      "Peaceful",
+      "Reflective",
+      "Melancholic",
+      "Serene"
+    ],
+    "energy": 2,
+    "bpmEstimate": 76,
+    "reason": "Well-produced instrumental track with a clear mood and no audible defects, suitable for background use or reflective content.",
+    "model": "gemini-2.5-flash",
+    "reviewedAt": "2026-09-09T08:36:23.207271+00:00",
+    "scope": "full-audio",
+    "method": "automated-audio-review"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/lib-funk-rest/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/lib-funk-rest/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/lib-funk-rest/v1/waveform.json"
+  },
+  "verifiedAt": "2026-09-09T08:38:32.822772+00:00"
+}
