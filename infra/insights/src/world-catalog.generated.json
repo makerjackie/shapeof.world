@@ -174,12 +174,6 @@
     "poster": "/assets/posters/thumb/human-atlas.webp"
   },
   {
-    "id": "p-versus-np",
-    "title": "答案好验，也好找吗？",
-    "titleEn": "Easy to check. Easy to find?",
-    "poster": "/assets/posters/thumb/p-versus-np.webp"
-  },
-  {
     "id": "riemann-primes",
     "title": "素数，藏着怎样的节奏？",
     "titleEn": "What rhythm hides in the primes?",
@@ -1458,6 +1452,13 @@
     "title": "折痕决定纸张的立体形状",
     "titleEn": "Crease patterns determine a sheet’s three-dimensional form",
     "poster": "/assets/posters/thumb/origami-folding.webp",
+    "retired": true
+  },
+  {
+    "id": "p-versus-np",
+    "title": "答案好验，也好找吗？",
+    "titleEn": "Easy to check. Easy to find?",
+    "poster": "/assets/posters/thumb/p-versus-np.webp",
     "retired": true
   },
   {
