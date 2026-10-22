@@ -172,6 +172,9 @@ const Lights: React.FC = () => {
   const f = useBeatFrame();
   const n = interpolate(f, [1 * FPB, 3 * FPB, 5 * FPB, 6 * FPB, 9 * FPB, 11 * FPB], [0, 50, 50, 86, 86, 159], { ...CL, easing: EIO });
   const y = f < 5 * FPB ? 2011 : f < 9 * FPB ? 2018 : 2024;
+  // The year (and 超) shows only once the count has settled on that year's figure, never on a number in between.
+  const settled = (f >= 3 * FPB && f < 5 * FPB) || (f >= 6 * FPB && f < 9 * FPB) || f >= 11 * FPB;
+  const lab = settled ? 1 : 0;
   const top = progAt(f, 11.6, 0.8, EO);
   return (
     <AbsoluteFill>
@@ -181,10 +184,10 @@ const Lights: React.FC = () => {
           <Txt size={40} color={K.sub}>福田，楼里的企业每年交税过亿的楼</Txt>
         </In>
         <div style={{ display: "flex", alignItems: "baseline", gap: 18 }}>
-          {y === 2011 ? <Txt size={56} w={900} color={K.gold}>超</Txt> : null}
+          {y === 2011 ? <Txt size={56} w={900} color={K.gold} style={{ opacity: lab }}>超</Txt> : null}
           <Odometer value={n} size={190} color={K.gold} />
           <Txt size={56} w={900}>栋</Txt>
-          <div style={{ marginLeft: 20, fontFamily: FONT, fontSize: 44, fontWeight: 900, color: K.sub, fontVariantNumeric: "tabular-nums", opacity: progAt(f, 0.8, 0.6, EO) }}>{y} 年</div>
+          <div style={{ marginLeft: 20, fontFamily: FONT, fontSize: 44, fontWeight: 900, color: K.sub, fontVariantNumeric: "tabular-nums", opacity: lab }}>{y} 年</div>
         </div>
         <div style={{ opacity: top, transform: `translateY(${(1 - top) * 20}px)`, marginTop: 4, fontFamily: FONT, fontSize: 40, fontWeight: 900, color: K.gold }}>全国区县最多</div>
       </div>

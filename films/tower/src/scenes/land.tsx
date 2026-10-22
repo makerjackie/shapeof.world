@@ -31,8 +31,8 @@ const SZ_WIDE: Cam = { x: 9000, y: 9000, z: 0.0165, bearing: 0, tilt: 0, ox: 108
 const DELTA: Cam = { x: -6000, y: 26000, z: 0.0062, bearing: 0, tilt: 0 };
 const SZ: Cam = { x: 12500, y: 10200, z: 0.0152, bearing: 0, tilt: 0, ox: 1300, oy: 560 };
 const SZ_DOTS: Cam = { ...SZ, ox: 820 };
-const CBD_FLAT: Cam = { x: -420, y: 120, z: 0.36, bearing: 0, tilt: 0, ox: 1240 };
-const CBD_3D: Cam = { x: -470, y: -60, z: 0.5, bearing: -18, tilt: 52, ox: 1220, oy: 600 };
+const CBD_FLAT: Cam = { x: -420, y: 120, z: 0.36, bearing: 0, tilt: 0, ox: 1330 };
+const CBD_3D: Cam = { x: -470, y: -60, z: 0.5, bearing: -18, tilt: 52, ox: 1320, oy: 620 };
 const PARCEL: Cam = { x: HERO.x, y: HERO.y + 10, z: 3.3, bearing: -38, tilt: 50, ox: 1250, oy: 640 };
 const PARCEL_UP: Cam = { ...PARCEL, z: 2.2, oy: 760 };
 
@@ -538,19 +538,19 @@ const Cbd: React.FC = () => (
         <Txt size={52}>福田中心区</Txt>
       </In>
       <In at={0.9} from="up">
-        <Txt size={34} color={K.sub}>1980 年代初，规划就把市中心定在这里</Txt>
+        <Txt size={30} color={K.sub}>1980 年代起规划为新市中心（1986 年总规）</Txt>
       </In>
       <In at={1.5} from="up">
-        <Txt size={34} color={K.sub}>中轴线：莲花山 → 市民中心 → 会展中心</Txt>
+        <Txt size={30} color={K.sub}>中轴线：莲花山 → 市民中心 → 会展中心</Txt>
       </In>
       <In at={2.1} from="up">
-        <Txt size={34} color={K.sub}>图则范围 6.19 平方公里，地上可建约 1,100 万㎡</Txt>
+        <Txt size={30} color={K.sub}>图则范围 6.19 平方公里，地上可建约 1,100 万平方米</Txt>
       </In>
       <div style={{ marginTop: 26 }}>
         <Head at={3.2} parts={["楼还没影，", { t: "城市已经画好了", c: K.theme }, "。"]} size={64} />
       </div>
     </div>
-    <Src at={1}>陈一新 2025；ISOCARP 2012；福田中心区法定图则 2018（含莲花山）· 道路、地铁、建筑：© OpenStreetMap contributors</Src>
+    <Src at={1}>深圳市城市总体规划 1986（经 ISOCARP 2012 转述）；陈一新 2025；福田中心区法定图则 2018（含莲花山）· 道路、地铁、建筑：© OpenStreetMap contributors</Src>
   </AbsoluteFill>
 );
 
