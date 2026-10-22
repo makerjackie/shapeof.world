@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, interpolate } from "remotion";
-import { Cross, InkStamp, Scribble, Section, Sheet } from "../art/paper";
+import { Cross, Drop, InkStamp, Scribble, Section, Sheet } from "../art/paper";
 import { CL, EBACK, In, progAt } from "../fx";
 import { useBeatFrame } from "../kit";
 import { FONT, K } from "../theme";
@@ -24,10 +24,10 @@ export const FairPlay: React.FC = () => (
       <Head at={0} parts={["说句公道话："]} size={70} />
     </div>
     {REJ.map((r, i) => {
-      const at = 1 + i * 1.5;
+      const at = 1 + i;
       return (
-        <In key={r.org} at={at} from="up" dist={50}>
-          <Sheet x={96 + i * 440} y={238} w={400} h={500} rot={[-1.5, 1, -0.8, 1.3][i]} seal={false}>
+        <Drop key={r.org} land={at} x={96 + i * 440} y={238} w={400} h={500} rot={[-1.5, 1, -0.8, 1.3][i]} back="退回">
+          <Sheet x={0} y={0} w={400} h={500} seal={false} shadow={0}>
             <div style={{ position: "absolute", left: 28, right: 24, top: 24, fontFamily: FONT, fontWeight: 900, fontSize: 25, color: K.ink }}>{r.org}</div>
             {r.flag ? <div style={{ position: "absolute", left: 28, top: 62, fontFamily: FONT, fontSize: 15, fontWeight: 700, color: K.inkSoft, border: `1px solid ${K.inkFaint}`, borderRadius: 4, padding: "1px 6px" }}>{r.flag}</div> : null}
             <div style={{ position: "absolute", left: 28, top: 100, fontFamily: FONT, fontWeight: 900, fontSize: 82, letterSpacing: -2, color: K.ink, whiteSpace: "nowrap" }}>{r.big}</div>
@@ -40,7 +40,7 @@ export const FairPlay: React.FC = () => (
             <Cross at={at + 0.7} size={70} style={{ position: "absolute", right: 22, bottom: 70 }} />
             <div style={{ position: "absolute", left: 28, bottom: 18, fontFamily: FONT, fontSize: 15, color: K.inkFaint, whiteSpace: "nowrap" }}>{r.src}</div>
           </Sheet>
-        </In>
+        </Drop>
       );
     })}
     <div style={{ position: "absolute", left: 96, top: 800 }}>

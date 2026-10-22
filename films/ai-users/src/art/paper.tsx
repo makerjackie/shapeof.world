@@ -1,6 +1,7 @@
 import React from "react";
 import { interpolate, random } from "remotion";
 import { CL, EBACK, EO, progAt } from "../fx";
+import { FPB } from "../timing";
 import { useBeatFrame } from "../kit";
 import { FONT, K, SERIF } from "../theme";
 
@@ -323,3 +324,81 @@ export const Blank: React.FC<{ w: number; style?: React.CSSProperties }> = ({ w,
 );
 
 export const clamp01 = (v: number) => interpolate(v, [0, 1], [0, 1], CL);
+
+// ---------- The drop: how every sheet arrives ----------
+
+// Falls, turns face-up and hits the desk exactly on beat `land`, then settles; a ring of air marks the impact.
+// `back` is what shows while the sheet is still face-down.
+export const Drop: React.FC<{
+  land: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  rot?: number;
+  scale?: number;
+  fall?: number;
+  back?: React.ReactNode;
+  children: React.ReactNode;
+}> = ({ land, x, y, w, h, rot = 0, scale = 1, fall: dur = 0.55, back, children }) => {
+  const frame = useBeatFrame();
+  const L = land * FPB;
+  const D = dur * FPB;
+  if (frame < L - D) return null;
+  const t = interpolate(frame, [L - D, L], [0, 1], CL);
+  const fall = 1 - t * t; // accelerating drop
+  const dt = frame - L;
+  const squash = dt >= 0 && dt < 7 ? 0.035 * (1 - dt / 7) : 0;
+  const ring = dt >= 0 && dt < 12 ? dt / 12 : -1;
+  return (
+    <div style={{ position: "absolute", left: x, top: y, width: w, height: h, transform: `scale(${scale})`, transformOrigin: "0 0" }}>
+      {ring >= 0 ? (
+        <div
+          style={{
+            position: "absolute",
+            left: -40 * ring,
+            top: -26 * ring,
+            width: w + 80 * ring,
+            height: h + 52 * ring,
+            borderRadius: 18,
+            border: `${3 * (1 - ring) + 1}px solid rgba(241,236,223,${0.35 * (1 - ring)})`,
+          }}
+        />
+      ) : null}
+      <div style={{ position: "absolute", inset: 0, perspective: 1600, opacity: Math.min(1, t * 4) }}>
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            transformStyle: "preserve-3d",
+            transform: `translateY(${-fall * 140}px) rotate(${rot + fall * 14}deg) rotateY(${-Math.pow(fall, 1.4) * 180}deg) scale(${1 + fall * 0.32 - squash})`,
+            boxShadow: `0 ${16 + fall * 70}px ${40 + fall * 80}px rgba(0,0,0,${0.6 - fall * 0.3})`,
+            borderRadius: 6,
+          }}
+        >
+          <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden" }}>{children}</div>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              backfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+              borderRadius: 6,
+              background: `linear-gradient(180deg, ${K.paperLo}, ${K.paper})`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontFamily: SERIF,
+              fontWeight: 900,
+              fontSize: Math.min(64, w * 0.11),
+              color: "rgba(25,35,31,0.12)",
+              letterSpacing: 20,
+            }}
+          >
+            {back ?? "答卷"}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

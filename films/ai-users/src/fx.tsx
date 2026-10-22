@@ -57,22 +57,38 @@ export const Kinetic: React.FC<{
         const start = idx;
         idx += chars.length;
         const partEnd = at * FPB + (start + chars.length) * stagger;
-        const hlP = interpolate(frame, [partEnd, partEnd + 10], [0, 1], { ...CL, easing: EO });
+        // A highlight is a slip of paper laid down before its words rise onto it, so dark text never sits on the dark
+        // background and the slip never passes over a glyph.
+        const partStart = at * FPB + start * stagger;
+        const hlP = interpolate(frame, [partStart - 6, partStart + 2], [0, 1], { ...CL, easing: EO });
         const stP = interpolate(frame, [partEnd + 4, partEnd + 14], [0, 1], { ...CL, easing: EO });
         return (
-          <span key={pi} style={{ position: "relative", display: "inline-block", color: part.c, fontWeight: part.w, fontSize: part.size }}>
+          <span
+            key={pi}
+            style={{
+              position: "relative",
+              display: "inline-block",
+              color: part.c,
+              fontWeight: part.w,
+              fontSize: part.size,
+              padding: part.hl ? "0 0.1em" : undefined,
+              margin: part.hl ? "0 0.06em" : undefined,
+              isolation: part.hl ? "isolate" : undefined,
+            }}
+          >
             {part.hl ? (
               <span
                 style={{
                   position: "absolute",
-                  left: -6,
-                  right: -6,
-                  top: "4%",
-                  bottom: "-2%",
+                  left: 0,
+                  right: 0,
+                  top: "2%",
+                  bottom: "-1%",
                   background: part.hl,
                   borderRadius: 8,
                   transform: `scaleX(${hlP})`,
                   transformOrigin: "left center",
+                  zIndex: 0,
                 }}
               />
             ) : null}
@@ -80,7 +96,7 @@ export const Kinetic: React.FC<{
               const t0 = at * FPB + (start + ci) * stagger;
               const p1 = interpolate(frame, [t0, t0 + 14], [0, 1], { ...CL, easing: EO });
               return (
-                <span key={ci} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top", padding: "0.06em 0", position: "relative" }}>
+                <span key={ci} style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top", padding: "0.06em 0", position: "relative", zIndex: 1 }}>
                   <span
                     style={{
                       display: "inline-block",
