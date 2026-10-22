@@ -7,7 +7,7 @@ export type MuseumRoute = { view: 'journey' } | { view: 'museum'; particleId?: P
 
 export function parseMuseumRoute(hash: string): MuseumRoute {
  if (hash.startsWith('#museum/read/')) { const id=hash.slice(13); return /^[a-z][a-z0-9-]*$/.test(id)?{view:'museum',topicId:id}:{view:'museum'} }
- if (hash.startsWith('#museum/lab/')) { const id=hash.slice(12); return ['atom','oscillation','event'].includes(id)?{view:'museum',labId:id}:{view:'museum'} }
+ if (hash.startsWith('#museum/lab/')) { const id=hash.slice(12); return ['proton','atom','oscillation','event'].includes(id)?{view:'museum',labId:id}:{view:'museum'} }
  const section = museumSections.find(s=>hash===`#museum/${s}`)
  if(section)return {view:'museum',section:section==='interactions'?'matter':section==='experiments'?'discovery':section}
  const match = /^#museum(?:\/([a-z]+))?$/.exec(hash)

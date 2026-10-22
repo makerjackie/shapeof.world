@@ -3939,16 +3939,16 @@
     },
     "standard-model": {
       "question": {
-        "zh": "基本粒子有哪些，我们如何发现它们？",
-        "en": "What are the elementary particles, and how did we discover them?"
+        "zh": "你的体重是从哪儿来的？",
+        "en": "Where does your weight come from?"
       },
       "hook": {
-        "zh": "从粒子全景认识基本粒子，在物质与作用、实验与发现和未解问题中继续探索；打开粒子档案，观察行为、比较数据并收入卡册。",
-        "en": "Start with the particle atlas, then explore matter and forces, experiments and discoveries, and open questions. Open a dossier to observe behaviour, compare measurements and collect a card."
+        "zh": "镜头从站在秤上的你钻进手指，一路到原子、原子核和一个质子。先猜，再把质子里的三颗夸克拖上秤；之后走进博物馆，拼质子、看 17 种基本粒子和它们被发现的证据。",
+        "en": "The camera dives from you on a scale into your finger, through an atom and a nucleus into one proton. Guess, then drag its three quarks onto a scale. Then walk into the museum: build protons, meet all 17 elementary particles and the evidence for each."
       },
       "payoff": {
-        "zh": "上、下夸克和电子参与构成原子；规范玻色子传递三种相互作用。希格斯机制与许多基本粒子的质量有关，但核子的大部分质量来自强相互作用能量。动画为定性示意；标准模型尚不包含引力，也不能完整解释中微子质量。",
-        "en": "Up and down quarks and electrons are constituents of atoms; gauge bosons carry three interactions. The Higgs mechanism accounts for many elementary masses, but most nucleon mass comes from strong-interaction energy. These animations are qualitative. The Standard Model does not include gravity or fully explain neutrino mass."
+        "zh": "你的体重只有约 1% 来自夸克本身，另外 99% 是把夸克锁在质子和中子里的能量。希格斯机制给了夸克和电子质量，但核子的大部分质量来自强相互作用能量。动画为定性示意；标准模型尚不包含引力，也不能完整解释中微子质量。",
+        "en": "Only about 1% of your weight is the quarks themselves; the other 99% is the energy that locks them inside protons and neutrons. The Higgs mechanism gives quarks and electrons their mass, but most nucleon mass comes from strong-interaction energy. These animations are qualitative. The Standard Model does not include gravity or fully explain neutrino mass."
       },
       "topicLabel": {
         "zh": "量子物理",
@@ -3957,6 +3957,39 @@
       "evidence": "verified",
       "fieldNotes": [],
       "sources": [
+        {
+          "label": {
+            "zh": "Particle Data Group · 2024 夸克汇总表",
+            "en": "Particle Data Group · 2024 quark summary"
+          },
+          "url": "https://pdg.lbl.gov/2024/tables/rpp2024-sum-quarks.pdf",
+          "note": {
+            "zh": "u 夸克 2.16 MeV、d 夸克 4.70 MeV（MS-bar，2 GeV）；三颗加起来约 9 MeV。",
+            "en": "Up quark 2.16 MeV, down quark 4.70 MeV (MS-bar at 2 GeV); three of them add up to about 9 MeV."
+          }
+        },
+        {
+          "label": {
+            "zh": "NIST · CODATA 2022 基本物理常数",
+            "en": "NIST · CODATA 2022 fundamental constants"
+          },
+          "url": "https://physics.nist.gov/cuu/Constants/",
+          "note": {
+            "zh": "质子 938.272 MeV、中子 939.565 MeV、电子 0.511 MeV；夸克本身约占核子质量的 1%。",
+            "en": "Proton 938.272 MeV, neutron 939.565 MeV, electron 0.511 MeV; quarks alone are about 1% of nucleon mass."
+          }
+        },
+        {
+          "label": {
+            "zh": "Particle Data Group · 2024 Δ(1232) 与中子",
+            "en": "Particle Data Group · 2024 Δ(1232) and neutron"
+          },
+          "url": "https://pdg.lbl.gov/2024/listings/rpp2024-list-Delta-1232.pdf",
+          "note": {
+            "zh": "Δ 宽度约 117 MeV，寿命约 5.6×10⁻²⁴ 秒；自由中子平均寿命 878.4 秒。",
+            "en": "Δ width about 117 MeV, lifetime about 5.6×10⁻²⁴ s; free-neutron mean life 878.4 s."
+          }
+        },
         {
           "label": {
             "zh": "CERN · 宇宙线产生的粒子",

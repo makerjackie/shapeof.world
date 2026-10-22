@@ -12,6 +12,7 @@ describe('museum page links', () => {
   expect(parseMuseumRoute('#museum/collection')).toEqual({view:'museum',section:'collection'})
   expect(parseMuseumRoute('#museum/read/neutrino-mass')).toEqual({view:'museum',topicId:'neutrino-mass'})
   expect(parseMuseumRoute('#museum/lab/oscillation')).toEqual({view:'museum',labId:'oscillation'})
+  expect(parseMuseumRoute('#museum/lab/proton')).toEqual({view:'museum',labId:'proton'})
   expect(parseMuseumRoute('#museum/lab/unknown')).toEqual({view:'museum'})
   expect(parseMuseumRoute('#museum/read/../e')).toEqual({view:'museum'})
  })
@@ -22,6 +23,7 @@ describe('museum page links', () => {
  it('keeps unknown particle names on the museum index and ignores unrelated anchors', () => {
   expect(parseMuseumRoute('#museum/unobtainium')).toEqual({ view: 'museum' })
   expect(parseMuseumRoute('#elsewhere')).toEqual({ view: 'journey' })
+  expect(parseMuseumRoute('#')).toEqual({ view: 'journey' })
   expect(parseMuseumRoute('#museum/e/malformed')).toEqual({ view: 'journey' })
  })
 })

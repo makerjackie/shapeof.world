@@ -128,13 +128,13 @@ Local Chromium captures of the Shape of the World `solar-system` renderer, frame
 - `orb/solar-system.webp` — SHA-256 `31ed7721b72897908ab1e401d86837a596807e2ca9e6431582ed5229c0dc6fa4`
 - `social/solar-system.jpg` — SHA-256 `21b79a3464ac8ffea91a468ad7bfd614b9f9bc3ed8c606e8f27a2e37e6e13051`
 
-## Elementary particles: procedural snow crystal — 14 September 2026
+## Elementary particles: where your weight comes from — 22 October 2026
 
-`standard-model.webp`, desktop, mobile, thumbnail, orb and social variants are local Chromium / ANGLE Metal captures of the actual Three.js runtime, with overlays hidden. The opening now uses original three-dimensional dendrite geometry, faceted ice, growth striations and finer clustered translucent frost along the beveled edges; the prior generated photographic plates are not loaded. This is a geometric specimen, not a measured scan or physical growth simulation. Environment lighting uses original procedural light cards. Thin faceted sections with shallow channels replace the former thick extrusions, and branch spacing varies within a shared sixfold rhythm. No photographic texture, external model or HDR asset was added. Mobile is a dedicated 390 × 844 capture at 3×; its source is also stored in `scripts/poster-sources/standard-model-mobile.webp`. Only format conversion, compression and derivative resizing were applied. See [model and former media provenance](../worlds/standard-model/SOURCES.md).
+`standard-model.webp`, desktop, mobile, thumbnail, orb and social variants are local Microsoft Edge (Chromium) captures of the world's own Canvas 2D front door at the "see" beat: one glowing proton labelled 99%, and its three quarks on a scale reading 9.0 MeV (≈1%). The `?poster` flag drops word labels so one frame serves both languages, and the page's text overlays are hidden. Masses: up 2.16 MeV, down 4.70 MeV (PDG 2024, MS-bar at 2 GeV); proton 938.27 MeV (CODATA 2022). No third-party image, texture or model is used. Desktop is a 1600 × 1000 capture at 2×, the master its 2560 × 1600 downscale; mobile is a dedicated 390 × 844 capture at 3×, also stored in `scripts/poster-sources/standard-model-mobile.webp`. ImageMagick was unavailable on the capture machine, so Pillow 13 did the cropping, Lanczos resizing and WebP/JPEG encoding (quality 88–92). The earlier snow-crystal posters were retired with that opening.
 
-- `standard-model.webp` — SHA-256 `60d71418d894fc9735362ff6602e6d78e19fcbad3e5a36bc6a951c149b945f6c`
-- `desktop/standard-model.webp` — SHA-256 `97a4464f58894467047db74ebe2e53afaf9fb897917b6f1d2701c4e072416d7f`
-- `mobile/standard-model.webp` — SHA-256 `3d9fd67ccbefa445062631534fb33ad191718cb4e023f89ff6759a1274dfbf80`
-- `thumb/standard-model.webp` — SHA-256 `373b45bc46e126edcb31e157e0b9ba5d8b3a2f19ce8c7e03d56bb305090cf008`
-- `orb/standard-model.webp` — SHA-256 `62f824728f3782805ee7da9e745dc2d129302072d19e44a18741b1a8fd6e2b13`
-- `social/standard-model.jpg` — SHA-256 `69d2b33ccaf9ddbffe9d0c4c3dd0af0bfab92093a759124241f465aa0ff026e8`
+- `standard-model.webp` — SHA-256 `2bb6fcd537473555e9040f5a183ad6e4345463f2c4b6d29d7190bdf3755122ab`
+- `desktop/standard-model.webp` — SHA-256 `8a1ba0e1df4428b4a43c8bbb4c2c7cd73e67c53aba0297df3c91c37b2002721d`
+- `mobile/standard-model.webp` — SHA-256 `7c05a7d7419fa1510084535eea047a303c2111b579e6c1bb861e16a8b023e0d9`
+- `thumb/standard-model.webp` — SHA-256 `e12d97703c0814e3b0c2967e856c1f7f705eda42d8bd967486768bdd8fea07fa`
+- `orb/standard-model.webp` — SHA-256 `f589580ab9515ff82aaefe7fb14d21c43f9e83a2bdd08f0f9d41517098345319`
+- `social/standard-model.jpg` — SHA-256 `97c404726377fbbd68ee743f5d0930eec0326d344afc43a84b3a8fd837b70c94`

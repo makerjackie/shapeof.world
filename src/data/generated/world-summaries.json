@@ -963,16 +963,16 @@
     "posterMobile": "/assets/posters/mobile/standard-model.webp",
     "posterDesktop": "/assets/posters/desktop/standard-model.webp",
     "title": "基本粒子博物馆",
-    "posterTitle": "基本粒子博物馆",
-    "posterHook": "认识粒子，理解相互作用，追溯发现的证据。",
-    "question": "基本粒子有哪些，我们如何发现它们？",
+    "posterTitle": "你的体重是从哪儿来的？",
+    "posterHook": "只有约 1% 来自夸克本身。",
+    "question": "你的体重是从哪儿来的？",
     "topicLabel": "量子物理",
     "translations": {
       "en": {
         "title": "Elementary Particle Museum",
-        "posterTitle": "Elementary Particle Museum",
-        "posterHook": "Particles, interactions and the evidence behind them.",
-        "question": "What are the elementary particles, and how did we discover them?",
+        "posterTitle": "Where does your weight come from?",
+        "posterHook": "Only about 1% of it is the quarks themselves.",
+        "question": "Where does your weight come from?",
         "topicLabel": "Quantum physics"
       }
     },
