@@ -18,6 +18,7 @@ export function SiteFooter() {
           <h2>{t('footer.explore')}</h2>
           <Link to="/" hash="home-worlds">{t('nav.worlds')}</Link>
           <Link to="/routes">{t('nav.routes')}</Link>
+          <Link to="/films">{t('nav.films')}</Link>
         </div>
         <div className="footer-group">
           <h2>{t('footer.creation')}</h2>

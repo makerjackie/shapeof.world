@@ -25,7 +25,7 @@ describe('content security policy', () => {
 
   it('allows device-local song playback without opening arbitrary remote media origins', () => {
     const media = contentSecurityPolicy.split('; ').find((directive) => directive.startsWith('media-src '))
-    expect(media?.split(' ').slice(1)).toEqual(["'self'", 'https://music-cdn.shapeof.world', 'blob:'])
+    expect(media?.split(' ').slice(1)).toEqual(["'self'", 'https://music-cdn.shapeof.world', 'https://press.shapeof.world', 'blob:'])
   })
 
   it('allows AI assistants to read pages while reserving training rights', () => {

@@ -16,6 +16,7 @@ import { Route as RoutesRouteImport } from './routes/routes'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as MakingRouteImport } from './routes/making'
 import { Route as LogoRouteImport } from './routes/logo'
+import { Route as FilmsRouteImport } from './routes/films'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as FailuresRouteImport } from './routes/failures'
 import { Route as CollaborateRouteImport } from './routes/collaborate'
@@ -24,7 +25,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as WorldIdRouteImport } from './routes/$worldId'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoutesIndexRouteImport } from './routes/routes.index'
+import { Route as FilmsIndexRouteImport } from './routes/films.index'
 import { Route as RoutesSlugRouteImport } from './routes/routes.$slug'
+import { Route as FilmsSlugRouteImport } from './routes/films.$slug'
 import { Route as ExploreWorldIdRouteImport } from './routes/explore.$worldId'
 import { Route as CategoryCategoryIdRouteImport } from './routes/category.$categoryId'
 import { Route as ApiLiveEarthRouteImport } from './routes/api/live-earth'
@@ -69,6 +72,11 @@ const LogoRoute = LogoRouteImport.update({
   path: '/logo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FilmsRoute = FilmsRouteImport.update({
+  id: '/films',
+  path: '/films',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeedbackRoute = FeedbackRouteImport.update({
   id: '/feedback',
   path: '/feedback',
@@ -109,10 +117,20 @@ const RoutesIndexRoute = RoutesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => RoutesRoute,
 } as any)
+const FilmsIndexRoute = FilmsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FilmsRoute,
+} as any)
 const RoutesSlugRoute = RoutesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
   getParentRoute: () => RoutesRoute,
+} as any)
+const FilmsSlugRoute = FilmsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => FilmsRoute,
 } as any)
 const ExploreWorldIdRoute = ExploreWorldIdRouteImport.update({
   id: '/explore/$worldId',
@@ -163,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/collaborate': typeof CollaborateRoute
   '/failures': typeof FailuresRoute
   '/feedback': typeof FeedbackRoute
+  '/films': typeof FilmsRouteWithChildren
   '/logo': typeof LogoRoute
   '/making': typeof MakingRoute
   '/privacy': typeof PrivacyRoute
@@ -178,7 +197,9 @@ export interface FileRoutesByFullPath {
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/explore/$worldId': typeof ExploreWorldIdRoute
+  '/films/$slug': typeof FilmsSlugRoute
   '/routes/$slug': typeof RoutesSlugRoute
+  '/films/': typeof FilmsIndexRoute
   '/routes/': typeof RoutesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -203,7 +224,9 @@ export interface FileRoutesByTo {
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/explore/$worldId': typeof ExploreWorldIdRoute
+  '/films/$slug': typeof FilmsSlugRoute
   '/routes/$slug': typeof RoutesSlugRoute
+  '/films': typeof FilmsIndexRoute
   '/routes': typeof RoutesIndexRoute
 }
 export interface FileRoutesById {
@@ -215,6 +238,7 @@ export interface FileRoutesById {
   '/collaborate': typeof CollaborateRoute
   '/failures': typeof FailuresRoute
   '/feedback': typeof FeedbackRoute
+  '/films': typeof FilmsRouteWithChildren
   '/logo': typeof LogoRoute
   '/making': typeof MakingRoute
   '/privacy': typeof PrivacyRoute
@@ -230,7 +254,9 @@ export interface FileRoutesById {
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
   '/explore/$worldId': typeof ExploreWorldIdRoute
+  '/films/$slug': typeof FilmsSlugRoute
   '/routes/$slug': typeof RoutesSlugRoute
+  '/films/': typeof FilmsIndexRoute
   '/routes/': typeof RoutesIndexRoute
 }
 export interface FileRouteTypes {
@@ -243,6 +269,7 @@ export interface FileRouteTypes {
     | '/collaborate'
     | '/failures'
     | '/feedback'
+    | '/films'
     | '/logo'
     | '/making'
     | '/privacy'
@@ -258,7 +285,9 @@ export interface FileRouteTypes {
     | '/api/live-earth'
     | '/category/$categoryId'
     | '/explore/$worldId'
+    | '/films/$slug'
     | '/routes/$slug'
+    | '/films/'
     | '/routes/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -283,7 +312,9 @@ export interface FileRouteTypes {
     | '/api/live-earth'
     | '/category/$categoryId'
     | '/explore/$worldId'
+    | '/films/$slug'
     | '/routes/$slug'
+    | '/films'
     | '/routes'
   id:
     | '__root__'
@@ -294,6 +325,7 @@ export interface FileRouteTypes {
     | '/collaborate'
     | '/failures'
     | '/feedback'
+    | '/films'
     | '/logo'
     | '/making'
     | '/privacy'
@@ -309,7 +341,9 @@ export interface FileRouteTypes {
     | '/api/live-earth'
     | '/category/$categoryId'
     | '/explore/$worldId'
+    | '/films/$slug'
     | '/routes/$slug'
+    | '/films/'
     | '/routes/'
   fileRoutesById: FileRoutesById
 }
@@ -321,6 +355,7 @@ export interface RootRouteChildren {
   CollaborateRoute: typeof CollaborateRoute
   FailuresRoute: typeof FailuresRoute
   FeedbackRoute: typeof FeedbackRoute
+  FilmsRoute: typeof FilmsRouteWithChildren
   LogoRoute: typeof LogoRoute
   MakingRoute: typeof MakingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -389,6 +424,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LogoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/films': {
+      id: '/films'
+      path: '/films'
+      fullPath: '/films'
+      preLoaderRoute: typeof FilmsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/feedback': {
       id: '/feedback'
       path: '/feedback'
@@ -445,12 +487,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoutesIndexRouteImport
       parentRoute: typeof RoutesRoute
     }
+    '/films/': {
+      id: '/films/'
+      path: '/'
+      fullPath: '/films/'
+      preLoaderRoute: typeof FilmsIndexRouteImport
+      parentRoute: typeof FilmsRoute
+    }
     '/routes/$slug': {
       id: '/routes/$slug'
       path: '/$slug'
       fullPath: '/routes/$slug'
       preLoaderRoute: typeof RoutesSlugRouteImport
       parentRoute: typeof RoutesRoute
+    }
+    '/films/$slug': {
+      id: '/films/$slug'
+      path: '/$slug'
+      fullPath: '/films/$slug'
+      preLoaderRoute: typeof FilmsSlugRouteImport
+      parentRoute: typeof FilmsRoute
     }
     '/explore/$worldId': {
       id: '/explore/$worldId'
@@ -511,6 +567,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface FilmsRouteChildren {
+  FilmsSlugRoute: typeof FilmsSlugRoute
+  FilmsIndexRoute: typeof FilmsIndexRoute
+}
+
+const FilmsRouteChildren: FilmsRouteChildren = {
+  FilmsSlugRoute: FilmsSlugRoute,
+  FilmsIndexRoute: FilmsIndexRoute,
+}
+
+const FilmsRouteWithChildren = FilmsRoute._addFileChildren(FilmsRouteChildren)
+
 interface RoutesRouteChildren {
   RoutesSlugRoute: typeof RoutesSlugRoute
   RoutesIndexRoute: typeof RoutesIndexRoute
@@ -532,6 +600,7 @@ const rootRouteChildren: RootRouteChildren = {
   CollaborateRoute: CollaborateRoute,
   FailuresRoute: FailuresRoute,
   FeedbackRoute: FeedbackRoute,
+  FilmsRoute: FilmsRouteWithChildren,
   LogoRoute: LogoRoute,
   MakingRoute: MakingRoute,
   PrivacyRoute: PrivacyRoute,

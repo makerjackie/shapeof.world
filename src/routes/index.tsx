@@ -10,6 +10,11 @@ const getHomeBootstrap = createServerFn({ method: 'GET' }).handler(async () => {
   return loadHomeBootstrap()
 })
 
+const getHomeFilms = createServerFn({ method: 'GET' }).handler(async () => {
+  const { loadFilms } = await import('~/data/films.server')
+  return loadFilms()
+})
+
 export const Route = createFileRoute('/')({
   validateSearch: (search: Record<string, unknown>): { issue?: string; q?: string; viewed?: 'all' | 'unviewed' | 'viewed' } => ({
     ...(['all', 'unviewed', 'viewed'].includes(String(search.viewed)) ? { viewed: search.viewed as 'all' | 'unviewed' | 'viewed' } : {}),
@@ -17,9 +22,9 @@ export const Route = createFileRoute('/')({
     ...(typeof search.q === 'string' && search.q.trim() ? { q: search.q } : {}),
   }),
   loader: async ({ context }) => {
-    const bootstrap = await getHomeBootstrap()
+    const [bootstrap, films] = await Promise.all([getHomeBootstrap(), getHomeFilms()])
     if (!bootstrap) throw notFound()
-    return { bootstrap, locale: context.locale }
+    return { bootstrap, films, locale: context.locale }
   },
   head: ({ loaderData, matches }) => {
     const locale = loaderData?.locale ?? localeFromRouteMatches(matches)
@@ -35,6 +40,6 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  const { bootstrap } = Route.useLoaderData()
-  return <HomeDiscovery bootstrap={bootstrap} />
+  const { bootstrap, films } = Route.useLoaderData()
+  return <HomeDiscovery bootstrap={bootstrap} films={films} />
 }

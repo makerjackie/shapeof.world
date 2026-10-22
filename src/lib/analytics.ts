@@ -58,6 +58,8 @@ export const oneWorldEvents = [
   'share_error',
   'share_download',
   'pwa_install',
+  'film_play',
+  'film_world_click',
 ] as const
 
 export type OneWorldEvent = (typeof oneWorldEvents)[number]
@@ -161,6 +163,7 @@ const knownExactPaths = new Set([
   '/',
   '/about',
   '/collaborate',
+  '/films',
   '/changelog',
   '/routes',
   '/failures',
@@ -190,6 +193,7 @@ function isKnownAnalyticsPath(path: string): boolean {
   return knownExactPaths.has(normalized)
     || Boolean(world && world.locale === 'zh' && (world.legacy || currentWorldRouteIds.has(world.worldId)))
     || /^\/routes\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
+    || /^\/films\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
     || /^\/category\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(normalized)
 }
 
