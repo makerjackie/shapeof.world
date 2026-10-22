@@ -122,16 +122,17 @@ const Wave: React.FC<{ cards: CardD[]; tag: string; conclusion: unknown[]; n: nu
   const t = progAt(frame, 0, 0.6, EBACK);
   return (
     <AbsoluteFill>
+      {cards.map((d, i) => {
+        const s = slot(i, cards.length);
+        return <PaperCard key={d.org + i} d={d} land={2 + i} x={s.x} y={s.y} rot={s.rot} />;
+      })}
+      {/* drawn last: a falling sheet passes behind the headline, never over it */}
       <div style={{ position: "absolute", left: 100, top: 112, display: "flex", alignItems: "center", gap: 22 }}>
         <span style={{ fontFamily: FONT, fontWeight: 900, fontSize: 30, padding: "6px 16px", borderRadius: 8, background: K.paper, color: K.ink, transform: `scale(${0.6 + 0.4 * t})`, opacity: t, whiteSpace: "nowrap" }}>
           {n} / 4　{tag}
         </span>
         <Head at={0.25} parts={conclusion as never} size={62} />
       </div>
-      {cards.map((d, i) => {
-        const s = slot(i, cards.length);
-        return <PaperCard key={d.org + i} d={d} land={2 + i} x={s.x} y={s.y} rot={s.rot} />;
-      })}
     </AbsoluteFill>
   );
 };
@@ -149,6 +150,15 @@ export const Wall: React.FC = () => (
   <AbsoluteFill>
     {/* desk-lamp light pooled under the pile */}
     <div style={{ position: "absolute", left: 160, top: 220, width: 1600, height: 820, background: "radial-gradient(ellipse at 50% 55%, rgba(255,226,170,0.14) 0%, rgba(255,226,170,0.05) 45%, transparent 72%)" }} />
+    {ALL.map((d, i) => {
+      // a loose pile: 6 × 4 positions, heavy jitter, sheets overlap and turn
+      const c = i % 6;
+      const r = Math.floor(i / 6);
+      const x = 150 + c * 262 + jit(i, "px", 34) + (r % 2) * 40;
+      const y = 236 + r * 172 + jit(i, "py", 26);
+      return <PaperCard key={i} d={d} land={0.4 + i * 0.18} x={x} y={y} rot={jit(i, "pr", 8)} scale={0.5} />;
+    })}
+    {/* drawn last, above the falling sheets */}
     <div style={{ position: "absolute", left: 120, top: 108 }}>
       <Head at={0} parts={[`${ALL.length} 张答卷，同一个形状：`]} size={62} />
     </div>
@@ -168,13 +178,5 @@ export const Wall: React.FC = () => (
         </In>
       ))}
     </div>
-    {ALL.map((d, i) => {
-      // a loose pile: 6 × 4 positions, heavy jitter, sheets overlap and turn
-      const c = i % 6;
-      const r = Math.floor(i / 6);
-      const x = 150 + c * 262 + jit(i, "px", 34) + (r % 2) * 40;
-      const y = 236 + r * 172 + jit(i, "py", 26);
-      return <PaperCard key={i} d={d} land={0.4 + i * 0.18} x={x} y={y} rot={jit(i, "pr", 8)} scale={0.5} />;
-    })}
   </AbsoluteFill>
 );
