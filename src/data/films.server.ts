@@ -41,6 +41,11 @@ export function loadFilms(): FilmSummary[] {
   return published().map(summarize)
 }
 
+/** Published films that point viewers to this world, newest first. */
+export function loadFilmsForWorld(worldId: string): FilmSummary[] {
+  return published().filter((entry) => entry.relatedWorldIds.includes(worldId)).map(summarize)
+}
+
 export function loadFilm(slug: string): FilmDetail | undefined {
   const entry = published().find((item) => item.slug === slug)
   if (!entry) return undefined
