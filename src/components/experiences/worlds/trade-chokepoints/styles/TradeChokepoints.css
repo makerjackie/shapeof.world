@@ -43,6 +43,26 @@
   pointer-events: none;
 }
 
+.choke-status.is-loading {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+
+.choke-status.is-loading::before {
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid rgba(236, 178, 79, 0.18);
+  border-top-color: var(--choke-amber);
+  border-radius: 50%;
+  content: '';
+  animation: choke-spin 1.1s linear infinite;
+}
+
+@keyframes choke-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* —— 点题铭牌 —— */
 .choke-plate {
   position: absolute;
@@ -71,85 +91,226 @@
   text-shadow: 0 3px 26px rgba(0, 0, 0, 0.8);
 }
 
-/* —— 被动读数：只读数据带，不是控件坞 —— */
+/* —— 被动读数：一条“你的船”大字 + 一排小账，压在底部暗幕上 —— */
 .choke-readout {
   position: absolute;
   z-index: 9;
-  bottom: calc(var(--choke-dock, 128px) + 4px);
-  left: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 18px;
-  align-items: flex-end;
-  width: min(680px, calc(100% - 52px));
-  pointer-events: none;
-}
-
-.choke-readout-row {
+  bottom: calc(var(--choke-dock, 128px) + 6px);
+  left: 28px;
   display: grid;
-  gap: 1px;
+  gap: 10px;
+  width: min(620px, calc(100% - 56px));
+  pointer-events: none;
+  isolation: isolate;
 }
 
-/* 读数直接压在海图上，靠字影而不是玻璃面板保证可读 */
-.choke-readout-row small,
-.choke-readout-row b,
-.choke-readout > p {
+/* 一团柔和的暗影托住文字，航线从后面穿过时也读得清 */
+.choke-readout::before {
+  position: absolute;
+  z-index: -1;
+  inset: -28px -60px -18px -36px;
+  background: radial-gradient(ellipse 70% 72% at 32% 55%, rgba(2, 6, 10, 0.78), rgba(2, 6, 10, 0) 100%);
+  content: '';
+}
+
+.choke-readout small,
+.choke-readout b,
+.choke-readout span,
+.choke-notes {
   text-shadow:
     0 1px 3px rgba(2, 6, 10, 0.95),
-    0 0 12px rgba(2, 6, 10, 0.8);
+    0 0 14px rgba(2, 6, 10, 0.85);
 }
 
-.choke-readout-row small {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 9.5px;
-  letter-spacing: 0.06em;
+.choke-hero {
+  display: grid;
+  gap: 3px;
+  animation: choke-rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.choke-hero-kicker {
+  color: rgba(244, 234, 216, 0.62);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.choke-hero-value {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  color: var(--choke-ink);
+  font-family: var(--serif);
+  font-size: clamp(38px, 4.4vw, 56px);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.choke-hero-value s {
+  color: rgba(244, 234, 216, 0.42);
+  font-size: 0.62em;
+  text-decoration-color: rgba(229, 86, 66, 0.7);
+  text-decoration-thickness: 2px;
+}
+
+.choke-hero-value i {
+  color: var(--choke-shut);
+  font-size: 0.5em;
+  font-style: normal;
+}
+
+.choke-hero-value em {
+  margin-left: -4px;
+  color: rgba(244, 234, 216, 0.7);
+  font-family: system-ui, sans-serif;
+  font-size: 0.32em;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+.choke-hero-value.is-cut {
+  color: #ff8a76;
+  font-size: clamp(28px, 3.2vw, 40px);
+}
+
+.choke-hero-sub {
+  color: rgba(244, 234, 216, 0.78);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.choke-hero-sub mark {
+  padding: 0;
+  color: var(--choke-amber);
+  background: none;
+  font-weight: 700;
+}
+
+/* 空闲态：一句邀请 + 呼吸的小圆环 */
+.choke-hero.is-idle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.choke-hero.is-idle strong {
+  display: block;
+  color: var(--choke-ink);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.choke-hero.is-idle small {
+  display: block;
+  margin-top: 3px;
+  color: rgba(244, 234, 216, 0.5);
+  font-size: 11.5px;
+}
+
+.choke-hero-dot {
+  position: relative;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--choke-brass);
+  border-radius: 50%;
+}
+
+.choke-hero-dot::after {
+  position: absolute;
+  inset: -1.5px;
+  border: 1.5px solid var(--choke-brass);
+  border-radius: 50%;
+  content: '';
+  animation: choke-sonar 2.2s ease-out infinite;
+}
+
+.choke-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(236, 178, 79, 0.16);
+}
+
+.choke-stat {
+  display: grid;
+  gap: 2px;
+}
+
+.choke-stat small {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
   white-space: nowrap;
 }
 
-.choke-readout-row b {
+.choke-stat b {
   display: flex;
-  gap: 5px;
+  gap: 4px;
   align-items: baseline;
   color: var(--choke-ink);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
-.choke-readout-row.is-key b {
-  color: var(--choke-amber);
-}
-
-.choke-readout-row b i {
-  color: rgba(255, 255, 255, 0.42);
-  font-size: 9.5px;
+.choke-stat b i {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 10.5px;
   font-style: normal;
   font-weight: 500;
 }
 
-.choke-readout > p {
+.choke-stat.is-cut b { color: #ff8a76; }
+.choke-stat.is-cape b { color: #ffd08a; }
+
+.choke-notes {
   display: flex;
-  flex: 1 1 100%;
   flex-wrap: wrap;
-  gap: 4px 12px;
-  margin: 2px 0 0;
-  color: rgba(255, 255, 255, 0.26);
-  font-size: 9.5px;
+  gap: 3px 12px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.32);
+  font-size: 10px;
   line-height: 1.5;
 }
 
-/* 故事进行时：铭牌收起，读数移到左上并只留关键行，把注意力还给画面 */
-.choke-experience.is-story .choke-readout {
-  top: max(80px, var(--experience-safe-top, 78px));
-  bottom: auto;
-  width: min(600px, calc(100% - 52px));
-  opacity: 0.84;
+@keyframes choke-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
 }
 
-.choke-experience.is-story .choke-readout-row:not(.is-key),
-.choke-experience.is-story .choke-readout > p {
+@keyframes choke-sonar {
+  from { opacity: 0.8; transform: scale(1); }
+  to { opacity: 0; transform: scale(2.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .choke-hero,
+  .choke-hero-dot::after {
+    animation: none;
+  }
+}
+
+/* 故事进行时：读数移到左上，只留大字和两格关键账；没关任何闸门时整个收起 */
+.choke-experience.is-story .choke-readout {
+  top: max(84px, var(--experience-safe-top, 78px));
+  bottom: auto;
+  width: min(520px, calc(100% - 56px));
+}
+
+.choke-experience.is-story .choke-readout.is-idle,
+.choke-experience.is-story .choke-notes,
+.choke-experience.is-story .choke-stat:nth-child(n + 3) {
   display: none;
+}
+
+.choke-experience.is-story .choke-hero-value {
+  font-size: clamp(30px, 3.2vw, 42px);
 }
 
 /* —— 自由底栏 —— */
@@ -258,19 +419,26 @@
   background: rgba(236, 178, 79, 0.12);
 }
 
-.choke-gate.is-shut {
-  color: #2a0d09;
-  border-color: var(--choke-shut);
-  background: var(--choke-shut);
+/* 关上的闸门：红底红字，压过共享 freebar 的芯片基线 */
+.choke-experience .experience-freebar .choke-gate.is-shut,
+.choke-experience .experience-freebar .choke-gate.is-shut:hover {
+  color: #ffd9d2;
+  border-color: rgba(229, 86, 66, 0.86);
+  background: rgba(229, 86, 66, 0.26);
+  box-shadow: 0 0 18px rgba(229, 86, 66, 0.28), inset 0 0 0 1px rgba(229, 86, 66, 0.2);
 }
 
 .choke-gate.is-shut > i {
-  border-color: rgba(42, 13, 9, 0.75);
+  border-color: #ff8a76;
 }
 
 .choke-gate.is-shut > i::before,
 .choke-gate.is-shut > i::after {
-  background: rgba(42, 13, 9, 0.85);
+  background: #ff8a76;
+}
+
+.choke-experience .experience-freebar .choke-gate {
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 220ms ease;
 }
 
 .choke-layer.is-on {
@@ -344,23 +512,45 @@
 
   .choke-readout {
     left: 18px;
-    gap: 5px 14px;
+    gap: 8px;
     width: calc(100% - 36px);
   }
 
-  .choke-readout-row:not(.is-key) {
+  .choke-hero-kicker { font-size: 11.5px; }
+  .choke-hero-value { gap: 8px; font-size: 40px; }
+  .choke-hero-value.is-cut { font-size: 28px; }
+  .choke-hero-sub { font-size: 12.5px; }
+  .choke-hero.is-idle strong { font-size: 15px; }
+  .choke-hero.is-idle small { font-size: 11px; }
+
+  .choke-stats {
+    gap: 6px 16px;
+    padding-top: 8px;
+  }
+
+  .choke-stat b { font-size: 15px; }
+
+  /* 空闲时让出一行给 GhostHint 的手势气泡 */
+  .choke-readout.is-idle {
+    padding-bottom: 44px;
+  }
+
+  .choke-wide-only {
     display: none;
   }
 
-  .choke-readout > p {
+  .choke-stat.is-wide,
+  .choke-notes {
     display: none;
   }
 
   /* Story chapters keep their caption in the top band, so the readout stays above the story bar. */
   .choke-experience.is-story .choke-readout {
     top: auto;
-    bottom: calc(var(--choke-dock, 72px) + 4px);
+    bottom: calc(var(--choke-dock, 72px) + 6px);
   }
+
+  .choke-experience.is-story .choke-hero-value { font-size: 32px; }
 
   /* 芯片横滑：右缘渐隐，明确告诉用户后面还有 */
   .choke-gate-chips,
@@ -377,9 +567,10 @@
     display: none;
   }
 
-  .choke-gate,
-  .choke-layer {
-    padding: 0 10px;
-    font-size: 11px;
+  .choke-experience .experience-freebar .choke-gate,
+  .choke-experience .experience-freebar .choke-layer {
+    min-height: 40px;
+    padding: 0 13px;
+    font-size: 13px;
   }
 }
