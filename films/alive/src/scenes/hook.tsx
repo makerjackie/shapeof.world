@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Branch, LifeGrid, RIGHT, Trunk } from "../grid";
-import { EBACK, EIO, EO, Odometer, progAt, Shockwave } from "../fx";
+import { EBACK, EIO, EO, In, Odometer, progAt } from "../fx";
 import { useBeatFrame } from "../kit";
 import { FONT, K, SERIF } from "../theme";
 import { Box, Cap, Head, Src } from "../ui";
@@ -17,6 +17,21 @@ const SPRIGS: [number, number, number, string, number][] = [
   [1060, 280, -60, K.sand, 6],
 ];
 
+// A soft glow and a thin ring that open out from behind the sentence on the first beat.
+const Bloom: React.FC<{ frame: number }> = ({ frame }) => {
+  const t = frame / 40;
+  if (t < 0 || t > 1) return null;
+  const e = EO(t);
+  const glow = 300 + 1300 * e;
+  const ring = 200 + 1500 * e;
+  return (
+    <>
+      <div style={{ position: "absolute", left: 960 - glow / 2, top: 420 - glow / 2, width: glow, height: glow, borderRadius: "50%", background: `radial-gradient(circle, ${K.themeHi}55 0%, ${K.theme}22 40%, transparent 70%)`, opacity: 1 - t }} />
+      <div style={{ position: "absolute", left: 960 - ring / 2, top: 420 - ring / 2, width: ring, height: ring, borderRadius: "50%", border: `3px solid ${K.themeHi}`, opacity: 0.6 * (1 - t) }} />
+    </>
+  );
+};
+
 // 0 s: the whole conclusion is on screen from the first frame; on the first beat a soft ring of light, not a hit.
 export const Claim: React.FC = () => {
   const frame = useBeatFrame();
@@ -29,7 +44,7 @@ export const Claim: React.FC = () => {
         ))}
         <Trunk x0={-20} x1={1940} y={700} glow={0.5 + 0.5 * hit} w={5} />
       </svg>
-      <Shockwave at={0} x={960} y={420} color={K.themeHi} size={1500} />
+      <Bloom frame={frame} />
       <div style={{ position: "absolute", left: 0, right: 0, top: 350, display: "flex", justifyContent: "center", transform: `scale(${1 + 0.025 * hit})` }}>
         <div style={{ fontFamily: FONT, fontSize: 104, fontWeight: 900, color: K.fg, letterSpacing: -2, whiteSpace: "nowrap", textShadow: "0 8px 40px rgba(0,0,0,0.8)" }}>
           <span style={{ color: K.theme }}>活着是主线，</span>其他都是支线。
@@ -49,10 +64,12 @@ export const Weeks: React.FC = () => {
       <LifeGrid {...RIGHT} reveal={reveal} trunk={trunk} glow={0.6} />
       <Box x={130} y={330} style={{ gap: 10 }}>
         <Cap at={0} size={48} color={K.fg}>人这一生，大约</Cap>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 18 }}>
-          <Odometer value={4100 * reveal} size={190} sep={false} color={K.theme} />
-          <span style={{ fontFamily: FONT, fontSize: 72, fontWeight: 900 }}>个星期</span>
-        </div>
+        <In at={0.2} from="up" dist={30}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 18 }}>
+            <Odometer value={4100 * reveal} size={190} sep={false} color={K.theme} />
+            <span style={{ fontFamily: FONT, fontSize: 72, fontWeight: 900 }}>个星期</span>
+          </div>
+        </In>
         <Cap at={3.5} size={36} color={K.sub}>每一格，是一周。</Cap>
       </Box>
       <Src>2024 年中国人均预期寿命 79.0 岁 · 国家卫健委 · 格子按 79 年 × 52 周</Src>
