@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
-import { dirname, extname, join, relative, resolve } from 'node:path'
+import { dirname, extname, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import ts from 'typescript'
@@ -131,7 +131,8 @@ function resolveImport(importer, specifier) {
 }
 
 function shouldFollow(path) {
-  const relativePath = relative(sourceRoot, path)
+  // Posix separators, so the rules below also match on Windows.
+  const relativePath = relative(sourceRoot, path).split(sep).join('/')
   return !relativePath.startsWith('i18n/')
     && !relativePath.startsWith('data/worlds/catalog/')
     && relativePath !== 'data/issues.ts'

@@ -1,6 +1,10 @@
 packages:
   - 'apps/music'
 
+# Run package scripts in pnpm's cross-platform shell, so `VAR=value cmd` and
+# `&&` in package.json work the same on Windows.
+shellEmulator: true
+
 # Pre-approve build scripts for the packages C3 itself installs that need
 # them: `workerd` downloads the platform binary, `esbuild` and `sharp`
 # (via miniflare) download/build native bindings. Without these, pnpm 11+

@@ -25,6 +25,9 @@ if (flags.includes('--production')) {
   } catch (error) { reason = `Full fallback: ${error.message}` }
 }
 const stages = checkStages(scope)
+// Under `pnpm check`, run the same pnpm through node: on Windows a bare `pnpm`
+// is a .cmd shim that spawnSync cannot start without a shell.
+const pnpm = process.env.npm_execpath ? [process.execPath, process.env.npm_execpath] : ['pnpm']
 console.log(JSON.stringify({ scope, baseline, reason, stages: stages.map(([name]) => name) }))
 if (flags.includes('--plan')) process.exit(0)
 mkdirSync('.local/checks', { recursive: true })
@@ -34,7 +37,7 @@ const reportPath = `.local/checks/${Date.now()}-${scope}.json`
 for (const [name, args] of stages) {
   const start = performance.now()
   console.log(`\n[check] ${name}`)
-  const result = spawnSync('pnpm', args, { stdio: 'inherit', env: process.env })
+  const result = spawnSync(pnpm[0], [...pnpm.slice(1), ...args], { stdio: 'inherit', env: process.env })
   const seconds = Number(((performance.now() - start) / 1000).toFixed(2))
   report.stages.push({ name, seconds, status: result.status ?? 1 })
   report.seconds = Number(((performance.now() - started) / 1000).toFixed(2))
