@@ -27,21 +27,18 @@ function useShellText() {
 
 const stepNames: Array<[string, string]> = [['问', 'Ask'], ['猜', 'Guess'], ['做', 'Do'], ['看', 'See'], ['懂', 'Get it']]
 
-/** 顶部的“问 猜 做 看 懂”。到了实验室还停在“懂”；给了 labLabel 就换成只显示它。 */
-export function BeatSteps({ beat, labLabel }: { beat: Beat; labLabel?: ReactNode }) {
+/** 顶部的“问 猜 做 看 懂”。到了实验室，五拍都走过了，后面亮起“实验室”。 */
+export function BeatSteps({ beat }: { beat: Beat }) {
   const text = useShellText()
-  const at = Math.min(beatIndex(beat), stepNames.length - 1)
+  const at = beatIndex(beat)
   return (
     <ol className="beat-steps" aria-label={text('五步', 'Five steps')}>
-      {beat === 'lab' && labLabel ? (
-        <li className="is-on">{labLabel}</li>
-      ) : (
-        stepNames.map(([zh, en], index) => (
-          <li key={zh} className={index === at ? 'is-on' : index < at ? 'is-done' : undefined}>
-            {text(zh, en)}
-          </li>
-        ))
-      )}
+      {stepNames.map(([zh, en], index) => (
+        <li key={zh} className={index === at ? 'is-on' : index < at ? 'is-done' : undefined}>
+          {text(zh, en)}
+        </li>
+      ))}
+      {beat === 'lab' && <li className="is-on">{text('实验室', 'Lab')}</li>}
     </ol>
   )
 }

@@ -29,7 +29,7 @@ const { beat, guess, goto, choose, restart } = useFiveBeats<Guess>(controls)
 
 ### 2. 步骤条
 
-放在顶部问题上面：`<BeatSteps beat={beat} />`。到了实验室它停在"懂"；想换成只显示"实验室"，传 `labLabel`。
+放在顶部问题上面：`<BeatSteps beat={beat} />`。到了实验室，五拍都显示走过了，后面亮起"实验室"，每个世界都一样。
 
 ### 3. 卡片
 
@@ -66,7 +66,7 @@ const { beat, guess, goto, choose, restart } = useFiveBeats<Guess>(controls)
 ### 4. 文案
 
 - 中英文都要有。文案由世界翻译好再传进来：用 `tx()`（中文写在源码里，英文写进 `src/i18n/experience-en-overrides/<世界>.json`），或者像粒子博物馆那样写成 `[中文, 英文]`。
-- 外壳自己只带几句：问、猜、做、看、懂，"五步"，"下一个问题"，"看这个问题的短片"。它们自带英文；世界的英文词典里有同一个中文词，就用世界的（雨水雕山把"看"译成 Look）。
+- 外壳自己只带几句：问、猜、做、看、懂，"实验室"，"五步"，"下一个问题"，"看这个问题的短片"。它们自带英文；世界的英文词典里有同一个中文词，就用世界的。为了各个世界一致，一般不要在世界里另译这几个词。
 
 ### 5. 样子
 
@@ -82,6 +82,6 @@ const { beat, guess, goto, choose, restart } = useFiveBeats<Guess>(controls)
 
 ## 例子
 
-- `worlds/cow-anatomy/CowAnatomy.tsx`：一头牛能变成多少肉，拖刀切两刀；下一个问题进实验室。
+- `worlds/cow-anatomy/CowAnatomy.tsx`：一头牛能变成多少肉，拖刀切两刀；下一个问题去人体，实验室是次要按钮。
 - `worlds/earth-and-nature/EarthAndNature.tsx`：把地推成山，按住不放；下一个问题去另一个世界。
 - `worlds/standard-model/front-door/FrontDoor.tsx`：体重从哪儿来，开场一段镜头（`start: 'ask'`），结论下面接博物馆。
