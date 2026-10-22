@@ -15,7 +15,7 @@ export default {
     question: 'What lies in the empty space of an ink landscape?', hook: 'Sweep over a fishing boat, through bridges and village lanes, then rise into the mountains and look back over Songxi.',
     payoff: 'Fly through pavilions and village lanes yourself, or follow a continuous tour and take the controls whenever you like.', topicLabel: 'Ink and space',
   } },
-  primaryCategoryId: 'economy-society', runtime: 'scene-3d', difficulty: 'intro', lane: 'flow', renderer: 'ink-landscape', duration: 180,
+  primaryCategoryId: 'works', runtime: 'scene-3d', difficulty: 'intro', lane: 'flow', renderer: 'ink-landscape', duration: 180,
   evidence: 'modeled', accent: '#53695c', related: ['starry-night'],
   sources: [
     { label: '普林斯顿大学艺术博物馆 · 宋代山水画', labelEn: 'Princeton University Art Museum · Chinese landscape painting', url: 'https://static.artmuseum.princeton.edu/asian-art/china/resources/landscape-painting/' },

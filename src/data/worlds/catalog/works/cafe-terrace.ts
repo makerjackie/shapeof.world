@@ -27,7 +27,7 @@ export default {
       topicLabel: 'Painting and space'
     }
   },
-  primaryCategoryId: 'economy-society',
+  primaryCategoryId: 'works',
   runtime: 'scene-3d',
   difficulty: 'intro',
   lane: 'flow',

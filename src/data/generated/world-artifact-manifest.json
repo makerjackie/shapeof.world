@@ -68,7 +68,7 @@
     },
     {
       "id": "economy-society",
-      "count": 6,
+      "count": 3,
       "pageCount": 1
     },
     {
@@ -139,6 +139,11 @@
     {
       "id": "waves",
       "count": 2,
+      "pageCount": 1
+    },
+    {
+      "id": "works",
+      "count": 7,
       "pageCount": 1
     }
   ],
