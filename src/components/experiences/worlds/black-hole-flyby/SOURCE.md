@@ -129,3 +129,21 @@ Visual research references only: [Bruneton's official demonstration](https://ebr
 for continuous lensing and [NASA/GSFC Jeremy Schnittman's 2019 black-hole
 visualization](https://svs.gsfc.nasa.gov/13326/) for view-dependent arcs and
 brightness structure. No NASA image or movie is copied into this world.
+
+## Readouts shown to the viewer
+
+The "where you are" card only re-expresses values the vendored model already
+computes (`getStats()` in `public/vendor/black-hole/demo.html`); no external
+numbers are added:
+
+- distance in black-hole radii = `distanceKm / radiusKm` (the model's `r`, in
+  Schwarzschild-radius units); the rail is logarithmic from 1 to 100 radii,
+  the radius at which the fly-through ends;
+- "your weight while hovering" = the model's `gForce / 9.80665` (shown only
+  while hovering with the engine on);
+- speed = `speedMetersPerSecond / c` as a percentage;
+- "per hour of yours, far clocks gain" = `(timeDilationFactor − 1) × 3600 s`.
+
+The far-view callouts are placed by measuring the head-on render (shadow radius
+about 7% of the frame height) and hide as soon as the camera moves. The
+"if light went straight" button is the model's own lensing switch.

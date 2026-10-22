@@ -686,9 +686,11 @@
     flex: 0 0 auto;
   }
 
+  /* Two short lines beat one clipped scroller: chips, then the slider. */
   .bh-flyby-tool-row {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
   }
 
   .bh-flyby-tool-tabs {
@@ -709,8 +711,8 @@
 
   .bh-flyby-temperature,
   .bh-flyby-timescale {
-    flex: 0 0 min(220px, 70vw);
-    min-width: min(180px, 60vw);
+    flex: 1 1 100%;
+    min-width: 0;
     max-width: none;
   }
 

@@ -137,11 +137,11 @@ function extraPerHour(timeDilation: number, en: boolean) {
     ? { lt1: 'under 1 s', h: ' h ', min: ' min', minS: ' min ', s: ' s' }
     : { lt1: '不到 1 秒', h: ' 小时 ', min: ' 分', minS: ' 分 ', s: ' 秒' }
   if (seconds < 1) return units.lt1
-  if (seconds < 60) return String(Math.round(seconds)) + units.s
-  if (seconds < 3_600) {
-    return String(Math.floor(seconds / 60)) + units.minS + String(Math.round(seconds % 60)) + units.s
-  }
-  return String(Math.floor(seconds / 3_600)) + units.h + String(Math.round((seconds % 3_600) / 60)) + units.min
+  const whole = Math.round(seconds)
+  if (whole < 60) return String(whole) + units.s
+  if (whole < 3_600) return String(Math.floor(whole / 60)) + units.minS + String(whole % 60) + units.s
+  const minutes = Math.round(whole / 60)
+  return String(Math.floor(minutes / 60)) + units.h + String(minutes % 60) + units.min
 }
 
 type Callout = {

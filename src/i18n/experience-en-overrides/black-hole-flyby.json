@@ -1,5 +1,5 @@
 {
-  "前向": "Forward",
+  "前向": "Ahead",
   "黑洞周围那圈光，是从哪来的？": "Where does the ring of light around a black hole come from?",
   "点“假如光走直线”，看盘本来的样子。": "Tap “If light went straight” to see the disc as it really is.",
   "顶上和底下那两道光弧，都是盘的背面：它的光绕过黑洞，弯进了你的眼睛。盘没有弯，弯的是光。": "The arcs above and below are both the far side of the disc: its light bends around the black hole and into your eyes. The disc isn't bent — the light is.",
@@ -37,5 +37,10 @@
   "盘温": "Disc temp",
   "点这里，看看光不弯时黑洞是什么样": "Tap to see the black hole if light didn't bend",
   "个黑洞半径": "black-hole radii away",
-  "光速": "of light speed"
+  "光速": "of light speed",
+  "侧舷": "Side",
+  "正视": "Front",
+  "俯看": "Above",
+  "回望": "Behind",
+  "光学": "Optics"
 }
