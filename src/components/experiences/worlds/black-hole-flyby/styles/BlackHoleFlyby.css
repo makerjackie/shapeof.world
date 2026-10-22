@@ -31,32 +31,79 @@
   inset: 0;
   display: grid;
   place-content: center;
-  gap: 10px;
+  gap: 12px;
   justify-items: center;
-  color: rgba(246, 241, 232, 0.74);
+  padding: 0 28px;
+  color: rgba(246, 241, 232, 0.78);
+  text-align: center;
   background:
-    linear-gradient(rgba(2, 2, 4, 0.42), rgba(2, 2, 4, 0.72)),
+    radial-gradient(ellipse at 50% 50%, rgba(2, 2, 4, 0.2), rgba(2, 2, 4, 0.82) 70%),
     url('/assets/posters/desktop/black-hole-flyby.webp') center / cover no-repeat,
     #020204;
   pointer-events: none;
+  animation: bh-flyby-fade-in 420ms ease both;
 }
 
+/* A thin rotating “photon ring” instead of a generic spinner. */
 .bh-flyby-loading i {
-  width: 28px;
-  height: 28px;
-  border: 2px solid rgba(240, 195, 106, 0.25);
-  border-top-color: var(--bh-accent);
+  width: 44px;
+  height: 44px;
+  margin-bottom: 4px;
   border-radius: 50%;
-  animation: bh-flyby-spin 0.9s linear infinite;
+  background:
+    conic-gradient(from 0deg, rgba(240, 195, 106, 0) 0deg, rgba(255, 214, 140, 0.95) 300deg, rgba(240, 195, 106, 0) 360deg);
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 62%, #000 70%, transparent 72%);
+  mask: radial-gradient(circle, transparent 60%, #000 62%, #000 70%, transparent 72%);
+  filter: drop-shadow(0 0 10px rgba(240, 195, 106, 0.55));
+  animation: bh-flyby-spin 1.4s linear infinite;
+}
+
+.bh-flyby-loading span {
+  color: var(--bh-accent);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+}
+
+.bh-flyby-loading strong {
+  max-width: 16em;
+  color: #fff8ee;
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 450;
+  line-height: 1.35;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9);
+  text-wrap: balance;
 }
 
 .bh-flyby-loading small {
-  color: rgba(246, 241, 232, 0.45);
-  font-size: 11px;
+  color: rgba(246, 241, 232, 0.55);
+  font-size: 12px;
 }
 
 @keyframes bh-flyby-spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes bh-flyby-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bh-flyby-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Soft top/bottom falloff so copy and HUD read over bright disc light. */
+.bh-flyby-vignette {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 26%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 30%);
+  pointer-events: none;
 }
 
 .bh-flyby-plaque {
@@ -65,59 +112,321 @@
   top: var(--experience-safe-top, 78px);
   left: max(22px, env(safe-area-inset-left));
   display: grid;
-  max-width: min(390px, 48vw);
-  gap: 5px;
+  max-width: min(440px, 46vw);
+  gap: 8px;
+  justify-items: start;
   color: #fff8ee;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.95);
   pointer-events: none;
 }
 
-.bh-flyby-plaque span {
+.bh-flyby-plaque > span {
   color: var(--bh-accent);
   font-size: 11px;
   font-weight: 650;
   letter-spacing: 0.16em;
+  font-variant-numeric: tabular-nums;
 }
 
 .bh-flyby-plaque strong {
   font-family: var(--serif);
-  font-size: clamp(16px, 1.8vw, 23px);
-  font-weight: 420;
-  line-height: 1.3;
+  font-size: clamp(19px, 2.1vw, 28px);
+  font-weight: 450;
+  line-height: 1.28;
+  text-wrap: balance;
+  animation: bh-flyby-rise 420ms ease both;
 }
 
-.bh-flyby-readout {
+.bh-flyby-plaque p {
+  margin: 0;
+  max-width: 26em;
+  color: rgba(248, 244, 236, 0.74);
+  font-size: 13px;
+  line-height: 1.55;
+  animation: bh-flyby-rise 420ms 80ms ease both;
+}
+
+/* The one thing to try in the far view: real (bent) light vs straight light. */
+.bh-flyby-compare {
+  display: inline-flex;
+  margin-top: 2px;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(8, 8, 12, 0.62);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-shadow: none;
+  pointer-events: auto;
+  animation: bh-flyby-rise 420ms 120ms ease both;
+}
+
+.bh-flyby-compare button {
+  min-height: 36px;
+  padding: 0 14px;
+  color: rgba(248, 244, 236, 0.72);
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 550;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.bh-flyby-compare button:hover {
+  color: #fff;
+}
+
+.bh-flyby-compare button.is-active {
+  color: #1a1206;
+  background: linear-gradient(180deg, #ffd98f, #e9ae62);
+  box-shadow: 0 0 18px rgba(240, 195, 106, 0.35);
+}
+
+.bh-flyby-compare button:focus-visible {
+  outline: 2px solid var(--bh-accent);
+  outline-offset: 2px;
+}
+
+/* Labels on the far view: what each part of the ring actually is. */
+.bh-flyby-callouts {
   position: absolute;
-  z-index: 6;
-  bottom: max(124px, calc(env(safe-area-inset-bottom) + 112px));
-  left: max(22px, env(safe-area-inset-left));
-  display: flex;
-  gap: 18px;
-  padding: 9px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  background: rgba(3, 4, 7, 0.52);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(12px);
+  z-index: 4;
+  inset: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.bh-flyby-readout span {
+.bh-flyby-callouts svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.bh-flyby-callouts g {
+  animation: bh-flyby-fade-in 500ms ease both;
+}
+
+.bh-flyby-callouts line {
+  stroke: rgba(255, 236, 200, 0.55);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+}
+
+.bh-flyby-callouts circle {
+  fill: #ffe3a8;
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-width: 1;
+}
+
+.bh-flyby-callout {
+  position: absolute;
   display: grid;
-  gap: 2px;
+  max-width: 150px;
+  gap: 1px;
+  transform: translateY(-50%);
+  color: #fff8ee;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 1), 0 0 2px rgba(0, 0, 0, 0.9);
+  animation: bh-flyby-fade-in 500ms ease both;
+}
+
+.bh-flyby-callout.is-right {
+  padding-left: 6px;
+  text-align: left;
+}
+
+.bh-flyby-callout.is-center {
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.bh-flyby-callout strong {
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.bh-flyby-callout small {
+  color: rgba(255, 236, 200, 0.72);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.bh-flyby-callout.is-center strong {
+  color: rgba(255, 248, 238, 0.6);
+  font-size: 11px;
+  font-weight: 550;
+  letter-spacing: 0.14em;
+}
+
+/* “Where you are” card: distance rail + two felt numbers. */
+.bh-flyby-readout {
+  position: absolute;
+  z-index: 6;
+  bottom: calc(var(--experience-freebar-height, 124px) + max(26px, env(safe-area-inset-bottom)));
+  left: max(22px, env(safe-area-inset-left));
+  display: grid;
+  width: 340px;
+  gap: 8px;
+  padding: 11px 14px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(12, 12, 16, 0.7), rgba(6, 6, 10, 0.56));
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #fff8ee;
+  pointer-events: none;
 }
 
 .bh-flyby-readout small {
-  color: rgba(248, 244, 236, 0.48);
-  font-size: 9px;
-  letter-spacing: 0.06em;
+  color: rgba(248, 244, 236, 0.56);
+  font-size: 11px;
+  line-height: 1.3;
 }
 
 .bh-flyby-readout strong {
   color: #fff8ee;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 650;
+  line-height: 1.25;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.bh-flyby-readout-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+
+.bh-flyby-readout-head small {
+  white-space: nowrap;
+}
+
+.bh-flyby-readout-head em {
+  color: rgba(248, 244, 236, 0.42);
+  font-size: 11px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.bh-flyby-phase {
+  margin-left: auto;
+  padding: 2px 8px;
+  color: #ffe7ad;
+  border: 1px solid rgba(240, 195, 106, 0.4);
+  border-radius: 999px;
+  background: rgba(240, 195, 106, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.bh-flyby-phase.is-periapsis {
+  color: #1a1206;
+  background: #f0c36a;
+}
+
+.bh-flyby-rail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.bh-flyby-rail-hole {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 0 2px rgba(240, 195, 106, 0.85), 0 0 12px 2px rgba(240, 160, 70, 0.55);
+}
+
+.bh-flyby-rail-track {
+  position: relative;
+  flex: 1 1 auto;
+  height: 1px;
+  margin-right: 6px;
+  background: linear-gradient(90deg, rgba(240, 195, 106, 0.7), rgba(255, 255, 255, 0.16));
+}
+
+.bh-flyby-rail-you {
+  position: absolute;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transition: left 420ms linear;
+}
+
+.bh-flyby-rail-you::before {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff8ee;
+  box-shadow: 0 0 0 3px rgba(255, 248, 238, 0.18), 0 0 10px rgba(255, 248, 238, 0.7);
+  content: '';
+}
+
+.bh-flyby-rail-you b {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  transform: translateX(-50%);
+  color: #fff8ee;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.bh-flyby-rail > small {
+  flex: 0 0 auto;
+  font-size: 10px !important;
+}
+
+.bh-flyby-readout-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bh-flyby-readout-stats span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bh-flyby-readout-stats strong {
+  font-size: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bh-flyby-loading i,
+  .bh-flyby-plaque strong,
+  .bh-flyby-plaque p,
+  .bh-flyby-compare,
+  .bh-flyby-callouts g,
+  .bh-flyby-callout {
+    animation: none;
+  }
+
+  .bh-flyby-rail-you {
+    transition: none;
+  }
 }
 
 /* One shell: tabs → current tools → primary scene rail. */
@@ -318,8 +627,7 @@
     right: 12px;
     bottom: max(142px, calc(env(safe-area-inset-bottom) + 132px));
     left: 12px;
-    justify-content: space-between;
-    gap: 8px;
+    width: auto;
   }
 
   .bh-flyby-freebar .experience-freebar-main {
@@ -331,28 +639,42 @@
   .oss-experience.bh-flyby .bh-flyby-plaque[data-experience-overlay='true'] {
     top: var(--experience-safe-top, 78px);
     left: 14px;
-    max-width: 70vw;
+    max-width: calc(100vw - 28px);
   }
 
   .bh-flyby-plaque strong {
-    font-size: 15px;
+    max-width: 15em;
+  }
+
+  .bh-flyby-plaque strong {
+    font-size: 19px;
+  }
+
+  .bh-flyby-plaque p {
+    font-size: 12.5px;
+  }
+
+  .bh-flyby-compare button {
+    padding: 0 12px;
+    font-size: 12.5px;
   }
 
   .bh-flyby-readout {
-    bottom: max(150px, calc(env(safe-area-inset-bottom) + 140px));
-    padding: 8px 9px;
+    gap: 6px;
+    padding: 9px 12px 10px;
+    border-radius: 14px;
   }
 
-  .bh-flyby-readout:not(.is-journey) span:nth-child(1) {
+  .bh-flyby-readout strong {
+    font-size: 14px;
+  }
+
+  .bh-flyby-readout-stats strong {
+    font-size: 13px;
+  }
+
+  .bh-flyby-readout.is-journey .bh-flyby-readout-head em {
     display: none;
-  }
-
-  .bh-flyby-readout.is-journey {
-    bottom: max(178px, calc(env(safe-area-inset-bottom) + 168px));
-  }
-
-  .bh-flyby-readout.is-journey strong {
-    font-size: 11px;
   }
 
   .bh-flyby-freebar .experience-freebar-primary {

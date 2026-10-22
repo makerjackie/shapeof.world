@@ -67,26 +67,29 @@ const scenes = [
     demoIndex: 0,
     baseIntensity: 0.14,
     label: '远观',
-    title: '先从远处，看清黑洞怎样把光弯成环',
-    body: '黑洞把盘背面的光弯到视线里，才形成上下两道光弧。盘没有弯，弯的是光。',
-    durationMs: 6_200,
+    title: '黑洞周围那圈光，是从哪来的？',
+    lead: '点“假如光走直线”，看盘本来的样子。',
+    body: '顶上和底下那两道光弧，都是盘的背面：它的光绕过黑洞，弯进了你的眼睛。盘没有弯，弯的是光。',
+    durationMs: 6_800,
   },
   {
     key: 'near',
     demoIndex: 3,
     baseIntensity: 0.26,
     label: '近看',
-    title: '越靠近，时间流速差越明显',
-    body: '距离变小时，远方时钟相对走得更快；盘面朝你运动的一侧也会更亮、更偏蓝。',
-    durationMs: 6_400,
+    title: '越靠近黑洞，你的时间走得越慢',
+    lead: '看下方：你每过 1 小时，远方的钟会多走一截。',
+    body: '悬停在这里要一直开着发动机。你过 1 小时，远方的钟会多走一截；朝你转过来的那侧盘，也更亮、更偏蓝。',
+    durationMs: 6_800,
   },
   {
     key: 'flyby',
     demoIndex: 2,
     baseIntensity: 0.34,
     label: '掠过',
-    title: '关掉发动机，让黑洞从身边掠过',
-    body: '自由落体时飞船沿测地线前进。拖动画面，可以从不同方向追踪这次近掠。',
+    title: '关掉发动机，让黑洞把你甩过去',
+    lead: '熄火后自由下落。拖动画面，换个方向看。',
+    body: '熄火后飞船自由下落，沿着时空里最“直”的路滑过黑洞。拖动画面，可以换个方向追着看。',
     durationMs: 7_000,
   },
   {
@@ -94,8 +97,9 @@ const scenes = [
     demoIndex: 4,
     baseIntensity: 0.38,
     label: '飞越',
-    title: '从深空靠近，再远离到只剩一点光',
-    body: '这是一条不会被捕获的测地线：先落向黑洞，在最近点转弯，然后一路离开到深空。',
+    title: '从深空飞来，转个弯，再飞回深空',
+    lead: '靠近、转弯、远去，直到黑洞缩成一点光。',
+    body: '这条路线不会被黑洞吞掉：先落向它，在最近处转弯，再一路远去，直到它缩成一点光。',
     durationMs: 8_000,
   }
 ] as const
@@ -109,14 +113,65 @@ const journeyPhaseLabels: Record<JourneyPhase, string> = {
 
 const temperatureMin = 2_000
 const temperatureMax = 8_000
+/** 距离刻度：从视界（1 倍半径）到飞越终点（100 倍半径），对数刻度。 */
+const railMaxRadius = 100
+/** 正视镜头下黑洞中心在画面中的竖直位置（画面高度的比例）。 */
+const calloutCenterY = 0.495
 
 function compactNumber(value: number, locale: string) {
   if (!Number.isFinite(value)) return '—'
   return new Intl.NumberFormat(locale, {
-    notation: value >= 100_000 ? 'compact' : 'standard',
-    maximumFractionDigits: value >= 1000 ? 0 : 1,
+    notation: value >= 10_000 ? 'compact' : 'standard',
+    maximumFractionDigits: value >= 1000 ? 1 : 0,
   }).format(value)
 }
+
+/**
+ * 时间比 → “你过 1 小时，远方多过多久”。只是同一个模型数值换一种说法。
+ * 中英文各自拼好（英文分支不经过词典）。
+ */
+function extraPerHour(timeDilation: number, en: boolean) {
+  const seconds = Math.max(0, (timeDilation - 1) * 3_600)
+  if (!Number.isFinite(seconds)) return '—'
+  const units = en
+    ? { lt1: 'under 1 s', h: ' h ', min: ' min', minS: ' min ', s: ' s' }
+    : { lt1: '不到 1 秒', h: ' 小时 ', min: ' 分', minS: ' 分 ', s: ' 秒' }
+  if (seconds < 1) return units.lt1
+  if (seconds < 60) return String(Math.round(seconds)) + units.s
+  if (seconds < 3_600) {
+    return String(Math.floor(seconds / 60)) + units.minS + String(Math.round(seconds % 60)) + units.s
+  }
+  return String(Math.floor(seconds / 3_600)) + units.h + String(Math.round((seconds % 3_600) / 60)) + units.min
+}
+
+type Callout = {
+  key: string
+  /** 指向的点：相对黑洞中心，单位是画面高度。 */
+  ax: number
+  ay: number
+  /** 文字的位置：同上。 */
+  lx: number
+  ly: number
+  /** right：文字从锚点向右展开；center：文字居中压在锚点上。 */
+  side: 'right' | 'center'
+  title: string
+  note?: string
+}
+
+/**
+ * 只在“远观”且镜头正对、未被拖动时显示。位置按 vendored demo 在正视镜头下
+ * 的成像量出来（黑洞影子半径约为画面高度的 7%），镜头一动就隐藏。
+ */
+const lensedCallouts: Array<Callout> = [
+  { key: 'top', ax: 0.035, ay: -0.112, lx: 0.1, ly: -0.2, side: 'right', title: '盘的背面', note: '光从黑洞上方绕过来' },
+  { key: 'bottom', ax: 0.03, ay: 0.104, lx: 0.09, ly: 0.175, side: 'right', title: '还是盘的背面', note: '这次从下方绕过来' },
+  { key: 'front', ax: -0.15, ay: 0.012, lx: -0.2, ly: 0.075, side: 'right', title: '盘的正面', note: '离你最近的一段' },
+  { key: 'shadow', ax: 0, ay: -0.036, lx: 0, ly: -0.036, side: 'center', title: '影子' },
+]
+const straightCallouts: Array<Callout> = [
+  { key: 'disc', ax: -0.13, ay: 0.004, lx: -0.21, ly: -0.1, side: 'right', title: '盘其实是一张薄薄的平盘', note: '背面被黑洞挡住了' },
+  { key: 'hole', ax: 0.02, ay: -0.02, lx: 0.08, ly: -0.15, side: 'right', title: '黑洞本身', note: '没有弯光，它只有这么大' },
+]
 
 function getBridge(frame: HTMLIFrameElement | null) {
   return (frame?.contentWindow as BlackHoleWindow | null)?.OneWorldBlackHole
@@ -124,6 +179,7 @@ function getBridge(frame: HTMLIFrameElement | null) {
 
 export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
+  const rootRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef<HTMLIFrameElement>(null)
   const controlsRef = useRef(controls)
   const audioRef = useRef<FlybyAudio | null>(null)
@@ -135,7 +191,19 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
   const [toolTab, setToolTab] = useState<FlybyToolTab>('optics')
   const [stats, setStats] = useState<BlackHoleStats>()
   const [musicOn, setMusicOn] = useState(false)
+  const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
   controlsRef.current = controls
+
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      setStageSize((prev) => (prev.width === width && prev.height === height ? prev : { width, height }))
+    })
+    observer.observe(root)
+    return () => observer.disconnect()
+  }, [])
 
   function startMusicOnFirstGesture() {
     if (musicTouchedRef.current) return
@@ -299,6 +367,25 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
   const locale = typeof document !== 'undefined' && document.documentElement.lang === 'en'
     ? 'en-US'
     : 'zh-CN'
+  const en = locale === 'en-US'
+  const radii = stats && stats.radiusKm > 0 ? stats.distanceKm / stats.radiusKm : null
+  const railPosition = radii === null
+    ? 0
+    : Math.max(0, Math.min(1, Math.log(Math.max(1, radii)) / Math.log(railMaxRadius)))
+  const hovering = stats?.state === 'stopped' && (stats?.speedC ?? 0) < 1e-6
+  const cameraHome = Boolean(stats && stats.viewIndex === 1 &&
+    Math.abs(stats.cameraYaw) < 0.01 && Math.abs(stats.cameraPitch) < 0.01)
+  const showCallouts = ready && scene.key === 'far' && cameraHome && stageSize.height > 0
+  const callouts = stats?.lensing === false ? straightCallouts : lensedCallouts
+
+  function setLensingTo(enabled: boolean) {
+    const bridge = getBridge(frameRef.current)
+    if (!bridge || !stats || stats.lensing === enabled) return
+    setStats(bridge.setLensing(enabled))
+    controls.registerInteraction()
+    startMusicOnFirstGesture()
+  }
+
   const motionLabel = stats?.state === 'playing'
     ? '暂停'
     : stats?.state === 'paused'
@@ -306,12 +393,16 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
       : '重跑'
 
   return (
-    <div className={`oss-experience bh-flyby black-hole-experience black-hole-flyby-experience${storyMode ? ' is-story' : ' is-free'}`}>
+    <div
+      ref={rootRef}
+      className={`oss-experience bh-flyby black-hole-experience black-hole-flyby-experience${storyMode ? ' is-story' : ' is-free'}`}
+    >
       {!ready && (
         <div className="bh-flyby-loading" role="status">
-          <i />
-          <span>{tx('正在铺设光路')}</span>
-          <small>{tx('载入相对论光线模型与程序生成星空')}</small>
+          <i aria-hidden="true" />
+          <span>{tx('黑洞掠过')}</span>
+          <strong>{tx('如果从深空掠过黑洞，你会看见怎样的宇宙？')}</strong>
+          <small>{tx('正在把星光弯成环…')}</small>
         </div>
       )}
 
@@ -325,35 +416,120 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
         {tx('你的浏览器无法显示 WebGL2 黑洞实验。')}
       </iframe>
 
+      <div className="bh-flyby-vignette" aria-hidden="true" />
+
+      {showCallouts && (
+        <div
+          key={stats?.lensing === false ? 'straight' : 'lensed'}
+          className="bh-flyby-callouts"
+          data-experience-overlay="true"
+          aria-hidden="true"
+        >
+          <svg width={stageSize.width} height={stageSize.height}>
+            {callouts.filter((item) => item.side !== 'center').map((item, index) => {
+              const h = stageSize.height
+              const cx = stageSize.width / 2
+              const cy = h * calloutCenterY
+              return (
+                <g key={item.key} style={{ animationDelay: `${index * 140}ms` }}>
+                  <line x1={cx + item.ax * h} y1={cy + item.ay * h} x2={cx + item.lx * h} y2={cy + item.ly * h} />
+                  <circle cx={cx + item.ax * h} cy={cy + item.ay * h} r={3} />
+                </g>
+              )
+            })}
+          </svg>
+          {callouts.map((item, index) => {
+            const h = stageSize.height
+            const w = stageSize.width
+            const x = w / 2 + item.lx * h
+            const top = h * calloutCenterY + item.ly * h
+            const edge = 14
+            const style = item.side === 'center'
+              ? { left: x, top }
+              : { left: Math.max(edge, Math.min(x, w - edge - 150)), top }
+            return (
+              <div
+                key={item.key}
+                className={`bh-flyby-callout is-${item.side}`}
+                style={{ ...style, animationDelay: `${120 + index * 140}ms` }}
+              >
+                <strong>{tx(item.title)}</strong>
+                {item.note && <small>{tx(item.note)}</small>}
+              </div>
+            )
+          })}
+        </div>
+      )}
+
       {!storyMode && (
         <div className="bh-flyby-plaque" data-experience-overlay="true" data-experience-plaque="true" aria-live="polite">
-          <span>{tx('黑洞掠过')}</span>
-          <strong>{tx(scene.title)}</strong>
+          <span>{tx('黑洞掠过')} · {sceneIndex + 1} / {scenes.length}</span>
+          <strong key={scene.key}>{tx(scene.title)}</strong>
+          {scene.key === 'far' ? (
+            <div className="bh-flyby-compare" role="group" aria-label={tx('光线弯折')}>
+              <button
+                type="button"
+                aria-pressed={stats?.lensing !== false}
+                className={stats?.lensing !== false ? 'is-active' : undefined}
+                onClick={() => setLensingTo(true)}
+              >
+                {tx('真实：光会弯')}
+              </button>
+              <button
+                type="button"
+                aria-pressed={stats?.lensing === false}
+                className={stats?.lensing === false ? 'is-active' : undefined}
+                onClick={() => setLensingTo(false)}
+              >
+                {tx('假如光走直线')}
+              </button>
+            </div>
+          ) : (
+            <p key={`${scene.key}-lead`}>{tx(scene.lead)}</p>
+          )}
         </div>
       )}
 
       {!storyMode && stats && (
         <div className={`bh-flyby-readout${scene.key === 'journey' ? ' is-journey' : ''}`} data-experience-overlay="true" data-freebar-clearance="true" aria-live="polite">
-          <span>
-            <small>{tx('距离')}</small>
-            <strong>{compactNumber(stats.distanceKm, locale)} km</strong>
-          </span>
-          <span>
-            <small>{tx('速度')}</small>
-            <strong>{stats.speedC.toFixed(2)} c</strong>
-          </span>
-          {scene.key === 'journey' && (
-            <span>
-              <small>{tx('航段')}</small>
-              <strong>{stats.journeyPhase
-                ? tx(journeyPhaseLabels[stats.journeyPhase])
-                : tx('飞近黑洞')}</strong>
+          <div className="bh-flyby-readout-head">
+            <small>{tx('你离黑洞')}</small>
+            <strong>
+              {radii === null ? '—' : radii >= 10 ? Math.round(radii) : radii.toFixed(1)} {tx('个黑洞半径')}
+            </strong>
+            <em>{compactNumber(stats.distanceKm, locale)} km</em>
+            {scene.key === 'journey' && (
+              <b className={`bh-flyby-phase is-${stats.journeyPhase ?? 'approach'}`}>
+                {tx(journeyPhaseLabels[stats.journeyPhase ?? 'approach'])}
+              </b>
+            )}
+          </div>
+          <div className="bh-flyby-rail" aria-hidden="true">
+            <i className="bh-flyby-rail-hole" />
+            <span className="bh-flyby-rail-track">
+              <span className="bh-flyby-rail-you" style={{ left: `${railPosition * 100}%` }}>
+                <b>{tx('你')}</b>
+              </span>
             </span>
-          )}
-          <span>
-            <small>{tx('时间比')}</small>
-            <strong>{stats.timeDilation.toFixed(2)}×</strong>
-          </span>
+            <small>{tx('深空')}</small>
+          </div>
+          <div className="bh-flyby-readout-stats">
+            {hovering ? (
+              <span>
+                <small>{tx('悬停时你的体重')}</small>
+                <strong>×{compactNumber(stats.gForceG, locale)}</strong>
+              </span>
+            ) : (
+              <span>
+                <small>{tx('你的速度')}</small>
+                <strong>{Math.round(stats.speedC * 100)}% {tx('光速')}</strong>
+              </span>
+            )}
+            <span>
+              <small>{tx('你过 1 小时，远方多过')}</small>
+              <strong>{extraPerHour(stats.timeDilation, en)}</strong>
+            </span>
+          </div>
         </div>
       )}
 
@@ -411,7 +587,7 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
                         className={stats?.lensing ? 'is-active' : undefined}
                         onClick={() => toggleOptic('lensing')}
                       >
-                        {tx('透镜')}
+                        {tx('光线弯折')}
                       </button>
                       <button
                         type="button"
@@ -419,7 +595,7 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
                         className={stats?.doppler ? 'is-active' : undefined}
                         onClick={() => toggleOptic('doppler')}
                       >
-                        {tx('光变')}
+                        {tx('明暗偏色')}
                       </button>
                     </div>
                     <label className="bh-flyby-temperature experience-freebar-field">
@@ -534,7 +710,7 @@ export function BlackHoleFlyby({ controls }: { controls: ExperienceControls }) {
       {!storyMode && (
         <GhostHint
           worldId="black-hole-flyby"
-          gesture={{ type: 'tap', target: '.bh-flyby-scene-button[data-scene="journey"]', label: tx('点飞越，一步看完靠近、掠过与远离') }}
+          gesture={{ type: 'tap', target: '.bh-flyby-compare button:last-child', label: tx('点这里，看看光不弯时黑洞是什么样') }}
         />
       )}
     </div>
