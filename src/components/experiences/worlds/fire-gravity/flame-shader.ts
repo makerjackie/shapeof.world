@@ -38,7 +38,7 @@ color+=vec3(1.,.68,.38)*exp(-dot(p-mote,p-mote)/size)*lit*burn*.55;
 }
 // Warm subsurface wax, a concave liquid pool and irregular raised rim.
 float flicker=.95+.035*sin(time*5.7)+.015*sin(time*11.3);
-float waxWidth=.185+.004*sin(p.y*18.)+.002*sin(p.y*43.);
+float waxWidth=.185+.0018*sin(p.y*11.+1.)+.0008*sin(p.y*29.);
 if(p.y<.0 && p.y>-.9 && abs(p.x)<waxWidth){
 float side=sqrt(max(0.,1.-pow(p.x/waxWidth,2.)));
 float light=(.09+.91*burn*flicker)*exp(p.y*1.65)*(.10+.90*side);
