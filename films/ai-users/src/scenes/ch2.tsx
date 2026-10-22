@@ -102,7 +102,7 @@ export const PaperCard: React.FC<{ d: CardD; at: number; x: number; y: number; r
   const flip = still ? 0 : Math.max(0, 1 - progAt(frame, at, 0.55, EO)) * 180;
   const lift = 1 - p;
   return (
-    <div style={{ position: "absolute", left: x, top: y, width: W, height: H, perspective: 1600, transform: `scale(${scale})`, transformOrigin: "0 0" }}>
+    <div style={{ position: "absolute", left: x, top: y, width: W, height: H, perspective: 1600, transform: `scale(${scale})`, transformOrigin: "0 0", opacity: Math.min(1, p * 3) }}>
       <div
         style={{
           position: "absolute",
@@ -111,7 +111,6 @@ export const PaperCard: React.FC<{ d: CardD; at: number; x: number; y: number; r
           transform: `translateY(${-lift * 60}px) rotate(${rot + lift * 6}deg) rotateY(${-flip}deg) scale(${1 + lift * 0.18})`,
           boxShadow: `0 ${18 + lift * 40}px ${50 + lift * 50}px rgba(0,0,0,${0.55 - lift * 0.2})`,
           borderRadius: 6,
-          opacity: Math.min(1, p * 3),
         }}
       >
         <Face d={d} at={at} still={still} />

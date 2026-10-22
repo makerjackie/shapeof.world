@@ -19,15 +19,15 @@ const Slip: React.FC<{ children: React.ReactNode; size: number }> = ({ children,
 export const Claim: React.FC = () => {
   const frame = useBeatFrame();
   const beat = frame / FPB;
-  const written = interpolate(beat, [0, 7.5], [0.35, 9], CL);
+  const written = interpolate(beat, [-1, 7.5], [3.2, 9], CL);
   const flood = progAt(frame, 5, 2.5, EIO);
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: 110, top: 232, fontFamily: FONT, color: K.fg, whiteSpace: "nowrap" }}>
         <div style={{ fontSize: 86, fontWeight: 900, lineHeight: 1.18 }}>最会用 AI 的人，</div>
         <div style={{ fontSize: 86, fontWeight: 900, lineHeight: 1.18 }}>只做两件事：</div>
-        <div style={{ fontSize: 172, fontWeight: 900, lineHeight: 1.2, marginTop: 18, letterSpacing: -4 }}>
-          <Slip size={172}>出题</Slip>，<Slip size={172}>阅卷</Slip>。
+        <div style={{ fontSize: 150, fontWeight: 900, lineHeight: 1.2, marginTop: 18, letterSpacing: -4 }}>
+          <Slip size={150}>出题</Slip>，<Slip size={150}>阅卷</Slip>。
         </div>
         <div style={{ fontSize: 46, fontWeight: 700, marginTop: 30, color: K.aiHi }}>中间的答题，全交给 AI。</div>
       </div>
@@ -181,10 +181,19 @@ export const Title: React.FC = () => {
     <AbsoluteFill>
       <Sheet x={300} y={86} w={1320} h={908} rot={0}>
         <div style={{ position: "absolute", left: 92, top: 40, fontSize: 26, color: K.inkSoft }}>绝密★启用前</div>
+        <div style={{ position: "absolute", right: 60, top: 34, display: "flex", alignItems: "center", gap: 18 }}>
+          <span style={{ fontSize: 20, color: K.inkSoft }}>考生号</span>
+          <span style={{ display: "flex" }}>
+            {Array.from({ length: 8 }, (_, i) => (
+              <span key={i} style={{ width: 30, height: 38, border: `1.5px solid ${K.ink}`, marginLeft: -1.5 }} />
+            ))}
+          </span>
+          <span style={{ width: 190, height: 56, border: `2px dashed ${K.inkFaint}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17, color: K.inkSoft }}>条形码粘贴处</span>
+        </div>
         <div style={{ position: "absolute", left: 0, right: 0, top: 138, textAlign: "center", fontFamily: SERIF, fontSize: 32, fontWeight: 700, letterSpacing: 14, color: K.inkSoft }}>世界的形状</div>
         <div style={{ position: "absolute", left: 0, right: 0, top: 210, display: "flex", flexDirection: "column", alignItems: "center", gap: 6, perspective: 1600 }}>
           {TITLE.map((line, li) => (
-            <div key={li} style={{ display: "flex", fontFamily: FONT, fontWeight: 900, fontSize: li === 0 ? 96 : 128, color: K.ink, letterSpacing: -2, whiteSpace: "pre" }}>
+            <div key={li} style={{ display: "flex", alignItems: "baseline", fontFamily: FONT, fontWeight: 900, fontSize: li === 0 ? 96 : 128, color: K.ink, letterSpacing: -2, whiteSpace: "pre" }}>
               {Array.from(line).map((ch, ci) => {
                 const k = idx++;
                 const q = progAt(frame, k * 0.12, 0.7, EBACK);

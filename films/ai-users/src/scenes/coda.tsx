@@ -31,7 +31,7 @@ const Stack: React.FC<{ n: number; x: number; base: number; p: number; label: st
       ))}
       <div style={{ position: "absolute", left: 0, width: 104, top: base + 14, textAlign: "center", fontFamily: FONT, fontSize: 22, fontWeight: 700, color: last ? K.fg : K.muted }}>{label}</div>
       {last && p > 0.98 ? (
-        <div style={{ position: "absolute", left: 6, top: base - n * 9 - 52, fontFamily: FONT, fontWeight: 900, fontSize: 24, padding: "4px 12px", borderRadius: 6, background: K.paper, color: K.ink }}>高考</div>
+        <div style={{ position: "absolute", left: 14, top: base - n * 9 - 54, fontFamily: FONT, fontWeight: 900, fontSize: 26, padding: "4px 14px", borderRadius: 6, background: K.paper, color: K.ink, whiteSpace: "nowrap" }}>高考</div>
       ) : null}
     </div>
   );
@@ -105,16 +105,9 @@ export const Medal: React.FC = () => {
 
 // ---------- S21 · the two subjects left: set a question worth answering, recognise a right answer ----------
 
-const MainSheet: React.FC<{ x: number; y: number; glow: number; river: number; dimAnswer: number }> = ({ x, y, glow, river, dimAnswer }) => (
-  <>
-    {river > 0 ? (
-      <div style={{ position: "absolute", left: x + 70, top: y + 330, width: 600, height: 1200, background: `linear-gradient(180deg, ${K.ai}55, ${K.ai}00)`, opacity: river, transformOrigin: "50% 0", transform: `scaleY(${river})` }}>
-        <div style={{ position: "absolute", left: 20, top: 40 }}>
-          <Scribble w={560} lines={18} lineH={36} progress={18 * river} seed="river" color={K.aiHi} />
-        </div>
-      </div>
-    ) : null}
-    <Sheet x={x} y={y} w={700} h={872} rot={1.2}>
+const MainSheet: React.FC<{ x: number; y: number; glow: number; dimAnswer: number; scale?: number }> = ({ x, y, glow, dimAnswer, scale = 1 }) => (
+  <div style={{ position: "absolute", left: x, top: y, width: 700, height: 872, transform: `scale(${scale})`, transformOrigin: "0 0" }}>
+    <Sheet x={0} y={0} w={700} h={872} rot={1.2}>
       <Section n="一" title="出题" who="人" style={{ position: "absolute", left: 70, top: 60 }} />
       <div style={{ position: "absolute", left: 92, top: 112, fontSize: 27, lineHeight: 1.6 }}>
         1. 要做成什么？
@@ -133,8 +126,21 @@ const MainSheet: React.FC<{ x: number; y: number; glow: number; river: number; d
       </div>
       <div style={{ position: "absolute", left: 54, right: 14, top: 622, height: 214, borderRadius: 10, border: `5px solid ${K.gold}`, boxShadow: `0 0 40px ${K.gold}`, opacity: glow }} />
     </Sheet>
-  </>
+  </div>
 );
+
+// The answers keep coming: a widening stream of AI ink flowing out of the answer column.
+const River: React.FC<{ p: number }> = ({ p }) => {
+  const frame = useBeatFrame();
+  const flow = (frame * 1.6) % 36;
+  return (
+    <div style={{ position: "absolute", left: 1130, top: 330, width: 700, height: 750 * p, overflow: "hidden", clipPath: "polygon(24% 0, 76% 0, 100% 100%, 0 100%)", background: `linear-gradient(180deg, ${K.ai}70, ${K.ai}14)` }}>
+      <div style={{ position: "absolute", left: 70, top: -36 + flow }}>
+        <Scribble w={560} lines={22} lineH={36} progress={22} seed="river" color={K.aiHi} width={3} />
+      </div>
+    </div>
+  );
+};
 
 export const TwoSkills: React.FC = () => {
   const frame = useBeatFrame();
@@ -146,7 +152,7 @@ export const TwoSkills: React.FC = () => {
         <Head at={1.5} parts={["出一道", { t: "值得答", c: K.gold }, "的题；"]} size={80} />
         <Head at={3.5} parts={["认出哪份", { t: "答对了", c: K.gold }, "。"]} size={80} />
       </div>
-      <MainSheet x={1110} y={104} glow={glow} river={0} dimAnswer={progAt(frame, 0.5, 1.5, EIO)} />
+      <MainSheet x={1110} y={104} glow={glow} dimAnswer={progAt(frame, 0.5, 1.5, EIO)} />
     </AbsoluteFill>
   );
 };
@@ -163,7 +169,8 @@ export const Final: React.FC = () => {
         <Head at={3} parts={[{ t: "出题和阅卷，", c: K.gold }]} size={118} />
         <Head at={4.5} parts={[{ t: "留给人。", c: K.gold }]} size={118} />
       </div>
-      <MainSheet x={1110} y={104} glow={1} river={river} dimAnswer={0} />
+      <River p={river} />
+      <MainSheet x={1196} y={70} scale={0.72} glow={1} dimAnswer={0} />
     </AbsoluteFill>
   );
 };
@@ -188,7 +195,7 @@ const SOURCES = [
 
 const Dimmed: React.FC = () => (
   <div style={{ position: "absolute", inset: 0, opacity: 0.1 }}>
-    <MainSheet x={1110} y={104} glow={0} river={0} dimAnswer={0} />
+    <MainSheet x={1110} y={104} glow={0} dimAnswer={0} />
   </div>
 );
 

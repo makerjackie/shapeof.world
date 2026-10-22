@@ -80,7 +80,7 @@ export const Compiler: React.FC = () => {
           { v: 16, u: "个 AI 并行", at: 1 },
           { v: 2000, u: "次会话（近）", at: 1.6 },
           { v: 2, u: "周", at: 2.2 },
-          { v: 20000, u: "美元以内", at: 2.8, pre: "$" },
+          { v: 20000, u: "API 费用以内", at: 2.8, pre: "$" },
         ].map((s) => (
           <In key={s.u} at={s.at} from="scale">
             <Glass style={{ padding: "14px 20px" }}>
@@ -100,7 +100,8 @@ export const Compiler: React.FC = () => {
       </In>
       <In at={7.5} from="up">
         <div style={{ position: "absolute", left: 1290, top: 760, width: 560, fontFamily: FONT, color: K.fg }}>
-          <div style={{ fontSize: 30, fontWeight: 900, lineHeight: 1.4 }}>“裁判必须近乎完美，否则 AI 会去解错的题。”</div>
+          <div style={{ fontSize: 28, fontWeight: 900, lineHeight: 1.45 }}>“裁判必须近乎完美，</div>
+          <div style={{ fontSize: 28, fontWeight: 900, lineHeight: 1.45 }}>否则 AI 会去解错的题。”</div>
           <div style={{ fontSize: 19, color: K.muted, marginTop: 6 }}>Nicholas Carlini · Anthropic · 2026-02-05</div>
         </div>
       </In>
@@ -125,8 +126,8 @@ export const Overnight: React.FC = () => {
   const frame = useBeatFrame();
   const sweep = interpolate(frame, [0, 12 * FPB], [8, 32], CL); // hours, 8:00 → 8:00 next day
   const cx = 420;
-  const cy = 590;
-  const R = 270;
+  const cy = 600;
+  const R = 250;
   const ang = (h: number) => (h / 24) * Math.PI * 2 - Math.PI / 2;
   const arc = (h0: number, h1: number, r: number) => {
     const a0 = ang(h0);
@@ -155,8 +156,8 @@ export const Overnight: React.FC = () => {
           {h}:00
         </div>
       ))}
-      <div style={{ position: "absolute", left: cx + R + 10, top: cy - R - 10, fontFamily: FONT, fontSize: 24, fontWeight: 900, color: K.paper }}>白天：人出题、阅卷</div>
-      <div style={{ position: "absolute", left: cx - R - 40, top: cy + R + 20, fontFamily: FONT, fontSize: 24, fontWeight: 900, color: K.aiHi, opacity: night }}>夜里：AI 答题</div>
+      <div style={{ position: "absolute", left: cx - 150, width: 300, textAlign: "center", top: cy + R + 34, fontFamily: FONT, fontSize: 26, fontWeight: 900, color: K.paper }}>白天：人出题、阅卷</div>
+      <div style={{ position: "absolute", left: cx - 150, width: 300, textAlign: "center", top: cy - R - 72, fontFamily: FONT, fontSize: 26, fontWeight: 900, color: K.aiHi, opacity: night }}>夜里：AI 答题</div>
       <div style={{ position: "absolute", left: 860, top: 236, width: 980, display: "flex", flexDirection: "column", gap: 18 }}>
         {PRACTICE.map((p) => (
           <In key={p.who} at={p.at} from="right" dist={40}>

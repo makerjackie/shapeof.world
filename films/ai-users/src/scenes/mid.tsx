@@ -113,8 +113,7 @@ export const Finding: React.FC = () => {
       </In>
       <In at={9.5} from="up" dist={24}>
         <div style={{ position: "absolute", left: 980, top: 690, width: 800, fontFamily: FONT, fontSize: 27, fontWeight: 700, color: K.fg, lineHeight: 1.45, background: "rgba(7,9,11,0.78)", padding: "12px 18px", borderRadius: 8 }}>
-          同一天，题库暂停接收新证明。原因：
-          <span style={{ color: K.aiHi }}>“一波没有解释的 AI 解答”</span>
+          同一天，题库暂停收稿：<span style={{ color: K.aiHi }}>“一波没有解释的 AI 解答”</span>
         </div>
       </In>
       {/* The reveal */}

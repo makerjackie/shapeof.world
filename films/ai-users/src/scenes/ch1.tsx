@@ -81,10 +81,10 @@ export const OnePerson: React.FC = () => {
         <Head at={8} parts={["30 天，烧掉 ", { t: "130 万美元", c: K.aiHi }, " 的 token。"]} size={70} />
       </div>
       <In at={1.5} from="fade">
-        <div style={{ position: "absolute", left: 1060, top: 146, fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>Peter Steinberger · OpenClaw 作者</div>
+        <div style={{ position: "absolute", left: 112, top: 296, fontFamily: FONT, fontSize: 28, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>Peter Steinberger · OpenClaw 作者</div>
       </In>
       {/* The menu bar and the CodexBar panel */}
-      <div style={{ position: "absolute", left: 110, top: 300, width: 840, height: 446, opacity: Math.min(1, panel * 2), transform: `translateY(${(1 - panel) * 40}px)` }}>
+      <div style={{ position: "absolute", left: 110, top: 346, width: 840, height: 446, opacity: Math.min(1, panel * 2), transform: `translateY(${(1 - panel) * 40}px)` }}>
         <div style={{ position: "absolute", inset: 0, borderRadius: 12, background: "linear-gradient(160deg, #1b1d2b, #0d0e14)", border: "1px solid rgba(255,255,255,0.08)" }} />
         <Bar />
         <div style={{ position: "absolute", left: 300, top: 50, width: 520, borderRadius: 14, background: "rgba(36,38,46,0.97)", border: "1px solid rgba(255,255,255,0.14)", boxShadow: "0 30px 80px rgba(0,0,0,0.6)", padding: "18px 24px", fontFamily: FONT, color: "#ececf1" }}>
@@ -110,10 +110,10 @@ export const OnePerson: React.FC = () => {
       </div>
       {/* ~100 Codex agents in the cloud */}
       <In at={1} from="fade">
-        <div style={{ position: "absolute", left: 1010, top: 252, fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.sub }}>约 100 个 Codex，常驻云端</div>
+        <div style={{ position: "absolute", left: 1010, top: 294, fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.sub }}>约 100 个 Codex，常驻云端</div>
       </In>
-      <Agents x={1010} y={300} />
-      <div style={{ position: "absolute", left: 1010, top: 790, display: "flex", gap: 12 }}>
+      <Agents x={1010} y={340} />
+      <div style={{ position: "absolute", left: 1010, top: 832, display: "flex", gap: 12 }}>
         {["审每一个 PR", "查每一个 issue", "每次提交做安全检查"].map((t, i) => (
           <In key={t} at={5.5 + i * 0.5} from="up" dist={20}>
             <Tag color={K.ai} size={24}>
@@ -123,7 +123,7 @@ export const OnePerson: React.FC = () => {
         ))}
       </div>
       {/* Per-day ladder: an average enterprise developer vs him (different bases; flagged) */}
-      <div style={{ position: "absolute", left: 110, top: 860, width: 1700, opacity: ladder }}>
+      <div style={{ position: "absolute", left: 110, top: 898, width: 1700, opacity: ladder }}>
         {[
           { l: "企业开发者平均", v: 13, s: "约 $13 / 天", note: "Claude Code 企业部署 · Anthropic 自己的数据", c: K.sub },
           { l: "他", v: 43500, s: "约 $43,500 / 天", note: "推算：30 天 ÷ 30 · 三人团队的组织账号", c: K.ai },
@@ -217,7 +217,7 @@ export const Books: React.FC = () => {
         <Odometer value={BOOKS * fill} size={120} color={K.aiHi} />
         <div style={{ fontSize: 40, fontWeight: 900, color: K.fg }}>部《红楼梦》</div>
         <In at={11} from="up">
-          <div style={{ marginTop: 28, fontSize: 52, fontWeight: 900, color: K.fg, lineHeight: 1.2 }}>
+          <div style={{ marginTop: 28, fontSize: 46, fontWeight: 900, color: K.fg, lineHeight: 1.2, whiteSpace: "nowrap" }}>
             一天，约 <span style={{ color: K.aiHi }}>4.6 万部</span>。
           </div>
         </In>
