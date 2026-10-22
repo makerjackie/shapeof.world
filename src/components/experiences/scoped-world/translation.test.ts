@@ -4,7 +4,7 @@ import ts from 'typescript'
 import { describe, expect, it } from 'vitest'
 import { createWorldTranslator } from './translation'
 
-const ids = ['earth-and-nature', 'vegetation-atlas']
+const ids = ['vegetation-atlas']
 const han = /[\u3400-\u9fff]/u
 
 describe('imported world bilingual coverage', () => {

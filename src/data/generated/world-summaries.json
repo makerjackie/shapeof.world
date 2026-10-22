@@ -1049,27 +1049,27 @@
     "poster": "/assets/posters/earth-and-nature.webp",
     "posterMobile": "/assets/posters/mobile/earth-and-nature.webp",
     "posterDesktop": "/assets/posters/desktop/earth-and-nature.webp",
-    "title": "地球与自然",
-    "posterTitle": "地表从来没有停止变化",
-    "posterHook": "从火山熔岩到冰川裂隙，在立体地貌中观察形成、侵蚀与沉积。",
-    "question": "山川为何一直在改变？",
-    "topicLabel": "地貌演化",
+    "title": "雨水雕山",
+    "posterTitle": "把一块地推成山，再下一百万年雨，它会变成什么样？",
+    "posterHook": "按住地面把它推高，看雨水自己刻出一道道像树枝的山谷。",
+    "question": "把一块地推成山，再下一百万年雨，它会变成什么样？",
+    "topicLabel": "河流与山",
     "translations": {
       "en": {
-        "title": "Earth & Nature",
-        "posterTitle": "Earth’s surface is always changing",
-        "posterHook": "From lava flows to glacier crevasses, explore formation, erosion and deposition in three dimensions.",
-        "question": "What keeps reshaping the land?",
-        "topicLabel": "Landforms"
+        "title": "Rain Carves the Mountain",
+        "posterTitle": "Push up a mountain and let it rain for a million years. What does it become?",
+        "posterHook": "Hold the ground to push it up, and watch the rain carve valleys that branch like a tree.",
+        "question": "Push up a mountain and let it rain for a million years. What does it become?",
+        "topicLabel": "Rivers and mountains"
       }
     },
     "primaryCategoryId": "earth-climate",
     "renderer": "earth-and-nature",
     "runtime": "scene-3d",
     "difficulty": "intro",
-    "duration": 420,
+    "duration": 180,
     "evidence": "modeled",
-    "accent": "#73c7cb",
+    "accent": "#7fd4e8",
     "posterPosition": "50% 50%"
   },
   {
