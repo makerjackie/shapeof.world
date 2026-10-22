@@ -1,10 +1,10 @@
 import React from "react";
 import { AbsoluteFill, Img, random, staticFile } from "remotion";
-import { Branch, Trunk } from "./grid";
 import { FONT, K, SERIF } from "./theme";
+import { Branch, LIFE_BRANCHES, TipLabel, TreeGeo, Trunk } from "./tree";
 
-// Covers (STYLE.md 二): paper brand bar on top, the first frame's sentence as the title, one main picture: the
-// trunk and its branches drawn large over a field of week squares, the past lit warm.
+// Covers (STYLE.md 二): paper brand bar on top, the first frame's sentence as the title, one main picture: the life
+// tree drawn large over a field of week squares, the past lit warm.
 const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
   <div style={{ position: "absolute", left: 0, top: 0, width: w, height: h, background: K.paper, display: "flex", alignItems: "center", justifyContent: "space-between", padding: `0 ${h * 0.6}px`, boxSizing: "border-box" }}>
     <div style={{ display: "flex", alignItems: "center", gap: h * 0.22 }}>
@@ -15,49 +15,49 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
   </div>
 );
 
-const Field: React.FC<{ W: number; top: number; H: number; trunkY: number; pitch: number }> = ({ W, top, H, trunkY, pitch }) => {
+const Field: React.FC<{ W: number; top: number; H: number; pitch: number }> = ({ W, top, H, pitch }) => {
   const cols = Math.ceil(W / pitch);
   const rows = Math.ceil((H - top) / pitch);
-  const now = Math.floor(cols * 0.4);
+  const now = Math.floor(cols * 0.36);
   const cells: React.ReactNode[] = [];
   for (let c = 0; c < cols; c++)
     for (let r = 0; r < rows; r++) {
-      const y = top + r * pitch;
-      const near = Math.max(0, 1 - Math.abs(y - trunkY) / (H * 0.42));
       const past = c < now;
       cells.push(
-        <rect key={`${c}-${r}`} x={c * pitch} y={y} width={pitch * 0.74} height={pitch * 0.74} rx={3} fill={past ? (random(`cv${c}-${r}`) < 0.5 ? K.theme : K.gold) : K.fg} fillOpacity={(past ? 0.12 + 0.45 * random(`co${c}-${r}`) : 0.07) * (0.35 + 0.65 * near)} />,
+        <rect key={`${c}-${r}`} x={c * pitch} y={top + r * pitch} width={pitch * 0.74} height={pitch * 0.74} rx={3} fill={past ? (random(`cv${c}-${r}`) < 0.5 ? K.theme : K.gold) : K.fg} fillOpacity={past ? 0.1 + 0.3 * random(`co${c}-${r}`) : 0.06} />,
       );
     }
-  const s = W / 1920;
-  return (
-    <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
-      {cells}
-      <Branch b={{ x0: 120 * s, x1: 620 * s, y: trunkY, dy: -170 * s, color: K.lilac, grow: 1, w: 7 * s, o: 0.9 }} />
-      <Branch b={{ x0: 460 * s, x1: 1500 * s, y: trunkY, dy: 150 * s, color: K.steel, grow: 1, w: 7 * s, o: 0.9 }} />
-      <Branch b={{ x0: 760 * s, x1: 1880 * s, y: trunkY, dy: -260 * s, color: K.sand, grow: 1, w: 7 * s, o: 0.9 }} />
-      <Trunk x0={-20} x1={W + 20} y={trunkY} glow={1} w={14 * s} />
-      <circle cx={now * pitch - pitch * 0.13} cy={trunkY} r={22 * s} fill={K.themeHi} />
-    </svg>
-  );
+  return <>{cells}</>;
 };
 
 export const Cover: React.FC<{ tall: boolean }> = ({ tall }) => {
   const W = tall ? 1080 : 1920;
   const H = tall ? 1440 : 1080;
   const bar = Math.round(H * 0.06);
+  const g: TreeGeo = tall ? { x0: 60, w: 960, y: 1090, scale: 1.3 } : { x0: 90, w: 1740, y: 760, scale: 1.4 };
+  const k = tall ? 0.9 : 0.85;
+  const bs = LIFE_BRANCHES.map((b) => ({ ...b, dy: b.dy * k, grow: 1, w: 10 }));
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
-      <AbsoluteFill style={{ background: `radial-gradient(ellipse at 40% ${tall ? "78%" : "74%"}, ${K.theme}38 0%, transparent 55%)` }} />
-      <Field W={W} top={tall ? 760 : 560} H={H} trunkY={tall ? 1110 : 830} pitch={tall ? 40 : 44} />
+      <AbsoluteFill style={{ background: `radial-gradient(ellipse at 40% ${tall ? "76%" : "72%"}, ${K.theme}38 0%, transparent 55%)` }} />
+      <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
+        <Field W={W} top={tall ? 700 : 500} H={H} pitch={tall ? 40 : 44} />
+        {bs.map((b, i) => (
+          <Branch key={i} g={g} b={b} />
+        ))}
+        <Trunk g={g} glow={1} w={14} threads={1} />
+      </svg>
+      {bs.map((b, i) => (
+        <TipLabel key={i} g={g} b={b} o={1} size={tall ? 30 : 34} />
+      ))}
       <div
         style={{
           position: "absolute",
           left: tall ? 70 : 100,
-          top: bar + (tall ? 70 : 60),
+          top: bar + (tall ? 70 : 50),
           fontFamily: FONT,
           fontWeight: 900,
-          fontSize: tall ? 150 : 170,
+          fontSize: tall ? 150 : 160,
           lineHeight: 1.12,
           color: K.fg,
           letterSpacing: -4,

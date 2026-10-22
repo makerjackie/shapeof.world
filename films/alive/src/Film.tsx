@@ -5,7 +5,7 @@ import { CL, EIO, EO } from "./fx";
 import { BeatOffset } from "./kit";
 import { CHAPTERS, FILM_FRAMES, SCENES, Trans } from "./scenes";
 import { FONT, K, SERIF } from "./theme";
-import { barToFrame, FPB } from "./timing";
+import { barToFrame, FPB, MUSIC_SEGMENTS } from "./timing";
 
 const PRE = 7; // frames the incoming scene starts before its downbeat
 const POST = 5; // frames the outgoing scene lingers after it
@@ -53,7 +53,7 @@ const Shell: React.FC<{ tin: Trans; tout?: Trans; pre: number; total: number; ch
 
 // Brand corner mark (STYLE.md 三、4/6): orb + 世界的形状 at 60% opacity, 48 px from the edges, from frame 0 until
 // the brand card; the chapter label sits right next to it.
-const BRAND_END = barToFrame(49.5) - 10;
+const BRAND_END = barToFrame(64) - 10;
 
 const Hud: React.FC = () => {
   const frame = useCurrentFrame();
@@ -99,6 +99,34 @@ const Flash: React.FC = () => {
   return o > 0 ? <AbsoluteFill style={{ background: "#fff3e0", opacity: o, pointerEvents: "none" }} /> : null;
 };
 
+const XF = 2; // crossfade half-length in frames at each music cut, centred on the downbeat
+const GAIN = 0.84; // −1.5 dB: the track's own peaks reach +0.8 dBTP after AAC encoding (films/ai-real-cost)
+
+// The cut soundtrack (千年之后（氛围版）, 和乐府): each segment overlaps its neighbours by XF frames with an equal-power
+// fade; the end card rides the track's own fade, finished off from bar 64.
+const Music: React.FC = () => (
+  <>
+    {MUSIC_SEGMENTS.map((m, i) => {
+      const from = Math.max(0, m.from - XF);
+      const to = Math.min(FILM_FRAMES, m.to + XF);
+      return (
+        <Sequence key={i} from={from} durationInFrames={to - from}>
+          <Audio
+            src={staticFile("music.m4a")}
+            trimBefore={from + m.offset}
+            volume={(f) => {
+              const t = f + from;
+              const fadeIn = i === 0 ? interpolate(t, [0, 3], [0.6, 1], CL) : Math.sin((Math.PI / 2) * interpolate(t, [m.from - XF, m.from + XF], [0, 1], CL));
+              const fadeOut = m.to === Infinity ? 1 : Math.cos((Math.PI / 2) * interpolate(t, [m.to - XF, m.to + XF], [0, 1], CL));
+              return GAIN * fadeIn * fadeOut * interpolate(t, [barToFrame(64), FILM_FRAMES - 2], [1, 0], CL);
+            }}
+          />
+        </Sequence>
+      );
+    })}
+  </>
+);
+
 const palKeys = SCENES.map((s, i) => ({ at: starts[i], pal: s.pal as Palette }));
 
 export const Film: React.FC = () => {
@@ -106,7 +134,7 @@ export const Film: React.FC = () => {
   const cur = SCENES[Math.max(0, starts.filter((s) => s <= frame).length - 1)];
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
-      <Audio src={staticFile("score.wav")} />
+      <Music />
       <Backdrop keys={palKeys} />
       {SCENES.map((s, i) => {
         const start = starts[i];

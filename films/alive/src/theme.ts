@@ -32,9 +32,22 @@ export const K = {
   steelLo: "#5d7aa0",
   sand: "#c9b48a",
   lilac: "#a99bd6",
+  pink: "#d9a3c7",
   night: "#1c2230",
   green: "#3ddc97",
   red: "#ff5a5f",
+};
+
+// How a day is spent (2018 time-use survey), painted onto the life grid. The things you have to do are cool
+// (blue to lilac); your own time is the film's warm theme colour.
+export const USE = {
+  sleep: "#4f5f92",
+  meals: "#c9b48a",
+  work: "#7f9bbf",
+  travel: "#c3d3ee",
+  chores: "#a99bd6",
+  study: "#d9a3c7",
+  free: "#ffa776",
 };
 
 // Soft colours the viewer might paint their future weeks with (the ending).

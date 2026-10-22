@@ -1,79 +1,86 @@
 import React from "react";
 import { AbsoluteFill, Img, interpolate, interpolateColors, random, staticFile } from "remotion";
-import { Branch, Cell, gridGeo, LifeGrid, Trunk } from "../grid";
-import { CL, EBACK, EIO, EO, In, progAt } from "../fx";
+import { BIG, Cell, COLS, EMPTY, geo, LifeGrid, ROWS } from "../grid";
+import { CL, EBACK, EIO, EO, In, Odometer, progAt } from "../fx";
+import { Icon } from "../icons";
 import { useBeatFrame } from "../kit";
 import { FONT, K, PASTEL, SERIF } from "../theme";
 import { FPB } from "../timing";
-import { Box, Cap, Head } from "../ui";
+import { AgeTicks, Branch, LIFE_BRANCHES, TBranch, TipLabel, TREE, TreeGeo, Trunk, trunkY } from "../tree";
+import { Box, Head } from "../ui";
 
-// 85 s: the stance. Only the trunk is left, a light running along it.
+// ---------- 104 s: the stance, on the climax. The trunk, with relationships wound round it. ----------
+
 export const Stance: React.FC = () => {
   const frame = useBeatFrame();
-  const run = (frame / (FPB * 6)) % 1;
-  const lx = -200 + run * 2320;
+  const threads = progAt(frame, 2, 6, EIO);
+  const bs: TBranch[] = LIFE_BRANCHES.map((b) => ({ ...b, grow: 1, o: 0.28 }));
   return (
     <AbsoluteFill>
       <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
-        <defs>
-          <radialGradient id="runlight">
-            <stop offset="0%" stopColor={K.themeHi} stopOpacity={0.9} />
-            <stop offset="100%" stopColor={K.theme} stopOpacity={0} />
-          </radialGradient>
-        </defs>
-        {[300, 820, 1350].map((x0, i) => (
-          <Branch key={i} b={{ x0, x1: x0 + 300, y: 720, dy: i % 2 ? 110 : -110, color: [K.lilac, K.steel, K.sand][i], grow: 1, w: 2, o: 0.22 }} />
+        {bs.map((b, i) => (
+          <Branch key={i} g={TREE} b={b} />
         ))}
-        <Trunk x0={-20} x1={1940} y={720} glow={0.9} w={6} />
-        <ellipse cx={lx} cy={720} rx={160} ry={26} fill="url(#runlight)" />
+        <Trunk g={TREE} glow={1} w={9} threads={threads} run={(frame / (FPB * 6)) % 1} />
+        <circle cx={TREE.x0} cy={trunkY(TREE, TREE.x0)} r={30} fill={K.bg} stroke={K.theme} strokeWidth={3} />
       </svg>
-      <Box x={960} y={300} cx style={{ gap: 20 }}>
-        <Cap at={0} size={40} color={K.muted} from="fade">我们的看法：</Cap>
-        <Head at={1} parts={["活着本身，"]} size={110} />
-        <Head at={3} parts={[{ t: "就够了", c: K.theme }, "。"]} size={110} />
+      <div style={{ position: "absolute", left: TREE.x0 - 18, top: trunkY(TREE, TREE.x0) - 18 }}>
+        <Icon name="heart" size={36} color={K.theme} />
+      </div>
+      <div style={{ position: "absolute", left: 1040, top: trunkY(TREE, 1040) + 34, fontFamily: FONT, fontSize: 28, fontWeight: 700, color: K.gold }}>
+        <In at={7} from="fade">缠在主线上的，是关系</In>
+      </div>
+      <Box x={960} y={150} cx style={{ gap: 16 }}>
+        <In at={0} from="fade">
+          <div style={{ fontFamily: FONT, fontSize: 38, fontWeight: 700, color: K.muted }}>我们的看法：</div>
+        </In>
+        <Head at={1} parts={["活着本身，", { t: "就够了", c: K.theme }, "。"]} size={110} />
       </Box>
     </AbsoluteFill>
   );
 };
 
-// The relit grid, shared by the last scenes. A viewer about 28: the past lights up warm instead of going dark; the
-// future turns into empty frames; then a few of them get painted.
+// ---------- The relit grid, shared by the last scenes ----------
+// A viewer of 28 (an example): the past lights up warm instead of going dark; the future turns into empty frames;
+// then squares of the future pick up colours of their own.
 const NOW = 28;
-const FULL = { x: 447, y: 250, pitch: 13, cell: 10 };
-const FG = gridGeo(FULL.x, FULL.y, FULL.pitch, FULL.cell);
+const BG = geo(BIG);
 const PAINTED = (() => {
   const m = new Map<number, { c: string; at: number }>();
-  for (let k = 0; k < 90; k++) {
-    const col = NOW + 1 + Math.floor(random(`pc${k}`) * (79 - NOW - 1));
-    const row = Math.floor(random(`pr${k}`) * 52);
-    m.set(col * 52 + row, { c: PASTEL[Math.floor(random(`pk${k}`) * PASTEL.length)], at: random(`pa${k}`) });
+  for (let k = 0; k < 70; k++) {
+    // Small clusters, like a few weeks given to something.
+    const col = NOW + 1 + Math.floor(random(`pc${k}`) * (COLS - NOW - 2));
+    const row = Math.floor(random(`pr${k}`) * (ROWS - 2));
+    const c = PASTEL[Math.floor(random(`pk${k}`) * PASTEL.length)];
+    const at = random(`pa${k}`);
+    const size = 1 + Math.floor(random(`ps${k}`) * 4);
+    for (let j = 0; j < size; j++) m.set((col + (j % 2)) * ROWS + row + Math.floor(j / 2), { c, at: Math.min(1, at + j * 0.03) });
   }
   return m;
 })();
 
-// past: 0–1 wave across the past; frames: 0–1 future squares become outlines; paint: 0–1 how many get coloured.
 const relit = (past: number, frames: number, paint: number) => (col: number, row: number): Cell | null => {
   if (col < NOW) {
-    const on = interpolate(past * (NOW + 6) - col - (row / 52) * 4, [0, 3], [0, 1], CL);
+    const on = interpolate(past * (NOW + 6) - col - (row / ROWS) * 4, [0, 3], [0, 1], CL);
     if (on <= 0) return null;
     const warm = interpolateColors(random(`w${col}-${row}`), [0, 1], [K.theme, K.gold]);
-    return { c: warm, o: 0.14 + on * (0.4 + 0.35 * random(`o${col}-${row}`)) };
+    return { c: warm, o: EMPTY.o + on * (0.45 + 0.4 * random(`o${col}-${row}`)) };
   }
-  const p = PAINTED.get(col * 52 + row);
+  const p = PAINTED.get(col * ROWS + row);
   if (p) {
-    const t = interpolate(paint, [p.at * 0.8, p.at * 0.8 + 0.2], [0, 1], CL);
-    if (t > 0) return { c: p.c, o: 0.15 + 0.75 * t };
+    const t = interpolate(paint, [p.at * 0.85, p.at * 0.85 + 0.15], [0, 1], CL);
+    if (t > 0) return { c: p.c, o: 0.2 + 0.75 * t };
   }
-  if (frames > 0) return { c: K.fg, o: 0.14 + 0.26 * frames, outline: true };
+  if (frames > 0) return { c: K.fg, o: EMPTY.o + 0.3 * frames, outline: true };
   return null;
 };
 
 export const RelitGrid: React.FC<{ past: number; frames: number; paint: number; o?: number; cursor?: number }> = ({ past, frames, paint, o = 1, cursor = 0 }) => (
-  <LifeGrid {...FULL} paint={relit(past, frames, paint)} glow={0.8} o={o}>
+  <LifeGrid {...BIG} paint={relit(past, frames, paint)} o={o}>
     {cursor > 0 ? (
       <g opacity={cursor}>
-        <line x1={FG.ageX(NOW) - 2} y1={FULL.y - 14} x2={FG.ageX(NOW) - 2} y2={FULL.y + FG.h + 14} stroke={K.themeHi} strokeWidth={3} strokeLinecap="round" />
-        <circle cx={FG.ageX(NOW) - 2} cy={FULL.y - 14} r={6} fill={K.themeHi} />
+        <line x1={BG.colX(NOW) - 2} y1={BIG.y - 14} x2={BG.colX(NOW) - 2} y2={BIG.y + BG.h + 14} stroke={K.themeHi} strokeWidth={3} strokeLinecap="round" />
+        <circle cx={BG.colX(NOW) - 2} cy={BIG.y - 14} r={6} fill={K.themeHi} />
       </g>
     ) : null}
   </LifeGrid>
@@ -84,50 +91,79 @@ export const Relight: React.FC = () => {
   const past = progAt(frame, 0.5, 4, EIO);
   const cursor = progAt(frame, 4, 1, EO);
   const frames = progAt(frame, 6, 1.5, EO);
-  const paint = progAt(frame, 9, 6, EIO);
+  const paint = progAt(frame, 10, 6, EIO) * 0.35;
   return (
     <AbsoluteFill>
       <RelitGrid past={past} frames={frames} paint={paint} cursor={cursor} />
-      <div style={{ position: "absolute", left: FG.ageX(NOW) - 30, top: FULL.y - 62 }}>
-        <In at={4} from="fade">
-          <div style={{ fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.themeHi, whiteSpace: "nowrap" }}>现在</div>
+      <div style={{ position: "absolute", left: BG.colX(NOW) - 28, top: BIG.y - 50, opacity: cursor, fontFamily: FONT, fontSize: 26, fontWeight: 900, color: K.themeHi }}>现在</div>
+      {/* Left margin: the weeks behind; right margin: the weeks ahead. */}
+      <div style={{ position: "absolute", left: 60, top: 420, width: 290, fontFamily: FONT }}>
+        <In at={2} from="left" dist={20}>
+          <div style={{ fontSize: 24, fontWeight: 700, color: K.muted }}>假如你 28 岁</div>
+          <div style={{ fontSize: 28, fontWeight: 700, color: K.sub, marginTop: 10 }}>走过了</div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+            <Odometer value={NOW * ROWS * past} size={64} color={K.theme} />
+            <span style={{ fontSize: 30, fontWeight: 900 }}>周</span>
+          </div>
         </In>
       </div>
-      <Box x={960} y={70} cx>
-        <Head at={0} out={6.5} parts={["过去的格子，", { t: "不用涂黑", c: K.theme }, "。"]} size={72} />
+      <div style={{ position: "absolute", left: 1590, top: 450, width: 290, fontFamily: FONT }}>
+        <In at={6.5} from="right" dist={20}>
+          <div style={{ fontSize: 28, fontWeight: 700, color: K.sub }}>还有大约</div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+            <Odometer value={(COLS - NOW) * ROWS * frames} size={64} color={K.fg} />
+            <span style={{ fontSize: 30, fontWeight: 900 }}>周</span>
+          </div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: K.muted, marginTop: 6 }}>都还空着</div>
+        </In>
+      </div>
+      <Box x={960} y={52} cx>
+        <Head at={0} out={7} parts={["过去的格子，", { t: "不用涂黑", c: K.theme }, "。"]} size={64} />
       </Box>
-      <Box x={960} y={70} cx>
-        <Head at={7} parts={["剩下的，", { t: "留给你自己选颜色", c: K.theme }, "。"]} size={72} />
+      <Box x={960} y={52} cx>
+        <Head at={7.5} parts={["剩下的，", { t: "留给你自己选颜色", c: K.theme }, "。"]} size={64} />
       </Box>
     </AbsoluteFill>
   );
 };
 
-// 103 s: the closing line, on the music's peak.
-export const Closing: React.FC = () => (
-  <AbsoluteFill>
-    <RelitGrid past={1} frames={1} paint={1} o={0.22} />
-    <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(7,9,11,0.75) 0%, rgba(7,9,11,0.3) 50%, transparent 75%)" }} />
-    <Box x={960} y={330} cx style={{ gap: 36 }}>
-      <Head at={0} parts={["用自己的方式，过完一生，"]} size={84} />
-      <Head at={3} parts={[{ t: "活着便是成功", c: K.gold }, "。"]} size={128} />
-    </Box>
-  </AbsoluteFill>
-);
+// ---------- 119 s: the closing line; the future squares take colours as it lands ----------
 
-// 110 s: back to the first sentence.
+export const Closing: React.FC = () => {
+  const frame = useBeatFrame();
+  const paint = 0.35 + 0.65 * progAt(frame, 2.5, 8, EIO);
+  return (
+    <AbsoluteFill>
+      <RelitGrid past={1} frames={1} paint={paint} o={0.75} />
+      <AbsoluteFill style={{ background: "linear-gradient(180deg, transparent 26%, rgba(7,9,11,0.82) 40%, rgba(7,9,11,0.82) 64%, transparent 78%)" }} />
+      <Box x={960} y={420} cx style={{ gap: 30 }}>
+        <Head at={0} parts={["用自己的方式，过完一生，"]} size={80} />
+        <Head at={3} parts={[{ t: "活着便是成功", c: K.gold }, "。"]} size={124} />
+      </Box>
+    </AbsoluteFill>
+  );
+};
+
+// ---------- 125 s: back to the first sentence ----------
+
+const CB_TREE: TreeGeo = { ...TREE, y: 700 };
+
 export const Callback: React.FC = () => {
   const frame = useBeatFrame();
-  const draw = progAt(frame, 0, 2.5, EIO);
+  const bs: TBranch[] = LIFE_BRANCHES.map((b, i) => ({ ...b, dy: b.dy * 0.8, grow: progAt(frame, 0.5 + i * 0.4, 1.6, EO), o: 0.85 }));
   return (
     <AbsoluteFill>
       <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
-        {[180, 560, 900, 1240, 1480].map((x0, i) => (
-          <Branch key={i} b={{ x0, x1: x0 + 320, y: 700, dy: i % 2 ? -120 : 120, color: [K.steel, K.sand, K.lilac][i % 3], grow: progAt(frame, 1.5 + i * 0.4, 1.6, EO), w: 3, o: 0.6 }} />
+        {bs.map((b, i) => (
+          <Branch key={i} g={CB_TREE} b={b} />
         ))}
-        <Trunk x0={-20} x1={1940} y={700} draw={draw} glow={0.8} w={5} />
+        <Trunk g={CB_TREE} glow={1} threads={1} draw={progAt(frame, 0, 2.5, EIO)} />
+        <AgeTicks g={CB_TREE} o={0.8} />
       </svg>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 350, display: "flex", justifyContent: "center" }}>
+      {bs.map((b, i) => (
+        <TipLabel key={i} g={CB_TREE} b={b} o={progAt(frame, 1.6 + i * 0.4, 0.8, EO)} size={26} />
+      ))}
+      <div style={{ position: "absolute", left: 0, right: 0, top: 200, display: "flex", justifyContent: "center" }}>
         <Head at={0} parts={[{ t: "活着是主线，", c: K.theme }, "其他都是支线。"]} size={104} />
       </div>
     </AbsoluteFill>
@@ -137,8 +173,8 @@ export const Callback: React.FC = () => {
 // ---------- Fixed end sequence: sources → making-of → brand card ----------
 
 const NOTES = [
-  "约 4100 周 = 79.0 岁 × 52.18 周。53% 为本片推算：（有酬劳动 264 + 交通 38 + 无酬劳动 162 分钟）÷ 醒着的 881 分钟，15 岁以上全体均值，含不上班的人。",
-  "片中的研究多为相关，不是因果；奖励削弱兴趣在学界有争议。“活着本身就够了”是本片的看法，不是研究结论。",
+  "约 4100 周 = 79.0 岁 × 52.18 周。“一生的时间”按 2018 年 15 岁以上居民的平均一天推算（每天分钟数 ÷ 1440 × 79 年），含不上班的人；53% = 工作、路上、家务和照顾家人 7:44 ÷ 醒着的 14:41。",
+  "片中研究多为相关，不是因果；奖励削弱兴趣在学界有争议；哈佛研究只有男性。“活着本身就够了”是本片的看法，不是研究结论。",
 ];
 
 const SOURCES = [
@@ -149,7 +185,7 @@ const SOURCES = [
   "哈佛成人发展研究（Grant & Glueck Study）· 研究官网 · 2026　｜　Harvard Gazette · 2017",
 ];
 
-const Dimmed: React.FC = () => <RelitGrid past={1} frames={1} paint={1} o={0.12} />;
+const Dimmed: React.FC = () => <RelitGrid past={1} frames={1} paint={1} o={0.14} />;
 
 export const Sources: React.FC = () => (
   <AbsoluteFill>
@@ -182,7 +218,7 @@ const MAKING: [string, string][] = [
   ["选题与撰稿", "MakerJackie"],
   ["数据核对", "MakerJackie"],
   ["画面", "代码逐帧渲染"],
-  ["配乐", "原创，代码生成"],
+  ["配乐", "千年之后（氛围版）· 和乐府"],
   ["制作", "MakerJackie"],
 ];
 
@@ -194,7 +230,7 @@ export const Making: React.FC = () => (
         <In key={r} at={i * 0.25} from="up">
           <div style={{ display: "flex", fontFamily: FONT, alignItems: "baseline" }}>
             <div style={{ width: 300, textAlign: "right", paddingRight: 36, fontSize: 34, fontWeight: 700, color: K.muted }}>{r}</div>
-            <div style={{ width: 420, fontSize: 44, fontWeight: 700, color: K.fg }}>{n}</div>
+            <div style={{ width: 620, fontSize: 44, fontWeight: 700, color: K.fg, whiteSpace: "nowrap" }}>{n}</div>
           </div>
         </In>
       ))}
@@ -208,7 +244,7 @@ export const Making: React.FC = () => (
 const FROM = Array.from("活着是主线");
 const TO = Array.from("世界的形状");
 
-// The title turns into 世界的形状, the orb lands, then the slogan. The audio logo plays on beat 0.
+// The title turns into 世界的形状, the orb lands, then the slogan.
 export const BrandCard: React.FC = () => {
   const frame = useBeatFrame();
   const mark = progAt(frame, 1.4, 1.6, EBACK);

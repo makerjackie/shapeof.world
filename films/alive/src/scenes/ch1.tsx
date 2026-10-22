@@ -1,178 +1,273 @@
 import React from "react";
-import { AbsoluteFill, random } from "remotion";
-import { GBr, LIFE, LifeGrid, RG, RIGHT, tintFor } from "../grid";
-import { EBACK, EIO, EO, In, Odometer, progAt, Tag } from "../fx";
+import { AbsoluteFill } from "remotion";
+import { COLS, EMPTY, geo, GridBox, LifeGrid } from "../grid";
+import { EBACK, EIO, EO, In, progAt, Tag } from "../fx";
+import { Icon, IconName, Person } from "../icons";
 import { useBeatFrame } from "../kit";
-import { FONT, K } from "../theme";
-import { Box, Cap, Head, Src } from "../ui";
+import { FONT, K, USE } from "../theme";
+import { FPB } from "../timing";
+import { Branch, LIFE_BRANCHES, TBranch, TipLabel, TREE, Trunk, ageX, trunkY } from "../tree";
+import { Box, Head, Src } from "../ui";
 
-// 2018 time-use survey (NBS, 11 provinces, everyone 15+), minutes a day. Awake = 1440 − 559 = 881; the things you
-// have to do = paid work 264 + travel 38 + unpaid work 162 = 464, 464 / 881 = 52.7 % (derived, flagged on screen).
-const DAY = { sleep: 559, paid: 264, travel: 38, unpaid: 162 };
-const X0 = 130;
-const W = 1660;
-const PX = W / 1440;
-const BAR_Y = 600;
-const BAR_H = 64;
+// ---------- 22 s: an average day, spread over a life ----------
+// 2018 time-use survey (NBS, 11 provinces, everyone 15+), minutes a day; they add up to 1440. Each category gets
+// round(4108 × minutes / 1440) of the life's squares, painted in reading order (row by row), so the areas are the
+// true shares. Years = minutes / 1440 × 79 (derived, flagged on screen).
+type Cat = { name: string; icon: IconName; min: number; n: number; c: string };
+const CATS: Cat[] = [
+  { name: "睡觉休息", icon: "moon", min: 559, n: 1595, c: USE.sleep },
+  { name: "吃饭、洗漱", icon: "bowl", min: 154, n: 439, c: USE.meals },
+  { name: "工作", icon: "bag", min: 264, n: 753, c: USE.work },
+  { name: "路上", icon: "bus", min: 38, n: 108, c: USE.travel },
+  { name: "家务、照顾家人", icon: "home", min: 162, n: 462, c: USE.chores },
+  { name: "学习", icon: "book", min: 27, n: 77, c: USE.study },
+  { name: "自己的时间", icon: "sun", min: 236, n: 674, c: USE.free },
+];
+const STARTS = CATS.reduce<number[]>((a, c, i) => [...a, (a[i - 1] ?? 0) + (i ? CATS[i - 1].n : 0)], []);
+const HAVE = [2, 3, 4]; // work, travel, chores: the things you have to do
+const D: GridBox = { x: 110, y: 250, pitch: 14, cell: 11 };
+const DG = geo(D);
+const catOf = (idx: number) => {
+  for (let i = CATS.length - 1; i >= 0; i--) if (idx >= STARTS[i]) return i;
+  return 0;
+};
+const bandY = (i: number) => D.y + ((STARTS[i] + CATS[i].n / 2) / COLS) * D.pitch;
+const bandSpan = (ids: number[]) => [D.y + (STARTS[ids[0]] / COLS) * D.pitch, D.y + ((STARTS[ids[ids.length - 1]] + CATS[ids[ids.length - 1]].n) / COLS) * D.pitch - (D.pitch - D.cell)];
+const hm = (m: number) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`;
+const LABEL_X = 1300;
+const rowY = (i: number) => 262 + i * 106;
 
-export const Day: React.FC = () => {
+export const LifeDay: React.FC = () => {
   const frame = useBeatFrame();
-  const draw = progAt(frame, 1.5, 2.5, EIO);
-  const sleepDim = progAt(frame, 4, 1, EO);
-  const segs = [
-    { m: DAY.paid, c: K.steel, at: 5 },
-    { m: DAY.travel, c: K.steelHi, at: 5.6 },
-    { m: DAY.unpaid, c: K.steelLo, at: 6.2 },
-  ];
-  const sleepW = DAY.sleep * PX;
-  const restX = X0 + (DAY.sleep + DAY.paid + DAY.travel + DAY.unpaid) * PX;
-  const brace = progAt(frame, 7.5, 1, EO);
-  let x = X0 + sleepW;
+  const paintAt = (i: number) => 1 + 1.7 * i;
+  const phase2 = progAt(frame, 16, 1.2, EIO);
+  const prog = CATS.map((_, i) => progAt(frame, paintAt(i), 1.4, EIO));
+  const paint = (col: number, row: number) => {
+    const idx = row * COLS + col;
+    const i = catOf(idx);
+    const p = prog[i];
+    if ((idx - STARTS[i]) / CATS[i].n >= p) return EMPTY;
+    const base = i === 0 ? 0.62 - 0.45 * phase2 : HAVE.includes(i) ? 0.85 : 0.8 - (i === 6 ? 0 : 0.35 * phase2);
+    return { c: CATS[i].c, o: base };
+  };
+  const labelsO = 1 - phase2;
+  const [h0, h1] = bandSpan(HAVE);
+  const [m0, m1] = bandSpan([1]);
+  const [f0, f1] = bandSpan([5, 6]);
+  const br = progAt(frame, 16.5, 1.2, EO);
+  const bracket = (y0: number, y1: number, c: string) => (
+    <path d={`M ${D.x + DG.w + 8} ${y0} L ${D.x + DG.w + 18} ${y0} L ${D.x + DG.w + 18} ${y1} L ${D.x + DG.w + 8} ${y1} M ${D.x + DG.w + 18} ${(y0 + y1) / 2} L ${LABEL_X - 16} ${(y0 + y1) / 2}`} stroke={c} strokeWidth={2.5} fill="none" opacity={br} />
+  );
   return (
     <AbsoluteFill>
-      <Box x={X0} y={150} style={{ gap: 14 }}>
-        <Head at={0} parts={["醒着的时间里，"]} size={76} />
-        <Head at={1.5} parts={[{ t: "一半多", c: K.steelHi }, "给了“要做的事”。"]} size={76} />
-      </Box>
-      <div style={{ position: "absolute", left: 1370, top: 150 }}>
-        <In at={8} from="scale">
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6 }}>
-            <Odometer value={53 * progAt(frame, 8, 1.6, EO)} size={190} suffix="%" color={K.steelHi} />
-            <Tag color={K.sub} size={24}>推算 · 含不上班的人</Tag>
-          </div>
-        </In>
-      </div>
-      {/* The day, 24 hours from left to right, wiped in. */}
-      <div style={{ position: "absolute", left: X0, top: BAR_Y, width: W * draw, height: BAR_H, overflow: "hidden", borderRadius: 10 }}>
-        <div style={{ position: "absolute", left: 0, top: 0, width: sleepW, height: BAR_H, background: K.night, opacity: 1 - 0.4 * sleepDim }} />
-        <div style={{ position: "absolute", left: sleepW, top: 0, width: W - sleepW, height: BAR_H, background: `${K.theme}2e` }} />
-        {segs.map((s, i) => {
-          const p = progAt(frame, s.at, 0.8, EO);
-          const left = x - X0;
-          x += s.m * PX;
-          return <div key={i} style={{ position: "absolute", left, top: 0, width: s.m * PX * p, height: BAR_H, background: s.c }} />;
+      <LifeGrid {...D} paint={paint}>
+        {/* Leaders from each band to its label (phase 1). */}
+        {CATS.map((c, i) => {
+          const o = progAt(frame, paintAt(i) + 0.4, 0.8, EO) * labelsO;
+          if (o <= 0.01) return null;
+          const y0 = bandY(i);
+          const y1 = rowY(i) + 26;
+          const xe = D.x + DG.w;
+          return <path key={i} d={`M ${xe + 6} ${y0} L ${xe + 30} ${y0} L ${LABEL_X - 50} ${y1} L ${LABEL_X - 14} ${y1}`} stroke={c.c} strokeWidth={2} fill="none" opacity={0.8 * o} />;
         })}
+        {bracket(m0, m1, USE.meals)}
+        {bracket(h0, h1, USE.work)}
+        {bracket(f0, f1, USE.free)}
+      </LifeGrid>
+      {/* Phase 1: seven labels, one per category. */}
+      {CATS.map((c, i) => {
+        const o = progAt(frame, paintAt(i) + 0.3, 0.8, EO) * labelsO;
+        if (o <= 0.01) return null;
+        const years = (c.min / 1440) * 79;
+        return (
+          <div key={i} style={{ position: "absolute", left: LABEL_X, top: rowY(i), width: 560, height: 52, display: "flex", alignItems: "center", gap: 14, opacity: o, transform: `translateX(${(1 - o) * 30}px)`, fontFamily: FONT }}>
+            <div style={{ width: 52, height: 52, borderRadius: 14, background: `${c.c}26`, border: `2px solid ${c.c}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Icon name={c.icon} size={30} color={c.c} />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.1 }}>
+              <span style={{ fontSize: 32, fontWeight: 900, color: K.fg }}>{c.name}</span>
+              <span style={{ fontSize: 20, fontWeight: 600, color: K.muted }}>每天 {hm(c.min)}</span>
+            </div>
+            <div style={{ marginLeft: "auto", fontSize: 44, fontWeight: 900, color: c.c, fontVariantNumeric: "tabular-nums" }}>
+              {years.toFixed(1)}<span style={{ fontSize: 26, marginLeft: 6 }}>年</span>
+            </div>
+          </div>
+        );
+      })}
+      {/* Phase 2: the waking day in three parts. */}
+      <div style={{ position: "absolute", left: LABEL_X, top: 300, width: 560, opacity: phase2, fontFamily: FONT }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, color: K.muted, fontSize: 28, fontWeight: 700 }}>
+          <Icon name="moon" size={28} color={USE.sleep} />睡着的时间先不算
+        </div>
+        <div style={{ fontSize: 28, fontWeight: 700, color: K.sub, marginTop: 12 }}>醒着的每一天：14 小时 41 分 = 100%</div>
       </div>
-      {/* Brace over the three segments. */}
-      <div style={{ position: "absolute", left: X0 + sleepW, top: BAR_Y - 30, width: (restX - X0 - sleepW) * brace, height: 16, borderTop: `3px solid ${K.steelHi}`, borderLeft: `3px solid ${K.steelHi}`, borderRight: brace > 0.98 ? `3px solid ${K.steelHi}` : undefined, borderRadius: "6px 6px 0 0", opacity: brace }} />
-      <div style={{ position: "absolute", left: X0 + sleepW, top: BAR_Y - 86 }}>
-        <In at={7.8} from="up" dist={20}>
-          <div style={{ fontFamily: FONT, fontSize: 38, fontWeight: 700, color: K.steelHi, whiteSpace: "nowrap" }}>要做的事 · 7 小时 44 分</div>
+      <Group y={(m0 + m1) / 2} at={16.5} c={USE.meals} pct="17%" name="吃饭、洗漱" small />
+      <Group y={(h0 + h1) / 2} at={17} c={USE.work} pct="53%" name="要做的事" note="工作 + 路上 + 家务、照顾家人 · 每天 7:44" big />
+      <Group y={(f0 + f1) / 2} at={17.5} c={USE.free} pct="30%" name="自己的时间" note="含学习 · 每天 4:23" />
+      <div style={{ position: "absolute", left: LABEL_X, top: (h0 + h1) / 2 + 88 }}>
+        <In at={18.5} from="fade">
+          <Tag color={K.sub} size={22}>推算 · 含不上班的人</Tag>
         </In>
       </div>
-      <Label x={X0 + 10} at={4} c={K.muted}>睡觉休息 9:19</Label>
-      <Label x={X0 + sleepW + 10} at={5} c={K.steel}>工作 4:24</Label>
-      <Label x={X0 + sleepW + DAY.paid * PX + 10} at={5.6} c={K.steelHi} row={1}>路上 0:38 · 家务和照顾家人 2:42</Label>
-      <Label x={restX + 14} at={6.6} c={K.theme}>吃饭、休息、学习 6:57</Label>
-      <Src>国家统计局 · 2018 年时间利用调查（11 省市，48,580 人）· 15 岁以上全体均值 · 53% =（工作 + 交通 + 无酬劳动）÷ 醒着的时间</Src>
+      <Box x={110} y={92} style={{ gap: 10 }}>
+        <Head at={0} out={15.6} parts={["把平均的一天，", { t: "摊到一生", c: K.theme }, "："]} size={64} />
+      </Box>
+      <Box x={110} y={92} style={{ gap: 10 }}>
+        <Head at={16} parts={["醒着的时间里，", { t: "一半多", c: USE.work }, "给了“要做的事”。"]} size={64} />
+      </Box>
+      <div style={{ position: "absolute", left: 112, top: 178, opacity: 1 - phase2 }}>
+        <In at={0.5} from="fade">
+          <div style={{ fontFamily: FONT, fontSize: 26, fontWeight: 600, color: K.sub }}>一格一周 · 按 2018 年 15 岁以上居民的平均一天 × 79 年推算 · 含不上班的人</div>
+        </In>
+      </div>
+      <Src>国家统计局 · 2018 年全国时间利用调查（11 省市，48,580 人）· 年数 = 每天分钟数 ÷ 1440 × 79 · 53% = 7:44 ÷ 14:41</Src>
     </AbsoluteFill>
   );
 };
 
-const Label: React.FC<{ x: number; at: number; c: string; row?: number; children: React.ReactNode }> = ({ x, at, c, row = 0, children }) => (
-  <div style={{ position: "absolute", left: x, top: BAR_Y + BAR_H + 18 + row * 44 }}>
-    <In at={at} from="up" dist={16}>
-      <div style={{ fontFamily: FONT, fontSize: 28, fontWeight: 700, color: c, whiteSpace: "nowrap" }}>{children}</div>
+const Group: React.FC<{ y: number; at: number; c: string; pct: string; name: string; note?: string; big?: boolean; small?: boolean }> = ({ y, at, c, pct, name, note, big, small }) => (
+  <div style={{ position: "absolute", left: LABEL_X, top: y - (big ? 62 : small ? 26 : 44) }}>
+    <In at={at} from="left" dist={20}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 16, fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: big ? 110 : small ? 40 : 64, fontWeight: 900, color: c, letterSpacing: big ? -3 : 0, lineHeight: 1 }}>{pct}</span>
+        <span style={{ fontSize: big ? 40 : small ? 28 : 34, fontWeight: 900, color: K.fg }}>{name}</span>
+      </div>
+      {note ? <div style={{ fontFamily: FONT, fontSize: 22, fontWeight: 600, color: K.sub, marginTop: 6, whiteSpace: "nowrap" }}>{note}</div> : null}
     </In>
   </div>
 );
 
-// Branch labels sit just above where a branch turns flat.
-export const BrLabel: React.FC<{ b: Omit<GBr, "grow">; at: number; children: React.ReactNode; o?: number }> = ({ b, at, children, o = 1 }) => {
-  const x = RG.ageX(b.from) + Math.min(110, (b.to - b.from) * RIGHT.pitch * 0.3) * 2 + 8;
-  const y = RG.trunkY + b.dy * RIGHT.pitch - 40;
-  return (
-    <div style={{ position: "absolute", left: x, top: y, opacity: o }}>
-      <In at={at} from="fade">
-        <div style={{ fontFamily: FONT, fontSize: 28, fontWeight: 700, color: b.color, whiteSpace: "nowrap", textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>{children}</div>
-      </In>
-    </div>
-  );
-};
+// ---------- 37 s: the life tree; branches are named, then the trunk ----------
 
-export const lifeBranches = (frame: number, at: [number, number, number], o = 1): GBr[] => [
-  { ...LIFE.school, grow: progAt(frame, at[0], 2, EIO), o },
-  { ...LIFE.work, grow: progAt(frame, at[1], 2.4, EIO), o },
-  { ...LIFE.money, grow: progAt(frame, at[2], 2.6, EIO), o },
-];
+export const lifeBranches = (frame: number, start = 0.5, step = 1, o = 1): TBranch[] =>
+  LIFE_BRANCHES.map((b, i) => ({ ...b, grow: progAt(frame, start + i * step, 1.8, EO), o }));
 
-// 28 s: the branches are named, then the trunk.
-export const Lines: React.FC = () => {
+export const Tree: React.FC = () => {
   const frame = useBeatFrame();
-  const fade = progAt(frame, 6, 1.5, EO);
-  const bs = lifeBranches(frame, [0.5, 1.3, 2.1], 1 - 0.4 * fade);
-  const glow = 0.4 + 0.6 * progAt(frame, 7.5, 1.2, EO);
+  const bs = lifeBranches(frame, 0.4, 0.9);
+  const named = progAt(frame, 9.5, 1.2, EO);
+  const fadeB = 1 - 0.45 * named;
   return (
     <AbsoluteFill>
-      <LifeGrid {...RIGHT} paint={tintFor(bs)} branches={bs} glow={glow} />
-      <BrLabel b={LIFE.school} at={1.5}>上学</BrLabel>
-      <BrLabel b={LIFE.work} at={2.3}>工作</BrLabel>
-      <BrLabel b={LIFE.money} at={3.1}>赚钱</BrLabel>
-      <div style={{ position: "absolute", left: RG.ageX(0), top: RG.trunkY + 14 }}>
-        <In at={7.5} from="fade">
-          <div style={{ fontFamily: FONT, fontSize: 30, fontWeight: 900, color: K.theme, textShadow: "0 2px 12px rgba(0,0,0,0.9)" }}>活着</div>
-        </In>
+      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+        {bs.map((b, i) => (
+          <Branch key={i} g={TREE} b={{ ...b, o: fadeB }} />
+        ))}
+        <Trunk g={TREE} glow={0.5 + 0.5 * named} run={named > 0 ? ((frame - 9.5 * FPB) / (FPB * 6)) % 1 : undefined} />
+        <circle cx={TREE.x0} cy={trunkY(TREE, TREE.x0)} r={30} fill={K.bg} stroke={K.theme} strokeWidth={3} opacity={named} />
+      </svg>
+      {bs.map((b, i) => (
+        <TipLabel key={i} g={TREE} b={{ ...b, o: fadeB }} o={progAt(frame, 0.4 + i * 0.9 + 1.2, 0.8, EO)} size={28} />
+      ))}
+      <div style={{ position: "absolute", left: TREE.x0 - 18, top: trunkY(TREE, TREE.x0) - 18, opacity: named }}>
+        <Icon name="heart" size={36} color={K.theme} />
       </div>
-      <Box x={130} y={280} style={{ gap: 18 }}>
-        <Head at={0} parts={["上学、工作、赚钱——"]} size={68} />
-        <Head at={2.5} parts={[{ t: "这些是支线", c: K.steelHi }, "。"]} size={76} />
-        <div style={{ height: 30 }} />
-        <Head at={6} parts={["中间这条，"]} size={68} />
-        <Head at={7.5} parts={[{ t: "是主线：活着", c: K.theme }, "。"]} size={76} />
+      <div style={{ position: "absolute", left: TREE.x0 - 40, top: trunkY(TREE, TREE.x0) + 40, opacity: named, fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.theme }}>活着</div>
+      <div style={{ position: "absolute", left: ageX(TREE, 79) - 30, top: trunkY(TREE, ageX(TREE, 79)) + 26, fontFamily: FONT, fontSize: 22, fontWeight: 700, color: K.muted }}>79 岁</div>
+      <Box x={960} y={84} cx style={{ gap: 6 }}>
+        <Head at={0} out={9} parts={["上学、工作、赚钱、买房、升职——"]} size={60} />
+        <Head at={3} out={9} parts={[{ t: "这些，是支线", c: K.steelHi }, "。"]} size={76} />
+      </Box>
+      <Box x={960} y={120} cx>
+        <Head at={9.5} parts={["中间这条，", { t: "是主线：活着", c: K.theme }, "。"]} size={80} />
       </Box>
     </AbsoluteFill>
   );
 };
 
-// 100 workers, 20 of them engaged (Gallup 2026, 2025 data). Two dim again for East Asia's 18 %.
-const ENGAGED = (() => {
-  const idx = Array.from({ length: 100 }, (_, i) => i).sort((a, b) => random(`g${a}`) - random(`g${b}`));
-  return { on: new Set(idx.slice(0, 20)), east: new Set(idx.slice(18, 20)) };
-})();
+// ---------- 45 s: Gallup, one figure = 2 % of workers ----------
 
-export const Alone: React.FC = () => {
+const ROWS_G = [
+  { name: "全球", groups: [10, 32, 8], pct: ["20%", "64%", "16%"], y: 520, at: 3 },
+  { name: "东亚", groups: [9, 33, 8], pct: ["18%", "66%", "16%"], y: 790, at: 5.5 },
+];
+const GKIND = [
+  { label: "敬业", c: K.theme },
+  { label: "不敬业", c: "#9a9c9e" },
+  { label: "主动消极", c: K.steelLo },
+];
+const GX = 330;
+const GP = 30;
+
+export const Gallup: React.FC = () => {
   const frame = useBeatFrame();
-  const light = progAt(frame, 3, 1.6, EO);
-  const dimEast = progAt(frame, 6, 0.8, EO);
-  const P = 58;
   return (
     <AbsoluteFill>
-      <div style={{ position: "absolute", left: 1160, top: 260 }}>
-        {Array.from({ length: 100 }, (_, i) => {
-          const col = i % 10;
-          const row = Math.floor(i / 10);
-          const pop = progAt(frame, 0.3 + (col + row) * 0.08, 0.8, EBACK);
-          const on = ENGAGED.on.has(i);
-          const lit = on ? light * (ENGAGED.east.has(i) ? 1 - 0.75 * dimEast : 1) : 0;
-          return (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: col * P,
-                top: row * P,
-                width: 44,
-                height: 44,
-                borderRadius: 8,
-                background: lit > 0.02 ? K.theme : K.fg,
-                opacity: (lit > 0.02 ? 0.2 + 0.8 * lit : 0.1) * Math.min(1, pop),
-                transform: `scale(${0.6 + 0.4 * pop})`,
-              }}
-            />
+      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+        {ROWS_G.map((r, ri) => {
+          const lit = progAt(frame, r.at, 1, EO);
+          let k = 0;
+          return r.groups.map((n, gi) =>
+            Array.from({ length: n }, () => {
+              const i = k++;
+              const pop = progAt(frame, 0.5 + ri * 0.6 + i * 0.025, 0.8, EBACK);
+              if (pop <= 0) return null;
+              const x = GX + i * GP + 12;
+              const base = gi === 0 ? K.fg : GKIND[gi].c;
+              const c = gi === 0 && lit > 0.05 ? K.theme : base;
+              const o = gi === 0 ? 0.4 + 0.6 * lit : gi === 1 ? 0.45 : 0.75;
+              return (
+                <g key={`${ri}-${i}`} transform={`translate(0 ${(1 - Math.min(1, pop)) * 20})`}>
+                  {gi === 0 && lit > 0.05 ? <circle cx={x} cy={r.y - 24} r={22} fill={K.theme} fillOpacity={0.18 * lit} /> : null}
+                  <Person x={x} y={r.y} h={46} color={c} o={o * Math.min(1, pop)} />
+                </g>
+              );
+            }),
           );
         })}
+        {/* Group brackets. */}
+        {ROWS_G.map((r, ri) => {
+          const b = progAt(frame, r.at + 1, 1, EO);
+          let s = 0;
+          return r.groups.map((n, gi) => {
+            const x0 = GX + s * GP;
+            s += n;
+            const x1 = GX + s * GP - 6;
+            return <path key={`${ri}b${gi}`} d={`M ${x0} ${r.y + 12} L ${x0} ${r.y + 20} L ${x0 + (x1 - x0) * b} ${r.y + 20}`} stroke={GKIND[gi].c} strokeWidth={2.5} fill="none" opacity={b} />;
+          });
+        })}
+      </svg>
+      {ROWS_G.map((r, ri) => {
+        let s = 0;
+        return (
+          <React.Fragment key={ri}>
+            <div style={{ position: "absolute", left: 110, top: r.y - 62, fontFamily: FONT }}>
+              <In at={0.5 + ri * 0.6} from="left" dist={20}>
+                <div style={{ fontSize: 44, fontWeight: 900, color: K.fg }}>{r.name}</div>
+              </In>
+            </div>
+            {r.groups.map((n, gi) => {
+              const x0 = GX + s * GP;
+              s += n;
+              return (
+                <div key={gi} style={{ position: "absolute", left: x0, top: r.y + 28, fontFamily: FONT, whiteSpace: "nowrap" }}>
+                  <In at={r.at + 1 + gi * 0.2} from="up" dist={14}>
+                    <span style={{ fontSize: gi === 0 ? 40 : 28, fontWeight: 900, color: GKIND[gi].c }}>{r.pct[gi]}</span>
+                    <span style={{ fontSize: 24, fontWeight: 700, color: K.sub, marginLeft: 8 }}>{GKIND[gi].label}</span>
+                  </In>
+                </div>
+              );
+            })}
+          </React.Fragment>
+        );
+      })}
+      <div style={{ position: "absolute", right: 90, top: 262, fontFamily: FONT, fontSize: 24, fontWeight: 600, color: K.muted, display: "flex", alignItems: "center", gap: 10 }}>
+        <svg width={20} height={30}>
+          <Person x={10} y={29} h={28} color={K.sub} />
+        </svg>
+        每个小人 = 2% 的员工
       </div>
-      <Box x={130} y={230} style={{ gap: 12 }}>
-        <Head at={0} parts={["对工作提不起劲？"]} size={76} />
-        <Cap at={1.5} size={44} color={K.sub}>全世界的员工里，真正投入的只有</Cap>
-        <In at={2.7} from="up" dist={30}>
-          <Odometer value={20 * light} size={190} suffix="%" color={K.theme} />
+      <Box x={110} y={100} style={{ gap: 12 }}>
+        <Head at={0} parts={["对工作提不起劲？"]} size={72} />
+        <In at={1.5} from="fade">
+          <div style={{ fontFamily: FONT, fontSize: 36, fontWeight: 700, color: K.sub }}>全世界的员工里，真正投入工作的，只有五分之一。</div>
         </In>
-        <Cap at={6} size={44} color={K.sub}>东亚：18%</Cap>
-        <div style={{ height: 16 }} />
-        <Head at={8} parts={[{ t: "你不是一个人", c: K.theme }, "。"]} size={84} />
       </Box>
-      <Src>盖洛普 · 全球职场现状 2026 · 2025 年数据 · “敬业”按盖洛普的定义，自评问卷 · 东亚为区域均值</Src>
+      <Box x={960} y={900} cx>
+        <Head at={8} parts={[{ t: "你不是一个人", c: K.theme }, "。"]} size={72} />
+      </Box>
+      <Src>盖洛普 · 全球职场现状 2026 · 2025 年数据 · “敬业”按盖洛普的定义，自评问卷 · 东亚为区域均值，不等于中国</Src>
     </AbsoluteFill>
   );
 };
+
