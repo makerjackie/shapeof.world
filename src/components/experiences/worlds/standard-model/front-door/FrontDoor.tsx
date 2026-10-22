@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ArrowRight, ArrowCounterClockwise } from '@phosphor-icons/react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
+import { BeatResult, BeatSteps, Conclusion, DoHint, GuessCard, SkipButton, beatIndex, useFiveBeats } from '~/components/experiences/five-beat'
 import { worldPath } from '~/lib/world-urls'
 import { sampleHydrogenPosition } from '../particle-model'
 import { bodyQuarkKg, protonMassMeV, protonQuarks, quarkMassMeV, quarkSum, weightSources, type QuarkFlavour } from './weight-model'
@@ -13,7 +14,6 @@ import './FrontDoor.css'
  * then the three quarks become the only thing you can move.
  */
 
-type Beat = 0 | 1 | 2 | 3 | 4
 type Guess = 'all' | 'half' | 'tiny'
 type L = [string, string]
 
@@ -24,7 +24,6 @@ const quarkSumMeV = quarkSum(protonQuarks)
 const bodyQuarks = bodyQuarkKg(BODY_KG)
 const percent = (quarkSumMeV / protonMassMeV * 100).toFixed(1)
 
-const beatNames: L[] = [['问', 'Ask'], ['猜', 'Guess'], ['做', 'Do'], ['看', 'See'], ['懂', 'Get it']]
 const journey: L[] = [['夸克', 'Quarks'], ['原子', 'Atoms'], ['细胞', 'Cells'], ['生物', 'Life'], ['地球', 'Earth'], ['太阳系', 'Solar system'], ['星系', 'Galaxies']]
 const guesses: Array<{ id: Guess; text: L }> = [
 	{ id: 'all', text: ['差不多全部', 'Nearly all of it'] },
@@ -49,21 +48,17 @@ const nucleus: Array<[number, number, boolean]> = [[0, 0, true], [1.55, 0.35, fa
 
 export function FrontDoor({ controls, en, onEnterMuseum }: { controls: ExperienceControls; en: boolean; onEnterMuseum: () => void }) {
 	const t = (value: L) => value[en ? 1 : 0]
-	const [beat, setBeat] = useState<Beat>(0)
-	const [guess, setGuess] = useState<Guess | null>(null)
+	const { beat, beatRef, guess, goto, choose, restart: restartBeats } = useFiveBeats<Guess>(controls, { start: 'ask' })
 	const [onPan, setOnPan] = useState(0)
 	const [caption, setCaption] = useState(0)
 	const root = useRef<HTMLDivElement>(null), canvas = useRef<HTMLCanvasElement>(null)
 	const top = useRef<HTMLDivElement>(null), card = useRef<HTMLDivElement>(null)
-	const beatRef = useRef<Beat>(0)
 	const quarks = useRef<QuarkState[]>(protonQuarks.map(flavour => ({ flavour, onPan: false, x: 0, y: 0 })))
 	const drag = useRef<{ index: number; startX: number; startY: number; moved: boolean } | null>(null)
 	const layout = useRef<Layout | null>(null)
 	const diveStart = useRef<number | null>(null)
 	const reduced = useRef(false)
-	beatRef.current = beat
 
-	const goto = (next: Beat) => { beatRef.current = next; setBeat(next) }
 	const placeOnPan = (index: number) => {
 		const quark = quarks.current[index]
 		if (!quark || quark.onPan) return
@@ -71,12 +66,12 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 		const count = quarks.current.filter(q => q.onPan).length
 		setOnPan(count)
 		controls.registerInteraction()
-		if (count === 3) window.setTimeout(() => { if (beatRef.current === 2) goto(3) }, 700)
+		if (count === 3) window.setTimeout(() => { if (beatRef.current === 'do') goto('see') }, 700)
 	}
 	const placeNext = () => placeOnPan(quarks.current.findIndex(q => !q.onPan))
 	const restart = () => {
 		quarks.current.forEach(q => { q.onPan = false })
-		setOnPan(0); setGuess(null); setCaption(0); diveStart.current = null; goto(0)
+		setOnPan(0); setCaption(0); diveStart.current = null; restartBeats()
 	}
 
 	useEffect(() => {
@@ -100,11 +95,11 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 		const draw = (now: number) => {
 			frame = requestAnimationFrame(draw)
 			const time = now / 1000
-			const b = beatRef.current
+			const b = beatIndex(beatRef.current)
 			if (diveStart.current === null) diveStart.current = time
 			const diveT = reduced.current ? 1 : Math.min(1, (time - diveStart.current) / DIVE_SECONDS)
 			const z = 3 * easeInOut(diveT)
-			if (b === 0 && diveT >= 1) goto(1)
+			if (b === 0 && diveT >= 1) goto('guess')
 			const captionIndex = Math.min(3, Math.floor(z + 0.35))
 			if (captionIndex !== lastCaption) { lastCaption = captionIndex; setCaption(captionIndex) }
 
@@ -146,10 +141,10 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 		}
 		frame = requestAnimationFrame(draw)
 		return () => { cancelAnimationFrame(frame); observer.disconnect() }
-	}, [en])
+	}, [en, goto])
 
 	const pointer = (event: React.PointerEvent<HTMLCanvasElement>) => {
-		const b = beatRef.current
+		const b = beatIndex(beatRef.current)
 		const box = event.currentTarget.getBoundingClientRect()
 		const x = event.clientX - box.left, y = event.clientY - box.top
 		if (event.type === 'pointerdown') {
@@ -174,32 +169,38 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 
 	const mine = guesses.find(g => g.id === guess)
 	const right = guess === 'tiny'
-	const sub = beat <= 1 ? t(diveCaptions[caption]) : beat === 2 ? t(['现实里夸克拿不出来；这里的读数是间接测出来的。', 'In reality quarks cannot be taken out; these readings are inferred indirectly.'])
-		: beat === 3 ? t(['质子还是那么重，夸克只占一点点。', 'The proton weighs the same; the quarks are a sliver.'])
+	const at = beatIndex(beat)
+	const sub = at <= 1 ? t(diveCaptions[caption]) : at === 2 ? t(['现实里夸克拿不出来；这里的读数是间接测出来的。', 'In reality quarks cannot be taken out; these readings are inferred indirectly.'])
+		: at === 3 ? t(['质子还是那么重，夸克只占一点点。', 'The proton weighs the same; the quarks are a sliver.'])
 			: t(['你摸到的每一样东西，重量大多是被关住的能量。', 'Most of the weight of everything you touch is trapped energy.'])
 
-	return <div className="smf-door" ref={root} data-beat={beat}>
-		<canvas ref={canvas} className="smf-scene" data-beat={beat} onPointerDown={pointer} onPointerMove={pointer} onPointerUp={pointer} onPointerCancel={pointer}
+	return <div className="smf-door" ref={root} data-beat={at}>
+		<canvas ref={canvas} className="smf-scene" data-beat={at} onPointerDown={pointer} onPointerMove={pointer} onPointerUp={pointer} onPointerCancel={pointer}
 			aria-label={t(['从站在秤上的你一路放大到一个质子；质子里有三颗夸克', 'A dive from you on a scale down into one proton, with three quarks inside'])} />
 		<div className="smf-top" ref={top}>
 			<div className="smf-journey" aria-label={t(['尺度之旅', 'Journey through scales'])}>{journey.map((step, i) => <span key={step[1]} className={i === 0 ? 'is-here' : undefined}>{t(step)}</span>)}</div>
-			<div className="smf-beats" aria-hidden="true">{beatNames.map((name, i) => <span key={name[1]} className={i === beat ? 'is-on' : i < beat ? 'is-done' : undefined}>{t(name)}</span>)}</div>
+			<BeatSteps beat={beat} />
 			<h1 data-experience-content-start="true">{t(['你的体重是从哪儿来的？', 'Where does your weight come from?'])}</h1>
 			<p className="smf-sub" aria-live="polite">{sub}</p>
 		</div>
 		<div className="smf-card" ref={card} aria-live="polite">
-			{beat === 0 && <p className="smf-dive">{t(['点一下画面，跳过镜头。', 'Tap the picture to skip the dive.'])}</p>}
-			{beat === 1 && <>
-				<p className="smf-q">{t(['先猜一下：把质子里的三颗夸克单独放上秤，它们占质子重量的多少？', 'First, a guess: put the three quarks from a proton on a scale by themselves. How much of the proton’s weight do they make up?'])}</p>
-				<div className="smf-options">{guesses.map(g => <button key={g.id} className="smf-option" onClick={() => { controls.registerInteraction(); setGuess(g.id); goto(2) }}>{t(g.text)}</button>)}</div>
-				<div className="smf-row"><button className="smf-skip" onClick={() => { controls.registerInteraction(); goto(2) }}>{t(['不猜，直接玩', 'Skip the guess'])}</button><button className="smf-skip" onClick={onEnterMuseum}>{t(['直接进博物馆', 'Go straight to the museum'])}</button></div>
-			</>}
-			{beat === 2 && <>
-				<p><span className="smf-hint">{t(['把三颗夸克拖到秤上', 'Drag the three quarks onto the scale'])}</span>{t(['，看看它们一共多重。', ' and see what they weigh together.'])}</p>
-				<div className="smf-row"><span className="smf-meter">{t(['秤上', 'On the scale'])} <b>{onPan}/3</b></span><button className="smf-skip" onClick={placeNext}>{t(['拖不动？点这里放一颗', 'Can’t drag? Place one'])}</button></div>
-			</>}
-			{beat === 3 && <>
-				{mine && <><span className={right ? 'smf-verdict is-good' : 'smf-verdict is-miss'}>{right ? t(['猜对了', 'You got it']) : t(['比你猜的少得多', 'Far less than you guessed'])}</span><p>{t(['你猜：', 'You guessed: ']) + t(mine.text) + t(['。', '.'])}</p></>}
+			{beat === 'ask' && <p className="smf-dive">{t(['点一下画面，跳过镜头。', 'Tap the picture to skip the dive.'])}</p>}
+			{beat === 'guess' && <GuessCard
+				question={t(['先猜一下：把质子里的三颗夸克单独放上秤，它们占质子重量的多少？', 'First, a guess: put the three quarks from a proton on a scale by themselves. How much of the proton’s weight do they make up?'])}
+				options={guesses.map(g => ({ id: g.id, label: t(g.text) }))}
+				onChoose={choose}
+				skip={t(['不猜，直接玩', 'Skip the guess'])}
+				toLab={{ label: t(['直接进博物馆', 'Go straight to the museum']), onClick: onEnterMuseum }} />}
+			{beat === 'do' && <DoHint
+				hint={t(['把三颗夸克拖到秤上', 'Drag the three quarks onto the scale'])}
+				tail={t(['，看看它们一共多重。', ' and see what they weigh together.'])}
+				meter={<span className="smf-meter">{t(['秤上', 'On the scale'])} <b>{onPan}/3</b></span>}
+				fallback={{ label: t(['拖不动？点这里放一颗', 'Can’t drag? Place one']), onClick: placeNext }} />}
+			{beat === 'see' && <BeatResult
+				verdict={mine && (right ? t(['猜对了', 'You got it']) : t(['比你猜的少得多', 'Far less than you guessed']))}
+				right={right}
+				mine={mine && t(['你猜：', 'You guessed: ']) + t(mine.text) + t(['。', '.'])}
+				next={{ label: t(['那剩下的 99% 是什么？', 'So what is the other 99%?']), onClick: () => goto('know') }}>
 				<div className="smf-bars" role="img" aria-label={t(['质子 938.3 MeV，三颗夸克 9.0 MeV', 'Proton 938.3 MeV, three quarks 9.0 MeV'])}>
 					<div><span>{t(['整个质子', 'Whole proton'])}</span><i style={{ width: '100%' }} /><b>{protonMassMeV.toFixed(1)} MeV</b></div>
 					<div><span>{t(['三颗夸克', 'Three quarks'])}</span><i className="is-quarks" style={{ width: `${quarkSumMeV / protonMassMeV * 100}%` }} /><b>{quarkSumMeV.toFixed(1)} MeV · {percent}%</b></div>
@@ -210,15 +211,14 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 					<BottleIcon /><div><b>{bodyQuarks.toFixed(2)} kg</b><span>{t(['你身上所有夸克本身', 'All the quarks in you, by themselves'])}</span></div>
 				</div>
 				<p className="smf-small">{t(['约等于一瓶矿泉水。按质子、中子各一半估算；电子只占约 0.03%。', 'About one bottle of water. Estimated with equal protons and neutrons; electrons add about 0.03%.'])}</p>
-				<div className="smf-row"><button className="smf-primary" onClick={() => { controls.registerInteraction(); controls.finish(); goto(4) }}>{t(['那剩下的 99% 是什么？', 'So what is the other 99%?'])}</button></div>
-			</>}
-			{beat === 4 && <>
-				<p className="smf-big">{t(['你的体重只有约 1% 来自夸克本身，另外 99% 是把夸克锁在质子和中子里的能量。', 'Only about 1% of your weight is the quarks themselves; the other 99% is the energy that locks them inside protons and neutrons.'])}</p>
-				<p className="smf-src">{t(['出处：', 'Sources: '])}{weightSources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}<br />{t(['夸克从不单独出现，质量是间接推得的；能量就是质量，E = mc²。', 'Quarks never appear alone, so their masses are inferred; energy is mass, E = mc².'])}</p>
-				<button className="smf-primary smf-wide" onClick={onEnterMuseum}>{t(['走进基本粒子博物馆', 'Enter the particle museum'])}<ArrowRight size={18} /></button>
-				<a className="smf-next" href={worldPath('periodic-table', en ? 'en' : 'zh')}><small>{t(['下一个问题 · 尺度之旅往外走一层', 'Next question · one step out'])}</small><span>{t(['元素符号背后，物质是什么模样？', 'What does matter look like behind an element symbol?'])}</span></a>
-				<button className="smf-skip" onClick={restart}><ArrowCounterClockwise size={14} />{t(['再走一遍', 'Play again'])}</button>
-			</>}
+			</BeatResult>}
+			{beat === 'know' && <Conclusion
+				sentence={t(['你的体重只有约 1% 来自夸克本身，另外 99% 是把夸克锁在质子和中子里的能量。', 'Only about 1% of your weight is the quarks themselves; the other 99% is the energy that locks them inside protons and neutrons.'])}
+				source={<>{t(['出处：', 'Sources: '])}{weightSources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}<br />{t(['夸克从不单独出现，质量是间接推得的；能量就是质量，E = mc²。', 'Quarks never appear alone, so their masses are inferred; energy is mass, E = mc².'])}</>}
+				cta={<button className="smf-primary smf-wide" onClick={onEnterMuseum}>{t(['走进基本粒子博物馆', 'Enter the particle museum'])}<ArrowRight size={18} /></button>}
+				next={{ href: worldPath('periodic-table', en ? 'en' : 'zh'), kicker: t(['下一个问题 · 尺度之旅往外走一层', 'Next question · one step out']), question: t(['元素符号背后，物质是什么模样？', 'What does matter look like behind an element symbol?']) }}>
+				<SkipButton onClick={restart}><ArrowCounterClockwise size={14} />{t(['再走一遍', 'Play again'])}</SkipButton>
+			</Conclusion>}
 		</div>
 	</div>
 }
@@ -278,7 +278,7 @@ function quarkHome(L: Layout, unit: number, slot: number, time: number, still: b
 	return [L.cx + Math.cos(a) * unit * 0.42 + Math.sin(time * 3.1 + slot * 2) * unit * jitter, L.cy + Math.sin(a) * unit * 0.42 + Math.cos(time * 2.7 + slot) * unit * jitter]
 }
 
-function drawProton(ctx: CanvasRenderingContext2D, L: Layout, unit: number, time: number, still: boolean, quarks: QuarkState[], beat: Beat, drag: { index: number } | null, en: boolean) {
+function drawProton(ctx: CanvasRenderingContext2D, L: Layout, unit: number, time: number, still: boolean, quarks: QuarkState[], beat: number, drag: { index: number } | null, en: boolean) {
 	const { cx, cy } = L
 	const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, unit * 1.05)
 	const intensity = beat >= 3 ? 0.62 + 0.08 * Math.sin(time * 2) : 0.42
@@ -342,7 +342,7 @@ function drawQuark(ctx: CanvasRenderingContext2D, x: number, y: number, r: numbe
 	ctx.fillText(flavour, x, y + r * 0.33); ctx.textAlign = 'start'
 }
 
-function drawScale(ctx: CanvasRenderingContext2D, L: Layout, quarks: QuarkState[], blend: number, beat: Beat, en: boolean) {
+function drawScale(ctx: CanvasRenderingContext2D, L: Layout, quarks: QuarkState[], blend: number, beat: number, en: boolean) {
 	const { px, py, pr } = L
 	ctx.save(); ctx.globalAlpha = Math.min(1, blend * 1.4)
 	ctx.fillStyle = '#1d2430'; ctx.strokeStyle = 'rgba(244,239,226,0.35)'; ctx.lineWidth = 1.5
