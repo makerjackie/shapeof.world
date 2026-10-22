@@ -4,7 +4,7 @@
 // Playwright comes from the site's dependencies at the repository root; it drives the headless Chrome that Remotion
 // downloads into node_modules/.remotion, so no extra browser is needed. (The system Edge works too, PW_CHANNEL=msedge,
 // but Windows runs it in efficiency mode and the render crawls.) ffmpeg is the one bundled with Remotion.
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import path from "node:path";
@@ -14,12 +14,21 @@ const { chromium } = require("playwright");
 const root = path.resolve(new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
 const raw = path.join(root, "music", "score-raw.wav");
 const out = path.join(root, "public", "score.wav");
-const ffmpeg = (args) => spawnSync("npx", ["remotion", "ffmpeg", ...args], { cwd: root, encoding: "utf8", shell: true });
+// npx is a .cmd on Windows and needs a shell there; elsewhere spawn it directly so the filter strings stay intact.
+const ffmpeg = (args) => spawnSync("npx", ["remotion", "ffmpeg", ...args], { cwd: root, encoding: "utf8", shell: process.platform === "win32" });
+
+// Remotion downloads its headless Chrome on the first render; fetch it now if this checkout has not rendered yet.
+function headlessShell() {
+  const dir = path.join(root, "node_modules", ".remotion", "chrome-headless-shell");
+  if (!existsSync(dir)) spawnSync("npx", ["remotion", "browser", "ensure"], { cwd: root, stdio: "inherit", shell: process.platform === "win32" });
+  const plat = readdirSync(dir)[0]; // win64, mac-arm64, linux64 …
+  const exe = process.platform === "win32" ? "chrome-headless-shell.exe" : "chrome-headless-shell";
+  return path.join(dir, plat, `chrome-headless-shell-${plat}`, exe);
+}
 
 if (!process.argv.includes("--norm-only")) {
-  const shell = path.join(root, "node_modules", ".remotion", "chrome-headless-shell", "win64", "chrome-headless-shell-win64", "chrome-headless-shell.exe");
   const args = ["--disable-renderer-backgrounding", "--disable-background-timer-throttling", "--disable-backgrounding-occluded-windows"];
-  const browser = await chromium.launch(process.env.PW_CHANNEL ? { channel: process.env.PW_CHANNEL, args } : { executablePath: shell, args });
+  const browser = await chromium.launch(process.env.PW_CHANNEL ? { channel: process.env.PW_CHANNEL, args } : { executablePath: headlessShell(), args });
   const page = await browser.newPage();
   page.on("pageerror", (e) => console.log("pageerror", String(e)));
   await page.setContent("<!doctype html><meta charset=utf-8><title>score</title>");
