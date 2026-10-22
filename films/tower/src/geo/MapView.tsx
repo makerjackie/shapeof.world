@@ -26,12 +26,13 @@ export type Label = {
 };
 
 export type Layers = {
-  prd?: number;
-  prdFill?: Record<string, { color: string; a: number }>;
+  prd?: number; // the delta's land
+  szTint?: { color: string; a: number }; // all of Shenzhen
   sz?: number;
   szFill?: Record<string, { color: string; a: number }>;
   roads?: number;
   metro?: number;
+  metroFlow?: number; // px of dash travel: trains running
   bldg?: number;
   bldgH?: number; // 0..1 heights rise
   night?: number; // 0..1 windows lit
@@ -219,7 +220,7 @@ export const MapView: React.FC<{
   const metroO = (L.metro ?? 0) * zFade(z, 0.012);
   const bldgO = (L.bldg ?? 0) * zFade(z, 0.08);
 
-  const prd = prdO > 0.01 ? polys(p, WORLD.prd) : [];
+  const coastD = prdO > 0.01 ? WORLD.coast.map((r) => linePath(p, r)).join("") : "";
   const sz = szO > 0.01 ? polys(p, WORLD.sz) : [];
 
   const drawn: Drawn[] = bldgO > 0.01 ? drawBuildings(p, CITY.buildings, L, "b") : [];
@@ -229,21 +230,14 @@ export const MapView: React.FC<{
   return (
     <>
       <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
-        {prd.map(({ q, d }, i) => {
-          const f = L.prdFill?.[q.name ?? ""];
-          return (
-            <g key={`p${i}`} opacity={prdO}>
-              <path d={d} fill={q.name === "深圳市" ? "#1a1f26" : "#11161c"} stroke="rgba(244,240,232,0.16)" strokeWidth={1} />
-              {f ? <path d={d} fill={f.color} fillOpacity={f.a} stroke={f.color} strokeOpacity={Math.min(1, f.a * 2.5)} strokeWidth={2} /> : null}
-            </g>
-          );
-        })}
+        {coastD ? <path d={coastD} fill="none" stroke="#9fb3c4" strokeOpacity={0.55 * prdO} strokeWidth={1.3} strokeLinejoin="round" /> : null}
         {sz.map(({ q, d }, i) => {
           const f = L.szFill?.[q.name ?? ""];
           return (
             <g key={`s${i}`} opacity={szO}>
               <path d={d} fill="#161c24" stroke="rgba(244,240,232,0.28)" strokeWidth={1.2} />
               {f ? <path d={d} fill={f.color} fillOpacity={f.a} /> : null}
+              {L.szTint && L.szTint.a > 0.005 ? <path d={d} fill={L.szTint.color} fillOpacity={L.szTint.a} stroke={L.szTint.color} strokeOpacity={Math.min(1, L.szTint.a * 2.5)} strokeWidth={1.5} /> : null}
             </g>
           );
         })}
@@ -265,7 +259,17 @@ export const MapView: React.FC<{
           : null}
         {metroO > 0.01
           ? CITY.metro.map((m: Line, i) => (
-              <path key={`m${i}`} d={linePath(p, m.pts)} fill="none" stroke="#5fb0d8" strokeOpacity={0.75 * metroO} strokeWidth={Math.max(2, Math.min(6, z * 8))} strokeDasharray={z > 0.15 ? "10 6" : undefined} strokeLinecap="round" />
+              <path
+                key={`m${i}`}
+                d={linePath(p, m.pts)}
+                fill="none"
+                stroke={L.metroFlow !== undefined ? "#8fd3f0" : "#5fb0d8"}
+                strokeOpacity={0.75 * metroO}
+                strokeWidth={Math.max(2, Math.min(L.metroFlow !== undefined ? 7 : 6, z * 8))}
+                strokeDasharray={L.metroFlow !== undefined ? "18 14" : z > 0.15 ? "10 6" : undefined}
+                strokeDashoffset={L.metroFlow !== undefined ? -L.metroFlow : undefined}
+                strokeLinecap="round"
+              />
             ))
           : null}
         {under?.(p)}

@@ -1,5 +1,6 @@
 #!/bin/bash
-# Raw map downloads for tools/geo-prep.mjs (not committed): OSM via Overpass, city boundaries via DataV.GeoAtlas.
+# Raw map downloads for tools/geo-prep.mjs (not committed), all from OpenStreetMap via Overpass. The Futian layers
+# also read the CTBUH-matched heights and landmarks in data/ (built by data/scripts).
 # Usage: bash tools/fetch-geo.sh [rawDir]   (default /tmp/towerv2-raw)
 set -e
 RAW=${1:-/tmp/towerv2-raw}
@@ -22,8 +23,6 @@ q '[out:json][timeout:200];way["highway"~"^(motorway|trunk|primary|secondary|ter
 # The metro network and stations across Shenzhen.
 q '[out:json][timeout:200];(way["railway"="subway"](22.40,113.75,22.90,114.65);node["railway"="station"]["station"="subway"](22.40,113.75,22.90,114.65);node["public_transport"="station"]["subway"="yes"](22.40,113.75,22.90,114.65););out tags geom;' metro.json
 
-# Pearl River Delta cities (GCJ-02; geo-prep converts to WGS-84).
-for a in 440000_full 810000 820000; do
-  curl -s -m 60 -A "$UA" "https://geo.datav.aliyun.com/areas_v3/bound/$a.json" -o "$RAW/dv-$a.json"
-  echo "ok dv-$a.json"
-done
+# The Pearl River Delta coastline, for the title shot's land (tools/prd-land.mjs builds the polygons).
+q '[out:json][timeout:240];way["natural"="coastline"](21.8,112.3,23.75,115.6);out geom;' prd-coast.json
+node "$(dirname "$0")/prd-land.mjs" "$RAW"

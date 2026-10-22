@@ -114,7 +114,7 @@ export const Film: React.FC = () => {
         trimBefore={MUSIC_OFFSET}
         volume={(f) => GAIN * interpolate(f, [0, 3], [0.6, 1], CL) * interpolate(f, [FILM_FRAMES - 12, FILM_FRAMES - 1], [1, 0], CL)}
       />
-      {cur.flat ? null : <Backdrop keys={palKeys} />}
+      <Backdrop keys={palKeys} />
       {SCENES.map((s, i) => {
         const start = starts[i];
         const pre = i === 0 ? 0 : PRE;

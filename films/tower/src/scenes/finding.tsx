@@ -13,7 +13,21 @@ const Y0 = 2006;
 const Y1 = 2064;
 const X0 = 150;
 const X1 = 1770;
-const X = (y: number) => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
+export const X = (y: number) => X0 + ((y - Y0) / (Y1 - Y0)) * (X1 - X0);
+export const Y_AXIS = 800;
+const YEARS = [2008, 2018, 2028, 2038, 2048, 2058];
+
+// The year axis shared with the fair-play screen just before, so the cut between them keeps every mark in place.
+export const AxisYears: React.FC<{ o: number }> = ({ o }) => (
+  <>
+    <div style={{ position: "absolute", left: X0, top: Y_AXIS, width: (X1 - X0) * o, height: 2, background: K.line }} />
+    {YEARS.map((y) => (
+      <div key={y} style={{ position: "absolute", left: X(y), top: Y_AXIS + 14, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.muted, opacity: o, fontVariantNumeric: "tabular-nums" }}>
+        {y}
+      </div>
+    ))}
+  </>
+);
 
 const LAND_FROM = 2008.3; // contract signed 2008-04-23
 const LAND_TO = 2058.3;
@@ -68,21 +82,13 @@ export const Finding: React.FC = () => {
   const yearsLeft = interpolate(f, [2 * FPB, 3.2 * FPB], [50, 40], { ...CL, easing: EO });
   const y33 = interpolate(pay1, [0, 1], [0, 33]);
   const y41 = interpolate(pay2, [0, 1], [0, 41]);
-  const axis = progAt(f, 0, 1, EO);
 
   const LAND_Y = 430;
   const P1_Y = 610;
   const P2_Y = 700;
-  const years = [2008, 2018, 2028, 2038, 2048, 2058];
   return (
     <AbsoluteFill>
-      {/* year axis */}
-      <div style={{ position: "absolute", left: X0, top: 800, width: (X1 - X0) * axis, height: 2, background: K.line }} />
-      {years.map((y) => (
-        <Txt key={y} x={X(y)} y={814} size={24} color={K.muted} align="center" o={axis}>
-          {y}
-        </Txt>
-      ))}
+      <AxisYears o={1} />
       {/* land */}
       <Txt x={X0} y={LAND_Y - 74} size={30} color={K.sub} o={land}>
         这块地 · 50 年
@@ -130,7 +136,7 @@ export const Finding: React.FC = () => {
       {/* headline */}
       <div style={{ position: "absolute", left: X0, top: 130, display: "flex", flexDirection: "column", gap: 14 }}>
         <Head at={0.3} parts={["这块地 50 年，交付时", { t: "只剩 40 年", c: K.steel }, "。"]} size={56} />
-        <Head at={4.5} parts={["29.36 亿的楼，回本要 ", { t: "33–41 年", c: K.theme }, "。"]} size={56} />
+        <Head at={4.5} parts={["按今天的租金，回本要 ", { t: "33–41 年", c: K.theme }, "。"]} size={56} />
       </div>
       <div style={{ position: "absolute", left: X0, top: 900 }}>
         <Head at={10} parts={["回本，要用掉这块地", { t: "几乎全部的寿命", c: K.gold }, "。"]} size={72} />

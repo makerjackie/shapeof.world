@@ -2,13 +2,14 @@ import React from "react";
 import { AbsoluteFill, interpolate, random } from "remotion";
 import { actBar, Subs, track } from "../act";
 import { Cam, CamKey, camAt, project, Proj } from "../geo/cam";
-import { CITY, WORLD } from "../geo/data";
+import { CITY, ll, poi, WORLD } from "../geo/data";
 import { Label, MapView } from "../geo/MapView";
 import { CL, EBACK, EIO, EO, In, Odometer, progAt, Shockwave } from "../fx";
 import { Stamp, useBeatFrame } from "../kit";
 import { FONT, K } from "../theme";
 import { FPB } from "../timing";
 import { Head, Src } from "../ui";
+import { Scrim, Txt } from "./common";
 
 // Opening and 01 一块地 (film bars 0–24): one continuous camera over the real city. Futian at night → 粤海 (the
 // hook) → the delta (title) → Shenzhen and its land → the CBD → parcel B119-0053 → back to 粤海 for the answer.
@@ -21,14 +22,14 @@ const HERO = { x: -129, y: -808 };
 const CIVIC = { x: -566, y: 696 };
 const EXPO = { x: -548, y: -702 };
 const PINGAN = { x: -995, y: -369 };
-const YUEHAI = { x: -11800, y: -700 }; // 南山 粤海街道 (approximate centre, labelled as an area only)
+const YUEHAI = poi("K602-0016"); // 南山粤海 K602-0016, estimated from its road corner (~100 m)
 
 // ---------- camera ----------
 const NIGHT: Cam = { x: -420, y: -470, z: 0.8, bearing: 18, tilt: 66, oy: 810 };
 const NANSHAN: Cam = { x: -12500, y: 1500, z: 0.034, bearing: 0, tilt: 0, ox: 1180 };
 const SZ_WIDE: Cam = { x: 9000, y: 9000, z: 0.0165, bearing: 0, tilt: 0, ox: 1080 };
-const DELTA: Cam = { x: -6000, y: 26000, z: 0.0043, bearing: 0, tilt: 0 };
-const SZ: Cam = { x: 12500, y: 10200, z: 0.0152, bearing: 0, tilt: 0, ox: 1190, oy: 560 };
+const DELTA: Cam = { x: -6000, y: 26000, z: 0.0062, bearing: 0, tilt: 0 };
+const SZ: Cam = { x: 12500, y: 10200, z: 0.0152, bearing: 0, tilt: 0, ox: 1300, oy: 560 };
 const SZ_DOTS: Cam = { ...SZ, ox: 820 };
 const CBD_FLAT: Cam = { x: -420, y: 120, z: 0.36, bearing: 0, tilt: 0, ox: 1240 };
 const CBD_3D: Cam = { x: -470, y: -60, z: 0.5, bearing: -18, tilt: 52, ox: 1220, oy: 600 };
@@ -164,12 +165,28 @@ const Columns: React.FC<{ p: Proj; f: number }> = ({ p, f }) => {
       {col(x - 110, 10.86, res, K.red, "住宅地 · 2026", "10.86 万")}
       {col(x + 110, 1.11, off, K.green, "写字楼地 · 2025", "1.11 万")}
       <div style={{ position: "absolute", left: x - 260, top: y, width: 520, height: 3, background: K.fg, opacity: 0.6 }} />
+      <div style={{ position: "absolute", left: x - 260, top: y + 62, width: 520, textAlign: "center", fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.sub, letterSpacing: 2 }}>南山 · 粤海街道</div>
     </div>
   );
 };
 
 // ---------- labels ----------
-const prdLabels: Label[] = WORLD.prd.map((d) => ({ text: (d.name ?? "").replace(/市$|特别行政区$/, ""), x: d.c[0], y: d.c[1], kind: "city", zMax: 0.009 }));
+const CITIES: [string, number, number][] = [
+  ["广州", 113.264, 23.129],
+  ["佛山", 113.122, 23.021],
+  ["东莞", 113.752, 23.02],
+  ["惠州", 114.416, 23.111],
+  ["中山", 113.392, 22.517],
+  ["珠海", 113.577, 22.271],
+  ["江门", 113.082, 22.579],
+  ["香港", 114.17, 22.35],
+  ["澳门", 113.55, 22.19],
+  ["深圳", 114.06, 22.64],
+];
+const prdLabels: Label[] = CITIES.map(([text, lon, lat]) => {
+  const [x, y] = ll(lon, lat);
+  return { text, x, y, kind: "city", zMax: 0.009 };
+});
 const szLabels: Label[] = WORLD.sz.map((d) => ({ text: d.name ?? "", x: d.c[0], y: d.c[1], kind: "district", zMin: 0.012, zMax: 0.06 }));
 const roadLabels: Label[] = [
   { text: "深南大道", x: -2300, y: -150, along: "深南大道" },
@@ -189,7 +206,6 @@ const placeLabels: Label[] = [
   { text: "莲花山", x: -520, y: 2050, kind: "poi", zMin: 0.25, zMax: 1.2, color: K.sub },
   { text: "深圳湾", x: -6500, y: -3200, kind: "note", zMin: 0.012, zMax: 0.05, color: "#6f8fa8", size: 24 },
   { text: "香港", x: 4000, y: -9000, kind: "note", zMin: 0.012, zMax: 0.05, color: "#6f8fa8", size: 24 },
-  { text: "粤海街道", x: YUEHAI.x, y: YUEHAI.y + 2600, kind: "poi", zMin: 0.025, zMax: 0.06, color: K.fg, size: 26 },
 ];
 const stationLabels: Label[] = ["会展中心", "市民中心", "岗厦", "岗厦北", "购物公园", "福田"].map((n) => {
   const s = CITY.stations.find((q) => q.name === n)!;
@@ -317,7 +333,7 @@ const Stage: React.FC = () => {
         cam={cam}
         layers={{
           prd,
-          prdFill: { 深圳市: { color: K.theme, a: szHi } },
+          szTint: { color: K.theme, a: szHi },
           sz: szDim,
           szFill: { 南山区: { color: K.theme, a: ns * 0.45 }, 福田区: { color: K.theme, a: ft } },
           roads,
@@ -331,9 +347,9 @@ const Stage: React.FC = () => {
         }}
         labels={[
           ...prdLabels.map((l) => (l.text === "深圳" ? { ...l, color: K.theme, size: 34 } : { ...l, o: 1 - 0.65 * title })),
-          ...szLabels.map((l) => ({ ...l, o: Math.max(0, (szDim - 0.35) / 0.65) })),
+          ...szLabels.map((l) => ({ ...l, o: Math.max(0, (szDim - 0.35) / 0.65) * (1 - ns / 0.28) })),
           ...roadLabels.map((l) => ({ ...l, o: 1 - 0.5 * night })),
-          ...placeLabels.map((l) => (l.text.startsWith("平安") ? { ...l, o: 1 - night } : l)),
+          ...placeLabels.map((l) => (l.text.startsWith("平安") ? { ...l, o: 1 - night } : l.text === "深圳湾" || l.text === "香港" ? { ...l, o: 1 - ns / 0.28 } : l)),
           ...stationLabels,
           { ...heroLabel, o: hero * (1 - track(f, [[at(16) - 6, 0], [at(16), 1], [at(18, 2), 1], [at(18, 3), 0]])) },
         ]}
@@ -353,14 +369,6 @@ const Stage: React.FC = () => {
 };
 
 // ---------- screens ----------
-const Scrim: React.FC<{ w?: number }> = ({ w = 900 }) => (
-  <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: w, background: "linear-gradient(90deg, rgba(7,9,11,0.92) 0%, rgba(7,9,11,0.75) 55%, rgba(7,9,11,0) 100%)" }} />
-);
-
-const Txt: React.FC<{ size?: number; color?: string; w?: number; children: React.ReactNode; style?: React.CSSProperties }> = ({ size = 40, color = K.fg, w = 700, children, style }) => (
-  <div style={{ fontFamily: FONT, fontSize: size, fontWeight: w, color, whiteSpace: "nowrap", lineHeight: 1.3, ...style }}>{children}</div>
-);
-
 // S01: the whole claim is on screen from frame 0 (no entrance), and slams on the first beat.
 const Claim: React.FC = () => {
   const f = useBeatFrame();
@@ -397,7 +405,7 @@ const Hook: React.FC = () => (
         <Txt size={30} color={K.sub} style={{ marginTop: 24 }}>写字楼地反而便宜</Txt>
       </In>
     </div>
-    <Src at={0.5}>第一财经 2026 · 粤海街道住宅地 57.72 亿元；澎湃新闻 2025 · K602-0016 总部用地 9.65 亿元 · 楼面地价为估算：成交价 ÷ 规定建筑面积 · 柱子位置为街道示意</Src>
+    <Src at={0.5}>第一财经 2026 · 粤海街道住宅地 57.72 亿元；澎湃新闻 2025 · K602-0016 总部用地 9.65 亿元 · 楼面地价为估算：成交价 ÷ 规定建筑面积 · 位置为估算</Src>
   </AbsoluteFill>
 );
 
@@ -438,14 +446,14 @@ const Shenzhen: React.FC = () => (
         <Txt size={52}>深圳</Txt>
       </In>
       <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
-        <Odometer value={interpolate(useBeatFrame(), [0.8 * FPB, 2.6 * FPB], [0, 1997], { ...CL, easing: EO })} size={150} />
+        <Odometer value={interpolate(useBeatFrame(), [0.8 * FPB, 2.6 * FPB], [0, 1997], { ...CL, easing: EO })} size={130} />
         <Txt size={44} color={K.sub}>平方公里</Txt>
       </div>
       <In at={2.4} from="up">
         <Txt size={34} color={K.sub}>9 个区 + 大鹏新区</Txt>
       </In>
     </div>
-    <Src at={1}>深圳市统计局 · 2025（待核）· 行政区划：OpenStreetMap、DataV.GeoAtlas</Src>
+    <Src at={1}>深圳市统计局（待核）· 行政区划与海岸线：© OpenStreetMap contributors</Src>
   </AbsoluteFill>
 );
 

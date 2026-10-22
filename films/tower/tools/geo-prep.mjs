@@ -116,60 +116,22 @@ const polysOf = (fcol, tol, nameKey = "name", minArea = 0) =>
     return { name: f.properties[nameKey], rings, bbox: bboxOf(rings), c: centre(rings) };
   });
 
-// ---------- GCJ-02 → WGS-84 (DataV is in GCJ-02, OSM in WGS-84) ----------
-const GA = 6378245.0;
-const GEE = 0.00669342162296594323;
-const tLat = (x, y) => {
-  let r = -100 + 2 * x + 3 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
-  r += ((20 * Math.sin(6 * x * Math.PI) + 20 * Math.sin(2 * x * Math.PI)) * 2) / 3;
-  r += ((20 * Math.sin(y * Math.PI) + 40 * Math.sin((y / 3) * Math.PI)) * 2) / 3;
-  r += ((160 * Math.sin((y / 12) * Math.PI) + 320 * Math.sin((y * Math.PI) / 30)) * 2) / 3;
-  return r;
-};
-const tLon = (x, y) => {
-  let r = 300 + x + 2 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
-  r += ((20 * Math.sin(6 * x * Math.PI) + 20 * Math.sin(2 * x * Math.PI)) * 2) / 3;
-  r += ((20 * Math.sin(x * Math.PI) + 40 * Math.sin((x / 3) * Math.PI)) * 2) / 3;
-  r += ((150 * Math.sin((x / 12) * Math.PI) + 300 * Math.sin((x / 30) * Math.PI)) * 2) / 3;
-  return r;
-};
-const wgs2gcj = ([lon, lat]) => {
-  let dLat = tLat(lon - 105, lat - 35);
-  let dLon = tLon(lon - 105, lat - 35);
-  const rad = (lat / 180) * Math.PI;
-  const m = 1 - GEE * Math.sin(rad) ** 2;
-  const sq = Math.sqrt(m);
-  dLat = (dLat * 180) / (((GA * (1 - GEE)) / (m * sq)) * Math.PI);
-  dLon = (dLon * 180) / ((GA / sq) * Math.cos(rad) * Math.PI);
-  return [lon + dLon, lat + dLat];
-};
-const gcj2wgs = ([lon, lat]) => {
-  let w = [lon, lat];
-  for (let i = 0; i < 6; i++) {
-    const g = wgs2gcj(w);
-    w = [w[0] - (g[0] - lon), w[1] - (g[1] - lat)];
-  }
-  return w;
-};
 const rawJ = (f) => JSON.parse(fs.readFileSync(`${RAW}/${f}`, "utf8"));
-const toWgs = (fcol) => {
-  for (const f of fcol.features) {
-    const g = f.geometry;
-    const parts = g.type === "Polygon" ? [g.coordinates] : g.coordinates;
-    for (const poly of parts) for (const r of poly) for (let i = 0; i < r.length; i++) r[i] = gcj2wgs(r[i]);
-  }
-  return fcol;
-};
 
 // ---------- world.json ----------
-const world = { origin: ORIGIN, prd: [], sz: [] };
+// The delta's land from the OSM coastline (tools/prd-land.mjs) and Shenzhen's districts (data/, OSM, land only).
+const world = { origin: ORIGIN, coast: [], sz: [] };
 world.sz = polysOf(read("shenzhen-districts.geojson"), 20, "name", 20000);
-const PRD = new Set(["广州市", "深圳市", "珠海市", "佛山市", "江门市", "肇庆市", "惠州市", "东莞市", "中山市", "清远市", "河源市", "汕尾市", "云浮市", "阳江市", "韶关市"]);
-const gd = toWgs(rawJ("dv-440000_full.json"));
-gd.features = gd.features.filter((f) => PRD.has(f.properties.name));
-world.prd = [...polysOf(gd, 150, "name", 4e6), ...polysOf(toWgs(rawJ("dv-810000.json")), 80, "name", 5e5), ...polysOf(toWgs(rawJ("dv-820000.json")), 30, "name", 1e5)];
+{
+  const pl = rawJ("prd-land.json");
+  const len = (m) => m.reduce((s, p, i) => (i ? s + Math.hypot(p[0] - m[i - 1][0], p[1] - m[i - 1][1]) : 0), 0);
+  world.coast = pl.chains
+    .map((c) => dp(c.map(toM), 70))
+    .filter((m) => m.length > 1 && len(m) > 2500)
+    .map(flat);
+}
 fs.writeFileSync("src/geo/world.json", JSON.stringify(world));
-console.log("world.json", "prd", world.prd.length, "sz", world.sz.length, fs.statSync("src/geo/world.json").size, "bytes");
+console.log("world.json", "coast", world.coast.length, "sz", world.sz.length, fs.statSync("src/geo/world.json").size, "bytes");
 
 // ---------- city.json ----------
 // OSM ways of 深圳能源大厦 (金田路 2026): north tower, south tower and the block between them.
@@ -202,6 +164,8 @@ const heightOf = (t, id) => {
   const r = ((id * 2654435761) % 1000) / 1000;
   return t.building === "apartments" || t.building === "residential" ? 24 + r * 30 : 9 + r * 14;
 };
+// Best heights for the CBD window (data/futian-cbd-buildings.geojson): CTBUH > OSM height > levels × 3.5.
+const bestH = new Map(read("futian-cbd-buildings.geojson").features.filter((f) => f.properties.h > 0).map((f) => [f.properties.id, { h: f.properties.h, year: f.properties.year }]));
 const buildings = [];
 for (const e of els) {
   const t = e.tags || {};
@@ -217,7 +181,8 @@ for (const e of els) {
   if (!m || Math.abs(area(m)) < 80) continue;
   const ring = flat(m);
   const b = bboxOf([ring]);
-  buildings.push({ h: Math.round(heightOf(t, e.id)), ring, bbox: b, cx: Math.round((b[0] + b[2]) / 2), cy: Math.round((b[1] + b[3]) / 2), name: t.name });
+  const best = bestH.get(e.id);
+  buildings.push({ h: Math.round(best ? best.h : heightOf(t, e.id)), ring, bbox: b, cx: Math.round((b[0] + b[2]) / 2), cy: Math.round((b[1] + b[3]) / 2), name: t.name, year: best?.year });
 }
 // The parcel outline drawn on the map: the box around the three footprints (the site itself is 6,427.7 m²).
 {
@@ -269,6 +234,24 @@ for (const e of els) {
   const b = buildings.find((q) => q.name === t.name);
   pois.push({ name: WANT[t.name], x: Math.round(ms.reduce((s, p) => s + p[0], 0) / ms.length), y: Math.round(ms.reduce((s, p) => s + p[1], 0) / ms.length), h: b ? b.h : 0 });
 }
-const city = { roads, metro, stations, buildings, pois, hero };
+// Landmarks (data/landmarks.geojson): HQ towers, the 7 submarket anchors (a metro station inside each, not a
+// boundary) and K602-0016 (estimated from its road corner, ~100 m).
+for (const f of read("landmarks.geojson").features) {
+  const p = f.properties;
+  const [x, y] = toM(f.geometry.coordinates);
+  const name = p.name.startsWith("南山粤海 K602-0016") ? "K602-0016" : p.name.replace(" (写字楼分区锚点)", "");
+  if (pois.some((q) => q.name === name)) continue;
+  pois.push({ name, x: Math.round(x), y: Math.round(y), h: Math.round(p.height_m || 0), kind: p.kind });
+}
+// CTBUH completed towers ≥150 m with a year, for the skyline growing city-wide: [x, y, height, year].
+const towers = read("shenzhen-towers-ctbuh.geojson")
+  .features.filter((f) => f.properties.status === "COM" && f.properties.year)
+  .map((f) => {
+    const [x, y] = toM(f.geometry.coordinates);
+    return [Math.round(x), Math.round(y), Math.round(f.properties.height_m), f.properties.year];
+  });
+const skyline = JSON.parse(fs.readFileSync("data/shenzhen-skyline-by-year.json", "utf8")).series.map((r) => [r.year, r.cum150, r.cum200, r.cum300]);
+const cbdRing = flat(mring(read("futian-cbd-boundary.geojson").features[0].geometry.coordinates[0], 0));
+const city = { roads, metro, stations, buildings, pois, hero, towers, skyline, cbd: cbdRing };
 fs.writeFileSync("src/geo/city.json", JSON.stringify(city));
 console.log("city.json", "roads", roads.length, "metro", metro.length, "stations", stations.length, "buildings", buildings.length, "pois", pois.length, fs.statSync("src/geo/city.json").size, "bytes");
