@@ -1,395 +1,190 @@
-import { Component, Suspense, lazy, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import type { ExperienceControls } from '~/components/ExperienceShell';
+import { useI18n } from '~/i18n/index';
 import { useExperienceI18n } from '~/i18n/experience';
 import { ClientOnly } from '~/components/ClientOnly';
-import { cuts, systems, type SystemId } from './cow-data';
-import { CowMap, shortNames } from './CowMap';
-import { MeatSlice } from './MeatSlice';
-import { fiberSpan } from './meat-model';
+import { copy } from './copy';
+import { NECK_KG, cuts, primals } from './cow-data';
+import { CowMap } from './CowMap';
+import { CowScene } from './CowScene';
+import { guesses, guessIsRight, servings, type Guess } from './yield-model';
 import './styles/CowAnatomy.css';
-const AnatomyScene = lazy(() => import('./private/AnatomyScene'));
-class ModelBoundary extends Component<{ children: ReactNode; fallback: ReactNode }, { failed: boolean }> {
-	state = { failed: false };
-	static getDerivedStateFromError() {
-		return { failed: true };
-	}
-	render() {
-		return this.state.failed ? this.props.fallback : this.props.children;
-	}
-}
-const modes = [
-	['cuts', '部位图鉴'],
-	['anatomy', '身体里面'],
-	['slice', '切一片看看'],
-] as const;
-type Mode = (typeof modes)[number][0];
-const tissueNotes = [
-	['肌纤维', '肌肉由肌纤维组成。逆纹切能缩短肉片中的纤维。'],
-	['结缔组织', '筋膜与肌腱提供支撑和传力。它们影响嚼感，但短时间涮烫并不会让胶原大量化成明胶。'],
-	['脂肪', '脂肪带来脂香和润滑感。雪花多并不保证一块肉一定更嫩。'],
-] as const;
+
+const beats = ['问', '猜', '做', '看', '懂'] as const;
+type Beat = 1 | 2 | 3 | 4;
+
 export function CowAnatomy({ controls, worldId = 'cow-anatomy' }: { controls: ExperienceControls; worldId?: string }) {
 	const tx = useExperienceI18n();
-	const [mode, setMode] = useState<Mode>('cuts');
-	const [cutId, setCutId] = useState('chuck-tender');
-	const [system, setSystem] = useState<SystemId>('skeletal');
-	const [opacity, setOpacity] = useState(0.08);
-	const [reset, setReset] = useState(0);
-	const knifeStart = useRef<number | null>(null);
-	const [knife, setKnife] = useState(0);
-	const [angle, setAngle] = useState(90);
-	const [thickness, setThickness] = useState(1.5);
-	const [slices, setSlices] = useState(1);
-	const [heat, setHeat] = useState(0);
-	const [tissue, setTissue] = useState(0);
-	const cut = cuts.find((c) => c.id === cutId)!;
-	const activeSystem = systems.find((s) => s.id === system)!;
+	const { locale } = useI18n();
+	const l = locale === 'en' ? 'en' : 'zh';
+	const [beat, setBeat] = useState<Beat>(1);
+	const [guess, setGuess] = useState<Guess | null>(null);
+	const [stage, setStage] = useState(0);
+	const [lab, setLab] = useState(false);
+	const [cutId, setCutId] = useState('neck');
 	const interact = controls.registerInteraction;
-	function chooseCut(id: string) {
-		interact();
-		setCutId(id);
-		setSlices(1);
-		setHeat(0);
+	const cut = cuts.find((c) => c.id === cutId)!;
+	const primal = primals[cut.primal];
+	const neckDunks = servings(NECK_KG.low, NECK_KG.high);
+
+	function cutOnce() {
+		setStage((s) => Math.min(2, s + 1));
 	}
-	function slice() {
+	useEffect(() => {
+		if (stage !== 2 || beat !== 2) return;
+		const timer = window.setTimeout(() => setBeat(3), 1100);
+		return () => window.clearTimeout(timer);
+	}, [stage, beat]);
+	function choose(g: Guess | null) {
 		interact();
-		setSlices((s) => (s >= 5 ? 1 : s + 1));
+		setGuess(g);
+		setBeat(2);
 	}
-	function chooseMode(m: Mode) {
+	function restart() {
 		interact();
-		setMode(m);
+		setLab(false);
+		setGuess(null);
+		setStage(0);
+		setBeat(1);
 	}
-	const span = fiberSpan(angle, thickness);
-	const muscle = cut.id !== 'tripe' && cut.id !== 'brisket';
+	function understand() {
+		interact();
+		setBeat(4);
+		controls.finish();
+	}
+
 	return (
-		<div className={`ca-world ca-mode-${mode}`} data-world={worldId}>
-			<div className="ca-paper-grain" aria-hidden="true" />
-			<header className="ca-heading" data-experience-overlay="true">
-				<div>
-					<span className="ca-eyebrow">{tx('潮汕牛肉图鉴')}</span>
-					<h1>
-						{tx('牛的里里外外')}
-						<i aria-hidden="true" />
-					</h1>
-				</div>
-				<p>{tx('部位、肉质与身体结构')}</p>
+		<div className={`ca-world ${lab ? 'ca-lab' : ''}`} data-world={worldId}>
+			<header className="ca-question" data-experience-overlay="true">
+				<ol className="ca-beats" aria-label={tx('五步')}>
+					{lab ? (
+						<li className="on">{tx('实验室')}</li>
+					) : (
+						beats.map((b, i) => (
+							<li key={b} className={i === beat ? 'on' : i < beat ? 'done' : ''}>
+								{tx(b)}
+							</li>
+						))
+					)}
+				</ol>
+				<h1>{tx(lab ? '最贵的脖仁，一头牛有多少？' : '一头牛，能变成多少肉？')}</h1>
 			</header>
-			<nav className="ca-mode-nav" aria-label={tx('探索方式')} data-experience-overlay="true">
-				{modes.map(([m, label], i) => (
-					<button key={m} aria-pressed={mode === m} onClick={() => chooseMode(m)}>
-						<span>0{i + 1}</span>
-						{tx(label)}
-					</button>
-				))}
-			</nav>
+
 			<div className="ca-stage">
-				<section className="ca-body-stage" aria-label={tx(mode === 'anatomy' ? '牛身体系统' : '牛肉部位探索')}>
-					<div className="ca-stage-caption" data-experience-overlay="true">
-						<span>{tx(mode === 'anatomy' ? '牛的解剖' : '部位分布')}</span>
-						<span>{tx(mode === 'anatomy' ? '拖动旋转 · 滚动缩放' : '点击部位查看肉质')}</span>
-					</div>
-					{mode === 'anatomy' ? (
-						<>
-							<div className="ca-anatomy-canvas">
-								<ModelBoundary
-									key={reset}
-									fallback={
-										<div className="ca-model-fallback">
-											<p>{tx('解剖模型暂时无法显示。部位图鉴仍可使用。')}</p>
-											<button onClick={() => setReset((r) => r + 1)}>{tx('重新加载')}</button>
-										</div>
-									}
-								>
-									<ClientOnly fallback={<p>{tx('正在打开解剖模型…')}</p>}>
-										<Suspense fallback={<p>{tx('正在打开解剖模型…')}</p>}>
-											<AnatomyScene system={system} opacity={opacity} reset={reset} onInteract={interact} />
-										</Suspense>
-									</ClientOnly>
-								</ModelBoundary>
-							</div>
-							<div className="ca-model-actions" data-experience-overlay="true">
-								{system !== 'surface' && (
-									<label>
-										{tx('牛体轮廓')}
-										<input
-											aria-label={tx('牛体轮廓')}
-											type="range"
-											min="0"
-											max=".4"
-											step=".02"
-											value={opacity}
-											onChange={(e) => {
-												interact();
-												setOpacity(+e.target.value);
-											}}
-										/>
-									</label>
-								)}
-								<button
-									onClick={() => {
-										interact();
-										setReset((r) => r + 1);
-									}}
-								>
-									{tx('复位视角')}
-								</button>
-							</div>
-						</>
-					) : (
-						<CowMap selected={cut.id} onSelect={chooseCut} />
-					)}
-					<div
-						className="ca-selection"
-						role="group"
-						aria-label={tx(mode === 'anatomy' ? '牛身体系统' : '十一种潮州牛肉火锅部位')}
-						data-experience-overlay="true"
-					>
-						{mode === 'anatomy'
-							? systems.map((s) => (
-									<button
-										key={s.id}
-										aria-pressed={system === s.id}
-										onClick={() => {
-											interact();
-											setSystem(s.id);
-										}}
-									>
-										{tx(s.label)}
-									</button>
-								))
-							: cuts.map((c, i) => (
-									<button key={c.id} aria-pressed={cut.id === c.id} onClick={() => chooseCut(c.id)}>
-										<small>{String(i + 1).padStart(2, '0')}</small>
-										{tx(shortNames[c.id])}
-									</button>
-								))}
-					</div>
-				</section>
-				<section className="ca-detail" aria-label={tx(mode === 'anatomy' ? '系统详情' : '肉质与切片')}>
-					{mode !== 'anatomy' && (
-						<div className="ca-detail-top" data-experience-overlay="true">
-							<span>{tx('潮汕鲜切')}</span>
-							<span>{`${String(cuts.indexOf(cut) + 1).padStart(2, '0')} / 11`}</span>
-						</div>
-					)}
-					{mode === 'anatomy' ? (
-						<>
-							<div className="ca-detail-copy" data-experience-overlay="true">
-								<h2>{tx(activeSystem.title)}</h2>
-								<p>{tx(activeSystem.body)}</p>
-								{system === 'digestive' && (
-									<div className="ca-stomachs">
-										{['瘤胃 · 发酵', '网胃 · 协同反刍', '瓣胃 · 吸收水分', '皱胃 · 酸与酶消化'].map((t) => (
-											<span key={t}>{tx(t)}</span>
-										))}
-									</div>
-								)}
-								<small>{tx('模型为示意，不同个体的形态会有差异。')}</small>
-							</div>
-						</>
-					) : (
-						<>
-							<div className="ca-platter" key={cut.id}>
-								{mode === 'cuts' ? (
-									<div
-										className="ca-photo-plate"
-										role="img"
-										aria-label={tx(cut.label)}
-										style={{ '--plate-x': `${(cut.atlas[0] / 3) * 100}%`, '--plate-y': `${(cut.atlas[1] / 2) * 100}%` } as CSSProperties}
-									/>
-								) : (
-									<MeatSlice cut={cut} heat={heat} angle={angle} thickness={thickness} slices={slices} />
-								)}
-								{mode === 'slice' && (
-									<button
-										className="ca-knife"
-										aria-label={tx('向下拖刀，切下一片')}
-										style={{ '--knife-travel': `${knife * 130}px` } as CSSProperties}
-										onPointerDown={(e) => {
-											knifeStart.current = e.clientY;
-											e.currentTarget.setPointerCapture(e.pointerId);
-										}}
-										onPointerMove={(e) => {
-											if (knifeStart.current !== null) setKnife(Math.max(0, Math.min(1, (e.clientY - knifeStart.current) / 100)));
-										}}
-										onPointerUp={(e) => {
-											if (knifeStart.current !== null && e.clientY - knifeStart.current > 45) slice();
-											knifeStart.current = null;
-											setKnife(0);
-										}}
-										onPointerCancel={() => {
-											knifeStart.current = null;
-											setKnife(0);
-										}}
-										onKeyDown={(e) => {
-											if (e.key === 'Enter' || e.key === ' ') {
-												e.preventDefault();
-												slice();
-											}
-										}}
-									>
-										<i />
-										<span>{tx('向下拖刀')}</span>
-									</button>
-								)}
-								<span className="ca-platter-seal" aria-hidden="true">
-									{tx('鲜切')}
-								</span>
-							</div>
-							<div className="ca-detail-copy" data-experience-overlay="true">
-								<span className="ca-kicker">{tx(cut.standard)}</span>
-								<h2>
-									{tx(shortNames[cut.id])}
-									<span>{tx(cut.texture)}</span>
-								</h2>
-								<p>{tx(cut.body)}</p>
-								{mode === 'cuts' ? (
-									<button className="ca-text-action" onClick={() => chooseMode('slice')}>
-										{tx('切开看看里面')} <span>↗</span>
-									</button>
-								) : (
-									<>
-										<div className="ca-slice-controls">
-											<div className="ca-angle-switch" role="group" aria-label={tx('切向')}>
-												<button
-													disabled={!muscle}
-													aria-pressed={angle === 90}
-													onClick={() => {
-														interact();
-														setAngle(90);
-														setSlices(1);
-													}}
-												>
-													{tx('逆纹切')}
-												</button>
-												<button
-													disabled={!muscle}
-													aria-pressed={angle === 0}
-													onClick={() => {
-														interact();
-														setAngle(0);
-														setSlices(1);
-													}}
-												>
-													{tx('顺纹切')}
-												</button>
-											</div>
-											<label>
-												{tx('厚度')} <b>{thickness.toFixed(1)} mm</b>
-												<input
-													type="range"
-													aria-label={tx('厚度')}
-													min=".5"
-													max="5"
-													step=".5"
-													value={thickness}
-													onChange={(e) => {
-														interact();
-														setThickness(+e.target.value);
-														setSlices(1);
-													}}
-												/>
-											</label>
-											<button className="ca-cut-action" onClick={slice}>
-												{tx(slices >= 5 ? '重新摆盘' : '切一片')} <span>＋</span>
-											</button>
-										</div>
-									</>
-								)}
-							</div>
-						</>
-					)}
-				</section>
+				{lab ? (
+					<CowMap
+						selected={cut.id}
+						onSelect={(id) => {
+							interact();
+							setCutId(id);
+						}}
+					/>
+				) : (
+					<ClientOnly fallback={null}>
+						<CowScene stage={stage} knifeActive={beat === 2 && stage < 2} showMeat={stage === 2} onCut={cutOnce} onInteract={interact} />
+					</ClientOnly>
+				)}
 			</div>
-			<section className="ca-learning" data-experience-overlay="true" aria-label={tx('结构与口感')}>
-				{mode === 'slice' ? (
-					<>
-						<div className="ca-fiber-experiment">
-							<div className={`ca-fiber-window ${!muscle ? 'ca-nonmuscle' : ''}`} aria-hidden="true">
-								{Array.from({ length: 12 }, (_, i) => (
-									<i key={i} style={{ width: `${Math.min(92, span * 3)}%`, top: `${9 + i * 7}%`, left: `${4 + (i % 3) * 2}%` }} />
-								))}
-							</div>
-							<div>
-								<span className="ca-kicker">{tx(muscle ? '放大看肌纤维' : '组织结构')}</span>
-								<h3>
-									{tx(
-										!muscle
-											? cut.id === 'tripe'
-												? '百叶是胃的叶片'
-												: '胸口朥是筋脂组织'
-											: angle === 90
-												? '横着切，纤维更短'
-												: '顺着切，留下长纤维',
-									)}
-								</h3>
-								<p>{tx(muscle ? '逆纹切和薄切都会缩短肉片中的肌纤维。' : '这个部位的组织不呈平行肌纤维排列，不能用顺纹、逆纹来比较。')}</p>
-							</div>
-						</div>
-						<div className="ca-heat">
-							<div className="ca-heat-tabs" role="group" aria-label={tx('受热变化')}>
-								{['未加热', '受热收缩', '继续久煮'].map((label, i) => (
-									<button
-										key={label}
-										aria-pressed={heat === i}
-										onClick={() => {
-											interact();
-											setHeat(i);
-										}}
-									>
-										{tx(label)}
-									</button>
-								))}
-							</div>
+
+			<section className="ca-card" aria-live="polite">
+				{lab ? (
+					<div className="ca-cut">
+						<div
+							className="ca-plate"
+							role="img"
+							aria-label={tx(cut.label)}
+							style={{ '--plate-x': `${(cut.atlas[0] / 3) * 100}%`, '--plate-y': `${(cut.atlas[1] / 2) * 100}%` } as CSSProperties}
+						/>
+						<div className="ca-cut-copy">
+							<h2>
+								{tx(cut.label)} <small>{tx(cut.texture)}</small>
+							</h2>
+							{cut.id === 'neck' && (
+								<p className="ca-big-line">{copy.neckAmount(l, NECK_KG.low, NECK_KG.high, NECK_KG.cowKg, neckDunks.low, neckDunks.high)}</p>
+							)}
 							<p>
-								{tx(
-									heat === 2
-										? cut.overcook
-										: heat === 1
-											? muscle
-												? '肌肉受热会收缩、失水。图中颜色不代表实际熟度。'
-												: '不同组织受热后的变化不同。图示不用于判断熟度。'
-											: '筋花、脂肪与肌纤维的放大示意。',
-								)}
+								{primal.share === null
+									? tx('它不算「肉」：第一刀就和皮、头、内脏一起被拿走了。')
+									: copy.primalShare(l, tx(primal.label), primal.share)}
 							</p>
+							<p className="ca-src">
+								{tx(cut.timeLabel)} · {tx('潮州地方标准 DB4451/T 9—2024。口感秒数不是安全线，吃之前要熟透。')}
+							</p>
+							{cut.id === 'neck' && <p className="ca-src">{tx('脖仁产量是行业说法（澎湃号，2024），不是统计数据。')}</p>}
+							<p className="ca-src">{tx('点牛身上的其他部位看看。')}</p>
 						</div>
-					</>
-				) : mode === 'cuts' ? (
+						<button className="ca-ghost" onClick={restart}>
+							{tx('再切一头牛')}
+						</button>
+					</div>
+				) : beat === 1 ? (
 					<>
-						<div className="ca-tissue">
-							<div className="ca-tissue-tabs" role="group" aria-label={tx('肉里有什么')}>
-								{tissueNotes.map(([title], i) => (
-									<button
-										key={title}
-										aria-pressed={tissue === i}
-										onClick={() => {
-											interact();
-											setTissue(i);
-										}}
-									>
-										<i className={`ca-tissue-icon ca-tissue-${i}`} />
-										{tx(title)}
-									</button>
-								))}
-							</div>
-							<p aria-live="polite">{tx(tissueNotes[tissue][1])}</p>
+						<p className="ca-q">{tx('先猜：一头牛，最后有多少能变成肉？')}</p>
+						<div className="ca-options">
+							{guesses.map((g) => (
+								<button key={g.id} className="ca-option" onClick={() => choose(g.id)}>
+									{tx(g.label)}
+								</button>
+							))}
 						</div>
-						<div className="ca-cooking">
-							<span className="ca-kicker">{tx('地方烹饪标准参考')}</span>
-							<strong>{tx(cut.timeLabel)}</strong>
-							<p>{tx(cut.boundary)}</p>
+						<button className="ca-skip" onClick={() => choose(null)}>
+							{tx('不猜，直接切')}
+						</button>
+					</>
+				) : beat === 2 ? (
+					<>
+						{stage === 1 && <p>{copy.firstCut(l)}</p>}
+						{stage === 2 ? (
+							<p>{copy.secondCut(l)}</p>
+						) : (
+							<p className="ca-hint">{tx(stage === 0 ? '在牛身上向右拖刀，切第一刀。' : '再向右拖一刀：剔骨、去肥油。')}</p>
+						)}
+						{stage < 2 && (
+							<button
+								className="ca-skip"
+								onClick={() => {
+									interact();
+									cutOnce();
+								}}
+							>
+								{tx('拖不动？点这里切一刀')}
+							</button>
+						)}
+					</>
+				) : beat === 3 ? (
+					<>
+						{guess && <span className={`ca-verdict ${guessIsRight(guess) ? 'good' : 'miss'}`}>{copy.verdict(l, guess)}</span>}
+						<p className="ca-big-line">{copy.result(l)}</p>
+						<p>{copy.feel(l)}</p>
+						<p className="ca-src">{tx('剩下的红块就是肉。左下是第一刀拿走的，右下是第二刀拿走的。')}</p>
+						<div className="ca-row">
+							<button className="ca-primary" onClick={understand}>
+								{tx('原来如此')} →
+							</button>
 						</div>
 					</>
 				) : (
-					<button className="ca-text-action" onClick={() => chooseMode('cuts')}>
-						{tx('查看牛肉部位')} ↗
-					</button>
+					<>
+						<p className="ca-conclusion">{tx('一头牛，不到一半能变成肉。')}</p>
+						<p className="ca-src">
+							{tx('其余是皮、头、蹄、血、内脏、骨头和肥油。按田纳西大学推广处 PB1829 的例子：1400 磅的牛，880 磅胴体，约 570 磅肉。')}
+						</p>
+						<button
+							className="ca-next"
+							onClick={() => {
+								interact();
+								setLab(true);
+							}}
+						>
+							<small>{tx('下一个问题')}</small>
+							<span>{tx('最贵的脖仁，一头牛有多少？')}</span>
+						</button>
+						<button className="ca-ghost" onClick={restart}>
+							{tx('再切一次')}
+						</button>
+					</>
 				)}
 			</section>
-			<footer className="ca-footnote" data-experience-overlay="true">
-				<span>{tx('图形与组织纹理为示意；餐饮名称不与单一肌肉严格对应。')}</span>
-				<span>{tx('口感时间不是安全倒计时，实际食用须充分熟透。')}</span>
-			</footer>
 		</div>
 	);
 }
