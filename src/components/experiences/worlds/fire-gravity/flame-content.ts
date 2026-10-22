@@ -1,6 +1,6 @@
 export type FlameRegion = 'whole' | 'core' | 'luminous' | 'outer'
 export const flameRegions = [
-  { id: 'whole', label: '全貌', title: '一簇火，里面发生了什么？', body: '黄色亮光包住了暗处。剖开它，看看燃料和空气在哪里相遇。', fact: '自然外观 · 火焰的边界由反应与流动形成', focus: 0 },
+  { id: 'whole', label: '全貌', title: '烛火最亮的地方，就是最热的地方吗？', body: '最亮的是黄色那一片；更热的，往往是外侧那层不起眼的薄边。剖开它，看看燃料和空气在哪里相遇。', fact: '自然外观 · 火焰的边界由反应与流动形成', focus: 0 },
   { id: 'core', label: '焰心', title: '焰心：暗处也有燃料', body: '烛芯上方聚集着蜡蒸气。这里氧气较少，燃料还没有充分燃烧。', fact: '焰心 · 富燃料、少氧气 · 暗不等于冷', focus: 1 },
   { id: 'luminous', label: '内焰', title: '内焰：微小烟炱烧得发亮', body: '蜡蒸气受热分解，形成微小烟炱。炽热颗粒发出黄光，构成最醒目的亮区。', fact: '内焰 · 烟炱白炽发光 · 最亮未必最热', focus: 2 },
   { id: 'outer', label: '外焰', title: '外焰：氧气从外面进来', body: '燃料与周围氧气在外侧相遇，氧化反应更充分。薄薄的外缘常比黄色亮区更热，却不那么显眼。', fact: '外焰 · 富氧反应区 · 蓝色外缘已增强显示', focus: 3 },

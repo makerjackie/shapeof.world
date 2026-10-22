@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { Freebar } from '~/components/experiences/Freebar'
 import { FilmStrip } from '@phosphor-icons/react'
@@ -9,9 +9,17 @@ import { chemistryViews } from './chemistry-content'
 import { combustionState, relativeSupply, type ChemistryView } from './combustion-model'
 import { GhostHint } from '~/components/experiences/GhostHint'
 import { useExperienceI18n } from '~/i18n/experience'
-import { flameShape, relax } from './fire-gravity-model'
+import { flameShape, relax, sceneFrame, sceneToScreen } from './fire-gravity-model'
 import { vertex, fragment } from './flame-shader'
 import './styles/FireGravity.css'
+
+/** Points inside the right half-section (scene units, candle top at y = 0) where each zone label is pinned. */
+const zoneAnchors = [
+  { id: 'luminous', x: .12, y: 1.07 },
+  { id: 'outer', x: .232, y: .77 },
+  { id: 'core', x: .045, y: .4 },
+] as const
+const zoneColumn = .52
 
 export function FireGravity({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
@@ -36,6 +44,15 @@ export function FireGravity({ controls }: { controls: ExperienceControls }) {
   const [story, setStory] = useState(() => !hasCompletedGuide('fire-gravity'))
   const selected = flameRegions.find(item => item.id === region)!
   const [failed, setFailed] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [size, setSize] = useState({ w: 0, h: 0 })
+  useEffect(() => {
+    const el = canvas.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const observer = new ResizeObserver(([entry]) => setSize({ w: entry.contentRect.width, h: entry.contentRect.height }))
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
   const target = useRef({ gravity, traces, peel, focus: selected.focus, transport, air: combustion.air, burn: combustion.burning ? 1 : 0, chemistry: chemistry ? 1 : 0 })
   target.current = { gravity, traces, peel, focus: selected.focus, transport, air: combustion.air, burn: combustion.burning ? 1 : 0, chemistry: chemistry ? 1 : 0 }
   useEffect(() => {
@@ -86,9 +103,10 @@ export function FireGravity({ controls }: { controls: ExperienceControls }) {
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW)
       const attr = gl.getAttribLocation(program, 'position')
       gl.enableVertexAttribArray(attr); gl.vertexAttribPointer(attr, 2, gl.FLOAT, false, 0, 0)
-      const locations = Object.fromEntries(['resolution','time','gravity','height','radius','traces','peel','focus','transport','air','burn','chemistry'].map(name => [name, gl.getUniformLocation(program, name)]))
+      const locations = Object.fromEntries(['resolution','time','gravity','height','radius','traces','peel','focus','transport','air','burn','chemistry','sceneScale','sceneOffset'].map(name => [name, gl.getUniformLocation(program, name)]))
       const reduced = matchMedia('(prefers-reduced-motion: reduce)')
       let currentAir = 1, currentBurn = 1, currentChemistry = 0
+      let drawn = false
       let current = 1, currentPeel = 0, currentFocus = 0, currentTransport = 0, currentTraces = 0, last = performance.now(), clock = 0
       const render = (now: number) => {
         // A candle needs coherent motion, not a full-volume draw at display refresh rate.
@@ -121,7 +139,11 @@ export function FireGravity({ controls }: { controls: ExperienceControls }) {
           gl.uniform1f(locations.air,currentAir)
           gl.uniform1f(locations.burn,currentBurn)
           gl.uniform1f(locations.chemistry,currentChemistry)
+          const frame = sceneFrame(bounds.width / Math.max(1, bounds.height), currentChemistry)
+          gl.uniform1f(locations.sceneScale,frame.scale)
+          gl.uniform1f(locations.sceneOffset,frame.offset)
           gl.drawArrays(gl.TRIANGLES,0,6)
+          if (!drawn) { drawn = true; setReady(true) }
         }
         raf=requestAnimationFrame(render)
       }
@@ -129,7 +151,12 @@ export function FireGravity({ controls }: { controls: ExperienceControls }) {
     } catch (error) { console.error('Fire gravity renderer:', error); fail() }
     return () => { cancelAnimationFrame(raf); el.removeEventListener('webglcontextlost',onLost); gl.deleteBuffer(buffer); shaders.forEach(s=>gl.deleteShader(s)); gl.deleteProgram(program) }
   }, [])
-  return <div className={`fire-gravity-experience ${chemistry ? 'is-chemistry' : ''}`}>
+  const microgravity = !chemistry && gravity < .02
+  const fact = tx(region === 'whole' && peel > .1 ? '半剖面 · 暗处是富燃料的焰心' : selected.fact).split(' · ')
+  const frame = sceneFrame(size.w / Math.max(1, size.h), 0)
+  const column = sceneToScreen(zoneColumn, 0, size.w, size.h, frame).x
+  const showZones = !chemistry && peel > .35 && gravity > .9 && size.w > 0
+  return <div className={`fire-gravity-experience ${chemistry ? 'is-chemistry' : ''} ${ready ? 'is-ready' : ''}`}>
     <canvas ref={canvas} className={`fire-gravity-canvas ${!chemistry ? 'is-sliceable' : ''}`}
       onPointerDown={event => {
         if (chemistry || event.button !== 0) return
@@ -145,19 +172,29 @@ export function FireGravity({ controls }: { controls: ExperienceControls }) {
       }}
       onPointerUp={event => { drag.current = null; if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId) }}
       onPointerCancel={() => { drag.current = null }} aria-label={tx('随重力变化的烛火')} role="img" />
+    {!ready && !failed && <div className="fire-gravity-loading" aria-hidden="true"><i /></div>}
     {failed && <div className="fire-gravity-fallback"><img src="/assets/posters/fire-gravity.webp" alt={tx('烛火近景')} /><p>{tx('当前设备无法绘制火焰，显示静态预览。')}</p></div>}
     {!story && <div className="fire-gravity-caption" data-experience-overlay="true">
-      <span>{tx('一簇火的内部')}</span>
-      <h1>{tx(chemistryContent?.title ?? selected.title)}</h1>
-      <p>{chemistryContent ? tx(chemistryContent.body) : gravity < .02 ? tx('静止空气中的微重力烛火，可以变成蓝色圆顶。') : tx(selected.body)}</p>
+      <span className="fire-gravity-kicker">{tx(chemistry ? '燃烧化学' : microgravity ? '微重力' : '一簇火的内部')}</span>
+      <h1>{tx(chemistryContent?.title ?? (microgravity ? '没有浮力，火焰变成圆顶' : selected.title))}</h1>
+      <p>{chemistryContent ? tx(chemistryContent.body) : microgravity ? tx('静止空气中的微重力烛火，可以变成蓝色圆顶。') : tx(selected.body)}</p>
+      {!chemistry && !microgravity && <div className={`fire-gravity-fact is-${region}`}>{fact.map((item, i) => <span key={i}>{item}</span>)}</div>}
+      {!chemistry && gravity < .98 && <button className="fire-gravity-earth" onClick={() => { setGravity(1); controls.registerInteraction() }}>{tx('回到地球重力')}</button>}
     </div>}
     {chemistry && <ReactionLens view={chemistry} burning={combustion.burning} />}
-    {peel > .2 && region !== 'whole' && <div className={`fire-gravity-callout is-${region}`} data-experience-overlay="true">{tx(selected.label)}</div>}
+    {showZones && <div className={`fire-zone-labels ${story ? 'is-passive' : ''}`} data-experience-overlay="true" style={{ opacity: Math.min(1, (peel - .35) / .35) }}>
+      {zoneAnchors.map(zone => {
+        const point = sceneToScreen(zone.x, zone.y, size.w, size.h, frame)
+        const item = flameRegions.find(entry => entry.id === zone.id)!
+        const state = region === 'whole' ? '' : region === zone.id ? 'is-active' : 'is-dim'
+        return <button key={zone.id} className={`fire-zone-label is-${zone.id} ${state}`} tabIndex={story ? -1 : 0}
+          style={{ left: point.x, top: point.y, width: Math.max(28, column - point.x) } as CSSProperties}
+          aria-pressed={region === zone.id} onClick={() => selectRegion(zone.id)}><span>{tx(item.label)}</span></button>
+      })}
+    </div>}
     {!story && !chemistry && <div className="fire-gravity-note" data-experience-overlay="true" data-freebar-clearance="true">
-      <span>{tx(region === 'whole' && peel > .1 ? '半剖面 · 暗处是富燃料的焰心' : selected.fact)}</span>
-      <small>{tx('在火焰上向右拖动，剖开内部；向左拖动合拢。')}</small>
-      {peel > .1 && <small>{tx('右半侧为增强剖面；分区之间实际是渐变。')}</small>}
-      {transport && <small>{tx('金色：蜡的供给路径 · 蓝色：空气输运示意')}</small>}
+      {transport && <div className="fire-note-legend">{gravity > .5 && <span className="is-fuel">{tx('蜡的供给路径')}</span>}<span className="is-air">{tx('空气输运（示意）')}</span></div>}
+      <small>{tx(peel > .1 ? '右半侧为增强剖面；分区之间实际是渐变。' : '在火焰上向右拖动，剖开内部；向左拖动合拢。')}</small>
     </div>}
     {!story && <Freebar ariaLabel={tx('探索火焰内部')} primaryControlBudget={4} secondaryClassName="fire-gravity-secondary" secondary={<>
       <div className="fire-view-switch"><button aria-pressed={!chemistry} onClick={() => { selectRegion('whole'); controls.registerInteraction() }}>{tx('火焰分层')}</button><button aria-pressed={Boolean(chemistry)} onClick={() => { selectChemistry('products'); controls.registerInteraction() }}>{tx('燃烧化学')}</button></div>
