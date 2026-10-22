@@ -15,7 +15,7 @@
 - 统计：埋点写入 Analytics Engine `oneworld_events`（只保留三个月）。`infra/insights`（Worker `oneworld-insights`，insights.shapeof.world）每 10 分钟把原始事件归档进 D1 `shapeof-analytics`。部署：在 `infra/insights` 里 `npx wrangler deploy --config wrangler.jsonc`。
 - 视频发布套件：`infra/press`（Worker `shapeof-press`，press.shapeof.world），用法见其 README。
 - 短片源码：`films/<片>/`，成片和音频不进 Git，见 `films/README.md`；做片方法见 `films/METHOD.md`。网站上的短片页 `shapeof.world/films/<片>` 由 `src/data/films.json` 和发布套件的 `kit.json` 生成。
-- `private/`：作者的私有仓库 `makerjackie/shapeof-world-dev`（章程，部署成 dev.shapeof.world；旧版短片、调研和发布记录），被本仓 `.gitignore` 忽略，是独立的 Git 仓库，在里面单独提交。里面的内容不能写进本仓或公开发布。搜索时它默认被跳过，要找里面的东西就直接指定 `private/` 路径。
+- `private/`：本仓里的本地私有文件夹，被 `.gitignore` 忽略，不进 Git，也不是单独的仓库。选题规划、内部笔记、发布记录这类不公开的内容放这里，不能写进本仓的其他地方或公开发布。搜索时它默认被跳过，要找里面的东西就直接指定 `private/` 路径。（以前这里是私有仓库 `makerjackie/shapeof-world-dev`，已不再使用。）
 
 ## 仅有的几条规矩
 
