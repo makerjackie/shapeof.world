@@ -116,6 +116,31 @@ function approach(current: number, target: number, rate: number, dt: number): nu
   return Math.abs(next - target) < 1e-3 ? target : next
 }
 
+/** Cheap hashed value noise for the storm cloud behind the rain. */
+function hash2(x: number, y: number): number {
+  const h = Math.sin(x * 127.1 + y * 311.7) * 43758.5453
+  return h - Math.floor(h)
+}
+
+function valueNoise(x: number, y: number): number {
+  const ix = Math.floor(x)
+  const iy = Math.floor(y)
+  const fx = x - ix
+  const fy = y - iy
+  const ux = fx * fx * (3 - 2 * fx)
+  const uy = fy * fy * (3 - 2 * fy)
+  const a = hash2(ix, iy)
+  const b = hash2(ix + 1, iy)
+  const c = hash2(ix, iy + 1)
+  const d = hash2(ix + 1, iy + 1)
+  return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy
+}
+
+/** Three octaves are plenty: the cloud is a mood, not a forecast. */
+function cloudField(x: number, y: number): number {
+  return valueNoise(x, y) * 0.55 + valueNoise(x * 2.1 + 7.3, y * 2.1 - 3.1) * 0.3 + valueNoise(x * 4.3 - 1.7, y * 4.3 + 5.9) * 0.15
+}
+
 function rgba(r: number, g: number, b: number, a: number) {
   return `rgba(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}, ${a})`
 }
@@ -306,13 +331,15 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
           let g: number
           let b: number
           if (dy < 0) {
-            // Ground: wet, dark, fading into the same haze as the horizon.
+            // Ground: lit by the low sun behind you, so it is brighter than the
+            // storm cloud ahead, fading into the haze at the horizon.
             const t = -py / dy
-            const fog = 1 - Math.exp(-t / 260)
-            r = lerp(30, 118, fog)
-            g = lerp(34, 116, fog)
-            b = lerp(36, 122, fog)
-            // A faint sheen on the ground where the low sun rakes across it.
+            const fog = 1 - Math.exp(-t / 220)
+            const lit = Math.max(0.2, 1 - store.sunElevation / 70)
+            r = lerp(30 + 34 * lit, 50, fog)
+            g = lerp(30 + 28 * lit, 52, fog)
+            b = lerp(30 + 18 * lit, 62, fog)
+            // Wet ground catches a long warm sheen where the low sun rakes across it.
             const sheen = Math.max(dx * sun[0] + dz * sun[2], 0) * 0.08 * (1 - fog)
             r += 60 * sheen
             g += 48 * sheen
@@ -321,13 +348,24 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
             const elevation = Math.asin(Math.min(dy, 1))
             const height = Math.min(elevation / 1.05, 1)
             const zenith = Math.pow(height, 0.75)
-            r = lerp(107, 20, zenith)
-            g = lerp(112, 29, zenith)
-            b = lerp(124, 48, zenith)
+            // A storm sky: rainbows show best against the dark rain cloud.
+            r = lerp(56, 9, zenith)
+            g = lerp(62, 13, zenith)
+            b = lerp(80, 24, zenith)
+            // Rolling cloud base, seen in perspective on a plane overhead.
+            const lift = Math.max(dy, 0.035)
+            const cu = (dx / lift) * 0.22
+            const cv = (dz / lift) * 0.22 + 0.6 * dy
+            const billow = cloudField(cu, cv)
+            const reach = smoothstep(0.03, 0.22, dy) * (1 - 0.45 * zenith)
+            const shade = (billow - 0.5) * reach
+            r += 110 * shade
+            g += 114 * shade
+            b += 130 * shade
             // Warm rake along the horizon: the sun is behind the viewer and low.
             const rake = Math.exp(-elevation / 0.11) * Math.max(0.25, 1 - store.sunElevation / 60)
-            r += 26 * rake
-            g += 14 * rake
+            r += 34 * rake
+            g += 18 * rake
             b += 0 * rake
           }
 
@@ -340,9 +378,9 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
             if (hy > -0.5 && hy < CURTAIN_TOP_M + 6 && Math.abs(hz) < CURTAIN_HALF_WIDTH_M + 8) {
               const feather = smoothstep(0, 14, CURTAIN_TOP_M + 6 - hy)
                 * smoothstep(0, 18, CURTAIN_HALF_WIDTH_M + 8 - Math.abs(hz))
-              r = lerp(r, 128, 0.16 * feather)
-              g = lerp(g, 130, 0.16 * feather)
-              b = lerp(b, 138, 0.16 * feather)
+              r = lerp(r, 92, 0.14 * feather)
+              g = lerp(g, 98, 0.14 * feather)
+              b = lerp(b, 112, 0.14 * feather)
               if (bowWeight > 0.001) {
                 const vx = CURTAIN_X_M - eye[0]
                 const vy = hy - eye[1]
@@ -458,7 +496,8 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
         const theta = Math.acos(cosine) / DEG
         sampleGraded(profileNow, theta, colour, GLOW_GAIN)
         const luma = Math.max(colour[0], colour[1], colour[2])
-        const size = clamp((96 / depth) * drops.size[i], 0.6, 3) * (1 + 1.1 * Math.min(luma, 1))
+        // Drops on the bow glint a little larger, but stay streaks: big blocks read as pixels.
+        const size = clamp((96 / depth) * drops.size[i], 0.6, 2.4) * (1 + 0.35 * Math.min(luma, 1))
         if (luma < 0.035) {
           // Falling rain reads as short vertical streaks, not dust.
           context.rect(sx - size * 0.4, sy - size * 1.1, size * 0.8, size * 2.2)
@@ -469,9 +508,9 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
           Math.min((glint * 0.9 + colour[0]) * 255, 255),
           Math.min((glint * 0.95 + colour[1]) * 255, 255),
           Math.min((glint + colour[2]) * 255, 255),
-          alpha * quiet * Math.min(0.45 + luma * 0.6, 1),
+          alpha * quiet * Math.min(0.22 + luma * 0.4, 0.7),
         )
-        context.fillRect(sx - size * 0.4, sy - size * 1.1, size * 0.8, size * 2.2)
+        context.fillRect(sx - size * 0.3, sy - size * 1.2, size * 0.6, size * 2.4)
         context.beginPath()
       }
       context.fillStyle = rgba(150, 158, 170, plainAlpha)
@@ -503,28 +542,70 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
       context.beginPath()
       context.arc(x, feet[1] - heightPx * 0.885, heightPx * 0.095, 0, Math.PI * 2)
       context.fill()
+      // From outside, name the figure: this tiny person is you.
+      const tag = fade * smoothstep(0.92, 0.6, store.orbit)
+      if (tag > 0.02) {
+        const top = crown[1] - 10
+        context.globalAlpha = tag
+        context.strokeStyle = 'rgba(255, 228, 182, 0.75)'
+        context.lineWidth = 1
+        context.beginPath()
+        context.moveTo(x, top)
+        context.lineTo(x, top - 16)
+        context.stroke()
+        context.font = '700 13px Manrope, system-ui, sans-serif'
+        context.fillStyle = 'rgba(255, 232, 190, 0.98)'
+        context.textAlign = 'center'
+        context.textBaseline = 'bottom'
+        context.shadowColor = '#05080f'
+        context.shadowBlur = 8
+        context.fillText(tx('你'), x, top - 20)
+      }
       context.restore()
     }
 
+    /** Half-widths (metres) of a standing person's shadow, from the feet (0) to the top of the head (1). */
+    const SHADOW_OUTLINE: Array<[number, number]> = [
+      [0, 0.13], [0.06, 0.17], [0.46, 0.19], [0.56, 0.22], [0.8, 0.25], [0.85, 0.2], [0.875, 0.08],
+    ]
     const drawShadow = (camera: Camera, eye: Vec3, alpha: number) => {
       if (alpha < 0.01) return
+      // The observer's own shadow, stretched towards the antisolar point: the
+      // head of it sits exactly where the bow is centred.
       const shadow = headShadowPoint(eye, store.sunElevation, CURTAIN_X_M - 2 - eye[0])
-      const a = camera.project([eye[0], 0.01, eye[2] - 0.32])
-      const b = camera.project([eye[0], 0.01, eye[2] + 0.32])
-      const c = camera.project([shadow[0], 0.01, shadow[2] + 0.14])
-      const d = camera.project([shadow[0], 0.01, shadow[2] - 0.14])
-      if (!a || !b || !c || !d) return
+      const ax = shadow[0] - eye[0]
+      const az = shadow[2] - eye[2]
+      const length = Math.hypot(ax, az)
+      if (length < 0.2) return
+      const ux = ax / length
+      const uz = az / length
+      // Ground point at fraction t of the way to the head, w metres to the side.
+      const at = (t: number, w: number) => camera.project([eye[0] + ux * length * t - uz * w, 0.01, eye[2] + uz * length * t + ux * w])
+      const outline: Array<[number, number]> = []
+      for (const [t, w] of SHADOW_OUTLINE) outline.push([t, w])
+      for (let k = 0; k <= 10; k += 1) {
+        const angle = -Math.PI / 2 + (k / 10) * Math.PI
+        outline.push([0.94 + Math.sin(angle) * 0.06, Math.cos(angle) * 0.11 + 0.0001])
+      }
+      for (let k = SHADOW_OUTLINE.length - 1; k >= 0; k -= 1) outline.push([SHADOW_OUTLINE[k][0], -SHADOW_OUTLINE[k][1]])
+      const points = outline.map(([t, w]) => at(t, w))
+      const feet = at(0, 0)
+      const head = at(1, 0)
+      if (!head) return
       context.save()
-      context.globalAlpha = alpha * 0.55
-      const grad = context.createLinearGradient(a[0], a[1], c[0], c[1])
-      grad.addColorStop(0, 'rgba(4, 6, 10, 0.9)')
-      grad.addColorStop(1, 'rgba(4, 6, 10, 0.25)')
+      context.globalAlpha = alpha * 0.7
+      const grad = context.createLinearGradient(feet ? feet[0] : head[0], feet ? feet[1] : camera.height, head[0], head[1])
+      grad.addColorStop(0, 'rgba(2, 3, 6, 0.95)')
+      grad.addColorStop(1, 'rgba(2, 3, 6, 0.55)')
       context.fillStyle = grad
       context.beginPath()
-      context.moveTo(a[0], a[1])
-      context.lineTo(b[0], b[1])
-      context.lineTo(c[0], c[1])
-      context.lineTo(d[0], d[1])
+      let open = false
+      for (const point of points) {
+        if (!point) continue
+        if (!open) context.moveTo(point[0], point[1])
+        else context.lineTo(point[0], point[1])
+        open = true
+      }
       context.closePath()
       context.fill()
       context.restore()
@@ -1195,6 +1276,33 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
           nc.stroke()
         }
       }
+
+      // "You" in the scene: your own shadow points at the centre of the bow.
+      if (store.geometry < 0.1 && store.sunElevation > 2.5) {
+        const shadow = headShadowPoint(eye, store.sunElevation, CURTAIN_X_M - 2 - eye[0])
+        const head = camera.project(shadow)
+        if (head && head[1] > 0 && head[1] < camera.height * (portrait ? 0.66 : 0.84)) {
+          // Beside the shadow, not on it, with a short leader to its head.
+          const x = Math.min(head[0] + (portrait ? 34 : 44), camera.width - 110)
+          const y = head[1] + (portrait ? 26 : 30)
+          nc.strokeStyle = 'rgba(255, 224, 168, 0.6)'
+          nc.lineWidth = 1
+          nc.beginPath()
+          nc.moveTo(head[0] + 3, head[1] + 3)
+          nc.lineTo(x - 5, y - 6)
+          nc.stroke()
+          nc.textAlign = 'left'
+          nc.shadowColor = '#05080f'
+          nc.shadowBlur = 8
+          nc.font = `600 ${portrait ? 12 : 13}px Manrope, system-ui, sans-serif`
+          nc.fillStyle = 'rgba(255, 228, 182, 0.95)'
+          nc.fillText(tx('你的影子'), x, y)
+          nc.font = `${portrait ? 11 : 12}px Manrope, system-ui, sans-serif`
+          nc.fillStyle = 'rgba(214, 224, 238, 0.7)'
+          nc.fillText(tx('太阳在你身后'), x, y + 16)
+          nc.shadowBlur = 0
+        }
+      }
     }
 
     const frame = (now: number) => {
@@ -1441,7 +1549,8 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
 
   const guideSteps: Array<GuideStep> = [
     {
-      title: tx('彩虹外面，还有一道彩虹'),
+      // The world's one question, in everyday words: the same line as the poster.
+      title: tx('彩虹为什么会有两道？'),
       body: tx('里面鲜亮的是主虹，外面较淡的是副虹。仔细看：两圈的颜色顺序正好相反，红色都朝着中间的暗带。'),
       action: () => {
         settle()

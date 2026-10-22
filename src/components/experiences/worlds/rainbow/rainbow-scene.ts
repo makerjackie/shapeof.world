@@ -183,7 +183,7 @@ export function fieldOfViewDeg(orbit: number, width: number, height: number): nu
   // Desktop includes both complete arcs above the horizon. Portrait keeps
   // the two crowns large enough to compare without shrinking the scene.
   const eyeView = portrait ? 86 : 114
-  const sideView = portrait ? 46 : 60
+  const sideView = portrait ? 54 : 60
   return lerp(sideView, eyeView, smoothstep(0, 1, orbit))
 }
 
@@ -214,7 +214,8 @@ export function buildCamera({ eye, orbit, sunElevationDeg, width, height }: Came
   const eyeLookElevation = (portrait
     ? -5
     : clamp(bowTop * 0.5 - 2, 4, 22)) * DEG
-  const sideTarget: Vec3 = [eye[0] + 27, 15, eye[2]]
+  // A phone is narrow: aim the side view nearer the observer so they stay in frame.
+  const sideTarget: Vec3 = [eye[0] + (portrait ? 19 : 27), portrait ? 12 : 15, eye[2]]
   const eyeTarget: Vec3 = add(eye, [60, 60 * Math.tan(eyeLookElevation), 0])
   const target: Vec3 = [
     lerp(sideTarget[0], eyeTarget[0], eased),
