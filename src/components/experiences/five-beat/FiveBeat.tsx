@@ -27,10 +27,10 @@ function useShellText() {
 
 const stepNames: Array<[string, string]> = [['问', 'Ask'], ['猜', 'Guess'], ['做', 'Do'], ['看', 'See'], ['懂', 'Get it']]
 
-/** 顶部的“问 猜 做 看 懂”。到了实验室五个都点亮；给了 labLabel 就只显示它。 */
+/** 顶部的“问 猜 做 看 懂”。到了实验室还停在“懂”；给了 labLabel 就换成只显示它。 */
 export function BeatSteps({ beat, labLabel }: { beat: Beat; labLabel?: ReactNode }) {
   const text = useShellText()
-  const at = beatIndex(beat)
+  const at = Math.min(beatIndex(beat), stepNames.length - 1)
   return (
     <ol className="beat-steps" aria-label={text('五步', 'Five steps')}>
       {beat === 'lab' && labLabel ? (

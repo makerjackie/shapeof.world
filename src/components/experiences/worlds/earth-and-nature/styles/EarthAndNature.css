@@ -12,6 +12,12 @@
   --ean-miss: #ffa08a;
   --ean-line: rgba(238, 243, 239, 0.16);
   --ean-card: rgba(9, 15, 20, 0.84);
+  --beat-ink: var(--ean-ink);
+  --beat-muted: var(--ean-muted);
+  --beat-line: var(--ean-line);
+  --beat-accent: var(--ean-accent);
+  --beat-good: var(--ean-good);
+  --beat-miss: var(--ean-miss);
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -56,28 +62,6 @@
   padding: 0 max(16px, env(safe-area-inset-left, 0px));
   text-align: center;
   pointer-events: none;
-}
-.ean-beats {
-  display: flex;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: var(--ean-muted);
-}
-.ean-beats li {
-  padding: 2px 8px;
-  border: 1px solid transparent;
-  border-radius: 99px;
-}
-.ean-beats li.is-on {
-  color: var(--ean-accent);
-  border-color: color-mix(in srgb, var(--ean-accent) 45%, transparent);
-}
-.ean-beats li.is-done {
-  color: var(--ean-ink);
 }
 .ean-top h1 {
   max-width: 22em;
@@ -176,25 +160,16 @@
   font: inherit;
   color: inherit;
 }
-.ean-q {
-  font-size: 16px;
-  font-weight: 700;
+/* 五拍外壳的卡片内容：只写和外壳默认不一样的地方。 */
+.ean-experience .beat-option {
+  min-height: 0;
 }
-.ean-options {
-  display: grid;
-  gap: 8px;
-}
-.ean-option {
-  padding: 11px 14px;
-  border: 1px solid var(--ean-line);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  text-align: left;
-  font-size: 15px;
-  cursor: pointer;
-}
-.ean-option:hover {
-  border-color: var(--ean-accent);
+.ean-experience .beat-skip {
+  display: inline-block;
+  min-height: 0;
+  padding: 0;
+  color: var(--ean-muted);
+  font-size: 13px;
 }
 .ean-skip {
   justify-self: start;
@@ -215,43 +190,15 @@
   font-size: 13px;
   color: var(--ean-muted);
 }
-.ean-verdict {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-.ean-verdict.is-right {
-  color: var(--ean-good);
-}
-.ean-verdict.is-miss {
-  color: var(--ean-miss);
-}
-.ean-mine {
+.ean-experience .beat-result {
   color: var(--ean-muted);
   font-size: 14px;
 }
-.ean-big {
+.ean-experience .beat-conclusion {
+  font-family: inherit;
   font-size: 19px;
   font-weight: 800;
-  line-height: 1.5 !important;
-}
-.ean-source {
-  font-size: 12px;
-  color: var(--ean-muted);
-}
-.ean-next {
-  display: grid;
-  gap: 2px;
-  padding: 10px 14px;
-  border: 1px solid color-mix(in srgb, var(--ean-accent) 40%, transparent);
-  border-radius: 12px;
-  background: rgba(255, 210, 122, 0.08);
-  text-decoration: none;
-}
-.ean-next small {
-  color: var(--ean-accent);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  line-height: 1.5;
 }
 .ean-row {
   display: flex;
@@ -259,14 +206,10 @@
   align-items: center;
   gap: 10px;
 }
-.ean-primary {
+.ean-experience .beat-primary {
+  min-height: 0;
   padding: 10px 16px;
-  border: 0;
-  border-radius: 99px;
-  background: var(--ean-accent);
-  color: #17120a !important;
-  font-weight: 700;
-  cursor: pointer;
+  color: #17120a;
 }
 .ean-ghost {
   padding: 9px 14px;
@@ -379,7 +322,7 @@
   .ean-stats-chart {
     grid-column: 1 / -1;
   }
-  .ean-big {
+  .ean-experience .beat-conclusion {
     font-size: 17px;
   }
   .ean-sub {

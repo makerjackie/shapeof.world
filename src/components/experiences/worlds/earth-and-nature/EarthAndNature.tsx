@@ -3,6 +3,7 @@ import './styles/EarthAndNature.css'
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react'
 
 import type { ExperienceControls } from '~/components/ExperienceShell'
+import { BeatResult, BeatSteps, Conclusion, DoHint, GuessCard, useFiveBeats, type Beat } from '~/components/experiences/five-beat'
 import { useI18n } from '~/i18n'
 import { useExperienceI18n } from '~/i18n/experience'
 import { worldPath } from '~/lib/world-urls'
@@ -38,11 +39,8 @@ const BEIJING_M2 = 16_410e6
 const HISTORY_SAMPLES = 160
 const NEXT_WORLD_ID = 'earth-spin-orbit'
 
-type Beat = 'guess' | 'do' | 'see' | 'know' | 'lab'
 type Guess = 'flat' | 'branches' | 'lake'
 type Tool = 'uplift' | 'rock'
-
-const BEAT_ORDER: Array<Beat> = ['guess', 'do', 'see', 'know']
 
 /** 海报取景（?capture=1）：直接给一条已经被雨刻过的山脉，不显示界面。 */
 function grownRange(): Landscape {
@@ -82,8 +80,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
   const hintRef = useRef<HTMLDivElement>(null)
   const handRef = useRef<HTMLDivElement>(null)
 
-  const [beat, setBeat] = useState<Beat>('guess')
-  const [guess, setGuess] = useState<Guess | null>(null)
+  const { beat, guess, goto, choose, restart: restartBeats } = useFiveBeats<Guess>(controls)
   const [tool, setTool] = useState<Tool>('uplift')
   const [rain, setRain] = useState(1)
   const [paused, setPaused] = useState(false)
@@ -107,7 +104,6 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
     /** 上一次给山顶曲线取样时的模拟年份。 */
     lastSample: 0,
     interacted: false,
-    finished: false,
     capture,
   })
 
@@ -185,7 +181,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
 
       if (state.beat === 'do' && state.upliftYears >= SEE_AFTER_UPLIFT_YEARS) {
         state.beat = 'see'
-        setBeat('see')
+        goto('see')
       }
 
       const wantGlow = state.capture || state.beat === 'see' || state.beat === 'know' ? 1 : 0
@@ -237,15 +233,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       stopObserving()
       scene.dispose()
     }
-  }, [])
-
-  // 进入“懂”时告诉外壳：这个世界已经走完。
-  useEffect(() => {
-    if ((beat === 'know' || beat === 'lab') && !live.current.finished) {
-      live.current.finished = true
-      controls.finish()
-    }
-  }, [beat, controls])
+  }, [goto])
 
   const pointerPosition = (event: ReactPointerEvent) => {
     const rect = canvasRef.current?.getBoundingClientRect()
@@ -290,12 +278,6 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
     setPressing(false)
   }
 
-  const choose = (value: Guess | null) => {
-    setGuess(value)
-    setBeat('do')
-    markInteraction()
-  }
-
   const restart = () => {
     landscapeRef.current = createLandscape()
     live.current.history = []
@@ -305,11 +287,10 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
 
   const replayStory = () => {
     restart()
-    setGuess(null)
+    restartBeats()
     setTool('uplift')
     setRain(1)
     setPaused(false)
-    setBeat('guess')
   }
 
   const formatYears = (years: number) => {
@@ -331,7 +312,6 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
     { id: 'lake', text: tx('雨水积在山上，变成一个大湖') },
   ]
   const myGuess = guesses.find((item) => item.id === guess)
-  const beatIndex = beat === 'lab' ? BEAT_ORDER.length : BEAT_ORDER.indexOf(beat) + 1
 
   const sparkline = (() => {
     const values = readout.history
@@ -393,11 +373,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       </div>
 
       <div ref={topRef} className="ean-top">
-        <ol className="ean-beats" aria-label={tx('五步')}>
-          {[tx('问'), tx('猜'), tx('做'), tx('看'), tx('懂')].map((label, index) => (
-            <li key={label} className={index === beatIndex ? 'is-on' : index < beatIndex ? 'is-done' : ''}>{label}</li>
-          ))}
-        </ol>
+        <BeatSteps beat={beat} />
         <h1>{tx('把一块地推成山，再下一百万年雨，它会变成什么样？')}</h1>
         <p className="ean-sub">
           {beat === 'lab'
@@ -410,25 +386,16 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
 
       <div ref={cardRef} className="ean-card" aria-live="polite">
         {beat === 'guess' && (
-          <>
-            <p className="ean-q">{tx('先猜一下：你一直往上推，雨一直往下冲，最后会是什么样？')}</p>
-            <div className="ean-options">
-              {guesses.map((item) => (
-                <button key={item.id} type="button" className="ean-option" onClick={() => choose(item.id)}>
-                  {item.text}
-                </button>
-              ))}
-            </div>
-            <button type="button" className="ean-skip" onClick={() => choose(null)}>{tx('不猜，直接玩')}</button>
-          </>
+          <GuessCard
+            question={tx('先猜一下：你一直往上推，雨一直往下冲，最后会是什么样？')}
+            options={guesses.map((item) => ({ id: item.id, label: item.text }))}
+            onChoose={choose}
+            skip={tx('不猜，直接玩')}
+          />
         )}
 
         {beat === 'do' && (
-          <>
-            <p>
-              <span className="ean-accent">{tx('按住地面不放')}</span>
-              {tx('，把地往上推。手指可以拖动。')}
-            </p>
+          <DoHint hint={tx('按住地面不放')} tail={tx('，把地往上推。手指可以拖动。')}>
             {stats}
             <p className="ean-note">
               {tx('按住 1 秒 = 20 万年，约推高')} {metresPerSecond} {tx('米。人类有文字的五千年，在这里只有 0.025 秒。')}
@@ -436,42 +403,32 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
             {!pressing && released && (
               <p className="ean-note ean-accent">{tx('继续按住，山还没长成。')}</p>
             )}
-          </>
+          </DoHint>
         )}
 
         {beat === 'see' && (
-          <>
-            {myGuess && (
-              <p className="ean-mine">
-                <span className={`ean-verdict ${guess === 'branches' ? 'is-right' : 'is-miss'}`}>
-                  {guess === 'branches' ? tx('猜对了') : tx('和你猜的不一样')}
-                </span>
-                {' · '}{tx('你猜：')}{myGuess.text}
-              </p>
-            )}
+          <BeatResult
+            verdict={myGuess && (guess === 'branches' ? tx('猜对了') : tx('和你猜的不一样'))}
+            right={guess === 'branches'}
+            mine={myGuess && <>{' · '}{tx('你猜：')}{myGuess.text}</>}
+            next={{ label: tx('所以，原来如此'), onClick: () => goto('know') }}
+          >
             <p>{tx('没人画这些河。雨水往低处流，汇得越多冲得越狠，自己刻出了一道道山谷。')}</p>
             <p>{tx('你一直在推，山也没有无限长高：长到某个高度，雨水削掉的正好等于你推起来的。')}</p>
             {stats}
-            <div className="ean-row">
-              <button type="button" className="ean-primary" onClick={() => setBeat('know')}>{tx('所以，原来如此')}</button>
-            </div>
-          </>
+          </BeatResult>
         )}
 
         {beat === 'know' && (
-          <>
-            <p className="ean-big">{tx('河谷不是谁画上去的：雨水往低处流，越汇越多、越冲越深，自己在山上刻出了树枝的形状。')}</p>
-            <p className="ean-source">
-              {tx('河流下切的快慢 ∝ 汇水面积的平方根 × 坡度（河流功率模型，Whipple & Tucker 1999）；数值解法 Braun & Willett 2013。地块为程序生成，时间和高度按真实量级取值。')}
-            </p>
-            <a className="ean-next" href={worldPath(NEXT_WORLD_ID, en ? 'en' : 'zh')}>
-              <small>{tx('下一个问题')}</small>
-              <span>{tx('同一个瞬间，地球上的不同地方正在经历什么？')}</span>
-            </a>
+          <Conclusion
+            sentence={tx('河谷不是谁画上去的：雨水往低处流，越汇越多、越冲越深，自己在山上刻出了树枝的形状。')}
+            source={tx('河流下切的快慢 ∝ 汇水面积的平方根 × 坡度（河流功率模型，Whipple & Tucker 1999）；数值解法 Braun & Willett 2013。地块为程序生成，时间和高度按真实量级取值。')}
+            next={{ href: worldPath(NEXT_WORLD_ID, en ? 'en' : 'zh'), question: tx('同一个瞬间，地球上的不同地方正在经历什么？') }}
+          >
             <div className="ean-row">
-              <button type="button" className="ean-ghost" onClick={() => setBeat('lab')}>{tx('打开实验室：改降雨、画硬岩')}</button>
+              <button type="button" className="ean-ghost" onClick={() => goto('lab')}>{tx('打开实验室：改降雨、画硬岩')}</button>
             </div>
-          </>
+          </Conclusion>
         )}
 
         {beat === 'lab' && (
