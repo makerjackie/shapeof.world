@@ -17,7 +17,6 @@ export const recommendedWorldIds = [
   'fluid-sim',
   'mandelbrot-zoom',
   'fourier',
-  'riemann-primes',
 ] as const
 
 export const HOME_PRIMARY_COUNT = 10

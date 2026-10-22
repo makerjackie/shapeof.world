@@ -841,37 +841,8 @@
     "posterPosition": "50% 42%"
   },
   {
-    "id": "riemann-primes",
-    "index": "30",
-    "poster": "/assets/posters/riemann-primes.webp",
-    "posterMobile": "/assets/posters/mobile/riemann-primes.webp",
-    "posterDesktop": "/assets/posters/desktop/riemann-primes.webp",
-    "title": "素数，藏着怎样的节奏？",
-    "posterTitle": "素数，藏着怎样的节奏？",
-    "posterHook": "素数的起伏，为什么会与另一条线上看不见的零点有关？",
-    "question": "不规则的素数间距，能被另一种数学结构描述吗？",
-    "topicLabel": "黎曼猜想",
-    "translations": {
-      "en": {
-        "title": "What rhythm hides in the primes?",
-        "posterTitle": "What rhythm hides in the primes?",
-        "posterHook": "Why are prime fluctuations linked to zeros on another mathematical line?",
-        "question": "Can another mathematical structure describe the uneven gaps between primes?",
-        "topicLabel": "Riemann hypothesis"
-      }
-    },
-    "primaryCategoryId": "beautiful-math",
-    "renderer": "riemann-primes",
-    "runtime": "diagram-2d",
-    "difficulty": "intro",
-    "duration": 90,
-    "evidence": "modeled",
-    "accent": "#bda1ed",
-    "posterPosition": "50% 50%"
-  },
-  {
     "id": "fire-gravity",
-    "index": "31",
+    "index": "30",
     "poster": "/assets/posters/fire-gravity.webp",
     "posterMobile": "/assets/posters/mobile/fire-gravity.webp",
     "posterDesktop": "/assets/posters/desktop/fire-gravity.webp",
@@ -900,7 +871,7 @@
   },
   {
     "id": "flybody",
-    "index": "32",
+    "index": "31",
     "poster": "/assets/posters/flybody.webp",
     "posterMobile": "/assets/posters/mobile/flybody.webp",
     "posterDesktop": "/assets/posters/desktop/flybody.webp",
@@ -929,7 +900,7 @@
   },
   {
     "id": "light-speed",
-    "index": "33",
+    "index": "32",
     "poster": "/assets/posters/light-speed.webp",
     "posterMobile": "/assets/posters/mobile/light-speed.webp",
     "posterDesktop": "/assets/posters/desktop/light-speed.webp",
@@ -958,7 +929,7 @@
   },
   {
     "id": "standard-model",
-    "index": "34",
+    "index": "33",
     "poster": "/assets/posters/standard-model.webp",
     "posterMobile": "/assets/posters/mobile/standard-model.webp",
     "posterDesktop": "/assets/posters/desktop/standard-model.webp",
@@ -987,7 +958,7 @@
   },
   {
     "id": "tshirt-world",
-    "index": "35",
+    "index": "34",
     "poster": "/assets/posters/tshirt-world.webp",
     "posterMobile": "/assets/posters/mobile/tshirt-world.webp",
     "posterDesktop": "/assets/posters/desktop/tshirt-world.webp",
@@ -1016,7 +987,7 @@
   },
   {
     "id": "cafe-terrace",
-    "index": "36",
+    "index": "35",
     "poster": "/assets/posters/cafe-terrace.webp",
     "posterMobile": "/assets/posters/mobile/cafe-terrace.webp",
     "posterDesktop": "/assets/posters/desktop/cafe-terrace.webp",
@@ -1045,7 +1016,7 @@
   },
   {
     "id": "earth-and-nature",
-    "index": "37",
+    "index": "36",
     "poster": "/assets/posters/earth-and-nature.webp",
     "posterMobile": "/assets/posters/mobile/earth-and-nature.webp",
     "posterDesktop": "/assets/posters/desktop/earth-and-nature.webp",
@@ -1074,7 +1045,7 @@
   },
   {
     "id": "frontscope",
-    "index": "38",
+    "index": "37",
     "poster": "/assets/posters/frontscope.webp",
     "posterMobile": "/assets/posters/mobile/frontscope.webp",
     "posterDesktop": "/assets/posters/desktop/frontscope.webp",
@@ -1103,7 +1074,7 @@
   },
   {
     "id": "starry-night",
-    "index": "39",
+    "index": "38",
     "poster": "/assets/posters/starry-night.webp",
     "posterMobile": "/assets/posters/mobile/starry-night.webp",
     "posterDesktop": "/assets/posters/desktop/starry-night.webp",
@@ -1132,7 +1103,7 @@
   },
   {
     "id": "vegetation-atlas",
-    "index": "40",
+    "index": "39",
     "poster": "/assets/posters/vegetation-atlas.webp",
     "posterMobile": "/assets/posters/mobile/vegetation-atlas.webp",
     "posterDesktop": "/assets/posters/desktop/vegetation-atlas.webp",
@@ -1161,7 +1132,7 @@
   },
   {
     "id": "ink-landscape",
-    "index": "41",
+    "index": "40",
     "poster": "/assets/posters/ink-landscape.webp",
     "posterMobile": "/assets/posters/mobile/ink-landscape.webp",
     "posterDesktop": "/assets/posters/desktop/ink-landscape.webp",
@@ -1190,7 +1161,7 @@
   },
   {
     "id": "follow-the-money",
-    "index": "42",
+    "index": "41",
     "poster": "/assets/posters/follow-the-money.webp",
     "posterMobile": "/assets/posters/mobile/follow-the-money.webp",
     "posterDesktop": "/assets/posters/desktop/follow-the-money.webp",
@@ -1219,7 +1190,7 @@
   },
   {
     "id": "black-hole-flyby",
-    "index": "43",
+    "index": "42",
     "poster": "/assets/posters/black-hole-flyby.webp",
     "posterMobile": "/assets/posters/mobile/black-hole-flyby.webp",
     "posterDesktop": "/assets/posters/desktop/black-hole-flyby.webp",
@@ -1248,7 +1219,7 @@
   },
   {
     "id": "ukulele",
-    "index": "44",
+    "index": "43",
     "poster": "/assets/posters/ukulele.webp",
     "posterMobile": "/assets/posters/mobile/ukulele.webp",
     "posterDesktop": "/assets/posters/desktop/ukulele.webp",
