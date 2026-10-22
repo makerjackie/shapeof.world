@@ -1,0 +1,32 @@
+{
+  "name": "ai-impact",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Film out/ai-impact.mp4 --crf=20 --audio-bitrate=192k",
+    "stills": "node tools/stills.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.380",
+    "@remotion/google-fonts": "4.0.380",
+    "@remotion/noise": "4.0.380",
+    "@types/d3-geo": "^3.1.0",
+    "@types/topojson-client": "^3.1.5",
+    "d3-geo": "^3.1.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.380",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.380",
+    "@remotion/renderer": "4.0.380",
+    "@types/react": "19.1.0",
+    "typescript": "5.9.3"
+  },
+  "allowScripts": {
+    "esbuild@0.25.0": true
+  }
+}
