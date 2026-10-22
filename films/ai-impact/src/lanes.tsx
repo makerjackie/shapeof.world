@@ -1,6 +1,6 @@
 import React from "react";
 import { areaPath, Box, Curve, Dot, lin, linePath, stepPath, toXY, valueAt } from "./charts";
-import { DRAM_REV, NVDA, PJM, Pt, T0, T1, UNRATE, YOUNG_EXPOSED, yr } from "./data";
+import { DRAM_REV, NVDA, PJM, PJM_PLOT, Pt, T0, T1, UNRATE, YOUNG_EXPOSED, yr } from "./data";
 import { FONT, K, LaneKey, LANES } from "./theme";
 
 // The main prop: the AI era as four lanes on one time axis, 2022-11-30 (ChatGPT) → today, with room for the
@@ -39,7 +39,7 @@ const STATIONS: Record<LaneKey, Station[]> = {
 const SERIES: Record<LaneKey, { pts: Pt[]; max: number; step?: boolean }> = {
   money: { pts: NVDA, max: 6.2 },
   chip: { pts: DRAM_REV, max: 165 },
-  power: { pts: PJM.map((p) => [p.d, p.v] as Pt), max: 360, step: true },
+  power: { pts: PJM_PLOT, max: 360, step: true },
   work: { pts: UNRATE, max: 10 },
 };
 

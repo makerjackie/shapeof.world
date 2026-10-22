@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { lin, linePath, stepPath, toXY } from "./charts";
-import { DRAM_REV, NVDA, PJM, Pt, T0, T1, UNRATE } from "./data";
+import { DRAM_REV, NVDA, PJM_PLOT, Pt, T0, T1, UNRATE } from "./data";
 import { FONT, K, LANES, SERIF } from "./theme";
 
 // Covers (STYLE.md 二): paper brand bar on top, one plain sentence (no numbers), and a main picture drawn for the
@@ -19,7 +19,7 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
 const SERIES: { pts: Pt[]; max: number; step?: boolean }[] = [
   { pts: NVDA, max: 6.2 },
   { pts: DRAM_REV, max: 165 },
-  { pts: PJM.map((p) => [p.d, p.v] as Pt), max: 360, step: true },
+  { pts: PJM_PLOT, max: 360, step: true },
   { pts: UNRATE, max: 10 },
 ];
 

@@ -193,3 +193,6 @@ export const AGI_RULER: { who: string; when: number; label: string; seller?: boo
   { who: "研究者问卷", when: 2042, label: "2042（50% 概率）", up: true, h: 110 },
   { who: "Narayanan & Kapoor", when: 2050, label: "几十年", up: false, h: 70 },
 ];
+
+// PJM steps for the time axes: the first price (set in June 2022) is drawn from the axis start, 2022-11-30.
+export const PJM_PLOT: Pt[] = PJM.map((p, i) => [i === 0 ? START : p.d, p.v]);

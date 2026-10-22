@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Curve, lin, linePath, stepPath, toXY } from "../charts";
-import { DRAM_REV, NVDA, PJM, Pt, T0, T1, UNRATE } from "../data";
+import { DRAM_REV, NVDA, PJM_PLOT, Pt, T0, T1, UNRATE } from "../data";
 import { EBACK, EIO, EO, Glass, In, progAt } from "../fx";
 import { useBeatFrame } from "../kit";
 import { Lanes, LANE_BOX } from "../lanes";
@@ -58,7 +58,7 @@ export const Shape: React.FC = () => {
 const MINI: { pts: Pt[]; max: number; step?: boolean }[] = [
   { pts: NVDA, max: 6.2 },
   { pts: DRAM_REV, max: 165 },
-  { pts: PJM.map((p) => [p.d, p.v] as Pt), max: 360, step: true },
+  { pts: PJM_PLOT, max: 360, step: true },
   { pts: UNRATE, max: 10 },
 ];
 const QUESTIONS = ["谁在花这么多钱？", "为什么突然变贵？", "为什么电不够了？", "哪个角落在往下掉？"];
