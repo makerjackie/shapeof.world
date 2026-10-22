@@ -29,8 +29,8 @@
   position: absolute;
   z-index: 9;
   top: max(76px, var(--experience-safe-top, 78px));
-  left: 26px;
-  width: min(420px, calc(100% - 190px));
+  left: 30px;
+  width: min(720px, calc(100% - 190px));
   pointer-events: none;
 }
 
@@ -45,7 +45,7 @@
   margin: 8px 0 0;
   color: var(--elem-ink);
   font-family: var(--serif);
-  font-size: clamp(22px, 2.7vw, 38px);
+  font-size: clamp(22px, 2.2vw, 32px);
   font-weight: 400;
   letter-spacing: -0.035em;
   line-height: 1.08;
@@ -118,10 +118,7 @@
 
 /* 故事进行时：铭牌收起，读数移到左上，把底部整段让给字幕轨 */
 .elem-experience.is-story .elem-readout {
-  top: max(80px, var(--experience-safe-top, 78px));
-  bottom: auto;
-  width: min(560px, calc(100% - 52px));
-  opacity: 0.82;
+  width: min(520px, calc(50% - 80px));
 }
 
 /* —— 自由底栏 —— */
@@ -239,6 +236,7 @@
   .elem-experience.is-story .elem-readout {
     top: auto;
     bottom: calc(var(--elem-dock, 72px) + 4px);
+    width: calc(100% - 32px);
   }
 
   .elem-chip-rail,
@@ -250,5 +248,151 @@
   .elem-chip {
     padding: 0 10px;
     font-size: 11px;
+  }
+}
+
+/* —— 打磨：开场问题 + 一个数字答案 —— */
+.elem-plate > span {
+  font-weight: 600;
+}
+
+.elem-plate > p {
+  margin: 10px 0 0;
+  color: rgba(238, 243, 248, 0.66);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.elem-plate > p b {
+  color: var(--elem-gold);
+  font-size: 1.55em;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 22px rgba(236, 190, 108, 0.35);
+}
+
+/* 读数：标签小而淡，数字大而亮；英雄数字（产地国家数）再大一号 */
+.elem-readout-row small {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+.elem-readout-row b {
+  font-size: 15px;
+}
+
+.elem-readout-row.is-hero b {
+  color: var(--elem-gold);
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 18px rgba(236, 190, 108, 0.3);
+}
+
+.elem-readout-row.is-felt b {
+  color: var(--elem-ink);
+  font-weight: 500;
+}
+
+.elem-readout-row b,
+.elem-readout-row small {
+  transition: color 240ms ease;
+}
+
+.elem-readout > * {
+  animation: elem-rise 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes elem-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 载入：一圈细细的金色转环，而不是一行孤零零的字 */
+.elem-loading {
+  display: flex !important;
+  gap: 10px;
+  align-items: center;
+}
+
+.elem-loading > i {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid rgba(236, 190, 108, 0.25);
+  border-top-color: var(--elem-gold);
+  border-radius: 50%;
+  animation: elem-spin 900ms linear infinite;
+}
+
+@keyframes elem-spin {
+  to { transform: rotate(360deg); }
+}
+
+.elem-experience.is-loading .elem-readout {
+  bottom: 50%;
+  left: 50%;
+  width: auto;
+  transform: translate(-50%, 50%);
+}
+
+/* 故事前两拍只看手机，读数暂时退场 */
+.elem-readout {
+  transition: opacity 420ms ease;
+}
+
+.elem-experience.is-quiet .elem-readout {
+  opacity: 0 !important;
+}
+
+.elem-chip {
+  min-height: 32px;
+  font-size: 12px;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+@media (max-width: 760px) {
+  .elem-plate {
+    width: calc(100% - 32px);
+  }
+
+  .elem-plate h1 {
+    font-size: 19px;
+    line-height: 1.22;
+  }
+
+  .elem-plate > p {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .elem-readout {
+    gap: 4px 16px;
+  }
+
+  .elem-readout-row b {
+    font-size: 14px;
+  }
+
+  .elem-readout-row.is-hero b {
+    font-size: 17px;
+  }
+
+  .elem-chip {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elem-readout > *,
+  .elem-loading > i {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  /* 窄屏上「至少 28 个国家」由底部读数来说，铭牌只留一句问题 */
+  .elem-plate > p {
+    display: none;
   }
 }
