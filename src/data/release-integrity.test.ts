@@ -113,7 +113,7 @@ describe('release integrity', () => {
   })
 
   it('redirects every retired demo to a current flagship world', () => {
-    expect(Object.keys(legacyWorldRedirects)).toHaveLength(14)
+    expect(Object.keys(legacyWorldRedirects)).toHaveLength(15)
     for (const replacement of Object.values(legacyWorldRedirects)) {
       expect(getWorld(replacement)?.publication).toBe('public')
     }

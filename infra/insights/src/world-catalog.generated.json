@@ -174,12 +174,6 @@
     "poster": "/assets/posters/thumb/human-atlas.webp"
   },
   {
-    "id": "riemann-primes",
-    "title": "素数，藏着怎样的节奏？",
-    "titleEn": "What rhythm hides in the primes?",
-    "poster": "/assets/posters/thumb/riemann-primes.webp"
-  },
-  {
     "id": "fire-gravity",
     "title": "烛火里面，发生了什么？",
     "titleEn": "What happens inside a candle flame?",
@@ -1722,6 +1716,13 @@
     "title": "火星为什么在天上「倒着走」？",
     "titleEn": "Why does Mars \"walk backwards\" in the sky?",
     "poster": "/assets/posters/thumb/retrograde.webp",
+    "retired": true
+  },
+  {
+    "id": "riemann-primes",
+    "title": "素数，藏着怎样的节奏？",
+    "titleEn": "What rhythm hides in the primes?",
+    "poster": "/assets/posters/thumb/riemann-primes.webp",
     "retired": true
   },
   {

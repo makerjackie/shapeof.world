@@ -3,7 +3,7 @@
   "pageSize": 48,
   "tailAbsorb": 12,
   "bucketCount": 256,
-  "total": 44,
+  "total": 43,
   "pageCount": 1,
   "categories": [
     {
@@ -23,7 +23,7 @@
     },
     {
       "id": "beautiful-math",
-      "count": 2,
+      "count": 1,
       "pageCount": 1
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "id": "math-signals",
-      "count": 11,
+      "count": 10,
       "pageCount": 1
     },
     {
@@ -143,35 +143,6 @@
     }
   ],
   "fallbackWorlds": [
-    {
-      "id": "riemann-primes",
-      "index": "30",
-      "poster": "/assets/posters/riemann-primes.webp",
-      "posterMobile": "/assets/posters/mobile/riemann-primes.webp",
-      "posterDesktop": "/assets/posters/desktop/riemann-primes.webp",
-      "title": "素数，藏着怎样的节奏？",
-      "posterTitle": "素数，藏着怎样的节奏？",
-      "posterHook": "素数的起伏，为什么会与另一条线上看不见的零点有关？",
-      "question": "不规则的素数间距，能被另一种数学结构描述吗？",
-      "topicLabel": "黎曼猜想",
-      "translations": {
-        "en": {
-          "title": "What rhythm hides in the primes?",
-          "posterTitle": "What rhythm hides in the primes?",
-          "posterHook": "Why are prime fluctuations linked to zeros on another mathematical line?",
-          "question": "Can another mathematical structure describe the uneven gaps between primes?",
-          "topicLabel": "Riemann hypothesis"
-        }
-      },
-      "primaryCategoryId": "beautiful-math",
-      "renderer": "riemann-primes",
-      "runtime": "diagram-2d",
-      "difficulty": "intro",
-      "duration": 90,
-      "evidence": "modeled",
-      "accent": "#bda1ed",
-      "posterPosition": "50% 50%"
-    },
     {
       "id": "cow-anatomy",
       "index": "02",
@@ -199,6 +170,35 @@
       "duration": 180,
       "evidence": "compiled",
       "accent": "#cf4b40",
+      "posterPosition": "50% 50%"
+    },
+    {
+      "id": "periodic-table",
+      "index": "03",
+      "poster": "/assets/posters/periodic-table.webp",
+      "posterMobile": "/assets/posters/mobile/periodic-table.webp",
+      "posterDesktop": "/assets/posters/desktop/periodic-table.webp",
+      "title": "元素周期表",
+      "posterTitle": "元素周期表",
+      "posterHook": "取出一件展品，发现一种变化。",
+      "question": "元素符号背后，物质是什么模样？",
+      "topicLabel": "元素与物态",
+      "translations": {
+        "en": {
+          "title": "Periodic table",
+          "posterTitle": "Periodic table",
+          "posterHook": "Lift an exhibit. Discover a transformation.",
+          "question": "What does matter look like behind an element symbol?",
+          "topicLabel": "Elements and physical states"
+        }
+      },
+      "primaryCategoryId": "materials-lab",
+      "renderer": "periodic-table",
+      "runtime": "diagram-2d",
+      "difficulty": "intro",
+      "duration": 300,
+      "evidence": "verified",
+      "accent": "#9a7947",
       "posterPosition": "50% 50%"
     }
   ]
