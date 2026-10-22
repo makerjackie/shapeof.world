@@ -2,17 +2,40 @@ export const vertex = `attribute vec2 position; void main(){gl_Position=vec4(pos
 export const fragment = `
 precision highp float;
 uniform vec2 resolution;
-uniform float time, gravity, height, radius, traces, peel, focus, transport, air, burn, chemistry;
+uniform float time, gravity, height, radius, traces, peel, focus, transport, air, burn, chemistry, sceneScale, sceneOffset;
 float hash(vec3 p){p=fract(p*.3183099+vec3(.1,.2,.3));p*=17.;return fract(p.x*p.y*p.z*(p.x+p.y+p.z));}
 float noise(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z);}
+// Illustrative air path: rising entrainment on Earth vs nearly radial supply.
+vec2 airPos(float j,float phase,float b){
+float a=j*6.283185/16.;
+vec2 start=vec2(cos(a)*1.12,.48+sin(a)*.9);
+vec2 inward=mix(start,vec2(cos(a)*.58,.48+sin(a)*.43),phase);
+float signX=mod(j,2.)<1.?-1.:1.;
+float arrivalY=.30+mod(j,4.)*.30;
+float arrivalH=clamp(arrivalY/height,0.,1.);
+float edgeR=radius*pow(max(0.,sin(3.14159*pow(arrivalH,.82))),.82)*(1.-.60*arrivalH);
+vec2 rise=vec2(signX*mix(.9,edgeR,phase),arrivalY-.12*(1.-phase));
+return mix(inward,rise,b);
+}
 void main(){
 vec2 uv=(gl_FragCoord.xy/resolution-.5)*vec2(resolution.x/resolution.y,1.);
-float scale=resolution.x/resolution.y<.8?4.7:2.85;
-vec2 p=uv*scale; p.y+=resolution.x/resolution.y<.8?1.2:.54;
+vec2 p=uv*sceneScale; p.y+=sceneOffset;
 float b=sqrt(gravity);
 vec3 color=vec3(.009,.007,.009);
 float glow=burn*exp(-dot(p-vec2(0,.55),p-vec2(0,.55))*2.0);
 color+=mix(vec3(.008,.025,.055),vec3(.09,.022,.003),b)*glow;
+// Candlelight falling on a dark room behind the flame.
+float room=burn*exp(-length((p-vec2(0,.7))*vec2(.5,.42))*1.3);
+color+=mix(vec3(.004,.009,.02),vec3(.045,.02,.007),b)*room;
+// Dust motes drifting through the light: decorative depth, not data.
+for(int m=0;m<18;m++){
+float mf=float(m);
+float speed=.035+.05*hash(vec3(mf,3.,4.));
+vec2 mote=vec2((hash(vec3(mf,1.,2.))-.5)*3.4+.07*sin(time*.37+mf*1.7),-.7+mod(hash(vec3(mf,5.,6.))*3.6+time*speed,3.6));
+float lit=exp(-length(mote-vec2(0,.7))*1.15);
+float size=.00005+.00009*hash(vec3(mf,7.,8.));
+color+=vec3(1.,.68,.38)*exp(-dot(p-mote,p-mote)/size)*lit*burn*.55;
+}
 // Warm subsurface wax, a concave liquid pool and irregular raised rim.
 float flicker=.95+.035*sin(time*5.7)+.015*sin(time*11.3);
 float waxWidth=.185+.004*sin(p.y*18.)+.002*sin(p.y*43.);
@@ -22,7 +45,9 @@ float light=(.09+.91*burn*flicker)*exp(p.y*1.65)*(.10+.90*side);
 float texture=noise(vec3(p*120.,2.));
 vec3 wax=mix(vec3(.065,.060,.052),vec3(.65,.53,.38),light);
 float translucent=exp(p.y*7.)*pow(side,2.)*burn;
-color=wax*(.32+.07*texture)+vec3(.28,.105,.024)*translucent;
+color=wax*(.34+.03*texture)+vec3(.28,.105,.024)*translucent;
+// Light leaking through the thin wax wall near the edges.
+color+=vec3(.20,.10,.035)*pow(1.-side,2.5)*exp(p.y*2.4)*burn*flicker*.8;
 color+=vec3(.008,.007,.005)*noise(vec3(p*70.,3.))*light;
 }
 float pool=length(vec2(p.x/.186,(p.y+.005)/.038));
@@ -73,12 +98,25 @@ float darkCore=(1.-smoothstep(coreRadius-.012,coreRadius+.012,abs(x)))*(1.-smoot
 float inside=1.-smoothstep(r-.01,r+.01,abs(x));
 float outerBand=exp(-pow((abs(x)-r)/.015,2.));
 float luminous=inside*(1.-darkCore);
-vec3 section=vec3(.035,.025,.02)*darkCore+vec3(1.5,.52,.065)*luminous*.7+vec3(.08,.36,1.2)*outerBand;
+float rr=abs(x)/max(r,.001);
+// Soot glows hottest-looking toward the reaction sheet; tiny particles twinkle as they rise.
+vec3 lumCol=mix(vec3(.80,.24,.03),vec3(2.05,1.02,.28),smoothstep(.15,.95,rr))*(.5+.5*smoothstep(.04,.34,h))*(1.-.5*smoothstep(.72,1.,h));
+lumCol+=vec3(2.2,1.3,.5)*pow(noise(vec3(x*70.,h*48.-time*2.6,7.)),16.)*4.*smoothstep(.12,.32,h)*smoothstep(.25,.6,rr);
+vec3 coreCol=vec3(.045,.03,.02)+vec3(.10,.06,.03)*noise(vec3(x*22.,h*13.-time*1.3,9.));
+float coreEdge=exp(-pow((abs(x)-coreRadius)/.009,2.))*(1.-smoothstep(.36,.43,h))*smoothstep(.01,.05,h);
+float outerGlow=exp(-pow((abs(x)-r)/.032,2.));
+vec3 section=coreCol*darkCore+lumCol*luminous*.62+vec3(.08,.36,1.2)*outerBand+vec3(.03,.12,.42)*outerGlow+vec3(.55,.32,.13)*coreEdge*.3;
 float emphasis=1.;
 if(focus>.5 && focus<1.5)emphasis=.18+.82*darkCore;
 if(focus>1.5 && focus<2.5)emphasis=.2+.8*luminous;
 if(focus>2.5)emphasis=.16+.84*outerBand;
 section*=emphasis;
+// Focusing the core reveals the wax vapor that fills it, drifting upward.
+if(focus>.5 && focus<1.5){
+float vapor=.55+.45*noise(vec3(x*26.,h*18.-time*1.6,4.));
+float coreRim=exp(-pow((abs(x)-coreRadius)/.007,2.))*(1.-smoothstep(.36,.43,h))*smoothstep(.01,.05,h);
+section+=vec3(.52,.34,.17)*darkCore*vapor*(.6+.4*smoothstep(.0,.25,h))+vec3(1.1,.72,.36)*coreRim*.8;
+}
 float cut=smoothstep(radius*(1.-peel)-.015,radius*(1.-peel)+.015,x)*peel;
 color+=mix(natural,section*end,cut)*burn;
 // The open edge is a restrained illuminated seam, not a solid diagram border.
@@ -111,18 +149,18 @@ if(p.y>-.005 && p.y<.11 && abs(p.x-wickX)<.011)color=vec3(.009,.006,.004)+vec3(.
 // Optional illustrative air paths: rising entrainment vs nearly radial supply.
 if(traces>.01){
 for(int j=0;j<16;j++){
-float a=float(j)*6.283185/16.;
-float phase=fract(time*.16+float(j)*.618);
-vec2 start=vec2(cos(a)*1.12,.48+sin(a)*.9);
-vec2 inward=mix(start,vec2(cos(a)*.58,.48+sin(a)*.43),phase);
-float signX=mod(float(j),2.)<1.?-1.:1.;
-float arrivalY=.30+mod(float(j),4.)*.30;
-float arrivalH=arrivalY/height;
-float edgeR=radius*pow(sin(3.14159*pow(arrivalH,.82)),.82)*(1.-.60*arrivalH);
-vec2 rise=vec2(signX*mix(.9,edgeR,phase),arrivalY-.12*(1.-phase));
-vec2 q=mix(inward,rise,b);
-float dotLight=exp(-dot(p-q,p-q)/.00017);
-color+=mix(vec3(.20,.47,.83),vec3(.85,.72,.38),smoothstep(.85,1.,phase))*dotLight*traces*.45*mix(1.,air,chemistry);
+float jf=float(j);
+float phase=fract(time*.16+jf*.618);
+// A short fading tail shows which way the air is moving.
+for(int t=0;t<4;t++){
+float tf=float(t);
+float ph=phase-tf*.022;
+if(ph<0.)continue;
+vec2 q=airPos(jf,ph,b);
+float dotLight=exp(-dot(p-q,p-q)/(.00016*(1.-tf*.18)));
+float fade=(1.-tf*.27)*smoothstep(0.,.12,phase);
+color+=mix(vec3(.20,.47,.83),vec3(.85,.72,.38),smoothstep(.85,1.,ph))*dotLight*fade*traces*.45*mix(1.,air,chemistry);
+}
 }}
 // Smoke is a qualitative soot plume, not a visible representation of CO.
 float smokeAmount=chemistry*burn*max(0.,(1.-air)*1.4-.15);
