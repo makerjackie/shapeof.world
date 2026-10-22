@@ -86,8 +86,8 @@ apps/music/public/packs.json
 # Press kits keep only kit.json; covers and videos live in R2.
 infra/press/kits/*/covers/
 
-# The author's private repository (makerjackie/shapeof-world-dev) lives here so
-# one checkout holds both. It is its own Git repository; never commit it here.
+# Local private folder (topic plans, internal notes, release records).
+# Never committed; see AGENTS.md.
 /private/
 
 # Film renders, audio and review frames stay local; finished videos live in R2
