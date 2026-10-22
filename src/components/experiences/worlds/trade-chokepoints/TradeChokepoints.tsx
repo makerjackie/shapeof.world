@@ -373,7 +373,7 @@ function drawShips(
 ) {
   if (scene.ships <= 0.02) return
   const dimByStory = 1 - scene.spotlight * 0.66
-  const size = view.mobile ? 1.3 : 1.6
+  const size = view.mobile ? 1.5 : 1.8
   const tail = reducedMotion ? 0 : view.mobile ? 5 : 7
 
   // Buckets are reused between frames: a few hundred ships × 60 fps would otherwise
@@ -434,12 +434,21 @@ function drawShips(
       ctx.lineWidth = size * 1.15
       ctx.stroke()
     }
+    // Soft halo first, then the hot core: each ship reads as a lit hull, not a pixel.
+    const halo = size * 2.4
+    ctx.beginPath()
+    for (let index = 0; index < bucket.heads.length; index += 2) {
+      ctx.moveTo(bucket.heads[index] + halo, bucket.heads[index + 1])
+      ctx.arc(bucket.heads[index], bucket.heads[index + 1], halo, 0, TAU)
+    }
+    ctx.fillStyle = rgba(bucket.channel, 0.12 * bucket.alpha)
+    ctx.fill()
     ctx.beginPath()
     for (let index = 0; index < bucket.heads.length; index += 2) {
       ctx.moveTo(bucket.heads[index] + size, bucket.heads[index + 1])
       ctx.arc(bucket.heads[index], bucket.heads[index + 1], size, 0, TAU)
     }
-    ctx.fillStyle = rgba(bucket.channel, 0.88 * bucket.alpha)
+    ctx.fillStyle = rgba(bucket.channel, 0.92 * bucket.alpha)
     ctx.fill()
   }
   ctx.restore()
@@ -505,9 +514,13 @@ function drawPipelines(
     ctx.textAlign = 'left'
     ctx.fillText(labels.pipelineAdcop, projectX(view, 56.35) + 8, projectY(view, 25.12) + 11)
   }
-  ctx.textAlign = 'center'
-  ctx.fillStyle = rgba(INK.brass, 0.5)
-  ctx.fillText(labels.pipelineNote, projectX(view, 47), projectY(view, 17))
+  // On a phone the Hormuz label already says "land pipelines only", and this line
+  // would land on top of the Suez caption.
+  if (!view.mobile) {
+    ctx.textAlign = 'center'
+    ctx.fillStyle = rgba(INK.brass, 0.5)
+    ctx.fillText(labels.pipelineNote, projectX(view, 47), projectY(view, 17))
+  }
   ctx.restore()
 }
 
@@ -585,9 +598,11 @@ function drawGates(
   scene: Scene,
   hovered: GateId | null,
   suppressLabel: GateId | null,
+  invite: number,
+  time: number,
 ) {
-  const radius = view.mobile ? 10 : 14
-  const lineStep = view.mobile ? 11 : 12.5
+  const radius = view.mobile ? 11 : 14
+  const lineStep = view.mobile ? 12 : 13
   ctx.save()
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
@@ -604,9 +619,28 @@ function drawGates(
     placedLabels.push({ left: x - radius - 4, right: x + radius + 4, top: y - radius - 4, bottom: y + radius + 4 })
   }
 
-  for (const { gate, x, y, shut } of visible) {
+  visible.forEach(({ gate, x, y, shut }, order) => {
     const glow = clamp((pulse[gate.id] ?? 0) + scene.spotlight * 0.6 + (hovered === gate.id ? 0.5 : 0), 0, 1)
     const channel = shut > 0.5 ? INK.closed : INK.brass
+
+    // Idle invitation: while every gate is open, a slow sonar ring walks from gate to
+    // gate, saying "these are buttons" without a word of instruction.
+    if (invite > 0.02 && shut < 0.5) {
+      const phase = (time * 0.42 + order * 0.37) % 1.6
+      if (phase < 1) {
+        ctx.strokeStyle = rgba(INK.brass, 0.42 * invite * (1 - phase) ** 1.6)
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.arc(x, y, radius + 2 + phase * radius * 1.6, 0, TAU)
+        ctx.stroke()
+      }
+    }
+
+    // A dark lens under every ring so the gate reads as a control above the traffic.
+    ctx.fillStyle = shut > 0.5 ? 'rgba(40, 8, 6, 0.78)' : 'rgba(3, 8, 12, 0.66)'
+    ctx.beginPath()
+    ctx.arc(x, y, radius - 0.5, 0, TAU)
+    ctx.fill()
 
     if (glow > 0.02) {
       ctx.save()
@@ -622,8 +656,8 @@ function drawGates(
       ctx.restore()
     }
 
-    ctx.strokeStyle = rgba(channel, 0.5 + shut * 0.4)
-    ctx.lineWidth = 1.5
+    ctx.strokeStyle = rgba(channel, 0.68 + shut * 0.3)
+    ctx.lineWidth = 1.7
     ctx.beginPath()
     ctx.arc(x, y, radius, 0, TAU)
     ctx.stroke()
@@ -648,7 +682,7 @@ function drawGates(
       ctx.lineTo(x, y + radius * 0.64 * shut)
       ctx.stroke()
     }
-  }
+  })
 
   for (const { gate, x, y, shut } of visible) {
     const channel = shut > 0.5 ? INK.closed : INK.brass
@@ -660,13 +694,13 @@ function drawGates(
     const rows: Array<{ text: string; font: string; fill: string }> = [
       {
         text: view.mobile ? labels.gatesShort[gate.id] : labels.gates[gate.id],
-        font: `600 ${view.mobile ? 9.5 : 11}px system-ui, sans-serif`,
-        fill: rgba(channel, 0.94),
+        font: `600 ${view.mobile ? 11 : 12}px system-ui, sans-serif`,
+        fill: rgba(channel, 0.98),
       },
       {
         text: `${volume.toFixed(1)} ${labels.mbd}`,
-        font: `600 ${view.mobile ? 9 : 10}px ui-monospace, "SF Mono", monospace`,
-        fill: 'rgba(255, 255, 255, 0.6)',
+        font: `500 ${view.mobile ? 9.5 : 10.5}px ui-monospace, "SF Mono", monospace`,
+        fill: 'rgba(255, 255, 255, 0.62)',
       },
     ]
     if (shut > 0.3) {
@@ -790,6 +824,52 @@ function drawEverGiven(
   )
   ctx.shadowBlur = 0
   ctx.restore()
+}
+
+/**
+ * Night-chart lighting: corners fall off into the dark, and the bands under the
+ * header and over the readout are scrimmed so type never has to fight a coastline.
+ */
+let vignetteCache: { canvas: HTMLCanvasElement; key: string } | null = null
+
+function drawVignette(ctx: CanvasRenderingContext2D, view: View, dpr: number) {
+  const key = `${view.w}|${view.h}|${dpr}|${Math.round(view.stageTop)}|${Math.round(view.stageBottom)}`
+  if (!vignetteCache || vignetteCache.key !== key) {
+    const canvas = vignetteCache?.canvas ?? document.createElement('canvas')
+    canvas.width = Math.max(1, Math.round(view.w * dpr))
+    canvas.height = Math.max(1, Math.round(view.h * dpr))
+    const v = canvas.getContext('2d')!
+    v.setTransform(dpr, 0, 0, dpr, 0, 0)
+    v.clearRect(0, 0, view.w, view.h)
+    const radius = Math.hypot(view.w, view.h) * 0.62
+    const corners = v.createRadialGradient(view.w / 2, view.cy, radius * 0.38, view.w / 2, view.cy, radius)
+    corners.addColorStop(0, 'rgba(2, 6, 10, 0)')
+    corners.addColorStop(1, 'rgba(2, 6, 10, 0.72)')
+    v.fillStyle = corners
+    v.fillRect(0, 0, view.w, view.h)
+
+    const topEnd = Math.max(0, view.stageTop + 24)
+    const top = v.createLinearGradient(0, 0, 0, topEnd)
+    top.addColorStop(0, 'rgba(2, 6, 10, 0.86)')
+    top.addColorStop(0.62, 'rgba(2, 6, 10, 0.5)')
+    top.addColorStop(1, 'rgba(2, 6, 10, 0)')
+    v.fillStyle = top
+    v.fillRect(0, 0, view.w, topEnd)
+
+    const bottomStart = Math.min(view.h, view.stageBottom - 70)
+    const bottom = v.createLinearGradient(0, bottomStart, 0, view.h)
+    bottom.addColorStop(0, 'rgba(2, 6, 10, 0)')
+    bottom.addColorStop(0.42, 'rgba(2, 6, 10, 0.7)')
+    bottom.addColorStop(1, 'rgba(2, 6, 10, 0.94)')
+    v.fillStyle = bottom
+    v.fillRect(0, bottomStart, view.w, view.h - bottomStart)
+    vignetteCache = { canvas, key }
+  }
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.drawImage(vignetteCache.canvas, 0, 0)
+  ctx.restore()
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
 }
 
 function drawFootnote(ctx: CanvasRenderingContext2D, view: View, labels: CanvasLabels) {
@@ -920,11 +1000,49 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
     }
     return best
   }, [model, laneStates, laneNames])
+  /**
+   * The one ship the readout follows: the busiest lane the reader's closures touch.
+   * Its own before/after voyage in days is the number people actually feel —
+   * "a container from China to Europe: 31 days → 42 days" — rather than an average.
+   */
+  const headline = useMemo(() => {
+    if (!model) return null
+    let pick: { index: number; weight: number } | null = null
+    laneStates.forEach((state, index) => {
+      if (!state.severed && state.variant === 0) return
+      const weight = model.lanes[index].weight + (state.severed ? 0 : 0.001)
+      if (!pick || weight > pick.weight) pick = { index, weight }
+    })
+    if (!pick) return null
+    const { index } = pick as { index: number; weight: number }
+    const lane = model.lanes[index]
+    const state = laneStates[index]
+    const base = lane.variants[0]
+    return {
+      name: laneNames[lane.id] ?? lane.id,
+      cargo: lane.cargo,
+      severed: state.severed,
+      beforeDays: base.days,
+      afterDays: state.severed ? null : lane.variants[state.variant].days,
+      extraDays: state.extraDays,
+      extraKm: state.extraKm,
+    }
+  }, [model, laneStates, laneNames])
   const capeLanes = useMemo(() => {
     if (!model) return 0
     return laneStates.reduce((total, state, index) => {
       if (state.variant < 0) return total
       return total + (model.lanes[index].variants[state.variant].viaCape ? 1 : 0)
+    }, 0)
+  }, [model, laneStates])
+
+  /** Lanes pushed onto the Cape by the reader's closures (not the ones that always go that way). */
+  const capeExtra = useMemo(() => {
+    if (!model) return 0
+    return laneStates.reduce((total, state, index) => {
+      if (state.variant <= 0) return total
+      const lane = model.lanes[index]
+      return total + (lane.variants[state.variant].viaCape && !lane.variants[0].viaCape ? 1 : 0)
     }, 0)
   }, [model, laneStates])
 
@@ -1076,6 +1194,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
     let previous = performance.now()
     let clock = 0
     let frames = 0
+    let invite = 0
 
     const frame = (now: number) => {
       frameId = window.requestAnimationFrame(frame)
@@ -1105,7 +1224,9 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
         anim.capeStat = approach(anim.capeStat, scene.capeStat, dt, 0.42)
 
         const mobile = width < 720
-        const base: Camera = mobile ? { lon0: 56, lat0: 12, zoom: 1 } : { lon0: 40, lat0: 8, zoom: 1 }
+        // A phone leans in on the belt from the Cape to Malacca: every gate that matters
+        // to Asia–Europe trade, big enough to tap, and land filling the portrait frame.
+        const base: Camera = mobile ? { lon0: 57, lat0: 14, zoom: 1.24 } : { lon0: 40, lat0: 8, zoom: 1 }
 
         if (!currentModel) {
           const emptyView = computeView(width, height, storyRef.current, reserveRef.current, plateRef.current, base)
@@ -1151,6 +1272,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
         camera.zoom = Math.exp(approach(Math.log(camera.zoom), Math.log(target.zoom), dt, tau))
 
         const view = computeView(width, height, storyRef.current, reserveRef.current, plateRef.current, camera)
+        invite = approach(invite, !storyRef.current && closedRef.current.size === 0 ? 1 : 0, dt, 0.5)
 
         for (const gate of currentModel.gates) {
           const shut = closedRef.current.has(gate.id) ? 1 : 0
@@ -1189,6 +1311,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
         drawQueues(ctx, view, currentModel, runtime, blended, clock)
         drawPipelines(ctx, view, currentModel, closeAnimRef.current.hormuz ?? 0, labelsRef.current)
         drawCape(ctx, view, currentModel, capeLoadRef.current, labelsRef.current, anim.capeStat)
+        drawVignette(ctx, view, dpr)
         drawGates(
           ctx,
           view,
@@ -1199,6 +1322,8 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
           anim,
           hoveredRef.current,
           anim.everGiven > 0.25 ? 'suez' : null,
+          invite,
+          clock,
         )
         drawEverGiven(ctx, view, currentModel, anim.everGiven, labelsRef.current, clock, dpr)
         drawFootnote(ctx, view, labelsRef.current)
@@ -1348,6 +1473,8 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
   }
 
   const formatKm = (value: number) => new Intl.NumberFormat('en-US').format(Math.round(value))
+  const shipLabel = (id: CargoId) =>
+    id === 'container' ? tx('一船集装箱') : id === 'crude' ? tx('一船原油') : id === 'lng' ? tx('一船天然气') : tx('一船粮食')
   const cargoLabel = (id: CargoId) =>
     id === 'container' ? tx('集装箱') : id === 'crude' ? tx('原油') : id === 'lng' ? tx('天然气') : tx('粮食')
 
@@ -1363,7 +1490,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
       />
 
       {failed && <p className="choke-status" data-experience-overlay="true">{tx('航道数据没有加载成功')}</p>}
-      {!failed && !model && <p className="choke-status" data-experience-overlay="true">{tx('正在载入全球航道…')}</p>}
+      {!failed && !model && <p className="choke-status is-loading" data-experience-overlay="true">{tx('正在载入全球航道…')}</p>}
 
       {!storyMode && (
         <header className="choke-plate" data-experience-overlay="true">
@@ -1372,40 +1499,84 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
         </header>
       )}
 
-      <aside ref={readoutRef} className="choke-readout" data-experience-overlay="true">
-        <div className="choke-readout-row is-key">
-          <small>{tx('已关闭咽喉')}</small>
-          <b>{summary ? summary.closedCount : 0} / {GATE_ORDER.length}</b>
-        </div>
-        <div className="choke-readout-row is-key">
-          <small>{tx('受影响航线')}</small>
-          <b>{summary ? summary.affected : 0} / {summary ? summary.laneTotal : 0}</b>
-        </div>
-        <div className="choke-readout-row is-key">
-          <small>{tx('平均绕行')}</small>
-          <b>+{summary ? formatKm(summary.averageExtraKm) : 0} km</b>
-        </div>
-        <div className="choke-readout-row is-key">
-          <small>{tx('平均多走（天）')}</small>
-          <b>+{summary ? summary.averageExtraDays.toFixed(1) : '0.0'}</b>
-        </div>
-        <div className="choke-readout-row">
-          <small>{tx('受阻通过量')}</small>
-          <b>
-            {summary ? summary.blockedMbd.toFixed(1) : '0.0'} {labels.mbd}
-            <i>{summary ? `${Math.round(summary.blockedShare * 100)}%` : '0%'}</i>
-          </b>
-        </div>
-        <div className="choke-readout-row">
-          <small>{tx('断航（没有海上替代）')}</small>
-          <b>{summary ? summary.severed : 0}</b>
-        </div>
-        <div className="choke-readout-row">
-          <small>{tx('绕行好望角')}</small>
-          <b>{capeLanes}</b>
-        </div>
-        <p>
-          <span>{tx('最长绕行')}{worstLane ? ` ${worstLane.name} +${formatKm(worstLane.km)} km` : ' —'}</span>
+      <aside
+        ref={readoutRef}
+        className={`choke-readout${closed.size === 0 ? ' is-idle' : ''}${headline?.severed ? ' is-severed' : ''}`}
+        data-experience-overlay="true"
+        aria-live="polite"
+      >
+        {closed.size === 0 || !headline ? (
+          <div className="choke-hero is-idle">
+            <span className="choke-hero-dot" aria-hidden="true" />
+            <div>
+              <strong>{tx('点一处闸门，把它关上')}</strong>
+              <small>
+                {tx('七处咽喉')} · {model ? model.lanes.length : 19} {tx('条干线')}
+                <span className="choke-wide-only"> · {tx('所有船按同一速度航行')}</span>
+              </small>
+            </div>
+          </div>
+        ) : (
+          <div className="choke-hero" key={`${headline.name}-${headline.afterDays ?? 'cut'}`}>
+            <small className="choke-hero-kicker">
+              {headline.name} · {shipLabel(headline.cargo)}
+            </small>
+            {headline.severed ? (
+              <>
+                <b className="choke-hero-value is-cut">{tx('没有海上替代')}</b>
+                <span className="choke-hero-sub">{tx('船只能停在门外排队')}</span>
+              </>
+            ) : (
+              <>
+                <b className="choke-hero-value">
+                  <s>{Math.round(headline.beforeDays)}</s>
+                  <i aria-hidden="true">→</i>
+                  {Math.round(headline.afterDays ?? headline.beforeDays)}
+                  <em>{tx('天')}</em>
+                </b>
+                <span className="choke-hero-sub">
+                  {tx('多走')} <mark>+{headline.extraDays.toFixed(1)} {tx('天')}</mark> · {tx('多绕')} +{formatKm(headline.extraKm)} km
+                </span>
+              </>
+            )}
+          </div>
+        )}
+
+        {closed.size > 0 && summary && (
+          <div className="choke-stats">
+            <div className="choke-stat">
+              <small>{tx('受影响干线')}</small>
+              <b>{summary.affected}<i>/ {summary.laneTotal}</i></b>
+            </div>
+            {summary.affected > summary.severed && (
+              <div className="choke-stat">
+                <small>{tx('平均多走')}</small>
+                <b>+{summary.averageExtraDays.toFixed(1)}<i>{tx('天')}</i></b>
+              </div>
+            )}
+            <div className="choke-stat is-wide">
+              <small>{tx('被卡住的石油')}</small>
+              <b>
+                {summary.blockedMbd.toFixed(1)}<i>{labels.mbd}</i>
+              </b>
+            </div>
+            {summary.severed > 0 && (
+              <div className="choke-stat is-cut">
+                <small>{tx('断航')}</small>
+                <b>{summary.severed}<i>{tx('条')}</i></b>
+              </div>
+            )}
+            {capeExtra > 0 && (
+              <div className="choke-stat is-cape">
+                <small>{tx('挤去好望角')}</small>
+                <b>+{capeExtra}<i>{tx('条')}</i></b>
+              </div>
+            )}
+          </div>
+        )}
+
+        <p className="choke-notes">
+          {worstLane && <span>{tx('最长绕行')} {worstLane.name} +{formatKm(worstLane.km)} km</span>}
           <span>{tx('通过量为 EIA 2023 石油海运量 · 同时关闭多处会重复计入')}</span>
           <span>{tx('天数按 14 节均速估算 · 不含排队与靠港')}</span>
         </p>
@@ -1511,7 +1682,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
           { position: 'top-right', mobilePosition: 'top-left', treatment: 'annotation', cue: 'left' },
           { position: 'bottom-left', mobilePosition: 'top-left', treatment: 'caption' },
           { position: 'bottom-right', mobilePosition: 'top-left', treatment: 'editorial', cue: 'up' },
-          { position: 'top-center', mobilePosition: 'top-center', treatment: 'annotation' },
+          { position: 'top-left', mobilePosition: 'top-center', treatment: 'annotation' },
         ]}
         showReplayChip={false}
         onExit={() => {
