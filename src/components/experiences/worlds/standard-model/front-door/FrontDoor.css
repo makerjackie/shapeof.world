@@ -30,6 +30,7 @@
 .smf-bars i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,#ff9d6b,#ffd9a8);min-width:3px}
 .smf-bars i.is-quarks{background:var(--smf-accent)}
 .smf-bars b{font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--smf-ink)}
+.smf-bars b small{font-weight:400;color:var(--smf-muted)}
 .smf-you{display:flex;align-items:center;gap:10px;color:var(--smf-ink)}
 .smf-you>div{display:grid;line-height:1.3}
 .smf-you b{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}

@@ -19,9 +19,9 @@ export function ParticleScene({ particle, reduced, en = false, onInteract }: { p
 		<svg viewBox="0 0 420 300" className="sm-scene-canvas" role="group" aria-label={(en ? particle.nameEn : particle.name) + ' · ' + L(en, '行为示意', 'Behaviour schematic')}>
 			<defs>
 				<radialGradient id="sm-scene-bag" cx="50%" cy="46%" r="60%">
-					<stop offset="0%" stopColor="#fffdf4" stopOpacity=".9" />
-					<stop offset="62%" stopColor="#f3efdd" stopOpacity=".55" />
-					<stop offset="100%" stopColor="#e7e2cd" stopOpacity=".08" />
+					<stop offset="0%" stopColor="#4a3c28" stopOpacity=".9" />
+					<stop offset="62%" stopColor="#2c261d" stopOpacity=".55" />
+					<stop offset="100%" stopColor="#1c1a16" stopOpacity=".08" />
 				</radialGradient>
 				<radialGradient id="sm-scene-flash" cx="50%" cy="50%" r="50%">
 					<stop offset="0%" stopColor="#fff" stopOpacity=".95" />
@@ -29,9 +29,9 @@ export function ParticleScene({ particle, reduced, en = false, onInteract }: { p
 					<stop offset="100%" stopColor="#ffe9b8" stopOpacity="0" />
 				</radialGradient>
 				<linearGradient id="sm-scene-sky" x1="0" y1="0" x2="0" y2="1">
-					<stop offset="0%" stopColor="#2e4653" stopOpacity=".16" />
-					<stop offset="70%" stopColor="#9db4bb" stopOpacity=".1" />
-					<stop offset="100%" stopColor="#c8b98a" stopOpacity=".22" />
+					<stop offset="0%" stopColor="#6f9fbd" stopOpacity=".16" />
+					<stop offset="70%" stopColor="#3a5866" stopOpacity=".1" />
+					<stop offset="100%" stopColor="#6b5d3a" stopOpacity=".22" />
 				</linearGradient>
 			</defs>
 			{(particle.scene === 'proton' || particle.scene === 'meson')
@@ -150,7 +150,7 @@ function ConfinementScene({ labels, reduced, en, onInteract }: { labels: string[
 			<circle className="sm-conf-orb" r="19" fill="url(#sm-quark-copper)" fillOpacity={isAnti(label)?.65:1}/>
 			<text y="5" className="sm-scene-tag sm-scene-tag-light" textAnchor="middle">{label}</text>
 		</g>)}
-		{!touched && !reduced && <g className="sm-pull-hint" data-experience-overlay="true" aria-hidden="true"><path d="M132 88 Q105 67 80 75 M80 75 l12 -12 M80 75 l17 4" fill="none" stroke="#a36d3d" strokeWidth="1.2"/><circle cx="136" cy="93" r="8" fill="none" stroke="#a36d3d" strokeWidth="1"/></g>}
+		{!touched && !reduced && <g className="sm-pull-hint" data-experience-overlay="true" aria-hidden="true"><path d="M132 88 Q105 67 80 75 M80 75 l12 -12 M80 75 l17 4" fill="none" stroke="#d29a66" strokeWidth="1.2"/><circle cx="136" cy="93" r="8" fill="none" stroke="#a36d3d" strokeWidth="1"/></g>}
 		<text data-experience-overlay="true" x="210" y="286" textAnchor="middle" className="sm-conf-label">{pulling ? L(en,'距离增大，储存的能量增加','Greater separation stores more energy') : L(en,'拉开一颗夸克，再松手','Pull a quark away, then release')}</text>
 	</g>
 }
@@ -219,8 +219,8 @@ function AtomScene({ en, measured }: { en: boolean; measured: boolean }) {
 function CosmicScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 	return <g className="sm-cosmic">
 		<rect x="60" y="24" width="300" height="252" rx="10" fill="url(#sm-scene-sky)" />
-		<line x1="60" y1="120" x2="360" y2="120" stroke="#5b6f6d" strokeOpacity=".25" strokeDasharray="4 7" />
-		<line x1="60" y1="206" x2="360" y2="206" stroke="#8a7f5f" strokeOpacity=".3" strokeDasharray="4 7" />
+		<line x1="60" y1="120" x2="360" y2="120" stroke="#a9b0b4" strokeOpacity=".25" strokeDasharray="4 7" />
+		<line x1="60" y1="206" x2="360" y2="206" stroke="#c8b98a" strokeOpacity=".3" strokeDasharray="4 7" />
 		<text x="72" y="44" className="sm-scene-note">{L(en, '15 km 高空，宇宙线撞出 μ 子', 'A cosmic ray makes a μ 15 km up')}</text>
 		<text x="72" y="136" className="sm-scene-note">{L(en, '大气层', 'Atmosphere')}</text>
 		<text x="72" y="222" className="sm-scene-note">{L(en, '地面', 'Ground')}</text>
@@ -269,7 +269,7 @@ function OscillationScene({ reduced, en, flavor }: { reduced: boolean; en: boole
 	return <g className="sm-osc">
 		<circle cx="66" cy="150" r="24" fill="#e8b64c" fillOpacity=".8" />
 		<text x="66" y="198" className="sm-scene-tag" textAnchor="middle">{L(en, '中微子源', 'Neutrino source')}</text>
-		<rect x="318" y="114" width="70" height="72" rx="8" fill="#5b6052" fillOpacity=".14" stroke="#5b6052" strokeOpacity=".4" />
+		<rect x="318" y="114" width="70" height="72" rx="8" fill="#a9b0b4" fillOpacity=".14" stroke="#a9b0b4" strokeOpacity=".4" />
 		<text x="353" y="212" className="sm-scene-tag" textAnchor="middle">{L(en, '探测器', 'Detector')}</text>
 		{!reduced
 			? <g className="sm-osc-beam">
@@ -290,7 +290,7 @@ function OscillationScene({ reduced, en, flavor }: { reduced: boolean; en: boole
 function PhotonScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 	const wave = 'M20 150 C 40 96, 60 96, 80 150 S 120 204, 140 150 S 180 96, 200 150 S 240 204, 260 150 S 300 96, 320 150 S 360 204, 400 150'
 	return <g className="sm-photon">
-		<line x1="16" y1="150" x2="404" y2="150" stroke="#5b6f6d" strokeOpacity=".3" strokeDasharray="2 6" />
+		<line x1="16" y1="150" x2="404" y2="150" stroke="#a9b0b4" strokeOpacity=".3" strokeDasharray="2 6" />
 		{!reduced
 			? <g className="sm-photon-live">
 				<path className="sm-photon-wave" d={wave} fill="none" />
@@ -325,7 +325,7 @@ function BetaDecayScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 		{!reduced
 			? <g className="sm-beta-live">
 				<g className="sm-beta-nucleus">
-					<circle cx="140" cy="150" r="32" fill="#e7e2cd" stroke="#8a7f5f" strokeOpacity=".4" />
+					<circle cx="140" cy="150" r="32" fill="#1c2129" stroke="#c8b98a" strokeOpacity=".4" />
 					<circle cx="128" cy="140" r="8" fill="#b0703c" fillOpacity=".85" />
 					<circle cx="152" cy="144" r="8" fill="#b0703c" fillOpacity=".6" />
 					<circle className="sm-beta-quark" cx="140" cy="164" r="8" fill="#b0703c" fillOpacity=".7" />
@@ -347,7 +347,7 @@ function BetaDecayScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 				</g>
 			</g>
 			: <g>
-				<circle cx="140" cy="150" r="32" fill="#e7e2cd" stroke="#8a7f5f" strokeOpacity=".4" />
+				<circle cx="140" cy="150" r="32" fill="#1c2129" stroke="#c8b98a" strokeOpacity=".4" />
 				<text x="140" y="104" className="sm-scene-tag" textAnchor="middle">{L(en, '中子 (u d d)', 'Neutron (u d d)')}</text>
 				<text x="140" y="204" className="sm-scene-tag" textAnchor="middle">{L(en, '→ 质子 (u u d)', '→ Proton (u u d)')}</text>
 				<circle cx="236" cy="196" r="10" fill="#4a81b0" />
@@ -384,7 +384,7 @@ function ZExchangeScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 
 function HiggsFieldScene({ reduced, en }: { reduced: boolean; en: boolean }) {
 	return <g className="sm-higgs">
-		{Array.from({length:13},(_,i)=><path key={i} d={`M45 ${65+i*13} Q210 ${40+i*13} 375 ${65+i*13}`} stroke="#ad8439" strokeOpacity=".13" fill="none"/>)}
+		{Array.from({length:13},(_,i)=><path key={i} d={`M45 ${65+i*13} Q210 ${40+i*13} 375 ${65+i*13}`} stroke="#ffd166" strokeOpacity=".13" fill="none"/>)}
 		<g transform="translate(122 146)"><circle r="46" fill="#4a81b0" fillOpacity=".06"/><circle r="10" fill="#4a81b0"/><text y="5" textAnchor="middle" className="sm-scene-tag sm-scene-tag-light">γ</text></g>
 		<g transform="translate(294 146)"><circle className={reduced?'':'sm-higgs-drag'} r="38" fill="#ad8439" fillOpacity=".12"/><circle r="23" fill="none" stroke="#ad8439" strokeOpacity=".45"/><circle r="10" fill="#4e8970"/><text y="5" textAnchor="middle" className="sm-scene-tag sm-scene-tag-light">e</text></g>
 		<text x="122" y="224" textAnchor="middle" className="sm-scene-tag">{L(en,'光子 · 无静止质量','Photon · zero rest mass')}</text>
