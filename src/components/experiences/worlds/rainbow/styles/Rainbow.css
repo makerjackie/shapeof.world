@@ -381,3 +381,34 @@
   line-height: 1.16;
   letter-spacing: -0.02em;
 }
+
+/* ---------- 电影感：暗角 + 故事字幕下方的压暗 ---------- */
+.rb-experience::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(130% 90% at 50% 38%, transparent 58%, rgba(2, 3, 6, 0.5) 100%);
+}
+/* Captions sit on a soft floor of dark, so lines in the scene never run through the words. */
+.rb-experience.is-story::after {
+  background:
+    radial-gradient(130% 90% at 50% 38%, transparent 58%, rgba(2, 3, 6, 0.5) 100%),
+    linear-gradient(to bottom, transparent 50%, rgba(3, 5, 9, 0.5) 66%, rgba(3, 5, 9, 0.9) 100%);
+}
+@media (min-width: 721px) {
+  .rb-experience.is-story::after {
+    background:
+      radial-gradient(130% 90% at 50% 38%, transparent 58%, rgba(2, 3, 6, 0.5) 100%),
+      linear-gradient(to bottom, transparent 58%, rgba(3, 5, 9, 0.45) 76%, rgba(3, 5, 9, 0.82) 100%);
+  }
+}
+@media (min-width: 721px) {
+  /* The side-view beat puts its caption top-left, where the sunbeams cross. */
+  .rb-experience.is-story:has(.guide-stage-copy[data-stage-position='top-left'])::after {
+    background:
+      radial-gradient(130% 90% at 50% 38%, transparent 58%, rgba(2, 3, 6, 0.5) 100%),
+      radial-gradient(48% 42% at 18% 16%, rgba(3, 5, 9, 0.82), rgba(3, 5, 9, 0.5) 55%, transparent 100%);
+  }
+}
