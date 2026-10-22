@@ -75,7 +75,7 @@ const Bubbles: React.FC<{ p: Proj; f: number }> = ({ p, f }) => (
 const MapStage: React.FC = () => {
   const f = useBeatFrame();
   const cam = camAt(f, KEYS);
-  const year = interpolate(f, [at(34, 0.5), at(36, 3)], [2004, 2026.99], { ...CL, easing: (t) => t });
+  const year = interpolate(f, [at(34, 0.5), at(35, 3)], [2004, 2026.99], { ...CL, easing: (t) => t });
   const towersO = track(f, [
     [at(37), 1],
     [at(37, 1), 0.22],
@@ -96,8 +96,9 @@ const MapStage: React.FC = () => {
 
 const Skyline: React.FC = () => {
   const f = useBeatFrame();
-  const year = interpolate(f, [0.5 * FPB, 11 * FPB], [2004, 2026.99], CL);
+  const year = interpolate(f, [0.5 * FPB, 7 * FPB], [2004, 2026.99], CL);
   const [, c200] = skylineAt(year);
+  const rank = progAt(f, 7.6, 0.8, EO);
   return (
     <AbsoluteFill>
       <Scrim w={760} />
@@ -114,9 +115,21 @@ const Skyline: React.FC = () => {
         <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
           <Odometer value={c200} size={150} color={K.lit} />
           <Txt size={44} color={K.sub}>栋</Txt>
+          <div style={{ marginLeft: 18, opacity: rank, transform: `scale(${0.8 + 0.2 * rank})`, transformOrigin: "left center", fontFamily: FONT, fontSize: 40, fontWeight: 900, color: K.bg, background: K.lit, padding: "4px 16px", borderRadius: 10 }}>全球第一</div>
+        </div>
+        <div style={{ display: "flex", gap: 22, marginTop: 6, opacity: rank, fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.sub }}>
+          {[
+            ["迪拜", 134],
+            ["香港", 102],
+            ["纽约", 102],
+          ].map(([c, n]) => (
+            <span key={c as string}>
+              {c} <b style={{ color: K.fg }}>{n}</b>
+            </span>
+          ))}
         </div>
       </div>
-      <Src at={1}>CTBUH Skyscraper Center · 2026 · 已建成的 150 米以上塔楼，按竣工年份立起 · 高度放大 10 倍示意</Src>
+      <Src at={1}>CTBUH Skyscraper Center · 2026-10-22 · 已建成塔楼按现行数据库的竣工年份立起（150 米以上）· 高度放大 10 倍示意</Src>
     </AbsoluteFill>
   );
 };

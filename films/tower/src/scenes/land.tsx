@@ -76,7 +76,7 @@ const DOTS = (() => {
   while (pts.length < 1997) pts.push(out[pts.length % out.length]);
   return pts;
 })();
-const ECO = 974; // km² inside 基本生态控制线 (待核: research/06)
+const ECO = 974.5; // km² inside 基本生态控制线 when it was drawn in 2005 (深圳政府在线 2023; research/06 §4.1)
 const COLS = 50;
 const CELL = 13;
 const WAF = { x: 1120, y: 250 };
@@ -95,7 +95,7 @@ const Dots: React.FC<{ p: Proj; f: number }> = ({ p, f }) => {
     const t = EIO(interpolate(f, [t0, t0 + 1.1 * FPB], [0, 1], CL));
     const x = gx + (c.x - gx) * t;
     const y = gy + (c.y - gy) * t;
-    const kind = t >= 1 && i < eco ? 1 : 0;
+    const kind = t >= 1 && i < Math.floor(eco) ? 1 : t >= 1 && i < eco ? 2 : 0;
     const s = 4.4 + 4 * t;
     rects[kind] += `M${(x - s / 2).toFixed(1)} ${(y - s / 2).toFixed(1)}h${s.toFixed(1)}v${s.toFixed(1)}h${(-s).toFixed(1)}z`;
   });
@@ -103,6 +103,7 @@ const Dots: React.FC<{ p: Proj; f: number }> = ({ p, f }) => {
     <g opacity={appear * leave}>
       <path d={rects[0]} fill={K.fg} opacity={0.62} />
       <path d={rects[1]} fill={K.eco} />
+      <path d={rects[2]} fill={K.eco} opacity={0.5} />
     </g>
   );
 };
@@ -453,7 +454,7 @@ const Shenzhen: React.FC = () => (
         <Txt size={34} color={K.sub}>9 个区 + 大鹏新区</Txt>
       </In>
     </div>
-    <Src at={1}>深圳市统计局（待核）· 行政区划与海岸线：© OpenStreetMap contributors</Src>
+    <Src at={1}>深圳统计年鉴 2024 · 陆域面积 1,997.47 平方公里，不含深汕 · 区界与海岸线：© OpenStreetMap contributors</Src>
   </AbsoluteFill>
 );
 
@@ -468,20 +469,20 @@ const Eco: React.FC = () => {
           <Txt size={36} color={K.sub}>1 个点 = 1 平方公里</Txt>
         </In>
         <In at={1} from="up">
-          <Txt size={44}>划进基本生态控制线的</Txt>
+          <Txt size={44}>2005 年划进基本生态控制线的</Txt>
         </In>
         <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
-          <Odometer value={eco} size={140} color={K.eco} />
+          <Odometer value={eco} size={140} decimals={1} color={K.eco} />
           <Txt size={40} color={K.sub}>平方公里</Txt>
         </div>
         <In at={2.6} from="up">
-          <Txt size={34} color={K.sub}>山、水库、郊野公园：原则上不准盖楼</Txt>
+          <Txt size={32} color={K.sub}>线内除道路、市政、公园等，禁止建设</Txt>
         </In>
         <div style={{ marginTop: 24 }}>
-          <Head at={3.6} parts={["深圳", { t: "一半", c: K.eco }, "的地，不能动。"]} size={70} />
+          <Head at={3.2} parts={["全市", { t: "一半的土地", c: K.eco }, "，不能盖楼。"]} size={66} />
         </div>
       </div>
-      <Src at={1}>深圳市基本生态控制线（待核：面积与年份）· 点阵为面积示意，不代表位置</Src>
+      <Src at={1}>深圳市基本生态控制线管理规定（市政府令第 145 号）· 2005；深圳政府在线 · 2023 · 点阵为面积示意，不代表位置</Src>
     </AbsoluteFill>
   );
 };
@@ -536,17 +537,20 @@ const Cbd: React.FC = () => (
       <In at={0.3} from="up">
         <Txt size={52}>福田中心区</Txt>
       </In>
-      <In at={1} from="up">
-        <Txt size={34} color={K.sub}>1980 年代就留出来的城市中心（待核）</Txt>
+      <In at={0.9} from="up">
+        <Txt size={34} color={K.sub}>1980 年代初，规划就把市中心定在这里</Txt>
       </In>
-      <In at={1.6} from="up">
+      <In at={1.5} from="up">
         <Txt size={34} color={K.sub}>中轴线：莲花山 → 市民中心 → 会展中心</Txt>
+      </In>
+      <In at={2.1} from="up">
+        <Txt size={34} color={K.sub}>图则范围 6.19 平方公里，地上可建约 1,100 万㎡</Txt>
       </In>
       <div style={{ marginTop: 26 }}>
         <Head at={3.2} parts={["楼还没影，", { t: "城市已经画好了", c: K.theme }, "。"]} size={64} />
       </div>
     </div>
-    <Src at={1}>道路、地铁、建筑轮廓与高度：© OpenStreetMap contributors（ODbL）</Src>
+    <Src at={1}>陈一新 2025；ISOCARP 2012；福田中心区法定图则 2018（含莲花山）· 道路、地铁、建筑：© OpenStreetMap contributors</Src>
   </AbsoluteFill>
 );
 

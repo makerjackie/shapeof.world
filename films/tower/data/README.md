@@ -40,7 +40,7 @@
 |---|---|---|---|---|
 | `futian-district-roads.geojson` | 福田区一带（113.98–114.12 E、22.49–22.60 N）motorway 到 secondary，8 米简化。属性：cls、name、ref、bridge、tunnel、link | OSM | ODbL | 600 KB |
 | `futian-district-green.geojson` | 同一范围的公园、林地、保护区、水面和湿地（≥2 公顷），非水面已裁到岸线（原 OSM 红树林保护区轮廓伸进了深圳湾） | OSM | ODbL | 317 KB |
-| `futian-cbd-boundary.geojson` | **福田中心区近似边界**：法定图则的四至（西新洲路、东彩田路、南滨河大道、北红荔路），用 OSM 道路中心线求交点连成。面积 **4.12 km²**。**这是近似，不是法定图则的官方边界** | OSM 道路 + 法定图则四至 | ODbL | 1 KB |
+| `futian-cbd-boundary.geojson` | **福田中心区核心区（不含莲花山）近似轮廓**：新洲路、彩田路、滨河大道、红荔路的 OSM 道路中心线求交点连成，量得约 4.12 km²。官方口径见 `../research/06-map-and-planning.md` §12：核心区 413 公顷（南区 233 + 北区 180）；法定图则全范围 618.80 公顷，含莲花山，北界为莲花路（滨河、莲花、彩田、新洲围合）。**这是示意轮廓，不是法定图则的官方边界** | OSM 道路 | ODbL | 1 KB |
 | `futian-cbd-buildings.geojson` | 窗口 114.037–114.069 E、22.527–22.560 N 内的建筑底图 1,522 个。属性：id、name、name_en、kind（OSM building 值）、levels、height、**h**（做拉伸用的最佳高度）、**hs**（h 的来源）、ctbuh_id、h_ctbuh、year（CTBUH 竣工年）、floors_ctbuh | OSM + CTBUH 配对 | ODbL | 611 KB |
 | `futian-cbd-roads.geojson` | 同一窗口的全部道路（motorway 到 service，不含停车场通道），1.5 米简化。属性：cls、name、name_en、ref、bridge、tunnel、layer、oneway、link | OSM | ODbL | 331 KB |
 | `futian-cbd-green.geojson` | 同一窗口的公园、草地、水面、河渠（kind=park/grass/wood/water/wetland/pitch/waterway） | OSM | ODbL | 68 KB |

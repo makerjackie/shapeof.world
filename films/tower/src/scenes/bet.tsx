@@ -12,7 +12,8 @@ import { Head, Src } from "../ui";
 import { Txt } from "./common";
 
 // 升华 on the track's climax (film bars 62–74). Futian goes from dusk to night while the buildings whose companies
-// pay over 1 亿 a year light up — 50 in 2010, 86 in 2018, 159 in 2024 — then the camera comes down to the tower as
+// pay over 1 亿 a year light up — over 50 in 2011, 86 in 2018, 159 in 2024 (福田区政府工作报告 2012, 2019, 2025) —
+// then the camera comes down to the tower as
 // the trains run and people walk in, and ends on the first shot of the film, every window lit.
 const ACT = 62;
 const B = (bar: number) => actBar(ACT, bar);
@@ -44,7 +45,7 @@ const LIT = (() => {
   return rank;
 })();
 
-// Count lit by frame: 50 (2010) → 86 (2018) → 159 (2024), each step on its own beats.
+// Count lit by frame: 50+ (2011) → 86 (2018) → 159 (2024), each step on its own beats.
 const litCount = (f: number) =>
   interpolate(f, [at(62, 1), at(62, 3), at(63, 1), at(63, 2), at(64, 1), at(64, 3)], [0, 50, 50, 86, 86, 159], { ...CL, easing: EIO });
 
@@ -170,7 +171,8 @@ const Stage: React.FC = () => {
 const Lights: React.FC = () => {
   const f = useBeatFrame();
   const n = interpolate(f, [1 * FPB, 3 * FPB, 5 * FPB, 6 * FPB, 9 * FPB, 11 * FPB], [0, 50, 50, 86, 86, 159], { ...CL, easing: EIO });
-  const y = f < 5 * FPB ? 2010 : f < 9 * FPB ? 2018 : 2024;
+  const y = f < 5 * FPB ? 2011 : f < 9 * FPB ? 2018 : 2024;
+  const top = progAt(f, 11.6, 0.8, EO);
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 520, background: "linear-gradient(180deg, rgba(7,9,11,0.92) 0%, rgba(7,9,11,0.7) 55%, rgba(7,9,11,0) 100%)" }} />
@@ -179,12 +181,14 @@ const Lights: React.FC = () => {
           <Txt size={40} color={K.sub}>福田，楼里的企业每年交税过亿的楼</Txt>
         </In>
         <div style={{ display: "flex", alignItems: "baseline", gap: 18 }}>
+          {y === 2011 ? <Txt size={56} w={900} color={K.gold}>超</Txt> : null}
           <Odometer value={n} size={190} color={K.gold} />
           <Txt size={56} w={900}>栋</Txt>
           <div style={{ marginLeft: 20, fontFamily: FONT, fontSize: 44, fontWeight: 900, color: K.sub, fontVariantNumeric: "tabular-nums", opacity: progAt(f, 0.8, 0.6, EO) }}>{y} 年</div>
         </div>
+        <div style={{ opacity: top, transform: `translateY(${(1 - top) * 20}px)`, marginTop: 4, fontFamily: FONT, fontSize: 40, fontWeight: 900, color: K.gold }}>全国区县最多</div>
       </div>
-      <Src at={1}>福田区人民政府《福田概况》2026（2024 年 159 栋）；福田区统计 2010（前瞻转述）；福田区人代会 2018（澎湃转述）· 示意：亮起的楼不对应具体楼宇，159 栋分布在福田全区</Src>
+      <Src at={1}>福田区政府工作报告 2012（超 50 栋）、2019（86 栋）、2025（159 栋）· 示意：亮起的楼不对应具体楼宇，159 栋分布在福田全区</Src>
     </AbsoluteFill>
   );
 };

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render Film out/tower.mp4 --crf=20 --audio-bitrate=192k",
+    "render": "remotion render Film out/tower-v2.mp4 --crf=20 --audio-bitrate=192k",
     "stills": "node tools/stills.mjs"
   },
   "dependencies": {

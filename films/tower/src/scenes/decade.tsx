@@ -117,19 +117,19 @@ const Design: React.FC = () => (
       </In>
       <In at={3} from="up">
         <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.fg }}>
-          总建筑面积 <span style={{ fontWeight: 900, fontSize: 56 }}>14.25 万㎡</span>
+          总建筑面积 <span style={{ fontWeight: 900, fontSize: 56 }}>14.26 万㎡</span>
         </div>
       </In>
     </div>
-    <Dim x={BX + (ELEV.sW + ELEV.gap + ELEV.nW) * S + 30} top={GROUND - 218 * S} bottom={GROUND} at={1.2} label="北塔 218 米" sub="41 层" />
-    <Dim x={BX - 40} top={GROUND - 116 * S} bottom={GROUND} at={1.8} label="" sub="" />
-    <div style={{ position: "absolute", left: BX - 330, top: GROUND - 116 * S - 8, width: 270, textAlign: "right", fontFamily: FONT }}>
+    <Dim x={BX + (ELEV.sW + ELEV.gap + ELEV.nW) * S + 30} top={GROUND - 218 * S} bottom={GROUND} at={1.2} label="北塔 218 米" sub="地上 43 层" />
+    <Dim x={BX - 40} top={GROUND - 111.3 * S} bottom={GROUND} at={1.8} label="" sub="" />
+    <div style={{ position: "absolute", left: BX - 330, top: GROUND - 111.3 * S - 8, width: 270, textAlign: "right", fontFamily: FONT }}>
       <In at={1.8} from="right">
-        <div style={{ fontSize: 40, fontWeight: 900, color: K.fg }}>南塔 116 米</div>
-        <div style={{ fontSize: 26, fontWeight: 700, color: K.sub }}>19 层</div>
+        <div style={{ fontSize: 40, fontWeight: 900, color: K.fg }}>南塔 111.3 米</div>
+        <div style={{ fontSize: 26, fontWeight: 700, color: K.sub }}>地上 20 层</div>
       </In>
     </div>
-    <Src>深圳市建筑设计研究总院 · 能源大厦项目页；深圳能源 · 投资深圳国际能源大厦项目公告 · 2010</Src>
+    <Src>高度、层数：CTBUH Skyscraper Center；总建筑面积 142,590㎡：深圳能源 · 2018；国际竞赛：深圳能源 · 2010</Src>
   </AbsoluteFill>
 );
 

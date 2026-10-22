@@ -1,7 +1,8 @@
-// 深圳能源大厦 (BIG + 深圳市建筑设计研究总院): two towers on a shared podium. Heights and floor counts from the
-// designer's project page (SZAD, verified 2026-10-22): north tower 218 m / 41 floors, south tower 116 m / 19
-// floors; podium about 34.5 m / 6 floors (深圳能源 2010 investment notice). Plan sizes come from the OSM footprints
-// (src/geo/data.ts); floor heights between podium and roof are spread evenly, which is a drawing assumption.
+// 深圳能源大厦 (BIG + 深圳市建筑设计研究总院): two towers on a shared podium. Heights and floor counts follow CTBUH
+// throughout (north 218 m / 43 floors above ground, south 111.3 m / 20 floors); the designer's page (SZAD) says
+// 41 and 19 floors and 116 m for the south tower, see SCRIPT.md. Podium about 34.5 m / 6 floors (深圳能源 2010
+// investment notice). Plan sizes come from the OSM footprints; floor heights between podium and roof are spread
+// evenly, which is a drawing assumption.
 
 export type TowerId = "N" | "S";
 
@@ -15,8 +16,8 @@ export type TowerSpec = {
 };
 
 export const TOWERS: Record<TowerId, TowerSpec> = {
-  N: { id: "N", height: 218, floors: 41, podium: 6, podiumH: 34.5, crown: 8 },
-  S: { id: "S", height: 116, floors: 19, podium: 6, podiumH: 34.5, crown: 6 },
+  N: { id: "N", height: 218, floors: 43, podium: 6, podiumH: 34.5, crown: 8 },
+  S: { id: "S", height: 111.3, floors: 20, podium: 6, podiumH: 34.5, crown: 5 },
 };
 
 // Bottom height (m) of floor `f` (1-based) in a tower; floorTop(t, f) = floorBase(t, f + 1).

@@ -156,7 +156,8 @@ console.log('parcel area (OSM outline) m2', Math.round(parcelArea), 'centroid', 
 write('energy-mansion.geojson', fc(em, { name: 'energy-mansion', note: 'WGS-84. OSM footprints; official numbers in properties where given' }));
 
 // ---------- Futian CBD boundary, approximated from the four named boundary roads ----------
-// 法定图则 boundary: 西 新洲路, 东 彩田路, 南 滨河大道, 北 红荔路.  Built from OSM road centre lines; approximation only.
+// Core of the Futian CBD without 莲花山: 西 新洲路, 东 彩田路, 南 滨河大道, 北 红荔路 (official core 413 ha; the 2018
+// 法定图则 covers 618.80 ha incl. 莲花山 up to 莲花路, research/06 §12). Built from OSM road centre lines; schematic only.
 const roadLines = (name, hws) => read('cbd-roads.json').elements.filter((e) => e.geometry && e.tags && e.tags.name === name && hws.includes(e.tags.highway)).map((e) => pts(e.geometry));
 const segInt = (a, b, c, d) => { const den = (b[0] - a[0]) * (d[1] - c[1]) - (b[1] - a[1]) * (d[0] - c[0]); if (!den) return null; const t = ((c[0] - a[0]) * (d[1] - c[1]) - (c[1] - a[1]) * (d[0] - c[0])) / den, u = ((c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0])) / den; return t >= 0 && t <= 1 && u >= 0 && u <= 1 ? [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])] : null; };
 const inter = (L1, L2) => { const hits = []; for (const l1 of L1) for (let i = 0; i < l1.length - 1; i++) for (const l2 of L2) for (let j = 0; j < l2.length - 1; j++) { const p = segInt(l1[i], l1[i + 1], l2[j], l2[j + 1]); if (p) hits.push(p); } if (!hits.length) return null; return [hits.reduce((s, p) => s + p[0], 0) / hits.length, hits.reduce((s, p) => s + p[1], 0) / hits.length]; };
@@ -174,6 +175,6 @@ if (NW && NE && SE && SW) {
   const r = ring(poly.map((p) => [p[0], p[1]]), 5);
   const a = ringAreaM2(r);
   console.log('CBD boundary approx area km2', (a / 1e6).toFixed(2));
-  cbd = { type: 'Feature', properties: { name: '福田中心区 (approx.)', name_en: 'Futian CBD (approx. from road centre lines)', area_km2_approx: +(a / 1e6).toFixed(2), basis: '法定图则 福田01-01&02号片区(中心区): W 新洲路, E 彩田路, S 滨河大道, N 红荔路', note: 'approximation from OSM centre lines; not the official 法定图则 boundary' }, geometry: { type: 'Polygon', coordinates: [r] } };
+  cbd = { type: 'Feature', properties: { name: '福田中心区核心区 (approx., excl. 莲花山)', name_en: 'Futian CBD core, excluding Lianhuashan (approx. from road centre lines)', area_km2_approx: +(a / 1e6).toFixed(2), basis: 'core area bounded by 新洲路 (W), 彩田路 (E), 滨河大道 (S), 红荔路 (N); official core 413 ha (南区 233 + 北区 180). The 2018 法定图则 covers 618.80 ha incl. 莲花山, bounded by 滨河/莲花/彩田/新洲 (research/06 §12)', note: 'schematic outline from OSM centre lines; not the official 法定图则 boundary' }, geometry: { type: 'Polygon', coordinates: [r] } };
   write('futian-cbd-boundary.geojson', fc([cbd], { name: 'futian-cbd-boundary' }));
 }

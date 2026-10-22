@@ -95,25 +95,20 @@ const HqLabels: React.FC<{ p: Proj; f: number; o: number }> = ({ p, f, o }) => (
   </>
 );
 
-// The CBD's outline (approximate, from the 法定图则 boundary roads) and two stacks: a year of rent vs a year of tax.
+// The CBD's core (approximate outline from OSM road centre lines, without 莲花山) and a year of its rent.
 const Ledger: React.FC<{ f: number }> = ({ f }) => {
-  const rent = progAt(f - B(58), 1.6, 1.2, EIO);
-  const tax = progAt(f - B(58), 3.4, 1.4, EBACK);
-  const PX = 4.6; // px per 亿
+  const rent = progAt(f - B(58), 1.8, 1.2, EIO);
+  const PX = 6.4; // px per 亿
   const base = 900;
-  const col = (x: number, v: number, p: number, color: string, top: string, label: string) => (
-    <div style={{ position: "absolute", left: x, top: base - v * PX * p, width: 170, height: v * PX * p, background: `linear-gradient(180deg, ${color}, ${color}55)`, borderRadius: "8px 8px 0 0", opacity: p > 0 ? 1 : 0 }}>
-      <div style={{ position: "absolute", left: "50%", top: -72, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 52, fontWeight: 900, color, whiteSpace: "nowrap" }}>{top}</div>
-      <div style={{ position: "absolute", left: "50%", top: v * PX * p + 14, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.fg, whiteSpace: "pre", textAlign: "center", lineHeight: 1.3 }}>{label}</div>
-    </div>
-  );
+  const v = 45;
   return (
-    <>
-      <div style={{ position: "absolute", left: 1320, top: 360, width: 540, height: 640, borderRadius: 24, background: "rgba(7,9,11,0.86)", border: `1px solid ${K.line}`, opacity: Math.min(1, rent * 3) }} />
-      {col(1380, 45, rent, K.steel, "≈45 亿", "福田 CBD 全部甲级写字楼\n一年的租金")}
-      {col(1620, 100, tax, K.theme, "100 亿+", "一栋楼里的企业\n一年交的税")}
-      <div style={{ position: "absolute", left: 1340, top: base, width: 500, height: 3, background: K.fg, opacity: rent > 0 ? 0.6 : 0 }} />
-    </>
+    <div style={{ opacity: Math.min(1, rent * 3) }}>
+      <div style={{ position: "absolute", left: 1440, top: 400, width: 400, height: 600, borderRadius: 24, background: "rgba(7,9,11,0.86)", border: `1px solid ${K.line}` }} />
+      <div style={{ position: "absolute", left: 1555, top: base - v * PX * rent, width: 170, height: v * PX * rent, background: `linear-gradient(180deg, ${K.steel}, ${K.steel}55)`, borderRadius: "8px 8px 0 0" }} />
+      <div style={{ position: "absolute", left: 1640, top: base - v * PX * rent - 84, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 64, fontWeight: 900, color: K.fg, whiteSpace: "nowrap" }}>≈45 亿</div>
+      <div style={{ position: "absolute", left: 1460, top: base, width: 360, height: 3, background: K.fg, opacity: 0.6 }} />
+      <div style={{ position: "absolute", left: 1640, top: base + 16, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.fg, whiteSpace: "pre", textAlign: "center", lineHeight: 1.35 }}>{"福田 CBD 全部甲级写字楼\n一年的租金（估算）"}</div>
+    </div>
   );
 };
 
@@ -169,15 +164,15 @@ const Hqs: React.FC = () => (
     <div style={{ position: "absolute", left: 120, top: 220, display: "flex", flexDirection: "column", gap: 14 }}>
       <Head at={0} parts={["不只它。"]} size={72} />
       <In at={1.4} from="up">
-        <Txt size={40}>2025 年深圳新增的甲级写字楼，</Txt>
+        <Txt size={40}>2025 年深圳新增的甲级写字楼项目，</Txt>
       </In>
-      <Head at={2.2} parts={[{ t: "一半以上", c: K.theme }, "是企业给"]} size={72} />
-      <Head at={3.2} parts={["自己盖的总部。"]} size={72} />
+      <Head at={2.2} parts={[{ t: "半数以上", c: K.theme }, "为"]} size={72} />
+      <Head at={3.2} parts={["企业自建总部大楼。"]} size={72} />
       <In at={5} from="fade">
-        <Txt size={26} color={K.muted} style={{ marginTop: 18 }}>地图上是几座企业自建的总部，高度放大 10 倍</Txt>
+        <Txt size={26} color={K.muted} style={{ marginTop: 18 }}>地图上是几座企业自建的总部（举例），高度放大 10 倍</Txt>
       </In>
     </div>
-    <Src at={1}>仲量联行 · 深圳写字楼市场 2025 年回顾 · 2026-01 · 高度：CTBUH</Src>
+    <Src at={1}>仲量联行 · 2025 年深圳房地产市场回顾 · 2026-01-20 · 地图上是几座企业自建的总部（举例），高度：CTBUH</Src>
   </AbsoluteFill>
 );
 
@@ -187,20 +182,20 @@ const CityWants: React.FC = () => (
     <div style={{ position: "absolute", left: 120, top: 230, display: "flex", flexDirection: "column", gap: 16 }}>
       <Head at={0} parts={["城市图什么？"]} size={72} />
       <In at={1} from="up">
-        <Txt size={34} color={K.sub}>福田中心区（虚线为近似范围）</Txt>
+        <Txt size={34} color={K.sub}>福田中心区（虚线：核心区示意，不含莲花山）</Txt>
       </In>
-      <In at={3.6} from="up">
+      <In at={2} from="up">
         <Txt size={34} color={K.sub} style={{ lineHeight: 1.5 }}>
-          福田有 3 栋以上的楼，
+          这一片的甲级写字楼，
           <br />
-          楼里的企业一年交税过百亿。
+          一年的租金合计约 45 亿。
         </Txt>
       </In>
       <div style={{ marginTop: 26 }}>
-        <Head at={6.5} parts={["从来不是", { t: "租金", c: K.theme }, "。"]} size={96} />
+        <Head at={5} parts={["城市等的，从来不是", { t: "租金", c: K.theme }, "。"]} size={72} />
       </div>
     </div>
-    <Src at={1}>租金为估算：271.5 万㎡ × 出租率 82% × 168.3 元 × 12（莱坊 2026Q2）· 福田区人民政府《福田概况》2026 · 税为全口径，大部分上缴中央 · 中心区轮廓为近似</Src>
+    <Src at={1}>租金为估算：莱坊 2026Q2 福田 CBD 片区 271.5 万㎡ × 出租率 82% × 168.3 元/㎡/月 × 12 · 中心区轮廓按道路中线勾画，为示意</Src>
   </AbsoluteFill>
 );
 
