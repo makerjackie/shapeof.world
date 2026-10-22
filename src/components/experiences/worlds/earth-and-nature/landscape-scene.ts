@@ -77,6 +77,8 @@ function strataTexture(): THREE.Texture {
 export type SceneView = {
   /** 0–1：河网高亮程度（“看”这一拍把河点亮）。 */
   riverGlow: number
+  /** 0–1：镜头往前推近的程度（“看”这一拍凑近看河网）。 */
+  focus: number
   /** 降雨倍数，决定雨线的数量和速度。 */
   rain: number
   /** 底部卡片占掉的高度（CSS 像素），画面相应上移。 */
@@ -208,7 +210,7 @@ export class LandscapeScene {
     const distance = Math.max(
       screenWidth / (2 * tan * (width / height)),
       (screenHeight / (2 * tan)) * (height / usable),
-    )
+    ) * (1 - 0.2 * view.focus)
     this.camera.position.set(
       Math.sin(azimuth) * Math.cos(elevation) * distance,
       Math.sin(elevation) * distance,
@@ -249,14 +251,16 @@ export class LandscapeScene {
         out[2] += (HARD_ROCK[2] - out[2]) * t
       }
       // 河只画在“正在下切”的地方：河流功率 √A·S 越大越蓝。低地上水流得慢，颜色就淡。
+      // “看”的时候河更宽、更亮：细一些的支流也画出来，树枝的形状才看得清。
       const logArea = Math.log10(area[i])
       const r = receiver[i]
-      if (logArea > LOG_RIVER && h > 0.5 && r !== i) {
+      const logRiver = LOG_RIVER - 0.3 * glow
+      if (logArea > logRiver && h > 0.5 && r !== i) {
         const run = (Math.abs((i % size) - (r % size)) + Math.abs(((i / size) | 0) - ((r / size) | 0))) === 2 ? CELL_M * Math.SQRT2 : CELL_M
         const power = Math.sqrt(area[i]) * Math.max(0, h - height[r]) / run
-        const cutting = Math.min(1, power / STREAM_POWER_FULL)
-        const width = Math.min(1, (logArea - LOG_RIVER) / (LOG_TRUNK - LOG_RIVER))
-        const mix = cutting * (0.45 + 0.55 * width)
+        const cutting = Math.min(1, (power / STREAM_POWER_FULL) * (1 + 1.2 * glow))
+        const width = Math.min(1, (logArea - logRiver) / (LOG_TRUNK - logRiver))
+        const mix = Math.min(1, cutting * (0.45 + 0.55 * width) * (1 + 0.5 * glow))
         out[0] += (river[0] - out[0]) * mix
         out[1] += (river[1] - out[1]) * mix
         out[2] += (river[2] - out[2]) * mix

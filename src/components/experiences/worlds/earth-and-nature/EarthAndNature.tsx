@@ -30,8 +30,8 @@ const MAX_STEP_YEARS = 8_000
 /** 手掌的半径（格子）：约 9 公里。 */
 const PALM_CELLS = 22
 const ROCK_BRUSH_CELLS = 2.6
-/** 推够这么久（模拟年），河网和“山不再长高”都已经看得见，进入“看”。 */
-const SEE_AFTER_UPLIFT_YEARS = 1_300_000
+/** 按满一百万年（开场问题里的那一百万年），进入“看”。 */
+const SEE_AT_YEARS = 1_000_000
 /** 泰山主峰海拔（米），拿来比山高。 */
 const MOUNT_TAI_M = 1545
 /** 北京市面积（平方米），拿来比冲走的岩石。 */
@@ -86,6 +86,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
   const [paused, setPaused] = useState(false)
   const [pressing, setPressing] = useState(false)
   const [released, setReleased] = useState(false)
+  const [autoPushing, setAutoPushing] = useState(false)
   const [readout, setReadout] = useState<Readout>({ years: 0, summit: 0, erodedM3: 0, history: [] })
   const [webglFailed, setWebglFailed] = useState(false)
 
@@ -99,7 +100,8 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
     paused: false,
     press: null as { x: number; y: number } | null,
     keyPress: false,
-    upliftYears: 0,
+    /** 点了“按不住？”以后，替他一直按住地块中心，直到进入“看”。 */
+    autoPress: false,
     history: [] as Array<number>,
     /** 上一次给山顶曲线取样时的模拟年份。 */
     lastSample: 0,
@@ -156,7 +158,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       let pushing = false
       const target = state.press
         ? scene.pick(state.press.x, state.press.y)
-        : state.keyPress
+        : state.keyPress || state.autoPress
           ? { gx: (GRID - 1) / 2, gy: (GRID - 1) / 2 }
           : null
       if (target && state.beat !== 'guess') {
@@ -167,11 +169,12 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
         }
       }
 
-      // 猜的时候地还没被动过；读结论时停住，好截图。这两拍只下雨，不推进时间。
-      if (!state.paused && !state.capture && state.beat !== 'guess' && state.beat !== 'know') {
+      // 五拍里时间只在按住的时候走（按住 1 秒 = 20 万年），一松手就停；
+      // “看”和“懂”停住，结论卡上的读数和“看”的时候一样。实验室里时间一直走。
+      const advancing = state.beat === 'lab' || (state.beat === 'do' && pushing)
+      if (!state.paused && !state.capture && advancing) {
         const years = Math.min(MAX_STEP_YEARS, YEARS_PER_SECOND * seconds)
         step(landscape, years, state.rain)
-        if (pushing) state.upliftYears += years
         if (landscape.years - state.lastSample >= 20_000) {
           state.lastSample = landscape.years
           state.history.push(maxHeight(landscape))
@@ -179,8 +182,13 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
         }
       }
 
-      if (state.beat === 'do' && state.upliftYears >= SEE_AFTER_UPLIFT_YEARS) {
+      if (state.beat === 'do' && landscape.years >= SEE_AT_YEARS) {
         state.beat = 'see'
+        if (state.autoPress) {
+          state.autoPress = false
+          setAutoPushing(false)
+          setPressing(false)
+        }
         goto('see')
       }
 
@@ -191,6 +199,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       const top = topRef.current
       scene.render(landscape, {
         riverGlow: glow,
+        focus: glow,
         rain: state.rain,
         bottomInset: card ? card.offsetHeight + 24 : 220,
         topInset: top ? top.offsetTop + top.offsetHeight : 140,
@@ -200,7 +209,7 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       // “按住这里”：贴在地块中心，没按的时候才出现。
       const hint = hintRef.current
       if (hint) {
-        const show = state.beat === 'do' && !state.press && !state.keyPress
+        const show = state.beat === 'do' && !state.press && !state.keyPress && !state.autoPress
         hint.hidden = !show
         if (show) {
           const centre = (GRID - 1) / 2
@@ -234,6 +243,14 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
       scene.dispose()
     }
   }, [goto])
+
+  // 拖不动（按不住）的人：点一下，替他按住地块中心。
+  const autoPush = () => {
+    live.current.autoPress = true
+    setAutoPushing(true)
+    setPressing(true)
+    markInteraction()
+  }
 
   const pointerPosition = (event: ReactPointerEvent) => {
     const rect = canvasRef.current?.getBoundingClientRect()
@@ -282,7 +299,6 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
     landscapeRef.current = createLandscape()
     live.current.history = []
     live.current.lastSample = 0
-    live.current.upliftYears = 0
   }
 
   const replayStory = () => {
@@ -395,7 +411,11 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
         )}
 
         {beat === 'do' && (
-          <DoHint hint={tx('按住地面不放')} tail={tx('，把地往上推。手指可以拖动。')}>
+          <DoHint
+            hint={tx('按住地面不放')}
+            tail={tx('，把地往上推。手指可以拖动。')}
+            fallback={autoPushing ? undefined : { label: tx('按不住？点这里替你按住'), onClick: autoPush }}
+          >
             {stats}
             <p className="ean-note">
               {tx('按住 1 秒 = 20 万年，约推高')} {metresPerSecond} {tx('米。人类有文字的五千年，在这里只有 0.025 秒。')}
@@ -414,15 +434,15 @@ export function EarthAndNature({ controls }: { controls: ExperienceControls }) {
             next={{ label: tx('所以，原来如此'), onClick: () => goto('know') }}
           >
             <p>{tx('没人画这些河。雨水往低处流，汇得越多冲得越狠，自己刻出了一道道山谷。')}</p>
-            <p>{tx('你一直在推，山也没有无限长高：长到某个高度，雨水削掉的正好等于你推起来的。')}</p>
+            <p>{tx('你一直在推，山却越长越慢：山越高，雨水削掉的越多。')}</p>
             {stats}
           </BeatResult>
         )}
 
         {beat === 'know' && (
           <Conclusion
-            sentence={tx('河谷不是谁画上去的：雨水往低处流，越汇越多、越冲越深，自己在山上刻出了树枝的形状。')}
-            source={tx('河流下切的快慢 ∝ 汇水面积的平方根 × 坡度（河流功率模型，Whipple & Tucker 1999）；数值解法 Braun & Willett 2013。地块为程序生成，时间和高度按真实量级取值。')}
+            sentence={tx('河谷是雨水自己刻出来的。')}
+            source={tx('河流冲刷模型（Whipple & Tucker 1999）。地形是程序生成的。')}
             next={{ href: worldPath(NEXT_WORLD_ID, en ? 'en' : 'zh'), question: tx('同一个瞬间，地球上的不同地方正在经历什么？') }}
           >
             <div className="ean-row">
