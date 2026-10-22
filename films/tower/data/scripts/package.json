@@ -1,0 +1,9 @@
+{
+  "name": "tower-map-data",
+  "private": true,
+  "type": "module",
+  "description": "Build scripts for films/tower/data (map layers for the Shenzhen Energy Mansion film)",
+  "dependencies": {
+    "polygon-clipping": "0.15.7"
+  }
+}
