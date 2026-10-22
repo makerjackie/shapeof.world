@@ -100,7 +100,7 @@ const Flash: React.FC = () => {
 };
 
 const XF = 2; // crossfade half-length in frames at each music cut, centred on the downbeat
-const GAIN = 0.84; // −1.5 dB: the track's own peaks reach +0.8 dBTP after AAC encoding (films/ai-real-cost)
+const GAIN = 0.76; // −2.4 dB: keeps the true peak under −1 dBTP after AAC encoding (0.84 measured −0.6 dBTP here)
 
 // The cut soundtrack (千年之后（氛围版）, 和乐府): each segment overlaps its neighbours by XF frames with an equal-power
 // fade; the end card rides the track's own fade, finished off from bar 64.

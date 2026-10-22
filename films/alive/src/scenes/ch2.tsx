@@ -31,7 +31,7 @@ const STAMPS: [string, number, number, number][] = [
   ["考核", 4.5, 120, 7],
   ["必须完成", 6.5, 10, -4],
 ];
-const CARD = { x: 170, y: 330, s: 380 };
+const CARD = { x: 120, y: 290, s: 540 };
 const GREY = "#6d6f72";
 
 export const Stamp: React.FC = () => {
@@ -45,11 +45,11 @@ export const Stamp: React.FC = () => {
       <div style={{ position: "absolute", left: CARD.x, top: CARD.y, width: CARD.s, height: CARD.s }}>
         <In at={0} from="scale">
           <div style={{ position: "relative", width: CARD.s, height: CARD.s, borderRadius: 34, background: `${col}22`, border: `4px solid ${col}`, boxShadow: `0 0 ${20 + 90 * glow}px ${K.theme}${Math.round(0x55 * glow).toString(16).padStart(2, "0")}`, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 18 }}>
-            <Icon name="brush" size={120} color={col} w={1.6} />
-            <svg width={7 * 30} height={4 * 30}>
+            <Icon name="brush" size={170} color={col} w={1.5} />
+            <svg width={7 * 44} height={4 * 44}>
               {Array.from({ length: 28 }, (_, i) => {
-                const on = random(`cal${i}`) < 0.75 - 0.55 * drain;
-                return <rect key={i} x={(i % 7) * 30 + 3} y={Math.floor(i / 7) * 30 + 3} width={24} height={24} rx={5} fill={on ? col : K.fg} fillOpacity={on ? 0.85 : 0.1} />;
+                const on = random(`cal${i}`) < 0.8 - 0.65 * drain;
+                return <rect key={i} x={(i % 7) * 44 + 4} y={Math.floor(i / 7) * 44 + 4} width={36} height={36} rx={7} fill={on ? col : K.fg} fillOpacity={on ? 0.9 : 0.08} />;
               })}
             </svg>
           </div>
@@ -58,15 +58,26 @@ export const Stamp: React.FC = () => {
           const p = progAt(frame, at, 0.55, EBACK);
           if (p <= 0) return null;
           return (
-            <div key={t} style={{ position: "absolute", left: 40 + dx, top: 70 + STAMPS.findIndex((s) => s[0] === t) * 95, transform: `rotate(${rot}deg) scale(${1 + (1 - p) * 1.6})`, opacity: Math.min(1, p * 3), padding: "8px 22px", border: `5px solid ${K.steelHi}`, borderRadius: 12, color: K.steelHi, fontFamily: FONT, fontSize: 44, fontWeight: 900, whiteSpace: "nowrap", background: "rgba(7,9,11,0.55)" }}>
+            <div key={t} style={{ position: "absolute", left: 60 + dx * 1.4, top: 90 + STAMPS.findIndex((s) => s[0] === t) * 135, transform: `rotate(${rot}deg) scale(${1 + (1 - p) * 1.6})`, opacity: Math.min(1, p * 3), padding: "10px 28px", border: `6px solid ${K.steelHi}`, borderRadius: 14, color: K.steelHi, fontFamily: FONT, fontSize: 58, fontWeight: 900, whiteSpace: "nowrap", background: "rgba(7,9,11,0.55)" }}>
               {t}
             </div>
           );
         })}
       </div>
-      <div style={{ position: "absolute", left: CARD.x, width: CARD.s, top: CARD.y + CARD.s + 22, textAlign: "center", fontFamily: FONT, fontSize: 36, fontWeight: 900, color: col }}>喜欢的事</div>
+      <div style={{ position: "absolute", left: CARD.x, top: CARD.y + CARD.s + 18, display: "flex", alignItems: "center", gap: 14, fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <span style={{ fontSize: 36, fontWeight: 900, color: col }}>喜欢的事</span>
+        <span style={{ fontSize: 24, fontWeight: 700, color: K.muted, marginLeft: 10 }}>想主动去碰它：</span>
+        {[0, 1, 2, 3, 4].map((k) => {
+          const full = k < Math.round(5 - 4 * drain);
+          return (
+            <svg key={k} width={34} height={34} viewBox="0 0 24 24">
+              <path d="M12 20s-7-4.4-9-9a4.8 4.8 0 0 1 9-3 4.8 4.8 0 0 1 9 3c-2 4.6-9 9-9 9z" fill={full ? K.theme : "none"} stroke={full ? K.theme : GREY} strokeWidth={2} />
+            </svg>
+          );
+        })}
+      </div>
       {/* The research, in three steps. */}
-      <div style={{ position: "absolute", left: 790, top: 300, width: 1050, fontFamily: FONT }}>
+      <div style={{ position: "absolute", left: 770, top: 300, width: 1060, fontFamily: FONT }}>
         <In at={1} from="fade">
           <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
             <Dots n={128} cols={16} at={1} color={K.steelHi} pitch={20} r={5.5} />
@@ -153,9 +164,23 @@ export const Grow: React.FC = () => {
           <div style={{ marginLeft: 44, width: 2, height: 22, background: K.themeHi }} />
         </In>
       </div>
-      {[0, 20, 40, 60, 79].map((a) => (
-        <div key={a} style={{ position: "absolute", left: GG.colX(a) - 35, width: 80, top: GR.y + GG.h + 12, textAlign: "center", fontFamily: FONT, fontSize: 20, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>{a} 岁</div>
+      {/* The life axis under the grid: birth to 79. */}
+      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+        <line x1={GR.x} y1={GR.y + GG.h + 16} x2={GR.x + GG.w + 26} y2={GR.y + GG.h + 16} stroke={K.sub} strokeWidth={2} />
+        <path d={`M ${GR.x + GG.w + 18} ${GR.y + GG.h + 10} L ${GR.x + GG.w + 28} ${GR.y + GG.h + 16} L ${GR.x + GG.w + 18} ${GR.y + GG.h + 22}`} stroke={K.sub} strokeWidth={2} fill="none" />
+        {[0, 10, 20, 30, 40, 50, 60, 70, 79].map((a) => (
+          <line key={a} x1={GG.colX(a) + GR.cell / 2} y1={GR.y + GG.h + 10} x2={GG.colX(a) + GR.cell / 2} y2={GR.y + GG.h + 22} stroke={K.sub} strokeWidth={2} />
+        ))}
+      </svg>
+      {[0, 10, 20, 30, 40, 50, 60, 70, 79].map((a) => (
+        <div key={a} style={{ position: "absolute", left: GG.colX(a) - 35, width: 80, top: GR.y + GG.h + 26, textAlign: "center", fontFamily: FONT, fontSize: 20, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>{a === 0 ? "出生" : `${a} 岁`}</div>
       ))}
+      <div style={{ position: "absolute", left: GR.x + GG.w - 60, top: GR.y - 44, fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.sub }}>一生 →</div>
+      <div style={{ position: "absolute", left: GG.colX(46), top: GR.y + 70, fontFamily: FONT }}>
+        <In at={6.5} from="up" dist={16}>
+          <div style={{ padding: "10px 20px", borderRadius: 12, background: "rgba(7,9,11,0.88)", border: `2px solid ${K.theme}`, fontSize: 34, fontWeight: 900, color: K.themeHi, whiteSpace: "nowrap" }}>一件真喜欢的事，越做越宽</div>
+        </In>
+      </div>
       <Box x={110} y={250} style={{ gap: 14 }}>
         <Head at={0} parts={["真感兴趣的时候，"]} size={68} />
         <Head at={2.5} parts={[{ t: "不用催", c: K.theme }, "，"]} size={68} />

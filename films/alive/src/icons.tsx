@@ -41,8 +41,8 @@ export const Person: React.FC<{ x: number; y: number; h?: number; color: string;
   const r = h * 0.17;
   const bw = h * 0.56;
   const bh = h * 0.5;
-  const lean = age * h * 0.06;
-  const hy = y - bh - r * 1.25 + age * h * 0.04;
+  const lean = age * h * 0.14;
+  const hy = y - bh - r * 1.25 + age * h * 0.07;
   const fillProps = outline ? { fill: "none", stroke: color, strokeWidth: Math.max(1, h * 0.05) } : { fill: color };
   return (
     <g opacity={o}>

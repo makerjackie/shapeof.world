@@ -8,40 +8,46 @@ import { Box, Head, Src } from "../ui";
 
 // ---------- 86 s: the one discovery, on the music's re-entry ----------
 // The Harvard Study of Adult Development: the Grant Study (268 Harvard sophomores, classes of 1939–1944) and the
-// Glueck Study (456 men who grew up in Boston's inner city), followed since 1938. A playhead runs along the years;
-// the men age; by 2017 (Harvard Gazette) 19 and 40 of them were still living. Then the threads between them light up.
+// Glueck Study (456 men who grew up in Boston's inner city), followed since 1938. One figure stands for 4 men. A
+// playhead runs along the years and the men age (grey heads, a stoop); by 2017 (Harvard Gazette) 19 and 40 of them
+// were still living, about 5 and 10 figures. On the reveal a few calm gold threads join them.
 
 const AX = { x0: 140, x1: 1780, y: 860 };
 const yearX = (y: number) => AX.x0 + ((y - 1938) / (2026 - 1938)) * (AX.x1 - AX.x0);
-const FP = { x: 16, y: 27, h: 22 };
-type Cohort = { n: number; cols: number; x: number; alive2017: number; name: string; who: string };
+const PER = 4;
+const FP = { x: 32, y: 52, h: 40 };
+type Cohort = { n: number; cols: number; x: number; alive2017: number; name: string; who: string; color: string };
 const COHORTS: Cohort[] = [
-  { n: 268, cols: 17, x: 170, alive2017: 19, name: "Grant 组", who: "268 名哈佛大二学生" },
-  { n: 456, cols: 24, x: 470, alive2017: 40, name: "Glueck 组", who: "456 名波士顿市中心长大的男孩" },
+  { n: 268, cols: 10, x: 150, alive2017: 19, name: "Grant 组", who: "268 名哈佛大二学生", color: K.themeHi },
+  { n: 456, cols: 13, x: 520, alive2017: 40, name: "Glueck 组", who: "456 名波士顿市中心长大的男孩", color: K.steelHi },
 ];
-const BOTTOM = 800;
+const figs = (c: Cohort) => Math.round(c.n / PER);
+const BOTTOM = 790;
 const posOf = (c: Cohort, i: number) => {
-  const rows = Math.ceil(c.n / c.cols);
+  const rows = Math.ceil(figs(c) / c.cols);
   const row = Math.floor(i / c.cols);
   return { x: c.x + (i % c.cols) * FP.x + FP.x / 2, y: BOTTOM - (rows - 1 - row) * FP.y };
 };
-const topOf = (c: Cohort) => BOTTOM - Math.ceil(c.n / c.cols) * FP.y - 10;
-// Which men are among the 2017 survivors (fixed at random).
-const SURV = COHORTS.map((c) => {
-  const idx = Array.from({ length: c.n }, (_, i) => i).sort((a, b) => random(`s${c.n}${a}`) - random(`s${c.n}${b}`));
-  return new Set(idx.slice(0, c.alive2017));
+const topOf = (c: Cohort) => BOTTOM - Math.ceil(figs(c) / c.cols) * FP.y - 4;
+// The order the figures pass away in (fixed at random); the last few stand for the 2017 survivors.
+const RANK = COHORTS.map((c) => {
+  const order = Array.from({ length: figs(c) }, (_, i) => i).sort((a, b) => random(`o${c.n}${a}`) - random(`o${c.n}${b}`));
+  const r = new Array<number>(order.length);
+  order.forEach((f, k) => (r[f] = k));
+  return r;
 });
-// Threads: each man to a near neighbour or two.
+// A calm few threads per cohort, between near neighbours, no figure in two.
 const THREADS = COHORTS.map((c, ci) => {
   const out: [number, number][] = [];
-  for (let i = 0; i < c.n; i++) {
-    const n = random(`tn${ci}-${i}`) < 0.6 ? 1 : 2;
-    for (let k = 0; k < n; k++) {
-      const dx = Math.floor(random(`tx${ci}-${i}-${k}`) * 3) - 1;
-      const dy = Math.floor(random(`ty${ci}-${i}-${k}`) * 3) - 1;
-      const j = i + dy * c.cols + dx;
-      if (j >= 0 && j < c.n && j !== i) out.push([i, j]);
-    }
+  const n = figs(c);
+  for (let k = 0; out.length < (ci ? 16 : 10) && k < 400; k++) {
+    const i = Math.floor(random(`ta${ci}-${k}`) * n);
+    const dx = Math.floor(random(`tx${ci}-${k}`) * 5) - 2;
+    const dy = Math.floor(random(`ty${ci}-${k}`) * 3) - 1;
+    const j = i + dy * c.cols + dx;
+    if (j < 0 || j >= n || j === i || Math.abs((i % c.cols) - (j % c.cols)) > 2) continue;
+    if (out.some(([a, b]) => a === i || b === i || a === j || b === j)) continue;
+    out.push([i, j]);
   }
   return out;
 });
@@ -51,32 +57,36 @@ export const Harvard: React.FC = () => {
   const appear = progAt(frame, 0.3, 1.6, EO);
   const play = progAt(frame, 2.2, 6, EIO);
   const year = 1938 + (2017 - 1938) * play;
-  const ageing = interpolate(year, [1945, 2005], [0, 1], CL);
+  const ageing = interpolate(year, [1945, 2010], [0, 1], CL);
   const passing = interpolate(year, [1985, 2017], [0, 1], CL);
-  const web = progAt(frame, 10, 3, EIO);
+  const web = progAt(frame, 10.5, 2.5, EIO);
   const axis = progAt(frame, 0.5, 1.5, EO);
   return (
     <AbsoluteFill>
       <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
-        {/* Threads (relationships), the reveal. */}
+        {/* A few threads (relationships), the reveal. */}
         {COHORTS.map((c, ci) =>
           THREADS[ci].map(([i, j], k) => {
-            const t = interpolate(web * 1.25 - (k / THREADS[ci].length) * 0.25, [0, 0.4], [0, 1], CL);
+            const t = interpolate(web * 1.3 - (k / THREADS[ci].length) * 0.3, [0, 0.5], [0, 1], CL);
             if (t <= 0) return null;
             const a = posOf(c, i);
             const b = posOf(c, j);
-            return <line key={`${ci}-${k}`} x1={a.x} y1={a.y - 12} x2={a.x + (b.x - a.x) * t} y2={a.y - 12 + (b.y - a.y) * t} stroke={K.gold} strokeWidth={1.4} strokeOpacity={0.6} />;
+            const ay = a.y - FP.h * 0.75;
+            const by = b.y - FP.h * 0.75;
+            const my = Math.min(ay, by) - 22;
+            return <path key={`${ci}-${k}`} d={`M ${a.x} ${ay} Q ${(a.x + b.x) / 2} ${my} ${b.x} ${by}`} stroke={K.gold} strokeWidth={2.4} strokeOpacity={0.85} fill="none" pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - t} strokeLinecap="round" />;
           }),
         )}
         {COHORTS.map((c, ci) =>
-          Array.from({ length: c.n }, (_, i) => {
+          Array.from({ length: figs(c) }, (_, i) => {
             const p = posOf(c, i);
-            const a = Math.min(1, Math.max(0, appear * 1.4 - (i / c.n) * 0.4));
+            const a = Math.min(1, Math.max(0, appear * 1.4 - (i / figs(c)) * 0.4));
             if (a <= 0) return null;
-            const gone = !SURV[ci].has(i) && random(`d${ci}${i}`) < passing * (1 - c.alive2017 / c.n) * 1.08;
-            const head = interpolateColors(ageing, [0, 1], ["#c98a5a", "#e8e6e1"]);
-            const body = ci === 0 ? K.themeHi : K.sub;
-            return <Person key={`${ci}-${i}`} x={p.x} y={p.y} h={FP.h} color={body} head={head} age={ageing} o={a * (gone ? 0.45 : 0.95)} outline={gone} />;
+            const survivors = Math.round(c.alive2017 / PER);
+            const gone = RANK[ci][i] >= survivors && RANK[ci][i] - survivors < passing * (figs(c) - survivors);
+            const head = interpolateColors(ageing, [0, 1], ["#b9794c", "#f1efe9"]);
+            const linked = web > 0.3 && THREADS[ci].some(([x, y]) => x === i || y === i);
+            return <Person key={`${ci}-${i}`} x={p.x} y={p.y} h={FP.h * (1 - 0.08 * ageing)} color={linked ? K.gold : c.color} head={head} age={ageing} o={a * (gone ? 0.5 : 0.95)} outline={gone} />;
           }),
         )}
         {/* The years. */}
@@ -90,49 +100,54 @@ export const Harvard: React.FC = () => {
             <circle cx={yearX(year)} cy={AX.y} r={9} fill={K.themeHi} />
           </g>
         ) : null}
-        {/* Age markers for the Harvard men (born around 1920). */}
-        {[
-          [1940, "约 20 岁"],
-          [1970, "约 50 岁"],
-          [2000, "约 80 岁"],
-        ].map(([y]) => (
-          <g key={y as number} opacity={interpolate(year, [(y as number) - 2, (y as number) + 2], [0, 1], CL)}>
-            <circle cx={yearX(y as number)} cy={AX.y} r={5} fill={K.fg} />
-          </g>
+        {[1940, 1970, 2000].map((y) => (
+          <circle key={y} cx={yearX(y)} cy={AX.y} r={5} fill={K.fg} opacity={interpolate(year, [y - 2, y + 2], [0, 1], CL)} />
         ))}
       </svg>
       {[1938, 1960, 1980, 2000, 2017, 2026].map((y) => (
         <div key={y} style={{ position: "absolute", left: yearX(y) - 40, width: 80, top: AX.y + 14, textAlign: "center", fontFamily: FONT, fontSize: 22, fontWeight: 700, color: K.muted, opacity: axis }}>{y}</div>
       ))}
-      {[
-        [1940, "约 20 岁"],
-        [1970, "约 50 岁"],
-        [2000, "约 80 岁"],
-      ].map(([y, t]) => (
-        <div key={y as number} style={{ position: "absolute", left: yearX(y as number) - 50, width: 100, top: AX.y - 44, textAlign: "center", fontFamily: FONT, fontSize: 22, fontWeight: 900, color: K.fg, opacity: interpolate(year, [(y as number) - 2, (y as number) + 2], [0, 1], CL) }}>{t}</div>
+      {(
+        [
+          [1940, "约 20 岁"],
+          [1970, "约 50 岁"],
+          [2000, "约 80 岁"],
+        ] as [number, string][]
+      ).map(([y, t]) => (
+        <div key={y} style={{ position: "absolute", left: yearX(y) - 50, width: 100, top: AX.y - 44, textAlign: "center", fontFamily: FONT, fontSize: 22, fontWeight: 900, color: K.fg, opacity: interpolate(year, [y - 2, y + 2], [0, 1], CL) }}>{t}</div>
       ))}
-      <div style={{ position: "absolute", left: yearX(year) - 70, width: 140, top: AX.y - 100, textAlign: "center", opacity: play > 0 && play < 1 ? 1 : play >= 1 ? 0.0 : 0 }}>
+      <div style={{ position: "absolute", left: yearX(year) - 70, width: 140, top: AX.y - 100, textAlign: "center", opacity: play > 0 && play < 1 ? 1 : 0 }}>
         <Odometer value={Math.floor(year)} size={40} sep={false} color={K.themeHi} />
       </div>
       <div style={{ position: "absolute", left: yearX(2017) - 150, width: 300, top: AX.y - 104, textAlign: "center", fontFamily: FONT, fontSize: 22, fontWeight: 700, color: K.sub, opacity: progAt(frame, 8.2, 0.8, EO) * (1 - web) }}>
         2017 年仍健在：19 人 · 40 人
       </div>
       {COHORTS.map((c, i) => (
-        <div key={c.name} style={{ position: "absolute", left: c.x, top: topOf(c) - 70, fontFamily: FONT }}>
+        <div key={c.name} style={{ position: "absolute", left: c.x, top: topOf(c) - 66, fontFamily: FONT }}>
           <In at={0.6 + i * 0.4} from="up" dist={14}>
-            <div style={{ fontSize: 30, fontWeight: 900, color: i === 0 ? K.themeHi : K.fg }}>{c.name}</div>
+            <div style={{ fontSize: 30, fontWeight: 900, color: c.color }}>{c.name}</div>
             <div style={{ fontSize: 22, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>{c.who}</div>
           </In>
         </div>
       ))}
+      <div style={{ position: "absolute", left: 1000, top: 210, fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.muted }}>
+        <In at={1.5} from="fade">
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <svg width={24} height={36}>
+              <Person x={12} y={35} h={34} color={K.sub} />
+            </svg>
+            每个小人 = 4 个人
+          </div>
+        </In>
+      </div>
       <Box x={110} y={92}>
         <Head at={0} parts={["1938 年起，哈佛", { t: "跟踪了两组人的一生", c: K.theme }, "："]} size={64} />
       </Box>
-      <Box x={930} y={330} style={{ gap: 14 }}>
+      <Box x={1000} y={330} style={{ gap: 14 }}>
         <In at={9} from="fade">
-          <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.sub }}>跟到老，最能预示他们健康、快乐的——</div>
+          <div style={{ fontFamily: FONT, fontSize: 38, fontWeight: 700, color: K.sub }}>跟到老，最能预示他们健康、快乐的——</div>
         </In>
-        <Head at={10.5} parts={[{ t: "是关系，", c: K.gold }, "不是成就。"]} size={96} />
+        <Head at={10.5} parts={[{ t: "是关系，", c: K.gold }, "不是成就。"]} size={88} />
         <In at={13} from="fade">
           <div style={{ display: "flex", alignItems: "center", gap: 12, fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.fg }}>
             <Icon name="heart" size={30} color={K.gold} />
