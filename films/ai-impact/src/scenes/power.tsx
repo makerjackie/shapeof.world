@@ -80,9 +80,9 @@ export const Grid: React.FC = () => {
 // ───────── 03-2 Nuclear plants switched back on, on a real US map ─────────
 
 const PLANTS = [
-  { n: "三里岛 1 号机组", who: "微软", mw: "835 MW", d: "2024-09-20", lon: -76.725, lat: 40.153, dx: -150, dy: 40 },
+  { n: "三里岛 1 号机组", who: "微软", mw: "835 MW", d: "2024-09-20", lon: -76.725, lat: 40.153, dx: -20, dy: 60 },
   { n: "Susquehanna", who: "亚马逊", mw: "1,920 MW", d: "2025-06", lon: -76.146, lat: 41.089, dx: -170, dy: -150 },
-  { n: "Clinton", who: "Meta", mw: "1,121 MW", d: "2025-06-03", lon: -88.834, lat: 40.172, dx: -60, dy: 50 },
+  { n: "Clinton", who: "Meta", mw: "1,121 MW", d: "2025-06-03", lon: -88.834, lat: 40.172, dx: -330, dy: 60 },
   { n: "Duane Arnold", who: "谷歌", mw: "615 MW", d: "2025-10", lon: -91.777, lat: 42.101, dx: -300, dy: -110 },
 ];
 
@@ -95,7 +95,7 @@ export const Nuclear: React.FC = () => {
       <div style={HEAD}>
         <Head at={0.2} size={72} parts={["为了 AI，", { t: "关掉的核电站", c: K.power }, "重新开机。"]} />
       </div>
-      <div style={{ position: "absolute", left: usProj(-79.5, 39.2)[0] - 40, top: usProj(-79.5, 39.2)[1] + 40, fontFamily: FONT, fontSize: 20, fontWeight: 700, color: K.power, opacity: progAt(frame, 0.8, 0.6), whiteSpace: "nowrap" }}>PJM 电网（覆盖 13 个州和华盛顿特区）</div>
+      <div style={{ position: "absolute", left: usProj(-90.5, 35.2)[0] - 40, top: usProj(-90.5, 35.2)[1], fontFamily: FONT, fontSize: 20, fontWeight: 700, color: K.power, opacity: progAt(frame, 0.8, 0.6), whiteSpace: "nowrap" }}>PJM 电网（覆盖 13 个州和华盛顿特区）</div>
       {PLANTS.map((p, i) => {
         const [x, y] = usProj(p.lon, p.lat);
         const q = progAt(frame, 1.2 + i * 0.7, 0.8, EBACK);

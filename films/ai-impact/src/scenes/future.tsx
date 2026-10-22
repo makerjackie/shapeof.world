@@ -12,7 +12,7 @@ const HEAD = { position: "absolute", left: 120, top: 128 } as const;
 
 // ───────── 05-1 The fan: the four lines cross "today" and open into forecasts ─────────
 
-const FAN_BOX = { ...LANE_BOX, w: 1040, y: 250, h: 640 };
+const FAN_BOX = { ...LANE_BOX, w: 1040, y: 310, h: 590 };
 const FORECASTS = [
   { t: "2027 年：四大云资本开支", v: "超过 1 万亿美元/年", who: "BofA、Evercore 预测" },
   { t: "2027–2028 年：内存", v: "比今年还紧", who: "美光管理层，2026-09" },
