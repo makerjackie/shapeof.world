@@ -48,12 +48,8 @@ Chinese name “世界的形状”, the logo or other brand identifiers. See
 ## 5. Contributions
 
 Commercial licensing and any future relicensing require the project to hold
-sufficient rights in accepted contributions. Every copyrightable code or content
-contribution intended for merge therefore needs prior maintainer agreement and
-an appropriate contributor agreement. Individuals use [CLA.md](./CLA.md),
-rights-owning organizations use [CCLA.md](./CCLA.md), and acceptance records
-follow [CLA_ACCEPTANCE.md](./CLA_ACCEPTANCE.md). See
-[CONTRIBUTING.md](./CONTRIBUTING.md).
+the rights in everything it ships, so code and content pull requests are not
+accepted for now. Issues are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## 中文摘要
 

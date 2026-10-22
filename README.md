@@ -87,9 +87,8 @@ a non-commercial restriction. The entry rule for new worlds is in
 - The name “Shape of the World / 世界的形状”, the logo and brand marks are not
   licensed with the code or content: [TRADEMARKS.md](./TRADEMARKS.md).
 
-Full boundaries: [LICENSING.md](./LICENSING.md). Contribution rules:
-[CONTRIBUTING.md](./CONTRIBUTING.md), with [CLA.md](./CLA.md) and
-[CCLA.md](./CCLA.md) for copyrightable contributions.
+Full boundaries: [LICENSING.md](./LICENSING.md). Issues are welcome; pull
+requests are not accepted for now: [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Contributors
 
