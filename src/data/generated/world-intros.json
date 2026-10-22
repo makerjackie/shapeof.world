@@ -2168,78 +2168,82 @@
     },
     "cow-anatomy": {
       "question": {
-        "zh": "同一头牛的不同部位，为什么会拥有完全不同的口感与涮烫时间？",
-        "en": "Why do cuts from the same cow need such different hotpot times and feel so different to eat?"
+        "zh": "一头牛，能变成多少肉？",
+        "en": "How much of a cow ends up as meat?"
       },
       "hook": {
-        "zh": "在牛身分区图上认识十一种潮州牛肉与内脏，旋转观察身体系统，再亲手改变切向与厚度，看看一片肉里藏着什么。",
-        "en": "Explore eleven Chaoshan beef and offal cuts on an interactive map, rotate the anatomical systems, then change slicing direction and thickness to see what lies inside a slice."
+        "zh": "600 个方块拼成一头 600 kg 的牛。先猜，再拖两刀：去掉皮、头、蹄、内脏，再剔掉骨头和肥油，看最后剩下多少肉。",
+        "en": "A 600 kg cow made of 600 blocks. Guess first, then make two cuts: hide, head, feet and organs, then bone and fat. See how much meat is left."
       },
       "payoff": {
-        "zh": "部位只给出趋势；肌纤维、结缔组织、脂肪、切向、厚度与火候共同决定口感，而口感秒数不等于食品安全线。",
-        "en": "Anatomical location gives only a trend. Fibres, connective tissue, fat, slicing direction, thickness, and heat shape texture together—and a taste timer is not a food-safety test."
+        "zh": "一头牛，不到一半能变成肉：600 kg 的牛约切出 244 kg 肉。最贵的脖仁，一头牛只有约 0.5–1 kg。",
+        "en": "Less than half of a cow becomes meat: a 600 kg cow gives about 244 kg. The prized neck cut is only about 0.5–1 kg per cow."
       },
       "topicLabel": {
-        "zh": "动物结构与饮食",
-        "en": "Animal Structure & Food"
+        "zh": "动物与饮食",
+        "en": "Animals & Food"
       },
-      "evidence": "verified",
-      "fieldNotes": [],
+      "evidence": "compiled",
+      "fieldNotes": [
+        {
+          "label": {
+            "zh": "这头牛是谁",
+            "en": "Which cow"
+          },
+          "body": {
+            "zh": "比例来自美国的一头育肥阉牛。潮汕常用的本地黄牛个头更小，屠宰率也更低，所以真实比例会更少一些。各部位占比是带骨的胴体比例。盘子插画由 AI 生成，是示意，不是照片。",
+            "en": "The shares come from a US feedlot steer. The local yellow cattle common in Chaoshan are smaller and dress out lower, so the real share is somewhat less. Primal shares are of the bone-in carcass. The plate illustrations are AI-generated, not photographs."
+          }
+        }
+      ],
       "sources": [
         {
           "label": {
-            "zh": "明尼苏达大学：反刍动物的消化系统",
-            "en": "University of Minnesota: the ruminant digestive system"
+            "zh": "内布拉斯加大学 BeefWatch：一头牛能出多少肉（转载田纳西大学推广处 PB1829）",
+            "en": "UNL BeefWatch: How much meat can we expect from a beef animal? (reprinting University of Tennessee Extension PB1829)"
           },
-          "url": "https://extension.umn.edu/agriculture/animals-and-livestock/dairy/the-ruminant-digestive-system"
+          "url": "https://beef.unl.edu/beefwatch/2020/how-many-pounds-meat-can-we-expect-beef-animal",
+          "note": {
+            "zh": "1400 磅活牛 → 880 磅胴体 → 约 570 磅肉；按比例换算成 600 kg 的牛。大部位占胴体比例也取自这里。",
+            "en": "1,400 lb steer → 880 lb carcass → about 570 lb of meat, scaled to a 600 kg cow. Primal shares of the carcass come from the same table."
+          }
         },
         {
           "label": {
-            "zh": "Open 3D Viewer Google Cow archive（Apache-2.0）",
-            "en": "Open 3D Viewer Google Cow archive（Apache-2.0）"
+            "zh": "澎湃号·湃客：不同部位牛肉食材特性（2024）",
+            "en": "The Paper contributor column: beef cuts and their uses (2024)"
           },
-          "url": "https://github.com/jah120/open-3d-viewer/tree/master/web/models/cow_anatomy"
-        },
-        {
-          "label": {
-            "zh": "Google Open Source Blog — Open 3D Viewer and Google Cow",
-            "en": "Google Open Source Blog — Open 3D Viewer and Google Cow"
-          },
-          "url": "https://opensource.googleblog.com/2012/01/google-body-becomes-zygote-body-built.html"
+          "url": "https://www.thepaper.cn/newsDetail_forward_28921334",
+          "note": {
+            "zh": "\"一头 1 千斤的牛，往往只能切出一两斤脖仁\"。行业说法，不是统计数据。",
+            "en": "\"A 500 kg cow often yields only 0.5–1 kg of neck.\" An industry estimate, not a statistic."
+          }
         },
         {
           "label": {
             "zh": "潮州市地方标准 DB4451/T 9—2024《潮州牛肉火锅烹饪工艺规范》",
             "en": "Chaozhou local standard DB4451/T 9—2024 for beef hotpot"
           },
-          "url": "https://dbba.sacinfo.org.cn/portal/download/ea30bd60105310be4692353bc73953f12080202fca4e64bf5a5ebe83f2de97d5"
-        },
-        {
-          "label": {
-            "zh": "肉的肌纤维、结缔组织与脂肪综述（Listrat 等，2016）",
-            "en": "Review of muscle fibres, connective tissue, and fat in meat (Listrat et al., 2016)"
-          },
-          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4789028/"
+          "url": "https://dbba.sacinfo.org.cn/portal/download/ea30bd60105310be4692353bc73953f12080202fca4e64bf5a5ebe83f2de97d5",
+          "note": {
+            "zh": "十一个潮汕部位的名称、每次 100–125 g 和示范涮烫时间。",
+            "en": "Names of the eleven Chaoshan items, 100–125 g per dunk, and demonstration cooking times."
+          }
         },
         {
           "label": {
             "zh": "市场监管总局：鲜、冻畜禽肉消费提示",
             "en": "China SAMR consumer guidance for fresh and frozen meat"
           },
-          "url": "https://www.samr.gov.cn/xw/zj/art/2023/art_313292588dd643dea677a3544975b4cb.html"
-        },
-        {
-          "label": {
-            "zh": "Original model artist Leo White attribution",
-            "en": "Original model artist Leo White attribution"
-          },
-          "url": "https://github.com/jah120/open-3d-viewer/blob/master/web/models/cow_anatomy/NOTICE.txt"
+          "url": "https://www.samr.gov.cn/xw/zj/art/2023/art_313292588dd643dea677a3544975b4cb.html",
+          "note": {
+            "zh": "口感秒数不是安全线，吃之前要熟透。",
+            "en": "Texture timings are not a safety line; cook meat through."
+          }
         }
       ],
       "provenance": {
-        "origin": "open-source-adaptation",
-        "sourceProject": "Open 3D Viewer Google Cow",
-        "sourceUrl": "https://github.com/jah120/open-3d-viewer/tree/master/web/models/cow_anatomy"
+        "origin": "multi-model"
       }
     },
     "flybody": {

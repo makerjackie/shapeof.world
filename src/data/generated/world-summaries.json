@@ -34,27 +34,27 @@
     "poster": "/assets/posters/cow-anatomy.webp",
     "posterMobile": "/assets/posters/mobile/cow-anatomy.webp",
     "posterDesktop": "/assets/posters/desktop/cow-anatomy.webp",
-    "title": "牛的里里外外",
-    "posterTitle": "牛的里里外外",
-    "posterHook": "把地方标准中的十一种牛肉与内脏放回牛身，再看肌纤维、筋膜、脂肪、切法与火候怎样变成嫩、脆、筋与脂。",
-    "question": "同一头牛的不同部位，为什么会拥有完全不同的口感与涮烫时间？",
-    "topicLabel": "动物结构与饮食",
+    "title": "一头牛，能变成多少肉？",
+    "posterTitle": "一头牛，能变成多少肉？",
+    "posterHook": "一头牛，不到一半能变成肉。",
+    "question": "一头牛，能变成多少肉？",
+    "topicLabel": "动物与饮食",
     "translations": {
       "en": {
-        "title": "A cow, inside and out",
-        "posterTitle": "A cow, inside and out",
-        "posterHook": "Put the local standard’s eleven beef and offal items back onto the cow, then see how fibres, fascia, fat, slicing, and heat become tenderness, snap, sinew, and richness.",
-        "question": "Why do cuts from the same cow need such different hotpot times and feel so different to eat?",
-        "topicLabel": "Animal Structure & Food"
+        "title": "How much of a cow ends up as meat?",
+        "posterTitle": "How much of a cow ends up as meat?",
+        "posterHook": "Less than half of a cow becomes meat.",
+        "question": "How much of a cow ends up as meat?",
+        "topicLabel": "Animals & Food"
       }
     },
     "primaryCategoryId": "body-atlas",
     "renderer": "cow-anatomy",
-    "runtime": "scene-3d",
-    "difficulty": "standard",
-    "duration": 480,
-    "evidence": "verified",
-    "accent": "#d6a968",
+    "runtime": "diagram-2d",
+    "difficulty": "intro",
+    "duration": 180,
+    "evidence": "compiled",
+    "accent": "#cf4b40",
     "posterPosition": "50% 50%"
   },
   {
