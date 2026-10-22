@@ -39,7 +39,7 @@ export const shortNames: Record<string, string> = {
 	'hind-shank': '五花趾',
 	tripe: '牛百叶',
 };
-const outline =
+export const outline =
 	'M96 248 Q106 229 118 208 Q119 184 145 166 L161 146 Q174 140 183 157 L204 151 Q232 129 264 137 Q304 132 345 137 Q476 151 634 134 Q709 117 745 155 Q768 185 759 242 Q754 276 744 304 L735 342 Q723 365 720 380 L732 445 L705 450 Q695 426 690 401 L683 369 L672 333 Q639 359 591 367 Q469 376 357 346 Q343 365 337 386 L333 443 L304 448 L300 414 Q288 386 283 348 Q249 344 225 311 Q204 292 187 279 L157 276 Q118 289 96 275 Q90 270 96 248Z';
 export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id: string) => void }) {
 	const tx = useExperienceI18n();
@@ -49,9 +49,9 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 		<svg className="ca-cow-map" viewBox="70 80 750 420" role="group" aria-label={tx('点选牛身上的部位')}>
 			<defs>
 				<linearGradient id={`${uid}-hide`} x2="0.6" y2="1">
-					<stop stopColor="#ddc9a5" />
-					<stop offset=".5" stopColor="#f0e4ce" />
-					<stop offset="1" stopColor="#bfa483" />
+					<stop stopColor="#4a392e" />
+					<stop offset=".5" stopColor="#5a4537" />
+					<stop offset="1" stopColor="#3a2c23" />
 				</linearGradient>
 				<clipPath id={`${uid}-body`}>
 					<path d={outline} />
@@ -60,15 +60,15 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 			<ellipse cx="458" cy="461" rx="288" ry="9" fill="#59402a" opacity=".06" />
 			<path
 				d="M343 312 L366 363 L351 416 L365 442 L341 448 L327 422 L337 365 L318 329 M694 308 L669 366 L678 411 L666 443 L643 443 L650 409 L641 366 L652 312"
-				fill="#bcaa8e"
-				stroke="#675345"
+				fill="#3a2d25"
+				stroke="#7d6655"
 				strokeWidth="1.4"
 			/>
-			<path d="M746 157 Q783 210 783 298 Q782 326 795 351" fill="none" stroke="#9c8060" strokeWidth="9" strokeLinecap="round" />
-			<path d="M795 335 Q813 353 803 378 Q781 363 786 347Z" fill="#5e4939" />
-			<path d={outline} fill={`url(#${uid}-hide)`} stroke="#715949" strokeWidth="1.5" strokeLinejoin="round" />
+			<path d="M746 157 Q783 210 783 298 Q782 326 795 351" fill="none" stroke="#6d5848" strokeWidth="9" strokeLinecap="round" />
+			<path d="M795 335 Q813 353 803 378 Q781 363 786 347Z" fill="#2c221c" />
+			<path d={outline} fill={`url(#${uid}-hide)`} stroke="#8d7462" strokeWidth="1.5" strokeLinejoin="round" />
 			<g clipPath={`url(#${uid}-body)`}>
-				<path d="M350 208 Q500 214 637 196 L637 261 Q490 310 359 284Z" fill="#d6bca4" />
+				<path d="M350 208 Q500 214 637 196 L637 261 Q490 310 359 284Z" fill="#4f3c30" />
 				{regions.map((r, i) => (
 					<g
 						key={r.id}
@@ -88,8 +88,8 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 						<path
 							d={r.d}
 							className="ca-region-fill"
-							fill={r.id === 'brisket' ? '#c8ac7c' : r.id === 'tripe' ? '#b69679' : ['#b97868', '#c48a78', '#bd8070', '#ad6f60'][i % 4]}
-							stroke="#f5ead8"
+							fill={r.id === 'brisket' ? '#cdb58c' : r.id === 'tripe' || r.id === 'tongue' ? '#8e6b55' : ['#b8473e', '#c55247', '#ad4038', '#bf4c42'][i % 4]}
+							stroke="#1a1310"
 							strokeWidth="1.8"
 							strokeLinejoin="round"
 						/>
@@ -98,22 +98,22 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 			</g>
 			<path
 				d="M156 151 Q145 116 157 93 Q157 128 176 141 M183 151 Q207 120 222 136 Q207 155 185 165"
-				fill="#d4bc93"
-				stroke="#715949"
+				fill="#5e493a"
+				stroke="#8d7462"
 				strokeWidth="1.5"
 			/>
-			<path d="M151 173 Q114 156 111 175 Q130 189 151 182" fill="#d2b596" stroke="#715949" strokeWidth="1.5" />
+			<path d="M151 173 Q114 156 111 175 Q130 189 151 182" fill="#5e493a" stroke="#8d7462" strokeWidth="1.5" />
 			<path
 				d="M121 211 Q141 193 166 199 M104 240 Q122 243 135 237 M176 214 Q169 238 154 248"
 				fill="none"
-				stroke="#8b6a51"
+				stroke="#8d7462"
 				strokeWidth="1.5"
 			/>
-			<ellipse cx="143" cy="210" rx="4" ry="3" fill="#3d3028" />
+			<ellipse cx="143" cy="210" rx="4" ry="3" fill="#120d0a" />
 			<circle cx="144" cy="209" r="1" fill="#fff6e5" />
 			<ellipse cx="103" cy="257" rx="4" ry="3" fill="#74543e" />
-			<path d="M303 436 L334 432 L333 450 L300 450Z M704 438 L730 437 L735 450 L701 452Z" fill="#54483d" />
-			<path d="M316 438V450 M718 440L720 451" stroke="#eee0c8" />
+			<path d="M303 436 L334 432 L333 450 L300 450Z M704 438 L730 437 L735 450 L701 452Z" fill="#1d1612" />
+			<path d="M316 438V450 M718 440L720 451" stroke="#5e493a" />
 			{regions.map((r, i) => {
 				const outside = r.id === 'tongue' || r.id === 'front-shank' || r.id === 'hind-shank';
 				const x = r.id === 'tongue' ? 130 : r.id === 'front-shank' ? 243 : r.id === 'hind-shank' ? 769 : r.x;
@@ -125,7 +125,7 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 						pointerEvents="none"
 						aria-hidden="true"
 					>
-						{outside && <path d={`M${r.x} ${r.y} L${x} ${y - 23}`} fill="none" stroke="#94765c" strokeWidth="1.2" />}
+						{outside && <path d={`M${r.x} ${r.y} L${x} ${y - 23}`} fill="none" stroke="#a08876" strokeWidth="1.2" />}
 						<text className="ca-region-number" x={x} y={y - 9} textAnchor="middle">
 							{String(i + 1).padStart(2, '0')}
 						</text>
