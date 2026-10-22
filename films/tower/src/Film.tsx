@@ -9,8 +9,8 @@ import { barToFrame, FPB, MUSIC_OFFSET } from "./timing";
 
 const PRE = 7; // frames the incoming scene starts before its downbeat
 const POST = 5; // frames the outgoing scene lingers after it
-// The track peaks at about +0.8 dBTP once encoded; 1.5 dB down keeps the master under −1 dBTP (as ai-real-cost).
-const GAIN = 0.84;
+// The track peaks at about +0.8 dBTP once encoded; 2 dB down keeps the master under −1 dBTP.
+const GAIN = 0.79;
 
 const starts = SCENES.map((s, i) => (i === 0 ? 0 : barToFrame(s.from)));
 const ends = SCENES.map((s, i) => (i === SCENES.length - 1 ? FILM_FRAMES : Math.min(FILM_FRAMES, barToFrame(s.to))));

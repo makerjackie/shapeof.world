@@ -24,7 +24,7 @@ const HERO = poi("深圳能源大厦");
 
 // The office belt from 宝安中心区 to 罗湖.
 const BELT3D: Cam = { x: -6600, y: -1600, z: 0.046, bearing: 0, tilt: 46, ox: 1300, oy: 640 };
-const BELT: Cam = { x: -6600, y: -1900, z: 0.04, bearing: 0, tilt: 0, ox: 1360, oy: 600 };
+const BELT: Cam = { x: -6600, y: -1900, z: 0.04, bearing: 0, tilt: 0, ox: 1320, oy: 600 };
 const KEYS: CamKey[] = [
   { at: 0, dur: 1, cam: BELT3D },
   { at: at(37), dur: 1.2 * FPB, cam: BELT },
@@ -306,10 +306,10 @@ export const Fair: React.FC = () => {
         <In at={0} from="up">
           <Txt size={40} color={K.sub}>说句公道话：</Txt>
         </In>
-        <Head at={0.6} parts={["按 2018 年的租金整栋出租，约 ", { t: "22 年", c: K.green }, "就能回本。"]} size={58} />
-        <In at={4.6} from="up">
+        <Head at={0.3} parts={["按 2018 年的租金整栋出租，约 ", { t: "22 年", c: K.green }, "就能回本。"]} size={58} />
+        <In at={2.8} from="up">
           <Txt size={44} style={{ marginTop: 14 }}>
-            可楼是十年前决定的，租金<b style={{ color: K.theme }}>十年后</b>才知道。
+            可楼是十年前定的，租金<b style={{ color: K.theme }}>十年后</b>才知道。
           </Txt>
         </In>
       </div>

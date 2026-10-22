@@ -269,16 +269,16 @@ const Stage: React.FC = () => {
     [at(15, 3), 1],
     [at(16), 1],
     [at(16, 0.8), 0],
-    [at(18, 2), 0],
-    [at(18, 2.2), 1],
+    [at(18, 3.2), 0],
+    [at(18, 3.4), 1],
     [at(20, 0.5), 1],
     [at(20, 1.5), 0],
   ]);
   const heroBuilt = track(f, [
     [at(2), 1],
     [at(2, 0.5), 0],
-    [at(18, 1.8), 0],
-    [at(19, 1.5), 1],
+    [at(18, 3.4), 0],
+    [at(19, 3), 1],
   ]);
   const szDim = track(f, [
     [at(10), 1],
@@ -478,7 +478,7 @@ const Eco: React.FC = () => {
           <Txt size={34} color={K.sub}>山、水库、郊野公园：原则上不准盖楼</Txt>
         </In>
         <div style={{ marginTop: 24 }}>
-          <Head at={4.4} parts={["深圳", { t: "一半", c: K.eco }, "的地，不能动。"]} size={70} />
+          <Head at={3.6} parts={["深圳", { t: "一半", c: K.eco }, "的地，不能动。"]} size={70} />
         </div>
       </div>
       <Src at={1}>深圳市基本生态控制线（待核：面积与年份）· 点阵为面积示意，不代表位置</Src>
@@ -543,7 +543,7 @@ const Cbd: React.FC = () => (
         <Txt size={34} color={K.sub}>中轴线：莲花山 → 市民中心 → 会展中心</Txt>
       </In>
       <div style={{ marginTop: 26 }}>
-        <Head at={4} parts={["楼还没影，", { t: "城市已经画好了", c: K.theme }, "。"]} size={64} />
+        <Head at={3.2} parts={["楼还没影，", { t: "城市已经画好了", c: K.theme }, "。"]} size={64} />
       </div>
     </div>
     <Src at={1}>道路、地铁、建筑轮廓与高度：© OpenStreetMap contributors（ODbL）</Src>
@@ -595,33 +595,70 @@ const Buyers: React.FC = () => (
     <div style={{ position: "absolute", left: 120, top: 190, display: "flex", flexDirection: "column", gap: 16 }}>
       <Head at={0} parts={["谁能买？"]} size={72} />
       {RULES.map((r, i) => (
-        <In key={r} at={0.8 + i * 0.5} from="left">
+        <In key={r} at={0.6 + i * 0.35} from="left">
           <div style={{ display: "flex", alignItems: "center", gap: 16, fontFamily: FONT }}>
             <span style={{ width: 34, height: 34, borderRadius: 8, border: `3px solid ${K.theme}`, color: K.theme, fontSize: 26, fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center" }}>✓</span>
             <span style={{ fontSize: 44, fontWeight: 700, color: K.fg, whiteSpace: "nowrap" }}>{r}</span>
           </div>
         </In>
       ))}
-      <In at={4.2} from="up">
+      <In at={2.4} from="up">
         <div style={{ marginTop: 30, fontFamily: FONT, display: "flex", alignItems: "baseline", gap: 18 }}>
           <span style={{ fontSize: 34, fontWeight: 700, color: K.sub }}>2008 年 4 月 23 日</span>
           <span style={{ fontSize: 96, fontWeight: 900, color: K.theme }}>6.7 亿</span>
           <span style={{ fontSize: 34, fontWeight: 700, color: K.sub }}>成交</span>
         </div>
       </In>
-      <In at={5.4} from="up">
-        <Txt size={40}>买家：深圳能源。楼，就是后来的深圳能源大厦。</Txt>
+      <In at={3.4} from="up">
+        <Txt size={44}>买家：深圳能源</Txt>
       </In>
     </div>
     <Src at={1}>深圳能源 · 关于竞买 / 竞得公司总部大楼用地的公告 · 2008-03-26、2008-04-25</Src>
   </AbsoluteFill>
 );
 
-// Back at 粤海: the answer to the hook. A balance tips toward the tax the buyer promised.
+// A balance in its own dark panel: the land price on the left pan, the promised local tax on the right.
+const Balance: React.FC<{ tip: number; o: number }> = ({ tip, o }) => {
+  if (o <= 0) return null;
+  const cx = 1490;
+  const cy = 500;
+  const L = 250;
+  const ang = (10 * tip * Math.PI) / 180; // right side goes down
+  const ends = [-1, 1].map((k) => [cx + k * L * Math.cos(ang), cy + k * L * Math.sin(ang)]);
+  const pan = (x: number, y: number, color: string) => (
+    <>
+      <line x1={x} y1={y} x2={x - 90} y2={y + 120} stroke={K.sub} strokeWidth={2} />
+      <line x1={x} y1={y} x2={x + 90} y2={y + 120} stroke={K.sub} strokeWidth={2} />
+      <path d={`M${x - 110} ${y + 120} L${x + 110} ${y + 120} Q${x} ${y + 175} ${x - 110} ${y + 120}Z`} fill={color} fillOpacity={0.85} />
+    </>
+  );
+  const label = (x: number, y: number, top: string, big: string, color: string) => (
+    <div style={{ position: "absolute", left: x - 160, top: y + 182, width: 320, fontFamily: FONT, textAlign: "center", whiteSpace: "nowrap" }}>
+      <div style={{ fontSize: 28, fontWeight: 700, color: K.sub }}>{top}</div>
+      <div style={{ fontSize: 60, fontWeight: 900, color }}>{big}</div>
+    </div>
+  );
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o }}>
+      <div style={{ position: "absolute", left: 1150, top: 380, width: 680, height: 520, borderRadius: 24, background: "rgba(7,9,11,0.86)", border: `1px solid ${K.line}` }} />
+      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+        <line x1={cx} y1={cy} x2={cx} y2={cy + 330} stroke={K.sub} strokeWidth={8} strokeLinecap="round" />
+        <path d={`M${cx - 70} ${cy + 340} L${cx + 70} ${cy + 340}`} stroke={K.sub} strokeWidth={8} strokeLinecap="round" />
+        <line x1={ends[0][0]} y1={ends[0][1]} x2={ends[1][0]} y2={ends[1][1]} stroke={K.fg} strokeWidth={8} strokeLinecap="round" />
+        <circle cx={cx} cy={cy} r={11} fill={K.fg} />
+        {pan(ends[0][0], ends[0][1], K.fg)}
+        {pan(ends[1][0], ends[1][1], K.theme)}
+      </svg>
+      {label(ends[0][0], ends[0][1], "地价", "9.65 亿", K.fg)}
+      {label(ends[1][0], ends[1][1], "承诺 5 年地方财力", "15 亿", K.theme)}
+    </div>
+  );
+};
+
+// Back at 粤海: the answer to the hook.
 const Tax: React.FC = () => {
   const f = useBeatFrame();
   const tip = progAt(f, 2.6, 1.4, EBACK);
-  const ang = -9 * tip;
   return (
     <AbsoluteFill>
       <Scrim w={900} />
@@ -647,21 +684,8 @@ const Tax: React.FC = () => {
           <Txt size={40} color={K.sub} style={{ marginTop: 6 }}>这些税，会变成路、地铁和学校。</Txt>
         </In>
       </div>
-      {/* the balance */}
-      <div style={{ position: "absolute", left: 1180, top: 420, width: 560, height: 300, opacity: progAt(f, 1, 0.8, EO) * (1 - progAt(f, 7.6, 0.6, EIO)) }}>
-        <div style={{ position: "absolute", left: 276, top: 40, width: 8, height: 240, background: K.sub, borderRadius: 4 }} />
-        <div style={{ position: "absolute", left: 0, top: 40, width: 560, transform: `rotate(${ang}deg)`, transformOrigin: "280px 0" }}>
-          <div style={{ position: "absolute", left: 0, top: -4, width: 560, height: 8, background: K.fg, borderRadius: 4 }} />
-          <div style={{ position: "absolute", left: -20, top: 10, width: 200, textAlign: "center", fontFamily: FONT, transform: `rotate(${-ang}deg)` }}>
-            <div style={{ fontSize: 30, fontWeight: 700, color: K.sub }}>地价</div>
-            <div style={{ fontSize: 64, fontWeight: 900, color: K.fg }}>9.65 亿</div>
-          </div>
-          <div style={{ position: "absolute", left: 380, top: 10, width: 200, textAlign: "center", fontFamily: FONT, transform: `rotate(${-ang}deg)` }}>
-            <div style={{ fontSize: 30, fontWeight: 700, color: K.sub }}>承诺 5 年</div>
-            <div style={{ fontSize: 64, fontWeight: 900, color: K.theme }}>15 亿</div>
-          </div>
-        </div>
-      </div>
+      {/* the balance: the promised tax outweighs the land price */}
+      <Balance tip={tip} o={progAt(f, 1, 0.8, EO) * (1 - progAt(f, 7.6, 0.6, EIO))} />
       <Src at={1}>澎湃新闻 · 转述 K602-0016 出让公告 · 2025-10 · 地方财力：企业交的税里留在深圳的部分</Src>
     </AbsoluteFill>
   );

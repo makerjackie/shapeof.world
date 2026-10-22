@@ -173,6 +173,7 @@ const Lights: React.FC = () => {
   const y = f < 5 * FPB ? 2010 : f < 9 * FPB ? 2018 : 2024;
   return (
     <AbsoluteFill>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 520, background: "linear-gradient(180deg, rgba(7,9,11,0.92) 0%, rgba(7,9,11,0.7) 55%, rgba(7,9,11,0) 100%)" }} />
       <div style={{ position: "absolute", left: 120, top: 150, display: "flex", flexDirection: "column", gap: 6 }}>
         <In at={0.2} from="up">
           <Txt size={40} color={K.sub}>福田，楼里的企业每年交税过亿的楼</Txt>

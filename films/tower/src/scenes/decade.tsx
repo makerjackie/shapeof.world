@@ -56,14 +56,11 @@ const SPEND: [number, number][] = [
 
 const Stage: React.FC = () => {
   const f = useBeatFrame();
-  // 0 → plan lines draw; 1 → skin on; then the site is cleared and the tower rises with the calendar.
+  // The design stacks up floor by floor in two beats; at 十年 the site is cleared and the tower rises again, this
+  // time with the calendar.
   const draw = track(f, [
-    [0, 0],
-    [2.5 * FPB, 1],
-  ]);
-  const skin = track(f, [
-    [B(26) - 4, 0],
-    [B(26) + 1.5 * FPB, 1],
+    [0.2 * FPB, 0],
+    [2.4 * FPB, 1],
   ]);
   const clear = track(f, [
     [B(28) - 6, 0],
@@ -74,13 +71,11 @@ const Stage: React.FC = () => {
     [
       [B(28) + 1 * FPB, 2008],
       [B(28) + 2 * FPB, 2010],
-      [B(28) + 9 * FPB, 2017.9],
-      [B(28) + 10 * FPB, 2018.6],
+      [B(28) + 6.5 * FPB, 2017.9],
+      [B(28) + 7.2 * FPB, 2018.6],
     ],
     (t) => t,
   );
-  const plan = clear < 1 && skin < 0.5;
-  const look = plan ? "plan" : "dusk";
   const growing = clear >= 1;
   const built = growing ? builtAt(year) : { S: TOWERS.S.floors * draw, N: TOWERS.N.floors * draw };
   const dim = growing ? 0 : clear;
@@ -89,7 +84,7 @@ const Stage: React.FC = () => {
     <>
       {/* ground line and site */}
       <div style={{ position: "absolute", left: BX - 60, top: GROUND, width: (ELEV.sW + ELEV.gap + ELEV.nW) * S + 120, height: 2, background: K.line }} />
-      <Elevation x={BX} ground={GROUND} s={S} built={built} look={look} dim={dim} crane={growing && year < 2017.8} lit={look === "dusk" ? lit : undefined} />
+      <Elevation x={BX} ground={GROUND} s={S} built={built} look="dusk" dim={dim} crane={growing && year < 2017.8} lit={lit} />
     </>
   );
 };
@@ -249,8 +244,9 @@ const Skin: React.FC = () => (
 const Decade: React.FC = () => {
   const f = useBeatFrame();
   const axis = progAt(f, 0, 1, EO);
-  const year = interpolate(f, [1 * FPB, 2 * FPB, 9 * FPB, 10 * FPB], [2008, 2010, 2017.9, 2018.6], CL);
-  const bar = progAt(f, 9.5, 1, EO);
+  const year = interpolate(f, [1 * FPB, 2 * FPB, 6.5 * FPB, 7.2 * FPB], [2008, 2010, 2017.9, 2018.6], CL);
+  const bar25 = progAt(f, 1.6, 1, EO);
+  const bar = progAt(f, 7.4, 1, EO);
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: 130, top: 190 }}>
@@ -275,15 +271,15 @@ const Decade: React.FC = () => {
       })}
       {/* 25 working days vs 10 years 2 months */}
       <div style={{ position: "absolute", left: 130, top: 420, display: "flex", flexDirection: "column", gap: 18, fontFamily: FONT }}>
-        <In at={9.4} from="left">
+        <In at={1.5} from="left">
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-            <div style={{ width: (AXX(2008.1) - AX0) * bar + 2, height: 34, background: K.green, borderRadius: 4 }} />
+            <div style={{ width: (AXX(2008.1) - AX0) * bar25 + 2, height: 34, background: K.green, borderRadius: 4 }} />
             <span style={{ fontSize: 36, fontWeight: 700, color: K.fg }}>
               政府审批时限，加起来 <b style={{ fontSize: 48 }}>25 个工作日</b>
             </span>
           </div>
         </In>
-        <In at={10} from="left">
+        <In at={7.3} from="left">
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
             <div style={{ width: (AX1 - AX0 - 380) * bar, height: 34, background: K.theme, borderRadius: 4 }} />
             <span style={{ fontSize: 36, fontWeight: 700, color: K.fg }}>
