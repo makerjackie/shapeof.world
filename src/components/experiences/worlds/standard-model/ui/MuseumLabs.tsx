@@ -3,10 +3,11 @@ import {sampleHydrogenPosition} from '../particle-model'
 import {conversionProbability,hydrogenRadialDensity} from '../museum-lab-model'
 import {MuseumSpectrum} from './MuseumSpectrum'
 import {EvidenceEvent} from '../evidence/EvidenceEvent'
+import {QuarkLab} from './QuarkLab'
 
-export const labNames = {atom:['电子的位置','Electron positions'],oscillation:['中微子的旅途','A neutrino journey'],event:['读懂一次碰撞','Reading a collision']} as const
+export const labNames = {proton:['拼一个质子','Build a proton'],atom:['电子的位置','Electron positions'],oscillation:['中微子的旅途','A neutrino journey'],event:['读懂一次碰撞','Reading a collision']} as const
 export function MuseumLab({id,en,onInteract}:{id:string;en:boolean;onInteract:()=>void}) {
- return <div className="smm-laboratory">{id==='atom'?<HydrogenLab en={en} onInteract={onInteract}/>:id==='oscillation'?<OscillationLab en={en} onInteract={onInteract}/>:<><EvidenceEvent particleId="z" en={en}/><MuseumSpectrum en={en} onInteract={onInteract}/><div className="smm-lab-explanation"><h3>{en?'From a signal to a claim':'从信号到结论'}</h3><ol><li>{en?'The detector records signals; reconstruction estimates two muon four-momenta.':'探测器记录信号，重建得到两个 μ 子的四动量。'}</li><li>{en?'Combine energy and momentum to calculate the invariant mass of the pair.':'将能量和动量合并，计算这一对粒子的不变质量。'}</li><li>{en?'A discovery needs many events, background estimates and uncertainties. This single candidate is an example, not a discovery claim.':'发现需要大量事件、背景估计和不确定度。这里的单个候选只作阅读实例。'}</li></ol></div></>}</div>
+ return <div className="smm-laboratory">{id==='proton'?<QuarkLab en={en} onInteract={onInteract}/>:id==='atom'?<HydrogenLab en={en} onInteract={onInteract}/>:id==='oscillation'?<OscillationLab en={en} onInteract={onInteract}/>:<><EvidenceEvent particleId="z" en={en}/><MuseumSpectrum en={en} onInteract={onInteract}/><div className="smm-lab-explanation"><h3>{en?'From a signal to a claim':'从信号到结论'}</h3><ol><li>{en?'The detector records signals; reconstruction estimates two muon four-momenta.':'探测器记录信号，重建得到两个 μ 子的四动量。'}</li><li>{en?'Combine energy and momentum to calculate the invariant mass of the pair.':'将能量和动量合并，计算这一对粒子的不变质量。'}</li><li>{en?'A discovery needs many events, background estimates and uncertainties. This single candidate is an example, not a discovery claim.':'发现需要大量事件、背景估计和不确定度。这里的单个候选只作阅读实例。'}</li></ol></div></>}</div>
 }
 function HydrogenLab({en,onInteract}:{en:boolean;onInteract:()=>void}) {
  const [points,setPoints]=useState<ReturnType<typeof sampleHydrogenPosition>[]>([])

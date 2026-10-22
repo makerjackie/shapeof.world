@@ -5,7 +5,7 @@ import { useExperienceI18n } from '~/i18n/experience'
 import { useI18n } from '~/i18n'
 import { familyInfo, particles, type Particle, type ParticleId } from './particle-data'
 import { readCollection, writeCollection, readMuseumCollection, writeMuseumCollection } from './particle-collection'
-import { ParticleScene } from './particle-scene'
+import { ParticleScene } from './ui/particle-scene'
 import { exhibitLabels } from './ui/ExhibitPreview'
 import { particleDossiers, museumSources, type MuseumClaim } from './particle-dossiers'
 import { museumFacts } from './museum-data'
@@ -54,7 +54,7 @@ export function ParticleAtlas({ controls, onSelect }: { controls: ExperienceCont
  return <div className="smm-world" data-locale={locale} data-page={selected?'particle':route.topicId?'topic':route.labId?'lab':route.section||'home'} ref={scroll} onScroll={()=>{if(scroll.current)positions.current[routeKey]=scroll.current.scrollTop}}>
 
   <div className="smm-gallery" hidden={!!selected}>
-  <header className="smm-masthead" data-experience-content-start="true"><h1>{tx('基本粒子博物馆')}</h1></header>
+  <header className="smm-masthead" data-experience-content-start="true"><h1>{tx('基本粒子博物馆')}</h1><a className="smm-door-link" href="#" onClick={event=>{event.preventDefault();interact();history.replaceState(null,'',location.pathname+location.search);window.dispatchEvent(new HashChangeEvent('hashchange'))}}>{en?'Where does your weight come from?':'你的体重是从哪儿来的？'}<ArrowRight size={14}/></a></header>
   <MuseumNav route={route} en={en}/>
   {(!route.section||route.section==='collection')&&!route.topicId&&!route.labId&&<>
    <ParticleTable en={en} onInteract={interact} collection={collection} initiallyCollected={route.section==='collection'}/>

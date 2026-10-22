@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react'
-import type { Particle } from './particle-data'
-import './styles/scenes.css'
-import { sampleHydrogenPosition } from './particle-model'
+import type { Particle } from '../particle-data'
+import '../styles/scenes.css'
+import { sampleHydrogenPosition } from '../particle-model'
 
 /**
  * Behaviour exhibits. Particles have no appearance to photograph; every scene

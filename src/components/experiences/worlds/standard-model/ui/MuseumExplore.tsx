@@ -22,7 +22,7 @@ export function MuseumExplore({route,en,onInteract}:{route:Extract<MuseumRoute,{
  const [query,setQuery]=useState('')
  const topic=route.topicId?museumTopics.find(t=>t.id===route.topicId):null
  if(route.topicId)return topic?<TopicDetail topic={topic} en={en}/>:<div className="smm-empty"><h2>{en?'Exhibit not found':'未找到这件展品'}</h2><a href="#museum">{en?'Return to the museum':'返回全馆导览'} →</a></div>
- if(route.labId)return <section className="smm-reading"><a className="smm-text-link" href="#museum/discovery"><ArrowLeft size={14}/>{en?'Experiments & discoveries':'实验与发现'}</a><h2>{labNames[route.labId as keyof typeof labNames][en?1:0]}</h2><MuseumLab key={route.labId} id={route.labId} en={en} onInteract={onInteract}/><RelatedParticles ids={route.labId==='atom'?['e','gamma']:route.labId==='oscillation'?['ve','vmu','vtau']:['z','mu']} en={en}/></section>
+ if(route.labId)return <section className="smm-reading"><a className="smm-text-link" href="#museum/discovery"><ArrowLeft size={14}/>{en?'Experiments & discoveries':'实验与发现'}</a><h2>{labNames[route.labId as keyof typeof labNames][en?1:0]}</h2><MuseumLab key={route.labId} id={route.labId} en={en} onInteract={onInteract}/><RelatedParticles ids={route.labId==='proton'?['u','d','gluon']:route.labId==='atom'?['e','gamma']:route.labId==='oscillation'?['ve','vmu','vtau']:['z','mu']} en={en}/></section>
  const section=route.section
  const topics=section?museumTopics.filter(t=>topicArea(t)===section):museumTopics
  const q=query.trim().toLowerCase()
@@ -48,10 +48,10 @@ export function MuseumExplore({route,en,onInteract}:{route:Extract<MuseumRoute,{
 }
 function LabList({en}:{en:boolean}) {
  return <div className="smm-topic-grid">{Object.entries(labNames).map(([id,names])=><a className="smm-topic-card" key={id} href={`#museum/lab/${id}`}>
-  <TopicArt visual={id==='atom'?'matter':id==='oscillation'?'neutrino':'detector'}/>
-  <span className="smm-kicker">{id==='event'?(en?'REAL EVENT':'真实事件'):(en?'MATHEMATICAL MODEL':'数学模型')}</span>
+  <TopicArt visual={id==='atom'||id==='proton'?'matter':id==='oscillation'?'neutrino':'detector'}/>
+  <span className="smm-kicker">{id==='proton'?(en?'HANDS-ON':'亲手拼'):id==='event'?(en?'REAL EVENT':'真实事件'):(en?'MATHEMATICAL MODEL':'数学模型')}</span>
   <h3>{names[en?1:0]}</h3>
-  <p>{id==='atom'?(en?'Many independent measurements reveal a distribution.':'让多次独立测量显露统计分布。'):id==='oscillation'?(en?'Explore how distance and energy affect flavour probabilities.':'观察距离与能量怎样影响味的概率。'):(en?'Read reconstructed momenta from a CMS candidate.':'阅读 CMS 候选事件的重建动量。')}</p>
+  <p>{id==='proton'?(en?'Snap three quarks together and see which ones hold.':'把三颗夸克拼在一起，看哪些组合能留下来。'):id==='atom'?(en?'Many independent measurements reveal a distribution.':'让多次独立测量显露统计分布。'):id==='oscillation'?(en?'Explore how distance and energy affect flavour probabilities.':'观察距离与能量怎样影响味的概率。'):(en?'Read reconstructed momenta from a CMS candidate.':'阅读 CMS 候选事件的重建动量。')}</p>
   <span className="smm-topic-arrow">{en?'Open':'打开'}<ArrowRight size={18}/></span>
  </a>)}</div>
 }
