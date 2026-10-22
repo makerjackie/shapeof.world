@@ -16,7 +16,7 @@
 
 最会用 AI 的人，只做两件事：出题，阅卷。答题，全交给 AI。
 
-这支片子把 23 个行业的真实例子摆在一起：银行、医院、政府、科研、律所、学校、影视、小团队、农田、工厂和普通家庭。形状都一样：人定题目和标准，AI 用海量 token 把中间做完，人判断对不对。
+这支片子把 22 个真实例子摆在一起：银行、医院、政府、科研、律所、学校、影视、小团队、农田和工厂。形状都一样：人定题目和标准，AI 用海量 token 把中间做完，人判断对不对。
 
 - 答卷有多厚：一个人带着约 100 个 AI，30 天用掉 6,030 亿 token、约 130 万美元，折合每天约 4.6 万部《红楼梦》；豆包每天处理的 token，两年涨了 1500 倍。
 - 各行各业：工商银行的 AI 承担 5.5 万人年工作量，Kaiser 的 7,260 名医生审改 257 万份 AI 病历，英国政府 2 小时归类 5 万份公众意见，一个人用 AI 写的游戏 17 天做到年化 100 万美元……
@@ -67,7 +67,6 @@
 - 美的集团 2025 年年度报告：https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400678.pdf
 - 海尔智家 2025 年年度报告：https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0427/2026042702192.pdf
 - Gallup × Walton Family Foundation，2025-06-24：https://news.gallup.com/poll/691967/three-teachers-weekly-saving-six-weeks-year.aspx
-- 医院账单：Gigazine 2025-10-29 https://gigazine.net/gsc_news/en/20251029-using-ai-negotiate-hospital-bill-down （最终金额各报道为 3.3 万或 3.7 万美元，片中只写"砍掉八成"）
 
 说句公道话与差距
 - Anthropic，How AI is transforming work at Anthropic，2025-12-02：https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic
