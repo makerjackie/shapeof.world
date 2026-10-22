@@ -102,8 +102,8 @@
 .experience-intro-copy h1 { max-width: none; font-size: var(--type-detail); letter-spacing: -.04em; line-height: 1; }
 .experience-intro .experience-hook { margin: 22px 0 12px; font-size: var(--type-body); line-height: 1.55; }
 .experience-search-answer { max-width: 470px; margin: 0 0 8px; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.experience-search-answer strong { display: block; margin-bottom: 7px; color: var(--text-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-.experience-search-answer p { margin: 0; color: var(--text-2); font-size: var(--fs-support); line-height: 1.65; }
+.experience-search-answer summary { color: var(--text-3); font-size: var(--fs-label); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.experience-search-answer p { margin: 7px 0 0; color: var(--text-2); font-size: var(--fs-support); line-height: 1.65; }
 .experience-intro .experience-source-list { margin-top: 18px; }
 .experience-intro .experience-source-list > span { margin-bottom: 9px; font-size: var(--fs-label); letter-spacing: .07em; }
 .experience-intro .experience-source-list a { padding: 9px 0; font-size: var(--fs-label); line-height: 1.45; }
