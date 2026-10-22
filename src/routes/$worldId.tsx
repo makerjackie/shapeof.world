@@ -32,12 +32,13 @@ const getExperienceRouteData = createServerFn({ method: 'GET' })
   }))
   .handler(async ({ data }) => {
     if (isReservedWorldName(data.worldId)) return { status: 'not-found' as const }
-    const [issueData, contentGraph, redirects, artifactData, navigationData] = await Promise.all([
+    const [issueData, contentGraph, redirects, artifactData, navigationData, filmData] = await Promise.all([
       import('~/data/issues'),
       import('~/data/content-graph'),
       import('~/data/legacy-redirects'),
       import('~/data/world-artifacts.server'),
       import('~/lib/next-world'),
+      import('~/data/films.server'),
     ])
 
     const replacement = Object.hasOwn(redirects.legacyWorldRedirects, data.worldId) ? redirects.legacyWorldRedirects[data.worldId] : undefined
@@ -106,6 +107,7 @@ const getExperienceRouteData = createServerFn({ method: 'GET' })
         displayPosition: issueFeedContext?.position,
         displayTotal: issueFeedContext?.position ? issueFeedContext.total : worldArtifactManifest.total,
         worldIssues,
+        films: visibility === 'public' ? filmData.loadFilmsForWorld(world.id) : [],
       },
     }
   })

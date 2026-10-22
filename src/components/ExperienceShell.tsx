@@ -36,6 +36,7 @@ import {
 } from '~/components/experiences/GuideTour'
 import { getRootCategory } from '~/data/content-graph'
 import { localizeIssue } from '~/data/issue-localization'
+import { filmCopy, type FilmSummary } from '~/data/films'
 import type { DailyIssue } from '~/data/issues'
 import type { WorldExperience } from '~/data/worlds/types'
 import { getWorldSearchProfile } from '~/data/world-search-profiles'
@@ -92,6 +93,8 @@ export type ExperienceNavigation = {
   displayPosition?: number
   displayTotal: number
   worldIssues: Array<DailyIssue>
+  /** Short films that send viewers here, shown in the intro panel. */
+  films?: Array<FilmSummary>
 }
 
 export function ExperienceShell({
@@ -178,7 +181,7 @@ function ExperienceShellView({
   const stageRef = useRef<HTMLDivElement>(null)
   const browserFullscreenOwnedRef = useRef(false)
   const immersiveRequestedRef = useRef(false)
-  const { nextIssue, nextKind, nextWorld, pathPosition, worldIssues } = navigation
+  const { nextIssue, nextKind, nextWorld, pathPosition, worldIssues, films = [] } = navigation
   const rootCategory = getRootCategory(world.primaryCategoryId)
   const nextIssueCopy = nextIssue ? localizeIssue(nextIssue, locale) : undefined
   const [shareOpen, setShareOpen] = useState(false)
@@ -968,6 +971,18 @@ function ExperienceShellView({
                     </Link>
                   )
                 })}
+              </div>
+            )}
+            {films.length > 0 && (
+              <div className="experience-chapters">
+                <span>{t('films.worldFilms')}</span>
+                {films.map((film) => (
+                  <Link key={film.slug} to="/films/$slug" params={{ slug: film.slug }} onClick={closeIntro}>
+                    <small>{film.duration}</small>
+                    <strong>{filmCopy(film, locale).title}</strong>
+                    <ArrowRight aria-hidden="true" />
+                  </Link>
+                ))}
               </div>
             )}
             <div className="experience-source-list">
