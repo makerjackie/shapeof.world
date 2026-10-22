@@ -10,7 +10,6 @@
   "实验室": "Lab",
   "先猜：一头牛，最后有多少能变成肉？": "First, guess: how much of a cow ends up as meat?",
   "八成以上": "More than 80%",
-  "一半左右": "About half",
   "不到一半": "Less than half",
   "不猜，直接切": "Skip the guess, start cutting",
   "在牛身上向右拖刀，切第一刀。": "Drag the knife right across the cow for the first cut.",
@@ -21,13 +20,11 @@
   "剩下的红块就是肉。左下是第一刀拿走的，右下是第二刀拿走的。": "The red blocks left behind are the meat. Bottom left is the first cut; bottom right is the second.",
   "原来如此": "So that’s it",
   "一头牛，不到一半能变成肉。": "Less than half of a cow becomes meat.",
-  "其余是皮、头、蹄、血、内脏、骨头和肥油。按田纳西大学推广处 PB1829 的例子：1400 磅的牛，880 磅胴体，约 570 磅肉。": "The rest is hide, head, feet, blood, organs, bone and fat. From University of Tennessee Extension PB1829: a 1,400 lb steer, an 880 lb carcass, about 570 lb of meat.",
   "下一个问题": "Next question",
   "再切一次": "Cut again",
   "再切一头牛": "Cut another cow",
   "它不算「肉」：第一刀就和皮、头、内脏一起被拿走了。": "It doesn’t count as meat: it left with the hide, head and organs in the first cut.",
   "潮州地方标准 DB4451/T 9—2024。口感秒数不是安全线，吃之前要熟透。": "Chaozhou local standard DB4451/T 9—2024. Texture timings are not a safety line; cook meat through before eating.",
-  "脖仁产量是行业说法（澎湃号，2024），不是统计数据。": "The neck yield is an industry estimate (The Paper contributor column, 2024), not a statistic.",
   "点牛身上的其他部位看看。": "Tap other parts of the cow.",
   "点选牛身上的部位": "Choose a part of the cow",
   "餐饮分区示意 · 非精确肌肉边界": "Culinary regions · approximate boundaries",
@@ -64,5 +61,9 @@
   "标准示范 10–12 秒": "Standard demo: 10–12 seconds",
   "标准示范 12–15 秒": "Standard demo: 12–15 seconds",
   "标准示范 3–5 分钟": "Standard demo: 3–5 minutes",
-  "标准示范 8–10 秒": "Standard demo: 8–10 seconds"
+  "标准示范 8–10 秒": "Standard demo: 8–10 seconds",
+  "六成左右": "About 60%",
+  "田纳西大学推广处 PB1829": "University of Tennessee Extension PB1829",
+  "身体里的器官、骨骼和血管，究竟怎样叠在一起？": "How do organs, bones, and vessels actually stack inside the body?",
+  "实验室：最贵的脖仁，一头牛有多少？": "Lab: how much prized neck meat is in one cow?"
 }

@@ -33,14 +33,14 @@ export function yieldKg(live = LIVE_KG) {
 export type Guess = 'most' | 'half' | 'less';
 export const guesses: ReadonlyArray<{ id: Guess; label: string }> = [
 	{ id: 'most', label: '八成以上' },
-	{ id: 'half', label: '一半左右' },
+	{ id: 'half', label: '六成左右' },
 	{ id: 'less', label: '不到一半' },
 ];
 
 export function guessIsRight(guess: Guess, meatShare = yieldShares().meat) {
 	if (guess === 'most') return meatShare >= 0.75;
-	if (guess === 'half') return meatShare >= 0.45 && meatShare < 0.75;
-	return meatShare < 0.45;
+	if (guess === 'half') return meatShare >= 0.5 && meatShare < 0.75;
+	return meatShare < 0.5;
 }
 
 /** Hotpot servings, using the Chaozhou standard's 100–125 g per dunk. */

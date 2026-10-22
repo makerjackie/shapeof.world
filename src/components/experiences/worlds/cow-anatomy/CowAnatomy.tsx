@@ -4,12 +4,16 @@ import { BeatResult, BeatSteps, Conclusion, DoHint, GuessCard, useFiveBeats } fr
 import { useI18n } from '~/i18n/index';
 import { useExperienceI18n } from '~/i18n/experience';
 import { ClientOnly } from '~/components/ClientOnly';
+import { worldPath } from '~/lib/world-urls';
 import { copy } from './copy';
-import { NECK_KG, cuts, primals } from './cow-data';
+import { NECK_KG, NECK_SOURCE_KG, cuts, primals } from './cow-data';
 import { CowMap } from './CowMap';
 import { CowScene } from './CowScene';
 import { guesses, guessIsRight, servings, type Guess } from './yield-model';
 import './styles/CowAnatomy.css';
+
+/** The next question on the size path: from a cow taken apart to your own body. */
+const NEXT_WORLD_ID = 'human-atlas';
 
 export function CowAnatomy({ controls, worldId = 'cow-anatomy' }: { controls: ExperienceControls; worldId?: string }) {
 	const tx = useExperienceI18n();
@@ -41,19 +45,22 @@ export function CowAnatomy({ controls, worldId = 'cow-anatomy' }: { controls: Ex
 	return (
 		<div className={`ca-world ${lab ? 'ca-lab' : ''}`} data-world={worldId}>
 			<header className="ca-question" data-experience-overlay="true">
-				<BeatSteps beat={beat} labLabel={tx('实验室')} />
+				<BeatSteps beat={beat} />
 				<h1>{tx(lab ? '最贵的脖仁，一头牛有多少？' : '一头牛，能变成多少肉？')}</h1>
 			</header>
 
 			<div className="ca-stage">
 				{lab ? (
-					<CowMap
-						selected={cut.id}
-						onSelect={(id) => {
-							interact();
-							setCutId(id);
-						}}
-					/>
+					<>
+						<CowMap
+							selected={cut.id}
+							onSelect={(id) => {
+								interact();
+								setCutId(id);
+							}}
+						/>
+						<p className="ca-map-caption">{tx('餐饮分区示意 · 非精确肌肉边界')}</p>
+					</>
 				) : (
 					<ClientOnly fallback={null}>
 						<CowScene stage={stage} knifeActive={beat === 'do' && stage < 2} showMeat={stage === 2} onCut={cutOnce} onInteract={interact} />
@@ -85,7 +92,7 @@ export function CowAnatomy({ controls, worldId = 'cow-anatomy' }: { controls: Ex
 							<p className="ca-src">
 								{tx(cut.timeLabel)} · {tx('潮州地方标准 DB4451/T 9—2024。口感秒数不是安全线，吃之前要熟透。')}
 							</p>
-							{cut.id === 'neck' && <p className="ca-src">{tx('脖仁产量是行业说法（澎湃号，2024），不是统计数据。')}</p>}
+							{cut.id === 'neck' && <p className="ca-src">{copy.neckSource(l, NECK_SOURCE_KG.low, NECK_SOURCE_KG.high, NECK_SOURCE_KG.cowKg, NECK_KG.cowKg)}</p>}
 							<p className="ca-src">{tx('点牛身上的其他部位看看。')}</p>
 						</div>
 						<button className="ca-ghost" onClick={restart}>
@@ -130,18 +137,23 @@ export function CowAnatomy({ controls, worldId = 'cow-anatomy' }: { controls: Ex
 				) : (
 					<Conclusion
 						sentence={tx('一头牛，不到一半能变成肉。')}
-						source={tx('其余是皮、头、蹄、血、内脏、骨头和肥油。按田纳西大学推广处 PB1829 的例子：1400 磅的牛，880 磅胴体，约 570 磅肉。')}
-						next={{
-							question: tx('最贵的脖仁，一头牛有多少？'),
-							onClick: () => {
-								interact();
-								goto('lab');
-							},
-						}}
+						source={tx('田纳西大学推广处 PB1829')}
+						next={{ href: worldPath(NEXT_WORLD_ID, l), question: tx('身体里的器官、骨骼和血管，究竟怎样叠在一起？') }}
 					>
-						<button className="ca-ghost" onClick={restart}>
-							{tx('再切一次')}
-						</button>
+						<div className="ca-row">
+							<button
+								className="ca-ghost"
+								onClick={() => {
+									interact();
+									goto('lab');
+								}}
+							>
+								{tx('实验室：最贵的脖仁，一头牛有多少？')}
+							</button>
+							<button className="ca-ghost" onClick={restart}>
+								{tx('再切一次')}
+							</button>
+						</div>
 					</Conclusion>
 				)}
 			</section>

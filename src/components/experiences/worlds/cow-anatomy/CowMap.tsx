@@ -115,9 +115,10 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 			<path d="M303 436 L334 432 L333 450 L300 450Z M704 438 L730 437 L735 450 L701 452Z" fill="#1d1612" />
 			<path d="M316 438V450 M718 440L720 451" stroke="#5e493a" />
 			{regions.map((r, i) => {
-				const outside = r.id === 'tongue' || r.id === 'front-shank' || r.id === 'hind-shank';
-				const x = r.id === 'tongue' ? 130 : r.id === 'front-shank' ? 243 : r.id === 'hind-shank' ? 769 : r.x;
-				const y = r.id === 'tongue' ? 318 : r.id === 'front-shank' || r.id === 'hind-shank' ? 393 : r.y;
+				// The brisket wedge is too thin for its name, so it is labelled outside like the shanks.
+				const outside = r.id === 'tongue' || r.id === 'brisket' || r.id === 'front-shank' || r.id === 'hind-shank';
+				const x = r.id === 'tongue' ? 130 : r.id === 'brisket' ? 190 : r.id === 'front-shank' ? 243 : r.id === 'hind-shank' ? 769 : r.x;
+				const y = r.id === 'tongue' ? 318 : r.id === 'brisket' ? 360 : r.id === 'front-shank' || r.id === 'hind-shank' ? 393 : r.y;
 				return (
 					<g
 						key={`label-${r.id}`}
@@ -135,9 +136,6 @@ export function CowMap({ selected, onSelect }: { selected: string; onSelect: (id
 					</g>
 				);
 			})}
-			<text className="ca-map-note" x="470" y="483" textAnchor="middle">
-				{tx('餐饮分区示意 · 非精确肌肉边界')}
-			</text>
 		</svg>
 	);
 }
