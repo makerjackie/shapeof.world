@@ -13,3 +13,6 @@ import；需要复用的能力放到共享层。入口由
 编辑共享 registry。
 
 英文覆盖、catalog 元数据和海报分别位于对应的 per-world 文件。共享壳层（GuideTour、Freebar、GhostHint）留在上一层，世界之间不得互相 import。
+
+`works` 根分类（作品）下的世界是数学与艺术作品，不回答某一个日常问题，不按
+`METHOD.md` 的五拍来做，也不在重做计划和形状审计（`audit:shape`）之内。
