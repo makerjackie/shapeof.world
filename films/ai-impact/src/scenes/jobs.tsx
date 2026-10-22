@@ -76,7 +76,7 @@ export const AiCuts: React.FC = () => {
         return (
           <React.Fragment key={c.y}>
             <div style={{ position: "absolute", left: x, top: sy(c.v * g), width: bw, height: box.y + box.h - sy(c.v * g), background: i === 3 ? K.red : `${K.red}88`, borderRadius: "8px 8px 0 0" }} />
-            <div style={{ position: "absolute", left: x + bw / 2, top: sy(c.v * g) - 50, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: i === 3 ? K.red : K.fg, opacity: progAt(frame, 1.4 + i * 0.9, 0.5) }}>{fmt(Math.round(c.v * g))}</div>
+            <div style={{ position: "absolute", left: x + bw / 2, top: sy(c.v * g) - 50, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: i === 3 ? K.red : K.fg, opacity: progAt(frame, 1.4 + i * 0.9, 0.5) }}>{fmt(Math.round(c.v * Math.min(1, g)))}</div>
             <div style={{ position: "absolute", left: x + bw / 2, top: box.y + box.h + 12, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>{c.y}</div>
           </React.Fragment>
         );

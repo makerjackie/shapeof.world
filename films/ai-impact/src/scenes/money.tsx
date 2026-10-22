@@ -59,7 +59,7 @@ export const Capex: React.FC = () => {
             <div style={{ position: "absolute", left: x + bw / 2, top: sy(total * p) - 58, transform: "translateX(-50%)", opacity: progAt(frame, at + 0.3, 0.6), whiteSpace: "nowrap", textAlign: "center" }}>
               <span style={{ fontFamily: FONT, fontSize: c.guide ? 40 : 32, fontWeight: 900, color: c.guide ? K.money : K.fg }}>
                 {c.guide ? "约 " : ""}
-                {fmt(Math.round(total * p * 10))}
+                {fmt(Math.round(total * Math.min(1, p) * 10))}
               </span>
             </div>
             <div style={{ position: "absolute", left: x + bw / 2, top: box.y + box.h + 12, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 26, fontWeight: 700, color: c.guide ? K.money : K.sub, whiteSpace: "nowrap" }}>

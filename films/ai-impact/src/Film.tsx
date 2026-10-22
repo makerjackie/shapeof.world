@@ -100,7 +100,7 @@ const Flash: React.FC = () => {
 };
 
 const XF = 2; // crossfade half-length in frames at the music edit, centred on the downbeat
-const GAIN = 0.84; // −1.5 dB: the track's own peaks reach +0.8 dBTP after AAC encoding (films/ai-real-cost)
+const GAIN = 0.76; // −2.4 dB: measured on the review render, 0.84 gave −11.5 LUFS and −0.4 dBTP; this lands near −12.4 LUFS and −1.3 dBTP
 
 // The edited soundtrack: each segment overlaps its neighbours by XF frames with an equal-power fade.
 const Music: React.FC = () => (

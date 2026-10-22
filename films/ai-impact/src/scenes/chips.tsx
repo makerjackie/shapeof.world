@@ -169,7 +169,7 @@ export const Squeeze: React.FC = () => {
               const h = progAt(frame, 1.8 + i * 0.6, 1, EBACK);
               return (
                 <div key={b.q} style={{ position: "absolute", left: 30 + i * 260, top: 0, width: 190, height: (Math.abs(b.v) / 30) * 300 * h, background: i ? `repeating-linear-gradient(135deg, ${K.red}cc 0 10px, ${K.red}66 10px 18px)` : K.red, borderRadius: "0 0 10px 10px" }}>
-                  <div style={{ position: "absolute", bottom: -64, left: 0, right: 0, textAlign: "center", fontSize: 50, fontWeight: 900, color: K.red }}>{Math.round(b.v * h)}%</div>
+                  <div style={{ position: "absolute", bottom: -64, left: 0, right: 0, textAlign: "center", fontSize: 50, fontWeight: 900, color: K.red }}>{Math.round(b.v * Math.min(1, h))}%</div>
                 </div>
               );
             })}

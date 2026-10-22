@@ -36,7 +36,7 @@ export const Grid: React.FC = () => {
             const g = progAt(frame, 1.6 + i * 0.5, 1.2, EBACK);
             return (
               <div key={b.n} style={{ position: "absolute", bottom: 90, left: 60 + i * 230, width: 160, height: (b.v / 18) * 230 * g, background: b.c, borderRadius: "10px 10px 0 0" }}>
-                <div style={{ position: "absolute", top: -64, left: 0, right: 0, textAlign: "center", fontSize: 54, fontWeight: 900, color: i ? K.sub : K.power }}>+{Math.round(b.v * g)}%</div>
+                <div style={{ position: "absolute", top: -64, left: 0, right: 0, textAlign: "center", fontSize: 54, fontWeight: 900, color: i ? K.sub : K.power }}>+{Math.round(b.v * Math.min(1, g))}%</div>
                 <div style={{ position: "absolute", bottom: -42, left: -20, right: -20, textAlign: "center", fontSize: 24, fontWeight: 700, color: K.sub }}>{b.n}</div>
               </div>
             );
