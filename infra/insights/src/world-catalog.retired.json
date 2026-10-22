@@ -873,6 +873,11 @@
     "titleEn": "Crease patterns determine a sheet’s three-dimensional form"
   },
   {
+    "id": "p-versus-np",
+    "title": "答案好验，也好找吗？",
+    "titleEn": "Easy to check. Easy to find?"
+  },
+  {
     "id": "pascal-hexagon-embroidery",
     "title": "圆锥曲线上的六点确定一条 Pascal 直线",
     "titleEn": "Six points on a conic determine one Pascal line",

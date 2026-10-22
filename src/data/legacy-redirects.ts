@@ -12,4 +12,5 @@ export const legacyWorldRedirects: Record<string, string> = {
   'money-flow-atlas': 'follow-the-money',
   'money-town': 'follow-the-money',
   'earth-in-a-day': 'earth-spin-orbit',
+  'p-versus-np': 'riemann-primes',
 }

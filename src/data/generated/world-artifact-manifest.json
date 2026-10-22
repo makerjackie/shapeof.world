@@ -3,7 +3,7 @@
   "pageSize": 48,
   "tailAbsorb": 12,
   "bucketCount": 256,
-  "total": 45,
+  "total": 44,
   "pageCount": 1,
   "categories": [
     {
@@ -78,7 +78,7 @@
     },
     {
       "id": "essence-of-math",
-      "count": 2,
+      "count": 1,
       "pageCount": 1
     },
     {
@@ -118,7 +118,7 @@
     },
     {
       "id": "math-signals",
-      "count": 12,
+      "count": 11,
       "pageCount": 1
     },
     {
@@ -145,7 +145,7 @@
   "fallbackWorlds": [
     {
       "id": "riemann-primes",
-      "index": "31",
+      "index": "30",
       "poster": "/assets/posters/riemann-primes.webp",
       "posterMobile": "/assets/posters/mobile/riemann-primes.webp",
       "posterDesktop": "/assets/posters/desktop/riemann-primes.webp",
