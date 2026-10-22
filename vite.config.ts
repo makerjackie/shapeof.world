@@ -21,7 +21,9 @@ export default defineConfig(({ command }) => ({
     allowedHosts: ['terminal.local'],
     // Local release copies contain their own tsconfig and HTML. Watching them
     // restarts the live site while unrelated packaging jobs are running.
-    watch: { ignored: ['**/.local/**', '**/.scratch/**', '**/private/**', '**/films/**'] },
+    // Agent worktrees under .claude/ are whole copies of the repo; watching them
+    // restarts this server every time another session edits a file.
+    watch: { ignored: ['**/.local/**', '**/.scratch/**', '**/private/**', '**/films/**', '**/.claude/**'] },
   },
   resolve: {
     tsconfigPaths: true,
