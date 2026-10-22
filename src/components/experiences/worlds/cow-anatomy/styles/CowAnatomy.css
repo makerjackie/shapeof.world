@@ -9,6 +9,12 @@
 	--ca-meat: #cf4b40;
 	--ca-good: #7fd8a4;
 	--ca-miss: #ff9b85;
+	--beat-ink: var(--ca-ink);
+	--beat-muted: var(--ca-muted);
+	--beat-line: var(--ca-line);
+	--beat-accent: var(--ca-accent);
+	--beat-good: var(--ca-good);
+	--beat-miss: var(--ca-miss);
 	position: absolute;
 	inset: 0;
 	display: flex;
@@ -45,27 +51,9 @@
 	justify-items: center;
 	text-align: center;
 }
-.ca-beats {
-	display: flex;
-	gap: 6px;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	font-size: 12px;
-	letter-spacing: 0.12em;
-	color: var(--ca-muted);
-}
-.ca-beats li {
+/* The five-beat steps come from the shared shell; only the pill width differs. */
+.ca-world .beat-steps li {
 	padding: 2px 9px;
-	border: 1px solid transparent;
-	border-radius: 99px;
-}
-.ca-beats li.done {
-	color: var(--ca-ink);
-}
-.ca-beats li.on {
-	color: var(--ca-accent);
-	border-color: color-mix(in srgb, var(--ca-accent) 45%, transparent);
 }
 .ca-question h1 {
 	margin: 0;
@@ -110,73 +98,50 @@
 	margin: 0;
 	line-height: 1.6;
 }
-.ca-q {
-	font-weight: 700;
-	font-size: 16px;
-}
-.ca-options {
-	display: grid;
+/* Shell pieces (guess card, hint, verdict, conclusion) where the cow looks different.
+   `.ca-world button` resets borders and backgrounds, so buttons restate theirs here. */
+.ca-world .beat-options {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 8px;
 }
-.ca-world .ca-option {
+.ca-world .beat-option {
 	min-height: 48px;
 	padding: 10px 12px;
 	border: 1px solid var(--ca-line);
-	border-radius: 12px;
 	background: rgba(255, 255, 255, 0.05);
 	font-size: 16px;
 	font-weight: 600;
+	text-align: center;
 }
-.ca-world .ca-option:hover {
+.ca-world .beat-option:hover {
 	border-color: var(--ca-accent);
 }
-.ca-world .ca-skip {
-	justify-self: start;
+.ca-world .beat-skip {
+	display: inline-block;
+	min-height: 0;
 	padding: 4px 0;
 	color: var(--ca-muted);
 	font-size: 13px;
-	text-decoration: underline;
-	text-underline-offset: 3px;
 }
-.ca-hint {
-	color: var(--ca-accent);
-	font-weight: 700;
-}
-.ca-verdict {
+.ca-world .beat-result {
 	font-size: 13px;
-	font-weight: 700;
+	line-height: normal;
+}
+.ca-world .beat-verdict {
 	letter-spacing: 0.04em;
-}
-.ca-verdict.good {
-	color: var(--ca-good);
-}
-.ca-verdict.miss {
-	color: var(--ca-miss);
 }
 .ca-big-line {
 	font-size: 18px;
 	font-weight: 700;
 }
-.ca-conclusion {
+.ca-world .beat-conclusion {
 	font-family: var(--font-serif, 'Noto Serif SC'), 'Songti SC', serif;
-	font-weight: 900;
 	font-size: clamp(22px, 4.6vw, 30px);
-	line-height: 1.35;
 }
 .ca-src {
 	font-size: 12px;
 	color: var(--ca-muted);
 }
-.ca-row {
-	display: flex;
-	gap: 10px;
-	flex-wrap: wrap;
-}
-.ca-world .ca-primary {
-	min-height: 44px;
-	padding: 10px 18px;
-	border-radius: 99px;
+.ca-world .beat-primary {
 	background: var(--ca-accent);
 	color: #14110a;
 	font-weight: 700;
@@ -189,21 +154,13 @@
 	border-radius: 99px;
 	color: var(--ca-muted);
 }
-.ca-world .ca-next {
-	display: grid;
-	gap: 2px;
-	text-align: left;
-	padding: 10px 14px;
+.ca-world .beat-next {
 	border: 1px solid color-mix(in srgb, var(--ca-accent) 40%, transparent);
-	border-radius: 12px;
 	background: rgba(255, 209, 102, 0.08);
 	font-weight: 700;
 }
-.ca-next small {
-	color: var(--ca-accent);
-	font-size: 12px;
+.ca-world .beat-next small {
 	font-weight: 500;
-	letter-spacing: 0.08em;
 }
 
 /* Lab: the cuts map and one cut at a time. */
@@ -296,10 +253,10 @@
 		padding: 14px;
 		gap: 8px;
 	}
-	.ca-options {
+	.ca-world .beat-options {
 		grid-template-columns: 1fr;
 	}
-	.ca-world .ca-option {
+	.ca-world .beat-option {
 		min-height: 44px;
 		text-align: left;
 	}
