@@ -14,11 +14,14 @@
  *
  *   node scripts/audit-world-shape.mjs
  *   node scripts/audit-world-shape.mjs --bare   # only the worlds worth a look
+ *
+ * Works (the `works` root Category) are pieces to look at rather than answers
+ * to one question, so the audit leaves them out.
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 
-import { isPublicWorldSource, readArchivedWorldIds, readWorldCatalogFiles } from './lib/world-catalog-source.mjs'
+import { WORKS_CATEGORY_ID, isPublicWorldSource, readArchivedWorldIds, readWorldCatalogFiles } from './lib/world-catalog-source.mjs'
 
 const root = resolve(import.meta.dirname, '..')
 const experienceDir = resolve(root, 'src/components/experiences')
@@ -77,7 +80,8 @@ if (existsSync(automaticWorldsDirectory)) {
 const archived = readArchivedWorldIds(root)
 
 const catalogue = new Map()
-for (const { source } of readWorldCatalogFiles(root)) {
+for (const { rootCategoryId, source } of readWorldCatalogFiles(root)) {
+  if (rootCategoryId === WORKS_CATEGORY_ID) continue
   const field = (key) => {
     const match = source.match(new RegExp(`^ {4}${key}: (['"])((?:(?!\\1)[^\\\\]|\\\\.)*)\\1`, 'm'))
     return match ? match[2] : ''

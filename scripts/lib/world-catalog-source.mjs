@@ -12,6 +12,9 @@ function collectTypeScriptFiles(directory) {
   })
 }
 
+/** Root Category for works: art and math pieces that answer no single everyday question. */
+export const WORKS_CATEGORY_ID = 'works'
+
 export function readWorldCatalogFiles(root) {
   const catalogDirectory = resolve(root, 'src/data/worlds/catalog')
   return collectTypeScriptFiles(catalogDirectory)

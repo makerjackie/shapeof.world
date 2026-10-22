@@ -670,6 +670,11 @@
     "three-body": "three-bodies",
     "fluid-sim": "ring-wake",
     "periodic-table": "orbital-cloud",
-    "boids-flocking": "flock-rule"
+    "boids-flocking": "flock-rule",
+    "formula-bloom": "prime-spiral",
+    "equation-wormhole": "prime-spiral",
+    "starry-night": "credit-spark",
+    "cafe-terrace": "credit-spark",
+    "ink-landscape": "credit-spark"
   }
 }

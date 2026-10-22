@@ -1511,49 +1511,6 @@
         "origin": "ai-prototype"
       }
     },
-    "cafe-terrace": {
-      "question": {
-        "zh": "梵高画框外的街道，通向哪里？",
-        "en": "Where does the street beyond Van Gogh’s frame lead?"
-      },
-      "hook": {
-        "zh": "走过暖黄灯光下的桌椅，转进小巷，再从屋顶回看夜色。",
-        "en": "Walk among tables in warm lamplight, turn into an alley and look back over the rooftops."
-      },
-      "payoff": {
-        "zh": "在行走、环顾与自动巡游中，对照绘画的平面构图和想象空间。",
-        "en": "Walk, look around and follow a camera tour to compare pictorial composition with an imagined three-dimensional space."
-      },
-      "topicLabel": {
-        "zh": "绘画与空间",
-        "en": "Painting and space"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [
-        {
-          "label": {
-            "zh": "艺术化边界",
-            "en": "Interpretation"
-          },
-          "body": {
-            "zh": "绘画只给出一个视角。本场景的建筑背面、街巷、河流与可进入的天空包含创作补充，不是原作扫描、历史实景复原或物理模拟。",
-            "en": "A painting shows one viewpoint. Unseen architecture, streets, rivers and the enterable sky include invented extensions. This is not a scan of the original, a historical reconstruction or a physical simulation."
-          }
-        }
-      ],
-      "sources": [
-        {
-          "label": {
-            "zh": "克勒勒-米勒博物馆 · 夜间露天咖啡座",
-            "en": "Kröller-Müller Museum · Terrace of a Café at Night"
-          },
-          "url": "https://www.krollermuller.nl/en/modern-art-museum-netherlands"
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
     "follow-the-money": {
       "question": {
         "zh": "我一辈子花掉的钱，最后变成了谁的收入？",
@@ -1847,99 +1804,6 @@
             "zh": "地月平均距离 384,400 公里。",
             "en": "Mean Earth–Moon distance of 384,400 km."
           }
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
-    "ink-landscape": {
-      "question": {
-        "zh": "如果飞进水墨，留白里有什么？",
-        "en": "What lies in the empty space of an ink landscape?"
-      },
-      "hook": {
-        "zh": "掠过渔舟、穿桥入巷，再升入群山，回望整幅松溪。",
-        "en": "Sweep over a fishing boat, through bridges and village lanes, then rise into the mountains and look back over Songxi."
-      },
-      "payoff": {
-        "zh": "亲手飞过松亭与村巷，或跟随一镜到底的航线，随时转向探索自己的山水。",
-        "en": "Fly through pavilions and village lanes yourself, or follow a continuous tour and take the controls whenever you like."
-      },
-      "topicLabel": {
-        "zh": "水墨与空间",
-        "en": "Ink and space"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [
-        {
-          "label": {
-            "zh": "原创空间",
-            "en": "An original space"
-          },
-          "body": {
-            "zh": "这是一幅以三维几何、原创皴笔纹理和程序笔触创作的水墨山水，不复原某一幅古画，也不代表真实地形。浓淡、遮挡和留白借鉴水墨绘画的空间表达。以原创母画《松溪入画》为基准，松亭、水道、桥洞、村落和前后层叠的山峰处于同一三维空间。原画视角以外的空间由创作补全，山峰为可接近的实体，树叶采用分布于三维枝干上的绘画片层。飞行采用 22.8 秒编排航线，末段从中低视点回望层叠山水；自由漫游是简化控制，允许穿过山体，不是无人机物理模拟。",
-            "en": "This original ink landscape uses three-dimensional geometry, original ink textures and procedural marks. It does not reconstruct a historical painting or a real terrain. Ink values, occlusion and empty space draw on landscape painting practices. Based on the original painting Songxi: Into the Ink, the pavilion, river, arch bridge, village and overlapping mountain ranges share one three-dimensional space. Areas beyond the painting’s viewpoint are creative additions. The peaks are approachable volumes; painted foliage cards are distributed along three-dimensional branches. The 22.8-second flight follows an authored path with a low climbing return and a layered landscape finish; free roaming uses simplified controls and permits passing through terrain, rather than simulating drone physics."
-          }
-        }
-      ],
-      "sources": [
-        {
-          "label": {
-            "zh": "普林斯顿大学艺术博物馆 · 宋代山水画",
-            "en": "Princeton University Art Museum · Chinese landscape painting"
-          },
-          "url": "https://static.artmuseum.princeton.edu/asian-art/china/resources/landscape-painting/"
-        },
-        {
-          "label": {
-            "zh": "亚洲艺术博物馆 · 中国山水画的发展",
-            "en": "Asian Art Museum · The development of landscape painting in China"
-          },
-          "url": "https://education.asianart.org/resources/the-development-of-landscape-painting-in-china-the-song-through-the-ming-dynasties/"
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
-    "starry-night": {
-      "question": {
-        "zh": "如果能走进《星月夜》，笔触会有多深？",
-        "en": "What lies behind the brushstrokes of The Starry Night?"
-      },
-      "hook": {
-        "zh": "从柏树旁的木屋起飞，穿过街巷与桥洞，飞进有厚度的星空。",
-        "en": "Launch from the cypress lookout, skim the lanes, pass under the bridge and enter the painted sky."
-      },
-      "payoff": {
-        "zh": "沿连续航线穿越画中的想象空间，随时接管飞行，点亮村庄，再对照梵高的原作。",
-        "en": "Follow a continuous flight, take the controls, light the village and compare this imagined space with Van Gogh’s original."
-      },
-      "topicLabel": {
-        "zh": "绘画与空间",
-        "en": "Painting and space"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [
-        {
-          "label": {
-            "zh": "艺术化边界",
-            "en": "Interpretation"
-          },
-          "body": {
-            "zh": "绘画只给出一个视角。柏树旁的木屋、建筑背面、街巷、河桥和可进入的天空是创作延伸。24 秒航线使用编排的镜头；自由飞行采用简化控制，允许穿过建筑，不是无人机物理模拟、原作扫描或历史实景复原。原作可随时打开对照。",
-            "en": "A painting supplies one viewpoint. The timber lookout, unseen architecture, lanes, river bridge and enterable sky are imagined additions. The 24-second flight is an authored camera path; free flight uses simplified controls and permits passing through buildings. This is not a drone physics simulation, a scan or a historical reconstruction. The original is available for comparison."
-          }
-        }
-      ],
-      "sources": [
-        {
-          "label": {
-            "zh": "纽约现代艺术博物馆 · 梵高《星月夜》",
-            "en": "MoMA · Vincent van Gogh, The Starry Night"
-          },
-          "url": "https://www.moma.org/collection/works/79802"
         }
       ],
       "provenance": {
@@ -2451,201 +2315,6 @@
         "sourceUrl": "https://github.com/ashemag/human-atlas"
       }
     },
-    "complex-mapping": {
-      "question": {
-        "zh": "实数里的正弦波有界，到了复数里为什么越长越高？",
-        "en": "Why does a bounded sine wave grow without bound when its input becomes complex?"
-      },
-      "hook": {
-        "zh": "一条熟悉的函数曲线沿虚数方向展开，变成可以转动的彩色线网。正弦的波峰向两侧升高，指数的一侧平缓、一侧陡峭，倒数在原点附近急剧起伏。切换实部、虚部与模长，看同一个复数结果的不同侧面。",
-        "en": "A familiar curve unfolds along the imaginary direction into a colored mesh you can rotate. Sine grows taller on both sides, the exponential rises steeply on one side, and the reciprocal bends sharply near the origin. Switch between real part, imaginary part and magnitude to see different aspects of the same complex output."
-      },
-      "payoff": {
-        "zh": "复变函数的输入和输出都各有两个实数分量，因此完整图像需要四个实数维度。这里用底面的两个方向表示输入 z=x+iy，高度选择输出的实部、虚部或模长，色相表示输出的辐角。正弦函数的实部是 sin(x)cosh(y)：在 y=0 时就是普通正弦波，离开实数轴后，cosh(y) 让波峰和波谷同时放大。平面映射模式则把输入网格逐点送到输出位置；例如 e^z 把竖线变成圆、横线变成射线。",
-        "en": "A complex function has two real input coordinates and two real output coordinates, so its full graph needs four real dimensions. Here the base represents the input z=x+iy, height shows the real part, imaginary part or magnitude of the output, and hue shows its argument. The real part of sine is sin(x)cosh(y): at y=0 it is the familiar sine wave, while cosh(y) amplifies its peaks and valleys away from the real axis. Plane mapping instead moves each input grid point to its output position: e^z maps vertical lines to circles and horizontal lines to rays."
-      },
-      "topicLabel": {
-        "zh": "复分析",
-        "en": "Complex analysis"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [],
-      "sources": [
-        {
-          "label": {
-            "zh": "NIST DLMF §25.2 · 黎曼 ζ 函数的定义、解析延拓与 z=1 处的单极点",
-            "en": "NIST DLMF §25.2 · Riemann zeta: definition, analytic continuation and its simple pole at z=1"
-          },
-          "url": "https://dlmf.nist.gov/25.2"
-        },
-        {
-          "label": {
-            "zh": "ζ 视图边界：数值近似显示 Re z ∈ [−4,4]、Im z ∈ [−18,18]；虚数轴绘图长度缩至 1/3，高度不压缩。白线是 Re z=1/2，并不表示整条线都是零点",
-            "en": "Zeta view limits: a numerical approximation over Re z ∈ [−4,4], Im z ∈ [−18,18]. The imaginary axis is drawn at one-third scale; height is not compressed. The white line is Re z=1/2; it is not a line of zeros"
-          },
-          "url": "https://dlmf.nist.gov/25.10"
-        },
-        {
-          "label": {
-            "zh": "MIT 18.04 · Topic 2 — 解析函数：复指数与三角函数",
-            "en": "MIT 18.04 · Topic 2 — Analytic functions: complex exponentials and trigonometric functions"
-          },
-          "url": "https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic2/"
-        },
-        {
-          "label": {
-            "zh": "MIT 18.04 · Topic 10 — 共形变换与网格映射",
-            "en": "MIT 18.04 · Topic 10 — Conformal transformations and grid mappings"
-          },
-          "url": "https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic10/"
-        },
-        {
-          "label": {
-            "zh": "Elias Wegert（2010）— 用颜色表示复变函数的相位",
-            "en": "Elias Wegert (2010) — Phase Plots of Complex Functions: a Journey in Illustration"
-          },
-          "url": "https://arxiv.org/abs/1007.2295"
-        },
-        {
-          "label": {
-            "zh": "模型边界：曲面是复函数的一种三维表示；高度按所选分量线性显示，超出有限窗口的线段被裁剪，极点附近留空。色相表示辐角，零点没有确定辐角；亮度仅用于呈现线网",
-            "en": "Model limits: the surface is one three-dimensional representation of a complex function. Height uses the selected quantity on a linear scale; segments outside the finite window are clipped and neighborhoods of poles are omitted. Hue encodes argument, which is undefined at zeros; brightness only makes the mesh visible"
-          },
-          "url": "https://dlmf.nist.gov/4.3"
-        }
-      ],
-      "provenance": {
-        "origin": "multi-model"
-      }
-    },
-    "equation-wormhole": {
-      "question": {
-        "zh": "一条由公式组成的虫洞，尽头是什么？",
-        "en": "What waits at the end of a wormhole made of equations?"
-      },
-      "hook": {
-        "zh": "五个学科的 56 条公式混合排列，组成隧道、人物肖像、黑洞吸积盘、莫比乌斯环等六种场景。",
-        "en": "Fifty-six equations mixed across five subjects form six scenes, including a tunnel, portraits, a black-hole accretion disk, a Möbius strip."
-      },
-      "payoff": {
-        "zh": "点一条公式查看来历与用途。绕行黑洞，看背面的光绕到上方；拖动只有一个面的莫比乌斯环。",
-        "en": "Tap an equation for its history and use. Orbit the black hole to see light bend up from behind, or turn the one-sided Möbius strip."
-      },
-      "topicLabel": {
-        "zh": "数学与物理",
-        "en": "Math & physics"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [
-        {
-          "label": {
-            "zh": "视觉与模型边界",
-            "en": "Visual and model boundaries"
-          },
-          "body": {
-            "zh": "公式是可点击的排版元素。隧道、穿越和雨属于数据艺术；黑洞支持环绕和推进。公式盘面起伏、向内流动与盘面上下悬浮的公式均经过艺术化处理，弯曲光线采用简化的引力偏折，周围公式采用屏幕空间透镜变形，并非广义相对论的精确光线追踪。莫比乌斯环采用标准参数曲面。时间、尺寸和颜色为观看效果调整。",
-            "en": "Equations are interactive typographic elements. The tunnel, fly-through, and rain are data art. The black hole supports orbiting and moving closer. Disk waves, infall, and equations suspended above and below the disk are artistic; bent light uses simplified gravitational deflection and surrounding equations use screen-space lensing, rather than exact relativistic ray tracing. The Möbius strip uses its standard parametric surface. Time, scale, and color are adjusted for viewing."
-          }
-        },
-        {
-          "label": {
-            "zh": "人物与公式",
-            "en": "Portraits and equations"
-          },
-          "body": {
-            "zh": "肖像与其他场景都由五个学科的公式混排组成。切换人物只改变肖像，不过滤公式；公式包含多位研究者的工作，不代表画中人物独自提出了所有公式；名称、年代和来历以公式卡片为准。",
-            "en": "All scenes, including portraits, mix equations across five subjects. Changing the person changes the portrait without filtering equations. The collection includes work by several researchers; the person depicted did not originate every equation. Individual cards give names, dates, and historical context."
-          }
-        }
-      ],
-      "sources": [
-        {
-          "label": {
-            "zh": "NASA：黑洞吸积盘与引力透镜",
-            "en": "NASA: black-hole accretion disks and gravitational lensing"
-          },
-          "url": "https://www.nasa.gov/universe/nasa-visualization-shows-a-black-holes-warped-world/",
-          "note": {
-            "zh": "黑洞盘面与背面光弧的视觉依据；本世界采用艺术化表现。",
-            "en": "Reference for the accretion disk and the lensed rear arc; this world presents an artistic interpretation."
-          }
-        },
-        {
-          "label": {
-            "zh": "MathWorld：莫比乌斯环",
-            "en": "MathWorld: Möbius strip"
-          },
-          "url": "https://mathworld.wolfram.com/MoebiusStrip.html",
-          "note": {
-            "zh": "单侧曲面与标准三维参数方程。",
-            "en": "The one-sided surface and its standard three-dimensional parametrization."
-          }
-        },
-        {
-          "label": {
-            "zh": "虫洞与 Morris–Thorne 喉管（Wikipedia）",
-            "en": "Wormhole and the Morris–Thorne throat (Wikipedia)"
-          },
-          "url": "https://zh.wikipedia.org/wiki/%E8%99%AB%E6%B4%9E"
-        },
-        {
-          "label": {
-            "zh": "麦克斯韦方程组（Wikipedia）",
-            "en": "Maxwell's equations (Wikipedia)"
-          },
-          "url": "https://zh.wikipedia.org/wiki/%E9%BA%A5%E5%85%8B%E6%96%AF%E9%9F%8B%E6%96%B9%E7%A8%8B%E7%B5%84"
-        },
-        {
-          "label": {
-            "zh": "欧拉恒等式（Wikipedia）",
-            "en": "Euler's identity (Wikipedia)"
-          },
-          "url": "https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E6%81%92%E7%AD%89%E5%BC%8F"
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
-    "formula-bloom": {
-      "question": {
-        "zh": "三角函数怎样画出像生物一样流动的形状？",
-        "en": "How can trigonometric functions draw shapes that seem alive?"
-      },
-      "hook": {
-        "zh": "每个光点的位置都由编号、时间和参数计算。改变参数，整群光点会在水母、脊骨与丝带般的形状之间连续变化。",
-        "en": "Each point’s position is calculated from its index, time and a set of parameters. Change the parameters to move smoothly between jellyfish-like, spine-like and ribbon-like shapes."
-      },
-      "payoff": {
-        "zh": "这里用含有 sin、cos 和距离项的参数方程，直接计算各个光点在每一时刻的位置；并不是逐步迭代求解混沌系统。像生物一样的外形来自公式与参数的组合，不是生物仿真。",
-        "en": "Parametric equations containing sin, cos and distance terms calculate each point’s position directly at a given time. This is not an iterative simulation of a chaotic system. The living-looking shapes are generative art, not a biological model."
-      },
-      "topicLabel": {
-        "zh": "数学",
-        "en": "Mathematics"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [],
-      "sources": [
-        {
-          "label": {
-            "zh": "参数方程（Wikipedia）",
-            "en": "Parametric equation (Wikipedia)"
-          },
-          "url": "https://en.wikipedia.org/wiki/Parametric_equation"
-        },
-        {
-          "label": {
-            "zh": "@yuruyurau #つぶやきProcessing",
-            "en": "@yuruyurau #つぶやきProcessing"
-          },
-          "url": "https://x.com/yuruyurau/status/2080977918914969636"
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
     "fourier": {
       "question": {
         "zh": "一串旋转的圆，为什么能画出任何曲线？",
@@ -2672,52 +2341,6 @@
             "en": "Fourier series (Wikipedia)"
           },
           "url": "https://zh.wikipedia.org/wiki/傅里叶级数"
-        }
-      ],
-      "provenance": {
-        "origin": "ai-prototype"
-      }
-    },
-    "kakeya-needle": {
-      "question": {
-        "zh": "桌上有一根针要掉头，最少需要多大一块地方？",
-        "en": "A needle on a table needs to turn around — how little room does it need?"
-      },
-      "hook": {
-        "zh": "先观察一根针移动和转向时扫过的区域，再想一想：如果每个方向都要放得下一根针，会有什么限制？",
-        "en": "Watch the region swept out as a needle moves and turns. Then ask what changes if a set must contain a needle pointing in every direction."
-      },
-      "payoff": {
-        "zh": "这里把针理想化成没有宽度的单位线段。包含每个方向的一条单位线段的集合叫挂谷集，但面积、体积与维数是不同的量。Wang 与 Zahl 的三维结果说明这类集合的豪斯多夫维数和闵可夫斯基维数都为 3，并不意味着体积必须大于零。本世界的二维演示帮助理解问题，不是三维证明。",
-        "en": "The needle is an ideal unit line segment with no thickness. A Kakeya set contains such a segment in every direction, but area, volume and dimension are different quantities. Wang and Zahl’s three-dimensional result establishes Hausdorff and Minkowski dimension 3, not a positive lower bound on volume. This two-dimensional illustration introduces the question; it does not demonstrate the three-dimensional proof."
-      },
-      "topicLabel": {
-        "zh": "几何直觉",
-        "en": "Geometric intuition"
-      },
-      "evidence": "modeled",
-      "fieldNotes": [],
-      "sources": [
-        {
-          "label": {
-            "zh": "Wikipedia — 挂谷问题",
-            "en": "Wikipedia — Kakeya set"
-          },
-          "url": "https://en.wikipedia.org/wiki/Kakeya_set"
-        },
-        {
-          "label": {
-            "zh": "Wikipedia — 三尖内摆线（deltoid）",
-            "en": "Wikipedia — Deltoid curve"
-          },
-          "url": "https://en.wikipedia.org/wiki/Deltoid_curve"
-        },
-        {
-          "label": {
-            "zh": "Wang & Zahl（2025）— 三维挂谷集的维数",
-            "en": "Wang & Zahl (2025) — Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions"
-          },
-          "url": "https://arxiv.org/abs/2502.17655"
         }
       ],
       "provenance": {
@@ -4297,6 +3920,383 @@
             "zh": "「不可解」指一般三体没有封闭通解，不是说没有特解。后面这些周期轨道就是特解。",
             "en": "“Unsolvable” means the general problem has no closed-form formula, not that no solutions exist. The periodic orbits on this page are special solutions."
           }
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "cafe-terrace": {
+      "question": {
+        "zh": "梵高画框外的街道，通向哪里？",
+        "en": "Where does the street beyond Van Gogh’s frame lead?"
+      },
+      "hook": {
+        "zh": "走过暖黄灯光下的桌椅，转进小巷，再从屋顶回看夜色。",
+        "en": "Walk among tables in warm lamplight, turn into an alley and look back over the rooftops."
+      },
+      "payoff": {
+        "zh": "在行走、环顾与自动巡游中，对照绘画的平面构图和想象空间。",
+        "en": "Walk, look around and follow a camera tour to compare pictorial composition with an imagined three-dimensional space."
+      },
+      "topicLabel": {
+        "zh": "绘画与空间",
+        "en": "Painting and space"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [
+        {
+          "label": {
+            "zh": "艺术化边界",
+            "en": "Interpretation"
+          },
+          "body": {
+            "zh": "绘画只给出一个视角。本场景的建筑背面、街巷、河流与可进入的天空包含创作补充，不是原作扫描、历史实景复原或物理模拟。",
+            "en": "A painting shows one viewpoint. Unseen architecture, streets, rivers and the enterable sky include invented extensions. This is not a scan of the original, a historical reconstruction or a physical simulation."
+          }
+        }
+      ],
+      "sources": [
+        {
+          "label": {
+            "zh": "克勒勒-米勒博物馆 · 夜间露天咖啡座",
+            "en": "Kröller-Müller Museum · Terrace of a Café at Night"
+          },
+          "url": "https://www.krollermuller.nl/en/modern-art-museum-netherlands"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "complex-mapping": {
+      "question": {
+        "zh": "实数里的正弦波有界，到了复数里为什么越长越高？",
+        "en": "Why does a bounded sine wave grow without bound when its input becomes complex?"
+      },
+      "hook": {
+        "zh": "一条熟悉的函数曲线沿虚数方向展开，变成可以转动的彩色线网。正弦的波峰向两侧升高，指数的一侧平缓、一侧陡峭，倒数在原点附近急剧起伏。切换实部、虚部与模长，看同一个复数结果的不同侧面。",
+        "en": "A familiar curve unfolds along the imaginary direction into a colored mesh you can rotate. Sine grows taller on both sides, the exponential rises steeply on one side, and the reciprocal bends sharply near the origin. Switch between real part, imaginary part and magnitude to see different aspects of the same complex output."
+      },
+      "payoff": {
+        "zh": "复变函数的输入和输出都各有两个实数分量，因此完整图像需要四个实数维度。这里用底面的两个方向表示输入 z=x+iy，高度选择输出的实部、虚部或模长，色相表示输出的辐角。正弦函数的实部是 sin(x)cosh(y)：在 y=0 时就是普通正弦波，离开实数轴后，cosh(y) 让波峰和波谷同时放大。平面映射模式则把输入网格逐点送到输出位置；例如 e^z 把竖线变成圆、横线变成射线。",
+        "en": "A complex function has two real input coordinates and two real output coordinates, so its full graph needs four real dimensions. Here the base represents the input z=x+iy, height shows the real part, imaginary part or magnitude of the output, and hue shows its argument. The real part of sine is sin(x)cosh(y): at y=0 it is the familiar sine wave, while cosh(y) amplifies its peaks and valleys away from the real axis. Plane mapping instead moves each input grid point to its output position: e^z maps vertical lines to circles and horizontal lines to rays."
+      },
+      "topicLabel": {
+        "zh": "复分析",
+        "en": "Complex analysis"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [],
+      "sources": [
+        {
+          "label": {
+            "zh": "NIST DLMF §25.2 · 黎曼 ζ 函数的定义、解析延拓与 z=1 处的单极点",
+            "en": "NIST DLMF §25.2 · Riemann zeta: definition, analytic continuation and its simple pole at z=1"
+          },
+          "url": "https://dlmf.nist.gov/25.2"
+        },
+        {
+          "label": {
+            "zh": "ζ 视图边界：数值近似显示 Re z ∈ [−4,4]、Im z ∈ [−18,18]；虚数轴绘图长度缩至 1/3，高度不压缩。白线是 Re z=1/2，并不表示整条线都是零点",
+            "en": "Zeta view limits: a numerical approximation over Re z ∈ [−4,4], Im z ∈ [−18,18]. The imaginary axis is drawn at one-third scale; height is not compressed. The white line is Re z=1/2; it is not a line of zeros"
+          },
+          "url": "https://dlmf.nist.gov/25.10"
+        },
+        {
+          "label": {
+            "zh": "MIT 18.04 · Topic 2 — 解析函数：复指数与三角函数",
+            "en": "MIT 18.04 · Topic 2 — Analytic functions: complex exponentials and trigonometric functions"
+          },
+          "url": "https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic2/"
+        },
+        {
+          "label": {
+            "zh": "MIT 18.04 · Topic 10 — 共形变换与网格映射",
+            "en": "MIT 18.04 · Topic 10 — Conformal transformations and grid mappings"
+          },
+          "url": "https://ocw.mit.edu/courses/18-04-complex-variables-with-applications-spring-2018/resources/mit18_04s18_topic10/"
+        },
+        {
+          "label": {
+            "zh": "Elias Wegert（2010）— 用颜色表示复变函数的相位",
+            "en": "Elias Wegert (2010) — Phase Plots of Complex Functions: a Journey in Illustration"
+          },
+          "url": "https://arxiv.org/abs/1007.2295"
+        },
+        {
+          "label": {
+            "zh": "模型边界：曲面是复函数的一种三维表示；高度按所选分量线性显示，超出有限窗口的线段被裁剪，极点附近留空。色相表示辐角，零点没有确定辐角；亮度仅用于呈现线网",
+            "en": "Model limits: the surface is one three-dimensional representation of a complex function. Height uses the selected quantity on a linear scale; segments outside the finite window are clipped and neighborhoods of poles are omitted. Hue encodes argument, which is undefined at zeros; brightness only makes the mesh visible"
+          },
+          "url": "https://dlmf.nist.gov/4.3"
+        }
+      ],
+      "provenance": {
+        "origin": "multi-model"
+      }
+    },
+    "equation-wormhole": {
+      "question": {
+        "zh": "一条由公式组成的虫洞，尽头是什么？",
+        "en": "What waits at the end of a wormhole made of equations?"
+      },
+      "hook": {
+        "zh": "五个学科的 56 条公式混合排列，组成隧道、人物肖像、黑洞吸积盘、莫比乌斯环等六种场景。",
+        "en": "Fifty-six equations mixed across five subjects form six scenes, including a tunnel, portraits, a black-hole accretion disk, a Möbius strip."
+      },
+      "payoff": {
+        "zh": "点一条公式查看来历与用途。绕行黑洞，看背面的光绕到上方；拖动只有一个面的莫比乌斯环。",
+        "en": "Tap an equation for its history and use. Orbit the black hole to see light bend up from behind, or turn the one-sided Möbius strip."
+      },
+      "topicLabel": {
+        "zh": "数学与物理",
+        "en": "Math & physics"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [
+        {
+          "label": {
+            "zh": "视觉与模型边界",
+            "en": "Visual and model boundaries"
+          },
+          "body": {
+            "zh": "公式是可点击的排版元素。隧道、穿越和雨属于数据艺术；黑洞支持环绕和推进。公式盘面起伏、向内流动与盘面上下悬浮的公式均经过艺术化处理，弯曲光线采用简化的引力偏折，周围公式采用屏幕空间透镜变形，并非广义相对论的精确光线追踪。莫比乌斯环采用标准参数曲面。时间、尺寸和颜色为观看效果调整。",
+            "en": "Equations are interactive typographic elements. The tunnel, fly-through, and rain are data art. The black hole supports orbiting and moving closer. Disk waves, infall, and equations suspended above and below the disk are artistic; bent light uses simplified gravitational deflection and surrounding equations use screen-space lensing, rather than exact relativistic ray tracing. The Möbius strip uses its standard parametric surface. Time, scale, and color are adjusted for viewing."
+          }
+        },
+        {
+          "label": {
+            "zh": "人物与公式",
+            "en": "Portraits and equations"
+          },
+          "body": {
+            "zh": "肖像与其他场景都由五个学科的公式混排组成。切换人物只改变肖像，不过滤公式；公式包含多位研究者的工作，不代表画中人物独自提出了所有公式；名称、年代和来历以公式卡片为准。",
+            "en": "All scenes, including portraits, mix equations across five subjects. Changing the person changes the portrait without filtering equations. The collection includes work by several researchers; the person depicted did not originate every equation. Individual cards give names, dates, and historical context."
+          }
+        }
+      ],
+      "sources": [
+        {
+          "label": {
+            "zh": "NASA：黑洞吸积盘与引力透镜",
+            "en": "NASA: black-hole accretion disks and gravitational lensing"
+          },
+          "url": "https://www.nasa.gov/universe/nasa-visualization-shows-a-black-holes-warped-world/",
+          "note": {
+            "zh": "黑洞盘面与背面光弧的视觉依据；本世界采用艺术化表现。",
+            "en": "Reference for the accretion disk and the lensed rear arc; this world presents an artistic interpretation."
+          }
+        },
+        {
+          "label": {
+            "zh": "MathWorld：莫比乌斯环",
+            "en": "MathWorld: Möbius strip"
+          },
+          "url": "https://mathworld.wolfram.com/MoebiusStrip.html",
+          "note": {
+            "zh": "单侧曲面与标准三维参数方程。",
+            "en": "The one-sided surface and its standard three-dimensional parametrization."
+          }
+        },
+        {
+          "label": {
+            "zh": "虫洞与 Morris–Thorne 喉管（Wikipedia）",
+            "en": "Wormhole and the Morris–Thorne throat (Wikipedia)"
+          },
+          "url": "https://zh.wikipedia.org/wiki/%E8%99%AB%E6%B4%9E"
+        },
+        {
+          "label": {
+            "zh": "麦克斯韦方程组（Wikipedia）",
+            "en": "Maxwell's equations (Wikipedia)"
+          },
+          "url": "https://zh.wikipedia.org/wiki/%E9%BA%A5%E5%85%8B%E6%96%AF%E9%9F%8B%E6%96%B9%E7%A8%8B%E7%B5%84"
+        },
+        {
+          "label": {
+            "zh": "欧拉恒等式（Wikipedia）",
+            "en": "Euler's identity (Wikipedia)"
+          },
+          "url": "https://zh.wikipedia.org/wiki/%E6%AC%A7%E6%8B%89%E6%81%92%E7%AD%89%E5%BC%8F"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "formula-bloom": {
+      "question": {
+        "zh": "三角函数怎样画出像生物一样流动的形状？",
+        "en": "How can trigonometric functions draw shapes that seem alive?"
+      },
+      "hook": {
+        "zh": "每个光点的位置都由编号、时间和参数计算。改变参数，整群光点会在水母、脊骨与丝带般的形状之间连续变化。",
+        "en": "Each point’s position is calculated from its index, time and a set of parameters. Change the parameters to move smoothly between jellyfish-like, spine-like and ribbon-like shapes."
+      },
+      "payoff": {
+        "zh": "这里用含有 sin、cos 和距离项的参数方程，直接计算各个光点在每一时刻的位置；并不是逐步迭代求解混沌系统。像生物一样的外形来自公式与参数的组合，不是生物仿真。",
+        "en": "Parametric equations containing sin, cos and distance terms calculate each point’s position directly at a given time. This is not an iterative simulation of a chaotic system. The living-looking shapes are generative art, not a biological model."
+      },
+      "topicLabel": {
+        "zh": "数学",
+        "en": "Mathematics"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [],
+      "sources": [
+        {
+          "label": {
+            "zh": "参数方程（Wikipedia）",
+            "en": "Parametric equation (Wikipedia)"
+          },
+          "url": "https://en.wikipedia.org/wiki/Parametric_equation"
+        },
+        {
+          "label": {
+            "zh": "@yuruyurau #つぶやきProcessing",
+            "en": "@yuruyurau #つぶやきProcessing"
+          },
+          "url": "https://x.com/yuruyurau/status/2080977918914969636"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "ink-landscape": {
+      "question": {
+        "zh": "如果飞进水墨，留白里有什么？",
+        "en": "What lies in the empty space of an ink landscape?"
+      },
+      "hook": {
+        "zh": "掠过渔舟、穿桥入巷，再升入群山，回望整幅松溪。",
+        "en": "Sweep over a fishing boat, through bridges and village lanes, then rise into the mountains and look back over Songxi."
+      },
+      "payoff": {
+        "zh": "亲手飞过松亭与村巷，或跟随一镜到底的航线，随时转向探索自己的山水。",
+        "en": "Fly through pavilions and village lanes yourself, or follow a continuous tour and take the controls whenever you like."
+      },
+      "topicLabel": {
+        "zh": "水墨与空间",
+        "en": "Ink and space"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [
+        {
+          "label": {
+            "zh": "原创空间",
+            "en": "An original space"
+          },
+          "body": {
+            "zh": "这是一幅以三维几何、原创皴笔纹理和程序笔触创作的水墨山水，不复原某一幅古画，也不代表真实地形。浓淡、遮挡和留白借鉴水墨绘画的空间表达。以原创母画《松溪入画》为基准，松亭、水道、桥洞、村落和前后层叠的山峰处于同一三维空间。原画视角以外的空间由创作补全，山峰为可接近的实体，树叶采用分布于三维枝干上的绘画片层。飞行采用 22.8 秒编排航线，末段从中低视点回望层叠山水；自由漫游是简化控制，允许穿过山体，不是无人机物理模拟。",
+            "en": "This original ink landscape uses three-dimensional geometry, original ink textures and procedural marks. It does not reconstruct a historical painting or a real terrain. Ink values, occlusion and empty space draw on landscape painting practices. Based on the original painting Songxi: Into the Ink, the pavilion, river, arch bridge, village and overlapping mountain ranges share one three-dimensional space. Areas beyond the painting’s viewpoint are creative additions. The peaks are approachable volumes; painted foliage cards are distributed along three-dimensional branches. The 22.8-second flight follows an authored path with a low climbing return and a layered landscape finish; free roaming uses simplified controls and permits passing through terrain, rather than simulating drone physics."
+          }
+        }
+      ],
+      "sources": [
+        {
+          "label": {
+            "zh": "普林斯顿大学艺术博物馆 · 宋代山水画",
+            "en": "Princeton University Art Museum · Chinese landscape painting"
+          },
+          "url": "https://static.artmuseum.princeton.edu/asian-art/china/resources/landscape-painting/"
+        },
+        {
+          "label": {
+            "zh": "亚洲艺术博物馆 · 中国山水画的发展",
+            "en": "Asian Art Museum · The development of landscape painting in China"
+          },
+          "url": "https://education.asianart.org/resources/the-development-of-landscape-painting-in-china-the-song-through-the-ming-dynasties/"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "kakeya-needle": {
+      "question": {
+        "zh": "桌上有一根针要掉头，最少需要多大一块地方？",
+        "en": "A needle on a table needs to turn around — how little room does it need?"
+      },
+      "hook": {
+        "zh": "先观察一根针移动和转向时扫过的区域，再想一想：如果每个方向都要放得下一根针，会有什么限制？",
+        "en": "Watch the region swept out as a needle moves and turns. Then ask what changes if a set must contain a needle pointing in every direction."
+      },
+      "payoff": {
+        "zh": "这里把针理想化成没有宽度的单位线段。包含每个方向的一条单位线段的集合叫挂谷集，但面积、体积与维数是不同的量。Wang 与 Zahl 的三维结果说明这类集合的豪斯多夫维数和闵可夫斯基维数都为 3，并不意味着体积必须大于零。本世界的二维演示帮助理解问题，不是三维证明。",
+        "en": "The needle is an ideal unit line segment with no thickness. A Kakeya set contains such a segment in every direction, but area, volume and dimension are different quantities. Wang and Zahl’s three-dimensional result establishes Hausdorff and Minkowski dimension 3, not a positive lower bound on volume. This two-dimensional illustration introduces the question; it does not demonstrate the three-dimensional proof."
+      },
+      "topicLabel": {
+        "zh": "几何直觉",
+        "en": "Geometric intuition"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [],
+      "sources": [
+        {
+          "label": {
+            "zh": "Wikipedia — 挂谷问题",
+            "en": "Wikipedia — Kakeya set"
+          },
+          "url": "https://en.wikipedia.org/wiki/Kakeya_set"
+        },
+        {
+          "label": {
+            "zh": "Wikipedia — 三尖内摆线（deltoid）",
+            "en": "Wikipedia — Deltoid curve"
+          },
+          "url": "https://en.wikipedia.org/wiki/Deltoid_curve"
+        },
+        {
+          "label": {
+            "zh": "Wang & Zahl（2025）— 三维挂谷集的维数",
+            "en": "Wang & Zahl (2025) — Volume estimates for unions of convex sets, and the Kakeya set conjecture in three dimensions"
+          },
+          "url": "https://arxiv.org/abs/2502.17655"
+        }
+      ],
+      "provenance": {
+        "origin": "ai-prototype"
+      }
+    },
+    "starry-night": {
+      "question": {
+        "zh": "如果能走进《星月夜》，笔触会有多深？",
+        "en": "What lies behind the brushstrokes of The Starry Night?"
+      },
+      "hook": {
+        "zh": "从柏树旁的木屋起飞，穿过街巷与桥洞，飞进有厚度的星空。",
+        "en": "Launch from the cypress lookout, skim the lanes, pass under the bridge and enter the painted sky."
+      },
+      "payoff": {
+        "zh": "沿连续航线穿越画中的想象空间，随时接管飞行，点亮村庄，再对照梵高的原作。",
+        "en": "Follow a continuous flight, take the controls, light the village and compare this imagined space with Van Gogh’s original."
+      },
+      "topicLabel": {
+        "zh": "绘画与空间",
+        "en": "Painting and space"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [
+        {
+          "label": {
+            "zh": "艺术化边界",
+            "en": "Interpretation"
+          },
+          "body": {
+            "zh": "绘画只给出一个视角。柏树旁的木屋、建筑背面、街巷、河桥和可进入的天空是创作延伸。24 秒航线使用编排的镜头；自由飞行采用简化控制，允许穿过建筑，不是无人机物理模拟、原作扫描或历史实景复原。原作可随时打开对照。",
+            "en": "A painting supplies one viewpoint. The timber lookout, unseen architecture, lanes, river bridge and enterable sky are imagined additions. The 24-second flight is an authored camera path; free flight uses simplified controls and permits passing through buildings. This is not a drone physics simulation, a scan or a historical reconstruction. The original is available for comparison."
+          }
+        }
+      ],
+      "sources": [
+        {
+          "label": {
+            "zh": "纽约现代艺术博物馆 · 梵高《星月夜》",
+            "en": "MoMA · Vincent van Gogh, The Starry Night"
+          },
+          "url": "https://www.moma.org/collection/works/79802"
         }
       ],
       "provenance": {

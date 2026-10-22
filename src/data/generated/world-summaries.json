@@ -483,7 +483,10 @@
         "topicLabel": "Geometric intuition"
       }
     },
-    "primaryCategoryId": "beautiful-math",
+    "primaryCategoryId": "works",
+    "additionalCategoryIds": [
+      "beautiful-math"
+    ],
     "renderer": "kakeya-needle",
     "runtime": "diagram-2d",
     "difficulty": "standard",
@@ -628,7 +631,10 @@
         "topicLabel": "Mathematics"
       }
     },
-    "primaryCategoryId": "essence-of-math",
+    "primaryCategoryId": "works",
+    "additionalCategoryIds": [
+      "essence-of-math"
+    ],
     "renderer": "formula-bloom",
     "runtime": "particle-2d",
     "difficulty": "intro",
@@ -715,7 +721,10 @@
         "topicLabel": "Complex analysis"
       }
     },
-    "primaryCategoryId": "math-signals",
+    "primaryCategoryId": "works",
+    "additionalCategoryIds": [
+      "math-signals"
+    ],
     "renderer": "complex-mapping",
     "runtime": "scene-3d",
     "difficulty": "standard",
@@ -773,7 +782,10 @@
         "topicLabel": "Math & physics"
       }
     },
-    "primaryCategoryId": "math-signals",
+    "primaryCategoryId": "works",
+    "additionalCategoryIds": [
+      "math-signals"
+    ],
     "renderer": "equation-wormhole",
     "runtime": "scene-3d",
     "difficulty": "intro",
@@ -1005,7 +1017,7 @@
         "topicLabel": "Painting and space"
       }
     },
-    "primaryCategoryId": "economy-society",
+    "primaryCategoryId": "works",
     "renderer": "cafe-terrace",
     "runtime": "scene-3d",
     "difficulty": "intro",
@@ -1092,7 +1104,7 @@
         "topicLabel": "Painting and space"
       }
     },
-    "primaryCategoryId": "economy-society",
+    "primaryCategoryId": "works",
     "renderer": "starry-night",
     "runtime": "scene-3d",
     "difficulty": "intro",
@@ -1150,7 +1162,7 @@
         "topicLabel": "Ink and space"
       }
     },
-    "primaryCategoryId": "economy-society",
+    "primaryCategoryId": "works",
     "renderer": "ink-landscape",
     "runtime": "scene-3d",
     "difficulty": "intro",
