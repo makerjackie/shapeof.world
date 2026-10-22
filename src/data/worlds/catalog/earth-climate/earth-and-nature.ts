@@ -3,28 +3,28 @@ import type { WorldExperience } from '../../types'
 export default {
   id: 'earth-and-nature',
   publication: 'public',
-  title: '地球与自然',
-  posterTitle: '地表从来没有停止变化',
-  posterHook: '从火山熔岩到冰川裂隙，在立体地貌中观察形成、侵蚀与沉积。',
-  posterSource: '美国国家公园管理局·地貌',
-  question: '山川为何一直在改变？',
-  hook: '从火山熔岩到冰川裂隙，在立体地貌中观察形成、侵蚀与沉积。',
-  payoff: '触发喷发，展开剖面，改变演化阶段；地形与运动一起响应。',
-  topicLabel: '地貌演化',
+  title: '雨水雕山',
+  posterTitle: '把一块地推成山，再下一百万年雨，它会变成什么样？',
+  posterHook: '按住地面把它推高，看雨水自己刻出一道道像树枝的山谷。',
+  posterSource: '河流功率模型 · Whipple & Tucker 1999',
+  question: '把一块地推成山，再下一百万年雨，它会变成什么样？',
+  hook: '按住地面把它推高，看雨水自己刻出一道道像树枝的山谷。',
+  payoff: '河谷不是谁画上去的：雨水往低处流，越汇越多、越冲越深，自己在山上刻出了树枝的形状。',
+  topicLabel: '河流与山',
   poster: '/assets/posters/earth-and-nature.webp',
   posterDesktop: '/assets/posters/desktop/earth-and-nature.webp',
   posterMobile: '/assets/posters/mobile/earth-and-nature.webp',
   posterPosition: '50% 50%',
   translations: {
     en: {
-      title: 'Earth & Nature',
-      posterTitle: 'Earth’s surface is always changing',
-      posterHook: 'From lava flows to glacier crevasses, explore formation, erosion and deposition in three dimensions.',
-      posterSource: 'National Park Service · Landforms',
-      question: 'What keeps reshaping the land?',
-      hook: 'From lava flows to glacier crevasses, explore formation, erosion and deposition in three dimensions.',
-      payoff: 'Trigger an eruption, reveal a cross-section and change the stage of evolution. Terrain and motion respond together.',
-      topicLabel: 'Landforms'
+      title: 'Rain Carves the Mountain',
+      posterTitle: 'Push up a mountain and let it rain for a million years. What does it become?',
+      posterHook: 'Hold the ground to push it up, and watch the rain carve valleys that branch like a tree.',
+      posterSource: 'Stream power model · Whipple & Tucker 1999',
+      question: 'Push up a mountain and let it rain for a million years. What does it become?',
+      hook: 'Hold the ground to push it up, and watch the rain carve valleys that branch like a tree.',
+      payoff: 'Nobody draws the valleys. Rain runs downhill, gathers, and cuts deeper the more it gathers, carving the mountain into the shape of a tree.',
+      topicLabel: 'Rivers and mountains'
     }
   },
   primaryCategoryId: 'earth-climate',
@@ -32,32 +32,38 @@ export default {
   difficulty: 'intro',
   lane: 'flow',
   renderer: 'earth-and-nature',
-  duration: 420,
+  duration: 180,
   evidence: 'modeled',
-  accent: '#73c7cb',
-  related: [],
+  accent: '#7fd4e8',
+  related: ['frontscope', 'vegetation-atlas'],
   sources: [
     {
-      label: '美国国家公园管理局·地貌',
-      labelEn: 'National Park Service · Landforms',
-      url: 'https://www.nps.gov/subjects/geology/landforms.htm'
+      label: 'Whipple & Tucker 1999 · 河流功率模型与山脉的高度上限',
+      labelEn: 'Whipple & Tucker 1999 · Stream power incision and the height limits of mountain ranges',
+      url: 'https://doi.org/10.1029/1999JB900120'
     },
     {
-      label: '美国国家公园管理局·火山喷发',
-      labelEn: 'National Park Service · Volcanic eruptions',
-      url: 'https://www.nps.gov/subjects/volcanoes/volcanic-eruptions.htm'
+      label: 'Braun & Willett 2013 · 河流功率方程的隐式 O(n) 解法',
+      labelEn: 'Braun & Willett 2013 · An implicit O(n) method for the stream power equation',
+      url: 'https://doi.org/10.1016/j.geomorph.2012.10.008'
     },
-    {label: '冰川与冰蚀地貌', labelEn: 'Glaciers and glacial landforms', url: 'https://www.nps.gov/subjects/geology/glacial-landforms.htm'},
-    {label: '喀斯特景观', labelEn: 'Karst landscapes', url: 'https://www.nps.gov/subjects/caves/karst-landscapes.htm'},
-    {label: '风成地貌', labelEn: 'Aeolian landforms', url: 'https://www.nps.gov/subjects/geology/aeolian-landforms.htm'},
-    {label: '海岸地貌', labelEn: 'Coastal landforms', url: 'https://www.nps.gov/subjects/geology/coastal-landforms.htm'}
+    {
+      label: 'Barnes 等 2014 · 洼地填平的 priority-flood 算法',
+      labelEn: 'Barnes et al. 2014 · Priority-flood depression filling',
+      url: 'https://doi.org/10.1016/j.cageo.2013.04.024'
+    },
+    {
+      label: 'Dadson 等 2003 · 台湾造山带的侵蚀与抬升',
+      labelEn: 'Dadson et al. 2003 · Erosion and uplift in the Taiwan orogen',
+      url: 'https://doi.org/10.1038/nature02150'
+    }
   ],
   fieldNotes: [
     {
       label: '模型边界',
       labelEn: 'Model limits',
-      body: '地貌由内外营力共同塑造。程序化场景是定性教学示意，时间和尺度经过压缩，不用于灾害预测。',
-      bodyEn: 'Internal and external forces shape landforms. Procedural scenes are qualitative teaching models with compressed scales and time; they are not hazard forecasts.'
+      body: '地形按河流功率模型实时计算：抬升、河流下切和坡面蠕移。地块是程序生成的，不是真实地区；抬升 4 毫米/年、山高两三千米这些量级取自造山带的观测，但岩石可蚀性等参数是为看清过程挑的。没有模拟泥沙堆积、冰川和气候变化。',
+      bodyEn: 'The terrain is computed live with the stream power model: uplift, river incision and hillslope creep. The land is procedurally generated, not a real place. Magnitudes such as 4 mm/yr of uplift and peaks of two to three kilometres follow observed mountain belts, but rock erodibility and other parameters were chosen so the process is easy to see. Sediment deposition, glaciers and climate change are not modelled.'
     }
   ],
   experiencePolicy: {
@@ -66,7 +72,7 @@ export default {
   },
   provenance: {
     origin: 'ai-prototype',
-    initialModel: 'gpt-6'
+    initialModel: 'claude-opus-5-5'
   },
   presentation: 'full-bleed',
   transferBudgetMb: 3,

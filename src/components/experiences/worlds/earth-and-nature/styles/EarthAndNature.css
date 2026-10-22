@@ -1,0 +1,394 @@
+/* ============================================================
+   Earth & Nature · 雨水雕山（一块被推高、被雨水刻出河谷的地）
+   一整屏活的地块；问题浮在上面，底部一张卡片走完五拍。
+   ============================================================ */
+.ean-experience {
+  --world-accent: #7fd4e8;
+  --ean-ink: #eef3ef;
+  --ean-muted: #a7b6b8;
+  --ean-accent: #ffd27a;
+  --ean-river: #8be8ff;
+  --ean-good: #8fe0a8;
+  --ean-miss: #ffa08a;
+  --ean-line: rgba(238, 243, 239, 0.16);
+  --ean-card: rgba(9, 15, 20, 0.84);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #0b1218;
+  color: var(--ean-ink);
+}
+
+.ean-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: pointer;
+  outline: none;
+}
+.ean-experience.is-guess .ean-canvas {
+  cursor: default;
+}
+.ean-canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--ean-accent);
+}
+
+.ean-fallback {
+  position: absolute;
+  inset: 40% 16px auto;
+  margin: 0;
+  text-align: center;
+  color: var(--ean-muted);
+}
+
+/* ---------- 顶部：五拍 + 问题 ---------- */
+.ean-top {
+  position: absolute;
+  top: var(--experience-safe-top, 78px);
+  left: 0;
+  right: 0;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 0 max(16px, env(safe-area-inset-left, 0px));
+  text-align: center;
+  pointer-events: none;
+}
+.ean-beats {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--ean-muted);
+}
+.ean-beats li {
+  padding: 2px 8px;
+  border: 1px solid transparent;
+  border-radius: 99px;
+}
+.ean-beats li.is-on {
+  color: var(--ean-accent);
+  border-color: color-mix(in srgb, var(--ean-accent) 45%, transparent);
+}
+.ean-beats li.is-done {
+  color: var(--ean-ink);
+}
+.ean-top h1 {
+  max-width: 22em;
+  margin: 0;
+  font-size: clamp(21px, 4.6vw, 36px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+}
+.ean-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ean-muted);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------- 地块上的提示：按住这里 / 你的手 ---------- */
+.ean-hint,
+.ean-hand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.ean-hint[hidden],
+.ean-hand[hidden] {
+  display: none;
+}
+.ean-hint-ring,
+.ean-hand-ring {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  margin: -37px 0 0 -37px;
+  border: 2px solid var(--ean-accent);
+  border-radius: 50%;
+}
+.ean-hint-ring {
+  animation: ean-pulse 1.4s ease-out infinite;
+}
+.ean-hand-ring {
+  width: 92px;
+  height: 92px;
+  margin: -46px 0 0 -46px;
+  box-shadow: 0 0 18px rgba(255, 210, 122, 0.45);
+}
+.ean-hint-text,
+.ean-hand-text {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(9, 15, 20, 0.78);
+  color: var(--ean-accent);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ean-hand-text {
+  top: -82px;
+}
+@keyframes ean-pulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* ---------- 底部卡片 ---------- */
+.ean-card {
+  position: absolute;
+  left: 50%;
+  bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 10px));
+  transform: translateX(-50%);
+  display: grid;
+  gap: 12px;
+  width: min(560px, calc(100% - 32px));
+  max-height: 58%;
+  overflow-y: auto;
+  padding: 16px 18px;
+  border: 1px solid var(--ean-line);
+  border-radius: 18px;
+  background: var(--ean-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-sizing: border-box;
+}
+.ean-card p {
+  margin: 0;
+  line-height: 1.6;
+}
+.ean-card button,
+.ean-card a {
+  font: inherit;
+  color: inherit;
+}
+.ean-q {
+  font-size: 16px;
+  font-weight: 700;
+}
+.ean-options {
+  display: grid;
+  gap: 8px;
+}
+.ean-option {
+  padding: 11px 14px;
+  border: 1px solid var(--ean-line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: left;
+  font-size: 15px;
+  cursor: pointer;
+}
+.ean-option:hover {
+  border-color: var(--ean-accent);
+}
+.ean-skip {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ean-muted) !important;
+  font-size: 13px !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.ean-accent {
+  color: var(--ean-accent);
+  font-weight: 700;
+}
+.ean-note {
+  font-size: 13px;
+  color: var(--ean-muted);
+}
+.ean-verdict {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.ean-verdict.is-right {
+  color: var(--ean-good);
+}
+.ean-verdict.is-miss {
+  color: var(--ean-miss);
+}
+.ean-mine {
+  color: var(--ean-muted);
+  font-size: 14px;
+}
+.ean-big {
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.5 !important;
+}
+.ean-source {
+  font-size: 12px;
+  color: var(--ean-muted);
+}
+.ean-next {
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--ean-accent) 40%, transparent);
+  border-radius: 12px;
+  background: rgba(255, 210, 122, 0.08);
+  text-decoration: none;
+}
+.ean-next small {
+  color: var(--ean-accent);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.ean-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.ean-primary {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--ean-accent);
+  color: #17120a !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ean-ghost {
+  padding: 9px 14px;
+  border: 1px solid var(--ean-line);
+  border-radius: 99px;
+  background: none;
+  color: var(--ean-ink);
+  cursor: pointer;
+}
+.ean-card button:focus-visible,
+.ean-card a:focus-visible,
+.ean-card input:focus-visible {
+  outline: 2px solid var(--ean-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- 读数 ---------- */
+.ean-stats {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 4px 16px;
+  align-items: end;
+  font-variant-numeric: tabular-nums;
+}
+.ean-stats div {
+  display: grid;
+  gap: 1px;
+}
+.ean-stats small {
+  color: var(--ean-muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.ean-stats strong {
+  font-size: 17px;
+}
+.ean-stats em {
+  color: var(--ean-muted);
+  font-size: 11px;
+  font-style: normal;
+}
+.ean-spark {
+  width: 100%;
+  height: 34px;
+}
+.ean-spark polyline {
+  fill: none;
+  stroke: var(--ean-river);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ---------- 实验室 ---------- */
+.ean-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--ean-line);
+  border-radius: 99px;
+}
+.ean-tools button {
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 99px;
+  background: none;
+  color: var(--ean-muted);
+  cursor: pointer;
+}
+.ean-tools button[aria-pressed='true'] {
+  background: var(--ean-accent);
+  color: #17120a;
+  font-weight: 700;
+}
+.ean-slider {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.ean-slider input {
+  width: 100%;
+  accent-color: var(--ean-river);
+}
+.ean-slider output {
+  min-width: 6.5em;
+  color: var(--ean-muted);
+  font-size: 13px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 海报取景：只留地块。 */
+.ean-experience.is-capture .ean-top,
+.ean-experience.is-capture .ean-card,
+.ean-experience.is-capture .ean-hint,
+.ean-experience.is-capture .ean-hand {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .ean-card {
+    padding: 14px;
+    gap: 10px;
+  }
+  .ean-stats {
+    grid-template-columns: auto auto;
+  }
+  .ean-stats-chart {
+    grid-column: 1 / -1;
+  }
+  .ean-big {
+    font-size: 17px;
+  }
+  .ean-sub {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ean-hint-ring {
+    animation: none;
+  }
+}
