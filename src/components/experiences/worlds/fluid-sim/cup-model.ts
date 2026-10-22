@@ -24,11 +24,11 @@ export function cupGeometry(width: number, height: number): Cup {
   const aspect = width / height
   const portrait = aspect < 0.9
   const byWidth = aspect * 0.5 * (portrait ? 0.9 : 0.82)
-  const byHeight = portrait ? 0.29 : 0.35
+  const byHeight = portrait ? 0.29 : 0.33
   const r = Math.min(byWidth, byHeight)
   // On wide screens, slide the cup right so the story card on the left stays clear of it.
-  const cx = aspect > 1.1 ? 0.5 + Math.min(0.09, (aspect - 1.1) * 0.18) : 0.5
-  return { cx, cy: portrait ? 0.44 : 0.49, r }
+  const cx = aspect > 1.1 ? 0.5 + Math.min(0.1, (aspect - 1.1) * 0.3) : 0.5
+  return { cx, cy: portrait ? 0.44 : 0.53, r }
 }
 
 /** Is a UV point inside the liquid surface? */
