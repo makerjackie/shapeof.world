@@ -79,9 +79,8 @@ npx wrangler deploy
 - “Shape of the World / 世界的形状”名称、标识与品牌不随代码或内容授权开放：
   [TRADEMARKS.md](./TRADEMARKS.md)。
 
-完整边界见 [LICENSING.md](./LICENSING.md)；贡献规则见
-[CONTRIBUTING.md](./CONTRIBUTING.md)，可版权化贡献需按 [CLA.md](./CLA.md) 或
-[CCLA.md](./CCLA.md) 完成核验。
+完整边界见 [LICENSING.md](./LICENSING.md)；欢迎提 issue，暂不接受
+PR，见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 ## 贡献者
 
