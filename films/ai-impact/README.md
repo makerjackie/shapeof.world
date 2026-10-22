@@ -79,3 +79,16 @@ python tools/sheet.py out/s out/sheets   # 2×2 拼审片图（需要 Pillow）
 | 62–72 | 2:14 | 05 下一个四年 | 预测扇面 · AGI 时间尺 · 本片的大胆预测 |
 | 72–84 | 2:35 | 升华 | 一届大学生 · 改了道的世界 · 它先换掉了起点 |
 | 84–91.5 | 3:01 | 片尾 | 来源 → 制作 → 品牌卡 |
+
+## 交片（v1，2026-10-23）
+
+- 成片：`out/ai-impact.mp4`（不进 Git）。
+  - 1920×1080、30fps、3:17.8，约 137.6 MB。
+  - H.264 CRF 20（约 5.4 Mbps），AAC 192 kbps，faststart。
+  - 响度 −12.3 LUFS，真峰值 −1.4 dBTP（`Film.tsx` 的 `GAIN` = 0.76）。
+  - 复核：`bash tools/review.sh out/ai-impact.mp4 out/review` 出每 10 秒一帧的总览图、每 3 秒一帧的细看图，并测响度。
+- 封面：`out/covers/cover-16x9.jpg`、`cover-3x4.jpg`（`node tools/covers.mjs`）。
+- 审片时修过的：
+  - 带回弹的计数会冲过终值（7,350 一度显示 7,755），所有标签的计数都已封顶。
+  - 第一版响度 −11.5 LUFS、真峰值 −0.4，增益已下调 0.9 dB。
+- 留给下一版：输家墙的计数从 0 开始时会短暂显示"−0%"，可改成从第一个真实值起数，或等计数开始再显示负号。

@@ -9,6 +9,7 @@
 | `ai-real-cost/` | AI 的真实价格 | 16:9 · 2:00 · 无旁白 · Remotion | 2026-10-21 v6 定稿 |
 | `tower/` | 高楼的形状 | 16:9 · 约 2:19 · 无旁白 · Remotion · 原创配乐 | 2026-10-22 v1 剧本和画面完成，待渲染 |
 | `ai-users/` | 最会用 AI 的人，在用 AI 干什么 | 16:9 · 3:02 · 无旁白 · Remotion · 《千年之后》整首不剪 | 2026-10-23 v1 定稿 |
+| `ai-impact/` | AI 到底改变了什么 | 16:9 · 3:18 · 无旁白 · Remotion · 《千年之后》 | 2026-10-23 v1 定稿 |
 
 - 成片、配乐音频和审片截图不进 Git。上传用的成片放 R2 桶 `shapeof-press`，见 [`infra/press`](../infra/press/README.md)。
 - Playwright 用仓库根目录装好的那份，先在根目录运行 `pnpm install`。`ai-shape/` 另有自己的依赖，在它的目录里运行 `npm install`。
