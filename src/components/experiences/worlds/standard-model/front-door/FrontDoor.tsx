@@ -23,8 +23,11 @@ const DIVE_SECONDS = 5.2
 const quarkSumMeV = quarkSum(protonQuarks)
 const bodyQuarks = bodyQuarkKg(BODY_KG)
 const percent = (quarkSumMeV / protonMassMeV * 100).toFixed(1)
+const percentOfProton = (mev: number, digits: number) => (mev / protonMassMeV * 100).toFixed(digits) + '%'
 
-const journey: L[] = [['夸克', 'Quarks'], ['原子', 'Atoms'], ['细胞', 'Cells'], ['生物', 'Life'], ['地球', 'Earth'], ['太阳系', 'Solar system'], ['星系', 'Galaxies']]
+// The journey through scales runs quarks → atoms → cells → life → Earth → solar system → galaxies;
+// during the five beats only the current stop is shown.
+const journeyHere: L = ['夸克', 'Quarks']
 const guesses: Array<{ id: Guess; text: L }> = [
 	{ id: 'all', text: ['差不多全部', 'Nearly all of it'] },
 	{ id: 'half', text: ['大约一半', 'About half'] },
@@ -172,13 +175,13 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 	const at = beatIndex(beat)
 	const sub = at <= 1 ? t(diveCaptions[caption]) : at === 2 ? t(['现实里夸克拿不出来；这里的读数是间接测出来的。', 'In reality quarks cannot be taken out; these readings are inferred indirectly.'])
 		: at === 3 ? t(['质子还是那么重，夸克只占一点点。', 'The proton weighs the same; the quarks are a sliver.'])
-			: t(['你摸到的每一样东西，重量大多是被关住的能量。', 'Most of the weight of everything you touch is trapped energy.'])
+			: t(['你摸到的每一样东西，都是这样。', 'The same goes for everything you touch.'])
 
 	return <div className="smf-door" ref={root} data-beat={at}>
 		<canvas ref={canvas} className="smf-scene" data-beat={at} onPointerDown={pointer} onPointerMove={pointer} onPointerUp={pointer} onPointerCancel={pointer}
 			aria-label={t(['从站在秤上的你一路放大到一个质子；质子里有三颗夸克', 'A dive from you on a scale down into one proton, with three quarks inside'])} />
 		<div className="smf-top" ref={top}>
-			<div className="smf-journey" aria-label={t(['尺度之旅', 'Journey through scales'])}>{journey.map((step, i) => <span key={step[1]} className={i === 0 ? 'is-here' : undefined}>{t(step)}</span>)}</div>
+			<div className="smf-journey" aria-label={t(['尺度之旅', 'Journey through scales'])}><span>{t(['尺度之旅', 'Journey through scales'])}</span><span className="is-here">{t(journeyHere)}</span></div>
 			<BeatSteps beat={beat} />
 			<h1 data-experience-content-start="true">{t(['你的体重是从哪儿来的？', 'Where does your weight come from?'])}</h1>
 			<p className="smf-sub" aria-live="polite">{sub}</p>
@@ -200,10 +203,10 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 				verdict={mine && (right ? t(['猜对了', 'You got it']) : t(['比你猜的少得多', 'Far less than you guessed']))}
 				right={right}
 				mine={mine && t(['你猜：', 'You guessed: ']) + t(mine.text) + t(['。', '.'])}
-				next={{ label: t(['那剩下的 99% 是什么？', 'So what is the other 99%?']), onClick: () => goto('know') }}>
-				<div className="smf-bars" role="img" aria-label={t(['质子 938.3 MeV，三颗夸克 9.0 MeV', 'Proton 938.3 MeV, three quarks 9.0 MeV'])}>
-					<div><span>{t(['整个质子', 'Whole proton'])}</span><i style={{ width: '100%' }} /><b>{protonMassMeV.toFixed(1)} MeV</b></div>
-					<div><span>{t(['三颗夸克', 'Three quarks'])}</span><i className="is-quarks" style={{ width: `${quarkSumMeV / protonMassMeV * 100}%` }} /><b>{quarkSumMeV.toFixed(1)} MeV · {percent}%</b></div>
+				next={{ label: t(['那剩下的是什么？', 'So what is the rest?']), onClick: () => goto('know') }}>
+				<div className="smf-bars" role="img" aria-label={t(['质子 100%（938.3 MeV），三颗夸克 ' + percent + '%（9.0 MeV）', 'Proton 100% (938.3 MeV), three quarks ' + percent + '% (9.0 MeV)'])}>
+					<div><span>{t(['整个质子', 'Whole proton'])}</span><i style={{ width: '100%' }} /><b>100%<small> · {protonMassMeV.toFixed(1)} MeV</small></b></div>
+					<div><span>{t(['三颗夸克', 'Three quarks'])}</span><i className="is-quarks" style={{ width: `${quarkSumMeV / protonMassMeV * 100}%` }} /><b>{percent}%<small> · {quarkSumMeV.toFixed(1)} MeV</small></b></div>
 				</div>
 				<div className="smf-you">
 					<PersonIcon /><div><b>{BODY_KG} kg</b><span>{t(['你', 'You'])}</span></div>
@@ -213,8 +216,8 @@ export function FrontDoor({ controls, en, onEnterMuseum }: { controls: Experienc
 				<p className="smf-small">{t(['约等于一瓶矿泉水。按质子、中子各一半估算；电子只占约 0.03%。', 'About one bottle of water. Estimated with equal protons and neutrons; electrons add about 0.03%.'])}</p>
 			</BeatResult>}
 			{beat === 'know' && <Conclusion
-				sentence={t(['你的体重只有约 1% 来自夸克本身，另外 99% 是把夸克锁在质子和中子里的能量。', 'Only about 1% of your weight is the quarks themselves; the other 99% is the energy that locks them inside protons and neutrons.'])}
-				source={<>{t(['出处：', 'Sources: '])}{weightSources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}<br />{t(['夸克从不单独出现，质量是间接推得的；能量就是质量，E = mc²。', 'Quarks never appear alone, so their masses are inferred; energy is mass, E = mc².'])}</>}
+				sentence={t(['你的体重，大多是被关住的能量。', 'Most of your weight is trapped energy.'])}
+				source={<>{t(['你的体重只有约 1% 来自夸克本身，另外 99% 是把夸克锁在质子和中子里的能量。', 'Only about 1% of your weight is the quarks themselves; the other 99% is the energy that locks them inside protons and neutrons.'])}<br />{t(['出处：', 'Sources: '])}{weightSources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.label} ↗</a>)}<br />{t(['夸克从不单独出现，质量是间接推得的；能量就是质量，E = mc²。', 'Quarks never appear alone, so their masses are inferred; energy is mass, E = mc².'])}</>}
 				cta={<button className="smf-primary smf-wide" onClick={onEnterMuseum}>{t(['走进基本粒子博物馆', 'Enter the particle museum'])}<ArrowRight size={18} /></button>}
 				next={{ href: worldPath('periodic-table', en ? 'en' : 'zh'), kicker: t(['下一个问题 · 尺度之旅往外走一层', 'Next question · one step out']), question: t(['元素符号背后，物质是什么模样？', 'What does matter look like behind an element symbol?']) }}>
 				<SkipButton onClick={restart}><ArrowCounterClockwise size={14} />{t(['再走一遍', 'Play again'])}</SkipButton>
@@ -310,8 +313,11 @@ function drawProton(ctx: CanvasRenderingContext2D, L: Layout, unit: number, time
 	if (beat >= 2) {
 		ctx.fillStyle = '#f4efe2'; ctx.textAlign = 'center'
 		ctx.font = `700 ${Math.max(13, unit * 0.1)}px system-ui, sans-serif`
-		ctx.fillText((posterFrame ? '' : en ? 'Proton ' : '质子 ') + protonMassMeV.toFixed(1) + ' MeV', cx, cy - unit * 1.12)
-		if (beat >= 3) {
+		ctx.fillText((posterFrame ? '' : en ? 'Proton ' : '质子 ') + '100%', cx, cy - unit * 1.12 - Math.max(11, unit * 0.075))
+		ctx.font = `600 ${Math.max(10, unit * 0.07)}px system-ui, sans-serif`; ctx.fillStyle = 'rgba(244,239,226,0.65)'
+		ctx.fillText(protonMassMeV.toFixed(1) + ' MeV', cx, cy - unit * 1.12 + 2)
+		// The 99% is the answer, so it waits for 懂.
+		if (beat >= 4) {
 			ctx.font = `800 ${Math.max(22, unit * 0.32)}px system-ui, sans-serif`; ctx.fillStyle = '#ffd9a8'
 			ctx.fillText('99%', cx, cy + unit * 0.1)
 			ctx.font = `600 ${Math.max(11, unit * 0.08)}px system-ui, sans-serif`; ctx.fillStyle = '#f4efe2'
@@ -351,10 +357,13 @@ function drawScale(ctx: CanvasRenderingContext2D, L: Layout, quarks: QuarkState[
 	ctx.beginPath(); ctx.roundRect(px - pr * 0.62, py + pr * 0.52, pr * 1.24, pr * 0.42, 8); ctx.fill()
 	const loaded = quarks.filter(q => q.onPan)
 	const reading = quarkSum(loaded.map(q => q.flavour))
-	ctx.fillStyle = '#7fd8a4'; ctx.textAlign = 'center'; ctx.font = `700 ${Math.max(13, pr * 0.2)}px system-ui, sans-serif`
-	ctx.fillText(reading.toFixed(1) + ' MeV', px, py + pr * 0.8)
-	if (beat >= 3) { ctx.fillStyle = '#ffd166'; ctx.font = `800 ${Math.max(16, pr * 0.26)}px system-ui, sans-serif`; ctx.fillText('≈1%', px, py - pr * 0.75) }
-	else { ctx.fillStyle = 'rgba(244,239,226,0.65)'; ctx.font = `600 ${Math.max(11, pr * 0.13)}px system-ui, sans-serif`; ctx.fillText(en ? 'Quark scale' : '夸克秤', px, py - pr * 0.6) }
+	// The scale reads in percent of the proton; MeV is the small print.
+	ctx.fillStyle = beat >= 3 ? '#ffd166' : '#7fd8a4'; ctx.textAlign = 'center'; ctx.font = `800 ${Math.max(14, pr * 0.22)}px system-ui, sans-serif`
+	ctx.fillText(percentOfProton(reading, 1), px, py + pr * 0.8)
+	ctx.fillStyle = 'rgba(244,239,226,0.6)'; ctx.font = `600 ${Math.max(10, pr * 0.11)}px system-ui, sans-serif`; ctx.textAlign = 'left'
+	ctx.fillText(reading.toFixed(1) + ' MeV', px + pr * 0.62 + 8, py + pr * 0.8)
+	ctx.textAlign = 'center'
+	ctx.fillStyle = 'rgba(244,239,226,0.65)'; ctx.font = `600 ${Math.max(11, pr * 0.13)}px system-ui, sans-serif`; ctx.fillText(en ? 'Quark scale' : '夸克秤', px, py - pr * 0.6)
 	const r = Math.max(12, pr * 0.2), labelled = pr >= 70
 	loaded.forEach((q, i) => {
 		q.x = px + (i - (loaded.length - 1) / 2) * r * 2.3
@@ -362,7 +371,7 @@ function drawScale(ctx: CanvasRenderingContext2D, L: Layout, quarks: QuarkState[
 		drawQuark(ctx, q.x, q.y, r, q.flavour)
 		if (!labelled) return
 		ctx.fillStyle = '#f4efe2'; ctx.font = `600 ${Math.max(10, r * 0.55)}px system-ui, sans-serif`; ctx.textAlign = 'center'
-		ctx.fillText(quarkMassMeV[q.flavour].toFixed(2), q.x, q.y + r * 1.75 + pr * 0.1)
+		ctx.fillText(percentOfProton(quarkMassMeV[q.flavour], 2), q.x, q.y + r * 1.75 + pr * 0.1)
 	})
 	ctx.textAlign = 'start'; ctx.restore()
 }

@@ -8,7 +8,7 @@
 .smm-periodic-generations{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px;text-align:center;font-size:10px;color:var(--smm-muted)}
 .smm-periodic-matter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,104px);gap:10px}
 .smm-periodic-carrier-grid{display:grid;grid-template-rows:repeat(4,104px);gap:10px;margin-top:30px}
-.smm-periodic-card{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;min-width:0;padding:12px 14px;border:1px solid color-mix(in srgb,var(--family-color) 32%,transparent);border-radius:8px;background:linear-gradient(135deg,#fffdf9b0,color-mix(in srgb,var(--family-color) 8%,#f6f5ed));color:var(--family-color);text-decoration:none;overflow:hidden;transition:transform .2s,box-shadow .2s,opacity .2s}
+.smm-periodic-card{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:center;min-width:0;padding:12px 14px;border:1px solid color-mix(in srgb,var(--family-color) 32%,transparent);border-radius:8px;background:linear-gradient(135deg,rgba(244,239,226,.08),color-mix(in srgb,var(--family-color) 8%,#0e1218));color:color-mix(in srgb,var(--family-color) 72%,#fff);text-decoration:none;overflow:hidden;transition:transform .2s,box-shadow .2s,opacity .2s}
 .smm-periodic-card:hover,.smm-periodic-card:focus-visible{transform:translateY(-3px);box-shadow:0 8px 25px color-mix(in srgb,var(--family-color) 16%,transparent);border-color:var(--family-color)}
 .smm-periodic-card[data-dimmed=true]{opacity:.27}
 .smm-periodic-symbol{font:italic 35px/1 Georgia,serif;z-index:1}
@@ -23,12 +23,12 @@
 .smm-periodic-higgs .smm-periodic-art{width:100%;max-width:none;top:12px;opacity:.9}
 .smm-periodic-higgs .smm-periodic-art svg{height:110px}
 .smm-periodic-higgs>p{font-size:12px;color:var(--smm-muted);line-height:1.9;margin:22px 0 10px}
-.smm-periodic-question{display:inline-block;color:#8c6d32;font-size:12px;line-height:1.6;min-height:44px;text-decoration:none}
+.smm-periodic-question{display:inline-block;color:var(--smm-accent);font-size:12px;line-height:1.6;min-height:44px;text-decoration:none}
 .smm-periodic-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:12px}
 .smm-periodic-bottom>span{font-size:10px;color:var(--smm-muted)}
 .smm-periodic-legend{display:flex;flex-wrap:wrap;gap:6px}
-.smm-periodic-legend button{display:flex;align-items:center;gap:7px;color:var(--family-color);background:transparent;border:1px solid transparent;border-radius:20px;padding:8px 10px;min-height:40px;font-size:11px}
-.smm-periodic-legend button[aria-pressed=true]{border-color:var(--family-color);background:#ffffff70}
+.smm-periodic-legend button{display:flex;align-items:center;gap:7px;color:color-mix(in srgb,var(--family-color) 72%,#fff);background:transparent;border:1px solid transparent;border-radius:20px;padding:8px 10px;min-height:40px;font-size:11px}
+.smm-periodic-legend button[aria-pressed=true]{border-color:var(--family-color);background:rgba(244,239,226,.05)}
 .smm-periodic-legend i{width:6px;height:6px;border-radius:50%;background:var(--family-color)}
 @media(max-width:900px){.smm-periodic-layout{gap:14px}.smm-periodic-card{padding:10px}.smm-periodic-role{display:none}.smm-periodic-name{font-size:11px}}
 @media(max-width:600px){
@@ -36,7 +36,7 @@
  .smm-periodic-layout{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 12px}.smm-periodic-matter{grid-column:1/-1}.smm-periodic-matter-grid{grid-template-rows:repeat(4,87px);gap:8px}.smm-periodic-symbol{font-size:29px}.smm-periodic-art{width:55%;opacity:.85}.smm-periodic-name{font-size:11px}.smm-periodic-carriers{grid-column:span 2}.smm-periodic-carrier-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,100px);gap:8px;margin-top:0}.smm-periodic-higgs>div{margin-top:0}.smm-periodic-higgs .smm-periodic-card{height:208px}.smm-periodic-higgs>p{font-size:10px;line-height:1.7;margin:12px 0}.smm-periodic-question{font-size:10px}.smm-periodic-bottom{align-items:flex-start;flex-direction:column;gap:4px}.smm-periodic-legend{gap:0}.smm-periodic-legend button{font-size:10px;padding:6px 8px;min-height:44px}
 }
 @media(prefers-reduced-motion:reduce){.smm-periodic-card,.smm-periodic-art{transition:none}}
-.smm-periodic-legend .smm-periodic-collected{color:#425e4a;border-color:#54674d30;margin-left:8px}
+.smm-periodic-legend .smm-periodic-collected{color:var(--smm-ink-2);border-color:rgba(244,239,226,.22);margin-left:8px}
 .smm-world[data-page=collection] .smm-masthead p{display:none}
 
 .smm-periodic-card:hover .sm-preview-flow{animation:smm-flow 2s linear infinite;stroke-dasharray:5 3}
