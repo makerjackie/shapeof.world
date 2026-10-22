@@ -47,6 +47,7 @@
     "music:typecheck": "pnpm --dir apps/music typecheck",
     "worker:bundle-check": "node scripts/check-worker-bundle.mjs",
     "check": "node scripts/check.mjs",
+    "land": "node scripts/land.mjs",
     "smoke:production": "node scripts/smoke-production.mjs --base https://new.shapeof.world",
     "cf-typegen": "wrangler types",
     "paraglide:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide --strategy url cookie preferredLanguage baseLocale --output-structure message-modules",

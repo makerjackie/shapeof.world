@@ -6,7 +6,8 @@
 
 - 开发：`pnpm dev`；单个世界检查：`pnpm world:check --id <world-id>`
 - 检查：`pnpm check`
-- 部署主站：`pnpm build && npx wrangler deploy`
+- 部署主站：`pnpm build && npx wrangler deploy`。用环境变量 `CLOUDFLARE_API_TOKEN` 和 `CLOUDFLARE_ACCOUNT_ID`，不要让作者跑 `wrangler login`。
+- 把工作区分支合进 main：`pnpm land`（见下）。
 
 ## 现状
 
@@ -16,6 +17,14 @@
 - 视频发布套件：`infra/press`（Worker `shapeof-press`，press.shapeof.world），用法见其 README。
 - 短片源码：`films/<片>/`，成片和音频不进 Git，见 `films/README.md`；做片方法见 `films/METHOD.md`。网站上的短片页 `shapeof.world/films/<片>` 由 `src/data/films.json` 和发布套件的 `kit.json` 生成。
 - `private/`：本仓里的本地私有文件夹，被 `.gitignore` 忽略，不进 Git，也不是单独的仓库。选题规划、内部笔记、发布记录这类不公开的内容放这里，不能写进本仓的其他地方或公开发布。搜索时它默认被跳过，要找里面的东西就直接指定 `private/` 路径。（以前这里是私有仓库 `makerjackie/shapeof-world-dev`，已不再使用。）
+
+## 多个会话一起干活
+
+- 改代码的会话在自己的工作区里做（`.claude/worktrees/<名字>`，分支 `claude/<名字>`）。做完提交，再运行 `pnpm land`：它把分支变基到最新的 main、跑 `pnpm check`，通过后把 main 快进过去。不用等作者去合并分支。
+- `pnpm land` 停在冲突上时，自己解决冲突，`git rebase --continue`，再跑一次。快进被拒（别人先合了）就直接再跑一次。只改文档时可以加 `--skip-check`。
+- 直接在主目录（main）上干活的会话，只提交自己改的文件：`git add <路径>`，不要 `git add -A` 或 `git commit -a`，因为别的会话可能正在同一个目录里写东西。
+- 不要停掉、重启或占用别的会话启动的进程（开发服务器等）。端口被占了就换一个端口。
+- 推送和部署：合进 main 后要上线，就 `git push origin main`，再按上面的命令部署。
 
 ## 仅有的几条规矩
 
