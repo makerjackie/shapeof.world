@@ -3,6 +3,8 @@
  * placed on the US primal they sit in. Primal shares are percent of carcass
  * weight, bone in, from University of Tennessee Extension PB1829 (880 lb carcass).
  */
+import { LIVE_KG } from './yield-model';
+
 export type Primal = 'offal' | 'chuck' | 'brisket' | 'shank' | 'ribLoin' | 'plateFlank' | 'round';
 
 export const primals: Record<Primal, { label: string; share: number | null }> = {
@@ -39,4 +41,10 @@ export const cuts: Array<Cut> = [
 ];
 
 /** Industry estimate (澎湃号, 2024): a 500 kg cow yields about 0.5–1 kg of 脖仁. */
-export const NECK_KG = { low: 0.5, high: 1, cowKg: 500 } as const;
+export const NECK_SOURCE_KG = { low: 0.5, high: 1, cowKg: 500 } as const;
+/** The same estimate scaled in proportion to the cow on screen. */
+export const NECK_KG = {
+	low: (NECK_SOURCE_KG.low * LIVE_KG) / NECK_SOURCE_KG.cowKg,
+	high: (NECK_SOURCE_KG.high * LIVE_KG) / NECK_SOURCE_KG.cowKg,
+	cowKg: LIVE_KG,
+} as const;

@@ -5,8 +5,8 @@ const kg = yieldKg();
 const meatPercent = Math.round(yieldShares().meat * 100);
 const people = Math.round(kg.meat / PERSON_KG);
 
-const guessEn: Record<Guess, string> = { most: 'more than 80%', half: 'about half', less: 'less than half' };
-const guessZh: Record<Guess, string> = { most: '八成以上', half: '一半左右', less: '不到一半' };
+const guessEn: Record<Guess, string> = { most: 'more than 80%', half: 'about 60%', less: 'less than half' };
+const guessZh: Record<Guess, string> = { most: '八成以上', half: '六成左右', less: '不到一半' };
 
 /** Sentences that carry numbers. Static labels go through tx(). */
 export const copy = {
@@ -21,8 +21,8 @@ export const copy = {
 	verdict: (l: Locale, guess: Guess | null) => {
 		if (!guess) return '';
 		const right = guessIsRight(guess);
-		if (l === 'zh') return right ? `你猜「${guessZh[guess]}」，猜对了。` : `你猜「${guessZh[guess]}」，其实没有那么多。`;
-		return right ? `You guessed ${guessEn[guess]}. Right.` : `You guessed ${guessEn[guess]}. It is less than that.`;
+		if (l === 'zh') return right ? `你猜「${guessZh[guess]}」，猜对了。` : `你猜「${guessZh[guess]}」，其实不到一半：约 ${meatPercent}%。`;
+		return right ? `You guessed ${guessEn[guess]}. Right.` : `You guessed ${guessEn[guess]}. It is actually less than half: about ${meatPercent}%.`;
 	},
 	result: (l: Locale) =>
 		l === 'zh'
@@ -43,6 +43,10 @@ export const copy = {
 		l === 'zh'
 			? `长在${label}这一大块里；整块${label}占整片牛（带骨）的 ${share}%。`
 			: `It sits in the ${label}; the whole ${label} is ${share}% of the carcass (bone in).`,
+	neckSource: (l: Locale, low: number, high: number, sourceKg: number, cowKg: number) =>
+		l === 'zh'
+			? `脖仁产量是行业说法（澎湃号，2024：${sourceKg} kg 的牛约 ${low}–${high} kg），这里按 ${cowKg} kg 等比换算，不是统计数据。`
+			: `The neck yield is an industry estimate (The Paper contributor column, 2024: about ${low}–${high} kg from a ${sourceKg} kg cow), scaled here to ${cowKg} kg. It is not a statistic.`,
 	neckAmount: (l: Locale, low: number, high: number, cowKg: number, dunksLow: number, dunksHigh: number) =>
 		l === 'zh'
 			? `一头 ${cowKg} kg 的牛，脖仁只有约 ${low}–${high} kg，够涮 ${dunksLow}–${dunksHigh} 次。`

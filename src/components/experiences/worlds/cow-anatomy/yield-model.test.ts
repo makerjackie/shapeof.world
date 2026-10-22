@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { translateExperienceText } from '~/i18n/experience';
 import { cowCells } from './cow-cells';
-import { cuts, primals } from './cow-data';
+import { NECK_KG, cuts, primals } from './cow-data';
 import { regions } from './CowMap';
 import { LIVE_KG, assignFates, guessIsRight, servings, yieldKg, yieldShares } from './yield-model';
 
@@ -23,6 +23,10 @@ describe('from cow to meat', () => {
 	});
 	it('turns 0.5–1 kg of neck into 4–10 dunks at 100–125 g', () => {
 		expect(servings(0.5, 1)).toEqual({ low: 4, high: 10 });
+	});
+	it('scales the 500 kg neck estimate to the 600 kg cow on screen', () => {
+		expect(NECK_KG).toEqual({ low: 0.6, high: 1.2, cowKg: LIVE_KG });
+		expect(servings(NECK_KG.low, NECK_KG.high)).toEqual({ low: 4, high: 12 });
 	});
 });
 
