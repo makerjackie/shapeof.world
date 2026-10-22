@@ -23,3 +23,11 @@
 代码按仓库的 AGPL-3.0-only 授权，片中原创的文案和画面按 CC BY-NC 4.0，第三方字体和数据按各自的许可，见每部片的 `DESCRIPTION.md` 和字体旁的 OFL 文本。名称和标志不随代码授权。
 
 做片的方法和交片清单见 [`METHOD.md`](./METHOD.md)。
+
+## 上网站
+
+每部片在 `shapeof.world/films/<目录名>` 有一个页面，首页"短片"一排和 `/films` 列表从新到旧排。
+
+- 网站上的文字写在 `src/data/films.json`：中英文的片名、副标题、简介、"怎么做的"，加上相关世界 `relatedWorldIds`，以及发到平台后的链接 `watch.bilibili`、`watch.youtube`。
+- 视频、封面（推荐的那张 16:9）、时长和简短来源直接读发布套件的 `kit.json`，不用再抄一遍，文件也不用再传。
+- `publishedAt` 为 `null` 时片子不上网站；平台发出后填上日期，就会出现在列表、首页和 sitemap 里（sitemap 用 `node scripts/generate-sitemap.mjs` 重新生成）。

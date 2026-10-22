@@ -1,0 +1,76 @@
+.work-card--film .work-card-media { aspect-ratio: 16 / 9; }
+
+.film-card-duration {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgb(0 0 0 / 0.68);
+  color: #fff;
+  font-size: var(--fs-label);
+  font-variant-numeric: tabular-nums;
+}
+.film-card-duration svg { width: 10px; height: 10px; }
+
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.film-page .film-player {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 0 24px;
+  border-radius: var(--radius-card);
+  background: #000;
+}
+
+.film-page .film-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: baseline;
+  margin: 0 0 32px;
+  color: var(--home-muted);
+  font-family: var(--home-font-ui);
+  font-size: var(--home-type-support);
+  font-variant-numeric: tabular-nums;
+}
+.film-page .film-meta a { color: var(--home-ink); }
+
+.film-body {
+  display: grid;
+  gap: 40px;
+  max-width: 760px;
+}
+.film-body h2 { margin: 0 0 12px; }
+.film-body p { margin: 0 0 12px; color: var(--text-2); line-height: 1.75; }
+.film-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--home-font-ui);
+  font-size: var(--home-type-support);
+}
+.film-links a { color: var(--home-ink); }
+.film-sources {
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--home-type-support);
+  line-height: 1.75;
+  white-space: pre-line;
+}
+.film-related { margin-top: 56px; }
+.film-related h2 { margin: 0 0 20px; }

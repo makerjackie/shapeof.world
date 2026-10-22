@@ -112,6 +112,7 @@ export function SiteHeader() {
             {t('nav.worlds')}
           </Link>
           <Link to="/routes" onClick={closeNavigation}>{t('nav.routes')}</Link>
+          <Link to="/films" onClick={closeNavigation}>{t('nav.films')}</Link>
           <div className="site-header-tools" onPointerDownCapture={closeNavigation}>
             <SiteSearchButton />
             <LocaleToggle compact />
@@ -140,6 +141,7 @@ export function SiteHeader() {
             <div className="site-navigation-mobile-primary">
               <Link to="/" hash="home-worlds" activeOptions={{ exact: true }} onClick={closeNavigation}>{t('nav.worlds')}</Link>
               <Link to="/routes" onClick={closeNavigation}>{t('nav.routes')}</Link>
+              <Link to="/films" onClick={closeNavigation}>{t('nav.films')}</Link>
                 </div>
             <Link to="/about" onClick={closeNavigation}>{t('nav.about')}</Link>
             <Link to="/feedback" onClick={closeNavigation}>{t('feedback.nav')}</Link>

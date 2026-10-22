@@ -1,5 +1,5 @@
 import { worldPath } from '../src/lib/world-urls.ts'
-import {readdir, writeFile} from 'node:fs/promises'
+import {readFile, readdir, writeFile} from 'node:fs/promises'
 import {resolve} from 'node:path'
 
 import {readWorldCatalogFiles} from './lib/world-catalog-source.mjs'
@@ -18,6 +18,10 @@ const categoryIds = (await readdir(categoryDirectory, {withFileTypes: true}))
   .map((entry) => readStaticDefaultExport(resolve(categoryDirectory, entry.name)))
   .filter((category) => category.publication === 'public')
   .map((category) => category.id)
+  .sort()
+const filmSlugs = JSON.parse(await readFile(resolve(root, 'src/data/films.json'), 'utf8'))
+  .filter((film) => film.publishedAt)
+  .map((film) => film.slug)
   .sort()
 const pathDirectory = resolve(root, 'src/data/content-graph/paths')
 const pathSlugs = (await readdir(pathDirectory, {withFileTypes: true}))
@@ -47,6 +51,8 @@ const staticEntries = [
   ['/sources', 'monthly', '0.6'],
   ['/changelog', 'weekly', '0.6'],
   ['/routes', 'weekly', '0.7'],
+  ['/films', 'weekly', '0.7'],
+  ...filmSlugs.map((slug) => [`/films/${slug}`, 'monthly', '0.7']),
   ...categoryIds.map((id) => [`/category/${id}`, 'weekly', '0.7']),
   ...pathSlugs.map((slug) => [`/routes/${slug}`, 'weekly', '0.7']),
 ]

@@ -10,6 +10,7 @@ import {
 import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { ArrowDown, ArrowLeft, ArrowRight, Check, MagnifyingGlass, Shuffle, X } from '@phosphor-icons/react'
 
+import { HomeFilms } from '~/components/HomeFilms'
 import { HomeSeries } from '~/components/HomeSeries'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
@@ -23,6 +24,7 @@ import {
 import { compareDefaultCatalogOrder } from '~/data/world-default-rank'
 import { getRootCategory, rootCategories, type CategoryId } from '~/data/content-graph'
 import { recommendedWorldIds } from '~/data/home-recommended'
+import type { FilmSummary } from '~/data/films'
 import type { WorldSummary } from '~/data/world-summaries'
 import { useI18n } from '~/i18n'
 import { useLocalizedRouteSeo } from '~/i18n/seo'
@@ -93,7 +95,7 @@ function HomeWorldCard({
   )
 }
 
-export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact }) {
+export function HomeDiscovery({ bootstrap, films }: { bootstrap: HomeBootstrapArtifact; films: FilmSummary[] }) {
   const { locale, t, categoryText, worldText } = useI18n()
   useLocalizedRouteSeo('home')
   const navigate = useNavigate()
@@ -393,6 +395,8 @@ export function HomeDiscovery({ bootstrap }: { bootstrap: HomeBootstrapArtifact 
           </figcaption>
         </figure>}
       </section>
+
+      <HomeFilms films={films} />
 
       <HomeSeries worldById={bootstrapWorldById} />
 
