@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Curve, Dot, GridY, lin, linePath, TimeTicks } from "../charts";
 import { DEEZER, METR, WAU, yr } from "../data";
-import { EBACK, EIO, EO, Glass, In, progAt } from "../fx";
+import { EBACK, EIO, EO, Glass, In, progAt, Tag } from "../fx";
 import { useBeatFrame } from "../kit";
 import { FONT, K } from "../theme";
 import { Head, Src } from "../ui";
@@ -27,7 +27,7 @@ export const Capability: React.FC = () => {
       </div>
       <div style={{ position: "absolute", left: 120, top: 232 }}>
         <In at={5} from="up">
-          <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>2023 年起，大约每 4 个月翻一倍。</div>
+          <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.sub, whiteSpace: "nowrap" }}>2023 年起，大约每 4 个多月翻一倍。<span style={{ fontSize: 24, color: K.muted, fontWeight: 600 }}>　METR：131 天</span></div>
         </In>
       </div>
       <GridY box={box} ticks={[0, 4, 8, 12, 16]} sy={sy} fmt={(v) => `${v} 小时`} />
@@ -66,7 +66,7 @@ export const Capability: React.FC = () => {
           </Glass>
         </In>
       ))}
-      <Src>METR 时间跨度数据 2026（50% 成功率，按人类耗时折算；点估计，区间很宽；Mythos 是 Anthropic 的模型，由 METR 测）· DeepMind 2025-07 · Epoch AI · 各家价目</Src>
+      <Src>METR 时间跨度数据 2026；翻倍时间：METR《Time Horizon 1.1》2026-01-29（50% 成功率，按人类耗时折算；点估计区间很宽；Mythos 是 Anthropic 的模型，由 METR 测）· DeepMind 2025-07 · 各家价目</Src>
     </AbsoluteFill>
   );
 };
@@ -83,6 +83,13 @@ export const Users: React.FC = () => {
     <AbsoluteFill>
       <div style={HEAD}>
         <Head at={0.2} size={76} parts={["每周 ", { t: "12 亿人", c: K.theme }, "在用 ChatGPT。"]} />
+      </div>
+      <div style={{ position: "absolute", left: 120, top: 236 }}>
+        <In at={1.2} from="scale">
+          <Tag color={K.muted} size={26}>
+            OpenAI 自报 · 2026-09-29
+          </Tag>
+        </In>
       </div>
       <div style={{ position: "absolute", left: 120, top: 320, width: cols * dot, display: "flex", flexWrap: "wrap" }}>
         {Array.from({ length: N }).map((_, i) => (
@@ -105,13 +112,16 @@ export const Users: React.FC = () => {
         })}
       </div>
       {[
-        { at: 3.6, k: "谷歌每月处理的 token", v: "约 330 倍", note: "9.7 万亿 → 3,200 万亿 · 2024 → 2026-05 · 谷歌自报" },
-        { at: 4.6, k: "Gemini 应用月活", v: "9.5 亿", note: "2026-07 · 谷歌自报" },
-        { at: 5.6, k: "美国上班族用 AI", v: "21% → 52%", note: "至少偶尔用 · 2023 → 2026-05 · Gallup" },
+        { at: 3.6, k: "谷歌每月处理的 token", v: "约 330 倍", note: "9.7 万亿 → 3,200 万亿 · 2024 → 2026-05 · 含搜索里的 AI 摘要", self: true },
+        { at: 4.6, k: "Gemini 应用月活", v: "9.5 亿", note: "2026-07", self: true },
+        { at: 5.6, k: "美国上班族用 AI", v: "21% → 52%", note: "至少偶尔用 · 2023 → 2026-05 · Gallup 调查", self: false },
       ].map((c, i) => (
         <In key={c.k} at={c.at} from="flip" style={{ position: "absolute", left: 1000, top: 320 + i * 200 }}>
           <Glass glow={K.theme} style={{ width: 800, height: 176, padding: "18px 30px", boxSizing: "border-box" }}>
-            <div style={{ fontSize: 26, fontWeight: 700, color: K.sub }}>{c.k}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <span style={{ fontSize: 26, fontWeight: 700, color: K.sub }}>{c.k}</span>
+              {c.self ? <span style={{ fontSize: 19, fontWeight: 800, color: K.bg, background: K.muted, borderRadius: 6, padding: "1px 8px" }}>自报</span> : null}
+            </div>
             <div style={{ fontSize: 64, fontWeight: 900, color: K.fg, lineHeight: 1.1 }}>{c.v}</div>
             <div style={{ fontSize: 19, color: K.muted, fontWeight: 600 }}>{c.note}</div>
           </Glass>

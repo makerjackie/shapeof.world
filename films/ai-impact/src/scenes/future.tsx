@@ -126,7 +126,7 @@ const BOLD = [
   { k: "money", c: K.money, t: "AI 投资，每年超过 1 万亿美元" },
   { k: "power", c: K.power, t: "内存和电继续紧：数据中心用电翻一倍多" },
   { k: "skill", c: K.fg, t: "AI 能独立干完一个月的活（METR 外推）" },
-  { k: "work", c: K.work, t: "第一份工作的缺口，走向 30% 以上" },
+  { k: "work", c: K.work, t: "第一份工作的缺口，走向 30% 以上", note: "把\"一年 +4 个百分点\"照直画下去" },
 ];
 
 export const Bold: React.FC = () => {
@@ -144,7 +144,10 @@ export const Bold: React.FC = () => {
               <In key={b.k} at={1.2 + i * 0.9} from="left">
                 <div style={{ display: "flex", alignItems: "center", gap: 24, height: 118, borderTop: i ? `1px solid ${K.grid}` : undefined }}>
                   <span style={{ width: 16, height: 64, borderRadius: 8, background: c }} />
-                  <span style={{ fontSize: 50, fontWeight: 900, color: K.fg, whiteSpace: "nowrap" }}>{b.t}</span>
+                  <span style={{ display: "flex", flexDirection: "column" }}>
+                    <span style={{ fontSize: 50, fontWeight: 900, color: K.fg, whiteSpace: "nowrap" }}>{b.t}</span>
+                    {"note" in b && b.note ? <span style={{ fontSize: 26, fontWeight: 700, color: K.work, whiteSpace: "nowrap" }}>趋势外推：{b.note}，描述性数据，不是定论</span> : null}
+                  </span>
                 </div>
               </In>
             );
@@ -157,7 +160,7 @@ export const Bold: React.FC = () => {
         </Stamp>
       </div>
       <div style={{ position: "absolute", left: 1470, top: 520, width: 380, fontFamily: FONT, fontSize: 21, lineHeight: 1.55, color: K.muted, fontWeight: 600, opacity: progAt(frame, 5.4, 0.8) }}>
-        趋势外推，不是定论。最后一行：把年轻人的缺口一年扩大 4 个百分点照直往后画。
+        全部是趋势外推，不是定论。依据：BofA/Evercore 的资本开支预测、IEA 用电情景、METR 时间跨度外推；最后一行把年轻人的缺口（2025-07 的 15% → 2026-06 的 19%）照直往后画。
       </div>
       <Src>本片推算 · 依据：BofA/Evercore、IEA、METR、Brynjolfsson 等（2026-08）</Src>
     </AbsoluteFill>

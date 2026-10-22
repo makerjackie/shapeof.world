@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Curve, lin, linePath, stepPath, toXY } from "../charts";
 import { DRAM_REV, NVDA, PJM, Pt, T0, T1, UNRATE } from "../data";
-import { EBACK, EIO, EO, Glass, In, progAt, Shockwave } from "../fx";
+import { EBACK, EIO, EO, Glass, In, progAt } from "../fx";
 import { useBeatFrame } from "../kit";
 import { Lanes, LANE_BOX } from "../lanes";
 import { FONT, K, LANES, SERIF } from "../theme";
@@ -14,11 +14,11 @@ export const Claim: React.FC = () => {
   const hit = frame >= 0 ? Math.max(0, 1 - frame / 16) : 0;
   return (
     <AbsoluteFill>
-      <div style={{ position: "absolute", inset: 0, opacity: 0.34 + hit * 0.3 }}>
+      <div style={{ position: "absolute", inset: 0, opacity: 0.34 + hit * 0.3, transform: `scale(${1 + 0.035 * hit})`, transformOrigin: "960px 540px" }}>
         <Lanes stations={1} flash={hit} />
       </div>
       <AbsoluteFill style={{ background: "radial-gradient(ellipse 62% 34% at 50% 50%, rgba(7,9,11,0.94) 0%, rgba(7,9,11,0.7) 55%, rgba(7,9,11,0) 100%)" }} />
-      <Shockwave at={0} x={960} y={540} color={K.fg} size={1900} />
+      <AbsoluteFill style={{ background: "radial-gradient(ellipse 46% 22% at 50% 50%, rgba(255,226,160,0.30) 0%, rgba(255,209,102,0.10) 45%, rgba(255,209,102,0) 75%)", opacity: hit }} />
       <div style={{ position: "absolute", left: 0, right: 0, top: 404, display: "flex", flexDirection: "column", alignItems: "center", gap: 18, transform: `scale(${1 + 0.05 * hit})` }}>
         <div style={{ fontFamily: FONT, fontSize: 84, fontWeight: 900, color: K.fg, letterSpacing: -1, whiteSpace: "nowrap", textShadow: "0 8px 40px rgba(0,0,0,0.9)" }}>
           AI 来了四年：<span style={{ color: K.money }}>钱</span>、<span style={{ color: K.chip }}>芯片</span>、<span style={{ color: K.power }}>电</span>都变了天，
