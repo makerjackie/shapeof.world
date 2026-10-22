@@ -3,8 +3,8 @@ import { K } from "../theme";
 import { floorBase, FOLD, ripple, TowerId, TOWERS, TowerSpec } from "./mansion";
 
 // East elevation of 深圳能源大厦 (looking west from 金田路: north tower on the right). Plan depths are the OSM
-// footprints' north–south extents, rounded.
-export const ELEV = { sW: 40, gap: 20, nW: 46 };
+// footprints' north–south extents (ways 776897366, 776897367, 776897365), rounded to the metre.
+export const ELEV = { sW: 53, gap: 32, nW: 56 };
 
 export type Look = "dusk" | "night" | "plan";
 
@@ -54,7 +54,7 @@ export const Elevation: React.FC<ElevationProps> = ({ x, ground, s, built, look 
     const w = towerW(t.id);
     const bays = Math.floor(w / FOLD);
     const bw = w / bays;
-    const skinTop = look === "plan" ? b : Math.max(0, b - 3); // the curtain wall follows the structure a few floors behind
+    const skinTop = look === "plan" || b >= t.floors ? b : Math.max(0, b - 3); // while rising, the curtain wall trails the structure
     const full = Math.floor(b);
     for (let f = 1; f <= full + 1 && f <= t.floors; f++) {
       const y0 = floorBase(t, f);

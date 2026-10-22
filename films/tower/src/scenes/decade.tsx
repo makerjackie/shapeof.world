@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, random } from "remotion";
 import { actBar, Subs, track } from "../act";
 import { ELEV, Elevation } from "../art/Elevation";
-import { TOWERS } from "../art/mansion";
+import { ripple, TOWERS } from "../art/mansion";
 import { CL, EBACK, EIO, EO, In, Odometer, progAt } from "../fx";
 import { useBeatFrame } from "../kit";
 import { FONT, K } from "../theme";
@@ -15,8 +15,8 @@ const ACT = 24;
 const B = (bar: number) => actBar(ACT, bar);
 
 const GROUND = 985;
-const S = 3.55;
-const BX = 1220;
+const S = 3.4;
+const BX = 1150;
 
 // Construction progress by date. Start 2012 (CTBUH, year only), completion 2017-10-20 (SZAD), the south tower a
 // year ahead of the north; the in-between floors are a drawing assumption (示意).
@@ -174,22 +174,67 @@ const Fold: React.FC<{ x: number; y: number; at: number }> = ({ x, y, at }) => {
   );
 };
 
+// A close-up of the skin: the same folds at 6× the scale, where the ripple is visible.
+const Closeup: React.FC<{ x: number; y: number; at: number }> = ({ x, y, at }) => {
+  const f = useBeatFrame();
+  const p = progAt(f, at, 1, EO);
+  const sweep = progAt(f, at + 0.4, 2.2, EIO);
+  const BW = 15;
+  const FH = 34;
+  const M = 28;
+  const N = 14;
+  const glass: string[] = [];
+  const shade: string[] = [];
+  for (let r = 0; r < N; r++) {
+    if (r / N > sweep) continue;
+    const fl = 30 - r;
+    for (let i = 0; i < M; i++) {
+      const g = ripple(i + 6, fl, 0);
+      const gx = x + i * BW + BW * (1 - g);
+      const gy = y + r * FH + FH * 0.16;
+      glass.push(`M${gx.toFixed(1)} ${gy.toFixed(1)}h${(g * BW).toFixed(1)}v${(FH * 0.72).toFixed(1)}h${(-g * BW).toFixed(1)}z`);
+      // the solid half of each fold catches the light unevenly: a soft shade on its left edge
+      shade.push(`M${(x + i * BW).toFixed(1)} ${gy.toFixed(1)}h${(BW * (1 - g) * 0.35).toFixed(1)}v${(FH * 0.72).toFixed(1)}h${(-BW * (1 - g) * 0.35).toFixed(1)}z`);
+    }
+  }
+  return (
+    <div style={{ position: "absolute", left: x - 10, top: y - 10, width: M * BW + 20, height: N * FH + 20, opacity: p, transform: `scale(${0.9 + 0.1 * p})`, transformOrigin: "50% 50%" }}>
+      <svg width={M * BW + 20} height={N * FH + 20} style={{ position: "absolute", left: 0, top: 0 }}>
+        <g transform={`translate(${10 - x} ${10 - y})`}>
+          <rect x={x} y={y} width={M * BW} height={N * FH} fill="#e4e0d8" />
+          <path d={shade.join("")} fill="#b9b4aa" />
+          <path d={glass.join("")} fill="#1f2b38" />
+          {Array.from({ length: N + 1 }).map((_, r) => (
+            <rect key={r} x={x} y={y + r * FH - 1} width={M * BW} height={2.5} fill="#f4f0e8" />
+          ))}
+        </g>
+      </svg>
+      <div style={{ position: "absolute", inset: 0, border: `2px solid ${K.fg}`, borderRadius: 4 }} />
+    </div>
+  );
+};
+
 const Skin: React.FC = () => (
   <AbsoluteFill>
+    <Closeup x={660} y={380} at={0.4} />
+    <div style={{ position: "absolute", left: 660, top: 380 + 14 * 34 + 22, fontFamily: FONT, fontSize: 24, fontWeight: 700, color: K.sub }}>
+      <In at={1} from="fade">北塔外墙局部（示意）</In>
+    </div>
     <div style={{ position: "absolute", left: 130, top: 210, display: "flex", flexDirection: "column", gap: 18 }}>
-      <Head at={0} parts={["外墙是一层", { t: "折起来的皮", c: K.theme }]} size={76} />
+      <Head at={0} parts={["外墙是一层", { t: "折起来的皮", c: K.theme }]} size={72} />
       <In at={1.6} from="up">
-        <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.fg }}>每一折把窗口转 45°，避开北面挡视线的楼</div>
+        <div style={{ fontFamily: FONT, fontSize: 36, fontWeight: 700, color: K.fg }}>每一折把窗口转 45°，</div>
+        <div style={{ fontFamily: FONT, fontSize: 36, fontWeight: 700, color: K.fg }}>避开北面挡视线的楼</div>
       </In>
       <In at={2.6} from="up">
-        <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 700, color: K.fg }}>整面墙看上去像涟漪</div>
+        <div style={{ fontFamily: FONT, fontSize: 36, fontWeight: 700, color: K.fg }}>整面墙看上去像涟漪</div>
       </In>
     </div>
-    <Fold x={150} y={700} at={0.8} />
-    <div style={{ position: "absolute", left: 150, top: 726, fontFamily: FONT, fontSize: 24, color: K.muted, whiteSpace: "nowrap" }}>
+    <Fold x={130} y={700} at={0.8} />
+    <div style={{ position: "absolute", left: 130, top: 726, fontFamily: FONT, fontSize: 22, color: K.muted, whiteSpace: "nowrap" }}>
       <In at={1.2} from="fade">平面示意：白线是墙，蓝线是玻璃，橙色是视线</In>
     </div>
-    <div style={{ position: "absolute", left: 150, top: 790, display: "flex", gap: 14 }}>
+    <div style={{ position: "absolute", left: 130, top: 790, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 10 }}>
       {["LEED 金级", "国家二星级绿色建筑", "2019 CTBUH 全球最佳高层建筑"].map((t, i) => (
         <In key={t} at={3 + i * 0.3} from="up">
           <div style={{ fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.sub, padding: "6px 16px", border: `1.5px solid ${K.line}`, borderRadius: 999 }}>{t}</div>
@@ -210,7 +255,7 @@ const Decade: React.FC = () => {
     <AbsoluteFill>
       <div style={{ position: "absolute", left: 130, top: 190 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 16 }}>
-          <Odometer value={Math.floor(Math.max(2008, year))} size={150} />
+          <Odometer value={Math.floor(Math.max(2008, year))} size={150} sep={false} />
           <span style={{ fontFamily: FONT, fontSize: 48, fontWeight: 900, color: K.sub }}>年</span>
         </div>
       </div>

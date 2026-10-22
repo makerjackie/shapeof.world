@@ -30,7 +30,7 @@ export const Subs: React.FC<{ act: number; subs: Sub[] }> = ({ act, subs }) => {
         const a = actBar(act, s.from);
         const b = actBar(act, s.to);
         const last = i === subs.length - 1;
-        const start = Math.max(0, off + a - 4);
+        const start = i === 0 ? 0 : Math.max(0, off + a - 4);
         const o = last ? 1 : interpolate(f, [b - FADE, b + 2], [1, 0], { ...CL, easing: EIO });
         return (
           <Sequence key={i} from={start} durationInFrames={off + b - start + (last ? 400 : FADE + 2)} layout="none">

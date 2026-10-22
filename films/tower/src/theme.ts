@@ -30,6 +30,7 @@ export const K = {
   glass: "#1a2230",
   lit: "#ffe7b0",
   green: "#3ddc97",
+  eco: "#5aa394", // 基本生态控制线 on the land ledger (muted, so it never reads as the semantic green)
   red: "#ff5a5f",
 };
 

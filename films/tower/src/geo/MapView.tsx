@@ -27,6 +27,7 @@ export type Label = {
 
 export type Layers = {
   prd?: number;
+  prdFill?: Record<string, { color: string; a: number }>;
   sz?: number;
   szFill?: Record<string, { color: string; a: number }>;
   roads?: number;
@@ -128,7 +129,7 @@ const drawBuildings = (p: Proj, list: Bldg[], L: Layers, key: string): Drawn[] =
     const sh = night > 0.5 ? SHADES_NIGHT : SHADES_DUSK;
     const litOverride = L.lit?.(b, bi);
     const litAmt = litOverride ?? night * (0.35 + 0.65 * random(`lit${key}${bi}`));
-    const winW = Math.max(0.8, Math.min(3, p.cam.z * 2.2));
+    const winW = Math.max(1.1, Math.min(3.2, p.cam.z * 3));
     const [, , depth] = project(p, b.cx, b.cy);
     out.push({
       depth,
@@ -228,9 +229,15 @@ export const MapView: React.FC<{
   return (
     <>
       <svg width={W} height={H} style={{ position: "absolute", left: 0, top: 0 }}>
-        {prd.map(({ q, d }, i) => (
-          <path key={`p${i}`} d={d} fill={q.name === "深圳市" ? "#1a1f26" : "#11161c"} stroke="rgba(244,240,232,0.16)" strokeWidth={1} opacity={prdO} />
-        ))}
+        {prd.map(({ q, d }, i) => {
+          const f = L.prdFill?.[q.name ?? ""];
+          return (
+            <g key={`p${i}`} opacity={prdO}>
+              <path d={d} fill={q.name === "深圳市" ? "#1a1f26" : "#11161c"} stroke="rgba(244,240,232,0.16)" strokeWidth={1} />
+              {f ? <path d={d} fill={f.color} fillOpacity={f.a} stroke={f.color} strokeOpacity={Math.min(1, f.a * 2.5)} strokeWidth={2} /> : null}
+            </g>
+          );
+        })}
         {sz.map(({ q, d }, i) => {
           const f = L.szFill?.[q.name ?? ""];
           return (
@@ -248,7 +255,7 @@ export const MapView: React.FC<{
                   d={linePath(p, r.pts)}
                   fill="none"
                   stroke="#f4f0e8"
-                  strokeOpacity={(r.cls === "major" ? 0.42 : 0.2) * roadsO}
+                  strokeOpacity={(r.cls === "major" ? 0.42 : 0.2) * roadsO * (1 - 0.55 * (L.night ?? 0))}
                   strokeWidth={Math.max(1, Math.min(r.cls === "major" ? 9 : 4, z * (r.cls === "major" ? 22 : 10)))}
                   strokeLinecap="round"
                   strokeLinejoin="round"

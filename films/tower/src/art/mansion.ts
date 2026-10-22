@@ -30,9 +30,9 @@ export const floorBase = (t: TowerSpec, f: number) => {
 // The folded skin: every bay is a fold, its glazed share changes slowly across the facade and up the floors, which
 // reads as the "ripple" (涟漪) the designers describe. Returns the glazed fraction of bay `i` on floor `f`.
 export const ripple = (i: number, f: number, face = 0) => {
-  const a = Math.sin(i * 0.52 + f * 0.31 + face * 1.7);
-  const b = Math.sin(i * 0.11 - f * 0.17 + face);
-  return Math.max(0.12, Math.min(0.86, 0.47 + 0.27 * a + 0.12 * b));
+  const a = Math.sin(i * 0.23 + f * 0.21 + face * 1.7);
+  const b = Math.sin(i * 0.07 - f * 0.12 + face);
+  return Math.max(0.1, Math.min(0.9, 0.5 + 0.3 * a + 0.12 * b));
 };
 
 export const FOLD = 1.6; // m, width of one fold (bay) in elevation

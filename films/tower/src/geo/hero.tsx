@@ -98,7 +98,7 @@ const tower = (p: Proj, L: Layers, ring: number[], t: TowerSpec | null, key: str
     hero: true,
     el: (
       <g key={key} opacity={L.hero ?? 1}>
-        {walls.map((d, k) => (d ? <path key={k} d={d} fill={pal.wall[k]} /> : null))}
+        {walls.map((d, k) => (d ? <path key={k} d={d} fill={pal.wall[k]} stroke={look === "night" ? K.theme : "none"} strokeWidth={1.6} strokeOpacity={0.9} /> : null))}
         <path d={glass} fill={pal.glass} />
         <path d={mid} fill={pal.lit} opacity={0.45} />
         <path d={lit} fill={pal.lit} opacity={0.95} />

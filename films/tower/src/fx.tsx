@@ -139,20 +139,25 @@ export const Odometer: React.FC<{
   color?: string;
   style?: React.CSSProperties;
   minDigits?: number;
-}> = ({ value, size, decimals = 0, prefix = "", suffix = "", color = K.fg, style, minDigits = 1 }) => {
+  sep?: boolean; // thousands separators (off for years)
+}> = ({ value, size, decimals = 0, prefix = "", suffix = "", color = K.fg, style, minDigits = 1, sep = true }) => {
   const scale = Math.pow(10, decimals);
   const n = Math.max(0, value * scale);
   const intDigits = Math.max(minDigits + decimals, Math.floor(n).toString().length, decimals + 1);
   const h = Math.round(size * 1.08);
   const cols: React.ReactNode[] = [];
+  const ip = Math.floor(n);
+  const fr = n - ip;
   for (let k = intDigits - 1; k >= 0; k--) {
     const cycle = Math.pow(10, k);
-    const base = Math.floor(n / cycle) % 10;
-    const carry = k === 0 ? n - Math.floor(n) : Math.min(1, Math.max(0, ((n % cycle) / cycle - 0.92) / 0.08));
+    const base = Math.floor(ip / cycle) % 10;
+    // A column rolls only while every column below it reads 9 (a mechanical counter), so a settled value never
+    // shows a half-turned digit.
+    const carry = k === 0 || ip % cycle === cycle - 1 ? fr : 0;
     cols.push(<Digit key={`d${k}`} pos={base + carry} h={h} />);
     const intPos = k - decimals;
     if (decimals > 0 && k === decimals) cols.push(<span key="dot">.</span>);
-    else if (intPos > 0 && intPos % 3 === 0) cols.push(<span key={`c${k}`} style={{ width: "0.28em", display: "inline-block" }}>,</span>);
+    else if (sep && intPos > 0 && intPos % 3 === 0) cols.push(<span key={`c${k}`} style={{ width: "0.28em", display: "inline-block" }}>,</span>);
   }
   return (
     <span
