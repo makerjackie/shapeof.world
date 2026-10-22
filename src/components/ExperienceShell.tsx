@@ -944,10 +944,12 @@ function ExperienceShellView({
               </div>
             )}
             {searchCopy && !issueCopy ? (
-              <section className="experience-search-answer" aria-label={answerHeading}>
-                <strong>{answerHeading}</strong>
+              // Folded by default: it spells out the world's answer, which the five beats
+              // should let people find themselves. It stays in the DOM for search engines.
+              <details className="experience-search-answer">
+                <summary>{answerHeading}</summary>
                 <p>{searchCopy.answer}</p>
-              </section>
+              </details>
             ) : null}
             {worldIssues.length > 1 && (
               <div className="experience-chapters">
