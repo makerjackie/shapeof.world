@@ -99,9 +99,9 @@ const Flash: React.FC = () => {
   return o > 0 ? <AbsoluteFill style={{ background: "#fff", opacity: o, pointerEvents: "none" }} /> : null;
 };
 
-// The track plays in one piece (STYLE.md 三、5), 1.5 dB down because its own peaks pass 0 dBTP after AAC
-// encoding (same as films/ai-real-cost), and fades out over the last bars.
-const GAIN = 0.84;
+// The track plays in one piece (STYLE.md 三、5) and fades out over the last bars. 2.5 dB down: at −1.5 dB the
+// review render measured −11.5 LUFS with true peaks near −0.5 dBTP; this lands near −12.5 LUFS and under −1 dBTP.
+const GAIN = 0.75;
 
 const palKeys = SCENES.map((s, i) => ({ at: starts[i], pal: s.pal as Palette }));
 
