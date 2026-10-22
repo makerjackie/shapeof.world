@@ -189,3 +189,29 @@ export function formatCrust(ppm: number): string {
   if (ppm >= 0.01) return `${ppm.toFixed(3)} ppm`
   return `${(ppm * 1_000).toFixed(1)} ppb`
 }
+
+/** Distinct countries among the listed top producers of these elements. */
+export function countSourceCountries(elements: Array<AtlasElement>): number {
+  const codes = new Set<string>()
+  for (const element of elements) for (const [code] of element.top ?? []) codes.add(code)
+  return codes.size
+}
+
+/**
+ * A small mass said the way people feel it: how many phones you would have to
+ * strip to gather one gram. Pure arithmetic on the measured figure, no outside data.
+ */
+export function feltMass(mg: number, locale: 'zh' | 'en' | string): string | null {
+  if (!(mg > 0) || mg >= 1_000) return null
+  const phones = 1_000 / mg
+  const rounded = phones < 20
+    ? Math.round(phones)
+    : phones < 1_000
+      ? Math.round(phones / 10) * 10
+      : Math.round(phones / 100) * 100
+  if (locale === 'zh') {
+    const text = rounded >= 10_000 ? `${(rounded / 10_000).toFixed(1).replace(/\.0$/, '')} 万部` : `${rounded} 部`
+    return `凑够 1 克，要拆 ${text}手机`
+  }
+  return `${rounded.toLocaleString('en')} phones to gather 1 g`
+}

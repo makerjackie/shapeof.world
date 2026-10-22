@@ -18,8 +18,9 @@ import {
   PERIODIC_ROWS,
   PLATES,
   approach,
-  averageConcentration,
   clamp,
+  countSourceCountries,
+  feltMass,
   formatCrust,
   formatMass,
   tableRowOffset,
@@ -128,36 +129,43 @@ function computeLayout(
   reserve: number,
   plateShown: boolean,
   mapReveal: number,
+  tableReveal: number,
 ): Layout {
   const mobile = w < 760
   const padX = mobile ? 14 : 30
   // 故事模式下读数带贴在顶部，主体要从它下面开始，否则手机会压在读数上；手机上读数落到底部，顶部整段留给章节文字
-  const stageTop = storyMode ? (mobile ? PHONE_STORY_CAPTION_RESERVE : 136) : mobile ? (plateShown ? 128 : 62) : 86
+  const stageTop = storyMode ? (mobile ? PHONE_STORY_CAPTION_RESERVE : 112) : mobile ? (plateShown ? 128 : 62) : 172
   const bottomReserve = clamp(reserve, 24, h * 0.5)
   const stageBottom = Math.max(stageTop + 200, h - bottomReserve)
   const stageH = stageBottom - stageTop
   const stageW = w - padX * 2
   const reveal = clamp(mapReveal, 0, 1)
+  const tableShown = clamp(tableReveal, 0, 1)
 
   if (mobile) {
-    // 窄屏三联画重排成上下三段：手机让出高度，地图从底部长出来。
-    const gap = 8
-    // 窄屏把三联画竖过来：手机、周期表、地图各占一段，谁都不被压扁
-    const weights = [1.15, 1.2, 0.85 * reveal]
+    // 窄屏把三联画竖过来：手机、周期表、地图各占一段。
+    // 周期表还没出场时，手机独占整个舞台；表和地图出场时，它再一点点让出高度。
+    const gapA = 8 * tableShown
+    const gapB = 8 * reveal
+    const weights = [1.15 + (1 - tableShown) * 1.6, 1.2 * tableShown, 0.85 * reveal]
     const total = weights[0] + weights[1] + weights[2]
-    const usable = stageH - gap * 2
+    const usable = stageH - gapA - gapB
     const heights = weights.map((weight) => (usable * weight) / total)
     return {
       mobile,
       phone: { x: padX, y: stageTop, w: stageW, h: heights[0] },
-      table: { x: padX, y: stageTop + heights[0] + gap, w: stageW, h: heights[1] },
-      map: { x: padX, y: stageTop + heights[0] + heights[1] + gap * 2, w: stageW, h: heights[2] },
+      table: { x: padX, y: stageTop + heights[0] + gapA, w: stageW, h: heights[1] },
+      map: { x: padX, y: stageTop + heights[0] + heights[1] + gapA + gapB, w: stageW, h: heights[2] },
       mapShown: reveal,
     }
   }
 
   const gap = 22
   const phoneW = clamp(stageW * 0.38, 280, 540)
+  // 周期表出场前，手机站在舞台正中；表亮起时它退到左边那一栏
+  const soloW = Math.min(stageW, 680)
+  const phoneShownW = phoneW + (soloW - phoneW) * (1 - tableShown)
+  const phoneShownX = padX + ((stageW - soloW) / 2) * (1 - tableShown)
   const rightX = padX + phoneW + gap
   const rightW = w - padX - rightX
   const rightGap = 18
@@ -166,7 +174,7 @@ function computeLayout(
   const tableH = usable - mapH
   return {
     mobile,
-    phone: { x: padX, y: stageTop, w: phoneW, h: stageH },
+    phone: { x: phoneShownX, y: stageTop, w: phoneShownW, h: stageH },
     table: { x: rightX, y: stageTop, w: rightW, h: tableH },
     map: { x: rightX, y: stageTop + tableH + rightGap * reveal, w: rightW, h: mapH },
     mapShown: reveal,
@@ -185,6 +193,8 @@ type Scene = {
 type CanvasLabels = {
   table: string
   map: string
+  holding: string
+  holdingSub: string
 }
 
 type ViewState = {
@@ -202,7 +212,7 @@ type ViewState = {
 
 type PlateHit = { id: PhonePartId; a: number; b: number; d: number; e: number; f: number; halfU: number; halfV: number }
 type CellHit = { sym: string; x: number; y: number; w: number; h: number }
-type PinHit = { code: string; x: number; y: number; r: number }
+type PinHit = { code: string; x: number; y: number; r: number; share: number; tone: string }
 
 type HitMap = { plates: Array<PlateHit>; cells: Array<CellHit>; pins: Array<PinHit>; phoneAnchor: { x: number; y: number } }
 
@@ -264,11 +274,18 @@ function drawPanelCaption(
   if (alpha <= 0.02) return
   ctx.save()
   ctx.globalAlpha = alpha
-  ctx.font = `500 ${mobile ? 9 : 10}px system-ui, sans-serif`
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.34)'
+  ctx.font = `600 ${mobile ? 10 : 11}px system-ui, sans-serif`
+  ctx.fillStyle = 'rgba(236, 190, 108, 0.62)'
   ctx.textAlign = 'left'
   ctx.textBaseline = 'top'
   ctx.fillText(text, panel.x + 2, panel.y)
+  const textW = ctx.measureText(text).width
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)'
+  ctx.lineWidth = 1
+  ctx.beginPath()
+  ctx.moveTo(panel.x + textW + 10, panel.y + (mobile ? 6 : 7))
+  ctx.lineTo(panel.x + panel.w - 2, panel.y + (mobile ? 6 : 7))
+  ctx.stroke()
   ctx.restore()
 }
 
@@ -294,9 +311,11 @@ function drawPhone(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
   const gapUnit = 0.012 + open * spreadUnit
   const widthUnits = 0.96 * ca + MAX_LAYER * gapUnit * sa
   const heightUnits = 2 * cp + MAX_LAYER * gapUnit * ca * sp
-  const scale = Math.min(stageW / widthUnits, panel.h / heightUnits)
+  // 合体时它是一件展品，不该撑满整个舞台：留出四周的空气和右边那行「你手里的这一台」
+  const closedShrink = 0.7 + 0.3 * clamp(open, 0, 1)
+  const scale = Math.min(stageW / widthUnits, panel.h / heightUnits) * closedShrink
   if (scale < 16) return
-  const cx = panel.x + panel.w * (named ? 0.4 : 0.5)
+  const cx = panel.x + panel.w * ((named ? 0.4 : 0.5) - (mobile ? 0.1 : 0.04) * (1 - clamp(open, 0, 1)))
   const cy = panel.y + panel.h * 0.5
 
   const spread = gapUnit * scale
@@ -419,6 +438,41 @@ function drawPhone(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
     }
   }
 
+  // 合体时给它一个「你」：这就是你手里那一台
+  const holdAlpha = clamp(1 - open / 0.3, 0, 1)
+  const glassHit = hits.plates.find((plate) => plate.id === 'glass')
+  if (holdAlpha > 0.03 && glassHit) {
+    const edgeX = glassHit.e + glassHit.halfU * glassHit.a
+    const edgeY = glassHit.f + glassHit.halfU * glassHit.b - glassHit.halfV * glassHit.d * 0.25
+    const titleFont = `600 ${mobile ? 12 : 15}px system-ui, sans-serif`
+    const subFont = `500 ${mobile ? 10 : 12}px system-ui, sans-serif`
+    ctx.font = titleFont
+    let labelW = ctx.measureText(view.labels.holding).width
+    ctx.font = subFont
+    labelW = Math.max(labelW, ctx.measureText(view.labels.holdingSub).width)
+    const labelX = Math.min(edgeX + (mobile ? 22 : 40), panel.x + panel.w - labelW - 4)
+    ctx.globalAlpha = holdAlpha
+    ctx.strokeStyle = rgba(INK.gold, 0.55)
+    ctx.lineWidth = 1
+    ctx.beginPath()
+    ctx.moveTo(edgeX + 4, edgeY)
+    ctx.lineTo(labelX - 6, edgeY)
+    ctx.stroke()
+    ctx.fillStyle = rgba(INK.gold, 0.95)
+    ctx.beginPath()
+    ctx.arc(edgeX + 4, edgeY, 2.2, 0, TAU)
+    ctx.fill()
+    ctx.textBaseline = 'alphabetic'
+    ctx.font = titleFont
+    ctx.fillStyle = rgba(INK.paper, 0.96)
+    ctx.fillText(view.labels.holding, labelX, edgeY - 3)
+    ctx.font = subFont
+    ctx.fillStyle = rgba(INK.paper, 0.56)
+    ctx.fillText(view.labels.holdingSub, labelX, edgeY + (mobile ? 12 : 15))
+    ctx.textBaseline = 'middle'
+    ctx.globalAlpha = 1
+  }
+
   // 引线收到同一根竖轴上，再把撞在一起的名字推开，读起来才像一张技术图
   if (callouts.length > 0) {
     const columnX = named ? panel.x + panel.w * 0.78 : panel.x + panel.w * 0.66
@@ -473,6 +527,14 @@ function drawPartDetail(
   }
 
   if (id === 'glass') {
+    // 前置摄像头的小孔：合体时一眼认出这是一台手机的正面
+    ctx.fillStyle = rgba('4, 6, 10', 0.85 * focus)
+    ctx.beginPath()
+    ctx.arc(0, -halfV * 0.93, 0.032, 0, TAU)
+    ctx.fill()
+    ctx.strokeStyle = rgba('255, 255, 255', 0.14 * focus)
+    ctx.lineWidth = 0.008
+    ctx.stroke()
     const sweep = ((time * 0.16) % 1.6) - 0.8
     const shine = ctx.createLinearGradient(sweep - 0.5, -halfV, sweep + 0.5, halfV)
     shine.addColorStop(0, rgba('255, 255, 255', 0))
@@ -626,8 +688,12 @@ function drawPartDetail(
 }
 
 function drawTable(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState, hits: HitMap, mobile: boolean) {
-  if (panel.h < 40 || panel.w < 60) return
-  const capH = mobile ? 13 : 17
+  const reveal = clamp(view.anim.table * 1.25, 0, 1)
+  if (panel.h < 40 || panel.w < 60 || reveal < 0.02) {
+    hits.cells.length = 0
+    return
+  }
+  const capH = mobile ? 15 : 19
   const height = panel.h - capH
   const cellW = Math.min(panel.w / (PERIODIC_COLUMNS + 0.4), height / (PERIODIC_ROWS + 0.4))
   const gridW = cellW * PERIODIC_COLUMNS
@@ -640,6 +706,7 @@ function drawTable(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
 
   hits.cells.length = 0
   ctx.save()
+  ctx.globalAlpha = reveal
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
@@ -650,7 +717,7 @@ function drawTable(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
     const element = byZ.get(cell.z)
     if (!element) {
       // 手机里没有的元素：留一个几乎看不见的位子，周期表的轮廓仍在
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.028)'
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.035)'
       ctx.fillRect(x, y, size, size)
       continue
     }
@@ -659,8 +726,9 @@ function drawTable(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
     const selected = view.activeElement === element.sym
     const { tone, weight } = elementTone(element, view.layerId)
     const strength = lit * weight
-    ctx.fillStyle = rgba(tone, 0.05 + strength * 0.78)
-    ctx.fillRect(x, y, size, size)
+    ctx.fillStyle = rgba(tone, 0.07 + strength * 0.8)
+    roundRectPath(ctx, x, y, size, size, Math.min(2.5, size * 0.12))
+    ctx.fill()
     if (lit > 0.04) {
       ctx.strokeStyle = rgba(tone, 0.16 + lit * 0.42)
       ctx.lineWidth = 1
@@ -678,7 +746,7 @@ function drawTable(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState,
     if (size > 8.5) {
       ctx.font = `600 ${clamp(size * 0.56, 6, 13)}px ui-monospace, "SF Mono", monospace`
       const dark = strength > 0.42
-      ctx.fillStyle = rgba(dark ? '10, 13, 19' : INK.paper, dark ? 0.9 : 0.28 + lit * 0.52)
+      ctx.fillStyle = rgba(dark ? '10, 13, 19' : INK.paper, dark ? 0.9 : 0.36 + lit * 0.5)
       ctx.fillText(element.sym, x + size / 2, y + size / 2 + 0.5)
     }
     hits.cells.push({ sym: element.sym, x, y, w: size, h: size })
@@ -759,6 +827,7 @@ function drawMap(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState, h
   hits.pins.length = 0
   ctx.textAlign = 'center'
   ctx.textBaseline = 'bottom'
+  const labelCandidates: Array<{ text: string; x: number; y: number; r: number; share: number; tone: string }> = []
   const sorted = [...shares.entries()].sort((left, right) => left[1] - right[1])
   for (const [code, share] of sorted) {
     const country = view.atlas.countries[code]
@@ -785,12 +854,43 @@ function drawMap(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState, h
     ctx.arc(point.x, point.y, radius, 0, TAU)
     ctx.stroke()
 
-    if (share >= 12 && panel.h > 90) {
-      ctx.font = `600 ${mobile ? 8.5 : 10}px system-ui, sans-serif`
-      ctx.fillStyle = rgba(INK.paper, 0.82)
-      ctx.fillText(`${view.pick(country)} ${share}%`, point.x, point.y - radius - 3)
+    if (panel.h > 70) {
+      labelCandidates.push({ text: `${view.pick(country)} ${share}%`, x: point.x, y: point.y, r: radius, share, tone })
     }
-    hits.pins.push({ code, x: point.x, y: point.y, r: Math.max(12, radius * 1.6) })
+    hits.pins.push({ code, x: point.x, y: point.y, r: Math.max(12, radius * 1.6), share, tone })
+  }
+
+  // 名字只给最大的几个产地，并且彼此不许压在一起：一锅粥的标签等于没有标签
+  const fontSize = mobile ? 9.5 : 11
+  ctx.font = `600 ${fontSize}px system-ui, sans-serif`
+  const placed: Array<{ x: number; y: number; w: number; h: number }> = []
+  const limit = view.activeElement ? 3 : mobile ? 5 : 9
+  labelCandidates.sort((left, right) => right.share - left.share)
+  for (const candidate of labelCandidates) {
+    if (placed.length >= limit) break
+    const w = ctx.measureText(candidate.text).width + 10
+    const h = fontSize + 6
+    const options = [candidate.y - candidate.r - 4 - h, candidate.y + candidate.r + 4]
+    for (const top of options) {
+      const left = clamp(candidate.x - w / 2, panel.x + 2, panel.x + panel.w - w - 2)
+      const box = { x: left, y: clamp(top, panel.y + 14, panel.y + panel.h - h - 2), w, h }
+      const clash = placed.some((other) => (
+        box.x < other.x + other.w + 3 && box.x + box.w + 3 > other.x
+        && box.y < other.y + other.h + 2 && box.y + box.h + 2 > other.y
+      ))
+      if (clash) continue
+      placed.push(box)
+      ctx.fillStyle = 'rgba(5, 8, 13, 0.78)'
+      roundRectPath(ctx, box.x, box.y, box.w, box.h, h / 2)
+      ctx.fill()
+      ctx.strokeStyle = rgba(candidate.tone, 0.5)
+      ctx.lineWidth = 1
+      ctx.stroke()
+      ctx.fillStyle = rgba(INK.paper, 0.94)
+      ctx.textBaseline = 'middle'
+      ctx.fillText(candidate.text, box.x + box.w / 2, box.y + box.h / 2 + 0.5)
+      break
+    }
   }
 
   ctx.restore()
@@ -806,12 +906,13 @@ function drawArcs(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState, 
   ctx.globalAlpha = clamp((reveal - 0.15) / 0.4, 0, 1)
   ctx.lineCap = 'round'
 
-  for (const pin of hits.pins) {
+  const strongest = [...hits.pins].sort((left, right) => right.share - left.share).slice(0, mobile ? 6 : 10)
+  for (const pin of strongest) {
     const midX = (pin.x + target.x) / 2
     const midY = (pin.y + target.y) / 2 - Math.abs(pin.x - target.x) * (mobile ? 0.12 : 0.24) - 30
     const gradient = ctx.createLinearGradient(pin.x, pin.y, target.x, target.y)
-    gradient.addColorStop(0, rgba(INK.gold, 0.42))
-    gradient.addColorStop(1, rgba(INK.accent, 0.05))
+    gradient.addColorStop(0, rgba(pin.tone, 0.5))
+    gradient.addColorStop(1, rgba(INK.accent, 0.04))
     ctx.strokeStyle = gradient
     ctx.lineWidth = 1
     ctx.beginPath()
@@ -823,9 +924,9 @@ function drawArcs(ctx: CanvasRenderingContext2D, panel: Panel, view: ViewState, 
     const inv = 1 - t
     const px = inv * inv * pin.x + 2 * inv * t * midX + t * t * target.x
     const py = inv * inv * pin.y + 2 * inv * t * midY + t * t * target.y
-    ctx.fillStyle = rgba(INK.gold, 0.9 * (1 - t * 0.6))
+    ctx.fillStyle = rgba(pin.tone, 0.95 * (1 - t * 0.6))
     ctx.beginPath()
-    ctx.arc(px, py, 2.1, 0, TAU)
+    ctx.arc(px, py, mobile ? 1.8 : 2.3, 0, TAU)
     ctx.fill()
   }
   ctx.restore()
@@ -847,6 +948,8 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
   const [activePart, setActivePart] = useState<PhonePartId | null>(null)
   const [activeElement, setActiveElement] = useState<string | null>(null)
   const [layerId, setLayerId] = useState<LayerId>('mass')
+  /** 故事走到第几拍：前两拍只有手机，读数先不出来抢戏 */
+  const [beat, setBeat] = useState(0)
 
   const freeScene: Scene = { explode: 1, table: 1, map: 1, spin: 1 }
   const sceneRef = useRef<Scene>(storyMode ? { explode: 0, table: 0, map: 0, spin: 1 } : { ...freeScene })
@@ -889,9 +992,12 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     (record: { zh: string; en: string }) => (locale === 'zh' ? record.zh : record.en)
   ), [locale])
 
+  const deviceGrams = atlas ? Math.round(atlas.meta.deviceMassG) : 111
   const labels: CanvasLabels = {
-    table: tx('元素周期表'),
-    map: tx('全球主要产地'),
+    table: tx('元素周期表 · 这台手机用到的点亮'),
+    map: tx('它们主要从这些国家挖出来'),
+    holding: tx('你手里的这一台'),
+    holdingSub: locale === 'zh' ? `约 ${deviceGrams} 克（不含电池）` : `≈ ${deviceGrams} g (no battery)`,
   }
   const labelsRef = useRef(labels)
   labelsRef.current = labels
@@ -916,8 +1022,10 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
   }, [atlas, activePart])
 
   const selected = activeElement ? elementsById.get(activeElement) ?? null : null
-  const concentration = useMemo(() => (
-    selected ? topThreeShare(selected) : averageConcentration(partElements)
+  const concentration = selected ? topThreeShare(selected) : null
+  const allCountries = useMemo(() => (atlas ? countSourceCountries(atlas.elements) : 0), [atlas])
+  const focusCountries = useMemo(() => (
+    countSourceCountries(selected ? [selected] : partElements)
   ), [selected, partElements])
 
   /* --------------------------------------------------------------- scenes */
@@ -956,10 +1064,12 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     const dockShown = Boolean(dockRect) && dockRect!.height > 4 && isVisible(dockElement)
     // Phone story chapters: the caption owns the top band and the readout sits above the slim story bar.
     const phoneStory = storyRef.current && rootRect.width < 760
-    const dockHeight = phoneStory ? 72 : dockShown ? Math.max(0, rootRect.bottom - dockRect!.top) + 12 : 22
+    // 桌面故事：读数落在左下、故事导航条之上，底部这条带子也是字幕的落脚处
+    const deskStory = storyRef.current && !phoneStory
+    const dockHeight = phoneStory ? 72 : deskStory ? 92 : dockShown ? Math.max(0, rootRect.bottom - dockRect!.top) + 12 : 22
     root.style.setProperty('--elem-dock', `${Math.round(dockHeight)}px`)
     const readout = readoutRef.current
-    const readoutHeight = (!storyRef.current || phoneStory) && readout && readout.offsetHeight > 0 && isVisible(readout)
+    const readoutHeight = readout && readout.offsetHeight > 0 && isVisible(readout)
       ? readout.offsetHeight + 14
       : 0
     reserveRef.current = dockHeight + readoutHeight
@@ -1006,7 +1116,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
 
         if (frames % 12 === 1) measureDock()
         frames += 1
-        const layout = computeLayout(width, height, storyRef.current, reserveRef.current, plateRef.current, anim.map)
+        const layout = computeLayout(width, height, storyRef.current, reserveRef.current, plateRef.current, anim.map, anim.table)
         drawBackdrop(ctx, width, height, layout)
 
         const data = atlasRef.current
@@ -1117,10 +1227,11 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
 
   const guideSteps: Array<GuideStep> = [
     {
-      title: '它看着只是玻璃和金属',
-      body: '一块玻璃，一圈金属，一块会亮的屏。掂在手里，它像一件完整、干净、说不清里面有什么的东西。',
+      title: '你手里这块玻璃，挖自多少个国家？',
+      body: '它看着只是一块玻璃、一圈金属、一块会亮的屏。拆开它，一层一层数。',
       durationMs: 5_600,
       action: () => runScene(() => {
+        setBeat(0)
         setActivePart(null)
         setActiveElement(null)
         setLayerId('mass')
@@ -1132,6 +1243,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
       body: '在拆解台上它散成十层：盖板、屏幕、中框、主板、芯片、摄像头、扬声器、马达、电池、天线。',
       durationMs: 6_200,
       action: () => runScene(() => {
+        setBeat(1)
         setActivePart(null)
         setActiveElement(null)
         setScene({ explode: 0, table: 0, map: 0, spin: 1 })
@@ -1140,9 +1252,10 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     },
     {
       title: '五十三种金属',
-      body: '把每一层溶解、送进质谱仪，数出 53 种金属。铁最多，有 16 克；金只有 16.8 毫克。',
+      body: '把每一层溶解、送进质谱仪，数出 53 种金属。铁最多，有 16 克；金只有 16.8 毫克——想凑够 1 克金，得拆 60 部手机。',
       durationMs: 8_200,
       action: () => runScene(() => {
+        setBeat(2)
         setActivePart(null)
         setActiveElement(null)
         setScene({ explode: 1, table: 0, map: 0, spin: 0.4 })
@@ -1151,22 +1264,26 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     },
     {
       title: '它们从哪里来',
-      body: '钴有 76% 来自一个国家，镓有 98% 来自另一个。产地地图一亮，你就看见了供应链风险的实体。',
+      body: '电池里的钴，76% 出自刚果（金）；芯片里的镓，98% 出自中国。很多金属，全世界只靠一两个国家供货。',
       durationMs: 9_600,
       action: () => runScene(() => {
+        setBeat(3)
         setActivePart(null)
         setLayerId('supply')
         setActiveElement('Co')
-        setScene({ explode: 1, table: 1, map: 0, spin: 0.25 })
+        // 手机竖屏放不下三联画：讲产地这一拍只留手机和地图，一屏一件事
+        const narrow = (rootRef.current?.clientWidth ?? window.innerWidth) < 760
+        setScene({ explode: 1, table: narrow ? 0 : 1, map: 0, spin: 0.25 })
         after(240, () => setScene({ map: 1 }))
         after(4_600, () => setActiveElement('Ga'))
       }),
     },
     {
-      title: '你来拆',
-      body: '点任意一层，看它用到哪些元素；点一个元素，看它从世界哪些角落被挖出来，再汇回你手上。',
+      title: '答案：至少 28 个国家',
+      body: '只算每种金属最大的三个产地，这一台手机就连着 28 个国家。现在你来拆：点一层，看它用到哪些元素；点一个元素，看它从哪里来。',
       durationMs: 7_200,
       action: () => runScene(() => {
+        setBeat(4)
         setLayerId('mass')
         setActiveElement(null)
         setActivePart(null)
@@ -1199,6 +1316,9 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     { id: 'recycle', label: tx('可回收性') },
   ]
 
+  const felt = selected ? feltMass(totalMg(selected), locale) : null
+  const countriesText = locale === 'zh' ? `${focusCountries} 个国家` : `${focusCountries} countries`
+
   const layerNote: Record<LayerId, string> = {
     mass: tx('格子越亮，这种元素在机内越多'),
     supply: tx('越红，前三个产地合起来占得越多'),
@@ -1207,7 +1327,10 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
   }
 
   return (
-    <div ref={rootRef} className={`oss-experience elem-experience${storyMode ? ' is-story' : ' is-free'}`}>
+    <div
+      ref={rootRef}
+      className={`oss-experience elem-experience${storyMode ? ' is-story' : ' is-free'}${storyMode && beat < 2 ? ' is-quiet' : ''}${atlas ? '' : ' is-loading'}`}
+    >
       <canvas
         ref={canvasRef}
         className="elem-canvas"
@@ -1218,47 +1341,74 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
       {!storyMode && (
         <header className="elem-plate" data-experience-overlay="true">
           <span>{tx('材料与供应链')}</span>
-          <h1>{tx('一部手机，拆开是半张世界地图')}</h1>
+          <h1>{tx('你手里这块玻璃，挖自多少个国家？')}</h1>
+          {atlas && (
+            <p>
+              {locale === 'zh'
+                ? <>拆开数：至少 <b>{allCountries}</b> 个国家</>
+                : <>Count them: at least <b>{allCountries}</b> countries</>}
+            </p>
+          )}
         </header>
       )}
 
       <aside ref={readoutRef} className="elem-readout" data-experience-overlay="true">
         {failed && <div className="elem-readout-row"><b>{tx('数据没能载入')}</b></div>}
-        {!failed && !atlas && <div className="elem-readout-row"><b>{tx('正在取出这台手机的成分表……')}</b></div>}
+        {!failed && !atlas && (
+          <div className="elem-readout-row elem-loading">
+            <i aria-hidden="true" />
+            <b>{tx('正在取出这台手机的成分表……')}</b>
+          </div>
+        )}
         {atlas && (
           <>
             <div className="elem-readout-row is-key">
-              <small>{tx('当前部件')}</small>
-              <b>{activePartRecord ? pick(activePartRecord) : tx('整机')}</b>
+              <small>{selected ? `${selected.sym} · ${pick(selected)}` : tx('当前部件')}</small>
+              <b>
+                {selected ? formatMass(totalMg(selected)) : activePartRecord ? pick(activePartRecord) : tx('整机')}
+                {selected?.batteryMg !== undefined && <i>{tx('含电池推算值')}</i>}
+              </b>
             </div>
-            <div className="elem-readout-row">
-              <small>{tx('涉及元素')}</small>
-              <b>{partElements.length}<i>/ {atlas.elements.length}</i></b>
-            </div>
-            <div className="elem-readout-row">
-              <small>{tx('这些元素合计')}</small>
-              <b>{formatMass(totalMass)}</b>
-            </div>
-            {selected && (
+            {felt && (
+              <div className="elem-readout-row is-key is-felt">
+                <small>{tx('换个说法')}</small>
+                <b>{felt}</b>
+              </div>
+            )}
+            {focusCountries > 0 && (
+              <div className="elem-readout-row is-key is-hero">
+                <small>{tx('主要产地')}</small>
+                <b>{countriesText}</b>
+              </div>
+            )}
+            {selected && concentration !== null && (
               <div className="elem-readout-row is-key">
-                <small>{selected.sym} · {pick(selected)}</small>
-                <b>
-                  {formatMass(totalMg(selected))}
-                  {selected.batteryMg !== undefined && <i>{tx('含电池推算值')}</i>}
-                  {selected.crust !== undefined && <i>{tx('地壳')} {formatCrust(selected.crust)}</i>}
-                </b>
+                <small>{tx('最大三国占全球')}</small>
+                <b>{concentration.toFixed(0)}%</b>
+              </div>
+            )}
+            {!selected && (
+              <div className="elem-readout-row">
+                <small>{tx('涉及元素')}</small>
+                <b>{partElements.length}<i>/ {atlas.elements.length}</i></b>
+              </div>
+            )}
+            {!selected && (
+              <div className="elem-readout-row">
+                <small>{tx('这些元素合计')}</small>
+                <b>{formatMass(totalMass)}</b>
+              </div>
+            )}
+            {selected?.crust !== undefined && (
+              <div className="elem-readout-row">
+                <small>{tx('地壳里的含量')}</small>
+                <b>{formatCrust(selected.crust)}</b>
               </div>
             )}
             {selected && producerLine && (
               <div className="elem-readout-row is-wide">
                 <small>{tx('主要产出国')}</small>
                 <b>{producerLine}</b>
-              </div>
-            )}
-            {concentration !== null && (
-              <div className="elem-readout-row is-key">
-                <small>{selected ? tx('前三国合计') : tx('平均供应集中度')}</small>
-                <b>{concentration.toFixed(0)}%</b>
               </div>
             )}
             <p>
@@ -1347,7 +1497,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
         stagePlan={[
           { position: 'top-left', mobilePosition: 'top-left', motion: 'rise', tone: 'light', width: 'normal', treatment: 'monumental' },
           { position: 'top-right', mobilePosition: 'top-left', motion: 'drift-left', tone: 'light', width: 'normal', treatment: 'editorial', cue: 'left' },
-          { position: 'bottom-left', mobilePosition: 'top-left', motion: 'fade', tone: 'light', width: 'wide', treatment: 'caption' },
+          { position: 'bottom-right', mobilePosition: 'top-left', motion: 'fade', tone: 'light', width: 'normal', treatment: 'caption' },
           { position: 'bottom-right', mobilePosition: 'top-left', motion: 'drift-right', tone: 'light', width: 'normal', treatment: 'annotation' },
           { position: 'top-center', mobilePosition: 'top-center', motion: 'scale', tone: 'light', width: 'normal', treatment: 'editorial' },
         ]}
