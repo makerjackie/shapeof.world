@@ -1,3 +1,9 @@
+# Text files are LF in the repository and in every checkout, on Windows too:
+# byte budgets, checksums and generated files must match across machines.
+* text=auto eol=lf
+# Upstream licence texts keep their original bytes.
+films/**/fonts/*-OFL.txt -text
+
 # Exported JavaScript includes upstream GLSL strings. Preserve their bytes;
 # whitespace checks apply to source files, not these hashed build artifacts.
 public/vendor/**/*.js -whitespace linguist-generated=true
