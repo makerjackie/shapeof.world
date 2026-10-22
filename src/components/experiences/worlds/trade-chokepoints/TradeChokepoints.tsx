@@ -571,7 +571,7 @@ function drawCape(
     const after = model.capeOfGoodHope.eia['2024'] ?? 0
     ctx.font = `600 ${view.mobile ? 12 : 14}px ui-monospace, "SF Mono", monospace`
     ctx.fillStyle = rgba(INK.cape, 0.96)
-    ctx.fillText(`${before.toFixed(1)} → ${after.toFixed(1)}`, x, y + (view.mobile ? 20 : 23))
+    ctx.fillText(`${before.toFixed(1)} → ${after.toFixed(1)} ${labels.mbd}`, x, y + (view.mobile ? 20 : 23))
     ctx.font = `500 ${view.mobile ? 8.5 : 9.5}px system-ui, sans-serif`
     ctx.fillStyle = 'rgba(255, 255, 255, 0.5)'
     ctx.fillText(labels.capeShift, x, y + (view.mobile ? 35 : 41))
@@ -600,6 +600,7 @@ function drawGates(
   suppressLabel: GateId | null,
   invite: number,
   time: number,
+  closed: ReadonlySet<GateId>,
 ) {
   const radius = view.mobile ? 11 : 14
   const lineStep = view.mobile ? 12 : 13
@@ -634,6 +635,17 @@ function drawGates(
         ctx.arc(x, y, radius + 2 + phase * radius * 1.6, 0, TAU)
         ctx.stroke()
       }
+    }
+
+    // The moment a gate is touched, one shock ring leaves it: red when it slams shut.
+    const kick = pulse[gate.id] ?? 0
+    if (kick > 0.02) {
+      const spread = 1 - kick
+      ctx.strokeStyle = rgba(closed.has(gate.id) ? INK.closed : INK.brass, 0.7 * kick)
+      ctx.lineWidth = 2 * kick + 0.6
+      ctx.beginPath()
+      ctx.arc(x, y, radius + spread * radius * 3.2, 0, TAU)
+      ctx.stroke()
     }
 
     // A dark lens under every ring so the gate reads as a control above the traffic.
@@ -1324,6 +1336,7 @@ export function TradeChokepoints({ controls }: { controls: ExperienceControls })
           anim.everGiven > 0.25 ? 'suez' : null,
           invite,
           clock,
+          closedRef.current,
         )
         drawEverGiven(ctx, view, currentModel, anim.everGiven, labelsRef.current, clock, dpr)
         drawFootnote(ctx, view, labelsRef.current)
