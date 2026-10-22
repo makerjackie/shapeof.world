@@ -1400,7 +1400,7 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
           const portrait = height > width * 1.05
           const fullRadius = portrait ? Math.min(width * 0.2, height * 0.1) : Math.min(width * 0.115, height * 0.19)
           const fullCentre: [number, number] = portrait
-            ? [width * 0.6, height * 0.4]
+            ? [width * 0.6, height * 0.43]
             : [width * 0.66, height * 0.36]
           const m = smoothstep(0, 1, store.magnify)
           const anchor: [number, number] = heroScreen ? [heroScreen[0], heroScreen[1]] : fullCentre
@@ -1734,8 +1734,8 @@ export function Rainbow({ controls }: { controls: ExperienceControls }) {
           ) : (
             <>
               <div className="rb-hud-row">
-                <small>{tx('入射位置')}</small>
-                <strong className="is-cool">{Math.abs(impact).toFixed(2)}</strong>
+                <small>{tx('光打在离中心')}</small>
+                <strong className="is-cool">{Math.round(Math.abs(impact) * 100)}%</strong>
               </div>
               <div className="rb-hud-row">
                 <small>{tx('偏离回头方向')}</small>
