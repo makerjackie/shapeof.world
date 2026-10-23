@@ -210,13 +210,14 @@ export const Rise4: React.FC = () => {
   const keys: Key[] = [
     [B(86) - 0.05, { x: -200, y: 40, z: 0.9 }],
     [B(88) - 0.2, { x: -120, y: 20, z: 0.98 }, E.lin],
-    [B(88) + 0.4, { x: -360, y: 40, z: 1.05 }, E.out],
-    [B(90) - 0.1, { x: -330, y: 30, z: 1.08 }, E.lin],
+    [B(88) + 0.4, { x: -360, y: -40, z: 1.05 }, E.out],
+    [B(90) - 0.1, { x: -330, y: -40, z: 1.08 }, E.lin],
     [B(90) + 0.5, { x: 200, y: 20, z: 0.95 }, E.inOut],
     [b47 - 0.1, { x: 220, y: 10, z: 0.92 }, E.lin],
     [b48, { x: 200, y: 0, z: 0.88 }, E.lin],
     [b49, { x: 380, y: 20, z: 0.95 }, E.inOut],
-    [B(100) + 0.05, { x: 560, y: 20, z: 1.12 }, E.inOut],
+    [b49 + 1.8, { x: 640, y: 0, z: 1.1 }, E.inOut],
+    [B(100) + 0.05, { x: 520, y: 20, z: 1.05 }, E.inOut],
   ];
   const us = pr(t, B(86) + 0.4, 0.8);
   const aiMarks = [AI_MARKS.m4, AI_MARKS.m39, AI_MARKS.h1, AI_MARKS.h3, AI_MARKS.h12, AI_MARKS.h17];
@@ -226,9 +227,10 @@ export const Rise4: React.FC = () => {
   const age = ageAt(t);
   const dim = pr(t, b47 - 0.1, 0.5, E.inOut) * (1 - pr(t, b48 - 0.25, 0.5, E.inOut));
   const doorGlow = pr(t, b48 + 0.1, 0.7);
-  const walk = pr(t, b49 + 0.1, 1.2, E.inOut);
-  const squeeze = pr(walk, 0.7, 0.3);
-  const mark23 = pr(t, b49 + 1.45, 0.3, E.inOut);
+  const walk = pr(t, b49 + 0.1, 1.5, E.inOut);
+  const enter = pr(t, b49 + 1.9, 0.9, E.inOut);
+  const squeeze = pr(enter, 0, 0.4);
+  const mark23 = pr(t, b49 + 2.9, 0.35, E.inOut);
   const kidH = HEIGHT[Math.floor(Math.min(22, age))] * PX;
   const kidX = HUL.x - 40;
   return (
@@ -306,7 +308,7 @@ export const Rise4: React.FC = () => {
           ) : null}
           {/* he walks to it and squeezes through sideways */}
           {t >= b49 ? (
-            <At x={lerp(kidX - kidH * 0.25, JOB.x - 60, walk)} y={HUL.floor - HEIGHT[22] * PX} o={1 - pr(walk, 0.85, 0.15)} style={{ transformOrigin: "50% 100%" }} s={1}>
+            <At x={lerp(kidX - kidH * 0.25, JOB.x - 250, walk) + enter * 170} y={HUL.floor - HEIGHT[22] * PX} o={1 - pr(enter, 0.55, 0.45)} style={{ transformOrigin: "50% 100%" }} s={1}>
               <div style={{ transform: `scaleX(${lerp(1, 0.45, squeeze)})`, transformOrigin: "50% 100%" }}>
                 <Grower h={HEIGHT[22] * PX} age={22} look={1} />
               </div>

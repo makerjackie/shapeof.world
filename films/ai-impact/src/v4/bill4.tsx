@@ -199,7 +199,7 @@ export const Factory4: React.FC = () => {
           return <At key={i} x={lerp(FAC.x + 420, FAC.x + 1900, p)} y={LANE_AI - 66}><div style={{ width: 80, height: 62, borderRadius: 10, background: "rgba(77,212,255,0.8)", boxShadow: "0 0 22px rgba(77,212,255,0.7)" }} /></At>;
         })}
         {/* the one crate for the PCs, slow, which the camera follows to the cart */}
-        <At x={t < B(44) - 0.35 ? lerp(FAC.x + 440, 900, pr(t, B(42) + 0.4, B(44) - 0.75 - B(42), E.lin)) : crateX} y={LANE_PC - 66}>
+        <At x={t < B(44) - 0.35 ? lerp(FAC.x + 440, 900, pr(t, B(42) + 0.4, B(44) - 0.75 - B(42), E.lin)) : crateX} y={LANE_PC - 66} o={1 - pr(t, B(44) + 0.6, 0.3)}>
           <div style={{ width: 80, height: 62, borderRadius: 10, background: "rgba(244,240,232,0.45)" }} />
         </At>
         <At x={260} y={LANE_PC + 60}>

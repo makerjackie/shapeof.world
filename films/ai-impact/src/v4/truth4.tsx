@@ -69,7 +69,7 @@ export const Flat4: React.FC = () => {
           <circle cx={tipX} cy={ue(draw)} r={14} fill={FG} />
         </svg>
         {ups.map((u, i) => (
-          <At key={u.name} x={0.62 * L + i * 140} y={curve(u.k, 0.62) - 60}>
+          <At key={u.name} x={0.5 * L + i * 160} y={curve(u.k, 0.5) - 60}>
             <div style={{ fontFamily: FONT, fontSize: 38, fontWeight: 800, color: u.c, opacity: 0.5, whiteSpace: "nowrap" }}>{u.name}</div>
           </At>
         ))}
@@ -123,11 +123,12 @@ export const Corridor4: React.FC = () => {
         {AGES.map((age, i) => {
           const young = i === 4;
           const w = young ? lerp(DW, 130, narrow) : DW;
+          const fade = young ? 1 : 1 - 0.75 * pr(t, SLAM4, 0.4);
           return (
-            <At key={age} x={DX(i) - w / 2} y={-DH}>
+            <At key={age} x={DX(i) - w / 2} y={-DH} o={fade}>
               {young ? <div style={{ position: "absolute", left: -300, top: -200, width: w + 600, height: DH + 400, background: `radial-gradient(ellipse at 50% 60%, rgba(255,209,102,${0.18 + 0.35 * glow}), transparent 60%)` }} /> : null}
               <Door w={w} h={DH} light={young ? 0.9 : 0.55} frame={young && narrow > 0 ? `rgba(255,209,102,${0.5 + 0.5 * clamp01(narrow)})` : "#3a4250"} />
-              <div style={{ position: "absolute", left: w / 2, top: -76, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 40, fontWeight: 900, color: young ? GOLD : "#b8b8b3", whiteSpace: "nowrap" }}>{age}</div>
+              <div style={{ position: "absolute", left: w / 2, top: -76, transform: "translateX(-50%)", fontFamily: FONT, fontSize: 40, fontWeight: 900, color: young ? GOLD : "#b8b8b3", whiteSpace: "nowrap", opacity: young ? 1 : 1 - pr(t, SLAM4, 0.3) }}>{age}</div>
               {/* light spilling onto the floor */}
               <div style={{ position: "absolute", left: -w * 0.3, top: DH, width: w * 1.6, height: 160, background: `linear-gradient(180deg, rgba(255,209,102,${young ? 0.22 : 0.1}), transparent)`, clipPath: "polygon(20% 0, 80% 0, 100% 100%, 0 100%)" }} />
             </At>
@@ -175,10 +176,10 @@ export const Rows4: React.FC = () => {
   const t = useT();
   if (t < B(66) - 0.05 || t > B(70) + 0.05) return null;
   const keys: Key[] = [
-    [B(66) - 0.05, { x: 200, y: 900, z: 0.8 }],
-    [B(66) + 0.6, { x: 320, y: 40, z: 0.92 }, E.out],
-    [B(68), { x: 340, y: 30, z: 0.96 }, E.lin],
-    [B(70) + 0.05, { x: 380, y: 10, z: 1.04 }, E.lin],
+    [B(66) - 0.05, { x: 260, y: 900, z: 0.9 }],
+    [B(66) + 0.6, { x: 330, y: 60, z: 1.16 }, E.out],
+    [B(68), { x: 340, y: 50, z: 1.2 }, E.lin],
+    [B(70) + 0.05, { x: 380, y: 40, z: 1.28 }, E.lin],
   ];
   const go = pr(t, B(66) + 2 * BEAT, 0.6, E.inOut);
   const add = spring(t, B(66) + 3 * BEAT, 2, 8);
@@ -189,10 +190,10 @@ export const Rows4: React.FC = () => {
       <Plane>
         {[0, 1].map((row) => {
           const young = row === 0;
-          const y = young ? -150 : 190;
+          const y = young ? -130 : 150;
           return (
             <React.Fragment key={row}>
-              <At x={-360} y={y + 30}>
+              <At x={-210} y={y + 30}>
                 <div style={{ fontFamily: FONT, whiteSpace: "nowrap", textAlign: "right", transform: "translateX(-100%)" }}>
                   <div style={{ fontSize: 44, fontWeight: 900, color: young ? GOLD : FG }}>{young ? (bowl > 0.5 ? "新人" : "22–25 岁") : bowl > 0.5 ? "老手" : "41–49 岁"}</div>
                   <div style={{ fontSize: 52, fontWeight: 900, color: young ? RED : GREEN, opacity: (young ? go : clamp01(add)) * (1 - bowl) }}>{young ? "约 −19%" : "约 +20%"}</div>
@@ -204,13 +205,13 @@ export const Rows4: React.FC = () => {
                 const on = last ? 1 - go * 0.85 : extra ? clamp01(add) : 1;
                 const lift = last ? gone * 60 : 0;
                 return (
-                  <At key={i} x={-300 + i * 210} y={y - lift} o={last && bowl > 0.5 ? 1 - gone : 1} s={extra ? lerp(0.6, 1, clamp01(add)) : 1}>
+                  <At key={i} x={-150 + i * 210} y={y - lift} o={last && bowl > 0.5 ? 1 - gone : 1} s={extra ? lerp(0.6, 1, clamp01(add)) : 1}>
                     <Desk on={bowl > 0.5 && last ? 1 : on} color={young ? "#8b96a6" : "#5f6878"} bowl={bowl} t={t} />
                   </At>
                 );
               })}
               {young ? (
-                <At x={-300 + 4 * 210 + 40} y={y + 70} o={gone}>
+                <At x={-150 + 4 * 210 + 40} y={y + 70} o={gone}>
                   <div style={{ width: 100, height: 40, borderRadius: "50%", border: "3px dashed rgba(255,209,102,0.7)" }} />
                 </At>
               ) : null}

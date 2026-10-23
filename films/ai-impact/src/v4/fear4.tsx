@@ -200,13 +200,13 @@ export const Notices4: React.FC = () => {
       <AbsoluteFill style={{ transform: `scale(${1 + 0.06 * pr(t, B(54), BAR * 2, E.lin)})` }}>
         {Array.from({ length: 22 }).map((_, i) => {
           const start = B(54) + 0.05 + i * 0.15;
-          const p = pr(t, start, 1.9, E.lin);
+          const p = pr(t, start, 3.0, E.lin);
           if (p <= 0) return null;
           const x = 380 + rnd(`nx${i}`) * 1420;
           const sway = Math.sin(t * 2.4 + i) * 40;
           const rot = (rnd(`nr${i}`) - 0.5) * 30 + Math.sin(t * 2 + i) * 12;
           return (
-            <div key={i} style={{ position: "absolute", left: x + sway, top: lerp(-280, 700 + rnd(`ny${i}`) * 120, Math.min(1, p)), transform: `rotate(${rot}deg)`, width: 200, padding: "14px 16px", borderRadius: 6, background: "#ece6da", color: "#19231f", fontFamily: FONT, boxShadow: "0 12px 30px rgba(0,0,0,0.45)" }}>
+            <div key={i} style={{ position: "absolute", left: x + sway, top: lerp(-280, 1250, Math.min(1, p)), transform: `rotate(${rot}deg)`, opacity: 1 - 0.55 * pr(t, B(55) - 0.1, 0.4), width: 200, padding: "14px 16px", borderRadius: 6, background: "#ece6da", color: "#19231f", fontFamily: FONT, boxShadow: "0 12px 30px rgba(0,0,0,0.45)" }}>
               <div style={{ fontSize: 24, fontWeight: 900 }}>裁员通知</div>
               <div style={{ marginTop: 8, height: 5, width: "85%", background: "rgba(25,35,31,0.3)", borderRadius: 3 }} />
               <div style={{ marginTop: 6, height: 5, width: "65%", background: "rgba(25,35,31,0.3)", borderRadius: 3 }} />
@@ -225,6 +225,7 @@ export const Notices4: React.FC = () => {
         <div style={{ fontSize: 26, fontWeight: 700, color: "#9a9a95" }}>写的原因是 AI</div>
       </div>
       <Words at={B(54) + 0.1} lines={['裁员公告写着"因为 AI"，']} x={110} y={150} size={76} />
+      <AbsoluteFill style={{ background: "radial-gradient(ellipse 45% 22% at 50% 54%, rgba(4,8,14,0.75), transparent 75%)", opacity: pr(t, B(55) - 0.1, 0.4) }} />
       <Words at={B(55) - 0.05} lines={["下一个会是我吗？"]} x={960} y={520} size={130} align="center" reveal="blur" cps={14} kw={["我"]} kwColor={RED} glow="rgba(0,0,0,0.6)" />
       <Fine at={B(54) + 0.3} out={B(56) - 0.2}>
         Challenger, Gray & Christmas：2026 年 1–9 月美国公司公告裁员中以 AI 为由 120,136 人，是公司自己说的原因，不是统计出来的失业 · 中国 54% 的受访者担心被 AI 抢走工作（腾讯 × 复旦，网络调查）
