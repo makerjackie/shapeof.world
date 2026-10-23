@@ -56,7 +56,19 @@ Intelligence Index v4.3.2 (leaderboard + model pages, 2026-10-22) [MEASURED-3P],
 
 Round-by-round counts on screen (whole tasks, chosen so the totals hit 162 and 216): Opus solves 62, 23, 9, 4, 1, 1; DeepSeek solves 46, 25, 12, 8, 5, 2, 1, 1.
 
+Also on screen:
+- Stack Overflow 2025: 66% name "AI solutions that are almost right, but not quite" as the top frustration (25,332 responses); 45.2% say debugging AI code takes longer (https://survey.stackoverflow.co/2025/ai) [SURVEY]. The 2025 blog post swaps the two numbers; use the survey page. The 2026 survey dropped this question.
+- Machine time per attempt (AA v2.0 `agentWallTimeSec`): Opus 5.5 3,661 s (61.0 min), DeepSeek V4.1 Flash 1017 1,285 s (21.4 min) [MEASURED-3P]. Per solved task that is about 99 min vs 46 min of agent time, which the film shows as the counter-point: the smart one is slower, but that time is the machine's, not yours.
+- Per-benchmark pass@1 (AA v2.0 payload, `evals[].mean.reward`) [MEASURED-3P]:
+
+  | Benchmark (what it is) | Opus 5.5 (max) | V4.1 Flash 1017 (max) | checks per 100 tasks [DERIVED] |
+  |---|---|---|---|
+  | SWE-Atlas-QnA-AA (trace a repository's code and answer questions; 124 tasks, binary pass/fail) | 65.86% | 61.56% | 151.8 vs 162.4 |
+  | FrontierCode v1.1 (changes to real open-source repos, partial credit 0 or 70–100%; 100 tasks) | 55.97% | 46.55% | not shown (partial credit is not a pass rate) |
+  | Terminal-Bench 4.0 (terminal tasks across software, ML, science, security, sysadmin; 66 tasks, pass/fail) | 63.13% | 30.81% | 158.4 vs 324.6 |
+
+  On Terminal-Bench the extra checks are 166 × 5 min ≈ 13.9 h per 100 tasks. Caveat: 66 tasks × 3 attempts is a small sample.
+
 Other evidence read but not put on screen:
-- Stack Overflow 2025: 66% name "AI solutions that are almost right, but not quite" as the top frustration; 45.2% say debugging AI code takes longer (https://survey.stackoverflow.co/2025/ai). The 2025 blog post swaps the two numbers; use the survey page.
 - METR 2025 RCT: experienced developers took 19% longer with early-2025 AI; ~9% of their time went to reviewing and cleaning AI output; they accepted < 44% of generations (arXiv 2507.09089). METR's 2026 follow-up calls its new data an unreliable signal.
 - Agent PR studies: 54.9% (Watanabe et al., arXiv 2509.14745) to 74.1% (MSR 2026, arXiv 2601.20106) of merged agent PRs went in unmodified.

@@ -3,7 +3,9 @@ import { AbsoluteFill } from "remotion";
 import { Receipt, receiptHeight, RLine, Spark, Whale } from "../art";
 import { drift, EBACK, EIN, EIO, EO, keys, Lab, lerp, Odometer, pr, Source, Stamp, useT } from "../kit";
 import { FONT, K } from "../theme";
-import { A_END_HIT, barA, BEAT_A } from "../timing";
+import { BAR, BEAT, FB } from "../timing";
+
+const JOLT = FB(27); // the printer jams for good as the music cuts out
 
 // ───────── 5. Same exam, two receipts: 4 lines against 33 (one line = 5 million tokens) ─────────
 
@@ -27,12 +29,12 @@ export const EXAM_D: RLine[] = [
 const HC = receiptHeight(EXAM_C) + 30;
 const HD = receiptHeight(EXAM_D) + 30;
 
-export const EXAM_START = barA(14);
-export const C_ROW_AT = (i: number) => barA(14.5) + i * BEAT_A; // 4 rows on the beats
-export const D_ROW_AT = (i: number) => barA(14.5) + i * ((barA(17.75) - barA(14.5)) / (ROWS_D - 1));
-export const C_DONE = barA(16);
-export const D_DONE = barA(18);
-export const EXAM_END = barA(22);
+export const EXAM_START = FB(14);
+export const C_ROW_AT = (i: number) => FB(14.5) + i * BEAT; // 4 rows on the beats
+export const D_ROW_AT = (i: number) => FB(14.5) + i * ((FB(17.75) - FB(14.5)) / (ROWS_D - 1));
+export const C_DONE = FB(16);
+export const D_DONE = FB(18);
+export const EXAM_END = FB(22);
 
 // Lines out at time t, from a list of line start times (each line feeds over `feed` s).
 const printedAt = (t: number, starts: number[], feed = 0.14) => {
@@ -49,11 +51,11 @@ export const Exam: React.FC = () => {
   const startsD = [EXAM_START + 0.25, ...Array.from({ length: ROWS_D }, (_, i) => D_ROW_AT(i)), D_DONE, D_DONE + 0.12];
   const pc = printedAt(t, startsC);
   const pd = printedAt(t, startsD);
-  const cam = keys(t, [[EXAM_START, 1.0], [barA(15), 1.0], [barA(18), 0.52], [barA(20), 0.5], [EXAM_END, 0.56]], EIO);
+  const cam = keys(t, [[EXAM_START, 1.0], [FB(15), 1.0], [FB(18), 0.52], [FB(20), 0.5], [EXAM_END, 0.56]], EIO);
   const camX = drift(t, 4, 10);
   const totalsC = pr(t, C_DONE, 0.5, EBACK);
   const totalsD = pr(t, D_DONE, 0.5, EBACK);
-  const eighth = pr(t, barA(20), 0.8, EIO);
+  const eighth = pr(t, FB(20), 0.8, EIO);
   return (
     <AbsoluteFill style={{ transform: `translateX(${(1 - enter) * 1900 - exit * 1900}px)` }}>
       <AbsoluteFill style={{ transform: `translateX(${camX}px) scale(${cam})`, transformOrigin: "960px 990px" }}>
@@ -75,7 +77,7 @@ export const Exam: React.FC = () => {
           约 ¥5,800 · <span style={{ color: K.fg }}>42 分</span>
         </Lab>
         <div style={{ marginTop: 26, marginLeft: 10 }}>
-          <Stamp t={t} at={barA(18.5)} color={K.green} size={60} rot={-6}>
+          <Stamp t={t} at={FB(18.5)} color={K.green} size={60} rot={-6}>
             总价更低
           </Stamp>
         </div>
@@ -112,10 +114,10 @@ export const Exam: React.FC = () => {
         </div>
       ) : null}
       <div style={{ position: "absolute", left: 60, top: lerp(1200, 820, pr(t, EXAM_START + 0.5, 0.5, EBACK)) + exit * 300 }}>
-        <Spark t={t} size={150} mood={t > D_DONE ? "smug" : "happy"} beat={BEAT_A} />
+        <Spark t={t} size={150} mood={t > D_DONE ? "smug" : "happy"} beat={BEAT} />
       </div>
       <div style={{ position: "absolute", left: 1660, top: lerp(1200, 850, pr(t, EXAM_START + 0.7, 0.5, EBACK)) + exit * 300 }}>
-        <Whale t={t} size={210} mood={t > barA(16) ? "sweat" : "happy"} beat={BEAT_A} />
+        <Whale t={t} size={210} mood={t > FB(16) ? "sweat" : "happy"} beat={BEAT} />
       </div>
       <Source o={1 - exit}>
         Artificial Analysis（美国 AI 评测机构）智能指数 v4.3 整套考题 · Opus 5.5 低推理档 $860、输出 1,960 万 token · DeepSeek V4 Pro 最高档 $1,122、1.63 亿 token · 按 2026-10-22 中间价换算 · 每行 = 500 万 token
@@ -133,25 +135,25 @@ export const FORMULA: RLine[] = [
   { k: "row", l: "包月", r: "再 ÷ 36", color: K.greenDeep, big: true },
   { k: "row", l: "？？？", r: "？", color: K.timeDeep, big: true },
 ];
-export const F_ROW_AT = [barA(22) + 0.15, barA(23), barA(24), barA(25)];
-export const F_STUCK_AT = barA(26);
-export const FORMULA_END = 59.45;
+export const F_ROW_AT = [FB(22) + 0.15, FB(23), FB(24), FB(25)];
+export const F_STUCK_AT = FB(26);
+export const FORMULA_END = FB(28) - 0.05;
 
 export const Formula: React.FC = () => {
   const t = useT();
-  const t0 = barA(22);
+  const t0 = FB(22);
   const enter = pr(t, t0 - 0.3, 0.6, EO);
-  const out = pr(t, FORMULA_END - 0.9, 0.9, EIO);
+  const out = pr(t, FORMULA_END - 0.7, 0.7, EIO);
   let printed = 0;
   for (const s of F_ROW_AT) printed += pr(t, s, 0.22, (x) => x);
   // the fourth line feeds in fits and starts, then jams; it jolts on the music's last accent
-  const stuck = pr(t, F_STUCK_AT, 0.3, (x) => x) * 0.35 + pr(t, F_STUCK_AT + 1.0, 0.15, (x) => x) * 0.15 + pr(t, A_END_HIT, 0.12, (x) => x) * 0.12;
+  const stuck = pr(t, F_STUCK_AT, 0.3, (x) => x) * 0.35 + pr(t, F_STUCK_AT + 1.0, 0.15, (x) => x) * 0.15 + pr(t, JOLT, 0.12, (x) => x) * 0.12;
   printed += stuck;
   const jam = t > F_STUCK_AT + 1.2;
-  const shake = jam ? Math.sin(t * 60) * 2 * Math.exp(-Math.max(0, t - A_END_HIT) * 4) : 0;
-  const dim = pr(t, 58.3, 1.2, EIO);
+  const shake = jam ? Math.sin(t * 60) * 2 * Math.exp(-Math.max(0, t - JOLT) * 4) : 0;
+  const dim = pr(t, JOLT, BAR * 0.9, EIO);
   const ledBlink = jam && Math.floor(t * 3) % 2 === 0;
-  const cam = keys(t, [[t0, 0.96], [F_STUCK_AT, 1.04], [59.5, 1.14]], EIO);
+  const cam = keys(t, [[t0, 0.96], [F_STUCK_AT, 1.04], [FB(28), 1.14]], EIO);
   return (
     <AbsoluteFill style={{ transform: `translateX(${(1 - enter) * 1900}px)`, opacity: 1 - out }}>
       <AbsoluteFill style={{ transform: `scale(${cam}) translateX(${shake}px)`, transformOrigin: "960px 700px", opacity: 1 - dim * 0.55 }}>

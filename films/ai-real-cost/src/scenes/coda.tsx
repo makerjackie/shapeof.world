@@ -3,7 +3,11 @@ import { AbsoluteFill, Img, random, staticFile } from "remotion";
 import { Hourglass, Receipt, RLine } from "../art";
 import { EBACK, EIN, EIO, EO, keys, lerp, pr, useT } from "../kit";
 import { FONT, K, SERIF } from "../theme";
-import { CHORD, FILM_S } from "../timing";
+import { FB, FILM_S } from "../timing";
+
+export const ANSWER_AT = FB(72);
+export const SAND_AT = FB(74);
+export const LINE2_AT = FB(75.5);
 
 // ───────── 12. The answer: the formula receipt comes back with its fourth line printed, biggest of all ─────────
 
@@ -15,13 +19,13 @@ const FULL: RLine[] = [
 
 export const Answer: React.FC = () => {
   const t = useT();
-  const c0 = CHORD[0];
+  const c0 = ANSWER_AT;
   const enter = pr(t, c0 - 0.3, 0.7, EO);
-  const exit = pr(t, CHORD[1] - 0.45, 0.6, EIN);
+  const exit = pr(t, SAND_AT - 0.65, 0.45, EIN);
   const printed = pr(t, c0 - 0.1, 0.15, (z) => z) + pr(t, c0 + 0.1, 0.2, (z) => z) + pr(t, c0 + 0.45, 1.3, (z) => z);
   const head = pr(t, c0 + 0.6, 0.7, EBACK);
   const sub = pr(t, c0 + 1.5, 0.6, EO);
-  const cam = keys(t, [[c0, 1.05], [CHORD[1], 0.98]], EIO);
+  const cam = keys(t, [[c0, 1.05], [SAND_AT, 0.98]], EIO);
   return (
     <AbsoluteFill style={{ opacity: Math.min(enter, 1 - exit), transform: `scale(${cam})`, transformOrigin: "960px 600px" }}>
       <div style={{ position: "absolute", left: 110, top: 930 }}>
@@ -49,12 +53,12 @@ const TOKEN_COLORS = [K.claude, K.gold, K.deepseek, K.fg, K.green];
 
 export const Sand: React.FC = () => {
   const t = useT();
-  const c1 = CHORD[1];
-  const enter = pr(t, c1 - 0.4, 0.8, EO);
-  const exit = pr(t, CHORD[3] - 0.5, 0.7, EIN);
-  const n = Math.round(keys(t, [[c1, 90], [CHORD[2], 300], [CHORD[3], 420]], EIO));
-  const sand = pr(t, c1, CHORD[3] - c1, (z) => z);
-  const cam = keys(t, [[c1, 1.1], [CHORD[3], 1.0]], EIO);
+  const c1 = SAND_AT;
+  const enter = pr(t, c1 - 0.15, 0.7, EO);
+  const exit = pr(t, END_AT - 0.5, 0.7, EIN);
+  const n = Math.round(keys(t, [[c1, 90], [LINE2_AT, 300], [END_AT, 420]], EIO));
+  const sand = pr(t, c1, END_AT - c1, (z) => z);
+  const cam = keys(t, [[c1, 1.1], [END_AT, 1.0]], EIO);
   return (
     <AbsoluteFill style={{ opacity: Math.min(enter, 1 - exit), transform: `scale(${cam})`, transformOrigin: "960px 600px" }}>
       {Array.from({ length: n }).map((_, i) => {
@@ -100,9 +104,9 @@ const Slot: React.FC<{ from: string; to: string; wFrom: number; wTo: number; q: 
   </span>
 );
 
-export const END_AT = CHORD[3];
-export const FLIP_AT = CHORD[3] + 1.6;
-export const BALL_AT = CHORD[4];
+export const END_AT = FB(77.5);
+export const FLIP_AT = END_AT + 1.4;
+export const BALL_AT = FB(79);
 
 export const EndCard: React.FC = () => {
   const t = useT();

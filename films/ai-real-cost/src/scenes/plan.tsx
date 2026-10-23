@@ -3,31 +3,31 @@ import { AbsoluteFill } from "remotion";
 import { ClaudeGlyph, Coin, COIN_T, MemberCard, Spark, WhaleGlyph } from "../art";
 import { drift, EBACK, EIN, EIO, EO, keys, Lab, lerp, Odometer, pr, Source, Stamp, swing, useT } from "../kit";
 import { FONT, K, SANS } from "../theme";
-import { barA, BEAT_A } from "../timing";
+import { BEAT, FB } from "../timing";
 
 // ───────── 3. Subscription: one month of Max = one coin; at list price it is worth a tower of 36 ─────────
 
 export const COINS = 36;
 // Coin i lands at COIN_AT(i): starts slow, speeds up, all down a beat before bar 10.
-export const COIN_AT = (i: number) => barA(8.25) + (barA(9.75) - barA(8.25)) * Math.pow(i / (COINS - 1), 0.72);
+export const COIN_AT = (i: number) => FB(8.25) + (FB(9.75) - FB(8.25)) * Math.pow(i / (COINS - 1), 0.72);
 const VALUE = 47850; // $7,121 × 6.7195
 
-export const PLAN_END = barA(12);
+export const PLAN_END = FB(12);
 
 export const Plan: React.FC = () => {
   const t = useT();
-  const t0 = barA(6);
+  const t0 = FB(6);
   const enter = pr(t, t0 - 0.2, 0.7, EBACK);
-  const toCoin = pr(t, barA(8), 0.5, EIO); // the card shrinks into the first coin
+  const toCoin = pr(t, FB(8), 0.5, EIO); // the card shrinks into the first coin
   const exit = pr(t, PLAN_END - 0.3, 0.5, EIN);
   const landed = Array.from({ length: COINS }, (_, i) => t >= COIN_AT(i)).filter(Boolean).length;
   const towerTop = 860 - landed * COIN_T;
-  const camY = keys(t, [[t0, 0], [barA(8), 0], [barA(10), -20]], EIO);
-  const camS = keys(t, [[t0, 1.0], [barA(8), 1.16], [barA(9.9), 0.95], [PLAN_END, 0.92]], EIO);
+  const camY = keys(t, [[t0, 0], [FB(8), 0], [FB(10), -20]], EIO);
+  const camS = keys(t, [[t0, 1.0], [FB(8), 1.16], [FB(9.9), 0.95], [PLAN_END, 0.92]], EIO);
   const shine = pr(t, t0 + 0.4, 1.2, EIO);
   const value = Math.min(VALUE, (landed / COINS) * VALUE);
   const lastLand = landed > 0 ? COIN_AT(landed - 1) : -9;
-  const s36 = barA(10.5);
+  const s36 = FB(10.5);
   return (
     <AbsoluteFill style={{ transform: `translateX(${-exit * 1900}px)` }}>
       <AbsoluteFill style={{ transform: `translateY(${camY}px) scale(${camS})`, transformOrigin: "1100px 880px" }}>
@@ -39,20 +39,20 @@ export const Plan: React.FC = () => {
             top: lerp(330, 640, toCoin) + drift(t, 3, 6),
             transform: `rotate(${lerp(-6, 0, toCoin) + swing(t, t0 + 0.3, 2, 0.8, 2)}deg) scale(${lerp(1, 0.35, toCoin)})`,
             transformOrigin: "0 0",
-            opacity: 1 - pr(t, barA(8) + 0.35, 0.2),
+            opacity: 1 - pr(t, FB(8) + 0.35, 0.2),
           }}
         >
           <MemberCard w={620} shine={shine} />
         </div>
         {toCoin > 0.5 ? (
           <div style={{ position: "absolute", left: 560, top: 860 - COIN_T }}>
-            <div style={{ transform: `scale(${pr(t, barA(8) + 0.3, 0.3, EBACK)})` }}>
+            <div style={{ transform: `scale(${pr(t, FB(8) + 0.3, 0.3, EBACK)})` }}>
               <Coin />
             </div>
           </div>
         ) : null}
         {toCoin > 0.6 ? (
-          <div style={{ position: "absolute", left: 420, top: 930, opacity: pr(t, barA(8) + 0.4, 0.4) }}>
+          <div style={{ position: "absolute", left: 420, top: 930, opacity: pr(t, FB(8) + 0.4, 0.4) }}>
             <Lab size={34} color={K.fg}>你付的：1 个月</Lab>
             <Lab size={26} color={K.sub} w={500} style={{ marginTop: 6 }}>Max 会员 约 ¥1,344</Lab>
           </div>
@@ -85,8 +85,8 @@ export const Plan: React.FC = () => {
             36 倍
           </Stamp>
         </div>
-        <div style={{ position: "absolute", left: 140, top: lerp(1200, 690, pr(t, barA(9), 0.5, EBACK)) }}>
-          <Spark t={t} size={150} mood={t > s36 ? "party" : "happy"} beat={BEAT_A} />
+        <div style={{ position: "absolute", left: 140, top: lerp(1200, 690, pr(t, FB(9), 0.5, EBACK)) }}>
+          <Spark t={t} size={150} mood={t > s36 ? "party" : "happy"} beat={BEAT} />
         </div>
       </AbsoluteFill>
       <Source o={1 - exit}>
@@ -111,9 +111,9 @@ const MARKS = [
   { v: 8, l: "DeepSeek V4.1 Flash · 高峰", c: K.deepseekHi },
 ];
 
-export const DROP_AT = barA(12.25);
-export const DROP_LEN = barA(13) - barA(12.25);
-export const RULER_END = barA(14);
+export const DROP_AT = FB(12.25);
+export const DROP_LEN = FB(13) - FB(12.25);
+export const RULER_END = FB(14);
 // When the falling tag passes each mark (for the ticks in the sound list).
 export const passTime = (v: number) => {
   const target = (Math.log(134) - Math.log(v)) / (Math.log(134) - Math.log(3.73));

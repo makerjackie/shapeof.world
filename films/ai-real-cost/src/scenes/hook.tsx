@@ -3,16 +3,16 @@ import { AbsoluteFill, random } from "remotion";
 import { ClaudeGlyph, PriceTag, Spark, Whale, WhaleGlyph } from "../art";
 import { drift, EBACK, EIO, EIN, EO, keys, lerp, pr, Source, Stamp, swing, useT } from "../kit";
 import { FONT, K, SERIF } from "../theme";
-import { barA, BEAT_A } from "../timing";
+import { BEAT, FB } from "../timing";
 
 // ───────── 1. Hook: two price tags; Claude's climbs on every beat and slams at ¥134 on the bar-1 downbeat ─────────
 
 export const PRICE_STEPS: [number, number][] = [
   [0, 8],
-  [barA(0.25), 30],
-  [barA(0.5), 67],
-  [barA(0.75), 100],
-  [barA(1), 134],
+  [FB(0.25), 30],
+  [FB(0.5), 67],
+  [FB(0.75), 100],
+  [FB(1), 134],
 ];
 const priceAt = (t: number) => {
   let v = PRICE_STEPS[0][1];
@@ -20,11 +20,11 @@ const priceAt = (t: number) => {
   return Math.min(134, v);
 };
 
-export const HOOK_END = barA(4);
+export const HOOK_END = FB(4);
 
 export const Hook: React.FC = () => {
   const t = useT();
-  const slam = barA(1);
+  const slam = FB(1);
   const exit = pr(t, HOOK_END - 0.25, 0.45, EIN); // tags are pulled up when the title receipt shoots out
   const inL = pr(t, 0, 0.5, EBACK);
   const inR = pr(t, 0.05, 0.55, EBACK);
@@ -35,9 +35,9 @@ export const Hook: React.FC = () => {
   const camY = keys(t, [[0, 0], [HOOK_END, -30]]);
   const angL = swing(t, 0, 7, 0.9, 1.6) + swing(t, slam, -2.5, 1.1, 2) + drift(t, 1, 1.2);
   const angR = swing(t, 0.05, -8, 0.85, 1.5) + swing(t, slam, 9, 1.2, 1.8) + drift(t, 2, 1.2);
-  const stamp17 = barA(1.25);
-  const peek = pr(t, barA(3), 0.5, EBACK);
-  const whaleIn = pr(t, barA(2.5), 0.5, EBACK);
+  const stamp17 = FB(1.25);
+  const peek = pr(t, FB(3), 0.5, EBACK);
+  const whaleIn = pr(t, FB(2.5), 0.5, EBACK);
   return (
     <AbsoluteFill style={{ transform: `translateY(${camY}px) scale(${cam})`, transformOrigin: "960px 600px" }}>
       {/* the two tags */}
@@ -93,10 +93,10 @@ export const Hook: React.FC = () => {
       </div>
       {/* the characters react */}
       <div style={{ position: "absolute", left: 1560, top: lerp(1100, 740, peek) + exit * 400 }}>
-        <Spark t={t} size={190} mood="smug" beat={BEAT_A} />
+        <Spark t={t} size={190} mood="smug" beat={BEAT} />
       </div>
       <div style={{ position: "absolute", left: 90, top: lerp(1100, 790, whaleIn) + exit * 400 }}>
-        <Whale t={t} size={230} mood={t > barA(3) ? "sweat" : "shock"} beat={BEAT_A} />
+        <Whale t={t} size={230} mood={t > FB(3) ? "sweat" : "shock"} beat={BEAT} />
       </div>
       <Source o={1 - exit}>
         官方标价 2026-10-22 · Opus 5.5 输出 $20，按当日中间价 6.7195 约合 ¥134 · DeepSeek V4.1 Flash 高峰价 ¥8 · 17 倍 = $20 ÷ $1.20 · 智能排行：Artificial Analysis（美国 AI 评测机构）智能指数第 1
@@ -107,14 +107,14 @@ export const Hook: React.FC = () => {
 
 // ───────── 2. Title: a receipt shoots out of a slot with the title printed on it ─────────
 
-export const TITLE_END = barA(6);
+export const TITLE_END = FB(6);
 
 export const Title: React.FC = () => {
   const t = useT();
   const at = HOOK_END;
   const rise = pr(t, at - 0.15, 0.55, EBACK);
   const out = pr(t, TITLE_END - 0.35, 0.6, EIN);
-  const sweep = pr(t, barA(5), 1.1, EIO);
+  const sweep = pr(t, FB(5), 1.1, EIO);
   const y = lerp(1180, 250, rise) - out * 1250 - pr(t, at + 0.4, TITLE_END - at, (z) => z) * 40;
   const curl = Math.sin(t * 2.1) * 1.2;
   return (
