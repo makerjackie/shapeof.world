@@ -1,0 +1,141 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>C 数据实物化</title>
+<link rel="stylesheet" href="skeleton.css">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+<style>
+  #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 75% 70% at 55% 45%, rgba(0,0,0,0) 55%, rgba(52, 44, 36, .28) 100%); }
+  .plate { background: rgba(241, 236, 223, .86); padding: 12px 20px 14px; color: #1c1d20; box-shadow: 0 8px 26px rgba(40, 32, 24, .12); }
+  .plate .cat { font: 500 24px/1.3 'NSans'; color: rgba(28, 29, 32, .66); letter-spacing: .04em; }
+  .plate .cat i { display: inline-block; width: 14px; height: 14px; border-radius: 7px; background: linear-gradient(135deg, #e9ecef, #9aa1a9); margin-right: 8px; vertical-align: 0; }
+  .plate .val { font: 300 64px/1.05 'Inter'; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .plate .val small { font: 400 30px 'NSans'; margin-right: 8px; }
+  .plate.hero .val { font-weight: 250; font-size: 156px; color: #d4521c; letter-spacing: -.03em; }
+  .plate.ram .val { font: 500 30px/1.3 'NSans'; }
+  .r-left { transform: translate(-100%, -100%); }
+  .r-right { transform: translate(0, -100%); }
+</style>
+</head><body>
+<div id="stage"></div><div id="vig"></div><svg id="lines" width="1920" height="1080"></svg><div id="labels"></div><div id="sk"></div>
+<script type="module">
+import { THREE, W, H, makeRenderer, rng, canvasTexture, toScreen, fontsReady, skeleton, label, done } from './common.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+await fontsReady();
+const R = rng(5);
+const renderer = makeRenderer({ exposure: 1.04 });
+const scene = new THREE.Scene();
+const SWEEP = '#c4beb4';
+scene.background = new THREE.Color(SWEEP);
+scene.fog = new THREE.Fog(SWEEP, 150, 420);
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), .04).texture;
+scene.environmentIntensity = 1.0;
+
+// units: centimetres
+const cam = new THREE.PerspectiveCamera(27, W / H, 1, 1000);
+cam.position.set(12, 21, 47);
+cam.lookAt(-2.5, 8.6, -1);
+
+// light: warm low key, cool rim, a little fill
+const key = new THREE.DirectionalLight('#ffdcb4', 3.8);
+key.position.set(-58, 34, 42); key.castShadow = true;
+key.shadow.mapSize.set(4096, 4096);
+Object.assign(key.shadow.camera, { left: -55, right: 55, top: 40, bottom: -40, near: 1, far: 220 });
+key.shadow.bias = -0.0003; key.shadow.normalBias = .02;
+const rim = new THREE.DirectionalLight('#c9dcff', 2.2); rim.position.set(46, 26, -62);
+scene.add(key, rim, new THREE.HemisphereLight('#ffffff', '#b8afa2', .35));
+
+// the sweep
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(900, 900), new THREE.MeshStandardMaterial({ color: '#bfb9af', roughness: 1 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+
+// the walnut base with brass inlay
+const tl = new THREE.TextureLoader();
+const [wd, wn, wr] = await Promise.all(['walnut_diff', 'walnut_nor', 'walnut_rough'].map(n => tl.loadAsync(`/tex/${n}.jpg`)));
+wd.colorSpace = THREE.SRGBColorSpace;
+for (const t of [wd, wn, wr]) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2.2, 1); t.anisotropy = 8; }
+const BW = 68, BD = 30, BH = 3.2;
+const walnut = new THREE.MeshStandardMaterial({ map: wd, normalMap: wn, roughnessMap: wr, roughness: .85, color: '#f6e6d4' });
+const base = new THREE.Mesh(new THREE.BoxGeometry(BW, BH, BD), walnut);
+base.position.set(0, BH / 2, 0); base.castShadow = base.receiveShadow = true; scene.add(base);
+
+const OLD = new THREE.Vector3(-3, BH, -2), NEW = new THREE.Vector3(8.5, BH, -2), RAM = new THREE.Vector3(-15, BH, 1.2);
+const PX = 40;   // inlay pixels per cm
+const inlay = canvasTexture(BW * PX, BD * PX, (g, w, h) => {
+  g.fillStyle = '#d9b57c'; g.strokeStyle = '#d9b57c';
+  const at = (v) => [(v.x + BW / 2) * PX, (v.z + BD / 2) * PX];
+  g.textAlign = 'center'; g.font = '500 46px NSans';
+  for (const [v, t] of [[OLD, '2025 年中'], [NEW, '2026 年 10 月']]) {
+    const [x, y] = at(v);
+    g.lineWidth = 3; g.beginPath(); g.arc(x, y, 2.35 * PX, 0, Math.PI * 2); g.stroke();
+    g.fillText(t, x, y + 3.4 * PX);
+  }
+  const [x0, y0] = at(OLD), [x1] = at(NEW);
+  g.lineWidth = 2; g.beginPath(); g.moveTo(x0 + 2.6 * PX, y0); g.lineTo(x1 - 2.6 * PX, y0); g.stroke();
+  g.textAlign = 'center'; g.font = '500 34px NSans';
+  g.fillText('1 枚 = 10 美元', (x0 + x1) / 2, y0 - .7 * PX);
+});
+const inl = new THREE.Mesh(new THREE.PlaneGeometry(BW, BD), new THREE.MeshStandardMaterial({ map: inlay, transparent: true, metalness: .75, roughness: .32, depthWrite: false }));
+inl.rotation.x = -Math.PI / 2; inl.position.set(0, BH + .012, 0); inl.receiveShadow = true; scene.add(inl);
+
+// coins: 1 coin = 10 dollars, every 10th coin brass so the stack is its own ruler
+const silver = new THREE.MeshStandardMaterial({ color: '#e4e7ea', metalness: 1, roughness: .22 });
+const brass = new THREE.MeshStandardMaterial({ color: '#dcb77a', metalness: 1, roughness: .26 });
+// a coin with a rounded rim, so the stack shows its seams
+const coinGeo = new THREE.LatheGeometry([[0, -.125], [1.66, -.125], [1.78, -.09], [1.8, -.03], [1.8, .03], [1.78, .09], [1.66, .125], [0, .125]].map(([x, y]) => new THREE.Vector2(x, y)), 72);
+function stack(at, n) {
+  let y = at.y;
+  for (let i = 0; i < n; i++) {
+    const c = new THREE.Mesh(coinGeo, (i + 1) % 10 === 0 ? brass : silver);
+    c.position.set(at.x + (R() - .5) * .14, y + .13, at.z + (R() - .5) * .14);
+    c.rotation.set((R() - .5) * .012, R() * 6, (R() - .5) * .012);
+    c.castShadow = c.receiveShadow = true; scene.add(c); y += .258;
+  }
+  return new THREE.Vector3(at.x, y, at.z);
+}
+const topOld = stack(OLD, 10), topNew = stack(NEW, 45);
+
+// the RAM kit: two green sticks lying on the wood, black chips, gold fingers
+const pcb = new THREE.MeshPhysicalMaterial({ color: '#1f6b47', roughness: .45, clearcoat: .7, clearcoatRoughness: .25 });
+const chip = new THREE.MeshStandardMaterial({ color: '#17191d', roughness: .55 });
+const gold = new THREE.MeshStandardMaterial({ color: '#e0b25a', metalness: 1, roughness: .22 });
+[[0, 0, .1], [1.2, -4.3, -.05]].forEach(([dx, dz, yaw], k) => {
+  const s = new THREE.Group(); s.position.set(RAM.x + dx, BH + .07 + k * .002, RAM.z + dz); s.rotation.y = yaw; scene.add(s);
+  const m = (geo, mt, x, y, z) => { const me = new THREE.Mesh(geo, mt); me.position.set(x, y, z); me.castShadow = me.receiveShadow = true; s.add(me); };
+  m(new THREE.BoxGeometry(13.3, .12, 3.1), pcb, 0, 0, 0);
+  for (let i = 0; i < 8; i++) m(new THREE.BoxGeometry(1.05, .14, 1.25), chip, -5.6 + i * 1.6, .12, -.2);
+  m(new THREE.BoxGeometry(12.8, .03, .42), gold, 0, .075, 1.3);
+});
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const focus = cam.position.distanceTo(new THREE.Vector3(NEW.x, 9, NEW.z));
+composer.addPass(new BokehPass(scene, cam, { focus, aperture: .00016, maxblur: .006 }));
+composer.addPass(new OutputPass());
+composer.render();
+
+// readings pinned to the objects
+const svg = document.getElementById('lines');
+function reading(anchor, dx, dy, cls, html) {
+  const p = toScreen(anchor, cam), q = { x: p.x + dx, y: p.y + dy };
+  svg.insertAdjacentHTML('beforeend',
+    `<circle cx="${p.x}" cy="${p.y}" r="5" fill="#1c1d20"/><polyline points="${p.x},${p.y} ${q.x},${q.y}" fill="none" stroke="#1c1d20" stroke-width="1.6"/>`);
+  label(html, `plate ${cls}`, q.x, q.y);
+}
+reading(topOld.clone().add(new THREE.Vector3(1.2, .05, 0)), 120, -150, 'r-right', `<div class="cat"><i></i>2025 年中</div><div class="val"><small>不到</small>$100</div>`);
+reading(topNew.clone().add(new THREE.Vector3(-1.4, .05, 0)), -80, -30, 'r-left hero', `<div class="cat"><i></i>2026 年 10 月</div><div class="val">$449</div>`);
+reading(new THREE.Vector3(RAM.x - 2, BH + .3, RAM.z - 2.4), 20, -150, 'r-right ram', `<div class="val">32GB DDR5 内存条</div><div class="cat">两根一套</div>`);
+
+await skeleton({
+  tone: 'light', chapter: '芯片',
+  caption: '同一套内存条，现在要 <mark><span class="num">449</span> 美元</mark>。',
+  source: '美国最低零售价 · Tom\'s Hardware（美国硬件网站）价格追踪，<b>2026-06-03</b>、<b>2026-10-19</b>',
+});
+done();
+</script>
+</body></html>

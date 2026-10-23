@@ -1,0 +1,228 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>B 低多边形小世界</title>
+<link rel="stylesheet" href="skeleton.css">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+<style>
+  .tag { transform: translate(-50%, -100%); text-align: center; }
+  .tag .pill { display: inline-block; background: rgba(255, 255, 255, .93); border-radius: 22px; padding: 12px 26px 14px; box-shadow: 0 7px 0 rgba(70, 96, 128, .22), 0 14px 30px rgba(40, 60, 90, .16); }
+  .tag .when { font: 500 25px/1.2 'NSans'; color: #4b5563; letter-spacing: .04em; }
+  .tag .price { font: 700 58px/1.1 'Inter'; color: #6b7280; font-variant-numeric: tabular-nums; }
+  .tag .price small { font: 700 34px 'NSans'; margin-right: 6px; }
+  .tag.new .price { color: #ef4b4b; font-size: 92px; }
+  .tag .tip { width: 0; height: 0; margin: 0 auto; border: 13px solid transparent; border-top-color: rgba(255, 255, 255, .93); border-bottom: 0; }
+  .key { transform: translate(-50%, 0); font: 500 21px/1.35 'NSans'; color: #2f3a48; background: rgba(255, 255, 255, .78); border-radius: 14px; padding: 8px 16px; white-space: nowrap; }
+  .key i { display: inline-block; width: 18px; height: 16px; background: #f4c542; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); vertical-align: -2px; margin-right: 6px; }
+</style>
+</head><body>
+<div id="stage"></div><div id="labels"></div><div id="sk"></div>
+<script type="module">
+import { THREE, W, H, makeRenderer, rng, gradient, toScreen, fontsReady, skeleton, label, done } from './common.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+await fontsReady();
+const R = rng(11);
+const renderer = makeRenderer({ exposure: 1.02 });
+const scene = new THREE.Scene();
+scene.background = gradient([[0, '#9fd3e6'], [.5, '#cfeaf0'], [1, '#f6e4cf']]);
+
+// camera: orthographic, isometric-ish
+const AZ = THREE.MathUtils.degToRad(40), EL = THREE.MathUtils.degToRad(30), FH = 13.2;
+const cam = new THREE.OrthographicCamera(-FH * W / H / 2, FH * W / H / 2, FH / 2, -FH / 2, 1, 500);
+const target = new THREE.Vector3(0, 0, 0);
+target.copy(new THREE.Vector3(Math.cos(AZ), 0, -Math.sin(AZ)).multiplyScalar(-1.75).add(new THREE.Vector3(-Math.sin(AZ), 0, -Math.cos(AZ)).multiplyScalar(1.15))).setY(.85);
+cam.position.set(target.x + 80 * Math.cos(EL) * Math.sin(AZ), target.y + 80 * Math.sin(EL), target.z + 80 * Math.cos(EL) * Math.cos(AZ));
+cam.lookAt(target);
+// a = along screen-right, b = into the picture
+const SR = new THREE.Vector3(Math.cos(AZ), 0, -Math.sin(AZ)), DB = new THREE.Vector3(-Math.sin(AZ), 0, -Math.cos(AZ));
+const at = (a, b, y = 0) => SR.clone().multiplyScalar(a).add(DB.clone().multiplyScalar(b)).setY(y);
+
+// light
+scene.add(new THREE.HemisphereLight('#e3f2ff', '#f1d4b0', 1.35));
+const sun = new THREE.DirectionalLight('#fff0dc', 2.7);
+sun.position.set(-16, 24, 14); sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+Object.assign(sun.shadow.camera, { left: -18, right: 18, top: 18, bottom: -18, near: 1, far: 90 });
+sun.shadow.bias = -0.0005; sun.shadow.normalBias = 0.03;
+scene.add(sun);
+
+const mats = new Map();
+const mat = (c, o = {}) => {
+  const k = c + JSON.stringify(o);
+  if (!mats.has(k)) mats.set(k, new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .88, metalness: 0, ...o }));
+  return mats.get(k);
+};
+const add = (geo, m, pos, parent = scene, rotY = 0) => {
+  const me = new THREE.Mesh(geo, m); me.position.copy(pos); me.rotation.y = rotY;
+  me.castShadow = me.receiveShadow = true; parent.add(me); return me;
+};
+const jitter = (hex, amt) => { const c = new THREE.Color(hex); const hsl = {}; c.getHSL(hsl); c.setHSL(hsl.h, hsl.s, hsl.l + (R() - .5) * amt); return c; };
+
+// hex island: pointy-top axial layout
+const SQ3 = Math.sqrt(3);
+function island(cx, cz, N, top, ring) {
+  for (let q = -N; q <= N; q++) for (let r = -N; r <= N; r++) {
+    const d = Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)); if (d > N) continue;
+    const x = cx + SQ3 * (q + r / 2), z = cz + 1.5 * r;
+    const { y, col, side } = ring(d, x, z);
+    const h = y + 2.0;
+    const colm = new THREE.MeshStandardMaterial({ color: jitter(side, .05), flatShading: true, roughness: .9 });
+    add(new THREE.CylinderGeometry(.955, .955, h - .1, 6), colm, new THREE.Vector3(x, y - .1 - (h - .1) / 2, z));
+    const capm = new THREE.MeshStandardMaterial({ color: jitter(col, .045), flatShading: true, roughness: .9 });
+    add(new THREE.CylinderGeometry(.965, .965, .14, 6), capm, new THREE.Vector3(x, y - .07, z));
+  }
+}
+const GRASS = '#8fcf7a', GRASS2 = '#a6d98a', SAND = '#f3dfae', EARTH = '#c99a6b', ROCK = '#b9b2a8';
+island(0, 0, 4, 0, (d) => d <= 3 ? { y: .8, col: R() < .5 ? GRASS : GRASS2, side: EARTH } : { y: .55, col: SAND, side: '#d9b98a' });
+const DC = at(4.5, 10.4);
+island(DC.x, DC.z, 1, 0, () => ({ y: .75, col: '#c3ccd6', side: '#9aa4b0' }));
+
+// faceted sea with a shallow halo around the land
+{
+  const g = new THREE.PlaneGeometry(140, 140, 210, 210).toNonIndexed(); g.rotateX(-Math.PI / 2);
+  const p = g.attributes.position, cols = [];
+  const deep = new THREE.Color('#5fb1cc'), shallow = new THREE.Color('#a8e6e2');
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), z = p.getZ(i);
+    p.setY(i, .4 + .055 * Math.sin(.9 * x + .35 * z) + .04 * Math.sin(1.6 * z - .7 * x) + .025 * Math.sin(2.7 * x + 1.3 * z));
+    const dl = Math.min(Math.hypot(x, z) - 6.5, Math.hypot(x - DC.x, z - DC.z) - 1.8);
+    const t = THREE.MathUtils.clamp(dl / 5, 0, 1);
+    const c = shallow.clone().lerp(deep, t); cols.push(c.r, c.g, c.b);
+  }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(cols, 3)); g.computeVertexNormals();
+  const sea = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: .42, metalness: 0 }));
+  sea.receiveShadow = true; scene.add(sea);
+}
+
+const GROUND = .8;
+
+// ---- the gamer's room, cut open toward the camera ----
+{
+  const room = new THREE.Group(); room.position.copy(at(-3.2, .7, GROUND)); room.rotation.y = AZ - Math.PI / 4; scene.add(room);
+  const v = (x, y, z) => new THREE.Vector3(x, y, z);
+  add(new THREE.BoxGeometry(3.1, .14, 2.5), mat('#d8b28a'), v(0, .07, 0), room);
+  add(new THREE.BoxGeometry(3.1, 1.55, .12), mat('#f3d6c6'), v(0, .14 + .775, -1.19), room);
+  add(new THREE.BoxGeometry(.12, 1.55, 2.5), mat('#ecc9b6'), v(-1.49, .14 + .775, 0), room);
+  add(new THREE.BoxGeometry(.7, .5, .02), mat('#fff6d8', { emissive: '#fff1c4', emissiveIntensity: .55 }), v(.75, 1.05, -1.125), room);
+  add(new THREE.BoxGeometry(.03, .58, .58), mat('#7cc4e8'), v(-1.42, 1.0, -.2), room);           // poster
+  add(new THREE.CylinderGeometry(.75, .75, .03, 6), mat('#f29e8e'), v(-.15, .155, .35), room);    // rug
+  // desk, monitor, tower PC, chair
+  add(new THREE.BoxGeometry(1.5, .06, .6), mat('#f7f2ea'), v(-.25, .78, -.82), room);
+  for (const dx of [-.95, .45]) add(new THREE.BoxGeometry(.05, .64, .5), mat('#d9d2c7'), v(dx, .46, -.82), room);
+  add(new THREE.BoxGeometry(.78, .46, .04), mat('#2a2f39'), v(-.3, 1.12, -.98), room);
+  add(new THREE.BoxGeometry(.7, .38, .01), mat('#7fd3ff', { emissive: '#5cc8ff', emissiveIntensity: .75 }), v(-.3, 1.12, -.955), room);
+  add(new THREE.BoxGeometry(.08, .2, .08), mat('#2a2f39'), v(-.3, .9, -1.0), room);
+  add(new THREE.BoxGeometry(.36, .7, .66), mat('#2b2f38'), v(.82, .5, -.78), room);
+  add(new THREE.BoxGeometry(.012, .56, .5), mat('#b89cff', { emissive: '#9b7bff', emissiveIntensity: .8 }), v(.995, .52, -.78), room);
+  add(new THREE.BoxGeometry(.5, .07, .5), mat('#3c4a5e'), v(-.3, .5, -.25), room);
+  add(new THREE.BoxGeometry(.5, .6, .07), mat('#3c4a5e'), v(-.3, .82, -.02), room);
+  add(new THREE.CylinderGeometry(.04, .04, .36, 5), mat('#8a94a3'), v(-.3, .3, -.25), room);
+}
+
+// ---- price as matter: hex coins, 1 coin = 10 dollars, every 10th coin darker ----
+const COIN_H = .082, COIN_R = .6;
+function tower(a, b, n) {
+  const base = at(a, b, GROUND);
+  add(new THREE.CylinderGeometry(.92, 1.0, .26, 6), mat('#d8d2c8'), base.clone().setY(GROUND + .13));
+  let y = GROUND + .26;
+  for (let i = 0; i < n; i++) {
+    const c = add(new THREE.CylinderGeometry(COIN_R, COIN_R, COIN_H * .94, 6), mat((i + 1) % 10 === 0 ? '#d58f2a' : '#f5c84c', { roughness: .55, metalness: .15 }),
+      base.clone().add(new THREE.Vector3((R() - .5) * .04, 0, (R() - .5) * .04)).setY(y + COIN_H / 2), scene, (R() - .5) * .09);
+    y += COIN_H;
+  }
+  // the RAM kit sits on its price: two classic green sticks, black chips, gold fingers
+  const kit = new THREE.Group(); kit.position.copy(base).setY(y); kit.rotation.y = AZ; scene.add(kit);
+  [[-.09, .16], [.09, -.16]].forEach(([dz, yaw]) => {
+    const s = new THREE.Group(); s.position.set(0, 0, dz); s.rotation.y = yaw; kit.add(s);
+    add(new THREE.BoxGeometry(1.5, .44, .035), mat('#2f8a5c'), new THREE.Vector3(0, .27, 0), s);
+    add(new THREE.BoxGeometry(1.42, .06, .04), mat('#e8b93f', { metalness: .55, roughness: .35 }), new THREE.Vector3(0, .07, 0), s);
+    for (let k = 0; k < 8; k++) add(new THREE.BoxGeometry(.13, .17, .03), mat('#1d2129'), new THREE.Vector3(-.6 + k * .171, .3, .03), s);
+  });
+  return base.clone().setY(y + .56);
+}
+const topOld = tower(.15, -.1, 10);
+const topNew = tower(2.25, -.25, 45);
+
+// ---- the gamer, looking up at the tall tower ----
+{
+  const g = new THREE.Group(); g.position.copy(at(.95, -1.75, GROUND)); g.scale.setScalar(1.3); scene.add(g);
+  const look = topNew.clone().setY(0).sub(g.position.clone().setY(0)); g.rotation.y = Math.atan2(look.x, look.z);
+  const v = (x, y, z) => new THREE.Vector3(x, y, z);
+  add(new THREE.CylinderGeometry(.09, .1, .36, 6), mat('#3b4a63'), v(0, .18, 0), g);
+  add(new THREE.CylinderGeometry(.15, .19, .4, 6), mat('#ffb703'), v(0, .56, 0), g);
+  add(new THREE.BoxGeometry(.26, .3, .13), mat('#2c7da0'), v(0, .58, -.19), g);
+  const head = add(new THREE.IcosahedronGeometry(.16, 0), mat('#f2c6a0'), v(0, .91, .02), g);
+  head.rotation.x = -.35;
+  add(new THREE.SphereGeometry(.165, 7, 4, 0, Math.PI * 2, 0, Math.PI / 2), mat('#273142'), v(0, .95, -.01), g).rotation.x = -.35;
+}
+
+// ---- the data-centre islet behind, and a truck taking memory there ----
+{
+  const dc = new THREE.Group(); dc.position.set(DC.x, .75, DC.z); dc.rotation.y = AZ; scene.add(dc);
+  const v = (x, y, z) => new THREE.Vector3(x, y, z);
+  add(new THREE.BoxGeometry(3.2, 1.25, 2.1), mat('#dfe6ee'), v(0, .62, 0), dc);
+  for (let i = 0; i < 7; i++) add(new THREE.BoxGeometry(.24, .62, .03), mat('#55606e'), v(-1.2 + i * .4, .62, 1.06), dc);
+  add(new THREE.BoxGeometry(3.2, .05, .02), mat('#6fd6ff', { emissive: '#4cc9ff', emissiveIntensity: 1 }), v(0, 1.08, 1.06), dc);
+  for (let i = 0; i < 3; i++) {
+    add(new THREE.CylinderGeometry(.32, .32, .2, 8), mat('#a9b4c2'), v(-1 + i, 1.36, -.2), dc);
+    add(new THREE.CylinderGeometry(.24, .24, .03, 8), mat('#3d4653'), v(-1 + i, 1.47, -.2), dc);
+  }
+  // bridge from the island to the islet
+  const from = at(3.4, 4.3, 0), to = at(4.3, 8.9, 0), n = 11;
+  for (let i = 0; i <= n; i++) {
+    const p = from.clone().lerp(to, i / n);
+    add(new THREE.BoxGeometry(.9, .07, .34), mat('#c79a6a'), p.clone().setY(.62), scene, Math.atan2(to.x - from.x, to.z - from.z));
+  }
+  const truck = new THREE.Group(); truck.position.copy(from.clone().lerp(to, .55)).setY(.66);
+  truck.rotation.y = Math.atan2(to.x - from.x, to.z - from.z); scene.add(truck);
+  add(new THREE.BoxGeometry(.42, .36, .36), mat('#ffffff'), v(0, .25, .32), truck);
+  add(new THREE.BoxGeometry(.46, .42, .62), mat('#e7ecf2'), v(0, .28, -.2), truck);
+  for (const dx of [-.12, .12]) add(new THREE.BoxGeometry(.18, .12, .26), mat('#ff86bb'), v(dx, .55, -.2), truck);
+}
+
+// trees and rocks, kept off the stage
+const busy = [at(-3.2, .7), at(.15, -.1), at(2.25, -.25), at(.95, -1.75), at(3.6, 4.0), at(-3.2, .7).add(at(.8, .8))];
+let placed = 0;
+while (placed < 16) {
+  const a = (R() - .5) * 11, b = (R() - .5) * 11, p = at(a, b);
+  if (Math.hypot(p.x, p.z) > 5.4 || busy.some(s => s.distanceTo(p) < 2.3)) continue;
+  if (a > -1.6 && a < 4 && b < 1.4) continue;
+  const kind = R();
+  if (kind < .55) {
+    add(new THREE.CylinderGeometry(.07, .08, .3, 5), mat('#8a5a3b'), p.clone().setY(GROUND + .15));
+    add(new THREE.ConeGeometry(.36 + R() * .12, .95 + R() * .3, 6), mat(R() < .5 ? '#4f9e63' : '#62b06c'), p.clone().setY(GROUND + .78));
+  } else if (kind < .85) {
+    add(new THREE.CylinderGeometry(.07, .08, .4, 5), mat('#8a5a3b'), p.clone().setY(GROUND + .2));
+    add(new THREE.IcosahedronGeometry(.42 + R() * .1, 0), mat('#7cc36f'), p.clone().setY(GROUND + .72));
+  } else add(new THREE.IcosahedronGeometry(.28, 0), mat(ROCK), p.clone().setY(GROUND + .12));
+  placed++;
+}
+
+// post: GTAO draws the seams between the tiles
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const ao = new GTAOPass(scene, cam, W, H);
+ao.updateGtaoMaterial({ radius: .55, distanceExponent: 1.4, thickness: 1, scale: 1.1, samples: 16 });
+ao.blendIntensity = .85;
+composer.addPass(ao);
+composer.addPass(new OutputPass());
+composer.render();
+
+// in-world labels
+const pOld = toScreen(topOld, cam), pNew = toScreen(topNew, cam);
+label(`<div class="pill"><div class="when">2025 年中</div><div class="price"><small>不到</small>$100</div></div><div class="tip"></div>`, 'tag old', pOld.x - 30, pOld.y);
+label(`<div class="pill"><div class="when">2026 年 10 月</div><div class="price">$449</div></div><div class="tip"></div>`, 'tag new', pNew.x, pNew.y);
+const pk = toScreen(at(1.3, -2.2, GROUND), cam);
+label(`<i></i>一枚 = 10 美元 · 32GB DDR5 内存条，两根一套`, 'key', pk.x + 330, pk.y + 40);
+
+await skeleton({
+  tone: 'light', chapter: '芯片',
+  caption: '同一套内存条，现在要 <mark><span class="num">449</span> 美元</mark>。',
+  source: '美国最低零售价 · Tom\'s Hardware（美国硬件网站）价格追踪，<b>2026-06-03</b>、<b>2026-10-19</b>',
+});
+done();
+</script>
+</body></html>

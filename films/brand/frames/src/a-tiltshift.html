@@ -1,0 +1,178 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>A 移轴微缩</title>
+<link rel="stylesheet" href="skeleton.css">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head><body>
+<div id="stage"></div><div id="labels"></div><div id="sk"></div>
+<script type="module">
+import { THREE, W, H, makeRenderer, rng, canvasTexture, toScreen, fontsReady, skeleton, tiltShift, done } from './common.js';
+
+await fontsReady();
+const R = rng(23);
+const renderer = makeRenderer({ exposure: 1.0 });
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#b9d3e0');
+
+// units: metres. High oblique, long-ish lens, the way tilt-shift photographs are taken
+const cam = new THREE.PerspectiveCamera(24, W / H, 1, 600);
+cam.position.set(1.5, 39, 30);
+cam.lookAt(2.2, 1.2, -3.6);
+
+const sun = new THREE.DirectionalLight('#fff1da', 3.3);
+sun.position.set(-26, 42, 30); sun.castShadow = true;
+sun.shadow.mapSize.set(4096, 4096);
+Object.assign(sun.shadow.camera, { left: -42, right: 42, top: 34, bottom: -34, near: 1, far: 160 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = .03;
+scene.add(sun, new THREE.HemisphereLight('#d2e7ff', '#ead6bb', 1.05));
+
+const mats = new Map();
+const mat = (c, o = {}) => { const k = c + JSON.stringify(o); if (!mats.has(k)) mats.set(k, new THREE.MeshStandardMaterial({ color: c, roughness: .8, ...o })); return mats.get(k); };
+const box = (w, h, d, m, x, y, z, parent = scene) => {
+  const me = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); me.position.set(x, y, z);
+  me.castShadow = me.receiveShadow = true; parent.add(me); return me;
+};
+const pick = a => a[Math.floor(R() * a.length)];
+
+// paving
+const paving = canvasTexture(512, 512, (g, w, h) => {
+  g.fillStyle = '#e7e1d6'; g.fillRect(0, 0, w, h);
+  for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) { g.fillStyle = `rgba(150,135,115,${.04 + R() * .07})`; g.fillRect(i * 64 + 2, j * 64 + 2, 60, 60); }
+  g.strokeStyle = 'rgba(120,108,92,.35)'; g.lineWidth = 3;
+  for (let i = 0; i <= 8; i++) { g.beginPath(); g.moveTo(i * 64, 0); g.lineTo(i * 64, h); g.stroke(); g.beginPath(); g.moveTo(0, i * 64); g.lineTo(w, i * 64); g.stroke(); }
+});
+paving.wrapS = paving.wrapT = THREE.RepeatWrapping; paving.repeat.set(50, 50);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({ map: paving, roughness: .95 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+
+// a road along the front edge, cars in time-lapse
+box(200, .02, 7, mat('#4b4f55'), 0, .01, 17);
+for (let x = -60; x < 60; x += 4) box(1.8, .03, .16, mat('#f4f1ea'), x, .025, 17);
+for (let i = 0; i < 14; i++) {
+  const lane = R() < .5 ? 15.4 : 18.6, x = -34 + R() * 70, c = pick(['#e63946', '#f1faee', '#1d3557', '#ffb703', '#2a9d8f', '#f4f4f4', '#264653']);
+  box(4.2, 1.1, 1.8, mat(c, { roughness: .4 }), x, .7, lane);
+  box(2.2, .5, 1.6, mat('#2b3440', { roughness: .2 }), x - .2, 1.45, lane);
+}
+
+// buildings at the back: the malls of an electronics street
+const facade = (base, lit) => canvasTexture(256, 512, (g, w, h) => {
+  g.fillStyle = base; g.fillRect(0, 0, w, h);
+  for (let y = 18; y < h - 10; y += 34) for (let x = 14; x < w - 10; x += 30) {
+    g.fillStyle = R() < lit ? '#f7e7b5' : 'rgba(40,60,80,.55)'; g.fillRect(x, y, 18, 22);
+  }
+});
+let bx = -46;
+while (bx < 48) {
+  const w = 7 + R() * 7, h = 9 + R() * 14, d = 9;
+  const m = new THREE.MeshStandardMaterial({ map: facade(pick(['#d9cbb8', '#c7d1d8', '#e4d6c4', '#b7c4cc', '#d6c2b0']), .15), roughness: .85 });
+  const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), [mat('#cfc6ba'), mat('#cfc6ba'), mat('#a9a399'), mat('#cfc6ba'), m, m]);
+  b.position.set(bx + w / 2, h / 2, -21); b.castShadow = b.receiveShadow = true; scene.add(b);
+  box(w * .8, 1.2, .2, mat(pick(['#e63946', '#1d6fb8', '#f4a261', '#2a9d8f'])), bx + w / 2, Math.min(h - 1.2, 7), -16.4);
+  bx += w + .6;
+}
+// trees between the mall and the stalls
+for (let x = -40; x < 44; x += 5.5) {
+  box(.25, 1.8, .25, mat('#7a5a3a'), x, .9, -12.5);
+  const c = new THREE.Mesh(new THREE.IcosahedronGeometry(1.5 + R() * .4, 1), mat(pick(['#4f9a4f', '#5aa65a', '#3f8a47'])));
+  c.position.set(x, 2.9, -12.5); c.castShadow = c.receiveShadow = true; scene.add(c);
+}
+
+// market stalls
+const CATS = ['显卡', '硬盘', '主板', '电源', '机箱', '显示器', '键鼠', '整机', '散热', '笔记本', '二手回收', '路由器'];
+const AWN = [['#e63946', '#fff4ec'], ['#1d6fb8', '#f1f6fb'], ['#2a9d8f', '#f2fbf9'], ['#f4a261', '#fff7ef'], ['#6a4c93', '#f6f1fb'], ['#ffb703', '#fffaf0']];
+const stripes = ([a, b]) => canvasTexture(256, 64, (g, w, h) => { for (let i = 0; i < 8; i++) { g.fillStyle = i % 2 ? b : a; g.fillRect(i * 32, 0, 32, h); } });
+const sign = (text, colour) => canvasTexture(640, 110, (g, w, h) => {
+  g.fillStyle = colour; g.fillRect(0, 0, w, h);
+  g.fillStyle = '#fff'; g.font = '900 72px NSans'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(text, w / 2, h / 2 + 4);
+});
+function stall(x, z, facing, cat, colours, hero = false) {
+  const s = new THREE.Group(); s.position.set(x, 0, z); s.rotation.y = facing; scene.add(s);
+  box(3.8, 2.4, .4, mat(pick(['#e9e4da', '#dfe5ea', '#ece2d2'])), 0, 1.2, -1.4, s);
+  for (let row = 0; row < 3; row++) for (let i = 0; i < 9; i++) {
+    const c = pick(['#e63946', '#1d6fb8', '#2a9d8f', '#ffb703', '#264653', '#f1faee', '#8d99ae', '#ef476f']);
+    box(.3, .26 + R() * .14, .22, mat(c), -1.6 + i * .4, .6 + row * .62, -1.1, s);
+  }
+  box(3.4, .95, .8, mat('#f4f6f7', { roughness: .3 }), 0, .475, .3, s);
+  box(3.4, .12, .82, mat(colours[0]), 0, .9, .3, s);
+  for (let i = 0; i < 5; i++) box(.34, .1 + R() * .12, .26, mat(pick(['#1d3557', '#e63946', '#ffffff', '#2a9d8f'])), -1.2 + i * .6, 1.03, .3, s);
+  if (!hero) {
+    const aw = new THREE.Mesh(new THREE.BoxGeometry(3.9, .07, 1.9), [mat(colours[0]), mat(colours[0]), new THREE.MeshStandardMaterial({ map: stripes(colours), roughness: .8 }), mat(colours[0]), mat(colours[0]), mat(colours[0])]);
+    aw.position.set(0, 2.75, -.4); aw.rotation.x = .2; aw.castShadow = aw.receiveShadow = true; s.add(aw);
+  }
+  const sg = new THREE.Mesh(new THREE.PlaneGeometry(3.3, .56), new THREE.MeshStandardMaterial({ map: sign(cat, colours[0]), roughness: .7 }));
+  sg.position.set(0, hero ? 2.9 : 2.5, hero ? -1.15 : .58); sg.rotation.x = hero ? 0 : -.25; s.add(sg);
+  if (hero) { box(.1, 3.2, .1, mat('#8d99ae'), -1.8, 1.6, -1.2, s); box(.1, 3.2, .1, mat('#8d99ae'), 1.8, 1.6, -1.2, s); }
+}
+const HERO_X = 3;
+let ci = 0;
+for (let x = -26; x <= 30; x += 4.1) {
+  const hero = Math.abs(x - (-26 + 4.1 * 7)) < .01;
+  stall(hero ? HERO_X : x, -7, 0, hero ? '内存条' : CATS[ci++ % CATS.length], hero ? ['#e63946', '#fff4ec'] : pick(AWN), hero);
+}
+for (let x = -24; x <= 30; x += 4.1) stall(x, 7.6, Math.PI, CATS[ci++ % CATS.length], pick(AWN));
+
+// clutter: cartons by the counters
+for (let i = 0; i < 40; i++) {
+  const x = -28 + R() * 60, z = R() < .5 ? -5.3 - R() * .4 : 5.9 + R() * .4;
+  if (Math.abs(x - HERO_X) < 3.6 && z < 0) continue;
+  const k = 1 + Math.floor(R() * 3);
+  for (let j = 0; j < k; j++) box(.5 + R() * .2, .4, .45, mat(pick(['#c89b6d', '#b9875a', '#d8b48a'])), x + (R() - .5) * .3, .2 + j * .4, z, scene).rotation.y = R() * .5;
+}
+
+// the price board, standing in the aisle in front of the RAM stall
+const board = canvasTexture(1840, 1120, (g, w, h) => {
+  g.fillStyle = '#fffdf8'; g.fillRect(0, 0, w, h);
+  g.strokeStyle = '#e63946'; g.lineWidth = 34; g.strokeRect(17, 17, w - 34, h - 34);
+  g.fillStyle = '#1c1d20'; g.font = '900 128px NSans'; g.textAlign = 'center';
+  g.fillText('32GB DDR5 内存条', w / 2, 200);
+  g.font = '700 116px NSans'; g.fillStyle = '#8a8f98';
+  g.fillText('2025 年中 不到 $100', w / 2, 370);
+  g.strokeStyle = '#e63946'; g.lineWidth = 16; g.beginPath(); g.moveTo(w / 2 - 560, 330); g.lineTo(w / 2 + 560, 330); g.stroke();
+  g.fillStyle = '#e63946'; g.font = '800 430px Inter'; g.fillText('$449', w / 2, 820);
+  g.fillStyle = '#1c1d20'; g.font = '700 92px NSans'; g.fillText('2026 年 10 月 · 两根一套', w / 2, 1000);
+});
+{
+  const b = new THREE.Group(); b.position.set(HERO_X, 0, -4.3); b.rotation.x = -.42; scene.add(b);
+  box(.12, 2.4, .12, mat('#59606b'), -2.9, 1.2, -.05, b); box(.12, 2.4, .12, mat('#59606b'), 2.9, 1.2, -.05, b);
+  box(6.6, 4.05, .1, mat('#e63946'), 0, 2.95, -.06, b);
+  const face = new THREE.Mesh(new THREE.PlaneGeometry(6.4, 3.9), new THREE.MeshStandardMaterial({ map: board, roughness: .55 }));
+  face.position.set(0, 2.95, .001); face.castShadow = true; b.add(face);
+}
+
+// people: model-railway figures
+const body = new THREE.CapsuleGeometry(.21, .72, 3, 8), head = new THREE.SphereGeometry(.14, 10, 8);
+const SHIRTS = ['#e63946', '#1d6fb8', '#ffb703', '#2a9d8f', '#f1faee', '#ef476f', '#8338ec', '#fb8500', '#219ebc', '#ffffff', '#3a3a3a'];
+function person(x, z, shirt, scale = 1, face = R() * 6.28) {
+  const p = new THREE.Group(); p.position.set(x, 0, z); p.scale.setScalar(scale); p.rotation.y = face; scene.add(p);
+  const b = new THREE.Mesh(body, mat(shirt)); b.position.y = .6; b.castShadow = true; p.add(b);
+  const hd = new THREE.Mesh(head, mat(pick(['#f2c9a5', '#e0b08a', '#c68e65']))); hd.position.y = 1.32; hd.castShadow = true; p.add(hd);
+  const hair = new THREE.Mesh(new THREE.SphereGeometry(.145, 10, 6, 0, Math.PI * 2, 0, Math.PI / 2), mat('#2b2420')); hair.position.y = 1.34; p.add(hair);
+  return p;
+}
+let n = 0;
+while (n < 300) {
+  const x = -30 + R() * 64, z = -5.2 + R() * 11.3;
+  if (Math.abs(x - HERO_X) < 4 && z < -1.0) continue;          // keep the board clear
+  if (z > 5.6 && R() < .6) continue;
+  person(x, z, pick(SHIRTS), .9); n++;
+}
+// a small queue at the RAM counter is empty; one gamer stops in front of the board
+const gamer = person(HERO_X - .5, -2.3, '#ffd60a', 1.15, Math.PI);
+box(.34, .42, .2, mat('#2c7da0'), 0, .85, .22, gamer);
+
+renderer.render(scene, cam);
+
+// tilt-shift: the sharp band sits on the board
+const bandY = toScreen(new THREE.Vector3(HERO_X, 2.4, -4.3), cam).y / H;
+const img = tiltShift(renderer.domElement, { center: bandY, band: .07, edges: [.13, .2, .29, .4], blurs: [2.2, 5, 9, 15] });
+renderer.domElement.style.display = 'none';
+document.getElementById('stage').appendChild(img);
+
+await skeleton({
+  tone: 'light', chapter: '芯片',
+  caption: '同一套内存条，现在要 <mark><span class="num">449</span> 美元</mark>。',
+  source: '美国最低零售价 · Tom\'s Hardware（美国硬件网站）价格追踪，<b>2026-06-03</b>、<b>2026-10-19</b>',
+});
+done();
+</script>
+</body></html>
