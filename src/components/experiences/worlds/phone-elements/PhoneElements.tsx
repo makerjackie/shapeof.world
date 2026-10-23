@@ -997,7 +997,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
     table: tx('元素周期表 · 这台手机用到的点亮'),
     map: tx('它们主要从这些国家挖出来'),
     holding: tx('你手里的这一台'),
-    holdingSub: locale === 'zh' ? `约 ${deviceGrams} 克（不含电池）` : `≈ ${deviceGrams} g (no battery)`,
+    holdingSub: `${tx('约')} ${deviceGrams} ${tx('克（不含电池）')}`,
   }
   const labelsRef = useRef(labels)
   labelsRef.current = labels
@@ -1317,7 +1317,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
   ]
 
   const felt = selected ? feltMass(totalMg(selected), locale) : null
-  const countriesText = locale === 'zh' ? `${focusCountries} 个国家` : `${focusCountries} countries`
+  const countriesText = `${focusCountries} ${tx('个国家')}`
 
   const layerNote: Record<LayerId, string> = {
     mass: tx('格子越亮，这种元素在机内越多'),
@@ -1344,9 +1344,7 @@ export function PhoneElements({ controls }: { controls: ExperienceControls }) {
           <h1>{tx('你手里这块玻璃，挖自多少个国家？')}</h1>
           {atlas && (
             <p>
-              {locale === 'zh'
-                ? <>拆开数：至少 <b>{allCountries}</b> 个国家</>
-                : <>Count them: at least <b>{allCountries}</b> countries</>}
+              {tx('拆开数：至少')} <b>{allCountries}</b> {tx('个国家')}
             </p>
           )}
         </header>
