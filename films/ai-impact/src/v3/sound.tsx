@@ -16,6 +16,8 @@ import { bar, BAR, BEAT, beat, FRAMES, fr, MUSIC_EDIT } from "./timing";
 // (tools/tune_sfx.py --triad F; files in public/lib/tunedF).
 
 export const GAIN = 0.76;
+// Whole-mix headroom so the raw render never clips; the master step (tpmaster.py) brings loudness back up.
+export const MIX = 0.56;
 type Ev = [number, string, number];
 const TF = (f: string) => `tunedF/${f}`;
 
@@ -218,7 +220,7 @@ const Music: React.FC = () => (
         let v = 1;
         if (fadeIn && f < fadeIn) v = f / fadeIn;
         if (fadeOut && f > len - fadeOut) v = Math.min(v, (len - f) / fadeOut);
-        return GAIN * v * duckAt((from + f) / 30);
+        return MIX * GAIN * v * duckAt((from + f) / 30);
       };
       return (
         <Sequence key={i} from={from} durationInFrames={len}>
@@ -234,12 +236,12 @@ export const Sound: React.FC<{ until?: number }> = ({ until = Infinity }) => (
     <Music />
     {BEDS.filter(([a]) => a < until).map(([a, b, f, v]) => (
       <Sequence key={a} from={fr(a)} durationInFrames={fr(b - a)}>
-        <Audio src={staticFile(`lib/${f}`)} volume={(k) => v * interpolate(k, [0, 15, fr(b - a) - 15, fr(b - a)], [0, 1, 1, 0], CL)} />
+        <Audio src={staticFile(`lib/${f}`)} volume={(k) => MIX * v * interpolate(k, [0, 15, fr(b - a) - 15, fr(b - a)], [0, 1, 1, 0], CL)} />
       </Sequence>
     ))}
     {EVENTS.filter(([s]) => s < until).map(([s, f, v], i) => (
       <Sequence key={i} from={Math.max(0, fr(s))} durationInFrames={60}>
-        <Audio src={staticFile(`lib/${f}`)} volume={v} />
+        <Audio src={staticFile(`lib/${f}`)} volume={MIX * v} />
       </Sequence>
     ))}
   </>

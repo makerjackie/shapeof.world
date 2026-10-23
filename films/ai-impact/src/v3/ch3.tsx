@@ -153,7 +153,7 @@ export const Factory: React.FC = () => {
     <AbsoluteFill>
       <Backdrop glow={C.cyan} at={[60, 60]} strength={0.1} />
       <div style={{ position: "absolute", left: 640, top: 420, width: 300, height: 330, borderRadius: 18, background: "linear-gradient(180deg, #273140, #19202a)", border: "2px solid #3a4556", fontFamily: FONT, opacity: pr(t, b0, 0.4) }}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: -112, textAlign: "center", fontSize: 30, fontWeight: 900, color: C.fg }}>内存工厂</div>
+        <div style={{ position: "absolute", left: 0, right: 0, top: 346, textAlign: "center", fontSize: 30, fontWeight: 900, color: C.fg }}>内存工厂</div>
         {[0, 1, 2].map((i) => (
           <div key={i} style={{ position: "absolute", left: 30 + i * 85, top: -42, width: 40, height: 50, background: "#273140", border: "2px solid #3a4556", borderBottom: "none" }} />
         ))}

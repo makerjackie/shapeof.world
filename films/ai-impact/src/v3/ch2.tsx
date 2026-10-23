@@ -243,14 +243,14 @@ export const Charts: React.FC = () => {
       <Chart x={1260} y={430} title="中国区 · 免费榜" color={C.orange} rank={cn} names={["应用 A", "应用 B", "应用 C", "应用 D", "应用 E"]} />
       {usOn > 0 ? (
         <div style={{ opacity: usOn }}>
-          <Chart x={280} y={430} title="美国区 · 免费榜" color={C.cyan} rank={us} names={["ChatGPT", "Threads", "Gemini", "应用 F", "应用 G"]} />
+          <Chart x={280} y={430} title="美国区 · 免费榜" color={C.cyan} rank={us} names={["ChatGPT", "应用 B", "应用 C", "应用 D", "应用 E"]} />
         </div>
       ) : null}
       {hop > 0 && hop < 1 ? (
         <div style={{ position: "absolute", left: lerp(1300, 320, hop), top: 480 - Math.sin(hop * Math.PI) * 260, width: 44, height: 44, borderRadius: 12, background: "#4d6bfe", boxShadow: "0 0 30px #4d6bfe" }} />
       ) : null}
       {date > 0 ? (
-        <div style={{ position: "absolute", left: 960, top: 840, transform: `translateX(-50%) scale(${date})`, fontFamily: FONT, fontWeight: 900, fontSize: 40, color: C.gold, whiteSpace: "nowrap" }}>2025.01.27 · 中美同时第一</div>
+        <div style={{ position: "absolute", left: 960, top: 840, transform: `translateX(-50%) scale(${date})`, fontFamily: FONT, fontWeight: 900, fontSize: 40, color: C.gold, whiteSpace: "nowrap", padding: "10px 28px", borderRadius: 16, background: "rgba(12,13,17,0.92)" }}>2025.01.27 · 中美同时第一</div>
       ) : null}
       <Lines at={b0} a={CH2.s14[0]} b={CH2.s14[1]} out={bar(28) - 0.05} />
       <Src at={b0 + 0.3}>DeepSeek（杭州）2025-01-27 同时登顶中国区、美国区 App Store 免费榜（界面新闻、TechNode）· 榜单其余应用为示意</Src>
@@ -371,7 +371,7 @@ export const ZhipuChart: React.FC = () => {
   const nextI = ZP.findIndex(([u]) => u > draw);
   const tip = nextI > 0 ? [draw, lerp(ZP[nextI - 1][1], ZP[nextI][1], (draw - ZP[nextI - 1][0]) / (ZP[nextI][0] - ZP[nextI - 1][0]))] : last;
   const d = [...pts, tip].map(([u, v], i) => `${i === 0 ? "M" : "L"}${px(u)},${py(v)}`).join(" ");
-  const ticker = ["寒武纪的股价一度超过茅台", "国内 1,112 款 AI 产品完成备案", "两家美国 AI 公司估值逼近 1 万亿美元"];
+  const notes = ["寒武纪的股价一度超过茅台", "国内 1,112 款 AI 产品完成备案"];
   return (
     <AbsoluteFill>
       <Backdrop glow={C.gold} at={[60, 55]} strength={0.12} />
@@ -402,12 +402,15 @@ export const ZhipuChart: React.FC = () => {
           {l as string}
         </div>
       ))}
-      <div style={{ position: "absolute", left: 0, right: 0, top: 940, height: 50, overflow: "hidden", opacity: pr(t, b0 + 1.2, 0.5) }}>
-        <div style={{ position: "absolute", left: 1920 - (t - b0) * 260, top: 8, whiteSpace: "nowrap", fontFamily: FONT, fontSize: 26, fontWeight: 800, color: C.gold }}>
-          {ticker.map((s) => (
-            <span key={s} style={{ marginRight: 120 }}>◆ {s}</span>
-          ))}
-        </div>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 942, display: "flex", justifyContent: "center", gap: 80, fontFamily: FONT, fontSize: 28, fontWeight: 800, color: C.gold, whiteSpace: "nowrap" }}>
+        {notes.map((s, i) => {
+          const p = pr(t, b0 + 1.6 + i * 2 * BEAT, 0.4, EO);
+          return (
+            <span key={s} style={{ opacity: p, transform: `translateY(${(1 - p) * 14}px)` }}>
+              ◆ {s}
+            </span>
+          );
+        })}
       </div>
       <Lines at={b0} a={CH2.s18[0]} b={CH2.s18[1]} out={bar(36) - 0.05} />
       <Src at={b0 + 0.3}>智谱（02513.HK）：发行价 116.2 港元（2026-01-08）→ 盘中最高 2,980（2026-06-22）→ 收盘 484.8（2026-10-20）；曲线中段为示意 · 寒武纪 2025-08 起多次超过茅台 · 国家网信办备案 1,112 款（2026-08）</Src>

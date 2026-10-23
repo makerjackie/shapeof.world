@@ -48,7 +48,7 @@ export const Flat: React.FC = () => {
   const Y0 = 900;
   const draw = pr(t, b0 + 0.2, BAR * 1.2, EIO);
   const ups = [
-    { name: "英伟达 ×13", c: C.cyan, k: 1 },
+    { name: "英伟达 ×12", c: C.cyan, k: 1 },
     { name: "大厂投入 ×5", c: C.gold, k: 0.62 },
     { name: "AI 干活时长 ×260", c: C.violet, k: 0.85 },
   ];
@@ -320,7 +320,7 @@ export const Handoff: React.FC = () => {
         </div>
       )}
       {toBot ? (
-        <div style={{ position: "absolute", left: 470, top: 440, opacity: 0.45 }}>
+        <div style={{ position: "absolute", left: 470, top: 384, opacity: 0.45 }}>
           <Person h={120} color="#7b8696" />
           <div style={{ position: "absolute", left: 4, top: 128, fontFamily: FONT, fontSize: 22, fontWeight: 800, color: C.muted, whiteSpace: "nowrap" }}>新人，空着手</div>
         </div>

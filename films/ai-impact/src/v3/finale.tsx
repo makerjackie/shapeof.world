@@ -2,11 +2,11 @@ import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { FONT, SERIF } from "../theme";
 import { Door, Person } from "../v2/art";
-import { ChatBox } from "./art";
+import { ChatBox, Gpu } from "./art";
 import { DOOR } from "./ch1";
 import { doorMarks } from "./ch4";
 import { AI_MARKS, Frame, Mark, Marks } from "./door";
-import { Backdrop, C, EBACK, EIO, EO, lerp, Line, Lines, pr, Src, useT } from "./kit";
+import { Backdrop, C, clamp01, EBACK, EIO, EO, lerp, Line, Lines, pr, Src, useT } from "./kit";
 import { BAR, BEAT, bar } from "./timing";
 
 // 06 未知 (片中 80–88), 升华 (88–100), 收尾 (100–108).
@@ -85,7 +85,7 @@ export const Guesses: React.FC = () => {
           </React.Fragment>
         );
       })}
-      <div style={{ position: "absolute", left: X0, top: 960, display: "flex", gap: 40, fontFamily: FONT, fontSize: 22, fontWeight: 800, opacity: pr(t, b0 + 2.6, 0.4) }}>
+      <div style={{ position: "absolute", left: 1150, top: 880, display: "flex", gap: 40, fontFamily: FONT, fontSize: 22, fontWeight: 800, opacity: pr(t, b0 + 2.6, 0.4) }}>
         <span style={{ color: C.gold }}>■ 卖 AI 的公司</span>
         <span style={{ color: C.cyan }}>■ 预测社区和研究者</span>
       </div>
@@ -100,12 +100,25 @@ export const Hungrier: React.FC = () => {
   const t = useT();
   const b0 = bar(84);
   const grow = pr(t, b0 + 0.3, BAR * 1.2, EIO);
+  const boxW = lerp(440, 760, grow);
+  const boxH = lerp(260, 470, grow);
   return (
     <AbsoluteFill>
       <Backdrop glow={C.violet} at={[62, 60]} strength={0.12} />
       <div style={{ position: "absolute", left: 1300 - lerp(220, 380, grow), top: 900 - lerp(260, 470, grow), width: lerp(440, 760, grow), height: lerp(260, 470, grow), borderRadius: 26, border: `2px solid rgba(77,212,255,${0.4 + 0.4 * grow})`, background: "rgba(77,212,255,0.05)" }}>
         <div style={{ position: "absolute", left: 24, top: 16, fontFamily: FONT, fontSize: 28, fontWeight: 900, color: C.fg, whiteSpace: "nowrap" }}>AI 数据中心</div>
       </div>
+      {/* the hall fills with cards as it grows: 6 → 30 */}
+      {Array.from({ length: 30 }).map((_, i) => {
+        const c = (i % 5) - 2;
+        const r = Math.floor(i / 5);
+        const o = Math.min(clamp01((boxW / 2 - 16 - (Math.abs(c) * 128 + 52)) / 24), clamp01((boxH - 64 - ((r + 1) * 58 + 20)) / 24));
+        return o > 0 ? (
+          <div key={i} style={{ position: "absolute", left: 1300 + c * 128 - 52, top: 900 - 20 - (r + 1) * 58, opacity: o }}>
+            <Gpu w={104} t={t} glow={o} id={`hungry${i}`} />
+          </div>
+        ) : null;
+      })}
       {[
         ["2027", "内存更紧"],
         ["2028", "内存更紧"],

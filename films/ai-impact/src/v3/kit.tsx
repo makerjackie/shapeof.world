@@ -2,7 +2,18 @@ import React from "react";
 import { FONT } from "../theme";
 import { C, clamp01, EIO, EO, pr, useT } from "../v2/kit";
 
-export { Backdrop, C, Cam, CL, clamp01, Corner, EBACK, EIO, EO, Glass, Label, lerp, pr, Scene, Src, useT } from "../v2/kit";
+export { Backdrop, C, Cam, CL, clamp01, Corner, EBACK, EIO, EO, Glass, Label, lerp, pr, Scene, useT } from "../v2/kit";
+
+// Source line: bottom-anchored and wrapping, so a long citation grows upward into a second line instead of running off
+// the frame (the v2 one is a single nowrap line).
+export const Src: React.FC<{ children: React.ReactNode; at?: number }> = ({ children, at = -1 }) => {
+  const t = useT();
+  return (
+    <div style={{ position: "absolute", left: 96, width: 1728, bottom: 24, lineHeight: 1.4, opacity: 0.6 * pr(t, at, 0.4), fontFamily: FONT, fontSize: 20, fontWeight: 500, color: C.fg }}>
+      {children}
+    </div>
+  );
+};
 
 // v3 keeps the v2 look (dark, big kinetic type, clean 2D objects; the user: "效果还可以"). Characters rise in at CPS a
 // second, so a 17-character two-line question is fully on screen within one second and the reading rule
