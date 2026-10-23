@@ -4,7 +4,9 @@
     "kit": "2026-10-20-house",
     "publishedAt": "2026-10-20",
     "relatedWorldIds": ["follow-the-money", "tshirt-world"],
-    "watch": {},
+    "watch": {
+      "bilibili": "https://www.bilibili.com/video/BV1srnN6GEBC/"
+    },
     "zh": {
       "title": "房子的形状",
       "subtitle": "一套 100 万的房子，钱都去哪了",
@@ -23,7 +25,9 @@
     "kit": "2026-10-20-ai-shape",
     "publishedAt": "2026-10-20",
     "relatedWorldIds": ["neural-playground", "cnn-vision"],
-    "watch": {},
+    "watch": {
+      "bilibili": "https://www.bilibili.com/video/BV1iFnK6FEvW/"
+    },
     "zh": {
       "title": "AI 的形状",
       "subtitle": "上百个数字，看懂 2026 年的 AI 世界",
@@ -40,9 +44,11 @@
   {
     "slug": "ai-real-cost",
     "kit": "2026-10-21-ai-real-cost",
-    "publishedAt": null,
+    "publishedAt": "2026-10-21",
     "relatedWorldIds": ["neural-playground"],
-    "watch": {},
+    "watch": {
+      "bilibili": "https://www.bilibili.com/video/BV1Kpn66GEwJ/"
+    },
     "zh": {
       "title": "AI 的真实价格",
       "subtitle": "全球最聪明的 AI，比 DeepSeek 还便宜？",
