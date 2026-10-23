@@ -19,9 +19,7 @@ describe('movement-level conflict geometry', () => {
   })
   it('removes bridge crossings without suppressing physical merge/diverge events', () => {
     const result = summarizeConflicts(calculateConflicts(cloverleaf.build()))
-    expect(result.crossing).toBe(0)
-    expect(result.merge).toBeGreaterThan(0)
-    expect(result.diverge).toBeGreaterThan(0)
+    expect(result).toEqual({ total: 16, crossing: 0, merge: 8, diverge: 8 })
   })
 })
 

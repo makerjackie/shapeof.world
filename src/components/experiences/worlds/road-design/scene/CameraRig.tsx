@@ -13,19 +13,34 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
   const mounted = useRef(false)
   useEffect(() => {
     const firstView = !mounted.current
-    const urban = design.id !== 'cloverleaf', mobile = size.width < 720
+    const urban = design.chapter === 1, service = design.chapter === 2, mobile = size.width < 720
     const position = design.camera.position, focus = design.camera.target
     let to = new T.Vector3(position.x, position.y, position.z), target = new T.Vector3(focus.x, focus.y, focus.z)
-    if (preset === 'top') to = new T.Vector3(0, urban ? 250 : 850, 1)
+    if (preset === 'top') {
+      to = new T.Vector3(0, urban ? 250 : 850, 1)
+      if (design.id === 'cloverleaf') {
+        // Include the outer ramp terminals at ±330 m. Offset the nadir so
+        // all sixteen conflict markers stay clear of the bottom controls.
+        target.set(0, 0, mobile ? 180 : 80)
+        to.set(0, mobile ? 2000 : 1300, target.z + 1)
+      }
+    }
     if (preset === 'close') { to = new T.Vector3(urban ? 40 : 110, urban ? 45 : 74, urban ? 75 : 115); target = new T.Vector3(urban ? 0 : 40, 3, urban ? 0 : 25) }
     if (preset === 'low') { to = new T.Vector3(urban ? 15 : 78, urban ? 8 : 22, urban ? 80 : 230); target = new T.Vector3(0, 2, 0) }
-    if (preset === 'overview' && !urban) { to.multiplyScalar(1.14); target.y = 35 }
+    if (preset === 'overview') {
+      // A 22 degree view through a 60 degree vertical lens leaves the horizon
+      // at 15% height while preserving the interchange in the lower two thirds.
+      if (urban) { to.set(74, 72, 98); target.set(0, 0, 0) }
+      else if (service) { to.set(150, 150, 225); target.set(0, 12, 0) }
+      else { to.set(225, 164, 290); target.set(0, 10, 0) }
+    }
     if (mobile && preset === 'overview') {
-      if (urban) to.multiplyScalar(1.6)
-      else to.set(475, 675, 495)
+      if (urban) to.set(96, 98, 118)
+      else if (service) { to.set(290, 330, 450); target.set(0, 10, 0) }
+      else { to.set(500, 430, 700); target.set(0, 44, 0) }
     }
     const perspective = camera as T.PerspectiveCamera
-    perspective.fov = mobile ? 48 : (design.camera.fov ?? 35); perspective.updateProjectionMatrix()
+    perspective.fov = preset === 'overview' ? (urban ? (mobile ? 58 : 48) : (service ? (mobile ? 62 : 60) : (mobile ? 64 : 60))) : (mobile ? 50 : 42); perspective.updateProjectionMatrix()
     if (!mounted.current || reducedMotion) {
       camera.position.copy(to); control.current?.target.copy(target); camera.lookAt(target)
       mounted.current = true

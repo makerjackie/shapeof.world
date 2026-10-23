@@ -17,6 +17,15 @@ export interface Lane {
   entry?: string
   exit?: string
   stopLine?: number
+  /** Explicit local signal gate; several groups allow a waiting-bay entry in both phases. */
+  signalGroups?: string[]
+  controlPoint?: string
+  protectedTurn?: boolean
+  /** The turn at this connector, which can differ from a multi-junction O-D turn. */
+  turn?: Turn
+  waitingArea?: boolean
+  circulating?: boolean
+  roundaboutEntry?: boolean
   cumulative?: number[]
   /** A lane ending in a merge has a physical end; it is never teleported downstream. */
   merge?: boolean
@@ -32,6 +41,8 @@ export interface Carriageway {
   kind?: 'main' | 'ramp' | 'urban'
   shoulder?: number
   superelevation?: number
+  oneWay?: boolean
+  medianWidth?: number
 }
 export interface Movement {
   id: string
@@ -60,7 +71,10 @@ export interface ControlSpec {
   kind: 'free' | 'yield' | 'signal'
   phases?: SignalPhase[]
   majorApproaches?: string[]
+  roundabout?: boolean
 }
+/** Axis-aligned core detector rectangle, in world metres; excludes the long leads. */
+export interface MeasurementArea { minX: number; maxX: number; minZ: number; maxZ: number }
 export interface Network {
   id: string
   lanes: Lane[]
@@ -69,6 +83,9 @@ export interface Network {
   schematicMovements: SchematicMovement[]
   weaving: WeavingSection[]
   control: ControlSpec
+  /** Optional override for irregular / real-world junctions. Otherwise derived from connector and ramp geometry. */
+  measurementArea?: MeasurementArea
+  urbanJunctions?: { id: string; position: Vec3; arms: { direction: 'north' | 'east' | 'south' | 'west'; halfWidth: number; reach?: number }[]; cornerRadius?: number; layout?: 'junction' | 'roundabout'; islandRadius?: number }[]
 }
 export interface DesignSpec {
   id: string
@@ -117,10 +134,14 @@ export interface Vehicle {
   laneChange?: LaneChange
   waitingSince?: number
   admitted?: boolean
+  admittedControlPoint?: string
   permissiveWaiting?: boolean
   lastLaneChangeAt: number
+  corePassage?: { enteredAt: number; elapsed: number; freeFlowTime: number; distance: number; stopsAtEntry: number; laneChangesAtEntry: number; exitedAt?: number }
 }
 export interface SimulationMetrics {
+  /** Requested arrivals summed across the network's distinct approaches, veh/h. */
+  demand: number
   throughput: number
   throughputByMovement: Record<string, number>
   averageDelay: number

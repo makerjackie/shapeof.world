@@ -44,3 +44,49 @@
   .rd-tools { flex-direction: column; gap: 16px; align-items: stretch; padding: 8px 3px 12px; }.rd-tools label { justify-content: space-between; }.rd-tools input[type=range] { width: 140px; }.rd-tools output { min-width: 82px; text-align: right; }.rd-camera-presets { justify-content: space-between; }
   .road-design-experience .rd-freebar-main { padding: 6px 8px; }
 }
+
+.rd-flow-pair { display:flex; align-items:baseline; gap:9px; padding:14px 0 0; font-variant-numeric:tabular-nums; }
+.rd-flow-pair>div { flex:1; }.rd-flow-pair span { display:block; color:#8a93a3; font-size:10px; margin-bottom:5px; }.rd-flow-pair strong { font-size:22px; font-weight:400; letter-spacing:-.03em; }.rd-flow-pair i { font-size:17px; color:#5e6877; font-style:normal; }
+.road-design-experience .rd-camera-presets { border:1px solid #ffffff1c; border-radius:3px; gap:0; padding:2px; }
+.road-design-experience .rd-camera-presets button { border-radius:2px; min-height:25px; height:25px; padding:2px 9px; font-size:10px; border:0; box-shadow:none; }
+@media(max-width:720px) { .rd-flow-pair { gap:5px; flex-wrap:wrap; padding-top:10px; }.rd-flow-pair strong { font-size:18px; }.rd-flow-pair>small { font-size:8px; }.rd-camera-presets button { flex:1; } }
+@media(max-width:720px) {
+  .rd-instruments { top:122px; left:12px; right:12px; width:auto; display:grid; grid-template-columns:1fr 1.5fr; gap:8px 14px; padding:10px 12px; }
+  .rd-conflict-count { justify-content:flex-start; gap:10px; }.rd-conflict-count strong { font-size:19px; }
+  .rd-conflict-key { justify-content:flex-end; align-items:center; border:0; margin:0; padding:0; gap:8px; }
+  .rd-flow-pair { grid-column:1/-1; padding:7px 0 0; border-top:1px solid #ffffff12; gap:10px; flex-wrap:nowrap; }
+  .rd-flow-pair>div { display:flex; align-items:baseline; gap:7px; }.rd-flow-pair span { margin:0; }.rd-flow-pair strong { font-size:19px; }
+  .rd-instruments dl { grid-column:1/-1; grid-template-columns:repeat(4,1fr); margin:0; gap:6px; }.rd-instruments dt { font-size:8px; }.rd-instruments dd { font-size:16px; margin-top:3px; }.rd-instruments dd small { display:inline; margin:0; font-size:8px; }
+  .rd-layer-readout { padding:6px 0 0; grid-column:1/-1; justify-content:flex-start; }.rd-layer-readout b:nth-child(2) { margin-right:10px; }
+  .rd-window { display:none; }
+}
+
+.experience-page[data-world-id="road-design"]:has(.road-design-experience[data-capture="true"]) .experience-header { visibility:hidden; pointer-events:none; }
+
+.rd-view-transition { position:absolute; inset:0; pointer-events:none; background:#07121f; opacity:0; transition:opacity .3s ease; }
+.rd-view-transition[data-changing=true] { opacity:1; }
+.rd-catalog { gap:15px; padding:0 1px; }
+.rd-catalog-group { flex:0 0 auto; }
+.rd-catalog-group>div { display:flex; gap:5px; }
+.rd-catalog .rd-chapter { display:block; color:#8390a0; font-size:9px; letter-spacing:.15em; margin:0 0 7px 3px; }
+.rd-catalog button { width:133px; flex-basis:133px; padding:9px; gap:9px; }
+.rd-catalog svg { width:33px; height:33px; }
+.rd-pressure { border-top:1px solid #ffffff18; margin-top:14px; padding-top:12px; }
+.rd-pressure-heading { display:flex; justify-content:space-between; font-size:11px; color:#d9c5a0; margin-bottom:12px; }
+.rd-pressure-plot>div { display:flex; justify-content:space-between; align-items:baseline; font-size:10px; color:#aab2c0; }
+.rd-pressure-plot svg { display:block; width:100%; height:66px; margin:4px 0 8px; overflow:visible; }
+.rd-pressure-axis { display:flex; justify-content:space-between; font-size:8px; color:#8a93a3; margin-top:-2px; }
+.rd-pressure-legend { display:flex; flex-wrap:wrap; gap:5px 10px; font-size:9px; margin-top:10px; }
+.rd-pressure-toggle { white-space:nowrap; padding:6px 10px; background:#ffffff06; border:1px solid #ffffff15; border-radius:3px; color:#c4b89d; }
+@media(max-width:720px) {
+  .rd-catalog { gap:12px; }
+  .rd-catalog button { width:112px; flex-basis:112px; padding:8px; gap:7px; }
+  .rd-catalog .rd-chapter { font-size:8px; margin-bottom:6px; }
+  .rd-catalog svg { width:28px; height:28px; }
+  .rd-pressure { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; gap:0 12px; margin-top:0; padding-top:8px; }
+  .rd-pressure-heading,.rd-pressure-axis,.rd-pressure-legend { grid-column:1/-1; }
+  .rd-pressure-heading { margin-bottom:8px; }
+  .rd-pressure-plot>div { display:block; font-size:9px; }.rd-pressure-plot>div>small { font-size:8px; margin-left:5px; }
+  .rd-pressure-plot svg { height:48px; margin-bottom:5px; }
+  .rd-pressure-axis { margin:0; }.rd-pressure-legend { margin-top:6px; }
+}

@@ -2,39 +2,58 @@ import { useEffect, useMemo } from 'react'
 import * as T from 'three'
 import type { Network, Vec3 } from '../sim/types'
 import { fillInstances, samplePath, type Instance } from './mesh-kit'
+import { CityBuildings } from './CityBuildings'
+import { CityLights } from './CityLights'
 
-export interface Lamp { position: Vec3; height: number; urban: boolean; rotation: number }
+export interface Lamp { position: Vec3; height: number; urban: boolean; rotation: number; radius?: number }
 
 export function buildLamps(network: Network): Lamp[] {
-  const urban = network.id !== 'cloverleaf'
+  const urban = network.carriageways.every(road => road.kind === 'urban')
   const lamps: Lamp[] = []
-  if (!urban) {
-    for (const x of [-172, 172]) for (const z of [-172, 172]) lamps.push({ position: { x, y: 0, z }, height: 30, urban: false, rotation: 0 })
-  }
+  if (!urban) for (const x of [-98, 98]) for (const z of [-98, 98]) lamps.push({ position: { x, y: 0, z }, height: 30, urban: false, rotation: 0 })
   for (const road of network.carriageways) {
-    if (road.kind === 'ramp') continue
-    const offset = road.laneCount * road.laneWidth / 2 + (road.shoulder ?? 0) + 1.4
-    for (const { position: p, tangent: t } of samplePath(road.points, urban ? 36 : 120)) {
-      if (urban && Math.hypot(p.x, p.z) < 35) continue
-      lamps.push({ position: { x: p.x - t.z * offset, y: p.y, z: p.z + t.x * offset }, height: urban ? 9 : 26, urban, rotation: Math.atan2(t.x, t.z) })
+    if (road.kind === 'ramp' || road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
+    const cityRoad=road.kind==='urban'
+    const offset = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2 + (road.shoulder ?? 0) + 1.4
+    for (const { position: p, tangent: t } of samplePath(road.points, cityRoad ? 36 : 110)) {
+      if (cityRoad && urban && Math.hypot(p.x, p.z) < 28) continue
+      for (const side of cityRoad && !road.oneWay ? [-1, 1] : [1]) {
+        lamps.push({ position: { x: p.x - t.z * offset * side, y: p.y, z: p.z + t.x * offset * side }, height: cityRoad ? 9 : 28, urban:cityRoad, rotation: Math.atan2(t.x, t.z) + (side < 0 ? Math.PI : 0) })
+      }
     }
+  }
+  if(network.urbanJunctions?.length) {
+    for(const node of network.urbanJunctions) {
+      const x=(node.arms.find(arm=>arm.direction==='north'||arm.direction==='south')?.halfWidth??3.5)+3.35
+      const z=(node.arms.find(arm=>arm.direction==='east'||arm.direction==='west')?.halfWidth??3.5)+3.35
+      for(const sx of[-1,1])for(const sz of[-1,1]) lamps.push({position:{x:node.position.x+sx*(x+12),y:node.position.y,z:node.position.z+sz*z},height:Math.max(x,z)>13?12:9,urban:true,rotation:sz<0?-Math.PI/2:Math.PI/2,radius:Math.max(28,Math.hypot(x+12,z)*1.55)})
+    }
+  } else if(urban) {
+    const horizontal=network.carriageways.find(road=>Math.abs(road.points[0].x)>Math.abs(road.points[0].z))
+    const vertical=network.carriageways.find(road=>Math.abs(road.points[0].z)>Math.abs(road.points[0].x))
+    const x=(vertical?vertical.laneCount*vertical.laneWidth/2:3.5)+3.8
+    const z=(horizontal?horizontal.laneCount*horizontal.laneWidth/2:3.5)+3.8
+    for(const sx of[-1,1])for(const sz of[-1,1]) lamps.push({position:{x:sx*(x+12),y:0.1,z:sz*z},height:9,urban:true,rotation:sz<0?-Math.PI/2:Math.PI/2,radius:28})
   }
   return lamps
 }
 
-/** One top-down irradiance atlas, no per-lamp point lights or shadow maps. */
+/** A single top-down irradiance atlas replaces hundreds of shadowed point lights. */
 export function makeLightingAtlas(lamps: Lamp[]) {
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = 2048
   const context = canvas.getContext('2d')!
   context.fillStyle = '#000'; context.fillRect(0, 0, 2048, 2048)
   context.globalCompositeOperation = 'lighter'
   const extent = 1800, scale = canvas.width / (extent * 2)
-  for (const { position: p, height, urban } of lamps) {
-    const x = (p.x + extent) * scale, z = (p.z + extent) * scale, r = height * (urban ? 2.5 : 3.7) * scale
+  for (const { position: p, urban, rotation, radius } of lamps) {
+    // Urban luminaires project into the road, while mast lights cover a 52 m radius.
+    const cx = p.x + (urban ? Math.cos(rotation) * 4.5 : 0), cz = p.z - (urban ? Math.sin(rotation) * 4.5 : 0)
+    const x = (cx + extent) * scale, z = (cz + extent) * scale, r = (radius ?? (urban ? 26 : 52)) * scale
     const gradient = context.createRadialGradient(x, z, 0, x, z, r)
-    gradient.addColorStop(0, urban ? 'rgba(255,180,100,0.98)' : 'rgba(255,220,166,0.98)')
-    gradient.addColorStop(0.3, 'rgba(255,193,112,0.50)')
-    gradient.addColorStop(0.65, 'rgba(215,153,90,0.15)')
+    gradient.addColorStop(0, urban ? 'rgba(255,206,144,1)' : 'rgba(255,237,201,1)')
+    gradient.addColorStop(0.21, urban ? 'rgba(255,198,130,0.85)' : 'rgba(255,228,182,0.85)')
+    gradient.addColorStop(0.48, 'rgba(255,218,166,0.46)')
+    gradient.addColorStop(0.76, 'rgba(245,208,163,0.10)')
     gradient.addColorStop(1, 'rgba(0,0,0,0)')
     context.fillStyle = gradient; context.fillRect(x - r, z - r, r * 2, r * 2)
   }
@@ -44,88 +63,139 @@ export function makeLightingAtlas(lamps: Lamp[]) {
   return texture
 }
 
+/** Light transfer respects world normals, including instanced piers and tree crowns. */
 export function litMaterial(atlas: T.Texture, color: string, gain = 0.5, roughness = 0.9) {
-  const material = new T.MeshStandardMaterial({ color, roughness, metalness: 0.05, side: T.DoubleSide })
-  material.onBeforeCompile = (shader) => {
+  const material = new T.MeshStandardMaterial({ color, roughness, metalness: 0.035, side: T.DoubleSide })
+  material.onBeforeCompile = shader => {
     shader.uniforms.roadLighting = { value: atlas }
-    shader.vertexShader = 'varying vec3 roadWorld;\n' + shader.vertexShader
-    shader.vertexShader = shader.vertexShader.replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nroadWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;')
-    shader.fragmentShader = 'uniform sampler2D roadLighting;\nvarying vec3 roadWorld;\n' + shader.fragmentShader
+    shader.vertexShader = 'varying vec3 roadWorld; varying vec3 roadNormal;\n' + shader.vertexShader
+    shader.vertexShader = shader.vertexShader.replace('#include <worldpos_vertex>', `#include <worldpos_vertex>
+      vec4 lightPosition = vec4(transformed, 1.0);
+      vec3 lightNormal = objectNormal;
+      #ifdef USE_INSTANCING
+        lightPosition = instanceMatrix * lightPosition;
+        lightNormal = mat3(instanceMatrix) * lightNormal;
+      #endif
+      roadWorld = (modelMatrix * lightPosition).xyz;
+      roadNormal = normalize(mat3(modelMatrix) * lightNormal);
+    `)
+    shader.fragmentShader = 'uniform sampler2D roadLighting; varying vec3 roadWorld; varying vec3 roadNormal;\n' + shader.fragmentShader
     shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
       vec2 lightUV = (roadWorld.xz + 1800.0) / 3600.0;
       vec3 illumination = texture2D(roadLighting, vec2(lightUV.x, 1.0-lightUV.y)).rgb;
-      float grain = fract(sin(dot(floor(roadWorld.xz * 7.0), vec2(127.1,311.7))) * 43758.5453);
-      outgoingLight += diffuseColor.rgb * illumination * ${gain.toFixed(3)} * (0.90 + grain * 0.20) * max(0.25, normal.y);
+      // The irradiance gradient gives walls a brighter lamp-facing side. Soffits
+      // remain dark; a small upward fill prevents pure-black bridge structure.
+      float leftLight = dot(texture2D(roadLighting,vec2(lightUV.x-0.002,1.0-lightUV.y)).rgb,vec3(0.333));
+      float rightLight = dot(texture2D(roadLighting,vec2(lightUV.x+0.002,1.0-lightUV.y)).rgb,vec3(0.333));
+      float nearLight = dot(texture2D(roadLighting,vec2(lightUV.x,1.0-lightUV.y+0.002)).rgb,vec3(0.333));
+      float farLight = dot(texture2D(roadLighting,vec2(lightUV.x,1.0-lightUV.y-0.002)).rgb,vec3(0.333));
+      vec3 lightDirection = normalize(vec3(rightLight-leftLight,0.16,farLight-nearLight));
+      vec3 surfaceNormal=normalize(roadNormal)*(gl_FrontFacing?1.0:-1.0);
+      float facing = max(0.0,dot(surfaceNormal,lightDirection));
+      float transfer = surfaceNormal.y < -0.3 ? 0.07 : (surfaceNormal.y > 0.5 ? 1.0 : 0.18+facing*0.9);
+      float grain = fract(sin(dot(floor(roadWorld.xz * 7.0),vec2(127.1,311.7)))*43758.5453);
+      outgoingLight += diffuseColor.rgb * illumination * ${gain.toFixed(3)} * 2.5 * (0.94+grain*0.12) * transfer;
       #include <opaque_fragment>`)
   }
-  material.customProgramCacheKey = () => `road-light-${gain}`
+  material.customProgramCacheKey = () => `road-light-v3-${gain}`
   return material
 }
 
+function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
+  const material = litMaterial(atlas, urban ? '#171817' : '#111511', urban ? 0.65 : 1.1)
+  const illumination = material.onBeforeCompile
+  material.onBeforeCompile = (shader, renderer) => {
+    illumination(shader, renderer)
+    shader.fragmentShader = `float terrainHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float terrainNoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(terrainHash(i),terrainHash(i+vec2(1,0)),f.x),mix(terrainHash(i+vec2(0,1)),terrainHash(i+vec2(1,1)),f.x),f.y);}\n` + shader.fragmentShader
+    shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+      float terrain = terrainNoise(roadWorld.xz*0.004)+0.3*terrainNoise(roadWorld.xz*0.017);
+      vec3 grass=vec3(0.0040,0.0070,0.0052), earth=vec3(0.0070,0.0060,0.0048);
+      vec2 loopCenter=sign(roadWorld.xz)*77.625;
+      float loopGrass=${cloverleaf ? '1.0-smoothstep(48.0,57.0,length(roadWorld.xz-loopCenter))' : '0.0'};
+      vec3 groundColor=mix(grass,earth,smoothstep(0.3,1.0,terrain));
+      groundColor=mix(groundColor,vec3(0.0056,0.0105,0.0058),loopGrass*0.55);
+      diffuseColor.rgb=${urban ? 'diffuseColor.rgb' : 'groundColor'};
+    `)
+  }
+    const groundLighting = material.onBeforeCompile
+    material.onBeforeCompile = (shader, renderer) => {
+      groundLighting(shader, renderer)
+      shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
+        float groundDistance=distance(cameraPosition,roadWorld);
+        float horizonHaze=1.0-exp(-max(0.0,groundDistance-650.0)*0.00045);
+        outgoingLight=mix(outgoingLight,vec3(0.020,0.032,0.065),horizonHaze);
+        #include <opaque_fragment>`)
+      shader.fragmentShader = shader.fragmentShader.replace('#include <fog_fragment>', `#include <fog_fragment>
+        float horizonBlend=smoothstep(900.0,8500.0,distance(cameraPosition,roadWorld));
+        gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(0.079,0.055,0.082),horizonBlend);
+      `)
+    }
+  material.customProgramCacheKey = () => `road-terrain-v5-${urban}-${cloverleaf}`
+  return material
+}
+
+function treeInstances(network: Network) {
+  const crowns: Instance[] = [], trunks: Instance[] = []
+  let seed = 498
+  const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 | 0; return (seed >>> 0) / 4294967296 }
+  const plant = (x: number, z: number, height: number) => {
+    trunks.push({ position: [x, height * 0.3, z], scale: [0.25, height * 0.6, 0.25] })
+    for (let lobe = 0; lobe < 3; lobe++) {
+      const angle = lobe * 2.094 + random() * 0.4, spread = height * (0.44 + random() * 0.14)
+      crowns.push({ position: [x + Math.cos(angle) * height * 0.15, height * (0.62 + random() * 0.13), z + Math.sin(angle) * height * 0.15], scale: [spread, height * (0.48 + random() * 0.12), spread], color: '#0f1a12' })
+    }
+  }
+  // Small copses occupy the inside of each loop, away from ramp sight lines.
+  if(network.id==='cloverleaf') for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
+    for (let group = 0; group < 4; group++) {
+      const angle = group * Math.PI / 2 + 0.35, cx = sx * 77.625 + Math.cos(angle) * 32, cz = sz * 77.625 + Math.sin(angle) * 32
+      for (let i = 0; i < 5; i++) plant(cx + (random() - 0.5) * 13, cz + (random() - 0.5) * 13, 4 + random() * 3.3)
+    }
+  }
+  // The planting follows the motorway reservation instead of filling the ground
+  // with unrelated random dots. Alternate sections leave open meadow between.
+  for (const road of network.carriageways.filter(road => road.kind === 'main')) {
+    const offset = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2 + (road.shoulder ?? 0) + 22
+    let index = 0
+    for (const { position: p, tangent: t } of samplePath(road.points, 13)) {
+      if (Math.hypot(p.x, p.z) < 390 || index++ % 11 > 5) continue
+      plant(p.x - t.z * offset + (random() - 0.5) * 4, p.z + t.x * offset + (random() - 0.5) * 4, 5 + random() * 3)
+    }
+  }
+  return { crowns, trunks }
+}
+
 export function NightWorld({ network, atlas }: { network: Network; atlas: T.Texture }) {
-  const urban = network.id !== 'cloverleaf'
+  const urban = network.carriageways.every(road => road.kind === 'urban')
+  const lamps = useMemo(() => buildLamps(network), [network])
   const assets = useMemo(() => {
-    const buildings: Instance[] = [], windows: Instance[] = [], trees: Instance[] = []
-    let seed = 491
-    const rand = () => { seed = Math.imul(seed, 1664525) + 1013904223 | 0; return (seed >>> 0) / 4294967296 }
-    const building = (x: number, z: number, w: number, d: number, h: number) => {
-      buildings.push({ position: [x, h / 2 - 0.4, z], scale: [w, h, d], color: rand() > 0.5 ? '#33414e' : '#3b464e' })
-      for (let y = 3; y < h - 2; y += 3.2) {
-        for (let dx = -w / 2 + 2; dx < w / 2 - 1; dx += 3.4) {
-          for (const side of [-1, 1]) if (rand() < (urban ? 0.28 : 0.12)) windows.push({ position: [x + dx, y, z + side * (d / 2 + 0.06)], scale: [1.25, 1.5, 0.08], color: rand() > 0.22 ? '#b69d74' : '#7894ab' })
-        }
-        for (let dz = -d / 2 + 2; dz < d / 2 - 1; dz += 3.4) {
-          for (const side of [-1, 1]) if (rand() < (urban ? 0.28 : 0.12)) windows.push({ position: [x + side * (w / 2 + 0.06), y, z + dz], scale: [0.08, 1.5, 1.25], color: rand() > 0.22 ? '#b69d74' : '#7894ab' })
-        }
-      }
-    }
-    if (urban) {
-      for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-        for (let ix = 0; ix < 4; ix++) for (let iz = 0; iz < 3; iz++) {
-          const x = sx * (45 + ix * 44), z = sz * (46 + iz * 45)
-          building(x, z, 23 + rand() * 12, 20 + rand() * 14, 12 + rand() * 30)
-        }
-      }
-    }
-    for (let i = 0; i < 150; i++) {
-      const angle = rand() * Math.PI * 2, radius = 900 + rand() * 1400
-      const x = Math.cos(angle) * radius, z = Math.sin(angle) * radius
-      if (Math.abs(x) < 65 || Math.abs(z) < 65) continue
-      building(x, z, 14 + rand() * 48, 16 + rand() * 35, 10 + rand() ** 3 * 120)
-    }
-    if (!urban) for (let i = 0; i < 340; i++) {
-      const x = (rand() - 0.5) * 1200, z = (rand() - 0.5) * 1200
-      if (Math.abs(x) < 230 && Math.abs(z) < 230 || Math.abs(x) < 45 || Math.abs(z) < 45) continue
-      const h = 3 + rand() * 6
-      trees.push({ position: [x, h / 2, z], scale: [h * 0.6, h, h * 0.6], color: '#101e1c' })
-    }
-    return { buildings, windows, trees, ground: litMaterial(atlas, urban ? '#242c30' : '#1b282a', urban ? 1.6 : 0.85), sky: new T.ShaderMaterial({
-      side: T.BackSide, depthWrite: false, uniforms: {},
-      vertexShader: 'varying vec3 vDirection; void main(){ vDirection=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
-      fragmentShader: `varying vec3 vDirection; void main(){
-        float h=normalize(vDirection).y;
-        vec3 top=vec3(0.009,0.019,0.048), horizon=vec3(0.100,0.137,0.210);
-        vec3 c=mix(horizon,top,smoothstep(0.0,0.55,h));
-        c+=vec3(0.075,0.035,0.014)*exp(-abs(h)*38.0);
-        gl_FragColor=vec4(c,1.0);
-        #include <tonemapping_fragment>
-        #include <colorspace_fragment>
-      }`,
+    const trees = urban ? { crowns: [], trunks: [] } : treeInstances(network)
+    const skyColor = (hex: string) => new T.Color(hex).toArray()
+    return { ...trees, ground: groundMaterial(atlas, urban,network.id==='cloverleaf'), foliage: litMaterial(atlas, '#ffffff', 1.65), sky: new T.ShaderMaterial({
+      side: T.BackSide, depthWrite: false, toneMapped: false,
+      uniforms: { zenith: { value: skyColor('#050a18') }, middle: { value: skyColor('#142446') }, horizon: { value: skyColor('#2c3b5e') }, pollution: { value: skyColor('#6a4a3c') } },
+      vertexShader: 'varying vec3 vDirection; void main(){vDirection=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',
+      fragmentShader: `varying vec3 vDirection; uniform vec3 zenith; uniform vec3 middle; uniform vec3 horizon; uniform vec3 pollution;
+        void main(){float h=normalize(vDirection).y;
+          vec3 sky=mix(horizon,middle,smoothstep(0.0,0.20,max(h,0.0)));
+          sky=mix(sky,zenith,smoothstep(0.16,0.85,max(h,0.0)));
+          sky=mix(sky,pollution,exp(-abs(h)*150.0)*0.45);
+          gl_FragColor=vec4(sky,1.0);
+          #include <colorspace_fragment>
+        }`,
     }) }
-  }, [urban, atlas])
-  useEffect(() => () => { assets.ground.dispose(); assets.sky.dispose() }, [assets])
+  }, [network, urban, atlas])
+  useEffect(() => () => { assets.ground.dispose(); assets.foliage.dispose(); assets.sky.dispose() }, [assets])
   return <>
-    <fogExp2 attach="fog" args={['#253652', 0.00065]} />
-    <hemisphereLight args={['#91a4cd', '#1a1e22', 1.05]} />
-    <directionalLight position={[-450, 750, -200]} color="#c4d5f5" intensity={1.1} />
+    <fogExp2 attach="fog" args={['#18243a', 0.00019]} />
+    <hemisphereLight args={['#91a4cd', '#292621', 0.32]} />
+    <directionalLight position={[-450, 750, -200]} color="#b9c9e2" intensity={0.52} />
     <mesh material={assets.sky}><sphereGeometry args={[7000, 32, 20]} /></mesh>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.15, 0]} material={assets.ground}><planeGeometry args={[14000, 14000]} /></mesh>
-    <instancedMesh args={[undefined, undefined, assets.buildings.length]} ref={m => { if (m) fillInstances(m, assets.buildings) }}>
-      <boxGeometry /><meshStandardMaterial roughness={0.92} />
-    </instancedMesh>
-    <instancedMesh args={[undefined, undefined, assets.windows.length]} ref={m => { if (m) fillInstances(m, assets.windows) }}>
-      <boxGeometry /><meshBasicMaterial color={[1.4, 1.3, 1.1]} toneMapped={false} />
-    </instancedMesh>
-    {!!assets.trees.length && <instancedMesh args={[undefined, undefined, assets.trees.length]} ref={m => { if (m) fillInstances(m, assets.trees) }}><icosahedronGeometry args={[0.5, 1]} /><meshStandardMaterial roughness={1} /></instancedMesh>}
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.15, 0]} material={assets.ground}><planeGeometry args={[30000, 30000]} /></mesh>
+    <CityBuildings urban={urban} service={network.id === 'diamond' || network.id === 'ddi'} roads={network.carriageways} />
+    <CityLights lamps={lamps} />
+    {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
+    {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}
   </>
 }

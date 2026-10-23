@@ -1,84 +1,90 @@
 import { useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
-import type { TrafficRuntime, TrailSample } from './runtime'
+import type { TrafficRuntime } from './runtime'
 
-// 1000 vehicles × 48 segments × four lamp ribbons × six vertices, with headroom.
-const MAX_VERTICES = 1_500_000
-
-export function LightTrails({ runtime, shutter }: { runtime: TrafficRuntime; shutter: number }) {
+// Each history segment is uploaded once; the GPU expands its four lamp ribbons.
+// 256 samples per car are retained by the distance/curvature adaptive recorder.
+const MAX_SEGMENTS = 256_000
+export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: TrafficRuntime; shutter: number; blueprint?: boolean }) {
   const assets = useMemo(() => {
-    const geometry = new T.BufferGeometry()
-    const position = new Float32Array(MAX_VERTICES * 3), tangent = new Float32Array(MAX_VERTICES * 3)
-    const data = new Float32Array(MAX_VERTICES * 4)
-    geometry.setAttribute('position', new T.BufferAttribute(position, 3).setUsage(T.DynamicDrawUsage))
-    geometry.setAttribute('direction', new T.BufferAttribute(tangent, 3).setUsage(T.DynamicDrawUsage))
-    geometry.setAttribute('trailData', new T.BufferAttribute(data, 4).setUsage(T.DynamicDrawUsage))
+    const geometry = new T.InstancedBufferGeometry()
+    const corners: number[] = [], indices: number[] = []
+    for (const head of [-1, 1]) for (const lamp of [-1, 1]) {
+      const base = corners.length / 4
+      for (const [end, side] of [[0, -1], [1, -1], [0, 1], [1, 1]]) corners.push(end, side, head, lamp)
+      indices.push(base, base + 1, base + 2, base + 2, base + 1, base + 3)
+    }
+    geometry.setIndex(indices)
+    geometry.setAttribute('corner', new T.Float32BufferAttribute(corners, 4))
+    geometry.setAttribute('position', new T.Float32BufferAttribute(new Float32Array(16 * 3), 3))
+    const arrays = { start: new Float32Array(MAX_SEGMENTS * 3), end: new Float32Array(MAX_SEGMENTS * 3), directionA: new Float32Array(MAX_SEGMENTS * 3), directionB: new Float32Array(MAX_SEGMENTS * 3), times: new Float32Array(MAX_SEGMENTS * 2), properties: new Float32Array(MAX_SEGMENTS * 4) }
+    for (const [name, array] of Object.entries(arrays)) geometry.setAttribute(name, new T.InstancedBufferAttribute(array, name === 'times' ? 2 : name === 'properties' ? 4 : 3).setUsage(T.DynamicDrawUsage))
     const material = new T.ShaderMaterial({
       transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide, toneMapped: false,
-      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, shutter: { value: 3 }, simTime: { value: 0 } },
+      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 } },
       vertexShader: `
-        attribute vec3 direction; attribute vec4 trailData;
-        uniform vec2 resolution; uniform float shutter; uniform float simTime;
+        attribute vec4 corner; attribute vec3 start; attribute vec3 end;
+        attribute vec3 directionA; attribute vec3 directionB; attribute vec2 times; attribute vec4 properties;
+        uniform vec2 resolution; uniform float shutter; uniform float simTime; uniform float blueprint;
         varying vec3 vLight; varying float vSide; varying float vFade;
         void main(){
-          vec4 view=modelViewMatrix*vec4(position,1.0);
-          vec4 clip=projectionMatrix*view;
-          vec4 ahead=projectionMatrix*modelViewMatrix*vec4(position+direction,1.0);
+          vec3 direction=normalize(mix(directionA,directionB,corner.x));
+          vec3 p=mix(start,end,corner.x)+direction*corner.z*properties.z*0.5;
+          p+=vec3(-direction.z*corner.w*0.72,0.68,direction.x*corner.w*0.72);
+          vec4 view=modelViewMatrix*vec4(p,1.0), clip=projectionMatrix*view;
+          vec4 ahead=projectionMatrix*modelViewMatrix*vec4(p+direction,1.0);
           vec2 screenDir=(ahead.xy/ahead.w-clip.xy/clip.w)*resolution;
           vec2 perpendicular=normalize(vec2(-screenDir.y,screenDir.x)+vec2(0.000001));
-          float pixelWidth=max(1.5,0.14*projectionMatrix[1][1]*resolution.y/max(1.0,-view.z));
-          clip.xy+=perpendicular*trailData.x*pixelWidth/resolution*clip.w;
+          float pixelWidth=max(3.2,0.23*projectionMatrix[1][1]*resolution.y/max(1.0,-view.z));
+          clip.xy+=perpendicular*corner.y*pixelWidth/resolution*clip.w;
           gl_Position=clip;
-          float facing=dot(normalize(direction)*trailData.z,normalize(cameraPosition-position));
+          float facing=dot(direction*corner.z,normalize(cameraPosition-p));
           float visibility=pow(max(0.0,facing),1.6);
-          vLight=(trailData.z>0.0 ? vec3(7.0,6.2,4.8) : vec3(5.0,0.23,0.10)*(1.0+trailData.w*0.8))*visibility;
-          vFade=pow(clamp(1.0-(simTime-trailData.y)/max(0.001,shutter),0.0,1.0),0.7);
-          vSide=trailData.x;
+          float braking=mix(properties.x,properties.y,corner.x);
+          vLight=(corner.z>0.0 ? vec3(10.0,8.8,7.0) : vec3(9.0,0.07,0.025)*(1.0+braking*0.8))*visibility;
+          vec3 flowColor=properties.w< -0.5 ? vec3(1.0,0.19,0.058) : properties.w>0.5 ? vec3(0.114,0.65,0.323) : vec3(0.254,0.456,1.0);
+          vLight=mix(vLight,flowColor*1.4*max(0.0,corner.z),blueprint);
+          vFade=pow(clamp(1.0-(simTime-mix(times.x,times.y,corner.x))/max(0.001,shutter),0.0,1.0),0.55);
+          vSide=corner.y;
         }`,
       fragmentShader: `varying vec3 vLight; varying float vSide; varying float vFade;
-        void main(){ float edge=pow(max(0.0,1.0-abs(vSide)),0.55); gl_FragColor=vec4(vLight,edge*vFade*0.72); }`,
+        void main(){ float core=exp(-vSide*vSide*10.0); float halo=exp(-vSide*vSide*2.4)*0.14;
+          gl_FragColor=vec4(vLight,(core+halo)*vFade*0.92); }`,
     })
-    return { geometry, material, position, tangent, data }
+    return { geometry, material, arrays, lastTime: -1, lastShutter: -1, simulation: runtime.simulation }
   }, [])
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
   useFrame(({ size }) => {
+    if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1 }
     const time = runtime.simulation.time
     assets.material.uniforms.resolution.value.set(size.width, size.height)
+    assets.material.uniforms.blueprint.value = blueprint ? 1 : 0;
     assets.material.uniforms.shutter.value = shutter; assets.material.uniforms.simTime.value = time
-    if (shutter <= 0.01) { assets.geometry.setDrawRange(0, 0); return }
+    if (shutter <= 0.01) { assets.geometry.instanceCount = 0; assets.lastShutter = shutter; return }
+    if (time === assets.lastTime && shutter === assets.lastShutter) return
+    assets.lastTime = time; assets.lastShutter = shutter
     let cursor = 0
-    const vertex = (sample: TrailSample, side: number, head: number, lamp: number) => {
-      const { position: p, tangent: t } = sample
-      const longitudinal = head * sample.length / 2
-      assets.position[cursor * 3] = p.x + t.x * longitudinal - t.z * lamp * 0.72
-      assets.position[cursor * 3 + 1] = p.y + 0.68 + t.y * longitudinal
-      assets.position[cursor * 3 + 2] = p.z + t.z * longitudinal + t.x * lamp * 0.72
-      assets.tangent[cursor * 3] = t.x; assets.tangent[cursor * 3 + 1] = t.y; assets.tangent[cursor * 3 + 2] = t.z
-      assets.data[cursor * 4] = side; assets.data[cursor * 4 + 1] = sample.time; assets.data[cursor * 4 + 2] = head; assets.data[cursor * 4 + 3] = Number(sample.braking)
-      cursor++
-    }
     for (const history of runtime.trails.values()) {
       const samples = history.samples
-      let start = 0
-      while (start < samples.length - 1 && samples[start].time < time - shutter) start++
-      const stride = Math.max(1, Math.ceil((samples.length - start) / 48))
-      for (let i = start; i < samples.length - 1; i += stride) {
-        if (cursor + 24 > MAX_VERTICES) break
-        const a = samples[i], b = samples[Math.min(samples.length - 1, i + stride)]
-        // A defensive continuity check prevents a missed exit ever drawing a beam across the map.
-        if (Math.hypot(b.position.x - a.position.x, b.position.z - a.position.z) > 35) continue
-        for (const head of [-1, 1]) for (const lamp of [-1, 1]) {
-          vertex(a, -1, head, lamp); vertex(b, -1, head, lamp); vertex(a, 1, head, lamp)
-          vertex(a, 1, head, lamp); vertex(b, -1, head, lamp); vertex(b, 1, head, lamp)
+      const count = samples.length + (history.tip && history.tip.time > (samples.at(-1)?.time ?? 0) ? 1 : 0)
+      for (let i = 0; i < count - 1 && cursor < MAX_SEGMENTS; i++) {
+        const a = samples[i], b = samples[i + 1] ?? history.tip!
+        if (b.time < time - shutter || Math.hypot(b.position.x - a.position.x, b.position.z - a.position.z) > 35) continue
+        const k = cursor * 3, j = cursor * 2
+        for (const [name, point] of [['start', a.position], ['end', b.position], ['directionA', a.tangent], ['directionB', b.tangent]] as const) {
+          assets.arrays[name][k] = point.x; assets.arrays[name][k + 1] = point.y; assets.arrays[name][k + 2] = point.z
         }
+        assets.arrays.times[j] = a.time; assets.arrays.times[j + 1] = b.time
+        assets.arrays.properties[cursor * 4] = +a.braking; assets.arrays.properties[cursor * 4 + 1] = +b.braking; assets.arrays.properties[cursor * 4 + 2] = b.length; assets.arrays.properties[cursor * 4 + 3] = history.turn
+        cursor++
       }
     }
-    for (const name of ['position', 'direction', 'trailData']) {
+    for (const name of Object.keys(assets.arrays)) {
       const attr = assets.geometry.getAttribute(name) as T.BufferAttribute
       attr.clearUpdateRanges(); attr.addUpdateRange(0, cursor * attr.itemSize); attr.needsUpdate = true
     }
-    assets.geometry.setDrawRange(0, cursor)
+    assets.geometry.instanceCount = cursor
   })
   return <mesh geometry={assets.geometry} material={assets.material} frustumCulled={false} renderOrder={2} />
 }
