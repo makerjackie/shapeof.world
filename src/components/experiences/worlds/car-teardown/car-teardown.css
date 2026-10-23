@@ -654,3 +654,309 @@
 		transition: none;
 	}
 }
+
+/* Engine parts are a second, local level of teardown. */
+.ct-parts-list {
+	position: absolute;
+	left: 40px;
+	top: 235px;
+	width: 205px;
+	z-index: 5;
+	border-top: 1px solid var(--ct-line);
+	background: #15191ee0;
+}
+.ct-parts-heading {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 12px 0;
+	border: 0 !important;
+	background: none !important;
+	font-size: 11px !important;
+	letter-spacing: 0.08em;
+}
+.ct-parts-heading span {
+	color: var(--ct-muted);
+}
+.ct-parts-items {
+	max-height: calc(100vh - 410px);
+	overflow: auto;
+	scrollbar-width: thin;
+}
+.ct-parts-items button {
+	display: flex;
+	gap: 9px;
+	align-items: center;
+	width: 100%;
+	padding: 9px 5px;
+	border: 0;
+	border-radius: 0;
+	background: none;
+	font-size: 11px;
+}
+.ct-parts-items button > span {
+	font-size: 9px;
+	color: #7e8995;
+}
+.ct-parts-items strong {
+	font-weight: 400;
+	flex: 1;
+	text-align: left;
+}
+.ct-parts-items small {
+	color: #78838e;
+	font-size: 9px;
+}
+.ct-parts-items .is-active {
+	background: #3b414a;
+	color: #fff;
+}
+.ct-part-labels {
+	z-index: 2;
+}
+.ct-part-labels path {
+	opacity: 0.4;
+}
+.ct-part-label-text {
+	font-size: 10px;
+	fill: #b5bec7;
+	stroke: none;
+}
+.ct-part-card {
+	position: absolute;
+	right: 40px;
+	top: 160px;
+	width: 285px;
+	padding: 20px;
+	background: #191e24f0;
+	border: 1px solid #3e4650;
+	z-index: 6;
+}
+.ct-part-card-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--ct-muted);
+	font-size: 10px;
+}
+.ct-part-card-heading button {
+	width: 26px;
+	height: 26px;
+	font-size: 18px;
+}
+.ct-part-card h2 {
+	font-size: 23px;
+	font-weight: 450;
+	margin: 27px 0 12px;
+}
+.ct-part-card p {
+	color: #adb7c2;
+	font-size: 12px;
+	line-height: 1.9;
+}
+.ct-part-card dl {
+	margin: 30px 0;
+}
+.ct-part-card dl > div {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 12px 0;
+	border-bottom: 1px solid #343c45;
+	font-size: 11px;
+}
+.ct-part-card dt {
+	color: #8f9ba7;
+}
+.ct-part-card dd {
+	margin: 0;
+	text-align: right;
+}
+.ct-back-instruments {
+	width: 100%;
+	padding: 12px;
+	font-size: 11px !important;
+}
+@media (max-width: 699px) {
+	.ct-parts-list {
+		left: 18px;
+		top: 200px;
+		width: 170px;
+		background: #15191ef5;
+	}
+	.ct-parts-heading {
+		padding: 8px 5px;
+		font-size: 10px !important;
+	}
+	.ct-parts-items {
+		display: none;
+		max-height: 220px;
+	}
+	.ct-parts-list.is-open .ct-parts-items {
+		display: block;
+	}
+	.ct-part-card {
+		left: 18px;
+		right: 18px;
+		top: auto;
+		bottom: 165px;
+		width: auto;
+		padding: 15px;
+		max-height: 330px;
+		overflow: auto;
+	}
+	.ct-part-card h2 {
+		font-size: 18px;
+		margin: 12px 0 6px;
+	}
+	.ct-part-card dl {
+		margin: 12px 0;
+	}
+	.ct-part-card dl > div {
+		padding: 8px 0;
+	}
+}
+.ct-gear-readout {
+	display: flex;
+	align-items: center;
+	gap: 22px;
+	margin-top: 15px;
+}
+.ct-gear-readout > strong {
+	font-size: 45px;
+	font-weight: 400;
+	color: #f0a64a;
+	min-width: 36px;
+}
+.ct-gear-readout > span {
+	font-size: 11px;
+	color: #c1c8d0;
+}
+.ct-gear-readout small {
+	display: block;
+	font-size: 9px;
+	color: #8895a2;
+	margin-top: 7px;
+}
+.ct-h-pattern {
+	width: 100%;
+	height: 150px;
+	overflow: visible;
+}
+.ct-h-pattern > path {
+	stroke: #454e59;
+	stroke-width: 3;
+	fill: none;
+}
+.ct-h-pattern g {
+	cursor: pointer;
+}
+.ct-h-pattern circle {
+	fill: #191f26;
+	stroke: #505966;
+}
+.ct-h-pattern text {
+	fill: #bcc6d0;
+	stroke: none;
+	font-size: 14px;
+}
+.ct-h-pattern .is-active circle {
+	fill: #49341e;
+	stroke: #f0a64a;
+}
+.ct-h-pattern .is-active text {
+	fill: #ffd492;
+}
+.ct-transmission-readings {
+	font-size: 11px;
+	margin: 15px 0;
+}
+.ct-transmission-readings > div {
+	display: flex;
+	justify-content: space-between;
+	padding: 9px 0;
+	border-bottom: 1px solid #303741;
+}
+.ct-transmission-readings dt {
+	color: #8f9aa6;
+}
+.ct-transmission-readings dd {
+	margin: 0;
+}
+.ct-transmission-readings .ct-speed dd {
+	font-size: 25px;
+	color: #f0a64a;
+}
+.ct-transmission-readings .ct-speed {
+	align-items: center;
+}
+.ct-transmission-readings small {
+	font-size: 11px;
+}
+.ct-transmission-fact {
+	font-size: 11px;
+	color: #c6ccd4;
+	line-height: 1.8;
+	border-left: 2px solid #b57b37;
+	padding-left: 12px;
+}
+@media (max-width: 699px) {
+	.ct-h-pattern {
+		height: 118px;
+	}
+	.ct-transmission-panel .ct-instrument-content {
+		max-height: 220px;
+	}
+}
+.ct-view-switch {
+	position: absolute;
+	left: 40px;
+	top: 225px;
+	display: flex;
+	gap: 2px;
+	z-index: 4;
+}
+.ct-view-switch button {
+	font-size: 10px;
+	padding: 9px 14px;
+	color: #8c99a6;
+}
+.ct-view-switch .is-active {
+	color: #f0a64a;
+	border-color: #8c683c;
+	background: #29241d;
+}
+@media (max-width: 699px) {
+	.ct-view-switch {
+		left: 18px;
+		top: 208px;
+	}
+	.ct-view-switch button {
+		padding: 7px 11px;
+	}
+}
+@media (min-width: 700px) {
+	.ct-transmission-panel .ct-h-pattern {
+		height: 123px;
+	}
+	.ct-transmission-panel .ct-rpm-reading strong {
+		font-size: 27px;
+	}
+	.ct-transmission-panel .ct-transmission-readings > div {
+		padding: 6px 0;
+	}
+	.ct-transmission-panel .ct-mechanism-note {
+		font-size: 9px;
+		line-height: 1.6;
+		color: #8c99a6;
+	}
+}
+@media (max-width: 699px) {
+	.ct-parts-list {
+		top: 177px;
+		width: 130px;
+	}
+	.ct-parts-list.is-open {
+		width: 180px;
+	}
+}

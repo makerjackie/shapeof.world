@@ -61,7 +61,9 @@ describe('the specified 2.0-litre inline four', () => {
 			const angle = index * 180 - advance + S.engine.ignition.duration / 2
 			expect(cylinderState(angle, cylinder, 3000).sparkIntensity).toBeCloseTo(1, 12)
 			expect(
-				([1, 2, 3, 4] as CylinderNumber[]).filter((c) => cylinderState(angle, c, 3000).spark > 0.01),
+				([1, 2, 3, 4] as CylinderNumber[]).filter(
+					(c) => cylinderState(angle, c, 3000).spark > 0.01,
+				),
 			).toEqual([cylinder])
 		}
 	})
@@ -172,12 +174,12 @@ describe('the five-speed transmission prepared for round two', () => {
 		expect(gearRatio('N')).toBeNull()
 	})
 
-	it('predicts about 96 km/h in fourth at 3000 RPM using rolling radius', () => {
+	it('predicts about 101.7 km/h in fourth at 3000 RPM using rolling radius', () => {
 		expect(finalDriveRatio()).toBeCloseTo(3.7272727, 7)
-		expect(vehicleSpeedKmh(3000, 4)).toBeCloseTo(96.19, 1)
+		expect(vehicleSpeedKmh(3000, 4)).toBeCloseTo(101.64968, 4)
 		expect(vehicleSpeedKmh(3000, 'R')).toBeLessThan(0)
 		expect(vehicleSpeedKmh(3000, 'N')).toBeNull()
-		expect(S.wheels.nominalDiameter).toBeCloseTo(0.6343, 10)
+		expect(S.wheels.nominalDiameter).toBeCloseTo(0.6706, 10)
 	})
 
 	it('keeps an open differential carrier at the average wheel speed', () => {

@@ -1,6 +1,13 @@
 import {VEHICLE_SPEC as S} from './vehicle-spec'
 
-export type SystemId = 'body' | 'powertrain' | 'drivetrain' | 'chassis' | 'steering' | 'brakes' | 'electrical'
+export type SystemId =
+	| 'body'
+	| 'powertrain'
+	| 'drivetrain'
+	| 'chassis'
+	| 'steering'
+	| 'brakes'
+	| 'electrical'
 export type Point3 = [number, number, number]
 export const SYSTEMS: {
 	id: SystemId
@@ -10,10 +17,22 @@ export const SYSTEMS: {
 	direction: 'left' | 'right'
 }[] = [
 	{id: 'body', name: '车身', nameEn: 'Body', anchor: [-0.5, 1.2, 0.75], direction: 'left'},
-	{id: 'electrical', name: '电气', nameEn: 'Electrical', anchor: [-0.8, 0.58, 0.59], direction: 'left'},
+	{
+		id: 'electrical',
+		name: '电气',
+		nameEn: 'Electrical',
+		anchor: [-0.8, 0.58, 0.59],
+		direction: 'left',
+	},
 	{id: 'powertrain', name: '动力', nameEn: 'Powertrain', anchor: [1.2, 0.6, 0], direction: 'right'},
 	{id: 'steering', name: '转向', nameEn: 'Steering', anchor: [1.3, 0.28, -0.1], direction: 'right'},
-	{id: 'drivetrain', name: '传动', nameEn: 'Drivetrain', anchor: [-0.4, 0.36, 0], direction: 'left'},
+	{
+		id: 'drivetrain',
+		name: '传动',
+		nameEn: 'Drivetrain',
+		anchor: [-0.4, 0.36, 0],
+		direction: 'left',
+	},
 	{
 		id: 'chassis',
 		name: '底盘悬架',
@@ -21,7 +40,13 @@ export const SYSTEMS: {
 		anchor: [-1.425, 0.55, 0.7],
 		direction: 'left',
 	},
-	{id: 'brakes', name: '制动', nameEn: 'Brakes', anchor: [1.425, 0.317, 1.075], direction: 'right'},
+	{
+		id: 'brakes',
+		name: '制动',
+		nameEn: 'Brakes',
+		anchor: [1.425, S.wheels.radius, S.wheels.frontTrack / 2 + S.explosion.brakeOutward],
+		direction: 'right',
+	},
 ]
 export type Part = {
 	id: string
@@ -203,6 +228,26 @@ part(
 	'Cylinder head',
 	'封住气缸，容纳气门。',
 	'Closes the cylinders and houses the valves.',
+	'铸铝',
+	'Cast aluminum',
+)
+part(
+	'powertrain',
+	'head-gasket',
+	'气缸垫',
+	'Head gasket',
+	'密封缸体与缸盖之间的燃气、水和油道。',
+	'Seals combustion, coolant and oil passages between the head and block.',
+	'多层钢',
+	'Multi-layer steel',
+)
+part(
+	'powertrain',
+	'timing-cover',
+	'正时罩',
+	'Timing cover',
+	'封住链条并保持润滑油在壳体内。',
+	'Encloses the chain and retains lubricating oil.',
 	'铸铝',
 	'Cast aluminum',
 )
@@ -433,22 +478,162 @@ part(
 )
 part(
 	'drivetrain',
-	'gearbox',
-	'变速箱',
-	'Transmission',
-	'用不同传动比连接发动机和车轮。',
-	'Connects engine and wheels through selectable ratios.',
+	'gearbox-case',
+	'变速箱壳体',
+	'Gearbox casing',
+	'固定轴承和齿轮轴，容纳润滑油。',
+	'Locates bearings and shafts and contains lubricating oil.',
 	'铸铝',
 	'Cast aluminum',
 )
 part(
 	'drivetrain',
-	'clutch',
-	'离合器',
-	'Clutch',
-	'接合或断开发动机与传动轴系。',
-	'Connects or disconnects engine and driveline.',
+	'clutch-disc',
+	'离合器摩擦片',
+	'Clutch disc',
+	'用摩擦把飞轮动力传给输入轴。',
+	'Transfers flywheel torque to the input shaft through friction.',
+	'钢与摩擦材料',
+	'Steel and friction lining',
 )
+part(
+	'drivetrain',
+	'clutch-pressure-plate',
+	'离合器压盘',
+	'Clutch pressure plate',
+	'压紧摩擦片，换挡时退开。',
+	'Clamps the friction disc and releases it during shifts.',
+)
+for (const [id, zh, en] of [
+	['input', '输入轴', 'Input shaft'],
+	['output', '输出轴', 'Output shaft'],
+	['layshaft', '中间轴', 'Layshaft'],
+])
+	part(
+		'drivetrain',
+		`gearbox-${id}${id === 'layshaft' ? '' : '-shaft'}`,
+		zh,
+		en,
+		'支承齿轮并传递转矩。',
+		'Supports gears and transmits torque.',
+		'合金钢',
+		'Alloy steel',
+	)
+part(
+	'drivetrain',
+	'gearbox-input-gear',
+	'常啮合主动齿轮',
+	'Constant-mesh input gear',
+	'22 齿输入齿轮始终带动中间轴。',
+	'The 22-tooth input gear continuously drives the layshaft.',
+	'合金钢',
+	'Alloy steel',
+)
+part(
+	'drivetrain',
+	'gearbox-primary-driven',
+	'常啮合从动齿轮',
+	'Constant-mesh driven gear',
+	'32 齿齿轮与中间轴固定在一起。',
+	'The 32-tooth gear is fixed to the layshaft.',
+	'合金钢',
+	'Alloy steel',
+)
+for (const gear of [1, 2, 3, 5, 'R']) {
+	part(
+		'drivetrain',
+		`gearbox-driver-${gear}`,
+		`${gear} 挡主动齿轮`,
+		`${gear} gear driver`,
+		'随中间轴转动，持续驱动对应空套齿轮。',
+		'Rotates with the layshaft and continuously drives its free gear.',
+		'合金钢',
+		'Alloy steel',
+	)
+	part(
+		'drivetrain',
+		`gearbox-free-${gear}`,
+		`${gear} 挡空套齿轮`,
+		`${gear} free gear`,
+		'一直旋转，结合套锁住它才驱动输出轴。',
+		'Always spins; drives the output shaft only when locked by its sleeve.',
+		'合金钢',
+		'Alloy steel',
+	)
+}
+part(
+	'drivetrain',
+	'gearbox-reverse-idler',
+	'倒挡惰轮',
+	'Reverse idler',
+	'多一次外啮合，使输出轴反向。',
+	'Adds a mesh to reverse the output shaft.',
+	'合金钢',
+	'Alloy steel',
+)
+for (const pair of ['1-2', '3-4', '5-R']) {
+	part(
+		'drivetrain',
+		`synchronizer-${pair}`,
+		`${pair} 结合套`,
+		`${pair} engagement sleeve`,
+		'沿输出轴滑动，把选中齿轮锁到轴上。',
+		'Slides along the output shaft to lock the selected gear.',
+		'合金钢',
+		'Alloy steel',
+	)
+	part(
+		'drivetrain',
+		`shift-fork-${pair}`,
+		`${pair} 拨叉`,
+		`${pair} shift fork`,
+		'拨动结合套，在空挡和齿轮间切换。',
+		'Moves its sleeve between neutral and a gear.',
+		'钢',
+		'Steel',
+	)
+}
+part(
+	'drivetrain',
+	'shift-rails',
+	'换挡导轨',
+	'Shift rails',
+	'引导三把拨叉沿轴向平移。',
+	'Guides the three forks axially.',
+	'钢',
+	'Steel',
+)
+part(
+	'drivetrain',
+	'final-drive-pinion',
+	'主减速主动轮',
+	'Final-drive pinion',
+	'11 齿小轮随传动轴旋转。',
+	'The 11-tooth pinion rotates with the propeller shaft.',
+	'合金钢',
+	'Alloy steel',
+)
+part(
+	'drivetrain',
+	'final-drive-ring',
+	'主减速齿圈',
+	'Final-drive ring gear',
+	'41 齿齿圈降速增矩，带动差速器。',
+	'The 41-tooth ring reduces speed and drives the differential.',
+	'合金钢',
+	'Alloy steel',
+)
+for (const id of ['input', 'output', 'layshaft-front', 'layshaft-rear'])
+	part(
+		'drivetrain',
+		`gearbox-bearing-${id}`,
+		'变速箱轴承',
+		'Gearbox bearing',
+		'支承轴并减小旋转摩擦。',
+		'Supports a shaft and reduces rotational friction.',
+		'轴承钢',
+		'Bearing steel',
+	)
 part(
 	'drivetrain',
 	'driveshaft',
@@ -474,6 +659,17 @@ part(
 	'Carries differential output to a wheel.',
 	'钢',
 	'Steel',
+	2,
+)
+part(
+	'chassis',
+	'antiroll',
+	'稳定杆',
+	'Anti-roll bar',
+	'连接左右悬架，限制车身侧倾。',
+	'Connects the left and right suspension to resist body roll.',
+	'弹簧钢',
+	'Spring steel',
 	2,
 )
 part(

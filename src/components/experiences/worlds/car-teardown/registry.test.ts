@@ -29,8 +29,17 @@ describe('rendered-part registry', () => {
 
 	it('registers every literal part ID actually referenced by the scene components', () => {
 		const ids = new Set(PARTS.map((part) => part.id))
-		for (const file of ['Body.tsx', 'Engine.tsx', 'Systems.tsx', 'Wheels.tsx']) {
-			const source = readFileSync(resolve('src/components/experiences/worlds/car-teardown', file), 'utf8')
+		for (const file of [
+			'Body.tsx',
+			'Engine.tsx',
+			'Systems.tsx',
+			'Wheels.tsx',
+			'Transmission.tsx',
+		]) {
+			const source = readFileSync(
+				resolve('src/components/experiences/worlds/car-teardown', file),
+				'utf8',
+			)
 			const literalId = /\b(?:partId|id)=["']([^"']+)["']|\bpartId:\s*["']([^"']+)["']/g
 			for (const match of source.matchAll(literalId)) {
 				expect(
@@ -61,8 +70,10 @@ describe('rendered-part registry', () => {
 				}
 		}
 		for (const type of ['intake', 'exhaust']) expect(ids.has(`${type}-camshaft`)).toBe(true)
-		for (let bearing = 1; bearing <= 5; bearing++) expect(ids.has(`main-bearing-${bearing}`)).toBe(true)
-		for (const shaft of ['crank', 'intake', 'exhaust']) expect(ids.has(`${shaft}-sprocket`)).toBe(true)
+		for (let bearing = 1; bearing <= 5; bearing++)
+			expect(ids.has(`main-bearing-${bearing}`)).toBe(true)
+		for (const shaft of ['crank', 'intake', 'exhaust'])
+			expect(ids.has(`${shaft}-sprocket`)).toBe(true)
 	})
 
 	it('provides all four tires and rims with distinct registered identities', () => {

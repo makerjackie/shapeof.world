@@ -17,7 +17,8 @@ function naturalSpline(rows: NumericRows, column: number) {
 	const c = new Array<number>(n).fill(0)
 	const b = new Array<number>(n - 1).fill(0)
 	const d = new Array<number>(n - 1).fill(0)
-	for (let i = 1; i < n - 1; i++) alpha[i] = 3 * ((a[i + 1] - a[i]) / h[i] - (a[i] - a[i - 1]) / h[i - 1])
+	for (let i = 1; i < n - 1; i++)
+		alpha[i] = 3 * ((a[i + 1] - a[i]) / h[i] - (a[i] - a[i - 1]) / h[i - 1])
 	for (let i = 1; i < n - 1; i++) {
 		l[i] = 2 * (x[i + 1] - x[i - 1]) - h[i - 1] * mu[i - 1]
 		mu[i] = h[i] / l[i]
@@ -39,6 +40,7 @@ function naturalSpline(rows: NumericRows, column: number) {
 
 const shellSplines = [1, 2, 3, 4].map((column) => naturalSpline(B.sections, column))
 const cabinSplines = [1, 2, 3].map((column) => naturalSpline(B.cabinSections, column))
+const flankOffset = naturalSpline(B.flankOffsets, 1)
 
 export function bodySection(x: number) {
 	return {
@@ -51,27 +53,56 @@ export function bodySection(x: number) {
 
 export function bodyPoint(x: number, angle: number, lift = 0) {
 	const {top, shoulder, width, bottom} = bodySection(x)
-	const c = Math.cos(angle)
-	const s = Math.sin(angle)
-	const exponent = c >= 0 ? B.upperExponent : B.lowerExponent
-	const y = shoulder + Math.sign(c) * (c >= 0 ? top - shoulder : shoulder - bottom) * Math.abs(c) ** exponent
-	return new THREE.Vector3(x, y + lift, Math.sign(s) * width * Math.abs(s) ** exponent)
+	const turn = THREE.MathUtils.euclideanModulo(angle, Math.PI * 2)
+	const side = turn <= Math.PI ? 1 : -1
+	const q = (turn <= Math.PI ? turn : Math.PI * 2 - turn) / Math.PI
+	let y: number, z: number
+	if (q <= B.shoulderParameter) {
+		const u = Math.sin(((q / B.shoulderParameter) * Math.PI) / 2)
+		z = width * u
+		const crown = Math.min(B.upperCrown, (top - shoulder) * 0.45)
+		y = top - crown * u * u - (top - shoulder - crown) * u ** B.upperPower
+	} else if (q <= B.flankParameter) {
+		const t = (q - B.shoulderParameter) / (B.flankParameter - B.shoulderParameter)
+		y = THREE.MathUtils.lerp(shoulder, bottom + B.sillBevelHeight, t)
+		z = width + flankOffset(t)
+	} else if (q <= B.undersideParameter) {
+		const t = (((q - B.flankParameter) / (B.undersideParameter - B.flankParameter)) * Math.PI) / 2
+		y = bottom + B.sillBevelHeight * (1 - Math.sin(t))
+		z = width - B.sillInset - B.sillBevelWidth * (1 - Math.cos(t))
+	} else {
+		y = bottom
+		z =
+			(width - B.sillInset - B.sillBevelWidth) *
+			(1 - (q - B.undersideParameter) / (1 - B.undersideParameter))
+	}
+	return new THREE.Vector3(x, y + lift, side * z)
 }
 
-/** Side surface at a given height, useful for door seams and arch trim. */
+/** The side is almost vertical below a deliberate shoulder: a 25 mm inset
+ * from shoulder to sill, with a small rolled lower edge, never an ellipse. */
 export function bodySide(x: number, y: number, side = 1, offset = 0) {
 	const {top, shoulder, width, bottom} = bodySection(x)
-	const ratio = Math.max(
-		0,
-		Math.min(1, Math.abs(y - shoulder) / (y >= shoulder ? top - shoulder : shoulder - bottom)),
-	)
-	const exponent = y >= shoulder ? B.upperExponent : B.lowerExponent
-	const cosine = ratio ** (1 / exponent)
-	return new THREE.Vector3(
-		x,
-		y,
-		side * (width * Math.sqrt(Math.max(0, 1 - cosine * cosine)) ** exponent + offset),
-	)
+	let z: number
+	if (y >= shoulder) {
+		const crown = Math.min(B.upperCrown, (top - shoulder) * 0.45)
+		let lo = 0,
+			hi = 1
+		for (let i = 0; i < 24; i++) {
+			const u = (lo + hi) / 2
+			const height = top - crown * u * u - (top - shoulder - crown) * u ** B.upperPower
+			if (height > y) lo = u
+			else hi = u
+		}
+		z = (width * (lo + hi)) / 2
+	} else if (y >= bottom + B.sillBevelHeight) {
+		const t = THREE.MathUtils.clamp((shoulder - y) / (shoulder - bottom - B.sillBevelHeight), 0, 1)
+		z = width + flankOffset(t)
+	} else {
+		const s = THREE.MathUtils.clamp((bottom + B.sillBevelHeight - y) / B.sillBevelHeight, 0, 1)
+		z = width - B.sillInset - B.sillBevelWidth * (1 - Math.sqrt(1 - s * s))
+	}
+	return new THREE.Vector3(x, y, side * (z + offset))
 }
 
 export function cabinPoint(x: number, angle: number, lift = 0) {
@@ -140,17 +171,28 @@ export function createCabinGeometry() {
 
 /** Recessed central intake and a distinct lower bumper plane. The cap is a
  * sculpted grid rather than a flat fan; the outline still meets the loft. */
+const frontProfile = naturalSpline(B.noseProfile, 1)
+const rearProfile = naturalSpline(B.tailProfile, 1)
+
 export function fasciaX(y: number, z: number, front: boolean) {
 	const row = front ? B.sections[B.sections.length - 1] : B.sections[0]
 	const halfWidth = Math.abs(bodySide(row[0], y).z)
-	const lateralFade = Math.max(0, 1 - (Math.abs(z) / Math.max(halfWidth, Number.EPSILON)) ** 6)
-	const mainRecess = B.fascia.frontRecess * Math.exp(-(((y - B.grille.y) / B.fascia.recessBlendHeight) ** 4))
-	const lowerRecess =
-		B.fascia.lowerRecess * Math.exp(-(((y - B.lowerIntake.y) / (B.fascia.recessBlendHeight / 2)) ** 2))
-	const verticalFade = Math.sin(Math.PI * THREE.MathUtils.clamp((y - row[4]) / (row[1] - row[4]), 0, 1))
-	return (
-		row[0] + (front ? -1 : 1) * (front ? mainRecess + lowerRecess : lowerRecess) * lateralFade * verticalFade
+	const cornerBlend = Math.max(
+		0,
+		1 - (Math.abs(z) / Math.max(halfWidth, Number.EPSILON)) ** B.capCornerPower,
 	)
+	const profile = front
+		? Math.min(V.dimensions.frontAxleX + V.dimensions.frontOverhang, frontProfile(y))
+		: Math.max(V.dimensions.rearAxleX - V.dimensions.rearOverhang, rearProfile(y))
+	const recess = front
+		? B.fascia.lowerRecess * Math.exp(-(((y - B.lowerIntake.y) / B.fascia.recessBlendHeight) ** 4))
+		: 0
+	const rearRecess = front
+		? 0
+		: B.rearDetail.plateRecess *
+			Math.exp(-(((y - B.rearDetail.plateY) / (B.rearDetail.plateHeight * 0.65)) ** 4)) *
+			Math.exp(-((z / (B.rearDetail.plateWidth * 0.65)) ** 6))
+	return row[0] + (profile - row[0] - recess + rearRecess) * cornerBlend
 }
 
 function fasciaGrid(
@@ -203,6 +245,41 @@ export function createIntakeSurface(grille: {y: number; width: number; height: n
 	)
 }
 
+export function createRearPanel(plate: boolean) {
+	const r = B.rearDetail
+	const y0 = plate ? r.plateY - r.plateHeight / 2 : B.sections[0][4] + B.seamRadius
+	const y1 = plate ? r.plateY + r.plateHeight / 2 : B.diffuserTop
+	return fasciaGrid(
+		false,
+		y0,
+		y1,
+		(y) => {
+			if (!plate) return Math.abs(bodySide(B.sections[0][0], y).z) * 0.96
+			const radius = r.plateHeight / 5
+			const end = Math.max(0, Math.abs(y - r.plateY) - (r.plateHeight / 2 - radius))
+			return r.plateWidth / 2 - radius + Math.sqrt(Math.max(0, radius * radius - end * end))
+		},
+		B.seamRadius,
+	)
+}
+
+export function createArchBack(axleX: number, side: number) {
+	const shape = new THREE.Shape()
+	shape.absarc(
+		0,
+		0,
+		B.wheelArchRadius,
+		-B.archLipAngleOverrun,
+		Math.PI + B.archLipAngleOverrun,
+		false,
+	)
+	shape.closePath()
+	const geometry = new THREE.ShapeGeometry(shape, 96)
+	const z = bodySide(axleX, V.wheels.radius, side).z - side * B.wheelArchDepth
+	geometry.translate(axleX, V.wheels.radius, z)
+	return geometry
+}
+
 const f = (value: number) => value.toFixed(6)
 const wheelClip = `
   if (abs(vCarPosition.z) > ${f(B.wheelArchCutZ)}) {
@@ -235,17 +312,19 @@ export function applyBodyClip<T extends THREE.Material>(material: T, surface: Cl
 			'#include <begin_vertex>',
 			'#include <begin_vertex>\nvCarPosition = position; vCarUv = uv;',
 		)
-		shader.fragmentShader = 'varying vec3 vCarPosition; varying vec2 vCarUv;\n' + shader.fragmentShader
+		shader.fragmentShader =
+			'varying vec3 vCarPosition; varying vec2 vCarUv;\n' + shader.fragmentShader
 		const code =
 			surface === 'shell'
 				? wheelClip
-				: glazingFunction + (surface === 'glass' ? '\nif (!isGlass) discard;' : '\nif (isGlass) discard;')
+				: glazingFunction +
+					(surface === 'glass' ? '\nif (!isGlass) discard;' : '\nif (isGlass) discard;')
 		shader.fragmentShader = shader.fragmentShader.replace(
 			'#include <clipping_planes_fragment>',
 			'#include <clipping_planes_fragment>\n' + code,
 		)
 	}
-	material.customProgramCacheKey = () => `car-surface-${surface}-v1`
+	material.customProgramCacheKey = () => `car-surface-${surface}-round2`
 	return material
 }
 

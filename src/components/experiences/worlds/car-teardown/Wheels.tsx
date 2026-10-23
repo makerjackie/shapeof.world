@@ -1,4 +1,5 @@
-import {useMemo} from 'react'
+import {useEffect, useMemo, useRef, type RefObject} from 'react'
+import {useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
 import {VEHICLE_SPEC as V, WHEEL_GEOMETRY as W} from './vehicle-spec'
 
@@ -33,11 +34,11 @@ function createRubber() {
       float axial = vTyrePoint.z / ${V.wheels.width.toFixed(6)};
       float around = atan(vTyrePoint.y, vTyrePoint.x) / 6.28318530718;
       float treadMask = smoothstep(${(V.wheels.radius * 0.94).toFixed(6)}, ${(V.wheels.radius * 0.985).toFixed(6)}, radius);
-      float channels = min(min(abs(axial - 0.32), abs(axial + 0.32)), min(abs(axial - 0.11), abs(axial + 0.11)));
-      float continuousGroove = 1.0 - smoothstep(0.006, 0.019, channels);
-      float diagonal = abs(fract(around * ${W.treadRepeats.toFixed(1)} + abs(axial) * 2.8) - 0.5);
-      float diagonalGroove = (1.0 - smoothstep(0.028, 0.070, diagonal)) * smoothstep(0.08, 0.22, abs(axial));
-      float height = -${W.treadGrooveDepth.toFixed(6)} * max(continuousGroove, diagonalGroove) * treadMask;
+      float channels = min(min(abs(axial - 0.29), abs(axial + 0.29)), min(abs(axial - 0.10), abs(axial + 0.10)));
+      float continuousGroove = 1.0 - smoothstep(${(W.treadGrooveWidth / V.wheels.width / 2).toFixed(6)}, ${((W.treadGrooveWidth / V.wheels.width) * 0.75).toFixed(6)}, channels);
+      float diagonal = abs(fract(around * ${W.treadRepeats.toFixed(1)} + abs(axial) * 2.1) - 0.5);
+      float diagonalGroove = (1.0 - smoothstep(0.008, 0.024, diagonal)) * smoothstep(0.08, 0.22, abs(axial));
+      float height = -(${W.treadGrooveDepth.toFixed(6)} * continuousGroove + ${W.sipeDepth.toFixed(6)} * diagonalGroove) * treadMask;
       vec3 sigmaX = dFdx(-vViewPosition);
       vec3 sigmaY = dFdy(-vViewPosition);
       vec3 r1 = cross(sigmaY, normal);
@@ -49,11 +50,11 @@ function createRubber() {
       vec3 treadNormal = abs(det) * normal - gradient;
       float treadNormalLength2 = dot(treadNormal, treadNormal);
       if (treadNormalLength2 > 1e-16) normal = treadNormal * inversesqrt(treadNormalLength2);
-      diffuseColor.rgb *= 1.0 - max(continuousGroove, diagonalGroove) * treadMask * 0.28;
+      diffuseColor.rgb *= 1.0 - (continuousGroove * 0.17 + diagonalGroove * 0.035) * treadMask;
     `,
 		)
 	}
-	material.customProgramCacheKey = () => 'car-tyre-tread-v2'
+	material.customProgramCacheKey = () => 'car-road-tyre-round2'
 	return material
 }
 
@@ -91,8 +92,34 @@ function createSpoke() {
 	})
 }
 
-function Wheel({axle, side, explode}: {axle: 'front' | 'rear'; side: -1 | 1; explode: number}) {
-	const objects = useMemo(() => ({tyre: createTyre(), rubber: createRubber(), spoke: createSpoke()}), [])
+function Wheel({
+	axle,
+	side,
+	explode,
+	rearSpinRef,
+}: {
+	axle: 'front' | 'rear'
+	side: -1 | 1
+	explode: number
+	rearSpinRef?: RefObject<number>
+}) {
+	const spin = useRef<THREE.Group>(null)
+	useFrame(() => {
+		if (spin.current && axle === 'rear' && rearSpinRef)
+			spin.current.rotation.z = -side * rearSpinRef.current
+	})
+	const objects = useMemo(
+		() => ({tyre: createTyre(), rubber: createRubber(), spoke: createSpoke()}),
+		[],
+	)
+	useEffect(
+		() => () => {
+			objects.tyre.dispose()
+			objects.spoke.dispose()
+			objects.rubber.dispose()
+		},
+		[objects],
+	)
 	const track = axle === 'front' ? V.wheels.frontTrack : V.wheels.rearTrack
 	const x = axle === 'front' ? V.dimensions.frontAxleX : V.dimensions.rearAxleX
 	const corner = `${axle}-${side < 0 ? 'left' : 'right'}`
@@ -100,73 +127,99 @@ function Wheel({axle, side, explode}: {axle: 'front' | 'rear'; side: -1 | 1; exp
 		<group
 			position={[x, V.wheels.radius, side * (track / 2 + V.explosion.wheelOutward * explode)]}
 			rotation={[0, side < 0 ? Math.PI : 0, 0]}>
-			<mesh
-				geometry={objects.tyre}
-				material={objects.rubber}
-				castShadow
-				receiveShadow
-				userData={{partId: `tyre-${corner}`}}
-			/>
-			<group userData={{partId: `rim-${corner}`}}>
-				<mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
-					<cylinderGeometry
-						args={[
-							W.rimLipRadius - W.barrelThickness,
-							W.rimLipRadius - W.barrelThickness,
-							V.wheels.width * 0.78,
-							W.radialSegments,
-							1,
-							true,
-						]}
-					/>
-					<meshStandardMaterial color="#60666c" metalness={1} roughness={0.29} side={THREE.DoubleSide} />
-				</mesh>
-				{[-1, 1].map((end) => (
-					<mesh key={end} position={[0, 0, end * W.faceOffset]} castShadow>
-						<torusGeometry args={[W.rimLipRadius, W.rimLipTube, 12, W.radialSegments]} />
-						<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
+			<group ref={spin}>
+				<mesh
+					geometry={objects.tyre}
+					material={objects.rubber}
+					castShadow
+					receiveShadow
+					userData={{partId: `tyre-${corner}`}}
+				/>
+				<group userData={{partId: `rim-${corner}`}}>
+					<mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
+						<cylinderGeometry
+							args={[
+								W.rimLipRadius - W.barrelThickness,
+								W.rimLipRadius - W.barrelThickness,
+								V.wheels.width * 0.78,
+								W.radialSegments,
+								1,
+								true,
+							]}
+						/>
+						<meshStandardMaterial
+							color="#60666c"
+							metalness={1}
+							roughness={0.29}
+							side={THREE.DoubleSide}
+						/>
 					</mesh>
-				))}
-				{Array.from({length: W.spokes}, (_, i) => (
+					{[-1, 1].map((end) => (
+						<mesh key={end} position={[0, 0, end * W.faceOffset]} castShadow>
+							<torusGeometry args={[W.rimLipRadius, W.rimLipTube, 12, W.radialSegments]} />
+							<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
+						</mesh>
+					))}
+					{Array.from({length: W.spokes}, (_, i) => (
+						<mesh
+							key={i}
+							geometry={objects.spoke}
+							position={[0, 0, W.faceOffset - W.spokeDepth]}
+							rotation={[0, 0, (i / W.spokes) * Math.PI * 2]}
+							castShadow>
+							<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
+						</mesh>
+					))}
 					<mesh
-						key={i}
-						geometry={objects.spoke}
-						position={[0, 0, W.faceOffset - W.spokeDepth]}
-						rotation={[0, 0, (i / W.spokes) * Math.PI * 2]}
+						position={[0, 0, W.faceOffset - W.hubDepth / 2]}
+						rotation={[Math.PI / 2, 0, 0]}
 						castShadow>
-						<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
+						<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
+						<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
 					</mesh>
-				))}
-				<mesh position={[0, 0, W.faceOffset - W.hubDepth / 2]} rotation={[Math.PI / 2, 0, 0]} castShadow>
-					<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
-					<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
-				</mesh>
-				{Array.from({length: 5}, (_, i) => (
-					<mesh
-						key={i}
-						position={[
-							Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-							Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-							W.faceOffset + W.hubDepth / 10,
-						]}
-						rotation={[Math.PI / 2, 0, 0]}>
-						<cylinderGeometry args={[W.boltRadius, W.boltRadius, W.hubDepth / 3, 6]} />
-						<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
-					</mesh>
-				))}
+					{Array.from({length: 5}, (_, i) => (
+						<mesh
+							key={i}
+							position={[
+								Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+								Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+								W.faceOffset + W.hubDepth / 10,
+							]}
+							rotation={[Math.PI / 2, 0, 0]}>
+							<cylinderGeometry args={[W.boltRadius, W.boltRadius, W.hubDepth / 3, 6]} />
+							<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
+						</mesh>
+					))}
+				</group>
 			</group>
 		</group>
 	)
 }
 
-export function Wheels({explode = 0}: {explode?: number}) {
+export function Wheels({
+	explode = 0,
+	rearSpinRef,
+	axle: axleFilter,
+}: {
+	explode?: number
+	rearSpinRef?: RefObject<number>
+	axle?: 'front' | 'rear'
+}) {
 	return (
 		<group name="Wheels">
-			{(['front', 'rear'] as const).flatMap((axle) =>
-				([-1, 1] as const).map((side) => (
-					<Wheel key={`${axle}-${side}`} axle={axle} side={side} explode={explode} />
-				)),
-			)}
+			{(['front', 'rear'] as const)
+				.filter((axle) => !axleFilter || axle === axleFilter)
+				.flatMap((axle) =>
+					([-1, 1] as const).map((side) => (
+						<Wheel
+							key={`${axle}-${side}`}
+							axle={axle}
+							side={side}
+							explode={explode}
+							rearSpinRef={rearSpinRef}
+						/>
+					)),
+				)}
 		</group>
 	)
 }
