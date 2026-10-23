@@ -7,7 +7,7 @@ import { Easing, interpolate } from "remotion";
 export const W = 1920;
 export const H = 1080;
 
-export type Cam = { x: number; y: number; z: number; bearing: number; tilt: number; ox?: number; oy?: number };
+export type Cam = { x: number; y: number; z: number; bearing: number; tilt: number; ox?: number; oy?: number; fov?: number };
 
 export type Proj = {
   cam: Cam;
@@ -94,6 +94,7 @@ export const mixCam = (a: Cam, b: Cam, t: number): Cam => {
     z: W / w,
     bearing: lerp(a.bearing, b.bearing, t),
     tilt: lerp(a.tilt, b.tilt, t),
+    fov: a.fov === undefined && b.fov === undefined ? undefined : lerp(a.fov ?? 30, b.fov ?? 30, t),
     ox: lerp(a.ox ?? W / 2, b.ox ?? W / 2, t),
     oy: lerp(a.oy ?? H / 2, b.oy ?? H / 2, t),
   };

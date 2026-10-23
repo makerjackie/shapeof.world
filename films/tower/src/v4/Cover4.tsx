@@ -17,13 +17,14 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
 );
 
 const shot = (tall: boolean): WorldState => ({
-  cam: tall ? { x: -989, y: -1000, z: 0.7, bearing: 8, tilt: 80, ox: 960, oy: 820 } : { x: -1250, y: -1350, z: 0.95, bearing: 12, tilt: 79, ox: 1260, oy: 700 },
-  night: 0.55,
-  lights: 0.85,
-  full: 0.8,
+  cam: tall ? { x: -900, y: -420, z: 1.2, bearing: -84, tilt: 82, ox: 960, oy: 800 } : { x: -900, y: -420, z: 1.35, bearing: -84, tilt: 82, ox: 1240, oy: 760 },
+  night: 0.3,
+  lights: 0.7,
+  full: 0.85,
   vacancy: 0.27,
   roads: 1,
   traffic: 400,
+  time: 3,
   towers: { year: 2026, ex: 1, on: 1 },
 });
 

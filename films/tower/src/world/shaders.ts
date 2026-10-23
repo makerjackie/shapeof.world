@@ -173,25 +173,26 @@ void main() {
     col += lc * lit * win * uLitGain * 0.85;
     col += uTint * inHL * hlOn * (0.25 + 1.6 * win);
 #else
-    // towers: curtain wall (1.5 m mullions, 4 m floors), lights by floor sections; low blocks: punched windows
+    // towers: curtain wall (3 m bays, 4 m floors, a dark spandrel band at every slab), lit a tenant's run of bays
+    // at a time; low blocks: punched windows, lit one by one. Lit glass is brightest at the top (ceiling lights),
+    // so it reads as a lit room, not a painted panel.
     float fh = mix(3.0, 4.0, tall);
-    float cw = mix(mix(2.6, 3.6, h21(vec2(vB, 1.7))), 1.5, tall);
+    float cw = mix(mix(2.6, 3.6, h21(vec2(vB, 1.7))), 3.0, tall);
     vec2 g = vec2(vUV.x / cw, vUV.y / fh);
     vec2 cell = floor(g);
     vec2 f = fract(g);
     vec2 e = clamp(fwidth(g), 0.0005, 0.5);
-    float ww = mix(mix(0.45, 0.7, h21(vec2(vB, 2.9))), 0.9, tall);
-    float wh = mix(0.55, 0.78, tall);
+    float ww = mix(mix(0.45, 0.7, h21(vec2(vB, 2.9))), 0.84, tall);
+    float wh = mix(0.55, 0.64, tall);
     float win = box(f.x, ww, e.x) * box(f.y, wh, e.y);
     float far = clamp(max(e.x, e.y) * 2.2 - 0.6, 0.0, 1.0);
     win = mix(win, ww * wh, far);
     win *= step(4.5, vUV.y) * step(vUV.y, vH - 1.8);
-    // a light is a room: towers light a tenant's run of bays along a floor, homes window by window
-    float run = mix(1.0, mix(8.0, 22.0, h21(vec2(vB, 5.5))), tall);
+    float run = mix(1.0, mix(4.0, 10.0, h21(vec2(vB, 5.5))), tall);
     vec3 key = vec3(floor(cell.x / run), cell.y, vB);
     float r = h31(key);
     float litP = uLights * vS.r * (0.08 + 0.42 * seed);
-    litP = mix(litP, 0.93, uFull * tall);
+    litP = mix(litP, 0.86, uFull * tall);
     // empty floors go dark in runs of two or three, like whole vacant floors of a tower
     float dark = step(h21(vec2(floor(cell.y / mix(1.0, 2.5, tall)), vB + 3.1)), uVacancy * vS.a);
     float lit = step(r, litP) * (1.0 - dark);
@@ -200,11 +201,12 @@ void main() {
     vec3 glass = mix(uGlassLo, uGlassHi, clamp(vUV.y / 260.0, 0.0, 1.0)) * (0.8 + 0.4 * h21(vec2(vB, 4.4)));
     glass *= mix(0.85 + 0.3 * h31(vec3(cell, vB + 2.0)), 1.0, tall);
     col = mix(wall, glass, win);
-    float tone = mix(0.6 + 0.6 * h31(key + 9.0), 0.85 + 0.3 * h31(key + 9.0), tall);
+    float tone = mix(0.6 + 0.6 * h31(key + 9.0), 0.75 + 0.35 * h31(key + 9.0), tall);
+    float room = mix(0.55 + 0.6 * smoothstep(0.15, 0.85, f.y), 0.85, far);
     // offices mostly cool white, one colour per building; homes mostly warm
-    float cool = mix(step(h31(key + 4.0), 0.12), step(h21(vec2(vB, 4.0)), 0.6), tall);
+    float cool = mix(step(h31(key + 4.0), 0.12), step(h21(vec2(vB, 4.0)), 0.55), tall);
     vec3 lc = mix(mix(uLitW, uLitC, cool), uTint * 1.25, vS.g);
-    col += lc * lit * win * tone * uLitGain * mix(1.0, 0.5, uFull * tall);
+    col += lc * lit * win * tone * room * uLitGain;
     // LED outlines on some towers at night: vertical corners and the roof line
     float ledOn = max(uLed * uNight * step(0.7, h21(vec2(vB, 8.8))) * smoothstep(140.0, 180.0, vH), vS.g * smoothstep(30.0, 70.0, vH));
     if (ledOn > 0.0) {
@@ -239,20 +241,148 @@ void main() {
 }
 `;
 
+// Blue-hour sky: an elevation gradient, the afterglow low over the sun's side, a cooler band opposite it, and a
+// thin deck of stratus lit from below on the sunset side, drifting slowly.
 export const SKY_FRAG = /* glsl */ `
 uniform vec3 uZen;
 uniform vec3 uMid;
 uniform vec3 uHor;
 uniform vec3 uGlow;
 uniform vec3 uSunDir;
+uniform vec3 uCloudLit;
+uniform vec3 uCloudDark;
+uniform float uClouds;
+uniform float uTime;
 varying vec3 vDir;
+
+float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+}
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int k = 0; k < 5; k++) {
+    v += a * noise(p);
+    p = p * 2.03 + vec2(1.7, 9.2);
+    a *= 0.5;
+  }
+  return v;
+}
+
 void main() {
-  float y = vDir.y;
-  vec3 c = mix(uHor, uMid, smoothstep(-0.02, 0.14, y));
-  c = mix(c, uZen, smoothstep(0.14, 0.65, y));
-  vec3 hd = normalize(vec3(vDir.x, 0.0, vDir.z) + 1e-5);
-  float g = pow(max(dot(hd, uSunDir), 0.0), 3.0) * exp(-max(y, 0.0) * 9.0);
-  c += uGlow * g;
+  vec3 d = normalize(vDir);
+  float y = d.y;
+  vec2 hz = normalize(d.xz + 1e-5);
+  float sa = dot(hz, normalize(uSunDir.xz));
+  float sun = max(sa, 0.0);
+  vec3 c = mix(uHor, uMid, smoothstep(-0.01, 0.2, y));
+  c = mix(c, uZen, smoothstep(0.2, 0.75, y));
+  // afterglow over the sunset, cooler opposite
+  c += uGlow * pow(sun, 2.5) * exp(-max(y, 0.0) * 6.0);
+  c = mix(c, c * vec3(0.82, 0.88, 1.08), (0.5 - 0.5 * sa) * exp(-max(y, 0.0) * 3.0) * 0.6);
+  // stratus deck
+  if (y > 0.0 && uClouds > 0.0) {
+    vec2 uv = d.xz / (y + 0.06) * 0.35 + vec2(uTime * 0.004, uTime * 0.0015);
+    float n = fbm(uv * vec2(0.6, 2.4));
+    float cov = smoothstep(0.5, 0.78, n) * smoothstep(0.0, 0.06, y) * (1.0 - smoothstep(0.3, 0.55, y));
+    vec3 cc = mix(uCloudDark, uCloudLit, pow(sun, 1.4) * (0.4 + 0.6 * smoothstep(0.55, 0.85, n)));
+    c = mix(c, cc, cov * uClouds);
+  }
   gl_FragColor = vec4(c, 1.0);
+}
+`;
+
+export const TERRAIN_VERT = /* glsl */ `
+varying vec3 vN;
+varying float vY;
+#include <common>
+#include <fog_pars_vertex>
+void main() {
+  vN = normal;
+  vY = position.y;
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  #include <fog_vertex>
+}
+`;
+
+export const TERRAIN_FRAG = /* glsl */ `
+uniform vec3 uCol;
+uniform vec3 uRim;
+uniform vec3 uSun;
+varying vec3 vN;
+varying float vY;
+#include <common>
+#include <fog_pars_fragment>
+void main() {
+  if (vY < 0.8) discard;
+  vec3 n = normalize(vN);
+  float l = 0.45 + 0.55 * max(dot(n, uSun), 0.0);
+  vec3 c = uCol * l * (0.85 + 0.25 * smoothstep(0.0, 400.0, vY)) + uRim * pow(1.0 - abs(n.y), 3.0) * 0.25;
+  gl_FragColor = vec4(c, 1.0);
+  #include <fog_fragment>
+}
+`;
+
+// Red aviation obstruction lights on the roofs of the tall towers, blinking out of step.
+export const AVL_VERT = /* glsl */ `
+attribute float aB;
+attribute float aPh;
+attribute float aTop;
+#ifdef TOWERS
+attribute float aYear;
+attribute float aCov;
+uniform float uYear;
+uniform float uEx;
+uniform float uHideCov;
+#endif
+uniform sampler2D uState;
+uniform float uStateW;
+uniform float uRise;
+uniform float uTime;
+uniform float uOn;
+uniform float uSize;
+varying float vA;
+#include <common>
+#include <fog_pars_vertex>
+void main() {
+  int i = int(aB + 0.5);
+  int w = int(uStateW);
+  vec4 s = texelFetch(uState, ivec2(i - (i / w) * w, i / w), 0);
+  float hs = s.b * uRise;
+  float full = 0.97;
+#ifdef TOWERS
+  float grow = clamp(uYear - aYear + 1.0, 0.0, 1.0);
+  hs *= grow * uEx;
+  full = 0.97 * uEx;
+  if (aCov > 0.5 && uHideCov > 0.5) hs = 0.0;
+#endif
+  vec3 p = position;
+  p.y = aTop * hs + 2.0;
+  float blink = step(fract(uTime * 0.7 + aPh), 0.4);
+  vA = blink * uOn * step(full, hs);
+  vec4 mvPosition = modelViewMatrix * vec4(p, 1.0);
+  gl_Position = projectionMatrix * mvPosition;
+  gl_PointSize = uSize;
+  #include <fog_vertex>
+}
+`;
+
+export const AVL_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying float vA;
+#include <common>
+#include <fog_pars_fragment>
+void main() {
+  vec2 d = gl_PointCoord - 0.5;
+  float r = length(d);
+  float a = smoothstep(0.5, 0.05, r) * vA;
+  if (a < 0.01) discard;
+  gl_FragColor = vec4(uColor * (1.2 + 2.5 * smoothstep(0.2, 0.0, r)), a);
+  #include <fog_fragment>
 }
 `;

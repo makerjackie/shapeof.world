@@ -7,7 +7,8 @@ import { Cam, H, W } from "../geo/cam";
 
 export const FOV = 30;
 
-export const camDist = (c: Cam) => H / c.z / (2 * Math.tan((FOV * Math.PI) / 360));
+// Shots may widen the lens (Cam.fov): the camera then moves closer for the same scale at the target.
+export const camDist = (c: Cam) => H / c.z / (2 * Math.tan(((c.fov ?? FOV) * Math.PI) / 360));
 
 export const setCamera = (cam3: THREE.PerspectiveCamera, c: Cam) => {
   const d = camDist(c);
@@ -18,7 +19,7 @@ export const setCamera = (cam3: THREE.PerspectiveCamera, c: Cam) => {
   cam3.position.set(c.x - fx * d * Math.sin(t), d * Math.cos(t), -(c.y - fy * d * Math.sin(t)));
   cam3.up.set(fx, 0, -fy);
   cam3.lookAt(c.x, 0, -c.y);
-  cam3.fov = FOV;
+  cam3.fov = c.fov ?? FOV;
   cam3.aspect = W / H;
   cam3.near = Math.max(0.5, d * 0.02);
   cam3.far = d * 60;

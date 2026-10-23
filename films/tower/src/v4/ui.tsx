@@ -91,7 +91,7 @@ export const Note: React.FC<{ at: number; out: number; children: React.ReactNode
   const o = Math.min(interpolate(frame, [bf(at), bf(at) + 10], [0, 1], CL), interpolate(frame, [bf(out) - 8, bf(out)], [1, 0], CL));
   if (o <= 0) return null;
   return (
-    <div style={{ position: "absolute", left: 64, bottom: 44, maxWidth: 1500, fontFamily: FONT, fontSize: 21, fontWeight: 500, color: "rgba(244,240,232,0.62)", textShadow: SHADOW, opacity: o, lineHeight: 1.4 }}>
+    <div style={{ position: "absolute", left: 64, bottom: 40, maxWidth: 1640, fontFamily: FONT, fontSize: 25, fontWeight: 500, color: "rgba(244,240,232,0.7)", textShadow: SHADOW, opacity: o, lineHeight: 1.4 }}>
       {children}
     </div>
   );
@@ -169,9 +169,9 @@ export const fade = (bar: number, a: number, b: number, f = 0.25) => Math.min(cl
 
 export const BrandMark: React.FC<{ o: number }> = ({ o }) =>
   o <= 0 ? null : (
-    <div style={{ position: "absolute", left: 48, top: 44, display: "flex", alignItems: "center", gap: 12, opacity: 0.62 * o }}>
-      <Img src={staticFile("mark-disc.png")} style={{ width: 42, height: 42 }} />
-      <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 27, color: K.fg, letterSpacing: 2, textShadow: SHADOW }}>世界的形状</span>
+    <div style={{ position: "absolute", left: 44, top: 34, display: "flex", alignItems: "center", gap: 12, opacity: 0.7 * o }}>
+      <Img src={staticFile("mark-disc.png")} style={{ width: 44, height: 44 }} />
+      <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 28, color: K.fg, letterSpacing: 2, textShadow: SHADOW }}>世界的形状</span>
     </div>
   );
 
@@ -197,22 +197,23 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const o = Math.min(interpolate(frame, [bf(at), bf(at) + 12], [0, 1], CL), interpolate(frame, [bf(out) - 10, bf(out)], [1, 0], CL));
   if (o <= 0) return null;
   const rows = [
-    "深圳能源：竞买总部用地公告 2008、投资大厦项目公告 2010、关联租赁公告 2018 / 2023、年报 2008–2018",
+    "深圳能源：竞买总部用地公告 2008、投资大厦项目公告 2010（含融资安排）、关联租赁公告 2018 / 2023、年报 2008–2018",
     "CTBUH Skyscraper Center：深圳已建成高楼的高度与竣工年份（2026-10）",
     "空置率：高力、仲量联行、戴德梁行、第一太平戴维斯 2026 年三季度；莱坊 2026 年二季度（分片区）",
     "租金：戴德梁行（21 世纪经济报道 2026-07、南方+ 2026-10）",
     "仲量联行《2025 年深圳房地产市场回顾》2026-01",
     "地价：第一财经 2026-06（粤海住宅地）；澎湃新闻 2025-10（K602-0016 出让公告）",
     "福田区政府：税收过亿元楼宇（2012、2025 年政府工作报告，《福田概况》2026）",
-    "回本年限为估算：整栋按市场租金出租、租金不涨，扣除房产税、运营与大修",
+    "深圳市规划和自然资源局《2026 年度建设用地供应计划》；每日经济新闻（2021 年商服用地 52.3 公顷）",
+    "回报率为估算：整栋按市场租金出租、租金不涨，扣除税费、运营与大修，地到期后不计价值；十年期国债收益率（2026-10）",
     "地图：© OpenStreetMap contributors（ODbL）· 三维城市由代码逐帧生成，CTBUH 高楼位置为示意轮廓",
   ];
   return (
     <div style={{ position: "absolute", inset: 0, background: `rgba(5,6,8,${0.82 * o})`, opacity: o }}>
-      <div style={{ position: "absolute", left: 160, top: 170, fontFamily: FONT, color: K.fg }}>
-        <div style={{ fontSize: 40, fontWeight: 800, marginBottom: 34, letterSpacing: 2 }}>信息来源</div>
+      <div style={{ position: "absolute", left: 140, top: 120, fontFamily: FONT, color: K.fg }}>
+        <div style={{ fontSize: 44, fontWeight: 800, marginBottom: 30, letterSpacing: 2 }}>信息来源</div>
         {rows.map((r, i) => (
-          <div key={i} style={{ fontSize: 25, fontWeight: 500, color: "rgba(244,240,232,0.78)", lineHeight: 1.95, fontFamily: i === rows.length ? MONO : FONT }}>
+          <div key={i} style={{ fontSize: 27, fontWeight: 500, color: "rgba(244,240,232,0.8)", lineHeight: 1.85, fontFamily: i === rows.length ? MONO : FONT }}>
             {r}
           </div>
         ))}

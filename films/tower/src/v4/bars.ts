@@ -4,8 +4,12 @@ import { Easing } from "remotion";
 import { BEAT_S, barToFrame, FIRST_BEAT_S, FPS } from "../timing";
 
 export const BAR_S = BEAT_S * 4;
-export const barAt = (frame: number) => (frame / FPS - FIRST_BEAT_S) / BAR_S;
-export const bf = barToFrame;
+// Story bars: the film starts at track bar 4 and plays track bars 56–64 twice (public/music-v5.m4a, built by
+// tools/music-edit.sh), so story bar b = track bar b + 2 up to 62 and track bar b − 6 from 70. The music is one
+// continuous file, so story bars run evenly through the film.
+export const STORY0 = 2;
+export const barAt = (frame: number) => (frame / FPS - FIRST_BEAT_S) / BAR_S + STORY0;
+export const bf = (bar: number) => barToFrame(bar - STORY0);
 
 export const EO = Easing.bezier(0.16, 1, 0.3, 1);
 export const EIO = Easing.bezier(0.65, 0, 0.35, 1);

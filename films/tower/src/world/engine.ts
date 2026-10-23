@@ -16,7 +16,8 @@ import { Bldg, CITY, WORLD } from "../geo/data";
 import { camDist, setCamera } from "./camera";
 import groundJson from "./ground.json";
 import nanshanJson from "./nanshan.json";
-import { BLDG_FRAG, BLDG_VERT, SKY_FRAG, SKY_VERT } from "./shaders";
+import terrainJson from "./terrain.json";
+import { AVL_FRAG, AVL_VERT, BLDG_FRAG, BLDG_VERT, SKY_FRAG, SKY_VERT, TERRAIN_FRAG, TERRAIN_VERT } from "./shaders";
 
 type Ground = {
   land: number[][][];
@@ -61,22 +62,27 @@ export type WorldState = {
   tint?: string;
   bloom?: number;
   exposure?: number;
+  time?: number; // seconds, for blinking lights and drifting clouds
+  clouds?: number;
 };
 
 // ---------- Palette (sRGB hex, blended between blue-hour dusk and night) ----------
 
 const PAL = {
   dusk: {
-    zen: "#0f1c36",
-    mid: "#34416a",
-    hor: "#b9846f",
-    glow: "#f0a070",
+    zen: "#0a1630",
+    mid: "#2c3f72",
+    hor: "#d8957a",
+    glow: "#ff9a5c",
     fog: "#4b4a5d",
-    wallA: "#1e2431",
-    wallB: "#8c7b72",
-    roof: "#2d3440",
-    glassLo: "#192131",
-    glassHi: "#3d4c6c",
+    wallA: "#151b28",
+    wallB: "#3e3c48",
+    roof: "#222936",
+    glassLo: "#141c2c",
+    glassHi: "#4b5d86",
+    terrain: "#1a2427",
+    cloudLit: "#f2a27a",
+    cloudDark: "#3a3550",
     land: "#1c222c",
     sea: "#0a1220",
     green: "#18261f",
@@ -89,11 +95,14 @@ const PAL = {
     hor: "#2b2230",
     glow: "#3a2620",
     fog: "#141420",
-    wallA: "#0c1016",
-    wallB: "#1c1e25",
-    roof: "#12161c",
-    glassLo: "#080b11",
-    glassHi: "#121925",
+    wallA: "#0a0d13",
+    wallB: "#181a21",
+    roof: "#101419",
+    glassLo: "#070a10",
+    glassHi: "#141c2a",
+    terrain: "#0b1012",
+    cloudLit: "#4a3a3c",
+    cloudDark: "#14151d",
     land: "#11161e",
     sea: "#04070c",
     green: "#0c1612",
@@ -245,14 +254,14 @@ const bldgMaterial = (n: number, defines: Record<string, string> = {}) =>
         uClip: { value: 1e6 },
         uYear: { value: 3000 },
         uEx: { value: 1 },
-        uSun: { value: new THREE.Vector3(-0.75, 0.35, -0.55).normalize() },
+        uSun: { value: new THREE.Vector3(-0.85, 0.3, 0.35).normalize() },
         uWallA: { value: new THREE.Color() },
         uWallB: { value: new THREE.Color() },
         uRoofC: { value: new THREE.Color() },
         uGlassLo: { value: new THREE.Color() },
         uGlassHi: { value: new THREE.Color() },
-        uLitW: { value: new THREE.Color("#ffd9a0") },
-        uLitC: { value: new THREE.Color("#d7e8ff") },
+        uLitW: { value: new THREE.Color("#ffcf8a") },
+        uLitC: { value: new THREE.Color("#cfe2ff") },
         uTint: { value: new THREE.Color("#ff8a3d") },
         uNight: { value: 0 },
         uLights: { value: 0 },
@@ -378,7 +387,11 @@ export const createEngine = (): Engine => {
       uMid: { value: new THREE.Color() },
       uHor: { value: new THREE.Color() },
       uGlow: { value: new THREE.Color() },
-      uSunDir: { value: new THREE.Vector3(-0.8, 0, -0.6).normalize() },
+      uSunDir: { value: new THREE.Vector3(-0.92, 0, 0.38).normalize() },
+      uCloudLit: { value: new THREE.Color() },
+      uCloudDark: { value: new THREE.Color() },
+      uClouds: { value: 1 },
+      uTime: { value: 0 },
     },
   });
   const sky = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 24), skyMat);
@@ -421,6 +434,49 @@ export const createEngine = (): Engine => {
     -2,
   );
   scene.add(water);
+
+  // Hills: SRTM-derived elevation (AWS Terrain Tiles), only where the ground rises 35 m above the plain, so the
+  // flat city keeps its own map layers and the hills cover them where they stand.
+  const terrainMat = new THREE.ShaderMaterial({
+    vertexShader: TERRAIN_VERT,
+    fragmentShader: TERRAIN_FRAG,
+    fog: true,
+    uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, { uCol: { value: new THREE.Color() }, uRim: { value: new THREE.Color() }, uSun: { value: new THREE.Vector3(-0.7, 0.45, 0.3).normalize() } }]),
+  });
+  const terrain = (() => {
+    const T = terrainJson as unknown as { x0: number; y0: number; dx: number; nx: number; ny: number; h: string };
+    const bin = atob(T.h);
+    const hv = new Int16Array(T.nx * T.ny);
+    for (let i = 0; i < hv.length; i++) hv[i] = bin.charCodeAt(2 * i) | (bin.charCodeAt(2 * i + 1) << 8);
+    const pos = new Float32Array(T.nx * T.ny * 3);
+    for (let j = 0; j < T.ny; j++)
+      for (let i = 0; i < T.nx; i++) {
+        const k = j * T.nx + i;
+        pos[k * 3] = T.x0 + i * T.dx;
+        pos[k * 3 + 1] = Math.max(0, hv[k] - 35);
+        pos[k * 3 + 2] = -(T.y0 + j * T.dx);
+      }
+    const idx: number[] = [];
+    for (let j = 0; j < T.ny - 1; j++)
+      for (let i = 0; i < T.nx - 1; i++) {
+        const a = j * T.nx + i;
+        const b = a + 1;
+        const c = a + T.nx;
+        const d = c + 1;
+        if (Math.max(pos[a * 3 + 1], pos[b * 3 + 1], pos[c * 3 + 1], pos[d * 3 + 1]) <= 0) continue;
+        idx.push(a, c, b, b, c, d);
+      }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    g.computeVertexNormals();
+    const m = new THREE.Mesh(g, terrainMat);
+    m.material.side = THREE.DoubleSide;
+    m.renderOrder = 8;
+    m.frustumCulled = false;
+    return m;
+  })();
+  scene.add(terrain);
 
   const szLines = lineMesh(
     WORLD.sz.flatMap((d) => d.rings.map((r) => ({ pts: [...r, r[0], r[1]] }))),
@@ -549,6 +605,68 @@ export const createEngine = (): Engine => {
   hMesh.renderOrder = 11;
   scene.add(hMesh);
 
+  // Red aviation lights on two roof corners of every block or tower 150 m and up.
+  const avlMat = (tex: THREE.DataTexture, towers: boolean) => {
+    const m = new THREE.ShaderMaterial({
+      vertexShader: AVL_VERT,
+      fragmentShader: AVL_FRAG,
+      defines: towers ? { TOWERS: "" } : {},
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      fog: true,
+      uniforms: THREE.UniformsUtils.merge([
+        THREE.UniformsLib.fog,
+        { uState: { value: null }, uStateW: { value: STATE_W }, uRise: { value: 1 }, uTime: { value: 0 }, uOn: { value: 1 }, uSize: { value: 7 }, uColor: { value: new THREE.Color("#ff2a1a") }, uYear: { value: 3000 }, uEx: { value: 1 }, uHideCov: { value: 0 } },
+      ]),
+    });
+    m.uniforms.uState.value = tex;
+    return m;
+  };
+  const avlPoints = (list: { x: number; y: number; i: number; top: number; year?: number; cov?: number }[], mat: THREE.ShaderMaterial, towers: boolean) => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(list.flatMap((q) => [q.x, 0, -q.y]), 3));
+    g.setAttribute("aB", new THREE.Float32BufferAttribute(list.map((q) => q.i), 1));
+    g.setAttribute("aTop", new THREE.Float32BufferAttribute(list.map((q) => q.top), 1));
+    g.setAttribute("aPh", new THREE.Float32BufferAttribute(list.map((q) => ((q.i * 0.6180339) % 1) + (q.x % 7) * 0.013), 1));
+    if (towers) {
+      g.setAttribute("aYear", new THREE.Float32BufferAttribute(list.map((q) => q.year ?? 0), 1));
+      g.setAttribute("aCov", new THREE.Float32BufferAttribute(list.map((q) => q.cov ?? 0), 1));
+    }
+    const p = new THREE.Points(g, mat);
+    p.renderOrder = 25;
+    p.frustumCulled = false;
+    scene.add(p);
+    return p;
+  };
+  const bAvlMat = avlMat(bTex, false);
+  avlPoints(
+    bl.flatMap((b, i) => {
+      if (b.h < 150) return [];
+      const pts = toPts(b.ring);
+      const a = pts[0];
+      const c = pts[Math.floor(pts.length / 2)];
+      return [
+        { x: a[0], y: a[1], i, top: b.h },
+        { x: c[0], y: c[1], i, top: b.h },
+      ];
+    }),
+    bAvlMat,
+    false,
+  );
+  const tAvlMat = avlMat(tTex, true);
+  avlPoints(
+    tw.flatMap(([x, y, h, year], j) => {
+      const s = Math.min(75, 34 + (h - 150) * 0.08) / 2;
+      return [
+        { x: x - s, y: y - s, i: j, top: h, year, cov: covered[j] },
+        { x: x + s, y: y + s, i: j, top: h, year, cov: covered[j] },
+      ];
+    }),
+    tAvlMat,
+    true,
+  );
+
   // Pools for scene props: boxes (plots, stacks, light columns) and outlines.
   const boxGeo = new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0);
   const boxPool: THREE.Mesh[] = [];
@@ -588,7 +706,13 @@ export const createEngine = (): Engine => {
     skyMat.uniforms.uZen.value.copy(P("zen"));
     skyMat.uniforms.uMid.value.copy(P("mid"));
     skyMat.uniforms.uHor.value.copy(P("hor"));
-    skyMat.uniforms.uGlow.value.copy(P("glow")).multiplyScalar(0.6);
+    skyMat.uniforms.uGlow.value.copy(P("glow")).multiplyScalar(0.55);
+    skyMat.uniforms.uCloudLit.value.copy(P("cloudLit"));
+    skyMat.uniforms.uCloudDark.value.copy(P("cloudDark"));
+    skyMat.uniforms.uClouds.value = s.clouds ?? 1;
+    skyMat.uniforms.uTime.value = s.time ?? 0;
+    terrainMat.uniforms.uCol.value.copy(P("terrain"));
+    terrainMat.uniforms.uRim.value.copy(P("hor")).multiplyScalar(0.5);
     sky.position.copy(camera.position);
     sky.scale.setScalar(camera.far * 0.5);
     // the far city sinks into the same colour as the sky at the horizon
@@ -733,6 +857,19 @@ export const createEngine = (): Engine => {
         l.computeLineDistances();
       }
     });
+
+    // aviation lights
+    for (const m of [bAvlMat, tAvlMat]) {
+      m.uniforms.uTime.value = s.time ?? 0;
+      m.uniforms.uOn.value = 0.55 + 0.45 * k;
+    }
+    bAvlMat.uniforms.uRise.value = s.rise ?? 1;
+    bAvlMat.uniforms.uSize.value = tAvlMat.uniforms.uSize.value = Math.max(4, Math.min(9, 4 + s.cam.z * 3));
+    if (T) {
+      tAvlMat.uniforms.uYear.value = T.year;
+      tAvlMat.uniforms.uEx.value = T.ex * T.on;
+      tAvlMat.uniforms.uHideCov.value = bMesh.visible ? 1 : 0;
+    } else tAvlMat.uniforms.uEx.value = 0;
 
     bloom.strength = s.bloom ?? 0.42 + 0.18 * k;
     renderer.toneMappingExposure = s.exposure ?? 1.05;
