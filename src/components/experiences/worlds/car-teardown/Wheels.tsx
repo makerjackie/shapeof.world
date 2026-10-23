@@ -92,21 +92,31 @@ function createSpoke() {
 	})
 }
 
-function Wheel({
+export type WheelPose = {steer: number; heave: number}
+export function Wheel({
 	axle,
 	side,
-	explode,
+	explode = 0,
 	rearSpinRef,
+	poseRef,
+	spinRef,
 }: {
 	axle: 'front' | 'rear'
 	side: -1 | 1
-	explode: number
+	explode?: number
 	rearSpinRef?: RefObject<number>
+	poseRef?: RefObject<WheelPose>
+	spinRef?: RefObject<number>
 }) {
 	const spin = useRef<THREE.Group>(null)
+	const pose = useRef<THREE.Group>(null)
 	useFrame(() => {
-		if (spin.current && axle === 'rear' && rearSpinRef)
-			spin.current.rotation.z = -side * rearSpinRef.current
+		const rotation = spinRef ?? (axle === 'rear' ? rearSpinRef : undefined)
+		if (spin.current && rotation) spin.current.rotation.z = side * rotation.current
+		if (pose.current && poseRef) {
+			pose.current.position.y = V.wheels.radius + poseRef.current.heave
+			pose.current.rotation.y = (side < 0 ? Math.PI : 0) + poseRef.current.steer
+		}
 	})
 	const objects = useMemo(
 		() => ({tyre: createTyre(), rubber: createRubber(), spoke: createSpoke()}),
@@ -125,6 +135,7 @@ function Wheel({
 	const corner = `${axle}-${side < 0 ? 'left' : 'right'}`
 	return (
 		<group
+			ref={pose}
 			position={[x, V.wheels.radius, side * (track / 2 + V.explosion.wheelOutward * explode)]}
 			rotation={[0, side < 0 ? Math.PI : 0, 0]}>
 			<group ref={spin}>

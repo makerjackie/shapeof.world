@@ -4,6 +4,7 @@ import {cylinderState, cycleAngle, ignitionAdvance, strokeAt} from './model'
 import {VEHICLE_SPEC as S, type CylinderNumber, type Stroke} from './vehicle-spec'
 import {SYSTEMS, partCount, type SystemId} from './parts'
 import type {AnchorMap} from './Scene'
+import {layoutLeaders} from './label-layout'
 
 const strokeNames: Record<Stroke, string> = {
 	power: '做功',
@@ -38,26 +39,30 @@ export function EngineeringLabels({
 	}, [anchorsRef, visible])
 	const mobile = layout.width < 700
 	const shown = SYSTEMS.filter((s) => !mobile || ['body', 'powertrain', 'chassis'].includes(s.id))
-	const positions = new Map<SystemId, number>()
-	for (const direction of ['left', 'right']) {
-		const column = shown
-			.filter((s) => s.direction === direction)
-			.sort((a, b) => (layout.anchors[a.id]?.y ?? 0) - (layout.anchors[b.id]?.y ?? 0))
-		let previous = mobile ? 175 : 165
-		column.forEach((s, i) => {
-			const max = layout.height - (mobile ? 255 : 205) - (column.length - i - 1) * (mobile ? 70 : 65)
-			const y = Math.min(max, Math.max(previous + (mobile ? 70 : 65), layout.anchors[s.id]?.y ?? previous))
-			positions.set(s.id, y)
-			previous = y
-		})
-	}
+	const positions = new Map(
+		layoutLeaders(
+			shown.flatMap((s) => {
+				const anchor = layout.anchors[s.id]
+				return anchor ? [{id: s.id, ...anchor}] : []
+			}),
+			{
+				top: mobile ? 235 : 230,
+				bottom: layout.height - (mobile ? 255 : 205),
+				gap: mobile ? 70 : 65,
+			},
+		).map((a) => [a.id, a]),
+	)
 	return (
-		<svg ref={host} className={`ct-labels ${visible ? 'is-visible' : ''}`} aria-label={tx('系统标注')}>
-			{shown.map((s, i) => {
+		<svg
+			ref={host}
+			className={`ct-labels ${visible ? 'is-visible' : ''}`}
+			aria-label={tx('系统标注')}>
+			{shown.map((s) => {
 				const anchor = layout.anchors[s.id]
 				if (!anchor || !anchor.visible) return null
-				const y = positions.get(s.id) ?? anchor.y
-				const left = s.direction === 'left'
+				const position = positions.get(s.id)
+				const y = position?.labelY ?? anchor.y
+				const left = position?.left ?? true
 				const x = left ? (mobile ? 20 : 65) : layout.width - (mobile ? 116 : 212)
 				const lineEnd = left ? x + (mobile ? 92 : 155) : x
 				const elbow = left ? lineEnd + 24 : lineEnd - 24
@@ -294,7 +299,9 @@ export function EngineInstruments({
 						<b>{ignitionAdvance(rpm).toFixed(0)}°</b>
 					</span>
 				</div>
-				<p className="ct-panel-note">{tx('气门正时固定，点火提前为示意；真实发动机随工况调整。')}</p>
+				<p className="ct-panel-note">
+					{tx('气门正时固定，点火提前为示意；真实发动机随工况调整。')}
+				</p>
 			</div>
 		</aside>
 	)

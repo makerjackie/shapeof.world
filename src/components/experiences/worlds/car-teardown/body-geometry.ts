@@ -177,15 +177,18 @@ const rearProfile = naturalSpline(B.tailProfile, 1)
 export function fasciaX(y: number, z: number, front: boolean) {
 	const row = front ? B.sections[B.sections.length - 1] : B.sections[0]
 	const halfWidth = Math.abs(bodySide(row[0], y).z)
-	const cornerBlend = Math.max(
-		0,
-		1 - (Math.abs(z) / Math.max(halfWidth, Number.EPSILON)) ** B.capCornerPower,
-	)
+	const radius = Math.min(B.rearCornerRadius, halfWidth)
+	const corner = Math.max(0, (Math.abs(z) - (halfWidth - radius)) / radius)
+	const cornerBlend = front
+		? Math.max(0, 1 - (Math.abs(z) / Math.max(halfWidth, Number.EPSILON)) ** B.capCornerPower)
+		: Math.sqrt(Math.max(0, 1 - corner * corner))
 	const profile = front
 		? Math.min(V.dimensions.frontAxleX + V.dimensions.frontOverhang, frontProfile(y))
 		: Math.max(V.dimensions.rearAxleX - V.dimensions.rearOverhang, rearProfile(y))
 	const recess = front
-		? B.fascia.lowerRecess * Math.exp(-(((y - B.lowerIntake.y) / B.fascia.recessBlendHeight) ** 4))
+		? B.fascia.lowerRecess *
+			Math.exp(-(((y - B.lowerIntake.y) / B.fascia.recessBlendHeight) ** 4)) *
+			THREE.MathUtils.smoothstep(y, row[4], row[4] + B.fascia.edgeRadius)
 		: 0
 	const rearRecess = front
 		? 0

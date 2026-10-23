@@ -59,9 +59,9 @@ export default {
 		{
 			label: '模型边界',
 			labelEn: 'Model limits',
-			body: '虚构的 2.0 升前置后驱轿车，不对应任何品牌。运动学使用精确曲柄滑块和固定气门正时；点火提前是示意曲线。五挡变速箱展示常啮合与换挡；同步器转速匹配为运动学示意。悬架、转向和制动展示结构骨架。',
+			body: '虚构的 2.0 升前置后驱轿车，不对应任何品牌。运动学使用精确曲柄滑块和固定气门正时；点火提前是示意曲线。五挡变速箱展示常啮合与换挡；同步器转速匹配为运动学示意。转向使用理想阿克曼并展示四轮轮速与差速器。制动按踏板力计算液压和摩擦，ABS 为 1 g 附着限幅示意。悬架用线性两自由度四分之一车模型，不计侧倾和轮胎离地。',
 			bodyEn:
-				'A fictional 2.0-liter front-engine, rear-wheel-drive sedan with no brand affiliation. Exact slider-crank kinematics and fixed valve timing; ignition advance is illustrative. The five-speed gearbox demonstrates constant mesh and shifts with idealized synchronizer speed matching. Suspension, steering, and brakes remain structural models.',
+				'A fictional 2.0-liter front-engine, rear-wheel-drive sedan with no brand affiliation. Exact slider-crank kinematics and fixed valve timing; ignition advance is illustrative. The five-speed gearbox demonstrates constant mesh and shifts with idealized synchronizer speed matching. Ideal Ackermann steering drives four wheel speeds and an open differential. Braking derives hydraulic pressure and friction from pedal force; ABS is illustrated as a 1 g adhesion cap. Suspension uses a linear two-degree-of-freedom quarter-car model without roll or tyre lift-off.',
 		},
 	],
 	provenance: {origin: 'human-led'},

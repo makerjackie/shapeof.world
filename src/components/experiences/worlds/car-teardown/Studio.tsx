@@ -26,7 +26,22 @@ export function createStudioGeometry() {
 			),
 		)
 	}
-	return new T.LatheGeometry(p, 128)
+	const geometry = new T.LatheGeometry(p, 128)
+	const positions = geometry.getAttribute('position')
+	const colors = new Float32Array(positions.count * 3)
+	const floor = new T.Color(G.color),
+		wall = new T.Color(G.wallColor),
+		color = new T.Color()
+	for (let i = 0; i < positions.count; i++) {
+		const radius = Math.hypot(positions.getX(i), positions.getZ(i))
+		color
+			.copy(floor)
+			.lerp(wall, T.MathUtils.smoothstep(radius + positions.getY(i) * 0.2, 2, 12))
+			.multiplyScalar(3.2)
+		color.toArray(colors, i * 3)
+	}
+	geometry.setAttribute('color', new T.BufferAttribute(colors, 3))
+	return geometry
 }
 export function Studio({mobile}: {mobile: boolean}) {
 	const autoClear = useRef(false)
@@ -66,6 +81,7 @@ export function Studio({mobile}: {mobile: boolean}) {
 	return (
 		<>
 			<ambientLight intensity={0.26} />
+			<directionalLight position={[0, 3, 6]} intensity={0.65} color="#dce7f4" />
 			<directionalLight
 				position={[...G.keyPosition]}
 				intensity={1.6}
@@ -104,17 +120,6 @@ export function Studio({mobile}: {mobile: boolean}) {
 						/>
 					)),
 				)}
-				{[-1, 1].map((side) => (
-					<Lightformer
-						key={`bounce-${side}`}
-						form="rect"
-						intensity={2.5}
-						color={S.materials.rimLight}
-						position={[0, G.bounceHeight, side * G.stripDistance]}
-						rotation={[0, side === 1 ? Math.PI : 0, 0]}
-						scale={[...G.bounceSize]}
-					/>
-				))}
 				<Lightformer
 					form="rect"
 					intensity={3}
@@ -132,13 +137,7 @@ export function Studio({mobile}: {mobile: boolean}) {
 				/>
 			</Environment>
 			<mesh geometry={bowl} receiveShadow onUpdate={(mesh) => mesh.layers.set(2)}>
-				<meshStandardMaterial
-					color={G.color}
-					roughness={0.95}
-					metalness={0.05}
-					envMapIntensity={0.22}
-					side={T.DoubleSide}
-				/>
+				<meshBasicMaterial vertexColors toneMapped={false} side={T.DoubleSide} />
 			</mesh>
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
@@ -147,19 +146,35 @@ export function Studio({mobile}: {mobile: boolean}) {
 				onUpdate={(mesh) => mesh.layers.set(2)}>
 				<planeGeometry args={[G.floorRadius * 2, G.floorRadius * 2]} />
 				<MeshReflectorMaterial
+					onUpdate={(material) => {
+						if (material.userData.charcoalReflection) return
+						material.userData.charcoalReflection = true
+						const prepare = material.onBeforeCompile.bind(material)
+						const floor = new T.Color(G.color).multiplyScalar(3.2)
+						material.onBeforeCompile = (shader) => {
+							prepare(shader)
+							// Keep the cove and floor at the same charcoal exposure. Only the
+							// blurred reflected image is added; direct lights cannot tint a disc.
+							shader.fragmentShader = shader.fragmentShader.replace(
+								'#include <opaque_fragment>',
+								`outgoingLight = vec3(${floor.r}, ${floor.g}, ${floor.b}) + clamp(newMerge.rgb, 0.0, 8.0) * 0.012;\n#include <opaque_fragment>`,
+							)
+						}
+						material.needsUpdate = true
+					}}
 					color={G.color}
 					// The alpha-faded overlay must not write an opaque rectangle into N8AO depth.
 					depthWrite={false}
 					transparent
 					alphaMap={fade}
-					envMapIntensity={0.22}
+					envMapIntensity={0}
 					resolution={mobile ? 256 : 512}
-					blur={[350, 160]}
+					blur={[500, 250]}
 					mixBlur={1}
-					mixStrength={3.5}
-					roughness={0.82}
-					metalness={0.35}
-					depthScale={0.25}
+					mixStrength={2.4}
+					roughness={1}
+					metalness={0}
+					depthScale={0}
 					minDepthThreshold={0.4}
 					maxDepthThreshold={1.4}
 					mirror={0.35}
