@@ -1,0 +1,46 @@
+.road-design-experience { position: absolute; inset: 0; overflow: hidden; background: #050a18; color: #e6e9ef; font-family: inherit; }
+.road-design-experience canvas { display: block; touch-action: none; }
+.rd-heading { position: absolute; top: 80px; left: 32px; pointer-events: none; }
+.rd-heading h1 { font-size: 24px; font-weight: 400; letter-spacing: .06em; margin: 0; }
+.rd-heading p { margin: 9px 0 0; color: #9da6b4; font-size: 12px; letter-spacing: .06em; }
+.rd-instruments { position: absolute; top: 80px; right: 28px; width: 224px; padding: 19px 18px 14px; background: rgba(6,10,18,.68); border: 1px solid rgba(255,255,255,.08); border-radius: 6px; backdrop-filter: blur(10px); font-variant-numeric: tabular-nums; }
+.rd-conflict-count { display: flex; justify-content: space-between; align-items: baseline; }
+.rd-conflict-count>span, .rd-instruments dt, .rd-layer-readout>span { color: #8a93a3; font-size: 11px; letter-spacing: .06em; }
+.rd-conflict-count strong { font-size: 32px; line-height: 1; font-weight: 400; }
+.rd-conflict-key { display: flex; gap: 10px; margin-top: 14px; padding-bottom: 17px; border-bottom: 1px solid #ffffff12; font-size: 10px; color: #aab0bc; white-space: nowrap; }
+.rd-conflict-key i { display: inline-block; width: 4px; height: 4px; border-radius: 50%; margin-right: 4px; vertical-align: 2px; }
+.rd-conflict-key .is-crossing { background: #ff3d5a; }.rd-conflict-key .is-merge { background: #ffc23d; }.rd-conflict-key .is-diverge { background: #3dd6ff; }
+.rd-instruments dl { margin: 16px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 10px; }
+.rd-instruments dd { margin: 5px 0 0; font-size: 23px; line-height: 1.2; font-weight: 400; white-space: nowrap; }
+.rd-instruments small { color: #8a93a3; font-size: 10px; font-weight: 400; }
+.rd-layer-readout { display: flex; gap: 8px; align-items: baseline; padding-top: 12px; border-top: 1px solid #ffffff12; }
+.rd-layer-readout b { font-weight: 400; font-size: 14px; }.rd-layer-readout b:nth-child(2) { margin-right: auto; }
+.rd-why { margin: 17px 0 12px; line-height: 1.8; color: #adb5c1; font-size: 11px; }
+.rd-window { display: block; opacity: .65; }
+.rd-catalog { position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(var(--experience-freebar-height, 110px) + 32px); display: flex; gap: 6px; padding: 0; max-width: calc(100% - 40px); overflow-x: auto; scrollbar-width: none; }
+.rd-catalog button { flex: 0 0 158px; display: flex; align-items: center; gap: 12px; padding: 12px; color: #8a93a3; background: rgba(6,10,18,.64); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.08); border-radius: 5px; cursor: pointer; transition: color .2s, border-color .2s, background .2s; text-align: left; }
+.rd-catalog button[aria-pressed=true] { color: #f1dfbc; border-color: #ddc29a66; background: rgba(29,31,35,.88); }.rd-catalog button:hover { color: #fff0d6; }
+.rd-catalog svg { width: 38px; height: 38px; flex-shrink: 0; }.rd-catalog span { font-size: 11px; line-height: 1.55; }
+.road-design-experience .rd-freebar { --experience-control-accent: #d9c5a0; }
+.road-design-experience .rd-freebar-main { background: rgba(6,10,18,.82); border: 1px solid rgba(255,255,255,.10); border-radius: 6px; padding: 7px 10px; backdrop-filter: blur(10px); }
+.road-design-experience .rd-freebar button { font-family: inherit; font-size: 12px; }
+.road-design-experience .rd-freebar button[aria-pressed=true] { color: #efd8af; background: #ddc29a17; }
+.rd-tools { display: flex; align-items: center; gap: 20px; padding: 3px 0 6px; }
+.rd-tools label { display: flex; align-items: center; gap: 9px; font-size: 11px; color: #aab2c0; white-space: nowrap; }
+.rd-tools input[type=range] { width: 104px; accent-color: #d6bd93; height: 3px; cursor: pointer; }
+.rd-tools output { font-variant-numeric: tabular-nums; color: #e6e9ef; font-size: 11px; min-width: 42px; }.rd-tools output small { font-size: 9px; color: #8a93a3; }
+.rd-camera-presets { display: flex; gap: 2px; }.rd-camera-presets button { min-height: 30px; padding: 4px 9px; border-radius: 3px; background: none; color: #aab2c0; }
+.rd-conflict-tooltip { min-width: 140px; padding: 10px 14px; background: rgba(6,10,18,.94); border: 1px solid #ffffff20; border-radius: 4px; pointer-events: none; font-size: 11px; white-space: nowrap; }
+.rd-conflict-tooltip strong, .rd-conflict-tooltip span, .rd-conflict-tooltip small { display: block; margin: 3px 0; }.rd-conflict-tooltip small { color: #8a93a3; }
+.road-design-experience button:focus-visible, .road-design-experience input:focus-visible { outline: 2px solid #e2c798; outline-offset: 3px; }
+@media(max-width:720px) {
+  .rd-heading { top: 72px; left: 18px; }.rd-heading h1 { font-size: 18px; }.rd-heading p { font-size: 10px; margin-top: 6px; }
+  .rd-instruments { top: 130px; right: 12px; width: 150px; padding: 12px; }
+  .rd-conflict-count strong { font-size: 24px; }.rd-conflict-key { gap: 7px; font-size: 9px; margin-top: 10px; padding-bottom: 10px; }.rd-conflict-key i { display: none; }
+  .rd-instruments dl { gap: 12px 8px; margin: 12px 0; }.rd-instruments dt, .rd-conflict-count>span { font-size: 10px; letter-spacing: 0; }.rd-instruments dd { font-size: 18px; }.rd-instruments dd small { display: block; font-size: 8px; margin-top: 2px; }
+  .rd-layer-readout { gap: 5px; }.rd-layer-readout>span { font-size: 9px; letter-spacing: 0; }.rd-layer-readout b { font-size: 11px; }.rd-why { display: none; }.rd-window { margin-top: 9px; font-size: 8px !important; }
+  .rd-catalog { left: 12px; right: 12px; transform: none; max-width: none; bottom: calc(var(--experience-freebar-height, 60px) + 22px); gap: 5px; }
+  .rd-catalog button { flex-basis: 116px; padding: 8px; gap: 7px; }.rd-catalog svg { width: 29px; height: 29px; }.rd-catalog span { font-size: 10px; }
+  .rd-tools { flex-direction: column; gap: 16px; align-items: stretch; padding: 8px 3px 12px; }.rd-tools label { justify-content: space-between; }.rd-tools input[type=range] { width: 140px; }.rd-tools output { min-width: 82px; text-align: right; }.rd-camera-presets { justify-content: space-between; }
+  .road-design-experience .rd-freebar-main { padding: 6px 8px; }
+}
