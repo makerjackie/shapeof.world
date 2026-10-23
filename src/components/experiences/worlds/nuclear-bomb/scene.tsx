@@ -270,7 +270,7 @@ export function NuclearScene(props: Props) {
     const backdrop = createBackdrop()
     scene.background = backdrop
     const camera = new T.PerspectiveCamera(36, 1, 0.05, 120)
-    const macroPosition = new T.Vector3(-7.4, 5.7, 17.8)
+    const macroPosition = new T.Vector3(2.05, 5.7, 18.86)
     const macroTarget = new T.Vector3(-.6, -.4, 0)
     camera.position.copy(macroPosition)
     const controls = new OrbitControls(camera, renderer.domElement)
@@ -474,7 +474,7 @@ export function NuclearScene(props: Props) {
       } else {
         controls.update(dt)
         if (oscillating) {
-          const azimuth = T.MathUtils.degToRad(-12)
+          const azimuth = T.MathUtils.degToRad(8)
           const swing = Math.sin((now - oscillationStart) / 40000 * Math.PI * 2) * Math.PI / 6
           const desired = homePosition.clone().sub(macroTarget)
           const horizontal = Math.hypot(desired.x, desired.z)
