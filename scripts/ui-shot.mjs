@@ -111,13 +111,13 @@ async function main() {
   console.log(`${out} · page ${size}`)
   ws.close()
   chrome.kill()
-  rmSync(profile, { recursive: true, force: true })
+  try { rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }) } catch {}
   process.exit(0)
 }
 
 main().catch((err) => {
   console.error(err)
   chrome.kill()
-  rmSync(profile, { recursive: true, force: true })
+  try { rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }) } catch {}
   process.exit(1)
 })
