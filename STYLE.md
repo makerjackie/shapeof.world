@@ -38,7 +38,7 @@
 | 用途 | 字体 | 说明 |
 |---|---|---|
 | 品牌字：标志旁的"世界的形状"、片尾卡、封面品牌条 | **Noto Serif SC**（英文 Cormorant Garamond） | 品牌包已规定；网站 `--serif` 已含 |
-| 片中的叙述句 | **Noto Serif SC** Bold | 纸条字幕，见 `films/DIRECTOR.md` 第四节 |
+| 片中的叙述句 | **Noto Serif SC** Bold 或 **Noto Sans SC** Black | 怎么放由导演定，见 `films/DIRECTOR.md`「画面」 |
 | 片中标签、封面大字 | **Noto Sans SC** | |
 | 数字、英文 | **Inter**，等宽数字 | |
 | 数据小字（代码感的标注） | JetBrains Mono，少用 | |
