@@ -3,7 +3,7 @@ import { AbsoluteFill } from "remotion";
 import { CAPEX, METR, NVDA, Pt, UNRATE, WAU, yr } from "../data";
 import { FONT } from "../theme";
 import { Door, Laptop, Person } from "./art";
-import { Backdrop, C, Cam, EBACK, EIO, EO, Label, lerp, Line, pr, Src, useT } from "./kit";
+import { Backdrop, C, Cam, clamp01, EBACK, EIO, EO, Label, lerp, Line, pr, Src, useT } from "./kit";
 
 const PINK = "#f472b6";
 
@@ -33,11 +33,14 @@ const path = (pts: [number, number][], k: number) => {
 
 export const Jobless: React.FC = () => {
   const t = useT();
-  const dim = pr(t, 57.58, 0.5, EIO);
+  const dim = pr(t, 57.58, 0.5, EIO) * lerp(1, 1.4, pr(t, 61.08, 0.6));
   const un = pr(t, 57.83, 1.5, EIO);
+  const zoom = pr(t, 61.08, 0.9, EIO);
+  const big = pr(t, 61.58, 0.45, EBACK);
   return (
     <AbsoluteFill>
       <Backdrop glow={C.fg} at={[50, 80]} strength={0.05} />
+      <Cam keys={[[56.08, 0, 0, 1], [61.08, 0, 0, 1], [61.98, 238, -380, 1.7]]}>
       {[1, 10, 100].map((g) => (
         <React.Fragment key={g}>
           <div style={{ position: "absolute", left: UB.x, width: UB.w, top: uy(g), height: 1, background: g === 1 ? "rgba(244,240,232,0.25)" : C.line }} />
@@ -53,7 +56,7 @@ export const Jobless: React.FC = () => {
         {GHOSTS.map((g, i) => {
           const k = pr(t, 56.2 + i * 0.12, 1.1, EIO);
           if (k <= 0) return null;
-          return <path key={g.name} d={path(g.pts, k)} fill="none" stroke={g.color} strokeWidth={4} strokeLinejoin="round" opacity={lerp(1, 0.28, dim)} />;
+          return <path key={g.name} d={path(g.pts, k)} fill="none" stroke={g.color} strokeWidth={4} strokeLinejoin="round" opacity={lerp(1, 0.28, clamp01(dim)) * lerp(1, 0.25, zoom)} />;
         })}
         {un > 0 ? <path d={path(UN_PTS, un)} fill="none" stroke={C.fg} strokeWidth={8} strokeLinejoin="round" strokeLinecap="round" /> : null}
       </svg>
@@ -61,15 +64,23 @@ export const Jobless: React.FC = () => {
         const [x, y] = g.pts[g.pts.length - 1];
         const p = pr(t, 57.08 + i * 0.08, 0.3);
         return (
-          <div key={g.name} style={{ position: "absolute", left: x + 16, top: y - 16 + g.dy, opacity: p * lerp(1, 0.4, dim), fontFamily: FONT, fontSize: 24, fontWeight: 800, color: g.color, whiteSpace: "nowrap" }}>
+          <div key={g.name} style={{ position: "absolute", left: x + 16, top: y - 16 + g.dy, opacity: p * lerp(1, 0.4, clamp01(dim)) * (1 - zoom), fontFamily: FONT, fontSize: 24, fontWeight: 800, color: g.color, whiteSpace: "nowrap" }}>
             {g.name} {g.end}
           </div>
         );
       })}
-      <div style={{ position: "absolute", left: UB.x + UB.w + 16, top: UN_PTS[UN_PTS.length - 1][1] - 70, opacity: pr(t, 59.08, 0.4), fontFamily: FONT, whiteSpace: "nowrap" }}>
+      <div style={{ position: "absolute", left: UB.x + UB.w + 16, top: UN_PTS[UN_PTS.length - 1][1] - 70, opacity: pr(t, 59.08, 0.4) * (1 - zoom), fontFamily: FONT, whiteSpace: "nowrap" }}>
         <div style={{ fontSize: 26, fontWeight: 800, color: C.sub }}>美国失业率</div>
         <div style={{ fontSize: 50, fontWeight: 900, color: C.fg }}>3.6% → 4.2%</div>
       </div>
+      </Cam>
+      {big > 0 ? (
+        <div style={{ position: "absolute", left: 0, right: 0, top: 440, textAlign: "center", fontFamily: FONT, whiteSpace: "nowrap", opacity: Math.min(1, big * 2), transform: `translateY(${(1 - big) * 24}px)` }}>
+          <div style={{ fontSize: 30, fontWeight: 800, color: C.sub }}>美国失业率，2022 年底 → 今年</div>
+          <div style={{ fontSize: 130, fontWeight: 900, color: C.fg, lineHeight: 1.15 }}>3.6% → 4.2%</div>
+          <div style={{ fontSize: 34, fontWeight: 800, color: C.gold, opacity: pr(t, 62.08, 0.4) }}>四年，只多了 0.6 个百分点</div>
+        </div>
+      ) : null}
       <Line at={57.58} text="可是，失业率几乎没动。" kw="几乎没动" kwAt={59.08} />
       <Src at={56.4}>美国劳工统计局（BLS）失业率，2022-11 → 2026-09 · 其余四条为前文数据，各自以起点为 1 倍（对数刻度）</Src>
     </AbsoluteFill>
@@ -188,6 +199,32 @@ export const Finding: React.FC = () => {
           </React.Fragment>
         );
       })}
+      {(
+        [
+          [FD[0].x, 2, 74.58],
+          [FD[1].x, 3, 74.83],
+        ] as [number, number, number][]
+      ).map(([x, n, t0]) =>
+        Array.from({ length: n }).map((_, k) => {
+          if (t < t0) return null;
+          const ph = ((t - t0) * 0.42 + k / n) % 1;
+          return (
+            <div
+              key={`${x}-${k}`}
+              style={{
+                position: "absolute",
+                left: lerp(x - 330, x - 30, ph),
+                top: FLOOR - 104 - ph * 26,
+                opacity: Math.min(1, ph * 6) * Math.min(1, (1 - ph) * 4),
+                transform: `scale(${1 - ph * 0.3})`,
+                transformOrigin: "50% 100%",
+              }}
+            >
+              <Person h={104} color="#6b7685" />
+            </div>
+          );
+        }),
+      )}
       <Label x={960} y={FLOOR + 24} anchor="center" size={24} color={C.muted} at={76.08}>
         26 岁以上的人：同样的岗位，人数没有减少
       </Label>
