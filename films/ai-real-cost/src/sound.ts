@@ -1,226 +1,142 @@
-import { CAPTIONS } from "./captions";
-import { ANSWER_AT, SAND_AT } from "./scenes/coda";
-import { C_DONE, C_ROW_AT, D_DONE, D_ROW_AT, EXAM_START, F_ROW_AT, F_STUCK_AT } from "./scenes/exam";
-import { HOOK_END, PRICE_STEPS } from "./scenes/hook";
-import { COIN_AT, COINS, DROP_AT, DROP_LEN, PLAN_END, passTime } from "./scenes/plan";
-import {
-  BILL_AT,
-  BUILD_AT,
-  CLOCK_IN,
-  COIN_IN,
-  COIN_DROP,
-  HARD,
-  HARD_AT,
-  HOURS_AT,
-  LAMP_ON,
-  LOOP_AT,
-  MACH_AT,
-  PH,
-  PLUS54_AT,
-  PRICE_AT,
-  ROUND_AT,
-  ROUNDS_C,
-  ROUNDS_D,
-  ROW_AT,
-  SAVE_AT,
-  SHARE_AT,
-  WALL_AT,
-} from "./scenes/time";
-import { BEAT, FB } from "./timing";
+import { AT } from "./scenes";
+import { BEAT_S, barS } from "./timing";
 
-// One-shot sounds: [film seconds, file under public/lib, volume]. Material follows the object (paper is paper, coins
-// are metal, the clock is a click); pitched effects come from public/lib/tuned (tools/tune_sfx.py). The end card has
-// no sound of its own: the track's fade carries it.
+// One-shot sounds: [film seconds, file under public/lib, volume]. Material follows the object (paper is paper, a coin
+// is metal, the clock is a click); pitched effects come from public/lib/tuned (tools/tune_sfx.py moves them onto F, A,
+// C, the key of the track). Kept sparse: only the hits the eye is already waiting for. The end card has no sound.
 export type Ev = [number, string, number];
 const T = (f: string) => `tuned/${f}`;
 
 const ev: Ev[] = [];
-const add = (s: number, f: string, v: number) => ev.push([s, f, v]);
-
-// ── captions: card slide as the strip enters, a tap on the first character ──
-for (const c of CAPTIONS) {
-  add(c.at - 0.18, "sfx-foley-02.wav", 0.3);
-  add(c.at, "sfx-ui-01.wav", 0.38);
-}
-
-// ── 1. hook ──
-add(0.0, "sfx-impact-08.wav", 0.55);
-add(0.02, "sfx-foley-01.wav", 0.5);
-add(0.06, T("sfx-impact-06.wav"), 0.35);
-PRICE_STEPS.slice(1, 4).forEach(([s], i) => {
-  add(s - 0.1, "sfx-mechanical-13.wav", 0.8);
-  add(s, T("sfx-impact-03.wav"), 0.22 + i * 0.06);
-});
-add(FB(1), "sfx-impact-08.wav", 1.0);
-add(FB(1), T("sfx-impact-06.wav"), 0.55);
-add(FB(1) + 0.02, T("sfx-impact-11.wav"), 0.3);
-add(FB(1.25), "sfx-impact-08.wav", 0.6);
-add(FB(1.25), "sfx-mechanical-01.wav", 0.5);
-add(FB(2.5), "sfx-foley-02.wav", 0.3);
-add(FB(3), T("sfx-game-01.wav"), 0.3);
-
-// ── 2. title receipt ──
-add(HOOK_END - 0.32, "sfx-transition-02.wav", 0.45);
-add(HOOK_END - 0.2, "sfx-foley-08.wav", 0.7);
-add(HOOK_END + 0.15, "sfx-foley-08.wav", 0.45);
-add(HOOK_END, T("sfx-impact-06.wav"), 0.6);
-add(HOOK_END, "sfx-impact-01.wav", 0.5);
-add(FB(5), T("sfx-impact-05.wav"), 0.22);
-
-// ── 3. subscription: card, then coins ──
-add(FB(6) - 0.25, "sfx-transition-02.wav", 0.45);
-add(FB(6), "sfx-foley-02.wav", 0.35);
-add(FB(8), "sfx-mechanical-01.wav", 0.45);
-add(FB(8) + 0.3, T("sfx-impact-03.wav"), 0.45);
-for (let i = 0; i < COINS; i++) {
-  add(COIN_AT(i), T("sfx-impact-03.wav"), 0.42 - 0.26 * (i / COINS));
-  if ((i + 1) % 12 === 0) add(COIN_AT(i), T("sfx-impact-06.wav"), 0.25);
-}
-add(FB(10.5), "sfx-impact-08.wav", 0.9);
-add(FB(10.5), T("sfx-impact-06.wav"), 0.5);
-add(FB(10.5) + 0.12, T("sfx-game-01.wav"), 0.28);
-
-// ── 4. price ruler ──
-add(PLAN_END - 0.32, "sfx-transition-02.wav", 0.45);
-add(DROP_AT, "sfx-transition-18.wav", 0.4);
-[67, 27, 8].forEach((v) => {
-  add(passTime(v), "sfx-mechanical-13.wav", 0.6);
-  add(passTime(v), T("sfx-ui-10.wav"), 0.3);
-});
-add(DROP_AT + DROP_LEN, "sfx-impact-01.wav", 0.7);
-add(DROP_AT + DROP_LEN, T("sfx-impact-05.wav"), 0.42);
-add(DROP_AT + DROP_LEN + 0.1, T("sfx-game-01.wav"), 0.25);
-
-// ── 5. exam receipts ──
-add(EXAM_START - 0.32, "sfx-transition-02.wav", 0.45);
-add(EXAM_START + 0.15, "sfx-mechanical-13.wav", 0.5);
-add(EXAM_START + 0.25, "sfx-mechanical-13.wav", 0.4);
-for (let i = 0; i < 4; i++) {
-  add(C_ROW_AT(i), "sfx-foley-08.wav", 0.4);
-  add(C_ROW_AT(i), "sfx-mechanical-13.wav", 0.35);
-}
-for (let i = 0; i < 33; i++) add(D_ROW_AT(i), "sfx-mechanical-13.wav", 0.34 - 0.14 * (i / 33));
-for (let i = 0; i < 14; i++) add(D_ROW_AT(0) + i * 0.42, "sfx-foley-08.wav", 0.16);
-add(C_DONE, T("sfx-impact-06.wav"), 0.45);
-add(D_DONE, T("sfx-impact-06.wav"), 0.45);
-add(D_DONE, "sfx-impact-01.wav", 0.45);
-add(FB(18.5), "sfx-impact-08.wav", 0.75);
-add(FB(18.5), "sfx-mechanical-01.wav", 0.4);
-add(FB(20), "sfx-transition-02.wav", 0.3);
-add(FB(20) + 0.6, T("sfx-impact-05.wav"), 0.3);
-
-// ── 6. formula receipt, and the line that jams as the music cuts out ──
-add(FB(22) - 0.32, "sfx-transition-02.wav", 0.4);
-F_ROW_AT.forEach((s, i) => {
-  add(s, "sfx-foley-08.wav", 0.45);
-  if (i > 0) add(s + 0.15, T("sfx-impact-06.wav"), 0.3);
-});
-add(F_STUCK_AT, "sfx-foley-08.wav", 0.45);
-add(F_STUCK_AT + 0.3, "sfx-mechanical-01.wav", 0.5);
-add(F_STUCK_AT + 1.0, "sfx-foley-08.wav", 0.3);
-add(F_STUCK_AT + 1.2, T("sfx-notification-18.wav"), 0.35);
-add(FB(27), "sfx-mechanical-01.wav", 0.6);
-
-// ── the clock: ticks on the beat, a J-cut into the chapter; loud in the two silences, soft under the music ──
-const ticks = (from: number, to: number, level: (s: number) => number) => {
-  for (let s = from, k = 0; s < to - 0.02; s += BEAT, k++) add(s, k % 2 ? T("sfx-ui-10.wav") : "sfx-mechanical-01.wav", (k % 2 ? 0.5 : 1) * level(s));
+// `bar` is the scene's first film bar, `beat` is scene-local (as in the scene files).
+const add = (bar: number, beat: number, f: string, v: number) => ev.push([barS(bar) + beat * BEAT_S, f, v]);
+const ticks = (bar: number, from: number, to: number, level: number) => {
+  for (let k = 0, b = from; b < to - 0.01; b += 1, k++) add(bar, b, k % 2 ? T("sfx-ui-10.wav") : "sfx-mechanical-01.wav", (k % 2 ? 0.5 : 1) * level);
 };
-ticks(FB(26), FB(36), (s) => (s >= FB(27) && s < FB(28) ? 0.42 : s < FB(27) ? 0.18 : 0.22));
-ticks(FB(52), FB(60), (s) => (s >= FB(59) ? 0.42 : 0.16));
-add(LAMP_ON, "sfx-mechanical-02.wav", 0.6);
-
-// ── 7. desk and the ten programmers ──
-add(FB(28.75), T("sfx-notification-02.wav"), 0.38);
-add(FB(30), T("sfx-notification-18.wav"), 0.32);
-add(FB(30), "sfx-impact-01.wav", 0.3);
-add(ROW_AT - 0.35, "sfx-transition-02.wav", 0.35);
-for (let i = 0; i < 10; i++) if (i !== 6) add(ROW_AT + 0.45 + i * 0.07, "sfx-foley-02.wav", 0.1);
-add(ROW_AT + 0.9, T("sfx-game-01.wav"), 0.3);
-
-// ── 8. one task, round by round ──
-add(LOOP_AT - 0.35, "sfx-transition-02.wav", 0.4);
-const lane = (rounds: { r0: number; ok: boolean }[], pan: number) => {
-  for (const r of rounds) {
-    add(r.r0, "sfx-foley-02.wav", 0.28 * pan);
-    for (let k = 0; k < 3; k++) add(r.r0 + PH.toAI + k * 0.15, "sfx-mechanical-13.wav", 0.18 * pan);
-    add(r.r0 + PH.work, "sfx-foley-02.wav", 0.22 * pan);
-    for (let k = 0; k < 5; k++) add(r.r0 + PH.back + k * 0.14, "sfx-mechanical-01.wav", 0.2 * pan);
-    if (r.ok) add(r.r0 + PH.verdict, T("sfx-impact-05.wav"), 0.42);
-    else {
-      add(r.r0 + PH.verdict, T("sfx-notification-18.wav"), 0.4);
-      add(r.r0 + PH.verdict, "sfx-impact-01.wav", 0.35);
-    }
-  }
+const hit = (bar: number, beat: number, v = 1) => {
+  add(bar, beat, "sfx-impact-08.wav", 0.85 * v);
+  add(bar, beat, T("sfx-impact-06.wav"), 0.45 * v);
 };
-lane(ROUNDS_C, 1);
-lane(ROUNDS_D, 0.9);
 
-// ── 9. the two walls of 100 ──
-add(WALL_AT - 0.35, "sfx-transition-02.wav", 0.4);
-ROUND_AT.forEach((s, i) => {
-  add(s, "sfx-foley-01.wav", 0.24 - i * 0.02);
-  add(s + 0.05, T("sfx-impact-05.wav"), 0.22 - i * 0.02);
-  add(s + 0.02, "sfx-mechanical-13.wav", 0.26);
+// ── Claim and the price board ──
+hit(AT.claim, 0, 0.7);
+add(AT.claim, 1.5, T("sfx-notification-02.wav"), 0.3);
+for (let i = 0; i < 5; i++) add(AT.board, 0.2 + i * 0.35, "sfx-mechanical-13.wav", 0.22);
+add(AT.board, 4, "sfx-impact-08.wav", 0.6);
+add(AT.board, 4, T("sfx-impact-11.wav"), 0.3);
+add(AT.board, 6.7, "sfx-transition-02.wav", 0.4);
+add(AT.board, 8, "sfx-transition-18.wav", 0.45);
+add(AT.board, 10, "sfx-foley-02.wav", 0.3);
+add(AT.board, 12, "sfx-impact-08.wav", 0.8);
+add(AT.board, 12, T("sfx-impact-05.wav"), 0.4);
+add(AT.board, 12.1, T("sfx-game-01.wav"), 0.3);
+
+// ── Title ──
+add(AT.title, -0.3, "sfx-transition-02.wav", 0.45);
+hit(AT.title, 0, 1.15);
+
+// ── Tower ──
+for (let i = 0; i < 20; i++) add(AT.tower, 1.2 + i * 0.27, "sfx-mechanical-13.wav", 0.2 - 0.006 * i);
+hit(AT.tower, 7.6, 0.95);
+add(AT.tower, 8.2, "sfx-ui-01.wav", 0.3);
+add(AT.tower, 9.2, T("sfx-game-01.wav"), 0.35);
+
+// ── Receipts ──
+for (let i = 0; i < 4; i++) add(AT.receipts, 2.2 + i * 0.7, "sfx-foley-08.wav", 0.4);
+for (let i = 0; i < 33; i++) add(AT.receipts, 2.2 + i * 0.22, "sfx-mechanical-13.wav", 0.26 - 0.12 * (i / 33));
+add(AT.receipts, 5.2, T("sfx-impact-06.wav"), 0.4);
+add(AT.receipts, 9.9, T("sfx-impact-06.wav"), 0.4);
+add(AT.receipts, 11.6, "sfx-impact-08.wav", 0.8);
+add(AT.receipts, 11.6, "sfx-impact-01.wav", 0.4);
+add(AT.receipts, 12.8, "sfx-ui-01.wav", 0.3);
+
+// ── Formula: tiles, the "？", the silence (beats 10–14 = film bar 17), "your time" on the breakdown ──
+[1, 1.7, 2.4].forEach((b) => add(AT.formula, b, T("sfx-impact-06.wav"), 0.35));
+add(AT.formula, 5.4, "sfx-foley-02.wav", 0.3);
+add(AT.formula, 7.8, "sfx-transition-02.wav", 0.35);
+add(AT.formula, 8.6, T("sfx-notification-18.wav"), 0.35);
+add(AT.formula, 9.4, "sfx-ui-01.wav", 0.25);
+ticks(AT.formula, 8.6, 10, 0.16);
+ticks(AT.formula, 10, 14, 0.45);
+add(AT.formula, 14, "sfx-impact-08.wav", 1.0);
+add(AT.formula, 14, T("sfx-impact-05.wav"), 0.6);
+add(AT.formula, 14.02, T("sfx-impact-11.wav"), 0.35);
+
+// ── Devs ──
+for (let i = 0; i < 10; i++) add(AT.devs, 0.6 + i * 0.1, "sfx-foley-02.wav", 0.12);
+add(AT.devs, 3, T("sfx-ui-10.wav"), 0.3);
+add(AT.devs, 3, T("sfx-impact-05.wav"), 0.4);
+add(AT.devs, 5, "sfx-ui-01.wav", 0.3);
+
+// ── Loop ──
+add(AT.loop, 1, "sfx-transition-02.wav", 0.25);
+add(AT.loop, 1.2, "sfx-transition-02.wav", 0.2);
+for (let k = 0; k < 3; k++) add(AT.loop, 2 + k * 0.5, "sfx-mechanical-01.wav", 0.22);
+add(AT.loop, 3.5, T("sfx-impact-05.wav"), 0.45);
+add(AT.loop, 3.7, T("sfx-notification-18.wav"), 0.45);
+add(AT.loop, 3.7, "sfx-impact-01.wav", 0.35);
+add(AT.loop, 5, "sfx-transition-18.wav", 0.3);
+for (let k = 0; k < 3; k++) add(AT.loop, 5.7 + k * 0.25, "sfx-mechanical-13.wav", 0.25);
+add(AT.loop, 6.4, "sfx-transition-02.wav", 0.25);
+for (let k = 0; k < 3; k++) add(AT.loop, 7.2 + k * 0.5, "sfx-mechanical-01.wav", 0.22);
+add(AT.loop, 8.7, T("sfx-impact-05.wav"), 0.45);
+
+// ── Grid ──
+add(AT.grid, 1.2, "sfx-foley-01.wav", 0.3);
+add(AT.grid, 1.2, "sfx-mechanical-13.wav", 0.3);
+add(AT.grid, 1.6, T("sfx-impact-05.wav"), 0.28);
+for (let k = 1; k <= 7; k++) {
+  add(AT.grid, 5.2 + (k - 1) * 0.55, "sfx-foley-01.wav", 0.22 - 0.015 * k);
+  add(AT.grid, 5.2 + (k - 1) * 0.55, "sfx-mechanical-13.wav", 0.22);
+}
+add(AT.grid, 9.2, "sfx-impact-08.wav", 0.6);
+add(AT.grid, 9.2, T("sfx-impact-03.wav"), 0.35);
+add(AT.grid, 11, "sfx-transition-02.wav", 0.3);
+for (let k = 0; k < 8; k++) add(AT.grid, 11.1 + k * 0.17, "sfx-mechanical-01.wav", 0.14);
+add(AT.grid, 13, "sfx-impact-08.wav", 0.6);
+
+// ── Wage ──
+for (let k = 0; k < 7; k++) add(AT.wage, 0.4 + k * 0.5, "sfx-mechanical-01.wav", 0.2);
+add(AT.wage, 2.9, "sfx-impact-08.wav", 0.55);
+add(AT.wage, 2.9, T("sfx-game-01.wav"), 0.5);
+add(AT.wage, 2.95, T("sfx-impact-03.wav"), 0.45);
+
+// ── Bill: tokens, the silence (beats 6–10 = film bar 33), the purple line on the peak ──
+add(AT.bill, -0.25, "sfx-transition-02.wav", 0.35);
+for (let k = 0; k < 3; k++) add(AT.bill, 0.6 + k * 0.3, "sfx-foley-08.wav", 0.35);
+ticks(AT.bill, 6, 10, 0.45);
+add(AT.bill, 6.3, T("sfx-notification-18.wav"), 0.3);
+add(AT.bill, 10, "sfx-impact-08.wav", 1.0);
+add(AT.bill, 10, T("sfx-impact-05.wav"), 0.7);
+add(AT.bill, 10.02, T("sfx-impact-11.wav"), 0.4);
+add(AT.bill, 10, "sfx-transition-02.wav", 0.4);
+for (let k = 0; k < 6; k++) add(AT.bill, 12.6 + k * 0.18, "sfx-mechanical-13.wav", 0.24);
+add(AT.bill, 15.5, "sfx-impact-08.wav", 0.6);
+add(AT.bill, 15.5, "sfx-impact-01.wav", 0.3);
+add(AT.bill, 15.9, "sfx-impact-08.wav", 0.6);
+add(AT.bill, 15.9, "sfx-impact-01.wav", 0.3);
+add(AT.bill, 18.5, "sfx-impact-08.wav", 0.85);
+add(AT.bill, 18.55, T("sfx-game-01.wav"), 0.45);
+add(AT.bill, 18.6, T("sfx-impact-05.wav"), 0.35);
+add(AT.bill, 19.9, "sfx-ui-01.wav", 0.25);
+
+// ── Today, Future, Collapse, the hourglass ──
+hit(AT.today, 0.6, 0.9);
+add(AT.future, 0, "sfx-transition-02.wav", 0.3);
+add(AT.future, 2.4, "sfx-transition-02.wav", 0.3);
+[3.2, 4.2, 5.2].forEach((b, i) => add(AT.future, b, T("sfx-impact-03.wav"), 0.38 - 0.06 * i));
+add(AT.future, 8.4, "sfx-transition-02.wav", 0.3);
+[9.2, 9.8, 10.4].forEach((b, i) => add(AT.future, b, T("sfx-impact-06.wav"), 0.3 + 0.12 * i));
+add(AT.future, 14, "sfx-transition-02.wav", 0.3);
+add(AT.future, 15.2, T("sfx-notification-02.wav"), 0.3);
+[15.2, 16.6, 18].forEach((b) => {
+  add(AT.future, b, "sfx-foley-02.wav", 0.35);
+  add(AT.future, b + 0.05, "sfx-foley-01.wav", 0.22);
 });
-add(PLUS54_AT, "sfx-impact-08.wav", 0.6);
-add(PLUS54_AT, T("sfx-impact-03.wav"), 0.35);
-
-// ── 10. hours ──
-add(HOURS_AT - 0.3, "sfx-transition-02.wav", 0.35);
-for (let k = 0; k < 22; k++) add(HOURS_AT + 0.1 + k * 0.075, "sfx-mechanical-01.wav", 0.16);
-add(HOURS_AT + 1.9, T("sfx-notification-18.wav"), 0.3);
-add(FB(46), T("sfx-impact-06.wav"), 0.3);
-
-// ── 11. the machine's time ──
-add(MACH_AT - 0.3, "sfx-transition-02.wav", 0.35);
-add(MACH_AT + 0.2, "sfx-mechanical-13.wav", 0.35);
-add(MACH_AT + 0.4, "sfx-mechanical-13.wav", 0.3);
-add(FB(50), "sfx-foley-02.wav", 0.35);
-add(FB(50.5), "sfx-impact-08.wav", 0.5);
-add(FB(50.5), "sfx-mechanical-01.wav", 0.35);
-
-// ── 12. the price of an hour, then the printers rise ──
-add(PRICE_AT - 0.3, "sfx-transition-02.wav", 0.35);
-add(COIN_DROP, "sfx-impact-08.wav", 0.5);
-add(COIN_DROP + 0.05, T("sfx-game-01.wav"), 0.45);
-add(COIN_DROP + 0.1, T("sfx-impact-03.wav"), 0.4);
-add(BUILD_AT, "sfx-transition-02.wav", 0.35);
-add(BUILD_AT + 0.5, "sfx-impact-01.wav", 0.45);
-add(CLOCK_IN, "sfx-foley-02.wav", 0.35);
-add(CLOCK_IN + 0.8, "sfx-mechanical-13.wav", 0.55);
-add(CLOCK_IN + 0.8, T("sfx-impact-06.wav"), 0.3);
-add(COIN_IN, "sfx-foley-02.wav", 0.3);
-add(COIN_IN + 0.8, T("sfx-impact-03.wav"), 0.5);
-add(COIN_IN + 0.85, T("sfx-impact-03.wav"), 0.4);
-for (let k = 0; k < 5; k++) add(COIN_IN + 1.0 + k * 0.37, "sfx-foley-08.wav", 0.18);
-
-// ── 13. the bill: the most important sound after the second silence ──
-add(BILL_AT, "sfx-impact-08.wav", 1.0);
-add(BILL_AT, T("sfx-impact-05.wav"), 0.7);
-add(BILL_AT + 0.02, "sfx-foley-08.wav", 0.6);
-add(BILL_AT + BEAT, "sfx-mechanical-13.wav", 0.5);
-for (let k = 0; k < 7; k++) add(BILL_AT + 2 * BEAT + k * 0.37, "sfx-foley-08.wav", 0.32);
-add(FB(62), T("sfx-impact-06.wav"), 0.55);
-add(FB(62) + 0.12, "sfx-mechanical-13.wav", 0.45);
-add(SHARE_AT, "sfx-impact-08.wav", 0.7);
-add(SHARE_AT, "sfx-mechanical-01.wav", 0.4);
-add(SHARE_AT + 0.2, "sfx-impact-08.wav", 0.55);
-add(SAVE_AT, "sfx-impact-08.wav", 0.8);
-add(SAVE_AT + 0.05, T("sfx-game-01.wav"), 0.42);
-add(SAVE_AT + 0.1, T("sfx-impact-05.wav"), 0.38);
-
-// ── 14. the spread ──
-add(HARD_AT - 0.3, "sfx-transition-02.wav", 0.35);
-HARD.forEach((r) => {
-  add(r.at, "sfx-mechanical-13.wav", 0.45);
-  add(r.at + 0.9, T("sfx-impact-06.wav"), 0.3);
-});
-add(FB(71), "sfx-impact-08.wav", 0.75);
-add(FB(71), "sfx-mechanical-01.wav", 0.4);
-
-// ── 15. coda (no sound on the end card) ──
-add(ANSWER_AT - 0.1, "sfx-foley-08.wav", 0.35);
-add(ANSWER_AT + 0.6, T("sfx-impact-05.wav"), 0.45);
-add(SAND_AT - 0.3, "sfx-transition-02.wav", 0.3);
+[2.8, 4.6].forEach((b) => add(AT.collapse, b, "sfx-transition-18.wav", 0.3));
+hit(AT.collapse, 7, 0.95);
+add(AT.collapse, 7.02, T("sfx-impact-11.wav"), 0.3);
+add(AT.scarce, 6, "sfx-impact-08.wav", 0.55);
+add(AT.scarce, 6, T("sfx-impact-05.wav"), 0.35);
 
 export const EVENTS: Ev[] = ev.sort((a, b) => a[0] - b[0]);
