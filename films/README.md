@@ -25,7 +25,7 @@
 
 代码按仓库的 AGPL-3.0-only 授权，片中原创的文案和画面按 CC BY-NC 4.0，第三方字体和数据按各自的许可，见每部片的 `DESCRIPTION.md` 和字体旁的 OFL 文本。名称和标志不随代码授权。
 
-做片的方法和交片清单见 [`METHOD.md`](./METHOD.md)。
+做片的规矩、流程和交片清单只看 [`DIRECTOR.md`](./DIRECTOR.md)。
 
 ## 上网站
 

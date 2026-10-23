@@ -1,0 +1,371 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>AI 到底改变了什么 · 开头样片</title>
+<link rel="stylesheet" href="/frames/skeleton.css">
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+<style>
+  #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 75% 70% at 55% 45%, rgba(0,0,0,0) 55%, rgba(52, 44, 36, .26) 100%); }
+  .plate { position: absolute; background: rgba(241, 236, 223, .9); padding: 10px 20px 12px; color: #1c1d20; box-shadow: 0 8px 26px rgba(40, 32, 24, .14); white-space: nowrap; }
+  .plate .cat { font: 500 24px/1.3 'NSans'; color: rgba(28, 29, 32, .66); letter-spacing: .04em; min-height: 31px; }
+  .plate .val { font: 300 72px/1.05 'Inter'; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .plate.hot .val { color: #d4521c; font-weight: 250; }
+  .ghost { position: absolute; font: 500 28px/1 'NSans'; color: #7a5a2a; background: rgba(241, 236, 223, .82); padding: 7px 12px; white-space: nowrap; }
+  .cap { position: absolute; left: 96px; bottom: 148px; }
+  .cap .sk-strip { white-space: nowrap; }
+  .cap mark { background: linear-gradient(#ffd166, #ffd166) no-repeat 0 88% / calc(var(--p, 0) * 100%) 40%; }
+  .cap .c { opacity: 0; }
+  .cap .c.on { opacity: 1; }
+  .src { position: absolute; left: 100px; bottom: 98px; font: 400 19px/1.3 'NSans'; color: #19231f; opacity: .62; white-space: nowrap; }
+</style>
+</head><body>
+<div id="stage"></div><div id="vig"></div><svg id="lines" width="1920" height="1080"></svg><div id="labels"></div><div id="sk"></div>
+<script type="module">
+import { THREE, W, H, makeRenderer, rng, canvasTexture, toScreen, fontsReady } from '/frames/common.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const lang = new URLSearchParams(location.search).get('lang') || 'zh';
+const L = await (await fetch(`/sample/${lang}.json`)).json();
+await fontsReady();
+await document.fonts.load('700 60px NSerif', L.lines.map(l => l.text).join(''));
+
+// ---------- the beat grid: 120 BPM, first downbeat at 0.03 s (track starts 2.0 s in) ----------
+const B0 = 0.03, BEAT = .5, BAR = 2;
+const T = (bar, beat = 0) => B0 + bar * BAR + beat * BEAT;
+const DUR = 16.2, FLIP = T(1);
+const CPS = lang === 'en' ? 30 : 14;                       // typing speed, characters per second
+const LINES = L.lines.map((l, i) => ({ ...l, type: [T(1, 2), T(3), T(5), T(6)][i], markAt: [null, T(3, 2), null, T(7)][i], src: i < 2 ? 0 : 1 }));
+const EV = [];                                             // sound events for the mixer
+const ev = (t, type, extra = {}) => EV.push({ t: +t.toFixed(4), type, ...extra });
+
+// ---------- set ----------
+const R = rng(5);
+const renderer = makeRenderer({ exposure: 1.04 });
+const scene = new THREE.Scene();
+const SWEEP = '#c4beb4';
+scene.background = new THREE.Color(SWEEP);
+scene.fog = new THREE.Fog(SWEEP, 160, 460);
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture;
+scene.environmentIntensity = 1.0;
+const cam = new THREE.PerspectiveCamera(27, W / H, 1, 1200);
+
+const key = new THREE.DirectionalLight('#ffdcb4', 3.8);
+key.position.set(-58, 40, 46); key.castShadow = true;
+key.shadow.mapSize.set(4096, 4096);
+Object.assign(key.shadow.camera, { left: -75, right: 75, top: 50, bottom: -50, near: 1, far: 260 });
+key.shadow.bias = -0.0003; key.shadow.normalBias = .02;
+const rim = new THREE.DirectionalLight('#c9dcff', 2.2); rim.position.set(46, 26, -62);
+scene.add(key, rim, new THREE.HemisphereLight('#ffffff', '#b8afa2', .35));
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(1200, 1200), new THREE.MeshStandardMaterial({ color: '#bfb9af', roughness: 1 }));
+floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+
+const BW = 100, BD = 56, BH = 3.2, BX = 20;
+const tl = new THREE.TextureLoader();
+const [wd, wn, wr] = await Promise.all(['walnut_diff', 'walnut_nor', 'walnut_rough'].map(n => tl.loadAsync(`/frames/tex/${n}.jpg`)));
+wd.colorSpace = THREE.SRGBColorSpace;
+for (const t of [wd, wn, wr]) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(3.2, 1); t.anisotropy = 8; }
+const base = new THREE.Mesh(new THREE.BoxGeometry(BW, BH, BD), new THREE.MeshStandardMaterial({ map: wd, normalMap: wn, roughnessMap: wr, roughness: .85, color: '#f6e6d4' }));
+base.position.set(BX, BH / 2, 0); base.castShadow = base.receiveShadow = true; scene.add(base);
+
+const STACK = new THREE.Vector3(0, BH, 0), RAM = new THREE.Vector3(-10, BH, 3.5), GAMER = new THREE.Vector3(4.6, BH, 4.4);
+const PX = 30;
+const inlay = canvasTexture(BW * PX, BD * PX, (g) => {
+  const at = (x, z) => [(x - BX + BW / 2) * PX, (z + BD / 2) * PX];
+  g.fillStyle = g.strokeStyle = '#d9b57c'; g.lineWidth = 3;
+  const [sx, sz] = at(STACK.x, STACK.z);
+  g.beginPath(); g.arc(sx, sz, 2.35 * PX, 0, Math.PI * 2); g.stroke();
+  g.textAlign = 'center'; g.font = '500 38px NSans'; g.fillText(L.coin.label, sx, sz + 3.6 * PX);
+  const [rx, rz] = at(RAM.x, RAM.z + 3.6); g.font = '400 30px Inter'; g.fillText(L.item.replace(/内存|RAM/, '').trim(), rx, rz);
+});
+const inl = new THREE.Mesh(new THREE.PlaneGeometry(BW, BD), new THREE.MeshStandardMaterial({ map: inlay, transparent: true, metalness: .75, roughness: .32, depthWrite: false }));
+inl.rotation.x = -Math.PI / 2; inl.position.set(BX, BH + .012, 0); inl.receiveShadow = true; scene.add(inl);
+
+// ---------- coins: 1 coin = one unit, every 10th brass ----------
+const silver = new THREE.MeshStandardMaterial({ color: '#e4e7ea', metalness: 1, roughness: .22 });
+const brass = new THREE.MeshStandardMaterial({ color: '#dcb77a', metalness: 1, roughness: .26 });
+const coinGeo = new THREE.LatheGeometry([[0, -.125], [1.66, -.125], [1.78, -.09], [1.8, -.03], [1.8, .03], [1.78, .09], [1.66, .125], [0, .125]].map(([x, y]) => new THREE.Vector2(x, y)), 72);
+const CH = .258, N0 = Math.round(L.old.value / L.coin.value), N = Math.round(L.new.value / L.coin.value);
+const coins = [];
+for (let i = 1; i <= N; i++) {
+  let land = -1;
+  if (i === N0) land = T(0);
+  else if (i > N0) land = T(0, 1) + (FLIP - T(0, 1)) * Math.pow((i - N0) / (N - N0), .6);
+  const m = new THREE.Mesh(coinGeo, i % 10 === 0 ? brass : silver);
+  m.castShadow = m.receiveShadow = true; scene.add(m);
+  const c = { m, land, dx: (R() - .5) * .14, dz: (R() - .5) * .14, yaw: R() * 6, tilt: (R() - .5) * .012, i };
+  coins.push(c);
+  if (land >= 0) {
+    const dense = i > N0 ? Math.pow((i - N0) / (N - N0), .6) : 0;
+    ev(land, i % 10 === 0 ? 'ruler' : 'coin', { gain: +(1 - .55 * dense).toFixed(3), n: i, step: Math.floor(i / 10) });
+  }
+}
+const landed = t => coins.filter(c => c.land <= t).length;
+const FALL = .17;
+function placeCoins(t) {
+  for (const c of coins) {
+    const yLand = BH + (c.i - .5) * CH;
+    let y = yLand, vis = true;
+    if (c.land > t + FALL) vis = false;
+    else if (c.land > t) { const u = 1 - (c.land - t) / FALL; y = yLand + 9 * (1 - u * u); }
+    else if (c.land >= 0) { const s = t - c.land; y = yLand + .06 * Math.exp(-s * 18) * Math.abs(Math.sin(s * 40)); }
+    c.m.visible = vis;
+    c.m.position.set(STACK.x + c.dx, y, STACK.z + c.dz);
+    c.m.rotation.set(c.tilt, c.yaw, c.tilt * .7);
+  }
+}
+const ring = new THREE.Mesh(new THREE.TorusGeometry(2.0, .055, 8, 72), new THREE.MeshStandardMaterial({ color: '#d9b57c', metalness: .9, roughness: .3, emissive: '#6b4a14', emissiveIntensity: .4 }));
+ring.rotation.x = Math.PI / 2; ring.position.set(STACK.x, BH + N0 * CH, STACK.z); scene.add(ring);
+
+// ---------- the RAM kit: two green sticks lying on the wood ----------
+const pcb = new THREE.MeshPhysicalMaterial({ color: '#1f6b47', roughness: .45, clearcoat: .7, clearcoatRoughness: .25 });
+const chip = new THREE.MeshStandardMaterial({ color: '#17191d', roughness: .55 });
+const gold = new THREE.MeshStandardMaterial({ color: '#e0b25a', metalness: 1, roughness: .22 });
+[[0, 0, .1], [1.2, -4.3, -.05]].forEach(([dx, dz, yaw], k) => {
+  const s = new THREE.Group(); s.position.set(RAM.x + dx, BH + .07 + k * .002, RAM.z + dz); s.rotation.y = yaw; scene.add(s);
+  const m = (geo, mt, x, y, z) => { const me = new THREE.Mesh(geo, mt); me.position.set(x, y, z); me.castShadow = me.receiveShadow = true; s.add(me); };
+  m(new THREE.BoxGeometry(13.3, .12, 3.1), pcb, 0, 0, 0);
+  for (let i = 0; i < 8; i++) m(new THREE.BoxGeometry(1.05, .14, 1.25), chip, -5.6 + i * 1.6, .12, -.2);
+  m(new THREE.BoxGeometry(12.8, .03, .42), gold, 0, .075, 1.3);
+});
+
+// ---------- low-poly miniatures (the B part of the hybrid) ----------
+const mats = new Map();
+const flat = (c, o = {}) => { const k = c + JSON.stringify(o); if (!mats.has(k)) mats.set(k, new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .88, ...o })); return mats.get(k); };
+const add = (geo, m, x, y, z, parent = scene) => { const me = new THREE.Mesh(geo, m); me.position.set(x, y, z); me.castShadow = me.receiveShadow = true; parent.add(me); return me; };
+
+// the gamer: a 3.3 cm model figure next to the coins
+const gamer = new THREE.Group(); scene.add(gamer);
+const body = new THREE.Group(); gamer.add(body);
+for (const dx of [-.22, .22]) add(new THREE.CylinderGeometry(.17, .19, 1.1, 6), flat('#3b4a63'), dx, .55, 0, body);
+add(new THREE.CylinderGeometry(.48, .58, 1.3, 6), flat('#ffc23a'), 0, 1.72, 0, body);
+add(new THREE.BoxGeometry(.8, .95, .42), flat('#2c7da0'), 0, 1.78, -.5, body);
+const head = new THREE.Group(); head.position.set(0, 2.62, .02); body.add(head);
+add(new THREE.IcosahedronGeometry(.46, 0), flat('#f2c6a0'), 0, 0, 0, head);
+add(new THREE.SphereGeometry(.48, 7, 4, 0, Math.PI * 2, 0, Math.PI / 2), flat('#273142'), 0, .08, -.03, head);
+
+// the miniature town at the far end of the table
+const TOWN = new THREE.Vector3(44, BH, -1), TR = 2.5, SQ3 = Math.sqrt(3);
+const TILE_TOP = BH + .6;
+for (let q = -3; q <= 3; q++) for (let r = -3; r <= 3; r++) {
+  const d = Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)); if (d > 3) continue;
+  const x = TOWN.x + SQ3 * TR * (q + r / 2), z = TOWN.z + 1.5 * TR * r, h = .6;
+  const c = new THREE.Color(d === 3 ? '#f1dcae' : (R() < .5 ? '#9fd08a' : '#b4dc94')); c.offsetHSL(0, 0, (R() - .5) * .04);
+  add(new THREE.CylinderGeometry(TR * .96, TR * .96, h, 6), new THREE.MeshStandardMaterial({ color: c, flatShading: true, roughness: .9 }), x, BH + h / 2, z);
+}
+const houses = [[36.5, 3.5, '#f3d6c6', '#e07a5f'], [39.5, 6.2, '#e9eef3', '#3d5a80'], [35.5, -2.5, '#fbe7c6', '#f2a65a'], [40.8, -6.5, '#e6f0e1', '#81b29a'], [33.5, 1.0, '#f6e1e6', '#c45d7a']];
+for (const [x, z, wall, roof] of houses) {
+  add(new THREE.BoxGeometry(2.2, 1.7, 2), flat(wall), x, TILE_TOP + .85, z);
+  add(new THREE.ConeGeometry(1.62, 1.1, 4), flat(roof), x, TILE_TOP + 2.25, z).rotation.y = Math.PI / 4;
+}
+for (const [x, z] of [[33, 6.5], [38, -4.8], [52, 5.5], [55, -3], [42.5, 8.4], [31.5, -4.5]]) {
+  add(new THREE.CylinderGeometry(.15, .18, .7, 5), flat('#8a5a3b'), x, TILE_TOP + .35, z);
+  add(new THREE.ConeGeometry(.9, 2.2, 6), flat(R() < .5 ? '#4f9e63' : '#62b06c'), x, TILE_TOP + 1.7, z);
+}
+const people = [];
+for (let i = 0; i < 11; i++) {
+  const p = new THREE.Group(); const x = 34 + R() * 14, z = -5 + R() * 13;
+  p.position.set(x, TILE_TOP, z); scene.add(p);
+  add(new THREE.CapsuleGeometry(.24, .55, 2, 6), flat(['#e63946', '#1d6fb8', '#ffb703', '#2a9d8f', '#f1faee', '#8338ec'][i % 6]), 0, .55, 0, p);
+  add(new THREE.SphereGeometry(.19, 7, 5), flat('#f2c6a0'), 0, 1.1, 0, p);
+  people.push({ p, x, z, ph: R() * 6, sp: .25 + R() * .3 });
+}
+// the data centre: base, three floors that drop in on the beats, roof units, window strips that light up
+const DC = new THREE.Vector3(49, TILE_TOP, -2.5);
+add(new THREE.BoxGeometry(10.4, .35, 6.8), flat('#c3ccd6'), DC.x, TILE_TOP + .175, DC.z);
+const LAYER_H = 1.6, layers = [], DROPS = [T(4, 1), T(4, 2), T(4, 3)], LIGHTS = [T(6), T(6, 1), T(6, 2)];
+DROPS.forEach((td, i) => {
+  const g = new THREE.Group(); scene.add(g);
+  add(new THREE.BoxGeometry(10, LAYER_H * .96, 6.4), flat('#e4e9ef'), 0, 0, 0, g);
+  for (let k = 0; k < 8; k++) add(new THREE.BoxGeometry(.7, .55, .06), flat('#56616f'), -4 + k * 1.15, -.1, 3.22, g);
+  const win = add(new THREE.BoxGeometry(9.6, .3, .07), new THREE.MeshStandardMaterial({ color: '#5d6b7a', emissive: '#7fe3ff', emissiveIntensity: 0, flatShading: true }), 0, .48, 3.23, g);
+  layers.push({ g, td, y: TILE_TOP + .35 + LAYER_H * (i + .5), win, lit: LIGHTS[i] });
+  ev(td, 'block', { step: i });
+  ev(LIGHTS[i], 'switch', { step: i });
+});
+const roof = new THREE.Group(); scene.add(roof);
+for (let i = 0; i < 3; i++) {
+  add(new THREE.CylinderGeometry(.85, .85, .4, 8), flat('#a9b4c2'), -3 + i * 3, .2, -.6, roof);
+  const fan = add(new THREE.CylinderGeometry(.62, .62, .05, 8), new THREE.MeshStandardMaterial({ color: '#3d4653', emissive: '#4cc9ff', emissiveIntensity: 0, flatShading: true }), -3 + i * 3, .43, -.6, roof);
+  fan.name = 'fan';
+}
+add(new THREE.BoxGeometry(2.2, .6, 1.4), flat('#cfd6de'), 2.8, .3, 1.8, roof);
+const ROOF_T = T(5), ROOF_Y = TILE_TOP + .35 + LAYER_H * 3, GLOW = T(7);
+ev(ROOF_T, 'block', { step: 3 });
+ev(GLOW, 'thump');
+function drop(g, td, yLand, t) {
+  const F = .24;
+  if (t < td - F) { g.visible = false; return; }
+  g.visible = true;
+  if (t < td) { const u = 1 - (td - t) / F; g.position.set(DC.x, yLand + 7 * (1 - u * u), DC.z); g.scale.set(1, 1, 1); return; }
+  const s = t - td, sq = .16 * Math.exp(-s * 9) * Math.cos(s * 26);
+  g.position.set(DC.x, yLand - sq * .5, DC.z); g.scale.set(1 + sq * .4, 1 - sq, 1 + sq * .4);
+}
+// the road and trucks carrying memory to the data centre
+const PATH = [new THREE.Vector3(15, BH + .05, 8.3), new THREE.Vector3(30, BH + .05, 6.4), new THREE.Vector3(33.5, TILE_TOP + .02, 5.2), new THREE.Vector3(43.8, TILE_TOP + .02, 1.6)];
+for (let i = 0; i < PATH.length - 1; i++) {
+  const a = PATH[i], b = PATH[i + 1], len = a.distanceTo(b);
+  const rd = add(new THREE.BoxGeometry(1.7, .05, len), flat('#5b5f66'), (a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2);
+  rd.lookAt(b.x, (a.y + b.y) / 2, b.z); rd.receiveShadow = true; rd.castShadow = false;
+}
+const segLen = PATH.slice(1).map((p, i) => p.distanceTo(PATH[i])), total = segLen.reduce((a, b) => a + b);
+function along(u) {
+  let d = u * total;
+  for (let i = 0; i < segLen.length; i++) { if (d <= segLen[i]) return { p: PATH[i].clone().lerp(PATH[i + 1], d / segLen[i]), dir: PATH[i + 1].clone().sub(PATH[i]) }; d -= segLen[i]; }
+  return { p: PATH.at(-1).clone(), dir: PATH.at(-1).clone().sub(PATH.at(-2)) };
+}
+const trucks = [[T(4, 2), T(6)], [T(5, 1), T(6, 2)], [T(5, 3), T(7)]].map(([t0, t1]) => {
+  const g = new THREE.Group(); scene.add(g);
+  add(new THREE.BoxGeometry(.9, .8, .8), flat('#ffffff'), 0, .5, .95, g);
+  add(new THREE.BoxGeometry(1.0, .9, 1.7), flat('#e7ecf2'), 0, .55, -.35, g);
+  add(new THREE.BoxGeometry(.38, .3, .7), flat('#ff86bb'), -.22, 1.15, -.35, g);
+  add(new THREE.BoxGeometry(.38, .3, .7), flat('#2f8a5c'), .22, 1.15, -.35, g);
+  return { g, t0, t1 };
+});
+function placeTrucks(t) {
+  for (const k of trucks) {
+    const u = (t - k.t0) / (k.t1 - k.t0);
+    k.g.visible = u > 0 && u < 1;
+    if (!k.g.visible) continue;
+    const e = u < .1 ? 5 * u * u : u > .9 ? 1 - 5 * (1 - u) * (1 - u) : u - .05;   // ease in and out
+    const { p, dir } = along(Math.min(1, Math.max(0, e)));
+    k.g.position.copy(p); k.g.rotation.y = Math.atan2(dir.x, dir.z);
+    const s = u > .93 ? Math.max(0, (1 - u) / .07) : 1; k.g.scale.setScalar(s);
+  }
+}
+
+// ---------- camera: Catmull-Rom through keys, never stops ----------
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const KEYS = [
+  [-1, V(9.6, 8.3, 25.6), V(-3.1, 4.1, 0)],
+  [0, V(10, 8.5, 26), V(-3, 4.2, 0)],
+  [T(0, 1), V(10.4, 9.2, 26.8), V(-2.8, 4.6, 0)],
+  [FLIP, V(12.5, 15.2, 31.5), V(-1.6, 8.3, 0)],
+  [T(2, 2), V(15.5, 15.6, 30.6), V(-1.2, 7.9, 0)],
+  [T(4), V(18.5, 16.4, 31), V(0, 7.6, 0)],
+  [T(5), V(41, 30, 66), V(30, 4.6, 0)],
+  [T(6, 2), V(47, 24.5, 53), V(39.5, 4.2, -1)],
+  [DUR, V(51.5, 21.5, 46), V(45, 4.4, -1.5)],
+  [DUR + 3, V(53, 20.5, 43.5), V(46.5, 4.5, -1.6)],
+];
+// a taller stack (another locale) raises and pulls back the crane by the same amount; 38 coins is the reference
+const EXTRA = (N - 38) * CH;
+KEYS.slice(3, 6).forEach(([, pos, tgt]) => { tgt.y += EXTRA * .7; pos.y += EXTRA * .7; pos.z += EXTRA * 1.4; });
+function cr(p0, p1, p2, p3, u) {
+  const u2 = u * u, u3 = u2 * u;
+  return p1.clone().multiplyScalar(2).add(p2.clone().sub(p0).multiplyScalar(u)).add(p0.clone().multiplyScalar(2).sub(p1.clone().multiplyScalar(5)).add(p2.clone().multiplyScalar(4)).sub(p3).multiplyScalar(u2)).add(p1.clone().multiplyScalar(3).sub(p0).sub(p2.clone().multiplyScalar(3)).add(p3).multiplyScalar(u3)).multiplyScalar(.5);
+}
+function camAt(t) {
+  let i = 1; while (i < KEYS.length - 2 && t > KEYS[i + 1][0]) i++;
+  const [t1] = KEYS[i], [t2] = KEYS[i + 1];
+  let u = Math.min(1, Math.max(0, (t - t1) / (t2 - t1)));
+  u = u * u * (3 - 2 * u) * .65 + u * .35;                  // a little ease, never a full stop
+  const g = k => [KEYS[i - 1][k], KEYS[i][k], KEYS[i + 1][k], KEYS[Math.min(KEYS.length - 1, i + 2)][k]];
+  return { pos: cr(...g(1), u), tgt: cr(...g(2), u) };
+}
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, cam));
+const bokeh = new BokehPass(scene, cam, { focus: 30, aperture: .00016, maxblur: .006 });
+composer.addPass(bokeh);
+composer.addPass(new OutputPass());
+
+// ---------- overlay: corner, readings, captions, source ----------
+const sk = document.getElementById('sk');
+sk.className = 'tone-light';
+sk.innerHTML = `<div class="sk-corner"><img src="/brand/mark-128.png" alt=""><span class="sk-name">${L.corner}</span></div>`;
+await sk.querySelector('img').decode();
+const lbl = document.getElementById('labels'), svg = document.getElementById('lines');
+const plate = document.createElement('div'); plate.className = 'plate'; plate.innerHTML = '<div class="cat"></div><div class="val"></div>'; lbl.appendChild(plate);
+const ghost = document.createElement('div'); ghost.className = 'ghost'; ghost.textContent = L.old.ghost; lbl.appendChild(ghost);
+const money = v => L.money.prefix + v.toLocaleString('en-US');
+const caps = LINES.map(l => {
+  const d = document.createElement('div'); d.className = 'cap';
+  const mi = l.mark ? l.text.indexOf(l.mark) : -1;
+  let html = '', n = 0;
+  [...l.text].forEach((ch, k) => {
+    if (k === mi) html += '<mark>';
+    const num = /[0-9$¥.,]/.test(ch) ? ' num' : '';
+    html += `<span class="c${num}" data-k="${n++}">${ch === ' ' ? '&nbsp;' : ch}</span>`;
+    if (mi >= 0 && k === mi + l.mark.length - 1) html += '</mark>';
+  });
+  d.innerHTML = `<span class="sk-strip">${html}</span>`;
+  lbl.appendChild(d);
+  ev(l.type - .25, 'strip'); ev(l.type, 'type');
+  return { d, l, chars: [...d.querySelectorAll('.c')], mark: d.querySelector('mark') };
+});
+const src = document.createElement('div'); src.className = 'src'; lbl.appendChild(src);
+ev(FLIP, 'thump'); ev(FLIP, 'number');
+ev(T(1, 1), 'tick');
+ev(T(4), 'whoosh');
+
+function overlay(t) {
+  // the reading follows the top of the stack and counts the coins that have landed
+  const n = Math.max(landed(t), N0 - 1);
+  const top = new THREE.Vector3(STACK.x + 1.2, BH + n * CH, STACK.z);
+  const p = toScreen(top, cam), q = { x: p.x + 70, y: p.y - 70 };
+  const done = t >= FLIP, value = n >= N ? L.new.value : n * L.coin.value;
+  plate.querySelector('.cat').textContent = done ? L.new.when : (t < T(0, 1) ? L.old.when : '');
+  plate.querySelector('.val').textContent = (!done && t < T(0, 1)) ? L.old.price : money(value);
+  plate.classList.toggle('hot', done);
+  const pop = done ? 1 + .1 * Math.exp(-(t - FLIP) * 9) : 1;
+  const show = 1 - Math.min(1, Math.max(0, (t - T(4)) / .4));    // the reading leaves as the camera moves on
+  Object.assign(plate.style, { left: q.x + 'px', top: q.y + 'px', transform: `translate(0,-100%) scale(${pop})`, transformOrigin: '0 100%', opacity: show });
+  // the ghost: last year's level stays marked on the stack
+  const gp = toScreen(new THREE.Vector3(STACK.x - 2.0, BH + N0 * CH, STACK.z), cam);
+  const ga = Math.min(1, Math.max(0, (t - T(1, 1)) / .3)) * show;
+  Object.assign(ghost.style, { left: gp.x - 30 + 'px', top: gp.y + 'px', transform: 'translate(-100%,-50%)', opacity: ga });
+  ring.scale.setScalar(.6 + .4 * ga); ring.visible = ga > 0;
+  svg.innerHTML = show > 0 ? `<g opacity="${show}"><circle cx="${p.x}" cy="${p.y}" r="5" fill="#1c1d20"/><polyline points="${p.x},${p.y} ${q.x},${q.y}" fill="none" stroke="#1c1d20" stroke-width="1.6"/></g>` : '';
+  // captions: strip slides in, characters type on the beat, the marker sweeps, the old line lifts away
+  caps.forEach((c, i) => {
+    const next = caps[i + 1], tIn = c.l.type - .25, tOut = next ? next.l.type - .3 : 1e9;
+    const on = t >= tIn && t < tOut + .3;
+    c.d.style.display = on ? '' : 'none';
+    if (!on) return;
+    const slide = Math.min(1, (t - tIn) / .25), out = Math.min(1, Math.max(0, (t - tOut) / .3));
+    c.d.style.clipPath = `inset(-20px ${(1 - slide) * 100}% -20px -20px)`;
+    c.d.style.opacity = 1 - out; c.d.style.transform = `translateY(${-12 * out}px)`;
+    const k = Math.floor((t - c.l.type) * CPS) + 1;
+    c.chars.forEach((s, j) => s.classList.toggle('on', j < k));
+    if (c.mark) c.mark.style.setProperty('--p', Math.min(1, Math.max(0, (t - c.l.markAt) / .3)));
+  });
+  const cur = [...LINES].reverse().find(l => t >= l.type - .25);
+  src.textContent = cur ? L.sources[cur.src] : '';
+  src.style.opacity = cur ? .62 * Math.min(1, (t - LINES[0].type + .25) / .3) : 0;
+}
+
+// ---------- one frame ----------
+window.render = (t) => {
+  placeCoins(t);
+  // gamer: looks up as the stack grows, hops back on the flip
+  const away = GAMER.clone().sub(STACK).setY(0).normalize();
+  const hop = t < FLIP - .15 ? 0 : t < FLIP ? -1 : Math.min(1, (t - FLIP) / .35);
+  const back = hop > 0 ? .8 * (1 - Math.pow(1 - hop, 3)) : 0;
+  gamer.position.copy(GAMER).add(away.clone().multiplyScalar(back)).setY(BH + (hop > 0 ? .6 * Math.sin(Math.PI * hop) : 0));
+  gamer.rotation.y = Math.atan2(-away.x, -away.z);
+  const sq = hop < 0 ? .9 : 1 + .05 * Math.sin(t * 3.1);
+  body.scale.set(1, sq, 1);
+  head.rotation.x = -Math.min(.75, (landed(t) - N0) * .03) - .05 * Math.sin(t * 1.7);
+  // town
+  layers.forEach(l => { drop(l.g, l.td, l.y, t); l.win.material.emissiveIntensity = t >= l.lit ? 3.2 * Math.min(1, (t - l.lit) / .12) : 0; });
+  drop(roof, ROOF_T, ROOF_Y, t);
+  roof.children.filter(c => c.name === 'fan').forEach((f, i) => { f.material.emissiveIntensity = t >= GLOW ? 1.2 * Math.min(1, (t - GLOW) / .2) : 0; f.rotation.y = t * (t >= GLOW ? 9 : 2) + i; });
+  for (const h of people) { const s = Math.sin(t * h.sp + h.ph); h.p.position.set(h.x + s * .8, TILE_TOP + Math.abs(Math.sin(t * 6 + h.ph)) * .08, h.z + Math.cos(t * h.sp + h.ph) * .5); }
+  placeTrucks(t);
+  // camera and focus
+  const { pos, tgt } = camAt(t);
+  cam.position.copy(pos); cam.lookAt(tgt);
+  bokeh.uniforms.focus.value = pos.distanceTo(tgt);
+  composer.render();
+  overlay(t);
+};
+window.DUR = DUR;
+window.EV = EV.sort((a, b) => a.t - b.t);
+window.GRID = { b0: B0, bpm: 120, trackOffset: 2.0 };
+window.render(0);
+window.READY = true;
+</script>
+</body></html>

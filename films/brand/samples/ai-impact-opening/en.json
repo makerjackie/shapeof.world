@@ -1,0 +1,19 @@
+{
+  "lang": "en",
+  "corner": "世界的形状",
+  "coin": { "value": 10, "label": "1 coin = $10" },
+  "old": { "value": 100, "when": "Mid-2025", "ghost": "2025: under $100", "price": "<$100" },
+  "new": { "value": 449, "when": "Oct 2026" },
+  "money": { "prefix": "$", "group": "," },
+  "item": "32GB DDR5 RAM",
+  "lines": [
+    { "text": "Last year this RAM was under $100.", "mark": "" },
+    { "text": "Now it costs $449.", "mark": "$449" },
+    { "text": "Why did RAM get so expensive?", "mark": "" },
+    { "text": "AI data centres are grabbing it.", "mark": "grabbing it" }
+  ],
+  "sources": [
+    "Cheapest US retail · Tom's Hardware price tracker, 2026-06-03 and 2026-10-19",
+    "TrendForce, 2026"
+  ]
+}

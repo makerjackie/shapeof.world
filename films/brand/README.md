@@ -1,94 +1,75 @@
-# 品牌骨架、画风样帧和声音
+# 品牌骨架、画风和声音
 
-2026-10-23 的提案，等用户选。做片的规矩见 [`../DIRECTOR.md`](../DIRECTOR.md)，这里放它引用的具体值、三张风格帧、《AI 到底改变了什么》的开头方案和声音清单。
+做片的规矩只看 [`../DIRECTOR.md`](../DIRECTOR.md)。这里放它引用的具体值、画风的选型记录、声音清单，以及《AI 到底改变了什么》的开头样片。
 
 ## 一、品牌骨架：每部片都一样
 
-画风每部换，下面这些不换。三张风格帧上叠的就是这一层，可以对照着看。
+画风按题目换，下面这些不换。
 
 | 部件 | 规定 |
 |---|---|
-| 角标 | 左上，距左 48 px、距顶 38 px：球（46 px）+"世界的形状"（Noto Serif SC SemiBold 28 px，字距 0.08 em）+ 一道竖线 + 章节词（Noto Sans SC 22 px，可省）。整体 80% 不透明；浅色画面用墨色，深色画面用纸白 |
-| 叙述字幕 | 纸色 `#f1ecdf` 纸条，墨色 `#19231f` Noto Serif SC Bold 60 px，左边 8 px 墨色竖边，轻投影；固定在左下（距左 96 px、距底 148 px）。纸条从左划出，字逐个打出 |
-| 关键词 | 品牌金 `#ffd166` 荧光笔，压在字的下半部（38% 高），打完后的下一拍刷上 |
-| 数字 | Inter，等宽数字；字重随画风（小岛用 700，实物化用 250–300） |
+| 角标 | 左上，距左 48 px、距顶 38 px：球（46 px）+"世界的形状"（Noto Serif SC SemiBold 28 px，字距 0.08 em），可加一道竖线和章节词（Noto Sans SC 22 px）。整体 80% 不透明；浅色画面用墨色，深色画面用纸白 |
+| 叙述字幕 | 纸色 `#f1ecdf` 纸条，墨色 `#19231f` Noto Serif SC Bold 60 px，左边 8 px 墨色竖边，轻投影；固定在左下（距左 96 px、距底 148 px）。纸条从左划出 0.25 s，字逐个打出（中文每秒 14 字，英文每秒 30 个字母），第一个字落在拍上 |
+| 关键词 | 品牌金 `#ffd166` 荧光笔，压在字的下半部，打完后的下一拍刷上（0.3 s） |
+| 数字 | Inter，等宽数字；字重随画风（实物读数用 250–300） |
 | 来源小字 | Noto Sans SC 19 px，60% 不透明，纸条下方；完整来源进简介 |
-| 颜色 | 纸 `#f1ecdf`、墨 `#19231f`、品牌金 `#ffd166`（只给关键词和"那一个发现"）；涨跌用语义红绿。底色跟画风走 |
-| 声音 | 音频标志 + 四个品牌音效，见 DIRECTOR 第七节和下文第四节 |
-| 片尾卡 | 正中"世界的形状"（带球的组合标志），底部一行 MakerJackie，配音频标志，约 3 秒 |
+| 颜色 | 纸 `#f1ecdf`、墨 `#19231f`、品牌金 `#ffd166`（只给关键词和"那一个发现"）；涨跌用语义红绿；读数的强调用信号橙 `#d4521c` |
+| 声音 | 四个品牌音效，见下文第四节；音频标志可选 |
+| 片尾卡 | 正中"世界的形状"（带球的组合标志），底部一行 MakerJackie，约 3 秒 |
 | 不再有 | 频谱条、进度条、来源页、制作页、"说句公道话"标签、开场定格的结论句 |
 
-为什么是纸条：它在亮的和暗的画面上都读得清，手机上一眼能认出来；和封面顶部的纸色品牌条是同一个东西，片子和封面连成一套。现在知识区常见的是黑体白字描边，纸条加衬线字更像"有人在讲故事"，容易被记住。
+为什么是纸条：在亮的和暗的画面上都读得清，手机上一眼能认出来；和封面顶部的纸色品牌条是同一个东西。知识区常见的是黑体白字描边，纸条加衬线字更像"有人在讲故事"。
 
-## 二、《AI 到底改变了什么》的三个画风方向
+## 二、画风：桌上的真东西，加一座小镇（2026-10-23 用户选定）
 
-三张帧画的是同一个时刻：一套 32GB DDR5 内存条，2025 年中不到 100 美元，2026 年 10 月最低 449 美元（美国零售最低价，Tom's Hardware 价格追踪，见 `../ai-impact/research/03-memory-chips.md`）。调研里没有 2022 年的零售价，所以用的是 2025 年中对 2026 年 10 月。
+三张风格帧画的是同一个时刻（一套 32GB DDR5 内存条的价格）：
 
 ![三张风格帧](frames/compare.jpg)
 
-| | 帧 | 一句话 | 好在哪 | 代价 |
+| 帧 | 方向 | 用户的判断 |
+|---|---|---|
+| [`frames/a-tiltshift.jpg`](frames/a-tiltshift.jpg) | 移轴微缩 | 这个题目第一眼读不出来 |
+| [`frames/b-lowpoly.jpg`](frames/b-lowpoly.jpg) | 低多边形小世界 | 第一眼读不出来；但讲人和工作时更好玩 |
+| [`frames/c-physical.jpg`](frames/c-physical.jpg) | 数据实物化 | **最好**：真的内存条、一摞摞硬币，第一眼就是"哇，真贵了" |
+
+定下来的是 C 为主、B 为辅的混合：
+
+- **主画面**：暖色、明亮的影棚桌面，胡桃木台面，真实大小的物件，价格变成硬币堆（一枚一个单位，每第 10 枚是黄铜色的刻度）。
+- **讲人和工作时**：同一张桌面上出现低多边形的小镇和小人（平涂、六角地块、几何体），真物件是真实大小，小镇是模型大小，始终是同一个世界。
+- **背景**暖而浅；黑暗只当戏剧手段（安静、夜里、坏消息）。
+- 字和数字放在语言层（`zh.json`、`en.json`），中文版用人民币，英文版用同一套画面换成美元。
+
+## 三、《AI 到底改变了什么》的开头样片
+
+[`samples/ai-impact-opening/`](samples/ai-impact-opening/)：开头 16 秒，"价签暴涨"，混合画风，带音乐和音效。总览图（每 0.5 秒一帧）：[`samples/ai-impact-opening/contact-zh.jpg`](samples/ai-impact-opening/contact-zh.jpg)。
+
+| 片中 | 拍 | 画面 | 字 | 声音 |
 |---|---|---|---|---|
-| A 移轴微缩（tilt-shift） | [`frames/a-tiltshift.jpg`](frames/a-tiltshift.jpg) | 真实的电脑城，从高处看成一张桌上的模型 | 有人群，有电影感；招牌镜头是清晰带一推落到一个人身上，时间加速后骤停 | 最贵：要做得像真的才不廉价；电网、工作这类抽象的东西不好拍 |
-| B 低多边形小世界（lowpoly-island） | [`frames/b-lowpoly.jpg`](frames/b-lowpoly.jpg) | 四年里，AI 在一座小岛上长出了什么 | 整部片是一个会长的世界：数据中心、核电站、玩家的房间、第一份工作的门都在岛上；价格变成一摞摞硬币，每块落下都是一个音，正好卡拍。和"世界的形状"这个名字最贴 | 中等：几何体加平涂，渲染快，手机上好读；要防止"太可爱"压过严肃的话题 |
-| C 数据实物化（data-physical） | [`frames/c-physical.jpg`](frames/c-physical.jpg) | 数字变成摸得到的东西 | 质感高级，每个数字都能"称一称"；讲钱和价格最有力 | 讲人和工作时弱；整部片都在桌面上，容易单调 |
+| 0.03 s | 第 0 小节强拍 | 桌上一套内存条、9 枚硬币（¥900）、一个 3 厘米高的小人；第 9 枚落下 | 读数"2025 年 ¥900" | 硬币声，音乐只有轻轻的拍点 |
+| 0.53–2.03 s | 第 2 拍起 | 硬币越落越密，镜头跟着往上升，读数按落下的硬币跳 | ¥1,000 → ¥3,700 | 每枚一声，第 10、20、30 枚各响一个马林巴音（A、C、E） |
+| 2.03 s | 第 1 小节强拍 | 第 38 枚落定，读数翻成橙色"2026 年 7 月 ¥3,800"，小人往后一跳 | | 低沉撞击 + 陶瓷轻敲；音乐整段进来 |
+| 2.53 s | 拍 | 去年的高度留下一圈黄铜环和"去年 ¥900" | | 轻点 |
+| 3.03 s | 拍 | 镜头绕着硬币塔慢慢转 | 去年 900 元的内存条， | 纸条、轻点 |
+| 6.03 s | 第 3 小节强拍 | | 现在要 3800 元。（7.03 s 刷金） | 轻点 |
+| 8.03 s | 第 4 小节强拍 | 镜头沿桌面拉远、右移，露出桌子另一头的低多边形小镇 | | 丝带掠过 |
+| 8.53–10.03 s | 每拍 | 数据中心一层一层落下来，屋顶最后落 | 10.03 s：内存条为什么突然这么贵？ | 木块敲击，一层一个音 |
+| 12.03–13.03 s | 每拍 | 运内存的小卡车开进数据中心，窗户一层层亮起 | 12.03 s：AI 的数据中心，在抢内存。 | 开关声；机房的嗡声提前半小节进来 |
+| 14.03 s | 第 7 小节强拍 | 屋顶风扇亮起转快 | "在抢内存"刷金 | 低沉撞击 |
 
-**推荐 B，再借 C 的"一枚硬币 = 一个单位"。** 理由：
+数字：
 
-- 这部片要讲钱、芯片、电、工作四件事，B 能把它们放进同一个世界，一路长下去，最后拉远看整座岛，就是片名"世界的形状"。
-- 硬币堆是 C 最好的一招，小岛上同样成立，而且比图表更直接：一摞 10 枚，一摞 45 枚，谁都看得懂。
-- B 的声音最好做：每一块落地、每一枚硬币都是一个音，音乐网格和画面天然对齐。
-- 制作成本可控，以后的数据片可以沿用这套小岛的做法，只换岛上的东西。
+- 价格用央视财经 2026 年 7 月在深圳华强北的调查："32G DDR5 内存去年 900 元，现在 3800 元"，"一套 32GB 的 DDR5 内存套装目前已经涨到近 4000 元，比去年贵了三四倍"（经同花顺、财联社转载，<https://news.10jqka.com.cn/20260707/c677990782.shtml>）。一个来源同时给了两头的价，倍数（约 4.2 倍）和美国零售价的涨幅（不到 100 美元 → 449 美元）一致。
+- 佐证：京东上光威龙武-弈 DDR5-6000 32GB（16GB×2）2025-06-15 活动价 499 元（中关村在线、快科技同日）；同规格 2026-02 京东现售 3359 元（中关村在线）；2026-09 国内同类 32GB DDR5-6000 套条"普遍报价在 3800 元左右"（中关村在线）。这一组型号和口径不完全一致，只放简介里作参考。
+- 汇率备用：2026-10-22 美元兑人民币中间价 6.7195（中国外汇交易中心）。
+- "AI 的数据中心，在抢内存"依据 `../ai-impact/research/03-memory-chips.md`：AI 服务器要的高带宽内存和服务器内存挤占了消费级内存的产能（TrendForce）。
 
-A 适合以后讲城市、交通、人群的题目；C 适合讲钱的单集（工资、房价、预算）。
+## 四、声音
 
-## 三、开头方案（《AI 到底改变了什么》）
+试听：每个 id 在 `https://music.shapeof.world/track/<id>` 有页面。`python films/brand/sound/make_sound.py` 在 `films/brand/sound/out/` 生成音频标志草稿和音效试听文件（WAV 不进 Git）。
 
-三个方案都按画风 B 写。时间是片中秒数；强拍按推荐配乐《形状咬合》（110 BPM，一小节约 2.18 秒）。
+**音频标志**（可选，每部片自己定）：一口气 → A4、E5、C#6 三个木琴音从左到右（像三笔画出一个圈）→ 第三个音上"球"落地（110 Hz，带二、三次谐波，手机外放也听得到）→ 玻璃余光，共 2.6 秒。
 
-### 方案 1：价签暴涨（推荐）
-
-- **0.0 s**：特写。小岛上一套绿色内存条立在一小摞金币上（10 枚），旁边一个穿黄卫衣的小人。最后一枚硬币正落下来，"叮"。
-- **0.0–1.3 s**：硬币像下雨一样砸下来，一枚一个音，越来越密，那摞硬币把内存条往上顶；镜头跟着往上摇，硬币塔冲出画框。
-- **约 2.2 s（第二小节的强拍）**：价签"啪"地翻到 **$449**（陶瓷轻敲 + 低沉撞击），小人往后退半步。
-- **2–6 s**：纸条打出"一套内存条，一年多涨到了 449 美元。"镜头拉远，岛上别处也有塔在长：显卡、电费、英伟达。
-- **封面**：AI 先改变的，不是你的工作。主图是小人仰头看硬币塔。
-- **标题**：AI 来了四年，到底改变了什么？
-
-为什么推荐：价格谁都懂；第一秒就有动作和声音；硬币堆是这个画风最拿手的一招；它也立住了全片的结构，先变的是东西的价钱，最后才轮到工作。
-
-### 方案 2：毕业帽
-
-- **0.0 s**：岛上一排穿学士服的小人，帽子同时抛起。
-- **0.5–1.0 s**：帽子在最高点停一下，其中一顶飘走了。
-- **1.0–2.2 s**：镜头跟着这顶帽子落到一扇门前，门"砰"地缩成一条缝（低沉撞击）。
-- **2–6 s**：纸条打出"他们入学那年秋天，还没有 ChatGPT。"
-- **封面**：AI 先关上的，是第一份工作的门。
-- **标题**：AI 到底改变了什么？先换掉的是起点。
-
-最有情绪，但一开头就交出了全片最强的发现，后半段的高潮会变弱；门的比喻也要先解释。
-
-### 方案 3：四年长出来的世界
-
-- **0.0 s**：一座空荡荡的小岛，清晨。角上一个年份计数器从 2022 开始跳。
-- **0.5–2.0 s**：每一拍，地里冲出一座数据中心（水花声、木块声）；核电站的冷却塔冒起烟，电线一路架过去，硬币塔一座座长高。
-- **约 2.2 s**：计数器停在 2026，岛已经认不出来了。
-- **2–6 s**：纸条打出"四年，AI 先改了这些。"
-- **封面**：四年，AI 把世界改成了这样。
-- **标题**：AI 到底改变了什么？
-
-最贴品牌，场面最大，但太抽象：2 秒里观众看到房子在长，还不知道这和自己有什么关系。
-
-## 四、声音清单
-
-试听：每个 id 在 `https://music.shapeof.world/track/<id>` 有页面。在 Mac 上运行 `python films/brand/sound/make_sound.py`，会在 `films/brand/sound/out/` 生成 `audio-logo.wav`（音频标志草稿）和 `palette-audition.wav`（下面 8 个音效按顺序各放两遍，约 20 秒）。WAV 不进 Git。
-
-### 音频标志
-
-自己合成，不用目录里的现成音效：一口气 → A4、E5、C#6 三个木琴音从左到右（像三笔画出一个圈）→ 第三个音上"球"落地（110 Hz，带二、三次谐波，手机外放也听得到）→ 玻璃余光，共 2.6 秒，−15 LUFS，峰值 −1 dBFS。画面上三个音对应球的轮廓画出来，落地对应球落定，余光对应左上那道青色边光。
-
-如果只想用目录里的：`sfx-impact-08`（低沉撞击）叠 `sfx-impact-05`（玻璃轻碰），但它们没有旋律，记不住。
-
-### 音效调色板
+**音效调色板**
 
 | 时刻 | id | 名字 | 层 |
 |---|---|---|---|
@@ -96,50 +77,48 @@ A 适合以后讲城市、交通、人群的题目；C 适合讲钱的单集（�
 | 纸条字幕划入 | [`sfx-foley-02`](https://music.shapeof.world/track/sfx-foley-02) | 卡片滑动 | 品牌 |
 | 数字落定 | [`sfx-impact-06`](https://music.shapeof.world/track/sfx-impact-06) | 陶瓷轻敲 | 品牌 |
 | "那一个发现"亮起 | [`sfx-impact-05`](https://music.shapeof.world/track/sfx-impact-05) | 玻璃轻碰 | 品牌 |
-| 物件落地、堆叠 | [`sfx-impact-01`](https://music.shapeof.world/track/sfx-impact-01) | 木块敲击 | 世界（按材质换） |
-| 计数的每一跳 | [`sfx-mechanical-13`](https://music.shapeof.world/track/sfx-mechanical-13) | 进纸机构 | 世界 |
+| 硬币、金属小件落下 | [`sfx-impact-03`](https://music.shapeof.world/track/sfx-impact-03) | 金属轻敲 | 世界（按材质换） |
+| 物件落地、小镇的楼块 | [`sfx-impact-01`](https://music.shapeof.world/track/sfx-impact-01) | 木块敲击 | 世界 |
+| 计数、开关 | [`sfx-mechanical-13`](https://music.shapeof.world/track/sfx-mechanical-13) | 进纸机构 | 世界 |
 | 镜头内转场 | [`sfx-transition-02`](https://music.shapeof.world/track/sfx-transition-02) | 丝带掠过 | 世界 |
 | 安静之后的重拍 | [`sfx-impact-08`](https://music.shapeof.world/track/sfx-impact-08) | 低沉撞击 | 世界 |
 
-挑法：240 个音效全部下载，量了时长、起音、衰减、音高稳不稳、低频占比，再看频谱；有颤音、像"弹簧"的都排除。目录里的文字描述（`audioReview`）和实际声音常对不上，最后还是要用耳朵定。
+挑法：240 个音效全部下载，量了时长、起音、衰减、音高稳不稳、低频占比，再看频谱；有颤音、像"弹簧"的都排除。目录里的文字描述（`audioReview`）和实际声音常对不上。
 
-环境声：数据中心 [`ambience-machine-02`](https://music.shapeof.world/track/ambience-machine-02)（服务器机房），岛上 [`ambience-water-01`](https://music.shapeof.world/track/ambience-water-01)（缓慢海浪），安静段垫底 [`ambience-room-01`](https://music.shapeof.world/track/ambience-room-01)（安静通风）。都是 CC0，可无缝循环。
+环境声（CC0，可无缝循环）：影棚底噪 [`ambience-room-01`](https://music.shapeof.world/track/ambience-room-01)（安静通风）；数据中心 [`ambience-machine-02`](https://music.shapeof.world/track/ambience-machine-02)（服务器机房）。
 
-### 配乐候选
+**配乐**（只用已确认可商用的曲子）
 
-BPM 和第一拍是在完整音频上测的（谱通量 + 梳状搜索）；"内容"一栏来自曲库的生成提示词和测出的能量曲线，没有人耳听过。强拍和音色都要在 15 秒样片里用耳朵再确认。
-
-| | 曲子 | 实测 | 长度 | 内容 | 用在哪 |
-|---|---|---|---|---|---|
-| 1 | [《形状咬合》`pattern-lock`](https://music.shapeof.world/track/pattern-lock) | 110.0 BPM，第一拍 0.04 s，拍子很清楚 | 2:26 | 拨弦、马林巴、预制钢琴，一记低音鼓像"咬合"；越走越满，约 1:27–1:53 最满，2:02 前后回落再起 | 前半段：钩子到"三条线冲上天"（约 0:00–1:45） |
-| 2 | [《擒纵》`tick-escape`](https://music.shapeof.world/track/tick-escape) | 89.9 BPM，第一拍 0.66 s | 2:26 | 开头 20 秒只有木头的滴答声，然后卡林巴、闷音钢琴、大提琴慢慢进来 | 后半段：安静之后的转折、那一个发现、升华 |
-| 3 | [《世界的形状 · 木琴》`shape-theme-b`](https://music.shapeof.world/track/shape-theme-b) | 108.0 BPM，第一拍 0.14 s | 2:20 | 卡林巴和马林巴的五音动机，轻快 | 1 的替补：更轻、更像品牌主题曲 |
-
-**推荐 1 + 2**：前半段用《形状咬合》，在"可是，失业率几乎没动"之前留 1–2 小节安静，从《擒纵》开头的木头滴答声接进后半段。速度从 110 换到 90，正好是片子从"世界在加速"转到"一个人的起点"。
-
-授权：这三首在目录里都标着 `legacy-unreviewed`（使用权限待核对），发布前请确认一次。目录里已确认可商用、风格最接近的替补是 [《有序运动 · 90》`scene-minimalism-90`](https://music.shapeof.world/track/scene-minimalism-90)（马林巴、闷音钢琴、木鱼，87 秒）。
+- 开头和前半段：[《有序运动 · 40》`scene-minimalism-40`](https://music.shapeof.world/track/scene-minimalism-40)。实测 120 BPM，A 小调；母带前 4 秒只有每拍一下的轻响，4.03 s 整段进来，之后每 4 小节换一次句。样片从曲子 2.0 s 处开始放，让整段进来正好落在价签翻牌上。
+- 全片的其余部分在全片阶段定，同样先从已确认可商用的曲子里挑；备选是 [`scene-game-minimalism-exploration`](https://music.shapeof.world/track/scene-game-minimalism-exploration)（低音马林巴，可无缝循环）和 [`scene-minimalism-90`](https://music.shapeof.world/track/scene-minimalism-90)。
+- Gate 1 时列过的《形状咬合》《擒纵》《世界的形状 · 木琴》都标着"使用权限待核对"，不再用。
 
 ## 五、怎么重做
 
-风格帧在 Mac 上渲（three.js + 仓库里的 Playwright，headless Chrome 走 Metal）。字体不进 Git，先下到 `films/brand/fonts/`：
+都在 Mac 上跑。字体不进 Git，先下到 `films/brand/fonts/`：
 
 ```bash
 mkdir -p films/brand/fonts && cd films/brand/fonts
 curl -L -o NotoSansSC.ttf  "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf"
 curl -L -o NotoSerifSC.ttf "https://github.com/google/fonts/raw/main/ofl/notoserifsc/NotoSerifSC%5Bwght%5D.ttf"
 curl -L -o Inter.ttf       "https://github.com/google/fonts/raw/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf"
-cd - && node films/brand/frames/src/shoot.mjs            # → films/brand/frames/a-tiltshift.jpg, b-lowpoly.jpg, c-physical.jpg
+cd -
+node films/brand/frames/src/shoot.mjs                                  # 三张风格帧
+node films/brand/samples/ai-impact-opening/render.mjs video --lang zh   # 画面 → out/video-zh.mp4、out/events-zh.json
+python films/brand/samples/ai-impact-opening/mix.py zh                  # 声音和成片 → out/sample-zh.mp4（约 −12 LUFS）
+node films/brand/samples/ai-impact-opening/render.mjs stills 2.6 9 --lang en   # 英文版的单帧
 ```
 
-在工作区（worktree）里运行时，用 `NODE_MODULES=<主仓库>/node_modules` 指向装好 three 和 playwright 的那份。
+在 worktree 里运行时，用 `NODE_MODULES=<主仓库>/node_modules` 指向装好 three 和 playwright 的那份；Python 用装了 numpy、scipy 的环境。样片 486 帧在 Mac mini 上约 20 秒渲完。
 
-- `frames/src/common.js`、`skeleton.css`：品牌骨架层和共用工具（移轴模糊、贴图字）。
-- `frames/src/a-tiltshift.html`、`b-lowpoly.html`、`c-physical.html`：三个画风的场景。
-- `sound/make_sound.py`：音频标志草稿和音效试听（需要 numpy、scipy）。
+- `frames/src/common.js`、`skeleton.css`：品牌骨架层和共用工具。
+- `frames/src/*.html`：三张风格帧的场景。
+- `samples/ai-impact-opening/index.html`：样片，`window.render(t)` 逐帧画，`window.EV` 给出每个音效的时间；拍点网格、镜头关键帧都在文件开头。`zh.json`、`en.json` 是语言层。
+- `sound/make_sound.py`：音频标志和音效试听。
 
 ## 素材和授权
 
-- 胡桃木贴图：Poly Haven 的 american_walnut_veneer，CC0，从 lemo-opuscar 的 `core/assets/polyhaven/` 复制。
+- 胡桃木贴图：Poly Haven 的 american_walnut_veneer，CC0，从 lemo-opuscar 的 `core/assets/polyhaven/` 复制并缩到 1024 px。
 - 字体：Noto Sans SC、Noto Serif SC、Inter，SIL OFL 1.1。three.js：MIT。
-- 画风方向参考 [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) 的 `styles/tilt-shift`、`lowpoly-island`、`data-physical`（MIT / CC BY 4.0），代码是自己写的。
-- 音效和环境声来自自己的曲库，CC0。
+- 画风参考 [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) 的 `styles/data-physical`、`lowpoly-island`、`tilt-shift`（MIT / CC BY 4.0），代码是自己写的。
+- 音乐、音效和环境声来自自己的曲库：音乐用 `rights.commercialUse = true` 的，音效和环境声是 CC0。
