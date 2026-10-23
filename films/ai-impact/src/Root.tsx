@@ -4,6 +4,7 @@ import { Cover } from "./Cover";
 import { Film } from "./Film";
 import { FilmV2 } from "./v2/FilmV2";
 import { Cover3 } from "./v3/Cover3";
+import { Film4, Sample4, SAMPLE4_END } from "./v4/Film4";
 import { FilmV3, SAMPLE_END, SampleV3 } from "./v3/FilmV3";
 import { FRAMES as V3_FRAMES, fr as v3fr } from "./v3/timing";
 import { FRAMES as V2_FRAMES } from "./v2/kit";
@@ -19,6 +20,8 @@ export const Root: React.FC = () => (
   <>
     <Composition id="Film" component={Film} durationInFrames={FILM_FRAMES} fps={FPS} width={1920} height={1080} />
     <Composition id="FilmV3" component={FilmV3} durationInFrames={V3_FRAMES} fps={FPS} width={1920} height={1080} />
+    <Composition id="Film4" component={Film4} durationInFrames={V3_FRAMES} fps={FPS} width={1920} height={1080} />
+    <Composition id="Sample4" component={Sample4} durationInFrames={v3fr(SAMPLE4_END)} fps={FPS} width={1920} height={1080} />
     <Composition id="SampleV3" component={SampleV3} durationInFrames={v3fr(SAMPLE_END)} fps={FPS} width={1920} height={1080} />
     <Composition id="FilmV2" component={FilmV2} durationInFrames={V2_FRAMES} fps={FPS} width={1920} height={1080} />
     <Composition id="Opening" component={Opening} durationInFrames={OPENING_FRAMES} fps={FPS} width={1920} height={1080} />
