@@ -18,7 +18,8 @@ describe('films', () => {
   it('keeps unpublished films off the site', () => {
     const unpublished = (entries as FilmEntry[]).filter((entry) => !entry.publishedAt)
     for (const entry of unpublished) expect(loadFilm(entry.slug)).toBeUndefined()
-    expect(loadFilms().map((film) => film.slug)).not.toEqual(expect.arrayContaining(unpublished.map((entry) => entry.slug)))
+    const listed = loadFilms().map((film) => film.slug)
+    for (const entry of unpublished) expect(listed).not.toContain(entry.slug)
   })
 
   it('finds the films that point to a world', () => {
