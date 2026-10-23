@@ -1,6 +1,6 @@
 """Shift pitched sound effects to the nearest tone of the F-major triad (F, A, C) so they sit in the music's key.
 
-Both tracks of this film are in F major (tools/beats.py notes in timing.ts).
+《千年之后（氛围版）》 measures F major (chroma key profile, r = 0.85), so the effects sit on F, A and C.
 Usage: python tools/tune_sfx.py public/lib public/lib/tuned sfx-impact-05 sfx-impact-06 ...
 Measures the dominant partial in the first 300 ms after the attack, then pitch-shifts with ffmpeg
 (asetrate + aresample + atempo), which keeps the duration. Adapted from films/ai-impact/tools/tune_sfx.py.

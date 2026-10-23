@@ -276,7 +276,10 @@ export const Bill: React.FC = () => {
   const t = useT();
   const enter = pr(t, BILL_AT - 0.15, 0.2, EO);
   const n = billPrinted(t);
-  const cam = keys(t, [[BILL_AT, 1.3], [FB(60.75), 1.2], [FB(61.75), 0.8], [FB(66), 0.78], [BILL_END, 0.74]], EIO);
+  // Halfway through, the camera moves in on the two purple "your time" bars (the side totals step back), then pulls
+  // out again for the saving.
+  const cam = keys(t, [[BILL_AT, 1.3], [FB(60.75), 1.2], [FB(61.75), 0.8], [FB(63.75), 0.82], [FB(64.4), 1.12], [FB(65.7), 1.16], [FB(66.3), 0.78], [BILL_END, 0.74]], EIO);
+  const sideDim = pr(t, FB(63.8), 0.5, EIO) - pr(t, FB(65.9), 0.4, EIO);
   const out = pr(t, BILL_END - 0.5, 0.6, EIO);
   const tot = pr(t, FB(62), 0.5, EBACK);
   const cx = 680;
@@ -301,7 +304,7 @@ export const Bill: React.FC = () => {
           </Stamp>
         </div>
       </AbsoluteFill>
-      <div style={{ position: "absolute", left: 110, top: 400, opacity: Math.min(1, tot * 2) * (1 - out), transform: `translateY(${(1 - tot) * 30}px)` }}>
+      <div style={{ position: "absolute", left: 110, top: 400, opacity: Math.min(1, tot * 2) * (1 - out) * (1 - 0.9 * sideDim), transform: `translateY(${(1 - tot) * 30}px)` }}>
         <Lab size={30} color={K.claudeHi} w={900}>Claude Opus 5.5</Lab>
         <Lab size={26} color={K.claudeHi} w={700}>包月用满</Lab>
         <Lab size={30} color={K.sub} w={700} style={{ marginTop: 6 }}>合计</Lab>
@@ -312,16 +315,16 @@ export const Bill: React.FC = () => {
           </Stamp>
         </div>
       </div>
-      <div style={{ position: "absolute", left: 1480, top: 400, opacity: Math.min(1, tot * 2) * (1 - out), transform: `translateY(${(1 - tot) * 30}px)` }}>
+      <div style={{ position: "absolute", left: 1480, top: 400, opacity: Math.min(1, tot * 2) * (1 - out) * (1 - 0.9 * sideDim), transform: `translateY(${(1 - tot) * 30}px)` }}>
         <Lab size={30} color={K.deepseekHi} w={900}>DeepSeek V4.1 Flash</Lab>
         <Lab size={26} color={K.deepseekHi} w={700}>闲时价</Lab>
         <Lab size={30} color={K.sub} w={700} style={{ marginTop: 6 }}>合计</Lab>
         <Lab size={112} color={K.fg} w={900} style={{ letterSpacing: -3 }}>¥2,357</Lab>
       </div>
-      <div style={{ position: "absolute", left: 40, top: lerp(1200, 850, pr(t, BILL_AT + 0.5, 0.5, EBACK)) + out * 300 }}>
+      <div style={{ position: "absolute", left: 40, top: lerp(1200, 850, pr(t, BILL_AT + 0.5, 0.5, EBACK)) + out * 300 + sideDim * 300 }}>
         <Spark t={t} size={150} mood={t > SAVE_AT ? "party" : "happy"} beat={BEAT} />
       </div>
-      <div style={{ position: "absolute", left: 1680, top: lerp(1200, 860, pr(t, BILL_AT + 0.7, 0.5, EBACK)) + out * 300 }}>
+      <div style={{ position: "absolute", left: 1680, top: lerp(1200, 860, pr(t, BILL_AT + 0.7, 0.5, EBACK)) + out * 300 + sideDim * 300 }}>
         <Whale t={t} size={200} mood={t > SHARE_AT ? "sweat" : "happy"} beat={BEAT} />
       </div>
       <Source o={(1 - out) * pr(t, BILL_AT + 0.5, 0.5)}>

@@ -76,7 +76,7 @@ export const Desk: React.FC = () => {
         <DevRow t={t} />
       </AbsoluteFill>
       <Source o={pr(t, FB(30), 0.5) * (1 - pr(t, ROW_AT - 0.4, 0.3))}>Stack Overflow（程序员问答网站）2025 开发者调查：66% 的人说，用 AI 最大的烦恼是答案"差一点就对"（25,332 人回答）</Source>
-      <Source o={pr(t, ROW_AT, 0.5) * (1 - exit)}>Stack Overflow 2026 开发者调查：拿到 AI 写的答案后"直接用"的占 9.6%，其余先在本地跑、对照代码、看测试（13,162 人回答，可多选）</Source>
+      <Source o={pr(t, ROW_AT, 0.5) * (1 - exit)}>Stack Overflow 2026 开发者调查"拿到 AI 生成的开发答案，使用前你通常会做什么？"：选"直接用"的 9.6%（13,162 人回答，可多选）</Source>
     </AbsoluteFill>
   );
 };
