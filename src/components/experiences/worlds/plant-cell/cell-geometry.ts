@@ -32,17 +32,22 @@ export function cellSurface(full = false, inset = 0) {
   return geometry
 }
 
-export function cutRim() {
-  const points: T.Vector3[] = []
-  for (let i = 0; i <= 100; i++) {
-    const y = -35 + i * 0.7
-    points.push(new T.Vector3(cellRadius(y), y, 0))
+/** Flat ivory wall cross-section, displayed at 0.4 µm (2× the 0.2 µm reference wall). */
+export function cutRim(offset = -1.2) {
+  const positions: number[] = [], indices: number[] = []
+  const rows = 240
+  for (const side of [-1, 1]) {
+    const start = positions.length / 3
+    for (let i = 0; i <= rows; i++) {
+      const y = -34.94 + i / rows * 69.88
+      const r = cellRadius(y), outer = Math.sqrt(Math.max(0, r * r - offset * offset))
+      for (const x of [outer, Math.max(0, outer - 0.4)]) positions.push(side * x, y, offset)
+      if (i < rows) { const a=start+i*2; indices.push(a,a+1,a+2,a+1,a+3,a+2) }
+    }
   }
-  for (let i = 0; i <= 100; i++) {
-    const y = 35 - i * 0.7
-    points.push(new T.Vector3(-cellRadius(y), y, 0))
-  }
-  return new T.TubeGeometry(new T.CatmullRomCurve3(points, true), 400, 0.065, 5, true)
+  const geometry = new T.BufferGeometry()
+  geometry.setAttribute('position',new T.Float32BufferAttribute(positions,3)); geometry.setIndex(indices); geometry.computeVertexNormals()
+  return geometry
 }
 
 export function curveGeometry(curves: T.Curve<T.Vector3>[], radius: number, segments = 80) {
@@ -53,18 +58,26 @@ export function curveGeometry(curves: T.Curve<T.Vector3>[], radius: number, segm
 }
 
 export function cytoplasmicTracks() {
-  return Array.from({ length: 6 }, (_, i) => {
-    const points = Array.from({ length: 28 }, (_, k) => {
-      const a = k / 28 * Math.PI * 2
-      const y = Math.cos(a) * (28 - i * 0.6)
-      const x = Math.sin(a) * (12 - i * 0.65)
-      const z = i < 3 ? -Math.sqrt(Math.max(1, cellRadius(y) ** 2 - x * x)) + 1.8 + i * 0.4 : -2.2 - (i - 3) * 2 + Math.sin(a * 2 + i) * 1.1
-      return new T.Vector3(x, y, z)
+  // Twelve staggered longitudinal streams lie in the cortical layer, winding
+  // around the entire wall. The turnarounds live in different angular sectors.
+  const tracks = Array.from({ length: 12 }, (_, i) => {
+    const points = Array.from({ length: 64 }, (_, k) => {
+      const phase = k / 64 * Math.PI * 2
+      const y = 28.6 * Math.sin(phase)
+      const angle = i / 12 * Math.PI * 2 + phase + 0.22 * Math.sin(phase * 3 + i)
+      const r = cellRadius(y) - 2.25 - (i % 3) * 0.35
+      return new T.Vector3(r*Math.cos(angle),y,r*Math.sin(angle))
     })
-    const curve = new T.CatmullRomCurve3(points, true)
-    curve.arcLengthDivisions = 400
-    return curve
+    const curve = new T.CatmullRomCurve3(points,true); curve.arcLengthDivisions=400; return curve
   })
+  // Three transvacuolar streams; alternate cargo uses the opposite direction.
+  for(let i=0;i<3;i++) {
+    const curve=new T.CatmullRomCurve3([
+      new T.Vector3(-11,-20+i*17,-3-i),new T.Vector3(-3,-8+i*10,-1),
+      new T.Vector3(4,9-i*7,-3),new T.Vector3(12,23-i*20,-4),
+    ]); curve.arcLengthDivisions=200; tracks.push(curve)
+  }
+  return tracks
 }
 
 export function erNetwork() {
@@ -73,7 +86,7 @@ export function erNetwork() {
   const rows = 19, cols = 15
   const point = (r: number, c: number) => {
     const y = -28 + r * 3.05 + Math.sin(c * 8 + r) * 0.7
-    const a = 0.06 + c / cols * (Math.PI - 0.12) + Math.sin(r * 4 + c) * 0.023
+    const a = c / cols * Math.PI * 2 + Math.sin(r * 4 + c) * 0.023
     const radius = cellRadius(y) - 0.9
     return new T.Vector3(radius * Math.cos(a), y, -radius * Math.sin(a))
   }

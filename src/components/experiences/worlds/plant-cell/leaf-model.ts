@@ -1,39 +1,62 @@
 import * as THREE from 'three'
 
-/** All layer geometry is expressed in micrometres, sharing the cell at the origin. */
+/** Physical frame shared with L1/L2: x = width, +y = adaxial, -z = leaf tip. */
 export const LEAF_DIMENSIONS = { length: 120_000, width: 80_000, thickness: 500 } as const
+export const LEAF_ENTRY: [number, number, number] = [15.5, 60, -15.5]
+export const LEAF_TOP_UM = 60
+export const LEAF_BOTTOM_UM = -440
+export const LEAF_MIDRIB_X = -1500
 
+/** Entire margin with a broad basal shoulder; no high-frequency serrations. */
 export function leafHalfWidth(t: number) {
-  const shoulder = 1 + 0.15 * Math.exp(-(((t - 0.25) / 0.11) ** 2))
-  return 40_000 * Math.sin(Math.PI * t) ** 0.79 * shoulder / 1.04
+  const shoulder = 1 + .19 * Math.exp(-(((t - .23) / .14) ** 2))
+  return 40_000 * Math.sin(Math.PI * Math.max(0, Math.min(1, t))) ** .78 * shoulder / 1.08
 }
 
-export function leafHeight(x: number, y: number) {
-  // The anchor at (0, 0) is on the blade, beside the midrib.
-  return 1_200 * Math.sin(y / 19_000) + 5_600 * (x / 40_000) ** 2 * Math.sin(y / 26_000 + 0.7)
-    + 680 * Math.sin(x / 3_100 + y / 11_000) * Math.abs(x / 40_000) ** 1.25
-    + 550 * (Math.exp(-(((x + 1_000) / 1_600) ** 2)) - Math.exp(-((1_000 / 1_600) ** 2)))
+function rawRelief(x: number, z: number) {
+  const u = x - LEAF_MIDRIB_X, v = -z
+  const macro = 1600 * Math.sin(v / 22000) + 6500 * (u / 40000) ** 2 * Math.sin(v / 31000 + .6)
+  const folded = 580 * Math.sin(u / 4500 + v / 15000) * Math.abs(u / 40000) ** .6
+  // Rounded interveinal pillows, not fine serrations at the margin.
+  const a = Math.sin((u + .35 * v) / 1050), b = Math.sin((v - .21 * u) / 1420)
+  const pillows = 95 * (a * a) * (b * b) + 32 * Math.sin(u / 360 + Math.sin(v / 700))
+  return macro + folded + pillows
+}
+const entryHeight = rawRelief(LEAF_ENTRY[0], LEAF_ENTRY[2])
+const entryDx = (rawRelief(LEAF_ENTRY[0] + 1, LEAF_ENTRY[2]) - rawRelief(LEAF_ENTRY[0] - 1, LEAF_ENTRY[2])) / 2
+const entryDz = (rawRelief(LEAF_ENTRY[0], LEAF_ENTRY[2] + 1) - rawRelief(LEAF_ENTRY[0], LEAF_ENTRY[2] - 1)) / 2
+
+/** Exactly y=60 and horizontal at the anchor pore. Nearby relief is reduced to
+ * let the epidermal patch and the cell beneath share one physical surface. */
+export function leafSurfaceY(x: number, z: number) {
+  const dx = x - LEAF_ENTRY[0], dz = z - LEAF_ENTRY[2]
+  const radius = Math.hypot(dx, dz)
+  const localFlatten = Math.exp(-((radius / 950) ** 2))
+  return LEAF_TOP_UM + rawRelief(x, z) - entryHeight - (entryDx * dx + entryDz * dz) * localFlatten
 }
 
 export function createLeafGeometry() {
-  const columns = 100
-  const rows = 160
-  const positions: number[] = []
-  const uv: number[] = []
-  const indices: number[] = []
-  for (let row = 0; row <= rows; row++) {
-    const t = Math.max(0.00005, Math.min(0.99995, row / rows))
-    const y = (t - 0.5) * LEAF_DIMENSIONS.length
-    const width = leafHalfWidth(t)
-    for (let column = 0; column <= columns; column++) {
-      const u = column / columns * 2 - 1
-      const edgeRipple = 1 + 0.015 * Math.sin(t * 71) * Math.abs(u) ** 7
-      const x = width * u * edgeRipple + 950 * Math.sin(t * Math.PI * 2)
-      positions.push(x, y, leafHeight(x, y))
-      uv.push(x / 80_000 + 0.5, t)
-      if (column < columns && row < rows) {
-        const a = row * (columns + 1) + column
-        const b = a + columns + 1
+  // Resolve the same analytic relief below the microscopic domes. Coarse blade
+  // triangles must not pass above the epidermis when the camera dives toward it.
+  const horizontal = Array.from({length: 161}, (_, i) => -1 + i / 80)
+  for (let u = -.02; u <= .105; u += .0005) horizontal.push(u)
+  const us = [...new Set(horizontal.map((value) => Number(value.toFixed(7))))].sort((a, b) => a - b)
+  const longitudinal = Array.from({length: 241}, (_, i) => -60000 + i * 500)
+  for (let v = -1900; v <= 1900; v += 25) longitudinal.push(v)
+  const vs = [...new Set(longitudinal)].sort((a, b) => a - b)
+  const positions: number[] = [], uv: number[] = [], indices: number[] = []
+  for (let row = 0; row < vs.length; row++) {
+    const v = Math.max(-59994, Math.min(59994, vs[row]))
+    const t = v / LEAF_DIMENSIONS.length + .5, width = leafHalfWidth(t)
+    for (let column = 0; column < us.length; column++) {
+      const u = us[column]
+      const ripple = 1 + .008 * Math.sin(t * Math.PI * 5.2) * Math.abs(u) ** 8
+      const x = LEAF_MIDRIB_X + width * u * ripple + 700 * Math.sin(t * Math.PI * 2)
+      const z = -v
+      positions.push(x, leafSurfaceY(x, z), z)
+      uv.push((x - LEAF_MIDRIB_X) / 80000 + .5, t)
+      if (column < us.length - 1 && row < vs.length - 1) {
+        const a = row * us.length + column, b = a + us.length
         indices.push(a, a + 1, b, a + 1, b + 1, b)
       }
     }
@@ -41,8 +64,7 @@ export function createLeafGeometry() {
   const geometry = new THREE.BufferGeometry()
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
   geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
-  geometry.setIndex(indices)
-  geometry.computeVertexNormals()
+  geometry.setIndex(indices); geometry.computeVertexNormals()
   return geometry
 }
 
@@ -51,63 +73,4 @@ export function seededLeafRandom(seed = 7281) {
     seed = (Math.imul(seed, 1664525) + 1013904223) | 0
     return (seed >>> 0) / 4294967296
   }
-}
-
-/** Open toward +z, with straight palisade walls and rounded end caps. */
-export function createOpenCellGeometry() {
-  const geometry = new THREE.CapsuleGeometry(1, 8 / 3, 5, 16)
-  const index = geometry.index!
-  const positions = geometry.getAttribute('position')
-  const kept: number[] = []
-  for (let i = 0; i < index.count; i += 3) {
-    const a = index.getX(i), b = index.getX(i + 1), c = index.getX(i + 2)
-    if (positions.getZ(a) + positions.getZ(b) + positions.getZ(c) <= 0.0001) kept.push(a, b, c)
-  }
-  geometry.setIndex(kept)
-  return geometry
-}
-
-export type SectionCell = {
-  x: number; y: number; z: number
-  rx: number; ry: number; rz: number
-  angle: number; kind: 'palisade' | 'sponge' | 'epidermis'
-}
-
-export function sectionCells(): SectionCell[] {
-  const random = seededLeafRandom()
-  const cells: SectionCell[] = []
-  // The front row has a single reference cell centred exactly at the layer anchor.
-  for (let depth = 0; depth < 3; depth++) {
-    for (let column = -17; column <= 17; column++) {
-      const central = depth === 0 && column === 0
-      cells.push({
-        x: column * 31.8 + (depth ? 6 * random() : 0),
-        y: central ? 0 : (random() - 0.5) * 4,
-        z: -depth * 31,
-        rx: central ? 15 : 13.8 + random() * 1.8,
-        ry: central ? 15 : 14.3 + random() * 1.3,
-        rz: central ? 15 : 13.8 + random() * 1.8,
-        angle: central ? 0 : (random() - 0.5) * 0.05,
-        kind: 'palisade',
-      })
-    }
-  }
-  // Air spaces are genuine gaps between irregular, loosely packed mesophyll cells.
-  for (let row = 0; row < 4; row++) {
-    for (let column = -7; column <= 7; column++) {
-      const x = column * 74 + (random() - 0.5) * 38
-      const y = -92 - row * 91 + (random() - 0.5) * 35
-      // Reserve a cavity around the small vascular bundle.
-      if (Math.hypot((x - 260) / 1.5, y + 190) < 82) continue
-      cells.push({x, y, z: -25 - random() * 50, rx: 22 + random() * 15, ry: 15 + random() * 9, rz: 22 + random() * 8,
-        angle: (random() - 0.5) * 1.65, kind: 'sponge'})
-    }
-  }
-  for (let column = -15; column <= 15; column++) {
-    cells.push({x: column * 36, y: 46, z: -27, rx: 17.8, ry: 4.6, rz: 45,
-      angle: 0, kind: 'epidermis'})
-    if (Math.abs(column) !== 3) cells.push({x: column * 36, y: -442, z: -27, rx: 17.8, ry: 4.8, rz: 45,
-      angle: 0, kind: 'epidermis'})
-  }
-  return cells
 }

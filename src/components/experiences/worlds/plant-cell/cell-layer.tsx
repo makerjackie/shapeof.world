@@ -2,59 +2,56 @@ import { useEffect, useLayoutEffect, useMemo, useRef, type MutableRefObject } fr
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import { cellRadius, cellSurface, cutRim, curveGeometry, cytoplasmicTracks, erNetwork } from './cell-geometry'
-import { ChloroplastMaterial, LightSheet, Membrane } from './cell-materials'
+import { LightSheet, Membrane, ParticleMaterial } from './cell-materials'
+import { Cutaway, TissueMaterial, useCutaway } from './cutaway'
+import type { PhysiologyState } from './model'
 
 function random(seed: number) {
   let n = seed
   return () => { n = (Math.imul(n, 1664525) + 1013904223) >>> 0; return n / 4294967296 }
 }
 
-/** 200 stationary chloroplasts; front-half specimens are removed by the cut. */
-function WallChloroplasts({ opacity, light, detailFade }: { opacity: number; light: number; detailFade: number }) {
-  const ref = useRef<T.InstancedMesh>(null)
-  const grana = useRef<T.InstancedMesh>(null)
-  const geometry = useMemo(() => new T.SphereGeometry(1, 24, 14).scale(3, 1.9, 1.15), [])
-  // The wall instances and zoom proxy share this geometry until their owner unmounts.
+function visibleInHierarchy(object: T.Object3D | null) {
+  for (let node = object; node; node = node.parent) if (!node.visible) return false
+  return object !== null
+}
+
+/** All 200 lenses are solid volumes; the camera-facing cut also clips organelles. */
+function WallChloroplasts({ opacity, physiology, starch }: { opacity: number; physiology: MutableRefObject<PhysiologyState>; starch: number }) {
+  const ref=useRef<T.InstancedMesh>(null), caps=useRef<T.InstancedMesh>(null), cut=useCutaway()
+  const scratch=useMemo(()=>({body:new T.Object3D(),cap:new T.Object3D(),normal:new T.Vector3(),inverse:new T.Quaternion(),matrix:new T.Matrix4(),radii:new T.Matrix4().makeScale(3,1.9,1.15),z:new T.Vector3(0,0,1),axes:new T.Vector3(3,1.9,1.15)}),[])
+  const geometry = useMemo(() => new T.SphereGeometry(1, 28, 18).scale(3, 1.9, 1.15), [])
   useEffect(() => () => geometry.dispose(), [geometry])
-  useLayoutEffect(() => {
-    if (!ref.current) return
-    const rand = random(72018), o = new T.Object3D(), granum = new T.Object3D(), combined = new T.Matrix4()
-    for (let i = 0; i < 200; i++) {
-      const row = Math.floor(i / 13), col = i % 13
-      const y = -29 + row * 3.9 + (rand() - 0.5) * 1.4
-      const angle = col / 13 * Math.PI * 2 + (row % 2) * 0.24 + (rand() - 0.5) * 0.13
-      const radius = cellRadius(y) - 1.25
-      o.position.set(radius * Math.cos(angle), y, -radius * Math.sin(angle))
-      o.quaternion.setFromUnitVectors(new T.Vector3(0, 0, 1), new T.Vector3(Math.cos(angle), 0.02, -Math.sin(angle)).normalize())
-      o.rotateZ((rand() - 0.5) * 0.6)
-      o.scale.setScalar(0.84 + rand() * 0.2)
-      // Reserve the zoom target, shown by its own matching proxy.
-      if (o.position.distanceTo(new T.Vector3(12.2, 6, 0)) < 5) o.scale.setScalar(0)
-      o.updateMatrix(); ref.current.setMatrixAt(i, o.matrix)
-      const interior = random(i + 417)
-      for (let j = 0; j < 40; j++) {
-        const angle = j * 2.399963, r = Math.sqrt((j + 0.5) / 40) * 0.85
-        granum.position.set(Math.cos(angle) * r * 2.65, Math.sin(angle) * r * 1.65, (interior() - 0.5) * 0.6)
-        granum.rotation.set(0, 0, interior() * 0.5)
-        granum.scale.set(0.18 + interior() * 0.07, 0.17 + interior() * 0.05, 0.06 + interior() * 0.08)
-        if (o.position.z > 1.3) granum.scale.setScalar(0)
-        granum.updateMatrix(); combined.multiplyMatrices(o.matrix, granum.matrix)
-        grana.current?.setMatrixAt(i * 40 + j, combined)
-      }
+  useFrame(()=>{
+    if(!ref.current||!caps.current||!cut||!visibleInHierarchy(ref.current))return
+    const {body,cap,normal,inverse,matrix,radii,z,axes}=scratch
+    for (const pose of physiology.current.chloroplasts.poses) {
+      body.position.fromArray(pose.positionUm);body.quaternion.fromArray(pose.quaternion);body.scale.setScalar(pose.sizeScale)
+      body.updateMatrix();ref.current.setMatrixAt(pose.id,body.matrix)
     }
-    ref.current.instanceMatrix.needsUpdate = true
-    if (grana.current) grana.current.instanceMatrix.needsUpdate = true
-  }, [])
+    ref.current.instanceMatrix.needsUpdate=true
+    for(let i=0;i<200;i++) {
+      ref.current.getMatrixAt(i,body.matrix);body.matrix.decompose(body.position,body.quaternion,body.scale)
+      inverse.copy(body.quaternion).invert();normal.copy(cut.normal).applyQuaternion(inverse).multiply(body.scale).multiply(axes)
+      const length=normal.length(), h=length>0?(cut.offset-cut.normal.dot(body.position))/length:2
+      normal.normalize()
+      cap.position.copy(normal).multiplyScalar(h);cap.quaternion.setFromUnitVectors(z,normal)
+      const r=Math.abs(h)<1?Math.sqrt(1-h*h):0;cap.scale.set(r,r,1);cap.updateMatrix()
+      matrix.copy(body.matrix).multiply(radii).multiply(cap.matrix)
+      // Put the cap just on the exposed side, preventing z-fighting at its lip.
+      matrix.elements[12]+=cut.normal.x*0.008;matrix.elements[14]+=cut.normal.z*0.008
+      caps.current.setMatrixAt(i,matrix)
+    }
+    caps.current.instanceMatrix.needsUpdate=true
+  })
   return <>
-    <instancedMesh ref={grana} args={[undefined, undefined, 8000]} frustumCulled={false}>
-      <sphereGeometry args={[1, 8, 5]} /><meshStandardMaterial color="#274224" roughness={1} transparent opacity={opacity * 0.78} />
+    <instancedMesh name="wall-chloroplasts" ref={ref} args={[geometry,undefined,200]} castShadow receiveShadow frustumCulled={false}>
+      <TissueMaterial color="#416d2f" kind="chloroplast" opacity={opacity*0.94} starch={starch} />
     </instancedMesh>
-    <instancedMesh name="wall-chloroplasts" ref={ref} args={[geometry, undefined, 200]} frustumCulled={false}>
-      <ChloroplastMaterial opacity={opacity} light={light} />
+    <instancedMesh ref={caps} args={[undefined,undefined,200]} frustumCulled={false} renderOrder={2} receiveShadow>
+      <circleGeometry args={[1,40]} /><TissueMaterial color="#35582b" kind="chloroplast-cut" clipped={false} opacity={opacity} />
     </instancedMesh>
-    <mesh geometry={geometry} position={[12.2, 6, 0]} rotation={[0, 0, Math.PI / 2]}>
-      <ChloroplastMaterial opacity={opacity * (1 - detailFade)} light={light} />
-    </mesh>
+
   </>
 }
 
@@ -72,7 +69,24 @@ function WallPores({ opacity }: { opacity: number }) {
     }
     if (ref.current) ref.current.instanceMatrix.needsUpdate = true
   }, [])
-  return <instancedMesh ref={ref} args={[undefined, undefined, 240]}><torusGeometry args={[0.025, 0.007, 4, 8]} /><meshBasicMaterial color="#c5c9ae" transparent opacity={opacity * 0.7} /></instancedMesh>
+  return <instancedMesh ref={ref} args={[undefined, undefined, 240]}><torusGeometry args={[0.025, 0.007, 4, 8]} /><TissueMaterial color="#c5c9ae" opacity={opacity * 0.7} /></instancedMesh>
+}
+
+function NuclearCut({ opacity }: { opacity: number }) {
+  const ref=useRef<T.Mesh>(null), cut=useCutaway()
+  const scratch=useMemo(()=>({plane:new T.Plane(),inverse:new T.Matrix4(),z:new T.Vector3(0,0,1)}),[])
+  useFrame(()=>{
+    if(!ref.current?.parent||!cut)return
+    ref.current.parent.updateWorldMatrix(true,false)
+    scratch.inverse.copy(ref.current.parent.matrixWorld).invert()
+    scratch.plane.copy(cut.plane).applyMatrix4(scratch.inverse)
+    const distance=scratch.plane.constant, radius=Math.sqrt(Math.max(0,16-distance*distance))
+    ref.current.position.copy(scratch.plane.normal).multiplyScalar(-distance-0.006)
+    ref.current.quaternion.setFromUnitVectors(scratch.z,scratch.plane.normal)
+    ref.current.scale.setScalar(radius)
+    ref.current.visible=Math.abs(distance)<4
+  })
+  return <mesh ref={ref} renderOrder={2} receiveShadow><circleGeometry args={[1,48]} /><TissueMaterial color="#798a83" kind="nucleus" clipped={false} opacity={opacity*0.8} /></mesh>
 }
 
 function Nucleus({ opacity }: { opacity: number }) {
@@ -95,30 +109,45 @@ function Nucleus({ opacity }: { opacity: number }) {
     if (pores.current) pores.current.instanceMatrix.needsUpdate = true
     if (chromatin.current) chromatin.current.instanceMatrix.needsUpdate = true
   }, [])
-  return <group position={[-8.2, -13, -1.8]} rotation={[0, 0.2, 0.16]}>
-    <mesh><sphereGeometry args={[4, 40, 28]} /><Membrane color="#aebcc5" opacity={opacity} strength={0.44} base={0.085} /></mesh>
-    <mesh><sphereGeometry args={[3.92, 32, 24]} /><Membrane color="#8197a5" opacity={opacity} strength={0.2} base={0.02} /></mesh>
-    <mesh position={[-0.6, 0.25, 0.1]} scale={[1.2, 1, 0.9]}><sphereGeometry args={[1.25, 24, 20]} /><meshStandardMaterial color="#4c5866" roughness={0.95} transparent opacity={opacity * 0.9} /></mesh>
+  return <group position={[-8.9, -12, -4.5]} rotation={[0, 0.2, 0.16]}>
+    <NuclearCut opacity={opacity} />
+    <mesh castShadow receiveShadow><sphereGeometry args={[4, 40, 28]} /><TissueMaterial color="#81908f" kind="nucleus" opacity={opacity*0.68} /></mesh>
+    <mesh scale={[1.23,1.3,1.12]}><sphereGeometry args={[4,24,16]} /><Membrane color="#c1c5a8" opacity={opacity} strength={0.05} base={0.005} /></mesh>
+    <mesh><sphereGeometry args={[3.92, 32, 24]} /><Membrane color="#8197a5" opacity={opacity} strength={0.18} base={0.002} /></mesh>
+    <mesh position={[-0.6, 0.25, 0.1]} scale={[1.2, 1, 0.9]}><sphereGeometry args={[1.25, 24, 20]} /><TissueMaterial color="#4c5866" roughness={0.95} opacity={opacity * 0.9} /></mesh>
     <instancedMesh ref={pores} args={[undefined, undefined, 340]}>
-      <torusGeometry args={[0.05, 0.013, 4, 8]} /><meshStandardMaterial color="#c3d1ca" roughness={0.85} transparent opacity={opacity * 0.85} />
+      <torusGeometry args={[0.05, 0.013, 4, 8]} /><TissueMaterial color="#c3cbbf" opacity={opacity*0.3} />
     </instancedMesh>
     <instancedMesh ref={chromatin} args={[undefined, undefined, 300]}>
-      <icosahedronGeometry args={[1, 0]} /><meshStandardMaterial color="#81919c" roughness={1} transparent opacity={opacity * 0.65} />
+      <icosahedronGeometry args={[1, 0]} /><TissueMaterial color="#81919c" roughness={1} opacity={opacity * 0.65} />
     </instancedMesh>
   </group>
 }
 
-function StreamingOrganelles({ opacity, clock, mobile }: { opacity: number; clock: MutableRefObject<number>; mobile: boolean }) {
+function StreamingOrganelles({ opacity, clock, mobile, timeScale, physiology }: { opacity: number; clock: MutableRefObject<number>; mobile: boolean; timeScale: number; physiology: MutableRefObject<PhysiologyState> }) {
   const mitochondria = useRef<T.InstancedMesh>(null), peroxisomes = useRef<T.InstancedMesh>(null), golgi = useRef<T.InstancedMesh>(null)
   const particles = useRef<T.Points>(null)
+  const golgiGeometry=useMemo(()=>{
+    const geometry=new T.SphereGeometry(1,20,10), positions=geometry.getAttribute('position')
+    for(let i=0;i<positions.count;i++) positions.setY(i,positions.getY(i)+3*(positions.getX(i)**2-0.5))
+    geometry.computeVertexNormals();return geometry
+  },[])
+  useEffect(()=>()=>golgiGeometry.dispose(),[golgiGeometry])
   const tracks = useMemo(cytoplasmicTracks, [])
   const tracksMesh = useMemo(() => curveGeometry(tracks, 0.017, 120), [tracks])
+  const trails = useMemo(() => curveGeometry(tracks, 0.075, 120), [tracks])
+  useEffect(() => () => trails.dispose(), [trails])
+  const fast = timeScale >= 3600
   useEffect(() => () => tracksMesh.dispose(), [tracksMesh])
   const particleCount = mobile ? 950 : 2400
   const data = useMemo(() => {
     const rand = random(51312)
-    return Array.from({ length: particleCount + 500 }, () => ({ phase: rand(), track: Math.floor(rand() * tracks.length), speed: 1.3 + rand() * 3, offset: new T.Vector3((rand() - 0.5) * 0.8, (rand() - 0.5) * 0.8, (rand() - 0.5) * 0.8) }))
+    return Array.from({ length: particleCount + 500 }, () => ({ phase: rand(), track: Math.floor(rand() * tracks.length), speed: 1.3 + rand() * 3, offset: new T.Vector3((rand() - 0.5) * 0.8, (rand() - 0.5) * 0.8, (rand() - 0.5) * 0.8), jitter:new T.Vector3() }))
   }, [particleCount, tracks.length])
+  const docking = useMemo(() => Array.from({ length: 100 }, (_, i) => ({
+    distance: 0, wait: 0, cooldown: data[i + 240].phase * 4, visits: 0,
+  })), [data])
+  const dockingPoint = useMemo(() => new T.Vector3(), [])
   const particleGeometry = useMemo(() => {
     const geo = new T.BufferGeometry()
     geo.setAttribute('position', new T.BufferAttribute(new Float32Array(particleCount * 3), 3))
@@ -126,48 +155,102 @@ function StreamingOrganelles({ opacity, clock, mobile }: { opacity: number; cloc
   }, [particleCount])
   // A breakpoint replaces only the particle buffer, not the shared flow tracks.
   useEffect(() => () => particleGeometry.dispose(), [particleGeometry])
+  const lastTime=useRef(0), brownian=useMemo(()=>random(99417),[])
   const o = useMemo(() => new T.Object3D(), []), tangent = useMemo(() => new T.Vector3(), []), axis = useMemo(() => new T.Vector3(0, 1, 0), [])
   useFrame(() => {
-    if (!mitochondria.current?.parent?.parent?.visible) return
-    const time = clock.current
-    const place = (index: number) => {
+    const time = clock.current, dt=Math.max(0,time-lastTime.current)
+    if (time < lastTime.current) docking.forEach((state, i) => {
+      state.distance=0;state.wait=0;state.cooldown=data[i+240].phase*4;state.visits=0
+    })
+    lastTime.current=time
+    const visible = visibleInHierarchy(mitochondria.current)
+    if (dt > 0) docking.forEach((state, i) => {
+      const datum=data[i+240], track=tracks[datum.track], speed=datum.speed*0.7
+      const cooldown=6+datum.phase*8
+      let remaining=dt
+      // At ×3600 only trails are drawn. Advance hidden cargo analytically;
+      // individual encounters resume when the real organelles become visible.
+      if (!visible) {
+        const stopped=Math.min(remaining,state.wait)
+        state.wait-=stopped;remaining-=stopped
+        if(stopped>0&&state.wait===0)state.cooldown=cooldown
+        state.distance+=speed*remaining;state.cooldown=Math.max(0,state.cooldown-remaining)
+        return
+      }
+      while (remaining > 1e-9) {
+        if (state.wait > 0) {
+          const stopped=Math.min(remaining,state.wait)
+          state.wait-=stopped;remaining-=stopped
+          if(state.wait===0)state.cooldown=cooldown
+          continue
+        }
+        if (state.cooldown <= 0) {
+          const phase=datum.phase+state.distance/track.getLength()
+          const t=datum.track>=12?1-Math.abs((phase%2)-1):phase%1
+          track.getPointAt(t,dockingPoint).add(datum.offset)
+          const nearby=physiology.current.chloroplasts.poses.some(({positionUm})=>{
+            const dx=dockingPoint.x-positionUm[0],dy=dockingPoint.y-positionUm[1],dz=dockingPoint.z-positionUm[2]
+            return Math.abs(dx)<=3&&Math.abs(dy)<=3&&Math.abs(dz)<=3&&dx*dx+dy*dy+dz*dz<=9
+          })
+          if(nearby) {
+            state.visits++
+            state.wait=1+2*((datum.phase+state.visits*0.61803398875)%1)
+            continue
+          }
+        }
+        // Substeps catch encounters at ×60 without jumping the stored distance.
+        const step=Math.min(0.5,remaining)
+        state.distance+=speed*step;state.cooldown=Math.max(0,state.cooldown-step);remaining-=step
+      }
+    })
+    if (!visible) return
+    const decay=Math.exp(-dt), noise=Math.sqrt(0.018*(1-decay*decay))
+    const place = (index: number, orient = true) => {
       const datum = data[index], track = tracks[datum.track]
-      const t = (datum.phase + time * datum.speed / track.getLength()) % 1
+      // Stop-and-go integrated time retains monotonic forward travel.
+      const cargoTime=index>=340&&index<390 ? time*0.55+Math.sin(time*0.8+index)*0.55/0.8 : time
+      const distance=index>=240&&index<340?docking[index-240].distance:cargoTime*datum.speed
+      const phase=datum.phase+distance/track.getLength()
+      const t=datum.track>=12 ? 1-Math.abs((phase%2)-1) : phase%1
       track.getPointAt(t, o.position).add(datum.offset)
-      track.getTangentAt(t, tangent)
-      o.quaternion.setFromUnitVectors(axis, tangent)
+      if (orient) {
+        track.getTangentAt(t, tangent)
+        o.quaternion.setFromUnitVectors(axis, tangent); o.rotateY(Math.sin(time*0.7+index)*0.3)
+      }
       return datum
     }
     for (let i = 0; i < 240; i++) {
-      place(i); o.scale.set(0.22, 0.45 + (i % 5) * 0.07, 0.22); o.updateMatrix(); mitochondria.current?.setMatrixAt(i, o.matrix)
+      place(i); o.scale.set(0.16, 0.3 + (i % 5) * 0.1, 0.16); o.updateMatrix(); mitochondria.current?.setMatrixAt(i, o.matrix)
     }
     for (let i = 0; i < 100; i++) {
-      place(i + 240); o.scale.setScalar(0.33 + (i % 4) * 0.055); o.updateMatrix(); peroxisomes.current?.setMatrixAt(i, o.matrix)
+      place(i + 240); o.scale.setScalar(0.26 + (i % 4) * 0.06); o.updateMatrix(); peroxisomes.current?.setMatrixAt(i, o.matrix)
     }
     for (let i = 0; i < 50; i++) {
       place(i + 340)
       // Five slightly curved flattened cisternae per moving Golgi stack.
       const center = o.position.clone()
       for (let j = 0; j < 5; j++) {
-        o.position.copy(center).addScaledVector(tangent, (j - 2) * 0.105)
-        o.scale.set(0.48 - Math.abs(j - 2) * 0.04, 0.04, 0.28); o.updateMatrix(); golgi.current?.setMatrixAt(i * 5 + j, o.matrix)
+        o.position.copy(center).addScaledVector(tangent, (j-2)*0.09); o.position.x+=Math.abs(j-2)*0.045
+        o.scale.set(0.43-Math.abs(j-2)*0.045,0.028,0.24); o.updateMatrix(); golgi.current?.setMatrixAt(i * 5 + j, o.matrix)
       }
     }
     for (const mesh of [mitochondria.current, peroxisomes.current, golgi.current]) if (mesh) mesh.instanceMatrix.needsUpdate = true
     const positions = particleGeometry.getAttribute('position') as T.BufferAttribute
     for (let i = 0; i < particleCount; i++) {
-      place(i + 500)
-      const t = time * 4 + i * 3.97
-      positions.setXYZ(i, o.position.x + Math.sin(t) * 0.09, o.position.y + Math.cos(t * 1.3) * 0.09, o.position.z + Math.sin(t * 0.7) * 0.09)
+      place(i + 500, false)
+      const jitter=data[i+500].jitter
+      if(dt>0) { jitter.multiplyScalar(decay);jitter.x+=(brownian()*2-1)*noise;jitter.y+=(brownian()*2-1)*noise;jitter.z+=(brownian()*2-1)*noise }
+      positions.setXYZ(i,o.position.x+jitter.x,o.position.y+jitter.y,o.position.z+jitter.z)
     }
     positions.needsUpdate = true
   })
   return <>
-    <mesh geometry={tracksMesh}><meshBasicMaterial color="#b8c9b9" transparent opacity={opacity * 0.09} depthWrite={false} /></mesh>
-    <instancedMesh name="streaming-mitochondria" ref={mitochondria} args={[undefined, undefined, 240]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><meshStandardMaterial color="#b78952" roughness={0.72} emissive="#52351a" emissiveIntensity={0.14} transparent opacity={opacity} /></instancedMesh>
-    <instancedMesh ref={peroxisomes} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><meshStandardMaterial color="#a5b9a4" roughness={0.86} transparent opacity={opacity * 0.75} /></instancedMesh>
-    <instancedMesh ref={golgi} args={[undefined, undefined, 250]} frustumCulled={false}><sphereGeometry args={[1, 10, 6]} /><meshStandardMaterial color="#b78c7e" roughness={0.95} transparent opacity={opacity * 0.8} /></instancedMesh>
-    <points ref={particles} geometry={particleGeometry} frustumCulled={false}><pointsMaterial color="#c9ccb0" size={0.085} transparent opacity={opacity * 0.53} depthWrite={false} sizeAttenuation /></points>
+    <mesh geometry={tracksMesh}><TissueMaterial color="#899b83" opacity={opacity*0.1} depthWrite={false} /></mesh>
+    <mesh geometry={trails} visible={fast}><TissueMaterial color="#b59f80" opacity={opacity*0.18} depthWrite={false} /></mesh>
+    <instancedMesh visible={!fast} name="streaming-mitochondria" ref={mitochondria} args={[undefined, undefined, 240]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#b0865c" opacity={opacity} /></instancedMesh>
+    <instancedMesh visible={!fast} name="streaming-peroxisomes" ref={peroxisomes} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#a0aca0" opacity={opacity*0.8} /></instancedMesh>
+    <instancedMesh visible={!fast} ref={golgi} args={[golgiGeometry, undefined, 250]} frustumCulled={false}><TissueMaterial color="#9d9a86" opacity={opacity*0.8} /></instancedMesh>
+    <points visible={!fast} ref={particles} geometry={particleGeometry} frustumCulled={false}><ParticleMaterial opacity={opacity*0.45} /></points>
   </>
 }
 
@@ -192,35 +275,57 @@ function Neighbors({ opacity }: { opacity: number }) {
   </group>
 }
 
-export function CellLayer({ opacity, light, clock, mobile = false, detailFade = 0 }: {
-  opacity: number; light: number; clock: MutableRefObject<number>; mobile?: boolean; detailFade?: number
-}) {
-  const wall = useMemo(() => cellSurface(), [])
-  const membrane = useMemo(() => cellSurface(false, 0.22), [])
-  const vacuole = useMemo(() => cellSurface(true), [])
-  const rim = useMemo(cutRim, [])
-  const er = useMemo(erNetwork, [])
-  const strands = useMemo(() => curveGeometry([
-    new T.CatmullRomCurve3([new T.Vector3(-12, -20, -3), new T.Vector3(-4, -7, -1), new T.Vector3(2, 3, -1), new T.Vector3(12, 18, -4)]),
-    new T.CatmullRomCurve3([new T.Vector3(-10, 24, -5), new T.Vector3(-5, 13, -1), new T.Vector3(-7, -2, -1), new T.Vector3(-10, -14, -2)]),
-    new T.CatmullRomCurve3([new T.Vector3(-9, -13, -2), new T.Vector3(0, -20, -2), new T.Vector3(12, -24, -4)]),
-  ], 0.11, 70), [])
-  useEffect(() => () => {
-    for (const geometry of [wall, membrane, vacuole, rim, er, strands]) geometry.dispose()
-  }, [wall, membrane, vacuole, rim, er, strands])
+function SliceEdge({ geometry, opacity }: { geometry: T.BufferGeometry; opacity: number }) {
+  const ref=useRef<T.Mesh>(null), cut=useCutaway()
+  useFrame(() => { if(ref.current&&cut) ref.current.rotation.y=cut.angle })
+  return <mesh ref={ref} geometry={geometry} renderOrder={3}><meshStandardMaterial color="#efe6cf" roughness={0.9} side={T.DoubleSide} transparent opacity={opacity} /></mesh>
+}
+
+function CellContext({ opacity }: { opacity: number }) {
+  const epidermis = useMemo(() => {
+    const geometry = new T.SphereGeometry(1, 32, 24)
+    const position = geometry.getAttribute('position')
+    // Rounded, tightly packed epidermal tiles: a continuous sheet above the
+    // palisade, rather than a collection of spherical bubbles.
+    const round = (value: number) => Math.sign(value) * Math.abs(value) ** 0.38
+    for (let i = 0; i < position.count; i++) {
+      const x = round(position.getX(i)), y = round(position.getY(i)), z = round(position.getZ(i))
+      position.setXYZ(i, x * (1 + 0.025 * Math.sin(z * 6)), y, z * (1 + 0.025 * Math.sin(x * 5)))
+    }
+    geometry.computeVertexNormals()
+    return geometry
+  }, [])
+  useEffect(() => () => epidermis.dispose(), [epidermis])
   return <group>
     <Neighbors opacity={opacity} />
-    <mesh geometry={wall}><Membrane color="#d9cfb5" opacity={opacity} strength={0.3} base={0.025} fibers /></mesh>
-    <mesh geometry={membrane}><Membrane color="#e6eee4" opacity={opacity} strength={0.22} base={0.006} /></mesh>
-    <mesh geometry={rim}><meshBasicMaterial color="#d7ceb5" transparent opacity={opacity * 0.78} /></mesh>
-    <mesh geometry={vacuole} scale={[0.88, 0.94, 0.88]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.075} base={0.002} /></mesh>
-    <mesh geometry={strands}><Membrane color="#d7ddd0" opacity={opacity} strength={0.24} base={0.08} /></mesh>
-    <mesh geometry={er}><meshStandardMaterial color="#9d9ab0" roughness={0.9} transparent opacity={opacity * 0.22} depthWrite={false} /></mesh>
-    <WallPores opacity={opacity} />
-    <WallChloroplasts opacity={opacity} light={light} detailFade={detailFade} />
-    <Nucleus opacity={opacity} />
-    <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} />
-    <mesh position={[-2, 7, -16]} rotation={[0, 0, -0.12]} scale={[82, 105, 1]}><planeGeometry /><LightSheet intensity={light * opacity} /></mesh>
-    <mesh position={[0, 5, 2]} rotation={[0, 0, -0.12]} scale={[50, 90, 1]}><planeGeometry /><LightSheet intensity={light * opacity * 0.45} /></mesh>
+    {Array.from({length:9},(_,i)=><mesh key={i} geometry={epidermis} position={[(i%3-1)*31,47.5,-35-Math.floor(i/3)*31]} scale={[15,12.5,15]}><Membrane color="#bbc3b8" strength={0.045} base={0.0015} opacity={opacity*0.4} /></mesh>)}
+    <mesh position={[0,60,-55]} scale={[96,0.4,80]}><boxGeometry /><meshStandardMaterial color="#ded8be" roughness={0.6} transparent opacity={opacity*0.05} /></mesh>
+    {Array.from({length:12},(_,i)=><mesh key={i} position={[(i%4-1.5)*31,-65-Math.floor(i/4)*34,-35-Math.sin(i)*15]} scale={[12,10,11]}><sphereGeometry args={[1,16,12]} /><Membrane color="#354833" strength={0.07} base={0.005} opacity={opacity*0.5} /></mesh>)}
+  </group>
+}
+
+export function CellLayer({ opacity, light, clock, mobile = false, physiology, timeScale, starch }: {
+  opacity: number; light: number; clock: MutableRefObject<number>; mobile?: boolean; physiology: MutableRefObject<PhysiologyState>; timeScale: number; starch: number
+}) {
+  const wall=useMemo(()=>cellSurface(true),[]), membrane=useMemo(()=>cellSurface(true,0.22),[])
+  const vacuole=useMemo(()=>cellSurface(true),[]), rim=useMemo(()=>cutRim(-1.2),[]), er=useMemo(erNetwork,[])
+  const strands=useMemo(()=>curveGeometry(cytoplasmicTracks().slice(12),0.09,90),[])
+  useEffect(()=>()=>{for(const geometry of [wall,membrane,vacuole,rim,er,strands]) geometry.dispose()},[wall,membrane,vacuole,rim,er,strands])
+  return <group>
+    <CellContext opacity={opacity} />
+    <Cutaway>
+      <mesh geometry={wall} receiveShadow><TissueMaterial color="#b5ba9a" kind="wall" opacity={opacity*0.19} roughness={0.96} depthWrite={false} /></mesh>
+      <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={0.11} base={0.001} fibers /></mesh>
+      <SliceEdge geometry={rim} opacity={opacity} />
+      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#afc5bb" opacity={opacity*0.012} depthWrite={false} /></mesh>
+      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
+      <mesh geometry={strands}><Membrane color="#c4cabb" opacity={opacity} strength={0.13} base={0.02} /></mesh>
+      <mesh geometry={er}><TissueMaterial color="#929b91" opacity={opacity*0.18} /></mesh>
+      <WallPores opacity={opacity} />
+      <WallChloroplasts opacity={opacity} physiology={physiology} starch={starch} />
+      <Nucleus opacity={opacity} />
+      <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} timeScale={timeScale} physiology={physiology} />
+      {[[-2,3,-5],[4,4,-10],[-6,5,0]].map((p,i)=><mesh key={i} position={p as [number,number,number]} rotation={[0,i*.75,-.08]} scale={[18-i*3,61,1]}><planeGeometry /><LightSheet intensity={light*opacity*(1-i*.18)*3.8} /></mesh>)}
+    </Cutaway>
   </group>
 }
