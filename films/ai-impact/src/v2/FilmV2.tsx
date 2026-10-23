@@ -8,17 +8,17 @@ import { Capex, Nvidia } from "./money";
 import { Devs, Finding, Jobless, Who } from "./people";
 import { Chips, Power } from "./world";
 
-// 《AI 到底改变了什么》 v2 · about 1:52, one dark kinetic look. Every scene is one or two 2-second bars long; every cut
-// is on a bar line of the 120 BPM grid (0.08 + 2b s). Music: 《有序运动 · 40》 from its 2.0 s (band in at 0:02, tonic end
-// 0:55.9), then 《有序运动 · 90》 from its bar 16 (32.07 s) on 0:56.08, which keeps the grid unbroken: its quiet bar 20 is
-// the "who?" beat (1:04), its biggest re-entry is the finding (1:12), its near-silent bar 35 is the quiet scene (1:34),
-// its last tonic is the end card (1:48). See SCRIPT.md.
+// 《AI 到底改变了什么》 v2 · 1:56, one dark kinetic look. Every scene is one to six 2-second bars long; every cut is on a
+// bar line of the 120 BPM grid (0.08 + 2b s). Music: 《有序运动 · 40》 from its 2.0 s (band in at 0:02, tonic end 0:55.9);
+// two bars of near-silence (room tone) carry the recap; then 《有序运动 · 90》 from its bar 16 (32.07 s) on 1:00.08, still
+// on the grid, under "可是". Its quiet bar 20 is the "who?" beat (1:08), its biggest re-entry is the finding (1:16), its
+// near-silent bar 35 is the quiet scene (1:38), its last tonic is the end card (1:52). See SCRIPT.md.
 
 type Ev = [number, string, number];
 const TU = (f: string) => `tuned/${f}`;
 
 // Caption lines (start times): a card slide just before, a tap on the first character.
-const LINES = [3.08, 6.58, 12.08, 15.08, 18.08, 22.08, 26.08, 30.08, 34.08, 38.08, 42.08, 46.08, 50.08, 57.58, 66.08, 72.08, 80.08, 84.08, 88.08, 96.08, 100.08, 104.08];
+const LINES = [3.08, 6.58, 12.08, 15.08, 18.08, 22.08, 26.08, 30.08, 34.08, 38.08, 42.08, 46.08, 50.08, 56.08, 60.08, 70.08, 76.08, 84.08, 88.08, 92.08, 100.08, 104.08, 108.08];
 
 const EVENTS: Ev[] = [
   ...LINES.flatMap((s): Ev[] => [
@@ -77,46 +77,49 @@ const EVENTS: Ev[] = [
   // usage
   ...Array.from({ length: 12 }, (_, k): Ev => [51.08 + k * 0.08, "sfx-ui-01.wav", 0.22]),
   [53.08, TU("sfx-impact-03.wav"), 0.3],
-  // jobless
-  [56.2, "sfx-transition-02.wav", 0.35],
-  [59.08, "sfx-mechanical-13.wav", 0.4],
+  // jobless: the recap in the silence, one curve a bar; B comes in on 可是; the drop to the floor
+  [56.1, "sfx-transition-02.wav", 0.22],
+  ...[56.58, 57.58, 58.58, 59.58].map((s): Ev => [s, TU("sfx-impact-03.wav"), 0.34]),
+  [61.58, "sfx-mechanical-13.wav", 0.4],
+  [64.0, "sfx-transition-02.wav", 0.35],
+  [64.58, TU("sfx-impact-05.wav"), 0.4],
   // who
-  ...[65.08, 67.08, 69.08].map((s): Ev => [s, "sfx-mechanical-01.wav", 0.3]),
-  [70.08, TU("sfx-notification-18.wav"), 0.3],
+  ...[69.08, 71.08, 73.08].map((s): Ev => [s, "sfx-mechanical-01.wav", 0.3]),
+  [74.08, TU("sfx-notification-18.wav"), 0.3],
   // finding
-  [72.08, TU("sfx-impact-05.wav"), 0.9],
-  [72.08, TU("sfx-impact-08.wav"), 0.7],
-  [72.58, TU("sfx-impact-03.wav"), 0.4],
-  [73.08, TU("sfx-notification-18.wav"), 0.35],
-  [74.0, "sfx-transition-02.wav", 0.35],
-  [74.58, TU("sfx-impact-03.wav"), 0.35],
+  [76.08, TU("sfx-impact-05.wav"), 0.9],
+  [76.08, TU("sfx-impact-08.wav"), 0.7],
+  [76.58, TU("sfx-impact-03.wav"), 0.4],
+  [77.08, TU("sfx-notification-18.wav"), 0.35],
+  [78.0, "sfx-transition-02.wav", 0.35],
+  [78.58, TU("sfx-impact-03.wav"), 0.35],
   // devs
-  [81.08, "sfx-mechanical-13.wav", 0.4],
-  [81.58, "sfx-ui-01.wav", 0.3],
-  [81.7, "sfx-ui-01.wav", 0.3],
+  [85.08, "sfx-mechanical-13.wav", 0.4],
+  [85.58, "sfx-ui-01.wav", 0.3],
+  [85.7, "sfx-ui-01.wav", 0.3],
   // RAM again
-  ...[85.08, 85.58].flatMap((s): Ev[] => [
+  ...[89.08, 89.58].flatMap((s): Ev[] => [
     [s - 0.05, "sfx-transition-02.wav", 0.3],
     [s, TU("sfx-impact-03.wav"), 0.3],
   ]),
   // narrower
-  [88.08, TU("sfx-impact-03.wav"), 0.3],
-  [88.58, TU("sfx-impact-03.wav"), 0.3],
-  [89.08, TU("sfx-impact-11.wav"), 0.3],
+  [92.08, TU("sfx-impact-03.wav"), 0.3],
+  [92.58, TU("sfx-impact-03.wav"), 0.3],
+  [93.08, TU("sfx-impact-11.wav"), 0.3],
   // cohort
-  ...[96.58, 97.08, 97.58, 98.08].map((s): Ev => [s, TU("sfx-impact-03.wav"), 0.3]),
-  [98.58, TU("sfx-notification-18.wav"), 0.4],
+  ...[100.58, 101.08, 101.58, 102.08].map((s): Ev => [s, TU("sfx-impact-03.wav"), 0.3]),
+  [102.58, TU("sfx-notification-18.wav"), 0.4],
   // balance
-  [101.0, "sfx-transition-02.wav", 0.5],
-  [101.58, TU("sfx-notification-18.wav"), 0.4],
+  [105.0, "sfx-transition-02.wav", 0.5],
+  [105.58, TU("sfx-notification-18.wav"), 0.4],
   // final
-  [104.5, "sfx-transition-02.wav", 0.35],
-  [105.58, TU("sfx-impact-05.wav"), 0.55],
+  [108.5, "sfx-transition-02.wav", 0.35],
+  [109.58, TU("sfx-impact-05.wav"), 0.55],
   // end card
-  [108.08, TU("sfx-impact-06.wav"), 0.4],
+  [112.08, TU("sfx-impact-06.wav"), 0.4],
 ];
 
-const B_AT = 56.08;
+const B_AT = 60.08;
 const B_TRIM = 32.07;
 
 const Sound: React.FC = () => (
@@ -137,11 +140,12 @@ const Sound: React.FC = () => (
         <Audio src={staticFile("lib/ambience-machine-02.wav")} volume={(f) => v * interpolate(f, [0, 15, fr(b - a) - 12, fr(b - a)], [0, 1, 1, 0], CL)} />
       </Sequence>
     ))}
-    {/* room tone under the two quiet beats */}
+    {/* room tone under the seam between the tracks and the two quiet beats */}
     {(
       [
-        [63.9, 66.4, 0.4],
-        [91.9, 96.3, 0.45],
+        [55.5, 60.4, 0.45],
+        [67.9, 70.4, 0.4],
+        [95.9, 100.3, 0.45],
       ] as [number, number, number][]
     ).map(([a, b, v]) => (
       <Sequence key={a} from={fr(a)} durationInFrames={fr(b - a)}>
@@ -156,7 +160,7 @@ const Sound: React.FC = () => (
   </>
 );
 
-const SCENES: [number, number, React.FC][] = [
+const SCENES: [number, number, React.FC, ("scale" | "up" | "none")?, ("scale" | "fade" | "none")?][] = [
   [10.08, 12.08, Title],
   [12.08, 18.08, Nvidia],
   [18.08, 26.08, Capex],
@@ -164,17 +168,17 @@ const SCENES: [number, number, React.FC][] = [
   [34.08, 42.08, Power],
   [42.08, 50.08, Task],
   [50.08, 56.08, Usage],
-  [56.08, 64.08, Jobless],
-  [64.08, 72.08, Who],
-  [72.08, 80.08, Finding],
-  [80.08, 84.08, Devs],
-  [84.08, 88.08, RamAgain],
-  [88.08, 92.08, Narrower],
-  [92.08, 96.08, Quiet],
-  [96.08, 100.08, Cohort],
-  [100.08, 104.08, Balance],
-  [104.08, 108.08, Final],
-  [108.08, END + 1, EndCard],
+  [56.08, 68.08, Jobless],
+  [68.08, 76.08, Who],
+  [76.08, 84.08, Finding],
+  [84.08, 88.08, Devs],
+  [88.08, 92.08, RamAgain],
+  [92.08, 96.08, Narrower],
+  [96.08, 100.08, Quiet, "scale", "none"],
+  [100.08, 104.08, Cohort, "none"],
+  [104.08, 108.08, Balance],
+  [108.08, 112.08, Final],
+  [112.08, END + 1, EndCard],
 ];
 
 export const FilmV2: React.FC = () => (
@@ -182,12 +186,12 @@ export const FilmV2: React.FC = () => (
     <Scene from={0} to={10.08} inMove="none">
       <Hook />
     </Scene>
-    {SCENES.map(([a, b, S]) => (
-      <Scene key={a} from={a} to={b} outMove={b > END ? "none" : "scale"}>
+    {SCENES.map(([a, b, S, inMove, outMove]) => (
+      <Scene key={a} from={a} to={b} inMove={inMove ?? "scale"} outMove={outMove ?? (b > END ? "none" : "scale")}>
         <S />
       </Scene>
     ))}
-    <Corner until={108.08} />
+    <Corner until={112.08} />
     <Sound />
   </AbsoluteFill>
 );

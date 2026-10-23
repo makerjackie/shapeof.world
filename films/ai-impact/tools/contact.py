@@ -1,7 +1,7 @@
 """Contact sheets at one frame a second, each tile stamped with its time (m:ss).
 
-Usage: ~/.venvs/shapeof-films/bin/python tools/contact.py <video.mp4> <out-prefix> [per-sheet=56] [cols=8] [width=320]
-Writes <out-prefix>-1.jpg, -2.jpg, …
+Usage: ~/.venvs/shapeof-films/bin/python tools/contact.py <video.mp4> <out-prefix> [per-sheet=half] [cols=8] [width=320]
+Writes <out-prefix>-1.jpg, -2.jpg, … (by default two sheets, one per half of the film)
 """
 
 import subprocess
@@ -16,13 +16,14 @@ FFMPEG = "/opt/homebrew/bin/ffmpeg"
 
 def main() -> None:
     video, prefix = sys.argv[1], sys.argv[2]
-    per = int(sys.argv[3]) if len(sys.argv) > 3 else 56
+    per = int(sys.argv[3]) if len(sys.argv) > 3 else 0
     cols = int(sys.argv[4]) if len(sys.argv) > 4 else 8
     width = int(sys.argv[5]) if len(sys.argv) > 5 else 320
     with tempfile.TemporaryDirectory() as tmp:
         # one frame at the middle of each second
         subprocess.run([FFMPEG, "-nostdin", "-hide_banner", "-loglevel", "error", "-i", video, "-vf", f"fps=1:start_time=0.5,scale={width}:-1", "-q:v", "3", f"{tmp}/f%04d.jpg"], check=True)
         frames = sorted(Path(tmp).glob("f*.jpg"))
+        per = per or (len(frames) + 1) // 2
         try:
             font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 18)
         except OSError:

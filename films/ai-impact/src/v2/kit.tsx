@@ -7,7 +7,7 @@ import { FONT, SERIF } from "../theme";
 // 0.08 + 2b (120 BPM). See SCRIPT.md for the scene and music map.
 
 export const FPS = 30;
-export const END = 112.0;
+export const END = 116.0;
 export const FRAMES = Math.round(END * FPS);
 export const bt = (n: number) => 0.08 + n * 0.5;
 export const barT = (b: number) => 0.08 + b * 2;
@@ -50,7 +50,7 @@ export const Scene: React.FC<{ from: number; to: number; children: React.ReactNo
   outMove = "scale",
 }) => {
   const t = useT();
-  if (t < from - 0.2 || t > to + 0.25) return null;
+  if (t < from - (inMove === "none" ? 0 : 0.2) || t > to + (outMove === "none" ? 0.05 : 0.25)) return null;
   const i = pr(t, from - 0.12, 0.3, EO);
   const o = outMove === "none" ? 0 : pr(t, to - 0.05, 0.25, EIO);
   const s = (inMove === "scale" ? lerp(1.04, 1, i) : 1) * (outMove === "scale" ? lerp(1, 0.97, o) : 1);

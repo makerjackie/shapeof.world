@@ -7,10 +7,10 @@ import { Backdrop, C, Cam, EBACK, EIO, EO, Glass, Label, lerp, Line, pr, Src, us
 
 const FLOOR = 930;
 
-// ── 1:24–1:28 · For you, 1: the RAM in your cart stays dear; Micron says 2027 and 2028 are tighter still. ──
+// ── 1:28–1:32 · For you, 1: the RAM in your cart stays dear; Micron says 2027 and 2028 are tighter still. ──
 export const RamAgain: React.FC = () => {
   const t = useT();
-  const card = pr(t, 84.08, 0.45, EBACK);
+  const card = pr(t, 88.08, 0.45, EBACK);
   return (
     <AbsoluteFill>
       <Backdrop glow={C.red} at={[30, 60]} strength={0.1} />
@@ -25,7 +25,7 @@ export const RamAgain: React.FC = () => {
         </Glass>
       </div>
       {["2027", "2028"].map((y, i) => {
-        const p = pr(t, 85.08 + i * 0.5, 0.5, EBACK);
+        const p = pr(t, 89.08 + i * 0.5, 0.5, EBACK);
         return (
           <div key={y} style={{ position: "absolute", left: 930 + i * 430, top: 440, width: 380, height: 300, perspective: 900 }}>
             <div style={{ position: "absolute", inset: 0, transform: `rotateY(${(1 - p) * 90}deg)`, opacity: p > 0 ? 1 : 0 }}>
@@ -39,17 +39,17 @@ export const RamAgain: React.FC = () => {
           </div>
         );
       })}
-      <div style={{ position: "absolute", left: 930, top: 790, width: 810, opacity: pr(t, 86.08, 0.4), fontFamily: FONT, fontSize: 28, lineHeight: 1.5, color: C.sub, fontWeight: 700 }}>
+      <div style={{ position: "absolute", left: 930, top: 790, width: 810, opacity: pr(t, 90.08, 0.4), fontFamily: FONT, fontSize: 28, lineHeight: 1.5, color: C.sub, fontWeight: 700 }}>
         "我们看不到供需什么时候能恢复平衡。"
         <div style={{ fontSize: 22, color: C.muted, fontWeight: 600 }}>—— 美光（美国内存大厂）管理层，2026 年 9 月</div>
       </div>
-      <Line at={84.08} text="明后年装电脑，内存还会贵。" kw="还会贵" kwAt={85.58} />
-      <Src at={84.4}>美光 2026 财年四季度财报讲稿：2027、2028 年供应比 2026 年"紧得多" · 公司自报，属预测</Src>
+      <Line at={88.08} text="明后年装电脑，内存还会贵。" kw="还会贵" kwAt={89.58} />
+      <Src at={88.4}>美光 2026 财年四季度财报讲稿：2027、2028 年供应比 2026 年"紧得多" · 公司自报，属预测</Src>
     </AbsoluteFill>
   );
 };
 
-// ── 1:28–1:32 · For you, 2: at this pace the door keeps narrowing. Three doors, each against the 2022 width: 2022,
+// ── 1:32–1:36 · For you, 2: at this pace the door keeps narrowing. Three doors, each against the 2022 width: 2022,
 // 2026 (−11%), 2028 (dashed: our straight-line extrapolation, about −16%). ──
 const YEARS = [
   { y: "2022 年底", k: 1, tag: "", dashed: false },
@@ -65,9 +65,9 @@ export const Narrower: React.FC = () => {
       <Backdrop glow={C.gold} at={[70, 70]} strength={0.09} />
       <div style={{ position: "absolute", left: 0, right: 0, top: FLOOR, height: 2, background: C.line }} />
       {YEARS.map((d, i) => {
-        const p = pr(t, 88.08 + i * 0.5, 0.45, EO);
+        const p = pr(t, 92.08 + i * 0.5, 0.45, EO);
         const left = 440 + i * 520 - NW / 2;
-        const w = NW * (1 - (1 - d.k) * pr(t, 88.33 + i * 0.5, 0.4, EBACK));
+        const w = NW * (1 - (1 - d.k) * pr(t, 92.33 + i * 0.5, 0.4, EBACK));
         return (
           <React.Fragment key={d.y}>
             <div style={{ position: "absolute", left, top: FLOOR - NH, opacity: p, transform: `translateY(${(1 - p) * 30}px)` }}>
@@ -94,46 +94,20 @@ export const Narrower: React.FC = () => {
             ) : null}
             <div style={{ position: "absolute", left: left + NW / 2, top: FLOOR + 18, transform: "translateX(-50%)", opacity: p, fontFamily: FONT, fontSize: 32, fontWeight: 900, color: d.dashed ? C.gold : C.fg, whiteSpace: "nowrap" }}>{d.y}</div>
             {d.tag ? (
-              <div style={{ position: "absolute", left: left + NW / 2, top: FLOOR - NH - 80, transform: "translateX(-50%)", opacity: pr(t, 88.58 + i * 0.5, 0.35), fontFamily: FONT, fontSize: 48, fontWeight: 900, color: d.dashed ? C.gold : C.red, whiteSpace: "nowrap" }}>{d.tag}</div>
+              <div style={{ position: "absolute", left: left + NW / 2, top: FLOOR - NH - 80, transform: "translateX(-50%)", opacity: pr(t, 92.58 + i * 0.5, 0.35), fontFamily: FONT, fontSize: 48, fontWeight: 900, color: d.dashed ? C.gold : C.red, whiteSpace: "nowrap" }}>{d.tag}</div>
             ) : null}
           </React.Fragment>
         );
       })}
-      <Line at={88.08} text="照这个速度，门还会更窄。" kw="更窄" kwAt={89.58} />
-      <Src at={88.4}>22–25 岁、AI 最容易做的岗位的雇佣人数 · 2028 年为本片推算：按 2022-11 → 2026-06 的速度直线外推，不是预测</Src>
+      <Line at={92.08} text="照这个速度，门还会更窄。" kw="更窄" kwAt={93.58} />
+      <Src at={92.4}>22–25 岁、AI 最容易做的岗位的雇佣人数 · 2028 年为本片推算：按 2022-11 → 2026-06 的速度直线外推，不是预测</Src>
     </AbsoluteFill>
   );
 };
 
-// ── 1:32–1:36 · Quiet. B's near-silent bar: a graduate in front of the narrow door, dust in the light. ──
-export const Quiet: React.FC = () => {
-  const t = useT();
-  const k = pr(t, 92.08, 4, EIO);
-  return (
-    <AbsoluteFill>
-      <Backdrop glow={C.gold} at={[50, 62]} strength={0.1} />
-      <Cam keys={[[92.08, 0, 0, 1], [96.2, 0, -20, 1.07]]}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: FLOOR, height: 2, background: C.line }} />
-        <div style={{ position: "absolute", left: 960 - 134, top: FLOOR - 420 }}>
-          <Door w={268} h={420} light={0.9} />
-        </div>
-        {Array.from({ length: 26 }).map((_, i) => {
-          const x0 = 960 + (random(`dq${i}`) - 0.5) * 360;
-          const y0 = FLOOR - random(`dy${i}`) * 520;
-          const drift = ((t - 92.08) * (8 + random(`dv${i}`) * 10)) % 120;
-          return <div key={i} style={{ position: "absolute", left: x0 + Math.sin(t * 0.8 + i) * 10, top: y0 - drift, width: 4, height: 4, borderRadius: 2, background: C.gold, opacity: 0.35 * (1 - drift / 120) * pr(t, 92.3, 0.6) }} />;
-        })}
-        <div style={{ position: "absolute", left: 960 - 75, top: FLOOR + 40 - 300 }}>
-          <Person h={300} color="#2a3038" head="#2a3038" cap={1} />
-        </div>
-      </Cam>
-      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 140, background: `linear-gradient(0deg, ${C.bg}, transparent)`, opacity: k }} />
-    </AbsoluteFill>
-  );
-};
-
-// ── 1:36–1:40 · Cohort: four years is one class of university students, and in their four years AI's task length went
-// from 4 minutes to 17 hours. ──
+// ── 1:36–1:40 · Quiet, on B's near-silent bar: a graduate in front of the narrow door, dust in the light. On the last
+// beat the camera pulls far back and the door and the graduate become the finish of a four-year track, which the
+// cohort scene then fills in (a match cut). ──
 const YEARS4 = [
   { n: "大一", y: "2022–23", who: "GPT-4", len: "4 分钟", m: 4 },
   { n: "大二", y: "2023–24", who: "GPT-4o", len: "7 分钟", m: 7 },
@@ -141,91 +115,142 @@ const YEARS4 = [
   { n: "大四", y: "2025–26", who: "Claude Mythos", len: "17 小时", m: 1045 },
 ];
 const TL = { x: 200, w: 1520, y: 560 };
-export const Cohort: React.FC = () => {
+const SEG = TL.w / 4;
+const GRAD = 0.4; // the 300 px graduate becomes 120 px at the end of the track
+// Camera key that puts the graduate's feet (960, FLOOR + 40) on the track's end (TL.x + TL.w, TL.y + 7).
+const PULL_KEY: [number, number, number, number] = [99.98, TL.x + TL.w - 960, TL.y + 7 - 540 - GRAD * (FLOOR + 40 - 540), GRAD];
+const DOOR_W = 268;
+const DOOR_H = 420;
+const mix = (a: string, b: string, k: number) => {
+  const c = (h: string, i: number) => parseInt(h.slice(1 + 2 * i, 3 + 2 * i), 16);
+  return `rgb(${[0, 1, 2].map((i) => Math.round(lerp(c(a, i), c(b, i), k))).join(",")})`;
+};
+
+// The empty track: grey bar, a tick and a label per school year.
+const Track: React.FC<{ o: number }> = ({ o }) => (
+  <div style={{ position: "absolute", inset: 0, opacity: o }}>
+    <div style={{ position: "absolute", left: TL.x, top: TL.y, width: TL.w, height: 14, borderRadius: 7, background: "rgba(255,255,255,0.08)" }} />
+    {YEARS4.map((s, i) => (
+      <React.Fragment key={s.n}>
+        <div style={{ position: "absolute", left: TL.x + i * SEG, top: TL.y - 6, width: 2, height: 26, background: C.line }} />
+        <div style={{ position: "absolute", left: TL.x + i * SEG + 20, top: TL.y - 74, fontFamily: FONT, whiteSpace: "nowrap" }}>
+          <span style={{ fontSize: 40, fontWeight: 900, color: C.fg }}>{s.n}</span>
+          <span style={{ fontSize: 22, fontWeight: 700, color: C.muted, marginLeft: 12 }}>{s.y}</span>
+        </div>
+      </React.Fragment>
+    ))}
+  </div>
+);
+
+export const Quiet: React.FC = () => {
   const t = useT();
-  const seg = TL.w / 4;
-  const prog = pr(t, 96.33, 2.25, EIO);
-  const cap = pr(t, 98.58, 0.5, EBACK);
+  const k = pr(t, 96.08, 3, EIO);
+  const pull = pr(t, 99.08, 0.9, EIO);
   return (
     <AbsoluteFill>
-      <Backdrop glow={C.cyan} at={[50, 60]} strength={0.1} />
-      <div style={{ position: "absolute", left: TL.x, top: TL.y, width: TL.w, height: 14, borderRadius: 7, background: "rgba(255,255,255,0.08)" }} />
-      <div style={{ position: "absolute", left: TL.x, top: TL.y, width: TL.w * prog, height: 14, borderRadius: 7, background: `linear-gradient(90deg, ${C.cyan}, ${C.gold})` }} />
-      {YEARS4.map((s, i) => {
-        const p = pr(t, 96.58 + i * 0.5, 0.4, EBACK);
-        const x = TL.x + i * seg;
-        const bar = (Math.log(s.m) / Math.log(1045)) * (seg - 60);
-        return (
-          <React.Fragment key={s.n}>
-            <div style={{ position: "absolute", left: x, top: TL.y - 6, width: 2, height: 26, background: C.line }} />
-            <div style={{ position: "absolute", left: x + 20, top: TL.y - 74, opacity: p, fontFamily: FONT, whiteSpace: "nowrap" }}>
-              <span style={{ fontSize: 40, fontWeight: 900, color: C.fg }}>{s.n}</span>
-              <span style={{ fontSize: 22, fontWeight: 700, color: C.muted, marginLeft: 12 }}>{s.y}</span>
-            </div>
-            <div style={{ position: "absolute", left: x + 20, top: TL.y + 50, opacity: p, transform: `translateY(${(1 - p) * 20}px)`, fontFamily: FONT, whiteSpace: "nowrap" }}>
-              <div style={{ fontSize: 22, fontWeight: 700, color: C.sub }}>AI 能独立干的活</div>
-              <div style={{ fontSize: 48, fontWeight: 900, color: i === 3 ? C.gold : C.cyan, marginTop: 4 }}>{s.len}</div>
-              <div style={{ width: Math.max(8, bar * p), height: 12, borderRadius: 6, background: i === 3 ? C.gold : C.cyan, marginTop: 10 }} />
-              <div style={{ fontSize: 20, fontWeight: 700, color: C.muted, marginTop: 10 }}>{s.who}</div>
-            </div>
-          </React.Fragment>
-        );
-      })}
-      <Label x={TL.x} y={TL.y - 140} size={24} color={C.muted} at={96.33}>
-        入学三个月，ChatGPT 发布
-      </Label>
-      <div style={{ position: "absolute", left: TL.x + TL.w, top: TL.y + 7, transform: `translate(-50%, -100%) scale(${cap})`, transformOrigin: "50% 100%", opacity: Math.min(1, cap * 2) }}>
-        <Person h={120} color="#8b95a3" cap={1} />
-      </div>
-      <Label x={TL.x + TL.w} y={TL.y + 50} anchor="right" size={26} color={C.gold} at={98.83} weight={900}>
-        毕业 · 2026
-      </Label>
-      <Line at={96.08} text="四年，正好是一届大学生。" kw="一届大学生" kwAt={97.58} />
-      <Src at={96.4}>METR：各学年里当时最强模型能有一半把握独立完成的任务长度（GPT-4 2023-03、GPT-4o 2024-05、o3 2025-04、Claude Mythos Preview 2026-04）</Src>
+      <Backdrop glow={C.gold} at={[50, 62]} strength={0.1} />
+      <Cam keys={[[96.08, 0, 0, 1], [99.08, 0, -20, 1.07], PULL_KEY]}>
+        <div style={{ position: "absolute", left: -2000, right: -2000, top: FLOOR, height: 2, background: C.line, opacity: 1 - pull }} />
+        <div style={{ position: "absolute", left: 960 - DOOR_W / 2, top: FLOOR - DOOR_H }}>
+          <Door w={DOOR_W} h={DOOR_H} light={0.9} />
+        </div>
+        {Array.from({ length: 26 }).map((_, i) => {
+          const x0 = 960 + (random(`dq${i}`) - 0.5) * 360;
+          const y0 = FLOOR - random(`dy${i}`) * 520;
+          const drift = ((t - 96.08) * (8 + random(`dv${i}`) * 10)) % 120;
+          return <div key={i} style={{ position: "absolute", left: x0 + Math.sin(t * 0.8 + i) * 10, top: y0 - drift, width: 4, height: 4, borderRadius: 2, background: C.gold, opacity: 0.35 * (1 - drift / 120) * pr(t, 96.3, 0.6) * (1 - pull) }} />;
+        })}
+        <div style={{ position: "absolute", left: 960 - 75, top: FLOOR + 40 - 300 }}>
+          <Person h={300} color={mix("#2a3038", "#8b95a3", pull)} head={mix("#2a3038", "#8b95a3", pull)} cap={1} />
+        </div>
+      </Cam>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 140, background: `linear-gradient(0deg, ${C.bg}, transparent)`, opacity: k * (1 - pull) }} />
+      <Track o={pr(t, 99.38, 0.6, EO)} />
     </AbsoluteFill>
   );
 };
 
-// ── 1:40–1:44 · Balance: the door narrowed, but the same AI hands the newcomer a two-day tool. ──
+// ── 1:40–1:44 · Cohort: four years is one class of university students. The track from the quiet scene fills from
+// 大一 to 大四, and under each year the task length AI could do on its own then: 4 minutes → 17 hours. ──
+export const Cohort: React.FC = () => {
+  const t = useT();
+  const prog = pr(t, 100.33, 2.25, EIO);
+  return (
+    <AbsoluteFill>
+      <Backdrop glow={C.gold} at={[50, 62]} strength={0.1} />
+      <Track o={1} />
+      <div style={{ position: "absolute", left: TL.x, top: TL.y, width: TL.w * prog, height: 14, borderRadius: 7, background: `linear-gradient(90deg, ${C.cyan}, ${C.gold})` }} />
+      {YEARS4.map((s, i) => {
+        const p = pr(t, 100.58 + i * 0.5, 0.4, EBACK);
+        const bar = (Math.log(s.m) / Math.log(1045)) * (SEG - 60);
+        return (
+          <div key={s.n} style={{ position: "absolute", left: TL.x + i * SEG + 20, top: TL.y + 50, opacity: Math.min(1, p * 2), transform: `translateY(${(1 - p) * 20}px)`, fontFamily: FONT, whiteSpace: "nowrap" }}>
+            <div style={{ fontSize: 22, fontWeight: 700, color: C.sub }}>AI 能独立干的活</div>
+            <div style={{ fontSize: 48, fontWeight: 900, color: i === 3 ? C.gold : C.cyan, marginTop: 4 }}>{s.len}</div>
+            <div style={{ width: Math.max(8, bar * Math.min(1, p)), height: 12, borderRadius: 6, background: i === 3 ? C.gold : C.cyan, marginTop: 10 }} />
+            <div style={{ fontSize: 20, fontWeight: 700, color: C.muted, marginTop: 10 }}>{s.who}</div>
+          </div>
+        );
+      })}
+      <Label x={TL.x} y={TL.y - 140} size={24} color={C.muted} at={100.33}>
+        入学三个月，ChatGPT 发布
+      </Label>
+      {/* the finish: the same narrow door and graduate the quiet scene shrank to */}
+      <div style={{ position: "absolute", left: TL.x + TL.w - (DOOR_W * GRAD) / 2, top: TL.y + 7 - GRAD * (FLOOR + 40 - (FLOOR - DOOR_H)) }}>
+        <Door w={DOOR_W * GRAD} h={DOOR_H * GRAD} light={0.9} />
+      </div>
+      <div style={{ position: "absolute", left: TL.x + TL.w, top: TL.y + 7, transform: "translate(-50%, -100%)" }}>
+        <Person h={120} color="#8b95a3" cap={1} />
+      </div>
+      <Label x={TL.x + TL.w} y={TL.y + 50} anchor="right" size={26} color={C.gold} at={102.58} weight={900}>
+        毕业 · 2026
+      </Label>
+      <Line at={100.08} text="四年，正好是一届大学生。" kw="一届大学生" kwAt={101.58} />
+      <Src at={100.4}>METR：各学年里当时最强模型能有一半把握独立完成的任务长度（GPT-4 2023-03、GPT-4o 2024-05、o3 2025-04、Claude Mythos Preview 2026-04）</Src>
+    </AbsoluteFill>
+  );
+};
+
+// ── 1:44–1:48 · Balance: the door narrowed, but the same AI hands the newcomer a two-day tool. ──
 export const Balance: React.FC = () => {
   const t = useT();
-  const fly = pr(t, 101.08, 0.7, EIO);
-  const glow = pr(t, 101.58, 0.4, EO);
+  const fly = pr(t, 105.08, 0.7, EIO);
+  const glow = pr(t, 105.58, 0.4, EO);
   const bx = lerp(1700, 1050, fly);
   const by = lerp(420, 700, fly);
   return (
     <AbsoluteFill>
       <Backdrop glow={glow > 0.5 ? C.cyan : C.gold} at={[55, 65]} strength={0.12} />
       <div style={{ position: "absolute", left: 0, right: 0, top: FLOOR, height: 2, background: C.line }} />
-      <div style={{ position: "absolute", left: 560 - 134, top: FLOOR - 420, opacity: pr(t, 100.08, 0.3) }}>
+      <div style={{ position: "absolute", left: 560 - 134, top: FLOOR - 420, opacity: pr(t, 104.08, 0.3) }}>
         <Door w={268} h={420} light={0.8} />
       </div>
-      <Label x={560} y={FLOOR - 490} anchor="center" size={30} color={C.red} at={100.33} weight={900}>
+      <Label x={560} y={FLOOR - 490} anchor="center" size={30} color={C.red} at={104.33} weight={900}>
         门：−11%
       </Label>
       <div style={{ position: "absolute", left: 900, top: FLOOR - 300 }}>
         <Person h={300} color="#8b95a3" cap={1} tool={0} />
       </div>
       {/* the tool: the 17-hour bar from the task scene */}
-      <div style={{ position: "absolute", left: bx, top: by, transform: `rotate(${(1 - fly) * -12}deg)`, opacity: pr(t, 100.58, 0.3) }}>
+      <div style={{ position: "absolute", left: bx, top: by, transform: `rotate(${(1 - fly) * -12}deg)`, opacity: pr(t, 104.58, 0.3) }}>
         <div style={{ width: 360, height: 54, borderRadius: 12, background: `linear-gradient(90deg, ${C.cyan}cc, ${C.cyan})`, boxShadow: `0 0 ${20 + 40 * glow}px ${C.cyan}`, display: "flex", alignItems: "center", paddingLeft: 18, fontFamily: FONT, fontSize: 26, fontWeight: 900, color: C.ink, whiteSpace: "nowrap" }}>
           AI · 能独立干 17 小时的活
         </div>
       </div>
-      <Label x={1240} y={FLOOR - 470} anchor="center" size={30} color={C.cyan} at={101.83} weight={900}>
+      <Label x={1240} y={FLOOR - 470} anchor="center" size={30} color={C.cyan} at={105.83} weight={900}>
         手里：一个能干两天活的帮手
       </Label>
-      <Line at={100.08} text="门窄了，新人的工具也强了。" kw="工具也强了" kwAt={101.58} />
+      <Line at={104.08} text="门窄了，新人的工具也强了。" kw="工具也强了" kwAt={105.58} />
     </AbsoluteFill>
   );
 };
 
-// ── 1:44–1:48 · The last line, centred: AI changed the starting line first. A gold start line draws under the
+// ── 1:48–1:52 · The last line, centred: AI changed the starting line first. A gold start line draws under the
 // newcomer. ──
 export const Final: React.FC = () => {
   const t = useT();
-  const line = pr(t, 104.58, 0.9, EIO);
-  const step = pr(t, 105.58, 0.5, EBACK);
+  const line = pr(t, 108.58, 0.9, EIO);
+  const step = pr(t, 109.58, 0.5, EBACK);
   return (
     <AbsoluteFill>
       <Backdrop glow={C.gold} at={[50, 70]} strength={0.12 + 0.08 * line} />
@@ -234,20 +259,20 @@ export const Final: React.FC = () => {
       <div style={{ position: "absolute", left: 960 - 60, top: lerp(860, 820, step) - 240 }}>
         <Person h={240} color="#8b95a3" cap={1} tool={1} />
       </div>
-      <Label x={960} y={840} anchor="center" size={26} color={C.gold} at={105.83} weight={900}>
+      <Label x={960} y={840} anchor="center" size={26} color={C.gold} at={109.83} weight={900}>
         起点
       </Label>
-      <Line at={104.08} center y={380} size={120} text="AI 先改变的，是起点。" kw="起点" kwAt={105.58} />
+      <Line at={108.08} center y={380} size={120} text="AI 先改变的，是起点。" kw="起点" kwAt={109.58} />
     </AbsoluteFill>
   );
 };
 
-// ── 1:48–1:52 · End card: the ball, 世界的形状, MakerJackie. ──
+// ── 1:52–1:56 · End card: the ball, 世界的形状, MakerJackie. ──
 export const EndCard: React.FC = () => {
   const t = useT();
-  const mark = pr(t, 108.08, 0.8, EBACK);
-  const name = pr(t, 108.58, 0.7, EO);
-  const by = pr(t, 109.33, 0.6, EO);
+  const mark = pr(t, 112.08, 0.8, EBACK);
+  const name = pr(t, 112.58, 0.7, EO);
+  const by = pr(t, 113.33, 0.6, EO);
   return (
     <AbsoluteFill>
       <Backdrop glow={C.gold} strength={0.08 * mark} />
