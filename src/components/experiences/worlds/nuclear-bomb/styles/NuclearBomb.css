@@ -39,7 +39,7 @@
 .nb-labels { position: absolute; z-index: 4; inset: 0; pointer-events: none; }
 .nb-leaders { position: absolute; inset: 0; overflow: visible; }
 .nb-leaders path { fill: none; stroke: rgba(199,188,166,.3); stroke-width: .8; }
-.nb-leaders circle { fill: #d4b072; opacity: .8; }
+.nb-leaders circle { fill: #d4b072; stroke: rgba(8,8,9,.85); stroke-width: 1.4; paint-order: stroke; opacity: .95; }
 .nb-leaders .is-selected path { stroke: var(--nb-brass); }
 .nb-part-label { position: absolute; display: flex; align-items: center; gap: 10px; width: 158px; height: 34px; padding: 0; border: 0; background: transparent; pointer-events: auto; text-shadow: 0 2px 8px #000; transition: opacity 160ms ease; }
 .nb-part-label.is-right { flex-direction: row-reverse; }

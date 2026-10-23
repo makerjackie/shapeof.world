@@ -15,7 +15,7 @@ import {sampleTimeline, samplePresentation} from './model'
 import {createMicroScene, getMicroFraming} from './micro-scene'
 import {createBackdrop, createExhibition} from './exhibition'
 
-export type SceneAnchor = {id: string; x: number; y: number; visible: boolean; occluded?: boolean; side?: 'left' | 'right'; bounds?: {left: number; right: number; top: number; bottom: number}}
+export type SceneAnchor = {id: string; x: number; y: number; visible: boolean; occluded?: boolean; side?: 'left' | 'right'; bounds?: {left: number; right: number; top: number; bottom: number}; avoid?: {left: number; right: number; top: number; bottom: number}}
 type Props = {
   active?: boolean
   guideCamera?: boolean
@@ -270,7 +270,7 @@ export function NuclearScene(props: Props) {
     const backdrop = createBackdrop()
     scene.background = backdrop
     const camera = new T.PerspectiveCamera(36, 1, 0.05, 120)
-    const macroPosition = new T.Vector3(2.05, 5.7, 18.86)
+    const macroPosition = new T.Vector3(0.4, 7.2, 18.6)
     const macroTarget = new T.Vector3(-.6, -.4, 0)
     camera.position.copy(macroPosition)
     const controls = new OrbitControls(camera, renderer.domElement)
@@ -433,7 +433,8 @@ export function NuclearScene(props: Props) {
     const leaders = new T.Group()
     const leaderLines = new Map<string, T.Line>()
     for (const part of PARTS) {
-      const line = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(), new T.Vector3(), new T.Vector3()]), new T.LineBasicMaterial({color: '#c7bca6', transparent: true, opacity: .3, depthTest: true, depthWrite: false}))
+      const line = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(), new T.Vector3(), new T.Vector3()]), new T.LineBasicMaterial({color: '#c7bca6', transparent: true, opacity: .3, depthTest: false, depthWrite: false}))
+      line.renderOrder = 20
       leaders.add(line)
       leaderLines.set(part.id, line)
     }
@@ -474,7 +475,7 @@ export function NuclearScene(props: Props) {
       } else {
         controls.update(dt)
         if (oscillating) {
-          const azimuth = T.MathUtils.degToRad(8)
+          const azimuth = T.MathUtils.degToRad(3)
           const swing = Math.sin((now - oscillationStart) / 40000 * Math.PI * 2) * Math.PI / 6
           const desired = homePosition.clone().sub(macroTarget)
           const horizontal = Math.hypot(desired.x, desired.z)
@@ -558,6 +559,21 @@ export function NuclearScene(props: Props) {
             bounds.bottom = Math.max(bounds.bottom, py)
           }
         })
+        // Screen box of the tail shroud: leader lines must not run behind it.
+        const tailBox = {left: width, right: 0, top: height, bottom: 0}
+        for (const mesh of assembly.tailParts) {
+          const vertices = mesh.geometry.getAttribute('position')
+          for (let index = 0; index < vertices.count; index += Math.max(1, Math.floor(vertices.count / 80))) {
+            projected.fromBufferAttribute(vertices, index).applyMatrix4(mesh.matrixWorld).project(camera)
+            const px = (projected.x + 1) * width / 2
+            const py = (1 - projected.y) * height / 2
+            tailBox.left = Math.min(tailBox.left, px)
+            tailBox.right = Math.max(tailBox.right, px)
+            tailBox.top = Math.min(tailBox.top, py)
+            tailBox.bottom = Math.max(tailBox.bottom, py)
+          }
+        }
+        const hasTail = tailBox.right > tailBox.left
         const nextAnchors = PARTS.map((part) => {
           const side = part.order <= 3 ? 'left' as const : 'right' as const
           const candidates: {point: T.Vector3; screen: T.Vector3; occluded: boolean; score: number}[] = []
@@ -579,14 +595,16 @@ export function NuclearScene(props: Props) {
                 const occluded = angle === 0 || Boolean(hit && hit.distance < distance - .035)
                 const screen = point.clone().project(camera)
                 const x = (screen.x + 1) * width / 2
-                const score = (occluded ? 10000 : 0) + (part.order <= 3 && sign < 0 ? 800 : 0) + (side === 'left' ? x : width - x) + Math.abs(screen.y) * 25
+                const y = (1 - screen.y) * height / 2
+                const tailInPath = hasTail && (side === 'left' ? tailBox.left < x : tailBox.right > x) && y > tailBox.top - 24 && y < tailBox.bottom + 24
+                const score = (occluded ? 10000 : 0) + (tailInPath ? 3000 : 0) + (part.order <= 3 && sign < 0 ? 800 : 0) + (side === 'left' ? x : width - x) + Math.abs(screen.y) * 25
                 candidates.push({point, screen, occluded, score})
               }
             }
           }
           const anchor = candidates.sort((a, b) => a.score - b.score)[0]
           anchorDepths.set(part.id, anchor.screen.z)
-          return {id: part.id, x: (anchor.screen.x + 1) / 2 * width, y: (1 - anchor.screen.y) / 2 * height, visible: anchor.screen.z < 1, occluded: anchor.occluded, side, bounds}
+          return {id: part.id, x: (anchor.screen.x + 1) / 2 * width, y: (1 - anchor.screen.y) / 2 * height, visible: anchor.screen.z < 1, occluded: anchor.occluded, side, bounds, avoid: hasTail ? tailBox : undefined}
         })
         const snapshot = JSON.stringify(nextAnchors)
         if (snapshot !== lastAnchorSnapshot) {
