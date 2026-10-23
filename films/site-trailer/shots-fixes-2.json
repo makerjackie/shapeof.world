@@ -1,0 +1,581 @@
+{
+  "version": 1,
+  "notes": "Recorder 2 (index%3===1) shots, full objects; overrides shots.json entries with the same id.",
+  "shots": [
+    {
+      "id": "black-hole-flyby",
+      "worldId": "black-hole-flyby",
+      "priority": 2,
+      "duration": 6,
+      "settle": 6000,
+      "mode": "realtime",
+      "steps": [
+        {
+          "clickText": "^掠过$"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "why": "The flyby itself: the sky warps and swings past the black hole at closest approach.",
+      "label": {
+        "zh": "掠过黑洞 · 星空在弯",
+        "en": "BLACK-HOLE FLYBY · THE SKY BENDS"
+      }
+    },
+    {
+      "id": "aurora-ground",
+      "worldId": "aurora",
+      "priority": 1,
+      "duration": 5,
+      "settle": 6000,
+      "steps": [
+        {
+          "range": {
+            "sel": "input[aria-label=\"太阳风强度 Kp 指数\"]",
+            "value": 9
+          }
+        },
+        {
+          "clickText": "^极地$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "why": "The auroral oval glowing green-red around the pole at Kp 9.",
+      "label": {
+        "zh": "极光 · 太阳风撞上磁场",
+        "en": "AURORA · SOLAR WIND MEETS THE FIELD"
+      },
+      "fix2": "地面 view is a blurry green smear with streaks; 极地 view at Kp 9 shows the auroral oval ringing the Earth"
+    },
+    {
+      "id": "solar-system-orbits",
+      "worldId": "solar-system",
+      "priority": 3,
+      "duration": 5,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^小天体带$"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.5,
+            0.55
+          ],
+          "to": [
+            0.5,
+            0.42
+          ],
+          "dur": 5
+        }
+      ],
+      "why": "Orbits plus the asteroid belt, camera tilting from top-down to edge-on.",
+      "label": {
+        "zh": "太阳系有多空旷",
+        "en": "HOW EMPTY IS THE SOLAR SYSTEM"
+      }
+    },
+    {
+      "id": "eclipse-orbit",
+      "worldId": "eclipses",
+      "priority": 3,
+      "duration": 5,
+      "settle": 6000,
+      "steps": [
+        {
+          "eval": "window.__eclipsesFilm?.prepare('orbit')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "why": "The Moon's shadow sliding across Earth seen from orbit.",
+      "label": {
+        "zh": "月影 · 扫过地球",
+        "en": "MOON'S SHADOW · SWEEPING THE EARTH"
+      }
+    },
+    {
+      "id": "three-body-gallery",
+      "worldId": "three-body",
+      "priority": 2,
+      "duration": 5,
+      "settle": 7000,
+      "why": "A whole gallery of periodic three-body orbits dancing at once: flowers, figure-eights, butterflies.",
+      "label": {
+        "zh": "三体 · 跳出花朵和蝴蝶",
+        "en": "THREE-BODY · FLOWERS AND BUTTERFLIES"
+      },
+      "ss": 2,
+      "crop": [
+        0.06,
+        0.12,
+        0.86,
+        0.86
+      ],
+      "fix2": "orbits were small; ss2 punch-in"
+    },
+    {
+      "id": "rainbow-raypath",
+      "worldId": "rainbow",
+      "priority": 3,
+      "duration": 5,
+      "settle": 5000,
+      "steps": [
+        {
+          "clickText": "^主虹光路$"
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "why": "Light path through a single raindrop splitting into a spectrum.",
+      "label": {
+        "zh": "一滴雨 · 把白光拆开",
+        "en": "ONE RAINDROP · SPLITTING WHITE LIGHT"
+      }
+    },
+    {
+      "id": "radio-sweep",
+      "worldId": "radio-spectrum",
+      "priority": 2,
+      "duration": 5,
+      "settle": 5000,
+      "actions": [
+        {
+          "at": 0,
+          "type": "range",
+          "sel": "input[aria-label=\"调到哪个频率\"]",
+          "from": 5,
+          "to": 14,
+          "dur": 5,
+          "ease": "inout"
+        }
+      ],
+      "why": "Tuning across the spectrum: AM, FM, WiFi, 5G bars lighting up as the wave shortens.",
+      "label": {
+        "zh": "电磁波 · 几十种穿过你的身体",
+        "en": "RADIO SPECTRUM · DOZENS PASS THROUGH YOU"
+      }
+    },
+    {
+      "id": "attractor-dadras",
+      "worldId": "strange-attractors",
+      "priority": 3,
+      "duration": 5,
+      "settle": 4000,
+      "ss": 2,
+      "crop": [
+        0.2,
+        0.1,
+        0.6,
+        0.6
+      ],
+      "steps": [
+        {
+          "clickText": "^达德拉斯$"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "why": "Dadras attractor: twin lobes of silky threads.",
+      "label": {
+        "zh": "三行方程 · 画出这团丝",
+        "en": "THREE EQUATIONS · ONE TANGLE OF SILK"
+      }
+    },
+    {
+      "id": "flame-zero-g",
+      "worldId": "fire-gravity",
+      "priority": 1,
+      "duration": 5,
+      "settle": 5000,
+      "ss": 2,
+      "crop": [
+        0.3,
+        0.12,
+        0.4,
+        0.4
+      ],
+      "actions": [
+        {
+          "at": 0.5,
+          "type": "range",
+          "sel": "#fire-gravity-input",
+          "from": 1,
+          "to": 0,
+          "dur": 3.5,
+          "ease": "inout"
+        }
+      ],
+      "why": "A candle flame collapsing from a teardrop into a blue sphere as gravity is switched off.",
+      "label": {
+        "zh": "火焰 · 关掉重力会变圆",
+        "en": "FLAME · ROUND WITHOUT GRAVITY"
+      },
+      "fix2": "selector was .fire-gravity-input (class); the slider is #fire-gravity-input, so gravity never changed"
+    },
+    {
+      "id": "cow-cubes",
+      "worldId": "cow-anatomy",
+      "priority": 1,
+      "duration": 6,
+      "settle": 5000,
+      "steps": [
+        {
+          "clickText": "^不猜，直接切$"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "why": "A cow made of 600 one-kilo cubes being cut apart into cuts of meat.",
+      "label": {
+        "zh": "一头牛 · 600 个方块",
+        "en": "ONE COW · 600 CUBES"
+      },
+      "actions": [
+        {
+          "at": 0.3,
+          "type": "drag",
+          "from": [
+            0.22,
+            0.12
+          ],
+          "to": [
+            0.72,
+            0.12
+          ],
+          "dur": 4,
+          "ease": "inout"
+        }
+      ],
+      "fix2": "no cut happened; added a knife drag across the cow (向右拖刀)"
+    },
+    {
+      "id": "fly-neurons",
+      "worldId": "flybody",
+      "priority": 2,
+      "duration": 5,
+      "settle": 7000,
+      "steps": [
+        {
+          "clickText": "^自由探索$"
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "clickText": "^进入神经网络$"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.45,
+            0.5
+          ],
+          "to": [
+            0.57,
+            0.5
+          ],
+          "dur": 5,
+          "ease": "linear"
+        }
+      ],
+      "why": "A fruit fly's connectome glowing inside its body.",
+      "label": {
+        "zh": "果蝇 · 一个大脑的全部连线",
+        "en": "FRUIT FLY · AN ENTIRE BRAIN'S WIRING"
+      },
+      "fix2": "after 自由探索 the buttons are renamed; 只看神经网络 no longer exists, 进入神经网络 does"
+    },
+    {
+      "id": "weather-front",
+      "worldId": "frontscope",
+      "priority": 2,
+      "duration": 5,
+      "settle": 8000,
+      "steps": [
+        {
+          "clickText": "^冷锋"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.44,
+            0.5
+          ],
+          "to": [
+            0.56,
+            0.5
+          ],
+          "dur": 5,
+          "ease": "linear"
+        }
+      ],
+      "why": "Volumetric storm cloud towering over a diorama landscape as a cold front advances.",
+      "label": {
+        "zh": "冷锋 · 天气为什么会变",
+        "en": "COLD FRONT · WHY THE WEATHER TURNS"
+      }
+    },
+    {
+      "id": "chokepoint-suez",
+      "worldId": "trade-chokepoints",
+      "priority": 2,
+      "duration": 6,
+      "settle": 5000,
+      "actions": [
+        {
+          "at": 0.6,
+          "type": "clickText",
+          "text": "^苏伊士$"
+        }
+      ],
+      "why": "Ship streams rerouting around Africa the moment Suez closes.",
+      "label": {
+        "zh": "关掉苏伊士 · 船绕非洲",
+        "en": "CLOSE SUEZ · SHIPS ROUND AFRICA"
+      }
+    },
+    {
+      "id": "fourier-epicycles",
+      "worldId": "fourier",
+      "priority": 2,
+      "duration": 5,
+      "settle": 4000,
+      "ss": 2,
+      "crop": [
+        0.15,
+        0.15,
+        0.7,
+        0.7
+      ],
+      "steps": [
+        {
+          "clickText": "^方波$"
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "range",
+          "sel": "input[aria-label=\"谐波项数\"]",
+          "from": 1,
+          "to": 32,
+          "dur": 4.5,
+          "step": 1
+        }
+      ],
+      "why": "Spinning circles adding up until a smooth sine becomes a crisp square wave.",
+      "label": {
+        "zh": "傅里叶 · 旋转的圆画出一切",
+        "en": "FOURIER · CIRCLES DRAW ANYTHING"
+      }
+    },
+    {
+      "id": "complex-exp",
+      "worldId": "complex-mapping",
+      "priority": 2,
+      "duration": 5,
+      "settle": 5000,
+      "ss": 2,
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.45,
+            0.5
+          ],
+          "to": [
+            0.57,
+            0.5
+          ],
+          "dur": 5,
+          "ease": "linear"
+        }
+      ],
+      "why": "Rainbow wireframe surface of a complex function rising out of the plane.",
+      "label": {
+        "zh": "复变函数 · 正弦波长高了",
+        "en": "COMPLEX FUNCTIONS · THE SINE WAVE GROWS"
+      },
+      "steps": [
+        {
+          "wheel": {
+            "at": [
+              0.5,
+              0.5
+            ],
+            "dy": -200,
+            "n": 4
+          }
+        },
+        {
+          "wait": 1000
+        }
+      ],
+      "fix2": "subject was small; zoom in with the wheel first"
+    },
+    {
+      "id": "cnn-layers",
+      "worldId": "cnn-vision",
+      "priority": 2,
+      "duration": 5,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^全景$"
+        },
+        {
+          "clickText": "^7$"
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.42,
+            0.5
+          ],
+          "to": [
+            0.56,
+            0.47
+          ],
+          "dur": 5,
+          "ease": "linear"
+        }
+      ],
+      "why": "A handwritten 7 flowing through convolution layers as glowing 3D feature maps.",
+      "label": {
+        "zh": "卷积网络 · 从笔画认出数字",
+        "en": "CNN · READING A HANDWRITTEN DIGIT"
+      },
+      "ss": 2,
+      "crop": [
+        0.12,
+        0.18,
+        0.64,
+        0.64
+      ],
+      "fix2": "layers were small and dim; ss2 punch-in"
+    },
+    {
+      "id": "money-banknote",
+      "worldId": "follow-the-money",
+      "priority": 3,
+      "duration": 5,
+      "settle": 5000,
+      "actions": [
+        {
+          "at": 0.4,
+          "type": "clickText",
+          "text": "^花一张$"
+        }
+      ],
+      "why": "A 100-yuan note splitting into where the money actually goes.",
+      "label": {
+        "zh": "一张钞票 · 去了哪里",
+        "en": "ONE BANKNOTE · WHERE IT GOES"
+      }
+    },
+    {
+      "id": "starry-night-orbit",
+      "worldId": "starry-night",
+      "priority": 2,
+      "duration": 5,
+      "settle": 8000,
+      "query": {
+        "capture": null
+      },
+      "steps": [
+        {
+          "clickText": "^开始飞行"
+        },
+        {
+          "wait": 4000
+        }
+      ],
+      "actions": [],
+      "why": "Looking around the painted village under the brushstroke sky.",
+      "label": {
+        "zh": "星月夜 · 笔触变成天空",
+        "en": "THE STARRY NIGHT · BRUSHSTROKES BECOME SKY"
+      },
+      "canvasOnly": true,
+      "fix2": "free-look drag ended staring at a wooden wall; the flight (开始飞行) glides down the street, under the bridge, up into the brushstroke sky"
+    },
+    {
+      "id": "ink-landscape-flight",
+      "worldId": "ink-landscape",
+      "priority": 1,
+      "duration": 6,
+      "settle": 6000,
+      "actions": [
+        {
+          "at": 0,
+          "type": "range",
+          "sel": "input[aria-label=\"飞行进度\"]",
+          "from": 9,
+          "to": 13,
+          "dur": 6
+        }
+      ],
+      "why": "Flying over a Song-dynasty ink painting in 3D: boats, bridges, misty peaks.",
+      "label": {
+        "zh": "水墨山水 · 飞进留白",
+        "en": "INK LANDSCAPE · INTO THE EMPTY SPACE"
+      },
+      "fix2": "first full run failed with a transient ffmpeg exit 234 (zero frames); steps unchanged, re-recorded"
+    },
+    {
+      "id": "equation-mobius",
+      "worldId": "equation-wormhole",
+      "priority": 2,
+      "duration": 5,
+      "settle": 5000,
+      "steps": [
+        {
+          "clickText": "^隧道$"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "why": "A vortex of hand-written equations spiralling into a tunnel.",
+      "label": {
+        "zh": "公式隧道 · 方程卷成漩涡",
+        "en": "EQUATION TUNNEL · FORMULAS SPIRAL IN"
+      },
+      "fix2": "the Mobius strip is a thin, nearly black ring (luma 5); the 隧道 view fills the frame with an equation vortex. Label changed accordingly"
+    }
+  ]
+}
