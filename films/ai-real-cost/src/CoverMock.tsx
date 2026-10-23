@@ -2,7 +2,7 @@ import { loadFont as loadSerif } from "@remotion/google-fonts/NotoSerifSC";
 import React from "react";
 import { AbsoluteFill, Img, staticFile } from "remotion";
 import { Spark, Whale } from "./art";
-import { FONT, K } from "./theme3";
+import { FONT, K } from "./theme";
 
 // Series cover template (STYLE.md): paper brand bar, one plain sentence that says what the film is about,
 // set huge so it reads as a feed thumbnail (B站 card ≈ 180 pt wide, 抖音 grid ≈ 130 pt), and the characters.
@@ -50,7 +50,7 @@ const BrandBar: React.FC<{ h: number }> = ({ h }) => (
     }}
   >
     <div style={{ display: "flex", alignItems: "center", gap: h * 0.22 }}>
-      <Img src={staticFile("mark-512.png")} style={{ width: h * 0.74, height: h * 0.74, borderRadius: "50%" }} />
+      <Img src={staticFile("mark-disc.png")} style={{ width: h * 0.74, height: h * 0.74}} />
       <span style={{ fontSize: h * 0.48, fontWeight: 700, letterSpacing: 2 }}>世界的形状</span>
     </div>
     <span style={{ fontSize: h * 0.32, fontWeight: 700, letterSpacing: "0.4em", opacity: 0.7 }}>看见世界如何运行</span>
@@ -87,11 +87,11 @@ export const CoverMockG: React.FC<Props> = ({ tall }) => (
       )}
     </div>
     <div style={{ position: "absolute", left: tall ? 50 : 120, bottom: tall ? 60 : 50 }}>
-      <Spark size={tall ? 300 : 300} mood="smug" />
+      <Spark t={0} size={tall ? 300 : 300} mood="smug" />
     </div>
     <div style={{ position: "absolute", right: tall ? 30 : 110, bottom: tall ? 40 : 30 }}>
       <div style={{ position: "relative" }}>
-        <Whale size={tall ? 400 : 420} mood="shock" />
+        <Whale t={0} size={tall ? 400 : 420} mood="shock" />
         <div style={{ position: "absolute", top: tall ? -90 : -100, left: tall ? 90 : 100, fontFamily: FONT, fontSize: tall ? 120 : 130, fontWeight: 900, color: S.gold }}>？！</div>
       </div>
     </div>

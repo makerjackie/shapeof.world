@@ -1,286 +1,138 @@
 import React from "react";
-import { AbsoluteFill, Img, interpolate, random, staticFile } from "remotion";
-import { Spark, Whale } from "../art";
-import { useBeatFrame } from "../kit";
-import { FPB } from "../timing";
-import { At, Chroma, CL, EBACK, EIO, EO, In, Kinetic, lerp, Note, progAt, Shockwave } from "../fx";
-import { FONT, K, MONO } from "../theme3";
+import { AbsoluteFill, Img, random, staticFile } from "remotion";
+import { Hourglass, Receipt, RLine } from "../art";
+import { EBACK, EIN, EIO, EO, keys, lerp, pr, useT } from "../kit";
+import { FONT, K, SERIF } from "../theme";
+import { CHORD, FILM_S } from "../timing";
 
-const TIME = "#B98CFF";
+// ───────── 12. The answer: the formula receipt comes back with its fourth line printed, biggest of all ─────────
 
-// ───────── TimeCost: the formula's missing, most expensive term ─────────
+const FULL: RLine[] = [
+  { k: "head", text: "AI 的真实价格", sub: "单价 × 用量 ÷ 包月" },
+  { k: "row", l: "单价 · 用量 · 包月", r: "token 钱", big: true },
+  { k: "bar", l: "+ 你的时间", r: "最贵的一项", color: K.time, h: 260 },
+];
 
-const TILES = ["单价", "×", "用量", "÷", "包月倍数"];
-
-export const TimeCost: React.FC = () => {
-  const frame = useBeatFrame();
-  const W = 1400;
-  const tokenShare = 2.25 / 17.4;
-  const a = progAt(frame, 5, 0.8, EO);
-  const b = progAt(frame, 5.8, 2.2, EIO);
-  const slam = progAt(frame, 3, 0.5, EBACK);
+export const Answer: React.FC = () => {
+  const t = useT();
+  const c0 = CHORD[0];
+  const enter = pr(t, c0 - 0.3, 0.7, EO);
+  const exit = pr(t, CHORD[1] - 0.45, 0.6, EIN);
+  const printed = pr(t, c0 - 0.1, 0.15, (z) => z) + pr(t, c0 + 0.1, 0.2, (z) => z) + pr(t, c0 + 0.45, 1.3, (z) => z);
+  const head = pr(t, c0 + 0.6, 0.7, EBACK);
+  const sub = pr(t, c0 + 1.5, 0.6, EO);
+  const cam = keys(t, [[c0, 1.05], [CHORD[1], 0.98]], EIO);
   return (
-    <AbsoluteFill>
-      <At x={960} y={170} center>
-        <Kinetic at={0} size={80} parts={["公式里，还漏了", { t: "最贵的一项", c: TIME }]} />
-      </At>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 290, display: "flex", justifyContent: "center", alignItems: "center", gap: 22, fontFamily: FONT }}>
-        {TILES.map((t, i) => {
-          const p = progAt(frame, 1.2 + i * 0.2, 0.6);
-          const op = t === "×" || t === "÷";
-          return (
-            <div
-              key={i}
-              style={{
-                opacity: p * 0.55,
-                fontSize: op ? 56 : 48,
-                fontWeight: 900,
-                color: K.muted,
-                padding: op ? 0 : "10px 26px",
-                borderRadius: 16,
-                border: op ? undefined : "2px solid rgba(255,255,255,0.18)",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {t}
-            </div>
-          );
-        })}
-        <div style={{ fontSize: 56, fontWeight: 900, color: TIME, opacity: slam }}>+</div>
-        <div
-          style={{
-            opacity: Math.min(1, slam * 2),
-            transform: `scale(${1 + (1 - slam) * 1.2})`,
-            fontSize: 72,
-            fontWeight: 900,
-            color: TIME,
-            padding: "14px 34px",
-            borderRadius: 20,
-            border: `4px solid ${TIME}`,
-            background: `${TIME}22`,
-            boxShadow: `0 0 60px ${TIME}66`,
-            whiteSpace: "nowrap",
-          }}
-        >
-          你的时间
+    <AbsoluteFill style={{ opacity: Math.min(enter, 1 - exit), transform: `scale(${cam})`, transformOrigin: "960px 600px" }}>
+      <div style={{ position: "absolute", left: 110, top: 930 }}>
+        <Receipt lines={FULL} printed={printed} w={640} s={1.2} accent={K.time} glow={0.4} label="真实价格" />
+      </div>
+      <div style={{ position: "absolute", left: 930, top: 300, transform: `scale(${0.6 + 0.4 * head})`, transformOrigin: "0 50%", opacity: Math.min(1, head * 2) }}>
+        <div style={{ fontFamily: FONT, fontWeight: 900, fontSize: 112, color: K.fg, lineHeight: 1.18, letterSpacing: -3, whiteSpace: "nowrap" }}>
+          最聪明的 AI，
+          <br />
+          反而<span style={{ color: K.green }}>最便宜</span>。
         </div>
       </div>
-      <At x={260} y={500}>
-        <In at={4.6}>
-          <div style={{ fontSize: 32, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>用 Claude 写代码，真正解决一道题的成本</div>
-        </In>
-      </At>
-      <div style={{ position: "absolute", left: 260, top: 560, width: W, height: 110, display: "flex", fontFamily: FONT }}>
-        <div style={{ width: W * tokenShare * a, height: "100%", background: `linear-gradient(90deg, ${K.claude}aa, ${K.claude})`, borderRadius: "14px 0 0 14px" }} />
-        <div style={{ width: W * (1 - tokenShare) * b, height: "100%", background: `linear-gradient(90deg, ${TIME}88, ${TIME})`, borderRadius: "0 14px 14px 0", boxShadow: `0 0 50px ${TIME}55` }} />
+      <div style={{ position: "absolute", left: 940, top: 610, opacity: sub, transform: `translateY(${(1 - sub) * 20}px)` }}>
+        <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 40, color: K.sub, whiteSpace: "nowrap" }}>
+          前提：包月用满，算上<span style={{ color: K.timeHi }}>你的时间</span>
+        </div>
       </div>
-      <At x={260} y={690}>
-        <div style={{ opacity: a, fontSize: 34, fontWeight: 900, color: K.claudeHi, whiteSpace: "nowrap" }}>token $2.25</div>
-      </At>
-      <At x={260 + W * tokenShare + (W * (1 - tokenShare)) / 2} y={615} center>
-        <div style={{ opacity: b, fontSize: 40, fontWeight: 900, color: K.bg, whiteSpace: "nowrap" }}>你检查、返工的时间 $15.15</div>
-      </At>
-      <At x={960} y={860} center>
-        <In at={9} from="slam" dur={0.5}>
-          <div style={{ fontSize: 76, fontWeight: 900, whiteSpace: "nowrap" }}>
-            <span style={{ color: TIME, fontSize: 110 }}>87%</span> 是你的时间
-          </div>
-        </In>
-      </At>
-      <Note>Artificial Analysis Coding Agent Index（Sonnet 5.5 high）：平均试 1.8 次才解决 · 每次人工检查按 5 分钟、时薪 $100 估算</Note>
     </AbsoluteFill>
   );
 };
 
-// ───────── Scarce: tokens multiply, your time doesn't ─────────
-
-const Hourglass: React.FC<{ p: number }> = ({ p }) => {
-  const top = 1 - p;
-  return (
-    <svg width={300} height={420} viewBox="0 0 300 420" style={{ overflow: "visible" }}>
-      <defs>
-        <clipPath id="hg-top">
-          <path d="M40 30 L260 30 C260 120 175 170 155 205 L145 205 C125 170 40 120 40 30 Z" />
-        </clipPath>
-        <clipPath id="hg-bot">
-          <path d="M145 215 L155 215 C175 250 260 300 260 390 L40 390 C40 300 125 250 145 215 Z" />
-        </clipPath>
-      </defs>
-      <rect x={20} y={10} width={260} height={20} rx={8} fill="rgba(255,255,255,0.75)" />
-      <rect x={20} y={390} width={260} height={20} rx={8} fill="rgba(255,255,255,0.75)" />
-      <rect x={40} y={205 - 175 * top} width={220} height={175 * top} fill={TIME} clipPath="url(#hg-top)" />
-      <rect x={40} y={390 - 175 * p} width={220} height={175 * p} fill={TIME} clipPath="url(#hg-bot)" />
-      {p > 0 && p < 1 ? <rect x={147} y={205} width={6} height={185 - 175 * p} fill={TIME} opacity={0.9} /> : null}
-      <path
-        d="M40 30 L260 30 C260 120 175 170 155 210 C175 250 260 300 260 390 L40 390 C40 300 125 250 145 210 C125 170 40 120 40 30 Z"
-        fill="rgba(255,255,255,0.06)"
-        stroke="rgba(255,255,255,0.7)"
-        strokeWidth={5}
-      />
-    </svg>
-  );
-};
+// ───────── 13. Tokens multiply; your time doesn't (hourglass in a flood of tokens) ─────────
 
 const TOKEN_COLORS = [K.claude, K.gold, K.deepseek, K.fg, K.green];
 
-export const Scarce: React.FC = () => {
-  const frame = useBeatFrame();
-  const b = frame / FPB;
-  const n = Math.round(interpolate(b, [0, 8], [60, 260], CL));
-  const sand = progAt(frame, 0, 16, (t) => t);
+export const Sand: React.FC = () => {
+  const t = useT();
+  const c1 = CHORD[1];
+  const enter = pr(t, c1 - 0.4, 0.8, EO);
+  const exit = pr(t, CHORD[3] - 0.5, 0.7, EIN);
+  const n = Math.round(keys(t, [[c1, 90], [CHORD[2], 300], [CHORD[3], 420]], EIO));
+  const sand = pr(t, c1, CHORD[3] - c1, (z) => z);
+  const cam = keys(t, [[c1, 1.1], [CHORD[3], 1.0]], EIO);
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ opacity: Math.min(enter, 1 - exit), transform: `scale(${cam})`, transformOrigin: "960px 600px" }}>
       {Array.from({ length: n }).map((_, i) => {
-        const speed = 4 + random(`v${i}`) * 14;
+        const speed = 50 + random(`v${i}`) * 260;
         const size = 6 + random(`s${i}`) * 14;
-        const y = random(`y${i}`) * 1080;
-        const x = ((random(`x${i}`) * 2200 + frame * speed) % 2200) - 140;
-        // Tokens part around the hourglass instead of crossing it.
+        const y = 120 + random(`y${i}`) * 900;
+        const x = ((random(`x${i}`) * 2300 + (t - c1) * speed) % 2300) - 190;
         const dx = x - 960;
-        const dy = y - 560;
-        const push = Math.max(0, 1 - Math.hypot(dx / 260, dy / 300));
+        const dy = y - 600;
+        const push = Math.max(0, 1 - Math.hypot(dx / 300, dy / 330));
         return (
           <div
             key={i}
             style={{
               position: "absolute",
               left: x,
-              top: y + Math.sign(dy || 1) * push * 220,
+              top: y + Math.sign(dy || 1) * push * 260,
               width: size,
               height: size,
               borderRadius: 3,
               background: TOKEN_COLORS[i % TOKEN_COLORS.length],
-              opacity: 0.18 + random(`o${i}`) * 0.3,
+              opacity: 0.16 + random(`o${i}`) * 0.3,
             }}
           />
         );
       })}
-      <At x={960} y={560} center>
-        <In at={0.5} from="scale">
-          <Hourglass p={sand} />
-        </In>
-      </At>
-      <At x={960} y={170} center>
-        <Kinetic at={0} out={4.6} size={84} parts={["token 会越来越", { t: "多", c: K.gold }]} />
-      </At>
-      <At x={960} y={170} center>
-        <Kinetic at={5} size={84} parts={["唯一不会变多的——"]} />
-      </At>
-      <At x={960} y={900} center>
-        <Chroma at={8}>
-          <In at={8} from="slam" dur={0.5}>
-            <div style={{ fontFamily: FONT, fontSize: 132, fontWeight: 900, color: TIME, whiteSpace: "nowrap", textShadow: `0 0 60px ${TIME}88` }}>是你的时间</div>
-          </In>
-        </Chroma>
-      </At>
+      <div style={{ position: "absolute", left: 960 - 150, top: 600 - 210 + Math.sin(t * 1.3) * 4, transform: "scale(1.35)", transformOrigin: "150px 230px" }}>
+        <div style={{ position: "absolute", left: -120, top: -80, width: 540, height: 580, borderRadius: "50%", background: `radial-gradient(circle, ${K.time}33 0%, transparent 65%)` }} />
+        <Hourglass p={0.15 + 0.7 * sand} />
+      </div>
     </AbsoluteFill>
   );
 };
 
-// ───────── Final: the claim again, now with its reason ─────────
+// ───────── 14. End card: "AI 的真实价格" rolls into "世界的形状"; the round ball lands above; MakerJackie ─────────
 
-export const Final: React.FC = () => (
-  <AbsoluteFill>
-    <Shockwave at={0} color={K.green} size={1800} />
-    <At x={960} y={400} center>
-      <Chroma at={0} amount={18}>
-        <In at={0} from="slam" dur={0.5}>
-          <div style={{ fontFamily: FONT, fontSize: 124, fontWeight: 900, letterSpacing: -3, whiteSpace: "nowrap", textAlign: "center", lineHeight: 1.22 }}>
-            最聪明的 AI，
-            <br />
-            就是<span style={{ color: K.green }}>最便宜</span>的 AI
-          </div>
-        </In>
-      </Chroma>
-    </At>
-    <At x={960} y={670} center>
-      <In at={4}>
-        <div style={{ fontSize: 56, fontWeight: 900, whiteSpace: "nowrap" }}>
-          因为它省下的，是你<span style={{ color: TIME }}>最贵的东西</span>
-        </div>
-      </In>
-    </At>
-    <At x={330} y={880} center>
-      <In at={2} from="left">
-        <Spark size={170} mood="party" />
-      </In>
-    </At>
-    <At x={1590} y={880} center>
-      <In at={2.5} from="right">
-        <Whale size={200} mood="happy" />
-      </In>
-    </At>
-  </AbsoluteFill>
-);
+const SIZE = 168;
 
-// ───────── Brand outro: "AI 的真实价格" rolls into "世界的形状" ─────────
-
-const SIZE = 190;
-const FLIP = 8;
-
-// One slot of the title: `from` rolls up and out, `to` rolls in from below.
 const Slot: React.FC<{ from: string; to: string; wFrom: number; wTo: number; q: number }> = ({ from, to, wFrom, wTo, q }) => (
-  <span style={{ display: "inline-block", position: "relative", width: lerp(wFrom, wTo, q), height: SIZE * 1.2, overflow: "hidden", verticalAlign: "top" }}>
-    <span style={{ position: "absolute", left: 0, right: 0, textAlign: "center", top: -q * SIZE * 1.3 }}>{from}</span>
-    <span style={{ position: "absolute", left: 0, right: 0, textAlign: "center", top: (1 - q) * SIZE * 1.3 }}>{to}</span>
+  <span style={{ display: "inline-block", position: "relative", width: lerp(wFrom, wTo, q), height: SIZE * 1.3, overflow: "hidden", verticalAlign: "top" }}>
+    <span style={{ position: "absolute", left: 0, right: 0, textAlign: "center", top: -q * SIZE * 1.35 }}>{from}</span>
+    <span style={{ position: "absolute", left: 0, right: 0, textAlign: "center", top: (1 - q) * SIZE * 1.35 }}>{to}</span>
   </span>
 );
 
-export const BrandOutro: React.FC = () => {
-  const frame = useBeatFrame();
-  const settle = progAt(frame, 0, 1.2, EO);
-  const q1 = progAt(frame, FLIP, 0.9, EIO);
-  const q2 = progAt(frame, FLIP + 0.25, 0.9, EIO);
-  const mark = progAt(frame, FLIP + 0.9, 1.6, EBACK);
-  const glow = Math.max(0, 1 - (frame - (FLIP + 0.9) * FPB) / 18);
-  const ruleW = lerp(SIZE * 6.2, SIZE * 4.9, q2) * progAt(frame, 0.4, 1, EO);
-  const subOut = 1 - progAt(frame, FLIP - 0.5, 0.4);
+export const END_AT = CHORD[3];
+export const FLIP_AT = CHORD[3] + 1.6;
+export const BALL_AT = CHORD[4];
+
+export const EndCard: React.FC = () => {
+  const t = useT();
+  const settle = pr(t, END_AT - 0.2, 0.9, EO);
+  const q1 = pr(t, FLIP_AT, 0.8, EIO);
+  const q2 = pr(t, FLIP_AT + 0.2, 0.8, EIO);
+  const ball = pr(t, FLIP_AT + 0.9, BALL_AT - FLIP_AT - 0.75, EO);
+  const glow = Math.max(0, 1 - Math.abs(t - BALL_AT) / 0.6);
+  const maker = pr(t, BALL_AT + 0.35, 0.6, EO);
+  const push = pr(t, END_AT, FILM_S - END_AT, (z) => z);
+  const fade = pr(t, FILM_S - 1.1, 1.0, EIO);
   return (
-    <AbsoluteFill>
-      {mark > 0 ? (
-        <At x={960} y={300} center>
-          <div style={{ position: "relative", width: 300, height: 300 }}>
-            <svg width={0} height={0} style={{ position: "absolute" }}>
-              <filter id="mark-alpha" colorInterpolationFilters="sRGB">
-                <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  1.5 1.5 1.5 0 -0.06" />
-              </filter>
-            </svg>
-            <div style={{ position: "absolute", inset: -160, borderRadius: "50%", background: `radial-gradient(circle, ${K.gold}${Math.round(glow * 90).toString(16).padStart(2, "0")} 0%, transparent 60%)` }} />
-            <Img
-              src={staticFile("mark-512.png")}
-              style={{ width: 300, height: 300, filter: "url(#mark-alpha)", opacity: Math.min(1, mark * 1.6), transform: `scale(${0.55 + 0.45 * mark}) rotate(${-2 + 2 * mark}deg)` }}
-            />
-          </div>
-        </At>
-      ) : null}
-      <At x={960} y={590} center>
-        <div style={{ transform: `scale(${1.15 - 0.15 * settle})`, opacity: settle, fontFamily: FONT, fontSize: SIZE, fontWeight: 900, letterSpacing: -4, whiteSpace: "nowrap", lineHeight: 1.2, display: "flex" }}>
-          <Slot from="AI" to="世界" wFrom={SIZE * 1.35} wTo={SIZE * 2} q={q1} />
+    <AbsoluteFill style={{ opacity: 1 - fade, transform: `scale(${1 + 0.035 * push})`, transformOrigin: "960px 520px" }}>
+      <div style={{ position: "absolute", left: 960, top: 300, transform: "translate(-50%, -50%)" }}>
+        <div style={{ position: "absolute", left: -260, top: -260, width: 520, height: 520, borderRadius: "50%", opacity: Math.min(1, ball * 1.4), background: `radial-gradient(circle, rgba(241,236,223,0.16) 0%, rgba(241,236,223,0.06) 38%, transparent 62%)` }} />
+        <div style={{ position: "absolute", left: -260, top: -260, width: 520, height: 520, borderRadius: "50%", background: `radial-gradient(circle, rgba(255,209,102,${0.4 * glow}) 0%, transparent 62%)` }} />
+        <div style={{ position: "absolute", left: -2, top: -2 + (1 - ball) * -160, width: 224, height: 224, borderRadius: "50%", boxShadow: "0 0 0 2px rgba(241,236,223,0.35)", opacity: Math.min(1, ball * 1.4), transform: `scale(${0.6 + 0.4 * ball})` }} />
+        <Img
+          src={staticFile("mark-disc.png")}
+          style={{ width: 220, height: 220, display: "block", opacity: Math.min(1, ball * 1.4), transform: `translateY(${(1 - ball) * -160}px) scale(${0.6 + 0.4 * ball})` }}
+        />
+      </div>
+      <div style={{ position: "absolute", left: 960, top: 600, transform: `translate(-50%, -50%) scale(${1.12 - 0.12 * settle})`, opacity: settle }}>
+        <div style={{ display: "flex", fontFamily: SERIF, fontSize: SIZE, fontWeight: 900, color: K.fg, letterSpacing: 6, whiteSpace: "nowrap", lineHeight: 1.3 }}>
+          <Slot from="AI" to="世界" wFrom={SIZE * 1.3} wTo={SIZE * 2.1} q={q1} />
           <span>的</span>
-          <Slot from="真实价格" to="形状" wFrom={SIZE * 4} wTo={SIZE * 2} q={q2} />
+          <Slot from="真实价格" to="形状" wFrom={SIZE * 4.15} wTo={SIZE * 2.1} q={q2} />
         </div>
-      </At>
-      <div style={{ position: "absolute", left: 960 - ruleW / 2, top: 720, width: ruleW, height: 10, borderRadius: 5, background: `linear-gradient(90deg, ${K.claude}, ${K.gold})` }} />
-      <At x={960} y={800} center>
-        <In at={1.5}>
-          <div style={{ opacity: subOut, fontSize: 34, fontWeight: 500, color: K.muted, whiteSpace: "nowrap" }}>数据截至 2026 年 10 月 21 日 · 全部来源见视频简介</div>
-        </In>
-      </At>
-      <At x={960} y={810} center>
-        <In at={FLIP + 1.5}>
-          <div style={{ fontSize: 56, fontWeight: 900, whiteSpace: "nowrap" }}>看见世界如何运行</div>
-        </In>
-      </At>
-      <At x={960} y={895} center>
-        <In at={FLIP + 2}>
-          <div style={{ fontFamily: MONO, fontSize: 48, fontWeight: 700, color: K.claudeHi }}>shapeof.world</div>
-        </In>
-      </At>
-      <At x={960} y={965} center>
-        <In at={FLIP + 2.5}>
-          <div style={{ fontSize: 34, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>制作 MakerJackie</div>
-        </In>
-      </At>
+      </div>
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 90, textAlign: "center", opacity: maker, fontFamily: FONT, fontWeight: 700, fontSize: 40, letterSpacing: 4, color: K.sub }}>MakerJackie</div>
     </AbsoluteFill>
   );
 };

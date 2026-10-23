@@ -1,24 +1,23 @@
-"""Tile review stills into 2x2 contact sheets.
+"""Tile review stills into one contact sheet with their file names.
 
-Usage: python tools/sheet.py <stillsDir> <outDir>
+Usage: python tools/sheet.py <stillsDir> <out.jpg> [cols] [width]
 """
 import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw
 
-src, dst = Path(sys.argv[1]), Path(sys.argv[2])
-dst.mkdir(parents=True, exist_ok=True)
-files = sorted(src.glob("f*.jpg"))
-for n in range(0, len(files), 4):
-    group = files[n : n + 4]
-    w, h = Image.open(group[0]).size
-    sheet = Image.new("RGB", (w * 2, h * 2), "white")
-    for i, f in enumerate(group):
-        im = Image.open(f)
-        x, y = (i % 2) * w, (i // 2) * h
-        sheet.paste(im, (x, y))
-        ImageDraw.Draw(sheet).text((x + 8, y + 6), f.stem, fill="yellow")
-    out = dst / f"sheet{n // 4:02d}.jpg"
-    sheet.save(out, quality=90)
-    print(out)
+src, out = Path(sys.argv[1]), sys.argv[2]
+cols = int(sys.argv[3]) if len(sys.argv) > 3 else 4
+W = int(sys.argv[4]) if len(sys.argv) > 4 else 480
+files = sorted(src.glob("s*.jpg"))
+ims = [Image.open(f) for f in files]
+h = round(ims[0].height * W / ims[0].width)
+rows = (len(ims) + cols - 1) // cols
+sheet = Image.new("RGB", (cols * W, rows * h), "white")
+for i, (f, im) in enumerate(zip(files, ims)):
+    x, y = (i % cols) * W, (i // cols) * h
+    sheet.paste(im.resize((W, h)), (x, y))
+    ImageDraw.Draw(sheet).text((x + 6, y + 4), f.stem[1:], fill="yellow")
+sheet.save(out, quality=82)
+print(out)

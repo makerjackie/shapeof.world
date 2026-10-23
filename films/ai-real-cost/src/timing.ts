@@ -1,37 +1,32 @@
-// Beat grid of the soundtrack (千年之后（氛围版）, 3:01). Measured with tools/beats.py:
-// steady 111.62 BPM, phase drift within ±10 ms over the whole track.
+// Music grid (film seconds). Both tracks are measured with tools/beats.py and tools/downbeats.py; the library's own
+// bpm field is a generation target and is not used.
+//
+// A: 《小小发明 · 40》 scene-chamber-40, 115.00 BPM, first beat 0.114 s, F major, 28 bars in 4-bar phrases, no phase
+//    drift. Starts at film 0. Bar 4 is the full entry; its own button ending hits on bar 27 beat 3 (57.506 s) and has
+//    died away by 58.3 s.
+// B: 《温暖电路 · 90》 scene-soul-90, 100.37 BPM, first beat 0.131 s, F major. Starts at film 60.000. Bars 0–3 are
+//    chords only (bar 3 nearly silent), bar 4 is the full entry, bar 16 the strongest downbeat, and from bar 24 on it
+//    is sustained chords without a steady pulse, so the coda follows the measured chord onsets (CHORD).
 export const FPS = 30;
-export const BPM = 111.62;
-export const BEAT_S = 60 / BPM;
-export const FIRST_BEAT_S = 0.487;
-export const MUSIC_S = 181.91;
-export const FPB = BEAT_S * FPS;
 
-export const beatToFrame = (beat: number) => Math.round((FIRST_BEAT_S + beat * BEAT_S) * FPS);
-export const barToFrame = (bar: number) => beatToFrame(bar * 4);
+export const A = { bpm: 115.0, first: 0.114, at: 0 };
+export const B = { bpm: 100.37, first: 0.131, at: 60.0 };
+export const BEAT_A = 60 / A.bpm;
+export const BEAT_B = 60 / B.bpm;
 
-// The 2-minute cut skips whole bars of the track. From film bar `at` on, film bar b plays track bar b + skip.
-// Both jumps land where the track's 8-bar chord cycle continues (tools/beats.py chroma check: the bar before
-// each cut matches the bar that normally precedes its target), so the tempo and phrasing never break:
-// 24 → 40 enters the breakdown exactly as the track does, 56 → 64 enters the peak.
-export const MUSIC_EDIT = [
-  { at: 0, skip: 2 },
-  { at: 22, skip: 18 },
-  { at: 38, skip: 26 },
-];
+// Film second of bar k (fractional k allowed: k + 0.25 is the second beat).
+export const barA = (k: number) => A.at + A.first + k * 4 * BEAT_A;
+export const barB = (k: number) => B.at + B.first + k * 4 * BEAT_B;
 
-const skipFrames = (bars: number) => Math.round(bars * 4 * FPB);
+export const A_END_HIT = A.at + 57.506;
+export const CHORD = [57.545, 62.433, 67.262, 72.069, 76.881, 81.786].map((s) => B.at + s);
+// Extra measured chord onsets inside the coda, used for the second caption line of a pair.
+export const CHORD_SUB = { c0b: B.at + 59.687, c1b: B.at + 64.877, c2b: B.at + 69.358 };
 
-// Track frame heard at a film frame (drives the spectrum bars and background pulse).
-export const musicFrame = (frame: number) => {
-  let skip = MUSIC_EDIT[0].skip;
-  for (const e of MUSIC_EDIT) if (frame >= barToFrame(e.at)) skip = e.skip;
-  return frame + skipFrames(skip);
-};
+// The bar of B that is muted for the second silence (stop-time before the receipts print).
+export const MUTE_B = { from: 15, to: 16 };
 
-// Audio segments: [film from, film to) played from track frame `from + offset`.
-export const MUSIC_SEGMENTS = MUSIC_EDIT.map((e, i) => ({
-  from: i === 0 ? 0 : barToFrame(e.at),
-  to: i < MUSIC_EDIT.length - 1 ? barToFrame(MUSIC_EDIT[i + 1].at) : Infinity,
-  offset: skipFrames(e.skip),
-}));
+export const FILM_S = CHORD[4] + 3.3;
+export const FILM_FRAMES = Math.round(FILM_S * FPS);
+
+export const fr = (s: number) => Math.round(s * FPS);
