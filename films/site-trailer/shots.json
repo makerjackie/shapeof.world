@@ -1,0 +1,1743 @@
+{
+ "version": 1,
+ "notes": "Shot list for the shapeof.world site trailer. Record with films/site-trailer/tools/capture.mjs (see header for schema). Coordinates <=1 are viewport fractions. Defaults: 1920x1080, 60fps, step mode, query capture=1&ghost=0. 'priority' 1 = must-have hero, 2 = strong montage, 3 = filler/variety. Steps were written from the live-site control inventory (media root inventory.json) and smoke-tested at preview quality; recorders should look at each contact sheet and tune framing/timing.",
+ "shots": [
+  {
+   "id": "black-hole-ring",
+   "worldId": "black-hole-flyby",
+   "priority": 1,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.56,
+      0.5
+     ],
+     "to": [
+      0.44,
+      0.52
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Gravitational lensing ray-traced live: the accretion disc bent over and under the shadow, stars smeared into rings.",
+   "label": {
+    "zh": "黑洞 · 光被拉成环",
+    "en": "BLACK HOLE · LIGHT BENT INTO A RING"
+   },
+   "note": "近看 (close view) is overexposed and over-filled (tested); the default approach view is the good one."
+  },
+  {
+   "id": "black-hole-flyby",
+   "worldId": "black-hole-flyby",
+   "priority": 2,
+   "duration": 6,
+   "settle": 6000,
+   "mode": "realtime",
+   "steps": [
+    {
+     "clickText": "^掠过$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "why": "The flyby itself: the sky warps and swings past the black hole at closest approach.",
+   "label": {
+    "zh": "掠过黑洞 · 星空在弯",
+    "en": "BLACK-HOLE FLYBY · THE SKY BENDS"
+   }
+  },
+  {
+   "id": "galaxy-collision-merge",
+   "worldId": "galaxy-collision",
+   "priority": 1,
+   "duration": 5,
+   "settle": 3000,
+   "steps": [
+    {
+     "clickText": "^2×$"
+    },
+    {
+     "wait": 20000
+    },
+    {
+     "wheel": {
+      "at": [
+       0.5,
+       0.5
+      ],
+      "dy": -240,
+      "n": 6
+     }
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "why": "Milky Way and Andromeda tearing into tidal tails, 100k-star N-body on the GPU.",
+   "label": {
+    "zh": "星系相撞 · 40 亿年后",
+    "en": "GALAXY COLLISION · 4 BILLION YEARS FROM NOW"
+   },
+   "note": "Scrubbing .gcx-time snaps the camera to a far wide view and the galaxies stay apart (probed 400-900): do NOT scrub. Let it play at 2x from load; tune the wait so the record lands on the tidal-tail moment. Tested: at ~20s wait the merger is happening but small/dim in frame; added a wheel zoom-in — verify scale, or crop with ss:2. After zoom (tested): merger reads as a dim star cloud, not yet premium — try the 俯视 camera, a longer/shorter wait, or demote.",
+   "mode": "step"
+  },
+  {
+   "id": "galaxy-collision-top",
+   "worldId": "galaxy-collision",
+   "priority": 2,
+   "duration": 5,
+   "settle": 3000,
+   "steps": [
+    {
+     "clickText": "^俯视$"
+    },
+    {
+     "clickText": "^2×$"
+    },
+    {
+     "wait": 28000
+    },
+    {
+     "wheel": {
+      "at": [
+       0.5,
+       0.5
+      ],
+      "dy": -240,
+      "n": 6
+     }
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "why": "Top-down view of the merger: two spirals wound into one swirl.",
+   "label": {
+    "zh": "两个星系 · 合成一个",
+    "en": "TWO GALAXIES · BECOMING ONE"
+   },
+   "note": "Scrubbing .gcx-time snaps the camera to a far wide view and the galaxies stay apart (probed 400-900): do NOT scrub. Let it play at 2x from load; tune the wait so the record lands on the tidal-tail moment."
+  },
+  {
+   "id": "aurora-ground",
+   "worldId": "aurora",
+   "priority": 1,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "range": {
+      "sel": "input[aria-label=\"太阳风强度 Kp 指数\"]",
+      "value": 8
+     }
+    },
+    {
+     "clickText": "^地面$"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "why": "Green-violet curtains rippling overhead from a ground camera.",
+   "label": {
+    "zh": "极光 · 太阳风撞上磁场",
+    "en": "AURORA · SOLAR WIND MEETS THE FIELD"
+   }
+  },
+  {
+   "id": "aurora-polar",
+   "worldId": "aurora",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "range": {
+      "sel": "input[aria-label=\"太阳风强度 Kp 指数\"]",
+      "value": 9
+     }
+    },
+    {
+     "clickText": "^极地$"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.55,
+      0.46
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "The auroral oval crowning Earth's pole, seen from space.",
+   "label": {
+    "zh": "极光圈 · 地球的光冠",
+    "en": "AURORAL OVAL · EARTH'S CROWN"
+   }
+  },
+  {
+   "id": "solar-system-galactic",
+   "worldId": "solar-system",
+   "priority": 1,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^银河航行$"
+    },
+    {
+     "wait": 3500
+    }
+   ],
+   "why": "Planets tracing helices as the Sun moves through the galaxy.",
+   "label": {
+    "zh": "太阳系 · 在银河里螺旋前进",
+    "en": "SOLAR SYSTEM · SPIRALLING THROUGH THE GALAXY"
+   }
+  },
+  {
+   "id": "solar-system-orbits",
+   "worldId": "solar-system",
+   "priority": 3,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^小天体带$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.5,
+      0.55
+     ],
+     "to": [
+      0.5,
+      0.42
+     ],
+     "dur": 5
+    }
+   ],
+   "why": "Orbits plus the asteroid belt, camera tilting from top-down to edge-on.",
+   "label": {
+    "zh": "太阳系有多空旷",
+    "en": "HOW EMPTY IS THE SOLAR SYSTEM"
+   }
+  },
+  {
+   "id": "earth-terminator",
+   "worldId": "earth-spin-orbit",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "eval": "window.__eso?.poster?.()"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.56,
+      0.5
+     ],
+     "to": [
+      0.44,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Day/night line sweeping across a photoreal globe, city lights on the dark side.",
+   "label": {
+    "zh": "地球 · 同一刻的白天与黑夜",
+    "en": "EARTH · DAY AND NIGHT AT ONE INSTANT"
+   }
+  },
+  {
+   "id": "eclipse-corona",
+   "worldId": "eclipses",
+   "priority": 1,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "eval": "window.__eclipsesFilm?.prepare('close')"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Totality close-up: the Moon covers the Sun and the corona flares out.",
+   "label": {
+    "zh": "日全食 · 白天突然变黑",
+    "en": "TOTAL ECLIPSE · DAY TURNS TO NIGHT"
+   }
+  },
+  {
+   "id": "eclipse-orbit",
+   "worldId": "eclipses",
+   "priority": 3,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "eval": "window.__eclipsesFilm?.prepare('orbit')"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "The Moon's shadow sliding across Earth seen from orbit.",
+   "label": {
+    "zh": "月影 · 扫过地球",
+    "en": "MOON'S SHADOW · SWEEPING THE EARTH"
+   }
+  },
+  {
+   "id": "moon-approach",
+   "worldId": "moon-voyage",
+   "priority": 1,
+   "duration": 6,
+   "settle": 6000,
+   "steps": [
+    {
+     "range": {
+      "sel": "input[aria-label=\"航程定位\"]",
+      "value": 91
+     }
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "why": "Huge cratered Moon near the terminator with the spacecraft approaching: candidate final hero shot (Kimi ends on the Moon).",
+   "label": {
+    "zh": "去月球 · 三天的航程",
+    "en": "TO THE MOON · A THREE-DAY VOYAGE"
+   },
+   "note": "Slider 航程定位 88-97 = Moon filling the frame (probed). Hero / final-shot candidate.",
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"航程定位\"]",
+     "from": 91,
+     "to": 97,
+     "dur": 6
+    }
+   ],
+   "ss": 2,
+   "crop": [
+    0.15,
+    0.27,
+    0.5,
+    0.5
+   ]
+  },
+  {
+   "id": "moon-orbit",
+   "worldId": "moon-voyage",
+   "priority": 2,
+   "duration": 6,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^绕月$"
+    },
+    {
+     "wait": 4000
+    }
+   ],
+   "why": "Orbiting the Moon: limb, craters, Earth on the horizon.",
+   "label": {
+    "zh": "绕月 · 地球在地平线上",
+    "en": "LUNAR ORBIT · EARTH ON THE HORIZON"
+   }
+  },
+  {
+   "id": "three-body-gallery",
+   "worldId": "three-body",
+   "priority": 2,
+   "duration": 5,
+   "settle": 7000,
+   "why": "A whole gallery of periodic three-body orbits dancing at once: flowers, figure-eights, butterflies.",
+   "label": {
+    "zh": "三体 · 跳出花朵和蝴蝶",
+    "en": "THREE-BODY · FLOWERS AND BUTTERFLIES"
+   }
+  },
+  {
+   "id": "three-body-3d",
+   "worldId": "three-body",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "ss": 2,
+   "steps": [
+    {
+     "clickText": "^3D空间解$"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.58,
+      0.47
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Three stars weaving a 3D braided orbit with glowing trails.",
+   "label": {
+    "zh": "三体 · 立体的舞",
+    "en": "THREE-BODY · A DANCE IN 3D"
+   }
+  },
+  {
+   "id": "rainbow-double",
+   "worldId": "rainbow",
+   "priority": 1,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^(天空|整片雨)$"
+    },
+    {
+     "clickText": "^第二道彩虹$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0.5,
+     "type": "clickText",
+     "text": "^往右走 8 米$"
+    }
+   ],
+   "why": "Primary and secondary bows with Alexander's dark band, physically computed.",
+   "label": {
+    "zh": "双彩虹 · 颜色为什么相反",
+    "en": "DOUBLE RAINBOW · WHY THE COLOURS FLIP"
+   }
+  },
+  {
+   "id": "rainbow-raypath",
+   "worldId": "rainbow",
+   "priority": 3,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^主虹光路$"
+    },
+    {
+     "wait": 2000
+    }
+   ],
+   "why": "Light path through a single raindrop splitting into a spectrum.",
+   "label": {
+    "zh": "一滴雨 · 把白光拆开",
+    "en": "ONE RAINDROP · SPLITTING WHITE LIGHT"
+   }
+  },
+  {
+   "id": "light-cone",
+   "worldId": "light-speed",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "ss": 2,
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.57,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Neon space-time light cone with a worldline piercing it.",
+   "label": {
+    "zh": "光锥 · 宇宙的速度上限",
+    "en": "LIGHT CONE · THE COSMIC SPEED LIMIT"
+   }
+  },
+  {
+   "id": "photon-double-slit",
+   "worldId": "photon",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.55,
+      0.48
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "A glowing wave packet passing a double slit and building interference fringes.",
+   "label": {
+    "zh": "光子 · 同时穿过两条缝",
+    "en": "PHOTON · THROUGH BOTH SLITS AT ONCE"
+   }
+  },
+  {
+   "id": "radio-sweep",
+   "worldId": "radio-spectrum",
+   "priority": 2,
+   "duration": 5,
+   "settle": 5000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"调到哪个频率\"]",
+     "from": 5,
+     "to": 14,
+     "dur": 5,
+     "ease": "inout"
+    }
+   ],
+   "why": "Tuning across the spectrum: AM, FM, WiFi, 5G bars lighting up as the wave shortens.",
+   "label": {
+    "zh": "电磁波 · 几十种穿过你的身体",
+    "en": "RADIO SPECTRUM · DOZENS PASS THROUGH YOU"
+   }
+  },
+  {
+   "id": "coffee-vortex",
+   "worldId": "fluid-sim",
+   "priority": 1,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.375,
+    0.245,
+    0.45,
+    0.45
+   ],
+   "steps": [
+    {
+     "clickText": "^搅一圈$"
+    },
+    {
+     "wait": 1200
+    }
+   ],
+   "actions": [
+    {
+     "at": 2.2,
+     "type": "clickText",
+     "text": "^搅一圈$"
+    }
+   ],
+   "why": "Milk in coffee curling into vortices, live Navier-Stokes; cropped close so the swirl fills the frame.",
+   "label": {
+    "zh": "咖啡 · 搅出涡旋",
+    "en": "COFFEE · STIRRING UP VORTICES"
+   },
+   "note": "Tested OK: 搅一圈 draws the world's own spoon ring (part of the sim). Crop slightly clips the cup rim top/bottom by design."
+  },
+  {
+   "id": "attractor-thomas",
+   "worldId": "strange-attractors",
+   "priority": 2,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.1,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^托马斯$"
+    },
+    {
+     "wait": 3500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.55,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Thomas attractor: millions of particle trails knotting into a 3D labyrinth.",
+   "label": {
+    "zh": "奇异吸引子 · 混沌的形状",
+    "en": "STRANGE ATTRACTOR · THE SHAPE OF CHAOS"
+   }
+  },
+  {
+   "id": "attractor-dadras",
+   "worldId": "strange-attractors",
+   "priority": 3,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.1,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^达德拉斯$"
+    },
+    {
+     "wait": 3500
+    }
+   ],
+   "why": "Dadras attractor: twin lobes of silky threads.",
+   "label": {
+    "zh": "三行方程 · 画出这团丝",
+    "en": "THREE EQUATIONS · ONE TANGLE OF SILK"
+   }
+  },
+  {
+   "id": "butterfly-lorenz",
+   "worldId": "butterfly-effect",
+   "priority": 2,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.1,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^光谱$"
+    },
+    {
+     "clickText": "^再并肩飞一次$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Two Lorenz trajectories starting together then diverging into butterfly wings, spectral colours.",
+   "label": {
+    "zh": "蝴蝶效应 · 差一点，差很多",
+    "en": "BUTTERFLY EFFECT · A TINY DIFFERENCE GROWS"
+   }
+  },
+  {
+   "id": "quark-weight",
+   "worldId": "standard-model",
+   "priority": 1,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^不猜，直接玩$"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "why": "Inside a proton: three quarks bound by a seething gluon field. Answers 'where does your weight come from?'",
+   "label": {
+    "zh": "夸克 · 你的体重从哪来",
+    "en": "QUARKS · WHERE YOUR WEIGHT COMES FROM"
+   }
+  },
+  {
+   "id": "flame-zero-g",
+   "worldId": "fire-gravity",
+   "priority": 1,
+   "duration": 5,
+   "settle": 5000,
+   "ss": 2,
+   "crop": [
+    0.3,
+    0.12,
+    0.4,
+    0.4
+   ],
+   "actions": [
+    {
+     "at": 0.5,
+     "type": "range",
+     "sel": ".fire-gravity-input",
+     "from": 1,
+     "to": 0,
+     "dur": 3.5,
+     "ease": "inout"
+    }
+   ],
+   "why": "A candle flame collapsing from a teardrop into a blue sphere as gravity is switched off.",
+   "label": {
+    "zh": "火焰 · 关掉重力会变圆",
+    "en": "FLAME · ROUND WITHOUT GRAVITY"
+   }
+  },
+  {
+   "id": "flame-layers",
+   "worldId": "fire-gravity",
+   "priority": 3,
+   "duration": 5,
+   "settle": 5000,
+   "ss": 2,
+   "crop": [
+    0.3,
+    0.12,
+    0.4,
+    0.4
+   ],
+   "actions": [
+    {
+     "at": 0.3,
+     "type": "range",
+     "sel": ".fire-peel-input",
+     "from": 0,
+     "to": 1,
+     "dur": 4
+    }
+   ],
+   "why": "Peeling the flame apart into inner cone, inner and outer flame.",
+   "label": {
+    "zh": "火焰 · 一层层剥开",
+    "en": "FLAME · PEELED LAYER BY LAYER"
+   }
+  },
+  {
+   "id": "periodic-wall",
+   "worldId": "periodic-table",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^显示全部$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "move",
+     "from": [
+      0.3,
+      0.4
+     ],
+     "to": [
+      0.75,
+      0.6
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "All 118 elements as real specimen photos on a museum wall; light frame for contrast in a dark montage.",
+   "label": {
+    "zh": "周期表 · 118 件标本",
+    "en": "PERIODIC TABLE · 118 SPECIMENS"
+   }
+  },
+  {
+   "id": "cow-cubes",
+   "worldId": "cow-anatomy",
+   "priority": 1,
+   "duration": 6,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^不猜，直接切$"
+    }
+   ],
+   "why": "A cow made of 600 one-kilo cubes being cut apart into cuts of meat.",
+   "label": {
+    "zh": "一头牛 · 600 个方块",
+    "en": "ONE COW · 600 CUBES"
+   }
+  },
+  {
+   "id": "human-arteries",
+   "worldId": "human-atlas",
+   "priority": 1,
+   "duration": 5,
+   "settle": 12000,
+   "steps": [
+    {
+     "clickText": "^全部隐藏$"
+    },
+    {
+     "wait": 800
+    },
+    {
+     "clickText": "^动脉"
+    },
+    {
+     "wait": 800
+    },
+    {
+     "clickText": "^心脏"
+    },
+    {
+     "wait": 6000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.58,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Only the arterial tree and heart, 639 vessels, turning in space.",
+   "label": {
+    "zh": "人体 · 639 条动脉",
+    "en": "HUMAN BODY · 639 ARTERIES"
+   }
+  },
+  {
+   "id": "human-explode",
+   "worldId": "human-atlas",
+   "priority": 2,
+   "duration": 5,
+   "settle": 12000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "#ha-explode",
+     "from": 0,
+     "to": 70,
+     "dur": 4.5,
+     "ease": "inout"
+    }
+   ],
+   "why": "Full anatomical body exploding into its systems.",
+   "label": {
+    "zh": "人体 · 拆开 2000 个零件",
+    "en": "HUMAN BODY · TAKEN APART"
+   },
+   "note": "Range sweep starts slowly; check that 70 gives a readable explode."
+  },
+  {
+   "id": "fly-neurons",
+   "worldId": "flybody",
+   "priority": 2,
+   "duration": 5,
+   "settle": 7000,
+   "steps": [
+    {
+     "clickText": "^自由探索$"
+    },
+    {
+     "wait": 2000
+    },
+    {
+     "clickText": "^只看神经网络$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.57,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "A fruit fly's connectome glowing inside its body.",
+   "label": {
+    "zh": "果蝇 · 一个大脑的全部连线",
+    "en": "FRUIT FLY · AN ENTIRE BRAIN'S WIRING"
+   }
+  },
+  {
+   "id": "fly-exploded",
+   "worldId": "flybody",
+   "priority": 3,
+   "duration": 5,
+   "settle": 7000,
+   "steps": [
+    {
+     "clickText": "^自由探索$"
+    },
+    {
+     "wait": 2000
+    },
+    {
+     "clickText": "^展开结构$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Exploded-view fly: legs, wings, head separated like a specimen plate.",
+   "label": {
+    "zh": "果蝇 · 展开每一块结构",
+    "en": "FRUIT FLY · EXPLODED VIEW"
+   }
+  },
+  {
+   "id": "rain-carves-valleys",
+   "worldId": "earth-and-nature",
+   "priority": 1,
+   "duration": 6,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^不猜，直接玩$"
+    },
+    {
+     "wait": 6000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.44,
+      0.5
+     ],
+     "to": [
+      0.56,
+      0.5
+     ],
+     "dur": 6,
+     "ease": "linear"
+    }
+   ],
+   "why": "Rain eroding a mountain into branching valleys, the terrain changing live.",
+   "label": {
+    "zh": "雨水 · 刻出山谷",
+    "en": "RAIN · CARVING THE VALLEYS"
+   }
+  },
+  {
+   "id": "weather-front",
+   "worldId": "frontscope",
+   "priority": 2,
+   "duration": 5,
+   "settle": 8000,
+   "steps": [
+    {
+     "clickText": "^冷锋"
+    },
+    {
+     "wait": 3000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.44,
+      0.5
+     ],
+     "to": [
+      0.56,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Volumetric storm cloud towering over a diorama landscape as a cold front advances.",
+   "label": {
+    "zh": "冷锋 · 天气为什么会变",
+    "en": "COLD FRONT · WHY THE WEATHER TURNS"
+   }
+  },
+  {
+   "id": "forest-diorama",
+   "worldId": "vegetation-atlas",
+   "priority": 3,
+   "duration": 5,
+   "settle": 8000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.42,
+      0.5
+     ],
+     "to": [
+      0.58,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "A slice of forest as a living diorama: canopy, understory, roots, stream.",
+   "label": {
+    "zh": "森林 · 一层一层打开",
+    "en": "FOREST · OPENED LAYER BY LAYER"
+   }
+  },
+  {
+   "id": "flight-network",
+   "worldId": "global-flight-network",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "actions": [
+    {
+     "at": 0.4,
+     "type": "clickText",
+     "text": "^下一站$"
+    }
+   ],
+   "why": "Thousands of flight routes glowing between cities with no borders drawn.",
+   "label": {
+    "zh": "航线 · 没有国界的世界地图",
+    "en": "FLIGHTS · A WORLD MAP WITHOUT BORDERS"
+   }
+  },
+  {
+   "id": "chokepoint-suez",
+   "worldId": "trade-chokepoints",
+   "priority": 2,
+   "duration": 6,
+   "settle": 5000,
+   "actions": [
+    {
+     "at": 0.6,
+     "type": "clickText",
+     "text": "^苏伊士$"
+    }
+   ],
+   "why": "Ship streams rerouting around Africa the moment Suez closes.",
+   "label": {
+    "zh": "关掉苏伊士 · 船绕非洲",
+    "en": "CLOSE SUEZ · SHIPS ROUND AFRICA"
+   }
+  },
+  {
+   "id": "mandelbrot-dive",
+   "worldId": "mandelbrot-zoom",
+   "priority": 1,
+   "duration": 6,
+   "settle": 4000,
+   "steps": [
+    {
+     "clickText": "^海马谷$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"缩放级别\"]",
+     "from": 1.5,
+     "to": 5.5,
+     "dur": 6
+    }
+   ],
+   "why": "Infinite dive into Seahorse Valley: spirals inside spirals.",
+   "label": {
+    "zh": "曼德博集 · 越放大越看不完",
+    "en": "MANDELBROT · ENDLESS AS YOU ZOOM"
+   }
+  },
+  {
+   "id": "mandelbrot-julia",
+   "worldId": "mandelbrot-zoom",
+   "priority": 3,
+   "duration": 5,
+   "settle": 4000,
+   "steps": [
+    {
+     "clickText": "^Julia 集$"
+    },
+    {
+     "clickText": "^铜与青$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "move",
+     "from": [
+      0.4,
+      0.45
+     ],
+     "to": [
+      0.6,
+      0.55
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Julia set morphing as the parameter moves.",
+   "label": {
+    "zh": "Julia 集 · 一个参数一个宇宙",
+    "en": "JULIA SET · ONE PARAMETER, ONE UNIVERSE"
+   }
+  },
+  {
+   "id": "fourier-epicycles",
+   "worldId": "fourier",
+   "priority": 2,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.15,
+    0.15,
+    0.7,
+    0.7
+   ],
+   "steps": [
+    {
+     "clickText": "^方波$"
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"谐波项数\"]",
+     "from": 1,
+     "to": 32,
+     "dur": 4.5,
+     "step": 1
+    }
+   ],
+   "why": "Spinning circles adding up until a smooth sine becomes a crisp square wave.",
+   "label": {
+    "zh": "傅里叶 · 旋转的圆画出一切",
+    "en": "FOURIER · CIRCLES DRAW ANYTHING"
+   }
+  },
+  {
+   "id": "ukulele-strings",
+   "worldId": "ukulele",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "eval": "window.__uke?.poster?.()"
+    },
+    {
+     "clickText": "^播放$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "why": "Amber ukulele with strings vibrating and frets lighting up note by note.",
+   "label": {
+    "zh": "尤克里里 · 看见声音",
+    "en": "UKULELE · SEEING SOUND"
+   }
+  },
+  {
+   "id": "kakeya-turn",
+   "worldId": "kakeya-needle",
+   "priority": 3,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.1,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^曲边三角$"
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": ".kak-scrub, input[class*=kak]",
+     "from": 0,
+     "to": 3.14,
+     "dur": 5
+    }
+   ],
+   "why": "A needle turning around inside a curved deltoid: geometry as choreography.",
+   "label": {
+    "zh": "挂谷问题 · 一根针怎样掉头",
+    "en": "KAKEYA · HOW A NEEDLE TURNS AROUND"
+   }
+  },
+  {
+   "id": "complex-exp",
+   "worldId": "complex-mapping",
+   "priority": 2,
+   "duration": 5,
+   "settle": 5000,
+   "ss": 2,
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.45,
+      0.5
+     ],
+     "to": [
+      0.57,
+      0.5
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Rainbow wireframe surface of a complex function rising out of the plane.",
+   "label": {
+    "zh": "复变函数 · 正弦波长高了",
+    "en": "COMPLEX FUNCTIONS · THE SINE WAVE GROWS"
+   }
+  },
+  {
+   "id": "complex-zeta",
+   "worldId": "complex-mapping",
+   "priority": 2,
+   "duration": 5,
+   "settle": 5000,
+   "ss": 2,
+   "steps": [
+    {
+     "clickText": "^ζ\\(z\\)$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "The Riemann zeta function as a colour-mapped landscape.",
+   "label": {
+    "zh": "黎曼 ζ 函数 · 数学最深的山",
+    "en": "RIEMANN ZETA · MATH'S DEEPEST MOUNTAIN"
+   }
+  },
+  {
+   "id": "neural-spiral",
+   "worldId": "neural-playground",
+   "priority": 2,
+   "duration": 6,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0,
+    0,
+    0.62,
+    0.62
+   ],
+   "steps": [
+    {
+     "clickText": "^螺旋$"
+    },
+    {
+     "wait": 600
+    }
+   ],
+   "actions": [
+    {
+     "at": 0.2,
+     "type": "clickText",
+     "text": "^播放$"
+    }
+   ],
+   "why": "A neural network learning to separate a two-arm spiral: the decision boundary wraps itself into shape.",
+   "label": {
+    "zh": "神经网络 · 自己学会分类",
+    "en": "NEURAL NET · LEARNING TO CLASSIFY"
+   }
+  },
+  {
+   "id": "cnn-layers",
+   "worldId": "cnn-vision",
+   "priority": 2,
+   "duration": 5,
+   "settle": 6000,
+   "steps": [
+    {
+     "clickText": "^全景$"
+    },
+    {
+     "clickText": "^7$"
+    },
+    {
+     "wait": 2000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.42,
+      0.5
+     ],
+     "to": [
+      0.56,
+      0.47
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "A handwritten 7 flowing through convolution layers as glowing 3D feature maps.",
+   "label": {
+    "zh": "卷积网络 · 从笔画认出数字",
+    "en": "CNN · READING A HANDWRITTEN DIGIT"
+   }
+  },
+  {
+   "id": "boids-vortex",
+   "worldId": "boids-flocking",
+   "priority": 1,
+   "duration": 5,
+   "settle": 4000,
+   "steps": [
+    {
+     "clickText": "^鱼群$"
+    },
+    {
+     "wait": 800
+    },
+    {
+     "clickText": "^漩涡$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Thousands of agents with three simple rules spinning into a bait ball.",
+   "label": {
+    "zh": "鱼群 · 没有领袖的旋涡",
+    "en": "SCHOOL OF FISH · A VORTEX WITH NO LEADER"
+   }
+  },
+  {
+   "id": "boids-birds",
+   "worldId": "boids-flocking",
+   "priority": 2,
+   "duration": 5,
+   "settle": 4000,
+   "steps": [
+    {
+     "clickText": "^鸟群$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "actions": [
+    {
+     "at": 2,
+     "type": "clickText",
+     "text": "^惊扰$"
+    }
+   ],
+   "why": "A murmuration splitting and re-forming after a scare.",
+   "label": {
+    "zh": "鸟群 · 三条规则飞出形状",
+    "en": "MURMURATION · THREE RULES, ONE SHAPE"
+   }
+  },
+  {
+   "id": "money-banknote",
+   "worldId": "follow-the-money",
+   "priority": 3,
+   "duration": 5,
+   "settle": 5000,
+   "actions": [
+    {
+     "at": 0.4,
+     "type": "clickText",
+     "text": "^花一张$"
+    }
+   ],
+   "why": "A 100-yuan note splitting into where the money actually goes.",
+   "label": {
+    "zh": "一张钞票 · 去了哪里",
+    "en": "ONE BANKNOTE · WHERE IT GOES"
+   }
+  },
+  {
+   "id": "tshirt-town",
+   "worldId": "tshirt-world",
+   "priority": 3,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^钱的流向$"
+    },
+    {
+     "wait": 1000
+    }
+   ],
+   "why": "Isometric town with money and goods flowing between farms, mills and shops.",
+   "label": {
+    "zh": "一件 T 恤 · 养活一座城",
+    "en": "ONE T-SHIRT · FEEDS A WHOLE TOWN"
+   }
+  },
+  {
+   "id": "starry-night-flight",
+   "worldId": "starry-night",
+   "priority": 1,
+   "duration": 6,
+   "settle": 8000,
+   "query": {
+    "capture": null
+   },
+   "steps": [
+    {
+     "clickText": "^开始飞行"
+    },
+    {
+     "wait": 5000
+    }
+   ],
+   "why": "Flying through Van Gogh's Starry Night: swirling painted sky, village, cypress.",
+   "label": {
+    "zh": "星月夜 · 走进梵高的画",
+    "en": "THE STARRY NIGHT · WALK INTO VAN GOGH"
+   },
+   "canvasOnly": true
+  },
+  {
+   "id": "starry-night-orbit",
+   "worldId": "starry-night",
+   "priority": 2,
+   "duration": 5,
+   "settle": 8000,
+   "query": {
+    "capture": null
+   },
+   "steps": [
+    {
+     "clickText": "^直接探索$"
+    },
+    {
+     "wait": 2000
+    }
+   ],
+   "actions": [
+    {
+     "at": 0,
+     "type": "drag",
+     "from": [
+      0.6,
+      0.5
+     ],
+     "to": [
+      0.4,
+      0.45
+     ],
+     "dur": 5,
+     "ease": "linear"
+    }
+   ],
+   "why": "Looking around the painted village under the brushstroke sky.",
+   "label": {
+    "zh": "星月夜 · 笔触变成天空",
+    "en": "THE STARRY NIGHT · BRUSHSTROKES BECOME SKY"
+   },
+   "canvasOnly": true
+  },
+  {
+   "id": "cafe-terrace-enter",
+   "worldId": "cafe-terrace",
+   "priority": 1,
+   "duration": 6,
+   "settle": 8000,
+   "query": {
+    "capture": null
+   },
+   "steps": [
+    {
+     "clickText": "^走进这幅画"
+    },
+    {
+     "wait": 4000
+    }
+   ],
+   "why": "Gliding into the lamplit Café Terrace at Night, the painting becoming a street.",
+   "label": {
+    "zh": "夜间咖啡馆 · 画框之外",
+    "en": "CAFÉ TERRACE · BEYOND THE FRAME"
+   },
+   "canvasOnly": true
+  },
+  {
+   "id": "cafe-terrace-stars",
+   "worldId": "cafe-terrace",
+   "priority": 3,
+   "duration": 5,
+   "settle": 8000,
+   "query": {
+    "capture": null
+   },
+   "steps": [
+    {
+     "clickText": "^06星星之间"
+    },
+    {
+     "wait": 5000
+    }
+   ],
+   "why": "Rising above the rooftops into the painted stars.",
+   "label": {
+    "zh": "梵高的星星 · 飞上屋顶",
+    "en": "VAN GOGH'S STARS · ABOVE THE ROOFTOPS"
+   },
+   "canvasOnly": true
+  },
+  {
+   "id": "ink-landscape-flight",
+   "worldId": "ink-landscape",
+   "priority": 1,
+   "duration": 6,
+   "settle": 6000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"飞行进度\"]",
+     "from": 9,
+     "to": 13,
+     "dur": 6
+    }
+   ],
+   "why": "Flying over a Song-dynasty ink painting in 3D: boats, bridges, misty peaks.",
+   "label": {
+    "zh": "水墨山水 · 飞进留白",
+    "en": "INK LANDSCAPE · INTO THE EMPTY SPACE"
+   }
+  },
+  {
+   "id": "ink-landscape-peaks",
+   "worldId": "ink-landscape",
+   "priority": 2,
+   "duration": 6,
+   "settle": 6000,
+   "actions": [
+    {
+     "at": 0,
+     "type": "range",
+     "sel": "input[aria-label=\"飞行进度\"]",
+     "from": 15,
+     "to": 20,
+     "dur": 6
+    }
+   ],
+   "why": "Rising into the mountains and looking back over the valley.",
+   "label": {
+    "zh": "松溪 · 回望群山",
+    "en": "SONGXI · LOOKING BACK AT THE PEAKS"
+   }
+  },
+  {
+   "id": "equation-tunnel",
+   "worldId": "equation-wormhole",
+   "priority": 1,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^穿越$"
+    },
+    {
+     "wait": 1500
+    }
+   ],
+   "why": "Hurtling through a tunnel built from famous equations: the 'this is all made of code/math' beat.",
+   "label": {
+    "zh": "公式虫洞 · 世界是写出来的",
+    "en": "EQUATION WORMHOLE · THE WORLD IS WRITTEN"
+   }
+  },
+  {
+   "id": "equation-mobius",
+   "worldId": "equation-wormhole",
+   "priority": 2,
+   "duration": 5,
+   "settle": 5000,
+   "steps": [
+    {
+     "clickText": "^莫比乌斯环$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Equations flowing along a Möbius strip.",
+   "label": {
+    "zh": "莫比乌斯环 · 只有一个面",
+    "en": "MÖBIUS STRIP · ONLY ONE SIDE"
+   }
+  },
+  {
+   "id": "formula-jellyfish",
+   "worldId": "formula-bloom",
+   "priority": 1,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.05,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^水母$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "A jellyfish made of nothing but trig functions, pulsing like a living thing.",
+   "label": {
+    "zh": "三角函数 · 长出一只水母",
+    "en": "TRIG FUNCTIONS · GROWING A JELLYFISH"
+   }
+  },
+  {
+   "id": "formula-ribbon",
+   "worldId": "formula-bloom",
+   "priority": 3,
+   "duration": 5,
+   "settle": 4000,
+   "ss": 2,
+   "crop": [
+    0.2,
+    0.05,
+    0.6,
+    0.6
+   ],
+   "steps": [
+    {
+     "clickText": "^丝带$"
+    },
+    {
+     "wait": 2500
+    }
+   ],
+   "why": "Particle ribbons folding through space from one formula.",
+   "label": {
+    "zh": "一个公式 · 一条流动的丝带",
+    "en": "ONE FORMULA · A FLOWING RIBBON"
+   }
+  }
+ ]
+}
