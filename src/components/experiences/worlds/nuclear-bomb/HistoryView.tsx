@@ -1,97 +1,105 @@
 import './styles/HistoryView.css'
 
 import {ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight} from '@phosphor-icons/react'
-import {useRef, useState, type ReactNode} from 'react'
+import {useEffect, useRef, useState, type ReactNode} from 'react'
 
 import type {ExperienceControls} from '~/components/ExperienceShell'
-import {Freebar} from '~/components/experiences/Freebar'
 import {useI18n} from '~/i18n'
 import {useExperienceI18n} from '~/i18n/experience'
 
 import {HISTORY_EVENTS, TEST_INTERVALS, wholeCalendarMonths} from './history'
+import {STOCKPILE_PEAK} from './history-data'
+import {HistoryDataChart} from './HistoryDataChart'
 
 const CHART_MAX_MONTHS = 120
+const CHINA_EVENT = HISTORY_EVENTS.findIndex((event) => event.id === 'china-596')
+const CHINA_INTERVAL = TEST_INTERVALS.find((interval) => interval.id === 'china')!
+const CHINA_MONTHS = wholeCalendarMonths(CHINA_INTERVAL.first.date, CHINA_INTERVAL.later.date)
 
-export function HistoryView({controls, active = true, tabs}: {
+export function HistoryView({controls, active = true, guided = false, guideFocus}: {
   controls: ExperienceControls
   active?: boolean
   tabs?: ReactNode
+  guided?: boolean
+  guideFocus?: 'china'
 }) {
   const tx = useExperienceI18n()
   const {locale} = useI18n()
   const language = locale === 'en' ? 'en' : 'zh'
   const scroller = useRef<HTMLDivElement>(null)
-  const timeline = useRef<HTMLOListElement>(null)
   const comparison = useRef<HTMLElement>(null)
   const [selectedCountry, setSelectedCountry] = useState('china')
+  const [selectedEvent, setSelectedEvent] = useState(CHINA_EVENT)
+  const [selectedYear, setSelectedYear] = useState(STOCKPILE_PEAK.year)
+  const guideSnapshot = useRef<{country: string; event: number; year: number; scroll: number} | null>(null)
   const selected = TEST_INTERVALS.find((interval) => interval.id === selectedCountry) ?? TEST_INTERVALS[4]
+  const event = HISTORY_EVENTS[selectedEvent]
   const selectedMonths = wholeCalendarMonths(selected.first.date, selected.later.date)
   const dateLabel = (value: string) => value.replaceAll('-', ' . ')
   const behavior = (): ScrollBehavior => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
 
-  const moveTimeline = (direction: -1 | 1) => {
-    controls.registerInteraction()
-    const element = timeline.current
-    if (element) element.scrollBy({left: direction * Math.max(300, element.clientWidth * 0.72), behavior: behavior()})
-  }
-
-  const jumpToChina = () => {
-    controls.registerInteraction()
-    const node = timeline.current?.querySelector<HTMLElement>('[data-history-event="china-596"]')
-    if (!node || !scroller.current || !timeline.current) return
-    if (window.matchMedia('(max-width: 720px)').matches) {
-      scroller.current.scrollTo({top: node.offsetTop - 246, behavior: behavior()})
-    } else {
-      timeline.current.scrollTo({left: node.offsetLeft - timeline.current.offsetLeft - 20, behavior: behavior()})
+  useEffect(() => {
+    if (guided && guideFocus === 'china') {
+      if (!guideSnapshot.current) guideSnapshot.current = {country: selectedCountry, event: selectedEvent, year: selectedYear, scroll: scroller.current?.scrollTop ?? 0}
+      setSelectedCountry('china')
+      setSelectedEvent(CHINA_EVENT)
+      setSelectedYear(STOCKPILE_PEAK.year)
+      scroller.current?.scrollTo({top: 0, behavior: 'auto'})
+    } else if (guideSnapshot.current) {
+      const saved = guideSnapshot.current
+      setSelectedCountry(saved.country)
+      setSelectedEvent(saved.event)
+      setSelectedYear(saved.year)
+      scroller.current?.scrollTo({top: saved.scroll, behavior: 'auto'})
+      guideSnapshot.current = null
     }
-  }
+  // The snapshot is captured once on tour entry, then restored on exit.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [guided, guideFocus])
 
+  const chooseEvent = (index: number) => {
+    controls.registerInteraction()
+    setSelectedEvent(Math.max(0, Math.min(HISTORY_EVENTS.length - 1, index)))
+  }
+  const jumpToChina = () => {
+    chooseEvent(CHINA_EVENT)
+    setSelectedCountry('china')
+    scroller.current?.scrollTo({top: 0, behavior: behavior()})
+  }
   const jumpToComparison = () => {
     controls.registerInteraction()
-    if (comparison.current && scroller.current) scroller.current.scrollTo({top: comparison.current.offsetTop - 246, behavior: behavior()})
+    if (comparison.current && scroller.current) scroller.current.scrollTo({top: comparison.current.offsetTop - 150, behavior: behavior()})
   }
 
-  return <section className="nb-history" aria-label={tx('历史视图')} data-nuclear-history="true">
+  return <section className="nb-history" aria-label={tx('历史视图')} data-nuclear-history="true" data-history-guided={guided || undefined}>
     <div className="nb-history-scroll" ref={scroller}>
       <div className="nb-history-content">
         <header className="nb-history-heading">
           <p><span />{tx('历史')}<i />1938 — {tx('今天')}</p>
-          <h1>{tx('从一次发现，走向一个时代。')}</h1>
-          <span>{tx('沿着日期，读这些事件。')}</span>
+          <h1>{tx('日期之间，也有距离。')}</h1>
+          <span>{tx('同一根年份横轴，读事件与数量。')}</span>
         </header>
 
         <section className="nb-history-timeline-section" aria-labelledby="nb-history-timeline-title">
           <div className="nb-history-section-label">
-            <h2 id="nb-history-timeline-title">01 <span>{tx('历史时间线')}</span></h2>
-            <div className="nb-history-timeline-actions">
-              <span>{tx('按事件排列，间隔不代表时长')}</span>
-              <button type="button" onClick={() => moveTimeline(-1)} aria-label={tx('向前浏览时间线')}><ArrowLeft size={16} /></button>
-              <button type="button" onClick={() => moveTimeline(1)} aria-label={tx('向后浏览时间线')}><ArrowRight size={16} /></button>
-            </div>
-            <button className="nb-history-mobile-compare" type="button" onClick={jumpToComparison}>{tx('看月数比较')}<ArrowDown size={13} /></button>
+            <h2 id="nb-history-timeline-title">01 <span>{tx('历史时间线与数据')}</span></h2>
+            <div className="nb-history-title-links"><button className="nb-history-text-link" type="button" onClick={jumpToChina}>{tx('中国的两个日期')}<ArrowUpRight size={12} /></button><button className="nb-history-text-link" type="button" onClick={jumpToComparison}>{tx('比较月数')}<ArrowDown size={12} /></button></div>
+            <span className="nb-history-axis-note">{tx('年份线性排列')}</span>
           </div>
-          <ol className="nb-history-timeline" ref={timeline} tabIndex={0} aria-label={tx('可滚动的历史时间线')}>
-            {HISTORY_EVENTS.map((event, index) => <li key={event.id} className={event.china ? 'is-china' : undefined} data-history-event={event.id}>
-              <div className="nb-history-node-marker" aria-hidden="true"><span />{String(index + 1).padStart(2, '0')}</div>
-              <article>
-                <div className="nb-history-event-date"><time dateTime={event.date}>{dateLabel(event.date)}</time>{event.secondDate && <><span> / </span><time dateTime={event.secondDate}>08 . 09</time></>}</div>
-                <h3>{event.title[language]}</h3>
-                <p>{event.description[language]}</p>
-                <div className="nb-history-event-sources">
-                  <a href={event.sourceUrl} target="_blank" rel="noreferrer" onClick={controls.registerInteraction}>{tx('维基百科')}<ArrowUpRight size={12} /><span className="nb-history-sr"> · {event.title[language]}</span></a>
-                  {event.additionalSourceUrl && <a href={event.additionalSourceUrl} target="_blank" rel="noreferrer" onClick={controls.registerInteraction}>{tx('不首先使用声明')}<ArrowUpRight size={12} /></a>}
-                </div>
-              </article>
-            </li>)}
-            <li className="nb-history-today">
-              <div className="nb-history-node-marker" aria-hidden="true"><span />—</div>
-              <article><p className="nb-history-today-label">{tx('今天')}</p><h3>{tx('回看这些日期。')}</h3><p>{tx('每个事件的出处，都可以打开。')}</p></article>
-            </li>
-          </ol>
+          <HistoryDataChart guided={guided} selectedEvent={selectedEvent} selectedYear={selectedYear} onEvent={chooseEvent} onYear={setSelectedYear} />
+          <div className={`nb-history-selected-event${event.china ? ' is-china' : ''}`} data-history-event={event.id}>
+            <div className="nb-history-event-index"><span>{String(selectedEvent + 1).padStart(2, '0')} / {HISTORY_EVENTS.length}</span><div><button type="button" disabled={selectedEvent === 0} onClick={() => chooseEvent(selectedEvent - 1)} aria-label={tx('上一个历史事件')}><ArrowLeft size={16} /></button><button type="button" disabled={selectedEvent === HISTORY_EVENTS.length - 1} onClick={() => chooseEvent(selectedEvent + 1)} aria-label={tx('下一个历史事件')}><ArrowRight size={16} /></button></div></div>
+            <article>
+              <div className="nb-history-event-date"><time dateTime={event.date}>{dateLabel(event.date)}</time>{event.secondDate && <><span> / </span><time dateTime={event.secondDate}>08 . 09</time></>}</div>
+              <h3>{event.title[language]}</h3>
+              <p>{event.description[language]}</p>
+              <div className="nb-history-event-sources"><a href={event.sourceUrl} target="_blank" rel="noreferrer" onClick={controls.registerInteraction}>{tx('维基百科')}<ArrowUpRight size={12} /><span className="nb-history-sr"> · {event.title[language]}</span></a>{event.additionalSourceUrl && <a href={event.additionalSourceUrl} target="_blank" rel="noreferrer" onClick={controls.registerInteraction}>{tx('不首先使用声明')}<ArrowUpRight size={12} /></a>}</div>
+            </article>
+            {guided && <aside className="nb-history-guide-months"><strong>{Math.floor(CHINA_MONTHS / 12)}<small>{tx('年')}</small>{CHINA_MONTHS % 12}<small>{tx('个月')}</small></strong><span>1964.10.16 — 1967.06.17</span><p>{tx('中国：32 个完整月，另 1 天。')}</p></aside>}
+          </div>
         </section>
-
         <section className="nb-history-comparison" ref={comparison} aria-labelledby="nb-history-comparison-title">
-          <div className="nb-history-section-label"><h2>02 <span>{tx('两次试验之间')}</span></h2><span>{tx('线性坐标 · 从零开始')}</span></div>
+          <div className="nb-history-section-label"><h2>02 <span>{tx('两次试验之间')}</span></h2><button className="nb-history-text-link" type="button" onClick={jumpToChina}>{tx('中国的两个日期')}<ArrowUpRight size={12} /></button><span>{tx('线性坐标 · 从零开始')}</span></div>
           <h2 id="nb-history-comparison-title">{tx('从第一颗原子弹到第一颗氢弹')}</h2>
           <div className="nb-history-chart-layout">
             <div className="nb-history-chart">
@@ -119,10 +127,5 @@ export function HistoryView({controls, active = true, tabs}: {
         </section>
       </div>
     </div>
-    {active && <Freebar className="nb-history-freebar" ariaLabel={tx('历史浏览控制')} primaryControlBudget={tabs ? 5 : 2} mobileDensity="comfortable">
-      {tabs}
-      <button type="button" className="nb-history-jump" onClick={jumpToChina}><span>1964—1967</span>{tx('中国的两个日期')}<ArrowRight size={14} /></button>
-      <button type="button" className="nb-history-jump nb-history-jump-compare" onClick={jumpToComparison}>{tx('比较月数')}<ArrowDown size={14} /></button>
-    </Freebar>}
   </section>
 }
