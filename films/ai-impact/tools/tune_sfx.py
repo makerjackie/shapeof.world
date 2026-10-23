@@ -1,4 +1,4 @@
-"""Shift pitched sound effects to the nearest tone of the A-minor triad (A, C, E) so they sit in the music's key.
+"""Shift pitched sound effects to the nearest tone of a triad (default A minor: A, C, E; TRIAD=5,9,0 for the F-major triad of 千年之后) so they sit in the music's key.
 
 Usage: python tools/tune_sfx.py public/lib public/lib/tuned sfx-impact-05 sfx-impact-06 ...
 Measures the dominant partial in the first 300 ms after the attack, then pitch-shifts with ffmpeg
@@ -11,7 +11,7 @@ from scipy.io import wavfile
 src, dst, ids = sys.argv[1], sys.argv[2], sys.argv[3:]
 os.makedirs(dst, exist_ok=True)
 NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
-TRIAD = [9, 0, 4]
+TRIAD = [int(x) for x in os.environ.get("TRIAD", "9,0,4").split(",")]
 for i in ids:
     sr, y = wavfile.read(f"{src}/{i}.wav")
     y = y.astype(np.float32)
