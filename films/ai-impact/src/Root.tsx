@@ -3,6 +3,7 @@ import { Composition, Still } from "remotion";
 import { Cover } from "./Cover";
 import { Film } from "./Film";
 import { FilmV2 } from "./v2/FilmV2";
+import { Cover3 } from "./v3/Cover3";
 import { FilmV3, SAMPLE_END, SampleV3 } from "./v3/FilmV3";
 import { FRAMES as V3_FRAMES, fr as v3fr } from "./v3/timing";
 import { FRAMES as V2_FRAMES } from "./v2/kit";
@@ -26,5 +27,7 @@ export const Root: React.FC = () => (
     <Composition id="SampleC" component={SampleC} durationInFrames={SAMPLE_FRAMES} fps={FPS} width={1920} height={1080} />
     <Still id="cover-16x9" component={Cover} width={1920} height={1080} defaultProps={{ tall: false }} />
     <Still id="cover-3x4" component={Cover} width={1080} height={1440} defaultProps={{ tall: true }} />
+    <Still id="cover3-16x9" component={Cover3} width={1920} height={1080} defaultProps={{ tall: false }} />
+    <Still id="cover3-3x4" component={Cover3} width={1080} height={1440} defaultProps={{ tall: true }} />
   </>
 );

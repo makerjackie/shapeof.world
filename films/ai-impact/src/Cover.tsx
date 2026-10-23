@@ -6,7 +6,7 @@ import { FONT, K, LANES, SERIF } from "./theme";
 
 // Covers (STYLE.md 二): paper brand bar on top, one plain sentence (no numbers), and a main picture drawn for the
 // cover: the film's four-lane prop, big. Three lines shoot up; the work line stays flat and ends on a gold point.
-const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
+export const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
   <div style={{ position: "absolute", left: 0, top: 0, width: w, height: h, background: K.paper, display: "flex", alignItems: "center", justifyContent: "space-between", padding: `0 ${h * 0.6}px`, boxSizing: "border-box" }}>
     <div style={{ display: "flex", alignItems: "center", gap: h * 0.22 }}>
       <Img src={staticFile("mark-disc.png")} style={{ width: h * 0.72, height: h * 0.72 }} />
