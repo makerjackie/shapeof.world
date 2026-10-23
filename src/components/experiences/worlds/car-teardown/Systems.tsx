@@ -53,7 +53,17 @@ export function Box({
 		</mesh>
 	)
 }
-function Pipe({points, radius, color, id}: {points: Point3[]; radius: number; color: string; id?: string}) {
+function Pipe({
+	points,
+	radius,
+	color,
+	id,
+}: {
+	points: Point3[]
+	radius: number
+	color: string
+	id?: string
+}) {
 	const geometry = useMemo(
 		() =>
 			new T.TubeGeometry(
@@ -103,21 +113,60 @@ export function Chassis() {
 		y = S.wheels.radius
 	return (
 		<>
-			{[-1, 1].map((side) => (
-				<Box
-					key={side}
-					position={[0, G.rail.y, G.rail.z * side]}
-					size={[G.rail.length, G.rail.height, G.rail.width]}
-					material="steel"
+			<group userData={{partId: 'subframe-1'}}>
+				{[-1, 1].map((side) => (
+					<group key={side}>
+						<Bar
+							from={[d.frontAxleX - G.subframe.frontLength / 2, G.crossmember.y, side * G.rail.z]}
+							to={[d.frontAxleX + G.subframe.frontLength / 2, G.crossmember.y, side * G.rail.z]}
+							radius={G.subframe.beamRadius}
+							material="aluminum"
+						/>
+						<Bar
+							from={[d.frontAxleX - G.subframe.frontLength / 2, G.crossmember.y, side * G.rail.z]}
+							to={[d.frontAxleX + G.subframe.frontLength / 2, G.crossmember.y, 0]}
+							radius={G.subframe.beamRadius}
+							material="aluminum"
+						/>
+					</group>
+				))}
+				<Bar
+					from={[d.frontAxleX + G.subframe.frontLength / 2, G.crossmember.y, -G.rail.z]}
+					to={[d.frontAxleX + G.subframe.frontLength / 2, G.crossmember.y, G.rail.z]}
+					radius={G.subframe.beamRadius}
+					material="aluminum"
 				/>
-			))}
+			</group>
+			<group userData={{partId: 'subframe-2'}}>
+				{[-1, 1].map((side) => (
+					<group key={side}>
+						<Bar
+							from={[d.rearAxleX - G.subframe.rearLength / 2, G.crossmember.y, side * G.rail.z]}
+							to={[d.rearAxleX + G.subframe.rearLength / 2, G.crossmember.y, side * G.rail.z]}
+							radius={G.subframe.beamRadius}
+							material="aluminum"
+						/>
+						<Bar
+							from={[d.rearAxleX + (side * G.subframe.rearLength) / 2, G.crossmember.y, -G.rail.z]}
+							to={[d.rearAxleX + (side * G.subframe.rearLength) / 2, G.crossmember.y, G.rail.z]}
+							radius={G.subframe.beamRadius}
+							material="aluminum"
+						/>
+					</group>
+				))}
+			</group>
 			{[d.frontAxleX, d.rearAxleX].map((x, i) => (
-				<Box
+				<Pipe
 					key={x}
-					position={[x, G.crossmember.y, 0]}
-					size={[G.crossmember.length, G.crossmember.height, G.crossmember.width]}
-					material="steel"
-					id={`subframe-${i + 1}`}
+					id={`antiroll-${i + 1}`}
+					radius={G.subframe.antirollRadius}
+					color="#7a818b"
+					points={[
+						[x - G.subframe.stabilizerOffset, y, -G.rail.z * 1.45],
+						[x, y * 0.65, -G.rail.z],
+						[x, y * 0.65, G.rail.z],
+						[x - G.subframe.stabilizerOffset, y, G.rail.z * 1.45],
+					]}
 				/>
 			))}
 			{wheelLocations.map(({x, z, front}, i) => {
@@ -178,72 +227,6 @@ export function Chassis() {
 		</>
 	)
 }
-export function Drivetrain() {
-	const tr = S.transmission,
-		box = G.gearbox,
-		diff = G.differential
-	return (
-		<>
-			<mesh position={[tr.clutchX, tr.axisY, 0]} rotation={[0, 0, Math.PI / 2]} userData={{partId: 'clutch'}}>
-				<cylinderGeometry args={[box.frontRadius * 1.1, box.frontRadius * 1.1, box.ribWidth * 4, 48]} />
-				<meshStandardMaterial {...S.materials.aluminum} />
-			</mesh>
-			<mesh
-				position={[(tr.clutchX + tr.outputX) / 2, tr.axisY, 0]}
-				rotation={[0, 0, -Math.PI / 2]}
-				castShadow
-				userData={{partId: 'gearbox'}}
-			>
-				<cylinderGeometry args={[box.frontRadius, box.rearRadius, box.length, 12]} />
-				<meshStandardMaterial {...S.materials.aluminum} />
-			</mesh>
-			{Array.from({length: box.ribs}, (_, i) => (
-				<mesh
-					key={i}
-					position={[tr.outputX + (i / (box.ribs - 1)) * box.length, tr.axisY, 0]}
-					rotation={[0, Math.PI / 2, 0]}
-				>
-					<torusGeometry
-						args={[
-							box.rearRadius + ((box.frontRadius - box.rearRadius) * i) / (box.ribs - 1),
-							box.ribWidth / 2,
-							6,
-							24,
-						]}
-					/>
-					<meshStandardMaterial {...S.materials.aluminum} />
-				</mesh>
-			))}
-			<Bar
-				from={[tr.outputX, tr.axisY, 0]}
-				to={[tr.driveshaftEndX, tr.differentialY, 0]}
-				radius={G.shaftRadius}
-				id="driveshaft"
-			/>
-			<Box
-				position={[tr.differentialX, tr.differentialY, 0]}
-				size={[diff.length, diff.height, diff.width]}
-				material="steel"
-				id="differential"
-			/>
-			{[-1, 1].map((side, i) => (
-				<Bar
-					key={side}
-					from={[tr.differentialX, tr.differentialY, 0]}
-					to={[tr.differentialX, tr.differentialY, (side * S.wheels.rearTrack) / 2]}
-					radius={G.halfshaftRadius}
-					id={`halfshaft-${i + 1}`}
-				/>
-			))}
-			{[tr.outputX, tr.driveshaftEndX].map((x) => (
-				<mesh key={x} position={[x, tr.axisY, 0]}>
-					<sphereGeometry args={[G.jointRadius, 16, 12]} />
-					<meshStandardMaterial {...S.materials.steel} />
-				</mesh>
-			))}
-		</>
-	)
-}
 export function Brakes({explode}: {explode: number}) {
 	return (
 		<>
@@ -254,7 +237,9 @@ export function Brakes({explode}: {explode: number}) {
 				return (
 					<group key={i} position={[x, S.wheels.radius, dz]}>
 						<mesh rotation={[Math.PI / 2, 0, 0]} userData={{partId: `disc-${i + 1}`}}>
-							<cylinderGeometry args={[b.diameter / 2, b.diameter / 2, b.thickness, G.discRadialSegments]} />
+							<cylinderGeometry
+								args={[b.diameter / 2, b.diameter / 2, b.thickness, G.discRadialSegments]}
+							/>
 							<meshPhysicalMaterial
 								{...S.materials.disc}
 								anisotropy={0.65}
@@ -284,8 +269,7 @@ export function Brakes({explode}: {explode: number}) {
 			<mesh
 				position={[...G.masterPosition]}
 				rotation={[0, 0, Math.PI / 2]}
-				userData={{partId: 'master-cylinder'}}
-			>
+				userData={{partId: 'master-cylinder'}}>
 				<cylinderGeometry args={[G.boosterRadius, G.boosterRadius, G.boosterRadius * 0.5, 32]} />
 				<meshStandardMaterial {...S.materials.plastic} />
 			</mesh>
@@ -321,13 +305,20 @@ export function Steering() {
 				<Bar
 					key={side}
 					from={[x, y, (side * G.rackLength) / 2]}
-					to={[S.dimensions.frontAxleX - G.armRadius, S.wheels.radius, (side * S.wheels.frontTrack) / 2]}
+					to={[
+						S.dimensions.frontAxleX - G.armRadius,
+						S.wheels.radius,
+						(side * S.wheels.frontTrack) / 2,
+					]}
 					radius={G.tieRodRadius}
 					id={`tie-rod-${i + 1}`}
 				/>
 			))}
 			<Bar from={[x, y, wheel[2]]} to={[...wheel]} radius={G.columnRadius} id="steering-column" />
-			<group position={[...wheel]} rotation={[0, 0, -Math.PI / 3]} userData={{partId: 'steering-wheel'}}>
+			<group
+				position={[...wheel]}
+				rotation={[0, 0, -Math.PI / 3]}
+				userData={{partId: 'steering-wheel'}}>
 				<mesh rotation={[Math.PI / 2, 0, 0]}>
 					<torusGeometry args={[G.steeringRimRadius, G.steeringRimTube, 12, 48]} />
 					<meshStandardMaterial {...S.materials.rubber} />
@@ -348,7 +339,12 @@ export function Electrical() {
 		r = G.harnessRearX
 	return (
 		<>
-			<Box id="battery" position={S.electrical.batteryPosition} size={G.batterySize} material="plastic" />
+			<Box
+				id="battery"
+				position={S.electrical.batteryPosition}
+				size={G.batterySize}
+				material="plastic"
+			/>
 			{[-1, 1].map((side) => (
 				<mesh
 					key={side}
@@ -356,8 +352,7 @@ export function Electrical() {
 						S.electrical.batteryPosition[0] + side * G.batterySize[0] * 0.3,
 						S.electrical.batteryPosition[1] + G.batterySize[1] / 2,
 						S.electrical.batteryPosition[2],
-					]}
-				>
+					]}>
 					<cylinderGeometry args={[G.batteryTerminal, G.batteryTerminal, G.batteryTerminal, 12]} />
 					<meshStandardMaterial color={side > 0 ? '#874937' : '#767c82'} metalness={0.6} />
 				</mesh>
@@ -366,42 +361,76 @@ export function Electrical() {
 			<Box id="fuse-box" position={G.fusePosition} size={G.fuseSize} material="plastic" />
 			<group userData={{partId: 'wiring-harness'}}>
 				{[-1, 1].map((side) => (
-					<Pipe
-						key={side}
-						points={[
-							[f, y, side * z],
-							[f * 0.6, y, side * z],
-							[0, y * 0.8, side * z],
-							[r * 0.65, y * 0.9, side * z],
-							[r, y, side * z],
-						]}
-						radius={G.wireRadius}
-						color="#454c51"
-					/>
+					<group key={side}>
+						<Pipe
+							points={[
+								[f, y, side * z],
+								[f * 0.6, y, side * z],
+								[0, y * 0.8, side * z],
+								[r * 0.65, y * 0.9, side * z],
+								[r, y, side * z],
+							]}
+							radius={G.wireRadius}
+							color="#32383c"
+						/>
+						{[-1, 0, 1].map((strand) => (
+							<Pipe
+								key={strand}
+								points={[
+									[f, y + strand * G.branchRadius, side * z + G.wireRadius],
+									[f * 0.6, y + strand * G.branchRadius, side * z + G.wireRadius],
+									[0, y * 0.8 + strand * G.branchRadius, side * z + G.wireRadius],
+									[r * 0.65, y * 0.9 + strand * G.branchRadius, side * z + G.wireRadius],
+									[r, y + strand * G.branchRadius, side * z + G.wireRadius],
+								]}
+								radius={G.branchRadius * 0.42}
+								color={strand === 0 ? '#8a7452' : '#4b5964'}
+							/>
+						))}
+						{[
+							f,
+							S.engine.cylinder1X,
+							S.transmission.clutchX,
+							0,
+							S.engine.fuelTankPosition[0],
+							r,
+						].map((x, i) => (
+							<group key={x}>
+								<Pipe
+									points={[
+										[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z],
+										[x - G.ecuSize[0], y * 0.88, side * z * 0.62],
+										[x - G.ecuSize[0], y * 0.9, side * z * 0.3],
+									]}
+									radius={G.branchRadius * (i % 2 ? 1.3 : 1.9)}
+									color="#41494f"
+								/>
+								<Box
+									position={[x - G.ecuSize[0], y * 0.9, side * z * 0.3]}
+									size={G.connectorSize}
+									material="plastic"
+								/>
+								<mesh
+									position={[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z]}
+									rotation={[0, 0, Math.PI / 2]}>
+									<cylinderGeometry
+										args={[G.wireRadius * 1.2, G.wireRadius * 1.2, G.harnessClipWidth, 12]}
+									/>
+									<meshStandardMaterial color="#74716b" roughness={0.65} />
+								</mesh>
+							</group>
+						))}
+					</group>
 				))}
-				{[f, S.engine.cylinder1X, S.transmission.clutchX, 0, S.engine.fuelTankPosition[0], r].map((x, i) => (
-					<Pipe
-						key={x}
-						points={[
-							[x, y, -z],
-							[x - G.ecuSize[0], y - G.ecuSize[1], 0],
-							[x, y, z],
-						]}
-						radius={G.branchRadius * (i % 2 ? 1 : 1.3)}
-						color={i % 2 ? '#6d5946' : '#59646c'}
-					/>
-				))}
-				{[-1, 1].map((side) => (
-					<Pipe
-						key={`lamp-${side}`}
-						points={[
-							[f, y, side * z],
-							[f + G.ecuSize[0], y + G.fuseSize[1], side * z * 1.1],
-						]}
-						radius={G.branchRadius}
-						color="#736356"
-					/>
-				))}
+				<Pipe
+					points={[
+						[f * 0.6, y, -z],
+						[f * 0.58, y, 0.0],
+						[f * 0.6, y, z],
+					]}
+					radius={G.wireRadius}
+					color="#32383c"
+				/>
 			</group>
 		</>
 	)
@@ -431,7 +460,12 @@ export function PowertrainAccessories() {
 				<torusGeometry args={[G.fanRadius, G.radiatorFinRadius * 3, 8, 48]} />
 				<meshStandardMaterial {...S.materials.plastic} />
 			</mesh>
-			<Box id="fuel-tank" position={S.engine.fuelTankPosition} size={G.tankSize} material="plastic" />
+			<Box
+				id="fuel-tank"
+				position={S.engine.fuelTankPosition}
+				size={G.tankSize}
+				material="plastic"
+			/>
 			<group userData={{partId: 'exhaust'}}>
 				<Pipe
 					points={[

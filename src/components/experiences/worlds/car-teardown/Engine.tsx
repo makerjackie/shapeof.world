@@ -1,13 +1,19 @@
-import {useEffect, useMemo, useRef, type RefObject} from 'react'
+import {useEffect, useMemo, useRef, type RefObject, type ReactNode} from 'react'
 import {useFrame} from '@react-three/fiber'
 import * as THREE from 'three'
 import {cylinderState} from './model'
-import {VEHICLE_SPEC, type CylinderNumber, type ValveType} from './vehicle-spec'
+import {
+	ENGINE_GEOMETRY as C,
+	VEHICLE_SPEC,
+	type CylinderNumber,
+	type ValveType,
+} from './vehicle-spec'
+import {createEngineCastings} from './engine-castings'
+import {enginePartOffset, type EnginePartId} from './engine-parts'
 import {
 	CYLINDERS,
 	ENGINE_CENTER_X,
 	cylinderX,
-	createBoredCasting,
 	createCamLobe,
 	createCrankWeb,
 	createValveSpring,
@@ -32,16 +38,20 @@ export interface EngineProps {
 	angleRef: RefObject<number>
 	rpm: number
 	xray: boolean
+	partsExplode?: number
+	hoveredPart?: string | null
+	selectedPart?: string | null
+	onHoverPart?: (id: string | null) => void
+	onSelectPart?: (id: string) => void
 }
 
 function makeResources() {
-	const block = createBoredCasting(G.blockLength, G.blockWidth, G.deckY - G.blockBottom, E.bore / 2)
-	const head = createBoredCasting(G.blockLength, G.headWidth, G.headHeight, E.bore / 2)
-	const cover = new THREE.BoxGeometry(G.blockLength, G.camShaftRadius * 3, G.headWidth)
-	const pan = new THREE.BoxGeometry(G.blockLength, G.oilPanHeight, G.blockWidth)
-	const lowerCase = createBoredCasting(G.blockLength, G.blockWidth, G.crankcaseHeight, E.bore / 2)
-	const allCasting = [block, head, cover, pan, lowerCase]
-	const castingEdges = allCasting.map((geometry) => new THREE.EdgesGeometry(geometry, 24))
+	const castings = createEngineCastings()
+	const castingEdges = Object.fromEntries(
+		Object.entries(castings)
+			.filter(([, value]) => !Array.isArray(value))
+			.map(([id, geometry]) => [id, new THREE.EdgesGeometry(geometry as THREE.BufferGeometry, 55)]),
+	) as Record<string, THREE.EdgesGeometry>
 	const spring = createValveSpring()
 	const crankWeb = createCrankWeb()
 	const rodBigEye = createRodEye(G.rodBigRadius, G.crankPinRadius)
@@ -74,11 +84,7 @@ function makeResources() {
 		}),
 	}
 	return {
-		block,
-		head,
-		cover,
-		pan,
-		lowerCase,
+		...castings,
 		castingEdges,
 		spring,
 		crankWeb,
@@ -116,13 +122,19 @@ function Casting({
 			<mesh
 				geometry={geometry}
 				material={
-					xray ? resources.materials.xray : dark ? resources.materials.black : resources.materials.aluminum
+					xray
+						? resources.materials.xray
+						: dark
+							? resources.materials.black
+							: resources.materials.aluminum
 				}
 				castShadow={!xray}
 				receiveShadow
 				userData={{partId}}
 			/>
-			{xray && <lineSegments geometry={edges} material={resources.materials.edges} renderOrder={3} />}
+			{xray && (
+				<lineSegments geometry={edges} material={resources.materials.edges} renderOrder={3} />
+			)}
 		</group>
 	)
 }
@@ -143,7 +155,9 @@ function Crankshaft({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {reso
 						rotation={X_AXIS}
 						material={resources.materials.steel}
 						castShadow>
-						<cylinderGeometry args={[G.crankMainRadius, G.crankMainRadius, G.crankWebThickness * 2, 40]} />
+						<cylinderGeometry
+							args={[G.crankMainRadius, G.crankMainRadius, G.crankWebThickness * 2, 40]}
+						/>
 					</mesh>
 				)
 			})}
@@ -158,7 +172,12 @@ function Crankshaft({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {reso
 						material={resources.materials.steel}
 						castShadow>
 						<cylinderGeometry
-							args={[G.crankPinRadius, G.crankPinRadius, E.cylinderSpacing - G.crankWebThickness * 4, 40]}
+							args={[
+								G.crankPinRadius,
+								G.crankPinRadius,
+								E.cylinderSpacing - G.crankWebThickness * 4,
+								40,
+							]}
 						/>
 					</mesh>
 					{[-1, 1].map((side) => (
@@ -181,6 +200,17 @@ function Crankshaft({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {reso
 					<cylinderGeometry args={[G.crankMainRadius, G.crankMainRadius, G.shaftEnd, 32]} />
 				</mesh>
 			))}
+		</group>
+	)
+}
+
+function Flywheel({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {resources: Resources}) {
+	const shaft = useRef<THREE.Group>(null)
+	useFrame(() => {
+		if (shaft.current) shaft.current.rotation.x = angleRef.current * DEG
+	})
+	return (
+		<group ref={shaft} position={[0, E.crankY, 0]}>
 			<group
 				position={[ENGINE_CENTER_X - G.blockLength / 2 - G.shaftEnd / 2, 0, 0]}
 				userData={{partId: 'flywheel'}}>
@@ -217,15 +247,17 @@ function PistonAssembly({
 	rpm,
 	resources,
 	xray,
+	partsExplode = 0,
 }: EngineProps & {cylinder: CylinderNumber; resources: Resources}) {
 	const piston = useRef<THREE.Group>(null)
 	const rod = useRef<THREE.Group>(null)
 	const gas = useRef<THREE.Mesh>(null)
 	const gasMaterial = useRef<THREE.MeshBasicMaterial>(null)
-	const spark = useRef<THREE.Mesh>(null)
-	const sparkMaterial = useRef<THREE.MeshBasicMaterial>(null)
 	const colors = useMemo(
-		() => Object.fromEntries(Object.entries(M.strokes).map(([key, value]) => [key, new THREE.Color(value)])),
+		() =>
+			Object.fromEntries(
+				Object.entries(M.strokes).map(([key, value]) => [key, new THREE.Color(value)]),
+			),
 		[],
 	)
 	useFrame(() => {
@@ -250,11 +282,6 @@ function PistonAssembly({
 			gasMaterial.current.opacity = state.stroke === 'power' ? 0.22 : 0.12
 			if (state.sparkIntensity > 0)
 				gasMaterial.current.color.lerp(colors.ignition, state.sparkIntensity * 0.75)
-		}
-		if (spark.current && sparkMaterial.current) {
-			spark.current.visible = xray && state.sparkIntensity > 0.005
-			sparkMaterial.current.color.set(M.strokes.ignition).multiplyScalar(3 + state.sparkIntensity * 7)
-			spark.current.scale.setScalar(0.65 + state.sparkIntensity * 0.65)
 		}
 	})
 	return (
@@ -304,7 +331,9 @@ function PistonAssembly({
 				<mesh
 					position={[0, (E.rodLength + G.rodBigRadius - G.rodSmallRadius) / 2, 0]}
 					material={resources.materials.darkSteel}>
-					<boxGeometry args={[G.rodThickness * 1.05, E.rodLength - G.rodBigRadius * 2, G.rodWidth * 0.35]} />
+					<boxGeometry
+						args={[G.rodThickness * 1.05, E.rodLength - G.rodBigRadius * 2, G.rodWidth * 0.35]}
+					/>
 				</mesh>
 				<mesh geometry={resources.rodBigEye} material={resources.materials.steel} castShadow />
 				<mesh
@@ -313,7 +342,11 @@ function PistonAssembly({
 					material={resources.materials.steel}
 				/>
 			</group>
-			<mesh ref={gas} position={[cylinderX(cylinder), G.deckY, 0]} visible={xray} renderOrder={2}>
+			<mesh
+				ref={gas}
+				position={[cylinderX(cylinder), G.deckY, 0]}
+				visible={xray && partsExplode < 0.08}
+				renderOrder={2}>
 				<cylinderGeometry args={[G.pistonRadius * 0.985, G.pistonRadius * 0.985, 1, 48]} />
 				<meshBasicMaterial
 					ref={gasMaterial}
@@ -324,19 +357,12 @@ function PistonAssembly({
 					side={THREE.DoubleSide}
 				/>
 			</mesh>
-			<mesh
-				ref={spark}
-				position={[cylinderX(cylinder), G.deckY - G.sparkPlugRadius, 0]}
-				visible={false}
-				renderOrder={5}>
-				<sphereGeometry args={[G.sparkPlugRadius * 1.5, 12, 8]} />
-				<meshBasicMaterial ref={sparkMaterial} toneMapped={false} color={M.strokes.ignition} />
-			</mesh>
 		</>
 	)
 }
 
 function Valve({
+	variant,
 	cylinder,
 	valve,
 	index,
@@ -344,6 +370,7 @@ function Valve({
 	rpm,
 	resources,
 }: Pick<EngineProps, 'angleRef' | 'rpm'> & {
+	variant: 'valves' | 'springs'
 	cylinder: CylinderNumber
 	valve: ValveType
 	index: number
@@ -368,26 +395,34 @@ function Valve({
 				side * G.valveZOffset,
 			]}
 			rotation={[side * G.valveInclination, 0, 0]}>
-			<group ref={moving} userData={{partId: `valve-${id}`}}>
-				<mesh material={resources.materials.steel} castShadow>
-					<cylinderGeometry args={[G.valveRadius, G.valveRadius * 0.93, G.ringTube * 3, 32]} />
-				</mesh>
-				<mesh position={[0, G.valveStemLength / 2, 0]} material={resources.materials.steel}>
-					<cylinderGeometry args={[G.valveStemRadius, G.valveStemRadius, G.valveStemLength, 16]} />
-				</mesh>
-				<mesh position={[0, G.valveStemLength - G.ringTube, 0]} material={resources.materials.steel}>
-					<cylinderGeometry
-						args={[G.valveSpringRadius * 1.15, G.valveSpringRadius * 1.15, G.ringTube * 2, 24]}
-					/>
-				</mesh>
-			</group>
-			<mesh
-				ref={spring}
-				position={[0, springBottom, 0]}
-				geometry={resources.spring}
-				material={resources.materials.darkSteel}
-				userData={{partId: `valve-spring-${id}`}}
-			/>
+			{variant === 'valves' && (
+				<group ref={moving} userData={{partId: `valve-${id}`}}>
+					<mesh material={resources.materials.steel} castShadow>
+						<cylinderGeometry args={[G.valveRadius, G.valveRadius * 0.93, G.ringTube * 3, 32]} />
+					</mesh>
+					<mesh position={[0, G.valveStemLength / 2, 0]} material={resources.materials.steel}>
+						<cylinderGeometry
+							args={[G.valveStemRadius, G.valveStemRadius, G.valveStemLength, 16]}
+						/>
+					</mesh>
+					<mesh
+						position={[0, G.valveStemLength - G.ringTube, 0]}
+						material={resources.materials.steel}>
+						<cylinderGeometry
+							args={[G.valveSpringRadius * 1.15, G.valveSpringRadius * 1.15, G.ringTube * 2, 24]}
+						/>
+					</mesh>
+				</group>
+			)}
+			{variant === 'springs' && (
+				<mesh
+					ref={spring}
+					position={[0, springBottom, 0]}
+					geometry={resources.spring}
+					material={resources.materials.darkSteel}
+					userData={{partId: `valve-spring-${id}`}}
+				/>
+			)}
 		</group>
 	)
 }
@@ -403,13 +438,18 @@ function Camshaft({
 		if (shaft.current) shaft.current.rotation.x = (angleRef.current * DEG) / 2
 	})
 	return (
-		<group ref={shaft} position={[0, G.camY, side * G.camZ]} userData={{partId: `${valve}-camshaft`}}>
+		<group
+			ref={shaft}
+			position={[0, G.camY, side * G.camZ]}
+			userData={{partId: `${valve}-camshaft`}}>
 			<mesh
 				position={[ENGINE_CENTER_X, 0, 0]}
 				rotation={X_AXIS}
 				material={resources.materials.steel}
 				castShadow>
-				<cylinderGeometry args={[G.camShaftRadius, G.camShaftRadius, G.blockLength + G.shaftEnd / 2, 32]} />
+				<cylinderGeometry
+					args={[G.camShaftRadius, G.camShaftRadius, G.blockLength + G.shaftEnd / 2, 32]}
+				/>
 			</mesh>
 			{CYLINDERS.flatMap((cylinder, cylinderIndex) =>
 				[-1, 1].map((offset) => (
@@ -469,29 +509,41 @@ function Sprocket({
 			<mesh rotation={X_AXIS} material={resources.materials.darkSteel}>
 				<cylinderGeometry args={[radius * 0.9, radius * 0.9, G.timingThickness, 64]} />
 			</mesh>
-			<mesh rotation={RING_X} position={[G.timingThickness / 2, 0, 0]} material={resources.materials.steel}>
+			<mesh
+				rotation={RING_X}
+				position={[G.timingThickness / 2, 0, 0]}
+				material={resources.materials.steel}>
 				<torusGeometry args={[radius * 0.62, G.ringTube * 2, 8, 48]} />
 			</mesh>
 			<instancedMesh
 				ref={toothInstances}
 				args={[undefined, resources.materials.steel, teeth]}
 				frustumCulled={false}>
-				<boxGeometry args={[G.timingThickness, G.timingChainRadius * 2.7, G.timingChainRadius * 1.6]} />
+				<boxGeometry
+					args={[G.timingThickness, G.timingChainRadius * 2.7, G.timingChainRadius * 1.6]}
+				/>
 			</instancedMesh>
-			<mesh rotation={X_AXIS} position={[G.timingThickness / 2, 0, 0]} material={resources.materials.steel}>
+			<mesh
+				rotation={X_AXIS}
+				position={[G.timingThickness / 2, 0, 0]}
+				material={resources.materials.steel}>
 				<cylinderGeometry args={[G.camShaftRadius, G.camShaftRadius, G.timingThickness / 2, 6]} />
 			</mesh>
 		</group>
 	)
 }
 
-function TimingChain({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {resources: Resources}) {
+function TimingChain({
+	angleRef,
+	resources,
+}: Pick<EngineProps, 'angleRef'> & {resources: Resources}) {
 	const links = useRef<THREE.InstancedMesh>(null)
 	const dummy = useMemo(() => new THREE.Object3D(), [])
 	const up = useMemo(() => new THREE.Vector3(0, 1, 0), [])
 	useFrame(() => {
 		if (!links.current) return
-		const phase = (angleRef.current * DEG * G.crankSprocketRadius) / resources.timingPath.getLength()
+		const phase =
+			(angleRef.current * DEG * G.crankSprocketRadius) / resources.timingPath.getLength()
 		for (let index = 0; index < resources.chainCount; index++) {
 			const t = (((index / resources.chainCount - phase) % 1) + 1) % 1
 			dummy.position.copy(resources.timingPath.getPointAt(t))
@@ -538,134 +590,179 @@ function TimingChain({angleRef, resources}: Pick<EngineProps, 'angleRef'> & {res
 	)
 }
 
-function EngineAncillaries({resources, xray}: {resources: Resources; xray: boolean}) {
-	const pipes = useMemo(
-		() =>
-			CYLINDERS.flatMap((cylinder) => {
-				const x = cylinderX(cylinder)
-				return ([-1, 1] as const).map((side) =>
-					createTube(
-						[
-							[x, G.deckY + G.headHeight / 2, (side * G.headWidth) / 2],
-							[x, G.deckY + G.headHeight / 2, side * G.headWidth * 0.72],
-							[x, G.deckY - E.bore * 0.2, side * G.headWidth],
-							[x - E.cylinderSpacing * 0.2, G.deckY - E.bore * 0.65, side * G.headWidth * 1.1],
-						],
-						E.bore * (side === -1 ? 0.18 : 0.14),
-					),
-				)
-			}),
-		[],
-	)
-	useEffect(() => () => pipes.forEach((geometry) => geometry.dispose()), [pipes])
+function Ignition({resources, angleRef, rpm, xray}: EngineProps & {resources: Resources}) {
 	return (
 		<>
-			{pipes.map((geometry, index) => (
-				<mesh
-					key={index}
-					geometry={geometry}
-					material={
-						xray
-							? resources.materials.xray
-							: index % 2 === 0
-								? resources.materials.black
-								: resources.materials.bronze
-					}
-					userData={{partId: index % 2 === 0 ? 'intake-manifold' : 'exhaust-manifold'}}
-					castShadow={!xray}
-				/>
-			))}
-			{[-1, 1].map((side) => (
-				<mesh
-					key={side}
-					position={[ENGINE_CENTER_X, G.deckY - E.bore * 0.65, side * G.headWidth * 1.1]}
-					rotation={X_AXIS}
-					material={
-						xray
-							? resources.materials.xray
-							: side === -1
-								? resources.materials.black
-								: resources.materials.bronze
-					}
-					userData={{partId: side === -1 ? 'intake-manifold' : 'exhaust-manifold'}}>
-					<cylinderGeometry
-						args={[
-							E.bore * (side === -1 ? 0.33 : 0.2),
-							E.bore * (side === -1 ? 0.33 : 0.2),
-							G.blockLength,
-							32,
-						]}
-					/>
-				</mesh>
-			))}
-			<mesh
-				position={[E.cylinder1X + E.cylinderSpacing / 2, G.deckY - E.bore * 0.65, -G.headWidth * 1.1]}
-				rotation={X_AXIS}
-				material={resources.materials.aluminum}
-				userData={{partId: 'throttle-body'}}>
-				<cylinderGeometry args={[E.bore * 0.36, E.bore * 0.36, E.bore * 0.6, 32]} />
-			</mesh>
 			{CYLINDERS.map((cylinder) => (
 				<group key={cylinder} position={[cylinderX(cylinder), G.deckY, 0]}>
 					<group userData={{partId: `spark-plug-${cylinder}`}}>
 						<mesh position={[0, G.sparkPlugLength / 2, 0]} material={resources.materials.ceramic}>
-							<cylinderGeometry args={[G.sparkPlugRadius, G.sparkPlugRadius * 0.75, G.sparkPlugLength, 24]} />
+							<cylinderGeometry
+								args={[G.sparkPlugRadius, G.sparkPlugRadius * 0.75, G.sparkPlugLength, 24]}
+							/>
 						</mesh>
 						<mesh position={[0, G.sparkPlugLength * 0.35, 0]} material={resources.materials.steel}>
 							<cylinderGeometry
-								args={[G.sparkPlugRadius * 1.2, G.sparkPlugRadius * 1.2, G.sparkPlugLength * 0.28, 6]}
+								args={[
+									G.sparkPlugRadius * 1.2,
+									G.sparkPlugRadius * 1.2,
+									G.sparkPlugLength * 0.28,
+									6,
+								]}
 							/>
-						</mesh>
-						<mesh position={[0, -G.sparkPlugRadius / 2, 0]} material={resources.materials.steel}>
-							<cylinderGeometry args={[G.valveStemRadius / 3, G.valveStemRadius / 3, G.sparkPlugRadius, 8]} />
 						</mesh>
 					</group>
 					<group userData={{partId: `ignition-coil-${cylinder}`}}>
 						<mesh position={[0, G.headHeight, 0]} material={resources.materials.rubber}>
-							<cylinderGeometry args={[G.sparkPlugRadius * 1.3, G.sparkPlugRadius * 1.3, G.headHeight, 20]} />
+							<cylinderGeometry
+								args={[G.sparkPlugRadius * 1.3, G.sparkPlugRadius * 1.3, G.headHeight, 20]}
+							/>
 						</mesh>
-						<mesh position={[0, G.camY - G.deckY + G.coilHeight, 0]} material={resources.materials.black}>
+						<mesh
+							position={[0, G.camY - G.deckY + G.coilHeight, 0]}
+							material={resources.materials.black}>
 							<boxGeometry args={[G.coilRadius * 2.1, G.coilHeight, G.coilRadius * 2]} />
 						</mesh>
 					</group>
+					<Spark cylinder={cylinder} angleRef={angleRef} rpm={rpm} visible={xray} />
 				</group>
 			))}
-			{Array.from({length: 5}, (_, index) => {
-				const x = E.cylinder1X + E.cylinderSpacing / 2 - index * E.cylinderSpacing
-				return (
-					<group key={index} userData={{partId: `main-bearing-${index + 1}`}}>
-						<mesh
-							position={[x, E.crankY - G.crankMainRadius, 0]}
-							material={xray ? resources.materials.xray : resources.materials.aluminum}>
-							<boxGeometry args={[G.crankWebThickness * 1.7, G.crankMainRadius, G.blockWidth * 0.8]} />
-						</mesh>
-						{[-1, 1].map((side) => (
-							<group key={side}>
-								<mesh
-									position={[x, G.deckY + G.headHeight + G.ringTube * 2, side * G.headWidth * 0.43]}
-									material={resources.materials.steel}>
-									<cylinderGeometry args={[G.pinRadius * 0.45, G.pinRadius * 0.45, G.ringTube * 3, 6]} />
-								</mesh>
-								<mesh
-									position={[x, G.blockBottom + (G.deckY - G.blockBottom) / 2, (side * G.blockWidth) / 2]}
-									material={xray ? resources.materials.xray : resources.materials.aluminum}>
-									<boxGeometry
-										args={[G.crankWebThickness / 2, G.deckY - G.blockBottom, G.crankWebThickness / 2]}
-									/>
-								</mesh>
-							</group>
-						))}
-					</group>
-				)
-			})}
 		</>
 	)
 }
 
-/** All coordinates remain in the vehicle's frame. The caller owns system-level
- * explosion and ghosting, while this component owns only the engine mechanism.
- */
-export function Engine({angleRef, rpm, xray}: EngineProps) {
+function Spark({
+	cylinder,
+	angleRef,
+	rpm,
+	visible,
+}: {
+	cylinder: CylinderNumber
+	angleRef: RefObject<number>
+	rpm: number
+	visible: boolean
+}) {
+	const mesh = useRef<THREE.Mesh>(null)
+	const material = useRef<THREE.MeshBasicMaterial>(null)
+	useFrame(() => {
+		const state = cylinderState(angleRef.current, cylinder, rpm)
+		if (mesh.current && material.current) {
+			mesh.current.visible = visible && state.sparkIntensity > 0.005
+			material.current.color.set(M.strokes.ignition).multiplyScalar(3 + state.sparkIntensity * 7)
+			mesh.current.scale.setScalar(0.65 + state.sparkIntensity * 0.65)
+		}
+	})
+	return (
+		<mesh ref={mesh} position={[0, -G.sparkPlugRadius, 0]} visible={false} renderOrder={5}>
+			<sphereGeometry args={[G.sparkPlugRadius * 1.5, 12, 8]} />
+			<meshBasicMaterial ref={material} toneMapped={false} color={M.strokes.ignition} />
+		</mesh>
+	)
+}
+
+function EnginePartGroup({
+	id,
+	amount,
+	active,
+	xray,
+	onHover,
+	onSelect,
+	children,
+}: {
+	id: EnginePartId
+	amount: number
+	active: boolean
+	xray: boolean
+	onHover?: (id: string | null) => void
+	onSelect?: (id: string) => void
+	children: ReactNode
+}) {
+	const group = useRef<THREE.Group>(null)
+	useEffect(() => {
+		if (!active || !group.current) return
+		const clones = new Map<THREE.Material, THREE.Material>()
+		const originals: {
+			mesh: THREE.Mesh
+			original: THREE.Material | THREE.Material[]
+			highlighted: THREE.Material | THREE.Material[]
+		}[] = []
+		const highlight = (source: THREE.Material) => {
+			// Gas and sparks animate this exact instance through their material refs.
+			if (source instanceof THREE.MeshBasicMaterial) return source
+			const cached = clones.get(source)
+			if (cached) return cached
+			const copy = source.clone()
+			if (copy instanceof THREE.MeshStandardMaterial) {
+				copy.emissive.set('#aeb8c2')
+				copy.emissiveIntensity = 0.13
+			} else if (copy instanceof THREE.ShaderMaterial && copy.uniforms.color) {
+				copy.uniforms.color.value = new THREE.Color('#d9e3eb')
+				copy.uniforms.faceOpacity.value = 0.1
+			}
+			clones.set(source, copy)
+			return copy
+		}
+		group.current.traverse((object) => {
+			if (!(object instanceof THREE.Mesh)) return
+			const original = object.material
+			const highlighted = Array.isArray(original) ? original.map(highlight) : highlight(original)
+			object.material = highlighted
+			originals.push({mesh: object, original, highlighted})
+		})
+		return () => {
+			originals.forEach(({mesh, original, highlighted}) => {
+				if (mesh.material === highlighted) mesh.material = original
+			})
+			clones.forEach((material) => material.dispose())
+		}
+	}, [active, xray])
+	return (
+		<group
+			ref={group}
+			position={enginePartOffset(id, amount)}
+			userData={{enginePartId: id}}
+			onPointerOver={
+				onHover
+					? (event) => {
+							event.stopPropagation()
+							onHover(id)
+						}
+					: undefined
+			}
+			onPointerOut={
+				onHover
+					? (event) => {
+							event.stopPropagation()
+							onHover(null)
+						}
+					: undefined
+			}
+			onClick={
+				onSelect
+					? (event) => {
+							if (event.delta > 5) return
+							event.stopPropagation()
+							onSelect(id)
+						}
+					: undefined
+			}>
+			{children}
+		</group>
+	)
+}
+
+/** Part offsets wrap the running mechanism rather than replacing its matrices.
+ * Scrubbing the disassembly never changes phase or accumulated engine time. */
+export function Engine({
+	angleRef,
+	rpm,
+	xray,
+	partsExplode = 0,
+	hoveredPart,
+	selectedPart,
+	onHoverPart,
+	onSelectPart,
+}: EngineProps) {
 	const resources = useMemo(makeResources, [])
 	useEffect(
 		() => () => {
@@ -673,9 +770,13 @@ export function Engine({angleRef, rpm, xray}: EngineProps) {
 				resources.block,
 				resources.head,
 				resources.cover,
+				resources.gasket,
 				resources.pan,
-				resources.lowerCase,
-				...resources.castingEdges,
+				resources.timingCover,
+				resources.intake,
+				resources.exhaust,
+				...resources.bearingCaps,
+				...Object.values(resources.castingEdges),
 				resources.spring,
 				resources.crankWeb,
 				resources.rodBigEye,
@@ -688,80 +789,164 @@ export function Engine({angleRef, rpm, xray}: EngineProps) {
 		},
 		[resources],
 	)
+	const part = (id: EnginePartId, children: ReactNode) => (
+		<EnginePartGroup
+			key={id}
+			id={id}
+			amount={partsExplode}
+			active={hoveredPart === id || selectedPart === id}
+			xray={xray}
+			onHover={onHoverPart}
+			onSelect={onSelectPart}>
+			{children}
+		</EnginePartGroup>
+	)
+	const shellXray = xray
+	const cast = (
+		key: 'block' | 'head' | 'cover' | 'pan' | 'timingCover',
+		id: string,
+		dark = false,
+	) => (
+		<Casting
+			geometry={resources[key]}
+			edges={resources.castingEdges[key]}
+			position={[0, 0, 0]}
+			xray={shellXray}
+			resources={resources}
+			partId={id}
+			dark={dark}
+		/>
+	)
 	return (
 		<group name="inline-four-engine" userData={{system: 'powertrain'}}>
-			<Casting
-				geometry={resources.block}
-				edges={resources.castingEdges[0]}
-				position={[ENGINE_CENTER_X, G.blockBottom, 0]}
-				xray={xray}
-				resources={resources}
-				partId="engine-block"
-			/>
-			<Casting
-				geometry={resources.head}
-				edges={resources.castingEdges[1]}
-				position={[ENGINE_CENTER_X, G.deckY, 0]}
-				xray={xray}
-				resources={resources}
-				partId="cylinder-head"
-			/>
-			<Casting
-				geometry={resources.cover}
-				edges={resources.castingEdges[2]}
-				position={[ENGINE_CENTER_X, G.camY + E.timing.camBaseRadius + G.camShaftRadius, 0]}
-				xray={xray}
-				resources={resources}
-				partId="cam-cover"
-				dark
-			/>
-			<Casting
-				geometry={resources.pan}
-				edges={resources.castingEdges[3]}
-				position={[ENGINE_CENTER_X, G.blockBottom - G.crankcaseHeight - G.oilPanHeight / 2, 0]}
-				xray={xray}
-				resources={resources}
-				partId="oil-pan"
-			/>
-			<Casting
-				geometry={resources.lowerCase}
-				edges={resources.castingEdges[4]}
-				position={[ENGINE_CENTER_X, G.blockBottom - G.crankcaseHeight, 0]}
-				xray={xray}
-				resources={resources}
-				partId="engine-block"
-			/>
-			<Crankshaft angleRef={angleRef} resources={resources} />
-			{CYLINDERS.map((cylinder) => (
-				<PistonAssembly
-					key={cylinder}
-					cylinder={cylinder}
+			{part('engine-block', cast('block', 'engine-block'))}
+			{part('cylinder-head', cast('head', 'cylinder-head'))}
+			{part('cam-cover', cast('cover', 'cam-cover', true))}
+			{part('oil-pan', cast('pan', 'oil-pan'))}
+			{part('timing-cover', cast('timingCover', 'timing-cover'))}
+			{part(
+				'head-gasket',
+				<mesh
+					geometry={resources.gasket}
+					material={resources.materials.darkSteel}
+					userData={{partId: 'head-gasket'}}
+				/>,
+			)}
+			{part('crankshaft', <Crankshaft angleRef={angleRef} resources={resources} />)}
+			{part('flywheel', <Flywheel angleRef={angleRef} resources={resources} />)}
+			{part(
+				'piston-assemblies',
+				<>
+					{CYLINDERS.map((cylinder) => (
+						<PistonAssembly
+							key={cylinder}
+							cylinder={cylinder}
+							angleRef={angleRef}
+							rpm={rpm}
+							xray={xray}
+							partsExplode={partsExplode}
+							resources={resources}
+						/>
+					))}
+				</>,
+			)}
+			{(['intake', 'exhaust'] as const).map((valve) =>
+				part(
+					`${valve}-camshaft`,
+					<Camshaft valve={valve} angleRef={angleRef} resources={resources} />,
+				),
+			)}
+			{(['valves', 'valve-springs'] as const).map((id) =>
+				part(
+					id,
+					<>
+						{(['intake', 'exhaust'] as const).flatMap((valve) =>
+							CYLINDERS.flatMap((cylinder) =>
+								[0, 1].map((index) => (
+									<Valve
+										key={`${valve}-${cylinder}-${index}`}
+										variant={id === 'valves' ? 'valves' : 'springs'}
+										valve={valve}
+										cylinder={cylinder}
+										index={index}
+										angleRef={angleRef}
+										rpm={rpm}
+										resources={resources}
+									/>
+								)),
+							),
+						)}
+					</>,
+				),
+			)}
+			{part('timing-chain', <TimingChain angleRef={angleRef} resources={resources} />)}
+			{part(
+				'main-bearing-caps',
+				<>
+					{resources.bearingCaps.map((geometry, index) => (
+						<mesh
+							key={index}
+							geometry={geometry}
+							material={resources.materials.aluminum}
+							userData={{partId: `main-bearing-${index + 1}`}}
+						/>
+					))}
+				</>,
+			)}
+			{part(
+				'ignition-coils',
+				<Ignition
+					resources={resources}
 					angleRef={angleRef}
 					rpm={rpm}
-					xray={xray}
-					resources={resources}
-				/>
-			))}
-			{(['intake', 'exhaust'] as const).map((valve) => (
-				<group key={valve}>
-					<Camshaft valve={valve} angleRef={angleRef} resources={resources} />
-					{CYLINDERS.flatMap((cylinder) =>
-						[0, 1].map((index) => (
-							<Valve
-								key={`${cylinder}-${index}`}
-								cylinder={cylinder}
-								valve={valve}
-								index={index}
-								angleRef={angleRef}
-								rpm={rpm}
-								resources={resources}
-							/>
-						)),
+					xray={xray || partsExplode > 0.08}
+				/>,
+			)}
+			{part(
+				'intake-manifold',
+				<>
+					<mesh
+						geometry={resources.intake}
+						material={shellXray ? resources.materials.xray : resources.materials.black}
+						userData={{partId: 'intake-manifold'}}
+						castShadow={!shellXray}
+					/>
+					{shellXray && (
+						<lineSegments
+							geometry={resources.castingEdges.intake}
+							material={resources.materials.edges}
+						/>
 					)}
-				</group>
-			))}
-			<TimingChain angleRef={angleRef} resources={resources} />
-			<EngineAncillaries resources={resources} xray={xray} />
+					<mesh
+						position={[
+							ENGINE_CENTER_X + C.intakePlenumLength / 2 + C.throttleLength / 2,
+							C.intakePlenumY,
+							C.intakePlenumZ,
+						]}
+						rotation={X_AXIS}
+						material={resources.materials.aluminum}
+						userData={{partId: 'throttle-body'}}>
+						<cylinderGeometry args={[C.throttleRadius, C.throttleRadius, C.throttleLength, 36]} />
+					</mesh>
+				</>,
+			)}
+			{part(
+				'exhaust-manifold',
+				<>
+					<mesh
+						geometry={resources.exhaust}
+						material={shellXray ? resources.materials.xray : resources.materials.bronze}
+						userData={{partId: 'exhaust-manifold'}}
+						castShadow={!shellXray}
+					/>
+					{shellXray && (
+						<lineSegments
+							geometry={resources.castingEdges.exhaust}
+							material={resources.materials.edges}
+						/>
+					)}
+				</>,
+			)}
 		</group>
 	)
 }
@@ -772,7 +957,8 @@ export function EngineElectrical({angleRef}: {angleRef?: RefObject<number>}) {
 	const crankPulley = useRef<THREE.Group>(null)
 	const alternatorPulley = useRef<THREE.Group>(null)
 	const pulleyRadius = G.crankPulleyRadius / VEHICLE_SPEC.electrical.alternatorPulleyRatio
-	const flywheelRearX = ENGINE_CENTER_X - G.blockLength / 2 - G.shaftEnd / 2 - G.flywheelThickness / 2
+	const flywheelRearX =
+		ENGINE_CENTER_X - G.blockLength / 2 - G.shaftEnd / 2 - G.flywheelThickness / 2
 	const starterCenterX = flywheelRearX - G.starterLength / 2
 	const belt = useMemo(
 		() =>
@@ -821,7 +1007,9 @@ export function EngineElectrical({angleRef}: {angleRef?: RefObject<number>}) {
 				position={[G.accessoryDriveX, E.crankY, 0]}
 				userData={{partId: 'crank-pulley'}}>
 				<mesh rotation={X_AXIS} material={materials.dark}>
-					<cylinderGeometry args={[G.crankPulleyRadius, G.crankPulleyRadius, G.timingThickness, 48]} />
+					<cylinderGeometry
+						args={[G.crankPulleyRadius, G.crankPulleyRadius, G.timingThickness, 48]}
+					/>
 				</mesh>
 				<mesh rotation={RING_X} position={[G.timingThickness / 2, 0, 0]} material={materials.steel}>
 					<torusGeometry args={[G.crankPulleyRadius * 0.8, G.ringTube, 8, 48]} />
@@ -838,17 +1026,25 @@ export function EngineElectrical({angleRef}: {angleRef?: RefObject<number>}) {
 				]}
 				userData={{partId: 'alternator'}}>
 				<mesh rotation={X_AXIS} material={materials.aluminum} castShadow>
-					<cylinderGeometry args={[G.alternatorRadius, G.alternatorRadius, G.alternatorLength, 40]} />
+					<cylinderGeometry
+						args={[G.alternatorRadius, G.alternatorRadius, G.alternatorLength, 40]}
+					/>
 				</mesh>
 				{Array.from({length: 12}, (_, index) => {
 					const theta = (index / 12) * Math.PI * 2
 					return (
 						<mesh
 							key={index}
-							position={[0, Math.cos(theta) * G.alternatorRadius, Math.sin(theta) * G.alternatorRadius]}
+							position={[
+								0,
+								Math.cos(theta) * G.alternatorRadius,
+								Math.sin(theta) * G.alternatorRadius,
+							]}
 							rotation={[theta, 0, 0]}
 							material={materials.dark}>
-							<boxGeometry args={[G.alternatorLength * 0.67, G.ringTube * 2, G.alternatorRadius * 0.22]} />
+							<boxGeometry
+								args={[G.alternatorLength * 0.67, G.ringTube * 2, G.alternatorRadius * 0.22]}
+							/>
 						</mesh>
 					)
 				})}
@@ -889,7 +1085,10 @@ export function EngineElectrical({angleRef}: {angleRef?: RefObject<number>}) {
 				<mesh rotation={X_AXIS} material={materials.dark} castShadow>
 					<cylinderGeometry args={[G.starterRadius, G.starterRadius, G.starterLength, 32]} />
 				</mesh>
-				<mesh rotation={X_AXIS} position={[G.starterLength * 0.4, 0, 0]} material={materials.aluminum}>
+				<mesh
+					rotation={X_AXIS}
+					position={[G.starterLength * 0.4, 0, 0]}
+					material={materials.aluminum}>
 					<cylinderGeometry
 						args={[G.starterRadius * 1.12, G.starterRadius * 1.12, G.starterLength * 0.2, 32]}
 					/>
@@ -903,7 +1102,9 @@ export function EngineElectrical({angleRef}: {angleRef?: RefObject<number>}) {
 					rotation={X_AXIS}
 					position={[G.starterLength / 2 + G.flywheelThickness / 2, 0, 0]}
 					material={materials.steel}>
-					<cylinderGeometry args={[G.starterRadius * 0.3, G.starterRadius * 0.3, G.flywheelThickness, 24]} />
+					<cylinderGeometry
+						args={[G.starterRadius * 0.3, G.starterRadius * 0.3, G.flywheelThickness, 24]}
+					/>
 				</mesh>
 			</group>
 		</group>

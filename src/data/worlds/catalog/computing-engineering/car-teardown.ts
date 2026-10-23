@@ -9,7 +9,8 @@ export default {
 	posterSource: '程序化几何 · 四冲程运动学 · 虚构车辆',
 	question: '一辆车里的零件怎样一起工作？',
 	hook: '拆开一辆虚构的后驱轿车，走近正在运转的直列四缸发动机。',
-	payoff: '曲轴每转两圈，四个缸按 1—3—4—2 的顺序各做功一次。画面转速经过慢放，尺寸和正时使用同一组代表值。',
+	payoff:
+		'曲轴每转两圈，四个缸按 1—3—4—2 的顺序各做功一次。画面转速经过慢放，尺寸和正时使用同一组代表值。',
 	topicLabel: '汽车机构',
 	translations: {
 		en: {
@@ -58,9 +59,9 @@ export default {
 		{
 			label: '模型边界',
 			labelEn: 'Model limits',
-			body: '虚构的 2.0 升前置后驱轿车，不对应任何品牌。运动学使用精确曲柄滑块和固定气门正时；点火提前是示意曲线。传动、悬架、转向和制动本轮展示结构骨架。',
+			body: '虚构的 2.0 升前置后驱轿车，不对应任何品牌。运动学使用精确曲柄滑块和固定气门正时；点火提前是示意曲线。五挡变速箱展示常啮合与换挡；同步器转速匹配为运动学示意。悬架、转向和制动展示结构骨架。',
 			bodyEn:
-				'A fictional 2.0-liter front-engine, rear-wheel-drive sedan with no brand affiliation. Exact slider-crank kinematics and fixed valve timing; ignition advance is illustrative. Drivetrain, suspension, steering, and brakes are structural models in this version.',
+				'A fictional 2.0-liter front-engine, rear-wheel-drive sedan with no brand affiliation. Exact slider-crank kinematics and fixed valve timing; ignition advance is illustrative. The five-speed gearbox demonstrates constant mesh and shifts with idealized synchronizer speed matching. Suspension, steering, and brakes remain structural models.',
 		},
 	],
 	provenance: {origin: 'human-led'},

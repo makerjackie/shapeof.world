@@ -8,6 +8,8 @@ export interface GearParameters {
 	pressureAngle?: number
 	/** Helix angle in degrees; opposite signs mesh on parallel shafts. */
 	helixAngle?: number
+	/** Tangential tooth-thickness reduction at the pitch circle, in metres. */
+	backlash?: number
 }
 
 export function gearDimensions({
@@ -47,7 +49,12 @@ export function involuteAngle(radius: number, baseRadius: number): number {
 /** Analytic involute flank angle about a tooth centre, at the given radius. */
 export function toothHalfAngle(radius: number, parameters: GearParameters): number {
 	const d = gearDimensions(parameters)
-	return d.pitchHalfAngle + involuteAngle(d.pitchRadius, d.baseRadius) - involuteAngle(radius, d.baseRadius)
+	return (
+		d.pitchHalfAngle +
+		involuteAngle(d.pitchRadius, d.baseRadius) -
+		involuteAngle(radius, d.baseRadius) -
+		(parameters.backlash ?? 0) / (2 * d.pitchRadius)
+	)
 }
 
 /**

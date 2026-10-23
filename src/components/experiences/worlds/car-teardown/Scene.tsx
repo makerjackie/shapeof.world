@@ -1,21 +1,20 @@
 import {memo, Suspense, useEffect, useRef, type ReactNode, type RefObject} from 'react'
 import {Canvas, useFrame, useThree} from '@react-three/fiber'
-import {
-	CameraControls,
-	ContactShadows,
-	Environment,
-	Lightformer,
-	MeshReflectorMaterial,
-} from '@react-three/drei'
+import {CameraControls, CameraControlsImpl} from '@react-three/drei'
 import {Bloom, EffectComposer, N8AO, ToneMapping, Vignette} from '@react-three/postprocessing'
 import {ToneMappingMode} from 'postprocessing'
 import * as T from 'three'
 import {Body} from './Body'
 import {Wheels} from './Wheels'
 import {Engine, EngineElectrical} from './Engine'
-import {Brakes, Chassis, Drivetrain, Electrical, PowertrainAccessories, Steering} from './Systems'
+import {Brakes, Chassis, Electrical, PowertrainAccessories, Steering} from './Systems'
 import {SYSTEMS, systemOffset, systemProgress, type SystemId, type Point3} from './parts'
-import {VEHICLE_SPEC as S} from './vehicle-spec'
+import {STUDIO_SPEC, VEHICLE_SPEC as S, type Gear} from './vehicle-spec'
+import {Studio} from './Studio'
+import {Transmission} from './Transmission'
+import {advanceTransmission, type TransmissionState} from './transmission-model'
+import {ENGINE_PARTS, enginePartAnchor} from './engine-parts'
+import type {PartAnchors} from './EnginePartsUI'
 import {advanceCrankAngle} from './model'
 import {isWorldPaused} from '~/lib/world-playback'
 
@@ -23,6 +22,15 @@ export type ProjectedAnchor = {x: number; y: number; visible: boolean}
 export type AnchorMap = Partial<Record<SystemId, ProjectedAnchor>>
 export type SceneProps = {
 	explode: number
+	partsExplode: number
+	gear: Gear
+	transmissionView: 'gearbox' | 'path'
+	transmissionRef: RefObject<TransmissionState>
+	hoveredPart: string | null
+	selectedPart: string | null
+	partAnchorsRef: RefObject<PartAnchors>
+	onHoverPart: (id: string | null) => void
+	onSelectPart: (id: string) => void
 	selected: SystemId | null
 	hovered: SystemId | null
 	xray: boolean
@@ -32,6 +40,7 @@ export type SceneProps = {
 	reducedMotion: boolean
 	angleRef: RefObject<number>
 	anchorsRef: RefObject<AnchorMap>
+	interactionRef: RefObject<boolean>
 	onSelect: (id: SystemId) => void
 	onHover: (id: SystemId | null) => void
 	onInteract: () => void
@@ -73,52 +82,31 @@ function System({
 	children: ReactNode
 }) {
 	const group = useRef<T.Group>(null)
-	const ghost = selected !== null && selected !== id
+	const hidden = selected !== null && selected !== id
 	useEffect(() => {
 		group.current?.traverse((object) => {
 			if (!(object instanceof T.Mesh)) return
-			let ancestor: T.Object3D | null = object
-			let accessory = false
-			while (ancestor) {
-				if (ancestor.name === 'engine-accessories') accessory = selected === 'powertrain'
-				ancestor = ancestor.parent
-			}
-			const faded = ghost || accessory
-			object.userData.originalCastShadow ??= object.castShadow
-			object.castShadow = !faded && object.userData.originalCastShadow
-			const list = Array.isArray(object.material) ? object.material : [object.material]
-			for (const material of list) {
-				if (!material.userData.original)
-					material.userData.original = {
-						opacity: material.opacity,
-						transparent: material.transparent,
-						depthWrite: material.depthWrite,
-						emissiveIntensity: material.emissiveIntensity ?? 0,
-						emissive: material.emissive?.clone(),
-					}
-				const original = material.userData.original
-				material.opacity = faded ? original.opacity * 0.08 : original.opacity
-				material.transparent = faded || original.transparent
-				material.depthWrite = faded ? false : original.depthWrite
-				if (material instanceof T.MeshStandardMaterial) {
-					material.emissive.copy(original.emissive)
-					if (hovered === id && !ghost) material.emissive.add(new T.Color('#677580').multiplyScalar(0.14))
-					material.emissiveIntensity =
-						hovered === id && !ghost ? Math.max(0.14, original.emissiveIntensity) : original.emissiveIntensity
-				}
-				material.needsUpdate = true
+			const materials = Array.isArray(object.material) ? object.material : [object.material]
+			for (const material of materials) {
+				if (!(material instanceof T.MeshStandardMaterial)) continue
+				material.userData.systemEmissive ??= material.emissive.clone()
+				material.userData.systemIntensity ??= material.emissiveIntensity
+				material.emissive.copy(material.userData.systemEmissive)
+				if (!selected && hovered === id)
+					material.emissive.add(new T.Color('#718591').multiplyScalar(0.14))
+				material.emissiveIntensity =
+					!selected && hovered === id
+						? Math.max(0.14, material.userData.systemIntensity)
+						: material.userData.systemIntensity
 			}
 		})
-	}, [ghost, hovered, id, selected])
+	}, [hovered, id, selected])
 	const offset = systemOffset(id, amount)
-	if (ghost) {
-		offset[1] += id === 'body' ? 1.5 : 0
-		offset[2] -= 3.5
-		offset[0] -= 1.5
-	}
 	return (
 		<group
 			ref={group}
+			visible={!hidden}
+			name={`system-${id}`}
 			position={offset}
 			onPointerOver={(event) => {
 				if (amount < 0.1 || selected) return
@@ -131,53 +119,86 @@ function System({
 				if (event.delta > 5) return
 				event.stopPropagation()
 				onSelect(id)
-			}}
-		>
+			}}>
 			{children}
 		</group>
 	)
 }
 function CameraRig({
 	selected,
+	transmissionView,
+	partsExplode,
 	explode,
 	reducedMotion,
 	onInteract,
-}: Pick<SceneProps, 'selected' | 'explode' | 'reducedMotion' | 'onInteract'>) {
+}: Pick<
+	SceneProps,
+	'selected' | 'transmissionView' | 'explode' | 'partsExplode' | 'reducedMotion' | 'onInteract'
+>) {
 	const camera = useRef<CameraControls>(null)
-	const {size} = useThree()
+	const {size, camera: perspective} = useThree()
 	const mobile = size.width < 700
-	const touched = useRef(false)
+	useEffect(() => {
+		if (perspective instanceof T.PerspectiveCamera) {
+			perspective.layers.enable(2)
+			perspective.fov = mobile ? 56 : 34
+			perspective.updateProjectionMatrix()
+		}
+	}, [mobile, perspective])
 	const expanded = explode > 0.08
+	const partsExpanded = partsExplode > 0.08
 	useEffect(() => {
 		const cc = camera.current
 		if (!cc) return
-		touched.current = false
 		if (selected === 'powertrain') {
 			const offset = systemOffset('powertrain', 1)
 			const target: Point3 = [
 				S.engine.cylinder1X - S.engine.cylinderSpacing * 1.5 + offset[0],
-				S.engine.crankY + 0.15 + offset[1],
+				S.engine.crankY + (partsExpanded ? 0.43 : 0.15) + offset[1],
 				0,
 			]
 			const shift = mobile ? 0.09 : 0.035
+			const zoom = partsExpanded ? (mobile ? 1.75 : 3.6) : 1
 			void cc.setLookAt(
-				target[0] + (mobile ? 1.5 : 0.82),
-				target[1] + (mobile ? 0.8 : 0.5),
-				mobile ? 2.05 : 1.12,
+				target[0] + (mobile ? 1.5 : 0.82) * zoom,
+				target[1] + (mobile ? 0.8 : 0.5) * zoom,
+				(mobile ? 2.05 : 1.12) * zoom,
 				target[0] - shift,
 				target[1] - (mobile ? 0.24 : 0),
 				0,
 				!reducedMotion,
 			)
 			void cc.setFocalOffset(mobile ? 0.1 : 0.18, 0, 0, !reducedMotion)
+		} else if (selected === 'drivetrain' && transmissionView === 'gearbox') {
+			void cc.setFocalOffset(mobile ? 0 : 0.15, 0, 0, !reducedMotion)
+			void cc.setLookAt(
+				mobile ? 1.05 : 0.95,
+				mobile ? 1.18 : 1.02,
+				mobile ? 1.75 : 1.25,
+				0.54,
+				0.61,
+				0,
+				!reducedMotion,
+			)
 		} else if (selected) {
 			void cc.setFocalOffset(0, 0, 0, !reducedMotion)
 			const system = SYSTEMS.find((s) => s.id === selected)!
 			const offset = systemOffset(selected, 1)
 			const target = system.anchor.map((n, i) => n + offset[i]) as Point3
 			const wide = ['body', 'electrical', 'chassis', 'brakes', 'drivetrain'].includes(selected)
-			if (wide) target[0] = offset[0]
-			const distance = wide ? (mobile ? 11.4 : 5.5) : mobile ? 5.8 : 2.8
+			if (wide) target[0] = selected === 'drivetrain' ? -0.24 : offset[0]
+			const distance =
+				selected === 'drivetrain'
+					? mobile
+						? 5
+						: 3.3
+					: wide
+						? mobile
+							? 7
+							: 5.5
+						: mobile
+							? 5.8
+							: 2.8
 			void cc.setLookAt(
 				target[0] + distance,
 				target[1] + distance * 0.45,
@@ -190,9 +211,9 @@ function CameraRig({
 		} else if (expanded) {
 			void cc.setFocalOffset(0, 0, 0, !reducedMotion)
 			void cc.setLookAt(
-				mobile ? 15.6 : 7.4,
-				mobile ? 9.0 : 4.9,
-				mobile ? 17.5 : 8.3,
+				mobile ? 7.8 : 7.4,
+				mobile ? 5.4 : 4.9,
+				mobile ? 8.3 : 8.3,
 				0,
 				mobile ? 1.55 : 1.55,
 				0,
@@ -201,31 +222,45 @@ function CameraRig({
 		} else {
 			void cc.setFocalOffset(0, 0, 0, !reducedMotion)
 			void cc.setLookAt(
-				mobile ? 12.8 : 5.5,
-				mobile ? 5 : 2.45,
-				mobile ? 14 : 6.1,
+				mobile ? 7 : 5.5,
+				mobile ? 3.4 : 2.45,
+				mobile ? 7.8 : 6.1,
 				0,
 				mobile ? 0.72 : 0.68,
 				0,
 				!reducedMotion,
 			)
 		}
-	}, [selected, expanded, mobile, reducedMotion])
-	useFrame((state, delta) => {
-		if (!camera.current || touched.current || reducedMotion || selected || expanded || isWorldPaused()) return
-		camera.current.azimuthAngle += Math.sin(state.clock.elapsedTime * 0.14) * Math.min(delta, 0.05) * 0.004
-	})
+	}, [selected, expanded, partsExpanded, transmissionView, mobile, reducedMotion])
 	return (
 		<CameraControls
 			ref={camera}
 			makeDefault
-			minDistance={0.16}
-			maxDistance={35}
+			mouseButtons={{
+				left: CameraControlsImpl.ACTION.ROTATE,
+				middle: CameraControlsImpl.ACTION.DOLLY,
+				right: CameraControlsImpl.ACTION.NONE,
+				wheel: CameraControlsImpl.ACTION.DOLLY,
+			}}
+			touches={{
+				one: CameraControlsImpl.ACTION.TOUCH_ROTATE,
+				two: CameraControlsImpl.ACTION.TOUCH_DOLLY_ROTATE,
+				three: CameraControlsImpl.ACTION.NONE,
+			}}
+			minDistance={
+				selected === 'drivetrain' && transmissionView === 'gearbox'
+					? 0.55
+					: selected === 'powertrain'
+						? 0.65
+						: !selected || selected === 'body'
+							? 3.2
+							: 1
+			}
+			maxDistance={12}
 			maxPolarAngle={Math.PI * 0.48}
 			smoothTime={0.55}
 			draggingSmoothTime={0.12}
 			onStart={() => {
-				touched.current = true
 				onInteract()
 			}}
 		/>
@@ -235,7 +270,31 @@ function SceneContents(props: SceneProps) {
 	const {size, camera} = useThree()
 	const mobile = size.width < 700
 	const projection = useRef(new T.Vector3())
+	const turntable = useRef<T.Group>(null)
+	const rearSpinRef = useRef(0)
 	useFrame((_, delta) => {
+		props.transmissionRef.current = advanceTransmission(props.transmissionRef.current, {
+			dt: Math.min(delta, 0.075),
+			rpm: props.rpm,
+			slowdown: props.slowdown,
+			requestedGear: props.gear,
+			paused: props.pausedRef.current || isWorldPaused(),
+		})
+		rearSpinRef.current = props.transmissionRef.current.wheelAngle
+		if (turntable.current) {
+			if (
+				!props.interactionRef.current &&
+				!props.reducedMotion &&
+				!props.selected &&
+				props.explode === 0 &&
+				!isWorldPaused()
+			)
+				turntable.current.rotation.y +=
+					(Math.min(delta, 0.075) * Math.PI * 2) / STUDIO_SPEC.turntablePeriod
+			if (props.explode > 0 || props.selected)
+				turntable.current.rotation.y = T.MathUtils.damp(turntable.current.rotation.y, 0, 8, delta)
+			turntable.current.updateMatrixWorld()
+		}
 		if (!props.pausedRef.current && !isWorldPaused())
 			props.angleRef.current = advanceCrankAngle(
 				props.angleRef.current,
@@ -243,11 +302,23 @@ function SceneContents(props: SceneProps) {
 				props.rpm,
 				props.slowdown,
 			)
+		if (props.selected === 'powertrain')
+			for (const part of ENGINE_PARTS) {
+				const p = enginePartAnchor(part.id, props.partsExplode),
+					offset = systemOffset('powertrain', 1)
+				projection.current.set(p[0] + offset[0], p[1] + offset[1], p[2] + offset[2]).project(camera)
+				props.partAnchorsRef.current[part.id] = {
+					x: ((projection.current.x + 1) / 2) * size.width,
+					y: ((1 - projection.current.y) / 2) * size.height,
+					visible: projection.current.z < 1,
+				}
+			}
 		for (const system of SYSTEMS) {
 			const offset = systemOffset(system.id, props.explode)
 			projection.current
 				.set(...system.anchor)
 				.add(new T.Vector3(...offset))
+				.applyMatrix4(turntable.current?.matrixWorld ?? new T.Matrix4())
 				.project(camera)
 			props.anchorsRef.current[system.id] = {
 				x: ((projection.current.x + 1) / 2) * size.width,
@@ -266,131 +337,50 @@ function SceneContents(props: SceneProps) {
 	return (
 		<>
 			<color attach="background" args={[S.materials.background]} />
-			<fog attach="fog" args={[S.materials.background, 16, 38]} />
-			<ambientLight intensity={0.3} />
-			<directionalLight
-				position={[2, 7, 4]}
-				intensity={2.2}
-				color={S.materials.keyLight}
-				castShadow
-				shadow-mapSize={[1024, 1024]}
-				shadow-camera-left={-5}
-				shadow-camera-right={5}
-				shadow-camera-top={5}
-				shadow-camera-bottom={-5}
-				shadow-bias={-0.0003}
-			/>
-			<directionalLight position={[-4, 3, -3]} intensity={1.8} color={S.materials.rimLight} />
-			<Environment resolution={mobile ? 128 : 256} frames={1}>
-				<Lightformer
-					form="rect"
-					intensity={4}
-					color={S.materials.keyLight}
-					position={[0, 5, 0]}
-					rotation={[Math.PI / 2, 0, 0]}
-					scale={[9, 3, 1]}
-				/>
-				<Lightformer
-					form="rect"
-					intensity={5}
-					color={S.materials.keyLight}
-					position={[0, 2.6, 3.6]}
-					rotation={[0, Math.PI, 0]}
-					scale={[8, 0.23, 1]}
-				/>
-				<Lightformer
-					form="rect"
-					intensity={4}
-					color={S.materials.rimLight}
-					position={[0, 3, -3.6]}
-					scale={[7, 0.32, 1]}
-				/>
-				<Lightformer
-					form="rect"
-					intensity={2.2}
-					color={S.materials.rimLight}
-					position={[-4, 2.4, 0]}
-					rotation={[0, Math.PI / 2, 0]}
-					scale={[2, 3, 1]}
-				/>
-				<Lightformer
-					form="rect"
-					intensity={1}
-					position={[4, 2, 0]}
-					rotation={[0, -Math.PI / 2, 0]}
-					scale={[2, 2, 1]}
-				/>
-				<Lightformer
-					form="rect"
-					intensity={1.2}
-					position={[0, 1.5, 4]}
-					rotation={[0, Math.PI, 0]}
-					scale={[6, 1.2, 1]}
-				/>
-			</Environment>
-			<mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.014, 0]} receiveShadow>
-				<planeGeometry args={[90, 90]} />
-				<MeshReflectorMaterial
-					color={S.materials.floor}
-					envMapIntensity={0.06}
-					resolution={mobile ? 256 : 512}
-					blur={[380, 150]}
-					mixBlur={1}
-					mixStrength={1.8}
-					roughness={0.92}
-					metalness={0.98}
-					depthScale={0.3}
-					minDepthThreshold={0.4}
-					maxDepthThreshold={1.4}
-					mirror={0.12}
-				/>
-			</mesh>
-			<ContactShadows
-				position={[0, -0.006, 0]}
-				opacity={0.55}
-				scale={12}
-				blur={2.5}
-				far={4.5}
-				resolution={mobile ? 256 : 512}
-				color="#000000"
-				frames={1}
-			/>
-			<System id="body" {...common}>
-				<Body />
-			</System>
-			<System id="powertrain" {...common}>
-				<Engine
-					angleRef={props.angleRef}
-					rpm={props.rpm}
-					xray={props.xray && props.selected === 'powertrain'}
-				/>
-				<group
-					name="engine-accessories"
-					position={props.selected === 'powertrain' ? [0, 0, -1.5] : [0, 0, 0]}
-				>
-					<PowertrainAccessories />
-				</group>
-			</System>
-			<System id="drivetrain" {...common}>
-				<Drivetrain />
-			</System>
-			<System id="chassis" {...common}>
-				<Chassis />
-				<Wheels explode={systemProgress('chassis', props.explode)} />
-			</System>
-			<System id="steering" {...common}>
-				<Steering />
-			</System>
-			<System id="brakes" {...common}>
-				<Brakes explode={systemProgress('brakes', props.explode)} />
-			</System>
-			<System id="electrical" {...common}>
-				<Electrical />
-				<EngineElectrical angleRef={props.angleRef} />
-			</System>
+			<Studio mobile={mobile} />
+			<group ref={turntable} name="vehicle-turntable">
+				<System id="body" {...common}>
+					<Body />
+				</System>
+				<System id="powertrain" {...common}>
+					<Engine
+						angleRef={props.angleRef}
+						rpm={props.rpm}
+						partsExplode={props.selected === 'powertrain' ? props.partsExplode : 0}
+						hoveredPart={props.selected === 'powertrain' ? props.hoveredPart : null}
+						selectedPart={props.selected === 'powertrain' ? props.selectedPart : null}
+						onHoverPart={props.selected === 'powertrain' ? props.onHoverPart : undefined}
+						onSelectPart={props.selected === 'powertrain' ? props.onSelectPart : undefined}
+						xray={props.xray && props.selected === 'powertrain'}
+					/>
+					<group name="engine-accessories" visible={props.selected !== 'powertrain'}>
+						<PowertrainAccessories />
+					</group>
+				</System>
+				<System id="drivetrain" {...common}>
+					<Transmission stateRef={props.transmissionRef} xray={props.selected === 'drivetrain'} />
+					{props.selected === 'drivetrain' && <Wheels axle="rear" rearSpinRef={rearSpinRef} />}
+				</System>
+				<System id="chassis" {...common}>
+					<Chassis />
+					<Wheels explode={systemProgress('chassis', props.explode)} rearSpinRef={rearSpinRef} />
+				</System>
+				<System id="steering" {...common}>
+					<Steering />
+				</System>
+				<System id="brakes" {...common}>
+					<Brakes explode={systemProgress('brakes', props.explode)} />
+				</System>
+				<System id="electrical" {...common}>
+					<Electrical />
+					<EngineElectrical angleRef={props.angleRef} />
+				</System>
+			</group>
 			<CameraRig
 				selected={props.selected}
+				transmissionView={props.transmissionView}
 				explode={props.explode}
+				partsExplode={props.partsExplode}
 				reducedMotion={props.reducedMotion}
 				onInteract={props.onInteract}
 			/>
@@ -412,10 +402,9 @@ export function CarScene(props: SceneProps) {
 				toneMappingExposure: 1.05,
 			}}
 			onCreated={({gl}) => {
-				gl.setClearColor(S.materials.background)
+				gl.setClearColor(S.materials.background, 0)
 				props.onReady()
-			}}
-		>
+			}}>
 			<Suspense fallback={null}>
 				<SceneContents {...props} />
 			</Suspense>
