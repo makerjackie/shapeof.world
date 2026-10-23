@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { advanceSimulation, DEFAULT_ENVIRONMENT, getLightAppearance, seededRandom } from './model'
-import { CHLOROPLAST_ANCHOR_UM, GRANUM_EDGE_OFFSET_UM, clampScale, getAnchorUm, getLayerWeights, getScaleBar, LAYERS, SCALE_MAX, SCALE_MIN, scaleToMicrometers } from './scale-model'
+import { LEAF_ENTRY } from './leaf-model'
+import { CHLOROPLAST_ANCHOR_UM, GRANUM_EDGE_OFFSET_UM, clampScale, getAnchorUm, getCameraPose, getLayerWeights, getScaleBar, LAYERS, SCALE_MAX, SCALE_MIN, scaleToMicrometers } from './scale-model'
 
 describe('physical zoom scale', () => {
   it('never loses the scene or displays more than two adjacent layers', () => {
@@ -31,13 +32,13 @@ describe('physical zoom scale', () => {
   it('frames the full leaf section before returning smoothly to the upper cell', () => {
     const sectionScale = LAYERS.find((layer) => layer.id === 'section')!.scale
     const sectionAnchor = getAnchorUm(sectionScale)
-    expect(sectionAnchor[1]).toBeCloseTo(-181.8359375, 6)
+    expect(sectionAnchor[1]).toBeCloseTo(-179.2578125, 6)
     // A 500 µm-thick section centred at -190 fits the 1600 × 1000 viewport.
     const halfHeightUm = scaleToMicrometers(sectionScale) * 1000 / 1600 / 2
     expect(-190 - 250).toBeGreaterThan(sectionAnchor[1] - halfHeightUm)
     expect(-190 + 250).toBeLessThan(sectionAnchor[1] + halfHeightUm)
     expect(getAnchorUm(-3.05)).toEqual([0, -190, 0])
-    expect(getAnchorUm(-2.65)).toEqual([0, 0, 0])
+    expect(getAnchorUm(-2.65)).toEqual(LEAF_ENTRY)
     expect(getAnchorUm(-3.75)).toEqual([0, 0, 0])
     expect(getAnchorUm(-4.35)).toEqual([0, 0, 0])
     for (const s of [-2.65, -3.05, -3.75]) {
@@ -64,6 +65,17 @@ describe('physical zoom scale', () => {
     expect(clampScale(-100)).toBe(SCALE_MIN)
     expect(clampScale(100)).toBe(SCALE_MAX)
     expect(Number.isFinite(clampScale(NaN))).toBe(true)
+  })
+
+  it('tilts the leaf into the section without a singular camera basis or a handoff jump', () => {
+    for (let s = SCALE_MIN; s <= SCALE_MAX; s += 0.005) {
+      const pose = getCameraPose(s), next = getCameraPose(s + 0.00001)
+      expect(Math.abs(next.yaw - pose.yaw) + Math.abs(next.pitch - pose.pitch) + Math.abs(next.roll - pose.roll)).toBeLessThan(0.001)
+      const dot = Math.sin(pose.yaw) * Math.cos(pose.pitch) * Math.sin(pose.roll) + Math.sin(pose.pitch) * Math.cos(pose.roll)
+      expect(Math.abs(dot)).toBeLessThan(0.96)
+    }
+    expect(getCameraPose(-2.65).pitch * 180 / Math.PI).toBeCloseTo(40)
+    expect(getCameraPose(-3.86).pitch * 180 / Math.PI).toBeCloseTo(18)
   })
 })
 

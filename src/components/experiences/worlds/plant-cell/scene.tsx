@@ -1,14 +1,14 @@
-import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type ComponentRef, type MutableRefObject, type ReactNode } from 'react'
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type MutableRefObject, type ReactNode } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
-import { Bloom, DepthOfField, EffectComposer, Noise, Vignette } from '@react-three/postprocessing'
+import { Bloom, DepthOfField, EffectComposer, Noise, SMAA, Vignette } from '@react-three/postprocessing'
 import * as T from 'three'
 import { BlendFunction } from 'postprocessing'
 import { isWorldPaused } from '~/lib/world-playback'
 import { CellLayer } from './cell-layer'
 import { LeafLayer, SectionLayer } from './leaf-layers'
 import { ChloroplastLayer } from './chloroplast-layer'
-import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, type PlantLayer } from './scale-model'
+import { advancePhysiology, getPhysiologySnapshot, getLightAppearance, type PlantInputs, type PhysiologyState, type PhysiologySnapshot } from './model'
+import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, CHLOROPLAST_QUATERNION, getCameraPose, smoothstep, type PlantLayer } from './scale-model'
 
 export interface ScaleController {
   current: number
@@ -20,8 +20,9 @@ export interface ScaleController {
 
 interface SceneProps {
   controller: MutableRefObject<ScaleController>
-  light: number
-  playing: boolean
+  inputs: PlantInputs
+  physiology: MutableRefObject<PhysiologyState>
+  onPhysiology: (snapshot: PhysiologySnapshot) => void
   mobile: boolean
   reducedMotion: boolean
   onScale: (scale: number, width: number) => void
@@ -60,8 +61,9 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
   return <group ref={root}>{children}</group>
 }
 
-function CameraAndScale({ controller, reducedMotion, onScale, onInteract }: Pick<SceneProps, 'controller' | 'reducedMotion' | 'onScale' | 'onInteract'>) {
-  const controls = useRef<ComponentRef<typeof OrbitControls>>(null)
+function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInteract }: Pick<SceneProps, 'controller' | 'physiology' | 'reducedMotion' | 'onScale' | 'onInteract'>) {
+  const orbit = useRef({ yaw:0, pitch:0, currentYaw:0, currentPitch:0 })
+  const focusFrame = useMemo(() => ({ rotation: new T.Quaternion(), blend: new T.Quaternion(), inverseInitial: CHLOROPLAST_QUATERNION.clone().invert() }), [])
   const { camera, size, gl } = useThree()
   const lastReport = useRef(0), autoTime = useRef(0), lastReset = useRef(-1)
   const interaction = useRef(onInteract)
@@ -81,10 +83,22 @@ function CameraAndScale({ controller, reducedMotion, onScale, onInteract }: Pick
       controller.current.target = clampScale(controller.current.target + Math.max(-260, Math.min(260, delta)) * 0.00125)
       controller.current.flight = null
     }
+    const pointers=new Map<number,{x:number;y:number}>()
+    const down=(event:PointerEvent)=>{touch();pointers.set(event.pointerId,{x:event.clientX,y:event.clientY});canvas.setPointerCapture(event.pointerId)}
+    const drag=(event:PointerEvent)=>{
+      const previous=pointers.get(event.pointerId);if(!previous)return
+      pointers.set(event.pointerId,{x:event.clientX,y:event.clientY})
+      if(pointers.size!==1)return
+      orbit.current.yaw-=(event.clientX-previous.x)/size.height*Math.PI*2
+      orbit.current.pitch+=(event.clientY-previous.y)/size.height*Math.PI*1.5
+      const basePitch=getCameraPose(controller.current.current).pitch
+      orbit.current.pitch=Math.max(-20*Math.PI/180-basePitch,Math.min(70*Math.PI/180-basePitch,orbit.current.pitch))
+    }
+    const up=(event:PointerEvent)=>{pointers.delete(event.pointerId);if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId)}
     let lastDistance = 0
     const start = (event: TouchEvent) => {
       touch()
-      if (controls.current) controls.current.enableRotate = event.touches.length < 2
+
       if (event.touches.length === 2) lastDistance = Math.hypot(event.touches[0].clientX - event.touches[1].clientX, event.touches[0].clientY - event.touches[1].clientY)
     }
     const move = (event: TouchEvent) => {
@@ -96,7 +110,7 @@ function CameraAndScale({ controller, reducedMotion, onScale, onInteract }: Pick
     }
     const end = (event: TouchEvent) => {
       lastDistance = 0
-      if (controls.current) controls.current.enableRotate = event.touches.length < 2
+
     }
     const key = (event: KeyboardEvent) => {
       if (!['+', '=', '-', '_', 'ArrowUp', 'ArrowDown'].includes(event.key)) return
@@ -106,29 +120,33 @@ function CameraAndScale({ controller, reducedMotion, onScale, onInteract }: Pick
       controller.current.flight = null
     }
     canvas.addEventListener('wheel', wheel, { passive: false })
-    canvas.addEventListener('pointerdown', touch)
+    canvas.addEventListener('pointerdown',down)
+    canvas.addEventListener('pointermove',drag)
+    canvas.addEventListener('pointerup',up)
+    canvas.addEventListener('pointercancel',up)
     canvas.addEventListener('touchstart', start, { passive: false })
     canvas.addEventListener('touchmove', move, { passive: false })
     canvas.addEventListener('touchend', end)
     canvas.addEventListener('touchcancel', end)
     canvas.addEventListener('keydown', key)
     return () => {
-      canvas.removeEventListener('wheel', wheel); canvas.removeEventListener('pointerdown', touch)
+      canvas.removeEventListener('wheel', wheel); canvas.removeEventListener('pointerdown',down); canvas.removeEventListener('pointermove',drag); canvas.removeEventListener('pointerup',up); canvas.removeEventListener('pointercancel',up)
       canvas.removeEventListener('touchstart', start); canvas.removeEventListener('touchmove', move); canvas.removeEventListener('touchend', end); canvas.removeEventListener('touchcancel', end); canvas.removeEventListener('keydown', key)
     }
   }, [gl, size.height, controller])
+  const cameraDistance = 100 / (2 * Math.tan(Math.PI / 12) * (size.width / size.height))
   useLayoutEffect(() => {
-    if (!(camera instanceof T.OrthographicCamera)) return
-    camera.left = -50; camera.right = 50
-    camera.top = 50 * size.height / size.width; camera.bottom = -camera.top
+    if (!(camera instanceof T.PerspectiveCamera)) return
+    camera.fov=30; camera.aspect=size.width/size.height
+    camera.setViewOffset(size.width,size.height,-size.width*(size.width>=720?0.085:0),0,size.width,size.height)
+    camera.position.normalize().multiplyScalar(cameraDistance)
     camera.updateProjectionMatrix()
-    onScale(controller.current.current, size.width)
-  }, [camera, size, onScale, controller])
+    onScale(controller.current.current,size.width)
+  }, [camera,size,cameraDistance,onScale,controller])
   useFrame((state, rawDelta) => {
     const delta = Math.min(rawDelta, 0.08), c = controller.current
     if (lastReset.current !== c.reset) {
-      camera.position.set(55, 25, 150); camera.lookAt(0, 0, 0)
-      controls.current?.target.set(0, 0, 0); controls.current?.update()
+      orbit.current={yaw:0,pitch:0,currentYaw:0,currentPitch:0}
       lastReset.current = c.reset; autoTime.current = 0
     }
     if (c.flight) {
@@ -142,58 +160,87 @@ function CameraAndScale({ controller, reducedMotion, onScale, onInteract }: Pick
       // 3% in 20 seconds, then hold; no unbounded automatic dive.
       const advance = Math.min(delta, Math.max(0, 20 - autoTime.current)) * Math.log10(1.03) / 20
       c.target -= advance
-      camera.position.applyAxisAngle(T.Object3D.DEFAULT_UP, delta * Math.PI / 1800)
-      camera.lookAt(0, 0, 0)
+      orbit.current.yaw+=delta*Math.PI/1800
     }
+    const pose=getCameraPose(c.current), movement=orbit.current
+    movement.currentYaw=T.MathUtils.damp(movement.currentYaw,movement.yaw,14,delta)
+    movement.currentPitch=T.MathUtils.damp(movement.currentPitch,movement.pitch,14,delta)
+    const yaw=pose.yaw+movement.currentYaw, pitch=Math.max(-20*Math.PI/180,Math.min(70*Math.PI/180,pose.pitch+movement.currentPitch))
+    camera.position.set(Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch)).multiplyScalar(cameraDistance)
+    camera.up.set(Math.sin(pose.roll),Math.cos(pose.roll),0)
+    // The selected lens can migrate. Carry the last part of the dive with its
+    // actual wall pose, so the same granum remains the optical target.
+    focusFrame.rotation.fromArray(physiology.current.chloroplasts.poses[0].quaternion).multiply(focusFrame.inverseInitial)
+    focusFrame.blend.identity().slerp(focusFrame.rotation,smoothstep(-4.85,-5.5,c.current))
+    camera.position.applyQuaternion(focusFrame.blend);camera.up.applyQuaternion(focusFrame.blend);camera.lookAt(0,0,0)
+    gl.domElement.dataset.yaw=(yaw*180/Math.PI).toFixed(2);gl.domElement.dataset.pitch=(pitch*180/Math.PI).toFixed(2)
     if (state.clock.elapsedTime - lastReport.current > 0.065) {
       onScale(c.current, size.width); lastReport.current = state.clock.elapsedTime
       gl.domElement.dataset.scale = c.current.toFixed(5)
     }
   }, -3)
-  return <OrbitControls ref={controls} enableZoom={false} enablePan={false} enableDamping dampingFactor={0.12} rotateSpeed={0.5} maxPolarAngle={Math.PI * 0.9} minPolarAngle={0.1} onStart={() => { controller.current.touched = true; onInteract() }} />
+  return null
 }
 
 function Contents(props: SceneProps) {
-  const root = useRef<T.Group>(null), clock = useRef(0)
-  const { light, mobile, playing, controller } = props
-  const brightness = Math.sqrt(light / 2000)
+  const root = useRef<T.Group>(null), lens = useRef<T.Group>(null), clock = useRef(0), lastSnapshot = useRef(-1)
+  const { mobile, controller, inputs, physiology, onPhysiology } = props
+  const snapshot = getPhysiologySnapshot(physiology.current, inputs)
+  const light = snapshot.actualPPFD, brightness = getLightAppearance(light).brightness
+  const skipElapsed = useRef(false)
+  useEffect(() => {
+    const change=()=>{skipElapsed.current=true}
+    document.addEventListener('visibilitychange',change)
+    return ()=>document.removeEventListener('visibilitychange',change)
+  }, [])
+  useFrame(({clock: renderClock, gl}, delta) => {
+    const paused=isWorldPaused()||document.hidden
+    advancePhysiology(physiology.current, paused ? {...inputs,playing:false}:inputs, skipElapsed.current ? 0 : delta)
+    skipElapsed.current=false
+    clock.current=physiology.current.simulationSeconds
+    gl.domElement.dataset.simulationSeconds=clock.current.toFixed(3)
+    gl.domElement.dataset.actualPpfd=physiology.current.actualPPFD.toFixed(2)
+    if(renderClock.elapsedTime-lastSnapshot.current>=.2){onPhysiology(getPhysiologySnapshot(physiology.current,inputs));lastSnapshot.current=renderClock.elapsedTime}
+  },-4)
   useFrame((_, delta) => {
-    if (playing && !isWorldPaused()) clock.current += Math.min(delta, 0.08)
     const scale = controller.current.current
     const factor = 100 / 10 ** (scale + 6)
-    const anchor = getAnchorUm(scale)
+    const focus = physiology.current.chloroplasts.poses[0]
+    const anchor = getAnchorUm(scale,focus)
     if (root.current) {
       root.current.scale.setScalar(factor)
       root.current.position.set(-anchor[0] * factor, -anchor[1] * factor, -anchor[2] * factor)
     }
+    if(lens.current){lens.current.position.fromArray(focus.positionUm);lens.current.quaternion.fromArray(focus.quaternion)}
   }, -2)
   const layers = useMemo(() => <>
-    <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} /></ScaleLayer>
-    <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} /></ScaleLayer>
-    <ScaleLayer layer="cell" controller={controller}><CellLayer opacity={1} light={brightness} clock={clock} mobile={mobile} /></ScaleLayer>
-    <ScaleLayer layer="chloroplast" controller={controller}><group position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}><ChloroplastLayer opacity={1} mobile={mobile} /></group></ScaleLayer>
-  </>, [controller, mobile, brightness])
+    <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
+    <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
+    <ScaleLayer layer="cell" controller={controller}><CellLayer opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
+    <ScaleLayer layer="chloroplast" controller={controller}><group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}><ChloroplastLayer opacity={1} mobile={mobile} light={light} starch={snapshot.starchFraction} /></group></ScaleLayer>
+  </>, [controller, mobile, brightness, physiology, inputs.timeScale, light, snapshot.starchFraction, snapshot.stomatalOpening])
   return <>
-    <color attach="background" args={['#060e10']} />
-    <ambientLight color="#879b91" intensity={0.13 + brightness * 0.28} />
-    <hemisphereLight args={['#ddd8b7', '#3f6f78', 0.12 + brightness * 0.25]} />
-    <directionalLight position={[-25, 85, 35]} color="#ffecc8" intensity={0.06 + brightness * 2.6} />
-    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={0.04 + brightness * 1.2} />
-    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.18} />
+    <color attach="background" args={['#04080a']} />
+    <ambientLight color="#879b91" intensity={0.08 + brightness * 0.16} />
+    <hemisphereLight args={['#ddd8b7', '#304640', 0.1 + brightness * 0.18]} />
+    <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={0.08+brightness*4.3} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
+    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={0.04 + brightness * 0.45} />
+    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.07} />
     <group ref={root}>{layers}</group>
     <CameraAndScale {...props} />
-    <EffectComposer multisampling={mobile ? 0 : 4}>
-      <DepthOfField target={[0, 0, -4]} focusRange={28} bokehScale={mobile ? 2 : 3.5} height={mobile ? 400 : 700} />
-      <Bloom intensity={0.12} luminanceThreshold={0.85} luminanceSmoothing={0.5} mipmapBlur />
-      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.16} />
+    <EffectComposer multisampling={0}>
+      <DepthOfField target={[0,0,0]} focusRange={42} bokehScale={mobile?2:4} height={mobile ? 400 : 700} />
+      <Bloom intensity={0.06} luminanceThreshold={0.85} luminanceSmoothing={0.5} mipmapBlur />
+      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.1} />
       <Vignette offset={0.3} darkness={0.55} />
+      <SMAA />
     </EffectComposer>
   </>
 }
 
 export function PlantScene(props: SceneProps) {
   return <div className="pc-scene">
-    <Canvas orthographic camera={{ position: [55, 25, 150], near: 0.01, far: 1800 }} dpr={props.mobile ? [1, 1.25] : [1, 1.5]} gl={{ antialias: false, powerPreference: 'high-performance', toneMapping: T.ACESFilmicToneMapping, toneMappingExposure: 1.25 }}>
+    <Canvas shadows={{type:T.PCFShadowMap}} camera={{ position: [65,37,94], fov:30, near:0.1, far:2200 }} onCreated={({gl})=>{gl.localClippingEnabled=true}} dpr={props.mobile ? [1, 1.25] : [1, 1.5]} gl={{ antialias: false, powerPreference: 'high-performance', toneMapping: T.ACESFilmicToneMapping, toneMappingExposure: 1.25 }}>
       <Suspense fallback={null}><Contents {...props} /></Suspense>
     </Canvas>
   </div>
