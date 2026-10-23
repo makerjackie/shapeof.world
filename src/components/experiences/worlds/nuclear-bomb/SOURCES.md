@@ -38,7 +38,7 @@ The [National Naval Aviation Museum display article](https://navalaviationmuseum
 | Maximum fireball radius | `0.06096 × W^0.4` | Glasstone & Dolan, *The Effects of Nuclear Weapons* (1977), [§2.127](https://www.atomicarchive.com/resources/documents/effects/glasstone-dolan/chapter2.html): air-burst breakaway radius approximately `100 × W^0.4` feet; maximum radius approximately twice the breakaway radius. Converting twice that radius to km gives the displayed coefficient. |
 | 20 psi (about 140 kPa) ground range | `0.24 × W^(1/3)` | Cube-root scaling from [§§3.60–3.61](https://www.atomicarchive.com/resources/documents/effects/glasstone-dolan/chapter3.html); reference coefficient from the summary table’s 1 Mt column, 2.4 km divided by 10. |
 | 5 psi (about 34 kPa) ground range | `0.62 × W^(1/3)` | The same scaling; reference coefficient from 6.2 km at 1 Mt, divided by 10. |
-| 1 psi (about 6.9 kPa) ground range | `1.72 × W^(1/3)` | The project brief explicitly fixes this coefficient. The current summary table rounds its 1 Mt value to 17 km, which implies **1.70**, not 1.72. The supplied 1.72 is preserved as an exhibit approximation, not attributed as an exact derivation from that table. |
+| 1 psi (about 6.9 kPa) ground range | `1.70 × W^(1/3)` | The same cube-root scaling; reference coefficient from the summary table’s 17 km at 1 Mt, divided by 10. |
 | Third-degree-burn ground range, clear skies | Log-log interpolation of `(W, km) = (1, 0.6), (20, 2.5), (1,000, 12), (20,000, 38)` | The four anchors are the summary table’s third-degree-burn row. Above 20 Mt the last log-log segment is extrapolated only as far as the 50 Mt exhibit limit. |
 
 The book sections above were checked in Atomic Archive’s transcription of the 1977 text. The government-hosted full-book PDF could not be retrieved during this check; it is not presented as separately verified evidence.
@@ -51,7 +51,11 @@ Verification examples calculated by `effects.ts`:
 | 1,000 kt | 0.96615 km | 2 km | 6.2 km | 12 km |
 | 50,000 kt | 4.61990 km | 7.36806 km | 22.84100 km | 54.06305 km |
 
-At 50,000 kt the 1 psi circle is 63.36534 km. Tests verify that the fireball radius stays below the illustrative height **within 1–50,000 kt only**. No claim is made for unbounded yields.
+At 15 kt the 1 psi circle is 4.19256 km; at 50,000 kt it is 62.62854 km. Tests verify that the fireball radius stays below the illustrative height **within 1–50,000 kt only**. No claim is made for unbounded yields.
+
+The equivalent TNT cube uses the [TNT article’s density](https://en.wikipedia.org/wiki/TNT), 1.654 g/cm³ = 1.654 tons/m³. Its edge in metres is the cube root of equivalent tons divided by 1.654. The cube is an abstract comparison of energy-equivalent volume, not a representation of material inside the cutaway. Reference edges are 0.84558 m at 1 ton, 8.45580 m at 1 kt, 20.85380 m at 15 kt, 125.89046 m at 3.3 Mt, and 311.51443 m at 50 Mt. The cube, 300 m tower and 1.7 m person use a common linear scale; the truck is an original generic silhouette, not a specific vehicle model or capacity claim.
+
+The city is an original seeded architectural model. Desktop street blocks contain one to four simple buildings; small viewports use one simplified volume in the same occupied block, retaining the seeded height and street pattern. This level-of-detail change does not alter the city extent, circle distances, tower, TNT cube, or person scale. Shading at building bases approximates contact darkening; it is not a simulation of material damage. The mountain has an original, deliberately compact horizontal footprint and a fixed 8,848 m peak, not measured terrain.
 
 The abstract city has no real geographic location, population or casualty estimate. The circles assume flat ground and clear skies. Buildings, terrain, shielding, reflections, weather, fallout and radiation are not modelled. The source table itself cautions that simple scaling can overestimate real-world effects. A fireball radius in the air and a ground-effect radius are distinct quantities. Historical yield presets change only this comparison’s energy input; they do not reconstruct each historical event’s actual conditions. The marker height and circles appear together to explain scale, not to choose a real detonation condition.
 
@@ -111,6 +115,22 @@ The bars compare each country’s first atomic test with its first two-stage or 
 | China | [596](https://en.wikipedia.org/wiki/596_(nuclear_test)), 1964-10-16 | [Test No. 6](https://en.wikipedia.org/wiki/Test_No._6), 1967-06-17 | 32 |
 
 Hurricane uses the local date of 3 October; its UTC date is 2 October. China’s interval is 32 complete months plus one day, shown as 2 years and 8 months.
+
+## Historical data charts: provenance and reuse
+
+Two public CSV snapshots were downloaded from Our World in Data on 2026-10-23. Their chart metadata links to full indicator metadata; both upstream `origins[].license.name` values explicitly read **CC BY 4.0**. The derived `history-data.json` retains that license, producer attribution, original-source links, download date, dataset version, and SHA-256 checksums of the downloaded CSV bytes. This data license is separate from the project's original-content license. Conversion selects the year and country observation columns and reorganizes rows; it does not alter the observations.
+
+| Chart | CSV and chart metadata | Full metadata / upstream producer | Snapshot coverage |
+| --- | --- | --- | --- |
+| Country nuclear warhead stockpiles | [CSV](https://ourworldindata.org/grapher/nuclear-warhead-stockpiles.csv), [metadata](https://ourworldindata.org/grapher/nuclear-warhead-stockpiles.metadata.json) | [Indicator 1229473](https://api.ourworldindata.org/v1/indicators/1229473.metadata.json); Federation of American Scientists, *Estimated Global Nuclear Warhead Inventories*, credited to Hans M. Kristensen, Matt Korda, Robert S. Norris, Eliana Johns and Mackenzie Knight | 1945–2026; dataset version 2026-05-13 |
+| Annual nuclear weapons tests | [CSV](https://ourworldindata.org/grapher/number-of-nuclear-weapons-tests.csv), [metadata](https://ourworldindata.org/grapher/number-of-nuclear-weapons-tests.metadata.json) | [Indicator 1229477](https://api.ourworldindata.org/v1/indicators/1229477.metadata.json); Arms Control Association, *The Nuclear Testing Tally*, Daryl Kimball | 1945–2024; dataset version 2026-05-13 |
+
+- Attribution in the interface: Our World in Data, based on the Federation of American Scientists / Arms Control Association, CC BY 4.0. [License terms](https://creativecommons.org/licenses/by/4.0/).
+- The stockpile chart stacks the ten country series. These exclude retired warheads awaiting dismantlement; the dataset's `World` aggregate includes retired warheads and is deliberately **not** used as the sum of that stack. The count is an estimate, not a measure of total energy or destructive power. The country-sum peak is computed from the snapshot (1986, 64,452), rather than encoded as a chart constant.
+- The test chart sums the eight country series. As the metadata states, these are officially announced or reported tests; Hiroshima and Nagasaki are excluded, the Vela incident is excluded, and some simultaneous detonations are counted as a single test. The snapshot's maximum annual count is computed from its rows (1962, 178).
+- The full timeline runs from 1938 to the present year, while the graphs stop at the available observations. Years before the data begins and after it ends remain empty. Published zeros stay zero; missing observations remain `null`. No observations are interpolated, extrapolated or typed from memory.
+- The two plots and event ticks share a linear year coordinate. Stockpile area and test-bar height use independent linear vertical count axes, both starting at zero. The 1963 and 1996 treaty annotations are chronological reference lines, not causal estimates.
+- Source CSV checksums: stockpiles `5fa030e5a7e312c74884adf5d9154afef16fd2fc7fe6b33eaa6ee72401dd7a9b`; tests `4a184bf157d180c91f71e1817f922bf571861b5961b964e0ca758a9101907984`.
 
 ## Scope
 

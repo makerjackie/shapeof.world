@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MAX_YIELD_KT, MIN_YIELD_KT, sampleEffects, sliderToYield, snapYield, YIELD_PRESETS, yieldToSlider } from './effects'
+import { MAX_YIELD_KT, MIN_YIELD_KT, sampleEffects, sliderToYield, snapYield, tntCubeSideM, YIELD_PRESETS, yieldToSlider } from './effects'
 
 describe('bounded public effects illustration', () => {
   it('shows only energy below one kiloton and starts circles at one kiloton', () => {
@@ -22,6 +22,7 @@ describe('bounded public effects illustration', () => {
     expect(sample.showEffects).toBe(true)
     if (!sample.showEffects) throw new Error('Expected effects at fifteen kilotons')
     expect(sample.blast5Km).toBeCloseTo(1.53, 2)
+    expect(sample.blast1Km).toBeCloseTo(4.19, 2)
     expect(sample.fireballKm * 1_000).toBeCloseTo(180, 0)
     expect(sample.heightKm * 1_000).toBeCloseTo(493, 0)
     expect(sample.burnKm).toBeCloseTo(2.18, 2)
@@ -31,12 +32,13 @@ describe('bounded public effects illustration', () => {
 
   it('preserves the supplied coefficients and the upper-range reference', () => {
     const base = sampleEffects(1)
-    expect(base).toMatchObject({heightKm: 0.2, fireballKm: 0.06096, blast20Km: 0.24, blast5Km: 0.62, blast1Km: 1.72, burnKm: 0.6})
+    expect(base).toMatchObject({heightKm: 0.2, fireballKm: 0.06096, blast20Km: 0.24, blast5Km: 0.62, blast1Km: 1.70, burnKm: 0.6})
     expect(sampleEffects(1_000).blast5Km).toBe(6.2)
+    expect(sampleEffects(1_000).blast1Km).toBe(17)
     const maximum = sampleEffects(50_000)
     expect(maximum.fireballKm).toBeCloseTo(4.62, 2)
     expect(maximum.heightKm).toBeCloseTo(7.37, 2)
-    expect(maximum.blast1Km).toBeCloseTo(63.4, 1)
+    expect(maximum.blast1Km).toBeCloseTo(62.6, 1)
     expect(maximum.burnKm).toBeCloseTo(54, 0)
   })
 
@@ -71,6 +73,22 @@ describe('bounded public effects illustration', () => {
       expect(() => yieldToSlider(value)).toThrow(RangeError)
       expect(() => sliderToYield(value)).toThrow(RangeError)
     }
+  })
+})
+
+describe('equivalent TNT volume', () => {
+  it('compares the supplied reference masses with a cube at the published density', () => {
+    for (const [yieldKt, side, precision] of [[0.001, 0.85, 2], [1, 8.5, 1], [15, 20.9, 1], [3_300, 126, 0], [50_000, 312, 0]]) {
+      expect(tntCubeSideM(yieldKt)).toBeCloseTo(side, precision)
+      expect(sampleEffects(yieldKt).tntCubeSideM).toBe(tntCubeSideM(yieldKt))
+    }
+    expect(tntCubeSideM(50_000)).toBeGreaterThan(300)
+  })
+  it('preserves cubic volume and rejects nonfinite input', () => {
+    for (const yieldKt of [0.001, 1, 15, 3_300, 50_000]) {
+      expect(tntCubeSideM(yieldKt) ** 3 * 1.654).toBeCloseTo(yieldKt * 1_000, 5)
+    }
+    expect(() => tntCubeSideM(NaN)).toThrow(RangeError)
   })
 })
 

@@ -9,6 +9,7 @@ import {SMAAPass} from 'three/examples/jsm/postprocessing/SMAAPass.js'
 import {ShaderPass} from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import {OutputPass} from 'three/examples/jsm/postprocessing/OutputPass.js'
 import {GTAOPass} from 'three/examples/jsm/postprocessing/GTAOPass.js'
+import {RoundedBoxGeometry} from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import {PARTS, MATERIALS, type Part} from './parts'
 import {sampleTimeline, samplePresentation} from './model'
 import {createMicroScene, getMicroFraming} from './micro-scene'
@@ -17,6 +18,7 @@ import {createBackdrop, createExhibition} from './exhibition'
 export type SceneAnchor = {id: string; x: number; y: number; visible: boolean; occluded?: boolean; side?: 'left' | 'right'; bounds?: {left: number; right: number; top: number; bottom: number}}
 type Props = {
   active?: boolean
+  guideCamera?: boolean
   explode: number
   cutAngle: 0 | 90 | 180
   selectedPart: string | null
@@ -138,12 +140,12 @@ function createAssembly(angle: number) {
   const tailMat = new T.MeshStandardMaterial({color: MATERIALS.casing.surface, metalness: .52, roughness: .65, envMapIntensity: .26})
   paintedFinish(tailMat, true)
   const tailInnerMat = tailMat.clone()
-  tailInnerMat.color.multiplyScalar(.52)
+  tailInnerMat.color.multiplyScalar(.34)
   paintedFinish(tailInnerMat, true)
   const tailMaterials = [tailMat, tailInnerMat]
   const tailParts: T.Mesh[] = []
   const box = (x: number, y: number, z: number, w: number, h: number, d: number, innerFace = -1) => {
-    const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), Array.from({length: 6}, (_, face) => face === innerFace ? tailInnerMat : tailMat))
+    const mesh = new T.Mesh(new RoundedBoxGeometry(w, h, d, 2, .014), Array.from({length: 6}, (_, face) => face === innerFace ? tailInnerMat : tailMat))
     mesh.position.set(x, y, z)
     mesh.castShadow = true
     mesh.receiveShadow = true
@@ -152,13 +154,26 @@ function createAssembly(angle: number) {
     tailParts.push(mesh)
     pickers.push(mesh)
     occluders.push(mesh)
+    return mesh
   }
   for (const side of [-1, 1]) {
-    box(-5.05, side * .96, 0, 1.02, .085, 2.0, side > 0 ? 3 : 2)
-    box(-5.05, 0, side * .96, 1.02, 2.0, .085, side > 0 ? 5 : 4)
+    box(-4.65, side * .78, 0, .82, .065, 1.63, side > 0 ? 3 : 2)
+    const plate = box(-4.65, 0, side * .78, .82, 1.63, .065, side > 0 ? 5 : 4)
+    // Decorative seams and rivets describe the exterior model's painted plates.
+    for (const offset of [-.23, .23]) {
+      const seam = new T.Mesh(new T.BoxGeometry(.006, 1.52, .002), tailInnerMat)
+      seam.position.set(offset, 0, side * .033)
+      plate.add(seam)
+    }
+    for (let row = 0; row < 9; row++) {
+      const rivet = new T.Mesh(new T.SphereGeometry(.016, 6, 4), tailMat)
+      rivet.scale.z = .5
+      rivet.position.set(-.32, -.64 + row * .16, side * .034)
+      plate.add(rivet)
+    }
   }
-  box(-4.02, 0, 0, 3.42, .07, 1.84)
-  box(-4.02, 0, 0, 3.42, 1.84, .07)
+  box(-3.9, 0, 0, 2.5, .055, 1.48)
+  box(-3.9, 0, 0, 2.5, 1.48, .055)
   const flangePath = new T.CatmullRomCurve3(Array.from({length: 145}, (_, i) => {
     const phi = start + length * i / 144
     return new T.Vector3(Math.sin(phi) * 2.25 * 1.5, 0, Math.cos(phi) * 2.25)
@@ -228,7 +243,7 @@ export function NuclearScene(props: Props) {
   latest.current = props
   const requestDraw = useRef<() => void>(() => {})
 
-  useEffect(() => { requestDraw.current() }, [props.active, props.explode, props.cutAngle, props.selectedPart, props.time, props.endingSeconds, props.leaders, props.micro, props.forceMicro, props.autoCamera, props.reducedMotion])
+  useEffect(() => { requestDraw.current() }, [props.active, props.guideCamera, props.explode, props.cutAngle, props.selectedPart, props.time, props.endingSeconds, props.leaders, props.micro, props.forceMicro, props.autoCamera, props.reducedMotion])
 
   useEffect(() => {
     const element = host.current
@@ -427,7 +442,7 @@ export function NuclearScene(props: Props) {
       raf = 0
       const state = latest.current
       if (state.active === false || document.hidden) return
-      const oscillating = !state.reducedMotion && state.time <= -3 && now - lastInteraction > 6000
+      const oscillating = !capturing && !state.guideCamera && !state.reducedMotion && state.time <= -3 && now - lastInteraction > 6000
       const dt = Math.min((now - previous) / 1000, 0.1)
       previous = now
       const requestedAngle = state.time >= 120 && state.micro ? 90 : state.cutAngle
@@ -447,10 +462,10 @@ export function NuclearScene(props: Props) {
       const displayExplode = state.explode * (1 - T.MathUtils.smoothstep(state.time, -3, -2))
       const microBlend = state.forceMicro ? 1 : state.micro ? presentation.microBlend : 0
       const isMicro = microBlend > 0
-      controls.enabled = !state.micro || state.time < 0
+      controls.enabled = !capturing && !state.guideCamera && (!state.micro || state.time < 0)
       controls.autoRotate = false
       homePosition.copy(macroPosition).multiplyScalar(width < 700 ? 1.6 : 1)
-      if (state.time > -3 && state.autoCamera) {
+      if (capturing || state.guideCamera || (state.time > -3 && state.autoCamera)) {
         // Reaction framing is sampled, never inherited from the playback direction.
         camera.position.copy(homePosition)
         if (state.micro && !state.forceMicro && state.time >= 120 && state.time <= 140) camera.position.multiplyScalar(.6 + .4 * presentation.macroBlend)
@@ -620,7 +635,7 @@ export function NuclearScene(props: Props) {
       renderer.domElement.dataset.renderCount = String(++renderCount)
       window.clearTimeout(wake)
       if (oscillating) invalidate()
-      else if (!state.reducedMotion && state.time <= -3) {
+      else if (!capturing && !state.guideCamera && !state.reducedMotion && state.time <= -3) {
         wake = window.setTimeout(invalidate, Math.max(16, 6005 - (now - lastInteraction)))
       }
     }

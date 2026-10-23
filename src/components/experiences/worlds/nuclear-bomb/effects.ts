@@ -3,6 +3,7 @@ import { KILOTON_TNT_J } from './model'
 export const MIN_YIELD_KT = 0.001
 export const MAX_YIELD_KT = 50_000
 export const MIN_EFFECTS_YIELD_KT = 1
+export const TNT_DENSITY_TONS_PER_CUBIC_METRE = 1.654
 
 export interface YieldPreset {
   readonly id: string
@@ -29,6 +30,7 @@ interface EnergySample {
   readonly yieldKt: number
   readonly energyJ: number
   readonly tntTons: number
+  readonly tntCubeSideM: number
 }
 
 interface EffectDistances {
@@ -61,6 +63,11 @@ function boundedYield(yieldKt: number): number {
   return clamp(finite(yieldKt), MIN_YIELD_KT, MAX_YIELD_KT)
 }
 
+/** Equivalent TNT volume, shown only as an abstract solid comparison. */
+export function tntCubeSideM(yieldKt: number): number {
+  return Math.cbrt(boundedYield(yieldKt) * 1_000 / TNT_DENSITY_TONS_PER_CUBIC_METRE)
+}
+
 function burnRadiusKm(yieldKt: number): number {
   let segment = 0
   while (segment < BURN_ANCHORS.length - 2 && yieldKt > BURN_ANCHORS[segment + 1][0]) segment++
@@ -73,7 +80,7 @@ function burnRadiusKm(yieldKt: number): number {
 /** Approximate, clear-sky exhibit distances; the supplied coefficients are fixed. */
 export function sampleEffects(requestedYieldKt: number): EffectsSample {
   const yieldKt = boundedYield(requestedYieldKt)
-  const energy = { yieldKt, energyJ: KILOTON_TNT_J * yieldKt, tntTons: 1_000 * yieldKt }
+  const energy = { yieldKt, energyJ: KILOTON_TNT_J * yieldKt, tntTons: 1_000 * yieldKt, tntCubeSideM: tntCubeSideM(yieldKt) }
   if (yieldKt < MIN_EFFECTS_YIELD_KT) {
     return { ...energy, showEffects: false, heightKm: null, fireballKm: null, blast20Km: null, blast5Km: null, blast1Km: null, burnKm: null, outerRadiusKm: null }
   }
@@ -82,7 +89,7 @@ export function sampleEffects(requestedYieldKt: number): EffectsSample {
   const fireballKm = 0.06096 * yieldKt ** 0.4
   const blast20Km = 0.24 * cubeRoot
   const blast5Km = 0.62 * cubeRoot
-  const blast1Km = 1.72 * cubeRoot
+  const blast1Km = 1.70 * cubeRoot
   const burnKm = burnRadiusKm(yieldKt)
   return { ...energy, showEffects: true, heightKm, fireballKm, blast20Km, blast5Km, blast1Km, burnKm, outerRadiusKm: Math.max(blast1Km, burnKm) }
 }

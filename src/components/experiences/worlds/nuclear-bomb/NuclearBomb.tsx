@@ -6,10 +6,11 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import type {ExperienceControls} from '~/components/ExperienceShell'
 import {Freebar, FreebarTabs} from '~/components/experiences/Freebar'
 import {GhostHint} from '~/components/experiences/GhostHint'
+import {GuideTour, GUIDE_AUTOPLAY_STATE_EVENT, type GuideStep} from '~/components/experiences/GuideTour'
 import {useI18n} from '~/i18n'
 import {useExperienceI18n} from '~/i18n/experience'
 
-import {advancePresentation, CHEMICAL_START, chainSummary, DEFAULT_YIELD_KT, ENDING_PRESENTATION_SECONDS, lastGenerationsEnergyFraction, samplePresentation, sampleTimeline, slowdownFactor, stepTimeline} from './model'
+import {advancePresentation, CHEMICAL_START, GENERATION_NS, chainSummary, DEFAULT_YIELD_KT, ENDING_PRESENTATION_SECONDS, lastGenerationsEnergyFraction, samplePresentation, sampleTimeline, slowdownFactor, stepTimeline} from './model'
 import {PARTS} from './parts'
 import {NuclearScene} from './scene'
 import {ScaleView} from './ScaleView'
@@ -37,46 +38,119 @@ function ScientificNumber({value, digits = 2, decimalPlaces = 0}: {value: number
 
 type ExhibitView = 'cutaway' | 'scale' | 'history'
 
+type GuidePosition = {index: number; run: number}
+
 export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   const tx = useExperienceI18n()
   const [view, setView] = useState<ExhibitView>('cutaway')
   const [visited, setVisited] = useState<Set<ExhibitView>>(() => new Set(['cutaway']))
-  const changeView = (next: ExhibitView) => {
-    controls.registerInteraction()
+  const [guided, setGuided] = useState(false)
+  const [guidePosition, setGuidePosition] = useState<GuidePosition | null>(null)
+  const [guideYield, setGuideYield] = useState(15)
+  const viewRef = useRef(view)
+  const guidedRef = useRef(guided)
+  const previousView = useRef<ExhibitView>('cutaway')
+  viewRef.current = view
+  guidedRef.current = guided
+
+  const showView = useCallback((next: ExhibitView) => {
     setVisited((current) => new Set([...current, next]))
     setView(next)
+  }, [])
+  const beginGuide = useCallback(() => {
+    if (!guidedRef.current) previousView.current = viewRef.current
+    guidedRef.current = true
+    setGuided(true)
+  }, [])
+  const endGuide = useCallback(() => {
+    guidedRef.current = false
+    setGuided(false)
+    setGuidePosition(null)
+    showView(previousView.current)
+  }, [showView])
+  const goToGuideStep = useCallback((index: number) => {
+    beginGuide()
+    if (index === 3) setGuideYield(15)
+    setGuidePosition((current) => ({index, run: (current?.run ?? 0) + 1}))
+    showView(index < 3 ? 'cutaway' : index === 3 ? 'scale' : 'history')
+  }, [beginGuide, showView])
+
+  useEffect(() => {
+    const syncGuide = (event: Event) => {
+      const detail = (event as CustomEvent<{worldId?: string; active?: boolean}>).detail
+      if (detail?.worldId !== 'nuclear-bomb') return
+      if (detail.active) beginGuide()
+      else if (guidedRef.current) endGuide()
+    }
+    window.addEventListener(GUIDE_AUTOPLAY_STATE_EVENT, syncGuide)
+    return () => window.removeEventListener(GUIDE_AUTOPLAY_STATE_EVENT, syncGuide)
+  }, [beginGuide, endGuide])
+
+  useEffect(() => {
+    if (!guided || guidePosition?.index !== 3) return
+    setGuideYield(15)
+    const timer = window.setTimeout(() => setGuideYield(50000), 2300)
+    return () => window.clearTimeout(timer)
+  }, [guided, guidePosition])
+
+  const guideSteps = useMemo<Array<GuideStep>>(() => [
+    {title: '从外壳，看到核心。', body: '剖面把层次摊开。橙色的是可裂变核心，其余各层可以逐一查看。', durationMs: 6500},
+    {title: '跟着一颗中子。', body: '裂变放出的中子触发下一次裂变。演示会停在第 8 代，留下正在扩展的前沿。', durationMs: 19000},
+    {title: '能量集中在最后几代。', body: '现在是第 78 代。理想化净翻倍下，最后 7 代贡献总能量的 99% 以上。', durationMs: 6500},
+    {title: '把能量，放回尺度里。', body: '从广岛的约 15 千吨，拉到沙皇炸弹的 50 百万吨。比较效应圈，也比较同等能量的 TNT 立方体。', durationMs: 9000},
+    {title: '日期之间，还有一条曲线。', body: '中国的两次试验相隔 2 年 8 个月。沿同一条年份轴，查看全球库存怎样变化。', durationMs: 8500},
+  ].map((step, index) => ({...step, action: () => goToGuideStep(index), replay: () => goToGuideStep(index)})), [goToGuideStep])
+
+  const changeView = (next: ExhibitView) => {
+    controls.registerInteraction()
+    guidedRef.current = false
+    setGuided(false)
+    setGuidePosition(null)
+    showView(next)
   }
-  return <div className="nb-experience" data-exhibit-view={view}>
-    <div className={`nb-view-layer${view === 'cutaway' ? ' is-active' : ''}`} aria-hidden={view !== 'cutaway'} inert={view !== 'cutaway'}><CutawayView controls={controls} active={view === 'cutaway'} /></div>
-    {visited.has('scale') && <div className={`nb-view-layer${view === 'scale' ? ' is-active' : ''}`} aria-hidden={view !== 'scale'} inert={view !== 'scale'}><ScaleView controls={controls} active={view === 'scale'} /></div>}
-    {visited.has('history') && <div className={`nb-view-layer${view === 'history' ? ' is-active' : ''}`} aria-hidden={view !== 'history'} inert={view !== 'history'}><HistoryView controls={controls} active={view === 'history'} /></div>}
+  return <div className={`nb-experience${guided ? ' is-guided' : ''}`} data-exhibit-view={view} data-exhibit-guide-step={guided && guidePosition ? guidePosition.index + 1 : undefined}>
+    <div className={`nb-view-layer${view === 'cutaway' ? ' is-active' : ''}`} aria-hidden={view !== 'cutaway'} inert={view !== 'cutaway'}><CutawayView controls={controls} active={view === 'cutaway'} guided={guided} guidePosition={guidePosition} /></div>
+    {visited.has('scale') && <div className={`nb-view-layer${view === 'scale' ? ' is-active' : ''}`} aria-hidden={view !== 'scale'} inert={view !== 'scale'}><ScaleView controls={controls} active={view === 'scale'} guided={guided} guideYieldKt={guided && guidePosition?.index === 3 ? guideYield : undefined} /></div>}
+    {visited.has('history') && <div className={`nb-view-layer${view === 'history' ? ' is-active' : ''}`} aria-hidden={view !== 'history'} inert={view !== 'history'}><HistoryView controls={controls} active={view === 'history'} guided={guided} guideFocus={guided && guidePosition?.index === 4 ? 'china' : undefined} /></div>}
     <nav className="nb-view-navigation" data-experience-overlay="true">
       <FreebarTabs activeId={view} onChange={changeView} ariaLabel={tx('展览视图')} tabs={[{id: 'cutaway', label: tx('剖面')}, {id: 'scale', label: tx('尺度')}, {id: 'history', label: tx('历史')}]} />
     </nav>
+    {!guided && <button className="nb-guide-entry" type="button" data-experience-overlay="true" onClick={() => { controls.registerInteraction(); beginGuide() }}><span>{tx('五步导览')}</span><ArrowRight size={13} /></button>}
+    <GuideTour worldId="nuclear-bomb" steps={guideSteps} defaultOpen={guided} placement="stage" showReplayChip={false} kicker={tx('导览')} replayLabel={tx('五步导览')} exitLabel={tx('退出导览')} onExit={endGuide} stagePlan={[{position: 'top-left', mobilePosition: 'top-left', motion: 'fade', tone: 'light', width: 'normal', treatment: 'annotation'}]} />
   </div>
 }
 
-function CutawayView({controls, active}: {controls: ExperienceControls; active: boolean}) {
+function CutawayView({controls, active, guided, guidePosition}: {controls: ExperienceControls; active: boolean; guided: boolean; guidePosition: GuidePosition | null}) {
   const tx = useExperienceI18n()
   const {locale} = useI18n()
   const english = locale === 'en'
   const host = useRef<HTMLDivElement>(null)
   const touchedExplode = useRef(false)
   const introElapsed = useRef(0)
-  const [explode, setExplode] = useState(0)
-  const [cutAngle, setCutAngle] = useState<0 | 90 | 180>(90)
-  const [selectedPart, setSelectedPart] = useState<string | null>(null)
-  const [{time, endingSeconds}, setPresentation] = useState({time: CHEMICAL_START, endingSeconds: 0})
-  const [playing, setPlaying] = useState(false)
+  const [freeExplode, setExplode] = useState(0)
+  const [freeCutAngle, setCutAngle] = useState<0 | 90 | 180>(90)
+  const [freeSelectedPart, setSelectedPart] = useState<string | null>(null)
+  const [guideSelectedPart, setGuideSelectedPart] = useState<string | null>('core')
+  const [freePresentation, setPresentation] = useState({time: CHEMICAL_START, endingSeconds: 0})
+  const [guidePresentation, setGuidePresentation] = useState({time: CHEMICAL_START, endingSeconds: 0})
+  const [freePlaying, setPlaying] = useState(false)
   const [reverse, setReverse] = useState(false)
   const [speed, setSpeed] = useState(1)
-  const [autoCamera, setAutoCamera] = useState(true)
-  const [manualMicro, setManualMicro] = useState<boolean | null>(null)
+  const [freeAutoCamera, setAutoCamera] = useState(true)
+  const [freeManualMicro, setManualMicro] = useState<boolean | null>(null)
   const [anchors, setAnchors] = useState<Array<Anchor>>([])
   const [size, setSize] = useState({width: 1600, height: 1000})
   const [reducedMotion, setReducedMotion] = useState(false)
   const [error, setError] = useState('')
   const [sourcesOpen, setSourcesOpen] = useState(false)
+  const cutawayGuide = guided && guidePosition !== null && guidePosition.index < 3
+  const {time, endingSeconds} = cutawayGuide ? guidePresentation : freePresentation
+  const explode = cutawayGuide ? guidePosition.index === 0 ? 0.55 : 0 : freeExplode
+  const cutAngle = cutawayGuide ? 90 : freeCutAngle
+  const selectedPart = cutawayGuide ? guidePosition.index === 0 ? guideSelectedPart : null : freeSelectedPart
+  const playing = cutawayGuide ? guidePosition.index === 1 && time < 8 * GENERATION_NS : freePlaying
+  const autoCamera = cutawayGuide || freeAutoCamera
+  const manualMicro = cutawayGuide ? null : freeManualMicro
   const sample = sampleTimeline(time)
   const presentation = samplePresentation(time, endingSeconds)
   const micro = manualMicro ?? (autoCamera && time >= 0)
@@ -85,7 +159,7 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
   const showCompletion = presentation.complete && !forceMicro
   const reactionActive = time >= 0
   const selected = PARTS.find((part) => part.id === selectedPart)
-  const slowdown = slowdownFactor(time, speed)
+  const slowdown = slowdownFactor(time, cutawayGuide ? 1 : speed)
   const mobile = size.width <= 720
 
   useEffect(() => {
@@ -101,7 +175,7 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
   }, [])
 
   useEffect(() => {
-    if (!active || touchedExplode.current || introElapsed.current >= 3200) return
+    if (!active || guided || touchedExplode.current || introElapsed.current >= 3200) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setExplode(0.55)
       introElapsed.current = 3200
@@ -119,10 +193,10 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
     }
     frame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(frame)
-  }, [active])
+  }, [active, guided])
 
   useEffect(() => {
-    if (!playing || !active) return
+    if (!playing || !active || guided) return
     let frame = 0
     let previous = 0
     const tick = (stamp: number) => {
@@ -133,16 +207,38 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
     }
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [playing, reverse, speed, active])
+  }, [playing, reverse, speed, active, guided])
 
   useEffect(() => {
-    if (playing && ((!reverse && presentation.complete) || (reverse && time <= CHEMICAL_START))) setPlaying(false)
-  }, [playing, presentation.complete, reverse, time])
+    if (!guided && playing && ((!reverse && presentation.complete) || (reverse && time <= CHEMICAL_START))) setPlaying(false)
+  }, [playing, presentation.complete, reverse, time, guided])
+
+  useEffect(() => {
+    if (!cutawayGuide || !guidePosition) return
+    const start = guidePosition.index === 0 ? CHEMICAL_START : guidePosition.index === 1 ? 0 : 78 * GENERATION_NS
+    setGuidePresentation({time: start, endingSeconds: 0})
+    setGuideSelectedPart('core')
+    if (guidePosition.index !== 1) return
+    let frame = 0
+    let previous = 0
+    let position = {time: start, endingSeconds: 0}
+    const animate = (stamp: number) => {
+      const delta = previous ? Math.max(0, (stamp - previous) / 1000) : 0
+      previous = stamp
+      position = advancePresentation(position, delta)
+      position.time = Math.min(8 * GENERATION_NS, position.time)
+      setGuidePresentation(position)
+      if (position.time < 8 * GENERATION_NS) frame = requestAnimationFrame(animate)
+    }
+    frame = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(frame)
+  }, [cutawayGuide, guidePosition])
 
   const choosePart = useCallback((id: string | null) => {
     controls.registerInteraction()
-    setSelectedPart((current) => current === id ? null : id)
-  }, [controls])
+    if (cutawayGuide) setGuideSelectedPart((current) => current === id ? null : id)
+    else setSelectedPart((current) => current === id ? null : id)
+  }, [controls, cutawayGuide])
 
   const scrub = (value: number) => {
     controls.registerInteraction()
@@ -244,11 +340,11 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
 
   return (
     <div className={`nb-world${microscopyVisible ? ' is-micro' : ''}${reactionActive ? ' is-reacting' : ''}${reactionActive && sample.energyFraction > 0.2 && !presentation.complete && !forceMicro ? ' is-bright' : ''}${showCompletion ? ' is-complete' : ''}${selected ? ' has-selection' : ''}`} ref={host} data-nuclear-time={time.toFixed(4)} data-nuclear-ending={endingSeconds.toFixed(4)} data-nuclear-view={microscopyVisible ? 'micro' : 'cutaway'}>
-      <NuclearScene active={active} explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} endingSeconds={endingSeconds} micro={micro} forceMicro={forceMicro} autoCamera={autoCamera && manualMicro === null} leaders={leaders} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
+      <NuclearScene active={active} guideCamera={cutawayGuide} explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} endingSeconds={endingSeconds} micro={micro} forceMicro={forceMicro} autoCamera={autoCamera && manualMicro === null} leaders={leaders} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
       <div className="nb-vignette" aria-hidden="true" />
 
       <header className="nb-heading" data-experience-overlay="true">
-        <p><span className="nb-live-dot" />{tx(showCompletion ? '时间停止在这里' : microscopyVisible ? '微观视图' : reactionActive ? '返回剖面' : '内爆式装置')}<i />{reactionActive || microscopyVisible ? '02' : '01'} / 02</p>
+        <p><span className="nb-live-dot" />{tx(showCompletion ? '时间停止在这里' : microscopyVisible ? '微观视图' : reactionActive ? '返回剖面' : '内爆式装置')}<i />01 / 03</p>
         <h1>{tx(showCompletion ? '不到一微秒。' : microscopyVisible ? '一颗，再到下一颗。' : reactionActive ? '能量，在最后几代显现。' : '原子弹，一层一层。')}</h1>
         <span>{tx(showCompletion ? '拖回时间轴，可以再看一次。' : forceMicro && time >= 120 ? '微观示意停在前 12 代，读数对应主时间轴。' : microscopyVisible ? '一颗原子核裂开，放出两三个中子。' : reactionActive ? '从微观回到整体。亮度表示累计能量。' : '「胖子」外形 · 结构示意')}</span>
       </header>
@@ -345,7 +441,7 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
 
       {error && <div className="nb-error" role="alert"><p>{tx('三维视图暂时无法显示。请使用支持 WebGL 的浏览器。')}</p></div>}
 
-      {active && <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
+      {active && !guided && <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
         <div className="nb-secondary">
           {time <= CHEMICAL_START && !micro && (mobile || selected) && sectionControls('nb-explode-secondary')}
           {!mobile && !micro && !reactionActive && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
@@ -378,7 +474,7 @@ function CutawayView({controls, active}: {controls: ExperienceControls; active: 
           </div>
         </div>
       </Freebar>}
-      {active && <GhostHint worldId="nuclear-bomb" gesture={{type: 'drag', target: '.nb-scene', dx: 75, dy: -25, label: tx('拖动旋转，点一层看里面')}} delay={6000} />}
+      {active && !guided && <GhostHint worldId="nuclear-bomb" gesture={{type: 'drag', target: '.nb-scene', dx: 75, dy: -25, label: tx('拖动旋转，点一层看里面')}} delay={6000} />}
     </div>
   )
 }
