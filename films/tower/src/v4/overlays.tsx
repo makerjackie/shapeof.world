@@ -346,20 +346,20 @@ export const Deal: React.FC = () => {
 
 export const TaxCount: React.FC = () => {
   const bar = barAt(useCurrentFrame());
-  const o = fade(bar, 70.5, 74.5, 0.3);
+  const o = fade(bar, 86.5, 90.5, 0.3);
   if (o <= 0) return null;
   const n = Math.round(
     runNum(bar, [
-      [72.4, 50],
-      [73.5, 159],
+      [88.4, 50],
+      [89.5, 159],
     ]),
   );
-  const yr = bar < 72.4 ? "2011 年" : "今天";
+  const yr = bar < 88.4 ? "2011 年" : "今天";
   return (
     <div style={{ position: "absolute", left: 120, top: 330, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
       <div style={{ fontSize: 44, fontWeight: 700, color: SUB }}>{yr}</div>
       <div style={{ fontFamily: NUM, fontSize: 210, fontWeight: 700, color: K.gold, lineHeight: 1 }}>
-        {bar < 72.4 ? "50+" : n}
+        {bar < 88.4 ? "50+" : n}
         <span style={{ fontFamily: FONT, fontSize: 56, marginLeft: 12, color: K.fg }}>栋</span>
       </div>
     </div>
@@ -381,6 +381,27 @@ export const MoveOutKey: React.FC = () => {
     <div style={{ position: "absolute", right: 90, top: 300, display: "flex", flexDirection: "column", gap: 14, opacity: o, fontFamily: FONT, fontSize: 36, fontWeight: 700, color: K.fg, textShadow: SHADOW }}>
       {row(K.theme, "新盖好的总部")}
       {row("#2a3140", "原来租的楼，灯暗下来")}
+    </div>
+  );
+};
+
+// Other cities' offices: two cards over the night city.
+export const Elsewhere: React.FC = () => {
+  const bar = barAt(useCurrentFrame());
+  const o = fade(bar, 76.4, 78.0, 0.25);
+  if (o <= 0) return null;
+  const card = (city: string, v: string, src: string, k: number) => (
+    <div style={{ width: 420, padding: "24px 30px", borderRadius: 18, background: "rgba(5,6,8,0.62)", opacity: k, transform: `translateY(${(1 - k) * 20}px)`, textAlign: "center" }}>
+      <div style={{ fontSize: 40, fontWeight: 800 }}>{city}</div>
+      <div style={{ fontFamily: NUM, fontSize: 96, fontWeight: 700, color: K.gold, lineHeight: 1.1 }}>{v}</div>
+      <div style={{ fontSize: 26, fontWeight: 600, color: SUB }}>{src}</div>
+    </div>
+  );
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: 440, display: "flex", justifyContent: "center", gap: 60, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      {card("深圳", "约 25%", "四家机构 · 2026 年三季度", ramp(bar, 76.6, 77.0, EO))}
+      {card("上海", "20.9%", "戴德梁行 · 2026 年三季度", ramp(bar, 76.8, 77.2, EO))}
+      {card("北京", "15.9%", "莱坊 · 2026 年二季度", ramp(bar, 77.0, 77.4, EO))}
     </div>
   );
 };

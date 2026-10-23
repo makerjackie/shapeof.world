@@ -3,8 +3,9 @@
 // per-building states on top. SCRIPT.md has the bar table this follows.
 import { Cam, mixCam } from "../geo/cam";
 import { Bldg, CITY } from "../geo/data";
+import { toScreen } from "../world/camera";
 import { Box, Poly, WorldState } from "../world/engine";
-import { barAt, clamp01, EIO, ESO, lerp, ramp, track, tween, window01 } from "./bars";
+import { barAt, clamp01, EO, EIO, ESO, lerp, ramp, track, tween, window01 } from "./bars";
 
 // ---------- Places (local metres, see src/geo/data.ts) ----------
 
@@ -139,13 +140,25 @@ const KEYS: Key[] = [
   // the taxes become roads, metro, schools
   { bar: 68.6, cam: c(-4500, 1500, 0.03, 0, 34, 520) },
   { bar: 70.05, cam: c(-4450, 1500, 0.0305, 1, 34.5, 520), ease: LIN },
+  // zoom out: land money nationwide, as two columns of light standing in 深圳湾
+  { bar: 70.9, cam: c(-9400, -3900, 0.13, -6, 72, 880) },
+  { bar: 76.2, cam: c(-9300, -3800, 0.14, 4, 72.5, 880), ease: LIN },
+  // offices empty elsewhere too: the whole city at night
+  { bar: 76.6, cam: c(-6000, -1500, 0.06, 0, 58, 620) },
+  { bar: 77.9, cam: c(-5900, -1450, 0.061, 2, 58.5, 620), ease: LIN },
+  // the bet lost: 深超总
+  { bar: 78.5, cam: c(-9850, -1800, 0.55, -20, 72, 720) },
+  { bar: 82.0, cam: c(-9800, -1750, 0.6, -12, 72, 720), ease: LIN },
+  // Shenzhen's bet: the next companies, lights coming on across the city
+  { bar: 82.6, cam: c(-7000, -1300, 0.09, -4, 62, 620) },
+  { bar: 86.0, cam: c(-6800, -1200, 0.095, 2, 63, 620), ease: LIN },
   // 升华: Futian lights up, the trains, the people, back to the first shot
-  { bar: 70.9, cam: c(-650, -320, 0.78, -22, 74, 640) },
-  { bar: 74.3, cam: c(-620, -300, 0.84, 6, 74, 640), ease: LIN },
-  { bar: 74.9, cam: c(-470, -600, 1.2, -24, 68, 660) },
-  { bar: 78.5, cam: c(-450, -580, 1.32, -14, 68, 660), ease: LIN },
-  { bar: 79.2, cam: c(-760, -430, 1.25, -82, 82, 760) },
-  { bar: 86, cam: c(-840, -410, 1.45, -86, 81.6, 750), ease: LIN },
+  { bar: 86.9, cam: c(-650, -320, 0.78, -22, 74, 640) },
+  { bar: 90.3, cam: c(-620, -300, 0.84, 6, 74, 640), ease: LIN },
+  { bar: 90.9, cam: c(-470, -600, 1.2, -24, 68, 660) },
+  { bar: 94.5, cam: c(-450, -580, 1.32, -14, 68, 660), ease: LIN },
+  { bar: 95.2, cam: c(-760, -430, 1.25, -82, 82, 760) },
+  { bar: 102, cam: c(-840, -410, 1.45, -86, 81.6, 750), ease: LIN },
 ];
 
 const camAtBar = (bar: number): Cam => {
@@ -244,8 +257,32 @@ const props = (bar: number, frame: number): { boxes: Box[]; polys: Poly[] } => {
     boxes.push({ x: PLACES.yuehai.x + 120, y: PLACES.yuehai.y - 40, w: 140, d: 140, h: 1.11 * 90 * g2, color: ORANGE, o: 0.85 * priceO, add: true });
   }
   // gold glints over the towers that pass a hundred million in tax (亮起的楼为示意)
+  // the city has braked: office land planned for sale, 2021 (52.3 ha) vs 2026 (10 ha), as plates of real size
+  // floating over the CBD
+  const brakeO = window01(bar, 50.4, 53.7, 0.3);
+  if (brakeO > 0) {
+    const p1 = ramp(bar, 50.9, 51.6, EO);
+    const p2 = ramp(bar, 51.7, 52.4, EO);
+    for (const [x, y, side, k, col] of [
+      [-1050, -250, Math.sqrt(523000), p1, "#a9c1e0"],
+      [420, -250, Math.sqrt(100000), p2, ORANGE],
+    ] as [number, number, number, number, string][]) {
+      if (k <= 0) continue;
+      const sd = side * (0.6 + 0.4 * k);
+      boxes.push({ x, y, w: sd, d: sd, h: 3, base: 300, color: col, o: 0.28 * k * brakeO, add: true });
+      polys.push({ pts: rect(x, y, sd, sd), color: col, width: 6, o: k * brakeO, closed: true, h: 303 });
+    }
+  }
+  // land money nationwide: 2021 vs 2025, 1 万亿 = 300 m, standing in 深圳湾
+  const landO = window01(bar, 70.6, 76.4, 0.4);
+  if (landO > 0) {
+    const g1 = ramp(bar, 71.0, 71.9, EIO);
+    const g2 = ramp(bar, 71.7, 72.5, EIO);
+    boxes.push({ x: LAND_COLS[0].x, y: LAND_COLS[0].y, w: 900, d: 900, h: 8.7051 * 300 * g1, color: GOLD, o: 0.6 * landO, add: true });
+    boxes.push({ x: LAND_COLS[1].x, y: LAND_COLS[1].y, w: 900, d: 900, h: 4.1518 * 300 * g2, color: ORANGE, o: 0.8 * landO, add: true });
+  }
   // people walking from the metro into the tower
-  const pplO = window01(bar, 74.6, 78.8, 0.4);
+  const pplO = window01(bar, 90.6, 94.8, 0.4);
   if (pplO > 0) {
     // from the metro stations (会展中心、岗厦、购物公园、福民) into the towers around them (示意)
     const routes = [
@@ -269,6 +306,38 @@ const props = (bar: number, frame: number): { boxes: Box[]; polys: Poly[] } => {
     });
   }
   return { boxes, polys };
+};
+
+export const LAND_COLS = [
+  { x: -10200, y: -5600 },
+  { x: -8600, y: -5600 },
+];
+// 深圳湾超级总部基地 (深超总), around the 招商银行全球总部 tower
+export const SCZ = { x: -9600, y: -1700 };
+// The tower whose dark floors come back on in the last shot: the tallest block near the middle of that frame.
+let RELIGHT = -1;
+const relightId = () => {
+  if (RELIGHT >= 0) return RELIGHT;
+  const cam = KEYS[KEYS.length - 1].cam;
+  let best = 0;
+  let score = -Infinity;
+  CITY.buildings.forEach((b, i) => {
+    if (b.h < 120) return;
+    const [sx, sy, vis] = toScreen(cam, b.cx, b.cy, b.h * 0.5);
+    if (!vis || sx < 500 || sx > 1420 || sy < 300 || sy > 1000) return;
+    const sc = b.h - Math.abs(sx - 960) * 0.4;
+    if (sc > score) {
+      score = sc;
+      best = i;
+    }
+  });
+  RELIGHT = best;
+  return best;
+};
+
+const hash01 = (i: number) => {
+  const s = Math.sin(i * 12.9898 + 78.233) * 43758.5453;
+  return s - Math.floor(s);
 };
 
 // Buildings that light up gold in the 亿元楼 count (示意): a fixed random pick of Futian's tall blocks.
@@ -306,12 +375,12 @@ export const worldAt = (frame: number): WorldState => {
     [10.9, 0.25],
     [16.6, 0.25],
     [19, 0.6],
-    [69.8, 0.7],
-    [70.6, 0.3],
-    [74.3, 0.3],
-    [75.0, 0.55],
-    [78.6, 0.55],
-    [79.2, 0.85],
+    [85.8, 0.7],
+    [86.6, 0.3],
+    [90.3, 0.3],
+    [91.0, 0.55],
+    [94.6, 0.55],
+    [95.2, 0.85],
   ]);
   // a quarter of the office floors go dark: in the hook, and again in the last shot
   const vacancy = Math.max(
@@ -320,8 +389,8 @@ export const worldAt = (frame: number): WorldState => {
       [3.95, 0.27],
       [4.3, 0.27],
       [4.32, 0],
-      [79.9, 0],
-      [80.6, 0.25],
+      [95.9, 0],
+      [96.6, 0.25],
     ], LIN),
     window01(bar, 61.3, 62.9, 0.6) * 0.45,
   );
@@ -333,13 +402,13 @@ export const worldAt = (frame: number): WorldState => {
   ], LIN);
   const heroTint = Math.max(window01(bar, 6.4, 8.6, 0.5) * 0.55, window01(bar, 8.3, 10.2, 0.3) * 0.85, window01(bar, 16.5, 19.4, 0.4) * 0.3);
   const goldN = Math.round(track(bar, [
-    [70.6, 0],
-    [71.4, 50],
-    [72.4, 50],
-    [73.5, 159],
+    [86.6, 0],
+    [87.4, 50],
+    [88.4, 50],
+    [89.5, 159],
   ], LIN));
   const goldSet = new Set(GOLD_PICK.slice(0, Math.round((goldN / 159) * Math.min(GOLD_PICK.length, 120))));
-  const goldO = window01(bar, 70.4, 78.6, 0.6);
+  const goldO = window01(bar, 86.4, 94.6, 0.6);
 
   const { boxes, polys } = props(bar, frame);
   // offices lit floor after floor, so the empty quarter shows when it goes dark
@@ -348,12 +417,17 @@ export const worldAt = (frame: number): WorldState => {
     [4.3, 0.85],
     [4.32, 0],
   ]), track(bar, [
-    [78.9, 0],
-    [79.3, 0.8],
+    [94.9, 0],
+    [95.3, 0.8],
   ]));
   // the whole-city shots: towers stand as light needles, twice their height (the screen says so)
-  const cityScale = Math.max(window01(bar, 21.0, 27.5, 0.6), window01(bar, 59.4, 60.7, 0.4), window01(bar, 68.2, 70.6, 0.5));
+  const cityScale = Math.max(window01(bar, 21.0, 27.5, 0.6), window01(bar, 59.4, 60.7, 0.4), window01(bar, 68.2, 70.6, 0.5), window01(bar, 70.6, 78.1, 0.4), window01(bar, 82.4, 86.2, 0.4));
   const hqO = window01(bar, 59.4, 60.7, 0.3);
+  // the next companies: tall buildings across the city light up gold, one after another
+  const nextFade = window01(bar, 82.5, 86.3, 0.4);
+  const nextCo = nextFade > 0 ? ramp(bar, 82.8, 85.6, EIO) * 0.55 : 0;
+  // the last shot: after 你会来, the dark floors of 平安金融中心 come back on
+  const relight = ramp(bar, 96.95, 97.9, EIO);
   // 后海: the newest towers (headquarters) lit, older towers lose tenants
   const moveOut = window01(bar, 60.9, 62.95, 0.3);
 
@@ -370,9 +444,9 @@ export const worldAt = (frame: number): WorldState => {
       [49.2, 0.8],
       [53.6, 0.8],
       [54.2, 1],
-      [82.0, 1],
-      [84.4, 0.22],
-      [85.2, 0],
+      [98.0, 1],
+      [100.4, 0.22],
+      [101.2, 0],
     ]);
 
   // while the years run, blocks that just went up flash gold
@@ -382,6 +456,9 @@ export const worldAt = (frame: number): WorldState => {
     let tint = b.year && growing > 0 && year >= b.year - 1 ? growing * clamp01(1.6 - (year - b.year)) * 0.9 : 0;
     if (goldO > 0 && goldSet.has(i)) tint = 0.75 * goldO;
     if (hqO > 0 && i === PINGAN_OSM) tint = hqO;
+    if (nextCo > 0 && b.h >= 70 && hash01(i) < nextCo) tint = Math.max(tint, 0.85 * nextFade);
+    // its empty floors fill back in and the whole tower warms up, so the moment reads from across the frame
+    if (i === relightId() && relight > 0) return [1 + 1.5 * relight, Math.max(tint, 0.55 * relight), hs, 1 - relight];
     if (moveOut > 0 && i >= CITY.buildings.length && b.h >= 60) {
       if (b.year && b.year >= 2023) return [1, moveOut * 0.85, hs, 0];
       return [1, tint, hs, 1];
@@ -397,11 +474,11 @@ export const worldAt = (frame: number): WorldState => {
     rise: 1,
     roads: 1,
     traffic: frame * 0.55,
-    metro: Math.max(window01(bar, 68.3, 78.8, 0.6), window01(bar, 8.4, 10.2, 0.3) * 0.35),
-    metroFlow: bar > 68.2 && bar < 79 ? frame * 2.2 : undefined,
-    led: tween(bar, 68, 71, 0, 0.8),
-    sz: Math.max(window01(bar, 21.0, 27.4, 0.5), window01(bar, 59.4, 60.7, 0.4), window01(bar, 68.2, 70.6, 0.5)) * 0.8,
-    cityRoads: Math.max(window01(bar, 21.0, 27.5, 0.5), window01(bar, 53.9, 57.9, 0.4) * 0.7, window01(bar, 59.4, 60.7, 0.4), window01(bar, 68.2, 70.6, 0.5)),
+    metro: Math.max(window01(bar, 68.3, 70.7, 0.4), window01(bar, 86.4, 94.8, 0.6), window01(bar, 8.4, 10.2, 0.3) * 0.35),
+    metroFlow: (bar > 68.2 && bar < 70.8) || (bar > 86.3 && bar < 95) ? frame * 2.2 : undefined,
+    led: Math.max(tween(bar, 68, 71, 0, 0.8) * (1 - ramp(bar, 70.6, 71.2)), tween(bar, 84, 87, 0, 0.8)),
+    sz: Math.max(window01(bar, 21.0, 27.4, 0.5), window01(bar, 59.4, 60.7, 0.4), window01(bar, 68.2, 70.6, 0.5), window01(bar, 70.6, 78.1, 0.4), window01(bar, 82.4, 86.2, 0.4)) * 0.8,
+    cityRoads: Math.max(window01(bar, 21.0, 27.5, 0.5), window01(bar, 53.9, 57.9, 0.4) * 0.7, window01(bar, 59.4, 60.7, 0.4), window01(bar, 70.6, 78.1, 0.4), window01(bar, 82.4, 86.2, 0.4), window01(bar, 68.2, 70.6, 0.5)),
     towers: {
       year,
       ex: 1 + cityScale,
@@ -415,7 +492,7 @@ export const worldAt = (frame: number): WorldState => {
       tint: heroTint,
       hl: window01(bar, 57.9, 59.3, 0.3) > 0 ? { part: 2, from: 29, to: 41, amt: window01(bar, 57.9, 59.3, 0.3) } : undefined,
     },
-    tint: (bar > 69.5 && bar < 79) || growing > 0 ? GOLD : ORANGE,
+    tint: (bar > 82.3 && bar < 95) || growing > 0 ? GOLD : ORANGE,
     boxes,
     polys,
     exposure,

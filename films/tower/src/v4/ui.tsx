@@ -187,6 +187,7 @@ export const EndCard: React.FC<{ at: number }> = ({ at }) => {
         <Img src={staticFile("mark-disc.png")} style={{ width: 132, height: 132 }} />
         <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 112, color: K.fg, letterSpacing: 10 }}>世界的形状</span>
       </div>
+      <div style={{ marginTop: 34, fontFamily: SERIF, fontWeight: 600, fontSize: 40, letterSpacing: 18, color: "rgba(244,240,232,0.78)", opacity: k2, transform: `translateY(${(1 - k2) * 10}px)` }}>看见世界如何运行</div>
       <div style={{ position: "absolute", bottom: 120, fontFamily: FONT, fontSize: 30, fontWeight: 600, letterSpacing: 6, color: "rgba(244,240,232,0.7)", opacity: k2 }}>MakerJackie</div>
     </div>
   );
@@ -205,6 +206,8 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
     "地价：第一财经 2026-06（粤海住宅地）；澎湃新闻 2025-10（K602-0016 出让公告）",
     "福田区政府：税收过亿元楼宇（2012、2025 年政府工作报告，《福田概况》2026）",
     "深圳市规划和自然资源局《2026 年度建设用地供应计划》；每日经济新闻（2021 年商服用地 52.3 公顷）",
+    "财政部：全国国有土地使用权出让收入 2021、2025 年；戴德梁行（上海）、莱坊（北京）2026；深圳市政府工作报告 2026",
+    "观点网 2022-11（恒大深超总地块停工、转让）；赢商网 2024-05（万科深超总地块转让）",
     "回报率为估算：整栋按市场租金出租、租金不涨，扣除税费、运营与大修，地到期后不计价值；十年期国债收益率（2026-10）",
     "地图：© OpenStreetMap contributors（ODbL）· 三维城市由代码逐帧生成，CTBUH 高楼位置为示意轮廓",
   ];

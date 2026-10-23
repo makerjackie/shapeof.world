@@ -6,12 +6,12 @@ import { Grain, Vignette } from "../bg";
 import { K } from "../theme";
 import { World } from "../world/World";
 import { barAt, bf } from "./bars";
-import { Brake, Deal, LeaseBar, LeaseLeft, MoveOutKey, QuestionDim, Rent, RentArc, Returns, SkylineCount, TaxCount, YearCounter } from "./overlays";
+import { Deal, Elsewhere, LeaseBar, LeaseLeft, MoveOutKey, QuestionDim, Rent, RentArc, Returns, SkylineCount, TaxCount, YearCounter } from "./overlays";
 import { At, BrandMark, EndCard, Line, Note, Pin, Sources } from "./ui";
-import { DISTRICTS, HERO, HQ, PARCEL, PLACES, worldAt } from "./world";
+import { DISTRICTS, HERO, HQ, LAND_COLS, PARCEL, PLACES, SCZ, worldAt } from "./world";
 
 // The edited track (tools/music-edit.sh) runs past the film; the film ends on the end card with the music fading.
-export const FILM4_FRAMES = bf(88.2);
+export const FILM4_FRAMES = bf(104.2);
 // The track peaks near +0.8 dBTP once encoded; this keeps the master under −1 dBTP.
 const GAIN = 0.75;
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -24,7 +24,7 @@ const SFX: { id: string; bar: number; vol: number }[] = [
   ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-mechanical-14", bar: 16.4 + (i + 1) * 0.26, vol: 0.13 })),
   { id: "sfx-transition-13", bar: 21.0, vol: 0.15 },
   { id: "sfx-impact-01", bar: 32.3, vol: 0.42 },
-  ...[79.95, 80.15, 80.35].map((bar) => ({ id: "sfx-mechanical-01", bar, vol: 0.18 })),
+  ...[95.95, 96.15, 96.35].map((bar) => ({ id: "sfx-mechanical-01", bar, vol: 0.18 })),
 ];
 
 const G = K.gold;
@@ -44,13 +44,13 @@ export const Film4: React.FC = () => {
   const bar = barAt(frame);
   return (
     <AbsoluteFill style={{ background: "#050608", overflow: "hidden" }}>
-      <Audio src={staticFile("music-v5.wav")} volume={(f) => GAIN * interpolate(f, [0, 3], [0.6, 1], CL) * interpolate(f, [bf(86.4), FILM4_FRAMES - 1], [1, 0], { ...CL, easing: (t) => 1 - (1 - t) * (1 - t) })} />
+      <Audio src={staticFile("music-v6.wav")} volume={(f) => GAIN * interpolate(f, [0, 3], [0.6, 1], CL) * interpolate(f, [bf(102.4), FILM4_FRAMES - 1], [1, 0], { ...CL, easing: (t) => 1 - (1 - t) * (1 - t) })} />
       {SFX.map((x, i) => (
         <Sequence key={i} from={bf(x.bar)} durationInFrames={60} layout="none">
           <Audio src={staticFile(`sfx/${x.id}.wav`)} volume={x.vol} />
         </Sequence>
       ))}
-      {bar < 85.6 ? <World s={s} /> : null}
+      {bar < 101.6 ? <World s={s} /> : null}
       <QuestionDim />
 
       {/* ---------- the question ---------- */}
@@ -106,20 +106,17 @@ export const Film4: React.FC = () => {
         <Line at={14.9} out={16.4} size={S} parts={["买下这块地 ", { t: "50 年", c: O }, "的使用权。"]} />
       </At>
       <LeaseBar />
-      <Note at={14.6} out={16.4}>深圳能源公告 2008-04-25：宗地 B119-0053，2008 年 4 月 23 日竞得</Note>
 
       <At x={110} y={110}>
         <Line at={16.5} out={18.95} size={S2} weight={700} parts={["设计、审批、施工……"]} />
         <Line at={17.3} out={18.95} size={96} parts={["盖了", { t: "整整十年", c: O }, "。"]} />
       </At>
-      <Note at={16.7} out={18.95}>2009 年国际设计竞赛，丹麦 BIG 事务所中标；2018 年交付 · 楼层逐年长高为示意</Note>
       <YearCounter />
 
       <At x={110} y={110}>
         <Line at={19.0} out={21.0} size={S} parts={["加上地，一共约 ", { t: "29 亿元", c: O }, "。"]} />
         <Line at={19.6} out={21.0} size={S2} weight={700} parts={["计划一半自己出，一半向银行借。"]} />
       </At>
-      <Note at={19.1} out={21.0}>预算 29.36 亿元，含地价 6.7 亿；融资安排：动态总投资的 50% 用自有资金，其余贷款 · 深圳能源公告 2010-12</Note>
 
       {/* ---------- after it was built ---------- */}
       <At x={110} y={110}>
@@ -136,7 +133,6 @@ export const Film4: React.FC = () => {
       {DISTRICTS.map((d, i) => (
         <Pin key={d.name} cam={cam} at={25.2 + i * 0.12} out={27.4} x={d.x} y={d.y} h={d.vac * 45} lift={18} dot={false} text={`${d.vac.toFixed(1)}%`} sub={d.name} size={d.name === "后海" ? 44 : 32} color={d.vac > 30 ? R : K.fg} />
       ))}
-      <Note at={25.2} out={27.4}>莱坊 2026 年二季度，各片区甲级写字楼空置率</Note>
 
       <At x={960} y={300} align="center">
         <Line at={27.5} out={30.5} size={S} parts={["房租，跌了一半。"]} />
@@ -161,7 +157,6 @@ export const Film4: React.FC = () => {
         <Line at={36.4} out={38.4} size={S2} weight={700} parts={["盖好那天只剩 40 年；到期要续，得再交一笔地价。"]} />
       </At>
       <LeaseLeft />
-      <Note at={35.8} out={38.4}>非住宅建设用地使用权到期不会自动续期，要申请、再交出让金 ·《民法典》第三百五十九条、《城市房地产管理法》第二十二条</Note>
 
       <At x={960} y={130} align="center">
         <Line at={38.5} out={40.6} size={S} parts={["算上这一点，按盖好时的租金："]} />
@@ -188,7 +183,8 @@ export const Film4: React.FC = () => {
         <Line at={50.5} out={53.6} size={S} parts={["城市其实已经踩了刹车。"]} />
         <Line at={51.0} out={53.6} size={S2} weight={700} parts={["今年计划卖的商业办公用地，只有 2021 年的五分之一。"]} />
       </At>
-      <Brake />
+      <Pin cam={cam} at={51.2} out={53.6} x={-1050} y={-250} h={303} lift={30} dot={false} text="52.3 公顷" sub="2021 年" color={B} size={48} />
+      <Pin cam={cam} at={52.0} out={53.6} x={420} y={-250} h={303} lift={30} dot={false} text="10 公顷" sub="2026 年" color={O} size={48} />
       <Note at={50.6} out={53.6}>深圳市规划和自然资源局《2026 年度建设用地供应计划》：商服用地 10 公顷，"严控商办用地新增供应"；2021 年 52.3 公顷（每日经济新闻）</Note>
 
       <At x={110} y={110}>
@@ -197,7 +193,6 @@ export const Film4: React.FC = () => {
       </At>
       <Pin cam={cam} at={54.7} out={57.8} x={-9750} y={-1621} h={393} lift={40} text="招商银行全球总部" sub="2016 年拿地 → 2025 年建成" color={K.fg} size={36} />
       <Pin cam={cam} at={55.1} out={57.8} x={-12720} y={-2739} h={158} lift={60} text="字节跳动后海中心" sub="2020 年拿地 → 2025 年建成" color={K.fg} size={36} side="right" />
-      <Note at={53.8} out={57.8}>平安金融中心 2007 年拿地、2017 年竣工；招商银行全球总部 2016-12 拿地，2025 年建成；字节跳动后海中心 2020-06 拿地，2025-02 竣工验收</Note>
 
       <At x={110} y={110}>
         <Line at={57.95} out={60.6} size={S} parts={["而且很多楼，本来就不是盖来出租的。"]} />
@@ -207,14 +202,12 @@ export const Film4: React.FC = () => {
       {HQ.map((h, i) => (
         <Pin key={h.label} cam={cam} at={59.6 + i * 0.1} out={60.6} x={h.x} y={h.y} h={i === 3 ? 600 : 300} lift={40} text={h.label} size={30} color={O} />
       ))}
-      <Note at={58.0} out={60.6}>仲量联行 2026-01-20（按项目数）· 深圳能源公告：北塔 29–41 层自用 · 地图上的总部为举例</Note>
 
       <At x={110} y={110}>
         <Line at={60.75} out={62.9} size={S} parts={["公司搬进自己的楼，"]} />
         <Line at={61.15} out={62.9} size={S} parts={["原来租的写字楼，就", { t: "空了出来", c: R }, "。"]} />
       </At>
       <MoveOutKey />
-      <Note at={60.85} out={62.9}>莱坊 2026 年一季度：后海租金单季下跌 12.6%，原因是大型科技和金融机构的自建总部竣工、主力租户退租</Note>
 
       <At x={110} y={110}>
         <Line at={63.05} out={65.6} size={S} parts={["企业愿意自己盖，因为地便宜："]} />
@@ -236,26 +229,60 @@ export const Film4: React.FC = () => {
         <Line at={69.1} out={70.5} size={S2} weight={700} parts={["这些税，会变成路、地铁和学校。"]} />
       </At>
 
-      {/* ---------- 升华 ---------- */}
-      <At x={120} y={240}>
-        <Line at={70.6} out={74.5} size={S2} weight={700} parts={["福田区，一年交税过亿元的写字楼"]} />
+      {/* ---------- zoom out ---------- */}
+      <At x={110} y={110}>
+        <Line at={70.65} out={74.6} size={S} parts={["靠卖地赚钱的日子，正在过去。"]} />
+        <Line at={71.3} out={74.6} size={S2} weight={700} parts={["全国卖地的钱，4 年", { t: "少了一半多", c: R }, "。"]} />
       </At>
-      <TaxCount />
-      <Note at={70.7} out={74.5}>福田区政府工作报告 2012；《福田概况》2026 · 按楼里企业交的税计 · 亮起的楼为示意</Note>
-      <At x={960} y={130} align="center">
-        <Line at={74.7} out={78.6} size={84} parts={["你每天走进去的那栋楼，"]} />
-        <Line at={75.6} out={78.6} size={84} parts={["是一座城市", { t: "十年前下的注", c: G }, "。"]} />
-      </At>
-      <At x={960} y={150} align="center" gap={18}>
-        <Line at={79.4} out={82.3} size={S} weight={700} parts={["空着的那些，还在等。"]} />
-        <Line at={80.6} out={82.3} size={120} serif weight={700} parts={["它赌的，是", { t: "你会来", c: G }, "。"]} />
+      <Pin cam={cam} at={71.7} out={76.3} x={LAND_COLS[0].x} y={LAND_COLS[0].y} h={8.7051 * 300} lift={24} dot={false} text="8.7 万亿" sub="2021 年 · 全国卖地收入" color={G} size={52} />
+      <Pin cam={cam} at={72.4} out={76.3} x={LAND_COLS[1].x} y={LAND_COLS[1].y} h={4.1518 * 300} lift={24} dot={false} text="4.2 万亿" sub="2025 年" color={O} size={52} />
+      <Note at={70.8} out={76.3}>财政部：全国国有土地使用权出让收入 2021 年 87,051 亿元，2025 年 41,518 亿元</Note>
+      <At x={110} y={110}>
+        <Line at={74.7} out={76.3} size={S} parts={["所以不只深圳，"]} />
+        <Line at={75.1} out={76.3} size={S} parts={["各地都更要靠", { t: "企业交的税", c: G }, "。"]} />
       </At>
 
-      <Sources at={82.3} out={85.0} />
-      <BrandMark o={interpolate(frame, [bf(84.7), bf(85.0)], [1, 0], CL)} />
+      <At x={960} y={170} align="center">
+        <Line at={76.4} out={78.0} size={S} parts={["写字楼空着，也不只是深圳。"]} />
+        <Line at={76.6} out={78.0} size={S2 - 10} weight={700} color="rgba(244,240,232,0.8)" parts={["甲级写字楼空置率"]} />
+      </At>
+      <Elsewhere />
+
+      <At x={110} y={110}>
+        <Line at={78.1} out={82.1} size={S} parts={["盖楼这场赌，也有人", { t: "输了", c: R }, "。"]} />
+        <Line at={78.8} out={82.1} size={S2 - 6} weight={700} parts={["恒大：2017 年拿地，挖到地下 42 米停工，2022 年转手。"]} />
+        <Line at={79.9} out={82.1} size={S2 - 6} weight={700} parts={["万科：2017 年拿地，2024 年转手，亏了约 ", { t: "9 亿", c: R }, "。"]} />
+      </At>
+      <Pin cam={cam} at={78.4} out={82.1} x={SCZ.x} y={SCZ.y} h={0} lift={120} text="深圳湾超级总部基地" sub="两块地都在这里" color={K.fg} size={38} />
+      <Note at={78.3} out={82.1}>观点网 2022-11-12：恒大 T208-0054 2021-09 停工，基坑深 42.40 米，2022-11 转让；赢商网 2024-05-28：万科 T208-0053 以 22.35 亿元转让（2017 年 31.37 亿元拿地）</Note>
+
+      <At x={110} y={110}>
+        <Line at={82.2} out={86.1} size={S} parts={["深圳押的，是", { t: "下一批公司", c: G }, "。"]} />
+        <Line at={82.9} out={86.1} size={S2} weight={700} parts={["2.6 万多家高新技术企业，谁长大了，"]} />
+        <Line at={83.5} out={86.1} size={S2} weight={700} parts={["谁就会搬进", { t: "下一栋楼", c: G }, "。"]} />
+      </At>
+      <Note at={82.4} out={86.1}>2026 年深圳市政府工作报告：2025 年新增国家高新技术企业 7300 家，总量突破 2.6 万家 · 亮起的楼为示意</Note>
+
+      {/* ---------- 升华 ---------- */}
+      <At x={120} y={240}>
+        <Line at={86.6} out={90.5} size={S2} weight={700} parts={["福田区，一年交税过亿元的写字楼"]} />
+      </At>
+      <TaxCount />
+      <Note at={86.7} out={90.5}>福田区政府工作报告 2012；《福田概况》2026 · 按楼里企业交的税计 · 亮起的楼为示意</Note>
+      <At x={960} y={130} align="center">
+        <Line at={90.7} out={94.6} size={84} parts={["你每天走进去的那栋楼，"]} />
+        <Line at={91.6} out={94.6} size={84} parts={["是一座城市", { t: "十年前下的注", c: G }, "。"]} />
+      </At>
+      <At x={960} y={150} align="center" gap={18}>
+        <Line at={95.4} out={98.6} size={S} weight={700} parts={["空着的那些，还在等。"]} />
+        <Line at={96.6} out={98.6} size={120} serif weight={700} parts={["它赌的，是", { t: "你会来", c: G }, "。"]} />
+      </At>
+
+      <Sources at={98.6} out={101.0} />
+      <BrandMark o={interpolate(frame, [bf(100.7), bf(101.0)], [1, 0], CL)} />
       <Vignette />
       <Grain />
-      <EndCard at={84.9} />
+      <EndCard at={100.9} />
       <AbsoluteFill style={{ background: "#000", opacity: interpolate(frame, [FILM4_FRAMES - 24, FILM4_FRAMES - 1], [0, 1], CL), pointerEvents: "none" }} />
     </AbsoluteFill>
   );
