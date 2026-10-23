@@ -31,7 +31,7 @@ const valueAt = (t: number) => {
   return v;
 };
 
-const CARD = { x: 780, y: 360, w: 1000, h: 560 };
+export const CARD = { x: 780, y: 360, w: 1000, h: 560 };
 const SLOT = { x: CARD.x + CARD.w - 50, y: CARD.y + 352 };
 const TILE = 0.24;
 const TW = CARD.w * TILE;
@@ -70,7 +70,7 @@ export const REPLY_AT = bar(7) + 0.82;
 
 type CardProps = { price: number; priceColor: string; priceScale: number; showPrice: boolean; month: string; stock: string; ramGone: number; struck: number; id: string };
 
-const CartCard: React.FC<CardProps> = ({ price, priceColor, priceScale, showPrice, month, stock, ramGone, struck, id }) => (
+export const CartCard: React.FC<CardProps> = ({ price, priceColor, priceScale, showPrice, month, stock, ramGone, struck, id }) => (
   <Glass x={0} y={0} w={CARD.w} h={CARD.h}>
     <div style={{ position: "absolute", left: 40, top: 28, fontSize: 40, fontWeight: 900 }}>
       购物车 <span style={{ fontSize: 28, color: C.muted }}>(1)</span>

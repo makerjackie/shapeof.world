@@ -6,8 +6,8 @@ export { Backdrop, C, Cam, CL, clamp01, Corner, EBACK, EIO, EO, Glass, Label, le
 
 // v3 keeps the v2 look (dark, big kinetic type, clean 2D objects; the user: "效果还可以"). Characters rise in at CPS a
 // second, so a 17-character two-line question is fully on screen within one second and the reading rule
-// (0.6 s + 0.15 s per character, films/house/tools/reading.mjs) fits inside a 2-bar scene (4.3 s).
-export const CPS = 18;
+// (0.6 s + 0.15 s per character, films/house/tools/reading.mjs) fits inside a 2-bar scene (4.3 s); about one character a frame.
+export const CPS = 30;
 
 // One caption line: characters rise out of a mask from `at`; the keyword gets the gold marker with ink type on `kwAt`;
 // the line lifts and fades on `out`.
