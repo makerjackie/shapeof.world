@@ -40,6 +40,7 @@ export type WorldState = {
   cam: Cam;
   night: number; // 0 blue-hour dusk → 1 deep night
   lights?: number; // share of windows lit, 0..1 (defaults to 0.35 + 0.65 × night)
+  full?: number; // 0..1: office towers lit on (almost) every floor
   rise?: number; // global height of the OSM city, 0..1
   city?: number; // OSM buildings on (default 1)
   vacancy?: number; // share of floors gone dark
@@ -54,7 +55,7 @@ export type WorldState = {
   szTint?: number; // Shenzhen land lifted out of the delta
   green?: number;
   hero?: { built?: number; tint?: number; on?: number; hl?: { part: number; from: number; to: number; amt: number } };
-  towers?: { year: number; ex: number; on: number; beacon?: number; tint?: (i: number, t: [number, number, number, number]) => number };
+  towers?: { year: number; ex: number; on: number; beacon?: number; fresh?: number; tint?: (i: number, t: [number, number, number, number]) => number };
   boxes?: Box[];
   polys?: Poly[];
   tint?: string;
@@ -255,12 +256,14 @@ const bldgMaterial = (n: number, defines: Record<string, string> = {}) =>
         uTint: { value: new THREE.Color("#ff8a3d") },
         uNight: { value: 0 },
         uLights: { value: 0 },
+        uFull: { value: 0 },
         uVacancy: { value: 0 },
         uLitGain: { value: 1.8 },
         uTintGlow: { value: 1 },
         uLed: { value: 0 },
         uHL: { value: new THREE.Vector4(-1, 0, 0, 0) },
         uBeacon: { value: 0 },
+        uFresh: { value: 0 },
         uHideCov: { value: 0 },
         uHide: { value: new THREE.Vector4(1, 1, -1, -1) },
       },
@@ -643,6 +646,7 @@ export const createEngine = (): Engine => {
       const u = m.uniforms;
       u.uNight.value = k;
       u.uLights.value = s.lights ?? 0.35 + 0.65 * k;
+      u.uFull.value = s.full ?? 0;
       u.uVacancy.value = s.vacancy ?? 0;
       u.uWallA.value.copy(P("wallA"));
       u.uWallB.value.copy(P("wallB"));
@@ -662,6 +666,7 @@ export const createEngine = (): Engine => {
     if (T) {
       tMat.uniforms.uYear.value = T.year;
       tMat.uniforms.uBeacon.value = T.beacon ?? 0;
+      tMat.uniforms.uFresh.value = T.fresh ?? 0;
       // where the OSM blocks stand, they already carry these towers with their real footprints
       tMat.uniforms.uHideCov.value = bMesh.visible ? 1 : 0;
       tMat.uniforms.uEx.value = T.ex * T.on;

@@ -84,12 +84,14 @@ uniform vec3 uLitC;
 uniform vec3 uTint;
 uniform float uNight;
 uniform float uLights;
+uniform float uFull; // offices lit floor after floor, for the vacancy reveal
 uniform float uVacancy;
 uniform float uLitGain;
 uniform float uTintGlow;
 uniform float uLed;
 uniform vec4 uHL; // hero: part, first floor, last floor, amount
 uniform float uBeacon; // towers glow as light needles at city scale
+uniform float uFresh; // while the years run, towers that just went up flash
 #ifdef TOWERS
 varying float vFresh;
 #endif
@@ -189,7 +191,9 @@ void main() {
     vec3 key = vec3(floor(cell.x / run), cell.y, vB);
     float r = h31(key);
     float litP = uLights * vS.r * (0.08 + 0.42 * seed);
-    float dark = step(h21(vec2(cell.y, vB + 3.1)), uVacancy * vS.a);
+    litP = mix(litP, 0.93, uFull * tall);
+    // empty floors go dark in runs of two or three, like whole vacant floors of a tower
+    float dark = step(h21(vec2(floor(cell.y / mix(1.0, 2.5, tall)), vB + 3.1)), uVacancy * vS.a);
     float lit = step(r, litP) * (1.0 - dark);
     lit = mix(lit, litP * (1.0 - uVacancy * vS.a), far);
     lit = max(lit, mix(step(r, 0.85), 0.85, far) * vS.g);
@@ -200,7 +204,7 @@ void main() {
     // offices mostly cool white, one colour per building; homes mostly warm
     float cool = mix(step(h31(key + 4.0), 0.12), step(h21(vec2(vB, 4.0)), 0.6), tall);
     vec3 lc = mix(mix(uLitW, uLitC, cool), uTint * 1.25, vS.g);
-    col += lc * lit * win * tone * uLitGain;
+    col += lc * lit * win * tone * uLitGain * mix(1.0, 0.5, uFull * tall);
     // LED outlines on some towers at night: vertical corners and the roof line
     float ledOn = max(uLed * uNight * step(0.7, h21(vec2(vB, 8.8))) * smoothstep(140.0, 180.0, vH), vS.g * smoothstep(30.0, 70.0, vH));
     if (ledOn > 0.0) {
@@ -219,7 +223,7 @@ void main() {
 #ifdef TOWERS
   // city scale: towers read as light needles; the ones just finished flash
   if (vRoof < 0.5) col += mix(uLitW, uLitC, 0.3) * uBeacon * (0.25 + 0.75 * smoothstep(0.0, vH + 1.0, vY));
-  col += uTint * vFresh * 1.4;
+  col += uTint * vFresh * 1.4 * uFresh;
 #endif
   gl_FragColor = vec4(col, 1.0);
   #include <fog_fragment>

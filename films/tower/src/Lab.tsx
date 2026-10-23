@@ -15,6 +15,8 @@ export const SHOTS: WorldState[] = [
   { cam: { x: -128, y: -810, z: 2.6, bearing: -35, tilt: 68, oy: 600 }, night: 0.1, roads: 1, hero: { on: 0 } },
   { cam: { x: -128, y: -810, z: 2.6, bearing: -35, tilt: 68, oy: 600 }, night: 0.1, roads: 1, city: 0 },
   { cam: { x: -128, y: -810, z: 2.6, bearing: -35, tilt: 68, oy: 600 }, night: 0.1, roads: 0 },
+  { cam: { x: -12720, y: -2620, z: 0.95, bearing: -32, tilt: 75, oy: 760 }, night: 0.45, roads: 1, tint: "#ffd166", bState: (_i, b) => (b.year && b.year >= 2024 ? [1, 1, 1, 1] : [1, 0, 1, 1]), towers: { year: 2026, ex: 1, on: 1 } },
+  { cam: { x: -12720, y: -2620, z: 0.95, bearing: -32, tilt: 75, oy: 760 }, night: 0.45, roads: 1, city: 0, tint: "#ffd166", towers: { year: 2026, ex: 1, on: 1, tint: (_i, t) => (t[3] >= 2024 ? 1 : 0) } },
 ];
 
 const GlInfo: React.FC = () => {

@@ -10,7 +10,8 @@ import { Account, Deal, LeaseBar, OwnRent, QuestionDim, Rent, SkylineCount, TaxC
 import { At, BrandMark, EndCard, Line, Note, Pin, Sources } from "./ui";
 import { DISTRICTS, HERO, HQ, PARCEL, PLACES, worldAt } from "./world";
 
-export const FILM4_FRAMES = MUSIC_END_FRAME;
+// The film ends three bars before the track does: the music fades out over the end card instead of a long hold.
+export const FILM4_FRAMES = Math.min(MUSIC_END_FRAME, bf(80.2));
 // The track peaks near +0.8 dBTP once encoded; the master step (tools/tpmaster.py) brings it under −1 dBTP.
 const GAIN = 0.79;
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -23,7 +24,7 @@ const SFX: { id: string; bar: number; vol: number }[] = [
   ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-mechanical-14", bar: 16.4 + (i + 1) * 0.26, vol: 0.13 })),
   { id: "sfx-transition-13", bar: 20.2, vol: 0.15 },
   { id: "sfx-impact-01", bar: 32.2, vol: 0.42 },
-  ...[70.85, 71.1, 71.35].map((bar) => ({ id: "sfx-mechanical-01", bar, vol: 0.18 })),
+  ...[71.0, 71.2, 71.4].map((bar) => ({ id: "sfx-mechanical-01", bar, vol: 0.18 })),
 ];
 
 const G = K.gold;
@@ -40,7 +41,7 @@ export const Film4: React.FC = () => {
       <Audio
         src={staticFile("music.m4a")}
         trimBefore={MUSIC_OFFSET}
-        volume={(f) => GAIN * interpolate(f, [0, 3], [0.6, 1], CL) * interpolate(f, [FILM4_FRAMES - 75, FILM4_FRAMES - 1], [1, 0], CL)}
+        volume={(f) => GAIN * interpolate(f, [0, 3], [0.6, 1], CL) * interpolate(f, [bf(78.4), FILM4_FRAMES - 1], [1, 0], { ...CL, easing: (t) => 1 - (1 - t) * (1 - t) })}
       />
       {SFX.map((x, i) => (
         <Sequence key={i} from={bf(x.bar)} durationInFrames={60} layout="none">
@@ -208,7 +209,7 @@ export const Film4: React.FC = () => {
 
       {/* ---------- 升华 ---------- */}
       <At x={120} y={250}>
-        <Line at={62.7} out={66.4} size={44} weight={700} parts={["福田区，一年交税过亿元的写字楼"]} />
+        <Line at={62.7} out={66.4} size={52} weight={700} parts={["福田区，一年交税过亿元的写字楼"]} />
       </At>
       <TaxCount />
       <Note at={62.8} out={66.4}>福田区政府工作报告 2012；《福田概况》2026 · 按楼里企业交的税计 · 亮起的楼为示意</Note>
@@ -221,11 +222,11 @@ export const Film4: React.FC = () => {
         <Line at={72.5} out={74.4} size={96} serif weight={700} parts={["它赌的，是", { t: "你会来", c: G }, "。"]} />
       </At>
 
-      <Sources at={74.4} out={77.4} />
-      <BrandMark o={interpolate(frame, [bf(77.0), bf(77.3)], [1, 0], CL)} />
+      <Sources at={74.4} out={77.0} />
+      <BrandMark o={interpolate(frame, [bf(76.7), bf(77.0)], [1, 0], CL)} />
       <Vignette />
       <Grain />
-      <EndCard at={77.2} />
+      <EndCard at={76.9} />
       <AbsoluteFill style={{ background: "#000", opacity: interpolate(frame, [FILM4_FRAMES - 24, FILM4_FRAMES - 1], [0, 1], CL), pointerEvents: "none" }} />
     </AbsoluteFill>
   );

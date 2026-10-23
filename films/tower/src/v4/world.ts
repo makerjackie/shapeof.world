@@ -85,8 +85,8 @@ const KEYS: Key[] = [
   { bar: 2.9, cam: c(-830, -560, 1.65, 22, 74, 640) },
   { bar: 4.05, cam: c(-800, -470, 1.8, 27, 74, 640), ease: LIN },
   // still building: Nanshan's 后海 skyline, the newest towers rise out of the ground
-  { bar: 4.8, cam: c(-12380, -3300, 0.36, 6, 75, 720) },
-  { bar: 6.05, cam: c(-12380, -3150, 0.38, 10, 75, 720), ease: LIN },
+  { bar: 4.8, cam: c(-12720, -2620, 0.95, -32, 75, 760) },
+  { bar: 6.05, cam: c(-12720, -2560, 1.02, -26, 75, 760), ease: LIN },
   // the dive onto the tower
   { bar: 7.3, cam: c(HERO.x, HERO.y, 2.3, -32, 64, 760) },
   { bar: 8.05, cam: c(HERO.x, HERO.y, 2.4, -24, 65, 760), ease: LIN },
@@ -96,13 +96,13 @@ const KEYS: Key[] = [
   // 2008: the plot, the stack, the price
   { bar: 10.9, cam: c(PARCEL.x + 40, PARCEL.y - 10, 2.0, -26, 52, 600) },
   { bar: 12.05, cam: c(PARCEL.x + 40, PARCEL.y - 10, 2.05, -18, 54, 600), ease: LIN },
-  { bar: 12.8, cam: c(PARCEL.x + 10, PARCEL.y, 1.55, -14, 77, 780) },
-  { bar: 14.05, cam: c(PARCEL.x + 10, PARCEL.y, 1.6, -4, 77, 780), ease: LIN },
+  { bar: 12.8, cam: c(PARCEL.x + 10, PARCEL.y + 30, 2.5, -16, 74, 820) },
+  { bar: 14.05, cam: c(PARCEL.x + 10, PARCEL.y + 30, 2.6, -6, 74, 820), ease: LIN },
   { bar: 14.7, cam: c(PARCEL.x, PARCEL.y, 1.6, 8, 58, 520) },
   { bar: 16.05, cam: c(PARCEL.x, PARCEL.y, 1.65, 14, 58, 520), ease: LIN },
   // ten years of building, orbiting the tower
-  { bar: 16.8, cam: c(HERO.x, HERO.y, 1.4, -48, 72, 660) },
-  { bar: 20.05, cam: c(HERO.x, HERO.y, 1.55, 28, 71, 660), ease: LIN },
+  { bar: 16.8, cam: c(HERO.x, HERO.y, 2.1, -48, 70, 700) },
+  { bar: 20.05, cam: c(HERO.x, HERO.y, 2.25, 26, 69, 700), ease: LIN },
   // the whole city building at once
   { bar: 21.0, cam: c(-6800, -2600, 0.085, 0, 58, 640) },
   { bar: 24.05, cam: c(-6500, -2400, 0.088, 5, 59, 640), ease: LIN },
@@ -115,10 +115,12 @@ const KEYS: Key[] = [
   // this tower's rent
   { bar: 30.9, cam: c(HERO.x + 10, HERO.y - 40, 3.0, -42, 70, 620) },
   { bar: 33.05, cam: c(HERO.x + 10, HERO.y - 40, 3.1, -34, 70, 620), ease: LIN },
-  // the account: the tower small and high in frame, the timeline below
-  { bar: 33.9, cam: c(HERO.x, HERO.y, 0.95, 40, 74, 330) },
-  { bar: 46.0, cam: c(HERO.x, HERO.y, 1.05, 100, 74, 330), ease: LIN },
-  { bar: 50.05, cam: c(HERO.x, HERO.y, 1.12, 120, 75, 330), ease: LIN },
+  // the account: the CBD seen low from across the river, the dark water and ground below carry the timeline
+  { bar: 33.45, cam: c(HERO.x + 80, HERO.y + 120, 0.75, -20, 62, 520) },
+  { bar: 33.9, cam: c(HERO.x + 120, HERO.y + 300, 0.82, -6, 82.5, 420) },
+  { bar: 45.9, cam: c(HERO.x + 60, HERO.y + 300, 0.9, 4, 82.5, 420), ease: LIN },
+  { bar: 46.6, cam: c(HERO.x + 40, HERO.y + 300, 0.98, 6, 82.5, 420) },
+  { bar: 50.05, cam: c(HERO.x + 20, HERO.y + 300, 1.02, 9, 82.5, 420), ease: LIN },
   // its own headquarters
   { bar: 50.9, cam: c(HERO.x, HERO.y + 40, 2.1, -18, 68, 760) },
   { bar: 53.05, cam: c(HERO.x, HERO.y + 40, 2.2, -10, 68, 760), ease: LIN },
@@ -134,8 +136,8 @@ const KEYS: Key[] = [
   // 升华: Futian lights up, the trains, the people, back to the first shot
   { bar: 62.9, cam: c(-650, -320, 0.78, -22, 74, 640) },
   { bar: 66.05, cam: c(-620, -300, 0.84, 6, 74, 640), ease: LIN },
-  { bar: 66.9, cam: c(-260, -700, 2.3, -62, 72, 620) },
-  { bar: 70.05, cam: c(-240, -700, 2.45, -48, 72, 620), ease: LIN },
+  { bar: 66.9, cam: c(-470, -600, 1.2, -24, 68, 660) },
+  { bar: 70.05, cam: c(-450, -580, 1.32, -14, 68, 660), ease: LIN },
   { bar: 71.0, cam: c(-860, -1260, 0.98, 13, 79, 740) },
   { bar: 77, cam: c(-840, -1140, 1.04, 17, 79.5, 740), ease: LIN },
 ];
@@ -232,19 +234,24 @@ const props = (bar: number, frame: number): { boxes: Box[]; polys: Poly[] } => {
   // people walking from the metro into the tower
   const pplO = window01(bar, 66.4, 70.6, 0.4);
   if (pplO > 0) {
+    // from the metro stations (会展中心、岗厦、购物公园、福民) into the towers around them (示意)
     const routes = [
       [-418, -281, -330, -520, -150, -735],
       [303, -267, 120, -560, -112, -760],
       [314, -1343, 60, -1040, -112, -850],
+      [-1064, -290, -1020, -330, -990, -380],
+      [-418, -281, -700, -320, -960, -370],
+      [-418, -281, -300, -100, -132, -94],
+      [303, -267, 100, -400, -132, -564],
     ];
     routes.forEach((r, ri) => {
-      for (let k = 0; k < 26; k++) {
-        const t = (((frame * 0.0045 + k / 26 + ri * 0.13) % 1) + 1) % 1;
+      for (let k = 0; k < 34; k++) {
+        const t = (((frame * 0.0036 + k / 34 + ri * 0.17) % 1) + 1) % 1;
         const seg = t < 0.6 ? 0 : 1;
         const u = seg === 0 ? t / 0.6 : (t - 0.6) / 0.4;
         const x = lerp(r[seg * 2], r[seg * 2 + 2], u);
         const y = lerp(r[seg * 2 + 1], r[seg * 2 + 3], u);
-        boxes.push({ x, y, w: 5, d: 5, h: 5, base: 0.5, color: "#ffe7b0", o: pplO * Math.min(1, t * 8) * Math.min(1, (1 - t) * 8), add: true });
+        boxes.push({ x, y, w: 6, d: 6, h: 6, base: 0.5, color: "#ffe2b0", o: pplO * Math.min(1, t * 8) * Math.min(1, (1 - t) * 8), add: true });
       }
     });
   }
@@ -291,32 +298,45 @@ export const worldAt = (frame: number): WorldState => {
     [61.8, 0.7],
     [62.6, 0.3],
     [66.2, 0.3],
-    [67.0, 0.85],
+    [67.0, 0.55],
+    [70.4, 0.55],
+    [71.2, 0.85],
   ]);
   const vacancy = track(bar, [
-    [2.4, 0],
-    [3.7, 0.27],
+    [2.5, 0],
+    [3.6, 0.27],
     [5.6, 0.27],
     [6.6, 0],
-    [70.6, 0],
+    [70.9, 0],
     [71.6, 0.25],
-  ]);
+  ], LIN);
   const built = track(bar, [
     [10.2, 1],
     [10.8, 0],
     [16.6, 0],
     [18.9, 1],
   ], LIN);
-  const heroTint = Math.max(window01(bar, 6.4, 8.6, 0.5) * 0.55, window01(bar, 8.4, 10.2, 0.3) * 0.85);
+  const heroTint = Math.max(window01(bar, 6.4, 8.6, 0.5) * 0.55, window01(bar, 8.4, 10.2, 0.3) * 0.85, window01(bar, 16.5, 19.4, 0.4) * 0.3);
   const goldN = Math.round(track(bar, [
-    [62.6, 0],
+    [62.7, 0],
+    [63.5, 50],
     [64.6, 50],
-    [65.6, 159],
+    [65.7, 159],
   ], LIN));
   const goldSet = new Set(GOLD_PICK.slice(0, Math.round((goldN / 159) * Math.min(GOLD_PICK.length, 120))));
   const goldO = window01(bar, 62.4, 70.8, 0.6);
 
   const { boxes, polys } = props(bar, frame);
+  // the opening and the last shot: offices lit floor after floor, so the empty quarter shows when it goes dark
+  const full = Math.max(track(bar, [
+    [1.2, 0],
+    [2.3, 0.85],
+    [4.4, 0.85],
+    [5.0, 0],
+  ]), track(bar, [
+    [70.2, 0],
+    [70.8, 0.8],
+  ]));
   // the whole-city shots: towers stand as light needles, twice their height (the screen says so)
   const cityScale = Math.max(window01(bar, 20.3, 27.4, 0.6), window01(bar, 53.4, 56.0, 0.5), window01(bar, 60.6, 62.5, 0.5));
   const hqO = window01(bar, 53.3, 55.9, 0.4);
@@ -329,17 +349,19 @@ export const worldAt = (frame: number): WorldState => {
       [6.0, 0.62],
       [6.35, 1],
       [33.6, 1],
-      [34.6, 0.72],
-      [49.6, 0.72],
+      [34.6, 0.85],
+      [49.6, 0.85],
       [50.6, 1],
       [74.2, 1],
       [76.6, 0.22],
       [77.4, 0],
     ]);
 
+  // while the years run, blocks that just went up flash gold
+  const growing = Math.max(window01(bar, 4.6, 5.7, 0.2), window01(bar, 20.9, 24.3, 0.2));
   const bState = (i: number, b: Bldg): [number, number, number, number] => {
     const hs = b.year ? clamp01(year - b.year + 1) : 1;
-    let tint = 0;
+    let tint = b.year && growing > 0 && year >= b.year - 1 ? growing * clamp01(1.6 - (year - b.year)) * 0.9 : 0;
     if (goldO > 0 && goldSet.has(i)) tint = 0.75 * goldO;
     if (hqO > 0 && i === PINGAN_OSM) tint = hqO;
     return [1, tint, hs, 1];
@@ -362,6 +384,7 @@ export const worldAt = (frame: number): WorldState => {
       year,
       ex: 1 + cityScale,
       beacon: 1.1 * cityScale,
+      fresh: growing,
       on: 1,
       tint: (i) => (hqO > 0 && HQ_TOWERS.has(i) ? hqO : 0),
     },
@@ -370,10 +393,12 @@ export const worldAt = (frame: number): WorldState => {
       tint: heroTint,
       hl: window01(bar, 30.6, 33.3, 0.3) > 0 ? { part: 1, from: 10, to: 19, amt: window01(bar, 30.6, 33.3, 0.3) } : window01(bar, 50.6, 53.3, 0.3) > 0 ? { part: 2, from: 29, to: 41, amt: window01(bar, 50.6, 53.3, 0.3) } : undefined,
     },
-    tint: bar > 61 && bar < 71 ? GOLD : ORANGE,
+    tint: (bar > 61 && bar < 71) || growing > 0 ? GOLD : ORANGE,
     boxes,
     polys,
     exposure,
+    bState,
+    full,
   };
 };
 

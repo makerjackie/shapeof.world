@@ -20,6 +20,7 @@ const shot = (tall: boolean): WorldState => ({
   cam: tall ? { x: -989, y: -1000, z: 0.7, bearing: 8, tilt: 80, ox: 960, oy: 820 } : { x: -1250, y: -1350, z: 0.95, bearing: 12, tilt: 79, ox: 1260, oy: 700 },
   night: 0.55,
   lights: 0.85,
+  full: 0.8,
   vacancy: 0.27,
   roads: 1,
   traffic: 400,

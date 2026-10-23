@@ -208,9 +208,9 @@ export const Account: React.FC = () => {
   const bar = barAt(frame);
   const o = fade(bar, 34.4, 51.0, 0.4);
   if (o <= 0) return null;
-  const x = 200;
-  const w = 1480;
-  const y0 = 640;
+  const x = 190;
+  const w = 1440;
+  const y0 = 660;
   const lease = ramp(bar, 38.3, 39.3, EIO);
   const end = ramp(bar, 39.3, 39.9, EO);
   const cut = ramp(bar, 40.2, 40.9, EIO);
@@ -220,9 +220,9 @@ export const Account: React.FC = () => {
   const px = (yr: number) => x + ((yr - AX0) / (AX1 - AX0)) * w;
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg }}>
-      <div style={{ position: "absolute", left: 0, top: y0 - 40, width: 1920, height: 460, background: "linear-gradient(rgba(5,6,8,0), rgba(5,6,8,0.55) 22%, rgba(5,6,8,0.7))" }} />
+      <div style={{ position: "absolute", left: 0, top: y0 - 110, width: 1920, height: 540, background: "linear-gradient(rgba(5,6,8,0), rgba(5,6,8,0.78) 26%, rgba(5,6,8,0.88))" }} />
       {/* the lease */}
-      <Bar x={x} w={w} y={y0} from={2008} to={2058} grow={lease} color="#7f9bbf" h={26} o={lease > 0 ? 1 : 0} label="地：50 年" labelColor={K.fg} />
+      <Bar x={x} w={w} y={y0} from={2008} to={2058} grow={lease} color="#7f9bbf" h={30} o={lease > 0 ? 1 : 0} label="地：50 年" labelColor={K.fg} />
       {cut > 0 ? (
         <div style={{ position: "absolute", left: px(2018) - 1, top: y0 - 16, width: 3, height: 58 + 210 * cut, background: K.fg, opacity: cut }}>
           <div style={{ position: "absolute", left: 12, top: -8, whiteSpace: "nowrap", fontSize: 26, fontWeight: 800, textShadow: SHADOW }}>2018 盖好 · 只剩 40 年</div>
@@ -230,15 +230,15 @@ export const Account: React.FC = () => {
       ) : null}
       {/* the land runs out in 2058 */}
       {end > 0 ? (
-        <div style={{ position: "absolute", left: px(2058) - 1, top: y0 - 14, width: 3, height: 240 * end, background: `repeating-linear-gradient(${K.red} 0 10px, transparent 10px 18px)`, opacity: 0.95 }}>
+        <div style={{ position: "absolute", left: px(2058) - 1, top: y0 - 14, width: 3, height: 250 * end, background: `repeating-linear-gradient(${K.red} 0 10px, transparent 10px 18px)`, opacity: 0.95 }}>
           <div style={{ position: "absolute", left: 10, top: 236 * end - 4, whiteSpace: "nowrap", fontSize: 24, fontWeight: 800, color: K.red, textShadow: SHADOW, transform: "translateY(-100%)" }}>2058 地到期</div>
         </div>
       ) : null}
       {/* payback bars from 2018 */}
-      <Bar x={x} w={w} y={y0 + 70} from={2018} to={2040} grow={p22} color={K.green} label={<span>约 22 年<span style={{ fontSize: 22, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按 2018 年的租金</span></span>} />
-      <Bar x={x} w={w} y={y0 + 70} from={2018} to={2051} grow={p33} color={K.theme} over={2058} label={<span>33 年<span style={{ fontSize: 22, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按今天福田的租金</span></span>} />
-      <Bar x={x} w={w} y={y0 + 130} from={2018} to={2059} grow={p41} color={K.theme} over={2058} label={<span>41 年<span style={{ fontSize: 22, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按今天全市的租金</span></span>} labelColor={K.red} />
-      <Axis x={x} w={w} y={y0 + 200} o={1} ticks={[2008, 2018, 2028, 2038, 2048, 2058]} />
+      <Bar x={x} w={w} y={y0 + 76} h={36} from={2018} to={2040} grow={p22} color={K.green} label={<span>约 22 年<span style={{ fontSize: 24, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按 2018 年的租金</span></span>} />
+      <Bar x={x} w={w} y={y0 + 76} h={36} from={2018} to={2051} grow={p33} color={K.theme} over={2058} label={<span>33 年<span style={{ fontSize: 24, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按今天福田的租金</span></span>} />
+      <Bar x={x} w={w} y={y0 + 140} h={36} from={2018} to={2059} grow={p41} color={K.theme} over={2058} label={<span>41 年<span style={{ fontSize: 24, fontWeight: 600, marginLeft: 10, color: "rgba(244,240,232,0.75)" }}>按今天全市的租金</span></span>} labelColor={K.red} />
+      <Axis x={x} w={w} y={y0 + 212} o={1} ticks={[2008, 2018, 2028, 2038, 2048, 2058]} />
       <div style={{ position: "absolute", left: x, top: y0 + 62, fontSize: 22, fontWeight: 600, color: "rgba(244,240,232,0.6)", transform: "translateY(-100%)" }}>{bar > 35.4 ? "假如整栋出租，收回 29 亿要……" : ""}</div>
     </div>
   );
@@ -282,17 +282,15 @@ export const TaxCount: React.FC = () => {
   const o = fade(bar, 62.6, 66.4, 0.3);
   if (o <= 0) return null;
   const n = Math.round(runNum(bar, [
-    [62.8, 0],
-    [64.4, 50],
-    [64.9, 50],
+    [64.6, 50],
     [65.7, 159],
   ]));
-  const yr = bar < 64.9 ? "2011 年" : "今天";
+  const yr = bar < 64.6 ? "2011 年" : "今天";
   return (
-    <div style={{ position: "absolute", left: 120, top: 330, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
-      <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.85)" }}>{yr}</div>
+    <div style={{ position: "absolute", left: 120, top: 350, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(244,240,232,0.85)" }}>{yr}</div>
       <div style={{ fontFamily: NUM, fontSize: 168, fontWeight: 700, color: K.gold, lineHeight: 1 }}>
-        {bar < 64.9 && n >= 50 ? "50+" : n}
+        {bar < 64.6 ? "50+" : n}
         <span style={{ fontFamily: FONT, fontSize: 44, marginLeft: 10, color: K.fg }}>栋</span>
       </div>
     </div>

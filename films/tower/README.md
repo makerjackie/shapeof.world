@@ -1,74 +1,49 @@
-# 高楼的形状
+# 深圳写字楼空了四分之一，为什么还在盖？（films/tower）
 
-2:57.6、1920×1080、30fps 的中文数据片，无旁白。v2（2026-10-22）把 v1 的抽象卡片换成了真实的城市：一台连续的地图镜头从珠三角推到宗地 B119-0053，楼按 OpenStreetMap 的真实轮廓拉起来。
+2:52.9、1920×1080、30fps，无旁白。v4（2026-10-23）是 v2 成片之后的重写：开头先问"空着这么多，为什么还要盖？"，再跟着深圳能源大厦找答案。剧本和小节表见 `SCRIPT.md`，发布文案和来源见 `DESCRIPTION.md`，调研见 `research.md`、`research/`。
 
-- **论点**：深圳的高楼，不是盖来收租的。
-- **主线**：跟着深圳能源大厦（福田，北塔 218 米），从 2008 年的一块地走到今天。
-- **那一个发现**：按今天的租金整栋出租，回本要 33–41 年，而它的地交付时只剩 40 年。
-- **结尾**：福田的亿元楼一栋栋亮起，人从地铁口走进这栋楼，"它赌的，是你会来"，片名翻成"世界的形状"。
+- 成片：`out/tower-v4.mp4`；封面：`out/covers-v4/cover-16x9.jpg`、`cover-3x4.jpg`。
+- v2（`out/tower-v2.mp4`，SVG 地图版）的代码还在：composition `FilmV2`（`src/Film.tsx`、`src/scenes/`、`src/geo/MapView.tsx`）。
 
-按 `STYLE.md` 做：Remotion 管线、系列配色和字体、左上品牌角标、来源 → 制作 → 品牌的固定片尾。
+## 画面：一个三维的深圳
 
-- 调研：`research.md`（结论和故事草案）、`research/`（带链接的原始笔记，06 是地图与规划数字，§12 是最后一轮核实）。
-- 剧本：`SCRIPT.md`（v3，含口径取舍）。
-- 发布文案和来源：`DESCRIPTION.md`。
-- 地图数据：`data/`（见 `data/README.md`）和 `src/geo/`（片子实际读的压缩图层）。
+`src/world/` 是一个 three.js 场景，整部片只有这一个 WebGL 画布，每帧在 layout effect 里同步渲染完，再 `gl.finish()`，Remotion 截图时画面一定是完整的。
 
-## 配乐
+- `engine.ts`：城市本体。地面（陆地、海、公园、水面）、道路、车流、地铁、楼、塔、道具（地块、叠层、光柱、人流）都由一个 `WorldState` 决定；`camera.ts` 把旧 SVG 地图的相机参数（中心、像素/米、朝向、倾角）换成透视相机，标注用同一台相机投影。
+- `shaders.ts`：楼的立面。窗户按楼层和开间程序化画出，远处按像素大小自动变成平均色，不闪；写字楼按租户整段亮灯，住宅一扇扇亮；空置率、亮灯、高亮、楼高都是每栋楼的状态（浮点贴图）。深圳能源大厦单独画折板立面。
+- `src/v4/world.ts`：整部片的相机路线和城市状态，按小节写；`yearAt()` 让楼按真实竣工年份沉下去、再长出来。`src/v4/Film4.tsx` 是字幕、标注、图表和声音。
 
-《千年之后（氛围版）》，和乐府，3:01，取自 <https://music.01mvp.com/>（和 `films/ai-real-cost` 同一首）。音频不进 Git，渲染前先下载：
+数据（都是派生的压缩图层，进 Git）：
 
-```bash
-curl -L -o public/music.m4a https://music.01mvp.com/audio/qian-nian-zhi-hou-bv1xmn36aexp.m4a
-```
+| 文件 | 内容 | 来源 |
+|---|---|---|
+| `src/geo/city.json` | 福田 6×6 公里的建筑轮廓、道路、地铁站、深圳能源大厦、CTBUH 150 米以上的楼 | OSM（ODbL）+ CTBUH，`tools/geo-prep.mjs` |
+| `src/world/ground.json` | 珠三角陆地、福田公园和水面、全深圳主干道和地铁线（带线路颜色） | OSM，`tools/world3d-prep.mjs` |
+| `src/world/nanshan.json` | 南山（后海、科技园、粤海、前海、蛇口）7,831 栋建筑和道路，162 栋配上 CTBUH 高度和年份 | OSM（Geofabrik 广东数据包），`tools/pbf-nanshan.py` → `tools/nanshan-prep.mjs` |
 
-拍点沿用 `films/ai-real-cost` 的测量：111.62 BPM，第一拍 0.487 s。片子从曲子第 2 小节放到结尾，中间不剪（`src/timing.ts`），片中第 b 小节 = 曲子第 b + 2 小节：片名在曲子第 8 小节（主段进来），那一个发现在第 48 小节（最大的一次重进），升华在高潮段，品牌卡在收尾。整体压低 2 dB（`Film.tsx` 的 `GAIN`），成片约 −11.9 LUFS、真峰值 −1.0 dBTP。
+楼高：CTBUH > OSM `height` > `building:levels` × 3.4 > 低矮的画法默认值（只用于画面，不当数据）。全城视角下 CTBUH 的楼高放大 2 倍，屏幕上有说明。
 
-频谱条和背景脉动：`python tools/spectrum.py <单声道 wav> src/audio.json`（按曲子原始帧，`musicFrame` 换算）。
-
-## 地图
-
-画面里的地图每帧按同一台相机投影（`src/geo/cam.ts`，带 van Wijk 平滑缩放），所以从珠三角到一栋楼是一个连续的镜头。
-
-- 海岸线、区界、道路、地铁、建筑轮廓：© OpenStreetMap contributors（ODbL）。片子用的是派生的压缩图层，见 `src/geo/world.json`、`src/geo/city.json`。
-- 塔楼高度和竣工年：CTBUH Skyscraper Center（经 `data/` 里的配对）。
-- 没有用 DataV / 高德的数据（它的条款写"仅供学习和交流使用"）。
-
-重新生成：
+重新生成南山：
 
 ```bash
-bash tools/fetch-geo.sh          # Overpass 下载到 /tmp/towerv2-raw（10–20 分钟），并生成珠三角海岸线
-node tools/geo-prep.mjs          # → src/geo/world.json、src/geo/city.json
+curl -L -o /tmp/guangdong.osm.pbf https://download.geofabrik.de/asia/china/guangdong-latest.osm.pbf   # 约 170 MB
+~/.venvs/shapeof-films/bin/python tools/pbf-nanshan.py /tmp/guangdong.osm.pbf /tmp/tower3-ns          # 需要 pip install osmium
+node tools/nanshan-prep.mjs /tmp/tower3-ns
 ```
 
-能源大厦的三个 OSM 轮廓是 way 776897365（北塔）、776897366（南塔）、776897367（中间裙楼）；画面上的楼高、层数用 CTBUH（北塔 218 米 / 地上 43 层，南塔 111.3 米 / 地上 20 层），表皮的折线和"涟漪"按设计院项目页的描述画，楼层之间平均分，是画法上的假设。
+（`tools/fetch-nanshan.sh` 走 Overpass，公共服务器经常 502 / 超时，所以改用数据包。）
 
-## 重新生成
+## 声音
+
+- 配乐《千年之后（氛围版）》，和乐府，取自 <https://music.01mvp.com/>，不进 Git：`curl -L -o public/music.m4a https://music.01mvp.com/audio/qian-nian-zhi-hou-bv1xmn36aexp.m4a`。拍点 111.62 BPM、第一拍 0.487 s，片中第 b 小节 = 曲子第 b + 2 小节；片子在片中第 80.2 小节结束，最后约 4 秒淡出。
+- 四个音效来自自己的曲库（开关、时钟滴答、风声、木块敲击），不进 Git：`bash tools/fetch-sfx.sh`。
+
+## 渲染
+
+WebGL 要走 GPU（Mac 上 ANGLE → Metal），`remotion.config.ts` 已设 `setChromiumOpenGlRenderer("angle")`；脚本渲染时传 `chromiumOptions: { gl: "angle" }`。
 
 ```bash
 npm ci
-npm run studio                       # 预览，选 Film
-npx remotion render Film out/tower-v2.mp4 --crf=20 --audio-bitrate=192k
-node tools/covers.mjs                # 封面 → out/covers/cover-16x9.jpg、cover-3x4.jpg
-SCALE=1 node tools/stills.mjs out/s 0 2369   # 指定帧的审片截图（默认半分辨率）
-node tools/readtime.mjs              # 读字审计
+npx remotion render Film out/tower-v4.mp4 --gl=angle --concurrency=4 --crf=20 --audio-bitrate=192k   # M4 上约 3 分钟
+COMP=cover-16x9 node tools/lab.mjs /tmp/cov 0      # 封面（cover-3x4 同理），也可以渲任意帧：COMP=Film SCALE=0.5 node tools/lab.mjs out/s 300 900
 ```
-
-字体（Inter、Noto Sans SC、Noto Serif SC、JetBrains Mono，均为 SIL OFL 1.1）由 `@remotion/google-fonts` 在渲染时加载，需要联网。标志 `public/mark-disc.png` 是 `public/assets/brand/kit/mark-512.png` 按圆形裁出透明边，球体本身没有改色。
-
-## 结构
-
-| 片中小节 | 场景 | 唯一的结论 |
-|---|---|---|
-| 0–2 | 结论 | 深圳的高楼，不是盖来收租的（第一帧就是整句，压在福田夜景上） |
-| 2–6 | 证据 · 凭什么 | 同一个街道，写字楼的地比住宅便宜约 10 倍；凭什么？ |
-| 6–8 | 片名 | 高楼的形状 · 世界的形状（珠三角） |
-| 8–24 | 01 一块地 | 深圳 1,997 平方公里，一半划进生态控制线；一年只给 10 公顷商服用地；中心区先画好图；宗地 B119-0053 和容积率 15；谁能买；城市卖的不是地，是以后的税 |
-| 24–34 | 02 十年 | BIG 的双塔和折线表皮；审批 25 个工作日，拿地到交付 10 年零 2 个月；地只占预算不到四分之一 |
-| 34–46 | 03 等人来 | 全城都在盖（200 米以上全球第一）；约每 4 间空 1 间；租金跌一半；这栋楼五年不涨；公道话 22 年 |
-| 46–51 | 那一个发现 | 回本 33–41 年 vs 地交付时只剩 40 年（配乐最大的一次重进） |
-| 51–62 | 图什么 | 它自己的总部；半数新项目是企业自建总部；城市等的不是租金 |
-| 62–74 | 升华 | 亿元楼超 50 → 86 → 159；人走进这栋楼；它赌的，是你会来 |
-| 74–82 | 片尾 | 来源 → 制作 → 品牌卡 |
-
-v1（原创配乐、深色卡片，`out/tower.mp4`）的剧本和代码在 Git 历史里。
