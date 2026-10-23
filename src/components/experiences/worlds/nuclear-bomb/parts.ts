@@ -41,9 +41,9 @@ function profiles(id: string, outer: number, inner: number, separation: number) 
 export const MATERIALS = {
   casing: {surface: '#5a5f57', cut: '#8b9096', hatch: 1, metalness: 0.52, roughness: 0.55},
   explosive: {surface: '#b8955a', cut: '#c9a35a', hatch: 2, metalness: 0.05, roughness: 0.73},
-  pusher: {surface: '#a7b0b8', cut: '#b9c1c8', hatch: 3, metalness: 0.72, roughness: 0.4},
-  reflector: {surface: '#3f4753', cut: '#4b5563', hatch: 4, metalness: 0.6, roughness: 0.48},
-  core: {surface: '#8a5a40', cut: '#c8744a', hatch: 0, metalness: 0.65, roughness: 0.34},
+  pusher: {surface: '#939ba2', cut: '#b9c1c8', hatch: 3, metalness: 0.35, roughness: 0.7},
+  reflector: {surface: '#3f4753', cut: '#4b5563', hatch: 4, metalness: 0.45, roughness: 0.62},
+  core: {surface: '#8a5a40', cut: '#c8744a', hatch: 0, metalness: 0.28, roughness: 0.7},
   source: {surface: '#f2d48a', cut: '#f2d48a', hatch: 0, metalness: 0.25, roughness: 0.38},
 } as const
 

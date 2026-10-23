@@ -16,6 +16,7 @@ import {createBackdrop, createExhibition} from './exhibition'
 
 export type SceneAnchor = {id: string; x: number; y: number; visible: boolean; occluded?: boolean; side?: 'left' | 'right'; bounds?: {left: number; right: number; top: number; bottom: number}}
 type Props = {
+  active?: boolean
   explode: number
   cutAngle: 0 | 90 | 180
   selectedPart: string | null
@@ -57,6 +58,22 @@ function sectionMaterial(part: Part) {
 
 type Section = {group: T.Group; part: Part; displacement: T.Vector3; surfaces: T.MeshStandardMaterial[]; cuts: T.ShaderMaterial[]}
 
+function paintedFinish(material: T.MeshStandardMaterial, plate = false) {
+  material.onBeforeCompile = (shader) => {
+    shader.vertexShader = 'varying vec3 finishPosition; varying vec2 finishUv;\n' + shader.vertexShader
+    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nfinishPosition=position; finishUv=uv;')
+    shader.fragmentShader = 'varying vec3 finishPosition; varying vec2 finishUv;\n' + shader.fragmentShader
+    const edge = plate ? 'min(min(finishUv.x,1.-finishUv.x),min(finishUv.y,1.-finishUv.y))' : 'abs(finishPosition.y)'
+    shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+      float grain=fract(sin(dot(floor(finishPosition*220.),vec3(12.9898,78.233,37.719)))*43758.5453);
+      float wear=1.-smoothstep(.004,.025,${edge});
+      diffuseColor.rgb*=.95+.08*grain;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.29,.30,.27),wear*.18);`)
+    shader.fragmentShader = shader.fragmentShader.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor*=.9+.2*grain;')
+  }
+  material.customProgramCacheKey = () => plate ? 'painted-plate' : 'painted-shell'
+}
+
 /** All meridians and their closure faces use exactly the same display profile. */
 function createAssembly(angle: number) {
   const group = new T.Group()
@@ -79,16 +96,7 @@ function createAssembly(angle: number) {
         emissive: part.id === 'source' ? '#f2d48a' : '#000000',
         emissiveIntensity: part.id === 'source' ? 0.32 : 0,
       })
-      // A faint procedural finish, with no external model or texture assets.
-      if (part.id === 'casing') {
-        material.onBeforeCompile = (shader) => {
-          shader.vertexShader = 'varying vec3 finishPosition;\n' + shader.vertexShader
-          shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nfinishPosition=position;')
-          shader.fragmentShader = 'varying vec3 finishPosition;\n' + shader.fragmentShader
-          shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\nfloat grain=fract(sin(dot(floor(finishPosition*220.),vec3(12.9898,78.233,37.719)))*43758.5453);float wear=1.-smoothstep(.008,.045,abs(finishPosition.y));diffuseColor.rgb*=.94+.10*grain;diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.29,.30,.27),wear*.22);')
-          shader.fragmentShader = shader.fragmentShader.replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor*=.9+.2*grain;')
-        }
-      }
+      if (part.id === 'casing') paintedFinish(material)
       const surface = new T.Mesh(geometry, material)
       surface.castShadow = true
       surface.receiveShadow = true
@@ -127,10 +135,15 @@ function createAssembly(angle: number) {
 
   // Open, thin plate silhouette inspired by exterior museum replicas.
   const tail = new T.Group()
-  const tailMat = new T.MeshStandardMaterial({color: '#62665a', metalness: 0.58, roughness: 0.48, envMapIntensity: 0.32})
+  const tailMat = new T.MeshStandardMaterial({color: MATERIALS.casing.surface, metalness: .52, roughness: .65, envMapIntensity: .26})
+  paintedFinish(tailMat, true)
+  const tailInnerMat = tailMat.clone()
+  tailInnerMat.color.multiplyScalar(.52)
+  paintedFinish(tailInnerMat, true)
+  const tailMaterials = [tailMat, tailInnerMat]
   const tailParts: T.Mesh[] = []
-  const box = (x: number, y: number, z: number, w: number, h: number, d: number) => {
-    const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), tailMat)
+  const box = (x: number, y: number, z: number, w: number, h: number, d: number, innerFace = -1) => {
+    const mesh = new T.Mesh(new T.BoxGeometry(w, h, d), Array.from({length: 6}, (_, face) => face === innerFace ? tailInnerMat : tailMat))
     mesh.position.set(x, y, z)
     mesh.castShadow = true
     mesh.receiveShadow = true
@@ -141,11 +154,11 @@ function createAssembly(angle: number) {
     occluders.push(mesh)
   }
   for (const side of [-1, 1]) {
-    box(-5.05, side * 1.05, 0, 1.15, .065, 2.16)
-    box(-5.05, 0, side * 1.05, 1.15, 2.16, .065)
+    box(-5.05, side * .96, 0, 1.02, .085, 2.0, side > 0 ? 3 : 2)
+    box(-5.05, 0, side * .96, 1.02, 2.0, .085, side > 0 ? 5 : 4)
   }
-  box(-4.05, 0, 0, 3.55, .055, 2.1)
-  box(-4.05, 0, 0, 3.55, 2.1, .055)
+  box(-4.02, 0, 0, 3.42, .07, 1.84)
+  box(-4.02, 0, 0, 3.42, 1.84, .07)
   const flangePath = new T.CatmullRomCurve3(Array.from({length: 145}, (_, i) => {
     const phi = start + length * i / 144
     return new T.Vector3(Math.sin(phi) * 2.25 * 1.5, 0, Math.cos(phi) * 2.25)
@@ -165,7 +178,7 @@ function createAssembly(angle: number) {
   bolts.castShadow = true
   tail.add(bolts)
   group.add(tail)
-  return {group, sections, pickers, occluders, tail, tailMat, tailParts}
+  return {group, sections, pickers, occluders, tail, tailMaterials, tailParts}
 }
 
 function disposeGroup(group: T.Group | T.Scene) {
@@ -213,6 +226,9 @@ export function NuclearScene(props: Props) {
   const host = useRef<HTMLDivElement>(null)
   const latest = useRef(props)
   latest.current = props
+  const requestDraw = useRef<() => void>(() => {})
+
+  useEffect(() => { requestDraw.current() }, [props.active, props.explode, props.cutAngle, props.selectedPart, props.time, props.endingSeconds, props.leaders, props.micro, props.forceMicro, props.autoCamera, props.reducedMotion])
 
   useEffect(() => {
     const element = host.current
@@ -224,7 +240,8 @@ export function NuclearScene(props: Props) {
       latest.current.onError?.('webgl-unavailable')
       return
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 700 ? 1.5 : 2))
+    const capturing = new URLSearchParams(window.location.search).get('capture') === '1'
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, capturing ? 3 : window.innerWidth < 700 ? 1.25 : 2))
     renderer.setClearColor('#0a0a0b')
     renderer.outputColorSpace = T.SRGBColorSpace
     renderer.toneMapping = T.ACESFilmicToneMapping
@@ -265,7 +282,7 @@ export function NuclearScene(props: Props) {
     key.position.set(-4, 8, 6)
     key.target.position.set(0, -2, 0)
     key.castShadow = true
-    key.shadow.mapSize.set(2048, 2048)
+    key.shadow.mapSize.set(window.innerWidth < 700 ? 1024 : 2048, window.innerWidth < 700 ? 1024 : 2048)
     key.shadow.bias = -0.00035
     key.shadow.normalBias = 0.035
     key.shadow.radius = 4
@@ -320,7 +337,7 @@ export function NuclearScene(props: Props) {
     const ending = new ShaderPass({
       uniforms: {tDiffuse: {value: null}, white: {value: 0}, dark: {value: 0}},
       vertexShader: 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-      fragmentShader: 'varying vec2 vUv;uniform sampler2D tDiffuse;uniform float white;uniform float dark;void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;c=c*max(0.,1.-white-dark)+vec3(4.)*white+vec3(.003,.003,.0034)*dark;gl_FragColor=vec4(c,1.);}',
+      fragmentShader: 'varying vec2 vUv;uniform sampler2D tDiffuse;uniform float white;uniform float dark;void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;c=c*(1.-white)*mix(1.,.62,dark)+vec3(4.)*white;gl_FragColor=vec4(c,1.);}',
     })
     composer.addPass(ending)
     composer.addPass(new OutputPass())
@@ -331,6 +348,20 @@ export function NuclearScene(props: Props) {
     let lastInteraction = performance.now()
     const homePosition = new T.Vector3()
     const oscillationStart = performance.now() + 6000
+    let raf = 0
+    let wake = 0
+    let disposed = false
+    let animate: (now: number) => void = () => {}
+    const invalidate = () => {
+      if (!disposed && !document.hidden && latest.current.active !== false && !raf) raf = requestAnimationFrame((now) => animate(now))
+    }
+    requestDraw.current = () => {
+      window.clearTimeout(wake)
+      if (latest.current.active === false || document.hidden) { cancelAnimationFrame(raf); raf = 0 }
+      else invalidate()
+    }
+    const visibilityChanged = () => requestDraw.current()
+    document.addEventListener('visibilitychange', visibilityChanged)
     const resize = () => {
       width = element.clientWidth
       height = element.clientHeight
@@ -348,6 +379,7 @@ export function NuclearScene(props: Props) {
         controls.target.copy(macroTarget)
       }
       camera.updateProjectionMatrix()
+      invalidate()
     }
     const observer = new ResizeObserver(resize)
     observer.observe(element)
@@ -356,9 +388,11 @@ export function NuclearScene(props: Props) {
       userOrbit = true
       lastInteraction = performance.now()
       latest.current.onInteract?.()
+      invalidate()
     }
     controls.addEventListener('start', interacted)
-    controls.addEventListener('end', () => {lastInteraction = performance.now()})
+    controls.addEventListener('end', () => {lastInteraction = performance.now(); invalidate()})
+    controls.addEventListener('change', invalidate)
     const raycaster = new T.Raycaster()
     const pointer = new T.Vector2()
     let down = {x: 0, y: 0}
@@ -375,9 +409,10 @@ export function NuclearScene(props: Props) {
     renderer.domElement.addEventListener('pointerdown', pointerDown)
     renderer.domElement.addEventListener('pointerup', pointerUp)
     renderer.domElement.addEventListener('webglcontextlost', lost)
-    let raf = 0
     let previous = performance.now()
     let lastLabels = 0
+    let lastAnchorSnapshot = ''
+    let renderCount = 0
     const projected = new T.Vector3()
     const anchorDepths = new Map<string, number>()
     const leaders = new T.Group()
@@ -388,8 +423,11 @@ export function NuclearScene(props: Props) {
       leaderLines.set(part.id, line)
     }
     scene.add(leaders)
-    const animate = (now: number) => {
+    animate = (now: number) => {
+      raf = 0
       const state = latest.current
+      if (state.active === false || document.hidden) return
+      const oscillating = !state.reducedMotion && state.time <= -3 && now - lastInteraction > 6000
       const dt = Math.min((now - previous) / 1000, 0.1)
       previous = now
       const requestedAngle = state.time >= 120 && state.micro ? 90 : state.cutAngle
@@ -420,7 +458,7 @@ export function NuclearScene(props: Props) {
         camera.lookAt(controls.target)
       } else {
         controls.update(dt)
-        if (!state.reducedMotion && state.time <= -3 && now - lastInteraction > 6000) {
+        if (oscillating) {
           const azimuth = T.MathUtils.degToRad(-12)
           const swing = Math.sin((now - oscillationStart) / 40000 * Math.PI * 2) * Math.PI / 6
           const desired = homePosition.clone().sub(macroTarget)
@@ -439,11 +477,13 @@ export function NuclearScene(props: Props) {
       micro.group.visible = false
       scene.background = backdrop
       vignette.uniforms.strength.value = isMicro ? .1 : .16
-      ao.enabled = !isMicro
+      ao.enabled = !isMicro && width >= 700
       microscopeBlend.uniforms.blend.value = microBlend
       ending.uniforms.white.value = state.time >= 0 && !state.forceMicro ? presentation.whiteOpacity : 0
       ending.uniforms.dark.value = state.time >= 0 && !state.forceMicro ? presentation.darkOpacity : 0
-      const glowAmount = frame.energyFraction
+      const returnToExhibit = state.forceMicro ? 0 : presentation.darkOpacity
+      const glowAmount = frame.energyFraction * (1 - returnToExhibit)
+      const residualHeat = returnToExhibit * .12
       const heatColor = new T.Color('#3a0a00')
       if (glowAmount < .18) heatColor.lerp(new T.Color('#ff5a1f'), glowAmount / .18)
       else if (glowAmount < .6) heatColor.set('#ff5a1f').lerp(new T.Color('#ffd08a'), (glowAmount - .18) / .42)
@@ -462,12 +502,13 @@ export function NuclearScene(props: Props) {
           material.opacity = opacity
           material.depthWrite = !faded
           if (part.id === 'source') material.emissiveIntensity = 0.32 + frame.sourceFlash * 5
-          if (part.id === 'core') {material.emissive.copy(heatColor); material.emissiveIntensity = glowAmount * 24}
+          if (part.id === 'core') {material.emissive.copy(heatColor); material.emissiveIntensity = glowAmount * 24 + residualHeat * 2}
         }
         for (const material of section.cuts) {
           material.uniforms.alpha.value = opacity
           material.uniforms.glow.value.copy(heatColor)
-          material.uniforms.heat.value = glowAmount * (part.id === 'core' ? 28 : 5)
+          material.uniforms.heat.value = glowAmount * (part.id === 'core' ? 28 : 5) + (part.id === 'core' ? residualHeat * 3 : 0)
+          if (part.id === 'core') material.uniforms.ink.value.set(MATERIALS.core.cut).lerp(new T.Color('#401811'), returnToExhibit * .8)
           material.transparent = faded
           material.depthWrite = !faded
         }
@@ -476,13 +517,15 @@ export function NuclearScene(props: Props) {
         })
       }
       assembly.tail.position.y = 0
-      assembly.tailMat.opacity = state.selectedPart && state.selectedPart !== 'casing' ? 0.15 : 1
-      assembly.tailMat.transparent = assembly.tailMat.opacity < 1
-      assembly.tailMat.depthWrite = assembly.tailMat.opacity === 1
+      for (const material of assembly.tailMaterials) {
+        material.opacity = state.selectedPart && state.selectedPart !== 'casing' ? 0.15 : 1
+        material.transparent = material.opacity < 1
+        material.depthWrite = material.opacity === 1
+      }
       wave.group.visible = !isMicro && angle > 0 && frame.waveProgress > 0 && frame.waveProgress < 1
       wave.group.scale.setScalar(T.MathUtils.lerp(1.95, 1.65, frame.waveProgress))
       wave.material.opacity = wave.group.visible ? Math.sin(frame.waveProgress * Math.PI) * 0.85 : 0
-      if (!isMicro && state.time < 0 && now - lastLabels > 100) {
+      if (!isMicro && state.time < 0 && (now - lastLabels > 100 || !oscillating)) {
         lastLabels = now
         camera.updateMatrixWorld()
         assembly.group.updateMatrixWorld(true)
@@ -500,7 +543,7 @@ export function NuclearScene(props: Props) {
             bounds.bottom = Math.max(bounds.bottom, py)
           }
         })
-        latest.current.onAnchors(PARTS.map((part) => {
+        const nextAnchors = PARTS.map((part) => {
           const side = part.order <= 3 ? 'left' as const : 'right' as const
           const candidates: {point: T.Vector3; screen: T.Vector3; occluded: boolean; score: number}[] = []
           for (const section of assembly.sections.filter((item) => item.part.id === part.id)) {
@@ -529,9 +572,14 @@ export function NuclearScene(props: Props) {
           const anchor = candidates.sort((a, b) => a.score - b.score)[0]
           anchorDepths.set(part.id, anchor.screen.z)
           return {id: part.id, x: (anchor.screen.x + 1) / 2 * width, y: (1 - anchor.screen.y) / 2 * height, visible: anchor.screen.z < 1, occluded: anchor.occluded, side, bounds}
-        }))
+        })
+        const snapshot = JSON.stringify(nextAnchors)
+        if (snapshot !== lastAnchorSnapshot) {
+          lastAnchorSnapshot = snapshot
+          latest.current.onAnchors(nextAnchors)
+        }
       }
-      leaders.visible = state.time <= -3 && !isMicro && width >= 700
+      leaders.visible = !capturing && state.time <= -3 && !isMicro && width >= 700
       for (const leader of state.leaders ?? []) {
         const line = leaderLines.get(leader.id)!
         const positions = line.geometry.getAttribute('position')
@@ -569,12 +617,21 @@ export function NuclearScene(props: Props) {
         coreLight.intensity = glowAmount * 110
       }
       composer.render()
-      raf = requestAnimationFrame(animate)
+      renderer.domElement.dataset.renderCount = String(++renderCount)
+      window.clearTimeout(wake)
+      if (oscillating) invalidate()
+      else if (!state.reducedMotion && state.time <= -3) {
+        wake = window.setTimeout(invalidate, Math.max(16, 6005 - (now - lastInteraction)))
+      }
     }
-    raf = requestAnimationFrame(animate)
+    invalidate()
     return () => {
+      disposed = true
+      requestDraw.current = () => {}
+      window.clearTimeout(wake)
       cancelAnimationFrame(raf)
       observer.disconnect()
+      document.removeEventListener('visibilitychange', visibilityChanged)
       controls.dispose()
       renderer.domElement.removeEventListener('pointerdown', pointerDown)
       renderer.domElement.removeEventListener('pointerup', pointerUp)
