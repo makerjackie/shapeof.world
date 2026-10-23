@@ -467,8 +467,8 @@ export const Coaster: React.FC = () => {
     const d = pr(s, B(34) + 0.1, BAR * 1.55, E.inOut);
     keys.push([s, { x: zx(d) + 200, y: zy(zAt(d)) + 60, z: 0.66 + 0.06 * Math.sin(d * Math.PI) }, E.lin]);
   }
-  keys.push([B(35.7), { x: zx(0.5) + 120, y: -900, z: 0.36 }, E.inOut]);
-  keys.push([B(36) + 0.4, { x: zx(0.5) + 120, y: -920, z: 0.38 }, E.lin]);
+  keys.push([B(35.7), { x: zx(0.5), y: -900, z: 0.33 }, E.inOut]);
+  keys.push([B(36) + 0.4, { x: zx(0.5), y: -920, z: 0.345 }, E.lin]);
 
   const pts = ZP.filter(([u]) => u <= draw).map(([u, v]) => `${zx(u)},${zy(v)}`);
   pts.push(`${tip.x},${tip.y}`);
