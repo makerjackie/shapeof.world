@@ -347,6 +347,28 @@
         "en": "UKULELE"
       },
       "mode": "realtime"
+    },
+    {
+      "id": "eclipse-ring",
+      "worldId": "eclipses",
+      "duration": 2,
+      "ss": 3,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "仰望太阳"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "crop": [
+        0.299,
+        0.077,
+        0.4,
+        0.4
+      ],
+      "why": "The diamond ring itself for the recap's last half-beat: same scene as eclipse-sky, cropped at capture time at DPR 3 so it stays sharp (an edit punch-in on 1080p would be soft)."
     }
   ]
 }

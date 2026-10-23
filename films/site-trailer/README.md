@@ -30,7 +30,8 @@ ln -sfn /path/to/shapeof.world-reports/site-trailer/footage public/footage
 v2 节奏、拍点、结构、HUD、片尾全部沿用 v1，只换镜头。负责人审 v1 时指出很多镜头太近、角度怪、发糊（1080p 素材被放大 1.3–1.45 倍）或世界本身弱。v2 的做法：
 
 - 先用 `tools/probe.mjs` 在线上站点截图比较模式、机位、预设，挑全景、完整、颜色足的那一帧，再录。
-- 新录的镜头一律 `ss: 2`：按 3840×2160 渲染，lanczos 缩到 1080p，`crop` 在 2 倍画面上裁，裁完仍是原生清晰度。剪辑里的推镜对 ss2 素材可到约 1.5 倍；v1 的 1080p 素材不超过约 1.1 倍。
+- 新录的镜头一律 `ss: 2`（日食钻石环用 `ss: 3`）：按 2 倍或 3 倍像素渲染，lanczos 缩到 1920×1080。素材仍是 1080p，只是更清晰，没有多余分辨率可放大。要近景就在录制时用 `crop` 裁（在高倍画面上裁，裁完仍是原生清晰度），剪辑里的推镜一律不超过 1.1 倍。v1 里果蝇和人体在剪辑里放大了 1.3–1.45 倍，v2 退回 1.06 倍：原画面里没有界面，整只果蝇连着脑、整个人体都在画面里。
+- 渲染：Mac 是共用的，`npm run render` 用 `--concurrency=2`，避免和别的渲染一起把机器压垮。
 - `init`（`shots-v2.json` 的 fluid-swirl）：页面脚本运行前注入的 JS。这里用来把咖啡杯着色器里"勺子圈"的 uniform 透明度置零，画面里就没有光标圈。
 - 交付：`npm run render`、`npm run render:loop`、`npm run finish` 现在输出 `out/site-trailer-v2*.mp4` 和 `poster-v2.jpg`，v1 文件保留不动。
 
@@ -59,7 +60,7 @@ node tools/render-music.mjs   # → music/score-raw.wav、public/score.wav（−
 ```bash
 npm ci
 npm run studio      # 预览
-npm run render      # 成片 → 媒体目录 out/site-trailer-raw.mp4（CRF 12 中间文件，--concurrency=4）
+npm run render      # 成片 → 媒体目录 out/site-trailer-raw.mp4（CRF 12 中间文件，--concurrency=2）
 npm run render:loop # 首页循环 → out/site-trailer-loop-raw.mp4
 npm run finish      # 交付编码：成片 CRF 20 + AAC 192k + faststart，循环两遍编码 ≤3 MB，海报；顺便量响度和真峰值
 ```
