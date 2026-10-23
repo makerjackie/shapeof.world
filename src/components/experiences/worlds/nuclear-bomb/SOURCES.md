@@ -19,9 +19,13 @@ This is a museum-level illustration of the order of layers and events. Geometry 
 - The chemical segment has a separate, unitless storyboard coordinate. Its screen duration is an editorial choice. No physical duration or slowdown factor is assigned to that segment.
 - Chain playback gradually changes from 2.5 to 0.3 screen seconds per generation. The slowdown readout uses the instantaneous speed, including the user-selected playback rate.
 - Internal layer thicknesses, spacing, displayed compression, particle paths, particle size, and heat colors are chosen for legibility. They do not reproduce measured structures, temperatures or motion. The heat field represents cumulative energy, not a temperature calculation.
-- The first twelve generations are a seeded abstract illustration; subsequent generations use a continuous light field. Changing time only samples this fixed illustration. No particle state is accumulated.
-- The endpoint stays on a white field. The illustration adds no numerical “disassembly duration” to the physical clock.
+- The first twelve generations are a seeded abstract illustration in a dense, dark field of nuclei. Its spherical front is a visual arrangement, not a spatial simulation. Generations 12–14 crossfade back to the closed cutaway; internal emission then represents cumulative energy. Changing time only samples this fixed illustration. No particle state is accumulated.
+- At the endpoint the physical clock freezes. A separate two-second presentation clock fades white to dark and reveals the summary; it can also be played backward. Scrubbing directly to the physical endpoint shows its white frame. No numerical “disassembly duration” is added to the physical clock.
 - All geometry and animation are programmatically authored for this project. No third-party models, images or textures are incorporated.
+
+## Exterior reference
+
+The [National Naval Aviation Museum display article](https://navalaviationmuseum.org/museum-marches-to-commemorate-end-of-world-war-ii/) documents a Fat Man exterior replica. The elongated painted shell and open tail frame are broad visual references only. The decorative flange, bolts and museum cradles are original display geometry; no historical engineering dimensions are reproduced. No source image is embedded in the experience.
 
 ## Not implemented in this round
 

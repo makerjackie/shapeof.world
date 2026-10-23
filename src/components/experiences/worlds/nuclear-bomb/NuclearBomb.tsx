@@ -9,19 +9,27 @@ import {GhostHint} from '~/components/experiences/GhostHint'
 import {useI18n} from '~/i18n'
 import {useExperienceI18n} from '~/i18n/experience'
 
-import {advanceTimeline, CHEMICAL_START, chainSummary, DEFAULT_YIELD_KT, sampleTimeline, slowdownFactor, stepTimeline} from './model'
+import {advancePresentation, CHEMICAL_START, chainSummary, DEFAULT_YIELD_KT, ENDING_PRESENTATION_SECONDS, lastGenerationsEnergyFraction, samplePresentation, sampleTimeline, slowdownFactor, stepTimeline} from './model'
 import {PARTS} from './parts'
 import {NuclearScene} from './scene'
 
-type Anchor = {id: string; x: number; y: number; visible: boolean}
+type Anchor = {
+  id: string
+  x: number
+  y: number
+  visible: boolean
+  occluded?: boolean
+  side?: 'left' | 'right'
+  bounds?: {left: number; right: number; top: number; bottom: number}
+}
 const SUMMARY = chainSummary(DEFAULT_YIELD_KT)
 const SCHEMATIC = '示意图：只表现结构的层次和发生的先后，不按比例，不含工程细节。'
 
-function ScientificNumber({value, digits = 2}: {value: number; digits?: number}) {
+function ScientificNumber({value, digits = 2, decimalPlaces = 0}: {value: number; digits?: number; decimalPlaces?: number}) {
   if (!Number.isFinite(value) || value <= 0) return <>0</>
   const exponent = Math.floor(Math.log10(value))
   const coefficient = value / 10 ** exponent
-  if (exponent >= 0 && exponent <= 3) return <>{value.toLocaleString('en-US', {maximumFractionDigits: 0})}</>
+  if (exponent >= 0 && exponent <= 3) return <>{value.toLocaleString('en-US', {maximumFractionDigits: decimalPlaces})}</>
   return <>{coefficient.toFixed(digits)}<span className="nb-times"> × 10</span><sup>{exponent}</sup></>
 }
 
@@ -34,7 +42,7 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   const [explode, setExplode] = useState(0)
   const [cutAngle, setCutAngle] = useState<0 | 90 | 180>(90)
   const [selectedPart, setSelectedPart] = useState<string | null>(null)
-  const [time, setTime] = useState(CHEMICAL_START)
+  const [{time, endingSeconds}, setPresentation] = useState({time: CHEMICAL_START, endingSeconds: 0})
   const [playing, setPlaying] = useState(false)
   const [reverse, setReverse] = useState(false)
   const [speed, setSpeed] = useState(1)
@@ -46,7 +54,12 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   const [error, setError] = useState('')
   const [sourcesOpen, setSourcesOpen] = useState(false)
   const sample = sampleTimeline(time)
+  const presentation = samplePresentation(time, endingSeconds)
   const micro = manualMicro ?? (autoCamera && time >= 0)
+  const forceMicro = manualMicro === true
+  const microscopyVisible = forceMicro || (micro && time < 140)
+  const showCompletion = presentation.complete && !forceMicro
+  const reactionActive = time >= 0
   const selected = PARTS.find((part) => part.id === selectedPart)
   const slowdown = slowdownFactor(time, speed)
   const mobile = size.width <= 720
@@ -86,9 +99,9 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
     let frame = 0
     let previous = 0
     const tick = (stamp: number) => {
-      const delta = previous ? Math.min((stamp - previous) / 1000, 0.1) : 0
+      const delta = previous ? Math.max(0, (stamp - previous) / 1000) : 0
       previous = stamp
-      setTime((current) => advanceTimeline(current, reverse ? -delta : delta, speed))
+      setPresentation((current) => advancePresentation(current, reverse ? -delta : delta, speed))
       frame = requestAnimationFrame(tick)
     }
     frame = requestAnimationFrame(tick)
@@ -96,8 +109,8 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   }, [playing, reverse, speed])
 
   useEffect(() => {
-    if (playing && ((!reverse && time >= SUMMARY.durationNs) || (reverse && time <= CHEMICAL_START))) setPlaying(false)
-  }, [playing, reverse, time])
+    if (playing && ((!reverse && presentation.complete) || (reverse && time <= CHEMICAL_START))) setPlaying(false)
+  }, [playing, presentation.complete, reverse, time])
 
   const choosePart = useCallback((id: string | null) => {
     controls.registerInteraction()
@@ -107,15 +120,16 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   const scrub = (value: number) => {
     controls.registerInteraction()
     setPlaying(false)
-    setTime(value)
+    setPresentation({time: value, endingSeconds: 0})
     setManualMicro(null)
   }
 
   const play = () => {
     controls.registerInteraction()
-    if (!playing && !reverse && time >= SUMMARY.durationNs) setTime(CHEMICAL_START)
-    if (!playing && reverse && time <= CHEMICAL_START) setTime(SUMMARY.durationNs)
+    if (!playing && !reverse && presentation.complete) setPresentation({time: CHEMICAL_START, endingSeconds: 0})
+    if (!playing && reverse && time <= CHEMICAL_START) setPresentation({time: SUMMARY.durationNs, endingSeconds: ENDING_PRESENTATION_SECONDS})
     setManualMicro(null)
+    setSelectedPart(null)
     setPlaying((value) => !value)
   }
 
@@ -130,27 +144,68 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
 
   const labelPositions = useMemo(() => {
     const anchorById = new Map(anchors.map((anchor) => [anchor.id, anchor]))
-    const result: Array<Anchor & {name: string; order: number; side: 'left' | 'right'; labelX: number; labelY: number}> = []
+    const visible = anchors.filter((anchor) => anchor.visible)
+    const bounds = anchors.find((anchor) => anchor.bounds)?.bounds ?? {
+      left: Math.min(...visible.map((anchor) => anchor.x), size.width * 0.35),
+      right: Math.max(...visible.map((anchor) => anchor.x), size.width * 0.65),
+      top: Math.min(...visible.map((anchor) => anchor.y), size.height * 0.28),
+      bottom: Math.max(...visible.map((anchor) => anchor.y), size.height * 0.65),
+    }
+    const center = (bounds.left + bounds.right) / 2
+    const sideOf = (id: string) => {
+      const anchor = anchorById.get(id)
+      return anchor?.side ?? ((anchor?.x ?? center) < center ? 'left' : 'right')
+    }
+    const result: Array<Anchor & {name: string; order: number; side: 'left' | 'right'; labelX: number; labelY: number; edgeX: number; elbowX: number}> = []
     for (const side of ['left', 'right'] as const) {
-      const parts = PARTS.filter((part) => (part.order <= 3) === (side === 'left'))
+      const parts = PARTS.filter((part) => sideOf(part.id) === side)
       parts.sort((a, b) => (anchorById.get(a.id)?.y ?? a.order * 10) - (anchorById.get(b.id)?.y ?? b.order * 10))
-      const inset = mobile ? 13 : size.width >= 1200 ? Math.round(size.width * 0.15) : 38
-      const top = mobile ? size.height * 0.31 : Math.max(245, size.height * 0.25)
-      const bottom = mobile ? size.height * 0.6 : size.height * 0.65
-      const gap = mobile ? 49 : 72
-      const heights = parts.map((part, index) => Math.max(top + index * gap, Math.min(bottom - (2 - index) * gap, anchorById.get(part.id)?.y ?? top + index * gap)))
+      const edgeX = side === 'left' ? Math.max(190, bounds.left - 40) : Math.min(size.width - 190, bounds.right + 40)
+      const elbowX = side === 'left' ? bounds.left - 12 : bounds.right + 12
+      const labelX = side === 'left' ? edgeX - 158 : edgeX + 158
+      const top = Math.max(230, bounds.top + 26)
+      const bottom = Math.min(size.height - 255, bounds.bottom - 10)
+      const gap = 52
+      const heights = parts.map((part, index) => Math.max(top + index * gap, Math.min(bottom - (parts.length - 1 - index) * gap, anchorById.get(part.id)?.y ?? top + index * gap)))
       for (let index = 1; index < heights.length; index++) heights[index] = Math.max(heights[index], heights[index - 1] + gap)
       parts.forEach((part, index) => {
         const anchor = anchorById.get(part.id)
         if (!anchor) return
-        result.push({...anchor, name: english ? part.nameEn : part.name, order: part.order, side,
-          labelX: side === 'left' ? inset : size.width - inset,
-          labelY: heights[index],
-        })
+        result.push({...anchor, name: english ? part.nameEn : part.name, order: part.order, side, labelX, labelY: heights[index], edgeX, elbowX})
       })
     }
     return result
-  }, [anchors, english, mobile, size])
+  }, [anchors, english, size])
+
+  const leaders = useMemo(() => mobile || micro || reactionActive ? [] : labelPositions.filter((label) => label.visible).map((label) => ({
+    id: label.id,
+    points: [[label.edgeX, label.labelY], [label.elbowX, label.labelY], [label.x, label.y]] as Array<[number, number]>,
+    opacity: label.occluded ? 0.16 : selectedPart && selectedPart !== label.id ? 0.22 : 1,
+  })), [labelPositions, mobile, micro, reactionActive, selectedPart])
+
+  const mobilePins = useMemo(() => {
+    const placed: Array<{id: string; x: number; y: number}> = []
+    for (const anchor of [...labelPositions].filter((item) => item.visible).sort((a, b) => a.order - b.order)) {
+      let position = {x: anchor.x, y: anchor.y}
+      let found = false
+      for (let radius = 0; radius <= 72 && !found; radius += 12) {
+        for (let index = 0; index < 16; index++) {
+          const angle = (index / 16) * Math.PI * 2 - Math.PI / 2
+          const candidate = {
+            x: Math.max(23, Math.min(size.width - 23, anchor.x + Math.cos(angle) * radius)),
+            y: Math.max(190, Math.min(size.height - 230, anchor.y + Math.sin(angle) * radius)),
+          }
+          if (placed.every((other) => Math.hypot(candidate.x - other.x, candidate.y - other.y) >= 27)) {
+            position = candidate
+            found = true
+            break
+          }
+        }
+      }
+      placed.push({id: anchor.id, ...position})
+    }
+    return new Map(placed.map((pin) => [pin.id, pin]))
+  }, [labelPositions, size])
 
   const energyPath = useMemo(() => {
     const points = Array.from({length: 121}, (_, index) => {
@@ -161,35 +216,46 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   }, [])
 
   return (
-    <div className={`nb-world${micro ? ' is-micro' : ''}${micro && sample.energyFraction > 0.2 ? ' is-bright' : ''}${selected ? ' has-selection' : ''}`} ref={host} data-nuclear-time={time.toFixed(4)} data-nuclear-view={micro ? 'micro' : 'cutaway'}>
-      <NuclearScene explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} micro={micro} autoCamera={autoCamera && manualMicro === null} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
+    <div className={`nb-world${microscopyVisible ? ' is-micro' : ''}${reactionActive ? ' is-reacting' : ''}${reactionActive && sample.energyFraction > 0.2 && !presentation.complete && !forceMicro ? ' is-bright' : ''}${showCompletion ? ' is-complete' : ''}${selected ? ' has-selection' : ''}`} ref={host} data-nuclear-time={time.toFixed(4)} data-nuclear-ending={endingSeconds.toFixed(4)} data-nuclear-view={microscopyVisible ? 'micro' : 'cutaway'}>
+      <NuclearScene explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} endingSeconds={endingSeconds} micro={micro} forceMicro={forceMicro} autoCamera={autoCamera && manualMicro === null} leaders={leaders} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
       <div className="nb-vignette" aria-hidden="true" />
 
       <header className="nb-heading" data-experience-overlay="true">
-        <p><span className="nb-live-dot" />{tx(micro ? '微观视图' : '内爆式装置')}<i />{micro ? '02' : '01'} / 02</p>
-        <h1>{tx(micro ? '一颗，再到下一颗。' : '原子弹，一层一层。')}</h1>
-        <span>{tx(micro ? '一颗原子核裂开，放出两三个中子。' : '「胖子」外形 · 结构示意')}</span>
+        <p><span className="nb-live-dot" />{tx(showCompletion ? '时间停止在这里' : microscopyVisible ? '微观视图' : reactionActive ? '返回剖面' : '内爆式装置')}<i />{reactionActive || microscopyVisible ? '02' : '01'} / 02</p>
+        <h1>{tx(showCompletion ? '不到一微秒。' : microscopyVisible ? '一颗，再到下一颗。' : reactionActive ? '能量，在最后几代显现。' : '原子弹，一层一层。')}</h1>
+        <span>{tx(showCompletion ? '拖回时间轴，可以再看一次。' : forceMicro && time >= 120 ? '微观示意停在前 12 代，读数对应主时间轴。' : microscopyVisible ? '一颗原子核裂开，放出两三个中子。' : reactionActive ? '从微观回到整体。亮度表示累计能量。' : '「胖子」外形 · 结构示意')}</span>
       </header>
 
-      {!mobile && !micro && !selected && <aside className="nb-section-controls" data-experience-overlay="true" aria-label={tx('剖面控制')}><div className="nb-panel-eyebrow"><span>{tx('剖面控制')}</span><span>{tx('不按比例')}</span></div>{sectionControls('nb-explode')}</aside>}
+      {showCompletion && <section className="nb-end-summary" data-experience-overlay="true" aria-label={tx('理想化模型的读数')}>
+        <dl><div><dt>{tx('经历的代数')}</dt><dd>{Math.ceil(SUMMARY.generations)}<small>{tx('代')}</small></dd></div><div><dt>{tx('经过的时间')}</dt><dd>{(SUMMARY.durationNs / 1000).toFixed(2)}<small>μs</small></dd></div><div><dt>{tx('最后 7 代的能量')}</dt><dd>{(lastGenerationsEnergyFraction(7) * 100).toFixed(1)}<small>%</small></dd></div></dl>
+      </section>}
 
-      {!micro && (
+      {!mobile && time <= CHEMICAL_START && !micro && !selected && <aside className="nb-section-controls" data-experience-overlay="true" aria-label={tx('剖面控制')}><div className="nb-panel-eyebrow"><span>{tx('剖面控制')}</span><span>{tx('不按比例')}</span></div>{sectionControls('nb-explode')}</aside>}
+
+      {!micro && !reactionActive && (
         <div className="nb-labels" data-experience-overlay="true">
-          <svg className="nb-leaders" width={size.width} height={size.height} aria-hidden="true">
+          {!mobile && <svg className="nb-leaders" width={size.width} height={size.height} aria-hidden="true">
             {labelPositions.map((label) => {
-              const endX = label.labelX + (label.side === 'left' ? (mobile ? 90 : 152) : -(mobile ? 90 : 152))
-              const elbowX = label.side === 'left' ? Math.max(endX + 15, label.x - 25) : Math.min(endX - 15, label.x + 25)
-              return <g key={label.id} className={selectedPart === label.id ? 'is-selected' : ''} opacity={selectedPart && selectedPart !== label.id ? 0.28 : 1}>
-                <path d={`M${endX},${label.labelY} L${elbowX},${label.labelY} L${label.x},${label.y}`} />
+              if (!label.visible) return null
+              return <g key={label.id} className={selectedPart === label.id ? 'is-selected' : ''} opacity={label.occluded ? 0.16 : selectedPart && selectedPart !== label.id ? 0.22 : 1}>
                 <circle cx={label.x} cy={label.y} r={2.2} />
               </g>
             })}
-          </svg>
-          {labelPositions.map((label) => (
-            <button type="button" key={label.id} className={`nb-part-label is-${label.side}${selectedPart === label.id ? ' is-selected' : ''}`} style={{[label.side]: label.side === 'left' ? label.labelX : size.width - label.labelX, top: label.labelY - 17}} aria-pressed={selectedPart === label.id} onClick={() => choosePart(label.id)}>
-              <span>{String(label.order).padStart(2, '0')}</span><strong>{label.name}</strong>
+          </svg>}
+          {mobile && <svg className="nb-leaders nb-pin-leaders" width={size.width} height={size.height} aria-hidden="true">{labelPositions.filter((label) => label.visible).map((label) => {
+            const pin = mobilePins.get(label.id)
+            if (!pin || Math.hypot(pin.x - label.x, pin.y - label.y) < 8) return null
+            return <g key={label.id} opacity={label.occluded ? 0.2 : 0.8}><path d={`M${pin.x},${pin.y} L${label.x},${label.y}`} /><circle cx={label.x} cy={label.y} r={1.3} /></g>
+          })}</svg>}
+          {labelPositions.filter((label) => label.visible).map((label) => {
+            const pin = mobilePins.get(label.id) ?? label
+            return <button type="button" key={label.id} className={`nb-part-label is-${label.side}${mobile ? ' is-pin' : ''}${label.occluded ? ' is-occluded' : ''}${selectedPart === label.id ? ' is-selected' : ''}`} style={mobile ? {left: pin.x - 11, top: pin.y - 11} : {[label.side]: label.side === 'left' ? label.labelX : size.width - label.labelX, top: label.labelY - 17}} aria-label={label.name} aria-pressed={selectedPart === label.id} onClick={() => choosePart(label.id)}>
+              <span>{String(label.order).padStart(2, '0')}</span>{!mobile && <strong>{label.name}</strong>}
             </button>
-          ))}
+          })}
+          {mobile && !selected && <div className="nb-mobile-legend" aria-label={tx('结构编号')}>
+            {PARTS.map((part) => <button type="button" key={part.id} onClick={() => choosePart(part.id)}><span>{String(part.order).padStart(2, '0')}</span><strong>{english ? part.nameEn : part.name}</strong></button>)}
+          </div>}
         </div>
       )}
 
@@ -202,14 +268,14 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
         </aside>
       )}
 
-      {micro && (
+      {(micro || reactionActive) && (
         <aside className="nb-readout" data-experience-overlay="true" aria-label={tx('链式反应读数')}>
           <div className="nb-panel-eyebrow"><span>{tx('链式反应')}</span><span>{tx('理想化净翻倍')}</span></div>
           <div className="nb-generation"><span>{tx('代数')}</span><strong>{(sample.phase === 'disassembly' ? Math.ceil(SUMMARY.generations) : Math.floor(sample.generation)).toString().padStart(2, '0')}<small> / {Math.ceil(SUMMARY.generations)}</small></strong></div>
           <dl>
             <div><dt>{tx('本代裂变数')}</dt><dd><ScientificNumber value={sample.generationFissions} /></dd></div>
-            <div className="nb-energy-reading"><dt>{tx('累计能量')}</dt><dd><ScientificNumber value={sample.energyJ} /> <small>J</small></dd></div>
-            <div><dt>{tx('TNT 当量')}</dt><dd><ScientificNumber value={sample.energyKt} /> <small>kt</small></dd></div>
+            <div className="nb-energy-reading"><dt>{tx('累计能量')}</dt><dd><ScientificNumber value={sample.energyJ} decimalPlaces={2} /> <small>J</small></dd></div>
+            <div><dt>{tx('TNT 当量')}</dt><dd><ScientificNumber value={sample.energyKt} decimalPlaces={2} /> <small>kt</small></dd></div>
             <div><dt>{tx('经过时间')}</dt><dd>{sample.elapsedNs.toFixed(1)} <small>ns</small></dd></div>
             <div><dt>{tx('放慢倍数')}</dt><dd>{slowdown === null ? '—' : <><ScientificNumber value={slowdown} digits={1} /> <small>×</small></>}</dd></div>
           </dl>
@@ -231,13 +297,14 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
       )}
 
       <div className="nb-view-tools" data-experience-overlay="true">
-        <button type="button" onClick={() => { controls.registerInteraction(); setManualMicro(!micro); setSelectedPart(null) }}>{tx(micro ? '回到剖面' : '进到核心')}<ArrowRight size={13} /></button>
+        <button type="button" onClick={() => { controls.registerInteraction(); setManualMicro(!microscopyVisible); setSelectedPart(null) }}>{tx(microscopyVisible ? '回到剖面' : '进到核心')}<ArrowRight size={13} /></button>
       </div>
 
       <div className="nb-caption" data-experience-overlay="true">
-        {micro && <p className="nb-micro-note">{tx('示意：只画出前 12 代，之后用亮度表示')}</p>}
+        {microscopyVisible && <p className="nb-micro-note">{tx('示意：只画出前 12 代，之后返回剖面')}</p>}
+        {!microscopyVisible && reactionActive && !presentation.complete && <p className="nb-micro-note">{tx('内部亮度表示累计能量，不是温度测量。')}</p>}
         {!micro && time >= -1 && time < 0 && <p className="nb-micro-note">{tx('③ 压紧、中子源放出中子')}</p>}
-        {!micro && time > CHEMICAL_START && <p className="nb-micro-note">{tx('压缩量为视觉示意，不代表实际比例。')}</p>}
+        {!micro && time > CHEMICAL_START && time < 0 && <p className="nb-micro-note">{tx('压缩量为视觉示意，不代表实际比例。')}</p>}
         <p>{tx(SCHEMATIC)} <button type="button" onClick={() => setSourcesOpen((open) => !open)}>{tx('资料来源')}</button></p>
       </div>
 
@@ -257,8 +324,8 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
 
       <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
         <div className="nb-secondary">
-          {(mobile || micro || selected) && sectionControls('nb-explode-secondary')}
-          {!mobile && !micro && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
+          {time <= CHEMICAL_START && !micro && (mobile || selected) && sectionControls('nb-explode-secondary')}
+          {!mobile && !micro && !reactionActive && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
           <div className="nb-stepping" role="group" aria-label={tx('时间步进')}>
             <button type="button" aria-label={tx('回到开始')} title={tx('回到开始')} onClick={() => { scrub(CHEMICAL_START); setManualMicro(false) }}><ArrowCounterClockwise size={17} /></button>
             <button type="button" aria-label={tx('上一代')} title={tx('上一代')} onClick={() => step(-1)}><ArrowLeft size={15} /><span>1</span></button>

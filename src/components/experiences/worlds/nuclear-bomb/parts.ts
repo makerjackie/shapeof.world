@@ -34,7 +34,7 @@ function profiles(id: string, outer: number, inner: number, separation: number) 
   return ([1, -1] as const).map((half) => ({
     id: `${id}-${half === 1 ? 'upper' : 'lower'}`,
     points: shell(outer, inner, half),
-    displacement: [0, half * separation, 0] as const,
+    displacement: [0, half === 1 ? separation * 1.65 : 0, 0] as const,
   }))
 }
 
@@ -52,7 +52,7 @@ export const PARTS: ReadonlyArray<Part> = [
     id: 'casing', name: '弹壳与尾翼', nameEn: 'Casing & tail', order: 1, configuration: 'implosion', material: 'casing',
     description: '外壳包住内部结构，尾翼稳定飞行。这里借用“胖子”复制品的外形。',
     descriptionEn: 'The casing encloses the device; the tail stabilizes flight. This silhouette refers to museum replicas of Fat Man.',
-    profiles: profiles('casing', 2.24, 2.12, 1.6), scale: [1, 1, 1.28], anchor: [-1.238, 1.3, 1.585],
+    profiles: profiles('casing', 2.24, 2.12, 1.6), scale: [1.5, 1, 1], anchor: [-1.857, 1.3, 1.238],
   },
   {
     id: 'explosive', name: '高能炸药层', nameEn: 'Explosive layer', order: 2, configuration: 'implosion', material: 'explosive',
