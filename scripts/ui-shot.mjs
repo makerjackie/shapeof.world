@@ -7,7 +7,9 @@
 //   --click=<selector>           截图前点击元素
 //   --mobile                     等价于 --width=390 --height=844
 import { spawn } from 'node:child_process'
-import { writeFileSync } from 'node:fs'
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import http from 'node:http'
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
@@ -33,7 +35,10 @@ const clickSel = opt('click', null)
 const full = has('full')
 
 const port = 9222 + Math.floor(Math.random() * 500)
+// 独立的临时配置目录：不带它，Chrome 会把请求交给正在运行的那个 Chrome，在作者屏幕上弹出窗口。
+const profile = mkdtempSync(join(tmpdir(), 'ui-shot-'))
 const chrome = spawn(CHROME, [
+  `--user-data-dir=${profile}`, '--no-first-run', '--no-default-browser-check',
   '--headless=new', '--disable-gpu', '--hide-scrollbars',
   `--remote-debugging-port=${port}`,
   `--window-size=${width},${height}`,
@@ -106,11 +111,13 @@ async function main() {
   console.log(`${out} · page ${size}`)
   ws.close()
   chrome.kill()
+  rmSync(profile, { recursive: true, force: true })
   process.exit(0)
 }
 
 main().catch((err) => {
   console.error(err)
   chrome.kill()
+  rmSync(profile, { recursive: true, force: true })
   process.exit(1)
 })
