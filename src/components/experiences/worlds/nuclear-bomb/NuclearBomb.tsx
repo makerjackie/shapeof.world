@@ -24,6 +24,7 @@ type Anchor = {
   occluded?: boolean
   side?: 'left' | 'right'
   bounds?: {left: number; right: number; top: number; bottom: number}
+  avoid?: {left: number; right: number; top: number; bottom: number}
 }
 const SUMMARY = chainSummary(DEFAULT_YIELD_KT)
 const SCHEMATIC = '示意图：只表现结构的层次和发生的先后，不按比例，不含工程细节。'
@@ -287,7 +288,10 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
       const elbowX = side === 'left' ? bounds.left - 12 : bounds.right + 12
       const labelX = side === 'left' ? edgeX - 158 : edgeX + 158
       const top = Math.max(230, bounds.top + 26)
-      const bottom = Math.min(size.height - 255, bounds.bottom - 10)
+      // Keep a column's labels clear of the tail shroud when it sits on that side.
+      const avoid = anchors.find((anchor) => anchor.avoid)?.avoid
+      const avoidOnSide = avoid && (side === 'left' ? avoid.left < center : avoid.right > center)
+      const bottom = Math.min(size.height - 255, bounds.bottom - 10, avoidOnSide && parts.every((part) => (anchorById.get(part.id)?.y ?? 0) < avoid.top) ? avoid.top - 20 : Infinity)
       const gap = 52
       const heights = parts.map((part, index) => Math.max(top + index * gap, Math.min(bottom - (parts.length - 1 - index) * gap, anchorById.get(part.id)?.y ?? top + index * gap)))
       for (let index = 1; index < heights.length; index++) heights[index] = Math.max(heights[index], heights[index - 1] + gap)
@@ -357,7 +361,7 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
             {labelPositions.map((label) => {
               if (!label.visible) return null
               return <g key={label.id} className={selectedPart === label.id ? 'is-selected' : ''} opacity={label.occluded ? 0.16 : selectedPart && selectedPart !== label.id ? 0.22 : 1}>
-                <circle cx={label.x} cy={label.y} r={2.2} />
+                <circle cx={label.x} cy={label.y} r={3} />
               </g>
             })}
           </svg>}
