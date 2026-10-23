@@ -157,7 +157,7 @@ export const Hook: React.FC = () => {
   const slam = t >= 2.08 ? Math.max(0, 1 - (t - 2.08) / 0.4) : 0;
   const intro = pr(t, 0, 0.3, EO);
   const fly = pr(t, 1.08, 0.42, EIO); // centre → the cart's price slot
-  const cardIn = pr(t, 0.83, 0.5, EO);
+  const cardIn = pr(t, 1.08, 0.42, EO); // slides in with the flight, so the big number never sits on top of it
   const numColor = `rgb(${Math.round(lerp(244, 255, heat))},${Math.round(lerp(240, 90, heat))},${Math.round(lerp(232, 95, heat))})`;
   const size = lerp(300, 132, fly) * (1 + pump) * lerp(1.25, 1, intro);
   const nx = lerp(960, SLOT.x, fly);

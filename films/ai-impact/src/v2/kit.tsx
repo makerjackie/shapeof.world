@@ -119,7 +119,7 @@ export const Line: React.FC<{ at: number; text: string; size?: number; kw?: stri
         return (
           <span key={i} style={{ position: "relative", display: "inline-block", overflow: "hidden", verticalAlign: "top", whiteSpace: "pre" }}>
             {fill > 0 ? <span style={{ position: "absolute", left: 0, top: size * 0.1, bottom: size * 0.03, width: `${fill * 100}%`, background: C.gold, zIndex: 0 }} /> : null}
-            <span style={{ position: "relative", zIndex: 1, display: "inline-block", transform: `translateY(${(1 - p) * 105}%)`, color: inKw && hl > 0.5 ? C.ink : undefined }}>{c}</span>
+            <span style={{ position: "relative", zIndex: 1, display: "inline-block", transform: `translateY(${(1 - p) * 105}%)`, color: inKw && fill > 0.5 ? C.ink : undefined }}>{c}</span>
           </span>
         );
       })}

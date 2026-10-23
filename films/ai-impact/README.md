@@ -130,3 +130,9 @@ python tools/sheet.py out/s out/sheets   # 2×2 拼审片图（需要 Pillow）
   - 机房嗡声在三处机房画面前半小节进来；两处安静垫房间声；有音高的音效用 A 小调版（`public/lib/tuned/`）。
 - 审片截图：`bash tools/v2stills.sh out/v2-stills <帧…>`（半分辨率，外加 4 列拼图）。
 - 渲染：`bash tools/v2render.sh [名字]`。它会排队等别的渲染，然后渲染、把响度调到约 −12 LUFS（真峰值 −2 dBTP）、faststart，拼两张每秒一帧的总览图（`out/contact-<名字>-1.jpg`、`-2.jpg`），并报响度。
+
+### 交片（v2，2026-10-23）
+
+- 成片：`out/ai-impact.mp4`（不进 Git；`bash tools/v2render.sh ai-impact`）。1920×1080、30fps、1:56.1，约 27 MB；H.264 CRF 20，AAC 192 kbps，faststart；响度 −11.9 LUFS，真峰值 −1.6 dBTP。
+- 总览图：`out/contact-ai-impact-1.jpg`、`-2.jpg`（每秒一帧，标了时间）。主线审过两版总览图后放行。
+- 主仓库的 `films/ai-impact/out/` 里，v1 成片改名为 `ai-impact-v1.mp4` 留着。
