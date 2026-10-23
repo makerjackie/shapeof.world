@@ -1,6 +1,8 @@
 import React from "react";
-import { AbsoluteFill, Audio, Easing, Freeze, Img, interpolate, OffthreadVideo, random, Sequence, staticFile, useCurrentFrame } from "remotion";
-import { b2f, CARD_AT, FILM_FRAMES, FPS, GRID, GRID_AT, GRID_LABEL, GRID_ORDER, Label, LINES, Shot, SHOTS, Tile } from "./edl";
+import { AbsoluteFill, Audio, Easing, Img, interpolate, random, Sequence, staticFile, useCurrentFrame } from "remotion";
+import { b2f, BOOKEND, CARD_AT, FILM_FRAMES, FPS, GRID, GRID_AT, GRID_LABEL, GRID_ORDER, Label, LINES, Shot, SHOTS, Tile } from "./edl";
+import { Frame } from "./Frame";
+import { Bookend, Intro } from "./Story";
 import { FONT, K, MONO, SERIF } from "./theme";
 
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -15,15 +17,6 @@ const srcTime = (s: Shot, f: number) => {
   if (!s.ramp || f < s.ramp.at) return s.src + (f / FPS) * r;
   return s.src + (s.ramp.at / FPS) * r + ((f - s.ramp.at) / FPS) * s.ramp.rate;
 };
-
-// One frame of a clip at an exact source time. Inside <Freeze frame={1}> the video sees frame 1 + `from` of the
-// enclosing <Sequence>, and asks for media time frame × playbackRate / fps; so playbackRate = t·fps / (1 + from)
-// makes Remotion fetch time t, and ramps and odd start points stay frame-accurate.
-const Frame: React.FC<{ id: string; t: number; from: number; fit?: "cover" | "fill" }> = ({ id, t, from, fit = "cover" }) => (
-  <Freeze frame={1}>
-    <OffthreadVideo muted src={staticFile(`footage/${id}.mp4`)} playbackRate={Math.max(0.0001, (t * FPS) / (1 + from))} style={{ width: "100%", height: "100%", objectFit: fit }} />
-  </Freeze>
-);
 
 const ShotView: React.FC<{ s: Shot; from: number; frames: number }> = ({ s, from, frames }) => {
   const f = useCurrentFrame();
@@ -114,7 +107,8 @@ const Line: React.FC<{ zh: string; en: string; frames: number }> = ({ zh, en, fr
 
 // Brand card: the trailer's title flips into 世界的形状 while the orb lands on the audio logo, then the slogan,
 // the address and the signature.
-const FROM = Array.from("可以玩的世界");
+const FROM = Array.from("一个可以亲手玩的科学宇宙");
+const FROM_EN = "A PLAYABLE UNIVERSE OF SCIENCE";
 const TO = Array.from("世界的形状");
 const SIZE = 120;
 const Card: React.FC = () => {
@@ -123,18 +117,18 @@ const Card: React.FC = () => {
   const dark = at(0, 12, EIO);
   const mark = at(0, 18, EBACK);
   const halo = at(0.5, 24);
-  const slogan = at(4, 12);
-  const url = at(4.5, 12);
-  const sign = at(5, 12);
-  const row = (chars: string[], font: string, weight: number, q: (i: number) => number, inward: boolean) => (
+  const slogan = at(5.2, 12);
+  const url = at(5.7, 12);
+  const sign = at(6.2, 12);
+  const row = (chars: string[], font: string, weight: number, q: (i: number) => number, inward: boolean, size = SIZE) => (
     <div style={{ position: "absolute", left: 0, right: 0, top: 450, display: "flex", justifyContent: "center", gap: 4, perspective: 1400 }}>
       {chars.map((ch, i) => {
         const p = q(i);
         const ang = inward ? (1 - p) * 90 : -p * 90;
         const vis = inward ? p > 0 : p < 1;
         return (
-          <div key={i} style={{ width: SIZE * 1.02, height: SIZE * 1.25, display: "flex", alignItems: "center", justifyContent: "center", transform: `rotateX(${ang}deg)`, opacity: vis ? 1 : 0 }}>
-            <span style={{ fontFamily: font, fontWeight: weight, fontSize: SIZE, color: K.fg, lineHeight: 1 }}>{ch}</span>
+          <div key={i} style={{ width: size * 1.02, height: size * 1.25, display: "flex", alignItems: "center", justifyContent: "center", transform: `rotateX(${ang}deg)`, opacity: vis ? 1 : 0 }}>
+            <span style={{ fontFamily: font, fontWeight: weight, fontSize: size, color: K.fg, lineHeight: 1 }}>{ch}</span>
           </div>
         );
       })}
@@ -148,8 +142,11 @@ const Card: React.FC = () => {
         <div style={{ position: "absolute", inset: -80, borderRadius: "50%", background: `radial-gradient(circle, rgba(255,209,102,${0.2 * halo}) 0%, rgba(140,196,212,${0.07 * halo}) 45%, transparent 70%)` }} />
         <Img src={staticFile("mark-disc.png")} style={{ width: 200, height: 200, opacity: Math.min(1, mark * 1.5), transform: `translateY(${(1 - mark) * -50}px) scale(${0.7 + 0.3 * mark})` }} />
       </div>
-      <div style={{ opacity: fromIn }}>{row(FROM, FONT, 900, (i) => at(2 + i * 0.16, 9, EIO), false)}</div>
-      {row(TO, SERIF, 700, (i) => at(2.6 + i * 0.2, 10, EIO), true)}
+      <div style={{ opacity: fromIn }}>{row(FROM, FONT, 900, (i) => at(3.2 + i * 0.1, 9, EIO), false, 92)}</div>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 582, display: "flex", justifyContent: "center", opacity: 0.7 * at(0.4, 10) * (1 - at(3, 8)) }}>
+        <div style={{ fontFamily: MONO, fontSize: 19, letterSpacing: 7, color: K.fg, whiteSpace: "nowrap" }}>{FROM_EN}</div>
+      </div>
+      {row(TO, SERIF, 700, (i) => at(3.8 + i * 0.2, 10, EIO), true)}
       <div style={{ position: "absolute", left: 0, right: 0, top: 650, display: "flex", justifyContent: "center", opacity: slogan, transform: `translateY(${(1 - slogan) * 16}px)` }}>
         <div style={{ fontFamily: SERIF, fontSize: 46, fontWeight: 600, color: K.sub, letterSpacing: 10, whiteSpace: "nowrap" }}>看见世界如何运行</div>
       </div>
@@ -217,7 +214,13 @@ export const Film: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#000", overflow: "hidden" }}>
       <Audio src={staticFile("score.wav")} volume={(f) => interpolate(f, [FILM_FRAMES - 15, FILM_FRAMES - 1], [1, 0], CL)} />
+      <Sequence durationInFrames={b2f(SHOTS[0].at)}>
+        <Intro />
+      </Sequence>
       <Shots shots={SHOTS} />
+      <Sequence from={b2f(BOOKEND.at)} durationInFrames={b2f(BOOKEND.len)} premountFor={20}>
+        <Bookend />
+      </Sequence>
       <Sequence from={b2f(GRID_AT)} durationInFrames={b2f(4)} premountFor={20}>
         <Grid />
       </Sequence>

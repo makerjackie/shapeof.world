@@ -1,0 +1,32 @@
+{
+  "version": 3,
+  "notes": "v3 additions: the laptop intro and bookend. Screen recordings are kept at 3840x2160 (native: true) because the edit scales them up as the laptop screen fills the frame; cursor: true draws a visible pointer. 30 fps (the film's rate).",
+  "shots": [
+    {
+      "id": "home-cursor", "worldId": "home", "url": "https://shapeof.world/", "query": { "capture": null, "ghost": null },
+      "chrome": true, "cursor": true, "native": true, "ss": 2, "fps": 30, "duration": 3.4, "settle": 6000, "warmup": 0.2,
+      "actions": [
+        { "at": 0, "type": "move", "from": [0.2, 0.74], "to": [0.62, 0.5], "dur": 1.7, "ease": "inout" },
+        { "at": 1.7, "type": "move", "from": [0.62, 0.5], "to": [0.69, 0.43], "dur": 0.7, "ease": "inout" },
+        { "at": 2.4, "type": "down" }
+      ],
+      "why": "The real homepage with a pointer gliding from the hero onto the Starry Night card and pressing it: the intro's screen."
+    },
+    {
+      "id": "bh-drag", "worldId": "black-hole-flyby", "cursor": true, "native": true, "ss": 2, "fps": 30, "duration": 9, "settle": 7000,
+      "steps": [{ "clickText": "^近看$" }, { "wait": 3000 }],
+      "actions": [
+        { "at": 0, "type": "move", "from": [0.86, 0.66], "to": [0.62, 0.56], "dur": 1.2, "ease": "inout" },
+        { "at": 1.2, "type": "drag", "from": [0.62, 0.56], "to": [0.5, 0.6], "dur": 6.5, "ease": "inout" }
+      ],
+      "why": "The black hole close up with a pointer orbiting it live: the bookend's screen, pulled back to reveal the laptop."
+    },
+    {
+      "id": "flame-dome", "worldId": "fire-gravity", "duration": 3.5, "ss": 2, "settle": 6000,
+      "crop": [0.2, 0.2, 0.6, 0.6],
+      "actions": [{ "at": 0.4, "type": "range", "sel": "#fire-gravity-input", "from": 1, "to": 0, "dur": 0.5, "ease": "inout" }],
+      "why": "Same framing as flame-gravity with a quicker gravity cut, so the round blue zero-g dome holds for most of the shot.",
+      "label": { "zh": "火焰 · 没有重力会变圆", "en": "ZERO-G FLAME" }
+    }
+  ]
+}

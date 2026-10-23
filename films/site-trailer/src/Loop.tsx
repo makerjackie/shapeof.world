@@ -12,7 +12,7 @@ export const LOOP_SHOTS: Shot[] = [
   { id: "eclipse-sky", at: 6, len: 2, src: 1.0, zoom: [1.0, 1.25], origin: [0.5, 0.26] },
   { id: "earth-terminator", at: 8, len: 2, src: 1.0, rate: 2, zoom: [1.02, 1.1] },
   { id: "butterfly-flow", at: 10, len: 2, src: 2.2, rate: 1.2, zoom: [1.0, 1.06] },
-  { id: "flame-gravity", at: 12, len: 2, src: 1.0, rate: 1.6, ramp: { at: 12, rate: 3.4 }, zoom: [1.0, 1.05], origin: [0.5, 0.7] },
+  { id: "flame-dome", at: 12, len: 2, src: 0.7, rate: 2.8, zoom: [1.0, 1.05], origin: [0.5, 0.7] },
   { id: "ink-landscape-flight", at: 14, len: 2, src: 0.4, rate: 1.5, zoom: [1.0, 1.06] },
   { id: "equation-blackhole", at: 16, len: 2, src: 1.0, rate: 1.2, zoom: [1.0, 1.06] },
   { id: "black-hole-flyby", at: 18, len: 2, src: 1.0, rate: 0.8, zoom: [1.0, 1.06], origin: [0.5, 0.42] },

@@ -3,9 +3,9 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render Film /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v2-raw.mp4 --crf=12 --concurrency=2",
-    "render:loop": "remotion render Loop /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v2-loop-raw.mp4 --crf=12 --concurrency=2",
-    "finish": "bash tools/finish.sh /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out site-trailer-v2"
+    "render": "remotion render Film /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v3-raw.mp4 --crf=12 --concurrency=2",
+    "render:loop": "remotion render Loop /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v3-loop-raw.mp4 --crf=12 --concurrency=2",
+    "finish": "bash tools/finish.sh /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out site-trailer-v3"
   },
   "dependencies": {
     "@remotion/cli": "4.0.380",

@@ -1,12 +1,14 @@
 // Original score for the shapeof.world site trailer. Synthesized with Web Audio in an OfflineAudioContext; no samples.
 // The engine (drums, piano, organ bass, pad, effects) is the series engine, copied from films/indie-dev/music/score.js;
 // this file adds a saw pluck arpeggio, a reverse cymbal, the logo resolved onto A, and its own arrangement.
-// A minor, 900/7 ≈ 128.6 BPM so one beat is exactly 14 frames at 30 fps (one bar = 56 frames). Bar 0 starts at 0 s:
-// the first frame already has a kick and a hit under it. The bar table mirrors src/edl.ts.
+// A minor, 900/7 ≈ 128.6 BPM so one beat is exactly 14 frames at 30 fps (one bar = 56 frames). Two intro bars (the
+// laptop, bars -2 and -1) come first, so bar 0 (the montage's first hit) starts at T0 = 2 bars. The intro is moving on
+// frame 0: a soft pulse under a closed arpeggio, the pad swelling, the pointer's click, a riser into the bar-0 hit.
+// The bar table mirrors src/edl.ts.
 
 const BEAT = 7 / 15
 const BAR = 4 * BEAT
-const T0 = 0
+const T0 = 2 * BAR
 const BARS = 16
 const DURATION = T0 + 15.5 * BAR + 1.2
 const bt = (bar, beat = 0) => T0 + bar * BAR + beat * BEAT
@@ -34,6 +36,7 @@ const SECTIONS = [
 
 // Sound effects on the picture: [bar, beat, type, ...args].
 const CUES = [
+  [-1, 1, 'tick', 0.9], // the pointer presses the Starry Night card
   [0, 0, 'boom', 1.1],
   [1, 0, 'swish', 0.5], [2, 0, 'swish', 0.6], [3, 0, 'swish', 0.7],
   [4, 0, 'impact', 0.9], [6, 0, 'whoosh', 0.9], [7, 0, 'swish', 0.7],
@@ -399,6 +402,21 @@ async function renderScore() {
   const secOf = (bar) => SECTIONS.find((s) => bar >= s.from && bar <= s.to)
   const fill16 = (t0, n, fn) => { for (let i = 0; i < n; i++) fn(t0 + i * S16, i) }
   const SILENCE = bt(10, 3) // one beat of nothing before the black hole
+
+  // Intro, bars -2 and -1: a muffled pulse on every beat, the arpeggio closed and quiet, the pad opening; offbeat
+  // hats join in the second bar, then a riser and a reverse cymbal pull into the bar-0 hit.
+  for (let bar = -2; bar < 0; bar++) {
+    const t = bt(bar), p = bar + 2
+    for (let b = 0; b < 4; b++) {
+      const tb = t + b * BEAT
+      kick(tb, 0.32 + 0.14 * p)
+      if (p === 1) hat(tb + BEAT / 2, false, 0.3 + 0.1 * b, 0.2)
+    }
+    arp(t, Am9, 0.4 + 0.25 * p, 0.06 + 0.14 * p)
+    pad(t, Am9.notes, BAR, 0.3 + 0.35 * p, 450 + 550 * p)
+  }
+  riser(bt(-1), bt(0) - S16, 0.85)
+  suck(bt(0), 0.9, 1)
 
   for (let bar = 0; bar < BARS; bar++) {
     const sec = secOf(bar), k = sec.kind, t = bt(bar)

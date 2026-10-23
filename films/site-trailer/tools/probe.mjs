@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
  * Quick framing probe: open live worlds in real time, run setup steps, and grab screenshots so a shot can be
- * chosen before it is recorded with capture.mjs. Same step syntax as capture.mjs, plus {css: "..."}.
+ * chosen before it is recorded with capture.mjs. Same step syntax as capture.mjs, plus {css: "..."} and {dump: "js expression"} (prints the result).
  *
  *   node films/site-trailer/tools/probe.mjs probes.json <outDir> [--only a,b] [--ss 1]
  *
- * probes.json: [{ name, worldId, url?, query?, settle?, init? (js run before page scripts), shots: [{ label, steps: [...] }] }]
+ * probes.json: [{ name, worldId, url?, query?, settle?, init? (js run before page scripts), chrome? (keep site UI), shots: [{ label, steps: [...] }] }]
  * Each world's shots run in order on one page (steps accumulate). Writes <outDir>/<name>-<i>.jpg
  * and <outDir>/<name>-buttons.txt (every button label and slider, to discover modes and cameras).
  */
@@ -66,6 +66,7 @@ async function step(page, ref, st) {
   }, st.range)
   if (st.eval) return scope.evaluate(st.eval).catch((e) => console.warn('  ! eval', e.message))
   if (st.css) return page.addStyleTag({ content: st.css })
+  if (st.dump) return console.log('  dump:', JSON.stringify(await scope.evaluate(st.dump)))
 }
 
 for (const p of probes) {
@@ -80,7 +81,7 @@ for (const p of probes) {
     const u = new URL(p.url ?? `https://shapeof.world/${p.worldId}`)
     for (const [k, v] of Object.entries({ capture: 1, ghost: 0, ...(p.query ?? {}) })) if (v === null) u.searchParams.delete(k); else u.searchParams.set(k, String(v))
     await page.goto(u.toString(), { waitUntil: 'load', timeout: 90000 })
-    await page.addStyleTag({ content: CSS })
+    if (!p.chrome) await page.addStyleTag({ content: CSS })
     await page.evaluate(() => { const b = document.querySelector('.guide-skip, .guide-close, .guide-stage-exit'); if (b instanceof HTMLElement) b.click() })
     await sleep(p.settle ?? 6000)
     const labels = await page.evaluate(() => {
@@ -93,7 +94,7 @@ for (const p of probes) {
     let i = 0
     for (const s of p.shots ?? [{ label: 'default' }]) {
       for (const st of s.steps ?? []) await step(page, ref, st)
-      await page.addStyleTag({ content: CSS })
+      if (!p.chrome) await page.addStyleTag({ content: CSS })
       await page.screenshot({ path: resolve(out, `${p.name}-${i}.jpg`), type: 'jpeg', quality: 70 })
       console.log(`  ${p.name}-${i}: ${s.label}`)
       i++

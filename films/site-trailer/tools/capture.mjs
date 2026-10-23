@@ -41,6 +41,9 @@
  *   warmup? s stepped before frame 0 (default 0.4), actions? [...timeline during recording...],
  *   hide? [css selectors to hide], css? extra css, init? js run before the page's own scripts, mode?, fps?, size?, ss?,
  *   crop? [x,y,w,h] viewport fractions (keep 16:9; pair with ss:2 for a sharp punch-in),
+ *   native? true = keep the DPR-scaled size (ss:2 -> 3840x2160 output) for footage that is scaled up in the edit,
+ *   cursor? true = draw a visible arrow cursor in the page that follows the mouse (screenshots have no OS cursor),
+ *   chrome? true = keep the site's own UI (skip the overlay-hiding CSS; the cursor, music and cookie bars stay hidden),
  *   canvasOnly? true = hide every non-canvas element in page, iframes and shadow roots (clean plate;
  *   not for DOM/SVG worlds), shadowCss? css injected into shadow roots + iframes, why, label {zh, en}
  * Setup steps (real time, before recording):
@@ -51,7 +54,7 @@
  * Actions (during recording; seconds from frame 0; interpolated per frame):
  *   {at, type:'drag', from, to, dur, button?, ease?:'inout'|'linear'}   orbit / stir
  *   {at, type:'move', from, to, dur}                                    hover sweep
- *   {at, type:'click', pos} {at, type:'clickText', text} {at, type:'key', key}
+ *   {at, type:'click', pos} {at, type:'down', pos} {at, type:'up'} {at, type:'clickText', text} {at, type:'key', key}
  *   {at, type:'keyhold', key, dur} {at, type:'wheel', pos, dy, dur} {at, type:'eval', js}
  *   {at, type:'range', sel, from, to, dur, step?, ease?}                 sweep a slider (zoom, timeline...)
  * Selectors: input[aria-label="..."] works well for the world sliders (see inventory.json).
@@ -122,7 +125,18 @@ const BASE_CSS = `
   html, body, * { cursor: none !important; }
   ::-webkit-scrollbar { display: none !important; }
 `
-const cssFor = (s) => BASE_CSS + (s.hide?.length ? `${s.hide.join(',')}{opacity:0!important;pointer-events:none!important}` : '') + (s.css ?? '')
+const CHROME_CSS = `.site-bgm, .cookie-banner { opacity: 0 !important; pointer-events: none !important; } html, body, * { cursor: none !important; }`
+// A drawn arrow cursor: screenshots never contain the OS pointer. It follows mousemove and dips on mousedown.
+const CURSOR_JS = `addEventListener('DOMContentLoaded', () => {
+  const c = document.createElement('div')
+  c.innerHTML = '<svg width="44" height="56" viewBox="0 0 30 38"><path d="M2 2 L2 30 L9.5 23 L14.5 35 L19.5 33 L14.6 21.4 L25 21.4 Z" fill="#fff" stroke="#111" stroke-width="2" stroke-linejoin="round"/></svg>'
+  Object.assign(c.style, { position: 'fixed', left: '-100px', top: '-100px', zIndex: 2147483647, pointerEvents: 'none', transformOrigin: '2px 2px', filter: 'drop-shadow(0 2px 3px rgba(0,0,0,.45))', transition: 'transform 60ms' })
+  document.documentElement.appendChild(c)
+  addEventListener('mousemove', (e) => { c.style.left = e.clientX - 2 + 'px'; c.style.top = e.clientY - 2 + 'px' }, true)
+  addEventListener('mousedown', () => { c.style.transform = 'scale(0.86)' }, true)
+  addEventListener('mouseup', () => { c.style.transform = '' }, true)
+})`
+const cssFor = (s) => (s.chrome ? CHROME_CSS : BASE_CSS) + (s.hide?.length ? `${s.hide.join(',')}{opacity:0!important;pointer-events:none!important}` : '') + (s.css ?? '')
 
 const jpegDim = (buf) => { let i = 2; while (i + 9 < buf.length) { if (buf[i] === 0xff && buf[i + 1] >= 0xc0 && buf[i + 1] <= 0xc2) return `${buf.readUInt16BE(i + 7)}x${buf.readUInt16BE(i + 5)}`; i += 2 + buf.readUInt16BE(i + 2) } return '?' }
 const px = (v, total) => (v <= 1 ? v * total : v)
@@ -213,6 +227,8 @@ function makeActionDriver(page, scopeRef, actions, W, H) {
         if (k >= 1) { await page.keyboard.up(a.key); s.done = true }
       } else {
         if (a.type === 'click') await page.mouse.click(px(a.pos[0], W), px(a.pos[1], H))
+        else if (a.type === 'down') { if (a.pos) await page.mouse.move(px(a.pos[0], W), px(a.pos[1], H)); await page.mouse.down() }
+        else if (a.type === 'up') await page.mouse.up()
         else if (a.type === 'clickText') await clickText(scope, a.text)
         else if (a.type === 'key') await page.keyboard.press(a.key)
         else if (a.type === 'eval') await scope.evaluate(a.js)
@@ -222,12 +238,12 @@ function makeActionDriver(page, scopeRef, actions, W, H) {
   }
 }
 
-function startEncoder(outMp4, fps, W, H, ss, crop) {
+function startEncoder(outMp4, fps, W, H, ss, crop, native) {
   // crop = [x, y, w, h] as viewport fractions; applied on the DPR-scaled frame, so with ss:2 a
   // half-size crop still has full 1080p native detail ("punch-in" on small subjects).
   const c = crop ? `crop=${Math.round(crop[2] * W * ss)}:${Math.round(crop[3] * H * ss)}:${Math.round(crop[0] * W * ss)}:${Math.round(crop[1] * H * ss)},` : ''
   const args = ['-loglevel', 'error', '-y', '-f', 'image2pipe', '-c:v', 'mjpeg', '-framerate', String(fps), '-i', '-',
-    '-vf', `${c}scale=${W}:${H}:flags=lanczos,format=yuv420p`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '14',
+    '-vf', `${c}scale=${native ? W * ss : W}:${native ? H * ss : H}:flags=lanczos,format=yuv420p`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '14',
     '-profile:v', 'high', '-tune', 'film', '-g', String(fps), '-movflags', '+faststart', '-r', String(fps), outMp4]
   const p = spawn(FFMPEG, args, { stdio: ['pipe', 'inherit', 'inherit'] })
   let closed = null
@@ -266,6 +282,7 @@ async function recordShot(s) {
     } catch {}
   }, s.worldId)
   if (s.init) await ctx.addInitScript(s.init)
+  if (s.cursor) await ctx.addInitScript(CURSOR_JS)
   await ctx.route('https://music-cdn.shapeof.world/**', (r) => r.abort())
   await ctx.route(/googletagmanager|google-analytics|plausible\.io|cloudflareinsights/, (r) => r.abort())
   if (mode === 'step') await ctx.clock.install()
@@ -301,7 +318,7 @@ async function recordShot(s) {
     meta.renderer = await page.evaluate(() => { const c = document.createElement('canvas').getContext('webgl'); const e = c?.getExtension('WEBGL_debug_renderer_info'); return e ? c.getParameter(e.UNMASKED_RENDERER_WEBGL) : null })
 
     const cdp = await ctx.newCDPSession(page)
-    const enc = startEncoder(outMp4, fps, W, H, ss, s.crop)
+    const enc = startEncoder(outMp4, fps, W, H, ss, s.crop, s.native)
     const drive = makeActionDriver(page, scopeRef, s.actions ?? [], W, H)
     const total = Math.round(duration * fps)
     const rec0 = Date.now()
