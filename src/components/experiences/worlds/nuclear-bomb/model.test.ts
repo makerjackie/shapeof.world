@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import {
   advanceTimeline,
+  advancePresentation,
   chainSummary,
   CHEMICAL_START,
   cumulativeFissionsAtGeneration,
+  ENDING_PRESENTATION_SECONDS,
   FISSION_ENERGY_J,
   GENERATION_NS,
   KILOTON_TNT_J,
   lastGenerationsEnergyFraction,
   playbackSecondsAt,
   sampleTimeline,
+  samplePresentation,
   secondsPerGeneration,
   slowdownFactor,
   stepTimeline,
@@ -54,6 +57,81 @@ describe('idealized fission energy accounting', () => {
 
   it('rejects invalid energy targets', () => {
     for (const target of [0, -1, NaN, Infinity]) expect(() => chainSummary(target)).toThrow(RangeError)
+  })
+})
+
+describe('separate presentation camera and ending', () => {
+  it('crossfades from micro to macro over generations twelve to fourteen', () => {
+    expect(samplePresentation(-1).microBlend).toBe(0)
+    expect(samplePresentation(0).microBlend).toBe(1)
+    expect(samplePresentation(12 * GENERATION_NS).microBlend).toBe(1)
+    expect(samplePresentation(13 * GENERATION_NS).microBlend).toBeCloseTo(0.5)
+    expect(samplePresentation(14 * GENERATION_NS).microBlend).toBe(0)
+    for (const t of [0, 120, 125, 130, 135, 140, 780]) {
+      const frame = samplePresentation(t)
+      expect(frame.microBlend + frame.macroBlend).toBe(1)
+    }
+  })
+
+  it('starts the white exposure in the last four doublings while preserving linear energy', () => {
+    const end = chainSummary().durationNs
+    const start = samplePresentation(end - 4 * GENERATION_NS)
+    expect(start.whiteOpacity).toBeCloseTo(0, 12)
+    expect(samplePresentation(end - 3 * GENERATION_NS).whiteOpacity).toBeGreaterThan(0)
+    expect(samplePresentation(end).whiteOpacity).toBe(1)
+    expect(sampleTimeline(end - 3 * GENERATION_NS).energyFraction).toBeCloseTo(1 / 8)
+  })
+
+  it('settles white to dark in screen time without extending physical time or energy', () => {
+    const end = chainSummary().durationNs
+    const white = samplePresentation(end, 0)
+    const middle = samplePresentation(end, 1)
+    const dark = samplePresentation(end, ENDING_PRESENTATION_SECONDS)
+    expect([white.whiteOpacity, white.darkOpacity, white.complete]).toEqual([1, 0, false])
+    expect([middle.whiteOpacity, middle.darkOpacity]).toEqual([0.5, 0.5])
+    expect([dark.whiteOpacity, dark.darkOpacity, dark.complete]).toEqual([0, 1, true])
+    const position = advancePresentation({time: end, endingSeconds: 0}, 1.5)
+    expect(position.time).toBe(end)
+    expect(position.endingSeconds).toBe(1.5)
+    expect(sampleTimeline(position.time)).toEqual(sampleTimeline(end))
+    expect(samplePresentation(100, 2)).toEqual(samplePresentation(100, 0))
+  })
+
+  it('preserves overshoot and reverse across the physical endpoint', () => {
+    const end = chainSummary().durationNs
+    const startingTime = timelineAtPlaybackSeconds(playbackSecondsAt(end) - 0.4)
+    const forward = advancePresentation({time: startingTime, endingSeconds: 0}, 1)
+    expect(forward.time).toBe(end)
+    expect(forward.endingSeconds).toBeCloseTo(0.6, 10)
+    const back = advancePresentation(forward, -1)
+    expect(back.time).toBeCloseTo(startingTime, 8)
+    expect(back.endingSeconds).toBe(0)
+  })
+
+  it('keeps the ending at two screen seconds for every playback speed', () => {
+    const end = chainSummary().durationNs
+    for (const speed of [0.25, 0.5, 1, 2, 4]) {
+      expect(advancePresentation({time: end, endingSeconds: 0}, 1, speed).endingSeconds).toBe(1)
+      expect(advancePresentation({time: end, endingSeconds: 0}, 20, speed)).toEqual({time: end, endingSeconds: 2})
+      const start = {time: 80, endingSeconds: 0}
+      expect(advancePresentation(start, 0.2, speed).time).toBeCloseTo(advanceTimeline(80, 0.2, speed), 8)
+    }
+  })
+
+  it('replays identical presentation samples and is independent of frame rate', () => {
+    const end = chainSummary().durationNs
+    const startingTime = timelineAtPlaybackSeconds(playbackSecondsAt(end) - 0.5)
+    let smallFrames = {time: startingTime, endingSeconds: 0}
+    for (let frame = 0; frame < 90; frame++) smallFrames = advancePresentation(smallFrames, 1 / 60)
+    const oneFrame = advancePresentation({time: startingTime, endingSeconds: 0}, 1.5)
+    expect(smallFrames.time).toBe(oneFrame.time)
+    expect(smallFrames.endingSeconds).toBeCloseTo(oneFrame.endingSeconds, 8)
+    for (const position of [{time: 130, endingSeconds: 0}, {time: 780, endingSeconds: 0}, {time: end, endingSeconds: 1.4}]) {
+      const expected = samplePresentation(position.time, position.endingSeconds)
+      samplePresentation(end, 2)
+      samplePresentation(-3, 0)
+      expect(samplePresentation(position.time, position.endingSeconds)).toEqual(expected)
+    }
   })
 })
 

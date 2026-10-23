@@ -33,6 +33,13 @@ export default {
   related: [],
   sources: [
     {
+      label: '美国国家海军航空博物馆 · 外观复制品',
+      labelEn: 'National Naval Aviation Museum · Exterior replica',
+      url: 'https://navalaviationmuseum.org/museum-marches-to-commemorate-end-of-world-war-ii/',
+      note: '外壳与尾翼的大致轮廓参考，不使用工程尺寸。',
+      noteEn: 'A broad exterior silhouette reference; no engineering dimensions are used.',
+    },
+    {
       label: '维基百科 · 核裂变',
       labelEn: 'Wikipedia · Nuclear fission',
       url: 'https://en.wikipedia.org/wiki/Nuclear_fission',

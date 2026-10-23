@@ -8,6 +8,8 @@ export const DISPLAY_GENERATIONS = 12
 /** Negative values are three unitless storyboard steps, not physical time. */
 export const CHEMICAL_START = -3
 export const CHEMICAL_PLAYBACK_SECONDS = 5.4
+/** Screen seconds for the editorial white-to-dark ending; never added to ns. */
+export const ENDING_PRESENTATION_SECONDS = 2
 
 export type TimelinePhase = 'chemical' | 'chain' | 'disassembly'
 
@@ -35,6 +37,22 @@ export interface TimelineSample {
   elapsedNs: number
   heat: number
   whiteout: number
+}
+
+export interface PresentationPosition {
+  time: number
+  /** Actual screen seconds after the physical clock reaches its endpoint. */
+  endingSeconds: number
+}
+
+export interface PresentationSample {
+  microBlend: number
+  macroBlend: number
+  endingProgress: number
+  /** White/dark weights; the remaining weight belongs to the scene. */
+  whiteOpacity: number
+  darkOpacity: number
+  complete: boolean
 }
 
 const clamp = (value: number, minimum = 0, maximum = 1) => Math.min(maximum, Math.max(minimum, value))
@@ -96,6 +114,27 @@ export function sampleTimeline(time = CHEMICAL_START, yieldKt = DEFAULT_YIELD_KT
   }
 }
 
+/** Pure editorial camera/ending state, kept separate from the physical clock. */
+export function samplePresentation(time: number, endingSeconds = 0, yieldKt = DEFAULT_YIELD_KT): PresentationSample {
+  const frame = sampleTimeline(time, yieldKt)
+  const microBlend = frame.phase === 'chemical' ? 0 : 1 - smooth((frame.generation - DISPLAY_GENERATIONS) / 2)
+  const endingProgress = frame.phase === 'disassembly' && Number.isFinite(endingSeconds)
+    ? clamp(endingSeconds / ENDING_PRESENTATION_SECONDS)
+    : 0
+  const darkOpacity = smooth(endingProgress)
+  // A visual exposure choice starting four doublings before the reference energy.
+  // The separate energy chart and readouts always retain their linear values.
+  const whiteOpacity = smooth((frame.energyFraction - 1 / 16) / (1 - 1 / 16)) ** 2 * (1 - darkOpacity)
+  return {
+    microBlend,
+    macroBlend: 1 - microBlend,
+    endingProgress,
+    whiteOpacity,
+    darkOpacity,
+    complete: endingProgress === 1,
+  }
+}
+
 /** Presentation pacing: 2.5 seconds per generation, easing to 0.3 by generation 12. */
 export function secondsPerGeneration(generation: number): number {
   return 0.3 + 2.2 * (1 - clamp(generation / DISPLAY_GENERATIONS)) ** 2
@@ -144,6 +183,32 @@ export function timelineAtPlaybackSeconds(seconds: number, yieldKt = DEFAULT_YIE
 export function advanceTimeline(time: number, deltaSeconds: number, speed = 1, yieldKt = DEFAULT_YIELD_KT): number {
   positiveFinite(speed, 'speed')
   return timelineAtPlaybackSeconds(playbackSecondsAt(time, yieldKt) + deltaSeconds * speed, yieldKt)
+}
+
+/**
+ * Advances one continuous presentation clock, including overshoot and reverse.
+ * Rate controls the chain playback; the editorial ending always takes two
+ * actual screen seconds. Scrubbing supplies {time, endingSeconds: 0}.
+ */
+export function advancePresentation(
+  position: PresentationPosition,
+  deltaSeconds: number,
+  speed = 1,
+  yieldKt = DEFAULT_YIELD_KT,
+): PresentationPosition {
+  positiveFinite(speed, 'speed')
+  const summary = chainSummary(yieldKt)
+  const time = Number.isFinite(position.time) ? clamp(position.time, CHEMICAL_START, summary.durationNs) : CHEMICAL_START
+  const endingSeconds = time === summary.durationNs && Number.isFinite(position.endingSeconds)
+    ? clamp(position.endingSeconds, 0, ENDING_PRESENTATION_SECONDS)
+    : 0
+  const chainEndSeconds = playbackSecondsAt(summary.durationNs, yieldKt) / speed
+  const currentSeconds = playbackSecondsAt(time, yieldKt) / speed + endingSeconds
+  const nextSeconds = clamp(currentSeconds + (Number.isFinite(deltaSeconds) ? deltaSeconds : 0), 0, chainEndSeconds + ENDING_PRESENTATION_SECONDS)
+  if (nextSeconds >= chainEndSeconds) {
+    return {time: summary.durationNs, endingSeconds: nextSeconds - chainEndSeconds}
+  }
+  return {time: timelineAtPlaybackSeconds(nextSeconds * speed, yieldKt), endingSeconds: 0}
 }
 
 /** Steps through storyboard beats, then through integer reaction generations. */
