@@ -3,42 +3,47 @@ import { loadFont as loadMono } from "@remotion/google-fonts/JetBrainsMono";
 import { loadFont as loadNoto } from "@remotion/google-fonts/NotoSansSC";
 import { loadFont as loadSerif } from "@remotion/google-fonts/NotoSerifSC";
 
-const inter = loadInter("normal", { weights: ["500", "700", "900"], subsets: ["latin"] });
+const inter = loadInter("normal", { weights: ["300", "500", "700", "900"], subsets: ["latin"] });
 const noto = loadNoto("normal", { weights: ["500", "700", "900"], ignoreTooManyRequestsWarning: true });
-const serif = loadSerif("normal", { weights: ["500", "700", "900"], ignoreTooManyRequestsWarning: true });
-const mono = loadMono("normal", { weights: ["500", "700"], subsets: ["latin"] });
+const serif = loadSerif("normal", { weights: ["600", "700", "900"], ignoreTooManyRequestsWarning: true });
+const mono = loadMono("normal", { weights: ["500"], subsets: ["latin"] });
 
 export const FONT = `${inter.fontFamily}, ${noto.fontFamily}, "Microsoft YaHei", sans-serif`;
+export const SANS = `${noto.fontFamily}, sans-serif`;
 export const SERIF = `${serif.fontFamily}, serif`;
+export const NUM = `${inter.fontFamily}, sans-serif`;
 export const MONO = `${mono.fontFamily}, monospace`;
 
-// Series palette (STYLE.md 一、2). Theme colour for this film: AI 紫, only on what the AI does (the answer column,
-// agents, tokens). The exam paper is 纸色 with 墨色 print. 品牌金 is kept for the one discovery and the last line;
-// green/red only mean passed/good and rejected/bad (the grading marks).
+// Brand skeleton (films/brand/README.md 一): paper, ink, brand gold (keywords and the one finding only),
+// semantic green/red for passed/failed, signal orange for readout emphasis. The world is a warm, light desk
+// (films/DIRECTOR.md 五); the dark is kept for the one silence before the finding.
+// Film theme colour: AI 紫, only on what the AI does.
 export const K = {
-  bg: "#07090b",
-  fg: "#f4f0e8",
-  sub: "#b8b8b3",
-  muted: "#8a8a85",
-  dim: "#3c3e40",
-  line: "rgba(244,240,232,0.12)",
-  gold: "#ffd166",
+  desk: "#e8ddc9",
+  deskHi: "#f4ecdd",
+  deskLo: "#d8cab2",
   paper: "#f1ecdf",
   paperHi: "#f8f4ec",
-  paperLo: "#e2dbca",
+  paperLo: "#e3dbca",
   ink: "#19231f",
   inkSoft: "#4d5852",
-  inkFaint: "rgba(25,35,31,0.42)",
-  ai: "#9b87ff",
-  aiHi: "#c9bdff",
-  aiInk: "#6a55e8",
-  theme: "#9b87ff",
-  themeHi: "#c9bdff",
-  green: "#3ddc97",
-  greenInk: "#178a55",
-  red: "#ff5a5f",
-  redInk: "#cf3439",
-  cloth: "#25385a",
+  inkFaint: "rgba(25,35,31,0.40)",
+  gold: "#ffd166",
+  signal: "#d4521c",
+  green: "#21885a",
+  red: "#c8343a",
+  ai: "#6b57e0",
+  aiHi: "#a99cf6",
+  aiWash: "rgba(107,87,224,0.14)",
+  // illustration palette
+  coat: "#fbfaf6",
+  skin: "#efc4a0",
+  skin2: "#c98e66",
+  hair: "#2b2421",
+  sage: "#8fa98b",
+  slate: "#5f7d9c",
+  sand: "#d9c29c",
+  wood: "#b98a5c",
+  cloth: "#2c4269",
+  night: "#14171b",
 };
-
-export const C = K;

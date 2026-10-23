@@ -1,4 +1,5 @@
-# Soundtrack is third-party audio and stays out of Git; see README.md for the download link.
+# Third-party audio stays out of Git; tools/fetch-audio.sh downloads it.
 public/music.m4a
+public/audio/
 out/
 node_modules/

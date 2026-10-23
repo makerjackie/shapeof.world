@@ -1,8 +1,6 @@
 import React from "react";
 import { interpolate, random } from "remotion";
-import { CL, EBACK, EO, progAt } from "../fx";
-import { FPB } from "../timing";
-import { useBeatFrame } from "../kit";
+import { CL, EBACK, EO, progOf, useBeat, useBeatCtx } from "../kit";
 import { FONT, K, SERIF } from "../theme";
 
 // ---------- The exam paper: the film's one prop ----------
@@ -29,7 +27,7 @@ export const Sheet: React.FC<{
       transform: rot ? `rotate(${rot}deg)` : undefined,
       background: `linear-gradient(180deg, ${K.paperHi} 0%, ${K.paper} 55%, ${K.paperLo} 100%)`,
       borderRadius: 6,
-      boxShadow: `0 ${30 * shadow}px ${80 * shadow}px rgba(0,0,0,${0.55 * shadow}), 0 2px 0 rgba(255,255,255,0.4) inset`,
+      boxShadow: `0 ${24 * shadow}px ${60 * shadow}px rgba(70,45,15,${0.28 * shadow}), 0 ${3 * shadow}px ${8 * shadow}px rgba(70,45,15,${0.18 * shadow})`,
       overflow: "hidden",
       fontFamily: SERIF,
       color: K.ink,
@@ -85,7 +83,7 @@ export const Who: React.FC<{ who: "人" | "AI"; size?: number }> = ({ who, size 
         lineHeight: 1,
         padding: `${size * 0.28}px ${size * 0.55}px`,
         borderRadius: 6,
-        background: ai ? K.aiInk : K.ink,
+        background: ai ? K.ai : K.ink,
         color: ai ? "#fff" : K.paper,
         letterSpacing: ai ? 1 : 0,
       }}
@@ -144,7 +142,7 @@ export const Scribble: React.FC<{
   color?: string;
   width?: number;
   style?: React.CSSProperties;
-}> = ({ w, lines, lineH = 40, progress, seed, color = K.aiInk, width = 2.6, style }) => {
+}> = ({ w, lines, lineH = 40, progress, seed, color = K.ai, width = 2.6, style }) => {
   const all = getLines(seed, lines, w, lineH);
   return (
     <svg width={w} height={lines * lineH} style={{ display: "block", overflow: "visible", ...style }}>
@@ -187,11 +185,11 @@ export const Scribble: React.FC<{
 export const Tick: React.FC<{ at: number; size?: number; color?: string; width?: number; style?: React.CSSProperties }> = ({
   at,
   size = 120,
-  color = K.greenInk,
+  color = K.green,
   width,
   style,
 }) => {
-  const p = progAt(useBeatFrame(), at, 0.6, EO);
+  const p = progOf(useBeat(), at, 0.6, EO);
   if (p <= 0) return null;
   const len = 160;
   return (
@@ -210,10 +208,10 @@ export const Tick: React.FC<{ at: number; size?: number; color?: string; width?:
 };
 
 // A hand-drawn cross (rejected).
-export const Cross: React.FC<{ at: number; size?: number; color?: string; style?: React.CSSProperties }> = ({ at, size = 100, color = K.redInk, style }) => {
-  const frame = useBeatFrame();
-  const a = progAt(frame, at, 0.35, EO);
-  const b = progAt(frame, at + 0.3, 0.35, EO);
+export const Cross: React.FC<{ at: number; size?: number; color?: string; style?: React.CSSProperties }> = ({ at, size = 100, color = K.red, style }) => {
+  const frame = useBeat();
+  const a = progOf(frame, at, 0.35, EO);
+  const b = progOf(frame, at + 0.3, 0.35, EO);
   if (a <= 0) return null;
   const len = 120;
   return (
@@ -229,12 +227,12 @@ export const Seal: React.FC<{ at: number; name: string; size?: number; color?: s
   at,
   name,
   size = 78,
-  color = K.greenInk,
+  color = K.green,
   rot = 0,
   style,
 }) => {
-  const frame = useBeatFrame();
-  const p = progAt(frame, at, 0.5, EBACK);
+  const frame = useBeat();
+  const p = progOf(frame, at, 0.5, EBACK);
   if (p <= 0) return null;
   return (
     <div
@@ -267,12 +265,12 @@ export const Seal: React.FC<{ at: number; name: string; size?: number; color?: s
 export const InkStamp: React.FC<{ at: number; children: React.ReactNode; color?: string; size?: number; rot?: number; style?: React.CSSProperties }> = ({
   at,
   children,
-  color = K.greenInk,
+  color = K.green,
   size = 40,
   rot = -8,
   style,
 }) => {
-  const p = progAt(useBeatFrame(), at, 0.45, EBACK);
+  const p = progOf(useBeat(), at, 0.45, EBACK);
   if (p <= 0) return null;
   return (
     <div
@@ -308,8 +306,8 @@ export const Print: React.FC<{ at?: number; size?: number; w?: number; color?: s
   style,
   children,
 }) => {
-  const frame = useBeatFrame();
-  const p = at === undefined ? 1 : progAt(frame, at, 0.6, EO);
+  const frame = useBeat();
+  const p = at === undefined ? 1 : progOf(frame, at, 0.6, EO);
   if (p <= 0) return null;
   return (
     <div style={{ fontFamily: SERIF, fontSize: size, fontWeight: w, color, lineHeight: 1.45, opacity: p, transform: `translateY(${(1 - p) * 10}px)`, ...style }}>
@@ -341,9 +339,10 @@ export const Drop: React.FC<{
   back?: React.ReactNode;
   children: React.ReactNode;
 }> = ({ land, x, y, w, h, rot = 0, scale = 1, fall: dur = 0.55, back, children }) => {
-  const frame = useBeatFrame();
-  const L = land * FPB;
-  const D = dur * FPB;
+  const frame = useBeat() * useBeatCtx().fpb;
+  const { fpb } = useBeatCtx();
+  const L = land * fpb;
+  const D = dur * fpb;
   if (frame < L - D) return null;
   const t = interpolate(frame, [L - D, L], [0, 1], CL);
   const fall = 1 - t * t; // accelerating drop
@@ -361,7 +360,7 @@ export const Drop: React.FC<{
             width: w + 80 * ring,
             height: h + 52 * ring,
             borderRadius: 18,
-            border: `${3 * (1 - ring) + 1}px solid rgba(241,236,223,${0.35 * (1 - ring)})`,
+            border: `${3 * (1 - ring) + 1}px solid rgba(25,35,31,${0.22 * (1 - ring)})`,
           }}
         />
       ) : null}
@@ -372,7 +371,7 @@ export const Drop: React.FC<{
             inset: 0,
             transformStyle: "preserve-3d",
             transform: `translateY(${-fall * 140}px) rotate(${rot + fall * 14}deg) rotateY(${-Math.pow(fall, 1.4) * 180}deg) scale(${1 + fall * 0.32 - squash})`,
-            boxShadow: `0 ${16 + fall * 70}px ${40 + fall * 80}px rgba(0,0,0,${0.6 - fall * 0.3})`,
+            boxShadow: `0 ${12 + fall * 60}px ${30 + fall * 70}px rgba(70,45,15,${0.3 - fall * 0.12})`,
             borderRadius: 6,
           }}
         >
