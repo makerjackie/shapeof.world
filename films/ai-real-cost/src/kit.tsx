@@ -53,9 +53,9 @@ export const CPS = 14;
 export type Cap = { at: number; end: number; text: string; kw?: string; kwAt?: number; x?: number; y?: number; size?: number };
 
 export const Caption: React.FC<Cap & { t: number }> = ({ t, at, end, text, kw, kwAt, x = 110, y = 128, size = 76 }) => {
-  const slide = pr(t, at - 0.25, 0.25, EO);
+  const slide = pr(t, at - 0.18, 0.18, EO);
   if (slide <= 0) return null;
-  const out = pr(t, end - 0.3, 0.3, EIO);
+  const out = pr(t, end - 0.25, 0.25, EIO);
   if (out >= 1) return null;
   const chars = Array.from(text);
   const shown = t < at ? 0 : Math.floor((t - at) * CPS) + 1;

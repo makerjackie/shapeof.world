@@ -16,7 +16,7 @@ const add = (s: number, f: string, v: number) => ev.push([s, f, v]);
 
 // ── captions: card slide as the strip enters, a tap on the first character ──
 for (const c of CAPTIONS) {
-  add(c.at - 0.25, "sfx-foley-02.wav", 0.32);
+  add(c.at - 0.18, "sfx-foley-02.wav", 0.32);
   add(c.at, "sfx-ui-01.wav", 0.4);
 }
 

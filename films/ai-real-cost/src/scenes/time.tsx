@@ -418,7 +418,7 @@ export const Bill: React.FC = () => {
   const t = useT();
   const enter = pr(t, BILL_AT - 0.6, 0.6, EO);
   const n = billPrinted(t);
-  const cam = keys(t, [[BILL_AT, 1.3], [barB(17.4), 1.18], [barB(18.4), 0.8], [barB(23), 0.78], [BILL_END, 0.72]], EIO);
+  const cam = keys(t, [[BILL_AT, 1.3], [barB(16.75), 1.2], [barB(17.75), 0.8], [barB(23), 0.78], [BILL_END, 0.72]], EIO);
   const out = pr(t, BILL_END - 0.6, 0.8, EIO);
   const tot = pr(t, barB(18), 0.5, EBACK);
   const cx = 680;
