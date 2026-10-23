@@ -32,6 +32,7 @@ import { Route as ExploreWorldIdRouteImport } from './routes/explore.$worldId'
 import { Route as CategoryCategoryIdRouteImport } from './routes/category.$categoryId'
 import { Route as ApiLiveEarthRouteImport } from './routes/api/live-earth'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiGeoRouteImport } from './routes/api/geo'
 import { Route as ApiFeedbackRouteImport } from './routes/api/feedback'
 import { Route as ApiEventRouteImport } from './routes/api/event'
 import { Route as ApiEpicRouteImport } from './routes/api/epic'
@@ -152,6 +153,11 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
   path: '/api/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGeoRoute = ApiGeoRouteImport.update({
+  id: '/api/geo',
+  path: '/api/geo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiFeedbackRoute = ApiFeedbackRouteImport.update({
   id: '/api/feedback',
   path: '/api/feedback',
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/api/epic': typeof ApiEpicRoute
   '/api/event': typeof ApiEventRoute
   '/api/feedback': typeof ApiFeedbackRoute
+  '/api/geo': typeof ApiGeoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/api/epic': typeof ApiEpicRoute
   '/api/event': typeof ApiEventRoute
   '/api/feedback': typeof ApiFeedbackRoute
+  '/api/geo': typeof ApiGeoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/api/epic': typeof ApiEpicRoute
   '/api/event': typeof ApiEventRoute
   '/api/feedback': typeof ApiFeedbackRoute
+  '/api/geo': typeof ApiGeoRoute
   '/api/health': typeof ApiHealthRoute
   '/api/live-earth': typeof ApiLiveEarthRoute
   '/category/$categoryId': typeof CategoryCategoryIdRoute
@@ -281,6 +290,7 @@ export interface FileRouteTypes {
     | '/api/epic'
     | '/api/event'
     | '/api/feedback'
+    | '/api/geo'
     | '/api/health'
     | '/api/live-earth'
     | '/category/$categoryId'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/api/epic'
     | '/api/event'
     | '/api/feedback'
+    | '/api/geo'
     | '/api/health'
     | '/api/live-earth'
     | '/category/$categoryId'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/api/epic'
     | '/api/event'
     | '/api/feedback'
+    | '/api/geo'
     | '/api/health'
     | '/api/live-earth'
     | '/category/$categoryId'
@@ -367,6 +379,7 @@ export interface RootRouteChildren {
   ApiEpicRoute: typeof ApiEpicRoute
   ApiEventRoute: typeof ApiEventRoute
   ApiFeedbackRoute: typeof ApiFeedbackRoute
+  ApiGeoRoute: typeof ApiGeoRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiLiveEarthRoute: typeof ApiLiveEarthRoute
   CategoryCategoryIdRoute: typeof CategoryCategoryIdRoute
@@ -536,6 +549,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/geo': {
+      id: '/api/geo'
+      path: '/api/geo'
+      fullPath: '/api/geo'
+      preLoaderRoute: typeof ApiGeoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/feedback': {
       id: '/api/feedback'
       path: '/api/feedback'
@@ -612,6 +632,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiEpicRoute: ApiEpicRoute,
   ApiEventRoute: ApiEventRoute,
   ApiFeedbackRoute: ApiFeedbackRoute,
+  ApiGeoRoute: ApiGeoRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiLiveEarthRoute: ApiLiveEarthRoute,
   CategoryCategoryIdRoute: CategoryCategoryIdRoute,

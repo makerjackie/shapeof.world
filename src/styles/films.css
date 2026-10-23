@@ -34,6 +34,33 @@
   background: #000;
 }
 
+.film-page .film-player--embed { overflow: hidden; }
+.film-page .film-player--embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* Matches Bilibili's document so the dark box shows while it loads, not a white backdrop. */
+  color-scheme: light;
+}
+
+.film-page .film-player-switch {
+  margin: -16px 0 20px;
+  font-family: var(--home-font-ui);
+  font-size: var(--home-type-support);
+}
+.film-page .film-player-switch button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--home-muted);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.film-page .film-player-switch button:hover { color: var(--home-ink); }
+
 .film-page .film-meta {
   display: flex;
   flex-wrap: wrap;
