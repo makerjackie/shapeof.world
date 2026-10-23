@@ -15,7 +15,7 @@ export function strip(points: Vec3[], width: number, offset = 0, lift = 0, bank 
       positions.push(p.x + nx * w, p.y + lift + bank * w, p.z + nz * w)
       uvs.push((side + 1) / 2, distance / 8)
     }
-    if (i) { const k = i * 2; indices.push(k - 2, k, k - 1, k - 1, k, k + 1) }
+    if (i) { const k = i * 2; indices.push(k - 2, k - 1, k, k - 1, k + 1, k) }
   }
   const g = new T.BufferGeometry()
   g.setAttribute('position', new T.Float32BufferAttribute(positions, 3))
@@ -30,6 +30,18 @@ export function wall(points: Vec3[], offset: number, bottom: number, top: number
   for (let i = 0; i < p.count; i++) p.setY(i, p.getY(i) + (i % 2 ? top : bottom))
   g.computeVertexNormals()
   return g
+}
+
+/** Triangulate an x/z footprint without adding pavement outside its boundary. */
+export function planarPolygon(points: Vec3[]) {
+  const contour = points.map(p => new T.Vector2(p.x, p.z))
+  const triangles = T.ShapeUtils.triangulateShape(contour, [])
+  const geometry = new T.BufferGeometry()
+  geometry.setAttribute('position', new T.Float32BufferAttribute(points.flatMap(p => [p.x, p.y, p.z]), 3))
+  geometry.setAttribute('uv', new T.Float32BufferAttribute(points.flatMap(p => [p.x / 8, p.z / 8]), 2))
+  geometry.setIndex(triangles.flatMap(face => [face[0], face[2], face[1]]))
+  geometry.computeVertexNormals()
+  return geometry
 }
 
 export function mergeGeometry(geometries: T.BufferGeometry[]) {

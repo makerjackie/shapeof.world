@@ -34,38 +34,45 @@ function sharedSectionVertices(a: Vec3[], b: Vec3[]): Set<string> {
 const pointKey = (p: Vec3) => `${Math.round(p.x * 1000)},${Math.round(p.y * 1000)},${Math.round(p.z * 1000)}`
 const edgeKey = (a: Vec3, b: Vec3) => [pointKey(a), pointKey(b)].sort().join('|')
 
-/** Locate the branch in the actual path, including shared highway approach segments. */
-function branchPosition(a: Vec3[], b: Vec3[], reverse: boolean): Vec3 {
-  const aa = reverse ? [...a].reverse() : a, bb = reverse ? [...b].reverse() : b
-  let last = aa[0]
-  for (let i = 0; i < Math.min(aa.length, bb.length); i++) {
-    if (distance(aa[i], bb[i]) > 0.05) break
-    last = aa[i]
-  }
-  return { ...last }
-}
+interface BranchGroup { position: Vec3; branches: Map<string, SchematicMovement[]> }
 
-/**
- * Movement-level FHWA convention: k branches contribute k−1 merge/diverge
- * events, and every distinct interior same-height path intersection is a crossing.
- * No design identifiers or expected reference counts enter this calculation.
- */
-export function calculateConflicts(network: Network): ConflictPoint[] {
+/** Shared directed edges identify physical joins/splits, including intermediate
+ * ring junctions. A transverse crossing has no shared edge and is not a branch. */
+function topologyBranches(network: Network): ConflictPoint[] {
   const paths = network.schematicMovements
-  const conflicts: ConflictPoint[] = []
-  for (const [property, type] of [['from', 'diverge'], ['to', 'merge']] as const) {
-    const groups = new Map<string, SchematicMovement[]>()
-    for (const movement of paths) groups.set(movement[property], [...(groups.get(movement[property]) ?? []), movement])
-    for (const group of groups.values()) {
-      const turnOrder = { left: 0, straight: 1, right: 2 }
-      group.sort((a, b) => turnOrder[a.turn] - turnOrder[b.turn])
-      // A spanning tree counts a three-way branch twice, not three pairwise times.
-      for (let i = 1; i < group.length; i++) {
-        const a = group[i - 1], b = group[i]
-        conflicts.push({ id: `${type}-${a.id}-${b.id}`, type, position: branchPosition(a.points, b.points, type === 'merge'), movements: [a.id, b.id], separatedBySignal: false })
-      }
+  const groups: Record<'merge' | 'diverge', Map<string, BranchGroup>> = { merge: new Map(), diverge: new Map() }
+  for (const movement of paths) for (let i = 1; i < movement.points.length - 1; i++) {
+    const previous = pointKey(movement.points[i - 1]), here = pointKey(movement.points[i]), next = pointKey(movement.points[i + 1])
+    for (const type of ['merge', 'diverge'] as const) {
+      const common = type === 'merge' ? next : previous, branch = type === 'merge' ? previous : next
+      const key = `${here}|${common}`
+      let group = groups[type].get(key)
+      if (!group) { group = { position: movement.points[i], branches: new Map() }; groups[type].set(key, group) }
+      group.branches.set(branch, [...(group.branches.get(branch) ?? []), movement])
     }
   }
+  const result: ConflictPoint[] = []
+  for (const type of ['diverge', 'merge'] as const) for (const group of groups[type].values()) {
+    const laneEnds = network.lanes.filter(lane => distance(type === 'diverge' ? lane.points[0] : lane.points.at(-1)!, group.position) < 0.05)
+    const laneIds = new Set(laneEnds.map(lane => lane.id))
+    // A parallel auxiliary-lane taper is the end of a lateral lane change,
+    // already represented by weaving; it is not an extra ramp junction.
+    if (laneEnds.some(lane => laneIds.has(lane.left ?? '') || laneIds.has(lane.right ?? ''))) continue
+    const branches = [...group.branches.values()]
+    // k arms of one physical branch contribute k-1 conflicts; route multiplicity
+    // on a shared arm contributes none. This also avoids pairwise O-D overcounts.
+    for (let i = 1; i < branches.length; i++) {
+      const a = branches[i - 1][0], b = branches[i][0]
+      result.push({ id: `${type}-${pointKey(group.position)}-${i}`, type, position: { ...group.position }, movements: [a.id, b.id], separatedBySignal: false })
+    }
+  }
+  return result
+}
+
+/** Calculate same-height geometric crossings and physical shared-path branches. */
+export function calculateConflicts(network: Network): ConflictPoint[] {
+  const paths = network.schematicMovements
+  const conflicts: ConflictPoint[] = topologyBranches(network)
   for (let i = 0; i < paths.length; i++) for (let j = i + 1; j < paths.length; j++) {
     const a = paths[i], b = paths[j]
     if (a.from === b.from || a.to === b.to) continue
@@ -82,7 +89,11 @@ export function calculateConflicts(network: Network): ConflictPoint[] {
       if (intersections.some(existing => distance(existing, p) < 0.25)) continue
       intersections.push(p)
     }
-    intersections.forEach((position, index) => conflicts.push({ id: `crossing-${a.id}-${b.id}-${index}`, type: 'crossing', position, movements: [a.id, b.id], separatedBySignal: !sharesPhase(a, b, network) }))
+    intersections.forEach((position, index) => {
+      const existing = conflicts.find(point => point.type === 'crossing' && distance(point.position, position) < 0.25)
+      if (existing) existing.separatedBySignal &&= !sharesPhase(a, b, network)
+      else conflicts.push({ id: `crossing-${a.id}-${b.id}-${index}`, type: 'crossing', position, movements: [a.id, b.id], separatedBySignal: !sharesPhase(a, b, network) })
+    })
   }
   return conflicts
 }

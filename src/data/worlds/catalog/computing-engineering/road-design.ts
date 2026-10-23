@@ -12,7 +12,7 @@ export default {
   posterSource: 'IDM · MOBIL · 参数化道路模拟',
   posterPosition: '50% 50%',
   question: '路口与立交为什么这样设计？',
-  hook: '一本会动的道路设计图鉴。观察苜蓿叶、T 字路口和十字路口上的车流，改变需求与信号，看看冲突、等待和交织怎样发生。',
+  hook: '一本会动的道路设计图鉴。从 T 字、十字与环岛，到菱形、DDI 和苜蓿叶，观察八种道路设计上的车流。切换图纸、改变需求，比较冲突、等待和交织怎样发生。',
   payoff: '车流使用 IDM 跟车、MOBIL 换道和路口让行模型。道路是按真实量级生成的示意设计，参数未经本地实测标定；冲突点按每方向一条示意流向计算，不含行人、非机动车与掉头。读数用于比较模型行为，不代表真实路口容量或安全评估。',
   topicLabel: '道路设计',
   translations: {
@@ -22,7 +22,7 @@ export default {
       posterHook: 'Watch traffic cross junctions, loop onto ramps, and begin to queue.',
       posterSource: 'IDM · MOBIL · Parametric road simulation',
       question: 'Why are junctions and interchanges shaped this way?',
-      hook: 'A moving atlas of road design. Observe a cloverleaf, a T-junction, and crossroads; change demand and signals to see conflicts, waiting, and weaving emerge.',
+      hook: 'A moving atlas of road design. Explore eight designs, from T-junctions, crossroads, and roundabouts to diamonds, DDIs, and a cloverleaf. Switch to blueprint view and change demand to compare conflicts, waiting, and weaving.',
       payoff: 'Traffic uses IDM car following, MOBIL lane changing, and junction yielding models. Roads are schematic designs with realistic dimensions, without local field calibration. Conflict counts use one schematic path per movement and exclude pedestrians, bicycles, and U-turns. Readings compare model behavior; they are not capacity or safety assessments of real junctions.',
       topicLabel: 'Road design',
     },
@@ -62,6 +62,13 @@ export default {
       label: 'FHWA — 基础饱和流率与间隙接受',
       labelEn: 'FHWA — Base saturation flow and gap acceptance',
       url: 'https://www.fhwa.dot.gov/ohim/hpmsmanl/appn6.cfm',
+    },
+    {
+      label: 'NCHRP 959 — 分散式菱形立交指南第 2 版（2021）',
+      labelEn: 'NCHRP 959 — Diverging Diamond Interchange Informational Guide, Second Edition (2021)',
+      url: 'https://www.nationalacademies.org/publications/26027',
+      note: '第 4 章 Exhibits 4-1–4-3：菱形含匝道直行 26、不含 18，DDI 14；统计范围为主干道与匝道端部两个路口。',
+      noteEn: 'Chapter 4, Exhibits 4-1–4-3: diamond 26 with ramp-through movements, 18 without; DDI 14. The boundary includes the two arterial/ramp terminals.',
     },
     {
       label: '交通运输部 — 公路立体交叉设计细则',

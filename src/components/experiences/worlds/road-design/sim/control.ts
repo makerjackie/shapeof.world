@@ -28,14 +28,24 @@ export function mayPassSignal(control: ControlSpec, time: number, movement: Move
   const color = signalState(control, time, movement.signalGroup ?? movement.from)
   return color === 'green' || (color === 'yellow' && distance < speed * speed / (2 * comfortableBrake) + 1)
 }
+/** Lane-level gate used by staged left turns and serial signal junctions. */
+export function mayPassSignalGroups(control: ControlSpec, time: number, groups: string[], speed: number, distance: number, comfortableBrake = 2): boolean {
+  return groups.some(group => {
+    const color = signalState(control, time, group)
+    return color === 'green' || color === 'yellow' && distance < speed * speed / (2 * comfortableBrake) + 1
+  })
+}
 /** FHWA HPMS Appendix N (HCM 2000) minor-road base gaps; no local calibration.
+ * Roundabout 5.2/3.2 s are DESIGN assumptions, not an empirical HCM calibration.
  * Major-left 4.1/2.2 s remains a provisional assumption pending original-table verification. */
 export function criticalGap(movement: Movement, control: ControlSpec): number {
+  if (control.roundabout) return 5.2
   if (control.majorApproaches?.includes(movement.from)) return movement.turn === 'left' ? 4.1 : 0
   if (control.kind === 'signal') return movement.turn === 'left' ? 4.1 : 0
   return movement.turn === 'right' ? 6.2 : movement.turn === 'straight' ? 6.5 : 7.1
 }
 export function followUpTime(movement: Movement, control: ControlSpec): number {
+  if (control.roundabout) return 3.2
   if (control.majorApproaches?.includes(movement.from)) return 2.2
   return movement.turn === 'right' ? 3.3 : movement.turn === 'straight' ? 4 : 3.5
 }
@@ -55,7 +65,7 @@ function cross(a: Vec3, b: Vec3, c: Vec3, d: Vec3): Vec3 | undefined {
 }
 /** Runtime conflict graph uses driven connector geometry, independent of diagram counts. */
 export function buildMovementConflicts(network: Network): MovementConflict[] {
-  if (network.control.kind === 'free') return []
+  if (network.control.kind === 'free' || network.control.roundabout) return []
   const laneMap = new Map(network.lanes.map(lane => [lane.id, lane]))
   const result: MovementConflict[] = []
   for (let i = 0; i < network.movements.length; i++) for (let j = i + 1; j < network.movements.length; j++) {
@@ -66,21 +76,19 @@ export function buildMovementConflicts(network: Network): MovementConflict[] {
       result.push({ a: a.id, b: b.id, position: lane.points[0], kind: 'merge', aRange: { laneId: lane.id, start: -6, end: 8 }, bRange: { laneId: lane.id, start: -6, end: 8 } })
       continue
     }
-    const pa = a.lanes.flatMap(id => { const lane = laneMap.get(id)!; return lane.kind === 'connector' ? lane.points : [] })
-    const pb = b.lanes.flatMap(id => { const lane = laneMap.get(id)!; return lane.kind === 'connector' ? lane.points : [] })
-    let position: Vec3 | undefined
-    for (let p = 0; p < pa.length - 1 && !position; p++) for (let q = 0; q < pb.length - 1 && !position; q++) position = cross(pa[p], pa[p + 1], pb[q], pb[q + 1])
-    if (position) {
-      const range = (movement: Movement): ConflictRange => {
-        const connectors = movement.lanes.map(id => laneMap.get(id)!).filter(lane => lane.kind === 'connector')
-        const lane = connectors.reduce((best, item) => {
-          const p = item.points.reduce((d, point) => Math.min(d, Math.hypot(point.x - position!.x, point.z - position!.z)), Infinity)
-          return p < best.distance ? { lane: item, distance: p } : best
-        }, { lane: connectors[0], distance: Infinity }).lane
-        const at = projectToLane(lane, position!)
-        return { laneId: lane.id, start: at - 4, end: at + 4 }
-      }
-      result.push({ a: a.id, b: b.id, position, kind: 'crossing', aRange: range(a), bRange: range(b) })
+    const connectorsA = a.lanes.map(id => laneMap.get(id)!).filter(lane => lane.kind === 'connector')
+    const connectorsB = b.lanes.map(id => laneMap.get(id)!).filter(lane => lane.kind === 'connector')
+    const found: Vec3[] = []
+    for (const laneA of connectorsA) for (const laneB of connectorsB) {
+      // Shared circulating / receiving lanes use car-following and merge guards.
+      // Never draw a fictitious chord between two separate control points.
+      if (laneA.id === laneB.id || laneA.controlPoint && laneB.controlPoint && laneA.controlPoint !== laneB.controlPoint) continue
+      let position: Vec3 | undefined
+      for (let p = 0; p < laneA.points.length - 1 && !position; p++) for (let q = 0; q < laneB.points.length - 1 && !position; q++) position = cross(laneA.points[p], laneA.points[p + 1], laneB.points[q], laneB.points[q + 1])
+      if (!position || found.some(other => Math.hypot(other.x - position!.x, other.z - position!.z) < 4)) continue
+      found.push(position)
+      const aAt = projectToLane(laneA, position), bAt = projectToLane(laneB, position)
+      result.push({ a: a.id, b: b.id, position, kind: 'crossing', aRange: { laneId: laneA.id, start: aAt - 4, end: aAt + 4 }, bRange: { laneId: laneB.id, start: bAt - 4, end: bAt + 4 } })
     }
   }
   return result
