@@ -1,4 +1,7 @@
 import {VEHICLE_SPEC as S} from './vehicle-spec'
+import {STEERING_PARTS} from './steering-parts'
+import {BRAKE_PARTS} from './brake-parts'
+import {SUSPENSION_PARTS} from './suspension-parts'
 
 export type SystemId =
 	| 'body'
@@ -926,7 +929,12 @@ part(
 	'让发电机以曲轴约 2.7 倍的转速运行。',
 	'Turns the alternator at about 2.7 times crank speed.',
 )
-export const PARTS: readonly Part[] = rows
+export const PARTS: readonly Part[] = [
+	...rows,
+	...STEERING_PARTS,
+	...BRAKE_PARTS,
+	...SUSPENSION_PARTS,
+].map((part, order) => ({...part, order}))
 export const partCount = (system: SystemId) => PARTS.filter((p) => p.system === system).length
 
 export function systemProgress(id: SystemId, amount: number): number {

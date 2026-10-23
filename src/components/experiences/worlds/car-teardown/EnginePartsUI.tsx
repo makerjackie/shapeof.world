@@ -2,6 +2,7 @@ import {useEffect, useRef, useState, type RefObject} from 'react'
 import {useExperienceI18n} from '~/i18n/experience'
 import {ENGINE_PARTS} from './engine-parts'
 import type {ProjectedAnchor} from './Scene'
+import {layoutLeaders} from './label-layout'
 export type PartAnchors = Record<string, ProjectedAnchor>
 export function EnginePartsList({
 	hovered,
@@ -109,32 +110,31 @@ export function EnginePartLabels({
 			className={`ct-labels ct-part-labels ${visible ? 'is-visible' : ''}`}
 			aria-label={tx('零件标注')}>
 			{!mobile &&
-				[0, 1].flatMap((column) =>
-					ENGINE_PARTS.filter((_, i) => i % 2 === column)
-						.sort((a, b) => (layout.anchors[a.id]?.y ?? 0) - (layout.anchors[b.id]?.y ?? 0))
-						.map((p, row) => {
-							const a = layout.anchors[p.id]
-							if (!a?.visible) return null
-							const left = column === 0,
-								x = left ? 300 : layout.width - 510,
-								y = 245 + row * Math.min(53, (layout.height - 430) / 8),
-								end = left ? x + 135 : x - 8
-							return (
-								<g
-									key={p.id}
-									className={hovered === p.id ? 'is-hovered' : ''}
-									onPointerEnter={() => onHover(p.id)}
-									onPointerLeave={() => onHover(null)}
-									onClick={() => onSelect(p.id)}>
-									<circle cx={a.x} cy={a.y} r={2} />
-									<path d={`M${a.x},${a.y} L${end + (left ? 15 : -15)},${y} H${end}`} />
-									<text x={x} y={y - 6} className="ct-part-label-text">
-										{String(ENGINE_PARTS.indexOf(p) + 1).padStart(2, '0')} {tx(p.name.zh)}
-									</text>
-								</g>
-							)
-						}),
-				)}
+				layoutLeaders(
+					ENGINE_PARTS.flatMap((p) => {
+						const anchor = layout.anchors[p.id]
+						return anchor ? [{id: p.id, ...anchor}] : []
+					}),
+					{top: 245, bottom: layout.height - 190, gap: 42},
+				).map((a) => {
+					const p = ENGINE_PARTS.find((p) => p.id === a.id)!
+					const x = a.left ? 280 : layout.width - 510
+					const end = a.left ? x + 135 : x - 8
+					return (
+						<g
+							key={p.id}
+							className={hovered === p.id ? 'is-hovered' : ''}
+							onPointerEnter={() => onHover(p.id)}
+							onPointerLeave={() => onHover(null)}
+							onClick={() => onSelect(p.id)}>
+							<circle cx={a.x} cy={a.y} r={2} />
+							<path d={`M${a.x},${a.y} L${end + (a.left ? 15 : -15)},${a.labelY} H${end}`} />
+							<text x={x} y={a.labelY - 6} className="ct-part-label-text">
+								{String(ENGINE_PARTS.indexOf(p) + 1).padStart(2, '0')} {tx(p.name.zh)}
+							</text>
+						</g>
+					)
+				})}
 		</svg>
 	)
 }

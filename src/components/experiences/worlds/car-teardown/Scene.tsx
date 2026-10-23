@@ -17,10 +17,18 @@ import {ENGINE_PARTS, enginePartAnchor} from './engine-parts'
 import type {PartAnchors} from './EnginePartsUI'
 import {advanceCrankAngle} from './model'
 import {isWorldPaused} from '~/lib/world-playback'
+import {isRoadMechanism, type Mechanisms} from './MechanismControls'
+import {advanceSteering, steeringGeometry} from './steering-model'
+import {advanceBrake} from './brake-model'
+import {advanceSuspension} from './suspension-model'
+import {SteeringMechanism} from './SteeringMechanism'
+import {BrakeMechanism} from './BrakeMechanism'
+import {SuspensionMechanism} from './SuspensionMechanism'
 
 export type ProjectedAnchor = {x: number; y: number; visible: boolean}
 export type AnchorMap = Partial<Record<SystemId, ProjectedAnchor>>
 export type SceneProps = {
+	mechanisms: Mechanisms
 	explode: number
 	partsExplode: number
 	gear: Gear
@@ -101,7 +109,8 @@ function System({
 			}
 		})
 	}, [hovered, id, selected])
-	const offset = systemOffset(id, amount)
+	const offset =
+		selected === id && isRoadMechanism(id) ? ([0, 0, 0] as Point3) : systemOffset(id, amount)
 	return (
 		<group
 			ref={group}
@@ -127,13 +136,20 @@ function System({
 function CameraRig({
 	selected,
 	transmissionView,
+	mechanisms,
 	partsExplode,
 	explode,
 	reducedMotion,
 	onInteract,
 }: Pick<
 	SceneProps,
-	'selected' | 'transmissionView' | 'explode' | 'partsExplode' | 'reducedMotion' | 'onInteract'
+	| 'selected'
+	| 'transmissionView'
+	| 'mechanisms'
+	| 'explode'
+	| 'partsExplode'
+	| 'reducedMotion'
+	| 'onInteract'
 >) {
 	const camera = useRef<CameraControls>(null)
 	const {size, camera: perspective} = useThree()
@@ -141,10 +157,14 @@ function CameraRig({
 	useEffect(() => {
 		if (perspective instanceof T.PerspectiveCamera) {
 			perspective.layers.enable(2)
-			perspective.fov = mobile ? 56 : 34
+			perspective.fov = mobile
+				? 56
+				: selected === 'steering' && mechanisms.steeringView === 'top'
+					? 45
+					: 34
 			perspective.updateProjectionMatrix()
 		}
-	}, [mobile, perspective])
+	}, [mobile, perspective, selected, mechanisms.steeringView])
 	const expanded = explode > 0.08
 	const partsExpanded = partsExplode > 0.08
 	useEffect(() => {
@@ -180,6 +200,64 @@ function CameraRig({
 				0,
 				!reducedMotion,
 			)
+		} else if (selected === 'steering') {
+			void cc.setFocalOffset(mobile ? 0 : 0.6, mobile ? 1 : 0.8, 0, !reducedMotion)
+			if (mechanisms.steeringView === 'top') {
+				const geometry = steeringGeometry(mechanisms.wheelAngle)
+				const centerZ = Number.isFinite(geometry.radius)
+					? -Math.sign(mechanisms.wheelAngle) * Math.min(geometry.radius, 6) * 0.45
+					: 0
+				void cc.setLookAt(
+					-0.4,
+					mobile ? 13 : 12.6,
+					centerZ + 0.001,
+					-0.4,
+					0.1,
+					centerZ,
+					!reducedMotion,
+				)
+			} else if (mechanisms.steeringView === 'differential') {
+				void cc.setFocalOffset(mobile ? 0 : 0.07, mobile ? 0.07 : 0, 0, !reducedMotion)
+				void cc.setLookAt(
+					-0.94,
+					0.72,
+					0.55,
+					S.dimensions.rearAxleX,
+					S.wheels.radius,
+					0,
+					!reducedMotion,
+				)
+			} else void cc.setLookAt(4.2, 3.3, 4.4, 0, 0.4, 0, !reducedMotion)
+		} else if (selected === 'brakes') {
+			void cc.setFocalOffset(
+				mobile ? 0 : mechanisms.brakeView === 'caliper' ? 0.07 : 0.16,
+				mobile ? (mechanisms.brakeView === 'caliper' ? 0.1 : 0.25) : 0,
+				0,
+				!reducedMotion,
+			)
+			if (mechanisms.brakeView === 'caliper')
+				void cc.setLookAt(
+					0.7,
+					0.65,
+					0.2,
+					S.dimensions.frontAxleX - 0.13,
+					S.wheels.radius,
+					S.wheels.frontTrack / 2,
+					!reducedMotion,
+				)
+			else
+				void cc.setLookAt(
+					mobile ? 4.4 : 4.2,
+					mobile ? 3.4 : 3.6,
+					mobile ? 4.6 : 4.4,
+					0,
+					0.35,
+					0,
+					!reducedMotion,
+				)
+		} else if (selected === 'chassis') {
+			void cc.setFocalOffset(mobile ? 0 : 0.5, mobile ? 0.6 : 0, 0, !reducedMotion)
+			void cc.setLookAt(0.15, mobile ? 1.9 : 1.35, mobile ? 9.95 : 7.8, 0, 0.6, 0, !reducedMotion)
 		} else if (selected) {
 			void cc.setFocalOffset(0, 0, 0, !reducedMotion)
 			const system = SYSTEMS.find((s) => s.id === selected)!
@@ -231,7 +309,17 @@ function CameraRig({
 				!reducedMotion,
 			)
 		}
-	}, [selected, expanded, partsExpanded, transmissionView, mobile, reducedMotion])
+	}, [
+		selected,
+		expanded,
+		partsExpanded,
+		transmissionView,
+		mobile,
+		reducedMotion,
+		mechanisms.steeringView,
+		mechanisms.brakeView,
+		mechanisms.wheelAngle,
+	])
 	return (
 		<CameraControls
 			ref={camera}
@@ -248,15 +336,17 @@ function CameraRig({
 				three: CameraControlsImpl.ACTION.NONE,
 			}}
 			minDistance={
-				selected === 'drivetrain' && transmissionView === 'gearbox'
-					? 0.55
-					: selected === 'powertrain'
-						? 0.65
-						: !selected || selected === 'body'
-							? 3.2
-							: 1
+				isRoadMechanism(selected)
+					? 0.35
+					: selected === 'drivetrain' && transmissionView === 'gearbox'
+						? 0.55
+						: selected === 'powertrain'
+							? 0.65
+							: !selected || selected === 'body'
+								? 3.2
+								: 1
 			}
-			maxDistance={12}
+			maxDistance={16}
 			maxPolarAngle={Math.PI * 0.48}
 			smoothTime={0.55}
 			draggingSmoothTime={0.12}
@@ -273,6 +363,33 @@ function SceneContents(props: SceneProps) {
 	const turntable = useRef<T.Group>(null)
 	const rearSpinRef = useRef(0)
 	useFrame((_, delta) => {
+		const m = props.mechanisms
+		const paused = props.pausedRef.current || isWorldPaused()
+		const dt = Math.min(delta, 0.075)
+		m.steeringRef.current = advanceSteering(m.steeringRef.current, {
+			dt,
+			slowdown: props.slowdown,
+			paused: paused || props.selected !== 'steering',
+			wheelAngle: m.wheelAngle,
+			speedKmh: m.steeringSpeed,
+		})
+		m.brakeRef.current = advanceBrake(m.brakeRef.current, {
+			dt,
+			slowdown: props.slowdown,
+			paused: paused || props.selected !== 'brakes',
+			pedalForceN: m.pedalForce,
+			speedKmh: m.brakeSpeed,
+			restartToken: m.brakeRestart,
+		})
+		advanceSuspension(m.suspensionRef.current, {
+			dt,
+			slowdown: props.slowdown,
+			paused: paused || props.selected !== 'chassis',
+			speedKmh: m.suspensionSpeed,
+			bumpHeight: m.bumpHeight,
+			damping: m.damping,
+			restartToken: m.suspensionRestart,
+		})
 		props.transmissionRef.current = advanceTransmission(props.transmissionRef.current, {
 			dt: Math.min(delta, 0.075),
 			rpm: props.rpm,
@@ -362,14 +479,38 @@ function SceneContents(props: SceneProps) {
 					{props.selected === 'drivetrain' && <Wheels axle="rear" rearSpinRef={rearSpinRef} />}
 				</System>
 				<System id="chassis" {...common}>
-					<Chassis />
-					<Wheels explode={systemProgress('chassis', props.explode)} rearSpinRef={rearSpinRef} />
+					{props.selected === 'chassis' ? (
+						<SuspensionMechanism stateRef={props.mechanisms.suspensionRef} />
+					) : (
+						<>
+							<Chassis />
+							<Wheels
+								explode={systemProgress('chassis', props.explode)}
+								rearSpinRef={rearSpinRef}
+							/>
+						</>
+					)}
 				</System>
 				<System id="steering" {...common}>
-					<Steering />
+					{props.selected === 'steering' ? (
+						<SteeringMechanism
+							stateRef={props.mechanisms.steeringRef}
+							showConstruction={props.mechanisms.steeringView === 'top'}
+							closeup={props.mechanisms.steeringView === 'differential'}
+						/>
+					) : (
+						<Steering />
+					)}
 				</System>
 				<System id="brakes" {...common}>
-					<Brakes explode={systemProgress('brakes', props.explode)} />
+					{props.selected === 'brakes' ? (
+						<BrakeMechanism
+							stateRef={props.mechanisms.brakeRef}
+							closeup={props.mechanisms.brakeView === 'caliper'}
+						/>
+					) : (
+						<Brakes explode={systemProgress('brakes', props.explode)} />
+					)}
 				</System>
 				<System id="electrical" {...common}>
 					<Electrical />
@@ -379,6 +520,7 @@ function SceneContents(props: SceneProps) {
 			<CameraRig
 				selected={props.selected}
 				transmissionView={props.transmissionView}
+				mechanisms={props.mechanisms}
 				explode={props.explode}
 				partsExplode={props.partsExplode}
 				reducedMotion={props.reducedMotion}

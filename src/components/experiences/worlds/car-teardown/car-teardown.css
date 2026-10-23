@@ -960,3 +960,265 @@
 		width: 180px;
 	}
 }
+
+/* The three road mechanisms share a clock and a compact, readable instrument rail. */
+.ct-mechanism-clock {
+	margin: 14px 0 18px;
+	padding: 12px 0;
+	border-block: 1px solid var(--ct-line);
+}
+.ct-mechanism-clock > div:first-child {
+	display: flex;
+	justify-content: space-between;
+	font-size: 10px;
+	color: var(--ct-muted);
+}
+.ct-mechanism-clock strong {
+	color: #d4dde5;
+	font-weight: 400;
+}
+.ct-mechanism-clock .ct-slow-controls {
+	flex-wrap: wrap;
+	margin-top: 9px;
+}
+.ct-mechanism-clock .ct-slow-controls button {
+	padding: 6px 4px;
+	font-size: 9px;
+	min-width: 34px;
+}
+.ct-mechanism-clock .ct-slow-controls button:last-child {
+	flex: 0 0 100%;
+	margin-top: 3px;
+}
+.ct-mechanism-note {
+	font-size: 10px;
+	line-height: 1.65;
+	color: #8c99a5;
+	margin: 12px 0 0;
+}
+.ct-control-label {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 3px;
+	font-size: 10px;
+	color: #b0bdc8;
+	margin: 16px 0;
+}
+.ct-control-label output {
+	color: #e2e8ed;
+	font-variant-numeric: tabular-nums;
+}
+.ct-control-label input {
+	grid-column: 1/-1;
+}
+.ct-mechanism-status {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 12px;
+	color: #a6b8c6;
+	font-size: 10px;
+	margin: 5px 0 14px;
+}
+.ct-mechanism-status strong {
+	font-size: 19px;
+	font-weight: 400;
+	color: #e0e6eb;
+	font-variant-numeric: tabular-nums;
+}
+.ct-mechanism-action {
+	width: 100%;
+	padding: 10px !important;
+	margin: 5px 0 12px;
+	font-size: 11px !important;
+}
+.ct-suspension-scope {
+	padding: 12px 0 10px;
+	border-block: 1px solid var(--ct-line);
+}
+.ct-scope-heading {
+	display: flex;
+	justify-content: space-between;
+	color: #aebbc6;
+	font-size: 9px;
+	gap: 6px;
+	margin-bottom: 8px;
+}
+.ct-scope-heading span:last-child {
+	color: #73808b;
+	font-size: 8px;
+}
+.ct-suspension-scope svg {
+	display: block;
+	width: 100%;
+	height: auto;
+	background: #080b0e;
+}
+.ct-trace-legend {
+	display: flex;
+	gap: 16px;
+	font-size: 9px;
+	color: #aebbc6;
+	justify-content: center;
+	margin-top: 7px;
+}
+.ct-trace-legend span {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+.ct-trace-legend i {
+	width: 11px;
+	height: 2px;
+}
+.ct-brake-pressure {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin: 2px 0 18px;
+	font-size: 10px;
+	color: #8c99a5;
+}
+.ct-brake-pressure strong {
+	font-size: 31px;
+	font-weight: 400;
+	color: #e5bb84;
+	font-variant-numeric: tabular-nums;
+}
+.ct-brake-pressure small {
+	font-size: 11px;
+	color: #aebbc6;
+}
+.ct-brake-control {
+	display: block;
+	margin: 15px 0;
+	font-size: 10px;
+}
+.ct-brake-control > span {
+	display: flex;
+	justify-content: space-between;
+	color: #b0bdc8;
+}
+.ct-brake-control b {
+	font-weight: 400;
+	color: #e2e8ed;
+}
+.ct-brake-hold,
+.ct-brake-restart {
+	width: 100%;
+	padding: 9px !important;
+	font-size: 11px !important;
+}
+.ct-brake-hold[aria-pressed='true'] {
+	color: #f0c58b;
+	border-color: #a97a3d;
+	background: #4b371d;
+}
+.ct-brake-restart {
+	margin-bottom: 10px;
+}
+.ct-brake-sequence {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	font-size: 9px;
+	color: #53606b;
+	margin: 8px 0;
+}
+.ct-brake-sequence .is-active {
+	color: #f0a64a;
+}
+.ct-brake-caliper-diagram {
+	display: block;
+	width: 100%;
+	height: 84px;
+	margin: 8px 0;
+}
+.ct-brake-readings {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px 8px;
+	margin: 16px 0;
+}
+.ct-brake-readings dt {
+	font-size: 9px;
+	color: #8c99a5;
+	margin-bottom: 5px;
+}
+.ct-brake-readings dd {
+	margin: 0;
+	font-size: 16px;
+	color: #d7e0e7;
+	font-variant-numeric: tabular-nums;
+}
+.ct-brake-readings small {
+	font-size: 9px;
+	color: #8c99a5;
+}
+.ct-brake-abs {
+	font-size: 10px;
+	color: #84949f;
+	padding: 8px;
+	border: 1px solid #303a43;
+	text-align: center;
+}
+.ct-brake-abs.is-active {
+	color: #efbc76;
+	border-color: #a77332;
+}
+@media (min-width: 701px) {
+	.ct-parts-list {
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100% - 390px);
+	}
+	.ct-parts-items {
+		min-height: 0;
+		max-height: none;
+		overflow-y: auto;
+		scrollbar-gutter: stable;
+	}
+	.ct-parts-items button {
+		padding: 7px 5px;
+	}
+	.is-mechanism .ct-instruments {
+		max-height: calc(100% - 285px);
+		top: 155px;
+		padding: 16px;
+	}
+}
+@media (min-width: 701px) {
+	.is-mechanism .ct-instruments {
+		max-height: calc(100% - 200px);
+	}
+}
+.ct-steering-panel .ct-mechanism-status small {
+	font-size: 11px;
+	color: #94a5b3;
+}
+.ct-damping-controls {
+	display: flex;
+	gap: 5px;
+}
+.ct-damping-controls button {
+	flex: 1;
+}
+@media (max-width: 700px) {
+	.is-mechanism .ct-instrument-content {
+		display: block;
+	}
+	.is-mechanism .ct-panel-heading {
+		margin-bottom: 5px;
+	}
+	.is-mechanism .ct-mechanism-action {
+		min-height: 36px;
+	}
+	.is-mechanism .ct-brake-hold,
+	.is-mechanism .ct-brake-restart {
+		min-height: 36px;
+	}
+	.is-mechanism .ct-mechanism-clock {
+		margin: 12px 0;
+	}
+}

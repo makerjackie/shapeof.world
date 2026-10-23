@@ -72,6 +72,7 @@ function makeResources() {
 		aluminum: createCastAluminumMaterial(),
 		darkSteel: new THREE.MeshStandardMaterial({...M.steel, color: '#626970', roughness: 0.34}),
 		bronze: new THREE.MeshStandardMaterial(M.caliper),
+		exhaust: new THREE.MeshStandardMaterial({color: '#424a55', metalness: 0.82, roughness: 0.42}),
 		black: new THREE.MeshStandardMaterial(M.plastic),
 		rubber: new THREE.MeshStandardMaterial(M.rubber),
 		ceramic: new THREE.MeshStandardMaterial({color: '#d8d7cb', roughness: 0.24}),
@@ -82,6 +83,21 @@ function makeResources() {
 			opacity: M.xrayEdgeOpacity,
 			depthWrite: false,
 		}),
+	}
+	// Heat tint is confined to the short hot sections at the cylinder-head ports.
+	materials.exhaust.onBeforeCompile = (shader) => {
+		shader.vertexShader =
+			'varying vec3 vExhaustPosition;\n' +
+			shader.vertexShader.replace(
+				'#include <begin_vertex>',
+				'#include <begin_vertex>\nvExhaustPosition = position;',
+			)
+		shader.fragmentShader =
+			'varying vec3 vExhaustPosition;\n' +
+			shader.fragmentShader.replace(
+				'#include <color_fragment>',
+				'#include <color_fragment>\nfloat heat = 1.0 - smoothstep(0.11, 0.24, abs(vExhaustPosition.z));\ndiffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.11, 0.095, 0.085), heat * 0.28);',
+			)
 	}
 	return {
 		...castings,
@@ -935,7 +951,7 @@ export function Engine({
 				<>
 					<mesh
 						geometry={resources.exhaust}
-						material={shellXray ? resources.materials.xray : resources.materials.bronze}
+						material={shellXray ? resources.materials.xray : resources.materials.exhaust}
 						userData={{partId: 'exhaust-manifold'}}
 						castShadow={!shellXray}
 					/>

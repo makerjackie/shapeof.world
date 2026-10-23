@@ -35,6 +35,9 @@ describe('rendered-part registry', () => {
 			'Systems.tsx',
 			'Wheels.tsx',
 			'Transmission.tsx',
+			'SteeringMechanism.tsx',
+			'BrakeMechanism.tsx',
+			'SuspensionMechanism.tsx',
 		]) {
 			const source = readFileSync(
 				resolve('src/components/experiences/worlds/car-teardown', file),

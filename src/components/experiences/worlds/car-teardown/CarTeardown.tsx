@@ -9,6 +9,7 @@ import {suggestedSlowdown} from './model'
 import {VEHICLE_SPEC as S, type Gear} from './vehicle-spec'
 import {createTransmissionState} from './transmission-model'
 import {TransmissionInstruments} from './TransmissionInstruments'
+import {useMechanisms, MechanismPanel, MechanismViews, isRoadMechanism} from './MechanismControls'
 import './car-teardown.css'
 
 class SceneBoundary extends Component<{children: ReactNode; message: string}, {failed: boolean}> {
@@ -38,6 +39,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 	const [gear, setGear] = useState<Gear>('N')
 	const [transmissionView, setTransmissionView] = useState<'gearbox' | 'path'>('gearbox')
 	const transmissionRef = useRef(createTransmissionState())
+	const mechanisms = useMechanisms()
 	const [rpm, setRpm] = useState<number>(S.engine.idleRpm)
 	const [slowdown, setSlowdown] = useState<number>(40)
 	const [paused, setPaused] = useState(false)
@@ -81,10 +83,14 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 			setSelectedPart(null)
 			setHoveredPart(null)
 			setPartsExplode(0)
+			if (isRoadMechanism(id) && !isRoadMechanism(selected)) setSlowdown(1)
+			if (!isRoadMechanism(id) && isRoadMechanism(selected) && slowdown < 10)
+				setSlowdown(suggestedSlowdown(rpm))
+			if (id === 'chassis') mechanisms.setSuspensionRestart((n) => n + 1)
 			setSelected(id)
 			setHovered(null)
 		},
-		[interact],
+		[interact, selected, slowdown, rpm, mechanisms.setSuspensionRestart],
 	)
 	const returnToSystems = useCallback(() => {
 		setSelected(null)
@@ -135,7 +141,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 	const selectedSystem = SYSTEMS.find((s) => s.id === selected)
 	return (
 		<div
-			className={`ct-world ${selected ? 'has-selection' : ''} ${selected === 'powertrain' ? 'is-engine' : ''} ${partsExplode > 0.05 && selected === 'powertrain' ? 'is-parts' : ''}`}
+			className={`ct-world ${selected ? 'has-selection' : ''} ${isRoadMechanism(selected) ? 'is-mechanism' : ''} ${selected === 'powertrain' ? 'is-engine' : ''} ${partsExplode > 0.05 && selected === 'powertrain' ? 'is-parts' : ''}`}
 			onPointerDown={interact}
 			onWheel={interact}
 			data-ready={ready}
@@ -163,6 +169,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 						gear,
 						transmissionRef,
 						transmissionView,
+						mechanisms,
 					}}
 					onSelect={select}
 					onHover={setHovered}
@@ -211,7 +218,13 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 							? '四个缸，轮流做功。'
 							: selected === 'drivetrain'
 								? '齿轮常啮合，换挡只锁一个。'
-								: '一辆车，一层一层拆开。',
+								: selected === 'steering'
+									? '转一个弯，四个轮速。'
+									: selected === 'brakes'
+										? '一脚踏板，四轮同时夹紧。'
+										: selected === 'chassis'
+											? '轮子过坎，车身慢一点。'
+											: '一辆车，一层一层拆开。',
 					)}
 				</h1>
 				<p>
@@ -220,7 +233,13 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 							? '曲轴每转两圈，每个缸点一次火。'
 							: selected === 'drivetrain'
 								? '沿琥珀色路径，看动力怎样抵达后轮。'
-								: '前置纵置 · 后轮驱动 · 2.0 升直列四缸',
+								: selected === 'steering'
+									? '转向决定轨迹，差速器分配左右轮速。'
+									: selected === 'brakes'
+										? '从液压到摩擦，动能变成热。'
+										: selected === 'chassis'
+											? '弹簧承受冲击，阻尼让振动停下来。'
+											: '前置纵置 · 后轮驱动 · 2.0 升直列四缸',
 					)}
 				</p>
 			</div>
@@ -231,6 +250,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 				onHover={setHovered}
 				onSelect={select}
 			/>
+			<MechanismViews selected={selected} model={mechanisms} onInteract={interact} />
 			{(explode > 0.7 || selected) && (
 				<select
 					className="ct-system-picker"
@@ -344,6 +364,19 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 						interact()
 						pausedRef.current = v
 						setPaused(v)
+					}}
+				/>
+			) : isRoadMechanism(selected) ? (
+				<MechanismPanel
+					selected={selected}
+					model={mechanisms}
+					slowdown={slowdown}
+					paused={paused}
+					onInteract={interact}
+					onSlowdown={setSlowdown}
+					onPaused={(value) => {
+						pausedRef.current = value
+						setPaused(value)
 					}}
 				/>
 			) : selectedSystem ? (
