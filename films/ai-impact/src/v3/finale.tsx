@@ -45,12 +45,13 @@ export const Month: React.FC = () => {
 };
 
 // ── 42 · bars 82–84: the timeline of guesses ──
-const GUESSES: [number, string, string, boolean][] = [
-  [2026.9, "Altman", "OpenAI CEO · 今年底", true],
-  [2027.6, "Amodei", "Anthropic CEO · 1–2 年", true],
-  [2030, "Hassabis", "DeepMind CEO · 2030 前后", true],
-  [2033, "Metaculus", "预测社区 · 约 2033", false],
-  [2042, "AI 研究者问卷", "1,580 人 · 2042", false],
+// [year, who, note, seller, tag top]: three heights so neighbouring tags never touch
+const GUESSES: [number, string, string, boolean, number][] = [
+  [2026.9, "Altman", "OpenAI CEO · 今年底", true, 360],
+  [2027.6, "Amodei", "Anthropic CEO · 1–2 年", true, 870],
+  [2030, "Hassabis", "DeepMind CEO · 2030 前后", true, 520],
+  [2033, "Metaculus", "预测社区 · 约 2033", false, 870],
+  [2042, "AI 研究者问卷", "1,580 人 · 2042", false, 520],
 ];
 export const Guesses: React.FC = () => {
   const t = useT();
@@ -68,14 +69,16 @@ export const Guesses: React.FC = () => {
           {y}
         </div>
       ))}
-      {GUESSES.map(([y, who, note, seller], i) => {
+      {GUESSES.map(([y, who, note, seller, top], i) => {
         const p = pr(t, b0 + 0.4 + i * 0.45, 0.4, EBACK);
         if (p <= 0) return null;
-        const up = i % 2 === 0;
+        const up = top < 760;
+        const y0 = up ? top + 86 : 762;
+        const y1 = up ? 760 : top;
         return (
           <React.Fragment key={who}>
-            <div style={{ position: "absolute", left: px(y) - 2, top: up ? 560 : 762, width: 4, height: 198 * p, background: seller ? C.gold : C.cyan, transformOrigin: "top", opacity: 0.7 }} />
-            <div style={{ position: "absolute", left: px(y), top: up ? 470 : 870, transform: `translateX(-50%) scale(${p})`, padding: "10px 18px", borderRadius: 14, background: "rgba(255,255,255,0.06)", border: `1px solid ${seller ? C.gold : C.cyan}`, fontFamily: FONT, textAlign: "center", whiteSpace: "nowrap" }}>
+            <div style={{ position: "absolute", left: px(y) - 2, top: y0, width: 4, height: (y1 - y0) * p, background: seller ? C.gold : C.cyan, opacity: 0.7 }} />
+            <div style={{ position: "absolute", left: px(y), top, transform: `translateX(-50%) scale(${p})`, padding: "10px 18px", borderRadius: 14, background: "rgba(255,255,255,0.06)", border: `1px solid ${seller ? C.gold : C.cyan}`, fontFamily: FONT, textAlign: "center", whiteSpace: "nowrap" }}>
               <div style={{ fontSize: 28, fontWeight: 900, color: C.fg }}>{who}</div>
               <div style={{ fontSize: 20, fontWeight: 700, color: C.muted }}>{note}</div>
             </div>

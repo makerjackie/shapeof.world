@@ -1,5 +1,8 @@
 import React from "react";
+import { geoNaturalEarth1, geoPath } from "d3-geo";
 import { AbsoluteFill, random } from "remotion";
+import { feature } from "topojson-client";
+import world110Topo from "world-atlas/countries-110m.json";
 import { FONT, SERIF } from "../theme";
 import { Door, Person } from "../v2/art";
 import { ChatBox, Walker } from "./art";
@@ -237,35 +240,48 @@ export const Bowls: React.FC = () => {
   );
 };
 
-// ── 36 · bars 70–72: 41 countries, the same tilt ──
+// ── 36 · bars 70–72: 41 countries, the same tilt (no country is singled out; the paper's list is not on screen) ──
+const world110 = feature(world110Topo as never, (world110Topo as never as { objects: { countries: never } }).objects.countries) as unknown as { features: unknown[] };
+const worldD = (() => {
+  const proj = geoNaturalEarth1().fitExtent(
+    [
+      [0, 0],
+      [1100, 520],
+    ],
+    { type: "FeatureCollection", features: world110.features } as never,
+  );
+  return geoPath(proj)({ type: "FeatureCollection", features: world110.features } as never) ?? "";
+})();
 export const Countries: React.FC = () => {
   const t = useT();
   const b0 = bar(70);
+  const map = pr(t, b0 + 0.1, 0.8, EO);
   return (
     <AbsoluteFill>
-      <Backdrop glow={C.cyan} at={[55, 60]} strength={0.1} />
-      {Array.from({ length: 41 }).map((_, i) => {
-        const p = pr(t, b0 + 0.2 + i * 0.035, 0.3, EBACK);
-        const x = 560 + random(`cxx${i}`) * 1100;
-        const y = 440 + random(`cyy${i}`) * 300;
-        return <div key={i} style={{ position: "absolute", left: x, top: y, width: 18, height: 18, borderRadius: 9, background: C.cyan, transform: `scale(${p})`, opacity: 0.8, boxShadow: `0 0 12px ${C.cyan}` }} />;
-      })}
-      <div style={{ position: "absolute", left: 560, top: 800, display: "flex", gap: 60, fontFamily: FONT, opacity: pr(t, b0 + 1.6, 0.5), whiteSpace: "nowrap" }}>
+      <Backdrop glow={C.cyan} at={[55, 55]} strength={0.1} />
+      <svg width={1100} height={520} style={{ position: "absolute", left: 640, top: 360, opacity: 0.55 * map }}>
+        <path d={worldD} fill="rgba(77,212,255,0.10)" stroke="rgba(77,212,255,0.45)" strokeWidth={1} />
+      </svg>
+      <div style={{ position: "absolute", left: 1190, top: 520, transform: `translateX(-50%) scale(${lerp(0.8, 1, pr(t, b0 + 0.4, 0.4, EBACK))})`, opacity: pr(t, b0 + 0.4, 0.4), textAlign: "center", fontFamily: FONT, whiteSpace: "nowrap" }}>
+        <div style={{ fontSize: 96, fontWeight: 900, color: C.fg }}>41 个国家</div>
+        <div style={{ fontSize: 30, fontWeight: 800, color: C.sub }}>1.25 亿条招聘广告</div>
+      </div>
+      <div style={{ position: "absolute", left: 760, top: 850, display: "flex", gap: 70, fontFamily: FONT, opacity: pr(t, b0 + 1.4, 0.5), whiteSpace: "nowrap" }}>
         <div>
-          <div style={{ fontSize: 30, fontWeight: 800, color: C.sub }}>老员工</div>
-          <div style={{ fontSize: 64, fontWeight: 900, color: C.green }}>+6.7%</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: C.sub }}>老员工</div>
+          <div style={{ fontSize: 60, fontWeight: 900, color: C.green }}>+6.7%</div>
         </div>
         <div>
-          <div style={{ fontSize: 30, fontWeight: 800, color: C.sub }}>新人</div>
-          <div style={{ fontSize: 64, fontWeight: 900, color: C.red }}>−2.5%</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: C.sub }}>新人</div>
+          <div style={{ fontSize: 60, fontWeight: 900, color: C.red }}>−2.5%</div>
         </div>
         <div>
-          <div style={{ fontSize: 30, fontWeight: 800, color: C.sub }}>总招聘</div>
-          <div style={{ fontSize: 64, fontWeight: 900, color: C.fg }}>还在涨</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: C.sub }}>总招聘</div>
+          <div style={{ fontSize: 60, fontWeight: 900, color: C.fg }}>还在涨</div>
         </div>
       </div>
       <Lines at={b0} a={TRUTH.s36[0]} b={TRUTH.s36[1]} out={bar(72) - 0.05} />
-      <Src at={b0 + 0.3}>Chandar（斯坦福）& Klein Teeselink（伦敦国王学院），2026-09：41 国 1.25 亿条招聘广告，比较用 AI 和不用 AI 的公司，五年变化（新人 −2.5% 据该校新闻稿，彭博报道为 −3%）· 点位为示意</Src>
+      <Src at={b0 + 0.3}>Chandar（斯坦福）& Klein Teeselink（伦敦国王学院），2026-09：比较 41 国用 AI 和不用 AI 的公司，五年变化（新人 −2.5% 据该校新闻稿，彭博报道为 −3%）</Src>
     </AbsoluteFill>
   );
 };

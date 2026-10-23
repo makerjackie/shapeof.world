@@ -179,6 +179,31 @@ const BEDS: [number, number, string, number][] = [
   [bar(86), bar(88) + 0.2, "ambience-room-01.wav", 0.32],
 ];
 
+// Music ducking for the two real silences (DIRECTOR 七、声音): "可是" (bars 56–58) drops to room tone, the music
+// creeps back under the doors (58–64) and is full again on the slam (bar 64, the track's own re-entry); "那我们呢？"
+// (bars 86–88) takes a breath before the climax.
+const DUCK: [number, number][] = [
+  [bar(56) - 0.15, 1],
+  [bar(56) + 0.35, 0.22],
+  [bar(58), 0.22],
+  [bar(60), 0.6],
+  [bar(64) - 0.06, 0.6],
+  [bar(64), 1],
+  [bar(86), 1],
+  [bar(86) + 0.4, 0.5],
+  [bar(88) - 0.05, 0.5],
+  [bar(88) + 0.05, 1],
+];
+export const duckAt = (t: number) => {
+  if (t <= DUCK[0][0]) return 1;
+  for (let i = 1; i < DUCK.length; i++) {
+    const [t0, v0] = DUCK[i - 1];
+    const [t1, v1] = DUCK[i];
+    if (t <= t1) return v0 + (v1 - v0) * ((t - t0) / Math.max(1e-6, t1 - t0));
+  }
+  return 1;
+};
+
 const Music: React.FC = () => (
   <>
     {MUSIC_EDIT.map((e, i) => {
@@ -193,7 +218,7 @@ const Music: React.FC = () => (
         let v = 1;
         if (fadeIn && f < fadeIn) v = f / fadeIn;
         if (fadeOut && f > len - fadeOut) v = Math.min(v, (len - f) / fadeOut);
-        return GAIN * v;
+        return GAIN * v * duckAt((from + f) / 30);
       };
       return (
         <Sequence key={i} from={from} durationInFrames={len}>
