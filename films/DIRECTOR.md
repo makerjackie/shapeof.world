@@ -11,7 +11,7 @@
 1. **品牌露出。**
    - 左上角标从第一帧一直留到片尾卡之前：圆形的球加"世界的形状"。
    - 球只用圆形的那颗：[`public/assets/brand/kit/mark-disc.png`](../public/assets/brand/kit/mark-disc.png)。**绝不用带方形底的 `mark-*.png` 方块。**
-   - 片尾卡：正中"世界的形状"（带圆形的球），底部一行 MakerJackie。不放网址、口号、来源页、制作页。
+   - 片尾卡：正中"世界的形状"（带圆形的球），底部一行 MakerJackie。片尾卡前可以放一页信息来源；不放网址、口号、制作页。
 2. **数字是真的。** 每个数字都追得到出处和年份，完整来源写进简介（不带链接）。推算、估算、换算的数字说"约"；预测说清是谁说的；公司自报的、描述性的证据不说成定论。
 3. **素材有授权。** 音乐和音效用自己的曲库 <https://music.shapeof.world/>；地图用 OpenStreetMap 或 Natural Earth；照片用公有领域或 CC 授权的；字体用 OFL。
 4. **交付规格。** 1920×1080，至少 30 fps；真峰值 ≤ −1 dBTP，响度约 −12 LUFS（在成片 MP4 上量）。
@@ -63,7 +63,9 @@
 - **弹簧/回弹缓动会冲过头**：由进度算出来的数字要截断（`Math.min(1, p)`），否则会闪出错的数。
 - **AAC 编码会抬高真峰值**：ffmpeg 自带的 `aac` 能冲过 2.7 dB，还不单调。母带从原始 WAV 做，用 Apple 的 `aac_at` 编码（做法见 `films/ai-impact/tools/tpmaster.py`）。
 - **多个会话共用一个仓库**：在自己的 worktree 里干活；不要在主工作区 `git pull --rebase --autostash`，也不要 `git reset`。只提交自己的路径。
-- **渲染排队**：Mac 一次只跑一个 `remotion render`，开渲前先 `pgrep -fl "remotion render"`。
+- **渲染排队**：Mac 上最多同时跑两个 `remotion render`，开渲前先 `pgrep -fl "remotion render"`。
+- **WebGL 截图要等 GPU**：three.js 在 layout effect 里同步渲染完，再调 `gl.finish()`，否则偶尔截到半帧（做法见 `films/tower/src/world/engine.ts`）。
+- **Overpass 公共服务器常 502、超时**：大片区的 OSM 建筑改用 Geofabrik 的分省 `.osm.pbf`，用 pyosmium 按范围裁（`films/tower/tools/pbf-nanshan.py`）。
 - **WebGL 在 Mac 上要走 Metal**：headless Chrome 加 `--use-angle=metal`，否则会慢好几倍。
 - **canvas 上画中文**之前，先用 `document.fonts.load()` 把字体载完。
 - **曲库 CDN 拒绝 Python 默认的 User-Agent**（403），脚本下载时带一个 UA；目录里的 `bpm` 不准，以自己测的为准。
