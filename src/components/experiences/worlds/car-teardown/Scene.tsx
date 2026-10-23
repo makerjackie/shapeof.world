@@ -28,7 +28,7 @@ export type SceneProps = {
 	xray: boolean
 	rpm: number
 	slowdown: number
-	paused: boolean
+	pausedRef: RefObject<boolean>
 	reducedMotion: boolean
 	angleRef: RefObject<number>
 	anchorsRef: RefObject<AnchorMap>
@@ -236,7 +236,7 @@ function SceneContents(props: SceneProps) {
 	const mobile = size.width < 700
 	const projection = useRef(new T.Vector3())
 	useFrame((_, delta) => {
-		if (!props.paused && !isWorldPaused())
+		if (!props.pausedRef.current && !isWorldPaused())
 			props.angleRef.current = advanceCrankAngle(
 				props.angleRef.current,
 				Math.min(delta, 0.075),

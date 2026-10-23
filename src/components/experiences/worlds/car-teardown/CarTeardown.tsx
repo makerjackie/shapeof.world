@@ -25,6 +25,9 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 	const [rpm, setRpm] = useState<number>(S.engine.idleRpm)
 	const [slowdown, setSlowdown] = useState<number>(40)
 	const [paused, setPaused] = useState(false)
+	// The DOM and r3f have separate render roots. Freeze their shared clock before
+	// scheduling React state, otherwise a scrub can advance one extra frame.
+	const pausedRef = useRef(false)
 	const [xray, setXray] = useState(false)
 	const [ready, setReady] = useState(false)
 	const [reducedMotion, setReducedMotion] = useState(false)
@@ -37,7 +40,10 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 		const media = matchMedia('(prefers-reduced-motion: reduce)')
 		const sync = () => {
 			setReducedMotion(media.matches)
-			if (media.matches) setPaused(true)
+			if (media.matches) {
+				pausedRef.current = true
+				setPaused(true)
+			}
 		}
 		sync()
 		media.addEventListener('change', sync)
@@ -85,10 +91,22 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 			className={`ct-world ${selected ? 'has-selection' : ''} ${selected === 'powertrain' ? 'is-engine' : ''}`}
 			data-ready={ready}
 			data-explode={explode.toFixed(3)}
-			data-selected={selected ?? 'car'}>
+			data-selected={selected ?? 'car'}
+		>
 			<SceneBoundary message={tx('三维画面未能启动，请重新载入或开启浏览器硬件加速。')}>
 				<CarScene
-					{...{explode, selected, hovered, xray, rpm, slowdown, paused, reducedMotion, angleRef, anchorsRef}}
+					{...{
+						explode,
+						selected,
+						hovered,
+						xray,
+						rpm,
+						slowdown,
+						pausedRef,
+						reducedMotion,
+						angleRef,
+						anchorsRef,
+					}}
 					onSelect={select}
 					onHover={setHovered}
 					onInteract={interact}
@@ -101,7 +119,8 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 						interact()
 						setSelected(null)
 						setHovered(null)
-					}}>
+					}}
+				>
 					{tx('整车')}
 				</button>
 				<span>/</span>
@@ -111,7 +130,8 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 							onClick={() => {
 								interact()
 								setSelected(null)
-							}}>
+							}}
+						>
 							{tx(selectedSystem.name)}
 						</button>
 						{selected === 'powertrain' && (
@@ -147,7 +167,8 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 					className="ct-system-picker"
 					value={selected ?? ''}
 					aria-label={tx('选择系统')}
-					onChange={(e) => (e.target.value ? select(e.target.value as SystemId) : setSelected(null))}>
+					onChange={(e) => (e.target.value ? select(e.target.value as SystemId) : setSelected(null))}
+				>
 					<option value="">{tx('全部系统')}</option>
 					{SYSTEMS.map((s) => (
 						<option key={s.id} value={s.id}>
@@ -170,6 +191,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 					}}
 					onPaused={(v) => {
 						interact()
+						pausedRef.current = v
 						setPaused(v)
 					}}
 					onXray={(v) => {
@@ -178,6 +200,7 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 					}}
 					onScrub={(v) => {
 						interact()
+						pausedRef.current = true
 						angleRef.current = v
 						setPaused(true)
 					}}
@@ -193,7 +216,8 @@ export function CarTeardown({controls}: {controls: ExperienceControls}) {
 						onClick={() => {
 							interact()
 							setSelected(null)
-						}}>
+						}}
+					>
 						{tx('返回系统')}
 					</button>
 				</aside>
