@@ -59,7 +59,7 @@ export async function skeleton({ tone = 'light', chapter = '', caption = '', sou
   const sk = document.getElementById('sk');
   sk.className = 'tone-' + tone;
   sk.innerHTML =
-    `<div class="sk-corner"><img src="/brand/mark-128.png" alt=""><span class="sk-name">世界的形状</span>` +
+    `<div class="sk-corner"><img src="/brand/mark-disc.png" alt=""><span class="sk-name">世界的形状</span>` +
     (chapter ? `<span class="sk-chap">${chapter}</span>` : '') + `</div>` +
     (caption ? `<div class="sk-cap"><span class="sk-strip">${caption}</span></div>` : '') +
     (source ? `<div class="sk-src">${source}</div>` : '');

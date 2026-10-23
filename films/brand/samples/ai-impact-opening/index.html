@@ -275,7 +275,7 @@ composer.addPass(new OutputPass());
 // ---------- overlay: corner, readings, captions, source ----------
 const sk = document.getElementById('sk');
 sk.className = 'tone-light';
-sk.innerHTML = `<div class="sk-corner"><img src="/brand/mark-128.png" alt=""><span class="sk-name">${L.corner}</span></div>`;
+sk.innerHTML = `<div class="sk-corner"><img src="/brand/mark-disc.png" alt=""><span class="sk-name">${L.corner}</span></div>`;
 await sk.querySelector('img').decode();
 const lbl = document.getElementById('labels'), svg = document.getElementById('lines');
 const plate = document.createElement('div'); plate.className = 'plate'; plate.innerHTML = '<div class="cat"></div><div class="val"></div>'; lbl.appendChild(plate);
