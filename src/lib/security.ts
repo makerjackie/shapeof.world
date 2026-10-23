@@ -13,7 +13,7 @@ export const contentSecurityPolicy = [
   "connect-src 'self' blob: https://libraryimage.nga.gov https://api.nga.gov https://a.basemaps.cartocdn.com https://annotations.allmaps.org https://iiif.digitalcommonwealth.org https://music-cdn.shapeof.world",
   "media-src 'self' https://music-cdn.shapeof.world https://press.shapeof.world blob:",
   "font-src 'self' data:",
-  "frame-src 'self' https://web.wwtassets.org https://earth.nullschool.net https://seanwong17.github.io https://www.tradingview-widget.com https://s.tradingview.com https://www.tradingview.com",
+  "frame-src 'self' https://web.wwtassets.org https://earth.nullschool.net https://seanwong17.github.io https://www.tradingview-widget.com https://s.tradingview.com https://www.tradingview.com https://player.bilibili.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
 ].join('; ')

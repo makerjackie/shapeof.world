@@ -1,8 +1,8 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { ArrowLeft } from '@phosphor-icons/react'
 import { createServerFn } from '@tanstack/react-start'
-import { useRef } from 'react'
 
+import { FilmPlayer } from '~/components/FilmPlayer'
 import { SiteFooter } from '~/components/SiteFooter'
 import { SiteHeader } from '~/components/SiteHeader'
 import { WorldCard } from '~/components/WorldCard'
@@ -11,6 +11,7 @@ import type { WorldSummary } from '~/data/world-summaries'
 import { useI18n } from '~/i18n'
 import { languageDiscoveryLinks, localeFromRouteMatches } from '~/i18n/seo'
 import { trackEvent } from '~/lib/analytics'
+import { type FilmPlayerKind, parseFilmPlayer } from '~/lib/film-player'
 import { SOURCE_REPOSITORY_URL } from '~/lib/site'
 import { localizedPublicUrl } from '~/lib/share-url'
 import { seo } from '~/utils/seo'
@@ -33,6 +34,11 @@ const getFilmDetail = createServerFn({ method: 'GET' })
   })
 
 export const Route = createFileRoute('/films/$slug')({
+  // ?player=bilibili|native forces a player; it is part of the cache key, so the HTML stays safe to share.
+  validateSearch: (search: Record<string, unknown>): { player?: FilmPlayerKind } => {
+    const player = parseFilmPlayer(search.player)
+    return player ? { player } : {}
+  },
   loader: async ({ params, context }) => {
     const data = await getFilmDetail({ data: params.slug })
     if (!data) throw notFound()
@@ -60,9 +66,9 @@ export const Route = createFileRoute('/films/$slug')({
 
 function FilmPage() {
   const { film, worlds } = Route.useLoaderData()
+  const { player } = Route.useSearch()
   const { locale, t } = useI18n()
   const copy = filmCopy(film, locale)
-  const played = useRef(false)
   const watch = [
     film.watch.bilibili && { label: 'Bilibili', href: film.watch.bilibili },
     film.watch.youtube && { label: 'YouTube', href: film.watch.youtube },
@@ -81,20 +87,7 @@ function FilmPage() {
             <p>{copy.subtitle}</p>
           </div>
         </header>
-        <video
-          key={film.slug}
-          className="film-player"
-          src={film.video}
-          poster={film.poster}
-          controls
-          playsInline
-          preload="metadata"
-          onPlay={() => {
-            if (played.current) return
-            played.current = true
-            trackEvent({ event: 'film_play', value: film.slug })
-          }}
-        />
+        <FilmPlayer film={film} override={player} />
         <p className="film-meta">
           <time dateTime={film.publishedAt}>{film.publishedAt}</time>
           <span>{film.duration}</span>
