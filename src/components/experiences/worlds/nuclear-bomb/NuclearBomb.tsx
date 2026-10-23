@@ -4,7 +4,7 @@ import {ArrowCounterClockwise, ArrowLeft, ArrowRight, ArrowUUpLeft, Pause, Play,
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
 import type {ExperienceControls} from '~/components/ExperienceShell'
-import {Freebar} from '~/components/experiences/Freebar'
+import {Freebar, FreebarTabs} from '~/components/experiences/Freebar'
 import {GhostHint} from '~/components/experiences/GhostHint'
 import {useI18n} from '~/i18n'
 import {useExperienceI18n} from '~/i18n/experience'
@@ -12,6 +12,8 @@ import {useExperienceI18n} from '~/i18n/experience'
 import {advancePresentation, CHEMICAL_START, chainSummary, DEFAULT_YIELD_KT, ENDING_PRESENTATION_SECONDS, lastGenerationsEnergyFraction, samplePresentation, sampleTimeline, slowdownFactor, stepTimeline} from './model'
 import {PARTS} from './parts'
 import {NuclearScene} from './scene'
+import {ScaleView} from './ScaleView'
+import {HistoryView} from './HistoryView'
 
 type Anchor = {
   id: string
@@ -33,12 +35,34 @@ function ScientificNumber({value, digits = 2, decimalPlaces = 0}: {value: number
   return <>{coefficient.toFixed(digits)}<span className="nb-times"> × 10</span><sup>{exponent}</sup></>
 }
 
+type ExhibitView = 'cutaway' | 'scale' | 'history'
+
 export function NuclearBomb({controls}: {controls: ExperienceControls}) {
+  const tx = useExperienceI18n()
+  const [view, setView] = useState<ExhibitView>('cutaway')
+  const [visited, setVisited] = useState<Set<ExhibitView>>(() => new Set(['cutaway']))
+  const changeView = (next: ExhibitView) => {
+    controls.registerInteraction()
+    setVisited((current) => new Set([...current, next]))
+    setView(next)
+  }
+  return <div className="nb-experience" data-exhibit-view={view}>
+    <div className={`nb-view-layer${view === 'cutaway' ? ' is-active' : ''}`} aria-hidden={view !== 'cutaway'} inert={view !== 'cutaway'}><CutawayView controls={controls} active={view === 'cutaway'} /></div>
+    {visited.has('scale') && <div className={`nb-view-layer${view === 'scale' ? ' is-active' : ''}`} aria-hidden={view !== 'scale'} inert={view !== 'scale'}><ScaleView controls={controls} active={view === 'scale'} /></div>}
+    {visited.has('history') && <div className={`nb-view-layer${view === 'history' ? ' is-active' : ''}`} aria-hidden={view !== 'history'} inert={view !== 'history'}><HistoryView controls={controls} active={view === 'history'} /></div>}
+    <nav className="nb-view-navigation" data-experience-overlay="true">
+      <FreebarTabs activeId={view} onChange={changeView} ariaLabel={tx('展览视图')} tabs={[{id: 'cutaway', label: tx('剖面')}, {id: 'scale', label: tx('尺度')}, {id: 'history', label: tx('历史')}]} />
+    </nav>
+  </div>
+}
+
+function CutawayView({controls, active}: {controls: ExperienceControls; active: boolean}) {
   const tx = useExperienceI18n()
   const {locale} = useI18n()
   const english = locale === 'en'
   const host = useRef<HTMLDivElement>(null)
   const touchedExplode = useRef(false)
+  const introElapsed = useRef(0)
   const [explode, setExplode] = useState(0)
   const [cutAngle, setCutAngle] = useState<0 | 90 | 180>(90)
   const [selectedPart, setSelectedPart] = useState<string | null>(null)
@@ -77,25 +101,28 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
   }, [])
 
   useEffect(() => {
+    if (!active || touchedExplode.current || introElapsed.current >= 3200) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setExplode(0.55)
+      introElapsed.current = 3200
       return
     }
     let frame = 0
-    let start = 0
+    let previous = 0
     const animate = (stamp: number) => {
       if (touchedExplode.current) return
-      start ||= stamp
-      const progress = Math.max(0, Math.min(1, (stamp - start - 1000) / 2200))
+      if (previous) introElapsed.current += stamp - previous
+      previous = stamp
+      const progress = Math.max(0, Math.min(1, (introElapsed.current - 1000) / 2200))
       setExplode(0.55 * (1 - (1 - progress) ** 3))
       if (progress < 1) frame = requestAnimationFrame(animate)
     }
     frame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(frame)
-  }, [])
+  }, [active])
 
   useEffect(() => {
-    if (!playing) return
+    if (!playing || !active) return
     let frame = 0
     let previous = 0
     const tick = (stamp: number) => {
@@ -106,7 +133,7 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
     }
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [playing, reverse, speed])
+  }, [playing, reverse, speed, active])
 
   useEffect(() => {
     if (playing && ((!reverse && presentation.complete) || (reverse && time <= CHEMICAL_START))) setPlaying(false)
@@ -217,7 +244,7 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
 
   return (
     <div className={`nb-world${microscopyVisible ? ' is-micro' : ''}${reactionActive ? ' is-reacting' : ''}${reactionActive && sample.energyFraction > 0.2 && !presentation.complete && !forceMicro ? ' is-bright' : ''}${showCompletion ? ' is-complete' : ''}${selected ? ' has-selection' : ''}`} ref={host} data-nuclear-time={time.toFixed(4)} data-nuclear-ending={endingSeconds.toFixed(4)} data-nuclear-view={microscopyVisible ? 'micro' : 'cutaway'}>
-      <NuclearScene explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} endingSeconds={endingSeconds} micro={micro} forceMicro={forceMicro} autoCamera={autoCamera && manualMicro === null} leaders={leaders} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
+      <NuclearScene active={active} explode={explode} cutAngle={cutAngle} selectedPart={selectedPart} onSelectPart={choosePart} time={time} endingSeconds={endingSeconds} micro={micro} forceMicro={forceMicro} autoCamera={autoCamera && manualMicro === null} leaders={leaders} onAnchors={setAnchors} onInteract={controls.registerInteraction} onError={setError} reducedMotion={reducedMotion} />
       <div className="nb-vignette" aria-hidden="true" />
 
       <header className="nb-heading" data-experience-overlay="true">
@@ -225,10 +252,6 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
         <h1>{tx(showCompletion ? '不到一微秒。' : microscopyVisible ? '一颗，再到下一颗。' : reactionActive ? '能量，在最后几代显现。' : '原子弹，一层一层。')}</h1>
         <span>{tx(showCompletion ? '拖回时间轴，可以再看一次。' : forceMicro && time >= 120 ? '微观示意停在前 12 代，读数对应主时间轴。' : microscopyVisible ? '一颗原子核裂开，放出两三个中子。' : reactionActive ? '从微观回到整体。亮度表示累计能量。' : '「胖子」外形 · 结构示意')}</span>
       </header>
-
-      {showCompletion && <section className="nb-end-summary" data-experience-overlay="true" aria-label={tx('理想化模型的读数')}>
-        <dl><div><dt>{tx('经历的代数')}</dt><dd>{Math.ceil(SUMMARY.generations)}<small>{tx('代')}</small></dd></div><div><dt>{tx('经过的时间')}</dt><dd>{(SUMMARY.durationNs / 1000).toFixed(2)}<small>μs</small></dd></div><div><dt>{tx('最后 7 代的能量')}</dt><dd>{(lastGenerationsEnergyFraction(7) * 100).toFixed(1)}<small>%</small></dd></div></dl>
-      </section>}
 
       {!mobile && time <= CHEMICAL_START && !micro && !selected && <aside className="nb-section-controls" data-experience-overlay="true" aria-label={tx('剖面控制')}><div className="nb-panel-eyebrow"><span>{tx('剖面控制')}</span><span>{tx('不按比例')}</span></div>{sectionControls('nb-explode')}</aside>}
 
@@ -276,8 +299,8 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
             <div><dt>{tx('本代裂变数')}</dt><dd><ScientificNumber value={sample.generationFissions} /></dd></div>
             <div className="nb-energy-reading"><dt>{tx('累计能量')}</dt><dd><ScientificNumber value={sample.energyJ} decimalPlaces={2} /> <small>J</small></dd></div>
             <div><dt>{tx('TNT 当量')}</dt><dd><ScientificNumber value={sample.energyKt} decimalPlaces={2} /> <small>kt</small></dd></div>
-            <div><dt>{tx('经过时间')}</dt><dd>{sample.elapsedNs.toFixed(1)} <small>ns</small></dd></div>
-            <div><dt>{tx('放慢倍数')}</dt><dd>{slowdown === null ? '—' : <><ScientificNumber value={slowdown} digits={1} /> <small>×</small></>}</dd></div>
+            <div><dt>{tx('经过时间')}</dt><dd>{showCompletion ? (sample.elapsedNs / 1000).toFixed(2) : sample.elapsedNs.toFixed(1)} <small>{showCompletion ? 'μs' : 'ns'}</small></dd></div>
+            {showCompletion ? <div><dt>{tx('最后 7 代的能量')}</dt><dd>{(lastGenerationsEnergyFraction(7) * 100).toFixed(1)}<small>%</small></dd></div> : <div><dt>{tx('放慢倍数')}</dt><dd>{slowdown === null ? '—' : <><ScientificNumber value={slowdown} digits={1} /> <small>×</small></>}</dd></div>}
           </dl>
           <p className="nb-reference-yield">{tx('计算参照：15 kt。并非展品的实际当量。')}</p>
           <div className="nb-chart">
@@ -322,7 +345,7 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
 
       {error && <div className="nb-error" role="alert"><p>{tx('三维视图暂时无法显示。请使用支持 WebGL 的浏览器。')}</p></div>}
 
-      <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
+      {active && <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
         <div className="nb-secondary">
           {time <= CHEMICAL_START && !micro && (mobile || selected) && sectionControls('nb-explode-secondary')}
           {!mobile && !micro && !reactionActive && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
@@ -354,8 +377,8 @@ export function NuclearBomb({controls}: {controls: ExperienceControls}) {
             <div className="nb-ns-ticks">{[0, 200, 400, 600, 800].map((tick) => <span style={{left: `${tick / SUMMARY.durationNs * 100}%`}} key={tick}>{tick}{tick === 800 ? ' ns' : ''}</span>)}</div>
           </div>
         </div>
-      </Freebar>
-      <GhostHint worldId="nuclear-bomb" gesture={{type: 'drag', target: '.nb-scene', dx: 75, dy: -25, label: tx('拖动旋转，点一层看里面')}} delay={6000} />
+      </Freebar>}
+      {active && <GhostHint worldId="nuclear-bomb" gesture={{type: 'drag', target: '.nb-scene', dx: 75, dy: -25, label: tx('拖动旋转，点一层看里面')}} delay={6000} />}
     </div>
   )
 }
