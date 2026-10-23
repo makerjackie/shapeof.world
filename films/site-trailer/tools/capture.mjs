@@ -39,7 +39,7 @@
  *   {capture:1, ghost:0}; capture=1 makes the shell hide its overlays), lang? 'zh'|'en',
  *   settle? ms after the stage is ready (default 5000), steps? [...setup...], duration? s (default 5),
  *   warmup? s stepped before frame 0 (default 0.4), actions? [...timeline during recording...],
- *   hide? [css selectors to hide], css? extra css, mode?, fps?, size?, ss?,
+ *   hide? [css selectors to hide], css? extra css, init? js run before the page's own scripts, mode?, fps?, size?, ss?,
  *   crop? [x,y,w,h] viewport fractions (keep 16:9; pair with ss:2 for a sharp punch-in),
  *   canvasOnly? true = hide every non-canvas element in page, iframes and shadow roots (clean plate;
  *   not for DOM/SVG worlds), shadowCss? css injected into shadow roots + iframes, why, label {zh, en}
@@ -265,6 +265,7 @@ async function recordShot(s) {
       localStorage.setItem('oneworld.site-bgm.muted.v1', '1')
     } catch {}
   }, s.worldId)
+  if (s.init) await ctx.addInitScript(s.init)
   await ctx.route('https://music-cdn.shapeof.world/**', (r) => r.abort())
   await ctx.route(/googletagmanager|google-analytics|plausible\.io|cloudflareinsights/, (r) => r.abort())
   if (mode === 'step') await ctx.clock.install()

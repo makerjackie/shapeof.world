@@ -1,0 +1,352 @@
+{
+  "version": 2,
+  "notes": "v2 re-shoots after the owner's shot review: wide establishing views, whole objects, no cursor ring, recorded at ss 2 (3840x2160 render, lanczos to 1080p, crops keep native detail) so punch-ins in the edit stay sharp. Framing chosen from probe screenshots (tools/probe.mjs).",
+  "shots": [
+    {
+      "id": "fluid-swirl",
+      "worldId": "fluid-sim",
+      "duration": 4,
+      "ss": 2,
+      "settle": 2500,
+      "init": "(()=>{for(const C of [window.WebGL2RenderingContext,window.WebGLRenderingContext]){if(!C)continue;const P=C.prototype;const g=P.getUniformLocation;P.getUniformLocation=function(p,n){const l=g.call(this,p,n);if(l&&n==='spoon')l.__spoon=1;return l};const u=P.uniform3f;P.uniform3f=function(l,x,y,z){return u.call(this,l,x,y,l&&l.__spoon?0:z)}}})()",
+      "steps": [
+        {
+          "clickText": "^换一杯$"
+        },
+        {
+          "wait": 800
+        },
+        {
+          "clickText": "^搅一圈$"
+        },
+        {
+          "wait": 400
+        }
+      ],
+      "crop": [
+        0.15,
+        0.02,
+        0.9,
+        0.9
+      ],
+      "why": "The whole cup from above, milk spiralling while the (hidden) spoon stirs. The spoon ring is zeroed in the shader via an init hook.",
+      "label": {
+        "zh": "咖啡 · 搅出涡旋",
+        "en": "FLUID VORTEX"
+      }
+    },
+    {
+      "id": "boids-vortex",
+      "worldId": "boids-flocking",
+      "duration": 4,
+      "settle": 5000,
+      "steps": [
+        {
+          "clickText": "^漩涡$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "why": "Thousands of coloured birds wheeling into one vortex.",
+      "label": {
+        "zh": "鸟群 · 没有指挥也会转圈",
+        "en": "FLOCKING"
+      }
+    },
+    {
+      "id": "galaxy-wide",
+      "worldId": "galaxy-collision",
+      "duration": 5,
+      "ss": 2,
+      "settle": 3000,
+      "steps": [
+        {
+          "clickText": "^2×$"
+        },
+        {
+          "wait": 5000
+        },
+        {
+          "wheel": {
+            "at": [
+              0.5,
+              0.5
+            ],
+            "dy": -240,
+            "n": 5
+          }
+        },
+        {
+          "wait": 5500
+        }
+      ],
+      "why": "Both spiral galaxies fully in frame as their arms start to pull a tidal bridge.",
+      "label": {
+        "zh": "两个星系 · 撞成一个",
+        "en": "GALAXY COLLISION"
+      }
+    },
+    {
+      "id": "eclipse-sky",
+      "worldId": "eclipses",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "仰望太阳"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "crop": [
+        0.1,
+        0.07,
+        0.8,
+        0.8
+      ],
+      "why": "Totality seen from a rooftop in Wuhan: stars out at noon over the skyline, the corona round the Moon.",
+      "label": {
+        "zh": "日全食 · 白天变黑",
+        "en": "TOTAL ECLIPSE"
+      }
+    },
+    {
+      "id": "flame-gravity",
+      "worldId": "fire-gravity",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "crop": [
+        0.2,
+        0.2,
+        0.6,
+        0.6
+      ],
+      "actions": [
+        {
+          "at": 0.8,
+          "type": "range",
+          "sel": "#fire-gravity-input",
+          "from": 1,
+          "to": 0,
+          "dur": 1.6,
+          "ease": "inout"
+        }
+      ],
+      "why": "The candle with its glowing zones; gravity slides to zero and the flame turns into a round blue dome.",
+      "label": {
+        "zh": "火焰 · 没有重力会变圆",
+        "en": "ZERO-G FLAME"
+      }
+    },
+    {
+      "id": "butterfly-flow",
+      "worldId": "butterfly-effect",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^流光$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "crop": [
+        0.12,
+        0.12,
+        0.8,
+        0.8
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.45,
+            0.5
+          ],
+          "to": [
+            0.58,
+            0.5
+          ],
+          "dur": 4,
+          "ease": "linear"
+        }
+      ],
+      "why": "The Lorenz butterfly in the glowing 流光 style, two trajectories racing.",
+      "label": {
+        "zh": "蝴蝶效应",
+        "en": "BUTTERFLY EFFECT"
+      }
+    },
+    {
+      "id": "photon-slit",
+      "worldId": "photon",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "crop": [
+        0.25,
+        0.05,
+        0.65,
+        0.65
+      ],
+      "why": "A photon's wave spreading through two slits onto the screen.",
+      "label": {
+        "zh": "一个光子 · 同时穿过两条缝",
+        "en": "DOUBLE SLIT"
+      }
+    },
+    {
+      "id": "complex-zeta",
+      "worldId": "complex-mapping",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^ζ\\(z\\)$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "crop": [
+        0.1,
+        0.08,
+        0.8,
+        0.8
+      ],
+      "why": "The Riemann zeta function as a rainbow wire surface, slowly turning.",
+      "label": {
+        "zh": "黎曼 ζ 函数",
+        "en": "RIEMANN ZETA"
+      }
+    },
+    {
+      "id": "equation-blackhole",
+      "worldId": "equation-wormhole",
+      "duration": 4,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^黑洞$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "why": "Physics equations swirling in gold into a black hole.",
+      "label": {
+        "zh": "公式 · 卷进黑洞",
+        "en": "EQUATION BLACK HOLE"
+      }
+    },
+    {
+      "id": "mandel-spiral",
+      "worldId": "mandelbrot-zoom",
+      "duration": 4,
+      "ss": 2,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^双螺旋$"
+        },
+        {
+          "wait": 4000
+        }
+      ],
+      "why": "The double-spiral preset: copper and teal spirals filling the whole frame (the seahorse preset leaves half the frame black).",
+      "label": {
+        "zh": "曼德博集合 · 无限放大",
+        "en": "MANDELBROT ZOOM"
+      }
+    },
+    {
+      "id": "solar-belt",
+      "worldId": "solar-system",
+      "duration": 4,
+      "settle": 7000,
+      "steps": [
+        {
+          "clickText": "^小天体带$"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "why": "The Sun, the planets' orbits and the asteroid belt, side view.",
+      "label": {
+        "zh": "太阳系 · 小行星带",
+        "en": "SOLAR SYSTEM"
+      }
+    },
+    {
+      "id": "vegetation-forest",
+      "worldId": "vegetation-atlas",
+      "duration": 4,
+      "ss": 2,
+      "settle": 8000,
+      "steps": [
+        {
+          "clickText": "森林的层次"
+        },
+        {
+          "wait": 4000
+        }
+      ],
+      "crop": [
+        0.1,
+        0.13,
+        0.75,
+        0.75
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "drag",
+          "from": [
+            0.45,
+            0.5
+          ],
+          "to": [
+            0.55,
+            0.5
+          ],
+          "dur": 4,
+          "ease": "linear"
+        }
+      ],
+      "why": "A block of forest, canopy to roots, turning slowly.",
+      "label": {
+        "zh": "森林 · 从树冠到根系",
+        "en": "FOREST"
+      }
+    },
+    {
+      "id": "ukulele-play",
+      "worldId": "ukulele",
+      "duration": 4,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^播放$"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "why": "The ukulele playing itself, strings and warm bokeh.",
+      "label": {
+        "zh": "尤克里里 · 自己弹",
+        "en": "UKULELE"
+      },
+      "mode": "realtime"
+    }
+  ]
+}

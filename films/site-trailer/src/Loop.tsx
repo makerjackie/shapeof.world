@@ -7,14 +7,14 @@ import { Grain, Shots, Vignette } from "./Film";
 // to the first exactly like any other cut, so the loop has no seam.
 export const LOOP_SHOTS: Shot[] = [
   { id: "starry-night-flight", at: 0, len: 2, src: 3.2, rate: 1.2, zoom: [1.04, 1.1] },
-  { id: "coffee-vortex", at: 2, len: 2, src: 3.0, rate: 1.3, zoom: [1.16, 1.24], origin: [0.5, 0.15] },
-  { id: "galaxy-collision-top", at: 4, len: 2, src: 2.4, rate: 1.1, zoom: [1.3, 1.45] },
-  { id: "eclipse-corona", at: 6, len: 2, src: 1.0, zoom: [1.0, 1.28] },
+  { id: "fluid-swirl", at: 2, len: 2, src: 2.2, rate: 1.3, zoom: [1.0, 1.06] },
+  { id: "galaxy-wide", at: 4, len: 2, src: 0.9, rate: 1.5, zoom: [1.0, 1.1] },
+  { id: "eclipse-sky", at: 6, len: 2, src: 1.0, zoom: [1.0, 1.25], origin: [0.5, 0.26] },
   { id: "earth-terminator", at: 8, len: 2, src: 1.0, rate: 2, zoom: [1.16, 1.26] },
-  { id: "attractor-thomas", at: 10, len: 2, src: 3.0, rate: 1.2, zoom: [1.05, 1.12] },
-  { id: "flame-zero-g", at: 12, len: 2, src: 2.2, rate: 1.6, zoom: [1.0, 1.1], origin: [0.5, 1.0] },
+  { id: "butterfly-flow", at: 10, len: 2, src: 2.2, rate: 1.2, zoom: [1.0, 1.06] },
+  { id: "flame-gravity", at: 12, len: 2, src: 0.9, rate: 1.8, zoom: [1.0, 1.05], origin: [0.5, 0.7] },
   { id: "ink-landscape-flight", at: 14, len: 2, src: 0.4, rate: 1.5, zoom: [1.0, 1.06] },
-  { id: "neural-spiral", at: 16, len: 2, src: 0.8, rate: 1.2, zoom: [1.05, 1.12] },
+  { id: "equation-blackhole", at: 16, len: 2, src: 1.0, rate: 1.2, zoom: [1.0, 1.06] },
   { id: "black-hole-flyby", at: 18, len: 2, src: 1.0, rate: 0.8, zoom: [1.0, 1.06], origin: [0.5, 0.42] },
 ];
 export const LOOP_FRAMES = 20 * 14;

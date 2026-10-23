@@ -5,7 +5,8 @@
 - 剪辑表：`src/edl.ts`（每个镜头的拍点、入点、速度、推镜、标签）。
 - 合成：`src/Film.tsx`（成片）、`src/Loop.tsx`（首页静音循环）。
 - 配乐：`music/score.js`，原创，代码合成。
-- 录屏工具和镜头清单：`tools/capture.mjs`、`shots.json`、`shots-fixes-*.json`（录屏已完成，不用重录）。
+- 录屏工具和镜头清单：`tools/capture.mjs`、`shots.json`、`shots-fixes-*.json`（v1）、`shots-v2.json`（v2 重拍）。
+- 选机位：`tools/probe.mjs` 实时打开世界、按步骤点按钮、截图，先看截图再决定录什么。
 
 ## 素材
 
@@ -23,6 +24,15 @@
 ```bash
 ln -sfn /path/to/shapeof.world-reports/site-trailer/footage public/footage
 ```
+
+## v2：换镜头
+
+v2 节奏、拍点、结构、HUD、片尾全部沿用 v1，只换镜头。负责人审 v1 时指出很多镜头太近、角度怪、发糊（1080p 素材被放大 1.3–1.45 倍）或世界本身弱。v2 的做法：
+
+- 先用 `tools/probe.mjs` 在线上站点截图比较模式、机位、预设，挑全景、完整、颜色足的那一帧，再录。
+- 新录的镜头一律 `ss: 2`：按 3840×2160 渲染，lanczos 缩到 1080p，`crop` 在 2 倍画面上裁，裁完仍是原生清晰度。剪辑里的推镜对 ss2 素材可到约 1.5 倍；v1 的 1080p 素材不超过约 1.1 倍。
+- `init`（`shots-v2.json` 的 fluid-swirl）：页面脚本运行前注入的 JS。这里用来把咖啡杯着色器里"勺子圈"的 uniform 透明度置零，画面里就没有光标圈。
+- 交付：`npm run render`、`npm run render:loop`、`npm run finish` 现在输出 `out/site-trailer-v2*.mp4` 和 `poster-v2.jpg`，v1 文件保留不动。
 
 ## 配乐
 
