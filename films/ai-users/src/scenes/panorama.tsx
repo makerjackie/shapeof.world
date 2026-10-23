@@ -26,7 +26,7 @@ const CARDS: Card[] = [
   { field: "法律", org: "Harvey", gloss: "法律 AI", line: <>美国百强律所里 {N("8")} 成在用</>, src: "Harvey 2026-09 · 自报" },
   { field: "教育", org: "世界银行", line: <>{N("6")} 周 AI 补课，抵平常 {N("1.5–2")} 年</>, src: "World Bank 工作论文 2025-05 · 尼日利亚随机试验" },
   { field: "影视", org: "Netflix", gloss: "网飞", line: <>AI 特效镜头，快 {N("10")} 倍</>, src: "Netflix 财报电话会 2025-07 · 公司称" },
-  { field: "游戏", org: "Pieter Levels", gloss: "独立开发者", line: <>AI 写的游戏，{N("17")} 天年化收入约 {N("670")} 万元</>, src: "levels.io 2025-02 · 本人自报 · 100 万美元按 6.7220 换算" },
+  { field: "游戏", org: "Pieter Levels", gloss: "独立开发者", line: <>AI 写的游戏，{N("17")} 天年化收入破 {N("670")} 万元</>, src: "levels.io 2025-02 · 本人自报 · 100 万美元按 6.7220 换算" },
   { field: "音乐", org: "Deezer", gloss: "法国音乐平台", line: <>每天收到 {N("9")} 万首 AI 写的歌</>, src: "Deezer 2026-07-21" },
   { field: "制造", org: "海尔", line: <>空调样机测试：{N("15")} 天 → {N("7")} 天</>, src: "海尔智家 2025 年报 · 自报" },
 ];

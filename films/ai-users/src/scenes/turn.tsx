@@ -211,16 +211,22 @@ export const Turn: React.FC = () => {
       {Array.from({ length: 30 }, (_, i) => i + 1)
         .filter((t) => t < 19 || t > 25)
         .map((t) => (
-          <Sfx key={t} at={t} id="sfx-mechanical-13" vol={0.2} rate={0.8} />
+          <Sfx key={t} at={t} id="sfx-mechanical-13" vol={0.42} rate={0.8} />
         ))}
       {Array.from({ length: 22 }, (_, i) => 19 + i * 0.27).map((t, i) => (
-        <Sfx key={t} at={t} id="sfx-mechanical-13" vol={0.14 + 0.004 * i} rate={0.9 + i * 0.02} />
+        <Sfx key={t} at={t} id="sfx-mechanical-13" vol={0.3 + 0.006 * i} rate={0.9 + i * 0.02} />
       ))}
-      <Sfx at={2} id="sfx-impact-01" vol={0.3} />
+      <Sfx at={2} id="sfx-impact-01" vol={0.5} />
       {[10, 11.5, 13, 14.5].map((t) => (
-        <Sfx key={t} at={t} id="sfx-foley-16" vol={0.2} rate={1.2} />
+        <Sfx key={t} at={t} id="sfx-foley-16" vol={0.38} rate={1.2} />
       ))}
-      <Sfx at={26.4} id="sfx-impact-06" vol={0.4} rate={0.9} />
+      {[9.6, 10.6, 11.6, 12.6, 13.6, 14.6, 15.6].map((t, i) => (
+        <Sfx key={t} at={t} id="sfx-foley-02" vol={0.3} rate={1.05 + (i % 3) * 0.08} />
+      ))}
+      {[19.6, 21, 22.4, 23.8].map((t) => (
+        <Sfx key={t} at={t} id="sfx-foley-16" vol={0.32} rate={0.9} />
+      ))}
+      <Sfx at={26.4} id="sfx-impact-06" vol={0.55} rate={0.9} />
     </AbsoluteFill>
   );
 };

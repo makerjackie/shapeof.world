@@ -73,8 +73,9 @@ const MathSheet: React.FC<{ b: number }> = ({ b }) => {
 
 // The 372: answer sheets pouring in over everything, every grading box empty.
 const POUR = 64;
-const pour = Array.from({ length: POUR }, (_, i) => ({
-  at: 29.6 + (i / POUR) * 7 + random(`ma${i}`) * 0.3,
+const LATE = 12; // still arriving after the courts card, until the music stops
+const pour = Array.from({ length: POUR + LATE }, (_, i) => ({
+  at: i < POUR ? 29.6 + (i / POUR) * 7 + random(`ma${i}`) * 0.3 : 76.4 + ((i - POUR) / LATE) * 3.4,
   x: 960 + (random(`mx${i}`) - 0.45) * 2300,
   y: 560 + (random(`my${i}`) - 0.5) * 1300,
   r: (random(`mr${i}`) - 0.5) * 34,
@@ -224,6 +225,9 @@ export const MathS: React.FC = () => {
         <Sfx key={t} at={t} id="sfx-mechanical-13" vol={0.24} rate={1 + i * 0.05} />
       ))}
       <Sfx at={70} id="sfx-impact-06" vol={0.45} />
+      {[76.6, 78.2].map((t) => (
+        <Sfx key={t} at={t} id="sfx-foley-16" vol={0.2} rate={0.95} />
+      ))}
     </AbsoluteFill>
   );
 };

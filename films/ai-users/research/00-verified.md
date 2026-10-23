@@ -65,6 +65,8 @@
 | S17 | Cherny | 30 天 259 个 PR、497 次提交；"Every single line was written by Claude Code + Opus 4.5" | Simon Willison 转引，2025-12-27 | 二手（转引原帖） |
 | S18 | 高手 vs 新手 | 约 40 万会话、23.5 万人；每条提示 5 vs 12 个动作；验证成功 15% vs 28–33%；放弃 19% vs 5–7% | anthropic.com 2026-06-16 | 一手，Anthropic 自己的数据，观察性 |
 | S20 | IMO 2025 | Gemini Deep Think 35/42，6 题解 5，IMO 协调员官方评分 | DeepMind 2025-07-21 | 一手 |
+| v2 医生 | Kaiser 医生调查 | 102 名医生里 88% 说对问诊互动有正面影响（KP 页面口径；AMA 稿写 84% 正面体验，片中用 KP 口径并注明"Kaiser Permanente 对 102 名医生的调查"） | KP Division of Research 2025-04-01 | 一手，自报 |
+| v2 换算 | 人民币对美元中间价 | 2026-10-16：6.7220（较前一交易日调升 33 个基点）。$1,305,088.81 × 6.7220 ≈ 877 万元；100 万美元 × 6.7220 ≈ 672 万元（片中写"破 670 万元"）。10-22 的 6.7195 找不到原始出处，不用 | 中国经济网（引中国外汇交易中心），新浪财经转载 https://cj.sina.com.cn/articles/view/1663612603/6328b6bb0200248kg | 一手（转载全文） |
 
 ## 不进片的
 
