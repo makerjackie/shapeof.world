@@ -121,7 +121,7 @@ export const Words: React.FC<Props> = ({
               const isKw = kwMask[ci];
               const kwP = isKw ? pr(t, kwTime, 0.3, E.out) : 0;
               const kwB = isKw ? bump(t, kwTime + 0.05, 0.05, 0.4) : 0;
-              const o = out === undefined ? 0 : pr(t, out + (gi / Math.max(1, total)) * 0.25, 0.35, E.in);
+              const o = out === undefined ? 0 : pr(t, out + (gi / Math.max(1, total)) * 0.1, 0.22, E.in);
               let inner: React.CSSProperties = {};
               let wrap: React.CSSProperties = { display: "inline-block", verticalAlign: "top" };
               if (reveal === "rise") {

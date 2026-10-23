@@ -419,7 +419,7 @@ export const Seasons4: React.FC = () => {
 // ── S40 · two months with AI ≈ six months without (B78 → B80) ──
 export const Faster4: React.FC = () => {
   const t = useT();
-  if (t < B(78) - 0.05 || t > B(80) + 0.05) return null;
+  if (t < B(78) - 0.05 || t >= B(80)) return null;
   const grow = spring(t, B(78) + 0.35, 1.2, 5);
   const bars: [string, string, string][] = [
     ["用 AI", "入职 2 个月", CYAN],

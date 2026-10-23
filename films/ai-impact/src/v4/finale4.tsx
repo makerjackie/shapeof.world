@@ -31,7 +31,7 @@ const SKY_Y = -2300; // the ruler of years, up in the sky
 const px = (y: number) => 900 + ((y - 2026) / (2044 - 2026)) * 2600;
 export const Sky4: React.FC = () => {
   const t = useT();
-  if (t < B(80) - 0.05 || t > B(84) + 0.05) return null;
+  if (t < B(80) || t > B(84) + 0.05) return null;
   const monthY = AIF.floor - markY(AI_MARKS.month);
   const keys: Key[] = [
     [B(80) - 0.05, { x: 200, y: -60, z: 0.95 }],

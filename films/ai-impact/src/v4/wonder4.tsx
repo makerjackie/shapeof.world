@@ -178,7 +178,7 @@ export const DoorAndMedals: React.FC = () => {
   const jx = DOOR.x - DOOR.w / 2;
   const mail = pr(t, MARK_AT + 0.35, 0.45, E.back);
   return (
-    <Stage keys={keys} drift={0.035}>
+    <Stage keys={keys} drift={0.012}>
       <Plane>
         {/* the door, cool light inside */}
         <div style={{ position: "absolute", left: -900, top: -600, width: 1800, height: 1400, background: "radial-gradient(ellipse at 50% 55%, rgba(77,212,255,0.16), transparent 60%)", opacity: grow }} />

@@ -423,7 +423,7 @@ export const TowerCrack: React.FC = () => {
         <div style={{ fontSize: 28, fontWeight: 700, color: "#a88" }}>美股史上最大的单日跌幅</div>
       </div>
       <Words at={B(29.5) + 0.15} lines={["英伟达这家公司，", "一天少值了 4 万多亿元。"]} x={900} y={140} size={76} kw={["4 万多亿元"]} kwColor={RED} kwAt={CRACK + 0.3} out={B(32) - 0.25} />
-      <Words at={B(32) + 0.1} lines={["可 AI 越便宜，用得越多，", "显卡更不够了。"]} x={900} y={140} size={76} kw={["越便宜", "越多"]} kwColor="#3ddc97" />
+      <Words at={B(32) + 0.25} lines={["可 AI 越便宜，用得越多，", "显卡更不够了。"]} x={900} y={140} size={76} kw={["越便宜", "越多"]} kwColor="#3ddc97" />
       <div style={{ position: "absolute", left: 900, top: 350, opacity: pr(t, B(33) - 0.3, 0.4), fontFamily: FONT, fontSize: 34, fontWeight: 800, color: "#b8b8b3", whiteSpace: "nowrap", textShadow: "0 4px 20px rgba(0,0,0,0.8)" }}>
         谷歌每月处理的 AI 文字量，两年涨了约 330 倍
       </div>
@@ -467,8 +467,8 @@ export const Coaster: React.FC = () => {
     const d = pr(s, B(34) + 0.1, BAR * 1.55, E.inOut);
     keys.push([s, { x: zx(d) + 200, y: zy(zAt(d)) + 60, z: 0.66 + 0.06 * Math.sin(d * Math.PI) }, E.lin]);
   }
-  keys.push([B(35.7), { x: zx(0.5) + 300, y: -900, z: 0.36 }, E.inOut]);
-  keys.push([B(36) + 0.4, { x: zx(0.5) + 300, y: -920, z: 0.38 }, E.lin]);
+  keys.push([B(35.7), { x: zx(0.5) + 120, y: -900, z: 0.36 }, E.inOut]);
+  keys.push([B(36) + 0.4, { x: zx(0.5) + 120, y: -920, z: 0.38 }, E.lin]);
 
   const pts = ZP.filter(([u]) => u <= draw).map(([u, v]) => `${zx(u)},${zy(v)}`);
   pts.push(`${tip.x},${tip.y}`);
