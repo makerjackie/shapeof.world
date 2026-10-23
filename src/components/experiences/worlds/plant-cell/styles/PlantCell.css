@@ -1,0 +1,75 @@
+.pc-experience {
+  --world-accent: #cfe3a0; --freebar-accent: #cfe3a0;
+  --experience-panel-surface: rgba(9, 18, 19, .75);
+  --experience-panel-border: rgba(207, 227, 160, .15);
+  --experience-panel-radius: 5px;
+  position: absolute; inset: 0; overflow: hidden; isolation: isolate;
+  background: #060e10; color: #e7e7d9; font-variant-numeric: tabular-nums;
+}
+.pc-scene, .pc-scene canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: none; }
+.pc-scene canvas { cursor: grab; }
+.pc-scene canvas:active { cursor: grabbing; }
+.pc-atmosphere { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 41% -5%, #bfa96c09, transparent 60%); }
+.pc-heading { position: absolute; left: 42px; top: 102px; pointer-events: none; }
+.pc-heading p { display: flex; gap: 10px; align-items: center; font-size: 11px; color: #bfc5ad; margin: 0 0 14px; }
+.pc-heading p i { width: 5px; height: 5px; background: #c3d894; border-radius: 50%; }
+.pc-heading em { font-family: Georgia, serif; font-weight: normal; font-size: 12px; color: #7f9289; }
+.pc-heading h1 { font-size: 26px; font-weight: 400; margin: 0 0 12px; letter-spacing: .12em; }
+.pc-heading > span { display: block; font-size: 12px; line-height: 1.8; max-width: 270px; color: #91a397; }
+.pc-readout { position: absolute; left: 43px; top: 253px; width: 179px; border-top: 1px solid #cfe3a022; padding-top: 9px; }
+.pc-readout > div { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; font-size: 10px; }
+.pc-readout span { color: #829489; }
+.pc-readout strong { color: #c2cbb5; font-family: ui-monospace, monospace; font-size: 11px; font-weight: 400; }
+.pc-readout small { font-size: 9px; }
+.pc-logscale { position: absolute; right: 38px; top: 22%; bottom: 23%; width: 151px; }
+.pc-scale-track { position: absolute; right: 71px; width: 28px; height: 100%; border-right: 1px solid #9fb4a34a; cursor: crosshair; outline-offset: 6px; }
+.pc-minor-tick { position: absolute; right: 0; width: 4px; height: 1px; background: #9fb4a33a; }
+.pc-major-tick { position: absolute; right: 0; width: 58px; transform: translateY(-50%); padding-right: 10px; text-align: right; font: 9px ui-monospace, monospace; color: #87998c; pointer-events: none; }
+.pc-major-tick::after { content: ''; position: absolute; right: 0; top: 50%; width: 6px; height: 1px; background: #abc2a5; }
+.pc-cursor { position: absolute; right: -4px; width: 7px; height: 7px; transform: translateY(-50%) rotate(45deg); background: #d4e5b3; box-shadow: 0 0 10px #cfe3a055; pointer-events: none; }
+.pc-layer-names { position: absolute; right: 0; height: 100%; width: 63px; }
+.pc-layer-names button { position: absolute; left: 0; transform: translateY(-50%); border: 0; background: none; color: #819484; font-size: 11px; padding: 12px 0 12px 7px; text-align: left; white-space: nowrap; cursor: pointer; }
+.pc-layer-names button[aria-current] { color: #dfebc4; }
+.pc-scale-bar { position: absolute; bottom: 55px; left: 43px; pointer-events: none; }
+.pc-scale-bar span { display: block; font: 11px ui-monospace, monospace; color: #d6dfc2; margin-bottom: 8px; }
+.pc-scale-bar i { display: block; border: solid #c6d5b7; border-width: 0 1px 1px; height: 6px; }
+.pc-scale-bar small { display: block; font-size: 9px; color: #637c72; margin-top: 14px; letter-spacing: .04em; }
+.pc-gesture { position: absolute; right: 43px; bottom: 54px; color: #81978b; font-size: 10px; }
+.pc-experience .pc-freebar { left: 0; right: 0; width: 100%; max-width: none; }
+.pc-experience .pc-freebar .experience-freebar-main { max-width: 430px; }
+.pc-freebar .experience-freebar-main { gap: 13px; }
+.pc-experience .pc-light { width: 240px; min-width: 0; grid-template-columns: 1fr; gap: 7px; flex-shrink: 0; }
+.pc-light label { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 11px; white-space: nowrap; }
+.pc-light output { white-space: nowrap; }
+.pc-light output { font-size: 11px; font-family: ui-monospace, monospace; }
+.pc-light output small { font-size: 9px; color: #8c9e8c; margin-left: 4px; }
+/* Outrank Freebar's generic text-button padding without changing shared controls. */
+.pc-experience .pc-freebar .experience-freebar-main .experience-freebar-primary > .pc-light-switch { display: grid; place-items: center; flex: 0 0 34px; padding: 0; background: none; color: #d4e5af; border: 1px solid #cfe3a033; border-radius: 50%; width: 34px; height: 34px; cursor: pointer; }
+.pc-light-switch svg { width: 18px; height: 18px; flex-shrink: 0; }
+.pc-tools { display: flex; gap: 8px; align-items: center; justify-content: center; }
+.pc-tools button { background: none; border: 0; color: #c0cdb4; display: flex; align-items: center; gap: 6px; padding: 5px 9px; font-size: 11px; cursor: pointer; }
+.pc-tools button:hover { color: #eff5db; }
+.pc-boundaries { position: absolute; z-index: 9; left: 50%; bottom: 150px; transform: translateX(-50%); padding: 22px; width: min(420px, calc(100% - 40px)); background: #0b1617ef; border: 1px solid #b8c9a53a; }
+.pc-boundaries h2 { font-size: 15px; font-weight: 500; margin: 0 0 14px; }
+.pc-boundaries p { font-size: 12px; line-height: 1.8; color: #a6b5a8; }
+.pc-boundaries button { float: right; border: 0; background: none; color: #b5c2aa; cursor: pointer; font-size: 20px; }
+@media(max-width:719px) {
+  .pc-heading { top: 82px; left: 22px; }
+  .pc-heading p { margin-bottom: 9px; font-size: 10px; gap: 8px; }
+  .pc-heading h1 { font-size: 21px; margin-bottom: 8px; }
+  .pc-heading > span { font-size: 10px; max-width: 225px; }
+  .pc-readout { left: 22px; top: 189px; width: 143px; padding-top: 5px; }
+  .pc-readout > div { font-size: 9px; padding: 3px 0; }
+  .pc-readout > div:not(:first-child) { display: none; }
+  .pc-logscale { width: 52px; top: 31%; bottom: 27%; right: 14px; }
+  .pc-scale-track { right: 5px; }
+  .pc-layer-names { display: none; }
+  .pc-major-tick { font-size: 8px; width: 44px; color: #9aaf9a; }
+  .pc-scale-bar { bottom: 153px; left: 22px; }
+  .pc-scale-bar small { display: none; }
+  .pc-gesture { bottom: 150px; right: 22px; font-size: 9px; }
+  .pc-experience .pc-freebar .experience-freebar-main { max-width: calc(100vw - 28px); }
+  .pc-experience .pc-light { width: min(220px, calc(100vw - 150px)); }
+  .pc-light output small { font-size: 8px; }
+}
+@media(prefers-reduced-motion: reduce) { .pc-experience * { scroll-behavior: auto; } }
