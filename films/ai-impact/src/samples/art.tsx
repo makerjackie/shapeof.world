@@ -143,15 +143,15 @@ export const Builder: React.FC<{ s?: number; look: number; jump: number }> = ({ 
 );
 
 // ── The buyer's face for the checkout sample: calm → shocked ──
-export const Face: React.FC<{ size: number; shock: number; sweat: number }> = ({ size, shock, sweat }) => (
+export const Face: React.FC<{ size: number; shock: number; sweat: number; gaze?: number }> = ({ size, shock, sweat, gaze = 0 }) => (
   <svg width={size} height={size * 1.1} viewBox="-100 -110 200 220" style={{ overflow: "visible" }}>
     <path d="M-70,110 Q-70,40 0,40 Q70,40 70,110 Z" fill="#3a6ea5" />
     <circle cx="0" cy="-20" r="72" fill="#f2c9a5" />
     <path d={`M-74,-24 Q-70,-98 0,-98 Q70,-98 74,-24 Q58,-60 ${10 - shock * 10},-62 Q-40,-66 -74,-24 Z`} fill="#2a2420" />
     <ellipse cx="-26" cy="-22" rx={7 + shock * 6} ry={8 + shock * 9} fill="#fff" />
     <ellipse cx="26" cy="-22" rx={7 + shock * 6} ry={8 + shock * 9} fill="#fff" />
-    <circle cx="-26" cy="-21" r={5 - shock * 1.5} fill="#2a2420" />
-    <circle cx="26" cy="-21" r={5 - shock * 1.5} fill="#2a2420" />
+    <circle cx={-26 + gaze * 5} cy="-21" r={5 - shock * 1.5} fill="#2a2420" />
+    <circle cx={26 + gaze * 5} cy="-21" r={5 - shock * 1.5} fill="#2a2420" />
     <path d={`M-38,${-44 - shock * 10} L-14,${-40 - shock * 14}`} stroke="#2a2420" strokeWidth="5" strokeLinecap="round" />
     <path d={`M38,${-44 - shock * 10} L14,${-40 - shock * 14}`} stroke="#2a2420" strokeWidth="5" strokeLinecap="round" />
     {shock > 0.3 ? <ellipse cx="0" cy="20" rx={10 + shock * 6} ry={8 + shock * 12} fill="#7a2e22" /> : <path d="M-20,14 Q0,26 20,14" stroke="#7a2e22" strokeWidth="5" fill="none" strokeLinecap="round" />}

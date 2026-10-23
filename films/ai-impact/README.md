@@ -112,3 +112,7 @@ python tools/sheet.py out/s out/sheets   # 2×2 拼审片图（需要 Pillow）
   - 把响度调到约 −12 LUFS，真峰值上限 −2 dBTP。
   - 拼每秒 2 帧的总览图 `out/samples/contact-{A,B,C}.jpg`。
 - 数字：央视财经 2026 年 7 月华强北调查，"32G DDR5 内存去年 900 元，现在 3800 元"。"4 倍多""去年能买 4 套"为推算（3800 ÷ 900 ≈ 4.2），画面小字已标。
+
+### 合成开头样片（C → B，14.6 秒）
+
+用户选了"大字开场、购物车接上"。`Opening` 合成：0–4 秒是深色大字的价格计数器；4.08 秒（第 2 小节强拍）¥3,800 缩小，落进购物车的价签，暖色画面从那一点展开；之后是购物车：结不了账，音乐退成房间声 3.5 秒，你犹豫、开降价提醒、库存变紧张；第 5 小节强拍 AI 数据中心的订单砸进来、一直滚动。有音高的音效先用 `python tools/tune_sfx.py public/lib public/lib/tuned <id…>` 调到 A 小调。渲染：`bash tools/samples.sh Opening`。
