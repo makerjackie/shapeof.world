@@ -30,11 +30,12 @@ export function Cutaway({ children, offset = -1.2, reveal = 35 }: { children: Re
 }
 
 /** Lit surfaces share real clipping/shadows; only membranes use Fresnel alpha. */
-export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid', roughness = 0.72, clipped = true, attenuation = true, depthWrite = true, starch = 0, ...props }: {
-  color?: string; opacity?: number; kind?: 'solid' | 'chloroplast' | 'chloroplast-cut' | 'nucleus' | 'wall'; roughness?: number; clipped?: boolean; attenuation?: boolean; depthWrite?: boolean; starch?: number
+export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid', roughness = 0.72, clipped = true, attenuation = true, depthWrite = true, starch = 0, glow = 0, ...props }: {
+  color?: string; opacity?: number; kind?: 'solid' | 'chloroplast' | 'chloroplast-cut' | 'nucleus' | 'wall'; roughness?: number; clipped?: boolean; attenuation?: boolean; depthWrite?: boolean; starch?: number; glow?: number
 }) {
   const cut = useCutaway()
   const starchUniform = useRef({ value: starch }); starchUniform.current.value = starch
+  const glowUniform = useRef({ value: glow }); glowUniform.current.value = glow
   const planes = useMemo(() => cut && clipped ? [cut.plane] : [], [cut, clipped])
   const grana = useMemo(() => {
     if (kind !== 'chloroplast') return null
@@ -60,6 +61,7 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
       shader.uniforms.cellFromWorld = { value: cut?.fromWorld ?? new T.Matrix4() }
       shader.uniforms.granaMap = { value: grana }
       shader.uniforms.starchAmount = starchUniform.current
+      shader.uniforms.glowAmount = glowUniform.current
       shader.vertexShader = 'uniform mat4 cellFromWorld; varying vec3 vTissue; varying vec3 vShape;\n' + shader.vertexShader
       shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
         vShape=position; vec4 tissueP=vec4(transformed,1.0);
@@ -67,14 +69,14 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
         tissueP=instanceMatrix*tissueP;
         #endif
         vTissue=(cellFromWorld*modelMatrix*tissueP).xyz;`)
-      shader.fragmentShader = 'uniform sampler2D granaMap; uniform float starchAmount; varying vec3 vTissue; varying vec3 vShape;\n' + shader.fragmentShader
+      shader.fragmentShader = 'uniform sampler2D granaMap; uniform float starchAmount; uniform float glowAmount; varying vec3 vTissue; varying vec3 vShape;\n' + shader.fragmentShader
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
-        ${attenuation ? 'float received=0.1+1.15*exp(-max(0.0,35.0-vTissue.y)*0.035); diffuseColor.rgb*=received;' : ''}
+        ${attenuation ? 'float received=0.4+0.8*exp(-max(0.0,35.0-vTissue.y)*0.026); diffuseColor.rgb*=received;' : ''}
         ${kind === 'chloroplast' ? `
         float thickness=sqrt(max(0.0,1.0-dot(vShape.xy/vec2(3.0,1.9),vShape.xy/vec2(3.0,1.9))));
         diffuseColor.rgb*=mix(vec3(1.75,1.48,1.15),vec3(0.48,0.61,0.46),thickness);
         float stipple=texture2D(granaMap,vShape.xy/vec2(6.0,3.8)+0.5).r;
-        diffuseColor.rgb*=1.0-0.3*min(1.0,stipple);
+        diffuseColor.rgb*=1.0-0.42*min(1.0,stipple);
         float sr=max(0.001,0.7*pow(starchAmount,0.333333));
         vec2 sp=(vShape.xy-vec2(-0.6,0.35))/vec2(sr,sr*0.43);
         float starchSpot=exp(-dot(sp,sp)*2.0)*smoothstep(0.0,0.05,starchAmount);
@@ -83,6 +85,10 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
         ` : ''}
         ${kind === 'chloroplast-cut' ? 'float lines=smoothstep(0.1,0.7,abs(sin(vShape.y*100.0+sin(vShape.x*4.0)*0.3))); diffuseColor.rgb*=0.6+0.6*lines;' : ''}
         ${kind === 'nucleus' ? 'if(!gl_FrontFacing) diffuseColor.rgb*=0.52+0.18*sin(vShape.x*18.0)*sin(vShape.y*14.0);' : ''}
+      `)
+      // Thin lens rims transmit sunlight: a soft chlorophyll glow, darker where grana sit.
+      if (kind === 'chloroplast') shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+        if(gl_FrontFacing) totalEmissiveRadiance+=glowAmount*${attenuation ? 'received' : '1.0'}*vec3(0.07,0.13,0.03)*(0.35+0.65*(1.0-thickness))*(1.0-0.55*min(1.0,stipple));
       `)
     }} />
 }
