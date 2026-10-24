@@ -30,7 +30,7 @@
   "T 字路口": "T-junction",
   "十字 · 信号灯": "Crossroads · signals",
   "十字 · 无信号": "Crossroads · unsignalized",
-  "左转不再等红灯。上环和下环的车却要在同一小段路上交叉换道，车一多，先堵在这里。": "Left turns no longer wait at traffic lights. Vehicles entering and leaving the loops must weave across the same short stretch; this is where queues first form as demand rises.",
+  "左转不再等红灯。四个环道又小又慢（40 km/h），占地并不大；代价是上环和下环的车要在同一小段路上交叉换道，车一多，先堵在这里。": "Left turns no longer wait at traffic lights. The four loops are small and slow (40 km/h), so the interchange takes less land than you might expect; the price is weaving, as cars entering and leaving the loops cross the same short stretch, and that is where queues form first.",
   "支路的车要等主路留出足够大的空当，才能拐出去。": "Vehicles on the side road wait for a large enough gap in the main-road traffic before turning out.",
   "北侧直行": "From north · through",
   "北侧左转": "From north · left turn",
