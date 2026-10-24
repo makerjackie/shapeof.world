@@ -11,7 +11,7 @@ import { ChloroplastLayer } from './chloroplast-layer'
 import { MolecularLayers } from './molecular-layers'
 import { GRANUM_SECTION_ANCHOR_LOCAL } from './chloro-model'
 import { advancePhysiology, getPhysiologySnapshot, getLightAppearance, type PlantInputs, type PhysiologyState, type PhysiologySnapshot } from './model'
-import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, CHLOROPLAST_QUATERNION, MOLECULAR_WORLD_ROTATION, getCameraPose, getOrbitReference, smoothstep, type PlantLayer } from './scale-model'
+import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, CHLOROPLAST_QUATERNION, MOLECULAR_WORLD_ROTATION, getCameraPose, getFramedScale, getOrbitReference, smoothstep, type PlantLayer } from './scale-model'
 
 export interface ScaleController {
   current: number
@@ -190,7 +190,7 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
     const mpitch = Math.max(-20 * Math.PI / 180, Math.min(70 * Math.PI / 180, orbitReference.molecularPitch + movement.currentPitch))
     molecularFrame.direction.set(Math.sin(myaw)*Math.cos(mpitch),Math.sin(mpitch),Math.cos(myaw)*Math.cos(mpitch)).applyQuaternion(MOLECULAR_WORLD_ROTATION)
     molecularFrame.up.set(0,1,0).applyQuaternion(MOLECULAR_WORLD_ROTATION)
-    camera.position.lerp(molecularFrame.direction,molecularBlend).normalize().multiplyScalar(cameraDistance)
+    camera.position.lerp(molecularFrame.direction,molecularBlend).normalize().multiplyScalar(cameraDistance * 10 ** (getFramedScale(c.current, size.width < 720) - c.current))
     camera.up.lerp(molecularFrame.up,molecularBlend).normalize()
     // The selected lens can migrate. Carry the last part of the dive with its
     // actual wall pose, so the same granum remains the optical target.
@@ -211,6 +211,11 @@ function Contents(props: SceneProps) {
   const { mobile, controller, inputs, physiology, onPhysiology, viewScale } = props
   const snapshot = getPhysiologySnapshot(physiology.current, inputs)
   const light = snapshot.actualPPFD, brightness = getLightAppearance(light).brightness
+  const molecularDisplay = smoothstep(-6.2,-6.75,viewScale)
+  const displayBrightness = brightness*(1-molecularDisplay)+getLightAppearance(400).brightness*molecularDisplay
+  const moonFill = .12*(1-brightness)*(1-molecularDisplay)
+  const displayKey = getLightAppearance(light).keyIntensity*(1-molecularDisplay)+getLightAppearance(400).keyIntensity*molecularDisplay
+  const displayFill = getLightAppearance(light).fillIntensity*(1-molecularDisplay)+getLightAppearance(400).fillIntensity*molecularDisplay
   const skipElapsed = useRef(false)
   useEffect(() => {
     const change=()=>{skipElapsed.current=true}
@@ -254,11 +259,11 @@ function Contents(props: SceneProps) {
   </>
   return <>
     <color attach="background" args={['#04080a']} />
-    <ambientLight color="#6a8c9b" intensity={0.025 + brightness * 0.14} />
-    <hemisphereLight args={['#ddd8b7', '#304640', brightness * 0.24]} />
-    <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={getLightAppearance(light).keyIntensity} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
-    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={getLightAppearance(light).fillIntensity} />
-    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.09} />
+    <ambientLight color="#6a8c9b" intensity={0.025 + displayBrightness * 0.14 + moonFill} />
+    <hemisphereLight args={['#ddd8b7', '#304640', displayBrightness * 0.24]} />
+    <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={displayKey} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
+    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={displayFill} />
+    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.09 + moonFill} />
     <group ref={root}>{layers}</group>
     <CameraAndScale {...props} />
     <EffectComposer multisampling={0}>

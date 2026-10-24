@@ -160,3 +160,8 @@ export function getOrbitReference(scale: number) {
     molecularYaw, molecularPitch, blend,
   }
 }
+
+/** Portrait motor close-up: optical magnification, also applied to physical readout/bar. */
+export function getFramedScale(scale: number, mobile: boolean) {
+  return scale - (mobile ? .055 * smoothstep(-7.05, -7.65, scale) : 0)
+}
