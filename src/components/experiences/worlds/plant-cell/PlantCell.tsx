@@ -9,9 +9,11 @@ import { DEFAULT_INPUTS, createPhysiology, getPhysiologySnapshot, type PlantInpu
 import { PlantScene, flyToScale, type ScaleController } from './scene'
 import { SCALE_DEFAULT, MOBILE_HERO_SCALE, SCALE_MIN, SCALE_MAX, SCALE_TICKS, LAYERS, clampScale, getActiveLayer, getScaleBar, formatLength } from './scale-model'
 import { getMolecularReadings } from './molecular-model'
+import { parseCaptureParams } from './capture-params'
 
 export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
+  const [capture, setCapture] = useState(false)
   const [ready, setReady] = useState(false), [mobile, setMobile] = useState(false), [reducedMotion, setReducedMotion] = useState(false)
   const [inputs, setInputs] = useState<PlantInputs>({ ...DEFAULT_INPUTS })
   const physiology = useRef<PhysiologyState>(null!)
@@ -30,11 +32,15 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const [reading, setReading] = useState({ scale: SCALE_DEFAULT, width: 1600 })
   const controller = useRef<ScaleController>({ current: SCALE_DEFAULT, target: SCALE_DEFAULT, touched: false, flight: null, reset: 0 })
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search), phone = window.innerWidth < 720
-    const parsed = query.has('scale') ? Number(query.get('scale')) : phone ? MOBILE_HERO_SCALE : SCALE_DEFAULT
-    const scale = clampScale(parsed)
-    controller.current.current = scale; controller.current.target = scale; controller.current.touched = query.has('scale')
-    setMobile(phone); setReading({ scale, width: window.innerWidth }); setReady(true)
+    const phone = window.innerWidth < 720
+    const initial = parseCaptureParams(window.location.search, phone)
+    controller.current.current = initial.scale; controller.current.target = initial.scale; controller.current.touched = initial.touched
+    controller.current.initialOrbit = initial.orbit
+    manualSpeed.current = initial.manualSpeed
+    setInputs(initial.inputs); lastLight.current = initial.inputs.I || 400
+    physiology.current = createPhysiology(initial.inputs, initial.daySeconds)
+    setSnapshot(getPhysiologySnapshot(physiology.current, initial.inputs)); setCapture(initial.capture)
+    setMobile(phone); setReading({ scale: initial.scale, width: window.innerWidth }); setReady(true)
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     const sync = () => setReducedMotion(media.matches)
     sync(); media.addEventListener('change', sync)
@@ -48,7 +54,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const reset = () => {
     interact(); setInputs({ ...DEFAULT_INPUTS }); physiology.current = createPhysiology(DEFAULT_INPUTS)
     setSnapshot(getPhysiologySnapshot(physiology.current, DEFAULT_INPUTS)); lastLight.current=400; setLightHint(false)
-    controller.current.reset++; flyToScale(controller.current, mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT)
+    controller.current.initialOrbit = undefined; controller.current.reset++; flyToScale(controller.current, mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT)
     manualSpeed.current = false
   }
   const changeLight = (I: number) => {
@@ -58,14 +64,14 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const active = getActiveLayer(reading.scale)
   const molecular = active === 'membrane' || active === 'motor'
   useEffect(() => {
-    if (!manualSpeed.current) setInputs(current => ({ ...current, timeScale: molecular ? 0.001 : 1 }))
-  }, [molecular])
+    if (ready && !manualSpeed.current) setInputs(current => ({ ...current, timeScale: molecular ? 0.001 : 1 }))
+  }, [molecular, ready])
   const molecularReading = getMolecularReadings(snapshot.actualPPFD, reading.scale, inputs.timeScale, inputs.playing)
   const bar = getScaleBar(reading.scale, reading.width, mobile ? 88 : 160)
   const position = (scale: number) => (SCALE_MAX - scale) / (SCALE_MAX - SCALE_MIN) * 100
   const captions = { leaf: tx('一片叶子，也是一整个世界。'), section: tx('紧密的栅栏下面，是有空隙的海绵组织。'), cell: tx('小细胞器快速流动，叶绿体用几分钟挪向合适的光。'), chloroplast: tx('一摞摞基粒，被薄薄的膜连在一起。'), membrane: tx('膜上的分子各有位置。电子一路走，质子留在腔里。'), motor: tx('转子转一圈，14 个质子通过，3 个 ATP 离开。') }
-  return <div className="pc-experience" data-plant-cell-layer={active}>
-    {ready && <PlantScene controller={controller} viewScale={reading.scale} inputs={inputs} physiology={physiology} onPhysiology={setSnapshot} mobile={mobile} reducedMotion={reducedMotion} onScale={updateReading} onInteract={interact} />}
+  return <div className="pc-experience" data-plant-cell-layer={active} data-capture={capture}>
+    {ready && <PlantScene capture={capture} controller={controller} viewScale={reading.scale} inputs={inputs} physiology={physiology} onPhysiology={setSnapshot} mobile={mobile} reducedMotion={reducedMotion} onScale={updateReading} onInteract={interact} />}
     <div className="pc-atmosphere" aria-hidden="true" />
     <header className="pc-heading" data-experience-overlay="true">
       <p><i />{tx('菠菜')} <em>Spinacia oleracea</em></p>
@@ -120,7 +126,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <p>{tx('铁氧还蛋白 1A70 是菠菜 E92K 突变体，用作形状参照；它不代表野生型电子传递速率。')}</p>
       <p>{tx('分子过程采用局部慢放。ATP 合酶转速是百圈每秒的数量级参照，不是菠菜在该光强下的实测值；L5 另按可见转速调整慢放倍率。')}</p>
     </aside>}
-    {lightHint && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
+    {lightHint && !capture && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
     <Freebar className="pc-freebar" ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
       <button type="button" onClick={reset}><ArrowCounterClockwise />{tx('回到细胞')}</button>
       <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs((current)=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>
@@ -132,6 +138,6 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       </select>
       <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={(event) => changeLight(Number(event.target.value))} /></div>
     </Freebar>
-    <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />
+    {!capture && <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />}
   </div>
 }

@@ -71,3 +71,25 @@ describe('rendered membrane occupancy', () => {
     expect(Object.values(createAppressedPatch()).flat().every(pose => pose.zone === 'appressed')).toBe(true)
   })
 })
+
+import { clusterMoleculeSurface } from './molecule-lod'
+describe('repeated-protein display LOD', () => {
+  it('reduces vertex work while retaining membrane occupancy and finite geometry', () => {
+    const footprints = {} as Record<MembranePdb, ProteinFootprint>
+    let before = 0, after = 0
+    for (const id of ['3JCU', '1RWT', '6RQF'] as const) {
+      const path = resolve('public/assets/plant-cell/molecules', id)
+      const original = decodeMoleculeSurface(readFileSync(`${path}.surface.bin.gz`), JSON.parse(readFileSync(`${path}.json`, 'utf8')))
+      const lod = clusterMoleculeSurface(original)
+      before += original.indices.length; after += lod.indices.length
+      expect([...lod.positions, ...lod.normals].every(Number.isFinite)).toBe(true)
+      expect(Math.max(...lod.indices)).toBeLessThan(lod.positions.length / 3)
+      footprints[id] = molecularFootprint(lod.positions, lod.indices)
+    }
+    const occupancy = measureAppressedCoverage(footprints)
+    console.log('Repeated-protein LOD', { triangleRatio: after / before, ...occupancy })
+    expect(after / before).toBeLessThan(.55)
+    expect(occupancy.coverage).toBeGreaterThan(.63)
+    expect(occupancy.coverage).toBeLessThan(.74)
+  })
+})

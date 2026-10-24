@@ -86,3 +86,8 @@
   .pc-boundaries { max-height: 55vh; overflow-y: auto; bottom: 170px; }
 }
 @media(prefers-reduced-motion: reduce) { .pc-experience * { scroll-behavior: auto; } }
+
+/* Capture affects only this world's page, including its existing shell header. */
+.pc-experience[data-capture=true] [data-experience-overlay],
+.pc-experience[data-capture=true] .pc-freebar,
+body:has(.pc-experience[data-capture=true]) .experience-header { visibility: hidden !important; pointer-events: none !important; }

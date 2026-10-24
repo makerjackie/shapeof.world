@@ -143,11 +143,12 @@ function refreshReadings(state: PhysiologyState, inputs: PlantInputs): void {
   Object.assign(state.chloroplasts.modeWeights, getChloroplastTargetWeights(state.actualPPFD))
 }
 
-export function createPhysiology(inputs: PlantInputs = { ...DEFAULT_INPUTS }): PhysiologyState {
+export function createPhysiology(inputs: PlantInputs = { ...DEFAULT_INPUTS }, initialDaySeconds = 8 * 3600): PhysiologyState {
+  const daySeconds = Number.isFinite(initialDaySeconds) ? ((initialDaySeconds % DAY) + DAY) % DAY : 8 * 3600
   const state: PhysiologyState = {
-    simulationSeconds: 0, daySeconds: 8 * 3600, actualPPFD: 0,
+    simulationSeconds: 0, daySeconds, actualPPFD: 0,
     grossAssimilation: 0, netAssimilation: 0, approximateNetOxygen: 0,
-    stomatalOpening: getStomatalTarget(getActualPPFD(inputs, 8 * 3600)),
+    stomatalOpening: getStomatalTarget(getActualPPFD(inputs, daySeconds)),
     starchCarbonUmolPerM2: PHYSIOLOGY_PARAMETERS.starchReferenceCapacity * 0.35, starchFraction: 0.35,
     nightStartStarchCarbon: 0, nightDegradationRate: 0, nightActive: false, nightPlanDayCycle: inputs.dayCycle,
     chloroplasts: createChloroplastMotion(),

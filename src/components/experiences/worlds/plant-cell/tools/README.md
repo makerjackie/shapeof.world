@@ -33,3 +33,14 @@ Gzip-compressed binary files use little-endian numbers and a 32-byte header:
 Atomic occlusion is the number of other heavy atoms within 1 nm, divided by 240 and clamped to [0, 1]. It is an inexpensive local-density shading proxy. It does not represent electron density, charge or a physical radiative-transfer calculation. Radius and group colour tables live in `molecule-data.ts`.
 
 All structural coordinates and CCD data are **CC0** under [RCSB's usage policy](https://www.rcsb.org/pages/usage-policy). Per-structure JSON records the PDB ID, source URL, title, source organism, resolution, article DOI and dataset DOI. `5L8R` is pea (currently labelled *Lathyrus oleraceus* in PDB taxonomy, synonym *Pisum sativum*), and `1A70` is the E92K spinach ferredoxin mutant. Neither is silently described as an unmodified spinach leaf isolate.
+
+Read-only capture URLs use `scale` (log10 horizontal metres), `light` (PPFD),
+`speed` (0, .001, 1, 60, 3600), `t` (initial hour, wrapped over 24 h),
+`az` / `el` (degrees in the current anatomical frame), and `capture=1` (hide UI).
+Setting `t` sets the clock only; run the simulation to obtain light adaptation.
+For example: `/plant-cell?scale=-7.4&light=400&speed=.001&az=26&el=18`.
+
+`verify-round3.mjs <private-output-dir>` checks camera continuity, orbit, mobile
+pinch, rotor/stator motion, dark inhibition, capture params and hint expiry.
+It uses an isolated temporary profile and headless Chrome with Metal. It does
+not capture screenshots; use the project owner's private `gpu-shot.mjs`.

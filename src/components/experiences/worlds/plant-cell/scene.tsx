@@ -18,6 +18,7 @@ export interface ScaleController {
   touched: boolean
   flight: { from: number; to: number; elapsed: number; duration: number } | null
   reset: number
+  initialOrbit?: { azimuth?: number; elevation?: number }
 }
 
 interface SceneProps {
@@ -30,6 +31,7 @@ interface SceneProps {
   reducedMotion: boolean
   onScale: (scale: number, width: number) => void
   onInteract: () => void
+  capture?: boolean
 }
 
 /** Fade material alpha without rerendering the model or rebuilding geometry. */
@@ -150,7 +152,10 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
   useFrame((state, rawDelta) => {
     const delta = Math.min(rawDelta, 0.08), c = controller.current
     if (lastReset.current !== c.reset) {
-      orbit.current={yaw:0,pitch:0,currentYaw:0,currentPitch:0}
+      const reference = getOrbitReference(c.current)
+      const yaw = c.initialOrbit?.azimuth === undefined ? 0 : c.initialOrbit.azimuth - reference.yaw
+      const pitch = c.initialOrbit?.elevation === undefined ? 0 : c.initialOrbit.elevation - reference.pitch
+      orbit.current={yaw,pitch,currentYaw:yaw,currentPitch:pitch}
       lastReset.current = c.reset; autoTime.current = 0
     }
     if (c.flight) {
@@ -236,12 +241,12 @@ function Contents(props: SceneProps) {
     <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
     <ScaleLayer layer="cell" controller={controller}><CellLayer opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
     <group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}>
-      <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
+      <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer detailOnly={viewScale < -6.25} opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
       <group position={[...GRANUM_SECTION_ANCHOR_LOCAL]} rotation={[Math.PI/2,0,0]} scale={.001}>
-        <Suspense fallback={null}><MolecularLayers opacity={getLayerWeights(viewScale).membrane + getLayerWeights(viewScale).motor} scale={viewScale} mobile={mobile} light={light} playing={inputs.playing} timeScale={inputs.timeScale} /></Suspense>
+        <Suspense fallback={null}><MolecularLayers capture={props.capture} opacity={getLayerWeights(viewScale).membrane + getLayerWeights(viewScale).motor} scale={viewScale} mobile={mobile} light={light} playing={inputs.playing} timeScale={inputs.timeScale} /></Suspense>
       </group>
     </group>
-  </>, [controller, mobile, brightness, physiology, inputs.timeScale, inputs.playing, light, snapshot.starchFraction, snapshot.stomatalOpening, viewScale])
+  </>, [controller, mobile, brightness, physiology, inputs.timeScale, inputs.playing, light, snapshot.starchFraction, snapshot.stomatalOpening, viewScale, props.capture])
   return <>
     <color attach="background" args={['#04080a']} />
     <ambientLight color="#6a8c9b" intensity={0.025 + brightness * 0.14} />

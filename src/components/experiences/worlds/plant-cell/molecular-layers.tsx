@@ -9,6 +9,7 @@ import { isWorldPaused } from '~/lib/world-playback'
 import { loadATPAtoms, loadMoleculeSurface, loadMetabolite, type MetaboliteData, type MetaboliteId } from './molecule-data'
 import { MOLECULAR_ATP_ANCHOR_NM, advanceMotor, atomRadiusNm, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch } from './molecular-model'
 import { chloroplastRandom } from './chloro-model'
+import { clusterMoleculeSurface } from './molecule-lod'
 
 export { MOLECULAR_ATP_ANCHOR_NM } from './molecular-model'
 type SurfaceData = Awaited<ReturnType<typeof loadMoleculeSurface>>
@@ -125,7 +126,7 @@ function geometryFromData(data: SurfaceData) {
 
 function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect, dismiss, sectionCutNm }: { data: SurfaceData; pdb: PDB; poses: Pose[]; opacity: number; elapsed: React.MutableRefObject<number>; light: number; inspect: (pdb: PDB, pose: Pose, metadata?: SurfaceData['metadata'], pin?: boolean) => void; dismiss: () => void; sectionCutNm: number }) {
   const ref = useRef<T.InstancedMesh>(null)
-  const geometry = useMemo(() => geometryFromData(data), [data])
+  const geometry = useMemo(() => geometryFromData(['3JCU', '1RWT', '6RQF', '8RUC', '5L8R'].includes(pdb) ? clusterMoleculeSurface(data) : data), [data, pdb])
   const diffuse = ['1AG6', '1A70'].includes(pdb)
   const cutoff = useMemo(() => ({ value: sectionCutNm }), []); cutoff.value = sectionCutNm
   const update = () => {
