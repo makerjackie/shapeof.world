@@ -8,11 +8,12 @@ import type { WaterReadings } from './water-model'
 
 type SurfaceKind = 'blade' | 'vein' | 'epidermis' | 'guard' | 'chloroplast'
 function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
-  const colors = { blade: '#376126', vein: '#658448', epidermis: '#487133', guard: '#537d38', chloroplast: '#244a20' }
+  const colors = { blade: '#3d6b29', vein: '#7c9a55', epidermis: '#487133', guard: '#537d38', chloroplast: '#244a20' }
   const material = new T.MeshPhysicalMaterial({ color: colors[kind], roughness: kind === 'vein' ? .8 : .64,
     metalness: 0, clearcoat: kind === 'vein' ? .04 : .2, clearcoatRoughness: .42,
     side: T.DoubleSide, transparent: true, opacity: 1, depthWrite: kind === 'blade' || kind === 'vein',
-    vertexColors: kind === 'epidermis', emissive: kind === 'vein' ? '#273411' : '#1c300d', emissiveIntensity: .11 })
+    vertexColors: kind === 'epidermis', // Backlit blade: the lamina transmits warm green, veins (less chlorophyll) read paler.
+    emissive: kind === 'vein' ? '#4a5e22' : kind === 'blade' ? '#2a4f14' : '#1c300d', emissiveIntensity: kind === 'blade' || kind === 'vein' ? .3 : .11 })
   material.userData.waterWilt = { value: 0 }
   material.userData.guardOpen = { value: .6 }
   const isMicro = ['epidermis', 'guard', 'chloroplast'].includes(kind)

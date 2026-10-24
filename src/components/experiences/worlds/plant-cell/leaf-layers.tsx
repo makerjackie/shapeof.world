@@ -104,7 +104,7 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: Lay
   }, [resources, poses, water.radial, water.axial])
   useEffect(() => () => { resources.tissue.dispose(); resources.protoplast.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
   return <group>
-    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .94} /></mesh>
+    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .9} color="#c2d0b4" /></mesh>
     <mesh geometry={resources.protoplast} visible={water.immersion > .001}><SectionMaterial opacity={opacity * .65} color="#a9c1aa" /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>
       <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#97c969" opacity={opacity * .95} />

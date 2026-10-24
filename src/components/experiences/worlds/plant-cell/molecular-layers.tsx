@@ -105,8 +105,8 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
   }, [atoms])
   return <group onPointerMissed={()=>{pinned.current=false;setInspection(null)}} ref={root} name="plant-molecular-frame" visible={resourcesVisible} userData={{ units: 'nm', stromaAxis: '+Y', atomCount: atoms?.positions.length ? atoms.positions.length / 3 : 0 }}>
     <MembraneArchitecture opacity={opacity} light={light} mobile={mobile} scale={scale} />
-    {PDB_IDS.filter((id) => id !== '6FKF').map((pdb) => surfaces[pdb] && <SurfacePopulation key={pdb} data={surfaces[pdb]!} pdb={pdb} poses={bodies[pdb]} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-7.05,-7.34,scale)} />)}
-    {surfaces['6FKF'] && <SurfacePopulation data={surfaces['6FKF']} pdb="6FKF" poses={bodies['6FKF']} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-7.05,-7.34,scale)} />}
+    {PDB_IDS.filter((id) => id !== '6FKF').map((pdb) => surfaces[pdb] && <SurfacePopulation key={pdb} data={surfaces[pdb]!} pdb={pdb} poses={bodies[pdb]} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-6.55,-6.8,scale)} />)}
+    {surfaces['6FKF'] && <SurfacePopulation data={surfaces['6FKF']} pdb="6FKF" poses={bodies['6FKF']} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-6.55,-6.8,scale)} />}
     <group position={MOLECULAR_ATP_ANCHOR_NM as unknown as Point}>
       {surfaces['6FKF'] && <ATPOverview motor={motor} data={surfaces['6FKF']} opacity={opacity * (1 - atomWeight)} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']!.metadata)} />}
       {atoms && <AtomicMotor data={atoms} opacity={opacity * atomWeight} motor={motor} light={light} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']?.metadata)} />}
@@ -317,7 +317,12 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
   useEffect(() => () => Object.values(materials).forEach((m) => m.dispose()), [materials])
   const cylinders = useMemo(() => new T.CylinderGeometry(235, 235, 1, mobile ? 72 : 112), [mobile])
   const lamellaGeometry = useMemo(() => new T.BoxGeometry(1, 1, 1), [])
-  const headGeometry = useMemo(() => new T.IcosahedronGeometry(0.36, 0), [])
+  // Same 20 faces, but spherical normals: headgroups read as soft beads, not facets.
+  const headGeometry = useMemo(() => {
+    const geometry = new T.IcosahedronGeometry(0.36, 0), position = geometry.getAttribute('position'), normal = geometry.getAttribute('normal'), v = new T.Vector3()
+    for (let i = 0; i < position.count; i++) { v.fromBufferAttribute(position, i).normalize(); normal.setXYZ(i, v.x, v.y, v.z) }
+    return geometry
+  }, [])
   const layers = useMemo(() => Array.from({ length: 22 }, (_, i) => i - 11), [])
   const membraneInstances: Pose[] = [], lamellaInstances: Pose[] = []
   for (const layer of layers) for (const side of [0, -1]) membraneInstances.push({ position: [0, layer * d.repeatNm + side * (d.lumenNm + d.membraneNm), -136.3], scale: 1 })

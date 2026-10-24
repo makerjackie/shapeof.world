@@ -67,6 +67,6 @@ export function LightSheet({ intensity }: { intensity: number }) {
         float beams=exp(-pow((x-0.38)*13.0,2.0))+0.6*exp(-pow((x-0.7)*24.0,2.0))+0.25*exp(-pow((x-0.52)*28.0,2.0));
         float mask=smoothstep(0.0,0.16,vUv.y)*(1.0-smoothstep(0.85,1.0,vUv.y))*exp(-(1.0-vUv.y)*2.2);
         float shadow=0.78+0.22*sin(x*70.0+vUv.y*6.0);
-        gl_FragColor=vec4(vec3(0.63,0.57,0.32),beams*mask*shadow*intensity*alpha*0.055);
+        gl_FragColor=vec4(vec3(0.72,0.6,0.3),beams*mask*shadow*intensity*alpha*0.32);
       }`} />
 }
