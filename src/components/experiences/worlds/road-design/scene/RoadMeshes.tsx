@@ -1,3 +1,4 @@
+import { terrainHeight } from '../sim/terrain'
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
@@ -58,15 +59,18 @@ function pierHitsLowerRoad(p: Vec3, road: Carriageway, roads: Carriageway[]) {
 }
 
 function projectToRoad(p: Vec3, road: Carriageway) {
-  let nearest = { distance: Infinity, lateral: 0, y: 0 }
+  let nearest = { distance: Infinity, lateral: 0, y: 0, along: 0 }, walked = 0
   for (let i = 1; i < road.points.length; i++) {
     const a = road.points[i - 1], b = road.points[i], dx = b.x - a.x, dz = b.z - a.z, length = Math.hypot(dx, dz)
     const u = Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / Math.max(0.0001, length * length)))
     const px = p.x - a.x - dx * u, pz = p.z - a.z - dz * u, distance = Math.hypot(px, pz)
-    if (distance < nearest.distance) nearest = { distance, lateral: (-dz * px + dx * pz) / Math.max(0.0001, length), y: a.y + (b.y - a.y) * u }
+    if (distance < nearest.distance) nearest = { distance, lateral: (-dz * px + dx * pz) / Math.max(0.0001, length), y: a.y + (b.y - a.y) * u, along: walked + u * length }
+    walked += length
   }
   return nearest
 }
+
+function isAuxiliary(id: string) { return id.startsWith('aux-road-') || id.startsWith('hjw-accel-') }
 
 export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Network; atlas: T.Texture; lamps: Lamp[]; simulation: TrafficSimulation }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
@@ -78,14 +82,14 @@ export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Net
       const urbanRoad = road.kind === 'urban' || Boolean(network.urbanJunctions?.length) && road.kind === 'ramp' && !road.bridge
       const half = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2, width = half * 2 + (road.shoulder ?? 0) * 2
       const bank = road.superelevation ?? 0
-      const auxiliary = road.id.startsWith('aux-road-'), main = road.kind === 'main'
-      const a = road.points[0], b = road.points.at(-1)!, horizontalLength = Math.hypot(b.x - a.x, b.z - a.z)
-      const longitudinal = (p: Vec3) => (p.x * (b.x - a.x) + p.z * (b.z - a.z)) / horizontalLength
-      const portals = network.carriageways.filter(r => r !== road && r.kind === 'ramp' && !r.id.startsWith('aux-road-')).flatMap(r => [r.points[0], r.points.at(-1)!]).flatMap(p => {
+      const auxiliary = isAuxiliary(road.id), main = road.kind === 'main'
+      const outerSide = network.lanes.find(lane => lane.id === road.id)?.right ? -1 : 1
+      const longitudinal = (p: Vec3) => projectToRoad(p, road).along
+      const portals = network.carriageways.filter(r => r !== road && r.kind === 'ramp' && !isAuxiliary(r.id)).flatMap(r => [r.points[0], r.points.at(-1)!]).flatMap(p => {
         const projection = projectToRoad(p, road)
         return projection.distance < width / 2 + 1.5 && Math.abs(p.y - projection.y) < 0.75 ? [{ at: longitudinal(p), side: Math.sign(projection.lateral) }] : []
       })
-      const auxiliaryRanges = main ? network.carriageways.filter(r => r.id.startsWith('aux-road-')).flatMap(r => {
+      const auxiliaryRanges = main ? network.carriageways.filter(r => isAuxiliary(r.id)).flatMap(r => {
         const first = r.points[0], last = r.points.at(-1)!, p = projectToRoad(first, road), q = projectToRoad(last, road)
         return Math.max(p.distance, q.distance) < width / 2 && Math.max(Math.abs(first.y - p.y), Math.abs(last.y - q.y)) < 0.75 ? [{ start: Math.min(longitudinal(first), longitudinal(last)), end: Math.max(longitudinal(first), longitudinal(last)), side: Math.sign(p.lateral) }] : []
       }) : []
@@ -104,7 +108,7 @@ export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Net
         const open = (p: Vec3, distance: number, total: number) => {
           if (urbanRoad) return true
           const along = longitudinal(p)
-          if (auxiliary) return side > 0 && portals.every(portal => Math.abs(along - portal.at) > 35)
+          if (auxiliary) return side === outerSide && portals.every(portal => Math.abs(along - portal.at) > 35)
           if (main) return portals.every(portal => portal.side !== side || Math.abs(along - portal.at) > 38) && auxiliaryRanges.every(range => range.side !== side || along < range.start - 14 || along > range.end + 14)
           if (!main) return distance > 35 && distance < total - 35
           return true
@@ -118,9 +122,9 @@ export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Net
         }
         if (main) for (const section of sections(road.points, p => auxiliaryRanges.some(range => range.side === side && longitudinal(p) > range.start && longitudinal(p) < range.end))) paint.push(...dashGeometry(section, side * half, 2, 4))
       }
-      if (road.bridge || road.points.some(p => p.y > 2.5)) {
+      if (road.bridge || road.points.some(p => p.y - terrainHeight(network,p.x,p.z) > 2.5)) {
         // Box-girder webs and soffit, sampled from exactly the same alignment as the deck.
-        for (const section of sections(road.points, p => p.y > 2.5)) {
+        for (const section of sections(road.points, p => p.y - terrainHeight(network,p.x,p.z) > 2.5)) {
           for (const side of [-1, 1]) concrete.push(wall(section, side * (width / 2 - 0.7), -1.75, 0, bank))
           const underside = strip(section, width - 1.4, 0, -1.75, bank)
           const faces = underside.getIndex()!
@@ -130,19 +134,19 @@ export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Net
           }
           underside.computeVertexNormals(); soffits.push(underside)
         }
-        for (const section of sections(road.points, p => p.y > 0.35 && p.y <= 2.5)) for (const side of [-1, 1]) {
+        for (const section of sections(road.points, p => p.y - terrainHeight(network,p.x,p.z) > 0.35 && p.y - terrainHeight(network,p.x,p.z) <= 2.5)) for (const side of [-1, 1]) {
           const retaining = wall(section, side * width / 2, -2.5, 0, bank)
           const positions = retaining.getAttribute('position')
-          for (let i = 0; i < positions.count; i += 2) positions.setY(i, 0.03)
+          for (let i = 0; i < positions.count; i += 2) positions.setY(i, terrainHeight(network,positions.getX(i),positions.getZ(i)) + 0.03)
           retaining.computeVertexNormals()
           concrete.push(retaining)
         }
         for (const { position: p, tangent: t } of samplePath(road.points, 30)) {
           // Auxiliary decks share the mainline supports. Test every other road,
           // including curved ramps, before placing a column down to the ground.
-          if (auxiliary || p.y < 3 || pierHitsLowerRoad(p, road, network.carriageways)) continue
-          const height = p.y - 2.2
-          piers.push({ position: [p.x, height / 2, p.z], scale: [1.7, height, 1.7] })
+          if (auxiliary || p.y - terrainHeight(network,p.x,p.z) < 3 || pierHitsLowerRoad(p, road, network.carriageways)) continue
+          const ground = terrainHeight(network,p.x,p.z), height = p.y - ground - 2.2
+          piers.push({ position: [p.x, ground + height / 2, p.z], scale: [1.7, height, 1.7] })
           caps.push({ position: [p.x, p.y - 2.05, p.z], scale: [width - 1, 0.85, 2.4], rotation: Math.atan2(t.x, t.z) })
         }
       }

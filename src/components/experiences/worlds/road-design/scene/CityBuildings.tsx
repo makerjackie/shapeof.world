@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
-import type { Carriageway } from '../sim/types'
+import type { Carriageway, Network } from '../sim/types'
+import { isRiver, scenicGround } from './chongqing-context'
 import { fillInstances, type Instance } from './mesh-kit'
 
 type Triple = [number,number,number]
@@ -9,26 +10,30 @@ interface OcclusionVolume { center: Triple; size: Triple }
 interface Building extends Instance { size: Triple; seed: number; kind: number; occlusion: OcclusionVolume }
 
 /** Façades are metre-scaled procedural windows, not thousands of window meshes. */
-export function CityBuildings({ urban, service = false, roads }: { urban: boolean; service?: boolean; roads?: readonly Carriageway[] }) {
+export function CityBuildings({ urban, service = false, roads, network }: { urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
   const shaderRef = useRef<T.WebGLProgramParametersWithUniforms | null>(null)
   const assets = useMemo(() => {
     const blocks: Building[] = [], beacons: number[] = []
     let seed = 12963
     const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 | 0; return (seed >>> 0) / 4294967296 }
     const box = (x: number, z: number, width: number, depth: number, height: number, base: number, kind: number, tint: string, occlusion?: OcclusionVolume) => {
-      blocks.push({ position: [x, base + height / 2, z], scale: [width, height, depth], color: tint, size: [width, height, depth], seed: random() * 1000, kind, occlusion: occlusion ?? { center:[x,base+height/2,z], size:[width,height,depth] } })
+      blocks.push({ position: [x, base + height / 2 + scenicGround(network, x, z), z], scale: [width, height, depth], color: tint, size: [width, height, depth], seed: random() * 1000, kind, occlusion: occlusion ?? { center:[x,base+height/2,z], size:[width,height,depth] } })
     }
     const building = (x: number, z: number, width: number, depth: number, height: number, near: boolean) => {
       const glass = random() < 0.26
-      const occlusion: OcclusionVolume = { center:[x,height/2,z], size:[width+5,height,depth+5] }
+      const occlusion: OcclusionVolume = { center:[x,height/2+scenicGround(network,x,z),z], size:[width+5,height,depth+5] }
       if (near) {
         const podiumHeight = 4.1 + Math.floor(random() * 2) * 3.3
-        box(x, z, width + 5, depth + 5, podiumHeight, 0, 1, '#394044', occlusion)
-        box(x, z, width, depth, height - podiumHeight, podiumHeight, glass ? 2 : 0, glass ? '#233644' : random() < 0.5 ? '#394047' : '#413e38', occlusion)
+        box(x, z, width + 5, depth + 5, podiumHeight, 0, 1, '#20211f', occlusion)
+        box(x, z, width, depth, height - podiumHeight, podiumHeight, glass ? 2 : 0, glass ? '#11191c' : random() < 0.5 ? '#20211f' : '#24211d', occlusion)
         box(x-width*0.13,z+depth*0.12,width*0.24,depth*0.21,2,height,3,'#48505a',occlusion)
         if(width>20)box(x+width*0.25,z-depth*0.2,3.5,3.5,1.3,height,3,'#51545a',occlusion)
-      } else box(x, z, width, depth, height, 0, glass ? 2 : 0, glass ? '#283746' : '#363b43')
-      if (height > 100) beacons.push(x, height + 1.3, z, random() * 6)
+      } else {
+        const crown = height > 65 ? height * (0.08 + random() * 0.12) : 0
+        box(x, z, width, depth, height - crown, 0, glass ? 2 : 0, glass ? '#10141a' : '#141719')
+        if (crown) box(x + width * 0.06, z, width * 0.65, depth * 0.75, crown, height - crown, 0, '#11151a')
+      }
+      if (height > 100) beacons.push(x, height + scenicGround(network,x,z) + 1.3, z, random() * 6)
     }
     if (urban) {
       // The nearest frontage is > 12 m behind a 7.5 m half-width road curb.
@@ -43,7 +48,7 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
         }
       }
     }
-    if (service) {
+    if (service || !urban) {
       // Small suburban blocks give the two ramp terminals a city-edge setting.
       // Keep the entire podium footprint outside every carriageway reservation.
       const clearsRoads = (x: number, z: number, width: number, depth: number) => {
@@ -60,19 +65,21 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
         })
       }
       for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-        for (const blockX of [200, 280, 360]) for (const blockZ of [90, 170]) {
+        for (const blockX of [190, 290, 420, 570]) for (const blockZ of [110, 240, 390, 550]) {
           const width = 20 + random() * 10, depth = 18 + random() * 10
           const x = sx * (blockX + (random() - 0.5) * 8), z = sz * (blockZ + (random() - 0.5) * 8)
           if (!clearsRoads(x, z, width, depth)) continue
-          building(x, z, width, depth, (4 + Math.floor(random() * 7)) * 3.3, true)
+          building(x, z, width, depth, (network?.id === 'huangjuewan' ? 12 + Math.floor(random() * 18) : 2 + Math.floor(random() * 6)) * 3.3, true)
         }
       }
     }
     // Dense city blocks sit between 0.7 and 3 km, leaving long axial street corridors.
     for (let x = -2880; x <= 2880; x += 120) for (let z = -2880; z <= 2880; z += 120) {
       const radius = Math.hypot(x, z)
-      if (radius < 720 || radius > 3000 || Math.abs(x) < 100 || Math.abs(z) < 100 || random() > 0.42) continue
+      const clusterDensity = 0.18 + 0.45 * Math.pow(0.5 + 0.5 * Math.sin(x * 0.004 + Math.cos(z * 0.004) * 2.0), 2)
+      if (radius < 720 || radius > 3000 || Math.abs(x) < 100 || Math.abs(z) < 100 || random() > clusterDensity) continue
       const px = x + (random() - 0.5) * 38, pz = z + (random() - 0.5) * 38
+      if (network?.id === 'huangjuewan' && isRiver(px,pz)) continue
       const cluster = 0.5 + 0.5 * Math.sin(x * 0.0014 + z * 0.0019)
       const height = 14 + random() ** 2.2 * (60 + cluster * 145)
       building(px, pz, 19 + random() * 35, 17 + random() * 31, height, false)
@@ -83,11 +90,11 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
     geometry.setAttribute('cityKind', new T.InstancedBufferAttribute(new Float32Array(blocks.map(b => b.kind)), 1))
     geometry.setAttribute('cityOcclusionCenter',new T.InstancedBufferAttribute(new Float32Array(blocks.flatMap(b=>b.occlusion.center)),3))
     geometry.setAttribute('cityOcclusionSize',new T.InstancedBufferAttribute(new Float32Array(blocks.flatMap(b=>b.occlusion.size)),3))
-    const material = new T.MeshStandardMaterial({ roughness: 0.84, metalness: 0.12, alphaHash: true, depthWrite: true })
+    const material = new T.MeshStandardMaterial({ roughness: 0.9, metalness: 0.08, depthWrite: true, fog: false })
     material.onBeforeCompile = shader => {
       shaderRef.current = shader
       shader.uniforms.cityCamera = { value: new T.Vector3() }
-      shader.uniforms.cityFadeEnabled = { value: urban || service ? 1 : 0 }
+      shader.uniforms.cityFadeEnabled = { value: 1 }
       shader.vertexShader = `attribute vec3 citySize; attribute float citySeed; attribute float cityKind;
         attribute vec3 cityOcclusionCenter; attribute vec3 cityOcclusionSize;
         uniform vec3 cityCamera; uniform float cityFadeEnabled;
@@ -110,7 +117,7 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
       shader.fragmentShader = `varying vec3 cityLocal; varying vec3 cityNormal; varying vec3 cityWorld;
         varying float cityRandom; varying float cityType; varying float cityFade;
         float cityHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}\n` + shader.fragmentShader
-      shader.fragmentShader = shader.fragmentShader.replace('#include <alphahash_fragment>', 'diffuseColor.a *= cityFade;\n#include <alphahash_fragment>')
+      shader.fragmentShader = shader.fragmentShader.replace('#include <alphahash_fragment>', 'if (cityFade < 0.5) discard;\n#include <alphahash_fragment>')
       shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
         if (abs(cityNormal.y) < 0.5 && cityType < 2.5) {
           float horizontal = abs(cityNormal.z) > 0.5 ? cityLocal.x : cityLocal.z;
@@ -120,17 +127,19 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
           vec2 footprint = fwidth(meters);
           vec2 aa = max(footprint * 0.5, vec2(0.012));
           float resolved = 1.0-smoothstep(0.6,2.8,max(footprint.x,footprint.y));
-          float windowShape = smoothstep(0.65-aa.x,0.65+aa.x,within.x) * (1.0-smoothstep(1.85-aa.x,1.85+aa.x,within.x))
-            * smoothstep(0.95-aa.y,0.95+aa.y,within.y) * (1.0-smoothstep(2.55-aa.y,2.55+aa.y,within.y));
+          float windowShape = smoothstep(0.8-aa.x,0.8+aa.x,within.x) * (1.0-smoothstep(1.8-aa.x,1.8+aa.x,within.x))
+            * smoothstep(1.1-aa.y,1.1+aa.y,within.y) * (1.0-smoothstep(2.5-aa.y,2.5+aa.y,within.y));
           float hash = cityHash(cell + cityRandom);
           float officeFloor = step(0.955, cityHash(vec2(cell.y,cityRandom)));
-          float occupied = max(step(0.72,hash), officeFloor * step(0.12,hash));
+          float occupancy=0.15+cityHash(vec2(cityRandom,42.0))*0.28;
+          float darkFloor=step(0.13,cityHash(vec2(cell.y+71.0,cityRandom)));
+          float occupied = max(step(1.0-occupancy,hash), officeFloor * step(0.12,hash))*darkFloor;
           vec3 windowLight = mix(vec3(1.5,1.75,2.05),vec3(2.0,1.37,0.77),step(0.3,cityHash(cell*1.31+cityRandom)));
-          float variation = 0.55 + 0.45*cityHash(cell*2.7+cityRandom);
+          float variation = 0.22 + 0.78*cityHash(cell*2.7+cityRandom);
           // Once a window is subpixel, integrate its area and occupancy rather
           // than selecting a random on/off cell: stable lights, no sparkly facade.
-          windowShape = mix(0.224,windowShape,resolved);
-          occupied = mix(0.30,occupied,resolved);
+          windowShape = mix(0.163,windowShape,resolved);
+          occupied = mix(occupancy*0.9,occupied,resolved);
           windowLight = mix(vec3(1.83,1.49,1.13),windowLight,resolved);
           variation = mix(0.72,variation,resolved);
           float distanceDimming = mix(1.0,0.46,smoothstep(350.0,1500.0,distance(cameraPosition,cityWorld)));
@@ -140,7 +149,7 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
           if (cityType > 1.5) {
             float mullion = max(1.0-smoothstep(0.025,0.06,min(within.x,2.6-within.x)),1.0-smoothstep(0.025,0.06,min(within.y,3.3-within.y)));
             diffuseColor.rgb *= mix(0.74,1.6,mullion);
-            totalEmissiveRadiance += vec3(0.016,0.032,0.055)*(1.0-windowShape);
+            totalEmissiveRadiance += vec3(0.001,0.0016,0.0020)*(1.0-windowShape);
           }
           if (cityType > 0.5 && cityType < 1.5) {
             float storefront = smoothstep(0.45,0.55,cityLocal.y)*(1.0-smoothstep(3.1,3.2,cityLocal.y));
@@ -148,16 +157,16 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
             totalEmissiveRadiance += vec3(0.42,0.245,0.112)*storefront*mullion*(0.5+0.5*cityHash(vec2(floor(horizontal/5.2),cityRandom)));
           }
         }
-        totalEmissiveRadiance += diffuseColor.rgb*(0.48+0.30*max(0.0,cityNormal.x*0.45+cityNormal.y*0.7+cityNormal.z*0.3));
+        totalEmissiveRadiance += diffuseColor.rgb*(0.07+0.06*max(0.0,cityNormal.x*0.45+cityNormal.y*0.7+cityNormal.z*0.3));
         totalEmissiveRadiance *= cityFade*cityFade;
       `)
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float cityDistance = distance(cameraPosition,cityWorld);
         float lowHaze = 1.0-exp(-max(0.0,cityDistance-280.0) * 0.00077 * exp(-max(0.0,cityWorld.y)*0.0035));
-        outgoingLight = mix(outgoingLight, vec3(0.020,0.032,0.065), lowHaze);
+        outgoingLight = mix(outgoingLight, vec3(0.0025,0.0035,0.0055), lowHaze);
         #include <opaque_fragment>`)
     }
-    material.customProgramCacheKey = () => 'road-city-facades-v4'
+    material.customProgramCacheKey = () => 'road-city-facades-v5'
     const beaconGeometry = new T.BufferGeometry()
     const beaconPosition: number[] = [], phase: number[] = []
     for (let i = 0; i < beacons.length; i += 4) { beaconPosition.push(...beacons.slice(i, i + 3)); phase.push(beacons[i + 3]) }
@@ -172,7 +181,7 @@ export function CityBuildings({ urban, service = false, roads }: { urban: boolea
       fragmentShader: `varying float brightness; void main(){float r=length(gl_PointCoord-0.5)*2.0; if(r>1.0)discard;gl_FragColor=vec4(vec3(2.8,0.04,0.018)*brightness, exp(-r*r*4.0));}`,
     })
     return { blocks, geometry, material, beaconGeometry, beaconMaterial }
-  }, [urban, service, roads])
+  }, [urban, service, roads, network])
   useFrame(({ camera, clock, gl }) => {
     shaderRef.current?.uniforms.cityCamera.value.copy(camera.position)
     assets.beaconMaterial.uniforms.time.value = clock.elapsedTime

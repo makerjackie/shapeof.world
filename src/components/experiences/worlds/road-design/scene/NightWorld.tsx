@@ -4,15 +4,19 @@ import type { Network, Vec3 } from '../sim/types'
 import { fillInstances, samplePath, type Instance } from './mesh-kit'
 import { CityBuildings } from './CityBuildings'
 import { CityLights } from './CityLights'
+import { ContextLand, contextLayout } from './ContextLand'
+import { Terrain } from './Terrain'
+import { ChongqingRiver } from './ChongqingRiver'
+import { terrainHeight } from '../sim/terrain'
 
 export interface Lamp { position: Vec3; height: number; urban: boolean; rotation: number; radius?: number }
 
 export function buildLamps(network: Network): Lamp[] {
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const lamps: Lamp[] = []
-  if (!urban) for (const x of [-98, 98]) for (const z of [-98, 98]) lamps.push({ position: { x, y: 0, z }, height: 30, urban: false, rotation: 0 })
+  if (!urban) for (const x of [-98, 98]) for (const z of [-98, 98]) lamps.push({ position: { x, y: terrainHeight(network,x,z), z }, height: 30, urban: false, rotation: 0 })
   for (const road of network.carriageways) {
-    if (road.kind === 'ramp' || road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
+    if ((road.kind === 'ramp' && network.id !== 'huangjuewan') || road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
     const cityRoad=road.kind==='urban'
     const offset = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2 + (road.shoulder ?? 0) + 1.4
     for (const { position: p, tangent: t } of samplePath(road.points, cityRoad ? 36 : 110)) {
@@ -35,6 +39,7 @@ export function buildLamps(network: Network): Lamp[] {
     const z=(horizontal?horizontal.laneCount*horizontal.laneWidth/2:3.5)+3.8
     for(const sx of[-1,1])for(const sz of[-1,1]) lamps.push({position:{x:sx*(x+12),y:0.1,z:sz*z},height:9,urban:true,rotation:sz<0?-Math.PI/2:Math.PI/2,radius:28})
   }
+  lamps.push(...contextLayout(network).lamps)
   return lamps
 }
 
@@ -124,7 +129,8 @@ function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float groundDistance=distance(cameraPosition,roadWorld);
         float horizonHaze=1.0-exp(-max(0.0,groundDistance-650.0)*0.00045);
-        outgoingLight=mix(outgoingLight,vec3(0.020,0.032,0.065),horizonHaze);
+        outgoingLight=max(outgoingLight,vec3(0.010,0.013,0.010)*(0.85+0.3*terrainNoise(roadWorld.xz*0.009)));
+        outgoingLight=mix(outgoingLight,vec3(0.006,0.008,0.011),horizonHaze);
         #include <opaque_fragment>`)
       shader.fragmentShader = shader.fragmentShader.replace('#include <fog_fragment>', `#include <fog_fragment>
         float horizonBlend=smoothstep(900.0,8500.0,distance(cameraPosition,roadWorld));
@@ -140,10 +146,11 @@ function treeInstances(network: Network) {
   let seed = 498
   const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 | 0; return (seed >>> 0) / 4294967296 }
   const plant = (x: number, z: number, height: number) => {
-    trunks.push({ position: [x, height * 0.3, z], scale: [0.25, height * 0.6, 0.25] })
+    const ground = terrainHeight(network,x,z)
+    trunks.push({ position: [x, ground + height * 0.3, z], scale: [0.25, height * 0.6, 0.25] })
     for (let lobe = 0; lobe < 3; lobe++) {
       const angle = lobe * 2.094 + random() * 0.4, spread = height * (0.44 + random() * 0.14)
-      crowns.push({ position: [x + Math.cos(angle) * height * 0.15, height * (0.62 + random() * 0.13), z + Math.sin(angle) * height * 0.15], scale: [spread, height * (0.48 + random() * 0.12), spread], color: '#0f1a12' })
+      crowns.push({ position: [x + Math.cos(angle) * height * 0.15, ground + height * (0.62 + random() * 0.13), z + Math.sin(angle) * height * 0.15], scale: [spread, height * (0.48 + random() * 0.12), spread], color: '#0f1a12' })
     }
   }
   // Small copses occupy the inside of each loop, away from ramp sight lines.
@@ -192,9 +199,12 @@ export function NightWorld({ network, atlas }: { network: Network; atlas: T.Text
     <hemisphereLight args={['#91a4cd', '#292621', 0.32]} />
     <directionalLight position={[-450, 750, -200]} color="#b9c9e2" intensity={0.52} />
     <mesh material={assets.sky}><sphereGeometry args={[7000, 32, 20]} /></mesh>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.15, 0]} material={assets.ground}><planeGeometry args={[30000, 30000]} /></mesh>
-    <CityBuildings urban={urban} service={network.id === 'diamond' || network.id === 'ddi'} roads={network.carriageways} />
-    <CityLights lamps={lamps} />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, network.terrain ? Math.min(...network.terrain.values) - .5 : -.15, 0]} material={assets.ground}><planeGeometry args={[30000, 30000]} /></mesh>
+    <Terrain network={network} material={assets.ground} />
+    <ContextLand network={network} atlas={atlas} />
+    <CityBuildings urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
+    <CityLights lamps={lamps} network={network} />
+    {network.id === 'huangjuewan' && <ChongqingRiver />}
     {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
     {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}
   </>

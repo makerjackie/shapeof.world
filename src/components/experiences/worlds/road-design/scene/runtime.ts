@@ -15,9 +15,9 @@ export class TrafficRuntime {
   lastMetricAt = 0
   pressure: { startedAt: number; from: number; to: number; duration: number; lastSample: number; status: 'running' | 'complete' | 'stopped'; samples: PressureSample[] } | null = null
   warmupMs = 0
-  constructor(network: Network, demand: number, seed = 271828) {
+  constructor(network: Network, demandMultiplier = 1, seed = 271828) {
     const start = performance.now()
-    this.simulation = new TrafficSimulation(network, { demand, seed })
+    this.simulation = new TrafficSimulation(network, { demandMultiplier, seed })
     this.simulation.warmup(120)
     this.simulation.resetMetrics()
     this.simulation.warmup(120, () => { if (this.simulation.time > 224.5) this.record() })
@@ -45,14 +45,14 @@ export class TrafficRuntime {
     }
     for (const [id, history] of this.trails) if (history.lastSeen < sim.time - 15.3) this.trails.delete(id)
   }
-  startPressure(to: number) {
-    this.simulation = new TrafficSimulation(this.simulation.network, { demand: 100, seed: 271828 })
+  startPressure(to = 2.5) {
+    this.simulation = new TrafficSimulation(this.simulation.network, { demandMultiplier: 0.25, seed: 271828 })
     this.simulation.warmup(120)
     this.simulation.resetMetrics()
     this.trails.clear()
     this.simulation.warmup(120, () => { if (this.simulation.time > 224.5) this.record() })
     this.accumulator = 0
-    this.pressure = { startedAt: this.simulation.time, from: 100, to, duration: 1200, lastSample: this.simulation.time, status: 'running', samples: [] }
+    this.pressure = { startedAt: this.simulation.time, from: 0.25, to, duration: 1200, lastSample: this.simulation.time, status: 'running', samples: [] }
   }
   stopPressure() { if (this.pressure?.status === 'running') this.pressure.status = 'stopped' }
   advance(seconds: number) {
@@ -61,7 +61,7 @@ export class TrafficRuntime {
     let count = 0
     while (this.accumulator >= 1 / 30) {
       const run = this.pressure
-      if (run?.status === 'running') this.simulation.setDemand(pressureDemand(this.simulation.time - run.startedAt, run.from, run.to, run.duration))
+      if (run?.status === 'running') this.simulation.setDemandMultiplier(pressureDemand(this.simulation.time - run.startedAt, run.from, run.to, run.duration))
       this.simulation.step(1 / 30); this.record();
       if (run?.status === 'running' && this.simulation.time - run.lastSample >= 10) {
         const metrics = this.simulation.metrics
@@ -69,8 +69,8 @@ export class TrafficRuntime {
         // Compare the same observation window on both axes; a rising input's
         // instantaneous demand would otherwise precede its measured output.
         const window = Math.min(300, elapsed + 120), rampStart = Math.max(0, elapsed - window)
-        const averagePerApproach = run.from + (run.to - run.from) / run.duration * (elapsed * elapsed - rampStart * rampStart) / (2 * window)
-        run.samples.push({ time: elapsed, demand: averagePerApproach * new Set(this.simulation.network.movements.map(movement => movement.from)).size, throughput: metrics.throughput, averageDelay: metrics.averageDelay })
+        const averageMultiplier = run.from + (run.to - run.from) / run.duration * (elapsed * elapsed - rampStart * rampStart) / (2 * window)
+        run.samples.push({ time: elapsed, demand: averageMultiplier * this.simulation.baseDemand, throughput: metrics.throughput, averageDelay: metrics.averageDelay })
         run.lastSample = this.simulation.time
         if (this.simulation.time - run.startedAt >= run.duration) run.status = 'complete'
       }

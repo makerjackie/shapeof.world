@@ -2,14 +2,17 @@ import { useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import type { Lamp } from './NightWorld'
+import type { Network } from '../sim/types'
+import { isRiver, scenicGround } from './chongqing-context'
 
 /** Far streets are decorative GPU points; they never enter the traffic model. */
-export function CityLights({ lamps }: { lamps: Lamp[] }) {
+export function CityLights({ lamps, network }: { lamps: Lamp[]; network: Network }) {
   const assets = useMemo(() => {
     const positions: number[] = [], colors: number[] = [], moves: number[] = [], sizes: number[] = []
     let seed = 3311
     const random = () => { seed = Math.imul(seed, 1664525) + 1013904223 | 0; return (seed >>> 0) / 4294967296 }
     const add = (x: number, y: number, z: number, rgb: number[], size: number, direction = 0, speed = 0) => {
+      if (size < 4 && network.id === 'huangjuewan') { if(isRiver(x,z)) return; y += scenicGround(network,x,z) }
       positions.push(x, y, z); colors.push(...rgb); sizes.push(size); moves.push(direction, speed)
     }
     for (let street = -2940; street <= 2940; street += 120) {
@@ -57,7 +60,7 @@ export function CityLights({ lamps }: { lamps: Lamp[] }) {
           gl_FragColor=vec4(glowColor,glow);}`,
     })
     return { geometry, material }
-  }, [lamps])
+  }, [lamps, network])
   useFrame(({ clock, gl }) => { assets.material.uniforms.time.value = clock.elapsedTime; assets.material.uniforms.pixelRatio.value = gl.getPixelRatio() })
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
   return <points geometry={assets.geometry} material={assets.material} frustumCulled={false} />

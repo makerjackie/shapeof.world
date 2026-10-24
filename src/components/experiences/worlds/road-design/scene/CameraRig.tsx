@@ -17,7 +17,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
     const position = design.camera.position, focus = design.camera.target
     let to = new T.Vector3(position.x, position.y, position.z), target = new T.Vector3(focus.x, focus.y, focus.z)
     if (preset === 'top') {
-      to = new T.Vector3(0, urban ? 250 : 850, 1)
+      to = new T.Vector3(0, urban ? 250 : service ? (mobile ? 700 : 450) : 850, 1)
       if (design.id === 'cloverleaf') {
         // Include the outer ramp terminals at ±330 m. Offset the nadir so
         // all sixteen conflict markers stay clear of the bottom controls.
@@ -30,17 +30,26 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
     if (preset === 'overview') {
       // A 22 degree view through a 60 degree vertical lens leaves the horizon
       // at 15% height while preserving the interchange in the lower two thirds.
-      if (urban) { to.set(74, 72, 98); target.set(0, 0, 0) }
-      else if (service) { to.set(150, 150, 225); target.set(0, 12, 0) }
-      else { to.set(225, 164, 290); target.set(0, 10, 0) }
+      if (urban && design.id !== 'continuous-flow') { to.set(74, 72, 98); target.set(0, 0, 0) }
+      else if (service) { to.set(0, 150, 280); target.set(0, 12, 0) }
+      else if (design.id === 'cloverleaf') { to.set(225, 164, 290); target.set(0, 10, 0) }
+      else if (design.chapter === 4) { to.set(250,170,310); target.set(0,28,-15) }
     }
     if (mobile && preset === 'overview') {
-      if (urban) to.set(96, 98, 118)
-      else if (service) { to.set(290, 330, 450); target.set(0, 10, 0) }
-      else { to.set(500, 430, 700); target.set(0, 44, 0) }
+      if (urban && design.id !== 'continuous-flow') to.set(96, 98, 118)
+      else if (service) { to.set(0, 230, 370); target.set(0, 8, 0) }
+      else if (design.id === 'cloverleaf') { to.set(400, 360, 570); target.set(0, 16, 0) }
+      else { to.sub(target).multiplyScalar(1.45).add(target) }
+    }
+    if (design.id === 'continuous-flow' && preset === 'top') to.set(0,mobile ? 780 : 550,1)
+    if (design.chapter === 4 && preset !== 'overview') {
+      target.set(focus.x, focus.y, focus.z)
+      if (preset === 'top') to.set(focus.x, focus.y + (mobile ? 2300 : 1900), focus.z + 1)
+      if (preset === 'close') to.set(focus.x + 190, focus.y + 145, focus.z + 245)
+      if (preset === 'low') to.set(focus.x + 220, focus.y + 38, focus.z + 360)
     }
     const perspective = camera as T.PerspectiveCamera
-    perspective.fov = preset === 'overview' ? (urban ? (mobile ? 58 : 48) : (service ? (mobile ? 62 : 60) : (mobile ? 64 : 60))) : (mobile ? 50 : 42); perspective.updateProjectionMatrix()
+    perspective.fov = preset === 'overview' ? (urban ? (mobile ? 58 : design.id === 'continuous-flow' ? 55 : 48) : (service ? (mobile ? 60 : 52) : (mobile ? 60 : design.id === 'cloverleaf' ? 60 : design.camera.fov ?? 55))) : (mobile ? 50 : 42); perspective.updateProjectionMatrix()
     if (!mounted.current || reducedMotion) {
       camera.position.copy(to); control.current?.target.copy(target); camera.lookAt(target)
       mounted.current = true
