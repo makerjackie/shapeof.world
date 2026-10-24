@@ -4,12 +4,13 @@ import { CITY_PARAMETERS, HIGHWAY_PARAMETERS, idmAcceleration } from './idm'
 import { laneChangeAllowed, laneChangeBlend, mobilDecision } from './mobil'
 import { CoreDetectors, measureApproachQueues, MetricsWindow } from './metrics'
 import { SeededRandom } from './random'
+import { createDefaultOD, totalODDemand } from './demand'
 import type { Lane, Movement, Network, SimulationMetrics, Vehicle } from './types'
 export { sampleLane } from './geometry'
 export const FIXED_DT = 1 / 30
 interface Body { vehicle: Vehicle; s: number }
 interface Arrival { movement: Movement; dueAt: number; heavy: boolean; speedFactor: number; entryRoute: string[] }
-interface Entry { id: string; movements: Movement[]; nextAt: number; queue: Arrival[] }
+interface Entry { id: string; movements: Movement[]; nextAt: number; queue: Map<string, Arrival[]>; baseRate: number; rate: number }
 interface Leader { gap: number; speed: number; vehicle?: Vehicle }
 interface SignalGate { lane: Lane; routeIndex: number; distance: number; id: string }
 
@@ -23,13 +24,19 @@ export class TrafficSimulation {
   readonly coreDetectors: CoreDetectors
   vehicles: Vehicle[] = []
   time = 0
+  /** Legacy uniform per-approach input; use totalDemand for the instrument. */
   demand: number
+  demandMultiplier = 1
+  readonly baseDemand: number
+  private odRates = new Map<string, number>()
+  private demandMode: 'uniform' | 'od'
   metrics: SimulationMetrics
   private accumulator = 0
   private nextId = 0
   private tick = 0
   private entries: Entry[]
   private bodies = new Map<string, Body[]>()
+  private predecessors = new Map<string, string[]>()
   private conflicts = new Map<string, Set<string>>()
   private conflictZones = new Map<string, MovementConflict[]>()
   private lastGapAdmission = new Map<string, number>()
@@ -41,7 +48,7 @@ export class TrafficSimulation {
   private lastMergeFrom = new Map<string, string>()
   private lastMetrics = -1
 
-  constructor(network: Network, options: { seed?: number; demand?: number } = {}) {
+  constructor(network: Network, options: { seed?: number; demand?: number; demandMultiplier?: number } = {}) {
     this.network = network
     this.coreDetectors = new CoreDetectors(network, this.metricsWindow)
     this.laneMap = new Map(network.lanes.map(lane => {
@@ -49,33 +56,56 @@ export class TrafficSimulation {
       return [lane.id, lane]
     }))
     this.movementMap = new Map(network.movements.map(movement => [movement.id, movement]))
+    for (const lane of network.lanes) for (const next of lane.next) {
+      const previous = this.predecessors.get(next) ?? []
+      previous.push(lane.id); this.predecessors.set(next, previous)
+    }
     this.random = new SeededRandom(options.seed)
-    this.demand = options.demand ?? 900
+    const od = network.defaultOD ?? createDefaultOD(network, { urbanPerApproach: 900 })
+    for (const row of od) {
+      if (!this.movementMap.has(row.movementId) || !Number.isFinite(row.vehiclesPerHour) || row.vehiclesPerHour < 0) throw new Error(`Invalid demand row: ${row.movementId}`)
+      this.odRates.set(row.movementId, (this.odRates.get(row.movementId) ?? 0) + row.vehiclesPerHour)
+    }
+    this.baseDemand = totalODDemand(od)
+    this.demandMode = options.demand === undefined ? 'od' : 'uniform'
+    this.demandMultiplier = Math.max(0, options.demandMultiplier ?? 1)
+    this.demand = options.demand ?? 0
     const origins = [...new Set(network.movements.map(movement => movement.from))]
-    this.entries = origins.map(id => ({ id, movements: network.movements.filter(movement => movement.from === id), nextAt: this.random.exponential(this.demand / 3600), queue: [] }))
-    for (const conflict of buildMovementConflicts(network)) {
+    this.entries = origins.map(id => {
+      const movements = network.movements.filter(movement => movement.from === id)
+      const baseRate = movements.reduce((sum, movement) => sum + (this.odRates.get(movement.id) ?? 0), 0)
+      const rate = this.demandMode === 'uniform' ? this.demand : baseRate * this.demandMultiplier
+      return { id, movements, baseRate, rate, nextAt: this.random.exponential(rate / 3600), queue: new Map<string, Arrival[]>() }
+    })
+    for (const conflict of network.control.kind === 'free' ? [] : buildMovementConflicts(network)) {
       for (const id of [conflict.a, conflict.b]) { const zones = this.conflictZones.get(id) ?? []; zones.push(conflict); this.conflictZones.set(id, zones) }
       if (!this.conflicts.has(conflict.a)) this.conflicts.set(conflict.a, new Set())
       if (!this.conflicts.has(conflict.b)) this.conflicts.set(conflict.b, new Set())
       this.conflicts.get(conflict.a)!.add(conflict.b)
       this.conflicts.get(conflict.b)!.add(conflict.a)
     }
-    this.metrics = this.metricsWindow.snapshot(0, [], 0, {}, this.demand * this.entries.length)
+    this.metrics = this.metricsWindow.snapshot(0, [], 0, {}, this.totalDemand)
   }
 
-  get outsideQueue(): number { return this.entries.reduce((sum, entry) => sum + entry.queue.length, 0) }
+  get outsideQueue(): number { return this.entries.reduce((sum, entry) => sum + [...entry.queue.values()].reduce((count, lane) => count + lane.length, 0), 0) }
+  get totalDemand(): number { return this.entries.reduce((sum, entry) => sum + entry.rate, 0) }
+  private rescaleArrivals(entry: Entry, nextRate: number): void {
+    if (nextRate === entry.rate) return
+    // Preserve residual Poisson hazard across continuously changing pressure input.
+    entry.nextAt = nextRate === 0 ? Infinity : entry.rate > 0 && Number.isFinite(entry.nextAt)
+      ? this.time + Math.max(0, entry.nextAt - this.time) * entry.rate / nextRate
+      : this.time + this.random.exponential(nextRate / 3600)
+    entry.rate = nextRate
+  }
   setDemand(perApproachPerHour: number): void {
-    const nextDemand = Math.max(0, perApproachPerHour)
-    if (nextDemand === this.demand) return
-    const previousDemand = this.demand
-    this.demand = nextDemand
-    for (const entry of this.entries) {
-      // Preserve the residual exponential hazard when a pressure sweep changes
-      // the rate every step. Resampling here would postpone arrivals forever.
-      entry.nextAt = nextDemand === 0 ? Infinity : previousDemand > 0 && Number.isFinite(entry.nextAt)
-        ? this.time + Math.max(0, entry.nextAt - this.time) * previousDemand / nextDemand
-        : this.time + this.random.exponential(nextDemand / 3600)
-    }
+    this.demandMode = 'uniform'
+    this.demand = Math.max(0, perApproachPerHour)
+    for (const entry of this.entries) this.rescaleArrivals(entry, this.demand)
+  }
+  setDemandMultiplier(multiplier: number): void {
+    this.demandMode = 'od'
+    this.demandMultiplier = Math.max(0, multiplier)
+    for (const entry of this.entries) this.rescaleArrivals(entry, entry.baseRate * this.demandMultiplier)
   }
   advance(seconds: number, onStep?: (simulation: TrafficSimulation) => void): void {
     if (!Number.isFinite(seconds) || seconds <= 0) return
@@ -111,7 +141,7 @@ export class TrafficSimulation {
     const heavy = options.heavy ?? false
     const base = lane.kind === 'main' || lane.kind === 'ramp' ? HIGHWAY_PARAMETERS : CITY_PARAMETERS
     const parameters = { ...base, v0: lane.speedLimit * (heavy ? 0.85 : 1), a: heavy ? 0.8 : base.a }
-    const vehicle: Vehicle = { id: this.nextId++, laneId: lane.id, s: options.s ?? 0, v: options.speed ?? lane.speedLimit, a: 0, length: heavy ? 12 : 4.6, width: heavy ? 2.5 : 1.8, heavy, parameters, movementId, route: [...movement.lanes], routeIndex, bornAt: options.bornAt ?? this.time, enteredAt: this.time, freeFlowTime: this.freeFlowTime(movement.lanes, parameters.v0), distance: 0, stoppedTime: 0, stops: 0, laneChanges: 0, lastLaneChangeAt: -10 }
+    const vehicle: Vehicle = { id: this.nextId++, laneId: lane.id, s: options.s ?? 0, v: options.speed ?? lane.speedLimit, a: 0, length: heavy ? 12 : 4.6, width: heavy ? 2.5 : 1.8, heavy, parameters, movementId, route: [...movement.lanes], routeIndex, bornAt: options.bornAt ?? this.time, enteredAt: this.time, freeFlowTime: this.freeFlowTime(movement.lanes, parameters.v0), distance: 0, stoppedTime: 0, stops: 0, laneChanges: 0, lastLaneChangeAt: -Infinity }
     this.vehicles.push(vehicle)
     return vehicle
   }
@@ -132,16 +162,34 @@ export class TrafficSimulation {
   }
 
   private chooseMovement(movements: Movement[]): Movement {
-    const turns = [...new Set(movements.map(m => m.turn))]
-    const total = turns.reduce((sum, turn) => sum + (turn === 'left' ? 0.2 : turn === 'right' ? 0.15 : 0.65), 0)
+    if (this.demandMode === 'uniform') {
+      // Keep the original seeded city arrival sequence for replay compatibility.
+      const turns = [...new Set(movements.map(m => m.turn))]
+      const proportions = { left: 0.2, straight: 0.65, right: 0.15 }
+      const total = turns.reduce((sum, turn) => sum + proportions[turn], 0)
+      let choice = this.random.next() * total
+      let turn = turns[turns.length - 1]
+      for (const candidate of turns) { choice -= proportions[candidate]; if (choice <= 0) { turn = candidate; break } }
+      const candidates = movements.filter(movement => movement.turn === turn)
+      const weight = candidates.reduce((sum, movement) => sum + (movement.weight ?? 1), 0)
+      choice = this.random.next() * weight
+      for (const candidate of candidates) { choice -= candidate.weight ?? 1; if (choice <= 0) return candidate }
+      return candidates[candidates.length - 1]
+    }
+    const total = movements.reduce((sum, movement) => sum + (this.odRates.get(movement.id) ?? 0), 0)
     let choice = this.random.next() * total
-    let turn = turns[turns.length - 1]
-    for (const candidate of turns) { choice -= candidate === 'left' ? 0.2 : candidate === 'right' ? 0.15 : 0.65; if (choice <= 0) { turn = candidate; break } }
-    const candidates = movements.filter(movement => movement.turn === turn)
-    const weight = candidates.reduce((sum, movement) => sum + (movement.weight ?? 1), 0)
-    choice = this.random.next() * weight
-    for (const candidate of candidates) { choice -= candidate.weight ?? 1; if (choice <= 0) return candidate }
-    return candidates[candidates.length - 1]
+    for (const movement of movements) { choice -= this.odRates.get(movement.id) ?? 0; if (choice <= 0) return movement }
+    return movements[movements.length - 1]
+  }
+
+  private occupiesSourceLane(vehicle: Vehicle): boolean {
+    const change = vehicle.laneChange
+    if (!change) return false
+    const source = this.laneMap.get(change.fromLaneId)!, target = this.laneMap.get(change.toLaneId)!
+    const displacement = laneChangeBlend(this.time - change.startedAt, change.duration) * (source.width + target.width) / 2
+    // The body clears the old lane before its centre settles on the new one.
+    // Keep the 3.5 s steering/indicator animation, but release actual road space.
+    return displacement < (source.width + vehicle.width) / 2
   }
 
   private rebuildIndex(): void {
@@ -154,7 +202,8 @@ export class TrafficSimulation {
       if (currentLane.signalGroups && vehicle.admittedControlPoint !== (currentLane.controlPoint ?? currentLane.id)) { vehicle.admitted = false; vehicle.permissiveWaiting = false }
       if (vehicle.laneChange && this.time - vehicle.laneChange.startedAt >= vehicle.laneChange.duration) vehicle.laneChange = undefined
       put(vehicle.laneId, { vehicle, s: vehicle.s })
-      if (vehicle.laneChange) put(vehicle.laneChange.fromLaneId, { vehicle, s: vehicle.laneChange.fromS + vehicle.s - vehicle.laneChange.toS })
+      if (this.occupiesSourceLane(vehicle)) put(vehicle.laneChange!.fromLaneId, { vehicle, s: vehicle.laneChange!.fromS + vehicle.s - vehicle.laneChange!.toS })
+      if (this.network.control.kind === 'free') continue
       if (vehicle.admitted) {
         let group = this.admitted.get(vehicle.movementId)
         if (!group) { group = []; this.admitted.set(vehicle.movementId, group) }
@@ -174,18 +223,20 @@ export class TrafficSimulation {
         const original = this.laneMap.get(movement.lanes[0])!
         const candidates = this.network.lanes.filter(lane => lane.entry === original.entry && lane.entry)
         const choice = candidates[Math.floor(this.random.next() * candidates.length)] ?? original
-        const actual = movement.turn === 'straight' ? original : choice
+        // The boundary is far upstream: route-aware OD traffic already selects
+        // an appropriate entry lane there. Mandatory transfers inside the
+        // visible interchange are still performed by MOBIL, not teleported.
+        const actual = this.demandMode === 'od' || movement.turn === 'straight' ? original : choice
         const lateral = this.lateralPath(actual.id, original.id) ?? [original.id]
-        entry.queue.push({ movement, dueAt: entry.nextAt, heavy: this.random.next() < 0.1, speedFactor: 0.9 + this.random.next() * 0.2, entryRoute: [...lateral, ...movement.lanes.slice(1)] })
-        entry.nextAt += this.random.exponential(this.demand / 3600)
+        const arrival = { movement, dueAt: entry.nextAt, heavy: this.random.next() < 0.1, speedFactor: 0.9 + this.random.next() * 0.2, entryRoute: [...lateral, ...movement.lanes.slice(1)] }
+        const laneQueue = entry.queue.get(arrival.entryRoute[0]) ?? []
+        laneQueue.push(arrival); entry.queue.set(arrival.entryRoute[0], laneQueue)
+        entry.nextAt += this.random.exponential(entry.rate / 3600)
       }
-      // A blocked turn must not prevent independent entry lanes from receiving traffic.
-      const blocked = new Set<string>()
-      for (let i = 0; i < entry.queue.length && i < 12; i++) {
-        const arrival = entry.queue[i]
-        const laneId = arrival.entryRoute[0]
-        if (blocked.has(laneId)) continue
-        blocked.add(laneId)
+      // Preserve FIFO within a lane, without letting a long blocked exit queue
+      // hide unrelated mainline arrivals behind an arbitrary scan limit.
+      for (const [laneId, queue] of entry.queue) {
+        const arrival = queue[0]
         const lane = this.laneMap.get(laneId)!
         const first = this.bodies.get(laneId)?.[0]
         const speed = Math.min(lane.speedLimit * arrival.speedFactor * (arrival.heavy ? 0.85 : 1), first?.vehicle.v ?? Infinity)
@@ -196,7 +247,8 @@ export class TrafficSimulation {
         vehicle.laneId = laneId
         vehicle.route = arrival.entryRoute
         this.bodies.set(laneId, [{ vehicle, s: 0 }, ...(this.bodies.get(laneId) ?? [])])
-        entry.queue.splice(i--, 1)
+        queue.shift()
+        if (!queue.length) entry.queue.delete(laneId)
       }
     }
   }
@@ -225,6 +277,35 @@ export class TrafficSimulation {
     return result
   }
 
+  /** Nearest following front, including cars just before a longitudinal node. */
+  private follower(vehicle: Vehicle, laneId: string, s: number): Body | undefined {
+    let nearest: Body | undefined
+    const inspect = (id: string, offset: number, next?: string) => {
+      const bodies = this.bodies.get(id) ?? []
+      for (let index = bodies.length - 1; index >= 0; index--) {
+        const body = bodies[index], position = body.s - offset
+        if (body.vehicle.id === vehicle.id || position >= s) continue
+        if (next && body.vehicle.route[body.vehicle.routeIndex + 1] !== next && body.vehicle.laneChange?.fromLaneId !== id) continue
+        if (!nearest || position > nearest.s) nearest = { vehicle: body.vehicle, s: position }
+        break
+      }
+    }
+    inspect(laneId, 0)
+    if (nearest || s >= 220) return nearest
+    const pending = [{ id: laneId, offset: 0 }], visited = new Set([laneId])
+    while (pending.length) {
+      const current = pending.shift()!
+      for (const id of this.predecessors.get(current.id) ?? []) {
+        if (visited.has(id)) continue
+        visited.add(id)
+        const offset = current.offset + this.laneMap.get(id)!.length
+        inspect(id, offset, current.id)
+        if (s + offset < 220) pending.push({ id, offset })
+      }
+    }
+    return nearest
+  }
+
   private distanceToConnector(vehicle: Vehicle): number {
     let distance = -vehicle.s
     for (let i = vehicle.routeIndex; i < vehicle.route.length; i++) {
@@ -237,6 +318,7 @@ export class TrafficSimulation {
   }
 
   private nextSignalGate(vehicle: Vehicle): SignalGate | undefined {
+    if (this.network.control.kind !== 'signal') return undefined
     let offset = -vehicle.s
     for (let index = vehicle.routeIndex; index < vehicle.route.length; index++) {
       const lane = this.laneMap.get(vehicle.route[index])!
@@ -262,15 +344,20 @@ export class TrafficSimulation {
   private exitHasSpace(vehicle: Vehicle, gate?: SignalGate): boolean {
     const destination = gate ? vehicle.route.slice(gate.routeIndex + 1).find(id => { const lane = this.laneMap.get(id)!; return lane.kind !== 'connector' || lane.waitingArea }) ?? vehicle.route.at(-1)! : vehicle.route.at(-1)!
     const first = (this.bodies.get(destination) ?? []).find(body => body.vehicle.id !== vehicle.id)
-    // Serial signal nodes reserve an actual receiving slot. Predicting that a
-    // moving platoon will clear it can leave a truck's tail stranded in the box
-    // when the downstream signal turns red. Earlier admitted vehicles consume
-    // their slots until they actually reach the receiving lane.
+    // Reserve receiving storage, including vehicles admitted but still in the
+    // connector. A moving platoon can clear the lane mouth before we arrive,
+    // but never promise more space than the link can hold if its signal closes.
     let reserved = 0
     if (gate) for (const group of this.admitted.values()) for (const other of group) {
       if (other !== vehicle && other.admittedControlPoint === gate.id && other.route.indexOf(destination, other.routeIndex + 1) > other.routeIndex) reserved += other.length + other.parameters.s0 + 2
     }
-    const clearing = !gate && first && first.vehicle.v > 2 && first.vehicle.a > -1 ? first.vehicle.v * 3 : 0
+    const receiving = this.laneMap.get(destination)!
+    const packed = (this.bodies.get(destination) ?? []).reduce((sum, body) => sum + body.vehicle.length + body.vehicle.parameters.s0 + 2, 0)
+    const storage = Math.max(0, receiving.length - packed - reserved - vehicle.length - vehicle.parameters.s0 - 4)
+    let arrivalDistance = -vehicle.s
+    for (let i = vehicle.routeIndex; i < vehicle.route.length && vehicle.route[i] !== destination; i++) arrivalDistance += this.laneMap.get(vehicle.route[i])!.length
+    const arrivalTime = Math.min(8, Math.max(1, arrivalDistance / Math.max(4, vehicle.v)))
+    const clearing = first && first.vehicle.v > 2 && first.vehicle.a > -1 ? Math.min(first.vehicle.v * arrivalTime, receiving.signalGroups ? storage : Infinity) : 0
     const available = first ? first.s + clearing - first.vehicle.length : this.laneMap.get(destination)!.length
     return available > vehicle.length + vehicle.parameters.s0 + 2 + reserved
   }
@@ -304,6 +391,7 @@ export class TrafficSimulation {
       const otherRange = zone.a === movement.id ? zone.bRange : zone.aRange
       const otherId = zone.a === movement.id ? zone.b : zone.a
       const ownDistance = this.distanceToRange(vehicle, own)
+      if (!Number.isFinite(ownDistance) || ownDistance + own.end - own.start + vehicle.length < 0) continue
       const ownTime = Math.max(0, ownDistance) / Math.max(4, vehicle.v)
       for (const other of this.admitted.get(otherId) ?? []) {
         const until = this.distanceToRange(other, otherRange)
@@ -329,6 +417,14 @@ export class TrafficSimulation {
     const ownTurn = gate ? this.laneMap.get(vehicle.route[gate.routeIndex + 1])?.turn ?? movement.turn : movement.turn
     const ownDirection = sampleLane(ownLane, ownLane.length).tangent
     for (const conflictId of conflictIds) {
+      // Permissive priority belongs to this junction. A shared motorway exit
+      // later in the O-D route cannot block a non-crossing loop entrance here.
+      if (gate && !(this.conflictZones.get(movement.id) ?? []).some(zone => {
+        if (zone.a !== conflictId && zone.b !== conflictId) return false
+        const own = zone.a === movement.id ? zone.aRange : zone.bRange
+        const distance = this.distanceToRange(vehicle, own)
+        return this.laneMap.get(own.laneId)?.controlPoint === gate.id && Number.isFinite(distance) && distance + own.end - own.start + vehicle.length >= 0
+      })) continue
       const other = this.firstApproaching.get(conflictId)
       if (!other || other.id === vehicle.id) continue
       const otherMovement = this.movementMap.get(conflictId)!
@@ -385,12 +481,30 @@ export class TrafficSimulation {
     return null
   }
 
+  private routeToDestination(start: string, target: string): string[] | null {
+    const destination = this.laneMap.get(target)?.exit
+    if (!destination) return this.routeFrom(start, target)
+    // A destination is a road exit, not one particular parallel exit lane.
+    // Otherwise through drivers cannot leave a congested outside lane at all.
+    const direct = this.routeFrom(start, target)
+    if (direct) return direct
+    for (const lane of this.network.lanes) if (lane.exit === destination && lane.id !== target) {
+      const route = this.routeFrom(start, lane.id)
+      if (route) return route
+    }
+    return null
+  }
+
   private considerLaneChange(vehicle: Vehicle): void {
-    if (vehicle.laneChange || this.time - vehicle.lastLaneChangeAt < 5 || vehicle.v < 1) return
+    if (vehicle.laneChange) return
     const lane = this.laneMap.get(vehicle.laneId)!
     if (!laneChangeAllowed(lane, vehicle.s) || lane.kind === 'connector') return
     const mandatoryNext = vehicle.route[vehicle.routeIndex + 1]
     const mandatory = Boolean(mandatoryNext && !lane.next.includes(mandatoryNext) && (lane.left === mandatoryNext || lane.right === mandatoryNext))
+    // A vehicle waiting at the end of an acceleration lane must keep looking
+    // for a safe gap; requiring forward speed would freeze it there forever.
+    if (vehicle.v < 1 && !mandatory && !lane.merge) return
+    if (this.time - vehicle.lastLaneChangeAt < (mandatory || lane.merge ? 5 : 12)) return
     const futureMandatory = vehicle.route.slice(vehicle.routeIndex, -1).some((id, index) => !this.laneMap.get(id)!.next.includes(vehicle.route[vehicle.routeIndex + index + 1]))
     if (!mandatory && futureMandatory) return
     if (!mandatory && !lane.merge && lane.length - vehicle.s < vehicle.v * 3.5 + 8) return
@@ -402,17 +516,26 @@ export class TrafficSimulation {
       const targetId = lane[direction]
       if (!targetId) continue
       const target = this.laneMap.get(targetId)!
-      const route = mandatory ? targetId === mandatoryNext ? vehicle.route.slice(vehicle.routeIndex + 1) : null : this.routeFrom(targetId, vehicle.route.at(-1)!)
+      // An auxiliary exit/weaving lane is not an overtaking lane. Through
+      // traffic stays on the motorway unless its planned route requires it.
+      if (!mandatory && lane.kind === 'main' && target.kind === 'ramp') continue
+      const movement = this.movementMap.get(vehicle.movementId)!
+      const parallelThrough = lane.kind === 'main' && target.kind === 'main' || movement.turn === 'straight' && lane.kind === 'urban' && target.kind === 'urban'
+      const route = mandatory ? targetId === mandatoryNext ? vehicle.route.slice(vehicle.routeIndex + 1) : null : parallelThrough ? this.routeToDestination(targetId, vehicle.route.at(-1)!) : this.routeFrom(targetId, vehicle.route.at(-1)!)
       if (!route || route.length > vehicle.route.length - vehicle.routeIndex + 3) continue
       const s = projectToLane(target, sampleLane(lane, vehicle.s).position)
-      if (!laneChangeAllowed(target, s) || target.length - s < 8) continue
+      if (!laneChangeAllowed(target, s) || (!mandatory && !lane.merge && target.length - s < 8)) continue
       const leader = this.leader(vehicle, targetId, s, route, 0)
-      if (leader.gap < vehicle.parameters.s0 + vehicle.v * 0.5) continue
-      const targetBodies = this.bodies.get(targetId) ?? []
-      const follower = [...targetBodies].reverse().find(body => body.s < s && body.vehicle.id !== vehicle.id)
-      const oldFollower = [...(this.bodies.get(lane.id) ?? [])].reverse().find(body => body.s < vehicle.s && body.vehicle.id !== vehicle.id)
+      const discretionary = !mandatory && !lane.merge
+      // The lane change occupies both lanes for 3.5 s. Voluntary cut-ins need
+      // the driver's normal headway at both ends; otherwise instantaneous
+      // MOBIL gains create braking waves before the lateral move can finish.
+      if (leader.gap < vehicle.parameters.s0 + vehicle.v * (discretionary ? vehicle.parameters.T : 0.5)) continue
+      const follower = this.follower(vehicle, targetId, s)
+      const oldFollower = this.follower(vehicle, lane.id, vehicle.s)
       const targetAfter = follower ? idmAcceleration(follower.vehicle.v, s - vehicle.length - follower.s, vehicle.v, follower.vehicle.parameters) : 0
       if (follower && s - vehicle.length - follower.s < 2) continue
+      if (discretionary && follower && s - vehicle.length - follower.s < follower.vehicle.parameters.s0 + follower.vehicle.v * follower.vehicle.parameters.T) continue
       const targetBefore = follower ? idmAcceleration(follower.vehicle.v, this.leader(follower.vehicle).gap, this.leader(follower.vehicle).speed, follower.vehicle.parameters) : 0
       const oldBefore = oldFollower ? idmAcceleration(oldFollower.vehicle.v, vehicle.s - vehicle.length - oldFollower.s, vehicle.v, oldFollower.vehicle.parameters) : 0
       const oldAfter = oldFollower ? idmAcceleration(oldFollower.vehicle.v, oldLeader.gap + vehicle.s - oldFollower.s, oldLeader.speed, oldFollower.vehicle.parameters) : 0
@@ -420,6 +543,10 @@ export class TrafficSimulation {
       if (!decision.accepted) continue
       vehicle.laneChange = { fromLaneId: lane.id, toLaneId: target.id, fromRoute: [...vehicle.route], fromRouteIndex: vehicle.routeIndex, fromS: vehicle.s, toS: s, startedAt: this.time, duration: 3.5, direction }
       vehicle.laneId = target.id; vehicle.s = s; vehicle.route = route; vehicle.routeIndex = 0
+      if (lane.kind === 'urban' && movement.turn === 'straight') {
+        const variant = this.network.movements.find(item => item.from === movement.from && item.to === movement.to && item.turn === movement.turn && item.lanes.includes(target.id) && item.lanes.at(-1) === route.at(-1))
+        if (variant) vehicle.movementId = variant.id
+      }
       vehicle.lastLaneChangeAt = this.time; vehicle.laneChanges++
       this.rebuildIndex()
       return
@@ -462,12 +589,35 @@ export class TrafficSimulation {
   private fixedStep(): void {
     this.rebuildIndex()
     this.spawn()
-    if (this.tick % 15 === 0) for (const vehicle of this.vehicles) this.considerLaneChange(vehicle)
+    // Each driver re-evaluates MOBIL every 0.5 s, staggered by stable vehicle
+    // ID so a thousand simultaneous decisions do not create one long frame.
+    for (const vehicle of this.vehicles) if (this.tick === 0 || vehicle.id % 15 === this.tick % 15) this.considerLaneChange(vehicle)
+    // At an acceleration-lane end, the nearest motorway follower creates a
+    // real gap by braking. The merging driver still has to pass MOBIL safety;
+    // this courtesy avoids starving a stopped ramp car in a dense platoon.
+    const courtesy = new Map<number, { gap: number; speed: number }>()
+    for (const source of this.network.lanes) {
+      if (source.kind !== 'ramp' || (!source.left && !source.right)) continue
+      const merging = this.bodies.get(source.id)?.at(-1)?.vehicle
+      if (!merging || merging.laneChange || source.length - merging.s > 75) continue
+      const targetId = merging.route[merging.routeIndex + 1]
+      if (!targetId || targetId !== source.left && targetId !== source.right) continue
+      const target = this.laneMap.get(targetId)!
+      const position = projectToLane(target, sampleLane(source, merging.s).position)
+      const follower = this.follower(merging, targetId, position - merging.length - 2)
+      if (!follower) continue
+      const gap = position - merging.length - follower.s
+      if (gap < 2 || gap > 140) continue
+      const prior = courtesy.get(follower.vehicle.id)
+      if (!prior || gap < prior.gap) courtesy.set(follower.vehicle.id, { gap, speed: merging.v })
+    }
     const updates = this.vehicles.map(vehicle => {
       const lane = this.laneMap.get(vehicle.laneId)!
       const leader = this.leader(vehicle)
-      if (vehicle.laneChange) {
-        const change = vehicle.laneChange
+      const yielding = courtesy.get(vehicle.id)
+      if (yielding && yielding.gap < leader.gap) { leader.gap = yielding.gap; leader.speed = yielding.speed }
+      if (this.occupiesSourceLane(vehicle)) {
+        const change = vehicle.laneChange!
         const source = this.leader(vehicle, change.fromLaneId, change.fromS + vehicle.s - change.toS, change.fromRoute ?? [change.fromLaneId], change.fromRouteIndex ?? 0)
         if (source.gap < leader.gap) { leader.gap = source.gap; leader.speed = source.speed }
       }
@@ -573,7 +723,7 @@ export class TrafficSimulation {
 
   refreshMetrics(): SimulationMetrics {
     const queueByApproach = measureApproachQueues(this.network.lanes, this.vehicles)
-    this.metrics = this.metricsWindow.snapshot(this.time, this.vehicles, this.outsideQueue, queueByApproach, this.demand * this.entries.length)
+    this.metrics = this.metricsWindow.snapshot(this.time, this.vehicles, this.outsideQueue, queueByApproach, this.totalDemand)
     return this.metrics
   }
 }

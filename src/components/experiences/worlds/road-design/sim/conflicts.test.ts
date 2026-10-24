@@ -1,3 +1,4 @@
+import { projectToLane, sampleLane } from './geometry'
 import { describe, expect, it } from 'vitest'
 import { DESIGNS, cloverleaf, crossroadsSignal, crossroadsYield, tJunction } from '../designs'
 import { distance } from '../designs/kit'
@@ -31,8 +32,14 @@ describe('connected road geometry', () => {
       if (previous.left === next.id || previous.right === next.id) {
         // A planned lateral transfer has aligned longitudinal coordinates and
         // enough paved width; the simulator crosses it over 3.5 seconds.
-        expect(distance(previous.points[0], next.points[0])).toBeLessThanOrEqual((previous.width + next.width) / 2 + 0.001)
-        expect(distance(previous.points.at(-1)!, next.points.at(-1)!)).toBeLessThanOrEqual((previous.width + next.width) / 2 + 0.001)
+        // Imported acceleration lanes may cover only part of a longer mainline.
+        // Check the actual transfer interval by projection, not equal lengths.
+        const shorter = previous.length < next.length ? previous : next, longer = shorter === previous ? next : previous
+        for (const fraction of [0.2, 0.5, 0.8]) {
+          const p = sampleLane(shorter, shorter.length * fraction).position
+          const q = sampleLane(longer, projectToLane(longer, p)).position
+          expect(distance(p, q)).toBeLessThanOrEqual((previous.width + next.width) / 2 + 0.05)
+        }
       } else {
         expect(previous.next).toContain(next.id)
         expect(distance(previous.points[previous.points.length - 1], next.points[0])).toBeLessThan(0.001)

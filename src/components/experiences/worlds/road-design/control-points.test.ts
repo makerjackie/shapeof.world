@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest'
+import { lane, line, point } from './designs/kit'
+import type { Network } from './sim/types'
 import { buildRoundabout } from './designs/roundabout'
 import { buildServiceInterchange } from './designs/diamond'
 import { TrafficSimulation } from './sim/simulation'
@@ -53,10 +55,38 @@ describe('roundabout circulating priority', () => {
 })
 
 describe('local signal conflict reservations', () => {
+  it('does not reduce saturation flow merely by representing a green as a local lane gate', () => {
+    const run = (gated: boolean) => {
+      const network: Network = {
+        id: 'gate-capacity', carriageways: [], schematicMovements: [], weaving: [],
+        lanes: [
+          lane('in', line(point(-1000, 0), point(0, 0)), { kind: 'urban', width: 3.5, level: 0, speedLimit: 14, next: ['box'], entry: 'west', ...(gated ? { signalGroups: ['a'], controlPoint: 'a' } : {}) }),
+          lane('box', line(point(0, 0), point(40, 0)), { kind: 'connector', width: 3.5, level: 0, speedLimit: 11, next: ['out'], controlPoint: 'a' }),
+          lane('out', line(point(40, 0), point(840, 0)), { kind: 'urban', width: 3.5, level: 0, speedLimit: 14, next: [], exit: 'east', controlPoint: 'a' }),
+        ],
+        movements: [{ id: 'm', name: '', from: 'west', to: 'east', turn: 'straight', lanes: ['in', 'box', 'out'], signalGroup: 'a' }],
+        control: { kind: 'signal', phases: [{ id: 'a', groups: ['a'], green: 10000, yellow: 3, allRed: 2 }] },
+        measurementArea: { minX: -10, maxX: 100, minZ: -10, maxZ: 10 },
+      }
+      const sim = new TrafficSimulation(network, { demand: 1800, seed: 1 })
+      sim.advance(600)
+      return sim.refreshMetrics().throughput
+    }
+    const original = run(false), local = run(true)
+    expect(original).toBeGreaterThan(1450)
+    expect(Math.abs(local - original) / original).toBeLessThan(.01)
+  })
+  it('locates a shared-stream merge before the second signal, rather than reserving the final exit again', () => {
+    const zones = buildMovementConflicts(buildServiceInterchange(true))
+    const shared = zones.find(zone => zone.kind === 'merge' && [zone.a, zone.b].includes('west-east') && [zone.a, zone.b].includes('north-east'))!
+    expect(shared.aRange.laneId).toBe('right-e-in')
+    expect(shared.bRange.laneId).toBe('right-e-in')
+  })
+
   it('does not reserve a distant highway merge while waiting at the ramp terminal', () => {
     const sim = new TrafficSimulation(buildServiceInterchange(false), { demand: 0 })
     const movement = sim.movementMap.get('east-south')!
-    const routeIndex = movement.lanes.indexOf('left-e-in'), gate = sim.laneMap.get('left-e-in')!
+    const routeIndex = movement.lanes.indexOf('left-e-left-pocket'), gate = sim.laneMap.get('left-e-left-pocket')!
     const car = sim.createVehicle(movement.id, { routeIndex, s: gate.length - 3, speed: 0 })
     const aheadMovement = sim.movementMap.get('west-south')!
     const ahead = sim.createVehicle(aheadMovement.id, { routeIndex: aheadMovement.lanes.indexOf('left-r-out'), s: 13, speed: 8 })

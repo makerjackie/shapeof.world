@@ -47,7 +47,7 @@ export function buildChannelizedCrossroads(): Network {
       const index = turn === 'right' ? 2 : i, outIndex = turn === 'right' ? 2 : i
       const connectorId = `${name}-${ARMS[to]}-connector-${i}`
       const a = at(from, turn === 'left' ? 10 : EDGE, turn === 'left' ? W / 2 : W * (index + 1.5)), b = at(to, EDGE, -W * (outIndex + 0.5))
-      const handle = turn === 'right' ? 13 : turn === 'left' ? 15 : 20
+      const handle = turn === 'right' ? 13 : turn === 'left' ? 6 : 20
       const points = bezier(a, point(a.x - D[from].x * handle, a.z - D[from].z * handle), point(b.x - D[to].x * handle, b.z - D[to].z * handle), b, 64)
       const fromId = turn === 'left' ? `${name}-left-wait` : `${name}-approach-${index}`, outId = `${ARMS[to]}-out-${outIndex}`
       lanes.find(item => item.id === fromId)!.next.push(connectorId)
@@ -67,9 +67,9 @@ export function buildChannelizedCrossroads(): Network {
   }))
   return { id: 'crossroads-channelized', lanes, movements, carriageways, schematicMovements, weaving: [], measurementArea: { minX: -150, maxX: 150, minZ: -150, maxZ: 150 }, urbanJunctions: [{ id: 'center', position: point(0, 0), arms: ARMS.map(direction => ({ direction, halfWidth: 14.45, reach: REACH })), cornerRadius: 12 }], control: { kind: 'signal', phases: [
     { id: 'ns-through', groups: ['ns-through'], green: 28, yellow: 3, allRed: 2 },
-    { id: 'ns-left', groups: ['ns-left'], green: 14, yellow: 3, allRed: 2 },
+    { id: 'ns-left', groups: ['ns-left'], green: 26, yellow: 3, allRed: 2 },
     { id: 'ew-through', groups: ['ew-through'], green: 28, yellow: 3, allRed: 2 },
-    { id: 'ew-left', groups: ['ew-left'], green: 14, yellow: 3, allRed: 2 },
+    { id: 'ew-left', groups: ['ew-left'], green: 26, yellow: 3, allRed: 2 },
   ] } }
 }
 
