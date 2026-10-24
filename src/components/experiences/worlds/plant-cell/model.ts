@@ -43,13 +43,13 @@ export function advanceSimulation(state: PlantEnvironment, elapsedSeconds: numbe
 /** A display transfer function, deliberately not a photosynthesis model. */
 export function getLightAppearance(I: number) {
   const fraction = clampLight(I) / 2000
-  const brightness = fraction > 0 ? 0.45 + 0.55 * Math.sqrt(fraction) : 0
+  const brightness = Math.log1p(clampLight(I) / 80) / Math.log1p(2000 / 80)
   return {
     fraction,
     brightness,
-    keyIntensity: 0.08 + brightness * 4.3,
-    fillIntensity: 0.04 + brightness * 0.45,
-    beamOpacity: 0.006 + 0.065 * fraction,
+    keyIntensity: brightness * 6.2,
+    fillIntensity: brightness * 0.45,
+    beamOpacity: 0.065 * brightness,
     chloroplastBrightness: 0.28 + 0.72 * Math.sqrt(fraction),
   }
 }
@@ -98,6 +98,8 @@ export interface PhysiologySnapshot {
   starchCarbonUmolPerM2: number
   timeScale: number
   playing: boolean
+  /** Centres on the upper rounded cap, y >= 23 µm in the reference cell. */
+  topChloroplastCount: number
 }
 
 /**
@@ -199,6 +201,7 @@ export function getPhysiologySnapshot(state: PhysiologyState, inputs: PlantInput
     approximateNetOxygen: state.approximateNetOxygen, stomatalOpening: state.stomatalOpening,
     starchFraction: state.starchFraction, starchCarbonUmolPerM2: state.starchCarbonUmolPerM2,
     timeScale: inputs.timeScale, playing: inputs.playing,
+    topChloroplastCount: state.chloroplasts.poses.filter(pose => pose.positionUm[1] >= 23).length,
   }
 }
 
