@@ -23,6 +23,8 @@ import { TrafficRuntime } from './scene/runtime'
 import { Blueprint } from './scene/Blueprint'
 import { FrameBudget } from './scene/FrameBudget'
 import { PressurePanel, type PressureCurves } from './PressurePanel'
+import { CompareTable } from './CompareTable'
+import { measureGeometry } from './sim/geometry-costs'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
 function numberQuery(name: string, fallback: number, max: number) {
@@ -53,7 +55,7 @@ function Scene({ design, network, runtime, speed, playing, shutter, showConflict
     {(showConflicts || blueprint) && <ConflictMarkers network={network} conflicts={conflicts} />}
     <CameraRig design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} />
     <EffectComposer multisampling={0}>
-      <N8AO aoRadius={1.6} intensity={blueprint || query('ao') === '0' ? 0 : 0.35} distanceFalloff={1} quality="medium" aoSamples={16} denoiseSamples={8} denoiseRadius={8} halfRes />
+      {!blueprint && query('ao') !== '0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} quality="medium" aoSamples={16} denoiseSamples={8} denoiseRadius={8} halfRes /> : <></>}
       <Bloom luminanceThreshold={1.25} luminanceSmoothing={0.18} intensity={0.42} mipmapBlur resolutionScale={0.6} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette offset={0.25} darkness={0.32} />
@@ -62,7 +64,7 @@ function Scene({ design, network, runtime, speed, playing, shutter, showConflict
 }
 
 function Diagram({ network }: { network: Network }) {
-  const range = network.id === 'cloverleaf' ? 230 : ['diamond', 'ddi'].includes(network.id) ? 260 : network.id === 'crossroads-channelized' ? 105 : 63
+  const range = network.id === 'huangjuewan' ? 1200 : network.carriageways.some(r => r.kind === 'main') ? (network.id === 'cloverleaf' ? 230 : 450) : network.id === 'crossroads-channelized' ? 105 : network.id === 'continuous-flow' ? 170 : 63
   return <svg viewBox={`${-range} ${-range} ${range * 2} ${range * 2}`} aria-hidden="true">
     {network.carriageways.map(road => <polyline key={road.id} points={road.points.map(p => `${p.x},${p.z}`).join(' ')} fill="none" stroke="currentColor" strokeWidth={road.laneCount * road.laneWidth + (road.medianWidth ?? 0)} opacity={road.level > 0 ? 0.95 : 0.4} />)}
   </svg>
@@ -74,7 +76,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   const design = DESIGNS.find(d => d.id === designId)!
   const [networks] = useState(() => new Map(DESIGNS.map(d => [d.id, d.build()])))
   const network = networks.get(designId)!
-  const [demand, setDemand] = useState(() => numberQuery('demand', design.defaultDemand, 6000))
+  const [demand, setDemand] = useState(() => Math.max(0.25, numberQuery('multiplier', 1, 2.5)))
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [playing, setPlaying] = useState(!reducedMotion), [speed, setSpeed] = useState(1)
   const [shutter, setShutter] = useState(() => numberQuery('shutter', 6, 15))
@@ -86,6 +88,8 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   const [viewChanging, setViewChanging] = useState(false)
   const [curves, setCurves] = useState<PressureCurves>({})
   const [showPressure, setShowPressure] = useState(false)
+  const [showCompare, setShowCompare] = useState(query('compare') === '1')
+  const [expanded, setExpanded] = useState(false)
   const firstView = useRef(true)
   // The simulation is persistent state, not a disposable memoization cache.
   // Demand edits retain it; changing the design creates a reproducible new run.
@@ -97,7 +101,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   const capture = query('capture') === '1'
   const interact = useCallback(() => controls.registerInteraction(), [controls])
   const conflicts = useMemo(() => summarizeConflicts(calculateConflicts(network)), [network])
-  const layers = new Set(network.carriageways.map(road => road.level)).size
+  const cost = useMemo(() => measureGeometry(network), [network])
   useEffect(() => { controls.completeOnboarding() }, [controls])
   useEffect(() => {
     if (firstView.current) { firstView.current = false; return }
@@ -107,14 +111,17 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     return () => { clearTimeout(switchView); clearTimeout(settle) }
   }, [blueprint])
   useEffect(() => {
-    if (runtime.pressure?.status !== 'running') runtime.simulation.setDemand(demand)
+    if (runtime.pressure?.status !== 'running') {
+      runtime.simulation.setDemandMultiplier(demand)
+      setReadout({ ...runtime.simulation.refreshMetrics() })
+    }
   }, [runtime, demand])
   useEffect(() => {
     setReadout(runtime.simulation.metrics)
     const timer = window.setInterval(() => {
       setReadout({ ...runtime.simulation.metrics })
       if (runtime.pressure) {
-        setDemand(runtime.simulation.demand)
+        setDemand(runtime.simulation.demandMultiplier)
         setCurves(previous => ({ ...previous, [designId]: [...runtime.pressure!.samples] }))
       }
       if (stage.current) {
@@ -137,6 +144,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   }, [])
   useEffect(() => {
     const key = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { setShowCompare(false); setExpanded(false); return }
       if ((event.target as HTMLElement)?.matches('input,select,textarea,button') || event.metaKey || event.ctrlKey || event.altKey) return
       if (event.code === 'Space') { event.preventDefault(); setPlaying(p => !p); interact() }
       if (event.key === '[') { setSpeed(s => s === 16 ? 4 : 1); interact() }
@@ -152,7 +160,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     if (runtime.pressure?.status === 'running') setSpeed(1)
     runtime.stopPressure()
     if (runtime.pressure) setCurves(previous => ({ ...previous, [designId]: [...runtime.pressure!.samples] }))
-    setDesignId(next.id); setDemand(next.defaultDemand); setPreset('overview'); setRevision(r => r + 1); interact()
+    setDesignId(next.id); setDemand(1); setPreset('overview'); setRevision(r => r + 1); interact()
   }
   const pressureRunning = runtime.pressure?.status === 'running'
   const pressureProgress = runtime.pressure ? Math.min(1, (runtime.simulation.time - runtime.pressure.startedAt) / runtime.pressure.duration) : 0
@@ -164,12 +172,12 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   }, [designId])
   const startPressure = () => {
     if (pressureRunning) { runtime.stopPressure(); setSpeed(1); setReadout({ ...runtime.simulation.metrics }) }
-    else { runtime.startPressure(design.chapter === 3 ? 6000 : 2400); setShowPressure(true); setPlaying(true); setSpeed(16); setReadout({ ...runtime.simulation.metrics }) }
+    else { runtime.startPressure(2.5); setShowPressure(true); setExpanded(true); setPlaying(true); setSpeed(16); setReadout({ ...runtime.simulation.metrics }) }
     interact()
   }
   const format = (value: number) => Math.round(value).toLocaleString('en-US')
   const tools = <div className="rd-tools">
-    <label>{tx('需求')}<input aria-label={tx('每进口需求')} type="range" min="0" max={design.chapter === 3 ? 6000 : 2400} step="25" value={demand} onChange={e => { if (runtime.pressure?.status === 'running') setSpeed(1); runtime.stopPressure(); setDemand(Number(e.target.value)); interact() }} /><output>{format(demand)} <small>{tx('辆/时/进口')}</small></output></label>
+    <label>{tx('需求倍率')}<input aria-label={tx('需求倍率')} type="range" min="0.25" max="2.5" step="0.05" value={demand} onChange={e => { if (runtime.pressure?.status === 'running') setSpeed(1); runtime.stopPressure(); setDemand(Number(e.target.value)); interact() }} /><output>{demand.toFixed(2)}×</output></label>
     <label>{tx('快门')}<input aria-label={tx('快门')} type="range" min="0" max="15" step="0.5" value={shutter} onChange={e => { setShutter(Number(e.target.value)); interact() }} /><output>{shutter.toFixed(1)} s</output></label>
     <button type="button" className="rd-pressure-toggle" aria-pressed={pressureRunning} onClick={startPressure}>{tx(pressureRunning ? '停止压力测试' : '压力测试')}</button>
     <div className="rd-camera-presets experience-freebar-seg" role="group" aria-label={tx('镜头')}>
@@ -181,9 +189,12 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
       <Scene design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={renderBlueprint} interact={interact} />
     </Canvas>
     <div className="rd-view-transition" data-changing={viewChanging} aria-hidden="true" />
+    {designId === 'huangjuewan' && <div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture && <>
       <header className="rd-heading" data-experience-overlay="true"><h1>{tx('路口与立交')}</h1><p>{tx(design.name)}</p></header>
-      <aside className="rd-instruments" aria-label={tx('交通读数')} data-experience-overlay="true">
+      <aside className="rd-instruments" data-expanded={expanded} aria-label={tx('交通读数')} data-experience-overlay="true">
+        <button className="rd-summary" type="button" aria-expanded={expanded} onClick={() => { setExpanded(value => !value); interact() }}><span>{tx('冲突点')} <b>{conflicts.total}</b></span><span>{format(readout.throughput)} <small>{tx('辆/时')}</small></span><span>+{Math.round(readout.averageDelay)} s</span><i>{expanded ? '−' : '+'}</i></button>
+        <div className="rd-instrument-detail">
         <div className="rd-conflict-count"><span>{tx('冲突点')}</span><strong>{conflicts.total}</strong></div>
         <div className="rd-conflict-key"><span><i className="is-crossing" />{tx('交叉')} {conflicts.crossing}</span><span><i className="is-merge" />{tx('合流')} {conflicts.merge}</span><span><i className="is-diverge" />{tx('分流')} {conflicts.diverge}</span></div>
         <div className="rd-flow-pair"><div><span>{tx('需求')}</span><strong>{format(readout.demand)}</strong></div><i>/</i><div><span>{tx('通过量')}</span><strong>{format(readout.throughput)}</strong></div><small>{tx('辆/时')}</small></div>
@@ -193,11 +204,13 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
           <div><dt>{tx('在网车辆')}</dt><dd>{format(readout.vehicles)}</dd></div>
           <div><dt>{tx('画面外排队')}</dt><dd>{format(readout.outsideQueue)}</dd></div>
         </dl>
-        <div className="rd-layer-readout"><span>{tx('层数')}</span><b>{layers}</b><span>{tx('最高路面')}</span><b>{Math.max(...network.carriageways.flatMap(r => r.points.map(p => p.y))).toFixed(1)} <small>m</small></b></div>
+        <div className="rd-cost"><h2>{tx('代价')}</h2><dl><div><dt>{tx('层数')}</dt><dd>{cost.layers}</dd></div><div><dt>{tx('最高路面')}</dt><dd>{cost.maximumHeight.toFixed(1)} <small>m</small></dd></div><div><dt>{tx('桥面面积')}</dt><dd>{format(cost.bridgeArea)} <small>m²</small></dd></div><div><dt>{tx('匝道总长')}</dt><dd>{(cost.rampLength / 1000).toFixed(2)} <small>km</small></dd></div></dl><p>{tx('占地（凸包估算）')} <b>{(cost.hullArea / 10000).toFixed(1)} ha</b></p></div>
         <p className="rd-why">{tx(design.description)}</p>
         <small className="rd-window">{tx('核心区断面 · 最长 5 分钟')}</small>
         {showPressure && <PressurePanel curves={curves} designs={DESIGNS} current={designId} running={pressureRunning} progress={pressureProgress} speed={speed} />}
+        </div>
       </aside>
+      {showCompare && <CompareTable designs={DESIGNS} networks={networks} curves={curves} current={designId} onSelect={next => { selectDesign(next); setShowCompare(false) }} onClose={() => setShowCompare(false)} />}
       <nav className="rd-catalog" aria-label={tx('道路图鉴')} data-experience-overlay="true">
         {[{ chapter: 1, name: '平面交叉' }, { chapter: 2, name: '服务型立交' }, { chapter: 3, name: '枢纽型立交' }, { chapter: 4, name: '真实案例' }].filter(group => DESIGNS.some(d => d.chapter === group.chapter)).map(group => <div className="rd-catalog-group" key={group.chapter}>
           <span className="rd-chapter">{tx(group.name)}</span>
@@ -209,6 +222,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
         <div className="experience-freebar-seg" role="group" aria-label={tx('模拟速度')}>{[1, 4, 16].map(s => <button key={s} type="button" aria-pressed={speed === s} onClick={() => { setSpeed(s); interact() }}>{s}×</button>)}</div>
         <button type="button" className="rd-conflicts-toggle" aria-pressed={showConflicts} onClick={() => { setShowConflicts(!showConflicts); interact() }}>{tx('冲突点')}</button>
         <button type="button" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
+        <button type="button" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
       </Freebar>
       <GhostHint worldId="road-design" delay={8000} gesture={{ type: 'tap', target: '[data-design-id="t-junction"]', label: tx('换一种路口，看车流怎样改变') }} />
     </>}

@@ -90,3 +90,32 @@
   .rd-pressure-plot svg { height:48px; margin-bottom:5px; }
   .rd-pressure-axis { margin:0; }.rd-pressure-legend { margin-top:6px; }
 }
+
+.rd-summary { display:none; }
+.rd-cost { border-top:1px solid #ffffff14; padding-top:10px; }
+.rd-cost h2 { font-size:10px; font-weight:400; letter-spacing:.12em; color:#c0b39c; margin:0; }
+.rd-cost dl { margin:10px 0; gap:12px 8px; }.rd-cost dd { font-size:15px; }.rd-cost p { display:flex; justify-content:space-between; font-size:9px; color:#919aa7; margin:0; }.rd-cost b { font-weight:400; color:#c3c9d1; }
+.rd-instruments { max-height:calc(100% - 235px); overflow-y:auto; scrollbar-width:thin; scrollbar-color:#ffffff20 transparent; }
+.rd-compare { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:min(1050px,calc(100% - 48px)); max-height:calc(100% - 170px); background:#071019f2; border:1px solid #a4bddb33; border-radius:6px; z-index:20; padding:22px; backdrop-filter:blur(16px); box-shadow:0 20px 80px #0008; font-variant-numeric:tabular-nums; }
+.rd-compare header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:18px; }.rd-compare header strong { font-size:16px; font-weight:400; }.rd-compare header p { font-size:11px; color:#8e9bac; margin:8px 0 0; }.rd-compare header button { border:0; background:none; color:#aeb9c6; font-size:24px; cursor:pointer; }
+.rd-compare-scroll { overflow:auto; max-height:60vh; }.rd-compare table { border-collapse:collapse; width:100%; white-space:nowrap; text-align:right; font-size:12px; }.rd-compare th,.rd-compare td { padding:10px 12px; border-bottom:1px solid #d0dfef12; font-weight:400; }.rd-compare thead th { color:#8396ab; font-size:10px; }.rd-compare th:first-child { text-align:left; }.rd-compare tr[data-current=true] { background:#9fbce013; }.rd-compare td small { color:#8d9eae; font-size:9px; margin-left:5px; }.rd-compare tbody th button { padding:0; color:#c8d8e9; font-size:12px; background:none; border:0; cursor:pointer; }.rd-compare tbody tr:hover { background:#9fbce01c; }.rd-compare-note { color:#7f91a4; font-size:10px; line-height:1.7; margin:14px 0 0; }
+.rd-attribution { position:absolute; bottom:15px; left:18px; display:flex; flex-direction:column; gap:3px; font-size:9px; color:#a9b4bc; pointer-events:none; }.rd-attribution small { font-size:8px; color:#8c969e; }
+@media(max-width:720px) {
+ .rd-heading { top:66px; }.rd-heading h1 { font-size:17px; }
+ .rd-instruments { top:116px; padding:0; display:block; max-height:calc(100% - 320px); }
+ .rd-summary { display:flex; width:100%; justify-content:space-between; gap:10px; align-items:center; padding:10px 12px; background:none; border:0; color:#b2c0ce; font-size:10px; cursor:pointer; font-variant-numeric:tabular-nums; }.rd-summary b { font-size:15px; font-weight:400; color:#e3e9f0; }.rd-summary i { font-style:normal; color:#a7b0bb; }.rd-summary small { font-size:8px; }
+ .rd-instrument-detail { display:none; padding:12px; border-top:1px solid #ffffff12; }.rd-instruments[data-expanded=true] .rd-instrument-detail { display:grid; grid-template-columns:1fr 1.5fr; gap:8px 14px; }
+ .rd-cost { grid-column:1/-1; }.rd-cost dl { grid-template-columns:repeat(4,1fr); }.rd-cost dd { font-size:12px; }.rd-cost p { margin-top:6px; }.rd-cost h2 { font-size:9px; }
+ .rd-compare { width:calc(100% - 20px); padding:14px; max-height:calc(100% - 130px); }.rd-compare th,.rd-compare td { padding:9px 10px; }.rd-compare-scroll { max-height:58vh; }
+ .rd-attribution { bottom:155px; left:14px; font-size:8px; max-width:calc(100% - 28px); }.rd-attribution small { font-size:7px; }
+ .road-design-experience .rd-freebar button { font-size:11px; }.road-design-experience .rd-freebar-main { padding:6px; gap:5px; }
+}
+.rd-layer-label { display:block; border:1px solid currentColor; padding:3px 7px; font-size:10px; font-variant-numeric:tabular-nums; white-space:nowrap; background:#07121fe8; pointer-events:none; }
+
+.rd-attribution a { color:inherit; pointer-events:auto; text-decoration:none; }.road-design-experience[data-capture=true] .rd-attribution { bottom:12px; opacity:.75; }
+@media(max-width:720px) {
+ .road-design-experience .rd-freebar .experience-freebar-primary { gap:4px; }
+ .road-design-experience .rd-freebar .experience-freebar-primary > .experience-freebar-seg { flex:0 0 auto; }
+ .road-design-experience .rd-freebar .experience-freebar-primary > .experience-freebar-seg button { min-width:27px; padding-inline:5px !important; font-size:10px; }
+ .road-design-experience .rd-freebar .experience-freebar-primary > button:not(.experience-freebar-play):not(.experience-freebar-summary) { padding-inline:8px !important; }
+}

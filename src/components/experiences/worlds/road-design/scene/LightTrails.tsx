@@ -22,11 +22,11 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
     for (const [name, array] of Object.entries(arrays)) geometry.setAttribute(name, new T.InstancedBufferAttribute(array, name === 'times' ? 2 : name === 'properties' ? 4 : 3).setUsage(T.DynamicDrawUsage))
     const material = new T.ShaderMaterial({
       transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide, toneMapped: false,
-      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 } },
+      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, minimumWidth: { value: 3.2 }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 } },
       vertexShader: `
         attribute vec4 corner; attribute vec3 start; attribute vec3 end;
         attribute vec3 directionA; attribute vec3 directionB; attribute vec2 times; attribute vec4 properties;
-        uniform vec2 resolution; uniform float shutter; uniform float simTime; uniform float blueprint;
+        uniform vec2 resolution; uniform float minimumWidth; uniform float shutter; uniform float simTime; uniform float blueprint;
         varying vec3 vLight; varying float vSide; varying float vFade;
         void main(){
           vec3 direction=normalize(mix(directionA,directionB,corner.x));
@@ -36,7 +36,7 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
           vec4 ahead=projectionMatrix*modelViewMatrix*vec4(p+direction,1.0);
           vec2 screenDir=(ahead.xy/ahead.w-clip.xy/clip.w)*resolution;
           vec2 perpendicular=normalize(vec2(-screenDir.y,screenDir.x)+vec2(0.000001));
-          float pixelWidth=max(3.2,0.23*projectionMatrix[1][1]*resolution.y/max(1.0,-view.z));
+          float pixelWidth=max(minimumWidth,0.23*projectionMatrix[1][1]*resolution.y/max(1.0,-view.z));
           clip.xy+=perpendicular*corner.y*pixelWidth/resolution*clip.w;
           gl_Position=clip;
           float facing=dot(direction*corner.z,normalize(cameraPosition-p));
@@ -55,10 +55,10 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
     return { geometry, material, arrays, lastTime: -1, lastShutter: -1, simulation: runtime.simulation }
   }, [])
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
-  useFrame(({ size }) => {
+  useFrame(({ size, gl }) => {
     if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1 }
     const time = runtime.simulation.time
-    assets.material.uniforms.resolution.value.set(size.width, size.height)
+    assets.material.uniforms.resolution.value.set(size.width, size.height); assets.material.uniforms.minimumWidth.value = size.width < 720 ? 1.5 / Math.max(1, gl.getPixelRatio()) : 3.2
     assets.material.uniforms.blueprint.value = blueprint ? 1 : 0;
     assets.material.uniforms.shutter.value = shutter; assets.material.uniforms.simTime.value = time
     if (shutter <= 0.01) { assets.geometry.instanceCount = 0; assets.lastShutter = shutter; return }

@@ -39,7 +39,7 @@ function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = f
       const arm = Math.abs(far.x) > Math.abs(far.z) ? far.x > 0 ? 'east' : 'west' : far.z > 0 ? 'south' : 'north'
       arms.set(arm, { half: road.laneCount * road.laneWidth / 2 + (road.shoulder ?? 0), reach: Math.hypot(far.x, far.z), height: near.y })
       const half = road.laneCount * road.laneWidth / 2 + (road.shoulder ?? 0)
-      for (const { position: p, tangent: t } of samplePath(road.points, 8)) {
+      for (const { position: p, tangent: t } of samplePath(road.points, 12)) {
         if (Math.hypot(p.x, p.z) < 30) continue
         for (const side of [-1, 1]) {
           const x = p.x - t.z * side * (half + 2.8), z = p.z + t.x * side * (half + 2.8)
@@ -48,9 +48,9 @@ function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = f
           const ring = [{ x: x - 1, y: p.y + KERB_HEIGHT + 0.03, z: z - 1 }, { x: x + 1, y: p.y + KERB_HEIGHT + 0.03, z: z - 1 }, { x: x + 1, y: p.y + KERB_HEIGHT + 0.03, z: z + 1 }, { x: x - 1, y: p.y + KERB_HEIGHT + 0.03, z: z + 1 }, { x: x - 1, y: p.y + KERB_HEIGHT + 0.03, z: z - 1 }]
           pitRims.push(strip(ring, 0.12))
           trunks.push({ position: [x, p.y + height * 0.28, z], scale: [0.23, height * 0.56, 0.23] })
-          for (let cluster = 0; cluster < 4; cluster++) {
-            const a = cluster * 2.399 + variation * Math.PI, r = cluster === 0 ? 0 : 0.8
-            crowns.push({ position: [x + Math.cos(a) * r, p.y + height * (cluster === 0 ? 0.8 : 0.65), z + Math.sin(a) * r], scale: [(3.3 + variation) * 0.85, (3 + variation * 0.8) * 0.85, (3.1 + variation) * 0.85], color: cluster % 2 ? '#142116' : '#101b12' })
+          for (let cluster = 0; cluster < 3; cluster++) {
+            const a = cluster * 2.399 + variation * Math.PI, r = cluster === 0 ? 0 : 1.15
+            crowns.push({ position: [x + Math.cos(a) * r, p.y + height * (cluster === 0 ? 0.8 : 0.65), z + Math.sin(a) * r], scale: [2.5 + Math.sin(a)*.7 + variation*.4, 2.4 + Math.cos(a)*.6, 2.6 + Math.sin(a+1.3)*.6], color: cluster % 2 ? '#0d170f' : '#101a12' })
           }
         }
       }
@@ -161,24 +161,28 @@ function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = f
 function RoundaboutIslands({ atlas, radius }: { atlas: T.Texture; radius: number }) {
   const assets = useMemo(() => {
     const edges: T.BufferGeometry[] = [], surfaces: T.BufferGeometry[] = [], apron: T.BufferGeometry[] = []
-    const circle = arc(roadPoint(0, 0, 0.026), radius, 0, Math.PI * 2, 160)
+    const circle = arc(roadPoint(0, 0, 0.026), radius - 2.2, 0, Math.PI * 2, 160)
     edges.push(wall(circle, 0, 0, 0.15), strip(circle, 0.2, 0, 0.15))
     // The mountable truck apron is mountable; the raised island stays clear of the
     // swept vehicle envelope. A thin planted mound is visible from low views.
-    const apronWidth = 16 - radius
+    const apronWidth = 16 - radius + 2.2
     apron.push(strip(circle, apronWidth, -apronWidth / 2, 0.025))
     for (let arm = 0; arm < 4; arm++) {
       const angle = arm * Math.PI / 2, c = Math.cos(angle), s = Math.sin(angle)
       const points = ROUNDABOUT_SPLITTER.map(p => ({ x: p.x * c - p.z * s, y: 0.176, z: p.x * s + p.z * c }))
       surfaces.push(planarPolygon(points)); edges.push(wall([...points, points[0]], 0, -0.15, 0), strip([...points, points[0]], 0.15))
     }
-    return { edges: mergeGeometry(edges), surfaces: mergeGeometry(surfaces), apron: mergeGeometry(apron), cement: litMaterial(atlas, '#75716a', 1.3), grass: litMaterial(atlas, '#192b1c', 1.1), apronMaterial: litMaterial(atlas, '#564e3e', 1.25) }
+    return { edges: mergeGeometry(edges), surfaces: mergeGeometry(surfaces), apron: mergeGeometry(apron), cement: litMaterial(atlas, '#75716a', 1.3), grass: litMaterial(atlas, '#10170e', 0.65), foliage: litMaterial(atlas, '#152015', 1.9), apronMaterial: litMaterial(atlas, '#777064', 1.1) }
   }, [atlas, radius])
-  useEffect(() => () => { assets.edges.dispose(); assets.surfaces.dispose(); assets.apron.dispose(); assets.cement.dispose(); assets.grass.dispose(); assets.apronMaterial.dispose() }, [assets])
+  useEffect(() => () => { assets.edges.dispose(); assets.surfaces.dispose(); assets.apron.dispose(); assets.cement.dispose(); assets.grass.dispose(); assets.foliage.dispose(); assets.apronMaterial.dispose() }, [assets])
   return <>
     <mesh geometry={assets.edges} material={assets.cement} />
     <mesh geometry={assets.surfaces} material={assets.cement} />
     <mesh geometry={assets.apron} material={assets.apronMaterial} />
-    <mesh position={[0, 0.21, 0]} material={assets.grass}><cylinderGeometry args={[radius - 0.12, radius - 0.12, 0.13, 96]} /></mesh>
+    {[0,1,2,3,4,5,6,7,8].map(i=><mesh key={i} position={[Math.cos(i*2.4)*9,.65,Math.sin(i*2.4)*9]} scale={[2.3,1.1,1.7]} material={assets.foliage}><icosahedronGeometry args={[1,1]}/></mesh>)}
+    <mesh position={[0,2.3,0]}><cylinderGeometry args={[.2,.34,4.5,8]}/><meshStandardMaterial color="#3d3021"/></mesh>
+    {[[-1,4.6,0],[1.2,5.5,.4],[.1,6,-.7]].map((p,i)=><mesh key={i} position={p as [number,number,number]} scale={[3.1,2.7,2.8]} material={assets.foliage}><icosahedronGeometry args={[1,1]}/></mesh>)}
+    <pointLight position={[4,5,1]} color="#e9c69a" intensity={16} distance={16} decay={2}/>
+    <mesh position={[0, 0.21, 0]} material={assets.grass}><cylinderGeometry args={[radius - 2.32, radius - 2.32, 0.13, 96]} /></mesh>
   </>
 }
