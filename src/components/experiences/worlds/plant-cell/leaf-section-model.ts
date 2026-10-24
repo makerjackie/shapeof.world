@@ -65,7 +65,7 @@ export function createTissueGeometry(cells: TissueCell[]) {
   const capsule = new T.CapsuleGeometry(1, 8 / 3, 5, 18)
   const cp = capsule.getAttribute('position') as T.BufferAttribute
   for (let i = 0; i < cp.count; i++) cp.setY(i, cp.getY(i) / (7 / 3))
-  const positions: number[] = [], colors: number[] = [], indices: number[] = [], point = new T.Vector3()
+  const positions: number[] = [], colors: number[] = [], centers: number[] = [], indices: number[] = [], point = new T.Vector3()
   for (const cell of cells) {
     const source = cell.kind === 'palisade' ? capsule : sphere
     const attr = source.getAttribute('position'), offset = positions.length / 3
@@ -73,7 +73,7 @@ export function createTissueGeometry(cells: TissueCell[]) {
     tone.multiplyScalar(.93 + .12 * Math.sin(cell.phase * 2))
     for (let i = 0; i < attr.count; i++) {
       sectionPoint(cell, point.fromBufferAttribute(attr, i), point)
-      positions.push(point.x, point.y, point.z); colors.push(tone.r, tone.g, tone.b)
+      positions.push(point.x, point.y, point.z); centers.push(cell.center.x, cell.center.y, cell.center.z); colors.push(tone.r, tone.g, tone.b)
     }
     for (const index of source.index!.array) indices.push(offset + index)
   }
@@ -81,12 +81,13 @@ export function createTissueGeometry(cells: TissueCell[]) {
   const geometry = new T.BufferGeometry()
   geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3))
   geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 3))
+  geometry.setAttribute('cellCenter', new T.Float32BufferAttribute(centers, 3))
   geometry.setIndex(indices); geometry.computeVertexNormals()
   return geometry
 }
 
 export function createSectionChloroplasts(cells: TissueCell[], mobile = false) {
-  const rand = seededLeafRandom(1298), matrices: T.Matrix4[] = [], colors: T.Color[] = []
+  const rand = seededLeafRandom(1298), matrices: T.Matrix4[] = [], colors: T.Color[] = [], centers: T.Vector3[] = []
   const object = new T.Object3D(), point = new T.Vector3(), normal = new T.Vector3(), axis = new T.Vector3(0, 0, 1)
   for (const cell of cells) {
     if (cell.kind !== 'palisade' && cell.kind !== 'sponge') continue
@@ -101,11 +102,11 @@ export function createSectionChloroplasts(cells: TissueCell[], mobile = false) {
       normal.set(Math.cos(a), y * .3, Math.sin(a)).normalize()
       object.quaternion.setFromUnitVectors(axis, normal)
       object.scale.set(2.8 + rand() * .4, 1.7 + rand() * .2, .85 + rand() * .15)
-      object.updateMatrix(); matrices.push(object.matrix.clone())
+      object.updateMatrix(); matrices.push(object.matrix.clone()); centers.push(cell.center.clone())
       colors.push(new T.Color().setHSL(.25 + rand() * .025, .50 + rand() * .08, .38 + rand() * .06))
     }
   }
-  return { matrices, colors }
+  return { matrices, colors, centers }
 }
 
 export function createXylemGeometry() {

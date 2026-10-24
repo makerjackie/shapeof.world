@@ -1,12 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import * as T from 'three'
 import { Cutaway, useCutaway } from './cutaway'
+import type { WaterReadings } from './water-model'
+import { cellFold } from './water-geometry'
 import { LEAF_ENTRY } from './leaf-model'
 import { createGuardGeometry, guardCellMatrices } from './leaf-surface-geometry'
 import { createSectionCells, createSectionChloroplasts, createTissueGeometry, createXylemGeometry, LOWER_PORES, SECTION_STOMATA } from './leaf-section-model'
 
 export { LeafLayer } from './leaf-surface'
-type LayerProps = { opacity: number; mobile?: boolean; stomataOpen?: number }
+type LayerProps = { opacity: number; mobile?: boolean; stomataOpen?: number; water: WaterReadings }
 
 function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 }: { opacity: number; kind?: 'wall' | 'chloroplast' | 'xylem' | 'guard' | 'cuticle'; color?: string; open?: number }) {
   const cut = useCutaway()
@@ -65,17 +67,33 @@ export function SectionLayer(props: LayerProps) {
   return <Cutaway><SectionTissue {...props} /></Cutaway>
 }
 
-function SectionTissue({ opacity, mobile = false, stomataOpen = .6 }: LayerProps) {
+function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: LayerProps) {
   const chloroplastRef = useRef<T.InstancedMesh>(null), guardsRef = useRef<T.InstancedMesh>(null), guardChloroplastRef = useRef<T.InstancedMesh>(null)
   const resources = useMemo(() => {
     const cells = createSectionCells(mobile)
-    return { tissue: createTissueGeometry(cells), chloroplasts: createSectionChloroplasts(cells, mobile), xylem: createXylemGeometry(), guard: createGuardGeometry() }
+    const tissue = createTissueGeometry(cells)
+    return { tissue, protoplast: tissue.clone(), chloroplasts: createSectionChloroplasts(cells, mobile), xylem: createXylemGeometry(), guard: createGuardGeometry() }
   }, [mobile])
   const poses = useMemo(() => guardCellMatrices(SECTION_STOMATA, stomataOpen), [stomataOpen])
   useLayoutEffect(() => {
+    for (const [geometry, radial, axial, wrinkle] of [[resources.tissue,water.wallRadial,water.wallAxial,water.wrinkles], [resources.protoplast,water.radial,water.axial,water.wrinkles]] as const) {
+      const attr = geometry.getAttribute('position') as T.BufferAttribute, centers = geometry.getAttribute('cellCenter')
+      geometry.userData.restPositions ??= new Float32Array(attr.array)
+      const rest = geometry.userData.restPositions as Float32Array
+      for (let i=0;i<attr.count;i++) {
+        const y=rest[i*3+1]-centers.getY(i), fold=cellFold(y,wrinkle)
+        attr.setXYZ(i,centers.getX(i)+(rest[i*3]-centers.getX(i))*radial*fold,centers.getY(i)+y*axial,centers.getZ(i)+(rest[i*3+2]-centers.getZ(i))*radial*fold)
+      }
+      attr.needsUpdate=true;geometry.computeVertexNormals();geometry.computeBoundingSphere()
+    }
+  }, [resources, water.radial, water.axial, water.wallRadial, water.wallAxial, water.wrinkles])
+  useLayoutEffect(() => {
     const chloroplasts = chloroplastRef.current
     if (chloroplasts) {
-      resources.chloroplasts.matrices.forEach((matrix, index) => { chloroplasts.setMatrixAt(index, matrix); chloroplasts.setColorAt(index, resources.chloroplasts.colors[index]) })
+      resources.chloroplasts.matrices.forEach((matrix, index) => {
+        const transformed=matrix.clone(), c=resources.chloroplasts.centers[index], e=transformed.elements
+        e[12]=c.x+(e[12]-c.x)*water.radial;e[13]=c.y+(e[13]-c.y)*water.axial;e[14]=c.z+(e[14]-c.z)*water.radial
+        chloroplasts.setMatrixAt(index, transformed); chloroplasts.setColorAt(index, resources.chloroplasts.colors[index]) })
       chloroplasts.instanceMatrix.needsUpdate = true
       if (chloroplasts.instanceColor) chloroplasts.instanceColor.needsUpdate = true
       chloroplasts.computeBoundingSphere()
@@ -83,10 +101,11 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6 }: LayerProps
     for (const [mesh, matrices] of [[guardsRef.current, poses.guards], [guardChloroplastRef.current, poses.chloroplasts]] as const) if (mesh) {
       matrices.forEach((matrix, index) => mesh.setMatrixAt(index, matrix)); mesh.instanceMatrix.needsUpdate = true; mesh.computeBoundingSphere()
     }
-  }, [resources, poses])
-  useEffect(() => () => { resources.tissue.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
+  }, [resources, poses, water.radial, water.axial])
+  useEffect(() => () => { resources.tissue.dispose(); resources.protoplast.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
   return <group>
     <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .94} /></mesh>
+    <mesh geometry={resources.protoplast} visible={water.immersion > .001}><SectionMaterial opacity={opacity * .65} color="#a9c1aa" /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>
       <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#97c969" opacity={opacity * .95} />
     </instancedMesh>

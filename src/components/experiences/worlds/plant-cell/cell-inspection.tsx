@@ -7,6 +7,8 @@ import type { PhysiologyState } from './model'
 import { useCutaway } from './cutaway'
 
 const ORGANELLES = {
+  'cell-saline-gap': ['外液间隙', 'Extracellular saline gap', '0.5 M NaCl'],
+  'cell-hechtian-strands': ['赫氏丝', 'Hechtian strands', '50–100 nm'],
   'wall-chloroplasts': ['叶绿体', 'Chloroplast', '5.2–6 × 3.3–3.8 × 2–2.3 μm'],
   'cell-nucleus': ['细胞核', 'Nucleus', '8 μm'],
   'streaming-mitochondria': ['线粒体', 'Mitochondrion', '0.5–1.5 μm'],
@@ -30,7 +32,7 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     }
     selection.object.localToWorld(point); point.applyMatrix4(cut.fromWorld)
     // ER is an extended network; retain its actual picked point.
-    if (selection.kind === 'cell-er') point.fromArray(selection.position)
+    if (['cell-er', 'cell-saline-gap', 'cell-hechtian-strands'].includes(selection.kind)) point.fromArray(selection.position)
     anchor.current.position.copy(point)
   })
   useEffect(() => { if (!enabled) setSelection(null) }, [enabled])
@@ -49,7 +51,9 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     setSelection(null)
   }
   const state = physiology.current
-  const activity = selection?.kind === 'wall-chloroplasts'
+  const activity = selection?.kind === 'cell-saline-gap' ? '原生质体收缩后，外面的盐水填入壁与膜之间；不是空气。'
+    : selection?.kind === 'cell-hechtian-strands' ? '质膜仍在这些点连接细胞壁，被拉成细丝。'
+    : selection?.kind === 'wall-chloroplasts'
     ? state.actualPPFD === 0 ? '黑暗中消耗淀粉，缓慢移向底部和侧壁。' : state.chloroplasts.modeWeights.avoidance > .5 ? '缓慢移向侧壁，减少强光照射。' : '进行光合作用，缓慢调整向光位置。'
     : selection?.kind === 'streaming-mitochondria' ? '进行呼吸作用，随胞质流移动并翻转。'
     : selection?.kind === 'streaming-peroxisomes' ? '参与光呼吸和氧化物代谢，常在叶绿体旁停留。'

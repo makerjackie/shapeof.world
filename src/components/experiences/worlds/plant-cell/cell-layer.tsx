@@ -5,6 +5,8 @@ import { cellRadius, cellSurface, cutRim, curveGeometry, cytoplasmicTracks, erNe
 import { LightSheet, Membrane, ParticleMaterial } from './cell-materials'
 import { Cutaway, TissueMaterial, useCutaway } from './cutaway'
 import type { PhysiologyState } from './model'
+import { getWaterReadings } from './water-model'
+import { updateCellFolds, createHechtianStrands } from './water-geometry'
 import { CellInspection } from './cell-inspection'
 
 function random(seed: number) {
@@ -312,23 +314,44 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
   const vacuole=useMemo(()=>cellSurface(true),[]), rim=useMemo(()=>cutRim(-1.2),[]), er=useMemo(erNetwork,[])
   const strands=useMemo(()=>curveGeometry(cytoplasmicTracks().slice(12),0.09,90),[])
   useEffect(()=>()=>{for(const geometry of [wall,membrane,vacuole,rim,er,strands]) geometry.dispose()},[wall,membrane,vacuole,rim,er,strands])
+  const water = getWaterReadings(physiology.current.water)
+  const hechtian = useMemo(() => createHechtianStrands(water), [water.radial, water.axial, water.wallRadial, water.wallAxial, water.immersion, water.concavity, water.wrinkles])
+  useEffect(() => () => hechtian.dispose(), [hechtian])
+  useLayoutEffect(() => {
+    updateCellFolds(wall, water.wrinkles); updateCellFolds(rim, water.wrinkles)
+    updateCellFolds(membrane, water.wrinkles, water.concavity)
+    updateCellFolds(vacuole, water.wrinkles, water.concavity)
+  }, [wall, rim, membrane, vacuole, water.wrinkles, water.concavity])
   return <group>
     <CellContext opacity={opacity} />
     <Cutaway>
       <CellInspection enabled={inspectable} physiology={physiology}>
+      <group name="cell-water-wall" scale={[water.wallRadial,water.wallAxial,water.wallRadial]}>
       <mesh geometry={wall} receiveShadow><TissueMaterial color="#b5ba9a" kind="wall" opacity={opacity*0.19} roughness={0.96} depthWrite={false} /></mesh>
-      <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={0.11} base={0.001} fibers /></mesh>
       <SliceEdge geometry={rim} opacity={opacity} />
+      <WallPores opacity={opacity} />
+      </group>
+      {water.immersion > .001 && <>
+        <mesh name="cell-saline-gap" geometry={wall} scale={[.985, .99, .985]}><TissueMaterial color="#8ca7a9" opacity={opacity * .035} depthWrite={false} /></mesh>
+        <mesh name="cell-hechtian-strands" geometry={hechtian}><TissueMaterial color="#c1cec0" opacity={opacity * .85} /></mesh>
+      </>}
+      </CellInspection>
+    </Cutaway>
+    <group name="cell-water-protoplast" scale={[water.radial,water.axial,water.radial]}>
+    <Cutaway>
+      <CellInspection enabled={inspectable} physiology={physiology}>
+      <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={water.immersion > .01 ? .23 : .11} base={.001 + .012 * water.immersion} fibers /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#afc5bb" opacity={opacity*0.012} depthWrite={false} /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
       <mesh geometry={strands}><Membrane color="#c4cabb" opacity={opacity} strength={0.13} base={0.02} /></mesh>
       <mesh name="cell-er" geometry={er}><TissueMaterial color="#929b91" opacity={opacity*0.18} /></mesh>
-      <WallPores opacity={opacity} />
+
       <WallChloroplasts opacity={opacity} physiology={physiology} starch={starch} />
       <Nucleus opacity={opacity} />
       <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} timeScale={timeScale} physiology={physiology} />
       {[[-2,3,-5],[4,4,-10],[-6,5,0]].map((p,i)=><mesh key={i} position={p as [number,number,number]} rotation={[0,i*.75,-.08]} scale={[18-i*3,61,1]}><planeGeometry /><LightSheet intensity={light*opacity*(1-i*.18)*3.8} /></mesh>)}
       </CellInspection>
     </Cutaway>
+    </group>
   </group>
 }

@@ -1,3 +1,4 @@
+import { advanceWater, createWater, getWaterReadings, waterStomatalFactor, type WaterModel, type WaterReadings } from './water-model'
 import { advanceChloroplastMotion, createChloroplastMotion, getChloroplastTargetWeights, type ChloroplastMotionState } from './chloroplast-motion'
 
 /** Distances are micrometres throughout the scene, including the leaf. */
@@ -85,6 +86,7 @@ export interface PhysiologyState {
   nightActive: boolean
   /** Which light schedule supplied the current darkness-consumption horizon. */
   nightPlanDayCycle: boolean
+  water: WaterModel
   chloroplasts: ChloroplastMotionState
 }
 export interface PhysiologySnapshot {
@@ -100,6 +102,7 @@ export interface PhysiologySnapshot {
   playing: boolean
   /** Centres on the upper rounded cap, y >= 23 µm in the reference cell. */
   topChloroplastCount: number
+  water: WaterReadings
 }
 
 /**
@@ -130,25 +133,31 @@ export function getStomatalTarget(ppfd: number): number {
   const light = clampLight(ppfd)
   return light / (light + 80)
 }
-export function advanceStomatalOpening(opening: number, ppfd: number, dtSimSeconds: number): number {
-  const target = getStomatalTarget(ppfd)
+export function advanceStomatalOpening(opening: number, ppfd: number, dtSimSeconds: number, waterFactor = 1): number {
+  const target = getStomatalTarget(ppfd) * waterFactor
   const dt = Number.isFinite(dtSimSeconds) ? Math.max(0, dtSimSeconds) : 0
-  return target + (Math.max(0, Math.min(1, opening)) - target) * Math.exp(-dt / PHYSIOLOGY_PARAMETERS.stomatalTimeConstantSeconds)
+  return target + (Math.max(0, Math.min(1, opening)) - target) * Math.exp(-dt / (waterFactor < .99 ? 60 : PHYSIOLOGY_PARAMETERS.stomatalTimeConstantSeconds))
 }
 
 function refreshReadings(state: PhysiologyState, inputs: PlantInputs): void {
   state.actualPPFD = getActualPPFD(inputs, state.daySeconds)
-  Object.assign(state, evaluatePhotosynthesis(state.actualPPFD))
+  const lightRate = evaluatePhotosynthesis(state.actualPPFD)
+  const conductance = Math.min(1, state.stomatalOpening / Math.max(.001, getStomatalTarget(state.actualPPFD)))
+  state.grossAssimilation = lightRate.grossAssimilation * conductance
+  state.netAssimilation = state.grossAssimilation - PHYSIOLOGY_PARAMETERS.darkRespiration
+  state.approximateNetOxygen = state.netAssimilation
   state.starchFraction = Math.max(0, Math.min(1, state.starchCarbonUmolPerM2 / PHYSIOLOGY_PARAMETERS.starchReferenceCapacity))
   Object.assign(state.chloroplasts.modeWeights, getChloroplastTargetWeights(state.actualPPFD))
 }
 
-export function createPhysiology(inputs: PlantInputs = { ...DEFAULT_INPUTS }, initialDaySeconds = 8 * 3600): PhysiologyState {
+export function createPhysiology(inputs: PlantInputs = { ...DEFAULT_INPUTS }, initialDaySeconds = 8 * 3600, waterProgress?: number): PhysiologyState {
   const daySeconds = Number.isFinite(initialDaySeconds) ? ((initialDaySeconds % DAY) + DAY) % DAY : 8 * 3600
+  const water = createWater(inputs.water, waterProgress)
   const state: PhysiologyState = {
+    water,
     simulationSeconds: 0, daySeconds, actualPPFD: 0,
     grossAssimilation: 0, netAssimilation: 0, approximateNetOxygen: 0,
-    stomatalOpening: getStomatalTarget(getActualPPFD(inputs, daySeconds)),
+    stomatalOpening: getStomatalTarget(getActualPPFD(inputs, daySeconds)) * waterStomatalFactor(water.psi),
     starchCarbonUmolPerM2: PHYSIOLOGY_PARAMETERS.starchReferenceCapacity * 0.35, starchFraction: 0.35,
     nightStartStarchCarbon: 0, nightDegradationRate: 0, nightActive: false, nightPlanDayCycle: inputs.dayCycle,
     chloroplasts: createChloroplastMotion(),
@@ -183,9 +192,12 @@ export function advancePhysiology(state: PhysiologyState, inputs: PlantInputs, r
       state.nightPlanDayCycle = inputs.dayCycle
     }
     state.nightActive = dark
-    const carbonRate = dark ? -state.nightDegradationRate : PHYSIOLOGY_PARAMETERS.starchAllocation * Math.max(0, evaluatePhotosynthesis(irradiance).netAssimilation)
+    state.water = advanceWater(state.water, inputs.water, dt)
+    state.stomatalOpening = advanceStomatalOpening(state.stomatalOpening, irradiance, dt, waterStomatalFactor(state.water.psi))
+    const conductance = Math.min(1, state.stomatalOpening / Math.max(.001, getStomatalTarget(irradiance)))
+    const netCarbon = evaluatePhotosynthesis(irradiance).grossAssimilation * conductance - PHYSIOLOGY_PARAMETERS.darkRespiration
+    const carbonRate = dark ? -state.nightDegradationRate : PHYSIOLOGY_PARAMETERS.starchAllocation * Math.max(0, netCarbon)
     state.starchCarbonUmolPerM2 = Math.max(0, Math.min(PHYSIOLOGY_PARAMETERS.starchReferenceCapacity, state.starchCarbonUmolPerM2 + carbonRate * dt))
-    state.stomatalOpening = advanceStomatalOpening(state.stomatalOpening, irradiance, dt)
     advanceChloroplastMotion(state.chloroplasts, irradiance, dt)
     state.simulationSeconds += dt
     state.daySeconds = (state.daySeconds + dt) % DAY
@@ -202,6 +214,7 @@ export function getPhysiologySnapshot(state: PhysiologyState, inputs: PlantInput
     approximateNetOxygen: state.approximateNetOxygen, stomatalOpening: state.stomatalOpening,
     starchFraction: state.starchFraction, starchCarbonUmolPerM2: state.starchCarbonUmolPerM2,
     timeScale: inputs.timeScale, playing: inputs.playing,
+    water: getWaterReadings(state.water),
     topChloroplastCount: state.chloroplasts.poses.filter(pose => pose.positionUm[1] >= 23).length,
   }
 }
