@@ -1,3 +1,5 @@
+import { assemblyParts, type Assembly } from './subassemblies'
+import { assemblyFrame, explodedAssemblyPoints } from './assembly-framing'
 import { memo, Suspense, useEffect, useRef, type ReactNode, type RefObject } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { CameraControls, CameraControlsImpl } from '@react-three/drei'
@@ -32,6 +34,7 @@ export type ProjectedAnchor = { x: number; y: number; visible: boolean }
 export type AnchorMap = Partial<Record<SystemId, ProjectedAnchor>>
 export type SceneProps = {
 	captureMode: boolean
+	assembly?: Assembly
 	mechanisms: Mechanisms
 	explode: number
 	partsExplode: number
@@ -141,6 +144,7 @@ function System({
 	)
 }
 function CameraRig({
+	assembly,
 	captureMode,
 	selected,
 	transmissionView,
@@ -152,6 +156,7 @@ function CameraRig({
 }: Pick<
 	SceneProps,
 	| 'captureMode'
+	| 'assembly'
 	| 'selected'
 	| 'transmissionView'
 	| 'mechanisms'
@@ -161,7 +166,41 @@ function CameraRig({
 	| 'onInteract'
 >) {
 	const camera = useRef<CameraControls>(null)
-	const { size, camera: perspective } = useThree()
+	const { size, camera: perspective, scene } = useThree()
+	const fitPending = useRef(0)
+	useEffect(() => {
+		fitPending.current = 8
+	}, [assembly?.id, size.width, size.height])
+	useFrame(() => {
+		if (!assembly || !camera.current || fitPending.current <= 0) return
+		if (--fitPending.current > 0) return
+		const root = scene.getObjectByName(`system-${assembly.system}`)
+		if (!root) return
+		const vertices = explodedAssemblyPoints(root),
+			box = new T.Box3().setFromPoints(vertices)
+		if (box.isEmpty()) return
+		const mobile = size.width < 700,
+			frame = assemblyFrame(
+				box,
+				assembly.view,
+				size.width / size.height,
+				(perspective as T.PerspectiveCamera).fov,
+				mobile,
+				vertices,
+			)
+		camera.current.setFocalOffset(
+			mobile ? 0 : frame.distance * 0.035,
+			mobile ? frame.distance * 0.11 : 0,
+			0,
+			!reducedMotion,
+		)
+		camera.current.setLookAt(...frame.position.toArray(), ...frame.center.toArray(), !reducedMotion)
+		root.userData.framing = {
+			min: box.min.toArray(),
+			max: box.max.toArray(),
+			distance: frame.distance,
+		}
+	})
 	const mobile = size.width < 700 || (captureMode && size.width < size.height)
 	useEffect(() => {
 		if (perspective instanceof T.PerspectiveCamera) {
@@ -180,7 +219,7 @@ function CameraRig({
 	const partsExpanded = partsExplode > 0.08
 	useEffect(() => {
 		const cc = camera.current
-		if (!cc) return
+		if (!cc || assembly) return
 		if (captureMode) {
 			void cc.setFocalOffset(0, 0, 0, false)
 			if (selected === 'body')
@@ -388,6 +427,7 @@ function CameraRig({
 			)
 		}
 	}, [
+		assembly?.id,
 		captureMode,
 		selected,
 		expanded,
@@ -445,12 +485,23 @@ function SceneContents(props: SceneProps) {
 		const m = props.mechanisms
 		const paused = props.pausedRef.current || isWorldPaused()
 		const dt = Math.min(delta, 0.075)
+		props.transmissionRef.current = advanceTransmission(props.transmissionRef.current, {
+			dt: Math.min(delta, 0.075),
+			rpm: props.rpm,
+			slowdown: props.slowdown,
+			requestedGear: props.gear,
+			paused: props.pausedRef.current || isWorldPaused(),
+		})
 		m.steeringRef.current = advanceSteering(m.steeringRef.current, {
 			dt,
 			slowdown: props.slowdown,
-			paused: paused || props.selected !== 'steering',
+			paused: paused || (props.selected !== 'steering' && props.assembly?.id !== 'rear-axle'),
 			wheelAngle: m.wheelAngle,
-			speedKmh: m.steeringSpeed,
+			drivetrain: props.assembly?.id === 'rear-axle',
+			speedKmh:
+				props.assembly?.id === 'rear-axle'
+					? props.transmissionRef.current.speedKmh
+					: m.steeringSpeed,
 		})
 		m.brakeRef.current = advanceBrake(m.brakeRef.current, {
 			dt,
@@ -468,13 +519,6 @@ function SceneContents(props: SceneProps) {
 			bumpHeight: m.bumpHeight,
 			damping: m.damping,
 			restartToken: m.suspensionRestart,
-		})
-		props.transmissionRef.current = advanceTransmission(props.transmissionRef.current, {
-			dt: Math.min(delta, 0.075),
-			rpm: props.rpm,
-			slowdown: props.slowdown,
-			requestedGear: props.gear,
-			paused: props.pausedRef.current || isWorldPaused(),
 		})
 		rearSpinRef.current = props.transmissionRef.current.wheelAngle
 		if (turntable.current) {
@@ -537,7 +581,8 @@ function SceneContents(props: SceneProps) {
 			<TeardownAssembly
 				system={props.selected}
 				amount={props.partsExplode}
-				parts={teardownParts(props.selected)}
+				parts={props.assembly ? assemblyParts(props.assembly) : teardownParts(props.selected)}
+				assembly={props.assembly}
 				hovered={props.hoveredPart}
 				selected={props.selectedPart}
 				anchorsRef={props.partAnchorsRef}
@@ -564,12 +609,22 @@ function SceneContents(props: SceneProps) {
 						</group>
 					</System>
 					<System id="drivetrain" {...common}>
-						<Transmission stateRef={props.transmissionRef} xray={props.selected === 'drivetrain'} />
-						{props.selected === 'drivetrain' && <Wheels axle="rear" rearSpinRef={rearSpinRef} />}
+						<Transmission
+							stateRef={props.transmissionRef}
+							xray={props.selected === 'drivetrain'}
+							assembly={props.assembly?.id}
+							steeringRef={props.mechanisms.steeringRef}
+						/>
+						{props.selected === 'drivetrain' && !props.assembly && (
+							<Wheels axle="rear" rearSpinRef={rearSpinRef} />
+						)}
 					</System>
 					<System id="chassis" {...common}>
 						{props.selected === 'chassis' ? (
-							<SuspensionMechanism stateRef={props.mechanisms.suspensionRef} />
+							<SuspensionMechanism
+								stateRef={props.mechanisms.suspensionRef}
+								assembly={props.assembly?.id}
+							/>
 						) : (
 							<>
 								<Chassis />
@@ -583,6 +638,7 @@ function SceneContents(props: SceneProps) {
 					<System id="steering" {...common}>
 						{props.selected === 'steering' ? (
 							<SteeringMechanism
+								assembly={props.assembly?.id}
 								stateRef={props.mechanisms.steeringRef}
 								showConstruction={
 									props.mechanisms.steeringView === 'top' && props.partsExplode < 0.05
@@ -598,6 +654,7 @@ function SceneContents(props: SceneProps) {
 					<System id="brakes" {...common}>
 						{props.selected === 'brakes' ? (
 							<BrakeMechanism
+								assembly={props.assembly?.id}
 								stateRef={props.mechanisms.brakeRef}
 								closeup={props.mechanisms.brakeView === 'caliper' && props.partsExplode < 0.05}
 							/>
@@ -612,6 +669,7 @@ function SceneContents(props: SceneProps) {
 				</group>
 			</TeardownAssembly>
 			<CameraRig
+				assembly={props.assembly}
 				captureMode={props.captureMode}
 				selected={props.selected}
 				transmissionView={props.transmissionView}

@@ -21,18 +21,18 @@
 .ct-canvas:active {
 	cursor: grabbing;
 }
-.ct-world button,
+.ct-world button:not(:where(.guide-tour *)),
 .ct-world select {
 	font: inherit;
 	color: inherit;
 	cursor: pointer;
 }
-.ct-world button {
+.ct-world button:not(:where(.guide-tour *)) {
 	border: 1px solid var(--ct-line);
 	background: #171b20;
 	border-radius: 3px;
 }
-.ct-world button:hover {
+.ct-world button:not(:where(.guide-tour *)):hover {
 	background: #2a3037;
 	border-color: #69747f;
 }
@@ -1343,4 +1343,62 @@
 	line-height: 14px;
 	color: #b5bec7;
 	overflow-wrap: anywhere;
+}
+
+/* Compact assembly views keep both the subject and navigation inside the stage. */
+.ct-assembly-switch {
+	flex-wrap: wrap;
+	max-width: 600px;
+}
+.ct-world .ct-guide-start {
+	position: absolute;
+	right: 180px;
+	top: 95px;
+	z-index: 6;
+	border: 0;
+	background: transparent;
+	color: #aebbc8;
+	font-size: 12px;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+}
+.ct-guide-start span {
+	margin-left: 12px;
+}
+.ct-world.is-guided .ct-title,
+.ct-world.is-guided .ct-breadcrumb,
+.ct-world.is-guided .ct-parts-list,
+.ct-world.is-guided .ct-system-picker,
+.ct-world.is-guided .ct-view-switch,
+.ct-world.is-guided .ct-bottom,
+.ct-world.is-guided .ct-part-labels {
+	display: none;
+}
+.ct-world.is-guided .guide-stage {
+	z-index: 12;
+}
+@media (max-width: 700px) {
+	.ct-world.is-parts .ct-view-switch.ct-assembly-switch {
+		display: flex;
+		top: 217px;
+		left: 18px;
+		right: 18px;
+		gap: 4px;
+	}
+	.ct-assembly-switch button {
+		padding: 6px 8px;
+		font-size: 10px;
+	}
+	.ct-world .ct-guide-start {
+		top: 178px;
+		right: 20px;
+		font-size: 11px;
+	}
+	.ct-world.is-guided .ct-instruments {
+		max-height: 27vh;
+	}
+}
+/* Guide captions take the annotation space; free exploration keeps all leaders. */
+.ct-world.is-guided .ct-labels {
+	display: none;
 }

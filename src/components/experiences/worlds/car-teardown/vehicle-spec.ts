@@ -188,7 +188,7 @@ export const VEHICLE_SPEC = {
 		steel: { color: '#b8bcc2', metalness: 1, roughness: 0.25 },
 		aluminum: { color: '#9a9ea4', metalness: 1, roughness: 0.5 },
 		disc: { color: '#6e7176', metalness: 1, roughness: 0.35 },
-		caliper: { color: '#6b5a45', metalness: 0.75, roughness: 0.45 },
+		caliper: { color: '#6b5a45', metalness: 0.42, roughness: 0.63 },
 		rubber: { color: '#141517', metalness: 0, roughness: 0.85 },
 		plastic: { color: '#1a1b1e', metalness: 0, roughness: 0.6 },
 		glass: {

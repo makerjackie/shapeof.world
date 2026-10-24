@@ -1,4 +1,4 @@
-import {describe, expect, it} from 'vitest'
+import { describe, expect, it } from 'vitest'
 import {
 	advanceSteering,
 	createSteeringState,
@@ -10,7 +10,7 @@ import {
 	CARDAN_BEND,
 	cardanAngle,
 } from './steering-model'
-import {VEHICLE_SPEC as S} from './vehicle-spec'
+import { VEHICLE_SPEC as S } from './vehicle-spec'
 const drive = (angle: number, speed = 30) =>
 	advanceSteering(createSteeringState(), {
 		dt: 1,
@@ -47,7 +47,7 @@ describe('ideal Ackermann and open differential', () => {
 			const geometry = steeringGeometry(angle),
 				centre = geometry.turnCenter!
 			for (const id of STEERING_WHEELS) {
-				const {point, direction} = wheelNormal(id, geometry),
+				const { point, direction } = wheelNormal(id, geometry),
 					dx = centre[0] - point[0],
 					dz = centre[2] - point[2]
 				expect(dx * direction[2] - dz * direction[0]).toBeCloseTo(0, 11)
@@ -137,4 +137,22 @@ describe('ideal Ackermann and open differential', () => {
 			expect(cardanAngle(cardanAngle(input, CARDAN_BEND), CARDAN_BEND, true)).toBeCloseTo(input, 12)
 		}
 	})
+})
+
+it('couples the exploded axle to signed driveline speed without the steering control speed limit', () => {
+	for (const speedKmh of [-30, 0, 101.7, 220]) {
+		const state = advanceSteering(createSteeringState(), {
+			dt: 1,
+			slowdown: 40,
+			paused: false,
+			wheelAngle: 400,
+			speedKmh,
+			drivetrain: true,
+		})
+		expect(state.speedKmh).toBe(speedKmh)
+		const wheelRpm = (speedKmh / 3.6 / (2 * Math.PI * 0.335)) * 60
+		expect(state.carrierRpm).toBeCloseTo(wheelRpm, 10)
+		expect((state.wheelRpm.rearLeft + state.wheelRpm.rearRight) / 2).toBeCloseTo(wheelRpm, 10)
+		expect(Math.sign(state.planetSpinAngle)).toBe(Math.sign(speedKmh))
+	}
 })

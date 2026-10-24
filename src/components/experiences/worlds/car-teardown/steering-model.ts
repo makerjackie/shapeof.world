@@ -1,5 +1,5 @@
-import {STEERING_GEOMETRY as G, VEHICLE_SPEC as S} from './vehicle-spec'
-import {differentialSpeeds, finalDriveRatio} from './model'
+import { STEERING_GEOMETRY as G, VEHICLE_SPEC as S } from './vehicle-spec'
+import { differentialSpeeds, finalDriveRatio } from './model'
 
 export const STEERING_WHEELS = ['frontLeft', 'frontRight', 'rearLeft', 'rearRight'] as const
 export type SteeringWheelId = (typeof STEERING_WHEELS)[number]
@@ -79,7 +79,7 @@ export function steeringGeometry(angleDegrees: number) {
 				rearLeft: radius - (sign * S.wheels.rearTrack) / 2,
 				rearRight: radius + (sign * S.wheels.rearTrack) / 2,
 			}
-		: {frontLeft: Infinity, frontRight: Infinity, rearLeft: Infinity, rearRight: Infinity}
+		: { frontLeft: Infinity, frontRight: Infinity, rearLeft: Infinity, rearRight: Infinity }
 	const columnMiddleAngle = cardanAngle(wheelAngle * DEG, CARDAN_BEND)
 	const pinionAngle = cardanAngle(columnMiddleAngle, CARDAN_BEND, true)
 	return {
@@ -115,13 +115,15 @@ export type SteeringState = SteeringGeometry & {
 	yawRate: number
 }
 export type SteeringInput = {
+	/** A coupled driveline supplies signed speed, beyond the steering panel's 0–60 range. */
+	drivetrain?: boolean
 	dt: number
 	slowdown: number
 	paused: boolean
 	wheelAngle: number
 	speedKmh: number
 }
-const zeros = (): WheelValues => ({frontLeft: 0, frontRight: 0, rearLeft: 0, rearRight: 0})
+const zeros = (): WheelValues => ({ frontLeft: 0, frontRight: 0, rearLeft: 0, rearRight: 0 })
 export function createSteeringState(): SteeringState {
 	return {
 		...steeringGeometry(0),
@@ -151,7 +153,7 @@ export function advanceSteering(previous: SteeringState, input: SteeringInput): 
 			'Steering time, speed and slowdown must be finite; slowdown must be positive',
 		)
 	const geometry = steeringGeometry(input.wheelAngle),
-		speedKmh = clamp(input.speedKmh, 0, G.maxSpeedKmh)
+		speedKmh = input.drivetrain ? input.speedKmh : clamp(input.speedKmh, 0, G.maxSpeedKmh)
 	const centreRpm = (speedKmh / 3.6 / (2 * Math.PI * S.wheels.radius)) * 60
 	const wheelRpm = Object.fromEntries(
 		STEERING_WHEELS.map((id) => [
@@ -166,7 +168,7 @@ export function advanceSteering(previous: SteeringState, input: SteeringInput): 
 			previous.wheelAngles[id] + ((wheelRpm[id] * Math.PI) / 30) * elapsed,
 		]),
 	) as WheelValues
-	const {carrierRpm, planetSpinRpm} = differentialSpeeds(wheelRpm.rearLeft, wheelRpm.rearRight)
+	const { carrierRpm, planetSpinRpm } = differentialSpeeds(wheelRpm.rearLeft, wheelRpm.rearRight)
 	const carrierAngle = (wheelAngles.rearLeft + wheelAngles.rearRight) / 2
 	const planetSpinAngle =
 		(((wheelAngles.rearRight - wheelAngles.rearLeft) / 2) * S.transmission.differential.sideTeeth) /
@@ -190,10 +192,10 @@ export function advanceSteering(previous: SteeringState, input: SteeringInput): 
 export function wheelNormal(
 	id: SteeringWheelId,
 	geometry: SteeringGeometry,
-): {point: SteeringPoint; direction: SteeringPoint} {
+): { point: SteeringPoint; direction: SteeringPoint } {
 	const angle =
 		id === 'frontLeft' ? geometry.leftAngle : id === 'frontRight' ? geometry.rightAngle : 0
 	const point = wheelPosition(id)
 	point[1] = G.constructionY
-	return {point, direction: [Math.sin(angle), 0, Math.cos(angle)]}
+	return { point, direction: [Math.sin(angle), 0, Math.cos(angle)] }
 }

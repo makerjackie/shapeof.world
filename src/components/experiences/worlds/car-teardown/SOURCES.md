@@ -192,3 +192,13 @@ Engine exploded offsets are translations outside each moving assembly. The pisto
 ## Assets and dependencies / 素材与依赖
 
 Body, wheels, engine, gears and supporting components are generated in code. No downloaded vehicle models, engine meshes, HDRIs, texture images or third-party geometry are used. The studio environment is built with procedural lights. This world uses the repository's existing React Three Fiber / drei / Three.js / postprocessing dependencies and adds no package. References are links for attribution and further reading, not imported assets. The 3 MB catalogue transfer budget is a budget for code and poster fallback, not a measured claim of zero network traffic; procedural geometry requires no mesh downloads.
+
+## Round-five inspection views / 子总成近景
+
+Parts views isolate one front/rear brake corner, the hydraulic actuation hardware, clutch and gearbox, propeller shaft, rear axle, one suspension corner, or the rack/column. Translations are dimensionless lanes scaled to the assembly's dimensions; they are explanatory spacing, not a repair procedure. Cameras fit the final extracted geometry, with separate portrait framing. The rear axle's outboard housing and halfshafts are shortened to keep its gears legible; their cards identify this truncation. Electrical parts are placed on an evenly spaced floor grid while the harness remains faintly in its installed position.
+
+零件级按子总成展示；位移是教学排版，并非维修拆装行程。后桥远端桥管和半轴截短，齿轮及运动比例不变，零件卡注明截短。电气件在地面等间距平铺，线束留在原处作为淡背景。竖屏以主体高度安全区优先，避免被仪表抽屉遮住。
+
+The body-in-white uses tapered rounded box sections with narrow weld flanges, an embossed floor/tunnel, roof crossmembers, a ribbed bulkhead and formed strut towers. These are representative stamped/welded shapes, not manufacturing tooling or finite-element crash models. The floating caliper uses a 68-degree arcuate casting outside the disc rim, a single inner piston boss, two outer fingers, guide ears/boots, inlet/bleeder details and separate friction/backing layers. Internal clearances remain exaggerated 20 times for visibility; no seal deformation or fluid-flow simulation is implied. No additional third-party assets or dependencies were added.
+
+白车身的变截面盒形梁、翻边和压筋为代表性冲压焊接结构，不是可制造图纸；不模拟焊点、压溃或碰撞。浮动卡钳为跨过盘缘约 68° 的铸件，含单侧活塞缸、外侧双钳爪、导向耳、防尘套和双层制动片；沿用 20 倍间隙示意，不模拟橡胶密封圈变形或液体流场。未新增依赖或第三方素材。

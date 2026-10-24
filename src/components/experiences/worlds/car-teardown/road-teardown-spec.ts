@@ -14,7 +14,8 @@ export const ROAD_TEARDOWN_SPEC = {
 		master: [0.35, 0.33, 0],
 		reservoir: [0.2, 0.65, 0],
 		abs: [0.3, 0.22, -0.28],
-		castingBevel: 0.003,
+		castingBevel: 0.002,
+		castingArc: (Math.PI * 68) / 180,
 		castingSegments: 4,
 	},
 	steering: {

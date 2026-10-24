@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
-import { TeardownPart, useTeardownProgress } from './TeardownPart'
+import { TeardownPart, useTeardownProgress, useTeardown } from './TeardownPart'
 import { ROAD_TEARDOWN_SPEC as R, outwardOffset } from './road-teardown-spec'
 import { Wheel, type WheelPose } from './Wheels'
 import { createXrayMaterial } from './engine-geometry'
@@ -268,7 +268,7 @@ function Rack({ stateRef }: Clock) {
 			G.rackHousingRadius,
 			G.rackHousingRadius - G.rackHousingWall,
 			G.rackHousingLength,
-		),
+		).rotateY(Math.PI / 2),
 	)
 	const xray = useMemo(createXrayMaterial, [])
 	useEffect(() => () => xray.dispose(), [xray])
@@ -376,6 +376,7 @@ function AssistMotor() {
 	)
 }
 function SteeringCorner({ id, stateRef }: Clock & { id: SteeringWheelId }) {
+	const compact = !!useTeardown().assembly
 	const front = id.startsWith('front'),
 		side = id.endsWith('Left') ? -1 : 1,
 		index = side < 0 ? 1 : 2
@@ -414,7 +415,9 @@ function SteeringCorner({ id, stateRef }: Clock & { id: SteeringWheelId }) {
 	}, -0.1)
 	return (
 		<>
-			<Wheel axle={front ? 'front' : 'rear'} side={side} poseRef={pose} spinRef={spin} />
+			{!compact && (
+				<Wheel axle={front ? 'front' : 'rear'} side={side} poseRef={pose} spinRef={spin} />
+			)}
 			{front && (
 				<>
 					<TeardownPart
@@ -479,7 +482,9 @@ export function SteeringDifferential({ stateRef, closeup = false }: Clock & { cl
 	const edges = useGeometry(() => new T.EdgesGeometry(housing, 35)),
 		xray = useMemo(createXrayMaterial, [])
 	const carrierEnd = useGeometry(() =>
-		createAnnulus(G.carrierRadius, G.carrierRadius - G.carrierWall, G.carrierWall),
+		createAnnulus(G.carrierRadius, G.carrierRadius - G.carrierWall, G.carrierWall).rotateY(
+			Math.PI / 2,
+		),
 	)
 	useEffect(
 		() => () => {
@@ -1026,7 +1031,8 @@ export function SteeringMechanism({
 	stateRef,
 	showConstruction,
 	closeup = false,
-}: Clock & { showConstruction: boolean; closeup?: boolean }) {
+	assembly,
+}: Clock & { showConstruction: boolean; closeup?: boolean; assembly?: string }) {
 	const amount = useTeardownProgress()
 	const detail = closeup && amount < 0.01
 	return (
@@ -1040,7 +1046,7 @@ export function SteeringMechanism({
 					))}
 				</>
 			)}
-			<SteeringDifferential stateRef={stateRef} closeup={detail} />
+			{!assembly && <SteeringDifferential stateRef={stateRef} closeup={detail} />}
 			{showConstruction && amount < 0.02 && (
 				<>
 					<SteeringContext />
