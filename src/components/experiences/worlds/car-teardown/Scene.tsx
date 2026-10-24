@@ -234,11 +234,11 @@ function CameraRig({
 				)
 			else
 				void cc.setLookAt(
-					mobile ? 7.8 : 7.2,
-					mobile ? 5.4 : 4.8,
-					mobile ? 8.3 : 8,
+					mobile ? 7.8 : 6.2,
+					mobile ? 5.4 : 4.25,
+					mobile ? 8.3 : 6.9,
 					0,
-					1.5,
+					mobile ? 1.5 : 1.4,
 					0,
 					false,
 				)
