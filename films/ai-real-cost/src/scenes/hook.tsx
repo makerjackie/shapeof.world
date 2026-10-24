@@ -2,43 +2,53 @@ import React from "react";
 import { AbsoluteFill, random } from "remotion";
 import { Spark, Whale } from "../art";
 import { useBeatFrame } from "../kit";
-import { At, Badge, Chroma, EBACK, EIO, EO, In, Kinetic, lerp, Note, Odometer, progAt, Shockwave, Tag } from "../fx";
+import { At, Badge, Chroma, EBACK, EIO, EO, Glass, In, Kinetic, lerp, Note, Odometer, progAt, Shockwave, Tag } from "../fx";
 import { FONT, K, ModelKey } from "../theme3";
 
 // ───────── 1. The claim, stated flat out ─────────
 
-// Every word is already on the first frame: in a muted autoplay feed, and in the preview a link share shows,
-// frame 0 has to carry the whole claim. Only the characters and the accent on "便宜" move, on the beat.
 export const Claim: React.FC = () => {
   const frame = useBeatFrame();
-  const glow = progAt(frame, 0, 1.5) * (1 - 0.6 * progAt(frame, 2, 2));
-  const hit = Math.max(0, 1 - Math.abs(frame) / 6);
+  const glow = progAt(frame, 2, 1.5);
   return (
-    <AbsoluteFill style={{ fontFamily: FONT }}>
+    <AbsoluteFill>
       <At x={960} y={170} center>
-        <Tag color={K.claude} size={30}>
-          Claude Opus 5.5 · 智能排行全球第 1
-        </Tag>
+        <In at={0.5} from="down">
+          <Tag color={K.claude} size={30}>
+            Claude Opus 5.5 · 智能指数全球第 1
+          </Tag>
+        </In>
       </At>
       <At x={960} y={360} center>
-        <div style={{ fontSize: 150, fontWeight: 900, letterSpacing: -4, whiteSpace: "nowrap", color: K.fg }}>
-          全球<span style={{ color: K.claudeHi }}>最聪明</span>的 AI
-        </div>
+        <Kinetic at={-1.4} stagger={0.9} size={150} parts={["全球", { t: "最聪明", c: K.claudeHi }, "的 AI"]} />
       </At>
       <At x={960} y={580} center>
-        <div style={{ fontSize: 176, fontWeight: 900, letterSpacing: -4, whiteSpace: "nowrap", color: K.fg }}>
-          比 <span style={{ color: K.deepseekHi }}>DeepSeek</span> 还
-          <span style={{ display: "inline-block", color: K.green, transform: `scale(${1 + 0.08 * hit})`, textShadow: `0 0 ${70 * glow}px ${K.green}aa` }}>便宜</span>
-        </div>
+        <Chroma at={2}>
+          <In at={2} from="slam" dur={0.6}>
+            <div
+              style={{
+                fontFamily: FONT,
+                fontSize: 176,
+                fontWeight: 900,
+                letterSpacing: -4,
+                whiteSpace: "nowrap",
+                color: K.fg,
+                textShadow: `0 0 ${60 * glow}px ${K.green}66`,
+              }}
+            >
+              比 <span style={{ color: K.deepseekHi }}>DeepSeek</span> 还<span style={{ color: K.green }}>便宜</span>
+            </div>
+          </In>
+        </Chroma>
       </At>
-      <Shockwave at={0} x={1400} y={580} color={K.green} />
+      <Shockwave at={2} y={580} color={K.green} />
       <At x={150} y={820} center>
-        <In at={0.5} from="left">
+        <In at={1} from="left">
           <Spark size={170} mood="smug" />
         </In>
       </At>
       <At x={1770} y={820} center>
-        <In at={1.5} from="right">
+        <In at={2.4} from="right">
           <div style={{ position: "relative" }}>
             <Whale size={200} mood="shock" />
             <div style={{ position: "absolute", top: -50, left: 40, fontSize: 64, fontWeight: 900, color: K.gold, fontFamily: FONT }}>？！</div>
@@ -51,23 +61,22 @@ export const Claim: React.FC = () => {
 
 // ───────── 2. Price board: list price, then the subscription press ─────────
 
-type Row = { label: string; m: ModelKey; v: number; text: string; approx?: boolean };
-// Output price per million tokens in yuan. Claude and GPT are priced in dollars (× 6.7195, the 2026-10-22 central
-// parity, so "约"); DeepSeek lists its own yuan prices.
+type Row = { label: string; m: ModelKey; v: number; text: string };
 const ROWS: Row[] = [
-  { label: "Claude Opus 5.5", m: "opus", v: 134.4, text: "¥134", approx: true },
-  { label: "GPT-6.1 Sol", m: "sol", v: 67.2, text: "¥67", approx: true },
-  { label: "Claude Sonnet 5.5", m: "sonnet", v: 67.2, text: "¥67", approx: true },
-  { label: "DeepSeek V4 Pro", m: "dspro", v: 27, text: "¥27" },
+  { label: "Claude Opus 5.5", m: "opus", v: 134.4, text: "¥134" },
+  { label: "Kimi K3", m: "kimi", v: 100.8, text: "¥101" },
+  { label: "GPT-6.1 Sol", m: "sol", v: 67.2, text: "¥67" },
+  { label: "Gemini 4 Argon", m: "argon", v: 67.2, text: "¥67" },
+  { label: "Qwen3.8 Max", m: "qwen", v: 40.3, text: "¥40" },
+  { label: "GLM-5.3", m: "glm", v: 29.6, text: "¥30" },
   { label: "DeepSeek V4.1 Flash", m: "dsflash", v: 8, text: "¥8" },
 ];
-const OPUS = 134.4;
-const SUB = 3.77; // ¥134.4 × $200 ÷ $7,121 (a full month of Max 20x is worth 35.6× its price)
-const LAST = ROWS.length - 1;
-const TOP = 300;
-const RH = 112;
-const BX = 820;
-const BW = 740;
+const OPUS = 134.4; // $20 × 6.7195
+const SUB = 3.77; // ¥134.4 ÷ ($7,121 ÷ $200), a fully used Max 20x
+const TOP = 290;
+const RH = 92;
+const BX = 800;
+const BW = 900;
 
 export const Board: React.FC = () => {
   const frame = useBeatFrame();
@@ -77,22 +86,22 @@ export const Board: React.FC = () => {
   const bracket = progAt(frame, 4, 0.8) * (1 - progAt(frame, 6.2, 0.5));
   const plateIn = progAt(frame, 6.8, 1.2, EO);
   const plateOut = progAt(frame, 10, 0.6, EIO);
-  const opusW = (Math.exp(lerp(Math.log(OPUS), Math.log(SUB), pv)) / OPUS) * BW;
+  const opusW = (opusV / OPUS) * BW;
   const win = progAt(frame, 12, 0.8);
   return (
     <AbsoluteFill>
       <At x={960} y={118} center>
-        <Kinetic at={0} out={6} size={76} parts={["按单价，它是 DeepSeek 的 ", { t: "17 倍", c: K.red }]} />
+        <Kinetic at={0} out={6} size={72} parts={["按单价，它是 DeepSeek 的 ", { t: "17 倍", c: K.red }]} />
       </At>
       <At x={960} y={118} center>
-        <Kinetic at={6.4} out={11.4} size={76} parts={["但很多人，是", { t: "包月", c: K.claudeHi, hl: `${K.claude}33` }, "用的"]} />
+        <Kinetic at={6.4} out={11.4} size={72} parts={["但大多数人，是", { t: "包月", c: K.claudeHi, hl: `${K.claude}33` }, "用的"]} />
       </At>
       <At x={960} y={118} center>
-        <Kinetic at={11.8} size={76} parts={["包月用满：", { t: "¥134 → ¥3.8", c: K.green }]} />
+        <Kinetic at={11.8} size={72} parts={["包月用满：", { t: "¥134 → ¥3.8", c: K.green }]} />
       </At>
       {ROWS.map((r, i) => {
         const isOpus = i === 0;
-        const rank = isOpus ? lerp(0, LAST, pr) : lerp(i, i - 1, pr);
+        const rank = isOpus ? lerp(0, 6, pr) : lerp(i, i - 1, pr);
         const y = TOP + rank * RH;
         const enter = progAt(frame, 0.2 + i * 0.35, 1, EO);
         const w = isOpus ? opusW : (r.v / OPUS) * BW;
@@ -101,9 +110,9 @@ export const Board: React.FC = () => {
         const glowOpus = isOpus ? win : 0;
         return (
           <div key={r.label} style={{ position: "absolute", left: 0, top: y, width: 1920, height: RH, opacity: Math.min(1, enter * 2) }}>
-            <div style={{ position: "absolute", left: BX - 520, width: 490, height: RH, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 18 }}>
-              <div style={{ fontFamily: FONT, fontSize: 40, fontWeight: 900, color: isOpus || r.m === "dsflash" ? K.fg : K.muted, whiteSpace: "nowrap" }}>{r.label}</div>
-              <Badge m={r.m} size={62} />
+            <div style={{ position: "absolute", left: BX - 470, width: 440, height: RH, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 18 }}>
+              <div style={{ fontFamily: FONT, fontSize: 36, fontWeight: 900, color: isOpus || r.m === "dsflash" ? K.fg : K.muted, whiteSpace: "nowrap" }}>{r.label}</div>
+              <Badge m={r.m} size={56} />
             </div>
             <div
               style={{
@@ -121,26 +130,17 @@ export const Board: React.FC = () => {
             />
             <div style={{ position: "absolute", left: BX + barW + 22, height: RH, display: "flex", alignItems: "center" }}>
               {isOpus ? (
-                <span style={{ display: "inline-flex", alignItems: "baseline", gap: 8 }}>
-                  <span style={{ fontFamily: FONT, fontSize: 28, fontWeight: 700, color: K.muted, opacity: 1 - win }}>约</span>
-                  <Odometer value={opusV} decimals={opusV < 10 ? 1 : 0} prefix="¥" size={56} color={lerpColor(K.claudeHi, K.green, glowOpus)} />
-                </span>
+                <Odometer value={opusV} decimals={opusV < 10 ? 1 : 0} prefix="¥" size={50} color={lerpColor(K.claudeHi, K.green, glowOpus)} />
               ) : (
-                <span style={{ fontFamily: FONT, fontSize: 50, fontWeight: 900, color: r.m === "dsflash" ? K.deepseekHi : K.muted, whiteSpace: "nowrap" }}>
-                  {r.approx ? <span style={{ fontSize: 28, fontWeight: 700, marginRight: 8 }}>约</span> : null}
-                  {r.text}
-                </span>
+                <span style={{ fontFamily: FONT, fontSize: 46, fontWeight: 900, color: r.m === "dsflash" ? K.deepseekHi : K.muted }}>{r.text}</span>
               )}
             </div>
           </div>
         );
       })}
-      <At x={BX} y={TOP - 46}>
-        <div style={{ opacity: progAt(frame, 0.4, 0.8) * 0.8, fontFamily: FONT, fontSize: 26, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>输出价 · 每百万 token</div>
-      </At>
       {/* 17x bracket between Opus and DeepSeek */}
       {bracket > 0 ? (
-        <div style={{ position: "absolute", left: 250, top: TOP + RH * 0.5, height: RH * LAST * bracket, width: 30, borderLeft: `5px solid ${K.red}`, borderTop: `5px solid ${K.red}`, borderBottom: `5px solid ${K.red}`, borderRadius: "12px 0 0 12px", opacity: bracket }}>
+        <div style={{ position: "absolute", left: 300, top: TOP + RH * 0.5, height: RH * 6 * bracket, width: 30, borderLeft: `5px solid ${K.red}`, borderTop: `5px solid ${K.red}`, borderBottom: `5px solid ${K.red}`, borderRadius: "12px 0 0 12px", opacity: bracket }}>
           <div style={{ position: "absolute", right: 46, top: "50%", transform: "translateY(-50%)", fontFamily: FONT, fontSize: 72, fontWeight: 900, color: K.red }}>17×</div>
         </div>
       ) : null}
@@ -162,14 +162,14 @@ export const Board: React.FC = () => {
         </div>
       ) : null}
       {win > 0 ? (
-        <div style={{ position: "absolute", left: 1220, top: TOP + RH * LAST + 4, transform: `rotate(-5deg) scale(${1 + (1 - win) * 1.6})`, opacity: Math.min(1, win * 3) }}>
+        <div style={{ position: "absolute", left: 1290, top: TOP + RH * 6 - 8, transform: `rotate(-5deg) scale(${1 + (1 - win) * 1.6})`, opacity: Math.min(1, win * 3) }}>
           <div style={{ padding: "8px 26px", border: `6px solid ${K.green}`, borderRadius: 14, color: K.green, fontFamily: FONT, fontSize: 50, fontWeight: 900, whiteSpace: "nowrap", background: "#06060Acc" }}>
             最便宜
           </div>
         </div>
       ) : null}
       <Note>
-        输出价 · 每百万 token · 官方标价（2026-10-23）· 美元按 2026-10-22 中间价 6.72 换算 · 包月用满按 Claude Max 20x 实测 36 倍折算
+        输出价 · 人民币 / 百万 token · 官方标价（2026-10-22，美元价按汇率 6.7195 折算）· 包月用满按 Max 20x 实测 36 倍折算
       </Note>
     </AbsoluteFill>
   );
@@ -183,7 +183,42 @@ export const lerpColor = (a: string, b: string, t: number) => {
   return `#${[16, 8, 0].map((s) => ch(s).toString(16).padStart(2, "0")).join("")}`;
 };
 
-// ───────── 3. Title with warp-speed streaks ─────────
+// ───────── 3. Two reasons ─────────
+
+const REASONS = [
+  { n: "1", t: "包月", sub: "订阅 = 批发价", c: K.claude },
+  { n: "2", t: "省 token", sub: "少绕路，少返工", c: K.gold },
+];
+
+export const Reasons: React.FC = () => {
+  const frame = useBeatFrame();
+  const zoom = progAt(frame, 6.6, 1.4, EIO);
+  return (
+    <AbsoluteFill style={{ transform: `scale(${1 + zoom * 0.5})`, opacity: 1 - zoom * 0.9 }}>
+      <At x={960} y={260} center>
+        <Kinetic at={0} size={120} parts={["凭什么？"]} />
+      </At>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 430, display: "flex", justifyContent: "center", gap: 80, perspective: 1600 }}>
+        {REASONS.map((r, i) => {
+          const p = progAt(frame, 1.8 + i * 1.4, 1.1, EBACK);
+          return (
+            <div key={r.n} style={{ transform: `rotateY(${(1 - p) * -90}deg)`, opacity: p > 0 ? 1 : 0, transformOrigin: "left center" }}>
+              <Glass glow={r.c} style={{ width: 520, height: 300, padding: "36px 48px", boxSizing: "border-box", display: "flex", alignItems: "center", gap: 36 }}>
+                <span style={{ fontSize: 180, fontWeight: 900, color: r.c, lineHeight: 1 }}>{r.n}</span>
+                <div>
+                  <div style={{ fontSize: 84, fontWeight: 900, whiteSpace: "nowrap" }}>{r.t}</div>
+                  <div style={{ fontSize: 34, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>{r.sub}</div>
+                </div>
+              </Glass>
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// ───────── 4. Title with warp-speed streaks ─────────
 
 export const Title: React.FC = () => {
   const frame = useBeatFrame();
@@ -222,6 +257,11 @@ export const Title: React.FC = () => {
             AI 的<span style={{ color: K.claude }}>真实</span>价格
           </div>
         </Chroma>
+      </At>
+      <At x={960} y={680} center>
+        <In at={2}>
+          <div style={{ fontSize: 30, color: K.muted, fontWeight: 500, whiteSpace: "nowrap" }}>数据截至 2026 年 10 月 23 日</div>
+        </In>
       </At>
     </AbsoluteFill>
   );

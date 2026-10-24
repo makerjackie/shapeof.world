@@ -1,10 +1,9 @@
 import React from "react";
-import { Tower } from "./scenes/ch1";
-import { Receipts } from "./scenes/ch2";
-import { Formula } from "./scenes/ch3";
-import { Bill, Devs, Grid, Loop, Wage } from "./scenes/time";
-import { BrandOutro, Collapse, Future, Scarce, Today } from "./scenes/coda";
-import { Board, Claim, Title } from "./scenes/hook";
+import { Elevator, Plans, Tower, VsGPT } from "./scenes/ch1";
+import { Combine, Honest, Receipts } from "./scenes/ch2";
+import { DSBook, Formula, Relay } from "./scenes/ch3";
+import { BrandOutro, Final, Jevons, Scarce, TimeCost } from "./scenes/coda";
+import { Board, Claim, Reasons, Title } from "./scenes/hook";
 import { K } from "./theme3";
 import { barToFrame } from "./timing";
 
@@ -15,56 +14,39 @@ export type Scene = {
   C: React.FC;
   tin: Trans;
   pal: [string, string, string];
+  // Beats (from the scene's first downbeat) that get a white flash.
+  accents?: number[];
 };
 
-// Film bars (1 bar = 4 beats ≈ 2.15 s) where each scene starts; sound.ts uses the same table.
-export const AT = {
-  claim: 0,
-  board: 2,
-  title: 6,
-  tower: 7,
-  receipts: 10.5,
-  formula: 14.5,
-  devs: 19,
-  loop: 21.5,
-  grid: 24.5,
-  wage: 29,
-  bill: 31.5,
-  today: 37.5,
-  future: 39,
-  collapse: 44,
-  scarce: 47,
-  outro: 50,
-  end: 52.75,
-};
-
-// The soundtrack is cut at film bars 18 and 34 (MUSIC_EDIT in timing.ts): film bar b plays track bar b + 2 until 18,
-// b + 22 until 34, then b + 30. Track energy: intro 0–8, main 8–40, breakdown 40–48, main 48–64, peak 64–77, settling
-// 78–79, fade 80–84. Film bars 17 and 33 are muted (the two silences).
+// Film bars (1 bar = 4 beats ≈ 2.15 s). The story and order are the published v5.1's; the holds are shorter and
+// "your time" shows the rework loop. Music (timing.ts): film 16 → track 24, so film 40 = track 48 (the music comes
+// back after the breakdown) and film 56 = track 64 (the peak).
 export const SCENES: Scene[] = [
-  // The counter-intuitive claim on frame 0, the 17× puzzle, the subscription answer (track 2–8, intro)
-  { from: AT.claim, to: AT.board, C: Claim, tin: "cut", pal: [K.claude, K.deepseek, K.green] },
-  { from: AT.board, to: AT.title, C: Board, tin: "zoom", pal: [K.claude, K.purple, K.deepseek] },
-  { from: AT.title, to: AT.tower, C: Title, tin: "cut", pal: [K.claude, K.gold, K.purple] },
-  // Reason 1: the flat-rate plan; reason 2: fewer tokens for the same exam (track 9–17)
-  { from: AT.tower, to: AT.receipts, C: Tower, tin: "up", pal: [K.gold, K.claude, K.red] },
-  { from: AT.receipts, to: AT.formula, C: Receipts, tin: "zoom", pal: [K.gold, K.claude, K.deepseek] },
-  // The formula, its missing line, the first silence (bar 17), then "your time" on the breakdown (film 18 = track 40)
-  { from: AT.formula, to: AT.devs, C: Formula, tin: "zoom", pal: [K.claude, K.gold, K.purple] },
-  // Your time, step by step (breakdown, then the main section from film 26 = track 48)
-  { from: AT.devs, to: AT.loop, C: Devs, tin: "slide", pal: [K.purple, K.deepseek, K.claude] },
-  { from: AT.loop, to: AT.grid, C: Loop, tin: "slide", pal: [K.purple, K.claude, K.deepseek] },
-  { from: AT.grid, to: AT.wage, C: Grid, tin: "up", pal: [K.green, K.purple, K.deepseek] },
-  { from: AT.wage, to: AT.bill, C: Wage, tin: "zoom", pal: [K.gold, K.purple, K.claude] },
-  // The bill: tokens first, the second silence (bar 33), then the purple line on the peak (film 34 = track 64)
-  { from: AT.bill, to: AT.today, C: Bill, tin: "up", pal: [K.purple, K.claude, K.deepseek] },
-  // Today's answer, why it won't last, and the one line that stays (the hourglass lands on the settling bars)
-  { from: AT.today, to: AT.future, C: Today, tin: "zoom", pal: [K.green, K.claude, K.purple] },
-  { from: AT.future, to: AT.collapse, C: Future, tin: "slide", pal: [K.deepseek, K.gold, K.green] },
-  { from: AT.collapse, to: AT.scarce, C: Collapse, tin: "zoom", pal: [K.purple, K.claude, K.gold] },
-  { from: AT.scarce, to: AT.outro, C: Scarce, tin: "zoom", pal: [K.purple, K.gold, K.deepseek] },
-  { from: AT.outro, to: AT.end, C: BrandOutro, tin: "zoom", pal: [K.claude, K.gold, K.purple] },
+  { from: 0, to: 2, C: Claim, tin: "cut", pal: [K.claude, K.deepseek, K.green] },
+  { from: 2, to: 6, C: Board, tin: "zoom", pal: [K.claude, K.purple, K.deepseek] },
+  { from: 6, to: 8, C: Reasons, tin: "slide", pal: [K.gold, K.claude, K.deepseek] },
+  { from: 8, to: 10, C: Title, tin: "cut", pal: [K.claude, K.gold, K.purple], accents: [0] },
+  // Reason 1: flat-rate subscriptions
+  { from: 10, to: 12, C: Plans, tin: "zoom", pal: [K.claude, K.gold, K.purple] },
+  { from: 12, to: 16, C: Tower, tin: "up", pal: [K.gold, K.claude, K.red] },
+  { from: 16, to: 18, C: VsGPT, tin: "slide", pal: [K.claude, K.gpt, K.purple] },
+  { from: 18, to: 22, C: Elevator, tin: "up", pal: [K.claude, K.deepseek, K.green] },
+  { from: 22, to: 25, C: Relay, tin: "slide", pal: [K.gold, K.red, K.green] },
+  // Reason 2: fewer tokens for the same work
+  { from: 25, to: 30, C: Receipts, tin: "zoom", pal: [K.gold, K.claude, K.deepseek] },
+  // DeepSeek's side of the story
+  { from: 30, to: 33, C: Honest, tin: "slide", pal: [K.deepseek, K.gold, K.claude] },
+  { from: 33, to: 36, C: DSBook, tin: "zoom", pal: [K.deepseek, K.purple, K.green] },
+  // Both reasons together; the reveal (beat 16) lands where the music comes back
+  { from: 36, to: 42, C: Combine, tin: "up", pal: [K.green, K.claude, K.deepseek], accents: [16] },
+  { from: 42, to: 45, C: Formula, tin: "zoom", pal: [K.claude, K.gold, K.green] },
+  // The missing term: your time, checking and re-checking
+  { from: 45, to: 53.5, C: TimeCost, tin: "slide", pal: [K.purple, K.claude, K.gold] },
+  // Today's answer only: cheaper every year, used ever more; the usage line hits the peak (beat 10 = film bar 56)
+  { from: 53.5, to: 58, C: Jevons, tin: "zoom", pal: [K.green, K.gold, K.purple] },
+  { from: 58, to: 62, C: Scarce, tin: "zoom", pal: [K.purple, K.gold, K.deepseek] },
+  { from: 62, to: 64.5, C: Final, tin: "zoom", pal: [K.green, K.claude, K.purple], accents: [0] },
+  { from: 64.5, to: 67.25, C: BrandOutro, tin: "zoom", pal: [K.claude, K.gold, K.purple], accents: [3] },
 ];
 
-// The track is nearly silent by film bar 52 (track bar 82, −22 dB); Film.tsx fades the rest out by the last frame.
-export const FILM_FRAMES = barToFrame(AT.end) + 18;
+export const FILM_FRAMES = barToFrame(67.25) + 18;

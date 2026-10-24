@@ -1,11 +1,10 @@
 import React from "react";
 import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BeatOffset } from "./kit";
-import { barS, barToFrame, FPS, MUSIC_SEGMENTS, MUTE } from "./timing";
+import { barToFrame, FPB, MUSIC_SEGMENTS } from "./timing";
 import { Backdrop, Grain, Palette, Vignette } from "./bg";
 import { CL, EIO, EO } from "./fx";
 import { FILM_FRAMES, SCENES, Trans } from "./scenes";
-import { EVENTS } from "./sound";
 import { K } from "./theme3";
 
 const PRE = 7; // frames the incoming scene starts before its downbeat
@@ -14,7 +13,7 @@ const POST = 5; // frames the outgoing scene lingers after it
 const starts = SCENES.map((s, i) => (i === 0 ? 0 : barToFrame(s.from)));
 const ends = SCENES.map((s, i) => (i === SCENES.length - 1 ? FILM_FRAMES : Math.min(FILM_FRAMES, barToFrame(s.to))));
 
-// Enter/exit motion for one scene; transitions land on the downbeat.
+// Enter/exit motion for one scene; transitions land on the bar's downbeat.
 const Shell: React.FC<{ tin: Trans; tout?: Trans; pre: number; total: number; children: React.ReactNode }> = ({ tin, tout, pre, total, children }) => {
   const f = useCurrentFrame();
   const e = interpolate(f, [0, pre + 8], [0, 1], { ...CL, easing: EO });
@@ -51,12 +50,18 @@ const Shell: React.FC<{ tin: Trans; tout?: Trans; pre: number; total: number; ch
   return <AbsoluteFill style={{ opacity, transform: transform || undefined, filter }}>{children}</AbsoluteFill>;
 };
 
-const XF = 2; // crossfade half-length in frames at each music cut, centred on the downbeat
-const GAIN = 0.8; // the final loudness pass (tools/render.sh) sets the level; this only keeps the mix out of clipping
+const Flash: React.FC = () => {
+  const frame = useCurrentFrame();
+  const hits = SCENES.flatMap((s, i) => (s.accents ?? []).map((b) => Math.round(starts[i] + b * FPB)));
+  const last = hits.filter((h) => h >= 0 && h <= frame).pop();
+  if (last === undefined) return null;
+  const o = interpolate(frame - last, [0, 7], [0.4, 0], CL);
+  return o > 0 ? <AbsoluteFill style={{ background: "#fff", opacity: o, pointerEvents: "none" }} /> : null;
+};
 
-// 1 except inside the muted bars, with 2-frame ramps so the cut-out never clicks.
-const muteAt = (t: number) =>
-  MUTE.reduce((v, b) => v * (1 - interpolate(t, [barS(b) - 0.06, barS(b) + 0.02, barS(b + 1) - 0.05, barS(b + 1) - 0.01], [0, 1, 1, 0], CL)), 1);
+const XF = 2; // crossfade half-length in frames at each music cut, centred on the downbeat
+const GAIN = 0.8; // the loudness pass (tools/render_master.sh) sets the level; this only keeps the mix out of clipping
+const FADE_FROM = barToFrame(SCENES[SCENES.length - 1].from + 1.5);
 
 // The cut soundtrack: each segment overlaps its neighbours by XF frames with an equal-power fade.
 const Music: React.FC = () => (
@@ -73,31 +78,9 @@ const Music: React.FC = () => (
               const t = f + from;
               const fadeIn = i === 0 ? 1 : Math.sin((Math.PI / 2) * interpolate(t, [m.from - XF, m.from + XF], [0, 1], CL));
               const fadeOut = m.to === Infinity ? 1 : Math.cos((Math.PI / 2) * interpolate(t, [m.to - XF, m.to + XF], [0, 1], CL));
-              return GAIN * fadeIn * fadeOut * muteAt(t / FPS) * interpolate(t, [barToFrame(52), FILM_FRAMES - 4], [1, 0], CL);
+              return GAIN * fadeIn * fadeOut * interpolate(t, [FADE_FROM, FILM_FRAMES - 2], [1, 0], CL);
             }}
           />
-        </Sequence>
-      );
-    })}
-    {/* room tone under the two silences */}
-    {MUTE.map((b) => (
-      <Sequence key={b} from={barToFrame(b) - 6} durationInFrames={barToFrame(b + 1) - barToFrame(b) + 12}>
-        <Audio
-          src={staticFile("lib/ambience-room-01.wav")}
-          volume={(f) => interpolate(f, [0, 8, barToFrame(b + 1) - barToFrame(b) + 2, barToFrame(b + 1) - barToFrame(b) + 12], [0, 0.5, 0.5, 0], CL)}
-        />
-      </Sequence>
-    ))}
-  </>
-);
-
-const Sfx: React.FC = () => (
-  <>
-    {EVENTS.map(([s, f, v], i) => {
-      const at = Math.max(0, Math.round(s * FPS));
-      return (
-        <Sequence key={i} from={at} durationInFrames={Math.max(1, Math.min(75, FILM_FRAMES - at))}>
-          <Audio src={staticFile(`lib/${f}`)} volume={v} />
         </Sequence>
       );
     })}
@@ -111,7 +94,6 @@ export const Film: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
       <Music />
-      <Sfx />
       <Backdrop keys={palKeys} />
       {SCENES.map((s, i) => {
         const start = starts[i];
@@ -129,6 +111,7 @@ export const Film: React.FC = () => {
           </Sequence>
         );
       })}
+      <Flash />
       <Vignette />
       <Grain />
       <AbsoluteFill style={{ background: "#000", opacity: interpolate(frame, [FILM_FRAMES - 20, FILM_FRAMES - 1], [0, 1], CL), pointerEvents: "none" }} />

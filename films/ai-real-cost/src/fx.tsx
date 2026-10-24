@@ -405,4 +405,4 @@ export const Note: React.FC<{ children: React.ReactNode; style?: React.CSSProper
 );
 
 export const fmtMoney = (v: number, d = 0) =>
-  "$" + v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  "¥" + v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });

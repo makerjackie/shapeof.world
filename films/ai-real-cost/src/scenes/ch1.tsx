@@ -1,37 +1,81 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, random } from "remotion";
 import { useBeatFrame } from "../kit";
+import { FPB } from "../timing";
+import { RangeBars } from "../charts";
 import { PLAN } from "../data";
-import { At, Chroma, EIO, In, Kinetic, lerp, Note, Odometer, progAt, Tag } from "../fx";
+import { At, Badge, Chroma, EBACK, EIO, EO, fmtMoney, Glass, In, Kinetic, lerp, Note, Odometer, progAt, Tag } from "../fx";
 import { FONT, K } from "../theme3";
 
-// ───────── Tower: what one month of the plan is worth at API prices ─────────
+// ───────── Plans: most people pay a flat monthly fee ─────────
 
-const PX_PER_YUAN = 0.038;
+export const Plans: React.FC = () => {
+  const frame = useBeatFrame();
+  const plans = [
+    { name: "Pro", price: "¥134", sub: "", color: K.claudeHi },
+    { name: "Max 5x", price: "¥672", sub: "每 5 小时额度 ×5", color: K.claude },
+    { name: "Max 20x", price: "¥1,344", sub: "每 5 小时额度 ×20", color: K.gold },
+  ];
+  return (
+    <AbsoluteFill>
+      <At x={960} y={200} center>
+        <Kinetic at={0} size={84} parts={["大多数人用 Claude，是", { t: "包月", c: K.claudeHi }, "的"]} />
+      </At>
+      <div style={{ position: "absolute", top: 340, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 50, perspective: 1800 }}>
+        {plans.map((p, i) => {
+          const e = progAt(frame, 1.2 + i * 0.6, 1.1, EBACK);
+          const hero = i === 2;
+          return (
+            <div key={p.name} style={{ transform: `translateY(${hero ? -16 : 0}px) rotateX(${(1 - e) * 85}deg)`, transformOrigin: "50% 100%", opacity: e > 0 ? Math.min(1, e * 2) : 0 }}>
+              <Glass glow={hero ? p.color : undefined} style={{ width: 460, height: 300, padding: "34px 40px", boxSizing: "border-box", border: hero ? `2px solid ${p.color}` : undefined }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 46, fontWeight: 900, color: p.color }}>{p.name}</span>
+                  <Badge m="opus" size={50} />
+                </div>
+                <div style={{ marginTop: 18, display: "flex", alignItems: "baseline", gap: 8, whiteSpace: "nowrap" }}>
+                  <span style={{ fontSize: 84, fontWeight: 900, letterSpacing: -3 }}>{p.price}</span>
+                  <span style={{ fontSize: 32, color: K.muted, fontWeight: 700 }}>/ 月</span>
+                </div>
+                <div style={{ fontSize: 26, color: K.muted, fontWeight: 700, marginTop: 6 }}>{p.sub}</div>
+              </Glass>
+            </div>
+          );
+        })}
+      </div>
+      <Note>5x / 20x 指每 5 小时的额度；另有每周上限，三档每花 1 元换到的额度差不多（周额度约 1 : 5 : 10）· 来源：Anthropic 官方、wokey.ai、SemiAnalysis</Note>
+    </AbsoluteFill>
+  );
+};
+
+// ───────── Tower: what ¥1,344 ($200) buys at API prices ─────────
+
+const PX_PER_YUAN = 0.255 / 6.7195;
 const BASE_Y = 930;
-const fmtYuan = (v: number) => "¥" + Math.round(v).toLocaleString("en-US");
 
 export const Tower: React.FC = () => {
   const frame = useBeatFrame();
-  const grow = progAt(frame, 1.2, 5.4, (t) => 1 - Math.pow(1 - t, 2.6));
-  const zoom = progAt(frame, 6.8, 1.4, EIO);
-  const v = PLAN.worth * grow;
+  const grow = progAt(frame, 2, 6, (t) => 1 - Math.pow(1 - t, 2.6));
+  const ghostP = progAt(frame, 8.6, 2, EIO);
+  const zoom = progAt(frame, 11, 1.6, EIO);
+  const v = PLAN.max20.lo * grow;
+  const ghostV = (PLAN.max20.hi - PLAN.max20.lo) * ghostP;
   const towerH = v * PX_PER_YUAN;
-  const camY = Math.max(0, towerH - 600) * (1 - zoom);
+  const ghostH = ghostV * PX_PER_YUAN;
+  const camY = Math.max(0, towerH + ghostH - 600) * (1 - zoom);
   const scale = lerp(1, 0.24, zoom);
-  const gridLines = Array.from({ length: 10 }).map((_, k) => (k + 1) * 5000);
+  const gridLines = Array.from({ length: 8 }).map((_, k) => (k + 1) * 10000);
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", inset: 0, transformOrigin: `960px ${BASE_Y}px`, transform: `translateY(${camY - zoom * 20}px) scale(${scale})` }}>
         {gridLines.map((g) => (
           <div key={g} style={{ position: "absolute", left: -2000, right: -2000, top: BASE_Y - g * PX_PER_YUAN, borderTop: "2px dashed rgba(255,255,255,0.08)" }}>
-            <span style={{ position: "absolute", left: 2000 + 880, top: -40, fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.dim }}>{fmtYuan(g)}</span>
+            <span style={{ position: "absolute", left: 2000 + 880, top: -40, fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.dim }}>{fmtMoney(g)}</span>
           </div>
         ))}
-        <div style={{ position: "absolute", left: 1060, top: BASE_Y - PLAN.price * PX_PER_YUAN, width: 200, height: PLAN.price * PX_PER_YUAN, background: K.fg, borderRadius: 6, boxShadow: `0 0 30px ${K.fg}66` }} />
-        <div style={{ position: "absolute", left: 1010, top: BASE_Y + 14, width: 300, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.fg }}>
-          约 ¥1,344
-          <div style={{ fontSize: 24, color: K.muted, fontWeight: 700, whiteSpace: "nowrap" }}>你付的 · 一个月</div>
+        <div style={{ position: "absolute", left: 1060, top: BASE_Y - PLAN.max20.price * PX_PER_YUAN, width: 200, height: PLAN.max20.price * PX_PER_YUAN, background: K.fg, borderRadius: 6, boxShadow: `0 0 30px ${K.fg}66` }} />
+        <div style={{ position: "absolute", left: 1060, top: BASE_Y + 14, width: 200, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.fg }}>
+          ¥1,344
+          <div style={{ fontSize: 24, color: K.muted, fontWeight: 700 }}>你付的</div>
         </div>
         <div
           style={{
@@ -47,59 +91,196 @@ export const Tower: React.FC = () => {
         >
           <div style={{ position: "absolute", inset: 0, backgroundImage: "repeating-linear-gradient(0deg, rgba(0,0,0,0.12) 0 2px, transparent 2px 51px)" }} />
         </div>
-        <div style={{ position: "absolute", left: 510, top: BASE_Y + 14, width: 400, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.claudeHi }}>
-          按原价算
+        {ghostH > 1 ? (
+          <div
+            style={{
+              position: "absolute",
+              left: 560,
+              top: BASE_Y - towerH - ghostH,
+              width: 300,
+              height: ghostH,
+              border: `4px dashed ${K.gold}`,
+              borderBottom: "none",
+              borderRadius: "14px 14px 0 0",
+              background: `repeating-linear-gradient(-45deg, ${K.gold}33 0 12px, transparent 12px 24px)`,
+              boxSizing: "border-box",
+            }}
+          />
+        ) : null}
+        <div style={{ position: "absolute", left: 560, top: BASE_Y + 14, width: 300, textAlign: "center", fontFamily: FONT, fontSize: 34, fontWeight: 900, color: K.claudeHi }}>
+          API 等值
           <div style={{ fontSize: 24, color: K.muted, fontWeight: 700 }}>你用掉的</div>
         </div>
-        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 5.8, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
+        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 7.6, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
           <Tag color={K.claude} size={34}>
             实测中位数
           </Tag>
         </div>
-      </div>
-      <At x={960} y={70} center style={{ opacity: 1 - zoom }}>
-        <In at={0} from="down">
-          <Tag color={K.claudeHi} size={28}>
-            原因一 · 包月
+        <div style={{ position: "absolute", left: 530, top: BASE_Y - towerH - ghostH - 30, transform: "translateX(-100%)", opacity: progAt(frame, 10, 0.6) * (1 - zoom), whiteSpace: "nowrap" }}>
+          <Tag color={K.gold} size={34}>
+            理论上限
           </Tag>
-        </In>
+        </div>
+      </div>
+      <At x={960} y={130} center style={{ opacity: 1 - zoom }}>
+        <Kinetic at={0} size={72} parts={["¥1,344 包月，能用掉多少", { t: " API 钱", c: K.gold }, "？"]} />
       </At>
-      <At x={960} y={150} center style={{ opacity: 1 - zoom }}>
-        <Kinetic at={0} size={72} parts={["Claude 包月约 ¥1,344，", { t: "用满", c: K.gold }, "值多少？"]} />
-      </At>
-      <At x={1500} y={340} center style={{ opacity: 1 - zoom }}>
-        <In at={1.2}>
-          <Odometer value={v} prefix="¥" size={124} color={K.claudeHi} />
+      <At x={1500} y={330} center style={{ opacity: 1 - zoom }}>
+        <In at={1.6}>
+          <Odometer value={v + ghostV} prefix="¥" size={130} color={ghostP > 0 ? K.gold : K.claudeHi} />
         </In>
       </At>
       {zoom > 0 ? (
         <>
-          <At x={1340} y={400} center>
-            <Chroma at={7.6}>
-              <div style={{ opacity: progAt(frame, 7.4, 0.6), fontFamily: FONT, fontSize: 220, fontWeight: 900, color: K.gold, letterSpacing: -6, whiteSpace: "nowrap" }}>36 倍</div>
+          <At x={1340} y={440} center>
+            <Chroma at={12.2}>
+              <div style={{ opacity: progAt(frame, 12, 0.6), fontFamily: FONT, fontSize: 220, fontWeight: 900, color: K.gold, letterSpacing: -6, whiteSpace: "nowrap" }}>36 倍</div>
             </Chroma>
           </At>
-          <At x={1340} y={570} center>
-            <In at={8.2}>
-              <div style={{ fontSize: 46, fontWeight: 900, whiteSpace: "nowrap" }}>付 1 份钱，用掉 36 份</div>
-            </In>
-          </At>
-          <At x={1340} y={660} center>
-            <In at={9.2}>
-              <div style={{ fontSize: 40, fontWeight: 700, whiteSpace: "nowrap" }}>
-                平摊到单价，只要约 <span style={{ color: K.green, fontWeight: 900, fontSize: 52 }}>¥3.8</span>
-              </div>
-            </In>
-          </At>
-          <At x={1340} y={780} center>
-            <In at={10.4}>
-              <div style={{ fontSize: 30, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>前提：真用得满。偶尔用一下，还是按量付费省</div>
+          <At x={1340} y={610} center>
+            <In at={12.8}>
+              <div style={{ fontSize: 46, fontWeight: 900, whiteSpace: "nowrap" }}>付 ¥1,344，用掉 ¥47,850</div>
             </In>
           </At>
         </>
       ) : null}
-      <Note>Claude Max 20x 每月 $200 · 用满一个月按 API 原价值 $7,121：wokey.ai 17 个用满账号的中位数（2026-10）· 美元按 6.72 换算</Note>
+      <Note>实测：wokey.ai 17 个用满的 Max 20x 账号中位数（2026-10）· 理论上限约 ¥78,800（59 倍，SemiAnalysis）· 按 API 原价折算，美元按 6.7195 换成人民币</Note>
     </AbsoluteFill>
   );
 };
 
+// ───────── VsGPT: same ¥1,344, very different quota ─────────
+
+export const VsGPT: React.FC = () => (
+  <AbsoluteFill>
+    <At x={960} y={200} center>
+      <Kinetic at={0} size={80} parts={["同样 ¥1,344，Claude ", { t: "多给 3–5 倍", c: K.gold }]} />
+    </At>
+    <div style={{ position: "absolute", left: 90, top: 400 }}>
+      <RangeBars
+        at={1}
+        step={0.8}
+        max={80000}
+        width={720}
+        rowH={140}
+        labelW={480}
+        rows={[
+          { label: "Claude Max 20x", m: "opus", color: K.claude, lo: PLAN.max20.lo, hi: PLAN.max20.hi, text: "¥4.8 万 – 7.9 万" },
+          { label: "ChatGPT Pro", m: "sol", color: K.gpt, lo: PLAN.gptPro200.lo, hi: PLAN.gptPro200.hi, text: "¥1.4 万 – 1.9 万" },
+        ]}
+      />
+    </div>
+    <Note>每月 API 等值 · 实心 = 实测，虚线 = 理论上限（SemiAnalysis 2026-10）· ChatGPT Pro 9 月 29 日起降为 10× Plus · 顶配模型（Fable 5.1 vs GPT-6 Astra）两家相当</Note>
+  </AbsoluteFill>
+);
+
+// ───────── Elevator: the effective per-token price ─────────
+
+const FLOORS = [
+  { v: 134.4, label: "Opus 5.5 · API 原价", color: K.claude },
+  { v: 67.2, label: "GPT-6.1 · Gemini 4 · Sonnet 5.5", color: K.gpt },
+  { v: 40.3, label: "Qwen3.8 Max", color: K.qwen },
+  { v: 8, label: "DeepSeek V4.1 Flash", color: K.deepseek },
+  { v: 4, label: "DeepSeek 闲时五折", color: K.deepseekHi },
+];
+const TOP_V = 134.4;
+const SUB_V = 3.77; // a fully used Max 20x: API price ÷ 35.6
+const yOf = (v: number) => 260 + ((Math.log(TOP_V) - Math.log(v)) / (Math.log(TOP_V) - Math.log(3))) * 660;
+
+const DESCENT_AT = 2.5;
+const DESCENT_LEN = 8;
+
+// Beat at which the car passes price v during the descent.
+const passBeat = (v: number) => {
+  const target = (Math.log(TOP_V) - Math.log(v)) / (Math.log(TOP_V) - Math.log(SUB_V));
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 20; i++) {
+    const mid = (lo + hi) / 2;
+    if (EIO(mid) < target) lo = mid;
+    else hi = mid;
+  }
+  return DESCENT_AT + DESCENT_LEN * lo;
+};
+
+export const Elevator: React.FC = () => {
+  const frame = useBeatFrame();
+  const p = progAt(frame, DESCENT_AT, DESCENT_LEN, EIO);
+  const v = p <= 0 ? 134 : p >= 1 ? 3.8 : Math.exp(lerp(Math.log(TOP_V), Math.log(SUB_V), p));
+  const landF = (DESCENT_AT + DESCENT_LEN) * FPB;
+  const bounce = frame > landF ? -Math.sin((frame - landF) / 2.6) * 16 * Math.exp(-(frame - landF) / 7) : 0;
+  const carY = yOf(v) + bounce;
+  const appear = progAt(frame, 0.8, 1);
+  return (
+    <AbsoluteFill>
+      <At x={960} y={130} center>
+        <Kinetic at={0} size={72} parts={["换算成单价，", { t: "Opus 多少钱", c: K.claudeHi }, "？"]} />
+      </At>
+      <div style={{ position: "absolute", left: 560, top: 230, width: 170, height: 720, borderLeft: "2px solid rgba(255,255,255,0.12)", borderRight: "2px solid rgba(255,255,255,0.12)", opacity: appear }} />
+      <div style={{ position: "absolute", left: 644, top: 230, width: 2, height: Math.max(0, carY - 230), background: "rgba(255,255,255,0.35)", opacity: appear }} />
+      {FLOORS.map((f, i) => {
+        const y = yOf(f.v);
+        const e = progAt(frame, 0.8 + i * 0.25, 0.8);
+        const passed = carY >= y - 4;
+        const since = frame - passBeat(f.v) * FPB;
+        const flash = passed && since >= 0 ? Math.max(0, 1 - since / 12) : 0;
+        return (
+          <div key={f.label} style={{ position: "absolute", left: 0, top: y, width: 1920, opacity: e }}>
+            <div style={{ position: "absolute", left: 200, width: 330, top: -26, textAlign: "right", fontFamily: FONT, fontSize: 44, fontWeight: 900, color: passed ? f.color : K.muted }}>
+              ¥{Math.round(f.v)}
+            </div>
+            <div style={{ position: "absolute", left: 550, width: 640, borderTop: `2px solid ${passed ? f.color : "rgba(255,255,255,0.18)"}`, boxShadow: flash > 0 ? `0 0 ${30 * flash}px ${f.color}` : undefined }} />
+            <div style={{ position: "absolute", left: 760, top: -42, fontFamily: FONT, fontSize: 30, fontWeight: 700, color: passed ? K.fg : K.muted, whiteSpace: "nowrap" }}>{f.label}</div>
+          </div>
+        );
+      })}
+      <div style={{ position: "absolute", left: 570, top: carY - 120, width: 150, height: 120, opacity: appear }}>
+        <Glass radius={14} glow={K.claude} style={{ width: 150, height: 120, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4, background: "linear-gradient(160deg, #3a2318, #1a120e)" }}>
+          <Badge m="opus" size={40} />
+          <Odometer value={v} decimals={v < 10 ? 1 : 0} prefix="¥" size={34} color={K.claudeHi} />
+        </Glass>
+      </div>
+      {frame > landF ? <Dust at={DESCENT_AT + DESCENT_LEN} x={645} y={yOf(SUB_V)} /> : null}
+      <At x={1500} y={560} center>
+        <In at={DESCENT_AT + DESCENT_LEN + 0.4} from="slam" dur={0.5}>
+          <div style={{ textAlign: "center", fontFamily: FONT }}>
+            <div style={{ fontSize: 150, fontWeight: 900, color: K.green, letterSpacing: -4 }}>¥3.8</div>
+            <div style={{ fontSize: 40, fontWeight: 900, whiteSpace: "nowrap" }}>≈ DeepSeek 闲时价</div>
+          </div>
+        </In>
+      </At>
+      <Note>输出价 · 人民币 / 百万 token · Max 20x 用满 = API 价 ÷ 36（实测）</Note>
+    </AbsoluteFill>
+  );
+};
+
+const Dust: React.FC<{ at: number; x: number; y: number }> = ({ at, x, y }) => {
+  const frame = useBeatFrame();
+  const t = (frame - at * FPB) / 24;
+  if (t < 0 || t > 1) return null;
+  return (
+    <>
+      {Array.from({ length: 16 }).map((_, i) => {
+        const dir = i % 2 ? 1 : -1;
+        const sp = 60 + random(`d${i}`) * 160;
+        const up = 20 + random(`u${i}`) * 50;
+        const s = 10 + random(`s${i}`) * 14;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: x + dir * EO(t) * sp,
+              top: y - EO(t) * up,
+              width: s,
+              height: s,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.4)",
+              opacity: 1 - t,
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};

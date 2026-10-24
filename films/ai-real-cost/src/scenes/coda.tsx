@@ -1,277 +1,302 @@
 import React from "react";
-import { AbsoluteFill, Img, interpolate, random, staticFile } from "remotion";
-import { Spark, Whale } from "../art";
+import { AbsoluteFill, Easing, Img, interpolate, random, staticFile } from "remotion";
+import { ClockFace, CodeCard, Person, Spark, Verdict, Whale } from "../art";
 import { useBeatFrame } from "../kit";
 import { FPB } from "../timing";
-import { At, Badge, Chroma, CL, EBACK, EIO, EO, In, Kinetic, lerp, Note, progAt, Shockwave } from "../fx";
-import { FONT, K, M, ModelKey } from "../theme3";
+import { At, Chroma, CL, EBACK, EIO, EO, In, Kinetic, lerp, Note, progAt, Shockwave } from "../fx";
+import { FONT, K } from "../theme3";
 
 const TIME = K.time;
 
-// ───────── Today: the answer, and what it rests on ─────────
+// ───────── TimeCost: the formula's missing, most expensive term ─────────
 
-export const Today: React.FC = () => (
-  <AbsoluteFill>
-    <Shockwave at={0.6} color={K.green} size={1800} />
-    <At x={960} y={330} center>
-      <Kinetic at={0} size={56} weight={700} parts={["所以，", { t: "今天", c: K.gold }, "的答案是："]} />
-    </At>
-    <At x={960} y={520} center>
-      <Chroma at={0.6} amount={16}>
-        <In at={0.6} from="slam" dur={0.5}>
-          <div style={{ fontFamily: FONT, fontSize: 124, fontWeight: 900, letterSpacing: -3, whiteSpace: "nowrap" }}>
-            最聪明的 AI，反而<span style={{ color: K.green }}>最便宜</span>
-          </div>
-        </In>
-      </Chroma>
-    </At>
-    <At x={960} y={690} center>
-      <In at={1.8}>
-        <div style={{ fontSize: 38, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>前提：包月用满 · 算上你的时间</div>
-      </In>
-    </At>
-    <At x={330} y={880} center>
-      <In at={1.2} from="left">
-        <Spark size={160} mood="party" />
-      </In>
-    </At>
-    <At x={1590} y={880} center>
-      <In at={1.5} from="right">
-        <Whale size={190} mood="sweat" />
-      </In>
-    </At>
-  </AbsoluteFill>
-);
+const TILES = ["单价", "×", "用量", "÷", "包月倍数"];
 
-// ───────── Future: why today's answer won't last ─────────
-
-const A_AT = 2.4; // cheaper every year
-const B_AT = 8.4; // usage up a thousandfold
-const C_AT = 14; // the ranking keeps changing
-
-const TAGS = [
-  { when: "今年", v: "¥100", s: 1, at: A_AT + 0.8 },
-  { when: "明年", v: "约 ¥7.7", s: 0.7, at: A_AT + 1.8 },
-  { when: "后年", v: "约 ¥0.6", s: 0.5, at: A_AT + 2.8 },
+// The rework loop: Claude hands in code, you check it (5 minutes), it is wrong, it goes back, you check again.
+const LANE_Y = 640;
+const AI_X = 330;
+const YOU_X = 1180;
+const CLOCK_X = 1420;
+const CARD_A = 430;
+const CARD_B = 915;
+const CHECK = 2; // beats one 5-minute check takes on screen
+type Leg = { go: number; check: number; ok: boolean; back?: number };
+const LEGS: Leg[] = [
+  { go: 7, check: 8, ok: false, back: 11 },
+  { go: 13, check: 14, ok: true },
 ];
+const REDO = [11.8, 13]; // Claude rewrites
 
-const USE = [
-  { when: "2024 年初", v: "1,000 亿", h: 4, at: B_AT + 0.8 },
-  { when: "2025 年底", v: "100 万亿", h: 429, at: B_AT + 1.4 },
-  { when: "2026 年 3 月", v: "超 140 万亿", h: 600, at: B_AT + 2.0 },
-];
-
-const RANK: ModelKey[] = ["opus", "dsflash", "sol", "argon", "qwen", "kimi"];
-// Successive orders (model index per slot) for the shuffle.
-const ORDERS = [
-  [0, 1, 2, 3, 4, 5],
-  [2, 4, 0, 5, 1, 3],
-  [5, 0, 3, 1, 2, 4],
-  [1, 3, 5, 2, 4, 0],
-];
-const SHUFFLE = [C_AT + 1.2, C_AT + 2.6, C_AT + 4];
-
-export const Future: React.FC = () => {
+const Rework: React.FC = () => {
   const frame = useBeatFrame();
   const b = frame / FPB;
-  const showA = progAt(frame, A_AT, 0.5) * (1 - progAt(frame, B_AT - 0.4, 0.4));
-  const showB = progAt(frame, B_AT, 0.5) * (1 - progAt(frame, C_AT - 0.4, 0.4));
-  const showC = progAt(frame, C_AT, 0.5);
-  // Slot of each model: springs from one order to the next.
-  // What a rank row shows: the model in that slot and how far the row has flipped (-90°…90°).
-  const rowAt = (slot: number) => {
-    let k = 0;
-    let p = 0;
-    SHUFFLE.forEach((at, i) => {
-      const q = progAt(frame, at + slot * 0.08, 0.6, EIO);
-      if (q > 0) {
-        k = i;
-        p = q;
-      }
-    });
-    const m = RANK[p < 0.5 ? ORDERS[k][slot] : ORDERS[Math.min(k + 1, ORDERS.length - 1)][slot]];
-    return { m, angle: p < 0.5 ? p * 180 : (p - 1) * 180 };
-  };
+  const show = progAt(frame, 6, 0.8, EO) * (1 - progAt(frame, 21.2, 0.8, EIO));
+  if (show <= 0) return null;
+  let cardX = CARD_A;
+  let cardO = 0;
+  let tint: string | undefined;
+  let checks = 0;
+  let mins = 0;
+  let back = 0;
+  let verdict: { ok: boolean; at: number } | null = null;
+  for (const l of LEGS) {
+    if (b >= l.go) {
+      cardO = 1;
+      cardX = lerp(CARD_A, CARD_B, progAt(frame, l.go, 0.9, EIO));
+      tint = undefined;
+      back = 0;
+    }
+    if (b >= l.check) {
+      checks += 1;
+      mins += 5 * Math.min(1, (b - l.check) / CHECK);
+    }
+    if (b >= l.check + CHECK) {
+      verdict = { ok: l.ok, at: l.check + CHECK };
+      tint = l.ok ? K.green : K.red;
+    }
+    if (l.back !== undefined && b >= l.back) {
+      back = progAt(frame, l.back, 0.8, EIO);
+      cardX = lerp(CARD_B, CARD_A, back);
+      cardO = 1 - progAt(frame, l.back + 0.7, 0.3);
+      verdict = null;
+    }
+  }
+  const redo = b > REDO[0] && b < REDO[1];
+  const vp = verdict ? progAt(frame, verdict.at, 0.5, EBACK) : 0;
   return (
-    <AbsoluteFill>
-      <At x={960} y={520} center>
-        <Kinetic at={0} out={A_AT - 0.5} size={110} parts={["但这只是", { t: "今天", c: K.gold }, "的答案"]} />
+    <AbsoluteFill style={{ opacity: show }}>
+      <div style={{ position: "absolute", left: AI_X + 80, top: LANE_Y - 2, width: YOU_X - AI_X - 180, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.08)" }} />
+      <div style={{ position: "absolute", left: AI_X - 130, top: LANE_Y - 100, width: 260, display: "flex", flexDirection: "column", alignItems: "center", transform: redo ? `rotate(${Math.sin(frame * 0.9) * 6}deg)` : undefined }}>
+        <Spark size={150} mood={b > 10 && b < 13 ? "sweat" : "happy"} />
+        <div style={{ fontFamily: FONT, fontSize: 30, fontWeight: 900, color: K.claudeHi, whiteSpace: "nowrap" }}>Claude Opus 5.5</div>
+      </div>
+      {cardO > 0 ? (
+        <div style={{ position: "absolute", left: cardX, top: LANE_Y - 56, opacity: cardO }}>
+          {back > 0 ? (
+            <div style={{ position: "absolute", left: 30, top: -62, padding: "4px 18px", borderRadius: 999, background: K.red, color: K.bg, fontFamily: FONT, fontSize: 32, fontWeight: 900, whiteSpace: "nowrap" }}>返工</div>
+          ) : null}
+          <CodeCard tint={tint} w={170} />
+        </div>
+      ) : null}
+      <div style={{ position: "absolute", left: YOU_X - 75, top: LANE_Y - 115 }}>
+        <Person size={150} shirt="#5A6688" mood={verdict ? (verdict.ok ? "happy" : "frown") : "calm"} />
+        <div style={{ position: "absolute", left: 0, right: 0, top: 178, textAlign: "center", fontFamily: FONT, fontSize: 30, fontWeight: 900, color: K.muted }}>你</div>
+        {verdict ? (
+          <div style={{ position: "absolute", left: 96, top: -44, transform: `scale(${vp})` }}>
+            <Verdict ok={verdict.ok} size={76} />
+          </div>
+        ) : null}
+      </div>
+      <div style={{ position: "absolute", left: CLOCK_X - 70, top: LANE_Y - 70 }}>
+        <ClockFace size={140} p={mins / 60} arc={mins / 60} />
+      </div>
+      <div style={{ position: "absolute", left: CLOCK_X + 96, top: LANE_Y - 50, fontFamily: FONT, whiteSpace: "nowrap", opacity: checks > 0 ? 1 : 0.35 }}>
+        <div style={{ fontSize: 32, fontWeight: 700, color: K.muted }}>你检查了</div>
+        <div style={{ fontSize: 54, fontWeight: 900, color: K.fg }}>
+          {checks} 次 · <span style={{ color: K.timeHi }}>{Math.round(mins)} 分钟</span>
+        </div>
+      </div>
+      <At x={960} y={875} center>
+        <In at={17} out={21}>
+          <div style={{ fontSize: 46, fontWeight: 900, whiteSpace: "nowrap" }}>
+            平均要查 <span style={{ color: K.timeHi }}>1.6 次</span> × 5 分钟 × 时薪 ¥119 ≈ <span style={{ color: TIME, fontSize: 68 }}>¥16</span>
+          </div>
+        </In>
       </At>
-
-      {/* A. the same intelligence gets about 13× cheaper a year */}
-      {showA > 0 ? (
-        <AbsoluteFill style={{ opacity: showA }}>
-          <At x={960} y={170} center>
-            <Kinetic at={A_AT} size={76} parts={["同样聪明的 AI，", { t: "每年便宜约 13 倍", c: K.green }]} />
-          </At>
-          {TAGS.map((t, i) => {
-            const p = progAt(frame, t.at, 0.6, EBACK);
-            const c = i === 0 ? K.claude : K.green;
-            return (
-              <React.Fragment key={t.when}>
-                <At x={420 + i * 540} y={540} center>
-                  <div style={{ opacity: Math.min(1, p * 2), transform: `scale(${t.s * (0.6 + 0.4 * p)})`, textAlign: "center" }}>
-                    <div style={{ padding: "26px 46px", borderRadius: 24, border: `4px solid ${c}`, background: `${c}1a`, boxShadow: `0 0 50px ${c}33` }}>
-                      <div style={{ fontSize: 40, fontWeight: 700, color: K.muted }}>{t.when}</div>
-                      <div style={{ fontSize: 110, fontWeight: 900, color: i === 0 ? K.claudeHi : K.green, whiteSpace: "nowrap", letterSpacing: -3 }}>{t.v}</div>
-                    </div>
-                  </div>
-                </At>
-                {i > 0 ? (
-                  <At x={420 + i * 540 - 270} y={540} center>
-                    <div style={{ opacity: progAt(frame, t.at - 0.3, 0.4), fontSize: 52, fontWeight: 900, color: K.green, whiteSpace: "nowrap" }}>÷ 13</div>
-                  </At>
-                ) : null}
-              </React.Fragment>
-            );
-          })}
-          <At x={960} y={800} center>
-            <In at={A_AT + 3.4}>
-              <div style={{ fontSize: 38, fontWeight: 700, color: K.fg, whiteSpace: "nowrap" }}>今天花 ¥100 的活，照这个速度，后年只要几毛钱</div>
-            </In>
-          </At>
-          <Note>Epoch AI《The plunging price of thought》（2026-09）：做到同一水平的花费（含用掉的 token），2023 年以来每年降约 13 倍 · 往后按同样速度推算</Note>
-        </AbsoluteFill>
-      ) : null}
-
-      {/* B. daily token use in China, up more than a thousandfold in two years */}
-      {showB > 0 ? (
-        <AbsoluteFill style={{ opacity: showB }}>
-          <Rising t={b - B_AT} />
-          <At x={960} y={170} center>
-            <Kinetic at={B_AT} size={76} parts={["中国每天用掉的 token，", { t: "两年涨了 1,000 多倍", c: K.gold }]} />
-          </At>
-          {USE.map((u, i) => {
-            const p = progAt(frame, u.at, 1, EO);
-            const x = 560 + i * 400;
-            const h = Math.max(4, u.h * p);
-            return (
-              <React.Fragment key={u.when}>
-                <div style={{ position: "absolute", left: x - 110, top: 900 - h, width: 220, height: h, borderRadius: "14px 14px 4px 4px", background: `linear-gradient(180deg, ${K.gold}, ${K.claude})`, boxShadow: `0 0 60px ${K.gold}44`, opacity: Math.min(1, p * 3) }} />
-                <At x={x} y={900 - h - 44} center>
-                  <div style={{ opacity: p, fontSize: i === 2 ? 56 : 44, fontWeight: 900, color: i === 0 ? K.fg : K.gold, whiteSpace: "nowrap" }}>{u.v}</div>
-                </At>
-                <At x={x} y={940} center>
-                  <div style={{ opacity: Math.min(1, p * 2), fontSize: 30, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>{u.when}</div>
-                </At>
-              </React.Fragment>
-            );
-          })}
-          <Note>国家数据局（2026-03-24 国新办发布会）：全国日均 token 调用量，2024 年初约 1,000 亿，2025 年底 100 万亿，2026 年 3 月超 140 万亿</Note>
-        </AbsoluteFill>
-      ) : null}
-
-      {/* C. who is cheapest and who is smartest keeps changing */}
-      {showC > 0 ? (
-        <AbsoluteFill style={{ opacity: showC }}>
-          <At x={960} y={170} center>
-            <Kinetic at={C_AT} size={76} parts={["明年谁最便宜、谁最聪明，", { t: "可能都换了", c: K.gold }]} />
-          </At>
-          {[0, 1, 2, 3, 4, 5].map((slot) => (
-            <At key={slot} x={610} y={340 + slot * 104} center>
-              <div style={{ fontSize: 40, fontWeight: 900, color: slot === 0 ? K.gold : K.dim, opacity: progAt(frame, C_AT + 0.3, 0.5) }}>#{slot + 1}</div>
-            </At>
-          ))}
-          {[0, 1, 2, 3, 4, 5].map((slot) => {
-            const row = rowAt(slot);
-            const y = 340 + slot * 104;
-            const p = progAt(frame, C_AT + 0.3 + slot * 0.12, 0.6, EO);
-            return (
-              <div key={slot} style={{ position: "absolute", left: 690, top: y - 42, height: 84, width: 640, opacity: p, transform: `translateX(${(1 - p) * 80}px)`, perspective: 600 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 22, height: 84, transform: `rotateX(${row.angle}deg)`, transformOrigin: "50% 50%" }}>
-                  <Badge m={row.m} size={64} />
-                  <span style={{ fontFamily: FONT, fontSize: 42, fontWeight: 900, whiteSpace: "nowrap", color: K.fg }}>{M[row.m].name}</span>
-                </div>
-              </div>
-            );
-          })}
-          <At x={1420} y={340} center>
-            <In at={C_AT + 1.2} from="scale">
-              <div style={{ fontSize: 120, fontWeight: 900, color: K.gold }}>？</div>
-            </In>
-          </At>
-        </AbsoluteFill>
-      ) : null}
     </AbsoluteFill>
   );
 };
 
-// Token particles rising behind the usage bars.
-const Rising: React.FC<{ t: number }> = ({ t }) => {
+const BILL = 22; // the bill replaces the loop
+const TOKEN_Y = 3.5; // Claude's tokens per solved task, a fully used Max 20x
+const TIME_Y = 16.1; // 1.62 checks × 5 min × ¥119/h
+
+export const TimeCost: React.FC = () => {
   const frame = useBeatFrame();
-  if (t < 0) return null;
-  const n = Math.round(interpolate(t, [0, 4], [30, 220], CL));
+  const W = 1400;
+  const tokenShare = TOKEN_Y / (TOKEN_Y + TIME_Y);
+  const a = progAt(frame, BILL + 1.4, 1, EO);
+  const b = progAt(frame, BILL + 2.6, 2.4, EIO);
+  const slam = progAt(frame, 2.6, 0.5, EBACK);
+  const bill = progAt(frame, BILL, 0.6);
   return (
-    <>
-      {Array.from({ length: n }).map((_, i) => {
-        const sp = 3 + random(`rv${i}`) * 9;
-        const x = random(`rx${i}`) * 1920;
-        const y = 1100 - ((random(`ry${i}`) * 1200 + frame * sp) % 1200);
-        const s = 5 + random(`rs${i}`) * 10;
-        return <div key={i} style={{ position: "absolute", left: x, top: y, width: s, height: s, borderRadius: 2, background: [K.gold, K.claude, K.deepseek, K.fg][i % 4], opacity: 0.12 + random(`ro${i}`) * 0.25 }} />;
-      })}
-    </>
+    <AbsoluteFill>
+      <At x={960} y={170} center>
+        <Kinetic at={0} out={5.6} size={80} parts={["公式里，还漏了", { t: "最贵的一项", c: TIME }]} />
+      </At>
+      <At x={960} y={170} center>
+        <Kinetic at={6} out={10.4} size={76} parts={["AI 交活，你来检查：", { t: "一次 5 分钟", c: K.timeHi }]} />
+      </At>
+      <At x={960} y={170} center>
+        <Kinetic at={10.6} out={BILL - 0.6} size={76} parts={["没做对？", { t: "返工", c: K.red }, "，你再查一遍"]} />
+      </At>
+      <At x={960} y={170} center>
+        <Kinetic at={BILL} size={76} parts={["做对一道题，", { t: "一共花多少", c: K.gold }, "？"]} />
+      </At>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 290, display: "flex", justifyContent: "center", alignItems: "center", gap: 22, fontFamily: FONT }}>
+        {TILES.map((t, i) => {
+          const p = progAt(frame, 1 + i * 0.2, 0.6);
+          const op = t === "×" || t === "÷";
+          return (
+            <div
+              key={i}
+              style={{
+                opacity: p * 0.55,
+                fontSize: op ? 56 : 48,
+                fontWeight: 900,
+                color: K.muted,
+                padding: op ? 0 : "10px 26px",
+                borderRadius: 16,
+                border: op ? undefined : "2px solid rgba(255,255,255,0.18)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {t}
+            </div>
+          );
+        })}
+        <div style={{ fontSize: 56, fontWeight: 900, color: TIME, opacity: slam }}>+</div>
+        <div
+          style={{
+            opacity: Math.min(1, slam * 2),
+            transform: `scale(${1 + (1 - slam) * 1.2})`,
+            fontSize: 72,
+            fontWeight: 900,
+            color: TIME,
+            padding: "14px 34px",
+            borderRadius: 20,
+            border: `4px solid ${TIME}`,
+            background: `${TIME}22`,
+            boxShadow: `0 0 60px ${TIME}66`,
+            whiteSpace: "nowrap",
+          }}
+        >
+          你的时间
+        </div>
+      </div>
+      <Rework />
+      <At x={260} y={500}>
+        <div style={{ opacity: bill, fontSize: 32, fontWeight: 700, color: K.muted, whiteSpace: "nowrap" }}>用 Claude 包月（用满）写代码，做对一道题</div>
+      </At>
+      <div style={{ position: "absolute", left: 260, top: 560, width: W, height: 110, display: "flex", fontFamily: FONT }}>
+        <div style={{ width: W * tokenShare * a, height: "100%", background: `linear-gradient(90deg, ${K.claude}aa, ${K.claude})`, borderRadius: "14px 0 0 14px" }} />
+        <div style={{ width: W * (1 - tokenShare) * b, height: "100%", background: `linear-gradient(90deg, ${TIME}88, ${TIME})`, borderRadius: "0 14px 14px 0", boxShadow: `0 0 50px ${TIME}55` }} />
+      </div>
+      <At x={260} y={690}>
+        <div style={{ opacity: a, fontSize: 34, fontWeight: 900, color: K.claudeHi, whiteSpace: "nowrap" }}>token 约 ¥3.5</div>
+      </At>
+      <At x={260 + W * tokenShare + (W * (1 - tokenShare)) / 2} y={615} center>
+        <div style={{ opacity: b, fontSize: 40, fontWeight: 900, color: K.bg, whiteSpace: "nowrap" }}>你检查、返工的时间 约 ¥16</div>
+      </At>
+      <At x={960} y={860} center>
+        <In at={BILL + 6.4} from="slam" dur={0.5}>
+          <div style={{ fontSize: 76, fontWeight: 900, whiteSpace: "nowrap" }}>
+            <span style={{ color: TIME, fontSize: 110 }}>82%</span> 是你的时间
+          </div>
+        </In>
+      </At>
+      <Note>
+        Artificial Analysis 编程榜 v2.0：Opus 5.5 一次做对 62% · 每次检查按 5 分钟（假设）· 时薪 ¥119：国家统计局 2025 年软件业平均工资折算 · token 按包月用满折算
+      </Note>
+    </AbsoluteFill>
   );
 };
 
-// ───────── Collapse: whoever is cheapest, the line that stays is yours ─────────
+// ───────── Jevons: cheaper every year, used ever more ─────────
 
-// Opus's bill from the chapter before (token ¥346, your time ¥1,610), with tokens 13× cheaper each year.
-const YEARS = [
-  { when: "今年", token: 346, share: "82%" },
-  { when: "明年", token: 26.6, share: "98%" },
-  { when: "后年", token: 2, share: "99.9%" },
+const X0 = 2024.4;
+const X1 = 2026.4;
+const PRICE = [
+  [2024.4, 1],
+  [2025.4, 1 / 13],
+  [2026.4, 1 / 169],
 ];
-const STEP = [1, 2.8, 4.6];
-const BAR_X = 470;
-const PX = 0.56;
+const USAGE = [
+  [2024.4, 1],
+  [2025.4, 480 / 9.7],
+  [2026.4, 3200 / 9.7],
+];
+const CW = 1300;
+const CH = 520;
+const sx = (x: number) => ((x - X0) / (X1 - X0)) * CW;
+const sy = (v: number) => CH / 2 - (Math.log10(v) / Math.log10(400)) * (CH / 2);
 
-export const Collapse: React.FC = () => {
+// Polyline points up to progress p (0–1 along x).
+const partial = (pts: number[][], p: number) => {
+  const xEnd = X0 + (X1 - X0) * p;
+  const out: number[][] = [];
+  for (let i = 0; i < pts.length; i++) {
+    if (pts[i][0] <= xEnd) out.push(pts[i]);
+    else {
+      const [xa, va] = pts[i - 1];
+      const [xb, vb] = pts[i];
+      const t = (xEnd - xa) / (xb - xa);
+      out.push([xEnd, Math.pow(10, lerp(Math.log10(va), Math.log10(vb), t))]);
+      break;
+    }
+  }
+  return out;
+};
+
+const PEAK = 10; // the track's peak (bar 64)
+
+export const Jevons: React.FC = () => {
   const frame = useBeatFrame();
-  const b = frame / FPB;
-  let k = 0;
-  STEP.forEach((at, i) => {
-    if (b >= at) k = i;
-  });
-  let token = YEARS[0].token;
-  STEP.forEach((at, i) => {
-    if (i > 0) token = lerp(token, YEARS[i].token, progAt(frame, at, 0.7, EIO));
-  });
-  const enter = progAt(frame, 0.6, 1, EO);
-  const tw = token * PX * enter;
-  const pw = 1610 * PX * enter;
-  const yearIn = progAt(frame, STEP[k], 0.4, EO);
+  const pp = progAt(frame, 4.4, 3, EIO);
+  const up = progAt(frame, 7.6, PEAK - 7.6, Easing.in(Easing.cubic));
+  const price = partial(PRICE, pp);
+  const usage = partial(USAGE, up);
+  const pEnd = price[price.length - 1];
+  const uEnd = usage[usage.length - 1];
+  const path = (pts: number[][]) => pts.map(([x, v], i) => `${i ? "L" : "M"}${sx(x).toFixed(1)} ${sy(v).toFixed(1)}`).join(" ");
+  const labelP = progAt(frame, 7, 0.6);
+  const labelU = progAt(frame, PEAK, 0.5, EBACK);
+  const chart = progAt(frame, 3.6, 0.8); // the chart comes in with its headline, after the opener
   return (
     <AbsoluteFill>
-      <At x={960} y={200} center>
-        <Kinetic at={0} size={80} parts={["可不管谁最便宜——"]} />
+      <At x={960} y={150} center>
+        <Kinetic at={0} out={3.6} size={80} parts={["最聪明的最便宜，", { t: "只是今天的答案", c: K.gold }]} />
       </At>
-      <At x={300} y={500} center>
-        <div style={{ opacity: enter, fontSize: 60, fontWeight: 900, color: K.gold, transform: `translateY(${(1 - yearIn) * 30}px)`, whiteSpace: "nowrap" }}>{YEARS[k].when}</div>
+      <At x={960} y={150} center>
+        <Kinetic at={4} out={PEAK - 0.4} size={80} parts={["AI 每年便宜 ", { t: "13 倍", c: K.green }]} />
       </At>
-      <div style={{ position: "absolute", left: BAR_X, top: 445, height: 110, width: tw, background: `linear-gradient(90deg, ${K.claude}99, ${K.claude})`, borderRadius: "14px 0 0 14px", opacity: enter }} />
-      <div style={{ position: "absolute", left: BAR_X + tw, top: 445, height: 110, width: pw, background: `linear-gradient(90deg, ${TIME}aa, ${TIME})`, borderRadius: tw < 4 ? 14 : "0 14px 14px 0", boxShadow: `0 0 50px ${TIME}66`, opacity: enter, display: "flex", alignItems: "center", paddingLeft: 26, boxSizing: "border-box" }}>
-        <span style={{ fontFamily: FONT, fontSize: 40, fontWeight: 900, color: "#120A22", whiteSpace: "nowrap" }}>你的时间</span>
-      </div>
-      <At x={BAR_X + 6} y={432}>
-        <div style={{ opacity: enter * (token > 5 ? 1 : 0.55), fontSize: 30, fontWeight: 900, color: K.claudeHi, whiteSpace: "nowrap", transform: "translateY(-100%)" }}>token</div>
-      </At>
-      <At x={BAR_X + tw + pw + 40} y={500}>
-        <div style={{ opacity: enter, transform: "translateY(-50%)", whiteSpace: "nowrap" }}>
-          <div style={{ fontSize: 26, fontWeight: 700, color: K.muted }}>你的时间占账单</div>
-          <div style={{ fontSize: 72, fontWeight: 900, color: K.timeHi }}>{YEARS[k].share}</div>
-        </div>
-      </At>
-      <At x={960} y={790} center>
-        <Chroma at={7} amount={14}>
-          <In at={7} from="slam" dur={0.5}>
-            <div style={{ fontFamily: FONT, fontSize: 104, fontWeight: 900, whiteSpace: "nowrap", letterSpacing: -2 }}>
-              AI 越便宜，<span style={{ color: K.timeHi, textShadow: `0 0 50px ${TIME}88` }}>你的时间</span>越贵
-            </div>
-          </In>
+      <At x={960} y={150} center>
+        <Chroma at={PEAK}>
+          <Kinetic at={PEAK} stagger={1} size={80} parts={["可我们，", { t: "用得更多", c: K.gold }]} />
         </Chroma>
       </At>
-      <Note>以上面 Opus 的账单为例：你的时间不变，token 按每年便宜 13 倍推算</Note>
+      <svg width={CW + 400} height={CH + 120} style={{ position: "absolute", left: 210, top: 270, overflow: "visible", fontFamily: FONT, opacity: chart }}>
+        <g transform="translate(40, 20)">
+          <line x1={0} x2={CW} y1={sy(1)} y2={sy(1)} stroke="rgba(255,255,255,0.18)" strokeWidth={2} strokeDasharray="8 10" />
+          <path d={path(price)} stroke={K.green} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          {/* Glow as a wide translucent stroke: a CSS filter here made the whole chart shift between frames. */}
+          <path d={path(usage)} stroke={K.gold} strokeOpacity={0.18 + 0.12 * labelU} strokeWidth={26} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d={path(usage)} stroke={K.gold} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          {pp > 0 ? <circle cx={sx(pEnd[0])} cy={sy(pEnd[1])} r={12} fill={K.green} /> : null}
+          {up > 0 ? <circle cx={sx(uEnd[0])} cy={sy(uEnd[1])} r={12 + 6 * labelU} fill={K.gold} /> : null}
+          <text x={sx(X1) + 26} y={sy(1 / 169) + 12} fontSize={36} fontWeight={900} fill={K.green} opacity={labelP}>
+            价格 ÷169
+          </text>
+          <text x={sx(X1) + 26} y={sy(330) + 12} fontSize={36} fontWeight={900} fill={K.gold} opacity={labelU}>
+            用量 ×330
+          </text>
+        </g>
+      </svg>
+      {/* Year labels as HTML: centre-anchored SVG text drifted between frames in the full render. */}
+      {[2024, 2025, 2026].map((yr, i) => (
+        <div key={yr} style={{ position: "absolute", left: 210 + 40 + sx(X0 + i) - 60, top: 270 + 20 + CH + 32, width: 120, textAlign: "center", fontFamily: FONT, fontSize: 30, fontWeight: 700, color: K.muted, opacity: chart }}>
+          {yr}
+        </div>
+      ))}
+      <Shockwave at={PEAK} x={210 + 40 + sx(X1)} y={270 + 20 + sy(330)} color={K.gold} size={900} />
+      <At x={960} y={935} center>
+        <In at={PEAK + 3}>
+          <div style={{ fontSize: 44, fontWeight: 900, whiteSpace: "nowrap" }}>
+            明年，谁最便宜、谁最聪明，<span style={{ color: K.gold }}>都还不一定</span>
+          </div>
+        </In>
+      </At>
+      <Note>价格：Epoch AI，同等能力的成本每年约降 13 倍 · 用量：Google 每月处理 token 9.7 万亿 → 3,200 万亿（2024.5 → 2026.5）· Claude Code 人均日花费也从 $6 涨到 $13</Note>
     </AbsoluteFill>
   );
 };
@@ -310,8 +335,8 @@ const TOKEN_COLORS = [K.claude, K.gold, K.deepseek, K.fg, K.green];
 export const Scarce: React.FC = () => {
   const frame = useBeatFrame();
   const b = frame / FPB;
-  const n = Math.round(interpolate(b, [0, 6], [60, 260], CL));
-  const sand = progAt(frame, 0, 12, (t) => t);
+  const n = Math.round(interpolate(b, [0, 9], [40, 260], CL));
+  const sand = progAt(frame, 0, 16, (t) => t);
   return (
     <AbsoluteFill>
       {Array.from({ length: n }).map((_, i) => {
@@ -345,14 +370,17 @@ export const Scarce: React.FC = () => {
         </In>
       </At>
       <At x={960} y={170} center>
-        <Kinetic at={0} out={3.6} size={84} parts={["token 会越来越", { t: "多", c: K.gold }]} />
+        <Kinetic at={0} out={3.6} size={84} parts={["AI 会越来越", { t: "便宜", c: K.green }]} />
       </At>
       <At x={960} y={170} center>
-        <Kinetic at={4} size={84} parts={["唯一不会变多的——"]} />
+        <Kinetic at={4} out={7.6} size={84} parts={["token 会越来越", { t: "多", c: K.gold }]} />
+      </At>
+      <At x={960} y={170} center>
+        <Kinetic at={8} size={84} parts={["唯一不会变多的——"]} />
       </At>
       <At x={960} y={900} center>
-        <Chroma at={6}>
-          <In at={6} from="slam" dur={0.5}>
+        <Chroma at={10.4}>
+          <In at={10.4} from="slam" dur={0.5}>
             <div style={{ fontFamily: FONT, fontSize: 132, fontWeight: 900, color: TIME, whiteSpace: "nowrap", textShadow: `0 0 60px ${TIME}88` }}>是你的时间</div>
           </In>
         </Chroma>
@@ -360,6 +388,42 @@ export const Scarce: React.FC = () => {
     </AbsoluteFill>
   );
 };
+
+// ───────── Final: what stays true after the ranking changes ─────────
+
+export const Final: React.FC = () => (
+  <AbsoluteFill>
+    <Shockwave at={0} color={K.green} size={1800} />
+    <At x={960} y={400} center>
+      <Chroma at={0} amount={18}>
+        <In at={0} from="slam" dur={0.5}>
+          <div style={{ fontFamily: FONT, fontSize: 124, fontWeight: 900, letterSpacing: -3, whiteSpace: "nowrap", textAlign: "center", lineHeight: 1.22 }}>
+            <span style={{ color: K.green }}>最便宜</span>的 AI，
+            <br />
+            是最省<span style={{ color: TIME }}>你时间</span>的那个
+          </div>
+        </In>
+      </Chroma>
+    </At>
+    <At x={960} y={670} center>
+      <In at={3.4}>
+        <div style={{ fontSize: 52, fontWeight: 900, whiteSpace: "nowrap" }}>
+          今天，它是<span style={{ color: K.claudeHi }}>最聪明</span>的那个；明天，<span style={{ color: K.gold }}>不一定</span>
+        </div>
+      </In>
+    </At>
+    <At x={330} y={880} center>
+      <In at={2} from="left">
+        <Spark size={170} mood="party" />
+      </In>
+    </At>
+    <At x={1590} y={880} center>
+      <In at={2.5} from="right">
+        <Whale size={200} mood="happy" />
+      </In>
+    </At>
+  </AbsoluteFill>
+);
 
 // ───────── Brand outro: "AI 的真实价格" rolls into "世界的形状" ─────────
 

@@ -23,10 +23,9 @@ export const K = {
   green: "#34E0A1",
   red: "#FF5A65",
   purple: "#9B7BFF",
-  // "your time" (the theme colour of the second half)
+  // "your time"
   time: "#B98CFF",
   timeHi: "#D9C2FF",
-  skin: "#F2C9A0",
 };
 
 export type Glyph = "claude" | "deepseek" | "letter";

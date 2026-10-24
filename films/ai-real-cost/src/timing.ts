@@ -9,21 +9,17 @@ export const FPB = BEAT_S * FPS;
 
 export const beatToFrame = (beat: number) => Math.round((FIRST_BEAT_S + beat * BEAT_S) * FPS);
 export const barToFrame = (bar: number) => beatToFrame(bar * 4);
-// Film second of film bar `bar` (fractions allowed).
-export const barS = (bar: number) => FIRST_BEAT_S + bar * 4 * BEAT_S;
 
 // The cut skips whole bars of the track. From film bar `at` on, film bar b plays track bar b + skip. Both jumps land
 // where the track continues its own phrase (tools/chroma.py: the bar before each cut matches the bar that normally
-// precedes its target, 0.990 and 0.998): 20 → 40 enters the breakdown, which opens "your time"; 56 → 64 enters the
-// peak, which lands on the bill.
+// precedes its target, 1.000 and 0.999): 16 → 24 drops one turn of the 8-bar loop, so the music still comes back
+// from the breakdown (track bar 48) on the "smartest is cheapest" reveal and the peak (64) on "we use ever more";
+// 73 → 77, a beat before the end card flips, hands it the track's own settling bars.
 export const MUSIC_EDIT = [
-  { at: 0, skip: 2 },
-  { at: 18, skip: 22 },
-  { at: 34, skip: 30 },
+  { at: 0, skip: 0 },
+  { at: 16, skip: 8 },
+  { at: 65, skip: 12 },
 ];
-
-// Film bars that are muted whole: the two real silences (before "your time" is named, and before the bill).
-export const MUTE = [17, 33];
 
 const skipFrames = (bars: number) => Math.round(bars * 4 * FPB);
 
