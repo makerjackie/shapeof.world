@@ -24,7 +24,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   useEffect(() => {
     if (!hintVersion) return
     setLightHint(true)
-    const timer = window.setTimeout(() => setLightHint(false), 8500)
+    const timer = window.setTimeout(() => setLightHint(false), 6000)
     return () => window.clearTimeout(timer)
   }, [hintVersion])
   const [reading, setReading] = useState({ scale: SCALE_DEFAULT, width: 1600 })
@@ -93,6 +93,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       </>}
       {inputs.dayCycle && <div><span>{tx('一天中的时间')}</span><strong>{`${Math.floor(snapshot.daySeconds/3600).toString().padStart(2,'0')}:${Math.floor(snapshot.daySeconds%3600/60).toString().padStart(2,'0')}`}</strong></div>}
       {active === 'cell' && <div><span>{tx('胞质环流')}</span><strong>1.3–4.3 <small>μm/s</small></strong></div>}
+      {active === 'cell' && <div><span>{tx('顶面叶绿体')}</span><strong>{snapshot.topChloroplastCount} / 200</strong></div>}
       {active === 'cell' && inputs.timeScale >= 3600 && <p>{tx('环流太快，显示为轨迹')}</p>}
       <button className="pc-readout-toggle" aria-expanded={expandedReadouts} onClick={()=>setExpandedReadouts((value)=>!value)}>{tx(expandedReadouts?'收起读数':'展开读数')}</button>
     </aside>
@@ -119,7 +120,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <p>{tx('铁氧还蛋白 1A70 是菠菜 E92K 突变体，用作形状参照；它不代表野生型电子传递速率。')}</p>
       <p>{tx('分子过程采用局部慢放。ATP 合酶转速是百圈每秒的数量级参照，不是菠菜在该光强下的实测值；L5 另按可见转速调整慢放倍率。')}</p>
     </aside>}
-    {lightHint && <p className="pc-light-hint" role="status">{tx('叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
+    {lightHint && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
     <Freebar className="pc-freebar" ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
       <button type="button" onClick={reset}><ArrowCounterClockwise />{tx('回到细胞')}</button>
       <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs((current)=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>

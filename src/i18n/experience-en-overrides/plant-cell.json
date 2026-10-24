@@ -88,5 +88,7 @@
   "γ 亚基的氧化还原开关锁住转子": "The γ subunit’s redox switch locks the rotor",
   "分子资源加载失败，请刷新重试。": "Molecular structures failed to load. Please refresh to try again.",
   "铁氧还蛋白 1A70 是菠菜 E92K 突变体，用作形状参照；它不代表野生型电子传递速率。": "Ferredoxin 1A70 is the spinach E92K mutant, used as a shape reference. It does not represent the wild-type electron-transfer rate.",
-  "铁氧还蛋白（E92K 参照）": "Ferredoxin (E92K reference)"
+  "铁氧还蛋白（E92K 参照）": "Ferredoxin (E92K reference)",
+  "顶面叶绿体": "Chloroplasts on top",
+  "叶绿体正在慢慢挪位，需要几分钟。": "Chloroplasts are moving slowly. This takes a few minutes."
 }

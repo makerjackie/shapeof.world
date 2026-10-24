@@ -91,7 +91,8 @@ export function createSectionChloroplasts(cells: TissueCell[], mobile = false) {
   for (const cell of cells) {
     if (cell.kind !== 'palisade' && cell.kind !== 'sponge') continue
     const behind = cell.center.z < -20
-    const count = cell.kind === 'palisade' ? (behind ? 10 : mobile ? 18 : 26) : (behind ? 2 : mobile ? 4 : 6)
+    // A section samples the wall population; the full L2 cell retains 200.
+    const count = cell.kind === 'palisade' ? (behind ? 16 : mobile ? 42 : 60) : (behind ? 5 : mobile ? 12 : 16)
     for (let i = 0; i < count; i++) {
       const a = i * 2.399963 + cell.phase, y = ((i + .5) / count * 2 - 1) * .88
       const radius = cell.kind === 'palisade' ? Math.sqrt(Math.max(.05, 1 - Math.max(0, Math.abs(y) * (7 / 3) - 4 / 3) ** 2)) : Math.sqrt(1 - y * y)
@@ -99,9 +100,9 @@ export function createSectionChloroplasts(cells: TissueCell[], mobile = false) {
       sectionPoint(cell, point, object.position)
       normal.set(Math.cos(a), y * .3, Math.sin(a)).normalize()
       object.quaternion.setFromUnitVectors(axis, normal)
-      object.scale.set(2.3 + rand() * .4, 1.4 + rand() * .25, .65 + rand() * .15)
+      object.scale.set(2.8 + rand() * .4, 1.7 + rand() * .2, .85 + rand() * .15)
       object.updateMatrix(); matrices.push(object.matrix.clone())
-      colors.push(new T.Color().setHSL(.25 + rand() * .025, .25 + rand() * .08, .20 + rand() * .06))
+      colors.push(new T.Color().setHSL(.25 + rand() * .025, .50 + rand() * .08, .38 + rand() * .06))
     }
   }
   return { matrices, colors }

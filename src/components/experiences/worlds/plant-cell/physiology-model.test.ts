@@ -15,7 +15,8 @@ describe('light response in physical units', () => {
     }
     expect(evaluatePhotosynthesis(1900).netAssimilation - evaluatePhotosynthesis(1800).netAssimilation).toBeLessThan(evaluatePhotosynthesis(200).netAssimilation - evaluatePhotosynthesis(100).netAssimilation)
     expect(Number.isFinite(evaluatePhotosynthesis(NaN).netAssimilation)).toBe(true)
-    expect(getLightAppearance(400).keyIntensity).toBeCloseTo(0.08 + (0.45 + 0.55 * Math.sqrt(0.2)) * 4.3)
+    expect(getLightAppearance(0).keyIntensity).toBe(0)
+    expect(getLightAppearance(1800).keyIntensity).toBeGreaterThan(getLightAppearance(50).keyIntensity * 6)
   })
 
   it('keeps a constant lamp when only time speed changes', () => {
@@ -53,6 +54,7 @@ describe('shared physiological state', () => {
     const snapshot = getPhysiologySnapshot(state, inputs)
     expect(snapshot.timeScale).toBe(60)
     expect(snapshot.actualPPFD).toBe(400)
+    expect(snapshot.topChloroplastCount).toBe(state.chloroplasts.poses.filter(pose => pose.positionUm[1] >= 23).length)
     expect('chloroplasts' in snapshot).toBe(false)
   })
 

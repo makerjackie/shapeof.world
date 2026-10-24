@@ -244,11 +244,11 @@ function Contents(props: SceneProps) {
   </>, [controller, mobile, brightness, physiology, inputs.timeScale, inputs.playing, light, snapshot.starchFraction, snapshot.stomatalOpening, viewScale])
   return <>
     <color attach="background" args={['#04080a']} />
-    <ambientLight color="#879b91" intensity={0.08 + brightness * 0.16} />
-    <hemisphereLight args={['#ddd8b7', '#304640', 0.1 + brightness * 0.18]} />
-    <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={0.08+brightness*4.3} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
-    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={0.04 + brightness * 0.45} />
-    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.07} />
+    <ambientLight color="#6a8c9b" intensity={0.025 + brightness * 0.14} />
+    <hemisphereLight args={['#ddd8b7', '#304640', brightness * 0.24]} />
+    <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={getLightAppearance(light).keyIntensity} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
+    <directionalLight position={[35, 10, -30]} color="#cfe0c5" intensity={getLightAppearance(light).fillIntensity} />
+    <directionalLight position={[-20, -35, 10]} color="#3f6f78" intensity={0.09} />
     <group ref={root}>{layers}</group>
     <CameraAndScale {...props} />
     <EffectComposer multisampling={0}>

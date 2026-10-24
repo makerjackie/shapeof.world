@@ -88,7 +88,7 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6 }: LayerProps
   return <group>
     <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .94} /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>
-      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#819967" opacity={opacity * .85} />
+      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#97c969" opacity={opacity * .95} />
     </instancedMesh>
     <mesh geometry={resources.xylem.wall}><SectionMaterial kind="xylem" color="#d6cfb0" opacity={opacity * .78} /></mesh>
     <mesh geometry={resources.xylem.spiral}><SectionMaterial kind="xylem" color="#eee3c8" opacity={opacity * .9} /></mesh>
