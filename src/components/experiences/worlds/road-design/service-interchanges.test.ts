@@ -1,3 +1,4 @@
+import { projectToLane, sampleLane } from './sim/geometry'
 import { describe, expect, it } from 'vitest'
 import { buildServiceInterchange, diamond } from './designs/diamond'
 import { ddi } from './designs/ddi'
@@ -40,8 +41,12 @@ describe('service interchange geometry and the NCHRP 959 conflict boundary', () 
     const network = design.build(), byId = new Map(network.lanes.map(lane => [lane.id, lane]))
     for (const movement of network.movements) for (let i = 1; i < movement.lanes.length; i++) {
       const before = byId.get(movement.lanes[i - 1])!, after = byId.get(movement.lanes[i])!
-      expect(before.next).toContain(after.id)
-      expect(distance(before.points.at(-1)!, after.points[0])).toBeLessThan(1e-8)
+      expect([...before.next, before.left, before.right]).toContain(after.id)
+      if (before.next.includes(after.id)) expect(distance(before.points.at(-1)!, after.points[0])).toBeLessThan(1e-8)
+      else for (const fraction of [.2, .5, .8]) {
+        const p = sampleLane(before, before.length * fraction).position
+        expect(distance(p, sampleLane(after, projectToLane(after, p)).position)).toBeLessThanOrEqual(after.width + .05)
+      }
     }
     const crossing = network.movements.find(m => m.id === 'west-east')!
     expect(crossing.lanes.map(id => byId.get(id)!).filter(l => l.signalGroups).map(l => l.controlPoint)).toEqual(['left', 'right'])

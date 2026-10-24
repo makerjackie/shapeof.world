@@ -75,6 +75,9 @@ export interface ControlSpec {
 }
 /** Axis-aligned core detector rectangle, in world metres; excludes the long leads. */
 export interface MeasurementArea { minX: number; maxX: number; minZ: number; maxZ: number }
+/** Assumed origin-destination arrivals, veh/h; this is scenario input, not observed traffic. */
+export interface DemandOD { movementId: string; vehiclesPerHour: number }
+export interface TerrainGrid { originX: number; originZ: number; step: number; width: number; height: number; values: number[]; sourceElevation?: number }
 export interface Network {
   id: string
   lanes: Lane[]
@@ -83,6 +86,8 @@ export interface Network {
   schematicMovements: SchematicMovement[]
   weaving: WeavingSection[]
   control: ControlSpec
+  defaultOD?: DemandOD[]
+  terrain?: TerrainGrid
   /** Optional override for irregular / real-world junctions. Otherwise derived from connector and ramp geometry. */
   measurementArea?: MeasurementArea
   urbanJunctions?: { id: string; position: Vec3; arms: { direction: 'north' | 'east' | 'south' | 'west'; halfWidth: number; reach?: number }[]; cornerRadius?: number; layout?: 'junction' | 'roundabout'; islandRadius?: number }[]

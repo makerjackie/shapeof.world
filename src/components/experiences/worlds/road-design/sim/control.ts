@@ -71,10 +71,13 @@ export function buildMovementConflicts(network: Network): MovementConflict[] {
   for (let i = 0; i < network.movements.length; i++) for (let j = i + 1; j < network.movements.length; j++) {
     const a = network.movements[i], b = network.movements[j]
     if (a.from === b.from) continue
-    if (a.lanes.at(-1) === b.lanes.at(-1)) {
-      const lane = laneMap.get(a.lanes.at(-1)!)!
+    // The merge is where the routes first join, not the final common exit.
+    // After this point cars share a physical queue and use IDM. Reserving the
+    // far exit again would serialize different O-D cars through every signal.
+    const shared = a.lanes.find(id => b.lanes.includes(id))
+    if (shared) {
+      const lane = laneMap.get(shared)!
       result.push({ a: a.id, b: b.id, position: lane.points[0], kind: 'merge', aRange: { laneId: lane.id, start: -6, end: 8 }, bRange: { laneId: lane.id, start: -6, end: 8 } })
-      continue
     }
     const connectorsA = a.lanes.map(id => laneMap.get(id)!).filter(lane => lane.kind === 'connector')
     const connectorsB = b.lanes.map(id => laneMap.get(id)!).filter(lane => lane.kind === 'connector')
