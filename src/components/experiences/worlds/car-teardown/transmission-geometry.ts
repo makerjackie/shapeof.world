@@ -1,7 +1,7 @@
 import * as T from 'three'
-import {createInvoluteGearGeometry, gearDimensions, type GearParameters} from './gear-geometry'
-import {freeGearAngle, type TransmissionState} from './transmission-model'
-import {TRANSMISSION_GEOMETRY as G, VEHICLE_SPEC as S, type Gear} from './vehicle-spec'
+import { createInvoluteGearGeometry, gearDimensions, type GearParameters } from './gear-geometry'
+import { freeGearAngle, type TransmissionState } from './transmission-model'
+import { TRANSMISSION_GEOMETRY as G, VEHICLE_SPEC as S, type Gear } from './vehicle-spec'
 
 const TR = S.transmission
 const HALF_PI = Math.PI / 2
@@ -15,7 +15,8 @@ export const LAYSHAFT_Y = TR.axisY - GEARBOX_CENTRE_DISTANCE
 export function reverseIdlerCentre(): [number, number] {
 	// Reverse shares the forward train's normal module and helix magnitude.
 	// Sum transverse pitch radii, not spur radii, for each idler mesh.
-	const pitchRadius = (teeth: number) => gearDimensions({teeth, helixAngle: TR.helixAngle}).pitchRadius
+	const pitchRadius = (teeth: number) =>
+		gearDimensions({ teeth, helixAngle: TR.helixAngle }).pitchRadius
 	const a = pitchRadius(TR.gears.R.driver) + pitchRadius(G.reverseIdlerTeeth)
 	const b = pitchRadius(TR.gears.R.driven) + pitchRadius(G.reverseIdlerTeeth)
 	const c = GEARBOX_CENTRE_DISTANCE
@@ -128,7 +129,7 @@ function createGearNodes(): GearNode[] {
 			helixAngle: h,
 		},
 	)
-	return nodes.map((node) => ({...node, backlash: G.gearBacklash}))
+	return nodes.map((node) => ({ ...node, backlash: G.gearBacklash }))
 }
 export const GEARBOX_GEARS = createGearNodes()
 export const GEARBOX_MESH_PAIRS = [
@@ -170,8 +171,8 @@ export function createAnnulus(outer: number, inner: number, width: number): T.Bu
 }
 
 /** Rounded casting with a closed wall section, a tail bearing neck and front flange. */
-export function createGearboxCase(): T.BufferGeometry {
-	const outer: [number, number][] = [
+export function createGearboxCase(section?: 'front' | 'rear'): T.BufferGeometry {
+	let outer: [number, number][] = [
 		[G.caseHalfWidth * 0.58, G.caseRearX],
 		[G.caseHalfWidth * 0.7, G.stations.R - G.gearWidth],
 		[G.caseHalfWidth, G.stations.R],
@@ -179,6 +180,18 @@ export function createGearboxCase(): T.BufferGeometry {
 		[G.caseHalfWidth * 1.08, G.stations[3]],
 		[G.caseHalfWidth * 1.1, G.caseFrontX],
 	]
+	if (section) {
+		const split = (G.caseRearX + G.caseFrontX) / 2
+		const upperIndex = outer.findIndex(([, x]) => x >= split)
+		const [r0, x0] = outer[upperIndex - 1],
+			[r1, x1] = outer[upperIndex]
+		const seam: [number, number] = [r0 + ((r1 - r0) * (split - x0)) / (x1 - x0), split]
+		outer =
+			section === 'front'
+				? [seam, ...outer.slice(upperIndex)]
+				: [...outer.slice(0, upperIndex), seam]
+	}
+
 	const profile = [
 		...outer,
 		...outer
@@ -234,7 +247,7 @@ export function createFinalDriveGear(
 	const innerFraction = 1 - G.finalDriveFaceWidth / coneDistance
 	const thickness = outerAxial * (1 - innerFraction)
 	const geometry = createInvoluteGearGeometry(
-		{teeth, module: G.finalDriveModule, backlash: G.gearBacklash},
+		{ teeth, module: G.finalDriveModule, backlash: G.gearBacklash },
 		thickness,
 		bore,
 	)

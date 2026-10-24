@@ -1222,3 +1222,125 @@
 		margin: 12px 0;
 	}
 }
+
+/* Every assembly shares the same second-level controls. */
+.ct-world.is-capture > :not(.ct-canvas) {
+	display: none !important;
+}
+.ct-steel-legend {
+	position: absolute;
+	right: 40px;
+	top: 300px;
+	width: 285px;
+	padding: 16px;
+	background: #101419dc;
+	border-top: 1px solid var(--ct-line);
+	font-size: 11px;
+}
+.ct-steel-legend p {
+	margin: 0 0 14px;
+	color: #d3dae0;
+}
+.ct-steel-legend button {
+	width: 100%;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	padding: 10px 0;
+	background: none;
+	border: 0;
+	text-align: left;
+}
+.ct-steel-legend i {
+	width: 8px;
+	height: 8px;
+	border: 1px solid #ffffff20;
+}
+.ct-steel-legend button small {
+	margin-left: auto;
+	color: #aebac4;
+}
+.ct-steel-legend > small {
+	display: block;
+	margin-top: 13px;
+	line-height: 1.7;
+	color: #81909e;
+	font-size: 10px;
+}
+.ct-part-card {
+	max-height: calc(100% - 325px);
+	overflow-y: auto;
+}
+.ct-world[data-selected='body'] .ct-system-detail,
+.ct-world[data-selected='electrical'].is-parts .ct-system-detail {
+	display: none;
+}
+.ct-world[data-selected='body'] .ct-part-card ~ .ct-steel-legend {
+	display: none;
+}
+@media (min-width: 701px) {
+	.ct-world.has-selection:not(.is-engine) .ct-parts-list {
+		top: 285px;
+		width: 195px;
+	}
+	.ct-world.has-selection:not(.is-engine) .ct-parts-items {
+		max-height: calc(100dvh - 440px);
+	}
+}
+@media (max-width: 700px) {
+	.ct-world.has-selection .ct-parts-list {
+		top: 178px;
+		width: 142px;
+	}
+	.ct-world.has-selection .ct-parts-list.is-open {
+		width: 200px;
+	}
+	.ct-world.has-selection .ct-view-switch {
+		top: 221px;
+	}
+	.ct-world.is-parts .ct-view-switch {
+		display: none;
+	}
+	.ct-world.is-parts .ct-instruments {
+		max-height: 220px;
+	}
+	.ct-world .ct-part-card {
+		max-height: 285px;
+	}
+	.ct-steel-legend {
+		top: auto;
+		right: 20px;
+		left: 20px;
+		bottom: 158px;
+		width: auto;
+		padding: 10px;
+	}
+	.ct-steel-legend p {
+		font-size: 10px;
+		margin-bottom: 5px;
+	}
+	.ct-steel-legend button {
+		display: inline-flex;
+		width: auto;
+		padding: 6px;
+		gap: 5px;
+		font-size: 10px;
+	}
+	.ct-steel-legend button small,
+	.ct-steel-legend > small {
+		display: none;
+	}
+	.ct-part-label-text {
+		font-size: 8px;
+	}
+}
+
+/* Capture is local to this world and hides the shell's remaining immersion buttons. */
+.experience-page[data-world-id='car-teardown']:has(.ct-world.is-capture) > .experience-header {
+	visibility: hidden;
+}
+.ct-part-label-text {
+	line-height: 14px;
+	color: #b5bec7;
+	overflow-wrap: anywhere;
+}

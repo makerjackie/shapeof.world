@@ -1,7 +1,8 @@
-import {useEffect, useMemo, useRef, type RefObject} from 'react'
-import {useFrame} from '@react-three/fiber'
+import { useEffect, useMemo, useRef, type RefObject } from 'react'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import {VEHICLE_SPEC as V, WHEEL_GEOMETRY as W} from './vehicle-spec'
+import { TeardownPart } from './TeardownPart'
+import { VEHICLE_SPEC as V, WHEEL_GEOMETRY as W } from './vehicle-spec'
 
 /** A moulded tyre section with rounded shoulders. Tread is a procedural bump
  * field in metres, so its circumferential channels remain visible up close. */
@@ -92,7 +93,7 @@ function createSpoke() {
 	})
 }
 
-export type WheelPose = {steer: number; heave: number}
+export type WheelPose = { steer: number; heave: number }
 export function Wheel({
 	axle,
 	side,
@@ -119,7 +120,7 @@ export function Wheel({
 		}
 	})
 	const objects = useMemo(
-		() => ({tyre: createTyre(), rubber: createRubber(), spoke: createSpoke()}),
+		() => ({ tyre: createTyre(), rubber: createRubber(), spoke: createSpoke() }),
 		[],
 	)
 	useEffect(
@@ -137,71 +138,87 @@ export function Wheel({
 		<group
 			ref={pose}
 			position={[x, V.wheels.radius, side * (track / 2 + V.explosion.wheelOutward * explode)]}
-			rotation={[0, side < 0 ? Math.PI : 0, 0]}>
+			rotation={[0, side < 0 ? Math.PI : 0, 0]}
+		>
 			<group ref={spin}>
-				<mesh
-					geometry={objects.tyre}
-					material={objects.rubber}
-					castShadow
-					receiveShadow
-					userData={{partId: `tyre-${corner}`}}
-				/>
-				<group userData={{partId: `rim-${corner}`}}>
-					<mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
-						<cylinderGeometry
-							args={[
-								W.rimLipRadius - W.barrelThickness,
-								W.rimLipRadius - W.barrelThickness,
-								V.wheels.width * 0.78,
-								W.radialSegments,
-								1,
-								true,
-							]}
-						/>
-						<meshStandardMaterial
-							color="#60666c"
-							metalness={1}
-							roughness={0.29}
-							side={THREE.DoubleSide}
-						/>
-					</mesh>
-					{[-1, 1].map((end) => (
-						<mesh key={end} position={[0, 0, end * W.faceOffset]} castShadow>
-							<torusGeometry args={[W.rimLipRadius, W.rimLipTube, 12, W.radialSegments]} />
-							<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
-						</mesh>
-					))}
-					{Array.from({length: W.spokes}, (_, i) => (
-						<mesh
-							key={i}
-							geometry={objects.spoke}
-							position={[0, 0, W.faceOffset - W.spokeDepth]}
-							rotation={[0, 0, (i / W.spokes) * Math.PI * 2]}
-							castShadow>
-							<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
-						</mesh>
-					))}
+				<TeardownPart
+					id="susp-tyres"
+					representative={axle === 'front' && side > 0}
+					anchor={[0, 0, 0]}
+				>
 					<mesh
-						position={[0, 0, W.faceOffset - W.hubDepth / 2]}
-						rotation={[Math.PI / 2, 0, 0]}
-						castShadow>
-						<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
-						<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
-					</mesh>
-					{Array.from({length: 5}, (_, i) => (
-						<mesh
-							key={i}
-							position={[
-								Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-								Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-								W.faceOffset + W.hubDepth / 10,
-							]}
-							rotation={[Math.PI / 2, 0, 0]}>
-							<cylinderGeometry args={[W.boltRadius, W.boltRadius, W.hubDepth / 3, 6]} />
-							<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
+						geometry={objects.tyre}
+						material={objects.rubber}
+						castShadow
+						receiveShadow
+						userData={{ partId: `tyre-${corner}` }}
+					/>
+				</TeardownPart>
+				<TeardownPart
+					id="susp-rims"
+					representative={axle === 'front' && side > 0}
+					anchor={[0, 0, 0]}
+				>
+					<group userData={{ partId: `rim-${corner}` }}>
+						<mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
+							<cylinderGeometry
+								args={[
+									W.rimLipRadius - W.barrelThickness,
+									W.rimLipRadius - W.barrelThickness,
+									V.wheels.width * 0.78,
+									W.radialSegments,
+									1,
+									true,
+								]}
+							/>
+							<meshStandardMaterial
+								color="#60666c"
+								metalness={1}
+								roughness={0.29}
+								side={THREE.DoubleSide}
+							/>
 						</mesh>
-					))}
-				</group>
+						{[-1, 1].map((end) => (
+							<mesh key={end} position={[0, 0, end * W.faceOffset]} castShadow>
+								<torusGeometry args={[W.rimLipRadius, W.rimLipTube, 12, W.radialSegments]} />
+								<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
+							</mesh>
+						))}
+						{Array.from({ length: W.spokes }, (_, i) => (
+							<mesh
+								key={i}
+								geometry={objects.spoke}
+								position={[0, 0, W.faceOffset - W.spokeDepth]}
+								rotation={[0, 0, (i / W.spokes) * Math.PI * 2]}
+								castShadow
+							>
+								<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
+							</mesh>
+						))}
+						<mesh
+							position={[0, 0, W.faceOffset - W.hubDepth / 2]}
+							rotation={[Math.PI / 2, 0, 0]}
+							castShadow
+						>
+							<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
+							<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
+						</mesh>
+						{Array.from({ length: 5 }, (_, i) => (
+							<mesh
+								key={i}
+								position={[
+									Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+									Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+									W.faceOffset + W.hubDepth / 10,
+								]}
+								rotation={[Math.PI / 2, 0, 0]}
+							>
+								<cylinderGeometry args={[W.boltRadius, W.boltRadius, W.hubDepth / 3, 6]} />
+								<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
+							</mesh>
+						))}
+					</group>
+				</TeardownPart>
 			</group>
 		</group>
 	)

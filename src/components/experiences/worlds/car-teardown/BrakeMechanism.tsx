@@ -1,11 +1,12 @@
-import {useEffect, useMemo, useRef, type RefObject} from 'react'
-import {useFrame} from '@react-three/fiber'
-import {Html} from '@react-three/drei'
+import { useEffect, useMemo, useRef, type RefObject } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as T from 'three'
-import {useExperienceI18n} from '~/i18n/experience'
-import {BRAKE_GEOMETRY as B, VEHICLE_SPEC as S} from './vehicle-spec'
-import {caliperTravel, type BrakeState} from './brake-model'
-import {brakePad, brakeRing, caliperXrayMaterial, floatingCaliperBody} from './brake-geometry'
+import { useExperienceI18n } from '~/i18n/experience'
+import { BRAKE_GEOMETRY as B, VEHICLE_SPEC as S, ROAD_TEARDOWN_SPEC as R } from './vehicle-spec'
+import { caliperTravel, type BrakeState } from './brake-model'
+import { TeardownPart, useTeardownProgress } from './TeardownPart'
+import { brakePad, brakeRing, caliperXrayMaterial, floatingCaliperBody } from './brake-geometry'
 
 type Point = [number, number, number]
 type StateRef = RefObject<BrakeState>
@@ -26,12 +27,13 @@ function CaliperLabel({
 	const tx = useExperienceI18n(),
 		left = dx < 0
 	return (
-		<Html position={position} zIndexRange={[20, 0]} style={{pointerEvents: 'none'}}>
+		<Html position={position} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
 			<svg
 				width="1"
 				height="1"
-				style={{overflow: 'visible', position: 'absolute'}}
-				aria-hidden="true">
+				style={{ overflow: 'visible', position: 'absolute' }}
+				aria-hidden="true"
+			>
 				<path
 					d={`M0 0 L${dx * 0.65} ${dy} H${dx}`}
 					fill="none"
@@ -52,7 +54,8 @@ function CaliperLabel({
 					whiteSpace: 'nowrap',
 					textShadow: '0 1px 5px #0b0c0f',
 					letterSpacing: '.04em',
-				}}>
+				}}
+			>
 				{tx(label)}
 			</span>
 		</Html>
@@ -79,14 +82,15 @@ function Cylinder({
 			position={position}
 			rotation={axis === 'x' ? AXIS_X : axis === 'z' ? AXIS_Z : [0, 0, 0]}
 			castShadow
-			userData={{partId: id}}>
+			userData={{ partId: id }}
+		>
 			<cylinderGeometry args={[radius, radius, length, 40]} />
 			<meshStandardMaterial {...S.materials.aluminum} color={color ?? S.materials.aluminum.color} />
 		</mesh>
 	)
 }
 
-function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; index: number}) {
+function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef; index: number }) {
 	const rotating = useRef<T.Group>(null),
 		spec = front ? S.brakes.front : S.brakes.rear
 	const resources = useMemo(() => {
@@ -107,7 +111,7 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 			roughness: 0.52,
 			envMapIntensity: 1.15,
 		})
-		return {ring, hat, disc}
+		return { ring, hat, disc }
 	}, [front])
 	useEffect(
 		() => () => Object.values(resources).forEach((resource) => resource.dispose()),
@@ -119,7 +123,7 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 	})
 	const radius = spec.diameter / 2
 	return (
-		<group ref={rotating} userData={{partId: `disc-${index}`}}>
+		<group ref={rotating} userData={{ partId: `disc-${index}` }}>
 			{(front ? [-1, 1] : [0]).map((side) => (
 				<mesh
 					key={side}
@@ -130,7 +134,7 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 				/>
 			))}
 			{front &&
-				Array.from({length: B.rotorVanes}, (_, i) => {
+				Array.from({ length: B.rotorVanes }, (_, i) => {
 					const angle = (i / B.rotorVanes) * Math.PI * 2,
 						r = (radius + B.rotorInnerRadius) / 2
 					return (
@@ -138,7 +142,8 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 							key={i}
 							position={[r * Math.cos(angle), r * Math.sin(angle), 0]}
 							rotation={[0, 0, angle]}
-							castShadow>
+							castShadow
+						>
 							<boxGeometry
 								args={[
 									radius - B.rotorInnerRadius,
@@ -156,7 +161,7 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 				position={[0, 0, -B.rotorHatDepth / 3]}
 				castShadow
 			/>
-			{Array.from({length: 5}, (_, i) => {
+			{Array.from({ length: 5 }, (_, i) => {
 				const a = (i / 5) * Math.PI * 2
 				return (
 					<Cylinder
@@ -173,14 +178,15 @@ function Rotor({front, stateRef, index}: {front: boolean; stateRef: StateRef; in
 				)
 			})}
 			{[-1, 1].flatMap((side) =>
-				Array.from({length: B.rotorGrooveCount}, (_, i) => {
+				Array.from({ length: B.rotorGrooveCount }, (_, i) => {
 					const r =
 						B.rotorInnerRadius +
 						((radius - B.rotorInnerRadius) * (i + 1)) / (B.rotorGrooveCount + 1)
 					return (
 						<mesh
 							key={`${side}-${i}`}
-							position={[0, 0, side * (spec.thickness / 2 + B.rotorGrooveWidth)]}>
+							position={[0, 0, side * (spec.thickness / 2 + B.rotorGrooveWidth)]}
+						>
 							<torusGeometry args={[r, B.rotorGrooveWidth, 4, 96]} />
 							<meshStandardMaterial color="#899096" metalness={1} roughness={0.43} />
 						</mesh>
@@ -202,6 +208,7 @@ function FloatingCaliper({
 	closeup: boolean
 	index: number
 }) {
+	const amount = useTeardownProgress()
 	const body = useRef<T.Group>(null),
 		piston = useRef<T.Mesh>(null),
 		innerPad = useRef<T.Mesh>(null)
@@ -238,70 +245,138 @@ function FloatingCaliper({
 			{/* The carrier and guide pins stay fixed to the knuckle. */}
 			{[-1, 1].map((side) => (
 				<group key={side}>
-					<Cylinder
-						id={`brake-guide-pin-${(index - 1) * 2 + (side > 0 ? 2 : 1)}`}
-						position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, 0]}
-						radius={B.guidePinRadius}
-						length={B.guidePinLength}
-					/>
-					<mesh
-						position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 2]}
-						castShadow
-						userData={{partId: `caliper-bracket-${index}`}}>
-						<boxGeometry args={[B.caliperWidth, B.bracketThickness, B.bracketThickness]} />
-						<meshStandardMaterial {...S.materials.steel} />
-					</mesh>
+					<TeardownPart
+						id="brake-guide-pins"
+						representative={index === 2}
+						anchor={[-B.caliperRadialPosition, side * B.guidePinOffsetY, 0]}
+					>
+						<Cylinder
+							id={`brake-guide-pin-${(index - 1) * 2 + (side > 0 ? 2 : 1)}`}
+							position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, 0]}
+							radius={B.guidePinRadius}
+							length={B.guidePinLength}
+						/>
+					</TeardownPart>
+					<TeardownPart
+						id="brake-carriers"
+						representative={index === 2}
+						anchor={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 2]}
+					>
+						<mesh
+							position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 2]}
+							castShadow
+							userData={{ partId: `caliper-bracket-${index}` }}
+						>
+							<boxGeometry args={[B.caliperWidth, B.bracketThickness, B.bracketThickness]} />
+							<meshStandardMaterial {...S.materials.steel} />
+						</mesh>
+					</TeardownPart>
 				</group>
 			))}
-			<mesh
-				ref={innerPad}
-				geometry={resources.pad}
-				position={[0, 0, innerZ]}
-				castShadow
-				userData={{partId: `brake-inner-pad-${index}`}}>
-				<meshStandardMaterial color={B.padColor} roughness={0.94} />
-			</mesh>
-			<group ref={body}>
+			<TeardownPart
+				id="brake-carriers"
+				representative={index === 2}
+				anchor={[-B.caliperRadialPosition, 0, -B.guidePinLength / 2]}
+			>
 				<mesh
-					geometry={resources.casting}
-					material={closeup ? resources.xray : undefined}
-					castShadow={!closeup}
-					userData={{partId: `caliper-${index}`}}>
-					{!closeup && <meshStandardMaterial {...S.materials.caliper} />}
-				</mesh>
-				{closeup && (
-					<lineSegments geometry={resources.edges}>
-						<lineBasicMaterial
-							color={B.caliperXrayColor}
-							transparent
-							opacity={0.48}
-							depthWrite={false}
-						/>
-					</lineSegments>
-				)}
-				<mesh
-					ref={piston}
-					geometry={resources.piston}
-					position={[-B.caliperRadialPosition, 0, pistonZ]}
+					position={[
+						-B.caliperRadialPosition + B.caliperWidth / 2 - B.bracketThickness / 2,
+						0,
+						-B.guidePinLength / 2,
+					]}
 					castShadow
-					userData={{partId: `caliper-piston-${index}`}}>
+					userData={{ partId: `caliper-bracket-${index}` }}
+				>
+					<boxGeometry args={[B.bracketThickness, B.guidePinOffsetY * 2, B.bracketThickness]} />
 					<meshStandardMaterial {...S.materials.steel} />
 				</mesh>
+			</TeardownPart>
+			<TeardownPart
+				id="brake-pads"
+				offset={R.brakes.innerPad}
+				representative={index === 2}
+				anchor={[-B.caliperRadialPosition, 0, innerZ]}
+			>
 				<mesh
-					position={[-B.caliperRadialPosition, 0, pistonZ + B.pistonLength * 0.34]}
-					userData={{partId: `caliper-seal-${index}`}}>
-					<torusGeometry args={[spec.pistonDiameter / 2 + B.sealWire / 2, B.sealWire, 10, 64]} />
-					<meshStandardMaterial {...S.materials.rubber} />
-				</mesh>
-				<mesh
+					ref={innerPad}
 					geometry={resources.pad}
-					position={[0, 0, -innerZ]}
+					position={[0, 0, innerZ]}
 					castShadow
-					userData={{partId: `brake-outer-pad-${index}`}}>
+					userData={{ partId: `brake-inner-pad-${index}` }}
+				>
 					<meshStandardMaterial color={B.padColor} roughness={0.94} />
 				</mesh>
+			</TeardownPart>
+			<group ref={body}>
+				<TeardownPart
+					id="brake-castings"
+					representative={index === 2}
+					anchor={[-B.caliperRadialPosition, 0, 0]}
+				>
+					<mesh
+						geometry={resources.casting}
+						material={closeup && amount < 0.05 ? resources.xray : undefined}
+						castShadow={!closeup}
+						userData={{ partId: `caliper-${index}` }}
+					>
+						{(!closeup || amount >= 0.05) && <meshStandardMaterial {...S.materials.caliper} />}
+					</mesh>
+					{closeup && (
+						<lineSegments geometry={resources.edges}>
+							<lineBasicMaterial
+								color={B.caliperXrayColor}
+								transparent
+								opacity={0.48}
+								depthWrite={false}
+							/>
+						</lineSegments>
+					)}
+				</TeardownPart>
+				<TeardownPart
+					id="brake-pistons"
+					representative={index === 2}
+					anchor={[-B.caliperRadialPosition, 0, pistonZ]}
+				>
+					<mesh
+						ref={piston}
+						geometry={resources.piston}
+						position={[-B.caliperRadialPosition, 0, pistonZ]}
+						castShadow
+						userData={{ partId: `caliper-piston-${index}` }}
+					>
+						<meshStandardMaterial {...S.materials.steel} />
+					</mesh>
+				</TeardownPart>
+				<TeardownPart
+					id="brake-seals"
+					representative={index === 2}
+					anchor={[-B.caliperRadialPosition, 0, pistonZ]}
+				>
+					<mesh
+						position={[-B.caliperRadialPosition, 0, pistonZ + B.pistonLength * 0.34]}
+						userData={{ partId: `caliper-seal-${index}` }}
+					>
+						<torusGeometry args={[spec.pistonDiameter / 2 + B.sealWire / 2, B.sealWire, 10, 64]} />
+						<meshStandardMaterial {...S.materials.rubber} />
+					</mesh>
+				</TeardownPart>
+				<TeardownPart
+					id="brake-pads"
+					offset={R.brakes.outerPad}
+					representative={false}
+					anchor={[-B.caliperRadialPosition, 0, -innerZ]}
+				>
+					<mesh
+						geometry={resources.pad}
+						position={[0, 0, -innerZ]}
+						castShadow
+						userData={{ partId: `brake-outer-pad-${index}` }}
+					>
+						<meshStandardMaterial color={B.padColor} roughness={0.94} />
+					</mesh>
+				</TeardownPart>
 			</group>
-			{closeup && (
+			{closeup && amount < 0.05 && (
 				<>
 					<CaliperLabel
 						position={[-B.caliperRadialPosition, 0, pistonZ - B.pistonLength / 2]}
@@ -349,9 +424,13 @@ function PressureLine({
 			0.12,
 		)
 		const geometry = new T.TubeGeometry(curve, 80, B.pipeRadius, 8, false)
-		const progress = {value: 0},
-			pressureColor = {value: new T.Color(B.pressureColor)},
-			material = new T.MeshStandardMaterial({color: B.lineColor, metalness: 0.65, roughness: 0.36})
+		const progress = { value: 0 },
+			pressureColor = { value: new T.Color(B.pressureColor) },
+			material = new T.MeshStandardMaterial({
+				color: B.lineColor,
+				metalness: 0.65,
+				roughness: 0.36,
+			})
 		material.onBeforeCompile = (shader) => {
 			shader.uniforms.pressureProgress = progress
 			shader.uniforms.pressureColor = pressureColor
@@ -373,7 +452,7 @@ function PressureLine({
 					)
 		}
 		material.customProgramCacheKey = () => 'car-brake-pressure-line'
-		return {curve, geometry, material, progress}
+		return { curve, geometry, material, progress }
 	}, [JSON.stringify(points)])
 	useEffect(
 		() => () => {
@@ -392,7 +471,7 @@ function PressureLine({
 		}
 	})
 	return (
-		<group userData={{partId: id}}>
+		<group userData={{ partId: id }}>
 			<mesh geometry={resources.geometry} material={resources.material} />
 			<mesh ref={marker}>
 				<sphereGeometry args={[B.pressureMarkerRadius, 12, 8]} />
@@ -402,7 +481,7 @@ function PressureLine({
 	)
 }
 
-function HydraulicHardware({stateRef}: {stateRef: StateRef}) {
+function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 	const pedal = useRef<T.Group>(null),
 		booster = B.boosterPosition,
 		abs = B.absPosition,
@@ -414,65 +493,76 @@ function HydraulicHardware({stateRef}: {stateRef: StateRef}) {
 	})
 	return (
 		<>
-			<group position={[...pivot]} ref={pedal} userData={{partId: 'brake-pedal'}}>
+			<TeardownPart id="brake-pedal-group">
+				<group position={[...pivot]} ref={pedal} userData={{ partId: 'brake-pedal' }}>
+					<Cylinder
+						position={[0, -B.pedalLength / 2, 0]}
+						radius={B.pedalRodRadius}
+						length={B.pedalLength}
+						axis="y"
+					/>
+					<mesh position={[0, -B.pedalLength, 0]} castShadow>
+						<boxGeometry args={[...B.pedalPlateSize]} />
+						<meshStandardMaterial {...S.materials.rubber} />
+					</mesh>
+				</group>
+			</TeardownPart>
+			<TeardownPart id="brake-booster">
 				<Cylinder
-					position={[0, -B.pedalLength / 2, 0]}
-					radius={B.pedalRodRadius}
-					length={B.pedalLength}
-					axis="y"
+					id="vacuum-booster"
+					position={[...booster]}
+					radius={B.boosterRadius}
+					length={B.boosterDepth}
+					axis="x"
+					color="#343b42"
 				/>
-				<mesh position={[0, -B.pedalLength, 0]} castShadow>
-					<boxGeometry args={[...B.pedalPlateSize]} />
-					<meshStandardMaterial {...S.materials.rubber} />
+			</TeardownPart>
+			<TeardownPart id="brake-master">
+				<Cylinder
+					id="master-cylinder"
+					position={[booster[0] + B.boosterDepth / 2 + B.masterLength / 2, booster[1], booster[2]]}
+					radius={B.masterOuterRadius}
+					length={B.masterLength}
+					axis="x"
+				/>
+			</TeardownPart>
+			<TeardownPart id="brake-fluid">
+				<mesh
+					position={[
+						booster[0] + B.masterLength / 2,
+						booster[1] + B.masterOuterRadius + B.reservoirSize[1] / 2,
+						booster[2],
+					]}
+					castShadow
+					userData={{ partId: 'brake-reservoir' }}
+				>
+					<boxGeometry args={[...B.reservoirSize]} />
+					<meshStandardMaterial color="#c4c7b4" roughness={0.45} transparent opacity={0.8} />
 				</mesh>
-			</group>
-			<Cylinder
-				id="vacuum-booster"
-				position={[...booster]}
-				radius={B.boosterRadius}
-				length={B.boosterDepth}
-				axis="x"
-				color="#343b42"
-			/>
-			<Cylinder
-				id="master-cylinder"
-				position={[booster[0] + B.boosterDepth / 2 + B.masterLength / 2, booster[1], booster[2]]}
-				radius={B.masterOuterRadius}
-				length={B.masterLength}
-				axis="x"
-			/>
-			<mesh
-				position={[
-					booster[0] + B.masterLength / 2,
-					booster[1] + B.masterOuterRadius + B.reservoirSize[1] / 2,
-					booster[2],
-				]}
-				castShadow
-				userData={{partId: 'brake-reservoir'}}>
-				<boxGeometry args={[...B.reservoirSize]} />
-				<meshStandardMaterial color="#c4c7b4" roughness={0.45} transparent opacity={0.8} />
-			</mesh>
-			<Cylinder
-				position={[
-					booster[0] + B.masterLength / 2,
-					booster[1] + B.masterOuterRadius + B.reservoirSize[1],
-					booster[2],
-				]}
-				radius={B.masterOuterRadius}
-				length={B.caliperWall}
-				axis="y"
-				color="#313438"
-			/>
-			<mesh position={[...abs]} castShadow userData={{partId: 'abs-pump'}}>
-				<boxGeometry args={[...B.absSize]} />
-				<meshStandardMaterial {...S.materials.aluminum} />
-			</mesh>
-			<Cylinder
-				position={[abs[0], abs[1], abs[2] - B.absSize[2] / 2 - B.absMotorLength / 2]}
-				radius={B.absMotorRadius}
-				length={B.absMotorLength}
-				color="#333a42"
-			/>
+				<Cylinder
+					position={[
+						booster[0] + B.masterLength / 2,
+						booster[1] + B.masterOuterRadius + B.reservoirSize[1],
+						booster[2],
+					]}
+					radius={B.masterOuterRadius}
+					length={B.caliperWall}
+					axis="y"
+					color="#313438"
+				/>
+			</TeardownPart>
+			<TeardownPart id="brake-abs">
+				<mesh position={[...abs]} castShadow userData={{ partId: 'abs-pump' }}>
+					<boxGeometry args={[...B.absSize]} />
+					<meshStandardMaterial {...S.materials.aluminum} />
+				</mesh>
+				<Cylinder
+					position={[abs[0], abs[1], abs[2] - B.absSize[2] / 2 - B.absMotorLength / 2]}
+					radius={B.absMotorRadius}
+					length={B.absMotorLength}
+					color="#333a42"
+				/>
+			</TeardownPart>
 			<PressureLine
 				id="brake-master-line"
 				stateRef={stateRef}
@@ -489,17 +579,19 @@ function HydraulicHardware({stateRef}: {stateRef: StateRef}) {
 }
 
 /** Vehicle coordinates: rotor axes lie on ±Z; no explosion transform here. */
-export function BrakeMechanism({stateRef, closeup}: {stateRef: StateRef; closeup: boolean}) {
+export function BrakeMechanism({ stateRef, closeup }: { stateRef: StateRef; closeup: boolean }) {
+	const amount = useTeardownProgress()
+	const detail = closeup && amount < 0.01
 	const wheels = [
-		{front: true, x: S.dimensions.frontAxleX, track: S.wheels.frontTrack},
-		{front: false, x: S.dimensions.rearAxleX, track: S.wheels.rearTrack},
+		{ front: true, x: S.dimensions.frontAxleX, track: S.wheels.frontTrack },
+		{ front: false, x: S.dimensions.rearAxleX, track: S.wheels.rearTrack },
 	]
 	return (
 		<group name="hydraulic-brake-mechanism">
-			{!closeup && <HydraulicHardware stateRef={stateRef} />}
+			{!detail && <HydraulicHardware stateRef={stateRef} />}
 			{wheels.flatMap((axle) =>
 				[-1, 1].map((side) => {
-					if (closeup && (!axle.front || side < 0)) return null
+					if (detail && (!axle.front || side < 0)) return null
 					const z = (side * axle.track) / 2,
 						index = (axle.front ? 0 : 2) + (side > 0 ? 2 : 1),
 						id = `brake-line-${index}`,
@@ -508,15 +600,17 @@ export function BrakeMechanism({stateRef, closeup}: {stateRef: StateRef; closeup
 					return (
 						<group key={id}>
 							<group position={[axle.x, S.wheels.radius, z]} scale={[1, 1, side]}>
-								<Rotor front={axle.front} stateRef={stateRef} index={index} />
+								<TeardownPart id="brake-discs" representative={index === 2} anchor={[0, 0, 0]}>
+									<Rotor front={axle.front} stateRef={stateRef} index={index} />
+								</TeardownPart>
 								<FloatingCaliper
 									front={axle.front}
 									stateRef={stateRef}
-									closeup={closeup && axle.front && side > 0}
+									closeup={detail && axle.front && side > 0}
 									index={index}
 								/>
 							</group>
-							{!closeup && (
+							{!detail && (
 								<PressureLine
 									id={id}
 									stateRef={stateRef}

@@ -1,7 +1,8 @@
-import {VEHICLE_SPEC as S} from './vehicle-spec'
-import {STEERING_PARTS} from './steering-parts'
-import {BRAKE_PARTS} from './brake-parts'
-import {SUSPENSION_PARTS} from './suspension-parts'
+import { VEHICLE_SPEC as S, ROAD_TEARDOWN_SPEC as R } from './vehicle-spec'
+import { STEERING_PARTS } from './steering-parts'
+import { BRAKE_PARTS } from './brake-parts'
+import { SUSPENSION_PARTS } from './suspension-parts'
+import { TEARDOWN_PARTS } from './teardown-registry'
 
 export type SystemId =
 	| 'body'
@@ -19,7 +20,7 @@ export const SYSTEMS: {
 	anchor: Point3
 	direction: 'left' | 'right'
 }[] = [
-	{id: 'body', name: '车身', nameEn: 'Body', anchor: [-0.5, 1.2, 0.75], direction: 'left'},
+	{ id: 'body', name: '车身', nameEn: 'Body', anchor: [-0.5, 1.2, 0.75], direction: 'left' },
 	{
 		id: 'electrical',
 		name: '电气',
@@ -27,8 +28,20 @@ export const SYSTEMS: {
 		anchor: [-0.8, 0.58, 0.59],
 		direction: 'left',
 	},
-	{id: 'powertrain', name: '动力', nameEn: 'Powertrain', anchor: [1.2, 0.6, 0], direction: 'right'},
-	{id: 'steering', name: '转向', nameEn: 'Steering', anchor: [1.3, 0.28, -0.1], direction: 'right'},
+	{
+		id: 'powertrain',
+		name: '动力',
+		nameEn: 'Powertrain',
+		anchor: [1.2, 0.6, 0],
+		direction: 'right',
+	},
+	{
+		id: 'steering',
+		name: '转向',
+		nameEn: 'Steering',
+		anchor: [1.3, 0.28, -0.1],
+		direction: 'right',
+	},
 	{
 		id: 'drivetrain',
 		name: '传动',
@@ -929,12 +942,32 @@ part(
 	'让发电机以曲轴约 2.7 倍的转速运行。',
 	'Turns the alternator at about 2.7 times crank speed.',
 )
-export const PARTS: readonly Part[] = [
-	...rows,
-	...STEERING_PARTS,
-	...BRAKE_PARTS,
-	...SUSPENSION_PARTS,
-].map((part, order) => ({...part, order}))
+const registered: Part[] = [...rows, ...STEERING_PARTS, ...BRAKE_PARTS, ...SUSPENSION_PARTS]
+for (const [system, groups] of Object.entries(TEARDOWN_PARTS)) {
+	for (const group of groups)
+		for (const id of group.partIds) {
+			const existing = registered.find((part) => part.id === id)
+			if (existing) {
+				existing.explode = id.startsWith('brake-outer-pad-')
+					? [...R.brakes.outerPad]
+					: [...group.offset]
+				continue
+			}
+			registered.push({
+				id,
+				system: system as SystemId,
+				name: group.name.zh,
+				nameEn: group.name.en,
+				function: group.description.zh,
+				functionEn: group.description.en,
+				material: group.material.zh,
+				materialEn: group.material.en,
+				explode: [...group.offset],
+				order: registered.length,
+			})
+		}
+}
+export const PARTS: readonly Part[] = registered.map((part, order) => ({ ...part, order }))
 export const partCount = (system: SystemId) => PARTS.filter((p) => p.system === system).length
 
 export function systemProgress(id: SystemId, amount: number): number {
