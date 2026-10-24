@@ -36,12 +36,18 @@ All structural coordinates and CCD data are **CC0** under [RCSB's usage policy](
 
 Read-only capture URLs use `scale` (log10 horizontal metres), `light` (PPFD),
 `speed` (0, .001, 1, 60, 3600), `t` (initial hour, wrapped over 24 h),
-`az` / `el` (degrees in the current anatomical frame), and `capture=1` (hide UI).
+`az` / `el` (degrees in the current anatomical frame), `water`
+(`normal`, `drought`, `saltwater`), `wt` (water-transition progress, 0–1),
+and `capture=1` (hide UI and center the desktop subject).
+Stress URLs default to equilibrium; pass `wt=0` to run from the hydrated state.
 Setting `t` sets the clock only; run the simulation to obtain light adaptation.
 For example: `/plant-cell?scale=-7.4&light=400&speed=.001&az=26&el=18`.
 
-`verify-round3.mjs <private-output-dir>` checks camera continuity, orbit, mobile
-pinch, rotor/stator motion, dark inhibition, capture params and hint expiry.
+`verify-browser.mjs <private-output-dir>` checks camera continuity, orbit, mobile
+pinch and framing, rotor/stator motion, dark inhibition, capture params, hint
+expiry, water transitions and recovery, cytoplasmic streaming, chloroplast
+relocation, the day/night starch cycle, labels and bilingual readouts.
+Add `--report=round-4.browser.json` to choose the report filename.
 It uses an isolated temporary profile and headless Chrome with Metal. It does
 not capture screenshots; use the project owner's private `gpu-shot.mjs`.
 

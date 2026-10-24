@@ -80,7 +80,7 @@ export function LeafLayer({ opacity, mobile = false, stomataOpen = .6, water }: 
     const blade = createLeafGeometry(), veins = createLeafVeins(), epidermis = createEpidermis(mobile), guard = createGuardGeometry()
     const stalkCurve = new T.CatmullRomCurve3([
       new T.Vector3(LEAF_MIDRIB_X, leafSurfaceY(LEAF_MIDRIB_X, 59900), 59900),
-      new T.Vector3(LEAF_MIDRIB_X - 1700, -1000, 71000), new T.Vector3(LEAF_MIDRIB_X - 5400, -4500, 85000),
+      new T.Vector3(LEAF_MIDRIB_X - 2200, -1500, 88000), new T.Vector3(LEAF_MIDRIB_X - 6500, -6500, 130000),
     ])
     const stalk = new T.TubeGeometry(stalkCurve, 28, 680, 10, false)
     const materials = Object.fromEntries(['blade', 'vein', 'epidermis', 'guard', 'chloroplast'].map((kind) => [kind, surfaceMaterial(kind as SurfaceKind, epidermis.radius)])) as Record<SurfaceKind, T.MeshPhysicalMaterial>
@@ -105,7 +105,7 @@ export function LeafLayer({ opacity, mobile = false, stomataOpen = .6, water }: 
   })
   Object.values(resources.materials).forEach((material) => { material.opacity = opacity; material.userData.waterWilt.value = water.wilt; material.roughness = .64 + .3 * water.wilt; material.clearcoat = .2 * (1 - water.wilt); material.userData.guardOpen.value = T.MathUtils.clamp(stomataOpen, 0, 1) })
   return <group ref={root}>
-    {water.immersion > .001 && <mesh position={[-1500,-30000,10000]} rotation={[-Math.PI/2,0,0]}><planeGeometry args={[150000,210000]} /><meshPhysicalMaterial color="#8baca8" transparent opacity={.07 * opacity} roughness={.18} side={T.DoubleSide} depthWrite={false} /></mesh>}
+    {water.immersion > .001 && <mesh position={[-1500,-30000,10000]} rotation={[-Math.PI/2,0,0]}><planeGeometry args={[150000,210000]} /><meshPhysicalMaterial color="#8baca8" transparent opacity={.035 * opacity * water.immersion} roughness={.18} side={T.DoubleSide} depthWrite={false} /></mesh>}
     <mesh geometry={resources.blade} material={resources.materials.blade} />
     <mesh geometry={resources.veins.main} material={resources.materials.vein} />
     <mesh geometry={resources.veins.secondary} material={resources.materials.vein} />

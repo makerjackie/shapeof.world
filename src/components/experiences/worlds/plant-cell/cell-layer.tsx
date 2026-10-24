@@ -335,11 +335,8 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
         <mesh name="cell-saline-gap" geometry={wall} scale={[.985, .99, .985]}><TissueMaterial color="#8ca7a9" opacity={opacity * .035} depthWrite={false} /></mesh>
         <mesh name="cell-hechtian-strands" geometry={hechtian}><TissueMaterial color="#c1cec0" opacity={opacity * .85} /></mesh>
       </>}
-      </CellInspection>
-    </Cutaway>
     <group name="cell-water-protoplast" scale={[water.radial,water.axial,water.radial]}>
     <Cutaway>
-      <CellInspection enabled={inspectable} physiology={physiology}>
       <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={water.immersion > .01 ? .23 : .11} base={.001 + .012 * water.immersion} fibers /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#afc5bb" opacity={opacity*0.012} depthWrite={false} /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
@@ -350,8 +347,9 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
       <Nucleus opacity={opacity} />
       <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} timeScale={timeScale} physiology={physiology} />
       {[[-2,3,-5],[4,4,-10],[-6,5,0]].map((p,i)=><mesh key={i} position={p as [number,number,number]} rotation={[0,i*.75,-.08]} scale={[18-i*3,61,1]}><planeGeometry /><LightSheet intensity={light*opacity*(1-i*.18)*3.8} /></mesh>)}
-      </CellInspection>
     </Cutaway>
     </group>
+      </CellInspection>
+    </Cutaway>
   </group>
 }

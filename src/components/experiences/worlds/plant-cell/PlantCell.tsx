@@ -72,7 +72,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const bar = getScaleBar(getFramedScale(reading.scale, mobile), reading.width, mobile ? 88 : 160)
   const position = (scale: number) => (SCALE_MAX - scale) / (SCALE_MAX - SCALE_MIN) * 100
   const guideSteps = useMemo(() => [
-    { title: tx('一片叶子'), body: tx('沿着叶脉向里走。这片菠菜叶，连接着我们即将看到的细胞和分子。'), scale: -.62 },
+    { title: tx('一片叶子'), body: tx('沿着叶脉向里走。这片菠菜叶，连接着我们即将看到的细胞和分子。'), scale: -.54 },
     { title: tx('气孔'), body: tx('两枚保卫细胞围出一个孔。气孔调节气体交换，也影响水分散失。'), scale: -2.55 },
     { title: tx('叶片截面'), body: tx('紧密的栅栏组织朝向阳光，下面的海绵组织留下连通的气腔。'), scale: -3 },
     { title: tx('叶肉细胞'), body: tx('小细胞器沿胞质索流动。叶绿体留在壁边，用几分钟调整向光的位置。'), scale: mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT },
@@ -137,7 +137,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <p>{tx('水势与体积为压力–体积参照模型。干旱压缩至 3 小时，复水约 30 分钟；盐水交换约 5 分钟。参数非菠菜品种拟合，壁皱缩与质壁分离形状为示意。')}</p>
       <p>{tx('细胞形状、细胞器位置是按尺寸生成的参照，不是真实扫描。')}</p>
       <p>{tx('细胞壁切口显示为 0.4 μm，是 0.2 μm 参考壁厚的 2 倍；截面层切边为 0.65 μm，约 3.25 倍。')}</p>
-      <p>{tx('光合曲线是参照模型；放氧按净碳同化估算，未单独计算光呼吸。气孔用 15 分钟时间常数。')}</p>
+      <p>{tx('光合曲线是参照模型；放氧按净碳同化估算，未单独计算光呼吸。气孔的光响应时间常数为 15 分钟，水胁迫关闭为 1 分钟。')}</p>
       <p>{tx('聚光与避光阈值借鉴拟南芥光迁移研究，是简化的白光阈值，不是菠菜实测。叶绿体移动约每分钟 1–3 μm。')}</p>
       <p>{tx('淀粉按正净碳同化的 25% 储存；黑暗中按预计夜长消耗。百分比相对于模型参考容量，不是叶片干重比例。')}</p>
       <p>{tx('16.3–19.1 nm 的类囊体间距取自拟南芥暗适应与强光实验，按光强分档插值。')}</p>

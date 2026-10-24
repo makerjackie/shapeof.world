@@ -16,7 +16,14 @@ describe('leaf surface shares the mesophyll frame', () => {
     const geometry = createLeafGeometry()
     geometry.computeBoundingBox()
     const box = geometry.boundingBox!
-    expect(box.max.z - box.min.z).toBeCloseTo(119988, 0)
+    const bladeLength=box.max.z-box.min.z, bladeWidth=box.max.x-box.min.x
+    expect(bladeLength/bladeWidth).toBeGreaterThan(1.4)
+    expect(bladeLength/bladeWidth).toBeLessThan(1.8)
+    expect(box.max.z).toBeGreaterThan(68000) // lobes extend back past the 60 mm insertion
+    const positions=geometry.getAttribute('position')
+    let left=false,right=false
+    for(let i=0;i<positions.count;i++)if(positions.getZ(i)>66000){left ||= positions.getX(i)<-12000;right ||=positions.getX(i)>9000}
+    expect(left&&right).toBe(true)
     expect(box.max.y - box.min.y).toBeGreaterThan(4000)
     expect(box.max.x - box.min.x).toBeGreaterThan(70000)
     const normal = geometry.getAttribute('normal')
