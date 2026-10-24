@@ -36,6 +36,19 @@ async function navigate(page, query) {
   await wait(2500)
   return state(page)
 }
+async function objectPoint(page, name, local = [0,0,0]) {
+  return page.evaluate(async ({name,local}) => {
+    const canvas = document.querySelector('.pc-scene canvas')
+    const url = performance.getEntriesByType('resource').map(e=>e.name).find(url=>/\/[^/]*react-three[_+]fiber[^/]*\.js(?:\?|$)/.test(url))
+    const fiber = await import(url), root = fiber._roots.get(canvas).store.getState()
+    const object = root.scene.getObjectByName(name)
+    if (!object) return null
+    const point = root.camera.position.clone().set(...local)
+    object.localToWorld(point); point.project(root.camera)
+    const rect=canvas.getBoundingClientRect()
+    return {x:rect.left+(point.x+1)*rect.width/2,y:rect.top+(1-point.y)*rect.height/2}
+  },{name,local})
+}
 async function fps(page) {
   return page.evaluate(() => new Promise(resolve => {
     const frames=[],start=performance.now();let previous=start
@@ -89,6 +102,24 @@ try {
     const hint=await page.locator('.pc-light-hint').textContent().catch(()=>null)
     await wait(6200)
     check('hint expires and respects speed',hint&&!hint.includes('×60')&&await page.locator('.pc-light-hint').count()===0,{hint})
+    await navigate(page,'scale=-3.86&speed=0')
+    const nucleus = await objectPoint(page,'cell-nucleus')
+    if(nucleus) { await page.mouse.move(nucleus.x,nucleus.y); await wait(300) }
+    const organelle = await page.locator('[data-organelle-label]').textContent().catch(()=>null)
+    check('L2 organelle inspection',Boolean(organelle),{nucleus,organelle})
+    await page.mouse.move(20,60)
+    if(!await page.locator('[data-pc-guide]').isVisible()) await page.locator('.pc-freebar .experience-freebar-summary').click()
+    await page.locator('[data-pc-guide]').click();await page.waitForFunction(()=>Number(document.querySelector('.pc-scene canvas')?.dataset.scale)>-.65,{},{timeout:20000})
+    const guideOpen=await page.locator('.guide-tour').isVisible().catch(()=>false)
+    const guideState=await state(page)
+    await page.mouse.move(750,450);await page.mouse.down();await page.mouse.move(800,460);await page.mouse.up();await wait(300)
+    const guideClosed=await page.locator('.guide-tour').isVisible().catch(()=>false)
+    check('optional guide and canvas takeover',guideOpen&&!guideClosed&&Number(guideState.data.scale)>-.7,{guideOpen,guideClosed,scale:guideState.data.scale})
+    await navigate(page,'scale=-7.34&speed=0')
+    const motorPoint=await objectPoint(page,'atp-heavy-atoms',[0,6,0])
+    if(motorPoint){await page.mouse.click(motorPoint.x,motorPoint.y);await wait(300)}
+    const molecularLabel=await page.locator('[data-molecule-label]').textContent().catch(()=>null)
+    check('molecular inspection',Boolean(molecularLabel?.includes('6FKF')),{motorPoint,molecularLabel})
   }
   const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:1,isMobile:true,hasTouch:true})
   await mobile.addInitScript(() => performance.setResourceTimingBufferSize(20000))

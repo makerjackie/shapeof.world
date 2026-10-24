@@ -35,6 +35,11 @@ export function getMolecularReadings(light: number, scale = -7.5, timeScale = MO
 export type MotorState = { revolutions: number; angle: number; protons: number; atp: number }
 export function createMotorState(): MotorState { return { revolutions: 0, angle: 0, protons: 0, atp: 0 } }
 
+/** Each beta site releases once per revolution; the three sites are offset by 120°. */
+export function getCatalyticSitePhase(revolutions: number, site: number) {
+  return ((revolutions * 3 - site) % 3 + 3) % 3
+}
+
 /** Positive right-handed rotation about +Y is counterclockwise from the stroma.
  * A short eased stroke after each dwell makes c14 steps legible. The three
  * catalytic events are placed at equal 120° intervals as a visual abstraction.

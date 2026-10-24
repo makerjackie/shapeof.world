@@ -5,6 +5,7 @@ import { cellRadius, cellSurface, cutRim, curveGeometry, cytoplasmicTracks, erNe
 import { LightSheet, Membrane, ParticleMaterial } from './cell-materials'
 import { Cutaway, TissueMaterial, useCutaway } from './cutaway'
 import type { PhysiologyState } from './model'
+import { CellInspection } from './cell-inspection'
 
 function random(seed: number) {
   let n = seed
@@ -109,7 +110,7 @@ function Nucleus({ opacity }: { opacity: number }) {
     if (pores.current) pores.current.instanceMatrix.needsUpdate = true
     if (chromatin.current) chromatin.current.instanceMatrix.needsUpdate = true
   }, [])
-  return <group position={[-8.9, -12, -4.5]} rotation={[0, 0.2, 0.16]}>
+  return <group name="cell-nucleus" position={[-8.9, -12, -4.5]} rotation={[0, 0.2, 0.16]}>
     <NuclearCut opacity={opacity} />
     <mesh castShadow receiveShadow><sphereGeometry args={[4, 40, 28]} /><TissueMaterial color="#81908f" kind="nucleus" opacity={opacity*0.68} /></mesh>
     <mesh scale={[1.23,1.3,1.12]}><sphereGeometry args={[4,24,16]} /><Membrane color="#c1c5a8" opacity={opacity} strength={0.05} base={0.005} /></mesh>
@@ -249,7 +250,7 @@ function StreamingOrganelles({ opacity, clock, mobile, timeScale, physiology }: 
     <mesh geometry={trails} visible={fast}><TissueMaterial color="#b59f80" opacity={opacity*0.18} depthWrite={false} /></mesh>
     <instancedMesh visible={!fast} name="streaming-mitochondria" ref={mitochondria} args={[undefined, undefined, 240]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#b0865c" opacity={opacity} /></instancedMesh>
     <instancedMesh visible={!fast} name="streaming-peroxisomes" ref={peroxisomes} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#a0aca0" opacity={opacity*0.8} /></instancedMesh>
-    <instancedMesh visible={!fast} ref={golgi} args={[golgiGeometry, undefined, 250]} frustumCulled={false}><TissueMaterial color="#9d9a86" opacity={opacity*0.8} /></instancedMesh>
+    <instancedMesh visible={!fast} name="streaming-golgi" ref={golgi} args={[golgiGeometry, undefined, 250]} frustumCulled={false}><TissueMaterial color="#9d9a86" opacity={opacity*0.8} /></instancedMesh>
     <points visible={!fast} ref={particles} geometry={particleGeometry} frustumCulled={false}><ParticleMaterial opacity={opacity*0.45} /></points>
   </>
 }
@@ -304,8 +305,8 @@ function CellContext({ opacity }: { opacity: number }) {
   </group>
 }
 
-export function CellLayer({ opacity, light, clock, mobile = false, physiology, timeScale, starch }: {
-  opacity: number; light: number; clock: MutableRefObject<number>; mobile?: boolean; physiology: MutableRefObject<PhysiologyState>; timeScale: number; starch: number
+export function CellLayer({ opacity, light, clock, mobile = false, physiology, timeScale, starch, inspectable = true }: {
+  opacity: number; light: number; clock: MutableRefObject<number>; mobile?: boolean; physiology: MutableRefObject<PhysiologyState>; timeScale: number; starch: number; inspectable?: boolean
 }) {
   const wall=useMemo(()=>cellSurface(true),[]), membrane=useMemo(()=>cellSurface(true,0.22),[])
   const vacuole=useMemo(()=>cellSurface(true),[]), rim=useMemo(()=>cutRim(-1.2),[]), er=useMemo(erNetwork,[])
@@ -314,18 +315,20 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
   return <group>
     <CellContext opacity={opacity} />
     <Cutaway>
+      <CellInspection enabled={inspectable} physiology={physiology}>
       <mesh geometry={wall} receiveShadow><TissueMaterial color="#b5ba9a" kind="wall" opacity={opacity*0.19} roughness={0.96} depthWrite={false} /></mesh>
       <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={0.11} base={0.001} fibers /></mesh>
       <SliceEdge geometry={rim} opacity={opacity} />
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#afc5bb" opacity={opacity*0.012} depthWrite={false} /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
       <mesh geometry={strands}><Membrane color="#c4cabb" opacity={opacity} strength={0.13} base={0.02} /></mesh>
-      <mesh geometry={er}><TissueMaterial color="#929b91" opacity={opacity*0.18} /></mesh>
+      <mesh name="cell-er" geometry={er}><TissueMaterial color="#929b91" opacity={opacity*0.18} /></mesh>
       <WallPores opacity={opacity} />
       <WallChloroplasts opacity={opacity} physiology={physiology} starch={starch} />
       <Nucleus opacity={opacity} />
       <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} timeScale={timeScale} physiology={physiology} />
       {[[-2,3,-5],[4,4,-10],[-6,5,0]].map((p,i)=><mesh key={i} position={p as [number,number,number]} rotation={[0,i*.75,-.08]} scale={[18-i*3,61,1]}><planeGeometry /><LightSheet intensity={light*opacity*(1-i*.18)*3.8} /></mesh>)}
+      </CellInspection>
     </Cutaway>
   </group>
 }

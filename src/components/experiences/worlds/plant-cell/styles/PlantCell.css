@@ -91,3 +91,12 @@
 .pc-experience[data-capture=true] [data-experience-overlay],
 .pc-experience[data-capture=true] .pc-freebar,
 body:has(.pc-experience[data-capture=true]) .experience-header { visibility: hidden !important; pointer-events: none !important; }
+
+.pc-experience .pc-freebar.pc-guide-active { display: none; }
+.pc-organelle-label { width: 205px; padding: 10px 12px; border-left: 1px solid #b8b39a77; background: #0b1315ed; color: #c6cebd; font-size: 11px; line-height: 1.7; backdrop-filter: blur(8px); }
+.pc-organelle-label b, .pc-organelle-label em, .pc-organelle-label small, .pc-organelle-label span { display: block; }
+.pc-organelle-label b { font-size: 13px; font-weight: 500; }
+.pc-organelle-label em { font-style: normal; font-size: 10px; color: #aab8aa; }
+.pc-organelle-label small { color: #929e91; margin: 4px 0; }
+.pc-label-leader { display: block; width: 1px; height: 24px; margin: 0 auto; background: #c7d0b35c; }
+@media(max-width:719px) { .pc-tools { flex-wrap: wrap; } .pc-organelle-label { width: 180px; } }

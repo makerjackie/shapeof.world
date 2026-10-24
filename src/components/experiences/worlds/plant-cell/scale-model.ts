@@ -21,7 +21,7 @@ export const LAYERS = [
   { id: 'cell', label: '叶肉细胞', labelEn: 'Mesophyll cell', scale: SCALE_DEFAULT },
   { id: 'chloroplast', label: '叶绿体', labelEn: 'Chloroplast', scale: -5.22 },
   { id: 'membrane', label: '类囊体膜', labelEn: 'Thylakoid membrane', scale: -6.85 },
-  { id: 'motor', label: 'ATP 合酶', labelEn: 'ATP synthase', scale: -7.4 },
+  { id: 'motor', label: 'ATP 合酶', labelEn: 'ATP synthase', scale: -7.34 },
 ] as const
 
 export const SCALE_TICKS = [

@@ -1,8 +1,9 @@
 import './styles/PlantCell.css'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowCounterClockwise, Sun, Moon } from '@phosphor-icons/react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { Freebar } from '~/components/experiences/Freebar'
+import { GuideTour } from '~/components/experiences/GuideTour'
 import { GhostHint } from '~/components/experiences/GhostHint'
 import { useExperienceI18n } from '~/i18n/experience'
 import { DEFAULT_INPUTS, createPhysiology, getPhysiologySnapshot, type PlantInputs, type PhysiologyState } from './model'
@@ -14,6 +15,7 @@ import { parseCaptureParams } from './capture-params'
 export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
   const [capture, setCapture] = useState(false)
+  const [guide, setGuide] = useState(false)
   const [ready, setReady] = useState(false), [mobile, setMobile] = useState(false), [reducedMotion, setReducedMotion] = useState(false)
   const [inputs, setInputs] = useState<PlantInputs>({ ...DEFAULT_INPUTS })
   const physiology = useRef<PhysiologyState>(null!)
@@ -39,7 +41,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     manualSpeed.current = initial.manualSpeed
     setInputs(initial.inputs); lastLight.current = initial.inputs.I || 400
     physiology.current = createPhysiology(initial.inputs, initial.daySeconds)
-    setSnapshot(getPhysiologySnapshot(physiology.current, initial.inputs)); setCapture(initial.capture)
+    setSnapshot(getPhysiologySnapshot(physiology.current, initial.inputs)); setCapture(initial.capture); setGuide(initial.guide)
     setMobile(phone); setReading({ scale: initial.scale, width: window.innerWidth }); setReady(true)
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
     const sync = () => setReducedMotion(media.matches)
@@ -49,7 +51,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     return () => { media.removeEventListener('change', sync); window.removeEventListener('resize', resize) }
   }, [])
   const updateReading = useCallback((scale: number, width: number) => setReading((old) => Math.abs(old.scale - scale) > 0.0001 || old.width !== width ? { scale, width } : old), [])
-  const interact = useCallback(() => { controller.current.touched = true; controls.registerInteraction() }, [controls])
+  const interact = useCallback(() => { controller.current.touched = true; setGuide(false); controls.registerInteraction() }, [controls])
   const go = (scale: number) => { interact(); flyToScale(controller.current, scale) }
   const reset = () => {
     interact(); setInputs({ ...DEFAULT_INPUTS }); physiology.current = createPhysiology(DEFAULT_INPUTS)
@@ -69,6 +71,17 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const molecularReading = getMolecularReadings(snapshot.actualPPFD, reading.scale, inputs.timeScale, inputs.playing)
   const bar = getScaleBar(reading.scale, reading.width, mobile ? 88 : 160)
   const position = (scale: number) => (SCALE_MAX - scale) / (SCALE_MAX - SCALE_MIN) * 100
+  const guideSteps = useMemo(() => [
+    { title: tx('一片叶子'), body: tx('沿着叶脉向里走。这片菠菜叶，连接着我们即将看到的细胞和分子。'), scale: -.62 },
+    { title: tx('气孔'), body: tx('两枚保卫细胞围出一个孔。气孔调节气体交换，也影响水分散失。'), scale: -2.55 },
+    { title: tx('叶片截面'), body: tx('紧密的栅栏组织朝向阳光，下面的海绵组织留下连通的气腔。'), scale: -3 },
+    { title: tx('叶肉细胞'), body: tx('小细胞器沿胞质索流动。叶绿体留在壁边，用几分钟调整向光的位置。'), scale: mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT },
+    { title: tx('叶绿体'), body: tx('一摞摞类囊体组成基粒，伸出的薄膜把它们连接起来。'), scale: -5.22 },
+    { title: tx('类囊体膜'), body: tx('光系统让电子接力前进，把质子积累到腔内。伸向基质的大分子只能站在空隙足够的膜面。'), scale: -6.85 },
+    { title: tx('ATP 合酶'), body: tx('铜色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。'), scale: -7.34 },
+  ].map(step => ({ title: step.title, body: step.body, durationMs: 7500, action: () => {
+    flyToScale(controller.current, step.scale)
+  } })), [tx, mobile])
   const captions = { leaf: tx('一片叶子，也是一整个世界。'), section: tx('紧密的栅栏下面，是有空隙的海绵组织。'), cell: tx('小细胞器快速流动，叶绿体用几分钟挪向合适的光。'), chloroplast: tx('一摞摞基粒，被薄薄的膜连在一起。'), membrane: tx('膜上的分子各有位置。电子一路走，质子留在腔里。'), motor: tx('转子转一圈，14 个质子通过，3 个 ATP 离开。') }
   return <div className="pc-experience" data-plant-cell-layer={active} data-capture={capture}>
     {ready && <PlantScene capture={capture} controller={controller} viewScale={reading.scale} inputs={inputs} physiology={physiology} onPhysiology={setSnapshot} mobile={mobile} reducedMotion={reducedMotion} onScale={updateReading} onInteract={interact} />}
@@ -127,7 +140,8 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <p>{tx('分子过程采用局部慢放。ATP 合酶转速是百圈每秒的数量级参照，不是菠菜在该光强下的实测值；L5 另按可见转速调整慢放倍率。')}</p>
     </aside>}
     {lightHint && !capture && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
-    <Freebar className="pc-freebar" ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
+    <Freebar className={`pc-freebar ${guide ? 'pc-guide-active' : ''}`} ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
+      <button type="button" data-pc-guide onClick={() => { controls.registerInteraction(); setGuide(true) }}>{tx('七站导览')}</button>
       <button type="button" onClick={reset}><ArrowCounterClockwise />{tx('回到细胞')}</button>
       <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs((current)=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>
       <button type="button" aria-expanded={bounds} onClick={() => { interact(); setBounds((value) => !value) }}>{tx('模型边界')}</button>
@@ -138,6 +152,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       </select>
       <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={(event) => changeLight(Number(event.target.value))} /></div>
     </Freebar>
-    {!capture && <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />}
+    {!capture && <GuideTour worldId="plant-cell" steps={guideSteps} defaultOpen={guide} kicker={tx('导览')} exitLabel={tx('自由探索')} onExit={() => setGuide(false)} stagePlan={[{ position: 'bottom-left', mobilePosition: 'bottom-left', treatment: 'caption', tone: 'dark', width: 'narrow', motion: 'fade' }]} />}
+    {!capture && !guide && <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />}
   </div>
 }

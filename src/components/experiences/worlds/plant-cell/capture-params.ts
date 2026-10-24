@@ -27,5 +27,6 @@ export function parseCaptureParams(search: string, mobile = false) {
       elevation: el === undefined ? undefined : Math.max(-20, Math.min(70, el)) * Math.PI / 180,
     } : undefined,
     capture: query.get('capture') === '1',
+    guide: query.get('guide') === '1' && query.get('capture') !== '1',
   }
 }
