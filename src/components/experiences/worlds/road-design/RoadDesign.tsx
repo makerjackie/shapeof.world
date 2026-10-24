@@ -7,6 +7,8 @@ import { Pause, Play } from '@phosphor-icons/react'
 import * as T from 'three'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { Freebar } from '~/components/experiences/Freebar'
+import { GuideTour, GUIDE_REPLAY_EVENT, GUIDE_AUTOPLAY_STATE_EVENT } from '~/components/experiences/GuideTour'
+import { TOUR } from './tour'
 import { GhostHint } from '~/components/experiences/GhostHint'
 import { isWorldPaused } from '~/lib/world-playback'
 import { useExperienceI18n } from '~/i18n/experience'
@@ -20,10 +22,17 @@ import { LightTrails } from './scene/LightTrails'
 import { ConflictMarkers } from './scene/ConflictMarkers'
 import { CameraRig, type CameraPreset } from './scene/CameraRig'
 import { TrafficRuntime } from './scene/runtime'
-import { Blueprint } from './scene/Blueprint'
+import { Blueprint, BlueprintGround } from './scene/Blueprint'
 import { FrameBudget } from './scene/FrameBudget'
 import { PressurePanel, type PressureCurves } from './PressurePanel'
 import { CompareTable } from './CompareTable'
+import { PRESENTATIONS, defaultOverlays } from './presentation'
+import { PhaseRings } from './PhaseRings'
+import { DisplayStretch } from './scene/DisplayStretch'
+import { highestDeckTexture } from './scene/deck-shadow'
+import { CityLights } from './scene/CityLights'
+import { LeftRoutes } from './scene/LeftRoutes'
+import { WaitingOutline } from './scene/WaitingOutline'
 import { measureGeometry } from './sim/geometry-costs'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
@@ -33,12 +42,14 @@ function numberQuery(name: string, fallback: number, max: number) {
 }
 const PRESETS: { id: CameraPreset; name: string }[] = [{ id: 'overview', name: '鸟瞰' }, { id: 'top', name: '俯视' }, { id: 'close', name: '近看' }, { id: 'low', name: '路面' }]
 
-function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, preset, revision, reducedMotion, blueprint, interact }: {
-  design: DesignSpec; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void
+function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, highlightLeft, stretch, showWeaving, preset, revision, reducedMotion, blueprint, interact }: {
+  design: DesignSpec; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; highlightLeft: boolean; stretch: boolean; showWeaving: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void
 }) {
   const lamps = useMemo(() => buildLamps(network), [network])
   const atlas = useMemo(() => makeLightingAtlas(lamps), [lamps])
   const conflicts = useMemo(() => calculateConflicts(network), [network])
+  const roof = useMemo(() => highestDeckTexture(network), [network])
+  useEffect(() => () => roof.dispose(), [roof])
   useEffect(() => () => atlas.dispose(), [atlas])
   useFrame((_, delta) => {
     runtime.frameMs = runtime.frameMs * 0.9 + delta * 1000 * 0.1
@@ -46,17 +57,23 @@ function Scene({ design, network, runtime, speed, playing, shutter, showConflict
   }, -2)
   return <>
     <FrameBudget />
-    {blueprint ? <Blueprint network={network} /> : <>
-      <NightWorld network={network} atlas={atlas} />
-      <RoadMeshes network={network} atlas={atlas} lamps={lamps} simulation={runtime.simulation} />
-    </>}
-    <Vehicles runtime={runtime} />
-    <LightTrails runtime={runtime} shutter={shutter} blueprint={blueprint} />
-    {(showConflicts || blueprint) && <ConflictMarkers network={network} conflicts={conflicts} />}
+    {blueprint && <><color attach="background" args={['#07121f']} /><fogExp2 attach="fog" args={['#07121f',.00015]} /><ambientLight intensity={.65} color="#8ab4ff" /><BlueprintGround network={network} /></>}
+    {!blueprint && <NightWorld network={network} atlas={atlas} />}
+    <DisplayStretch key={network.id} network={network} enabled={stretch}>
+      {blueprint ? <Blueprint network={network} /> : <>
+        <RoadMeshes network={network} atlas={atlas} lamps={lamps} simulation={runtime.simulation} roof={roof} />
+        <CityLights lamps={lamps} network={network} />
+        {design.id === 'crossroads-channelized' && <WaitingOutline network={network} />}
+      </>}
+      {highlightLeft && !blueprint && <LeftRoutes network={network} />}
+      <Vehicles runtime={runtime} />
+      <LightTrails runtime={runtime} shutter={shutter} blueprint={blueprint} highlightLeft={highlightLeft} />
+      {(showConflicts || showWeaving || blueprint) && <ConflictMarkers network={network} conflicts={showConflicts || blueprint ? conflicts : []} showWeaving={showWeaving || blueprint} />}
+    </DisplayStretch>
     <CameraRig design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} />
     <EffectComposer multisampling={0}>
-      {!blueprint && query('ao') !== '0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} quality="medium" aoSamples={16} denoiseSamples={8} denoiseRadius={8} halfRes /> : <></>}
-      <Bloom luminanceThreshold={1.25} luminanceSmoothing={0.18} intensity={0.42} mipmapBlur resolutionScale={0.6} />
+      {!blueprint && !stretch && query('ao') !== '0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} quality="medium" aoSamples={16} denoiseSamples={8} denoiseRadius={8} halfRes /> : <></>}
+      <Bloom luminanceThreshold={1.25} luminanceSmoothing={0.18} intensity={0.30} radius={0.45} mipmapBlur resolutionScale={0.6} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette offset={0.25} darkness={0.32} />
     </EffectComposer>
@@ -79,8 +96,14 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   const [demand, setDemand] = useState(() => Math.max(0.25, numberQuery('multiplier', 1, 2.5)))
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [playing, setPlaying] = useState(!reducedMotion), [speed, setSpeed] = useState(1)
-  const [shutter, setShutter] = useState(() => numberQuery('shutter', 6, 15))
-  const [showConflicts, setShowConflicts] = useState(query('conflicts') === '1')
+  const manualShutter = useRef(query('shutter') !== null)
+  const [shutter, setShutter] = useState(() => numberQuery('shutter', designId === 'cloverleaf' ? 8 : 6, 15))
+  const [initialOverlays] = useState(() => defaultOverlays(designId, designId === 'cloverleaf'))
+  const manualOverlays = useRef<Partial<Record<keyof typeof initialOverlays, boolean>>>({})
+  const [showConflicts, setShowConflicts] = useState(query('conflicts') === null ? initialOverlays.conflicts : query('conflicts') === '1')
+  const [highlightLeft, setHighlightLeft] = useState(query('left') === null ? initialOverlays.left : query('left') === '1')
+  const [stretch, setStretch] = useState(query('stretch') === null ? initialOverlays.stretch : query('stretch') === '1')
+  const [showWeaving, setShowWeaving] = useState(initialOverlays.weaving)
   const [preset, setPreset] = useState<CameraPreset>(() => PRESETS.find(p => p.id === query('camera'))?.id ?? 'overview')
   const [revision, setRevision] = useState(0)
   const [blueprint, setBlueprint] = useState(query('blueprint') === '1')
@@ -90,6 +113,12 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
   const [showPressure, setShowPressure] = useState(false)
   const [showCompare, setShowCompare] = useState(query('compare') === '1')
   const [expanded, setExpanded] = useState(false)
+  const [tourActive, setTourActive] = useState(false)
+  useEffect(() => {
+    const listener = (event: Event) => { const state=(event as CustomEvent<{worldId: string; active: boolean}>).detail; if(state.worldId==='road-design')setTourActive(state.active) }
+    window.addEventListener(GUIDE_AUTOPLAY_STATE_EVENT,listener)
+    return ()=>window.removeEventListener(GUIDE_AUTOPLAY_STATE_EVENT,listener)
+  },[])
   const firstView = useRef(true)
   // The simulation is persistent state, not a disposable memoization cache.
   // Demand edits retain it; changing the design creates a reproducible new run.
@@ -160,6 +189,12 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     if (runtime.pressure?.status === 'running') setSpeed(1)
     runtime.stopPressure()
     if (runtime.pressure) setCurves(previous => ({ ...previous, [designId]: [...runtime.pressure!.samples] }))
+    if (!manualShutter.current) setShutter(next.id === 'cloverleaf' ? 8 : 6)
+    const defaults = defaultOverlays(next.id)
+    setShowConflicts(manualOverlays.current.conflicts ?? defaults.conflicts)
+    setHighlightLeft(manualOverlays.current.left ?? defaults.left)
+    setStretch(next.chapter > 1 && (manualOverlays.current.stretch ?? defaults.stretch))
+    setShowWeaving(manualOverlays.current.weaving ?? defaults.weaving)
     setDesignId(next.id); setDemand(1); setPreset('overview'); setRevision(r => r + 1); interact()
   }
   const pressureRunning = runtime.pressure?.status === 'running'
@@ -176,21 +211,33 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     interact()
   }
   const format = (value: number) => Math.round(value).toLocaleString('en-US')
+  const overlayTools = <div className="rd-overlay-tools">
+    <button type="button" data-overlay="left" aria-pressed={highlightLeft} onClick={() => { manualOverlays.current.left = !highlightLeft; setHighlightLeft(!highlightLeft); interact() }}>{tx('左转高亮')}</button>
+    {design.chapter > 1 && <button type="button" data-overlay="stretch" aria-pressed={stretch} onClick={() => { manualOverlays.current.stretch = !stretch; setStretch(!stretch); interact() }}>{tx('层高拉伸')}</button>}
+    {!!network.weaving.length && <button type="button" data-overlay="weaving" aria-pressed={showWeaving} onClick={() => { manualOverlays.current.weaving = !showWeaving; setShowWeaving(!showWeaving); interact() }}>{tx('交织段')}</button>}
+  </div>
   const tools = <div className="rd-tools">
+    {overlayTools}
+    <div className="rd-mobile-tools">
+      <button type="button" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
+      <button type="button" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
+    </div>
+    <button type="button" className="rd-tour-button" onClick={() => { setBlueprint(false); setShowCompare(false); window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT,{detail:{worldId:'road-design'}})); interact() }}>{tx('导览')}</button>
     <label>{tx('需求倍率')}<input aria-label={tx('需求倍率')} type="range" min="0.25" max="2.5" step="0.05" value={demand} onChange={e => { if (runtime.pressure?.status === 'running') setSpeed(1); runtime.stopPressure(); setDemand(Number(e.target.value)); interact() }} /><output>{demand.toFixed(2)}×</output></label>
-    <label>{tx('快门')}<input aria-label={tx('快门')} type="range" min="0" max="15" step="0.5" value={shutter} onChange={e => { setShutter(Number(e.target.value)); interact() }} /><output>{shutter.toFixed(1)} s</output></label>
+    <label>{tx('快门')}<input aria-label={tx('快门')} type="range" min="0" max="15" step="0.5" value={shutter} onChange={e => { manualShutter.current = true; setShutter(Number(e.target.value)); interact() }} /><output>{shutter.toFixed(1)} s</output></label>
     <button type="button" className="rd-pressure-toggle" aria-pressed={pressureRunning} onClick={startPressure}>{tx(pressureRunning ? '停止压力测试' : '压力测试')}</button>
     <div className="rd-camera-presets experience-freebar-seg" role="group" aria-label={tx('镜头')}>
       {PRESETS.map(p => <button key={p.id} type="button" aria-pressed={preset === p.id} onClick={() => { setPreset(p.id); setRevision(r => r + 1); interact() }}>{tx(p.name)}</button>)}
     </div>
   </div>
-  return <div ref={stage} className="road-design-experience" data-design={designId} data-capture={capture} data-blueprint={renderBlueprint}>
+  return <div ref={stage} className="road-design-experience" data-design={designId} data-capture={capture} data-blueprint={renderBlueprint} data-left-highlight={highlightLeft} data-stretch={stretch} data-conflicts={showConflicts} data-weaving={showWeaving} data-guide={tourActive}>
     <Canvas camera={{ position: [350, 250, 380], fov: 35, near: 0.3, far: 10000 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: false, powerPreference: 'high-performance', toneMapping: T.NoToneMapping }}>
-      <Scene design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={renderBlueprint} interact={interact} />
+      <Scene design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} highlightLeft={highlightLeft} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={renderBlueprint} interact={interact} />
     </Canvas>
     <div className="rd-view-transition" data-changing={viewChanging} aria-hidden="true" />
     {designId === 'huangjuewan' && <div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture && <>
+      <GuideTour worldId="road-design" placement="stage" steps={DESIGNS.map(d=>({title:tx(d.name),body:tx(TOUR[d.id]),durationMs:12000,action:()=>{selectDesign(d);setPlaying(true);setSpeed(1)}}))} kicker={tx('道路图鉴')} exitLabel={tx('结束导览')} stagePlan={DESIGNS.map(()=>({position:'center-left',mobilePosition:'bottom-center',tone:'dark',width:'narrow',treatment:'caption'}))} />
       <header className="rd-heading" data-experience-overlay="true"><h1>{tx('路口与立交')}</h1><p>{tx(design.name)}</p></header>
       <aside className="rd-instruments" data-expanded={expanded} aria-label={tx('交通读数')} data-experience-overlay="true">
         <button className="rd-summary" type="button" aria-expanded={expanded} onClick={() => { setExpanded(value => !value); interact() }}><span>{tx('冲突点')} <b>{conflicts.total}</b></span><span>{format(readout.throughput)} <small>{tx('辆/时')}</small></span><span>+{Math.round(readout.averageDelay)} s</span><i>{expanded ? '−' : '+'}</i></button>
@@ -204,7 +251,9 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
           <div><dt>{tx('在网车辆')}</dt><dd>{format(readout.vehicles)}</dd></div>
           <div><dt>{tx('画面外排队')}</dt><dd>{format(readout.outsideQueue)}</dd></div>
         </dl>
-        <div className="rd-cost"><h2>{tx('代价')}</h2><dl><div><dt>{tx('层数')}</dt><dd>{cost.layers}</dd></div><div><dt>{tx('最高路面')}</dt><dd>{cost.maximumHeight.toFixed(1)} <small>m</small></dd></div><div><dt>{tx('桥面面积')}</dt><dd>{format(cost.bridgeArea)} <small>m²</small></dd></div><div><dt>{tx('匝道总长')}</dt><dd>{(cost.rampLength / 1000).toFixed(2)} <small>km</small></dd></div></dl><p>{tx('占地（凸包估算）')} <b>{(cost.hullArea / 10000).toFixed(1)} ha</b></p></div>
+        <div className="rd-cost"><h2>{tx('代价')}</h2><dl><div><dt>{tx('层数')}</dt><dd>{cost.layers}</dd></div><div><dt>{tx('最高路面')}</dt><dd>{cost.maximumHeight.toFixed(1)} <small>m</small></dd></div><div><dt>{tx('桥面面积')}</dt><dd>{format(cost.bridgeArea)} <small>m²</small></dd></div><div><dt>{tx('匝道总长')}</dt><dd>{(cost.rampLength / 1000).toFixed(2)} <small>km</small></dd></div></dl><p>{tx('立交范围凸包估算')} <b>{(cost.hullArea / 10000).toFixed(1)} ha</b></p></div>
+        {stretch && <p className="rd-stretch-note">{tx('竖向已放大 2.5×')}</p>}
+        {PRESENTATIONS[designId].phases && <PhaseRings control={network.control} time={runtime.simulation.time} dual={designId === 'diamond'} />}
         <p className="rd-why">{tx(design.description)}</p>
         <small className="rd-window">{tx('核心区断面 · 最长 5 分钟')}</small>
         {showPressure && <PressurePanel curves={curves} designs={DESIGNS} current={designId} running={pressureRunning} progress={pressureProgress} speed={speed} />}
@@ -220,11 +269,11 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
       <Freebar ariaLabel={tx('交通与镜头')} className="rd-freebar" mainClassName="rd-freebar-main" secondary={tools} secondaryDefault="closed">
         <button type="button" className="experience-freebar-play" aria-label={tx(playing ? '暂停' : '播放')} data-playing={playing} onClick={() => { setPlaying(!playing); interact() }}>{playing ? <Pause weight="fill" /> : <Play weight="fill" />}</button>
         <div className="experience-freebar-seg" role="group" aria-label={tx('模拟速度')}>{[1, 4, 16].map(s => <button key={s} type="button" aria-pressed={speed === s} onClick={() => { setSpeed(s); interact() }}>{s}×</button>)}</div>
-        <button type="button" className="rd-conflicts-toggle" aria-pressed={showConflicts} onClick={() => { setShowConflicts(!showConflicts); interact() }}>{tx('冲突点')}</button>
-        <button type="button" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
-        <button type="button" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
+        <button type="button" className="rd-conflicts-toggle" aria-pressed={showConflicts} onClick={() => { manualOverlays.current.conflicts = !showConflicts; setShowConflicts(!showConflicts); interact() }}>{tx('冲突点')}</button>
+        <button type="button" className="rd-desktop-control" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
+        <button type="button" className="rd-desktop-control" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
       </Freebar>
-      <GhostHint worldId="road-design" delay={8000} gesture={{ type: 'tap', target: '[data-design-id="t-junction"]', label: tx('换一种路口，看车流怎样改变') }} />
+      {designId === 'cloverleaf' && revision === 0 && <GhostHint worldId="road-design" delay={45000} gesture={{ type: 'tap', target: '[data-design-id="t-junction"]', label: tx('换一种路口，看车流怎样改变') }} />}
     </>}
   </div>
 }

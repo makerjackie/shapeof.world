@@ -1,0 +1,128 @@
+{
+  "method": {
+    "version": 1,
+    "seed": 271828,
+    "stepSeconds": 0.03333333333333333,
+    "warmupSeconds": 240,
+    "rampSeconds": 1200,
+    "multiplierFrom": 0.25,
+    "multiplierTo": 2.5,
+    "windowSeconds": 300,
+    "sampleEverySeconds": 10,
+    "note": "Maximum completed-core detector rate in full rolling five-minute windows during one rising-demand run. Model-specific, not engineering capacity."
+  },
+  "designs": {
+    "t-junction": {
+      "vehiclesPerHour": 1164,
+      "peakAtSeconds": 1180,
+      "delayAtPeakSeconds": 16.36,
+      "outsideQueueAtPeak": 0,
+      "defaultDemand": 600,
+      "hullAreaM2": 5148.57
+    },
+    "crossroads-yield": {
+      "vehiclesPerHour": 660,
+      "peakAtSeconds": 1090,
+      "delayAtPeakSeconds": 105.35,
+      "outsideQueueAtPeak": 0,
+      "defaultDemand": 500,
+      "hullAreaM2": 8116.79
+    },
+    "crossroads-signal": {
+      "vehiclesPerHour": 1536,
+      "peakAtSeconds": 1170,
+      "delayAtPeakSeconds": 83.2,
+      "outsideQueueAtPeak": 33,
+      "defaultDemand": 1200,
+      "hullAreaM2": 8116.79
+    },
+    "roundabout": {
+      "vehiclesPerHour": 1260,
+      "peakAtSeconds": 1190,
+      "delayAtPeakSeconds": 92.29,
+      "outsideQueueAtPeak": 82,
+      "defaultDemand": 1200,
+      "hullAreaM2": 11878.2
+    },
+    "crossroads-channelized": {
+      "vehiclesPerHour": 4260,
+      "peakAtSeconds": 1160,
+      "delayAtPeakSeconds": 106.16,
+      "outsideQueueAtPeak": 2,
+      "defaultDemand": 2800,
+      "hullAreaM2": 12379.84
+    },
+    "continuous-flow": {
+      "vehiclesPerHour": 4800,
+      "peakAtSeconds": 1200,
+      "delayAtPeakSeconds": 44.69,
+      "outsideQueueAtPeak": 37,
+      "defaultDemand": 2800,
+      "hullAreaM2": 25132.82
+    },
+    "diamond": {
+      "vehiclesPerHour": 9096,
+      "peakAtSeconds": 1010,
+      "delayAtPeakSeconds": 41.15,
+      "outsideQueueAtPeak": 430,
+      "defaultDemand": 8800,
+      "hullAreaM2": 178511.46
+    },
+    "ddi": {
+      "vehiclesPerHour": 8724,
+      "peakAtSeconds": 820,
+      "delayAtPeakSeconds": 33.34,
+      "outsideQueueAtPeak": 173,
+      "defaultDemand": 8800,
+      "hullAreaM2": 196506.41
+    },
+    "parclo": {
+      "vehiclesPerHour": 9360,
+      "peakAtSeconds": 1020,
+      "delayAtPeakSeconds": 41.67,
+      "outsideQueueAtPeak": 428,
+      "defaultDemand": 8800,
+      "hullAreaM2": 257772.81
+    },
+    "trumpet": {
+      "vehiclesPerHour": 10464,
+      "peakAtSeconds": 1200,
+      "delayAtPeakSeconds": 93.92,
+      "outsideQueueAtPeak": 891,
+      "defaultDemand": 10500,
+      "hullAreaM2": 752170.35
+    },
+    "cloverleaf": {
+      "vehiclesPerHour": 19104,
+      "peakAtSeconds": 1050,
+      "delayAtPeakSeconds": 55.39,
+      "outsideQueueAtPeak": 1382,
+      "defaultDemand": 19200,
+      "hullAreaM2": 241858.65
+    },
+    "turbine": {
+      "vehiclesPerHour": 19716,
+      "peakAtSeconds": 1190,
+      "delayAtPeakSeconds": 78.95,
+      "outsideQueueAtPeak": 1930,
+      "defaultDemand": 19200,
+      "hullAreaM2": 2076455.63
+    },
+    "stack": {
+      "vehiclesPerHour": 19692,
+      "peakAtSeconds": 1200,
+      "delayAtPeakSeconds": 101.41,
+      "outsideQueueAtPeak": 1997,
+      "defaultDemand": 19200,
+      "hullAreaM2": 2076455.63
+    },
+    "huangjuewan": {
+      "vehiclesPerHour": 18792,
+      "peakAtSeconds": 1200,
+      "delayAtPeakSeconds": 55.25,
+      "outsideQueueAtPeak": 950,
+      "defaultDemand": 15660,
+      "hullAreaM2": 1829466.05
+    }
+  }
+}

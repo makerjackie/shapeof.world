@@ -3,7 +3,6 @@ import * as T from 'three'
 import type { Network, Vec3 } from '../sim/types'
 import { fillInstances, samplePath, type Instance } from './mesh-kit'
 import { CityBuildings } from './CityBuildings'
-import { CityLights } from './CityLights'
 import { ContextLand, contextLayout } from './ContextLand'
 import { Terrain } from './Terrain'
 import { ChongqingRiver } from './ChongqingRiver'
@@ -69,10 +68,11 @@ export function makeLightingAtlas(lamps: Lamp[]) {
 }
 
 /** Light transfer respects world normals, including instanced piers and tree crowns. */
-export function litMaterial(atlas: T.Texture, color: string, gain = 0.5, roughness = 0.9) {
+export function litMaterial(atlas: T.Texture, color: string, gain = 0.5, roughness = 0.9, roof?: T.Texture) {
   const material = new T.MeshStandardMaterial({ color, roughness, metalness: 0.035, side: T.DoubleSide })
   material.onBeforeCompile = shader => {
     shader.uniforms.roadLighting = { value: atlas }
+    if (roof) shader.uniforms.highestDeck = { value: roof }
     shader.vertexShader = 'varying vec3 roadWorld; varying vec3 roadNormal;\n' + shader.vertexShader
     shader.vertexShader = shader.vertexShader.replace('#include <worldpos_vertex>', `#include <worldpos_vertex>
       vec4 lightPosition = vec4(transformed, 1.0);
@@ -84,7 +84,7 @@ export function litMaterial(atlas: T.Texture, color: string, gain = 0.5, roughne
       roadWorld = (modelMatrix * lightPosition).xyz;
       roadNormal = normalize(mat3(modelMatrix) * lightNormal);
     `)
-    shader.fragmentShader = 'uniform sampler2D roadLighting; varying vec3 roadWorld; varying vec3 roadNormal;\n' + shader.fragmentShader
+    shader.fragmentShader = (roof ? 'uniform sampler2D highestDeck;\n' : '') + 'uniform sampler2D roadLighting; varying vec3 roadWorld; varying vec3 roadNormal;\n' + shader.fragmentShader
     shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
       vec2 lightUV = (roadWorld.xz + 1800.0) / 3600.0;
       vec3 illumination = texture2D(roadLighting, vec2(lightUV.x, 1.0-lightUV.y)).rgb;
@@ -97,17 +97,21 @@ export function litMaterial(atlas: T.Texture, color: string, gain = 0.5, roughne
       vec3 lightDirection = normalize(vec3(rightLight-leftLight,0.16,farLight-nearLight));
       vec3 surfaceNormal=normalize(roadNormal)*(gl_FrontFacing?1.0:-1.0);
       float facing = max(0.0,dot(surfaceNormal,lightDirection));
-      float transfer = surfaceNormal.y < -0.3 ? 0.07 : (surfaceNormal.y > 0.5 ? 1.0 : 0.18+facing*0.9);
+      float transfer = surfaceNormal.y < -0.3 ? 0.04 : (surfaceNormal.y > 0.5 ? 1.0 : 0.04+facing*0.85);
+      ${roof ? `float roofHeight=texture2D(highestDeck,lightUV).r;
+      float overhead=1.0-smoothstep(2.8,5.5,roofHeight-roadWorld.y);
+      illumination*=mix(surfaceNormal.y>0.5?0.18:0.65,1.0,overhead);
+      outgoingLight*=mix(surfaceNormal.y>0.5?0.38:0.72,1.0,overhead);` : ''}
       float grain = fract(sin(dot(floor(roadWorld.xz * 7.0),vec2(127.1,311.7)))*43758.5453);
       outgoingLight += diffuseColor.rgb * illumination * ${gain.toFixed(3)} * 2.5 * (0.94+grain*0.12) * transfer;
       #include <opaque_fragment>`)
   }
-  material.customProgramCacheKey = () => `road-light-v3-${gain}`
+  material.customProgramCacheKey = () => `road-light-v4-${gain}-${!!roof}`
   return material
 }
 
 function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
-  const material = litMaterial(atlas, urban ? '#171817' : '#111511', urban ? 0.65 : 1.1)
+  const material = litMaterial(atlas, urban ? '#15181b' : '#0c1013', 0.65)
   const illumination = material.onBeforeCompile
   material.onBeforeCompile = (shader, renderer) => {
     illumination(shader, renderer)
@@ -115,11 +119,11 @@ function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
       float terrainNoise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);return mix(mix(terrainHash(i),terrainHash(i+vec2(1,0)),f.x),mix(terrainHash(i+vec2(0,1)),terrainHash(i+vec2(1,1)),f.x),f.y);}\n` + shader.fragmentShader
     shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
       float terrain = terrainNoise(roadWorld.xz*0.004)+0.3*terrainNoise(roadWorld.xz*0.017);
-      vec3 grass=vec3(0.0040,0.0070,0.0052), earth=vec3(0.0070,0.0060,0.0048);
+      vec3 grass=vec3(0.0034,0.0044,0.0051), earth=vec3(0.0048,0.0065,0.0052);
       vec2 loopCenter=sign(roadWorld.xz)*77.625;
       float loopGrass=${cloverleaf ? '1.0-smoothstep(48.0,57.0,length(roadWorld.xz-loopCenter))' : '0.0'};
       vec3 groundColor=mix(grass,earth,smoothstep(0.3,1.0,terrain));
-      groundColor=mix(groundColor,vec3(0.0056,0.0105,0.0058),loopGrass*0.55);
+      groundColor=mix(groundColor,vec3(0.0036,0.0065,0.0048),loopGrass*0.55);
       diffuseColor.rgb=${urban ? 'diffuseColor.rgb' : 'groundColor'};
     `)
   }
@@ -129,15 +133,15 @@ function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float groundDistance=distance(cameraPosition,roadWorld);
         float horizonHaze=1.0-exp(-max(0.0,groundDistance-650.0)*0.00045);
-        outgoingLight=max(outgoingLight,vec3(0.010,0.013,0.010)*(0.85+0.3*terrainNoise(roadWorld.xz*0.009)));
+        outgoingLight=max(outgoingLight,vec3(0.0075,0.0100,0.0120)*(0.85+0.3*terrainNoise(roadWorld.xz*0.009)));
         outgoingLight=mix(outgoingLight,vec3(0.006,0.008,0.011),horizonHaze);
         #include <opaque_fragment>`)
       shader.fragmentShader = shader.fragmentShader.replace('#include <fog_fragment>', `#include <fog_fragment>
         float horizonBlend=smoothstep(900.0,8500.0,distance(cameraPosition,roadWorld));
-        gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(0.079,0.055,0.082),horizonBlend);
+        gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(0.030,0.045,0.076),horizonBlend);
       `)
     }
-  material.customProgramCacheKey = () => `road-terrain-v5-${urban}-${cloverleaf}`
+  material.customProgramCacheKey = () => `road-terrain-v7-${urban}-${cloverleaf}`
   return material
 }
 
@@ -175,7 +179,6 @@ function treeInstances(network: Network) {
 
 export function NightWorld({ network, atlas }: { network: Network; atlas: T.Texture }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
-  const lamps = useMemo(() => buildLamps(network), [network])
   const assets = useMemo(() => {
     const trees = urban ? { crowns: [], trunks: [] } : treeInstances(network)
     const skyColor = (hex: string) => new T.Color(hex).toArray()
@@ -196,14 +199,13 @@ export function NightWorld({ network, atlas }: { network: Network; atlas: T.Text
   useEffect(() => () => { assets.ground.dispose(); assets.foliage.dispose(); assets.sky.dispose() }, [assets])
   return <>
     <fogExp2 attach="fog" args={['#18243a', 0.00019]} />
-    <hemisphereLight args={['#91a4cd', '#292621', 0.32]} />
+    <hemisphereLight args={['#91a4cd', '#161e2a', 0.26]} />
     <directionalLight position={[-450, 750, -200]} color="#b9c9e2" intensity={0.52} />
     <mesh material={assets.sky}><sphereGeometry args={[7000, 32, 20]} /></mesh>
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, network.terrain ? Math.min(...network.terrain.values) - .5 : -.15, 0]} material={assets.ground}><planeGeometry args={[30000, 30000]} /></mesh>
     <Terrain network={network} material={assets.ground} />
     <ContextLand network={network} atlas={atlas} />
     <CityBuildings urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
-    <CityLights lamps={lamps} network={network} />
     {network.id === 'huangjuewan' && <ChongqingRiver />}
     {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
     {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}

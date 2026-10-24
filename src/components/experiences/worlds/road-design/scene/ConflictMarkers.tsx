@@ -34,7 +34,7 @@ function Marker({ conflict, active, onHover }: { conflict: ConflictPoint; active
     </mesh>
   </group>
 }
-export function ConflictMarkers({ network, conflicts }: { network: Network; conflicts: ConflictPoint[] }) {
+export function ConflictMarkers({ network, conflicts, showWeaving = true }: { network: Network; conflicts: ConflictPoint[]; showWeaving?: boolean }) {
   const tx = useExperienceI18n(), [hover, setHover] = useState<string | null>(null)
   const weaving = useMemo(() => network.weaving.map(w => strip(w.points, w.width, 0, 0.15)), [network])
   useEffect(() => () => weaving.forEach(g => g.dispose()), [weaving])
@@ -44,5 +44,5 @@ export function ConflictMarkers({ network, conflicts }: { network: Network; conf
       <Marker conflict={conflict} active={active} onHover={setHover} />
       {active && <Html center position={[0, 6, 0]} zIndexRange={[12, 8]}><div className="rd-conflict-tooltip" data-experience-overlay="true"><strong>{tx(NAMES[conflict.type])}</strong>{conflict.movements.map(id => <span key={id}>{(network.schematicMovements.find(m => m.id === id)?.name ?? id).split(' → ').map(part => tx(part)).join(' → ')}</span>)}{conflict.separatedBySignal && <small>{tx('由信号相位分开')}</small>}</div></Html>}
     </group>
-  })}{weaving.map((geometry, i) => <mesh key={i} geometry={geometry}><meshBasicMaterial color="#c77dff" transparent opacity={0.25} side={T.DoubleSide} depthWrite={false} /></mesh>)}</group>
+  })}{showWeaving && weaving.map((geometry, i) => <mesh key={i} geometry={geometry}><meshBasicMaterial color="#c77dff" transparent opacity={0.25} side={T.DoubleSide} depthWrite={false} /></mesh>)}</group>
 }

@@ -4,12 +4,13 @@ import { Html } from '@react-three/drei'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import type { Network, Vec3 } from '../sim/types'
+import { StretchAnchor } from './DisplayStretch'
 import { offsetPath } from '../designs/kit'
 import { mergeGeometry, samplePath, strip } from './mesh-kit'
 
 const LAYERS = ['#527ca6', '#55b5b0', '#b59ae5', '#e0bc77', '#e0eaf5']
 interface Stroke { a: Vec3; b: Vec3; color: string; drift?: Vec3; phase?: number }
-function screenLines(strokes: Stroke[], width: number, opacity = 1) {
+export function screenLines(strokes: Stroke[], width: number, opacity = 1) {
   const positions:number[]=[],ends:number[]=[],corners:number[]=[],colors:number[]=[],drifts:number[]=[],phases:number[]=[],indices:number[]=[]
   for(const [i,line] of strokes.entries()) {
     const color=new T.Color(line.color), drift=line.drift??{x:0,y:0,z:0}
@@ -60,16 +61,21 @@ export function Blueprint({ network }: { network: Network }) {
       const point=points.reduce<Vec3>((best,p)=>distance(p)<distance(best)?p:best,points[0]??{x:0,y:0,z:0})
       return {level,point}
     })
-    const grid=new T.ShaderMaterial({uniforms:{base:{value:new T.Color('#07121f')},ink:{value:new T.Color('#12263d')}},vertexShader:'varying vec3 p;void main(){p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:`varying vec3 p;uniform vec3 base;uniform vec3 ink;void main(){vec2 q=p.xy/20.;vec2 a=abs(fract(q-.5)-.5)/max(fwidth(q),vec2(.0001));float line=1.-min(1.,min(a.x,a.y));gl_FragColor=vec4(mix(base,ink,line*exp(-length(p.xy)*.00035)*.65),1.);}`})
-    return{lines,surfaces,labels,grid}
+
+    return{lines,surfaces,labels}
   },[network])
   useFrame(({size,clock})=>assets.lines.forEach(({material})=>{material.uniforms.resolution.value.set(size.width,size.height);material.uniforms.time.value=clock.elapsedTime}))
-  useEffect(()=>()=>{for(const item of [...assets.lines,...assets.surfaces]){item.geometry.dispose();item.material.dispose()}assets.grid.dispose()},[assets])
+  useEffect(()=>()=>{for(const item of [...assets.lines,...assets.surfaces]){item.geometry.dispose();item.material.dispose()}},[assets])
   return <>
-    <color attach="background" args={['#07121f']}/><fogExp2 attach="fog" args={['#07121f',.00015]}/><ambientLight intensity={.65} color="#8ab4ff"/>
-    <mesh rotation={[-Math.PI/2,0,0]} position={[0,network.terrain?Math.min(...network.terrain.values)-2:-.22,0]} material={assets.grid}><planeGeometry args={[20000,20000]}/></mesh>
     {assets.surfaces.map((item,i)=><mesh key={`fill-${i}`} geometry={item.geometry} material={item.material}/>)}
     {assets.lines.map((item,i)=><mesh key={i} geometry={item.geometry} material={item.material} frustumCulled={false}/>)}
-    {assets.labels.map(({level,point})=><Html key={level} position={[point.x,point.y+3,point.z]} center zIndexRange={[5,1]}><span className="rd-layer-label" style={{color:LAYERS[Math.min(4,level)]}}>{tx('层')} {level}</span></Html>)}
+    {assets.labels.map(({level,point})=><StretchAnchor key={level} position={[point.x,point.y+3,point.z]}><Html center zIndexRange={[5,1]}><span className="rd-layer-label" style={{color:LAYERS[Math.min(4,level)]}}>{tx('层')} {level}</span></Html></StretchAnchor>)}
   </>
+}
+
+/** The drawing floor stays at physical height when infrastructure is stretched. */
+export function BlueprintGround({ network }: { network: Network }) {
+  const material = useMemo(() => new T.ShaderMaterial({uniforms:{base:{value:new T.Color('#07121f')},ink:{value:new T.Color('#12263d')}},vertexShader:'varying vec3 p;void main(){p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:`varying vec3 p;uniform vec3 base;uniform vec3 ink;void main(){vec2 q=p.xy/20.;vec2 a=abs(fract(q-.5)-.5)/max(fwidth(q),vec2(.0001));float line=1.-min(1.,min(a.x,a.y));gl_FragColor=vec4(mix(base,ink,line*exp(-length(p.xy)*.00035)*.65),1.);}`}), [])
+  useEffect(() => () => material.dispose(), [material])
+  return <mesh rotation={[-Math.PI/2,0,0]} position={[0,network.terrain?Math.min(...network.terrain.values)-2:-.22,0]} material={material}><planeGeometry args={[20000,20000]}/></mesh>
 }
