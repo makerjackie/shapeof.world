@@ -9,7 +9,7 @@ export const LEAF_MIDRIB_X = -1500
 
 /** Entire margin with a broad basal shoulder; no high-frequency serrations. */
 export function leafHalfWidth(t: number) {
-  const shoulder = 1 + .19 * Math.exp(-(((t - .23) / .14) ** 2))
+  const shoulder = 1 + .28 * Math.exp(-(((t - .23) / .14) ** 2))
   return 40_000 * Math.sin(Math.PI * Math.max(0, Math.min(1, t))) ** .78 * shoulder / 1.08
 }
 
@@ -52,7 +52,10 @@ export function createLeafGeometry() {
       const u = us[column]
       const ripple = 1 + .008 * Math.sin(t * Math.PI * 5.2) * Math.abs(u) ** 8
       const x = LEAF_MIDRIB_X + width * u * ripple + 700 * Math.sin(t * Math.PI * 2)
-      const z = -v
+      // Two backward-pointing basal lobes around the petiole insertion. The
+      // smooth cross-section mapping preserves an entire, gently waved edge.
+      const basalLobe = 27000 * Math.exp(-(((t - .12) / .075) ** 2)) * Math.abs(u) ** 1.8
+      const z = -v + basalLobe
       positions.push(x, leafSurfaceY(x, z), z)
       uv.push((x - LEAF_MIDRIB_X) / 80000 + .5, t)
       if (column < us.length - 1 && row < vs.length - 1) {

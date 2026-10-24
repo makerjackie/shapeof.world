@@ -40,7 +40,17 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     if (!enabled || !cut) return
     for (const hit of event.intersections) {
       point.copy(hit.point).applyMatrix4(cut.fromWorld)
-      if (point.dot(cut.normal) > cut.offset + .03) continue
+      // Wall and retracting protoplast have independent clipping planes. Use
+      // the hit material's actual world plane; one inspector owns all labels.
+      if (hit.object instanceof T.Mesh) {
+        const materials = Array.isArray(hit.object.material) ? hit.object.material : [hit.object.material]
+        const clipped = materials.some(material => {
+          if (material.clippingPlanes?.some((plane: T.Plane) => plane.distanceToPoint(hit.point) < -.001)) return true
+          const plane = (material as T.ShaderMaterial).uniforms?.clip?.value
+          return plane instanceof T.Vector4 && plane.x * hit.point.x + plane.y * hit.point.y + plane.z * hit.point.z + plane.w < -.001
+        })
+        if (clipped) continue
+      }
       let object: T.Object3D | null = hit.object
       while (object && !(object.name in ORGANELLES)) object = object.parent
       if (!object) continue
@@ -65,7 +75,7 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     {enabled && selection && <group ref={anchor} position={selection.position}><Html center zIndexRange={[20, 15]} style={{ pointerEvents: 'none' }}>
       <div className="pc-organelle-label" data-organelle-label={selection.kind}>
         <b>{tx(ORGANELLES[selection.kind][0])}</b><em>{ORGANELLES[selection.kind][1]}</em>
-        <small>{ORGANELLES[selection.kind][2]} · {tx('参照尺寸')}</small>
+        <small>{ORGANELLES[selection.kind][2]} · {tx(selection.kind === 'cell-saline-gap' ? '外液浓度' : '参照尺寸')}</small>
         <span>{tx(activity)}</span>
       </div><i className="pc-label-leader" />
     </Html></group>}

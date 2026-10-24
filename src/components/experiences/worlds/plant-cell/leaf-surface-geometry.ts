@@ -20,7 +20,7 @@ function veinTube(points: T.Vector3[], radius: number, segments = 30) {
   for (let j = 0; j <= segments; j++) {
     const t = j / segments, point = curve.getPoint(t)
     curve.getTangent(t, tangent); across.crossVectors(tangent, up).normalize()
-    const r = radius * (segments <= 8 ? 1 : .2 + .8 * (1 - t) ** .65)
+    const r = radius * (.2 + .8 * (1 - t) ** .65)
     point.y = leafSurfaceY(point.x, point.z) - r * .8
     for (let k = 0; k <= sides; k++) {
       const angle = k / sides * Math.PI * 2
@@ -68,7 +68,7 @@ export function createLeafVeins() {
       }
     }
   }
-  // The central dive region has a real, warped hexagonal reticulum.
+  // Curved anastomosing minor veins, with tapering free endings in the areoles.
   for (let row = -12; row <= 12; row++) for (let column = -11; column <= 11; column++) {
     const cx = column * (Math.sqrt(3) * 380) + (Math.abs(row % 2)) * (Math.sqrt(3) * 190), cz = row * 570
     if (Math.hypot(cx, cz) > 7800) continue
@@ -77,11 +77,22 @@ export function createLeafVeins() {
       const x = cx + 380 * Math.cos(a), z = cz + 380 * Math.sin(a)
       return new T.Vector3(x + 80 * Math.sin(z / 720), 0, z + 65 * Math.sin(x / 630))
     }
+    const curves: T.CatmullRomCurve3[] = []
     for (let k = 0; k < 3; k++) {
-      const midpoint = vertex(k).lerp(vertex(k + 1), .5)
-      midpoint.x += 18 * Math.sin(midpoint.z / 240)
-      midpoint.z += 18 * Math.sin(midpoint.x / 310)
-      fine.push(veinTube([vertex(k), midpoint, vertex(k + 1)], 6, 8))
+      const a=vertex(k), b=vertex(k+1), across=new T.Vector3(b.z-a.z,0,a.x-b.x).normalize()
+      const bend=40+25*Math.sin(cx*.008+cz*.005+k)
+      const c1=a.clone().lerp(b,.32).addScaledVector(across,bend)
+      const c2=a.clone().lerp(b,.72).addScaledVector(across,bend*.65)
+      const radius=5.5+1.8*Math.sin(row*.63+column*.37+k)
+      curves.push(new T.CatmullRomCurve3([a,c1,c2,b]))
+      fine.push(veinTube([a,c1,c2,b],radius,14))
+    }
+    if ((row+column)%2===0) {
+      const start=curves[1].getPoint(.45)
+      const tip=new T.Vector3(cx+60*Math.sin(row*2.7),0,cz+50*Math.cos(column*2.1))
+      const mid=start.clone().lerp(tip,.55).add(new T.Vector3(45*Math.sin(row+column),0,-40))
+      fine.push(veinTube([start,mid,tip],3.4,12))
+      if((row-column)%3===0) fine.push(veinTube([mid,mid.clone().lerp(tip,.5).add(new T.Vector3(45,0,45)),tip.clone().add(new T.Vector3(90,0,55))],1.8,10))
     }
   }
   return { main: join(main), secondary: join(secondary), fine: join(fine) }

@@ -4,7 +4,7 @@ import { Euler, Quaternion, Vector3 } from 'three'
 
 /** s = log10(horizontal field of view / metre). Smaller values move inward. */
 export const SCALE_MIN = -7.7
-export const SCALE_MAX = -0.58
+export const SCALE_MAX = -0.5
 // A 70 µm-tall cell occupies ~78% of a 1600 × 1000 perspective viewport.
 export const HERO_SCALE = -3.86
 export const MOBILE_HERO_SCALE = -4.22
@@ -16,7 +16,7 @@ export type LayerWeights = Record<PlantLayer, number>
 export type PositionUm = [number, number, number]
 
 export const LAYERS = [
-  { id: 'leaf', label: '叶片', labelEn: 'Leaf', scale: -0.62 },
+  { id: 'leaf', label: '叶片', labelEn: 'Leaf', scale: -0.54 },
   { id: 'section', label: '叶片截面', labelEn: 'Leaf section', scale: -3.0 },
   { id: 'cell', label: '叶肉细胞', labelEn: 'Mesophyll cell', scale: SCALE_DEFAULT },
   { id: 'chloroplast', label: '叶绿体', labelEn: 'Chloroplast', scale: -5.22 },
@@ -109,7 +109,7 @@ export function getAnchorUm(scale: number, focus?: { positionUm: PositionUm; qua
   return [
     (LEAF_MIDRIB_X * (1 - leafProgress) + LEAF_ENTRY[0] * leafProgress) * surfaceWeight + lens[0] * chloroplastProgress + edge[0] * granumProgress + motor.x * motorProgress,
     LEAF_ENTRY[1] * surfaceWeight - 190 * sectionProgress + lens[1] * chloroplastProgress + edge[1] * granumProgress + motor.y * motorProgress,
-    (12000 * (1 - leafProgress) + LEAF_ENTRY[2] * leafProgress) * surfaceWeight + lens[2] * chloroplastProgress + edge[2] * granumProgress + motor.z * motorProgress,
+    (31000 * (1 - leafProgress) + LEAF_ENTRY[2] * leafProgress) * surfaceWeight + lens[2] * chloroplastProgress + edge[2] * granumProgress + motor.z * motorProgress,
   ]
 }
 
@@ -130,7 +130,8 @@ export function formatLength(meters: number): string {
 export function getScaleBar(scale: number, viewportWidthPx: number, targetPx = 100) {
   const viewport = Number.isFinite(viewportWidthPx) && viewportWidthPx > 0 ? viewportWidthPx : 1
   const target = Number.isFinite(targetPx) && targetPx > 0 ? Math.min(targetPx, viewport) : 100
-  const fieldMeters = 10 ** clampScale(scale)
+  // Optical portrait framing can go just beyond the navigation limit.
+  const fieldMeters = 10 ** (Number.isFinite(scale) ? scale : SCALE_DEFAULT)
   const desiredMeters = fieldMeters * target / viewport
   const power = 10 ** Math.floor(Math.log10(desiredMeters))
   const mantissa = desiredMeters / power

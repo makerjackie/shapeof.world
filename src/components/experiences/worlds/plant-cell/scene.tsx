@@ -67,7 +67,7 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
   return <group ref={root}>{children}</group>
 }
 
-function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInteract }: Pick<SceneProps, 'controller' | 'physiology' | 'reducedMotion' | 'onScale' | 'onInteract'>) {
+function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInteract, capture }: Pick<SceneProps, 'controller' | 'physiology' | 'reducedMotion' | 'onScale' | 'onInteract' | 'capture'>) {
   const orbit = useRef({ yaw:0, pitch:0, currentYaw:0, currentPitch:0 })
   const focusFrame = useMemo(() => ({ rotation: new T.Quaternion(), blend: new T.Quaternion(), inverseInitial: CHLOROPLAST_QUATERNION.clone().invert() }), [])
   const molecularFrame = useMemo(() => ({ direction: new T.Vector3(), up: new T.Vector3() }), [])
@@ -145,11 +145,11 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
   useLayoutEffect(() => {
     if (!(camera instanceof T.PerspectiveCamera)) return
     camera.fov=30; camera.aspect=size.width/size.height
-    camera.setViewOffset(size.width,size.height,-size.width*(size.width>=720?0.085:0),0,size.width,size.height)
+    camera.setViewOffset(size.width,size.height,-size.width*(size.width>=720 && !capture ? 0.085 : 0),0,size.width,size.height)
     camera.position.normalize().multiplyScalar(cameraDistance)
     camera.updateProjectionMatrix()
     onScale(controller.current.current,size.width)
-  }, [camera,size,cameraDistance,onScale,controller])
+  }, [camera,size,cameraDistance,onScale,controller,capture])
   useFrame((state, rawDelta) => {
     const delta = Math.min(rawDelta, 0.08), c = controller.current
     if (lastReset.current !== c.reset) {
@@ -228,6 +228,8 @@ function Contents(props: SceneProps) {
     skipElapsed.current=false
     clock.current=physiology.current.simulationSeconds
     gl.domElement.dataset.simulationSeconds=clock.current.toFixed(3)
+    gl.domElement.dataset.daySeconds=physiology.current.daySeconds.toFixed(2)
+    gl.domElement.dataset.starch=physiology.current.starchFraction.toFixed(5)
     gl.domElement.dataset.waterPsi=physiology.current.water.psi.toFixed(4)
     gl.domElement.dataset.waterVolume=getWaterReadings(physiology.current.water).relativeVolume.toFixed(4)
     gl.domElement.dataset.actualPpfd=physiology.current.actualPPFD.toFixed(2)

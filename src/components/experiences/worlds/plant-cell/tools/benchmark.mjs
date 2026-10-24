@@ -7,7 +7,7 @@ import { join } from 'node:path'
 if (!process.argv[2]) throw new Error('Pass a private JSON output path.')
 const results = []
 const views = process.argv.find(arg=>arg.startsWith('--views='))?.slice(8).split(',')
-for (const [name, scale, mobile] of [['hero',-3.86,false],['handoff',-6.5,false],['membrane',-6.85,false],['motor',-7.34,false],['mobileMotor',-7.65,true]]) {
+for (const [name, scale, mobile] of [['hero',-3.86,false],['handoff',-6.5,false],['membrane',-6.85,false],['motor',-7.34,false],['mobileMotor',-7.7,true]]) {
   if (views && !views.includes(name)) continue
   const profile=await mkdtemp(join(tmpdir(),'plant-cell-benchmark-'))
   let context
