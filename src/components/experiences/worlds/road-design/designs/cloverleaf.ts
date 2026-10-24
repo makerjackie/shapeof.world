@@ -98,7 +98,7 @@ export function buildCloverleaf(): Network {
 
 export const cloverleaf: DesignSpec = {
   id: 'cloverleaf', name: '全苜蓿叶立交', nameEn: 'Full cloverleaf', chapter: 3,
-  description: '左转不再等红灯。上环和下环的车却要在同一小段路上交叉换道，车一多，先堵在这里。',
+  description: '左转不再等红灯。四个环道又小又慢（40 km/h），占地并不大；代价是上环和下环的车要在同一小段路上交叉换道，车一多，先堵在这里。',
   defaultDemand: 2600,
   camera: { position: { x: 335, y: 250, z: 350 }, target: { x: 0, y: 0, z: 0 }, fov: 35 },
   build: buildCloverleaf,
