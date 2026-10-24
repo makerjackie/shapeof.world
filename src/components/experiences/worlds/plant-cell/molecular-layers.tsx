@@ -9,6 +9,7 @@ import { isWorldPaused } from '~/lib/world-playback'
 import { loadATPAtoms, loadMoleculeSurface, loadMetabolite, type MetaboliteData, type MetaboliteId } from './molecule-data'
 import { MOLECULAR_ATP_ANCHOR_NM, advanceMotor, atomRadiusNm, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch, getCatalyticSitePhase } from './molecular-model'
 import { chloroplastRandom } from './chloro-model'
+import { createLipidHeadgroups, proteinClearance } from './molecular-display'
 import { clusterMoleculeSurface } from './molecule-lod'
 
 export { MOLECULAR_ATP_ANCHOR_NM } from './molecular-model'
@@ -104,8 +105,8 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
   }, [atoms])
   return <group onPointerMissed={()=>{pinned.current=false;setInspection(null)}} ref={root} name="plant-molecular-frame" visible={resourcesVisible} userData={{ units: 'nm', stromaAxis: '+Y', atomCount: atoms?.positions.length ? atoms.positions.length / 3 : 0 }}>
     <MembraneArchitecture opacity={opacity} light={light} mobile={mobile} scale={scale} />
-    {PDB_IDS.filter((id) => id !== '6FKF').map((pdb) => surfaces[pdb] && <SurfacePopulation key={pdb} data={surfaces[pdb]!} pdb={pdb} poses={bodies[pdb]} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} />)}
-    {surfaces['6FKF'] && <SurfacePopulation data={surfaces['6FKF']} pdb="6FKF" poses={bodies['6FKF']} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} />}
+    {PDB_IDS.filter((id) => id !== '6FKF').map((pdb) => surfaces[pdb] && <SurfacePopulation key={pdb} data={surfaces[pdb]!} pdb={pdb} poses={bodies[pdb]} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-7.05,-7.34,scale)} />)}
+    {surfaces['6FKF'] && <SurfacePopulation data={surfaces['6FKF']} pdb="6FKF" poses={bodies['6FKF']} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} clearance={smooth(-7.05,-7.34,scale)} />}
     <group position={MOLECULAR_ATP_ANCHOR_NM as unknown as Point}>
       {surfaces['6FKF'] && <ATPOverview motor={motor} data={surfaces['6FKF']} opacity={opacity * (1 - atomWeight)} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']!.metadata)} />}
       {atoms && <AtomicMotor data={atoms} opacity={opacity * atomWeight} motor={motor} light={light} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']?.metadata)} />}
@@ -133,8 +134,9 @@ function geometryFromData(data: SurfaceData) {
   return geometry
 }
 
-function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect, dismiss, sectionCutNm }: { data: SurfaceData; pdb: PDB; poses: Pose[]; opacity: number; elapsed: React.MutableRefObject<number>; light: number; inspect: (pdb: PDB, pose: Pose, metadata?: SurfaceData['metadata'], pin?: boolean) => void; dismiss: () => void; sectionCutNm: number }) {
+function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect, dismiss, sectionCutNm, clearance }: { data: SurfaceData; pdb: PDB; poses: Pose[]; opacity: number; elapsed: React.MutableRefObject<number>; light: number; inspect: (pdb: PDB, pose: Pose, metadata?: SurfaceData['metadata'], pin?: boolean) => void; dismiss: () => void; sectionCutNm: number; clearance: number }) {
   const ref = useRef<T.InstancedMesh>(null)
+  const eye = useMemo(() => new T.Vector3(), [])
   const geometry = useMemo(() => geometryFromData(['3JCU', '1RWT', '6RQF', '8RUC', '5L8R'].includes(pdb) ? clusterMoleculeSurface(data) : data), [data, pdb])
   const diffuse = ['1AG6', '1A70'].includes(pdb)
   const cutoff = useMemo(() => ({ value: sectionCutNm }), []); cutoff.value = sectionCutNm
@@ -148,18 +150,19 @@ function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect,
       if (pdb === '1AG6') _dummy.position.y = -(dimensions.lumenNm + dimensions.membraneNm) / 2
       if (diffuse) { _dummy.position.x += Math.sin(t * 0.45 + i * 2.7) * 2.2; _dummy.position.z += Math.cos(t * 0.32 + i * 2.3) * 2.2 }
       _dummy.rotation.set(...(pose.rotation ?? [0, 0, 0])); if (diffuse) _dummy.rotation.y += t * 0.27
-      _dummy.scale.setScalar(pose.scale ?? 1); _dummy.updateMatrix(); ref.current!.setMatrixAt(i, _dummy.matrix)
+      const keep=proteinClearance(_dummy.position.toArray(),eye.toArray(),geometry.boundingSphere?.radius ?? 8)
+      _dummy.scale.setScalar((pose.scale ?? 1) * Math.max(.00001,1-clearance*(1-keep))); _dummy.updateMatrix(); ref.current!.setMatrixAt(i, _dummy.matrix)
     })
     ref.current.instanceMatrix.needsUpdate = true
   }
   useLayoutEffect(update, [poses, data, light])
-  useFrame(() => { if (diffuse) update() })
+  useFrame(({camera}) => { if (!ref.current || opacity < .001) return; ref.current.updateWorldMatrix(true,false); ref.current.worldToLocal(eye.copy(camera.position)); if (diffuse || clearance > 0) update() })
   useEffect(() => () => geometry.dispose(), [geometry])
   const pointer = (event: ThreeEvent<PointerEvent> | ThreeEvent<MouseEvent>) => {
     event.stopPropagation(); inspect(pdb, poses[event.instanceId ?? 0], data.metadata, event.type === 'click')
   }
   return <instancedMesh ref={ref} args={[geometry, undefined, poses.length]} frustumCulled={false} onPointerOver={pointer} onPointerOut={dismiss} onClick={pointer} name={`pdb-${pdb}`}>
-    <meshLambertMaterial vertexColors color={light > 0 ? '#b8baa6' : '#62767b'} transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
+    <meshLambertMaterial vertexColors color="#b8baa6" transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
       shader.uniforms.sectionCutNm = cutoff
       shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;').replace('#include <begin_vertex>', '#include <begin_vertex>\nmoleculePosition=(instanceMatrix*vec4(position,1.0)).xyz;')
       shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;uniform float sectionCutNm;').replace('#include <alphatest_fragment>', 'if(moleculePosition.z>sectionCutNm)discard;\n#include <alphatest_fragment>')
@@ -219,7 +222,7 @@ function AtomCloud({ data, indices, opacity, light }: { data: AtomData; indices:
     }
     indices.forEach((atom, i) => {
       const color = colors[data.groups[atom]]?.clone() ?? colors[5].clone()
-      color.multiplyScalar((0.52 + 0.48 * (1 - data.occlusion[atom])) * (0.27 + 0.73 * Math.log1p(Math.max(0, light)) / Math.log1p(2000)))
+      color.multiplyScalar((0.52 + 0.48 * (1 - data.occlusion[atom])) * (0.27 + 0.73 * Math.log1p(400) / Math.log1p(2000)))
       mesh.setColorAt(i, color)
     })
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
@@ -319,18 +322,7 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
   const membraneInstances: Pose[] = [], lamellaInstances: Pose[] = []
   for (const layer of layers) for (const side of [0, -1]) membraneInstances.push({ position: [0, layer * d.repeatNm + side * (d.lumenNm + d.membraneNm), -136.3], scale: 1 })
   for (const side of [0, -1]) lamellaInstances.push({ position: [10, side * (d.lumenNm + d.membraneNm), 122], scale: 1 })
-  const heads = useMemo(() => {
-    const points: Pose[] = [], random = chloroplastRandom(631)
-    // Resolve individual headgroups around the motor, a stippled surface farther
-    // away. This sampling is a display LOD, not a claim about lipid areal density.
-    const step = mobile ? 1.8 : 1.4
-    for (let x = -79; x <= 95; x += step) for (let z = 79; z <= 164; z += step) {
-      if (Math.abs(x) > 75 && z > 145) continue
-      if (Math.hypot(x - 28, z - 116) < 5.5) continue
-      for (const lower of [0, 1]) for (const side of [-1, 1]) points.push({ position: [x + random() * .25, -lower*(d.lumenNm+d.membraneNm)+side*d.membraneNm/2, z + random() * .25] })
-    }
-    return points
-  }, [mobile, d.membraneNm, d.lumenNm])
+  const heads = useMemo(() => createLipidHeadgroups(mobile, d.lumenNm, d.membraneNm), [mobile, d.lumenNm, d.membraneNm])
   useEffect(() => () => { cylinders.dispose(); lamellaGeometry.dispose(); headGeometry.dispose() }, [cylinders, lamellaGeometry, headGeometry])
   return <group ref={root} name="paired-lipid-bilayers">
     <StaticInstances geometry={cylinders} material={materials.core} poses={membraneInstances} scaling={[1, d.membraneNm, 1]} />

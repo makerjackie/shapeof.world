@@ -8,7 +8,7 @@ import { GhostHint } from '~/components/experiences/GhostHint'
 import { useExperienceI18n } from '~/i18n/experience'
 import { DEFAULT_INPUTS, createPhysiology, getPhysiologySnapshot, type PlantInputs, type PhysiologyState } from './model'
 import { PlantScene, flyToScale, type ScaleController } from './scene'
-import { SCALE_DEFAULT, MOBILE_HERO_SCALE, SCALE_MIN, SCALE_MAX, SCALE_TICKS, LAYERS, clampScale, getActiveLayer, getScaleBar, formatLength } from './scale-model'
+import { SCALE_DEFAULT, MOBILE_HERO_SCALE, SCALE_MIN, SCALE_MAX, SCALE_TICKS, LAYERS, clampScale, getActiveLayer, getScaleBar, getFramedScale, formatLength } from './scale-model'
 import { getMolecularReadings } from './molecular-model'
 import { parseCaptureParams } from './capture-params'
 
@@ -69,7 +69,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     if (ready && !manualSpeed.current) setInputs(current => ({ ...current, timeScale: molecular ? 0.001 : 1 }))
   }, [molecular, ready])
   const molecularReading = getMolecularReadings(snapshot.actualPPFD, reading.scale, inputs.timeScale, inputs.playing)
-  const bar = getScaleBar(reading.scale, reading.width, mobile ? 88 : 160)
+  const bar = getScaleBar(getFramedScale(reading.scale, mobile), reading.width, mobile ? 88 : 160)
   const position = (scale: number) => (SCALE_MAX - scale) / (SCALE_MAX - SCALE_MIN) * 100
   const guideSteps = useMemo(() => [
     { title: tx('一片叶子'), body: tx('沿着叶脉向里走。这片菠菜叶，连接着我们即将看到的细胞和分子。'), scale: -.62 },
@@ -78,7 +78,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     { title: tx('叶肉细胞'), body: tx('小细胞器沿胞质索流动。叶绿体留在壁边，用几分钟调整向光的位置。'), scale: mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT },
     { title: tx('叶绿体'), body: tx('一摞摞类囊体组成基粒，伸出的薄膜把它们连接起来。'), scale: -5.22 },
     { title: tx('类囊体膜'), body: tx('光系统让电子接力前进，把质子积累到腔内。伸向基质的大分子只能站在空隙足够的膜面。'), scale: -6.85 },
-    { title: tx('ATP 合酶'), body: tx('铜色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。'), scale: -7.34 },
+    { title: tx('ATP 合酶'), body: tx('铜色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。'), scale: mobile ? -7.7 : -7.34 },
   ].map(step => ({ title: step.title, body: step.body, durationMs: 7500, action: () => {
     flyToScale(controller.current, step.scale)
   } })), [tx, mobile])
@@ -92,7 +92,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <span>{captions[active]}</span>
     </header>
     <aside className={`pc-readout ${expandedReadouts ? 'is-expanded' : ''}`} data-experience-overlay="true" aria-label={tx('读数')}>
-      <div><span>{tx('视野宽度')}</span><strong>{formatLength(10 ** reading.scale)}</strong></div>
+      <div><span>{tx('视野宽度')}</span><strong>{formatLength(10 ** getFramedScale(reading.scale, mobile))}</strong></div>
       <div className="pc-time-reading"><span>{tx('时间倍率')}</span><strong>{inputs.playing ? inputs.timeScale === .001 ? '1/1000×' : `${inputs.timeScale}×` : tx('暂停')}</strong></div>
       <div><span>{tx('光照')}</span><strong>{Math.round(snapshot.actualPPFD)} <small>μmol m⁻² s⁻¹</small></strong></div>
       <div><span>{tx('净光合')}</span><strong>{snapshot.netAssimilation.toFixed(2)} <small>μmol m⁻² s⁻¹</small></strong></div>
@@ -122,14 +122,14 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <button className="pc-readout-toggle" aria-expanded={expandedReadouts} onClick={()=>setExpandedReadouts((value)=>!value)}>{tx(expandedReadouts?'收起读数':'展开读数')}</button>
     </aside>
     <nav className="pc-logscale" data-experience-overlay="true" aria-label={tx('对数标尺')}>
-      <div className="pc-scale-track" role="slider" tabIndex={0} aria-label={tx('尺度')} aria-valuemin={SCALE_MIN} aria-valuemax={SCALE_MAX} aria-valuenow={Number(reading.scale.toFixed(2))} aria-valuetext={`${tx(LAYERS.find((layer) => layer.id === active)!.label)} ${formatLength(10 ** reading.scale)}`}
+      <div className="pc-scale-track" role="slider" tabIndex={0} aria-label={tx('尺度')} aria-valuemin={SCALE_MIN} aria-valuemax={SCALE_MAX} aria-valuenow={Number(reading.scale.toFixed(2))} aria-valuetext={`${tx(LAYERS.find((layer) => layer.id === active)!.label)} ${formatLength(10 ** getFramedScale(reading.scale, mobile))}`}
         onPointerDown={(event) => { const rect = event.currentTarget.getBoundingClientRect(); go(SCALE_MAX - Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height)) * (SCALE_MAX - SCALE_MIN)) }}
         onKeyDown={(event) => { if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) { event.preventDefault(); go(event.key === 'Home' ? SCALE_MAX : event.key === 'End' ? SCALE_MIN : reading.scale + (event.key === 'ArrowUp' ? 0.2 : -0.2)) } }}>
         {Array.from({ length: 29 }, (_, i) => <i key={i} className="pc-minor-tick" style={{ top: `${i / 28 * 100}%` }} />)}
         {SCALE_TICKS.map((tick) => <span key={tick.scale} className="pc-major-tick" style={{ top: `${position(tick.scale)}%` }}>{tick.label}</span>)}
         <b className="pc-cursor" style={{ top: `${position(reading.scale)}%` }} />
       </div>
-      <div className="pc-layer-names">{LAYERS.map((layer) => <button key={layer.id} aria-current={active === layer.id ? 'location' : undefined} style={{ top: `${position(layer.scale)}%` }} onClick={() => go(layer.id === 'cell' && mobile ? MOBILE_HERO_SCALE : layer.scale)}>{tx(layer.label)}</button>)}</div>
+      <div className="pc-layer-names">{LAYERS.map((layer) => <button key={layer.id} aria-current={active === layer.id ? 'location' : undefined} style={{ top: `${position(layer.scale)}%` }} onClick={() => go(mobile && layer.id === 'motor' ? -7.7 : layer.id === 'cell' && mobile ? MOBILE_HERO_SCALE : layer.scale)}>{tx(layer.label)}</button>)}</div>
     </nav>
     <div className="pc-scale-bar" data-experience-overlay="true" aria-label={tx('比例尺')}><span>{bar.label}</span><i style={{ width: bar.widthPx }} /><small>{tx(molecular ? 'PDB 实验结构 · 排布与运动为示意' : '程序化参照结构 · 非标本扫描')}</small></div>
     <p className="pc-gesture" data-experience-overlay="true">{tx(mobile ? '拖动旋转 · 双指缩放' : '拖动旋转 · 滚动缩放')}</p>
