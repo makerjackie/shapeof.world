@@ -211,18 +211,19 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     interact()
   }
   const format = (value: number) => Math.round(value).toLocaleString('en-US')
-  const overlayTools = <div className="rd-overlay-tools">
+  const overlayButtons = <>
     <button type="button" data-overlay="left" aria-pressed={highlightLeft} onClick={() => { manualOverlays.current.left = !highlightLeft; setHighlightLeft(!highlightLeft); interact() }}>{tx('左转高亮')}</button>
     {design.chapter > 1 && <button type="button" data-overlay="stretch" aria-pressed={stretch} onClick={() => { manualOverlays.current.stretch = !stretch; setStretch(!stretch); interact() }}>{tx('层高拉伸')}</button>}
     {!!network.weaving.length && <button type="button" data-overlay="weaving" aria-pressed={showWeaving} onClick={() => { manualOverlays.current.weaving = !showWeaving; setShowWeaving(!showWeaving); interact() }}>{tx('交织段')}</button>}
-  </div>
+  </>
+  const overlayTools = <div className="rd-overlay-tools rd-mobile-overlays">{overlayButtons}</div>
   const tools = <div className="rd-tools">
     {overlayTools}
     <div className="rd-mobile-tools">
       <button type="button" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
       <button type="button" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
+      <button type="button" className="rd-tour-button" onClick={() => { setBlueprint(false); setShowCompare(false); window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT,{detail:{worldId:'road-design'}})); interact() }}>{tx('导览')}</button>
     </div>
-    <button type="button" className="rd-tour-button" onClick={() => { setBlueprint(false); setShowCompare(false); window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT,{detail:{worldId:'road-design'}})); interact() }}>{tx('导览')}</button>
     <label>{tx('需求倍率')}<input aria-label={tx('需求倍率')} type="range" min="0.25" max="2.5" step="0.05" value={demand} onChange={e => { if (runtime.pressure?.status === 'running') setSpeed(1); runtime.stopPressure(); setDemand(Number(e.target.value)); interact() }} /><output>{demand.toFixed(2)}×</output></label>
     <label>{tx('快门')}<input aria-label={tx('快门')} type="range" min="0" max="15" step="0.5" value={shutter} onChange={e => { manualShutter.current = true; setShutter(Number(e.target.value)); interact() }} /><output>{shutter.toFixed(1)} s</output></label>
     <button type="button" className="rd-pressure-toggle" aria-pressed={pressureRunning} onClick={startPressure}>{tx(pressureRunning ? '停止压力测试' : '压力测试')}</button>
@@ -238,7 +239,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     {designId === 'huangjuewan' && <div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture && <>
       <GuideTour worldId="road-design" placement="stage" steps={DESIGNS.map(d=>({title:tx(d.name),body:tx(TOUR[d.id]),durationMs:12000,action:()=>{selectDesign(d);setPlaying(true);setSpeed(1)}}))} kicker={tx('道路图鉴')} exitLabel={tx('结束导览')} stagePlan={DESIGNS.map(()=>({position:'center-left',mobilePosition:'bottom-center',tone:'dark',width:'narrow',treatment:'caption'}))} />
-      <header className="rd-heading" data-experience-overlay="true"><h1>{tx('路口与立交')}</h1><p>{tx(design.name)}</p></header>
+      <header className="rd-heading" data-experience-overlay="true"><h1>{tx('路口与立交')}</h1><p>{tx(design.name)}</p><button type="button" className="rd-tour-button" onClick={() => { setBlueprint(false); setShowCompare(false); window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT,{detail:{worldId:'road-design'}})); interact() }}>{tx('导览')}</button></header>
       <aside className="rd-instruments" data-expanded={expanded} aria-label={tx('交通读数')} data-experience-overlay="true">
         <button className="rd-summary" type="button" aria-expanded={expanded} onClick={() => { setExpanded(value => !value); interact() }}><span>{tx('冲突点')} <b>{conflicts.total}</b></span><span>{format(readout.throughput)} <small>{tx('辆/时')}</small></span><span>+{Math.round(readout.averageDelay)} s</span><i>{expanded ? '−' : '+'}</i></button>
         <div className="rd-instrument-detail">
@@ -270,6 +271,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
         <button type="button" className="experience-freebar-play" aria-label={tx(playing ? '暂停' : '播放')} data-playing={playing} onClick={() => { setPlaying(!playing); interact() }}>{playing ? <Pause weight="fill" /> : <Play weight="fill" />}</button>
         <div className="experience-freebar-seg" role="group" aria-label={tx('模拟速度')}>{[1, 4, 16].map(s => <button key={s} type="button" aria-pressed={speed === s} onClick={() => { setSpeed(s); interact() }}>{s}×</button>)}</div>
         <button type="button" className="rd-conflicts-toggle" aria-pressed={showConflicts} onClick={() => { manualOverlays.current.conflicts = !showConflicts; setShowConflicts(!showConflicts); interact() }}>{tx('冲突点')}</button>
+        <div className="rd-desktop-control rd-overlay-main">{overlayButtons}</div>
         <button type="button" className="rd-desktop-control" aria-pressed={blueprint} onClick={() => { setBlueprint(value => !value); interact() }}>{tx('图纸')}</button>
         <button type="button" className="rd-desktop-control" aria-pressed={showCompare} onClick={() => { setShowCompare(value => !value); interact() }}>{tx('对比')}</button>
       </Freebar>
