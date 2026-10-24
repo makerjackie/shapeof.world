@@ -13,8 +13,8 @@ export const PRESENTATIONS: Record<string, Presentation> = {
   parclo: { position: [180, 320, 380], mobile: [330, 450, 170], target: [0, 5, 0], fov: 56, mobileFov: 60, left: true },
   trumpet: { position: [260, 310, 460], mobile: [370, 470, 380], target: [-30, 8, 110], fov: 54, mobileFov: 60, left: true },
   cloverleaf: { position: [225, 164, 290], mobile: [340, 330, 480], target: [0, 10, 0], mobileTarget: [0, 10, 0], fov: 60, mobileFov: 62, weaving: true },
-  turbine: { position: [60, 610, 390], mobile: [65, 820, 450], target: [0, 23, 0], fov: 57, mobileFov: 64, left: true, stretch: true },
-  stack: { position: [310, 150, 365], mobile: [335, 205, 430], target: [0, 38, 0], fov: 57, mobileFov: 66, left: true, stretch: true },
+  turbine: { position: [80, 850, 540], mobile: [100, 1500, 850], target: [0, 18, 40], fov: 57, mobileFov: 64, left: true, stretch: true },
+  stack: { position: [345, 160, 400], mobile: [365, 220, 460], target: [0, 38, 0], fov: 57, mobileFov: 66, left: true, stretch: true },
   huangjuewan: { position: [205, 118, 300], mobile: [240, 115, 345], target: [-10, 20, -40], mobileTarget: [0, 35, -15], fov: 42, mobileFov: 62 },
 }
 

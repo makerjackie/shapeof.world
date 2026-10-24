@@ -1,0 +1,215 @@
+[
+  {
+    "id": "hermsdorf",
+    "type": "cloverleaf",
+    "name": "Hermsdorfer Kreuz (A4/A9)",
+    "lat": 50.880308,
+    "lon": 11.846622,
+    "downloadRadius": 1100,
+    "seedRadius": 750
+  },
+  {
+    "id": "rendsburg",
+    "type": "cloverleaf",
+    "name": "Kreuz Rendsburg (A7/A210)",
+    "lat": 54.30552,
+    "lon": 9.75453,
+    "downloadRadius": 1200,
+    "seedRadius": 750
+  },
+  {
+    "id": "rostock",
+    "type": "cloverleaf",
+    "name": "Kreuz Rostock (A19/A20)",
+    "lat": 54.02805,
+    "lon": 12.20028,
+    "downloadRadius": 1300,
+    "seedRadius": 750
+  },
+  {
+    "id": "daussoulx",
+    "type": "turbine",
+    "name": "Daussoulx (E42/E411)",
+    "lat": 50.52111,
+    "lon": 4.88139,
+    "downloadRadius": 1600,
+    "seedRadius": 750
+  },
+  {
+    "id": "zwijnaarde",
+    "type": "turbine",
+    "name": "Zwijnaarde (E17/E40)",
+    "lat": 51.01,
+    "lon": 3.7275,
+    "downloadRadius": 1400,
+    "seedRadius": 750,
+    "mainRefs": [
+      "E17",
+      "E40"
+    ]
+  },
+  {
+    "id": "thorpe",
+    "type": "turbine",
+    "name": "Thorpe (M3/M25)",
+    "lat": 51.403,
+    "lon": -0.535,
+    "downloadRadius": 1600,
+    "seedRadius": 750
+  },
+  {
+    "id": "almondsbury",
+    "type": "stack",
+    "name": "Almondsbury (M4/M5)",
+    "lat": 51.551432,
+    "lon": -2.552444,
+    "downloadRadius": 1500,
+    "seedRadius": 750
+  },
+  {
+    "id": "bill-keene",
+    "type": "stack",
+    "name": "Bill Keene Memorial (US101/SR110)",
+    "lat": 34.063,
+    "lon": -118.249,
+    "downloadRadius": 850,
+    "seedRadius": 750
+  },
+  {
+    "id": "thorney",
+    "type": "stack",
+    "name": "Thorney (M4/M25)",
+    "lat": 51.495,
+    "lon": -0.495,
+    "downloadRadius": 2400,
+    "seedRadius": 750,
+    "mainRefs": [
+      "M4",
+      "M25"
+    ]
+  },
+  {
+    "id": "ahlhorn",
+    "type": "trumpet",
+    "name": "Ahlhorner Heide (A1/A29)",
+    "lat": 52.85243,
+    "lon": 8.22705,
+    "downloadRadius": 1300,
+    "seedRadius": 750
+  },
+  {
+    "id": "guelph-line",
+    "type": "parclo",
+    "name": "401 / Guelph Line",
+    "lat": 43.4922,
+    "lon": -79.9886,
+    "downloadRadius": 1200,
+    "seedRadius": 600,
+    "crossroads": [
+      "Guelph Line",
+      "Main Street North",
+      "Main Street South"
+    ]
+  },
+  {
+    "id": "milton-25",
+    "type": "parclo",
+    "name": "401 / Regional Road 25",
+    "lat": 43.528,
+    "lon": -79.9053,
+    "downloadRadius": 1200,
+    "seedRadius": 600,
+    "crossroads": [
+      "25",
+      "Martin",
+      "Regional Road"
+    ]
+  },
+  {
+    "id": "wellington",
+    "type": "parclo",
+    "name": "401 / Wellington Road",
+    "lat": 42.9229,
+    "lon": -81.2124,
+    "downloadRadius": 1200,
+    "seedRadius": 600,
+    "crossroads": [
+      "Wellington"
+    ]
+  },
+  {
+    "id": "nc751",
+    "type": "diamond",
+    "name": "I40 / NC751",
+    "lat": 35.904,
+    "lon": -78.9602,
+    "downloadRadius": 1000,
+    "seedRadius": 600,
+    "crossroads": [
+      "751",
+      "Hope Valley"
+    ]
+  },
+  {
+    "id": "cornwallis",
+    "type": "diamond",
+    "name": "US15-501 / Cornwallis Road",
+    "lat": 35.9834,
+    "lon": -78.9572,
+    "downloadRadius": 900,
+    "seedRadius": 400,
+    "crossroads": [
+      "Cornwallis"
+    ],
+    "mainRefs": [
+      "US 15",
+      "US 501"
+    ]
+  },
+  {
+    "id": "us15-501",
+    "type": "diamond",
+    "name": "I40 / US15-501 (Exit 270)",
+    "lat": 35.9513,
+    "lon": -79.0,
+    "downloadRadius": 1000,
+    "seedRadius": 600,
+    "crossroads": [
+      "Durham-Chapel Hill Boulevard"
+    ],
+    "mainRefs": [
+      "I 40",
+      "US 15",
+      "US 501"
+    ]
+  },
+  {
+    "id": "drammetal",
+    "type": "trumpet",
+    "name": "Drammetal (A7/A38)",
+    "lat": 51.453163,
+    "lon": 9.86435,
+    "downloadRadius": 1300,
+    "seedRadius": 750,
+    "mainRefs": [
+      "A 7",
+      "A 38"
+    ],
+    "includeWays": [
+      18525047,
+      121410288,
+      122682208,
+      435027680,
+      1286351002
+    ]
+  },
+  {
+    "id": "feldmoching",
+    "type": "trumpet",
+    "name": "M\u00fcnchen-Feldmoching (A92/A99)",
+    "lat": 48.226272,
+    "lon": 11.542003,
+    "downloadRadius": 1400,
+    "seedRadius": 750
+  }
+]

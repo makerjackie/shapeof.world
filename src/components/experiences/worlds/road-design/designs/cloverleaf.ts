@@ -1,5 +1,7 @@
+import { addAccelerationLanes } from './acceleration-lanes'
+import { DESIGN_BASIS, rightRampPath } from './design-basis'
 import type { Carriageway, DesignSpec, Lane, Movement, Network, SchematicMovement, Vec3, WeavingSection } from '../sim/types'
-import { arc, bezier, GROUND, lane, line, point, rotate, routePoints, smoothstep } from './kit'
+import { arc, GROUND, lane, line, point, rotate, routePoints, smoothstep } from './kit'
 import { MOVEMENT_NAMES } from './movement-names'
 
 export const CLOVERLEAF_RADIUS = 60
@@ -27,10 +29,10 @@ const auxId = (direction: number, segment: number) => `aux-${direction}-${segmen
 export function buildCloverleaf(): Network {
   const lanes: Lane[] = [], carriageways: Carriageway[] = [], movements: Movement[] = [], schematicMovements: SchematicMovement[] = [], weaving: WeavingSection[] = []
   for (let direction = 0; direction < 4; direction++) {
-    carriageways.push({ id: `highway-${direction}`, points: highwayPath(direction, -1500, 1500, CENTER), laneCount: 3, laneWidth: LANE_WIDTH, shoulder: 3, speedLimit: 110 / 3.6, level: direction % 2 === 0 ? 1 : 0, bridge: direction % 2 === 0, kind: 'main' })
+    carriageways.push({ id: `highway-${direction}`, points: highwayPath(direction, -1500, 1500, CENTER), laneCount: 3, laneWidth: LANE_WIDTH, shoulder: 3, speedLimit: DESIGN_BASIS.mainKmh / 3.6, level: direction % 2 === 0 ? 1 : 0, bridge: direction % 2 === 0, kind: 'main' })
     for (let laneIndex = 0; laneIndex < 3; laneIndex++) for (let segment = 0; segment < LIMITS.length - 1; segment++) {
       const next = segment < LIMITS.length - 2 ? [mainId(direction, laneIndex, segment + 1)] : []
-      const l = lane(mainId(direction, laneIndex, segment), highwayPath(direction, LIMITS[segment], LIMITS[segment + 1], CENTER + (laneIndex - 1) * LANE_WIDTH), { speedLimit: 110 / 3.6, level: direction % 2 === 0 ? 1 : 0, width: LANE_WIDTH, kind: 'main', next })
+      const l = lane(mainId(direction, laneIndex, segment), highwayPath(direction, LIMITS[segment], LIMITS[segment + 1], CENTER + (laneIndex - 1) * LANE_WIDTH), { speedLimit: DESIGN_BASIS.mainKmh / 3.6, level: direction % 2 === 0 ? 1 : 0, width: LANE_WIDTH, kind: 'main', next })
       if (segment === 0) l.entry = FROM[direction]
       if (segment === LIMITS.length - 2) l.exit = TO[direction]
       if (laneIndex > 0) l.left = mainId(direction, laneIndex - 1, segment)
@@ -47,7 +49,10 @@ export function buildCloverleaf(): Network {
         const z = segment === 2 ? OUTER + LANE_WIDTH * smoothstep(t) : segment === 4 ? AUX - LANE_WIDTH * smoothstep(t) : AUX
         return rotate(point(p.x, z, elevation(direction, p.x)), direction * Math.PI / 2)
       })
-      const l = lane(auxId(direction, segment), points, { speedLimit: 70 / 3.6, level: direction % 2 === 0 ? 1 : 0, width: LANE_WIDTH, kind: 'ramp', next: segment < 4 ? [auxId(direction, segment + 1)] : [mainId(direction, 2, 5)], left: mainId(direction, 2, segment), merge: segment === 4 })
+      // The loop and upstream auxiliary taper share the same receiving lane.
+      // Mark both sides of that merge so the existing congested zipper guard
+      // alternates them; otherwise the taper can continuously starve the loop.
+      const l = lane(auxId(direction, segment), points, { speedLimit: 70 / 3.6, level: direction % 2 === 0 ? 1 : 0, width: LANE_WIDTH, kind: 'ramp', next: segment < 4 ? [auxId(direction, segment + 1)] : [mainId(direction, 2, 5)], left: mainId(direction, 2, segment), merge: segment === 2 || segment === 4 })
       if (segment === 3) l.next.push(`loop-${direction}`)
       lanes.push(l)
       auxPoints.push(points)
@@ -67,7 +72,7 @@ export function buildCloverleaf(): Network {
 
     const rightTarget = (direction + 1) % 4
     const rightStartHeight = elevation(direction, -330), rightEndHeight = elevation(rightTarget, 330)
-    const right = bezier(point(-330, OUTER), point(-260, OUTER), point(-OUTER, 260), point(-OUTER, 330), 128).map((p, i, arr) => rotate({ ...p, y: rightStartHeight + (rightEndHeight - rightStartHeight) * smoothstep(i / (arr.length - 1)) }, direction * Math.PI / 2))
+    const right = rightRampPath(OUTER).map((p, i, arr) => rotate({ ...p, y: rightStartHeight + (rightEndHeight - rightStartHeight) * smoothstep(i / (arr.length - 1)) }, direction * Math.PI / 2))
     lanes.push(lane(`right-${direction}`, right, { speedLimit: 60 / 3.6, level: 0, width: LANE_WIDTH, kind: 'ramp', next: [mainId(rightTarget, 2, 6)], merge: true }))
     carriageways.push({ id: `right-road-${direction}`, points: right, laneCount: 1, laneWidth: LANE_WIDTH, shoulder: 1.2, speedLimit: 60 / 3.6, level: 0, bridge: true, kind: 'ramp' })
 
@@ -86,7 +91,9 @@ export function buildCloverleaf(): Network {
     const schematicRoute = movement.turn === 'left' ? [mainId(direction, 2, 0), mainId(direction, 2, 1), auxId(direction, 2), auxId(direction, 3), `loop-${direction}`, auxId(target, 3), auxId(target, 4), mainId(target, 2, 5), mainId(target, 2, 6)] : movement.lanes
     schematicMovements.push({ id: movement.id, name: movement.name, from: movement.from, to: movement.to, turn: movement.turn, points: routePoints(lanes, schematicRoute) })
   }
-  return { id: 'cloverleaf', lanes, movements, carriageways, schematicMovements, weaving, control: { kind: 'free' } }
+  const network: Network = { id: 'cloverleaf', lanes, movements, carriageways, schematicMovements, weaving, control: { kind: 'free' } }
+  addAccelerationLanes(network)
+  return network
 }
 
 export const cloverleaf: DesignSpec = {

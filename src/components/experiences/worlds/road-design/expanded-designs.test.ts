@@ -83,7 +83,7 @@ describe('expanded interchange geometry', () => {
 				for (let i = 1; i < l.points.length; i++) {
 					const a = l.points[i - 1],
 						b = l.points[i]
-					expect(Math.abs(a.y - b.y) / Math.hypot(a.x - b.x, a.z - b.z), l.id).toBeLessThanOrEqual(0.06001)
+					expect(Math.abs(a.y - b.y) / Math.hypot(a.x - b.x, a.z - b.z), l.id).toBeLessThanOrEqual(['stack','turbine','trumpet'].includes(design.id) ? 0.04001 : 0.06001)
 				}
 			const conflicts = summarizeConflicts(calculateConflicts(n))
 			console.info(design.id, conflicts)
@@ -98,7 +98,7 @@ describe('expanded interchange geometry', () => {
 			if (design.chapter === 3) {
 				const crossings = transverseDeckCrossings(n)
 				expect(crossings.length).toBeGreaterThan(0)
-				for (const c of crossings) expect(c.clearance, `${c.a} × ${c.b} at ${c.position.x.toFixed(1)}, ${c.position.z.toFixed(1)}`).toBeGreaterThanOrEqual(5.5)
+				for (const c of crossings) expect(c.clearance, `${c.a} × ${c.b} at ${c.position.x.toFixed(1)}, ${c.position.z.toFixed(1)}`).toBeGreaterThanOrEqual(design.id === 'trumpet' ? 5.5 : 7)
 				expect(conflicts.crossing).toBe(0)
 				const clearanceProbe = {
 					...n,
@@ -111,7 +111,7 @@ describe('expanded interchange geometry', () => {
 			}
 			expect(n.defaultOD?.reduce((sum, od) => sum + od.vehiclesPerHour, 0)).toBeGreaterThan(2000)
 		})
-	it('uses 220 m stack turns, a 66 m trumpet loop, and separate turbine ramps without weaving', () => {
+	it('uses 150 m stack turns, a 66 m trumpet loop, and separate turbine ramps without weaving', () => {
 		for (const design of [stack, turbine]) {
 			const n = design.build()
 			expect(n.weaving).toHaveLength(0)
@@ -127,7 +127,7 @@ describe('expanded interchange geometry', () => {
 					area = Math.abs((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x))
 				if (area > 1e-6) minRadius = Math.min(minRadius, (ab * bc * ac) / (2 * area))
 			}
-			expect(minRadius).toBeGreaterThan(150)
+			expect(minRadius).toBeGreaterThanOrEqual(149.99)
 		}
 		expect(trumpet.build().carriageways.filter((c) => c.id === 'loop-road')).toHaveLength(1)
 	})

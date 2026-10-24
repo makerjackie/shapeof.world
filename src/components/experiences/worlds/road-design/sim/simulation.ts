@@ -503,10 +503,10 @@ export class TrafficSimulation {
     const mandatory = Boolean(mandatoryNext && !lane.next.includes(mandatoryNext) && (lane.left === mandatoryNext || lane.right === mandatoryNext))
     // A vehicle waiting at the end of an acceleration lane must keep looking
     // for a safe gap; requiring forward speed would freeze it there forever.
-    if (vehicle.v < 1 && !mandatory && !lane.merge) return
+    const transferIndex = vehicle.route.findIndex((id, index) => index >= vehicle.routeIndex && index < vehicle.route.length - 1 && !this.laneMap.get(id)!.next.includes(vehicle.route[index + 1]))
+    const futureMandatory = transferIndex >= 0
+    if (vehicle.v < 1 && !mandatory && !lane.merge && !futureMandatory) return
     if (this.time - vehicle.lastLaneChangeAt < (mandatory || lane.merge ? 5 : 12)) return
-    const futureMandatory = vehicle.route.slice(vehicle.routeIndex, -1).some((id, index) => !this.laneMap.get(id)!.next.includes(vehicle.route[vehicle.routeIndex + index + 1]))
-    if (!mandatory && futureMandatory) return
     if (!mandatory && !lane.merge && lane.length - vehicle.s < vehicle.v * 3.5 + 8) return
     const oldLeader = this.leader(vehicle)
     const p = { ...vehicle.parameters, v0: Math.min(vehicle.parameters.v0, lane.speedLimit) }
@@ -518,15 +518,24 @@ export class TrafficSimulation {
       const target = this.laneMap.get(targetId)!
       // An auxiliary exit/weaving lane is not an overtaking lane. Through
       // traffic stays on the motorway unless its planned route requires it.
-      if (!mandatory && lane.kind === 'main' && target.kind === 'ramp') continue
+      const futureTarget = futureMandatory ? vehicle.route[transferIndex + 1] : undefined
+      const advancePath = !mandatory && lane.kind === 'main' && target.kind === 'ramp' && futureTarget &&
+        this.network.weaving.some(section => section.lanes?.includes(futureTarget)) ? this.routeFrom(targetId, futureTarget) : null
+      const preposition = advancePath && advancePath.length <= 2
+      // A signed exit may be reached via the upstream auxiliary taper too.
+      // Keep the intended downstream route, instead of forbidding a safe
+      // early transfer and forcing every exit into the last 155 m of weaving.
+      if (!mandatory && futureMandatory && !preposition) continue
+      const required = mandatory || !!preposition
+      if (!required && lane.kind === 'main' && target.kind === 'ramp') continue
       const movement = this.movementMap.get(vehicle.movementId)!
       const parallelThrough = lane.kind === 'main' && target.kind === 'main' || movement.turn === 'straight' && lane.kind === 'urban' && target.kind === 'urban'
-      const route = mandatory ? targetId === mandatoryNext ? vehicle.route.slice(vehicle.routeIndex + 1) : null : parallelThrough ? this.routeToDestination(targetId, vehicle.route.at(-1)!) : this.routeFrom(targetId, vehicle.route.at(-1)!)
+      const route = preposition ? [...advancePath, ...vehicle.route.slice(transferIndex + 2)] : mandatory ? targetId === mandatoryNext ? vehicle.route.slice(vehicle.routeIndex + 1) : null : parallelThrough ? this.routeToDestination(targetId, vehicle.route.at(-1)!) : this.routeFrom(targetId, vehicle.route.at(-1)!)
       if (!route || route.length > vehicle.route.length - vehicle.routeIndex + 3) continue
       const s = projectToLane(target, sampleLane(lane, vehicle.s).position)
-      if (!laneChangeAllowed(target, s) || (!mandatory && !lane.merge && target.length - s < 8)) continue
+      if (!laneChangeAllowed(target, s) || (!required && !lane.merge && target.length - s < 8)) continue
       const leader = this.leader(vehicle, targetId, s, route, 0)
-      const discretionary = !mandatory && !lane.merge
+      const discretionary = !required && !lane.merge
       // The lane change occupies both lanes for 3.5 s. Voluntary cut-ins need
       // the driver's normal headway at both ends; otherwise instantaneous
       // MOBIL gains create braking waves before the lateral move can finish.
@@ -539,7 +548,7 @@ export class TrafficSimulation {
       const targetBefore = follower ? idmAcceleration(follower.vehicle.v, this.leader(follower.vehicle).gap, this.leader(follower.vehicle).speed, follower.vehicle.parameters) : 0
       const oldBefore = oldFollower ? idmAcceleration(oldFollower.vehicle.v, vehicle.s - vehicle.length - oldFollower.s, vehicle.v, oldFollower.vehicle.parameters) : 0
       const oldAfter = oldFollower ? idmAcceleration(oldFollower.vehicle.v, oldLeader.gap + vehicle.s - oldFollower.s, oldLeader.speed, oldFollower.vehicle.parameters) : 0
-      const decision = mobilDecision({ currentAcceleration, targetAcceleration: idmAcceleration(vehicle.v, leader.gap, leader.speed, { ...p, v0: Math.min(vehicle.parameters.v0, target.speedLimit) }), targetFollowerBefore: targetBefore, targetFollowerAfter: targetAfter, oldFollowerBefore: oldBefore, oldFollowerAfter: oldAfter, right: direction === 'right', mandatoryDistance: lane.merge || mandatory ? lane.length - vehicle.s : undefined, highway: lane.kind === 'main' || lane.kind === 'ramp', acceleration: p.a })
+      const decision = mobilDecision({ currentAcceleration, targetAcceleration: idmAcceleration(vehicle.v, leader.gap, leader.speed, { ...p, v0: Math.min(vehicle.parameters.v0, target.speedLimit) }), targetFollowerBefore: targetBefore, targetFollowerAfter: targetAfter, oldFollowerBefore: oldBefore, oldFollowerAfter: oldAfter, right: direction === 'right', mandatoryDistance: lane.merge || required ? lane.length - vehicle.s : undefined, highway: lane.kind === 'main' || lane.kind === 'ramp', acceleration: p.a })
       if (!decision.accepted) continue
       vehicle.laneChange = { fromLaneId: lane.id, toLaneId: target.id, fromRoute: [...vehicle.route], fromRouteIndex: vehicle.routeIndex, fromS: vehicle.s, toS: s, startedAt: this.time, duration: 3.5, direction }
       vehicle.laneId = target.id; vehicle.s = s; vehicle.route = route; vehicle.routeIndex = 0
@@ -550,6 +559,16 @@ export class TrafficSimulation {
       vehicle.lastLaneChangeAt = this.time; vehicle.laneChanges++
       this.rebuildIndex()
       return
+    }
+    // A lane graph node is not a physical lane end. A loop arrival may use
+    // the rest of the existing acceleration taper if it has not yet merged.
+    // Never divert to a different destination just to avoid waiting.
+    if (mandatory && lane.kind === 'ramp' && lane.length - vehicle.s < Math.max(12, vehicle.v * 3.5 + 8)) {
+      const onward = lane.next[0]
+      const continuation = onward ? this.routeFrom(onward, vehicle.route.at(-1)!) : null
+      if (continuation && continuation.length <= vehicle.route.length - vehicle.routeIndex + 2) {
+        vehicle.route = [lane.id, ...continuation]; vehicle.routeIndex = 0
+      }
     }
   }
 
@@ -598,8 +617,25 @@ export class TrafficSimulation {
     const courtesy = new Map<number, { gap: number; speed: number }>()
     for (const source of this.network.lanes) {
       if (source.kind !== 'ramp' || (!source.left && !source.right)) continue
-      const merging = this.bodies.get(source.id)?.at(-1)?.vehicle
-      if (!merging || merging.laneChange || source.length - merging.s > 75) continue
+      // A weaving lane mixes cars leaving the loop with cars entering the
+      // next loop. The frontmost car may be waiting for that loop, while an
+      // earlier car needs a gap into the motorway. Do not hide its request
+      // behind the queue: otherwise all four loops can lock into a cycle.
+      const bodies = this.bodies.get(source.id)
+      const weaving = this.network.weaving.some(section => section.lanes?.includes(source.id))
+      let merging = bodies?.at(-1)?.vehicle
+      if (weaving) {
+        merging = undefined
+        for (let index = (bodies?.length ?? 0) - 1; index >= 0; index--) {
+          const candidate = bodies![index].vehicle, next = candidate.route[candidate.routeIndex + 1]
+          const queuedRequest = candidate.waitingSince !== undefined && this.time - candidate.waitingSince > 8
+          if (!candidate.laneChange && (source.length - candidate.s <= 75 || queuedRequest) &&
+            next !== undefined && (next === source.left || next === source.right)) {
+            merging = candidate; break
+          }
+        }
+      }
+      if (!merging || merging.laneChange || !weaving && source.length - merging.s > 75) continue
       const targetId = merging.route[merging.routeIndex + 1]
       if (!targetId || targetId !== source.left && targetId !== source.right) continue
       const target = this.laneMap.get(targetId)!

@@ -252,7 +252,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
           <div><dt>{tx('在网车辆')}</dt><dd>{format(readout.vehicles)}</dd></div>
           <div><dt>{tx('画面外排队')}</dt><dd>{format(readout.outsideQueue)}</dd></div>
         </dl>
-        <div className="rd-cost"><h2>{tx('代价')}</h2><dl><div><dt>{tx('层数')}</dt><dd>{cost.layers}</dd></div><div><dt>{tx('最高路面')}</dt><dd>{cost.maximumHeight.toFixed(1)} <small>m</small></dd></div><div><dt>{tx('桥面面积')}</dt><dd>{format(cost.bridgeArea)} <small>m²</small></dd></div><div><dt>{tx('匝道总长')}</dt><dd>{(cost.rampLength / 1000).toFixed(2)} <small>km</small></dd></div></dl><p>{tx('立交范围凸包估算')} <b>{(cost.hullArea / 10000).toFixed(1)} ha</b></p></div>
+        <div className="rd-cost"><h2>{tx('代价')}</h2><dl><div><dt>{tx('层数')}</dt><dd>{cost.layers}</dd></div><div><dt>{tx('最高路面')}</dt><dd>{cost.maximumHeight.toFixed(1)} <small>m</small></dd></div><div><dt>{tx('桥面面积')}</dt><dd>{format(cost.bridgeArea)} <small>m²</small></dd></div><div><dt>{tx('匝道总长')}</dt><dd>{(cost.rampLength / 1000).toFixed(2)} <small>km</small></dd></div></dl><p>{tx('占地（路面 + 围死的地）')} <b>{(cost.landArea / 10000).toFixed(1)} ha</b></p></div>
         {stretch && <p className="rd-stretch-note">{tx('竖向已放大 2.5×')}</p>}
         {PRESENTATIONS[designId].phases && <PhaseRings control={network.control} time={runtime.simulation.time} dual={designId === 'diamond'} />}
         <p className="rd-why">{tx(design.description)}</p>

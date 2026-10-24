@@ -3,7 +3,7 @@ import type { Network, Vec3 } from '../sim/types'
 import { lane, smoothstep } from './kit'
 
 /** Engineering cross-section for schematic motorway entries: an arriving ramp
- * continues beside the receiving lane and uses MOBIL to merge over 240 m.
+ * continues beside the receiving lane and uses MOBIL to merge over 320 m (JTG table 10.2.5: 230 m + 90 m taper).
  * Static conflict diagrams retain their representative movement centre lines. */
 export function addAccelerationLanes(network: Network): void {
   for (const ramp of [...network.lanes]) {
@@ -14,7 +14,7 @@ export function addAccelerationLanes(network: Network): void {
       item.kind === 'ramp' && separation(item.points[0], ramp.points[0]) < .01 && separation(item.points.at(-1)!, ramp.points.at(-1)!) < .01
     ))
     if (!road) continue
-    const id = `aux-road-${target.id}`, length = Math.min(240, target.length - 20)
+    const id = `aux-road-${target.id}`, length = Math.min(network.id === 'cloverleaf' || network.id === 'stack' || network.id === 'turbine' || network.id === 'trumpet' ? 320 : 240, target.length - 20)
     const points: Vec3[] = []
     for (let i = 0; i <= Math.ceil(length / 6); i++) {
       const pose = sampleLane(target, Math.min(length, i * 6))

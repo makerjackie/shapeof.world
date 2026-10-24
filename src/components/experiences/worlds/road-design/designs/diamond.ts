@@ -382,9 +382,9 @@ export function buildServiceInterchange(ddi: boolean, includeRampThrough = !ddi,
 						{ id: 'westbound', groups: ['westbound'], green: 27, yellow: 3, allRed: 2 },
 					]
 				: [
-						{ id: 'arterial', groups: ['arterial'], green: 32, yellow: 3, allRed: 2 },
-						{ id: 'arterial-left', groups: ['arterial-left'], green: 14, yellow: 3, allRed: 2 },
-						{ id: 'ramps', groups: ['ramps'], green: 24, yellow: 3, allRed: 2 },
+						{ id: 'arterial', groups: ['arterial'], green: 40, yellow: 3, allRed: 2 },
+						{ id: 'arterial-left', groups: ['arterial-left'], green: 12, yellow: 3, allRed: 2 },
+						{ id: 'ramps', groups: ['ramps'], green: 38, yellow: 3, allRed: 2 },
 					],
 		},
 		urbanJunctions: TERMINALS.map((terminal) => ({

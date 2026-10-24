@@ -8,6 +8,12 @@ import { arc, GROUND, lane, line, point, rotate, routePoints, smoothstep } from 
 export function buildParclo(): Network {
 	const network = buildServiceInterchange(false, false, false, false)
 	network.id = 'parclo'
+	// The two loops remove the arterial left-turn crossing. Do not retain
+	// the diamond's now-empty protected-left phase; spend it on real flows.
+	network.control.phases = [
+		{ id: 'arterial', groups: ['arterial', 'arterial-left'], green: 40, yellow: 3, allRed: 2 },
+		{ id: 'ramps', groups: ['ramps'], green: 30, yellow: 3, allRed: 2 },
+	]
 	for (const [from, to, terminal, other, rotation] of [
 		['west', 'north', 'right', 'left', 0],
 		['east', 'south', 'left', 'right', Math.PI],
