@@ -83,9 +83,9 @@ try {
   if(!phaseA){
     const query=await navigate(page,'scale=-7.5&light=0&speed=0&t=17.5&az=90&el=25&capture=1')
     const overlays=await page.evaluate(()=>[...document.querySelectorAll('.pc-experience [data-experience-overlay]')].filter(e=>getComputedStyle(e).visibility!=='hidden'&&getComputedStyle(e).display!=='none').length)
-    check('capture and initial params',Number(query.data.actualPpfd)===0&&query.speed==='0'&&overlays===0,{query,visibleOverlays:overlays})
+    check('capture and initial params',Number(query.data.actualPpfd)===0&&query.speed==='0'&&overlays===0&&Math.abs(Number(query.data.yaw)-90)<.01&&Math.abs(Number(query.data.pitch)-25)<.01,{query,visibleOverlays:overlays})
     await navigate(page,'scale=-3.86&speed=60')
-    await page.locator('#pc-light').fill('100');await page.locator('#pc-light').dispatchEvent('input');await wait(150)
+    await page.locator('#pc-light').focus();await page.keyboard.press('Home');await page.keyboard.press('ArrowRight');await wait(150)
     const hint=await page.locator('.pc-light-hint').textContent().catch(()=>null)
     await wait(6200)
     check('hint expires and respects speed',hint&&!hint.includes('×60')&&await page.locator('.pc-light-hint').count()===0,{hint})

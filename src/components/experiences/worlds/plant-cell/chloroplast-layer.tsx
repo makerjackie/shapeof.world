@@ -5,7 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { CHLOROPLAST_RADII, ENTRY_GRANUM, GRANUM_SECTION_Y, STARCH_LENSES, chloroplastRandom, createChloroplastMorphology, getThylakoidDimensions } from './chloro-model'
 import { buildLamellae, makeMembraneDisk } from './chloro-geometry'
 
-interface ChloroplastLayerProps { opacity: number; mobile?: boolean; light?: number; starch?: number }
+interface ChloroplastLayerProps { opacity: number; mobile?: boolean; light?: number; starch?: number; detailOnly?: boolean }
 type Instance = { position: THREE.Vector3; scale: THREE.Vector3; rotation?: THREE.Euler; color?: THREE.Color }
 
 function OrganicInstances({ instances, geometry, color, opacity, clippingPlanes, roughness = 0.9, depthWrite = true, membrane = false }: {
@@ -140,7 +140,7 @@ function StromalParticles({ mobile, opacity, light }: { mobile: boolean; opacity
 }
 
 /** L3 in micrometres; the parent places this lens with an Rz(90°) transform. */
-export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch = 0.35 }: ChloroplastLayerProps) {
+export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch = 0.35, detailOnly = false }: ChloroplastLayerProps) {
   const ref = useRef<THREE.Group>(null)
   const section = useMemo(() => ({ local: new THREE.Plane(new THREE.Vector3(0, 1, 0), -GRANUM_SECTION_Y), world: new THREE.Plane() }), [])
   const clippingPlanes = useMemo(() => [section.world], [section])
@@ -212,18 +212,18 @@ export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch 
   useEffect(() => () => { resources.lamellae.dispose(); resources.focusedLamellae.dispose() }, [resources])
   useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry])
   return <group ref={ref} visible={opacity > 0.001} userData={{ repeatNm: dimensions.repeat * 1000, lumenNm: dimensions.lumen * 1000, entryGranum: ENTRY_GRANUM.id }}>
-    <Envelope opacity={opacity} mobile={mobile} />
-    <OrganicInstances instances={resources.bulk} geometry={geometry.disk} color="#2f5a24" opacity={opacity * 0.9} membrane />
+    <group visible={!detailOnly}><Envelope opacity={opacity} mobile={mobile} /></group>
+    <group visible={!detailOnly}><OrganicInstances instances={resources.bulk} geometry={geometry.disk} color="#2f5a24" opacity={opacity * 0.9} membrane /></group>
     <OrganicInstances instances={resources.focused} geometry={geometry.focusDisk} color="#2f5a24" opacity={opacity * 0.9} clippingPlanes={clippingPlanes} membrane />
-    <OrganicInstances instances={resources.rims} geometry={geometry.rim} color="#314e2b" opacity={opacity * 0.75} membrane />
+    <group visible={!detailOnly}><OrganicInstances instances={resources.rims} geometry={geometry.rim} color="#314e2b" opacity={opacity * 0.75} membrane /></group>
     <OrganicInstances instances={resources.focusedRims} geometry={geometry.rim} color="#314e2b" opacity={opacity * 0.75} clippingPlanes={clippingPlanes} membrane />
     <OrganicInstances instances={resources.caps} geometry={geometry.cap} color="#709163" opacity={opacity} />
     <OrganicInstances instances={resources.proteins} geometry={geometry.protein} color="#34582e" opacity={opacity} />
-    <mesh geometry={resources.lamellae}><meshStandardMaterial color="#36572b" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity * 0.82} /></mesh>
+    <group visible={!detailOnly}><mesh geometry={resources.lamellae}><meshStandardMaterial color="#36572b" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity * 0.82} /></mesh></group>
     <mesh geometry={resources.focusedLamellae}><meshStandardMaterial color="#36572b" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity * 0.82} clippingPlanes={clippingPlanes} /></mesh>
-    <OrganicInstances instances={starchInstances} geometry={geometry.sphere} color="#b8c4bb" opacity={opacity * 0.67} roughness={0.98} />
-    <OrganicInstances instances={resources.oil} geometry={geometry.sphere} color="#aaa68c" opacity={opacity * 0.82} roughness={0.9} />
-    <StromalParticles mobile={mobile} opacity={opacity} light={light} />
-    <mesh geometry={geometry.dna}><meshStandardMaterial color="#a5ad91" roughness={0.96} transparent opacity={opacity * 0.28} depthWrite={false} /></mesh>
+    <group visible={!detailOnly}><OrganicInstances instances={starchInstances} geometry={geometry.sphere} color="#b8c4bb" opacity={opacity * 0.67} roughness={0.98} /></group>
+    <group visible={!detailOnly}><OrganicInstances instances={resources.oil} geometry={geometry.sphere} color="#aaa68c" opacity={opacity * 0.82} roughness={0.9} /></group>
+    <group visible={!detailOnly}><StromalParticles mobile={mobile} opacity={opacity} light={light} /></group>
+    <group visible={!detailOnly}><mesh geometry={geometry.dna}><meshStandardMaterial color="#a5ad91" roughness={0.96} transparent opacity={opacity * 0.28} depthWrite={false} /></mesh></group>
   </group>
 }
