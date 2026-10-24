@@ -44,3 +44,8 @@ For example: `/plant-cell?scale=-7.4&light=400&speed=.001&az=26&el=18`.
 pinch, rotor/stator motion, dark inhibition, capture params and hint expiry.
 It uses an isolated temporary profile and headless Chrome with Metal. It does
 not capture screenshots; use the project owner's private `gpu-shot.mjs`.
+
+`benchmark.mjs <private-result.json>` uses a new isolated headless Chrome for
+each view, settles for 7 seconds and samples 5 seconds of frame intervals.
+This separates steady rendering from repeated navigation and retained contexts.
+`guide=1` opens the optional tour for capture; ordinary entry stays in free exploration.

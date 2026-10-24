@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { decodeMoleculeSurface, type MoleculeMetadata } from './molecule-data'
 import { describe, expect, it } from 'vitest'
-import { ATP_GROUPS, MOTOR_STOICHIOMETRY, advanceMotor, canOccupyMembrane, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch, molecularFootprint, measureAppressedCoverage, type MembranePdb, type ProteinFootprint } from './molecular-model'
+import { ATP_GROUPS, MOTOR_STOICHIOMETRY, advanceMotor, canOccupyMembrane, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch, getCatalyticSitePhase, molecularFootprint, measureAppressedCoverage, type MembranePdb, type ProteinFootprint } from './molecular-model'
 
 describe('molecular stoichiometry and light response', () => {
   it('advances c14 through exactly fourteen protons and three ATP per revolution', () => {
@@ -92,4 +92,19 @@ describe('repeated-protein display LOD', () => {
     expect(occupancy.coverage).toBeGreaterThan(.63)
     expect(occupancy.coverage).toBeLessThan(.74)
   })
+})
+
+it('brings one ADP/phosphate pair to each beta site before each ATP release', () => {
+  let releases = 0, entries = 0
+  for (let site = 0; site < 3; site++) {
+    let previous = getCatalyticSitePhase(0, site)
+    for (let i = 1; i <= 3000; i++) {
+      const current = getCatalyticSitePhase(i / 3000, site)
+      if (current < previous) releases++
+      if (current >= 2.15 && previous < 2.15) entries++
+      previous = current
+    }
+  }
+  expect(releases).toBe(3)
+  expect(entries).toBe(3)
 })

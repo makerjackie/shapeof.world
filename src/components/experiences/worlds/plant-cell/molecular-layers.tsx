@@ -7,7 +7,7 @@ import { SphereImpostorMaterial } from '~/components/experiences/SphereImpostorM
 import { useExperienceI18n } from '~/i18n/experience'
 import { isWorldPaused } from '~/lib/world-playback'
 import { loadATPAtoms, loadMoleculeSurface, loadMetabolite, type MetaboliteData, type MetaboliteId } from './molecule-data'
-import { MOLECULAR_ATP_ANCHOR_NM, advanceMotor, atomRadiusNm, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch } from './molecular-model'
+import { MOLECULAR_ATP_ANCHOR_NM, advanceMotor, atomRadiusNm, createMotorState, getMolecularReadings, isRotorGroup, createAppressedPatch, getCatalyticSitePhase } from './molecular-model'
 import { chloroplastRandom } from './chloro-model'
 import { clusterMoleculeSurface } from './molecule-lod'
 
@@ -46,7 +46,7 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
   const motor = useRef(createMotorState()), elapsed = useRef(0), root = useRef<T.Group>(null)
   const readings = getMolecularReadings(light, scale, timeScale, playing)
   const readingsRef = useRef(readings); readingsRef.current = readings
-  const atomWeight = smooth(-7.12, -7.40, scale)
+  const atomWeight = smooth(-7.12, -7.34, scale)
   const sectionCutNm = 220 * smooth(-6.38, -6.88, scale)
   const resourcesVisible = opacity > 0.002
   useEffect(() => {
@@ -93,6 +93,15 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
     return count?Math.atan2(-z,x):0
   },[atoms])
   const bodies = useMemo(() => createProteinArrangement(mobile), [mobile])
+  const catalyticAzimuths = useMemo(() => {
+    if (!atoms) return [.4, .4 + Math.PI * 2 / 3, .4 + Math.PI * 4 / 3]
+    const centers = new Map<number, [number, number]>()
+    for (let i=0;i<atoms.groups.length;i++) if(atoms.groups[i]===2) {
+      const center=centers.get(atoms.chains[i]) ?? [0,0]
+      center[0]+=atoms.positions[i*3];center[1]+=atoms.positions[i*3+2];centers.set(atoms.chains[i],center)
+    }
+    return [...centers.values()].map(([x,z])=>Math.atan2(-z,x)).sort((a,b)=>a-b)
+  }, [atoms])
   return <group onPointerMissed={()=>{pinned.current=false;setInspection(null)}} ref={root} name="plant-molecular-frame" visible={resourcesVisible} userData={{ units: 'nm', stromaAxis: '+Y', atomCount: atoms?.positions.length ? atoms.positions.length / 3 : 0 }}>
     <MembraneArchitecture opacity={opacity} light={light} mobile={mobile} scale={scale} />
     {PDB_IDS.filter((id) => id !== '6FKF').map((pdb) => surfaces[pdb] && <SurfacePopulation key={pdb} data={surfaces[pdb]!} pdb={pdb} poses={bodies[pdb]} opacity={opacity} elapsed={elapsed} light={light} inspect={inspect} dismiss={dismiss} sectionCutNm={sectionCutNm} />)}
@@ -100,7 +109,7 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
     <group position={MOLECULAR_ATP_ANCHOR_NM as unknown as Point}>
       {surfaces['6FKF'] && <ATPOverview motor={motor} data={surfaces['6FKF']} opacity={opacity * (1 - atomWeight)} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']!.metadata)} />}
       {atoms && <AtomicMotor data={atoms} opacity={opacity * atomWeight} motor={motor} light={light} inspect={() => inspect('6FKF', { position: [...MOLECULAR_ATP_ANCHOR_NM] }, surfaces['6FKF']?.metadata)} />}
-      <MotorTraffic channelAzimuth={channelAzimuth} motor={motor} opacity={opacity * smooth(-6.95, -7.35, scale)} active={light > 0 && playing} />
+      <MotorTraffic catalyticAzimuths={catalyticAzimuths} channelAzimuth={channelAzimuth} motor={motor} opacity={opacity * smooth(-6.95, -7.35, scale)} active={light > 0 && playing} />
     </group>
     <ElectronTraffic opacity={opacity * (1 - atomWeight * 0.8)} light={light} elapsed={elapsed} speed={Math.min(8, Math.max(0, timeScale / 0.001))} />
     {inspection && !capture && <Html position={inspection.position} zIndexRange={[20, 15]} center style={{ pointerEvents: 'none' }}>
@@ -150,7 +159,7 @@ function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect,
     event.stopPropagation(); inspect(pdb, poses[event.instanceId ?? 0], data.metadata, event.type === 'click')
   }
   return <instancedMesh ref={ref} args={[geometry, undefined, poses.length]} frustumCulled={false} onPointerOver={pointer} onPointerOut={dismiss} onClick={pointer} name={`pdb-${pdb}`}>
-    <meshStandardMaterial vertexColors color={light > 0 ? '#b8baa6' : '#62767b'} roughness={0.91} metalness={0} transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
+    <meshLambertMaterial vertexColors color={light > 0 ? '#b8baa6' : '#62767b'} transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
       shader.uniforms.sectionCutNm = cutoff
       shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;').replace('#include <begin_vertex>', '#include <begin_vertex>\nmoleculePosition=(instanceMatrix*vec4(position,1.0)).xyz;')
       shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;uniform float sectionCutNm;').replace('#include <alphatest_fragment>', 'if(moleculePosition.z>sectionCutNm)discard;\n#include <alphatest_fragment>')
@@ -378,7 +387,7 @@ function ElectronTraffic({ opacity, light, elapsed, speed }: { opacity: number; 
  * ATP particles leave three catalytic sites in sequence. ATP, ADP and phosphate
  * use CCD ideal coordinates; half-channel routes and binding states are schematic.
  */
-function MotorTraffic({ motor, opacity, active, channelAzimuth }: { channelAzimuth: number; motor: React.MutableRefObject<ReturnType<typeof createMotorState>>; opacity: number; active: boolean }) {
+function MotorTraffic({ motor, opacity, active, channelAzimuth, catalyticAzimuths }: { catalyticAzimuths: number[]; channelAzimuth: number; motor: React.MutableRefObject<ReturnType<typeof createMotorState>>; opacity: number; active: boolean }) {
   const protons = useRef<T.InstancedMesh>(null), products = useRef<T.Group[]>([]), substrates = useRef<T.Group[]>([])
   useFrame(() => {
     const turns = motor.current.revolutions
@@ -394,17 +403,18 @@ function MotorTraffic({ motor, opacity, active, channelAzimuth }: { channelAzimu
     }
     for (let i = 0; i < 3; i++) {
       const group = products.current[i]; if (!group) continue
-      const progress = ((turns * 3 - i) % 3 + 3) % 3
-      const angle = i * Math.PI * 2 / 3 + .4
+      const progress = getCatalyticSitePhase(turns, i)
+      const angle = catalyticAzimuths[i]
       group.visible = active && progress < .85
       group.position.set(Math.cos(angle) * (5 + progress * 7), 12 + progress * 5, -Math.sin(angle) * (5 + progress * 7))
-      group.scale.setScalar(.65 * (1 - progress * .25)); group.rotation.set(progress, angle, .4)
+      group.rotation.set(progress, angle, .4)
     }
     for (let i = 0; i < 6; i++) {
       const group = substrates.current[i]; if (!group) continue
-      const a = Math.floor(i / 2) * Math.PI * 2 / 3 + .4, f = ((turns * 3 + i * .33) % 1 + 1) % 1
+      const site = Math.floor(i / 2), a = catalyticAzimuths[site]
+      const phase = getCatalyticSitePhase(turns, site), f = Math.max(0, Math.min(1, (phase - 2.15) / .85))
       group.position.set(Math.cos(a) * (11 - f * 6), 15 - f * 3, -Math.sin(a) * (11 - f * 6))
-      group.rotation.set(.3, a, f); group.visible = active
+      group.rotation.set(.3, a, f); group.visible = active && phase >= 2.15
     }
   })
   return <group visible={opacity > .001}>

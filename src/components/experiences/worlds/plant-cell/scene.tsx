@@ -239,7 +239,7 @@ function Contents(props: SceneProps) {
   const layers = useMemo(() => <>
     <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
     <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
-    <ScaleLayer layer="cell" controller={controller}><CellLayer opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
+    <ScaleLayer layer="cell" controller={controller}><CellLayer inspectable={!props.capture && getLayerWeights(viewScale).cell > .98} opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
     <group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}>
       <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer detailOnly={viewScale < -6.25} opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
       <group position={[...GRANUM_SECTION_ANCHOR_LOCAL]} rotation={[Math.PI/2,0,0]} scale={.001}>
