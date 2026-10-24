@@ -5,7 +5,7 @@ import { arc, GROUND, joinPaths, lane, line, point, rotate, routePoints } from '
 import { HIGHWAY_CENTER as CENTER, HIGHWAY_LANE as W, HIGHWAY_OUTER as OUTER, verticalEase } from './freeway-kit'
 import { MOVEMENT_NAMES } from './movement-names'
 const BOUNDS = [-1500, -650, -80, 80, 650, 1500]
-const elevation = (x: number) => GROUND + 8 * (1 - verticalEase((Math.abs(x) - 350) / 250))
+const elevation = (x: number) => GROUND + 8 * (1 - verticalEase((Math.abs(x) - 300) / 350))
 const mainId = (d: number, i: number, s: number) => `main-${d}-${i}-${s}`
 function main(d: number, a: number, b: number, lateral: number) {
 	return line(point(a, lateral), point(b, lateral), 8).map((p) => rotate({ ...p, y: elevation(p.x) }, (d * Math.PI) / 2))
@@ -21,7 +21,7 @@ export function buildTrumpet(): Network {
 			laneCount: 3,
 			laneWidth: W,
 			shoulder: 3,
-			speedLimit: 110 / 3.6,
+			speedLimit: 120 / 3.6,
 			level: 1,
 			bridge: true,
 			kind: 'main',
@@ -32,7 +32,7 @@ export function buildTrumpet(): Network {
 					kind: 'main',
 					width: W,
 					level: 1,
-					speedLimit: 110 / 3.6,
+					speedLimit: 120 / 3.6,
 					next: s < 4 ? [mainId(d, i, s + 1)] : [],
 					...(s === 0 ? { entry: d === 0 ? 'west' : 'east' } : {}),
 					...(s === 4 ? { exit: d === 0 ? 'east' : 'west' } : {}),
@@ -99,7 +99,7 @@ export function buildTrumpet(): Network {
 	semiFlat.slice(1).forEach((p, i) => semiDistance.push(semiDistance[i] + Math.hypot(p.x - semiFlat[i].x, p.z - semiFlat[i].z)))
 	const semi = semiFlat.map((p, i) => ({
 		...p,
-		y: GROUND + 16 * Math.min(verticalEase(semiDistance[i] / 380), verticalEase((semiDistance.at(-1)! - semiDistance[i]) / 380)),
+		y: GROUND + 16 * Math.min(verticalEase(semiDistance[i] / 460), verticalEase((semiDistance.at(-1)! - semiDistance[i]) / 460)),
 	}))
 	const addRamp = (id: string, points: Vec3[], next: string, level: number, speed: number) => {
 		lanes.push(lane(id, points, { kind: 'ramp', width: W, level, speedLimit: speed / 3.6, next: [next], merge: true }))
@@ -117,9 +117,9 @@ export function buildTrumpet(): Network {
 		})
 	}
 	addRamp('loop', loop, 'south-out', 0, 40)
-	addRamp('west-right', rightWest, 'south-out', 0, 65)
-	addRamp('south-right', rightSouth, mainId(0, 2, 4), 0, 65)
-	addRamp('south-left', semi, mainId(2, 2, 4), 2, 70)
+	addRamp('west-right', rightWest, 'south-out', 0, 60)
+	addRamp('south-right', rightSouth, mainId(0, 2, 4), 0, 60)
+	addRamp('south-left', semi, mainId(2, 2, 4), 2, 60)
 	const add = (from: string, to: string, turn: 'left' | 'straight' | 'right', route: string[], weight: number, suffix = '') => {
 		movements.push({
 			id: `${from}-${turn}${suffix}`,

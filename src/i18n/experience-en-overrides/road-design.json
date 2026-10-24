@@ -104,10 +104,7 @@
   "层高拉伸": "Expand levels",
   "交织段": "Weaving sections",
   "竖向已放大 2.5×": "Vertical scale expanded 2.5×",
-  "立交范围凸包估算": "Junction footprint · convex hull",
-  "通行能力（模拟）": "Capacity (simulated)",
   "占地": "Footprint",
-  "固定种子，需求在 20 分钟内由 0.25× 升至 2.5×，取完整 5 分钟窗口最大通过量；不是工程容量。本次压力测试会更新读数。占地为立交范围凸包估算，不含远端引道。": "Fixed seed; demand rises from 0.25× to 2.5× over 20 minutes. Values are the maximum throughput in full five-minute windows, not engineering capacities. A session pressure test updates them. Land is a convex-hull estimate of the junction envelope, excluding distant approach roads.",
   "南北通行": "North–south traffic",
   "东西通行": "East–west traffic",
   "南北直行": "North–south through",
@@ -145,5 +142,10 @@
   "还可以让左转直接走最上面的两层，直行留在底下两层。车流不断，桥墩、桥面和高度都要付出代价。": "Or carry left turns directly on the upper two levels and leave through traffic below. Continuous flow costs more piers, deck area and height.",
   "真实城市把这些办法叠在一起，还要迁就山谷、隧道和八个方向。黄桷湾的线形来自 OSM，五层高度是约束推断，不是实测。": "A real city combines these ideas around a valley, tunnels and eight directions. Huangjuewan uses OSM alignments; its five-level heights are constrained estimates, not surveys.",
   "导览": "Guided tour",
-  "结束导览": "End tour"
+  "结束导览": "End tour",
+  "总通行能力（模拟）": "Total capacity (simulated)",
+  "转向通行能力": "Turning capacity",
+  "占地（路面 + 围死的地）": "Land (roads + enclosed ground)",
+  "未确认饱和": "Saturation unconfirmed",
+  "完整流向时转向占 40%，逐级加压至平台；取完整 5 分钟内按原定方向到达的最大流量，总量与转向量分别取峰值。≥ 表示未确认饱和，不是工程容量。会话压力曲线使用当前 OD，单独保留。占地：路面含路肩外扩 10 m，加围住的空地；2 m 网格，不含远端引道。参照为 18 个 OpenStreetMap 实例的同口径测量（ODbL 1.0），详见来源。": "40% turning demand where all turns exist, increased in steps until flow plateaus. Total and turning flows use their own best full five-minute window, counting only intended destinations. ≥ means saturation is unconfirmed. These are model results, not engineering capacities. Session pressure curves use the current OD separately. Land includes pavement, shoulders, a 10 m buffer and enclosed ground on a 2 m grid; remote approaches are excluded. Reference: 18 OpenStreetMap examples measured identically (ODbL 1.0); see Sources."
 }

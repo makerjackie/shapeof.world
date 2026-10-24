@@ -1,5 +1,5 @@
 import type { Interval, Lane, MeasurementArea, Network, SimulationMetrics, Vehicle } from './types'
-export interface Completion { time: number; movementId: string; delay: number; stops: number; distance: number; laneChanges: number }
+export interface Completion { delivered?: boolean; time: number; movementId: string; delay: number; stops: number; distance: number; laneChanges: number }
 export class MetricsWindow {
   readonly completions: Completion[] = []
   completed = 0
@@ -13,7 +13,7 @@ export class MetricsWindow {
     passage.exitedAt = time
     this.startedAt ??= time
     this.completed++
-    this.completions.push({ time, movementId: vehicle.movementId, delay: Math.max(0, passage.elapsed - passage.freeFlowTime), stops: vehicle.stops - passage.stopsAtEntry, distance: passage.distance, laneChanges: vehicle.laneChanges - passage.laneChangesAtEntry })
+    this.completions.push({ delivered: !vehicle.intendedMovementId, time, movementId: vehicle.movementId, delay: Math.max(0, passage.elapsed - passage.freeFlowTime), stops: vehicle.stops - passage.stopsAtEntry, distance: passage.distance, laneChanges: vehicle.laneChanges - passage.laneChangesAtEntry })
   }
   snapshot(time: number, vehicles: Vehicle[], outsideQueue: number, queueByApproach: Record<string, number>, demand = 0): SimulationMetrics {
     while (this.completions[0] && this.completions[0].time < time - 300) this.completions.shift()

@@ -19,11 +19,11 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
     let to = new T.Vector3(position.x, position.y, position.z), target = new T.Vector3(focus.x, focus.y, focus.z)
     if (preset === 'top') {
       to = new T.Vector3(0, urban ? 250 : service ? (mobile ? 700 : 450) : 850, 1)
-      if (design.id === 'cloverleaf') {
-        // Include the outer ramp terminals at ±330 m. Offset the nadir so
+      if (['cloverleaf', 'stack', 'turbine'].includes(design.id)) {
+        // Same metres per pixel for the three system interchanges. Offset so
         // all sixteen conflict markers stay clear of the bottom controls.
         target.set(0, 0, mobile ? 180 : 80)
-        to.set(0, mobile ? 2000 : 1300, target.z + 1)
+        to.set(0, 2500, target.z + 1)
       }
     }
     if (preset === 'close') { to = new T.Vector3(urban ? 40 : 110, urban ? 45 : 74, urban ? 75 : 115); target = new T.Vector3(urban ? 0 : 40, 3, urban ? 0 : 25) }

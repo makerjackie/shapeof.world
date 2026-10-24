@@ -1,8 +1,9 @@
 import type { Network, Vec3 } from './types'
 import { terrainHeight } from './terrain'
 import { sampleLane } from './geometry'
+import { junctionRoads, lockedLand } from './land-footprint'
 
-export interface GeometryCosts { layers: number; maximumHeight: number; bridgeArea: number; pavementArea: number; rampLength: number; hullArea: number }
+export interface GeometryCosts { layers: number; maximumHeight: number; bridgeArea: number; pavementArea: number; rampLength: number; hullArea: number; landArea: number; enclosedArea: number }
 function hullArea(points: Vec3[]): number {
   const sorted = [...points].sort((a, b) => a.x - b.x || a.z - b.z)
   const cross = (o: Vec3, a: Vec3, b: Vec3) => (a.x - o.x) * (b.z - o.z) - (a.z - o.z) * (b.x - o.x)
@@ -44,7 +45,7 @@ export function junctionFootprint(network: Network): Vec3[] {
 /** Physical road surface quantities; footprint alone excludes remote leads. */
 export function measureGeometry(network: Network): GeometryCosts {
   let maximumHeight = 0, bridgeArea = 0, pavementArea = 0, rampLength = 0
-  const footprint = junctionFootprint(network)
+  const footprint = junctionFootprint(network), land = lockedLand(junctionRoads(network))
   for (const road of network.carriageways) {
     const width = road.laneCount * road.laneWidth + (road.medianWidth ?? 0) + 2 * (road.shoulder ?? 0)
     for (let i = 0; i < road.points.length; i++) {
@@ -60,5 +61,5 @@ export function measureGeometry(network: Network): GeometryCosts {
       bridgeArea += above * length * width
     }
   }
-  return { layers: new Set(network.carriageways.filter(road => road.level >= 0).map(road => road.level)).size, maximumHeight, bridgeArea, pavementArea, rampLength, hullArea: hullArea(footprint) }
+  return { layers: new Set(network.carriageways.filter(road => road.level >= 0).map(road => road.level)).size, maximumHeight, bridgeArea, pavementArea, rampLength, hullArea: hullArea(footprint), landArea: land.area, enclosedArea: land.enclosedArea }
 }

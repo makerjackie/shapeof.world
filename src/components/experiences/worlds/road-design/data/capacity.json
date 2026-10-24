@@ -1,128 +1,1143 @@
 {
   "method": {
-    "version": 1,
+    "version": 2,
     "seed": 271828,
     "stepSeconds": 0.03333333333333333,
-    "warmupSeconds": 240,
-    "rampSeconds": 1200,
-    "multiplierFrom": 0.25,
-    "multiplierTo": 2.5,
+    "warmupSeconds": 600,
+    "stageSeconds": 600,
     "windowSeconds": 300,
-    "sampleEverySeconds": 10,
-    "note": "Maximum completed-core detector rate in full rolling five-minute windows during one rising-demand run. Model-specific, not engineering capacity."
+    "multipliers": [
+      0.5,
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      4,
+      5,
+      6,
+      8
+    ],
+    "turnShares": {
+      "left": 0.2,
+      "straight": 0.6,
+      "right": 0.2
+    },
+    "plateauTolerance": 0.05,
+    "confirmingStages": 2,
+    "note": "40% turning where all turns exist; unavailable turns renormalized. Fixed OD proportions at each origin; 10-minute demand steps, last five minutes measured. Two successive <5% gains with oversupply and growing queues confirm saturation. Report highest full-window correctly delivered total and turning flows (separate windows); an unconfirmed run is only a lower bound. Not engineering capacity."
   },
   "designs": {
     "t-junction": {
-      "vehiclesPerHour": 1164,
-      "peakAtSeconds": 1180,
-      "delayAtPeakSeconds": 16.36,
-      "outsideQueueAtPeak": 0,
+      "status": "not-saturated",
+      "vehiclesPerHour": 2412,
+      "turningVehiclesPerHour": 516,
+      "peakMultiplier": 8,
+      "turningPeakMultiplier": 2,
       "defaultDemand": 600,
-      "hullAreaM2": 5148.57
+      "landAreaM2": 6488,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 300,
+          "total": 336,
+          "turning": 144,
+          "delay": 3.28,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 600,
+          "total": 720,
+          "turning": 384,
+          "delay": 3.6,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 900,
+          "total": 984,
+          "turning": 372,
+          "delay": 10.94,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 1200,
+          "total": 1116,
+          "turning": 516,
+          "delay": 25.31,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 1500,
+          "total": 1068,
+          "turning": 408,
+          "delay": 29.71,
+          "queue": 62,
+          "queueGrowth": 62,
+          "backlogSeconds": 209
+        },
+        {
+          "missed": 0,
+          "multiplier": 3,
+          "demand": 1800,
+          "total": 1188,
+          "turning": 396,
+          "delay": 58.8,
+          "queue": 159,
+          "queueGrowth": 97,
+          "backlogSeconds": 482
+        },
+        {
+          "missed": 0,
+          "multiplier": 4,
+          "demand": 2400,
+          "total": 1548,
+          "turning": 348,
+          "delay": 7.06,
+          "queue": 309,
+          "queueGrowth": 150,
+          "backlogSeconds": 719
+        },
+        {
+          "missed": 0,
+          "multiplier": 5,
+          "demand": 3000,
+          "total": 1620,
+          "turning": 444,
+          "delay": 48.49,
+          "queue": 466,
+          "queueGrowth": 157,
+          "backlogSeconds": 1036
+        },
+        {
+          "missed": 0,
+          "multiplier": 6,
+          "demand": 3600,
+          "total": 2244,
+          "turning": 360,
+          "delay": 15.34,
+          "queue": 692,
+          "queueGrowth": 226,
+          "backlogSeconds": 1110
+        },
+        {
+          "missed": 0,
+          "multiplier": 8,
+          "demand": 4800,
+          "total": 2412,
+          "turning": 468,
+          "delay": 22.94,
+          "queue": 1076,
+          "queueGrowth": 384,
+          "backlogSeconds": 1606
+        }
+      ]
     },
     "crossroads-yield": {
-      "vehiclesPerHour": 660,
-      "peakAtSeconds": 1090,
-      "delayAtPeakSeconds": 105.35,
-      "outsideQueueAtPeak": 0,
+      "status": "not-saturated",
+      "vehiclesPerHour": 804,
+      "turningVehiclesPerHour": 348,
+      "peakMultiplier": 4,
+      "turningPeakMultiplier": 5,
       "defaultDemand": 500,
-      "hullAreaM2": 8116.79
+      "landAreaM2": 7184,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 250,
+          "total": 204,
+          "turning": 108,
+          "delay": 12.96,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 500,
+          "total": 576,
+          "turning": 312,
+          "delay": 38.01,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 750,
+          "total": 636,
+          "turning": 252,
+          "delay": 97.56,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 1000,
+          "total": 756,
+          "turning": 264,
+          "delay": 176.6,
+          "queue": 1,
+          "queueGrowth": 1,
+          "backlogSeconds": 5
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 1250,
+          "total": 708,
+          "turning": 240,
+          "delay": 198.98,
+          "queue": 41,
+          "queueGrowth": 41,
+          "backlogSeconds": 208
+        },
+        {
+          "missed": 0,
+          "multiplier": 3,
+          "demand": 1500,
+          "total": 744,
+          "turning": 324,
+          "delay": 228.25,
+          "queue": 157,
+          "queueGrowth": 116,
+          "backlogSeconds": 760
+        },
+        {
+          "missed": 0,
+          "multiplier": 4,
+          "demand": 2000,
+          "total": 804,
+          "turning": 264,
+          "delay": 154.5,
+          "queue": 335,
+          "queueGrowth": 178,
+          "backlogSeconds": 1500
+        },
+        {
+          "missed": 0,
+          "multiplier": 5,
+          "demand": 2500,
+          "total": 696,
+          "turning": 348,
+          "delay": 213.82,
+          "queue": 639,
+          "queueGrowth": 304,
+          "backlogSeconds": 3305
+        },
+        {
+          "missed": 0,
+          "multiplier": 6,
+          "demand": 3000,
+          "total": 744,
+          "turning": 300,
+          "delay": 191.74,
+          "queue": 1009,
+          "queueGrowth": 370,
+          "backlogSeconds": 4882
+        },
+        {
+          "missed": 0,
+          "multiplier": 8,
+          "demand": 4000,
+          "total": 780,
+          "turning": 240,
+          "delay": 216.77,
+          "queue": 1540,
+          "queueGrowth": 532,
+          "backlogSeconds": 7108
+        }
+      ]
     },
     "crossroads-signal": {
-      "vehiclesPerHour": 1536,
-      "peakAtSeconds": 1170,
-      "delayAtPeakSeconds": 83.2,
-      "outsideQueueAtPeak": 33,
+      "status": "saturated",
+      "vehiclesPerHour": 1656,
+      "turningVehiclesPerHour": 600,
+      "peakMultiplier": 2.5,
+      "turningPeakMultiplier": 2.5,
       "defaultDemand": 1200,
-      "hullAreaM2": 8116.79
+      "landAreaM2": 7184,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 600,
+          "total": 576,
+          "turning": 252,
+          "delay": 17.38,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 1200,
+          "total": 1308,
+          "turning": 432,
+          "delay": 30.9,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 1800,
+          "total": 1584,
+          "turning": 540,
+          "delay": 70,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 2400,
+          "total": 1620,
+          "turning": 564,
+          "delay": 78.19,
+          "queue": 78,
+          "queueGrowth": 78,
+          "backlogSeconds": 173
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 3000,
+          "total": 1656,
+          "turning": 600,
+          "delay": 83.94,
+          "queue": 345,
+          "queueGrowth": 267,
+          "backlogSeconds": 750
+        }
+      ]
     },
     "roundabout": {
-      "vehiclesPerHour": 1260,
-      "peakAtSeconds": 1190,
-      "delayAtPeakSeconds": 92.29,
-      "outsideQueueAtPeak": 82,
+      "status": "saturated",
+      "vehiclesPerHour": 1248,
+      "turningVehiclesPerHour": 468,
+      "peakMultiplier": 1.5,
+      "turningPeakMultiplier": 2.5,
       "defaultDemand": 1200,
-      "hullAreaM2": 11878.2
+      "landAreaM2": 9936,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 600,
+          "total": 552,
+          "turning": 228,
+          "delay": 4.51,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 1200,
+          "total": 1152,
+          "turning": 408,
+          "delay": 38.78,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 1800,
+          "total": 1248,
+          "turning": 360,
+          "delay": 94.9,
+          "queue": 6,
+          "queueGrowth": 6,
+          "backlogSeconds": 17
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 2400,
+          "total": 1248,
+          "turning": 360,
+          "delay": 84.02,
+          "queue": 169,
+          "queueGrowth": 163,
+          "backlogSeconds": 487
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 3000,
+          "total": 1212,
+          "turning": 468,
+          "delay": 99.66,
+          "queue": 475,
+          "queueGrowth": 305,
+          "backlogSeconds": 1411
+        }
+      ]
     },
     "crossroads-channelized": {
-      "vehiclesPerHour": 4260,
-      "peakAtSeconds": 1160,
-      "delayAtPeakSeconds": 106.16,
-      "outsideQueueAtPeak": 2,
+      "status": "saturated",
+      "vehiclesPerHour": 3852,
+      "turningVehiclesPerHour": 1488,
+      "peakMultiplier": 2,
+      "turningPeakMultiplier": 2,
       "defaultDemand": 2800,
-      "hullAreaM2": 12379.84
+      "landAreaM2": 13536,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 1400,
+          "total": 1488,
+          "turning": 492,
+          "delay": 45.81,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 2800,
+          "total": 2712,
+          "turning": 1056,
+          "delay": 63.51,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 4200,
+          "total": 3840,
+          "turning": 1392,
+          "delay": 97.5,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 5600,
+          "total": 3852,
+          "turning": 1488,
+          "delay": 164.03,
+          "queue": 42,
+          "queueGrowth": 41,
+          "backlogSeconds": 39
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 7000,
+          "total": 3576,
+          "turning": 1452,
+          "delay": 179.3,
+          "queue": 497,
+          "queueGrowth": 454,
+          "backlogSeconds": 500
+        }
+      ]
     },
     "continuous-flow": {
-      "vehiclesPerHour": 4800,
-      "peakAtSeconds": 1200,
-      "delayAtPeakSeconds": 44.69,
-      "outsideQueueAtPeak": 37,
+      "status": "saturated",
+      "vehiclesPerHour": 4776,
+      "turningVehiclesPerHour": 1896,
+      "peakMultiplier": 2.5,
+      "turningPeakMultiplier": 2.5,
       "defaultDemand": 2800,
-      "hullAreaM2": 25132.82
+      "landAreaM2": 20824,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 1400,
+          "total": 1380,
+          "turning": 504,
+          "delay": 26.77,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 2800,
+          "total": 2544,
+          "turning": 744,
+          "delay": 33.5,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 4200,
+          "total": 3828,
+          "turning": 1248,
+          "delay": 44.32,
+          "queue": 2,
+          "queueGrowth": 2,
+          "backlogSeconds": 2
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 5600,
+          "total": 4680,
+          "turning": 1884,
+          "delay": 86.89,
+          "queue": 143,
+          "queueGrowth": 141,
+          "backlogSeconds": 110
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 7000,
+          "total": 4776,
+          "turning": 1896,
+          "delay": 96.86,
+          "queue": 371,
+          "queueGrowth": 227,
+          "backlogSeconds": 280
+        },
+        {
+          "missed": 0,
+          "multiplier": 3,
+          "demand": 8400,
+          "total": 4776,
+          "turning": 1488,
+          "delay": 115.53,
+          "queue": 801,
+          "queueGrowth": 428,
+          "backlogSeconds": 604
+        }
+      ]
     },
     "diamond": {
-      "vehiclesPerHour": 9096,
-      "peakAtSeconds": 1010,
-      "delayAtPeakSeconds": 41.15,
-      "outsideQueueAtPeak": 430,
+      "status": "saturated",
+      "vehiclesPerHour": 6288,
+      "turningVehiclesPerHour": 1572,
+      "peakMultiplier": 3,
+      "turningPeakMultiplier": 5,
       "defaultDemand": 8800,
-      "hullAreaM2": 178511.46
+      "landAreaM2": 155048,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 4400,
+          "total": 3840,
+          "turning": 1320,
+          "delay": 93.44,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 8800,
+          "total": 5904,
+          "turning": 1440,
+          "delay": 82.78,
+          "queue": 205,
+          "queueGrowth": 205,
+          "backlogSeconds": 125
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 13200,
+          "total": 5748,
+          "turning": 1248,
+          "delay": 123.86,
+          "queue": 1192,
+          "queueGrowth": 985,
+          "backlogSeconds": 747
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 17600,
+          "total": 6048,
+          "turning": 1344,
+          "delay": 155.3,
+          "queue": 3164,
+          "queueGrowth": 1967,
+          "backlogSeconds": 1883
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 22000,
+          "total": 5952,
+          "turning": 1416,
+          "delay": 146.53,
+          "queue": 5829,
+          "queueGrowth": 2664,
+          "backlogSeconds": 3526
+        },
+        {
+          "missed": 0,
+          "multiplier": 3,
+          "demand": 26400,
+          "total": 6288,
+          "turning": 1344,
+          "delay": 135.56,
+          "queue": 9321,
+          "queueGrowth": 3485,
+          "backlogSeconds": 5336
+        },
+        {
+          "missed": 0,
+          "multiplier": 4,
+          "demand": 35200,
+          "total": 5784,
+          "turning": 1428,
+          "delay": 126.9,
+          "queue": 13920,
+          "queueGrowth": 4592,
+          "backlogSeconds": 8664
+        },
+        {
+          "missed": 0,
+          "multiplier": 5,
+          "demand": 44000,
+          "total": 5952,
+          "turning": 1572,
+          "delay": 141.19,
+          "queue": 20143,
+          "queueGrowth": 6221,
+          "backlogSeconds": 12183
+        }
+      ]
     },
     "ddi": {
-      "vehiclesPerHour": 8724,
-      "peakAtSeconds": 820,
-      "delayAtPeakSeconds": 33.34,
-      "outsideQueueAtPeak": 173,
+      "status": "saturated",
+      "vehiclesPerHour": 6600,
+      "turningVehiclesPerHour": 2100,
+      "peakMultiplier": 1,
+      "turningPeakMultiplier": 2,
       "defaultDemand": 8800,
-      "hullAreaM2": 196506.41
+      "landAreaM2": 157808,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 4400,
+          "total": 4248,
+          "turning": 1680,
+          "delay": 22.99,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 8800,
+          "total": 6600,
+          "turning": 1932,
+          "delay": 60.15,
+          "queue": 3,
+          "queueGrowth": 3,
+          "backlogSeconds": 2
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 13200,
+          "total": 6288,
+          "turning": 1776,
+          "delay": 105.11,
+          "queue": 888,
+          "queueGrowth": 886,
+          "backlogSeconds": 508
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 17600,
+          "total": 6276,
+          "turning": 2100,
+          "delay": 95.92,
+          "queue": 2781,
+          "queueGrowth": 1887,
+          "backlogSeconds": 1595
+        }
+      ]
     },
     "parclo": {
-      "vehiclesPerHour": 9360,
-      "peakAtSeconds": 1020,
-      "delayAtPeakSeconds": 41.67,
-      "outsideQueueAtPeak": 428,
+      "status": "saturated",
+      "vehiclesPerHour": 7428,
+      "turningVehiclesPerHour": 2196,
+      "peakMultiplier": 1.5,
+      "turningPeakMultiplier": 1.5,
       "defaultDemand": 8800,
-      "hullAreaM2": 257772.81
+      "landAreaM2": 170952,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 4400,
+          "total": 3936,
+          "turning": 1392,
+          "delay": 74.03,
+          "queue": 0,
+          "queueGrowth": 0,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 8800,
+          "total": 6660,
+          "turning": 2004,
+          "delay": 85.85,
+          "queue": 134,
+          "queueGrowth": 134,
+          "backlogSeconds": 72
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 13200,
+          "total": 7428,
+          "turning": 2196,
+          "delay": 96.53,
+          "queue": 960,
+          "queueGrowth": 826,
+          "backlogSeconds": 465
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 17600,
+          "total": 7392,
+          "turning": 1992,
+          "delay": 93.22,
+          "queue": 2574,
+          "queueGrowth": 1612,
+          "backlogSeconds": 1254
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 22000,
+          "total": 7320,
+          "turning": 1956,
+          "delay": 97.7,
+          "queue": 4965,
+          "queueGrowth": 2388,
+          "backlogSeconds": 2442
+        }
+      ]
     },
     "trumpet": {
-      "vehiclesPerHour": 10464,
-      "peakAtSeconds": 1200,
-      "delayAtPeakSeconds": 93.92,
-      "outsideQueueAtPeak": 891,
+      "status": "saturated",
+      "vehiclesPerHour": 9540,
+      "turningVehiclesPerHour": 3012,
+      "peakMultiplier": 2,
+      "turningPeakMultiplier": 2,
       "defaultDemand": 10500,
-      "hullAreaM2": 752170.35
+      "landAreaM2": 172368,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 5250,
+          "total": 5184,
+          "turning": 1680,
+          "delay": 43.73,
+          "queue": 0,
+          "queueGrowth": -2,
+          "backlogSeconds": 0
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 10500,
+          "total": 8580,
+          "turning": 2172,
+          "delay": 57.79,
+          "queue": 2,
+          "queueGrowth": 2,
+          "backlogSeconds": 1
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 15750,
+          "total": 9336,
+          "turning": 2508,
+          "delay": 134.39,
+          "queue": 717,
+          "queueGrowth": 714,
+          "backlogSeconds": 276
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 21000,
+          "total": 9540,
+          "turning": 3012,
+          "delay": 178.92,
+          "queue": 2574,
+          "queueGrowth": 1859,
+          "backlogSeconds": 971
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 26250,
+          "total": 9432,
+          "turning": 2784,
+          "delay": 194.51,
+          "queue": 5381,
+          "queueGrowth": 2808,
+          "backlogSeconds": 2054
+        }
+      ]
     },
     "cloverleaf": {
-      "vehiclesPerHour": 19104,
-      "peakAtSeconds": 1050,
-      "delayAtPeakSeconds": 55.39,
-      "outsideQueueAtPeak": 1382,
+      "status": "saturated",
+      "vehiclesPerHour": 19116,
+      "turningVehiclesPerHour": 4800,
+      "peakMultiplier": 2,
+      "turningPeakMultiplier": 1,
       "defaultDemand": 19200,
-      "hullAreaM2": 241858.65
+      "landAreaM2": 272224,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 9600,
+          "total": 9408,
+          "turning": 3672,
+          "delay": 7.29,
+          "queue": 5,
+          "queueGrowth": 1,
+          "backlogSeconds": 2
+        },
+        {
+          "missed": 20,
+          "multiplier": 1,
+          "demand": 19200,
+          "total": 16152,
+          "turning": 4800,
+          "delay": 40.72,
+          "queue": 15,
+          "queueGrowth": 11,
+          "backlogSeconds": 3
+        },
+        {
+          "missed": 20,
+          "multiplier": 1.5,
+          "demand": 28800,
+          "total": 18960,
+          "turning": 3804,
+          "delay": 101.98,
+          "queue": 754,
+          "queueGrowth": 740,
+          "backlogSeconds": 143
+        },
+        {
+          "missed": 42,
+          "multiplier": 2,
+          "demand": 38400,
+          "total": 19116,
+          "turning": 3552,
+          "delay": 168.09,
+          "queue": 3845,
+          "queueGrowth": 3088,
+          "backlogSeconds": 724
+        },
+        {
+          "missed": 76,
+          "multiplier": 2.5,
+          "demand": 48000,
+          "total": 18408,
+          "turning": 3912,
+          "delay": 216.99,
+          "queue": 8388,
+          "queueGrowth": 4529,
+          "backlogSeconds": 1640
+        }
+      ]
     },
     "turbine": {
-      "vehiclesPerHour": 19716,
-      "peakAtSeconds": 1190,
-      "delayAtPeakSeconds": 78.95,
-      "outsideQueueAtPeak": 1930,
+      "status": "saturated",
+      "vehiclesPerHour": 19608,
+      "turningVehiclesPerHour": 5892,
+      "peakMultiplier": 2.5,
+      "turningPeakMultiplier": 1,
       "defaultDemand": 19200,
-      "hullAreaM2": 2076455.63
+      "landAreaM2": 405744,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 9600,
+          "total": 9540,
+          "turning": 3792,
+          "delay": 7.56,
+          "queue": 5,
+          "queueGrowth": 1,
+          "backlogSeconds": 2
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 19200,
+          "total": 16224,
+          "turning": 5892,
+          "delay": 56.86,
+          "queue": 36,
+          "queueGrowth": 33,
+          "backlogSeconds": 8
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 28800,
+          "total": 18900,
+          "turning": 5820,
+          "delay": 138.99,
+          "queue": 784,
+          "queueGrowth": 752,
+          "backlogSeconds": 149
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 38400,
+          "total": 18972,
+          "turning": 5244,
+          "delay": 247.41,
+          "queue": 3439,
+          "queueGrowth": 2650,
+          "backlogSeconds": 653
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 48000,
+          "total": 19608,
+          "turning": 3984,
+          "delay": 283.16,
+          "queue": 8136,
+          "queueGrowth": 4688,
+          "backlogSeconds": 1494
+        }
+      ]
     },
     "stack": {
-      "vehiclesPerHour": 19692,
-      "peakAtSeconds": 1200,
-      "delayAtPeakSeconds": 101.41,
-      "outsideQueueAtPeak": 1997,
+      "status": "saturated",
+      "vehiclesPerHour": 19764,
+      "turningVehiclesPerHour": 6096,
+      "peakMultiplier": 2.5,
+      "turningPeakMultiplier": 1,
       "defaultDemand": 19200,
-      "hullAreaM2": 2076455.63
+      "landAreaM2": 362784,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 9600,
+          "total": 9588,
+          "turning": 3804,
+          "delay": 7.36,
+          "queue": 5,
+          "queueGrowth": 1,
+          "backlogSeconds": 2
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 19200,
+          "total": 16200,
+          "turning": 6096,
+          "delay": 57.19,
+          "queue": 36,
+          "queueGrowth": 33,
+          "backlogSeconds": 8
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 28800,
+          "total": 18648,
+          "turning": 5784,
+          "delay": 139.12,
+          "queue": 779,
+          "queueGrowth": 747,
+          "backlogSeconds": 150
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 38400,
+          "total": 19188,
+          "turning": 4584,
+          "delay": 224.95,
+          "queue": 3495,
+          "queueGrowth": 2709,
+          "backlogSeconds": 656
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 48000,
+          "total": 19764,
+          "turning": 4056,
+          "delay": 302.67,
+          "queue": 8312,
+          "queueGrowth": 4807,
+          "backlogSeconds": 1514
+        }
+      ]
     },
     "huangjuewan": {
-      "vehiclesPerHour": 18792,
-      "peakAtSeconds": 1200,
-      "delayAtPeakSeconds": 55.25,
-      "outsideQueueAtPeak": 950,
+      "status": "saturated",
+      "vehiclesPerHour": 18912,
+      "turningVehiclesPerHour": 9648,
+      "peakMultiplier": 6,
+      "turningPeakMultiplier": 6,
       "defaultDemand": 15660,
-      "hullAreaM2": 1829466.05
+      "landAreaM2": 381400,
+      "stages": [
+        {
+          "missed": 0,
+          "multiplier": 0.5,
+          "demand": 7830,
+          "total": 7584,
+          "turning": 2796,
+          "delay": 13.52,
+          "queue": 124,
+          "queueGrowth": 99,
+          "backlogSeconds": 59
+        },
+        {
+          "missed": 0,
+          "multiplier": 1,
+          "demand": 15660,
+          "total": 10392,
+          "turning": 4500,
+          "delay": 29.62,
+          "queue": 840,
+          "queueGrowth": 717,
+          "backlogSeconds": 291
+        },
+        {
+          "missed": 0,
+          "multiplier": 1.5,
+          "demand": 23490,
+          "total": 12336,
+          "turning": 5472,
+          "delay": 54.11,
+          "queue": 2390,
+          "queueGrowth": 1546,
+          "backlogSeconds": 697
+        },
+        {
+          "missed": 0,
+          "multiplier": 2,
+          "demand": 31320,
+          "total": 14280,
+          "turning": 6432,
+          "delay": 91.67,
+          "queue": 5095,
+          "queueGrowth": 2700,
+          "backlogSeconds": 1284
+        },
+        {
+          "missed": 0,
+          "multiplier": 2.5,
+          "demand": 39150,
+          "total": 15564,
+          "turning": 6732,
+          "delay": 124.1,
+          "queue": 8800,
+          "queueGrowth": 3696,
+          "backlogSeconds": 2035
+        },
+        {
+          "missed": 0,
+          "multiplier": 3,
+          "demand": 46980,
+          "total": 17112,
+          "turning": 7008,
+          "delay": 132.82,
+          "queue": 13660,
+          "queueGrowth": 4855,
+          "backlogSeconds": 2874
+        },
+        {
+          "missed": 0,
+          "multiplier": 4,
+          "demand": 62640,
+          "total": 18072,
+          "turning": 8220,
+          "delay": 168.57,
+          "queue": 20733,
+          "queueGrowth": 7063,
+          "backlogSeconds": 4130
+        },
+        {
+          "missed": 0,
+          "multiplier": 5,
+          "demand": 78300,
+          "total": 18660,
+          "turning": 8652,
+          "delay": 171.82,
+          "queue": 30456,
+          "queueGrowth": 9711,
+          "backlogSeconds": 5876
+        },
+        {
+          "missed": 0,
+          "multiplier": 6,
+          "demand": 93960,
+          "total": 18912,
+          "turning": 9648,
+          "delay": 200.7,
+          "queue": 42663,
+          "queueGrowth": 12194,
+          "backlogSeconds": 8121
+        }
+      ]
     }
   }
 }
