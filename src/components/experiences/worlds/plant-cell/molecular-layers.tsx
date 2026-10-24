@@ -297,7 +297,10 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
   })
   const materials = useMemo(() => {
     const material = (color: string, alpha: number, heads: boolean) => {
-      const m = new T.MeshStandardMaterial({ color, roughness: 0.95, transparent: true, opacity: alpha, side: T.DoubleSide, depthWrite: false, forceSinglePass: true })
+      // Headgroups stay translucent. The absorbing bilayer core writes depth:
+      // looking along a stack must not shade forty transparent full-screen slabs.
+      // Alpha hashing retains the continuous L3 handoff without that overdraw.
+      const m = new T.MeshStandardMaterial({ color, roughness: 0.95, transparent: heads, opacity: heads ? alpha : 1, alphaHash: !heads, side: T.DoubleSide, depthWrite: !heads, forceSinglePass: true })
       m.onBeforeCompile = (shader) => {
         shader.uniforms.molecularAlpha = cut.alpha; shader.uniforms.sectionCutNm = cut.section; shader.uniforms.molecularCut = { value: cut.plane }; shader.uniforms.molecularOpening = cut.opening
         shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 membranePosition;').replace('#include <begin_vertex>', '#include <begin_vertex>\nmembranePosition=(instanceMatrix*vec4(position,1.0)).xyz;')
@@ -306,7 +309,7 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
       }
       return m
     }
-    return { core: material('#283a32', 0.8, false), heads: material('#899676', 0.68, true), lumen: material('#996743', 0.015, false) }
+    return { core: material('#283a32', 1, false), heads: material('#899676', 0.68, true) }
   }, [cut])
   useEffect(() => () => Object.values(materials).forEach((m) => m.dispose()), [materials])
   const cylinders = useMemo(() => new T.CylinderGeometry(235, 235, 1, mobile ? 72 : 112), [mobile])
