@@ -1,0 +1,199 @@
+{
+  "id": "8RUC",
+  "title": "ACTIVATED SPINACH RUBISCO COMPLEXED WITH 2-CARBOXYARABINITOL BISPHOSPHATE",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 1.6,
+  "citationTitle": "Large structures at high resolution: the 1.6 A crystal structure of spinach ribulose-1,5-bisphosphate carboxylase/oxygenase complexed with 2-carboxyarabinitol bisphosphate.",
+  "citationDOI": "10.1006/jmbi.1996.0310",
+  "pdbDOI": "10.2210/pdb8RUC/pdb",
+  "source": "https://files.rcsb.org/download/8RUC.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1",
+    "2"
+  ],
+  "heavyAtomCount": 37696,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "B@1",
+      "authorChain": "C",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "C@1",
+      "authorChain": "E",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "D@1",
+      "authorChain": "G",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "E@1",
+      "authorChain": "I",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "F@1",
+      "authorChain": "J",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "G@1",
+      "authorChain": "K",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "H@1",
+      "authorChain": "L",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "A@2",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "B@2",
+      "authorChain": "C",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "C@2",
+      "authorChain": "E",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "D@2",
+      "authorChain": "G",
+      "entity": "1",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 3657
+    },
+    {
+      "chain": "E@2",
+      "authorChain": "I",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "F@2",
+      "authorChain": "J",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "G@2",
+      "authorChain": "K",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    },
+    {
+      "chain": "H@2",
+      "authorChain": "L",
+      "entity": "2",
+      "description": "RIBULOSE-1,5-BISPHOSPHATE CARBOXYLASE/OXYGENASE",
+      "group": 5,
+      "atomCount": 1033
+    }
+  ],
+  "orientation": {
+    "method": "Soluble protein, biological-assembly centroid; no membrane orientation required",
+    "helixCount": 0,
+    "sourceOriginAngstrom": [
+      -1.384204042888463e-16,
+      39.46109571307312,
+      50.32499999999948
+    ],
+    "sourceNormal": [
+      0,
+      1,
+      0
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {}
+  },
+  "minNm": [
+    -6.565000000000001,
+    -6.509009571307313,
+    -5.537199999999948
+  ],
+  "maxNm": [
+    6.565000000000001,
+    6.501390428692687,
+    5.537200000000053
+  ],
+  "spansNm": [
+    13.130000000000003,
+    13.0104,
+    11.0744
+  ],
+  "warnings": [],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.31860000000000005,
+    "gridResolution": 50,
+    "inputTriangles": 19280,
+    "triangles": 9004,
+    "vertices": 4500,
+    "compressedBytes": 76397,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "ff4e3b1d00051540cdf6cfbbb31b2a7b273b7163e8419265f0471f86596aee4d"
+}

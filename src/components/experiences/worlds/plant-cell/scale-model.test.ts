@@ -16,7 +16,7 @@ describe('physical zoom scale', () => {
   })
 
   it('has continuous opacity and anchor positions at each handoff', () => {
-    for (const s of [-2.95, -2.8, -2.65, -3.75, -3.6, -3.45, -4.35, -5.25, -5.1, -4.95, -5.45, -6.3]) {
+    for (const s of [-2.95, -2.8, -2.65, -3.75, -3.6, -3.45, -4.35, -5.25, -5.1, -4.95, -5.45, -6.3, -6.35, -6.5, -6.65, -7.15, -7.3, -7.45, -7.7]) {
       const before = Object.values(getLayerWeights(s - 1e-6))
       const after = Object.values(getLayerWeights(s + 1e-6))
       before.forEach((weight, index) => expect(Math.abs(weight - after[index])).toBeLessThan(0.00002))

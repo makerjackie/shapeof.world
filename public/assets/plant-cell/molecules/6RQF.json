@@ -1,0 +1,209 @@
+{
+  "id": "6RQF",
+  "title": "3.6 Angstrom cryo-EM structure of the dimeric cytochrome b6f complex from Spinacia oleracea with natively bound thylakoid lipids and plastoquinone molecules",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 3.58,
+  "citationTitle": "Cryo-EM structure of the spinach cytochrome b6f complex at 3.6 angstrom resolution.",
+  "citationDOI": "10.1038/s41586-019-1746-6",
+  "pdbDOI": "10.2210/pdb6RQF/pdb",
+  "source": "https://files.rcsb.org/download/6RQF.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 16359,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "I",
+      "entity": "1",
+      "description": "Cytochrome b6",
+      "group": 5,
+      "atomCount": 1705
+    },
+    {
+      "chain": "B@1",
+      "authorChain": "J",
+      "entity": "2",
+      "description": "Cytochrome b6-f complex subunit 4",
+      "group": 5,
+      "atomCount": 1234
+    },
+    {
+      "chain": "C@1",
+      "authorChain": "K",
+      "entity": "3",
+      "description": "Cytochrome f",
+      "group": 5,
+      "atomCount": 2209
+    },
+    {
+      "chain": "D@1",
+      "authorChain": "L",
+      "entity": "4",
+      "description": "Cytochrome b6-f complex iron-sulfur subunit, chloroplastic",
+      "group": 5,
+      "atomCount": 1333
+    },
+    {
+      "chain": "E@1",
+      "authorChain": "M",
+      "entity": "5",
+      "description": "Cytochrome b6-f complex subunit 6",
+      "group": 5,
+      "atomCount": 243
+    },
+    {
+      "chain": "F@1",
+      "authorChain": "N",
+      "entity": "6",
+      "description": "Cytochrome b6-f complex subunit 7",
+      "group": 5,
+      "atomCount": 264
+    },
+    {
+      "chain": "G@1",
+      "authorChain": "O",
+      "entity": "7",
+      "description": "Cytochrome b6-f complex subunit 5",
+      "group": 5,
+      "atomCount": 294
+    },
+    {
+      "chain": "H@1",
+      "authorChain": "P",
+      "entity": "8",
+      "description": "Cytochrome b6-f complex subunit 8",
+      "group": 5,
+      "atomCount": 223
+    },
+    {
+      "chain": "I@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "Cytochrome b6",
+      "group": 5,
+      "atomCount": 1705
+    },
+    {
+      "chain": "J@1",
+      "authorChain": "B",
+      "entity": "2",
+      "description": "Cytochrome b6-f complex subunit 4",
+      "group": 5,
+      "atomCount": 1234
+    },
+    {
+      "chain": "K@1",
+      "authorChain": "C",
+      "entity": "3",
+      "description": "Cytochrome f",
+      "group": 5,
+      "atomCount": 2209
+    },
+    {
+      "chain": "L@1",
+      "authorChain": "D",
+      "entity": "4",
+      "description": "Cytochrome b6-f complex iron-sulfur subunit, chloroplastic",
+      "group": 5,
+      "atomCount": 1333
+    },
+    {
+      "chain": "M@1",
+      "authorChain": "E",
+      "entity": "5",
+      "description": "Cytochrome b6-f complex subunit 6",
+      "group": 5,
+      "atomCount": 243
+    },
+    {
+      "chain": "N@1",
+      "authorChain": "F",
+      "entity": "6",
+      "description": "Cytochrome b6-f complex subunit 7",
+      "group": 5,
+      "atomCount": 264
+    },
+    {
+      "chain": "O@1",
+      "authorChain": "G",
+      "entity": "7",
+      "description": "Cytochrome b6-f complex subunit 5",
+      "group": 5,
+      "atomCount": 294
+    },
+    {
+      "chain": "P@1",
+      "authorChain": "H",
+      "entity": "8",
+      "description": "Cytochrome b6-f complex subunit 8",
+      "group": 5,
+      "atomCount": 223
+    }
+  ],
+  "orientation": {
+    "method": "Dominant direction of deposited long transmembrane alpha helices; signed using biochemical sidedness markers",
+    "helixCount": 20,
+    "sourceOriginAngstrom": [
+      161.53604374999998,
+      152.58715625000002,
+      176.15931875
+    ],
+    "sourceNormal": [
+      0.3391632577802931,
+      -0.10327108303681344,
+      0.9350419070716895
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {
+      "cytochromeFHead": [
+        0.004388321546710827,
+        -4.296520619252301,
+        0.01354435555953728
+      ],
+      "rieskeHead": [
+        0.01150500606726066,
+        -3.874376837370288,
+        0.008997044921743224
+      ]
+    }
+  },
+  "minNm": [
+    -6.417496147231005,
+    -6.769269170127271,
+    -5.417378552154386
+  ],
+  "maxNm": [
+    6.405052437017989,
+    4.1956773199629,
+    5.4937672964360615
+  ],
+  "spansNm": [
+    12.822548584248995,
+    10.96494649009017,
+    10.911145848590447
+  ],
+  "warnings": [],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.3188275221275305,
+    "gridResolution": 49,
+    "inputTriangles": 14744,
+    "triangles": 6498,
+    "vertices": 3250,
+    "compressedBytes": 55810,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "b0cb6dc68a6b31d1824792bfd9c4365ecdb586c1c816778857470cef443465d6"
+}

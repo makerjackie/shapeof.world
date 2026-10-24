@@ -1,0 +1,78 @@
+{
+  "id": "1FNB",
+  "title": "REFINED CRYSTAL STRUCTURE OF SPINACH FERREDOXIN REDUCTASE AT 1.7 ANGSTROMS RESOLUTION: OXIDIZED, REDUCED, AND 2'-PHOSPHO-5'-AMP BOUND STATES",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 1.7,
+  "citationTitle": "Refined crystal structure of spinach ferredoxin reductase at 1.7 A resolution: oxidized, reduced and 2'-phospho-5'-AMP bound states.",
+  "citationDOI": "10.1006/jmbi.1994.0127",
+  "pdbDOI": "10.2210/pdb1FNB/pdb",
+  "source": "https://files.rcsb.org/download/1FNB.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 2415,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "FERREDOXIN-NADP+ REDUCTASE",
+      "group": 5,
+      "atomCount": 2352
+    }
+  ],
+  "orientation": {
+    "method": "Soluble protein, biological-assembly centroid; no membrane orientation required",
+    "helixCount": 0,
+    "sourceOriginAngstrom": [
+      22.54467950310555,
+      5.068185093167706,
+      17.73977763975157
+    ],
+    "sourceNormal": [
+      0,
+      1,
+      0
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {}
+  },
+  "minNm": [
+    -2.935767950310555,
+    -2.456018509316771,
+    -3.224777763975157
+  ],
+  "maxNm": [
+    2.618832049689445,
+    2.8252814906832295,
+    2.5729222360248434
+  ],
+  "spansNm": [
+    5.5546,
+    5.2813,
+    5.797700000000001
+  ],
+  "warnings": [],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.28659,
+    "gridResolution": 30,
+    "inputTriangles": 3664,
+    "triangles": 2496,
+    "vertices": 1250,
+    "compressedBytes": 20632,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "5ff9e006f10b97a3ee62042679272769c9d6737972eeeaef0a8a90828991cdf2"
+}

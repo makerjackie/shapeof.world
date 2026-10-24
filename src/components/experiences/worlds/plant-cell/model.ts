@@ -59,7 +59,7 @@ export interface PlantInputs {
   I: number
   water: WaterState
   playing: boolean
-  timeScale: 1 | 60 | 3600
+  timeScale: 0.001 | 1 | 60 | 3600
   dayCycle: boolean
 }
 export const DEFAULT_INPUTS: Readonly<PlantInputs> = { I: 400, water: 'normal', playing: true, timeScale: 1, dayCycle: false }

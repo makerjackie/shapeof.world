@@ -1,0 +1,78 @@
+{
+  "id": "1AG6",
+  "title": "PLASTOCYANIN FROM SPINACH",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 1.6,
+  "citationTitle": "Crystal structure of spinach plastocyanin at 1.7 A resolution.",
+  "citationDOI": "10.2210/pdb1AG6/pdb",
+  "pdbDOI": "10.2210/pdb1AG6/pdb",
+  "source": "https://files.rcsb.org/download/1AG6.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 738,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "PLASTOCYANIN",
+      "group": 5,
+      "atomCount": 737
+    }
+  ],
+  "orientation": {
+    "method": "Soluble protein, biological-assembly centroid; no membrane orientation required",
+    "helixCount": 0,
+    "sourceOriginAngstrom": [
+      12.646330623306223,
+      47.20470731707318,
+      3.5047032520325168
+    ],
+    "sourceNormal": [
+      0,
+      1,
+      0
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {}
+  },
+  "minNm": [
+    -1.4070330623306224,
+    -1.788570731707318,
+    -1.5828703252032517
+  ],
+  "maxNm": [
+    1.3010669376693778,
+    2.0077292682926817,
+    1.3917296747967485
+  ],
+  "spansNm": [
+    2.7081,
+    3.7962999999999996,
+    2.9746
+  ],
+  "warnings": [],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.21987666666666664,
+    "gridResolution": 30,
+    "inputTriangles": 2480,
+    "triangles": 2480,
+    "vertices": 1242,
+    "compressedBytes": 19962,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "8e3799415ab2b2910d577e7017caa024df62b3eba00e3497005ef15051f44640"
+}

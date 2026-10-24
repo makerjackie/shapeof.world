@@ -1,0 +1,102 @@
+{
+  "id": "1RWT",
+  "title": "Crystal Structure of Spinach Major Light-harvesting complex at 2.72 Angstrom Resolution",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 2.72,
+  "citationTitle": "Crystal structure of spinach major light-harvesting complex at 2.72 A resolution",
+  "citationDOI": "10.1038/nature02373",
+  "pdbDOI": "10.2210/pdb1RWT/pdb",
+  "source": "https://files.rcsb.org/download/1RWT.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Native C3 LHCII trimer: auth chain A with its ligands, operations 1,2,3. The deposited assembly 1 is a 60-mer proteoliposome and is deliberately not rendered.",
+  "assemblyOperators": [
+    "1",
+    "2",
+    "3"
+  ],
+  "heavyAtomCount": 8502,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "Chlorophyll A-B binding protein, chloroplast",
+      "group": 5,
+      "atomCount": 1661
+    },
+    {
+      "chain": "A@2",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "Chlorophyll A-B binding protein, chloroplast",
+      "group": 5,
+      "atomCount": 1661
+    },
+    {
+      "chain": "A@3",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "Chlorophyll A-B binding protein, chloroplast",
+      "group": 5,
+      "atomCount": 1661
+    }
+  ],
+  "orientation": {
+    "method": "Native C3 axis, signed by stromal N-terminal peptide",
+    "helixCount": 3,
+    "sourceOriginAngstrom": [
+      0,
+      0,
+      108.50962499999999
+    ],
+    "sourceNormal": [
+      0,
+      0,
+      1
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {
+      "NTerminus": [
+        -1.4602632664743914e-16,
+        1.5144923872180456,
+        1.7763568394002506e-16
+      ]
+    }
+  },
+  "minNm": [
+    -4.5856491118272,
+    -3.2065624999999986,
+    -4.0283
+  ],
+  "maxNm": [
+    4.3686,
+    2.4966375000000016,
+    5.057118579040679
+  ],
+  "spansNm": [
+    8.954249111827199,
+    5.703200000000001,
+    9.08541857904068
+  ],
+  "warnings": [],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.31277417313264944,
+    "gridResolution": 38,
+    "inputTriangles": 6988,
+    "triangles": 6498,
+    "vertices": 3250,
+    "compressedBytes": 54130,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "d01ed38324a06e70490e35e1139eb78c111e8a6560af156e908ab9cb8e0573cf"
+}

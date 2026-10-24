@@ -1,0 +1,80 @@
+{
+  "id": "1A70",
+  "title": "SPINACH FERREDOXIN",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 1.7,
+  "citationTitle": "Structure of the mutant E92K of [2Fe-2S] ferredoxin I from Spinacia oleracea at 1.7 A resolution.",
+  "citationDOI": "10.1107/S0907444998005137",
+  "pdbDOI": "10.2210/pdb1A70/pdb",
+  "source": "https://files.rcsb.org/download/1A70.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 736,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "FERREDOXIN",
+      "group": 5,
+      "atomCount": 732
+    }
+  ],
+  "orientation": {
+    "method": "Soluble protein, biological-assembly centroid; no membrane orientation required",
+    "helixCount": 0,
+    "sourceOriginAngstrom": [
+      12.332357336956521,
+      8.626470108695644,
+      11.371684782608693
+    ],
+    "sourceNormal": [
+      0,
+      1,
+      0
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {}
+  },
+  "minNm": [
+    -1.469635733695652,
+    -1.5431470108695644,
+    -1.3468684782608693
+  ],
+  "maxNm": [
+    1.6947642663043483,
+    1.9356529891304355,
+    1.4246315217391308
+  ],
+  "spansNm": [
+    3.1644000000000005,
+    3.4787999999999997,
+    2.7715
+  ],
+  "warnings": [
+    "Deposited spinach ferredoxin I is the E92K mutant; this is not an unmutated native sequence."
+  ],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.2092933333333333,
+    "gridResolution": 30,
+    "inputTriangles": 2740,
+    "triangles": 2496,
+    "vertices": 1250,
+    "compressedBytes": 20178,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "6734c041a144157d6511b4ba7f46bfadc0fb1236730c433a890fabe69bf9adba"
+}

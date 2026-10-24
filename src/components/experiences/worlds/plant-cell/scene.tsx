@@ -7,8 +7,10 @@ import { isWorldPaused } from '~/lib/world-playback'
 import { CellLayer } from './cell-layer'
 import { LeafLayer, SectionLayer } from './leaf-layers'
 import { ChloroplastLayer } from './chloroplast-layer'
+import { MolecularLayers } from './molecular-layers'
+import { GRANUM_SECTION_ANCHOR_LOCAL } from './chloro-model'
 import { advancePhysiology, getPhysiologySnapshot, getLightAppearance, type PlantInputs, type PhysiologyState, type PhysiologySnapshot } from './model'
-import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, CHLOROPLAST_QUATERNION, getCameraPose, smoothstep, type PlantLayer } from './scale-model'
+import { clampScale, getAnchorUm, getLayerWeights, zoomFlightDuration, CHLOROPLAST_ANCHOR_UM, CHLOROPLAST_ROTATION, CHLOROPLAST_QUATERNION, MOLECULAR_WORLD_ROTATION, getCameraPose, getOrbitReference, smoothstep, type PlantLayer } from './scale-model'
 
 export interface ScaleController {
   current: number
@@ -20,6 +22,7 @@ export interface ScaleController {
 
 interface SceneProps {
   controller: MutableRefObject<ScaleController>
+  viewScale: number
   inputs: PlantInputs
   physiology: MutableRefObject<PhysiologyState>
   onPhysiology: (snapshot: PhysiologySnapshot) => void
@@ -64,6 +67,7 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
 function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInteract }: Pick<SceneProps, 'controller' | 'physiology' | 'reducedMotion' | 'onScale' | 'onInteract'>) {
   const orbit = useRef({ yaw:0, pitch:0, currentYaw:0, currentPitch:0 })
   const focusFrame = useMemo(() => ({ rotation: new T.Quaternion(), blend: new T.Quaternion(), inverseInitial: CHLOROPLAST_QUATERNION.clone().invert() }), [])
+  const molecularFrame = useMemo(() => ({ direction: new T.Vector3(), up: new T.Vector3() }), [])
   const { camera, size, gl } = useThree()
   const lastReport = useRef(0), autoTime = useRef(0), lastReset = useRef(-1)
   const interaction = useRef(onInteract)
@@ -91,7 +95,7 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
       if(pointers.size!==1)return
       orbit.current.yaw-=(event.clientX-previous.x)/size.height*Math.PI*2
       orbit.current.pitch+=(event.clientY-previous.y)/size.height*Math.PI*1.5
-      const basePitch=getCameraPose(controller.current.current).pitch
+      const basePitch=getOrbitReference(controller.current.current).pitch
       orbit.current.pitch=Math.max(-20*Math.PI/180-basePitch,Math.min(70*Math.PI/180-basePitch,orbit.current.pitch))
     }
     const up=(event:PointerEvent)=>{pointers.delete(event.pointerId);if(canvas.hasPointerCapture(event.pointerId))canvas.releasePointerCapture(event.pointerId)}
@@ -166,14 +170,28 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
     movement.currentYaw=T.MathUtils.damp(movement.currentYaw,movement.yaw,14,delta)
     movement.currentPitch=T.MathUtils.damp(movement.currentPitch,movement.pitch,14,delta)
     const yaw=pose.yaw+movement.currentYaw, pitch=Math.max(-20*Math.PI/180,Math.min(70*Math.PI/180,pose.pitch+movement.currentPitch))
-    camera.position.set(Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch)).multiplyScalar(cameraDistance)
+    camera.position.set(Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),Math.cos(yaw)*Math.cos(pitch))
     camera.up.set(Math.sin(pose.roll),Math.cos(pose.roll),0)
+    // At molecular scale orbit around the membrane normal, keeping stroma up.
+    // Interpolate the basis over the existing granum handoff, never reset orbit.
+    if (camera instanceof T.PerspectiveCamera) {
+      const far = 2200 + (cameraDistance + 210 - 2200) * smoothstep(-6.15,-6.5,c.current)
+      if (Math.abs(camera.far-far)>.01) { camera.far=far; camera.updateProjectionMatrix() }
+    }
+    const orbitReference = getOrbitReference(c.current)
+    const molecularBlend = orbitReference.blend
+    const myaw = orbitReference.molecularYaw + movement.currentYaw
+    const mpitch = Math.max(-20 * Math.PI / 180, Math.min(70 * Math.PI / 180, orbitReference.molecularPitch + movement.currentPitch))
+    molecularFrame.direction.set(Math.sin(myaw)*Math.cos(mpitch),Math.sin(mpitch),Math.cos(myaw)*Math.cos(mpitch)).applyQuaternion(MOLECULAR_WORLD_ROTATION)
+    molecularFrame.up.set(0,1,0).applyQuaternion(MOLECULAR_WORLD_ROTATION)
+    camera.position.lerp(molecularFrame.direction,molecularBlend).normalize().multiplyScalar(cameraDistance)
+    camera.up.lerp(molecularFrame.up,molecularBlend).normalize()
     // The selected lens can migrate. Carry the last part of the dive with its
     // actual wall pose, so the same granum remains the optical target.
     focusFrame.rotation.fromArray(physiology.current.chloroplasts.poses[0].quaternion).multiply(focusFrame.inverseInitial)
     focusFrame.blend.identity().slerp(focusFrame.rotation,smoothstep(-4.85,-5.5,c.current))
     camera.position.applyQuaternion(focusFrame.blend);camera.up.applyQuaternion(focusFrame.blend);camera.lookAt(0,0,0)
-    gl.domElement.dataset.yaw=(yaw*180/Math.PI).toFixed(2);gl.domElement.dataset.pitch=(pitch*180/Math.PI).toFixed(2)
+    gl.domElement.dataset.yaw=((orbitReference.yaw+movement.currentYaw)*180/Math.PI).toFixed(2);gl.domElement.dataset.pitch=((pitch*(1-molecularBlend)+mpitch*molecularBlend)*180/Math.PI).toFixed(2)
     if (state.clock.elapsedTime - lastReport.current > 0.065) {
       onScale(c.current, size.width); lastReport.current = state.clock.elapsedTime
       gl.domElement.dataset.scale = c.current.toFixed(5)
@@ -184,7 +202,7 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
 
 function Contents(props: SceneProps) {
   const root = useRef<T.Group>(null), lens = useRef<T.Group>(null), clock = useRef(0), lastSnapshot = useRef(-1)
-  const { mobile, controller, inputs, physiology, onPhysiology } = props
+  const { mobile, controller, inputs, physiology, onPhysiology, viewScale } = props
   const snapshot = getPhysiologySnapshot(physiology.current, inputs)
   const light = snapshot.actualPPFD, brightness = getLightAppearance(light).brightness
   const skipElapsed = useRef(false)
@@ -217,8 +235,13 @@ function Contents(props: SceneProps) {
     <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
     <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
     <ScaleLayer layer="cell" controller={controller}><CellLayer opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
-    <ScaleLayer layer="chloroplast" controller={controller}><group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}><ChloroplastLayer opacity={1} mobile={mobile} light={light} starch={snapshot.starchFraction} /></group></ScaleLayer>
-  </>, [controller, mobile, brightness, physiology, inputs.timeScale, light, snapshot.starchFraction, snapshot.stomatalOpening])
+    <group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}>
+      <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
+      <group position={[...GRANUM_SECTION_ANCHOR_LOCAL]} rotation={[Math.PI/2,0,0]} scale={.001}>
+        <Suspense fallback={null}><MolecularLayers opacity={getLayerWeights(viewScale).membrane + getLayerWeights(viewScale).motor} scale={viewScale} mobile={mobile} light={light} playing={inputs.playing} timeScale={inputs.timeScale} /></Suspense>
+      </group>
+    </group>
+  </>, [controller, mobile, brightness, physiology, inputs.timeScale, inputs.playing, light, snapshot.starchFraction, snapshot.stomatalOpening, viewScale])
   return <>
     <color attach="background" args={['#04080a']} />
     <ambientLight color="#879b91" intensity={0.08 + brightness * 0.16} />
