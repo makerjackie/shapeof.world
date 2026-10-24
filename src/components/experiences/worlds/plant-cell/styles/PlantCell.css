@@ -100,3 +100,7 @@ body:has(.pc-experience[data-capture=true]) .experience-header { visibility: hid
 .pc-organelle-label small { color: #929e91; margin: 4px 0; }
 .pc-label-leader { display: block; width: 1px; height: 24px; margin: 0 auto; background: #c7d0b35c; }
 @media(max-width:719px) { .pc-tools { flex-wrap: wrap; } .pc-organelle-label { width: 180px; } }
+
+.pc-water-control { display: flex; flex: 0 0 100%; justify-content: center; gap: 2px; }
+.pc-tools { flex-wrap: wrap; }
+.pc-water-control button[aria-pressed=true] { border-color: #cfe3a077; }

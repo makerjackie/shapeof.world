@@ -4,6 +4,8 @@ import * as T from 'three'
 import { createLeafGeometry, LEAF_ENTRY, LEAF_MIDRIB_X, leafSurfaceY } from './leaf-model'
 import { createEpidermis, createGuardGeometry, createLeafVeins, guardCellMatrices } from './leaf-surface-geometry'
 
+import type { WaterReadings } from './water-model'
+
 type SurfaceKind = 'blade' | 'vein' | 'epidermis' | 'guard' | 'chloroplast'
 function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
   const colors = { blade: '#376126', vein: '#658448', epidermis: '#487133', guard: '#537d38', chloroplast: '#244a20' }
@@ -11,11 +13,13 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
     metalness: 0, clearcoat: kind === 'vein' ? .04 : .2, clearcoatRoughness: .42,
     side: T.DoubleSide, transparent: true, opacity: 1, depthWrite: kind === 'blade' || kind === 'vein',
     vertexColors: kind === 'epidermis', emissive: kind === 'vein' ? '#273411' : '#1c300d', emissiveIntensity: .11 })
+  material.userData.waterWilt = { value: 0 }
   material.userData.guardOpen = { value: .6 }
   const isMicro = ['epidermis', 'guard', 'chloroplast'].includes(kind)
   material.onBeforeCompile = (shader) => {
+    shader.uniforms.waterWilt = material.userData.waterWilt
     shader.uniforms.guardOpen = material.userData.guardOpen
-    shader.vertexShader = 'varying vec3 vLeafPosition; uniform float guardOpen;\n' + shader.vertexShader
+    shader.vertexShader = 'varying vec3 vLeafPosition; uniform float guardOpen; uniform float waterWilt;\n' + shader.vertexShader
     shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       ${kind === 'guard' ? 'transformed.x += guardOpen * 4.0 * sin(clamp((position.z / 25.0 + .5), 0.0, 1.0) * 3.141593);' : ''}
       vec4 leafPoint = vec4(transformed, 1.0);
@@ -23,6 +27,13 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         leafPoint = instanceMatrix * leafPoint;
       #endif
       vLeafPosition = leafPoint.xyz;
+      ${!isMicro ? `
+        float outsideAnchor = smoothstep(2000.0, 12000.0, length(transformed.xz));
+        float along = clamp((60000.0 - transformed.z) / 120000.0, 0.0, 1.0);
+        float edgeCurl = pow(abs((transformed.x + 1500.0) / 40000.0), 3.0);
+        transformed.y += waterWilt * outsideAnchor * (-45000.0 * along * along + 12000.0 * edgeCurl);
+        transformed.x = mix(transformed.x, -1500.0 + (transformed.x + 1500.0) * (1.0 - .14 * edgeCurl), waterWilt * outsideAnchor);
+      ` : ''}
     `)
     shader.fragmentShader = 'varying vec3 vLeafPosition; uniform float guardOpen;\n' + shader.fragmentShader
     shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
@@ -62,7 +73,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
 }
 
 /** The blade, its epidermal patch and entry pore all share L1's physical frame. */
-export function LeafLayer({ opacity, mobile = false, stomataOpen = .6 }: { opacity: number; mobile?: boolean; stomataOpen?: number }) {
+export function LeafLayer({ opacity, mobile = false, stomataOpen = .6, water }: { opacity: number; mobile?: boolean; stomataOpen?: number; water: WaterReadings }) {
   const root = useRef<T.Group>(null), detail = useRef<T.Group>(null)
   const guardsRef = useRef<T.InstancedMesh>(null), chloroplastRef = useRef<T.InstancedMesh>(null)
   const resources = useMemo(() => {
@@ -92,8 +103,9 @@ export function LeafLayer({ opacity, mobile = false, stomataOpen = .6 }: { opaci
       detail.current.visible = scale.x > .0018
     }
   })
-  Object.values(resources.materials).forEach((material) => { material.opacity = opacity; material.userData.guardOpen.value = T.MathUtils.clamp(stomataOpen, 0, 1) })
+  Object.values(resources.materials).forEach((material) => { material.opacity = opacity; material.userData.waterWilt.value = water.wilt; material.roughness = .64 + .3 * water.wilt; material.clearcoat = .2 * (1 - water.wilt); material.userData.guardOpen.value = T.MathUtils.clamp(stomataOpen, 0, 1) })
   return <group ref={root}>
+    {water.immersion > .001 && <mesh position={[-1500,-30000,10000]} rotation={[-Math.PI/2,0,0]}><planeGeometry args={[150000,210000]} /><meshPhysicalMaterial color="#8baca8" transparent opacity={.07 * opacity} roughness={.18} side={T.DoubleSide} depthWrite={false} /></mesh>}
     <mesh geometry={resources.blade} material={resources.materials.blade} />
     <mesh geometry={resources.veins.main} material={resources.materials.vein} />
     <mesh geometry={resources.veins.secondary} material={resources.materials.vein} />

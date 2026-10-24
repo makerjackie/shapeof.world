@@ -40,7 +40,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     controller.current.initialOrbit = initial.orbit
     manualSpeed.current = initial.manualSpeed
     setInputs(initial.inputs); lastLight.current = initial.inputs.I || 400
-    physiology.current = createPhysiology(initial.inputs, initial.daySeconds)
+    physiology.current = createPhysiology(initial.inputs, initial.daySeconds, initial.waterProgress)
     setSnapshot(getPhysiologySnapshot(physiology.current, initial.inputs)); setCapture(initial.capture); setGuide(initial.guide)
     setMobile(phone); setReading({ scale: initial.scale, width: window.innerWidth }); setReady(true)
     const media = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -98,6 +98,9 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <div><span>{tx('净光合')}</span><strong>{snapshot.netAssimilation.toFixed(2)} <small>μmol m⁻² s⁻¹</small></strong></div>
       <div><span>{tx('净放氧（估算）')}</span><strong>{snapshot.approximateNetOxygen.toFixed(2)} <small>μmol m⁻² s⁻¹</small></strong></div>
       {!molecular && <><div><span>{tx('气孔开度')}</span><strong>{Math.round(snapshot.stomatalOpening*100)}%</strong></div>
+      <div><span>{tx('叶水势 Ψ')}</span><strong>{snapshot.water.psi.toFixed(2)} <small>MPa</small></strong></div>
+      <div><span>{tx('膨压 P')}</span><strong>{snapshot.water.pressure.toFixed(2)} <small>MPa</small></strong></div>
+      <div><span>{tx('细胞相对体积')}</span><strong>{Math.round(snapshot.water.relativeVolume*100)}%</strong></div>
       <div><span>{tx('淀粉储量')}</span><strong>{Math.round(snapshot.starchFraction*100)}%</strong></div></>}
       {molecular && <div><span>{tx('类囊体腔宽')}</span><strong>{molecularReading.lumenNm.toFixed(1)} <small>nm</small></strong></div>}
       {active === 'membrane' && <p>{tx(inputs.timeScale === .001 ? '电子传递以约 1/1000 的局部慢放示意；亮点代表传递事件，不是粒子轨道。' : '分子运动已加快；亮点与轨迹示意事件密度，不逐个追踪真实电子。')}</p>}
@@ -114,6 +117,8 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       {active === 'cell' && <div><span>{tx('胞质环流')}</span><strong>1.3–4.3 <small>μm/s</small></strong></div>}
       {active === 'cell' && <div><span>{tx('顶面叶绿体')}</span><strong>{snapshot.topChloroplastCount} / 200</strong></div>}
       {active === 'cell' && inputs.timeScale >= 3600 && <p>{tx('环流太快，显示为轨迹')}</p>}
+      {!molecular && inputs.water === 'drought' && <p>{tx('干旱过程压缩至 3 个模拟小时；×60 下约 3 分钟。')}</p>}
+      {!molecular && inputs.water === 'saltwater' && <p>{tx('实验：叶片浸入 0.5 M NaCl，外液进入壁膜间隙。')}</p>}
       <button className="pc-readout-toggle" aria-expanded={expandedReadouts} onClick={()=>setExpandedReadouts((value)=>!value)}>{tx(expandedReadouts?'收起读数':'展开读数')}</button>
     </aside>
     <nav className="pc-logscale" data-experience-overlay="true" aria-label={tx('对数标尺')}>
@@ -129,6 +134,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     <div className="pc-scale-bar" data-experience-overlay="true" aria-label={tx('比例尺')}><span>{bar.label}</span><i style={{ width: bar.widthPx }} /><small>{tx(molecular ? 'PDB 实验结构 · 排布与运动为示意' : '程序化参照结构 · 非标本扫描')}</small></div>
     <p className="pc-gesture" data-experience-overlay="true">{tx(mobile ? '拖动旋转 · 双指缩放' : '拖动旋转 · 滚动缩放')}</p>
     {bounds && <aside className="pc-boundaries" data-experience-overlay="true"><button type="button" onClick={() => setBounds(false)} aria-label={tx('关闭')}>×</button><h2>{tx('模型边界')}</h2>
+      <p>{tx('水势与体积为压力–体积参照模型。干旱压缩至 3 小时，复水约 30 分钟；盐水交换约 5 分钟。参数非菠菜品种拟合，壁皱缩与质壁分离形状为示意。')}</p>
       <p>{tx('细胞形状、细胞器位置是按尺寸生成的参照，不是真实扫描。')}</p>
       <p>{tx('细胞壁切口显示为 0.4 μm，是 0.2 μm 参考壁厚的 2 倍；截面层切边为 0.65 μm，约 3.25 倍。')}</p>
       <p>{tx('光合曲线是参照模型；放氧按净碳同化估算，未单独计算光呼吸。气孔用 15 分钟时间常数。')}</p>
@@ -141,6 +147,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     </aside>}
     {lightHint && !capture && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
     <Freebar className={`pc-freebar ${guide ? 'pc-guide-active' : ''}`} ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
+      <div className="pc-water-control" role="group" aria-label={tx('水分')}>{([{id:'normal',label:'正常'},{id:'drought',label:'干旱'},{id:'saltwater',label:'泡盐水'}] as const).map(option=><button key={option.id} type="button" data-water={option.id} aria-pressed={inputs.water===option.id} onClick={()=>{interact();setInputs(current=>({...current,water:option.id}))}}>{tx(option.label)}</button>)}</div>
       <button type="button" data-pc-guide onClick={() => { controls.registerInteraction(); setGuide(true) }}>{tx('七站导览')}</button>
       <button type="button" onClick={reset}><ArrowCounterClockwise />{tx('回到细胞')}</button>
       <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs((current)=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>

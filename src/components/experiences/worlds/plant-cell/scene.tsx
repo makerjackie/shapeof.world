@@ -4,6 +4,7 @@ import { Bloom, DepthOfField, EffectComposer, Noise, SMAA, Vignette } from '@rea
 import * as T from 'three'
 import { BlendFunction } from 'postprocessing'
 import { isWorldPaused } from '~/lib/world-playback'
+import { getWaterReadings } from './water-model'
 import { CellLayer } from './cell-layer'
 import { LeafLayer, SectionLayer } from './leaf-layers'
 import { ChloroplastLayer } from './chloroplast-layer'
@@ -222,6 +223,8 @@ function Contents(props: SceneProps) {
     skipElapsed.current=false
     clock.current=physiology.current.simulationSeconds
     gl.domElement.dataset.simulationSeconds=clock.current.toFixed(3)
+    gl.domElement.dataset.waterPsi=physiology.current.water.psi.toFixed(4)
+    gl.domElement.dataset.waterVolume=getWaterReadings(physiology.current.water).relativeVolume.toFixed(4)
     gl.domElement.dataset.actualPpfd=physiology.current.actualPPFD.toFixed(2)
     if(renderClock.elapsedTime-lastSnapshot.current>=.2){onPhysiology(getPhysiologySnapshot(physiology.current,inputs));lastSnapshot.current=renderClock.elapsedTime}
   },-4)
@@ -229,16 +232,18 @@ function Contents(props: SceneProps) {
     const scale = controller.current.current
     const factor = 100 / 10 ** (scale + 6)
     const focus = physiology.current.chloroplasts.poses[0]
-    const anchor = getAnchorUm(scale,focus)
+    const water = getWaterReadings(physiology.current.water)
+    const shiftedFocus = { ...focus, positionUm: [focus.positionUm[0]*water.radial, focus.positionUm[1]*water.axial, focus.positionUm[2]*water.radial] as [number,number,number] }
+    const anchor = getAnchorUm(scale,shiftedFocus)
     if (root.current) {
       root.current.scale.setScalar(factor)
       root.current.position.set(-anchor[0] * factor, -anchor[1] * factor, -anchor[2] * factor)
     }
-    if(lens.current){lens.current.position.fromArray(focus.positionUm);lens.current.quaternion.fromArray(focus.quaternion)}
+    if(lens.current){lens.current.position.fromArray(shiftedFocus.positionUm);lens.current.quaternion.fromArray(focus.quaternion)}
   }, -2)
-  const layers = useMemo(() => <>
-    <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
-    <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} /></ScaleLayer>
+  const layers = <>
+    <ScaleLayer layer="leaf" controller={controller}><LeafLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} water={snapshot.water} /></ScaleLayer>
+    <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} water={snapshot.water} /></ScaleLayer>
     <ScaleLayer layer="cell" controller={controller}><CellLayer inspectable={!props.capture && getLayerWeights(viewScale).cell > .98} opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
     <group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}>
       <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer detailOnly={viewScale < -6.25} opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
@@ -246,7 +251,7 @@ function Contents(props: SceneProps) {
         <Suspense fallback={null}><MolecularLayers capture={props.capture} opacity={getLayerWeights(viewScale).membrane + getLayerWeights(viewScale).motor} scale={viewScale} mobile={mobile} light={light} playing={inputs.playing} timeScale={inputs.timeScale} /></Suspense>
       </group>
     </group>
-  </>, [controller, mobile, brightness, physiology, inputs.timeScale, inputs.playing, light, snapshot.starchFraction, snapshot.stomatalOpening, viewScale, props.capture])
+  </>
   return <>
     <color attach="background" args={['#04080a']} />
     <ambientLight color="#6a8c9b" intensity={0.025 + brightness * 0.14} />

@@ -16,10 +16,13 @@ export function parseCaptureParams(search: string, mobile = false) {
   const manualSpeed = speed !== undefined && [0, .001, 1, 60, 3600].includes(speed)
   const timeScale = manualSpeed && speed !== 0 ? speed as PlantInputs['timeScale'] : molecular ? .001 : 1
   const az = number('az'), el = number('el'), time = number('t') ?? 8
+  const water = query.get('water')
+  const waterMode = water === 'drought' || water === 'saltwater' ? water : 'normal'
   return {
     scale, manualSpeed,
+    waterProgress: Math.max(0, Math.min(1, number('wt') ?? (waterMode === 'normal' ? 0 : 1))),
     touched: query.has('scale') || az !== undefined || el !== undefined || query.get('capture') === '1',
-    inputs: { ...DEFAULT_INPUTS, I: clampLight(number('light') ?? DEFAULT_INPUTS.I), timeScale, playing: speed !== 0 } satisfies PlantInputs,
+    inputs: { ...DEFAULT_INPUTS, water: waterMode, I: clampLight(number('light') ?? DEFAULT_INPUTS.I), timeScale, playing: speed !== 0 } satisfies PlantInputs,
     daySeconds: ((time % 24 + 24) % 24) * 3600,
     // Degrees relative to the current anatomical frame. Missing axes keep their default.
     orbit: az !== undefined || el !== undefined ? {
