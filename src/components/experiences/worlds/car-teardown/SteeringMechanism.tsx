@@ -1,11 +1,13 @@
-import {useEffect, useMemo, useRef, type RefObject} from 'react'
-import {useFrame} from '@react-three/fiber'
-import {Html} from '@react-three/drei'
+import { useEffect, useMemo, useRef, type RefObject } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { Html } from '@react-three/drei'
 import * as T from 'three'
-import {useExperienceI18n} from '~/i18n/experience'
-import {Wheel, type WheelPose} from './Wheels'
-import {createXrayMaterial} from './engine-geometry'
-import {createAnnulus} from './transmission-geometry'
+import { useExperienceI18n } from '~/i18n/experience'
+import { TeardownPart, useTeardownProgress } from './TeardownPart'
+import { ROAD_TEARDOWN_SPEC as R, outwardOffset } from './road-teardown-spec'
+import { Wheel, type WheelPose } from './Wheels'
+import { createXrayMaterial } from './engine-geometry'
+import { createAnnulus } from './transmission-geometry'
 import {
 	createAxleHousing,
 	createDifferentialResources,
@@ -25,9 +27,15 @@ import {
 	type SteeringState,
 	type SteeringWheelId,
 } from './steering-model'
-import {STEERING_GEOMETRY as G, VEHICLE_SPEC as S} from './vehicle-spec'
+import {
+	STEERING_GEOMETRY as G,
+	CHASSIS_GEOMETRY as C,
+	BODY_GEOMETRY as B,
+	VEHICLE_SPEC as S,
+} from './vehicle-spec'
+import { bodyPoint } from './body-geometry'
 
-type Clock = {stateRef: RefObject<SteeringState>}
+type Clock = { stateRef: RefObject<SteeringState> }
 const Z_AXIS = new T.Vector3(0, 0, 1),
 	Y_AXIS = new T.Vector3(0, 1, 0)
 const STEEL = S.materials.steel
@@ -58,13 +66,14 @@ function Rod({
 			position={a.add(b).multiplyScalar(0.5)}
 			quaternion={new T.Quaternion().setFromUnitVectors(Y_AXIS, d.clone().normalize())}
 			castShadow
-			userData={{partId: id}}>
+			userData={{ partId: id }}
+		>
 			<cylinderGeometry args={[radius, radius, d.length(), 24]} />
 			<meshStandardMaterial {...STEEL} color={color} />
 		</mesh>
 	)
 }
-function Ball({position, radius = G.ballRadius}: {position: SteeringPoint; radius?: number}) {
+function Ball({ position, radius = G.ballRadius }: { position: SteeringPoint; radius?: number }) {
 	return (
 		<mesh position={position} castShadow>
 			<sphereGeometry args={[radius, 20, 12]} />
@@ -95,42 +104,45 @@ function Universal({
 					: stateRef.current.columnMiddleAngle
 	})
 	return (
-		<group
-			position={position}
-			quaternion={new T.Quaternion().setFromUnitVectors(Z_AXIS, new T.Vector3(...axis))}
-			userData={{partId: id}}>
-			<group ref={rotating}>
-				{[-1, 1].map((side) => (
-					<group key={side}>
-						<Rod
-							from={[side * G.universalRadius, 0, -G.universalLength / 2]}
-							to={[side * G.universalRadius, 0, G.universalLength / 2]}
-							radius={G.crossRadius}
-						/>
-						<Rod
-							from={[0, side * G.universalRadius, 0]}
-							to={[0, side * G.universalRadius, G.universalLength]}
-							radius={G.crossRadius}
-						/>
-					</group>
-				))}
-				<Rod
-					from={[-G.universalRadius, 0, 0]}
-					to={[G.universalRadius, 0, 0]}
-					radius={G.crossRadius}
-					color={AMBER}
-				/>
-				<Rod
-					from={[0, -G.universalRadius, 0]}
-					to={[0, G.universalRadius, 0]}
-					radius={G.crossRadius}
-					color={AMBER}
-				/>
+		<TeardownPart id="steer-universals" anchor={position}>
+			<group
+				position={position}
+				quaternion={new T.Quaternion().setFromUnitVectors(Z_AXIS, new T.Vector3(...axis))}
+				userData={{ partId: id }}
+			>
+				<group ref={rotating}>
+					{[-1, 1].map((side) => (
+						<group key={side}>
+							<Rod
+								from={[side * G.universalRadius, 0, -G.universalLength / 2]}
+								to={[side * G.universalRadius, 0, G.universalLength / 2]}
+								radius={G.crossRadius}
+							/>
+							<Rod
+								from={[0, side * G.universalRadius, 0]}
+								to={[0, side * G.universalRadius, G.universalLength]}
+								radius={G.crossRadius}
+							/>
+						</group>
+					))}
+					<Rod
+						from={[-G.universalRadius, 0, 0]}
+						to={[G.universalRadius, 0, 0]}
+						radius={G.crossRadius}
+						color={AMBER}
+					/>
+					<Rod
+						from={[0, -G.universalRadius, 0]}
+						to={[0, G.universalRadius, 0]}
+						radius={G.crossRadius}
+						color={AMBER}
+					/>
+				</group>
 			</group>
-		</group>
+		</TeardownPart>
 	)
 }
-function SteeringColumn({stateRef}: Clock) {
+function SteeringColumn({ stateRef }: Clock) {
 	const wheel = useRef<T.Group>(null),
 		middle = useRef<T.Group>(null),
 		lower = useRef<T.Group>(null)
@@ -151,68 +163,83 @@ function SteeringColumn({stateRef}: Clock) {
 	return (
 		<>
 			<group position={S.steering.wheelPosition} quaternion={upperOrientation}>
-				<group ref={wheel} userData={{partId: 'steering-wheel'}}>
-					<mesh>
-						<torusGeometry args={[G.steeringWheelRadius, G.steeringWheelTube, 12, 96]} />
-						<meshStandardMaterial color="#20262c" roughness={0.65} />
-					</mesh>
-					<mesh rotation-x={Math.PI / 2}>
-						<cylinderGeometry
-							args={[G.steeringHubRadius, G.steeringHubRadius, G.steeringHubDepth, 32]}
+				<group ref={wheel}>
+					<TeardownPart id="steer-wheel" offset={[0, 0, R.steering.wheelAxial]} anchor={[0, 0, 0]}>
+						<group userData={{ partId: 'steering-wheel' }}>
+							<mesh>
+								<torusGeometry args={[G.steeringWheelRadius, G.steeringWheelTube, 12, 96]} />
+								<meshStandardMaterial color="#20262c" roughness={0.65} />
+							</mesh>
+							<mesh rotation-x={Math.PI / 2}>
+								<cylinderGeometry
+									args={[G.steeringHubRadius, G.steeringHubRadius, G.steeringHubDepth, 32]}
+								/>
+								<meshStandardMaterial {...STEEL} color="#515f6b" />
+							</mesh>
+							{[0, (Math.PI * 2) / 3, (Math.PI * 4) / 3].map((a) => (
+								<mesh
+									key={a}
+									position={[
+										Math.sin(a) * G.steeringWheelRadius * 0.58,
+										Math.cos(a) * G.steeringWheelRadius * 0.58,
+										0,
+									]}
+									rotation-z={-a}
+								>
+									<boxGeometry args={[G.spokeWidth, G.steeringWheelRadius * 0.77, G.spokeDepth]} />
+									<meshStandardMaterial {...STEEL} />
+								</mesh>
+							))}
+							<mesh position={[0, G.steeringWheelRadius, 0]}>
+								<boxGeometry
+									args={[
+										G.steeringWheelTube * 0.6,
+										G.steeringWheelTube * 2.05,
+										G.steeringWheelTube * 2.05,
+									]}
+								/>
+								<meshStandardMaterial color={AMBER} metalness={0.55} roughness={0.4} />
+							</mesh>
+						</group>
+					</TeardownPart>
+					<TeardownPart
+						id="steer-column"
+						offset={[0, 0, R.steering.columnAxial]}
+						anchor={[0, 0, G.upperShaftLength / 2]}
+					>
+						<Rod
+							from={[0, 0, 0]}
+							to={[0, 0, G.upperShaftLength]}
+							radius={G.shaftRadius}
+							id="steering-column"
 						/>
-						<meshStandardMaterial {...STEEL} color="#515f6b" />
-					</mesh>
-					{[0, (Math.PI * 2) / 3, (Math.PI * 4) / 3].map((a) => (
-						<mesh
-							key={a}
-							position={[
-								Math.sin(a) * G.steeringWheelRadius * 0.58,
-								Math.cos(a) * G.steeringWheelRadius * 0.58,
-								0,
-							]}
-							rotation-z={-a}>
-							<boxGeometry args={[G.spokeWidth, G.steeringWheelRadius * 0.77, G.spokeDepth]} />
-							<meshStandardMaterial {...STEEL} />
-						</mesh>
-					))}
-					<mesh position={[0, G.steeringWheelRadius, 0]}>
-						<boxGeometry
-							args={[
-								G.steeringWheelTube * 0.6,
-								G.steeringWheelTube * 2.05,
-								G.steeringWheelTube * 2.05,
-							]}
+					</TeardownPart>
+				</group>
+			</group>
+			<TeardownPart id="steer-intermediate">
+				<group position={UPPER_JOINT} quaternion={middleOrientation}>
+					<group ref={middle}>
+						<Rod
+							from={[0, 0, 0]}
+							to={[0, 0, middleLength]}
+							radius={G.shaftRadius}
+							id="steering-intermediate-shaft"
 						/>
-						<meshStandardMaterial color={AMBER} metalness={0.55} roughness={0.4} />
-					</mesh>
-					<Rod
-						from={[0, 0, 0]}
-						to={[0, 0, G.upperShaftLength]}
-						radius={G.shaftRadius}
-						id="steering-column"
-					/>
+					</group>
 				</group>
-			</group>
-			<group position={UPPER_JOINT} quaternion={middleOrientation}>
-				<group ref={middle}>
-					<Rod
-						from={[0, 0, 0]}
-						to={[0, 0, middleLength]}
-						radius={G.shaftRadius}
-						id="steering-intermediate-shaft"
-					/>
+			</TeardownPart>
+			<TeardownPart id="steer-column" anchor={LOWER_JOINT}>
+				<group position={LOWER_JOINT} quaternion={upperOrientation}>
+					<group ref={lower}>
+						<Rod
+							from={[0, 0, 0]}
+							to={[0, 0, G.lowerShaftLength]}
+							radius={G.shaftRadius}
+							id="steering-lower-shaft"
+						/>
+					</group>
 				</group>
-			</group>
-			<group position={LOWER_JOINT} quaternion={upperOrientation}>
-				<group ref={lower}>
-					<Rod
-						from={[0, 0, 0]}
-						to={[0, 0, G.lowerShaftLength]}
-						radius={G.shaftRadius}
-						id="steering-lower-shaft"
-					/>
-				</group>
-			</group>
+			</TeardownPart>
 			<Universal
 				position={UPPER_JOINT}
 				axis={COLUMN_AXIS}
@@ -230,7 +257,8 @@ function SteeringColumn({stateRef}: Clock) {
 		</>
 	)
 }
-function Rack({stateRef}: Clock) {
+function Rack({ stateRef }: Clock) {
+	const amount = useTeardownProgress()
 	const rack = useRef<T.Group>(null),
 		pinion = useRef<T.Group>(null)
 	const teeth = useGeometry(createRackTeeth),
@@ -250,54 +278,108 @@ function Rack({stateRef}: Clock) {
 	})
 	return (
 		<>
-			<mesh
-				position={S.steering.rackPosition}
-				geometry={housing}
-				material={xray}
-				userData={{partId: 'steering-rack'}}
-			/>
-			<group ref={rack} userData={{partId: 'steering-rack-bar'}}>
-				<Rod
-					from={[S.steering.rackPosition[0], S.steering.rackPosition[1], -G.rackLength / 2]}
-					to={[S.steering.rackPosition[0], S.steering.rackPosition[1], G.rackLength / 2]}
-					radius={G.rackRadius}
-				/>
-				<mesh geometry={teeth}>
-					<meshStandardMaterial {...STEEL} color="#b6bdc4" roughness={0.28} />
+			<TeardownPart id="steer-housing">
+				<mesh
+					position={S.steering.rackPosition}
+					geometry={housing}
+					material={amount < 0.02 ? xray : undefined}
+					userData={{ partId: 'steering-rack' }}
+				>
+					{amount >= 0.02 && <meshStandardMaterial {...S.materials.aluminum} />}
 				</mesh>
-			</group>
-			<group position={PINION_POSITION} quaternion={rackPinionQuaternion()}>
-				<group ref={pinion} userData={{partId: 'steering-pinion'}}>
-					<mesh geometry={gear}>
-						<meshStandardMaterial {...STEEL} color={AMBER} />
+			</TeardownPart>
+			<TeardownPart id="steer-rackbar">
+				<group ref={rack} userData={{ partId: 'steering-rack-bar' }}>
+					<Rod
+						from={[S.steering.rackPosition[0], S.steering.rackPosition[1], -G.rackLength / 2]}
+						to={[S.steering.rackPosition[0], S.steering.rackPosition[1], G.rackLength / 2]}
+						radius={G.rackRadius}
+					/>
+					<mesh geometry={teeth}>
+						<meshStandardMaterial {...STEEL} color="#b6bdc4" roughness={0.28} />
 					</mesh>
 				</group>
-			</group>
+			</TeardownPart>
+			<TeardownPart id="steer-pinion">
+				<group position={PINION_POSITION} quaternion={rackPinionQuaternion()}>
+					<group ref={pinion} userData={{ partId: 'steering-pinion' }}>
+						<mesh geometry={gear}>
+							<meshStandardMaterial {...STEEL} color={AMBER} />
+						</mesh>
+					</group>
+				</group>
+			</TeardownPart>
+			<AssistMotor />
 			{[-1, 1].map((side) => (
-				<group
+				<TeardownPart
 					key={side}
-					position={[
+					id="steer-gaiters"
+					offset={outwardOffset(R.steering.boots, side)}
+					anchor={[
 						S.steering.rackPosition[0],
 						S.steering.rackPosition[1],
 						(side * (G.rackHousingLength + G.bootLength)) / 2,
 					]}
-					userData={{partId: `steering-rack-boot-${side < 0 ? 1 : 2}`}}>
-					{Array.from({length: G.bootFolds}, (_, i) => (
-						<mesh key={i} position-z={(i / (G.bootFolds - 1) - 0.5) * G.bootLength}>
-							<torusGeometry args={[G.bootRadius, (G.bootLength / G.bootFolds) * 0.36, 8, 24]} />
-							<meshStandardMaterial color="#24282d" roughness={0.78} />
-						</mesh>
-					))}
-				</group>
+				>
+					<group
+						position={[
+							S.steering.rackPosition[0],
+							S.steering.rackPosition[1],
+							(side * (G.rackHousingLength + G.bootLength)) / 2,
+						]}
+						userData={{ partId: `steering-rack-boot-${side < 0 ? 1 : 2}` }}
+					>
+						{Array.from({ length: G.bootFolds }, (_, i) => (
+							<mesh key={i} position-z={(i / (G.bootFolds - 1) - 0.5) * G.bootLength}>
+								<torusGeometry args={[G.bootRadius, (G.bootLength / G.bootFolds) * 0.36, 8, 24]} />
+								<meshStandardMaterial color="#24282d" roughness={0.78} />
+							</mesh>
+						))}
+					</group>
+				</TeardownPart>
 			))}
 		</>
 	)
 }
-function SteeringCorner({id, stateRef}: Clock & {id: SteeringWheelId}) {
+function AssistMotor() {
+	return (
+		<TeardownPart id="steer-assist">
+			<group
+				position={[...R.steering.motorPosition]}
+				userData={{ partId: 'steering-assist-motor' }}
+			>
+				<mesh rotation-x={Math.PI / 2} castShadow>
+					<cylinderGeometry
+						args={[R.steering.motorRadius, R.steering.motorRadius, R.steering.motorLength, 40]}
+					/>
+					<meshStandardMaterial {...S.materials.aluminum} />
+				</mesh>
+				{[-1, 1].map((side) => (
+					<mesh
+						key={side}
+						position-z={(side * R.steering.motorLength) / 2}
+						rotation-x={Math.PI / 2}
+					>
+						<cylinderGeometry
+							args={[
+								R.steering.motorRadius * 1.05,
+								R.steering.motorRadius * 1.05,
+								G.carrierWall * 2,
+								40,
+							]}
+						/>
+						<meshStandardMaterial color="#303d48" metalness={0.8} roughness={0.4} />
+					</mesh>
+				))}
+			</group>
+		</TeardownPart>
+	)
+}
+function SteeringCorner({ id, stateRef }: Clock & { id: SteeringWheelId }) {
 	const front = id.startsWith('front'),
 		side = id.endsWith('Left') ? -1 : 1,
 		index = side < 0 ? 1 : 2
-	const pose = useRef<WheelPose>({steer: 0, heave: 0}),
+	const pose = useRef<WheelPose>({ steer: 0, heave: 0 }),
 		spin = useRef(0),
 		knuckle = useRef<T.Group>(null),
 		tie = useRef<T.Mesh>(null)
@@ -335,27 +417,48 @@ function SteeringCorner({id, stateRef}: Clock & {id: SteeringWheelId}) {
 			<Wheel axle={front ? 'front' : 'rear'} side={side} poseRef={pose} spinRef={spin} />
 			{front && (
 				<>
-					<group position={hub} ref={knuckle} userData={{partId: `suspension-knuckle-${index}`}}>
-						<Rod
-							from={[0, -G.knuckleHeight / 2, 0]}
-							to={[0, G.knuckleHeight / 2, 0]}
-							radius={G.knuckleWidth / 2}
-						/>
-						<Rod from={[0, 0, 0]} to={arm.toArray()} radius={G.knuckleWidth / 2} />
-						<Ball position={arm.toArray() as SteeringPoint} />
-						<Rod
-							from={[0, 0, -G.hubLength / 2]}
-							to={[0, 0, G.hubLength / 2]}
-							radius={G.hubRadius}
-						/>
-					</group>
-					<mesh ref={tie} geometry={tieGeometry} castShadow userData={{partId: `tie-rod-${index}`}}>
-						<meshStandardMaterial {...STEEL} />
-					</mesh>
-					<mesh ref={joint}>
-						<sphereGeometry args={[G.ballRadius, 20, 12]} />
-						<meshStandardMaterial {...STEEL} />
-					</mesh>
+					<TeardownPart
+						id="steer-knuckles"
+						offset={outwardOffset(R.steering.knuckles, side)}
+						anchor={hub}
+					>
+						<group
+							position={hub}
+							ref={knuckle}
+							userData={{ partId: `suspension-knuckle-${index}` }}
+						>
+							<Rod
+								from={[0, -G.knuckleHeight / 2, 0]}
+								to={[0, G.knuckleHeight / 2, 0]}
+								radius={G.knuckleWidth / 2}
+							/>
+							<Rod from={[0, 0, 0]} to={arm.toArray()} radius={G.knuckleWidth / 2} />
+							<Ball position={arm.toArray() as SteeringPoint} />
+							<Rod
+								from={[0, 0, -G.hubLength / 2]}
+								to={[0, 0, G.hubLength / 2]}
+								radius={G.hubRadius}
+							/>
+						</group>
+					</TeardownPart>
+					<TeardownPart
+						id="steer-ties"
+						offset={outwardOffset(R.steering.ties, side)}
+						anchor={[hub[0] - G.steeringArmRear, hub[1], side * 0.65]}
+					>
+						<mesh
+							ref={tie}
+							geometry={tieGeometry}
+							castShadow
+							userData={{ partId: `tie-rod-${index}` }}
+						>
+							<meshStandardMaterial {...STEEL} />
+						</mesh>
+						<mesh ref={joint}>
+							<sphereGeometry args={[G.ballRadius, 20, 12]} />
+							<meshStandardMaterial {...STEEL} />
+						</mesh>
+					</TeardownPart>
 				</>
 			)}
 		</>
@@ -364,7 +467,7 @@ function SteeringCorner({id, stateRef}: Clock & {id: SteeringWheelId}) {
 
 /** Side gears follow the two half shafts; only the planets' relative spin is
  * nested inside the carrier's orbit. Straight-line travel therefore has zero spin. */
-export function SteeringDifferential({stateRef, closeup = false}: Clock & {closeup?: boolean}) {
+export function SteeringDifferential({ stateRef, closeup = false }: Clock & { closeup?: boolean }) {
 	const carrier = useRef<T.Group>(null),
 		pinion = useRef<T.Group>(null),
 		left = useRef<T.Group>(null),
@@ -397,38 +500,50 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 	return (
 		<group position={[S.dimensions.rearAxleX, S.wheels.radius, 0]}>
 			{closeup && <DifferentialLabels stateRef={stateRef} />}
-			<mesh geometry={housing} material={xray} userData={{partId: 'differential-housing'}} />
+			<mesh geometry={housing} material={xray} userData={{ partId: 'differential-housing' }} />
 			<lineSegments geometry={edges}>
-				<lineBasicMaterial color={S.materials.xray} transparent opacity={0.13} depthWrite={false} />
+				<lineBasicMaterial
+					color={S.materials.xray}
+					transparent
+					opacity={closeup ? 0.32 : 0.13}
+					depthWrite={false}
+				/>
 			</lineSegments>
-			<group ref={pinion} userData={{partId: 'final-drive-pinion'}}>
+			<group ref={pinion} userData={{ partId: 'final-drive-pinion' }}>
 				<mesh geometry={resources.pinion}>
 					<meshStandardMaterial {...STEEL} color="#b0a185" />
 				</mesh>
 				<Rod
 					from={[G.axleHousingRadius, 0, 0]}
-					to={[G.driveShaftFrontX - S.dimensions.rearAxleX, 0, 0]}
+					to={[
+						closeup ? R.steering.differentialPropStub : G.driveShaftFrontX - S.dimensions.rearAxleX,
+						0,
+						0,
+					]}
 					radius={G.driveShaftRadius}
 					id="driveshaft"
 				/>
-				<mesh
-					position={[
-						(G.driveShaftFrontX - S.dimensions.rearAxleX + G.axleHousingRadius) / 2,
-						G.driveShaftRadius,
-						0,
-					]}>
-					<boxGeometry
-						args={[
-							(G.driveShaftFrontX - S.dimensions.rearAxleX) * 0.4,
-							G.carrierBoltRadius,
-							G.carrierBoltRadius,
+				{!closeup && (
+					<mesh
+						position={[
+							(G.driveShaftFrontX - S.dimensions.rearAxleX + G.axleHousingRadius) / 2,
+							G.driveShaftRadius,
+							0,
 						]}
-					/>
-					<meshStandardMaterial color={AMBER} />
-				</mesh>
+					>
+						<boxGeometry
+							args={[
+								(G.driveShaftFrontX - S.dimensions.rearAxleX) * 0.4,
+								G.carrierBoltRadius,
+								G.carrierBoltRadius,
+							]}
+						/>
+						<meshStandardMaterial color={AMBER} />
+					</mesh>
+				)}
 			</group>
-			<group ref={carrier} userData={{partId: 'differential'}}>
-				<mesh geometry={resources.ring} userData={{partId: 'final-drive-ring'}}>
+			<group ref={carrier} userData={{ partId: 'differential' }}>
+				<mesh geometry={resources.ring} userData={{ partId: 'final-drive-ring' }}>
 					<meshStandardMaterial {...STEEL} color="#c0c6ca" />
 				</mesh>
 				{[-1, 1].map((side) => (
@@ -436,7 +551,8 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 						key={side}
 						position-z={(side * G.carrierLength) / 2}
 						geometry={carrierEnd}
-						userData={{partId: 'differential-carrier'}}>
+						userData={{ partId: 'differential-carrier' }}
+					>
 						<meshStandardMaterial {...STEEL} color="#77848f" />
 					</mesh>
 				))}
@@ -448,7 +564,7 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 						</mesh>
 					</group>
 				))}
-				{Array.from({length: G.carrierBoltCount}, (_, i) => (
+				{Array.from({ length: G.carrierBoltCount }, (_, i) => (
 					<mesh
 						key={i}
 						position={[
@@ -458,7 +574,8 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 								(G.carrierRadius - G.carrierWall / 2),
 							G.carrierLength / 2 + G.carrierWall / 2,
 						]}
-						rotation-x={Math.PI / 2}>
+						rotation-x={Math.PI / 2}
+					>
 						<cylinderGeometry args={[G.carrierBoltRadius, G.carrierBoltRadius, G.carrierWall, 6]} />
 						<meshStandardMaterial {...STEEL} />
 					</mesh>
@@ -473,7 +590,8 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 					<group key={side} rotation-x={(-side * Math.PI) / 2}>
 						<group
 							ref={i === 0 ? planetA : planetB}
-							userData={{partId: `differential-planet-${i + 1}`}}>
+							userData={{ partId: `differential-planet-${i + 1}` }}
+						>
 							<mesh geometry={resources.planet}>
 								<meshStandardMaterial {...STEEL} color="#ba9a66" roughness={0.3} />
 							</mesh>
@@ -482,7 +600,8 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 									G.bevelModule * S.transmission.differential.planetTeeth * 0.28,
 									0,
 									(G.bevelModule * S.transmission.differential.sideTeeth) / 2,
-								]}>
+								]}
+							>
 								<sphereGeometry args={[G.carrierBoltRadius * 0.75, 10, 8]} />
 								<meshStandardMaterial color="#eed2a3" emissive="#d8b16e" emissiveIntensity={0.25} />
 							</mesh>
@@ -495,30 +614,38 @@ export function SteeringDifferential({stateRef, closeup = false}: Clock & {close
 					<mesh
 						rotation-y={side < 0 ? Math.PI : 0}
 						geometry={resources.side}
-						userData={{partId: `differential-side-gear-${i + 1}`}}>
+						userData={{ partId: `differential-side-gear-${i + 1}` }}
+					>
 						<meshStandardMaterial {...STEEL} color="#a8b5be" />
 					</mesh>
 					<Rod
 						from={[0, 0, (side * G.carrierLength) / 2]}
-						to={[0, 0, (side * S.wheels.rearTrack) / 2]}
+						to={[
+							0,
+							0,
+							side * (closeup ? R.steering.differentialStubLength : S.wheels.rearTrack / 2),
+						]}
 						radius={G.halfshaftRadius}
 						id={`halfshaft-${i + 1}`}
 					/>
-					<mesh
-						position={[
-							G.halfshaftRadius,
-							0,
-							side * (S.wheels.rearTrack / 4 + G.carrierLength / 4),
-						]}>
-						<boxGeometry
-							args={[
-								G.carrierBoltRadius,
-								G.carrierBoltRadius,
-								S.wheels.rearTrack / 2 - G.carrierLength / 2,
+					{!closeup && (
+						<mesh
+							position={[
+								G.halfshaftRadius,
+								0,
+								side * (S.wheels.rearTrack / 4 + G.carrierLength / 4),
 							]}
-						/>
-						<meshStandardMaterial color={AMBER} />
-					</mesh>
+						>
+							<boxGeometry
+								args={[
+									G.carrierBoltRadius,
+									G.carrierBoltRadius,
+									S.wheels.rearTrack / 2 - G.carrierLength / 2,
+								]}
+							/>
+							<meshStandardMaterial color={AMBER} />
+						</mesh>
+					)}
 				</group>
 			))}
 		</group>
@@ -543,12 +670,13 @@ function DifferentialLabel({
 	const tx = useExperienceI18n(),
 		left = dx < 0
 	return (
-		<Html position={position} zIndexRange={[20, 0]} style={{pointerEvents: 'none'}}>
+		<Html position={position} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
 			<svg
 				width="1"
 				height="1"
-				style={{overflow: 'visible', position: 'absolute'}}
-				aria-hidden="true">
+				style={{ overflow: 'visible', position: 'absolute' }}
+				aria-hidden="true"
+			>
 				<path
 					d={`M0 0 L${dx * 0.7} ${dy} H${dx}`}
 					fill="none"
@@ -569,9 +697,10 @@ function DifferentialLabel({
 					whiteSpace: 'nowrap',
 					letterSpacing: '.04em',
 					textShadow: '0 1px 5px #08090c',
-				}}>
+				}}
+			>
 				{tx(name)}{' '}
-				<span style={{color: '#aabac6', fontSize: 10}}>
+				<span style={{ color: '#aabac6', fontSize: 10 }}>
 					· {teeth} {tx('齿')}
 				</span>
 			</span>
@@ -581,7 +710,7 @@ function DifferentialLabel({
 
 /** The planet label's anchor orbits with its actual gear. The left/top/right
  * label sectors keep the three short leaders apart at the close-up camera. */
-function DifferentialLabels({stateRef}: Clock) {
+function DifferentialLabels({ stateRef }: Clock) {
 	const planet = useRef<T.Group>(null)
 	const planetAnchor = useMemo(
 		() => new T.Vector3(0, (G.bevelModule * S.transmission.differential.sideTeeth) / 2, 0),
@@ -630,7 +759,7 @@ function DifferentialLabels({stateRef}: Clock) {
 	)
 }
 
-function AckermannConstruction({stateRef}: Clock) {
+function AckermannConstruction({ stateRef }: Clock) {
 	const tx = useExperienceI18n(),
 		centre = useRef<T.Group>(null),
 		centreLabel = useRef<HTMLSpanElement>(null)
@@ -665,14 +794,14 @@ function AckermannConstruction({stateRef}: Clock) {
 						depthWrite: false,
 					}),
 				)
-				return {normal, arc, normalLine, arcLine}
+				return { normal, arc, normalLine, arcLine }
 			}),
 		[],
 	)
 	const previous = useRef(NaN)
 	useEffect(
 		() => () =>
-			lines.forEach(({normal, arc, normalLine, arcLine}) => {
+			lines.forEach(({ normal, arc, normalLine, arcLine }) => {
 				normal.dispose()
 				arc.dispose()
 				normalLine.material.dispose()
@@ -728,7 +857,7 @@ function AckermannConstruction({stateRef}: Clock) {
 	})
 	return (
 		<group>
-			{lines.map(({normalLine, arcLine}, i) => (
+			{lines.map(({ normalLine, arcLine }, i) => (
 				<group key={i}>
 					<primitive object={normalLine} />
 					<primitive object={arcLine} />
@@ -748,7 +877,8 @@ function AckermannConstruction({stateRef}: Clock) {
 						fontSize: 10,
 						whiteSpace: 'nowrap',
 						letterSpacing: '.08em',
-					}}>
+					}}
+				>
 					<span>
 						{tx('转弯中心')} · <span ref={centreLabel} />
 					</span>
@@ -758,14 +888,150 @@ function AckermannConstruction({stateRef}: Clock) {
 	)
 }
 
+/** Faint body perimeter and real subframe references keep the geometric
+ * construction tied to the vehicle rather than floating in empty space. */
+function SteeringContext() {
+	const outline = useGeometry(() => {
+		const vertices: number[] = []
+		const first = B.sections[0][0],
+			last = B.sections[B.sections.length - 1][0]
+		for (const side of [-1, 1])
+			for (let i = 0; i < 128; i++) {
+				const a = bodyPoint(
+					T.MathUtils.lerp(first, last, i / 128),
+					side * B.flankParameter * Math.PI,
+				)
+				const b = bodyPoint(
+					T.MathUtils.lerp(first, last, (i + 1) / 128),
+					side * B.flankParameter * Math.PI,
+				)
+				vertices.push(a.x, G.constructionY * 3, a.z, b.x, G.constructionY * 3, b.z)
+			}
+		for (const x of [first, last])
+			for (let i = 0; i < 32; i++) {
+				const a = bodyPoint(
+					x,
+					T.MathUtils.lerp(-B.flankParameter, B.flankParameter, i / 32) * Math.PI,
+				)
+				const b = bodyPoint(
+					x,
+					T.MathUtils.lerp(-B.flankParameter, B.flankParameter, (i + 1) / 32) * Math.PI,
+				)
+				vertices.push(a.x, G.constructionY * 3, a.z, b.x, G.constructionY * 3, b.z)
+			}
+		return new T.BufferGeometry().setAttribute(
+			'position',
+			new T.Float32BufferAttribute(vertices, 3),
+		)
+	})
+	return (
+		<group name="steering-body-reference">
+			<lineSegments geometry={outline}>
+				<lineBasicMaterial
+					color="#8aa0b1"
+					transparent
+					opacity={R.steering.outlineOpacity}
+					depthWrite={false}
+				/>
+			</lineSegments>
+			{(['front', 'rear'] as const).map((axle) => {
+				const x = axle === 'front' ? S.dimensions.frontAxleX : S.dimensions.rearAxleX
+				const length = axle === 'front' ? C.subframe.frontLength : C.subframe.rearLength
+				const p = (dx: number, z: number) => [x + dx, C.crossmember.y, z]
+				return (
+					<group key={axle}>
+						{[-1, 1].map((side) => (
+							<group key={side}>
+								<Rod
+									from={p(-length / 2, side * C.rail.z)}
+									to={p(length / 2, side * C.rail.z)}
+									radius={C.subframe.beamRadius}
+									color="#35424c"
+								/>
+								<Rod
+									from={p(-length / 2, side * C.rail.z)}
+									to={axle === 'front' ? p(length / 2, 0) : p(-length / 2, -side * C.rail.z)}
+									radius={C.subframe.beamRadius}
+									color="#35424c"
+								/>
+							</group>
+						))}
+						<Rod
+							from={p(length / 2, -C.rail.z)}
+							to={p(length / 2, C.rail.z)}
+							radius={C.subframe.beamRadius}
+							color="#35424c"
+						/>
+					</group>
+				)
+			})}
+		</group>
+	)
+}
+function SteeringAngle({ stateRef, side }: Clock & { side: -1 | 1 }) {
+	const label = useRef<HTMLSpanElement>(null)
+	const arc = useMemo(() => {
+		const geometry = new T.BufferGeometry().setAttribute(
+			'position',
+			new T.BufferAttribute(new Float32Array((R.steering.angleArcSegments + 1) * 3), 3),
+		)
+		return new T.Line(
+			geometry,
+			new T.LineBasicMaterial({ color: AMBER, transparent: true, opacity: 0.8, depthWrite: false }),
+		)
+	}, [])
+	useEffect(
+		() => () => {
+			arc.geometry.dispose()
+			arc.material.dispose()
+		},
+		[arc],
+	)
+	useFrame(() => {
+		const angle = side < 0 ? stateRef.current.leftAngle : stateRef.current.rightAngle
+		const position = arc.geometry.getAttribute('position')
+		for (let i = 0; i <= R.steering.angleArcSegments; i++) {
+			const a = (angle * i) / R.steering.angleArcSegments
+			position.setXYZ(
+				i,
+				Math.cos(a) * R.steering.angleArcRadius,
+				G.constructionY * 2,
+				-Math.sin(a) * R.steering.angleArcRadius,
+			)
+		}
+		position.needsUpdate = true
+		arc.geometry.computeBoundingSphere()
+		if (label.current)
+			label.current.textContent = `${((Math.abs(angle) * 180) / Math.PI).toFixed(1)}°`
+	})
+	return (
+		<group position={[S.dimensions.frontAxleX, 0, (side * S.wheels.frontTrack) / 2]}>
+			<primitive object={arc} />
+			<Html
+				position={[
+					R.steering.angleArcRadius,
+					G.constructionY * 2,
+					side * R.steering.angleArcRadius * 0.45,
+				]}
+				center
+				style={{ pointerEvents: 'none', color: AMBER, fontSize: 10, whiteSpace: 'nowrap' }}
+			>
+				<span ref={label} />
+			</Html>
+		</group>
+	)
+}
+
 export function SteeringMechanism({
 	stateRef,
 	showConstruction,
 	closeup = false,
-}: Clock & {showConstruction: boolean; closeup?: boolean}) {
+}: Clock & { showConstruction: boolean; closeup?: boolean }) {
+	const amount = useTeardownProgress()
+	const detail = closeup && amount < 0.01
 	return (
 		<group>
-			{!closeup && (
+			{!detail && (
 				<>
 					<SteeringColumn stateRef={stateRef} />
 					<Rack stateRef={stateRef} />
@@ -774,8 +1040,15 @@ export function SteeringMechanism({
 					))}
 				</>
 			)}
-			<SteeringDifferential stateRef={stateRef} closeup={closeup} />
-			{showConstruction && <AckermannConstruction stateRef={stateRef} />}
+			<SteeringDifferential stateRef={stateRef} closeup={detail} />
+			{showConstruction && amount < 0.02 && (
+				<>
+					<SteeringContext />
+					<AckermannConstruction stateRef={stateRef} />
+					<SteeringAngle stateRef={stateRef} side={-1} />
+					<SteeringAngle stateRef={stateRef} side={1} />
+				</>
+			)}
 		</group>
 	)
 }

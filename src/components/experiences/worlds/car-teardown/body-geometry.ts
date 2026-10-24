@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import {BODY_GEOMETRY as B, VEHICLE_SPEC as V} from './vehicle-spec'
+import { BODY_GEOMETRY as B, VEHICLE_SPEC as V } from './vehicle-spec'
 
 type NumericRows = readonly (readonly number[])[]
 
@@ -52,7 +52,7 @@ export function bodySection(x: number) {
 }
 
 export function bodyPoint(x: number, angle: number, lift = 0) {
-	const {top, shoulder, width, bottom} = bodySection(x)
+	const { top, shoulder, width, bottom } = bodySection(x)
 	const turn = THREE.MathUtils.euclideanModulo(angle, Math.PI * 2)
 	const side = turn <= Math.PI ? 1 : -1
 	const q = (turn <= Math.PI ? turn : Math.PI * 2 - turn) / Math.PI
@@ -82,7 +82,7 @@ export function bodyPoint(x: number, angle: number, lift = 0) {
 /** The side is almost vertical below a deliberate shoulder: a 25 mm inset
  * from shoulder to sill, with a small rolled lower edge, never an ellipse. */
 export function bodySide(x: number, y: number, side = 1, offset = 0) {
-	const {top, shoulder, width, bottom} = bodySection(x)
+	const { top, shoulder, width, bottom } = bodySection(x)
 	let z: number
 	if (y >= shoulder) {
 		const crown = Math.min(B.upperCrown, (top - shoulder) * 0.45)
@@ -234,7 +234,7 @@ export function createBodyCap(front: boolean) {
 	return fasciaGrid(front, row[4], row[1], (y) => Math.abs(bodySide(row[0], y).z), 0)
 }
 
-export function createIntakeSurface(grille: {y: number; width: number; height: number}) {
+export function createIntakeSurface(grille: { y: number; width: number; height: number }) {
 	const radius = grille.height / 3
 	return fasciaGrid(
 		true,
@@ -326,14 +326,32 @@ export function applyBodyClip<T extends THREE.Material>(material: T, surface: Cl
 			'#include <clipping_planes_fragment>',
 			'#include <clipping_planes_fragment>\n' + code,
 		)
+		if (surface === 'cabin') {
+			// The B-pillar is satin black trim, not another polished exterior panel.
+			// Suppress its narrow white studio reflection without altering the roof.
+			const satinPillar = `pillar && windowAngle > ${f(G.sideTopAngle)}`
+			shader.fragmentShader = shader.fragmentShader
+				.replace(
+					'#include <color_fragment>',
+					`#include <color_fragment>\nif (${satinPillar}) diffuseColor.rgb *= 0.22;`,
+				)
+				.replace(
+					'#include <roughnessmap_fragment>',
+					`#include <roughnessmap_fragment>\nif (${satinPillar}) roughnessFactor = max(roughnessFactor, 0.68);`,
+				)
+				.replace(
+					'#include <lights_physical_fragment>',
+					`#include <lights_physical_fragment>\n#ifdef USE_CLEARCOAT\nif (${satinPillar}) material.clearcoat = 0.0;\n#endif`,
+				)
+		}
 	}
-	material.customProgramCacheKey = () => `car-surface-${surface}-round2`
+	material.customProgramCacheKey = () => `car-surface-${surface}-round4`
 	return material
 }
 
 export function bodyDepthMaterial(surface: ClipSurface) {
 	return applyBodyClip(
-		new THREE.MeshDepthMaterial({depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide}),
+		new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide }),
 		surface,
 	)
 }

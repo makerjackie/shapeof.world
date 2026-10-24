@@ -1,5 +1,5 @@
-import {useEffect, useMemo, useRef, type RefObject} from 'react'
-import {useFrame} from '@react-three/fiber'
+import { useEffect, useMemo, useRef, type RefObject } from 'react'
+import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import {
 	BODY_GEOMETRY as B,
@@ -7,9 +7,11 @@ import {
 	SUSPENSION_GEOMETRY as G,
 	VEHICLE_SPEC as S,
 } from './vehicle-spec'
-import {bodyPoint, cabinPoint} from './body-geometry'
-import type {SuspensionState} from './suspension-model'
-import {Wheel} from './Wheels'
+import { TeardownPart, useTeardownProgress } from './TeardownPart'
+import { ROAD_TEARDOWN_SPEC as R, outwardOffset } from './road-teardown-spec'
+import { bodyPoint, cabinPoint } from './body-geometry'
+import type { SuspensionState } from './suspension-model'
+import { Wheel } from './Wheels'
 
 type Axle = 'front' | 'rear'
 type Point = (state: SuspensionState, target: T.Vector3) => T.Vector3
@@ -46,7 +48,7 @@ function MovingBar({
 }) {
 	const mesh = useRef<T.Mesh>(null)
 	const vectors = useMemo(
-		() => ({a: new T.Vector3(), b: new T.Vector3(), direction: new T.Vector3()}),
+		() => ({ a: new T.Vector3(), b: new T.Vector3(), direction: new T.Vector3() }),
 		[],
 	)
 	useFrame(() => {
@@ -59,20 +61,20 @@ function MovingBar({
 		mesh.current.quaternion.setFromUnitVectors(up, vectors.direction.normalize())
 	})
 	return (
-		<mesh ref={mesh} castShadow userData={{partId: id}}>
+		<mesh ref={mesh} castShadow userData={{ partId: id }}>
 			<cylinderGeometry args={[radius, radius, 1, 18]} />
 			<meshStandardMaterial color={color} metalness={0.8} roughness={0.32} />
 		</mesh>
 	)
 }
 
-function MovingJoint({stateRef, point, id}: {stateRef: StateRef; point: Point; id?: string}) {
+function MovingJoint({ stateRef, point, id }: { stateRef: StateRef; point: Point; id?: string }) {
 	const mesh = useRef<T.Mesh>(null)
 	useFrame(() => {
 		if (mesh.current) point(stateRef.current, mesh.current.position)
 	})
 	return (
-		<mesh ref={mesh} userData={{partId: id}}>
+		<mesh ref={mesh} userData={{ partId: id }}>
 			<sphereGeometry args={[G.jointRadius, 12, 8]} />
 			<meshStandardMaterial color="#343e49" metalness={0.6} roughness={0.45} />
 		</mesh>
@@ -177,7 +179,7 @@ function MovingSpring({
 		cache.geometry.computeBoundingSphere()
 	})
 	return (
-		<group userData={{partId: id}}>
+		<group userData={{ partId: id }}>
 			<mesh ref={mesh} geometry={cache.geometry} castShadow>
 				<meshStandardMaterial color={G.springColor} metalness={0.85} roughness={0.25} />
 			</mesh>
@@ -188,7 +190,8 @@ function MovingSpring({
 					castShadow
 					userData={{
 						partId: `suspension-spring-seat-${(Number(id.split('-').at(-1)) - 1) * 2 + i + 1}`,
-					}}>
+					}}
+				>
 					<cylinderGeometry
 						args={[G.springSeatRadius, G.springSeatRadius, G.springSeatThickness, 40]}
 					/>
@@ -222,7 +225,7 @@ function Damper({
 		}
 	}, [from, to, bodyLength])
 	return (
-		<group userData={{partId: id}}>
+		<group userData={{ partId: id }}>
 			<MovingBar
 				stateRef={stateRef}
 				from={from}
@@ -254,7 +257,7 @@ function Corner({
 	side: -1 | 1
 	index: number
 }) {
-	const poseRef = useRef({steer: 0, heave: 0}),
+	const poseRef = useRef({ steer: 0, heave: 0 }),
 		spinRef = useRef(0)
 	const hub = useRef<T.Mesh>(null)
 	const points = useMemo(() => {
@@ -337,54 +340,95 @@ function Corner({
 	return (
 		<group>
 			<Wheel axle={axle} side={side} poseRef={poseRef} spinRef={spinRef} />
-			<mesh
-				ref={hub}
-				position={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
-				rotation={[Math.PI / 2, 0, 0]}
-				userData={{partId: `hub-${index}`}}>
-				<cylinderGeometry args={[G.hubRadius, G.hubRadius, G.hubWidth, 40]} />
-				<meshStandardMaterial color={G.armColor} metalness={0.85} roughness={0.3} />
-			</mesh>
+			<TeardownPart
+				id="susp-hubs"
+				representative={index === 2}
+				offset={outwardOffset(R.suspension.hubs, side)}
+				anchor={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
+			>
+				<mesh
+					ref={hub}
+					position={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
+					rotation={[Math.PI / 2, 0, 0]}
+					userData={{ partId: `hub-${index}` }}
+				>
+					<cylinderGeometry args={[G.hubRadius, G.hubRadius, G.hubWidth, 40]} />
+					<meshStandardMaterial color={G.armColor} metalness={0.85} roughness={0.3} />
+				</mesh>
+			</TeardownPart>
 			{points.arms.map(([from, to], i) => (
-				<MovingBar
+				<TeardownPart
 					key={i}
-					stateRef={stateRef}
-					from={from}
-					to={to}
-					radius={G.armRadius}
-					id={
-						axle === 'front'
-							? `control-arm-${index}`
-							: `rear-link-${(index - 3) * G.rear.links.length + i + 1}`
-					}
-				/>
+					id={axle === 'front' ? 'susp-arms' : 'susp-links'}
+					representative={side > 0 && i === 0}
+					offset={outwardOffset(axle === 'front' ? R.suspension.arms : R.suspension.links, side)}
+					anchor={[axleX(axle), 0.3, side * 0.5]}
+				>
+					<MovingBar
+						key={i}
+						stateRef={stateRef}
+						from={from}
+						to={to}
+						radius={G.armRadius}
+						id={
+							axle === 'front'
+								? `control-arm-${index}`
+								: `rear-link-${(index - 3) * G.rear.links.length + i + 1}`
+						}
+					/>
+				</TeardownPart>
 			))}
-			<MovingJoint stateRef={stateRef} point={points.ball} id={`suspension-ball-joint-${index}`} />
-			<MovingBar
-				stateRef={stateRef}
-				from={points.ball}
-				to={points.bottom}
-				radius={G.knuckleRadius}
-				id={`suspension-knuckle-${index}`}
-			/>
-			<Damper
-				stateRef={stateRef}
-				from={points.bottom}
-				to={points.top}
-				bodyLength={points.shockBodyLength}
-				id={`damper-${index}`}
-			/>
-			<MovingSpring
-				stateRef={stateRef}
-				from={points.springBottom}
-				to={points.springTop}
-				id={`spring-${index}`}
-			/>
+			<TeardownPart
+				id="susp-knuckles"
+				representative={index === 2}
+				offset={outwardOffset(R.suspension.knuckles, side)}
+				anchor={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
+			>
+				<MovingJoint
+					stateRef={stateRef}
+					point={points.ball}
+					id={`suspension-ball-joint-${index}`}
+				/>
+				<MovingBar
+					stateRef={stateRef}
+					from={points.ball}
+					to={points.bottom}
+					radius={G.knuckleRadius}
+					id={`suspension-knuckle-${index}`}
+				/>
+			</TeardownPart>
+			<TeardownPart
+				id="susp-dampers"
+				representative={index === 2}
+				offset={outwardOffset(R.suspension.dampers, side)}
+				anchor={[axleX(axle), 0.6, side * 0.65]}
+			>
+				<Damper
+					stateRef={stateRef}
+					from={points.bottom}
+					to={points.top}
+					bodyLength={points.shockBodyLength}
+					id={`damper-${index}`}
+				/>
+			</TeardownPart>
+			<TeardownPart
+				id="susp-springs"
+				representative={index === 2}
+				offset={outwardOffset(R.suspension.springs, side)}
+				anchor={[axleX(axle), 0.72, side * 0.6]}
+			>
+				<MovingSpring
+					stateRef={stateRef}
+					from={points.springBottom}
+					to={points.springTop}
+					id={`spring-${index}`}
+				/>
+			</TeardownPart>
 		</group>
 	)
 }
 
-function Subframes({stateRef}: {stateRef: StateRef}) {
+function Subframes({ stateRef }: { stateRef: StateRef }) {
 	const bars = useMemo(
 		() =>
 			(['front', 'rear'] as const).flatMap((axle, index) => {
@@ -431,31 +475,39 @@ function Subframes({stateRef}: {stateRef: StateRef}) {
 						'wheel',
 					)
 				return [
-					{from: cross(-1), to: cross(1), id: `antiroll-${i + 1}`},
-					...[-1, 1].map((side) => ({from: cross(side), to: end(side), id: `antiroll-${i + 1}`})),
+					{ from: cross(-1), to: cross(1), id: `antiroll-${i + 1}` },
+					...[-1, 1].map((side) => ({ from: cross(side), to: end(side), id: `antiroll-${i + 1}` })),
 				]
 			}),
 		[],
 	)
 	return (
 		<>
-			{bars.map((p, i) => (
-				<MovingBar key={i} stateRef={stateRef} {...p} radius={C.subframe.beamRadius} />
-			))}
+			<TeardownPart id="susp-subframes">
+				{bars.map((p, i) => (
+					<MovingBar key={i} stateRef={stateRef} {...p} radius={C.subframe.beamRadius} />
+				))}
+			</TeardownPart>
 			{stabilizers.map((p, i) => (
-				<MovingBar
-					key={`antiroll-${i}`}
-					stateRef={stateRef}
-					{...p}
-					radius={C.subframe.antirollRadius}
-					color="#7a818b"
-				/>
+				<TeardownPart
+					key={i}
+					id="susp-stabilizers"
+					anchor={[i < 3 ? S.dimensions.frontAxleX : S.dimensions.rearAxleX, 0.22, 0]}
+				>
+					<MovingBar
+						key={`antiroll-${i}`}
+						stateRef={stateRef}
+						{...p}
+						radius={C.subframe.antirollRadius}
+						color="#7a818b"
+					/>
+				</TeardownPart>
 			))}
 		</>
 	)
 }
 
-function BodyOutline({stateRef}: {stateRef: StateRef}) {
+function BodyOutline({ stateRef }: { stateRef: StateRef }) {
 	const group = useRef<T.Group>(null)
 	const geometry = useMemo(() => {
 		const vertices: number[] = []
@@ -508,7 +560,33 @@ function BodyOutline({stateRef}: {stateRef: StateRef}) {
 	)
 }
 
-function MovingRoad({stateRef}: {stateRef: StateRef}) {
+function MovingRoad({ stateRef }: { stateRef: StateRef }) {
+	const asphalt = useMemo(() => {
+		const material = new T.MeshPhysicalMaterial({
+			color: R.suspension.asphaltColor,
+			specularIntensity: 0.04,
+			envMapIntensity: 0.06,
+			roughness: 1,
+			metalness: 0,
+		})
+		material.onBeforeCompile = (shader) => {
+			shader.vertexShader = 'varying vec3 vRoadPosition;\n' + shader.vertexShader
+			shader.vertexShader = shader.vertexShader.replace(
+				'#include <begin_vertex>',
+				'#include <begin_vertex>\nvRoadPosition=position;',
+			)
+			shader.fragmentShader = 'varying vec3 vRoadPosition;\n' + shader.fragmentShader
+			shader.fragmentShader = shader.fragmentShader.replace(
+				'#include <color_fragment>',
+				`#include <color_fragment>
+float aggregate=fract(sin(dot(floor(vRoadPosition.xz*${R.suspension.grainFrequency.toFixed(1)}),vec2(127.1,311.7)))*43758.5453);
+diffuseColor.rgb*=1.0+(aggregate-.5)*${R.suspension.grainStrength.toFixed(2)};`,
+			)
+		}
+		material.customProgramCacheKey = () => 'car-asphalt-grain-r4'
+		return material
+	}, [])
+	useEffect(() => () => asphalt.dispose(), [asphalt])
 	const bump = useRef<T.Mesh>(null),
 		marks = useRef<T.Group>(null)
 	const geometry = useMemo(() => {
@@ -556,25 +634,27 @@ function MovingRoad({stateRef}: {stateRef: StateRef}) {
 	})
 	return (
 		<group name="suspension-moving-road">
-			<mesh position={[0, -G.roadThickness / 2, 0]} receiveShadow>
+			<mesh position={[0, -G.roadThickness / 2, 0]} receiveShadow material={asphalt}>
 				<boxGeometry args={[G.roadLength, G.roadThickness, G.roadWidth]} />
-				<meshStandardMaterial color={G.roadColor} roughness={0.94} metalness={0.05} />
 			</mesh>
 			<mesh ref={bump} geometry={geometry} receiveShadow>
-				<meshStandardMaterial
-					color="#47525c"
-					roughness={0.88}
-					metalness={0.1}
+				<meshPhysicalMaterial
+					specularIntensity={0.04}
+					color={R.suspension.bumpColor}
+					envMapIntensity={0.06}
+					roughness={1}
+					metalness={0}
 					side={T.DoubleSide}
 				/>
 			</mesh>
 			<group ref={marks}>
-				{Array.from({length: Math.ceil(G.roadLength / G.roadMarkSpacing)}, (_, i) =>
+				{Array.from({ length: Math.ceil(G.roadLength / G.roadMarkSpacing) }, (_, i) =>
 					[-1, 1].map((side) => (
 						<mesh
 							key={`${i}-${side}`}
 							position={[0, G.roadMarkY, side * G.roadEdgeZ]}
-							rotation={[-Math.PI / 2, 0, 0]}>
+							rotation={[-Math.PI / 2, 0, 0]}
+						>
 							<planeGeometry args={[G.roadMarkLength, G.roadMarkWidth]} />
 							<meshBasicMaterial color="#687680" transparent opacity={0.4} depthWrite={false} />
 						</mesh>
@@ -586,11 +666,12 @@ function MovingRoad({stateRef}: {stateRef: StateRef}) {
 }
 
 /** All motion comes from stateRef: no independent oscillator or animation clock. */
-export function SuspensionMechanism({stateRef}: {stateRef: StateRef}) {
+export function SuspensionMechanism({ stateRef }: { stateRef: StateRef }) {
+	const amount = useTeardownProgress()
 	return (
 		<group name="suspension-mechanism">
 			<MovingRoad stateRef={stateRef} />
-			<BodyOutline stateRef={stateRef} />
+			{amount < 0.01 && <BodyOutline stateRef={stateRef} />}
 			<Subframes stateRef={stateRef} />
 			{(['front', 'rear'] as const).flatMap((axle, a) =>
 				([-1, 1] as const).map((side, i) => (

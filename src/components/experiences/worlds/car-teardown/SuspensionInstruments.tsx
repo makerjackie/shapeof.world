@@ -1,7 +1,7 @@
-import {useEffect, useState, type ReactNode, type RefObject} from 'react'
-import {useExperienceI18n} from '~/i18n/experience'
-import {SUSPENSION_GEOMETRY as G} from './vehicle-spec'
-import {rearAxleDelay, type SuspensionSample, type SuspensionState} from './suspension-model'
+import { useEffect, useState, type ReactNode, type RefObject } from 'react'
+import { useExperienceI18n } from '~/i18n/experience'
+import { SUSPENSION_GEOMETRY as G } from './vehicle-spec'
+import { rearAxleDelay, type SuspensionSample, type SuspensionState } from './suspension-model'
 
 export const SUSPENSION_EN: Record<string, string> = {
 	悬架仪表: 'Suspension instruments',
@@ -59,8 +59,8 @@ export function SuspensionInstruments({
 	const tx = useExperienceI18n()
 	const [state, setState] = useState(() => ({
 		...stateRef.current,
-		front: {...stateRef.current.front},
-		rear: {...stateRef.current.rear},
+		front: { ...stateRef.current.front },
+		rear: { ...stateRef.current.rear },
 		history: [...stateRef.current.history],
 	}))
 	const [open, setOpen] = useState(true)
@@ -69,32 +69,33 @@ export function SuspensionInstruments({
 			() =>
 				setState({
 					...stateRef.current,
-					front: {...stateRef.current.front},
-					rear: {...stateRef.current.rear},
+					front: { ...stateRef.current.front },
+					rear: { ...stateRef.current.rear },
 					history: [...stateRef.current.history],
 				}),
 			50,
 		)
 		return () => clearInterval(timer)
 	}, [stateRef])
-	const duration = Math.max(4, Math.ceil(state.time / 2) * 2)
-	const maximum = Math.ceil(Math.max(0.08, bumpHeight * 1.7) / 0.02) * 0.02,
-		minimum = -maximum / 2
-	const plot = {left: 38, right: 300, top: 16, bottom: 140}
+	const duration = 2
+	const maximum = Math.ceil((bumpHeight * 1.2) / 0.01) * 0.01,
+		minimum = -maximum / 3
+	const plot = { left: 38, right: 300, top: 16, bottom: 140 }
 	const x = (time: number) => plot.left + (time / duration) * (plot.right - plot.left)
 	const y = (height: number) =>
 		plot.bottom - ((height - minimum) / (maximum - minimum)) * (plot.bottom - plot.top)
 	const path = (key: 'road' | 'wheel' | 'body') =>
 		state.history
+			.filter((sample) => sample.time <= duration)
 			.map(
 				(p: SuspensionSample, i) =>
 					`${i ? 'L' : 'M'}${x(p.time).toFixed(2)},${y(p[key]).toFixed(2)}`,
 			)
 			.join(' ')
 	const traces = [
-		{key: 'road' as const, label: '路面', color: G.roadTrace},
-		{key: 'wheel' as const, label: '轮心', color: G.wheelTrace},
-		{key: 'body' as const, label: '车身', color: G.bodyTrace},
+		{ key: 'road' as const, label: '路面', color: G.roadTrace },
+		{ key: 'wheel' as const, label: '轮心', color: G.wheelTrace },
+		{ key: 'body' as const, label: '车身', color: G.bodyTrace },
 	]
 	const status = !state.active
 		? '回弹结束'
@@ -108,7 +109,8 @@ export function SuspensionInstruments({
 	return (
 		<aside
 			className={`ct-instruments ct-suspension-panel ${open ? 'is-open' : ''}`}
-			aria-label={tx('悬架仪表')}>
+			aria-label={tx('悬架仪表')}
+		>
 			<button className="ct-panel-heading" onClick={() => setOpen(!open)} aria-expanded={open}>
 				<span>{tx('悬架过坎')}</span>
 				<span className="ct-drawer-toggle">{open ? '−' : '+'}</span>
@@ -152,13 +154,15 @@ export function SuspensionInstruments({
 				<div
 					className="ct-slow-controls ct-damping-controls"
 					role="group"
-					aria-label={tx('减振阻尼')}>
+					aria-label={tx('减振阻尼')}
+				>
 					{G.dampingPresets.map((value, i) => (
 						<button
 							key={value}
 							data-damping={value}
 							aria-pressed={damping === value}
-							onClick={() => onDamping(value)}>
+							onClick={() => onDamping(value)}
+						>
 							{tx(['软', '标准', '硬'][i])}
 						</button>
 					))}
@@ -174,7 +178,8 @@ export function SuspensionInstruments({
 					<svg
 						viewBox="0 0 310 172"
 						role="img"
-						aria-label={tx('前轮路面、轮心与车身位移随时间变化')}>
+						aria-label={tx('前轮路面、轮心与车身位移随时间变化')}
+					>
 						{[minimum, 0, maximum / 2, maximum].map((height) => (
 							<g key={height}>
 								<line
@@ -190,7 +195,8 @@ export function SuspensionInstruments({
 									y={y(height) + 3}
 									textAnchor="end"
 									fill="#8c99a5"
-									fontSize={9}>
+									fontSize={9}
+								>
 									{Math.round(height * 1000)}
 								</text>
 							</g>
@@ -221,8 +227,8 @@ export function SuspensionInstruments({
 							/>
 						))}
 						<line
-							x1={x(state.time)}
-							x2={x(state.time)}
+							x1={x(Math.min(duration, state.time))}
+							x2={x(Math.min(duration, state.time))}
 							y1={plot.top}
 							y2={plot.bottom}
 							stroke="#cad6df"
@@ -234,14 +240,15 @@ export function SuspensionInstruments({
 							y={168}
 							textAnchor="middle"
 							fill="#8c99a5"
-							fontSize={9}>
+							fontSize={9}
+						>
 							{tx('物理时间')} / s
 						</text>
 					</svg>
 					<div className="ct-trace-legend">
 						{traces.map((trace) => (
 							<span key={trace.key}>
-								<i style={{background: trace.color}} />
+								<i style={{ background: trace.color }} />
 								{tx(trace.label)}
 							</span>
 						))}

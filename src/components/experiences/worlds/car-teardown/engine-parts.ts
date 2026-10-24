@@ -1,25 +1,25 @@
-import {ENGINE_EXPLOSION, ENGINE_GEOMETRY as C, VEHICLE_SPEC} from './vehicle-spec'
+import { ENGINE_EXPLOSION, ENGINE_GEOMETRY as C, VEHICLE_SPEC } from './vehicle-spec'
 
 const E = VEHICLE_SPEC.engine
 const G = E.geometry
 const centerX = E.cylinder1X - E.cylinderSpacing * 1.5
 export type EnginePartId = keyof typeof ENGINE_EXPLOSION
 export type EnginePoint = [number, number, number]
-export type EngineText = {zh: string; en: string}
+export type EngineText = { zh: string; en: string }
 export interface EnginePart {
 	id: EnginePartId
 	name: EngineText
 	description: EngineText
 	material: EngineText
 	count: number
-	data: {label: EngineText; value: string}[]
+	data: { label: EngineText; value: string }[]
 	offset: readonly [number, number, number]
 	anchor: EnginePoint
 	partIds: string[]
 }
-const text = (zh: string, en: string): EngineText => ({zh, en})
+const text = (zh: string, en: string): EngineText => ({ zh, en })
 const numberIds = (prefix: string, count: number) =>
-	Array.from({length: count}, (_, i) => `${prefix}-${i + 1}`)
+	Array.from({ length: count }, (_, i) => `${prefix}-${i + 1}`)
 const valveIds = (prefix: string) =>
 	['intake', 'exhaust'].flatMap((side) =>
 		[1, 2, 3, 4].flatMap((cylinder) =>
@@ -28,6 +28,7 @@ const valveIds = (prefix: string) =>
 	)
 const aluminum = text('铸铝合金', 'Cast aluminum')
 const steel = text('机加工合金钢', 'Machined alloy steel')
+const millimetres = (metres: number) => `${Number((metres * 1000).toFixed(3))} mm`
 const part = (
 	id: EnginePartId,
 	name: EngineText,
@@ -36,7 +37,7 @@ const part = (
 	count: number,
 	anchor: EnginePoint,
 	partIds: string[],
-	data: EnginePart['data'] = [],
+	data: EnginePart['data'],
 ): EnginePart => ({
 	id,
 	name,
@@ -63,7 +64,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		8,
 		[E.cylinder1X, G.camY + G.coilHeight, 0],
 		[...numberIds('ignition-coil', 4), ...numberIds('spark-plug', 4)],
-		[{label: text('点火顺序', 'Firing order'), value: '1 — 3 — 4 — 2'}],
+		[{ label: text('点火顺序', 'Firing order'), value: '1 — 3 — 4 — 2' }],
 	),
 	part(
 		'cam-cover',
@@ -76,6 +77,13 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX, C.coverValleyY + C.coverLobeHeight, 0],
 		['cam-cover'],
+		[
+			{ label: text('盖体长度', 'Cover length'), value: millimetres(C.coverLength) },
+			{
+				label: text('火花塞井内径', 'Plug-well diameter'),
+				value: millimetres(C.coverPlugWellRadius * 2),
+			},
+		],
 	),
 	part(
 		'intake-camshaft',
@@ -89,8 +97,8 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		[centerX, G.camY, -G.camZ],
 		['intake-camshaft'],
 		[
-			{label: text('最大升程', 'Maximum lift'), value: '9.5 mm'},
-			{label: text('转速 / 曲轴', 'Speed / crankshaft'), value: '1 : 2'},
+			{ label: text('最大升程', 'Maximum lift'), value: '9.5 mm' },
+			{ label: text('转速 / 曲轴', 'Speed / crankshaft'), value: '1 : 2' },
 		],
 	),
 	part(
@@ -105,8 +113,8 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		[centerX, G.camY, G.camZ],
 		['exhaust-camshaft'],
 		[
-			{label: text('最大升程', 'Maximum lift'), value: '9.0 mm'},
-			{label: text('持续角', 'Duration'), value: '240°'},
+			{ label: text('最大升程', 'Maximum lift'), value: '9.0 mm' },
+			{ label: text('持续角', 'Duration'), value: '240°' },
 		],
 	),
 	part(
@@ -120,6 +128,10 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		16,
 		[centerX, G.camY - E.timing.camBaseRadius, G.camZ],
 		valveIds('valve-spring'),
+		[
+			{ label: text('弹簧圈数', 'Spring turns'), value: String(G.valveSpringTurns) },
+			{ label: text('线径', 'Wire diameter'), value: millimetres(G.valveSpringWire * 2) },
+		],
 	),
 	part(
 		'valves',
@@ -132,7 +144,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		16,
 		[centerX, G.valveSeatY + G.valveStemLength / 2, G.valveZOffset],
 		valveIds('valve'),
-		[{label: text('气门重叠', 'Valve overlap'), value: '20°'}],
+		[{ label: text('气门重叠', 'Valve overlap'), value: '20°' }],
 	),
 	part(
 		'cylinder-head',
@@ -145,7 +157,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX, G.deckY + G.headHeight / 2, G.headWidth / 2],
 		['cylinder-head'],
-		[{label: text('结构', 'Layout'), value: 'DOHC · 16V'}],
+		[{ label: text('结构', 'Layout'), value: 'DOHC · 16V' }],
 	),
 	part(
 		'head-gasket',
@@ -158,6 +170,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX, G.deckY, 0],
 		['head-gasket'],
+		[{ label: text('垫片厚度', 'Gasket thickness'), value: millimetres(C.gasketThickness) }],
 	),
 	part(
 		'piston-assemblies',
@@ -176,8 +189,8 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 			...numberIds('connecting-rod', 4),
 		],
 		[
-			{label: text('缸径 × 行程', 'Bore × stroke'), value: '86 × 86 mm'},
-			{label: text('连杆中心距', 'Rod length'), value: '145 mm'},
+			{ label: text('缸径 × 行程', 'Bore × stroke'), value: '86 × 86 mm' },
+			{ label: text('连杆中心距', 'Rod length'), value: '145 mm' },
 		],
 	),
 	part(
@@ -192,8 +205,8 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		[centerX, G.blockBottom + E.bore / 2, G.blockWidth / 2],
 		['engine-block'],
 		[
-			{label: text('排量', 'Displacement'), value: '1,998 cc'},
-			{label: text('压缩比', 'Compression ratio'), value: '10.5 : 1'},
+			{ label: text('排量', 'Displacement'), value: '1,998 cc' },
+			{ label: text('压缩比', 'Compression ratio'), value: '10.5 : 1' },
 		],
 	),
 	part(
@@ -207,7 +220,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX, E.crankY, 0],
 		['crankshaft'],
-		[{label: text('曲柄半径', 'Crank radius'), value: '43 mm'}],
+		[{ label: text('曲柄半径', 'Crank radius'), value: '43 mm' }],
 	),
 	part(
 		'main-bearing-caps',
@@ -220,6 +233,12 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		5,
 		[centerX, E.crankY - G.crankMainRadius, 0],
 		numberIds('main-bearing', 5),
+		[
+			{
+				label: text('主轴颈直径', 'Main-journal diameter'),
+				value: millimetres(G.crankMainRadius * 2),
+			},
+		],
 	),
 	part(
 		'oil-pan',
@@ -229,6 +248,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX + C.sumpOffsetX, C.skirtBottomY - C.sumpDepth, 0],
 		['oil-pan'],
+		[{ label: text('集油槽深度', 'Sump depth'), value: millimetres(C.sumpDepth) }],
 	),
 	part(
 		'intake-manifold',
@@ -241,6 +261,13 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		2,
 		[centerX, C.intakePlenumY, C.intakePlenumZ],
 		['intake-manifold', 'throttle-body'],
+		[
+			{
+				label: text('进气支管内径', 'Runner inside diameter'),
+				value: millimetres((C.intakeRunnerRadius - C.intakeRunnerWall) * 2),
+			},
+			{ label: text('节气门直径', 'Throttle diameter'), value: millimetres(C.throttleRadius * 2) },
+		],
 	),
 	part(
 		'exhaust-manifold',
@@ -253,6 +280,13 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[C.exhaustCollectorX, C.exhaustCollectorY, C.exhaustCollectorZ],
 		['exhaust-manifold'],
+		[
+			{
+				label: text('排气支管内径', 'Runner inside diameter'),
+				value: millimetres((C.exhaustRunnerRadius - C.exhaustRunnerWall) * 2),
+			},
+			{ label: text('汇集方式', 'Collector layout'), value: `${E.cylinders} → 1` },
+		],
 	),
 	part(
 		'timing-cover',
@@ -262,6 +296,12 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[G.timingFrontX + C.timingCoverDepth, (G.camY + E.crankY) / 2, 0],
 		['timing-cover'],
+		[
+			{
+				label: text('前盖壁厚', 'Front-cover wall'),
+				value: millimetres(C.timingCoverFaceThickness),
+			},
+		],
 	),
 	part(
 		'timing-chain',
@@ -274,7 +314,7 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		4,
 		[G.timingFrontX, G.camY, 0],
 		['timing-chain', 'crank-sprocket', 'intake-sprocket', 'exhaust-sprocket'],
-		[{label: text('齿数', 'Teeth'), value: '20 : 40'}],
+		[{ label: text('齿数', 'Teeth'), value: '20 : 40' }],
 	),
 	part(
 		'flywheel',
@@ -287,6 +327,10 @@ export const ENGINE_PARTS: readonly EnginePart[] = [
 		1,
 		[centerX - G.blockLength / 2 - G.shaftEnd / 2, E.crankY, 0],
 		['flywheel'],
+		[
+			{ label: text('外径', 'Outside diameter'), value: millimetres(G.flywheelRadius * 2) },
+			{ label: text('厚度', 'Thickness'), value: millimetres(G.flywheelThickness) },
+		],
 	),
 ]
 

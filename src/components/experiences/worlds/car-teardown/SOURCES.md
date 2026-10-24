@@ -1,6 +1,6 @@
 # Car teardown — model, provenance and limits
 
-This is an original, fictional front-engine, rear-wheel-drive sedan. It does not reproduce a production car or a manufacturer's CAD. Every numerical specification below is a representative design choice, not a measurement attributed to a real vehicle. `vehicle-spec.ts` is the dimensional source of truth; all distances in code are metres unless the field says otherwise.
+This is an original, fictional front-engine, rear-wheel-drive sedan. It does not reproduce a production car or a manufacturer's CAD. Every numerical specification below is a representative design choice, not a measurement attributed to a real vehicle. `vehicle-spec.ts` is the dimensional entry point, including its re-exported body, road and auxiliary construction sheets. All distances in code are metres unless the field says otherwise. The references below explain principles and material classes; they are not sources for this fictional car's exact dimensions, tooth counts or tuning.
 
 这是一辆原创、虚构的前置后驱轿车，不对应真实车型。下列数值均为本作品选取的代表值，不是对某款汽车的测量。几何和运动学共用 `vehicle-spec.ts`，代码中的长度默认使用米。
 
@@ -33,14 +33,118 @@ This is an original, fictional front-engine, rear-wheel-drive sedan. It does not
 | Final drive                                   | 11→41 teeth, ratio 41/11                                                                                      |
 | Differential side / planet gears              | 16 / 10 teeth; two planets                                                                                    |
 | Gear generation defaults                      | Normal module 2 mm, normal pressure angle 20°, illustrative helix angle 22°                                   |
-| Steering                                      | Ideal Ackermann prepared for a later round; ratio 15:1, wheel limit ±540°                                     |
+| Steering                                      | Ideal Ackermann; ratio 15:1, steering-wheel limit ±540°, inner-wheel limit 36°                                     |
 | Front / rear brake discs                      | Ø320 × 28 mm ventilated / Ø300 × 12 mm solid                                                                  |
 | Front / rear caliper pistons                  | Ø57 / Ø38 mm                                                                                                  |
-| Brake pedal ratio; illustrative full pressure | 3.5:1; 100 bar                                                                                                |
-| Suspension model parameters, reserved         | Sprung / unsprung mass 360 / 40 kg; spring 30 kN/m; damping 3,000 N·s/m; tyre stiffness 250 kN/m; bump 0.05 m |
+| Brake pedal ratio; booster ratio; master bore | 3.5:1; 4:1; Ø23.8 mm                                                                                                |
+| Suspension model parameters         | Sprung / unsprung mass 360 / 40 kg; spring 30 kN/m; damping 3,000 N·s/m; tyre stiffness 250 kN/m; bump 0.05 m |
 | Electrical                                    | 12 V battery; alternator pulley speed ratio 2.7:1                                                             |
 
-Assembly locations: radiator x = 1.95 m; gearbox clutch x = 0.85 m, output x = 0.20 m at crank height; driveshaft extends to x = −1.30 m; differential x = −1.425 m, y = 0.335 m; steering rack (1.30, 0.28, 0), steering wheel (0.25, 0.95, −0.37); battery (1.75, 0.48, 0.55); fuel tank (−0.9, 0.30, 0). Small construction dimensions, body curves and materials in the same spec file are original visual design values.
+Assembly locations: radiator x = 1.95 m; gearbox clutch x = 0.85 m, output x = 0.20 m at crank height; driveshaft extends to x = −1.30 m; differential x = −1.425 m, y = 0.335 m; steering rack (1.30, 0.28, 0), steering wheel (0.25, 0.95, −0.37); battery (1.75, 0.48, 0.55); fuel tank (−0.9, 0.30, 0). Small construction dimensions, body curves and materials in the specification entry point are original visual design values. The casting rib thicknesses, wiring routes, bearing sizes, panel cuts and separation distances explain an assembly rather than reproduce manufacturing data.
+
+## Gear ratios and driveline / 齿数与传动比
+
+The sign is measured relative to forward input rotation. Ratios are `input RPM / output RPM`; the final drive is listed separately.
+
+| State | Teeth in selected path | Gearbox ratio | Output at input 3,000 RPM |
+| --- | --- | --- | --- |
+| 1 | 22→32, 15→39 | 3.781818 | +793.27 RPM |
+| 2 | 22→32, 21→33 | 2.285714 | +1,312.50 RPM |
+| 3 | 22→32, 26→28 | 1.566434 | +1,915.18 RPM |
+| 4 | Input locked directly to output | 1.000000 | +3,000 RPM |
+| 5 | 22→32, 35→19 | 0.789610 | +3,799.34 RPM |
+| R | 22→32, 13→24-tooth idler→36 | −4.027972 | −744.79 RPM |
+| N | No gear locked to output | Disconnected | 0 RPM in this unloaded model |
+| Final drive | 11→41 | 3.727273 | Wheel RPM = output RPM / (41/11) in a straight line |
+
+The layshaft runs at `−input × 22/32`. Direct forward meshing pairs each total 54 teeth; the reverse driver and driven gears total 49 because they mesh through an idler. Fourth is a direct coupling, not another gear pair. Normal module is 2 mm, normal pressure angle 20°, helix angle 22°, face width 22 mm and illustrative transverse backlash 0.08 mm. Final-drive and differential bevel teaching geometry uses a 4 mm module. Side gears have 16 teeth, the two planet gears have 10 each.
+
+Simplification / 简化：gear dimensions and ratios are authored representative values. Synchronizer speed matching is prescribed over a 0.5-second screen-time shift; friction cones, clutch torque, inertia and driveline losses are not solved. The final drive is represented by bevel teaching surfaces, not production hypoid contact geometry.
+
+## Steering and differential / 转向与差速器
+
+| Parameter | Representative value |
+| --- | --- |
+| Steering-wheel control | −540° to +540°; steering ratio 15:1 to the inner front wheel |
+| Wheelbase L; front / rear track w / t | 2.85 m; 1.58 / 1.60 m |
+| Rack pinion | 12 teeth, module 1.5 mm, pressure angle 20°, pitch radius 9 mm |
+| Rack travel at ±540° | ±84.823 mm from centre (`0.009 × 3π`) |
+| Steering demonstration speed | 0–60 km/h, measured at the rear-axle centre |
+| Maximum-lock inner angle | 36° |
+| Maximum-lock rear-centre radius R | 4.712688 m |
+| Maximum-lock outer-front path diameter | 12.393882 m; rounded readout about 12.4 m |
+
+For nonzero steer, `R = L / tan(δinner) + w/2`, `δouter = atan(L / (R + w/2))`, hence `cot(δouter) − cot(δinner) = w/L`. A left turn puts the instantaneous centre on −Z; a right turn mirrors it. At zero steer the path radii are infinite and all wheels have the same speed.
+
+Front-wheel path radii are `sqrt(L² + (R ± w/2)²)`; rear-wheel radii are `R ± t/2`. Each wheel's RPM is its path radius divided by R, multiplied by rear-centre road speed / tyre circumference. This makes all four wheel speeds distinct in a turn. Carrier/ring speed is `(left rear RPM + right rear RPM)/2`; planet spin about its own axis is `(right rear RPM − left rear RPM)/2 × 16/10`. In a straight line planet spin is zero, while the planets still orbit with the carrier. Final-drive pinion speed is carrier speed × 41/11.
+
+Simplification / 简化：ideal Ackermann directly drives the wheel angles, with no tyre slip angle or compliance. The displayed tie rods illustrate the layout, rather than determine the angles through a production linkage solve. The two phased Cardan joints show intermediate-shaft speed variation and restore the column-to-pinion angle. Rack travel is derived from pinion pitch radius, not adjusted independently to match a steering arm. There is no limited-slip mechanism, friction or wheel-torque model.
+
+## Braking calculation chain / 制动计算链
+
+| Parameter | Representative value |
+| --- | --- |
+| Pedal force | 0–400 N; held demonstration 300 N |
+| Pedal leverage; vacuum boost | 3.5:1; constant 4:1 |
+| Master-cylinder bore / area | 23.8 mm / 4.44881 cm² |
+| Front piston bore / area | 57 mm / 25.51759 cm² |
+| Rear piston bore / area | 38 mm / 11.34115 cm² |
+| Front rotor | Ø320 × 28 mm, ventilated; 36 radial vanes between two 6 mm faces |
+| Rear rotor | Ø300 × 12 mm, solid |
+| Pad friction coefficient | 0.40 at every wheel |
+| Effective friction radius | Front 0.13 m; rear 0.12 m |
+| Vehicle mass / rolling radius | 1,550 kg / 0.335 m |
+| Adhesion ceiling | 1.0 g = 9.81 m/s² |
+| Physical pad gap / drawing scale | 0.1 mm / 20× (2 mm shown) |
+| Traveling pressure highlight | 0.3 seconds of screen time |
+| Initial road speed | Default 40 km/h; control 0–120 km/h |
+
+`P = Fpedal × 3.5 × 4 / (π × 0.0238² / 4)` in pascals. Each caliper's displayed clamp force is **one piston force** `Fclamp = P × Apiston`. Both pad faces contribute to rotor torque: `T = 2 × 0.40 × Fclamp × reffective`. Four-wheel torque is `2 × (Tfront + Trear)` and raw deceleration is total torque / 0.335 / 1,550; the displayed moving-car deceleration is capped at 9.81 m/s².
+
+At 300 N: pressure **94.407 bar**, front piston force **24,090.46 N**, rear piston force **10,706.87 N**, front torque **2,505.41 N·m** per rotor and rear torque **1,027.86 N·m** per rotor. The uncapped deceleration is 13.609 m/s², so the adhesion cap activates. Pressure itself is not capped at 100 bar: 400 N produces about 125.876 bar. “About 100 bar” is an order-of-magnitude description.
+
+The piston pushes the inner pad toward the rotor. Reaction moves the C-shaped floating caliper body oppositely on its two guide pins, pulling the outer pad inward. The four pipes remain in their installed routes during parts separation. Wheel angle and stopping distance are integrated in the same slowed physical time as the other mechanisms.
+
+Simplification / 简化：all wheels receive equal pressure, friction and boost are constant, and load transfer, temperature, fade, fluid compressibility and seal elasticity are omitted. “ABS active” means the 1 g adhesion cap is reached; this is not a per-wheel slip controller. The moving amber segment explains pressure delivery and does not claim that pressure takes 0.3 seconds to propagate. Pad clearance and caliper travel are enlarged 20 times.
+
+## Suspension and road input / 悬架与路面输入
+
+| Parameter | Representative value |
+| --- | --- |
+| Front / rear layout | MacPherson strut / five-link rear suspension |
+| Sprung / unsprung mass per quarter model | 360 / 40 kg |
+| Spring rate / tyre stiffness | 30,000 / 250,000 N/m |
+| Damping presets | Soft 2,000; standard 3,000; firm 4,500 N·s/m |
+| Speed / default | 10–80 km/h / 30 km/h |
+| Bump height / default | 2–10 cm / 5 cm |
+| Bump length | 0.90 m |
+| First front-wheel contact | 0.5 physical seconds after replay |
+| Rear-wheel delay | L / v; 0.342 s at 30 km/h |
+| Fixed integration step | RK4 at 1/480 physical second |
+| Sample interval | Every 8 integration steps (1/60 physical second) |
+| Static spring / tyre deflection | 117.72 / 15.696 mm |
+
+Displacements are measured from the statically loaded ride height, so zero displacement is equilibrium on a flat road. Let `zs`, `zu`, `zr` be sprung, unsprung and road displacement; `ks`, `kt`, `c` the spring rate, tyre stiffness and damping. With `Fs = ks(zs−zu) + c(zs'−zu')`, the model solves `ms zs'' = −Fs` and `mu zu'' = Fs − kt(zu−zr)`. RK4 evaluates the road input at each intermediate time. The rounded bump is a single raised cosine, `h[1 − cos(2πx / 0.9)]/2`, flat outside its 0.9 m footprint.
+
+Front and rear sprung displacements form body heave (their mean) and pitch (their difference over wheelbase). The two sides of each axle move identically. Springs keep their turn count while their pitch changes; dampers extend and arms pivot to follow the wheel centres.
+
+Simplification / 简化：the same 360/40 kg reference quarter is used at both axles; multiplying it by four gives 1,600 kg, so it is not a detailed allocation of the 1,550 kg braking mass or its 52:48 static distribution. Spring and damping laws are linear. Roll, tyre lift-off, bump stops, tyre damping and complete spatial multi-link constraints are omitted. The rounded speed bump uses a cosine profile rather than a literal circular arc.
+
+## Body-in-white and electrical / 白车身与电气
+
+| Steel group | Representative strength label | Diagram color | Assigned purpose in this model |
+| --- | --- | --- | --- |
+| Press-hardened steel | About 1,500 MPa tensile strength | Muted orange `#c46a32` | A/B pillars, roof side rails, sill reinforcements, tunnel and cowl crossmember help resist cabin intrusion |
+| High-strength steel | Illustrative 340–800 MPa strength band | Cool blue-grey `#6f8fae` | Front rails are assigned controlled crush/energy absorption; floor crossmembers, rear rails and strut towers carry loads |
+| Mild steel | No numerical grade assigned | Neutral grey `#8d9197` | Floor, wheel housings, rear bulkhead and panel inner skins |
+
+The 1,500 MPa label is consistent with the commonly used PHS1500 class described by WorldAutoSteel. The 340–800 MPa band, part assignments and colors are authored explanatory choices, not a bill of materials for a production car. Strength alone does not determine crash performance; section shape, thickness, joining, strain rate and the complete structure matter. No collision or stress analysis is run. “Body-in-white” refers to the joined structure before paint and trim; colors here identify material groups, not actual finish or calculated stress.
+
+Exterior coverings are split into separate procedural meshes. Doors hinge about 60° before moving outward; glass separates along its surface direction; lids, bumpers, seats and dashboard move along explanatory assembly directions. The safety cage, floor and structural rails remain as the reference. Same-kind pieces share a numbered group; its card quantity counts represented pieces rather than label bubbles.
+
+Electrical reference values are a **12 V** battery and an alternator pulley speed ratio of **2.7:1** to the crankshaft. The assembly also shows a starter, ECU, fuse box, four ignition coils and front/rear lamp groups. The branched wiring harness stays in place during component separation.
+
+Simplification / 简化：body strength classes and structural shapes are teaching geometry, not homologation or crash evidence. Separation distances are diagram spacing, not service removal instructions or fastening sequences. Electrical animation shows placement and pulley motion; battery chemistry, alternator regulation, starter engagement, current and ECU software are not simulated.
 
 ## Equations and checks / 方程与校验
 
@@ -69,6 +173,11 @@ Engine exploded offsets are translations outside each moving assembly. The pisto
 - Harald Naunheimer, Bernd Bertsche, Joachim Ryborz and Wolfgang Novak, _Automotive Transmissions: Fundamentals, Selection, Design and Application_, 2nd edition, Springer, ©2011. [Publisher record and table of contents](https://link.springer.com/book/10.1007/978-3-642-16214-5). Background for three-shaft transmissions and gear selection. The publisher record/table of contents were checked; the chosen tooth counts are original representative design values.
 - KHK, [Calculation of Gear Dimensions](https://khkgears.net/new/gear_knowledge/gear_technical_reference/calculation_gear_dimensions.html), technical reference, sections on spur and normal-system helical gears. The manufacturer's page was consulted for base/reference diameters, normal/transverse systems and opposite-hand helical meshing. No diagrams or source code were copied.
 
+- Thomas D. Gillespie, _Fundamentals of Vehicle Dynamics_, SAE International, 1992. [Publisher record](https://saemobilus.sae.org/books/fundamentals-vehicle-dynamics-r-114). Background reading for steering, ride and vehicle dynamics. Publisher metadata was checked; the paywalled text was not reviewed here. Quarter-car masses/rates and the steering ratio are original choices, not values extracted from this book.
+- Rudolf Limpert, _Brake Design and Safety_, 3rd edition, SAE International, 2011. [Publisher record](https://saemobilus.sae.org/books/brake-design-safety-third-edition-r-398). Background reading for brake physics and hydraulic systems. Publisher metadata was checked; the paywalled chapters were not reviewed here. The force chain above is stated explicitly and tested from this model's chosen dimensions.
+- [Tyre markings explained](https://www.michelin.co.uk/auto/advice/tyre-basics/tyre-markings-explained), Michelin's own explanation of section width in millimetres, aspect ratio as a percentage, and rim diameter in inches. This supports decoding 235/40 R19 and the nominal geometric diameter `19 × 25.4 + 2 × 235 × 0.40 = 670.6 mm`; **0.335 m rolling radius is this model's approximation**, not a measured loaded radius.
+- WorldAutoSteel / AHSS Insights, [PHS and PQS Overview](https://ahssinsights.org/forming/press-hardened-steels/phs-and-pqs-overview/), _AHSS Application Guidelines_. The published overview describes the approximately 1,500 MPa tensile-strength PHS class. It supports the material-class context; it does not certify this fictional body's part zoning or the illustrative 340–800 MPa band. No source figures or datasets are reused.
+
 ## Explicit simplifications / 明示简化
 
 - Motion is an ideal rigid kinematic demonstration, not a structural, thermal, lubrication, emissions or acoustic simulation. Constant prescribed RPM has no torque or flywheel-speed fluctuation model.
@@ -82,4 +191,4 @@ Engine exploded offsets are translations outside each moving assembly. The pisto
 
 ## Assets and dependencies / 素材与依赖
 
-Body, wheels, engine, gears and supporting components are generated in code. No downloaded vehicle models, engine meshes, HDRIs, texture images or third-party geometry are used. The studio environment is built with procedural lights. This round uses the repository's existing React Three Fiber / drei / Three.js / postprocessing dependencies; this model and gear implementation adds no package.
+Body, wheels, engine, gears and supporting components are generated in code. No downloaded vehicle models, engine meshes, HDRIs, texture images or third-party geometry are used. The studio environment is built with procedural lights. This world uses the repository's existing React Three Fiber / drei / Three.js / postprocessing dependencies and adds no package. References are links for attribution and further reading, not imported assets. The 3 MB catalogue transfer budget is a budget for code and poster fallback, not a measured claim of zero network traffic; procedural geometry requires no mesh downloads.

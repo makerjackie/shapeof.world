@@ -1,7 +1,9 @@
-import {useEffect, useMemo} from 'react'
-import {RoundedBox} from '@react-three/drei'
+import { useEffect, useMemo } from 'react'
+import { RoundedBox } from '@react-three/drei'
 import * as THREE from 'three'
-import {BODY_GEOMETRY as B, VEHICLE_SPEC as V} from './vehicle-spec'
+import { BODY_GEOMETRY as B, VEHICLE_SPEC as V } from './vehicle-spec'
+import { TeardownPart, useTeardown } from './TeardownPart'
+import { BodyTeardown } from './BodyTeardown'
 import {
 	applyBodyClip,
 	bodyDepthMaterial,
@@ -21,7 +23,7 @@ import {
 } from './body-geometry'
 
 const sample = (count: number, callback: (t: number) => THREE.Vector3) =>
-	Array.from({length: count + 1}, (_, i) => callback(i / count))
+	Array.from({ length: count + 1 }, (_, i) => callback(i / count))
 
 function outsideEnd(y: number, z: number, front: boolean) {
 	const rows = B.sections
@@ -268,7 +270,7 @@ function DetailLines() {
 				B.seamRadius,
 			),
 		)
-		return {seams, trims, archLips}
+		return { seams, trims, archLips }
 	}, [])
 	useEffect(
 		() => () => {
@@ -277,7 +279,7 @@ function DetailLines() {
 		[lines],
 	)
 	return (
-		<group userData={{partId: 'body-shell'}}>
+		<group userData={{ partId: 'body-shell' }}>
 			{lines.seams.map((geometry, i) => (
 				<mesh key={`s${i}`} geometry={geometry}>
 					<meshStandardMaterial color="#080b0e" roughness={0.55} />
@@ -297,7 +299,7 @@ function DetailLines() {
 	)
 }
 
-function Lamps() {
+export function Lamps({ frontOnly }: { frontOnly?: boolean } = {}) {
 	const lamps = useMemo(
 		() =>
 			[-1, 1].flatMap((side) =>
@@ -343,113 +345,131 @@ function Lamps() {
 	)
 	return (
 		<group>
-			{lamps.map(({front, side, housing, lens}) => (
-				<group
-					key={`${front}-${side}`}
-					userData={{
-						partId: `${front ? 'headlight' : 'taillight'}-${side < 0 ? 'left' : 'right'}`,
-					}}>
-					<mesh geometry={housing}>
-						<meshPhysicalMaterial
-							color={front ? '#151a1e' : V.materials.taillight}
-							metalness={0.4}
-							roughness={0.15}
-							clearcoat={1}
-						/>
-					</mesh>
-					<mesh geometry={lens}>
-						<meshStandardMaterial
-							color={front ? V.materials.headlight : V.materials.taillightLit}
-							emissive={front ? V.materials.headlight : V.materials.taillightLit}
-							emissiveIntensity={front ? 4 : 2.2}
-							toneMapped={false}
-						/>
-					</mesh>
-				</group>
-			))}
+			{lamps
+				.filter((lamp) => frontOnly === undefined || lamp.front === frontOnly)
+				.map(({ front, side, housing, lens }) => (
+					<group
+						key={`${front}-${side}`}
+						userData={{
+							partId: `${front ? 'headlight' : 'taillight'}-${side < 0 ? 'left' : 'right'}`,
+						}}
+					>
+						<mesh geometry={housing}>
+							<meshPhysicalMaterial
+								color={front ? '#151a1e' : V.materials.taillight}
+								metalness={0.4}
+								roughness={0.15}
+								clearcoat={1}
+							/>
+						</mesh>
+						<mesh geometry={lens}>
+							<meshStandardMaterial
+								color={front ? V.materials.headlight : V.materials.taillightLit}
+								emissive={front ? V.materials.headlight : V.materials.taillightLit}
+								emissiveIntensity={front ? 4 : 2.2}
+								toneMapped={false}
+							/>
+						</mesh>
+					</group>
+				))}
 		</group>
 	)
 }
 
-function Interior() {
+export function Interior({ teardown = false }: { teardown?: boolean }) {
 	const I = B.interior
 	return (
 		<group>
-			<mesh position={[I.floorX, I.floorY, 0]} userData={{partId: 'body-floor'}}>
-				<boxGeometry args={[...I.floorSize]} />
-				<meshStandardMaterial color={I.carpetColor} roughness={1} />
-			</mesh>
+			{!teardown && (
+				<mesh position={[I.floorX, I.floorY, 0]} userData={{ partId: 'body-floor' }}>
+					<boxGeometry args={[...I.floorSize]} />
+					<meshStandardMaterial color={I.carpetColor} roughness={1} />
+				</mesh>
+			)}
 			{[-1, 1].map((side) => (
-				<group key={side} userData={{partId: `seat-front-${side < 0 ? 'left' : 'right'}`}}>
+				<TeardownPart key={side} id="body-seats" representative={side < 0}>
+					<group userData={{ partId: `seat-front-${side < 0 ? 'left' : 'right'}` }}>
+						<RoundedBox
+							position={[I.seatFrontX, I.seatBaseY, side * I.seatZ]}
+							args={[...I.seatBaseSize]}
+							radius={I.seatBaseSize[1] / 4}
+							smoothness={4}
+							castShadow
+						>
+							<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
+						</RoundedBox>
+						<RoundedBox
+							position={[I.seatBackX, I.seatBackY, side * I.seatZ]}
+							rotation={[0, 0, -Math.PI / 15]}
+							args={[...I.seatBackSize]}
+							radius={I.seatBackSize[0] / 3}
+							smoothness={4}
+							castShadow
+						>
+							<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
+						</RoundedBox>
+						<RoundedBox
+							position={[I.seatBackX - I.seatBackSize[0] / 2, I.headrestY, side * I.seatZ]}
+							args={[...I.headrestSize]}
+							radius={I.headrestSize[0] / 4}
+							smoothness={4}
+						>
+							<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
+						</RoundedBox>
+					</group>
+				</TeardownPart>
+			))}
+			<TeardownPart id="body-seats" representative={false}>
+				<group userData={{ partId: 'seat-rear' }}>
 					<RoundedBox
-						position={[I.seatFrontX, I.seatBaseY, side * I.seatZ]}
-						args={[...I.seatBaseSize]}
-						radius={I.seatBaseSize[1] / 4}
+						position={[I.seatRearX, I.seatBaseY, 0]}
+						args={[...I.benchSize]}
+						radius={I.benchSize[1] / 4}
 						smoothness={4}
-						castShadow>
-						<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
+					>
+						<meshStandardMaterial color={I.leatherColor} roughness={0.85} />
 					</RoundedBox>
 					<RoundedBox
-						position={[I.seatBackX, I.seatBackY, side * I.seatZ]}
-						rotation={[0, 0, -Math.PI / 15]}
-						args={[...I.seatBackSize]}
-						radius={I.seatBackSize[0] / 3}
+						position={[I.seatRearX - I.benchSize[0] / 2, I.seatBackY, 0]}
+						rotation={[0, 0, -Math.PI / 18]}
+						args={[...I.rearBackSize]}
+						radius={I.rearBackSize[0] / 4}
 						smoothness={4}
-						castShadow>
-						<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
-					</RoundedBox>
-					<RoundedBox
-						position={[I.seatBackX - I.seatBackSize[0] / 2, I.headrestY, side * I.seatZ]}
-						args={[...I.headrestSize]}
-						radius={I.headrestSize[0] / 4}
-						smoothness={4}>
-						<meshStandardMaterial color={I.leatherColor} roughness={0.8} />
+					>
+						<meshStandardMaterial color={I.leatherColor} roughness={0.85} />
 					</RoundedBox>
 				</group>
-			))}
-			<group userData={{partId: 'seat-rear'}}>
-				<RoundedBox
-					position={[I.seatRearX, I.seatBaseY, 0]}
-					args={[...I.benchSize]}
-					radius={I.benchSize[1] / 4}
-					smoothness={4}>
-					<meshStandardMaterial color={I.leatherColor} roughness={0.85} />
-				</RoundedBox>
-				<RoundedBox
-					position={[I.seatRearX - I.benchSize[0] / 2, I.seatBackY, 0]}
-					rotation={[0, 0, -Math.PI / 18]}
-					args={[...I.rearBackSize]}
-					radius={I.rearBackSize[0] / 4}
-					smoothness={4}>
-					<meshStandardMaterial color={I.leatherColor} roughness={0.85} />
-				</RoundedBox>
-			</group>
-			<group userData={{partId: 'dashboard'}}>
-				<RoundedBox
-					position={[I.dashboardX, I.dashboardY, 0]}
-					args={[...I.dashboardSize]}
-					radius={I.dashboardSize[1] / 3}
-					smoothness={4}>
-					<meshStandardMaterial color={I.carpetColor} roughness={0.75} />
-				</RoundedBox>
-				<RoundedBox
-					position={[I.consoleX, I.consoleY, 0]}
-					args={[...I.consoleSize]}
-					radius={I.consoleSize[2] / 10}
-					smoothness={4}>
-					<meshStandardMaterial color={I.leatherColor} roughness={0.7} />
-				</RoundedBox>
-				<mesh position={[I.displayX, I.displayY, 0]}>
-					<boxGeometry args={[...I.displaySize]} />
-					<meshStandardMaterial
-						color="#111a20"
-						emissive="#58717e"
-						emissiveIntensity={0.25}
-						roughness={0.2}
-						metalness={0.2}
-					/>
-				</mesh>
-			</group>
+			</TeardownPart>
+			<TeardownPart id="body-dashboard">
+				<group userData={{ partId: 'dashboard' }}>
+					<RoundedBox
+						position={[I.dashboardX, I.dashboardY, 0]}
+						args={[...I.dashboardSize]}
+						radius={I.dashboardSize[1] / 3}
+						smoothness={4}
+					>
+						<meshStandardMaterial color={I.carpetColor} roughness={0.75} />
+					</RoundedBox>
+					<RoundedBox
+						position={[I.consoleX, I.consoleY, 0]}
+						args={[...I.consoleSize]}
+						radius={I.consoleSize[2] / 10}
+						smoothness={4}
+					>
+						<meshStandardMaterial color={I.leatherColor} roughness={0.7} />
+					</RoundedBox>
+					<mesh position={[I.displayX, I.displayY, 0]}>
+						<boxGeometry args={[...I.displaySize]} />
+						<meshStandardMaterial
+							color="#111a20"
+							emissive="#58717e"
+							emissiveIntensity={0.25}
+							roughness={0.2}
+							metalness={0.2}
+						/>
+					</mesh>
+				</group>
+			</TeardownPart>
 		</group>
 	)
 }
@@ -498,7 +518,7 @@ function Unibody() {
 		)
 		tunnel.rotateZ(Math.PI / 2)
 		tunnel.scale(1, U.tunnelHeight / (U.tunnelWidth / 2), 1)
-		const beads = Array.from({length: Math.floor(U.floorLength / U.beadSpacing) - 1}, (_, i) =>
+		const beads = Array.from({ length: Math.floor(U.floorLength / U.beadSpacing) - 1 }, (_, i) =>
 			[-1, 1].map((side) =>
 				curveTube(
 					[
@@ -518,7 +538,7 @@ function Unibody() {
 				),
 			),
 		).flat()
-		return {rails, tunnel, beads}
+		return { rails, tunnel, beads }
 	}, [])
 	useEffect(
 		() => () => {
@@ -529,13 +549,14 @@ function Unibody() {
 	)
 	const plateWidth = (U.floorWidth - U.tunnelWidth) / 2
 	return (
-		<group userData={{partId: 'body-floor'}}>
+		<group userData={{ partId: 'body-floor' }}>
 			{[-1, 1].map((side) => (
 				<group key={side}>
 					<mesh
 						position={[U.floorX, U.floorY, side * (U.tunnelWidth / 2 + plateWidth / 2)]}
 						castShadow
-						receiveShadow>
+						receiveShadow
+					>
 						<boxGeometry args={[U.floorLength, U.sheetThickness, plateWidth]} />
 						<meshStandardMaterial color="#303b46" metalness={0.65} roughness={0.5} />
 					</mesh>
@@ -544,7 +565,8 @@ function Unibody() {
 						args={[U.floorLength, U.sillHeight, U.sillWidth]}
 						radius={U.sheetThickness}
 						smoothness={3}
-						castShadow>
+						castShadow
+					>
 						<meshStandardMaterial color="#303b46" metalness={0.65} roughness={0.5} />
 					</RoundedBox>
 				</group>
@@ -566,7 +588,7 @@ function Unibody() {
 	)
 }
 
-function IntakeMesh() {
+export function IntakeMesh() {
 	const geometry = useMemo(() => {
 		const positions: number[] = []
 		const intake = B.lowerIntake
@@ -586,13 +608,13 @@ function IntakeMesh() {
 	}, [])
 	useEffect(() => () => geometry.dispose(), [geometry])
 	return (
-		<lineSegments geometry={geometry} userData={{partId: 'bumper-front'}}>
+		<lineSegments geometry={geometry} userData={{ partId: 'bumper-front' }}>
 			<lineBasicMaterial color="#273039" transparent opacity={0.65} />
 		</lineSegments>
 	)
 }
 
-export function Body() {
+function AssembledBody() {
 	const objects = useMemo(
 		() => ({
 			intakes: [B.grille, B.lowerIntake].map(createIntakeSurface),
@@ -626,11 +648,11 @@ export function Body() {
 			front: createBodyCap(true),
 			rear: createBodyCap(false),
 			shellMaterial: applyBodyClip(
-				new THREE.MeshPhysicalMaterial({...V.materials.paint, side: THREE.DoubleSide}),
+				new THREE.MeshPhysicalMaterial({ ...V.materials.paint, side: THREE.DoubleSide }),
 				'shell',
 			),
 			roofMaterial: applyBodyClip(
-				new THREE.MeshPhysicalMaterial({...V.materials.paint, side: THREE.DoubleSide}),
+				new THREE.MeshPhysicalMaterial({ ...V.materials.paint, side: THREE.DoubleSide }),
 				'cabin',
 			),
 			glassMaterial: applyBodyClip(
@@ -685,7 +707,7 @@ export function Body() {
 				customDepthMaterial={objects.shellDepth}
 				castShadow
 				receiveShadow
-				userData={{partId: 'body-shell'}}
+				userData={{ partId: 'body-shell' }}
 			/>
 			<mesh
 				geometry={objects.cabin}
@@ -693,12 +715,12 @@ export function Body() {
 				customDepthMaterial={objects.cabinDepth}
 				castShadow
 				receiveShadow
-				userData={{partId: 'roof'}}
+				userData={{ partId: 'roof' }}
 			/>
 			<mesh
 				geometry={objects.cabin}
 				material={objects.glassMaterial}
-				userData={{partId: 'cabin-glazing'}}
+				userData={{ partId: 'cabin-glazing' }}
 				renderOrder={2}
 			/>
 			{[objects.front, objects.rear].map((geometry, i) => (
@@ -707,22 +729,23 @@ export function Body() {
 					geometry={geometry}
 					castShadow
 					receiveShadow
-					userData={{partId: i ? 'bumper-rear' : 'bumper-front'}}>
+					userData={{ partId: i ? 'bumper-rear' : 'bumper-front' }}
+				>
 					<meshPhysicalMaterial {...V.materials.paint} />
 				</mesh>
 			))}
 			{objects.liners.map((geometry, i) => (
-				<mesh key={i} geometry={geometry} userData={{partId: 'body-shell'}}>
+				<mesh key={i} geometry={geometry} userData={{ partId: 'body-shell' }}>
 					<meshStandardMaterial {...V.materials.rubber} side={THREE.DoubleSide} />
 				</mesh>
 			))}
 			{objects.archBacks.map((geometry, i) => (
-				<mesh key={`well-${i}`} geometry={geometry} userData={{partId: 'body-shell'}}>
+				<mesh key={`well-${i}`} geometry={geometry} userData={{ partId: 'body-shell' }}>
 					<meshStandardMaterial color="#090b0e" roughness={0.94} side={THREE.DoubleSide} />
 				</mesh>
 			))}
 			{objects.rearPanels.map((geometry, i) => (
-				<mesh key={`rear-${i}`} geometry={geometry} userData={{partId: 'bumper-rear'}}>
+				<mesh key={`rear-${i}`} geometry={geometry} userData={{ partId: 'bumper-rear' }}>
 					<meshStandardMaterial color={i ? '#141b22' : '#11161a'} roughness={0.7} metalness={0.1} />
 				</mesh>
 			))}
@@ -732,21 +755,22 @@ export function Body() {
 			<Unibody />
 			<IntakeMesh />
 			{objects.intakes.map((geometry, i) => (
-				<mesh key={i} geometry={geometry} userData={{partId: 'bumper-front'}}>
+				<mesh key={i} geometry={geometry} userData={{ partId: 'bumper-front' }}>
 					<meshStandardMaterial color="#090c10" roughness={0.9} metalness={0.05} />
 				</mesh>
 			))}
-			<mesh geometry={objects.ducktail} userData={{partId: 'bumper-rear'}}>
+			<mesh geometry={objects.ducktail} userData={{ partId: 'bumper-rear' }}>
 				<meshPhysicalMaterial {...V.materials.paint} />
 			</mesh>
-			<mesh geometry={objects.frontLip} userData={{partId: 'bumper-front'}}>
+			<mesh geometry={objects.frontLip} userData={{ partId: 'bumper-front' }}>
 				<meshPhysicalMaterial {...V.materials.paint} />
 			</mesh>
 			{[-1, 1].map((side, index) => (
 				<group key={side}>
 					<mesh
 						geometry={objects.mirrorStems[index]}
-						userData={{partId: `mirror-${side < 0 ? 'left' : 'right'}`}}>
+						userData={{ partId: `mirror-${side < 0 ? 'left' : 'right'}` }}
+					>
 						<meshStandardMaterial {...V.materials.plastic} />
 					</mesh>
 					<RoundedBox
@@ -755,14 +779,16 @@ export function Body() {
 						radius={B.mirrorSize[1] / 2.2}
 						smoothness={5}
 						rotation={[0, (side * Math.PI) / 15, 0]}
-						userData={{partId: `mirror-${side < 0 ? 'left' : 'right'}`}}
-						castShadow>
+						userData={{ partId: `mirror-${side < 0 ? 'left' : 'right'}` }}
+						castShadow
+					>
 						<meshPhysicalMaterial {...V.materials.paint} />
 					</RoundedBox>
 					<mesh
 						position={[B.mirrorX - B.mirrorSize[0] / 2, B.mirrorY, side * B.mirrorZ]}
 						rotation={[0, Math.PI / 2, 0]}
-						userData={{partId: `mirror-${side < 0 ? 'left' : 'right'}`}}>
+						userData={{ partId: `mirror-${side < 0 ? 'left' : 'right'}` }}
+					>
 						<planeGeometry args={[B.mirrorSize[2] * 0.78, B.mirrorSize[1] * 0.7]} />
 						<meshStandardMaterial color="#9ca8af" metalness={1} roughness={0.08} />
 					</mesh>
@@ -773,7 +799,8 @@ export function Body() {
 							args={[B.handleLength, B.seamRadius * 6, B.seamRadius * 4]}
 							radius={B.seamRadius * 2}
 							smoothness={3}
-							userData={{partId: `door-${i ? 'rear' : 'front'}-${side < 0 ? 'left' : 'right'}`}}>
+							userData={{ partId: `door-${i ? 'rear' : 'front'}-${side < 0 ? 'left' : 'right'}` }}
+						>
 							<meshStandardMaterial color="#56616b" metalness={0.8} roughness={0.26} />
 						</RoundedBox>
 					))}
@@ -781,4 +808,9 @@ export function Body() {
 			))}
 		</group>
 	)
+}
+
+export function Body() {
+	const { system } = useTeardown()
+	return system === 'body' ? <BodyTeardown /> : <AssembledBody />
 }

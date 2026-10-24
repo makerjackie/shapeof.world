@@ -1,8 +1,8 @@
-import {useMemo, useEffect, useRef} from 'react'
-import {useFrame} from '@react-three/fiber'
-import {ContactShadows, Environment, Lightformer, MeshReflectorMaterial} from '@react-three/drei'
+import { useMemo, useEffect, useRef } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial } from '@react-three/drei'
 import * as T from 'three'
-import {STUDIO_SPEC as G, VEHICLE_SPEC as S} from './vehicle-spec'
+import { STUDIO_SPEC as G, VEHICLE_SPEC as S } from './vehicle-spec'
 
 /** A continuous surface of revolution: floor, quarter-circle cove, wall, dome. */
 export function createStudioGeometry() {
@@ -43,16 +43,16 @@ export function createStudioGeometry() {
 	geometry.setAttribute('color', new T.BufferAttribute(colors, 3))
 	return geometry
 }
-export function Studio({mobile}: {mobile: boolean}) {
+export function Studio({ mobile }: { mobile: boolean }) {
 	const autoClear = useRef(false)
 	// Composer owns the main render at priority 1 and disables automatic clears.
 	// Drei's priority-0 contact-shadow/blur passes rely on fresh transparent targets.
 	// Restore that behavior only for the offscreen passes, then restore composer state.
-	useFrame(({gl}) => {
+	useFrame(({ gl }) => {
 		autoClear.current = gl.autoClear
 		gl.autoClear = true
 	}, -1)
-	useFrame(({gl}) => {
+	useFrame(({ gl }) => {
 		gl.autoClear = autoClear.current
 	}, 0.5)
 	const bowl = useMemo(createStudioGeometry, [])
@@ -137,13 +137,15 @@ export function Studio({mobile}: {mobile: boolean}) {
 				/>
 			</Environment>
 			<mesh geometry={bowl} receiveShadow onUpdate={(mesh) => mesh.layers.set(2)}>
-				<meshBasicMaterial vertexColors toneMapped={false} side={T.DoubleSide} />
+				{/* Show only the inside: a wide portrait camera may sit beyond the cove. */}
+				<meshBasicMaterial vertexColors toneMapped={false} side={T.BackSide} />
 			</mesh>
 			<mesh
 				rotation={[-Math.PI / 2, 0, 0]}
 				position={[0, G.floorY + 0.002, 0]}
 				receiveShadow
-				onUpdate={(mesh) => mesh.layers.set(2)}>
+				onUpdate={(mesh) => mesh.layers.set(2)}
+			>
 				<planeGeometry args={[G.floorRadius * 2, G.floorRadius * 2]} />
 				<MeshReflectorMaterial
 					onUpdate={(material) => {
@@ -157,7 +159,7 @@ export function Studio({mobile}: {mobile: boolean}) {
 							// blurred reflected image is added; direct lights cannot tint a disc.
 							shader.fragmentShader = shader.fragmentShader.replace(
 								'#include <opaque_fragment>',
-								`outgoingLight = vec3(${floor.r}, ${floor.g}, ${floor.b}) + clamp(newMerge.rgb, 0.0, 8.0) * 0.012;\n#include <opaque_fragment>`,
+								`outgoingLight = vec3(${floor.r}, ${floor.g}, ${floor.b}) + clamp(newMerge.rgb, 0.0, 8.0) * 0.045;\n#include <opaque_fragment>`,
 							)
 						}
 						material.needsUpdate = true
@@ -182,7 +184,7 @@ export function Studio({mobile}: {mobile: boolean}) {
 			</mesh>
 			<ContactShadows
 				position={[0, G.floorY + 0.004, 0]}
-				opacity={0.6}
+				opacity={0.72}
 				scale={12}
 				blur={2.8}
 				far={4.5}

@@ -1,6 +1,7 @@
 import * as T from 'three'
-import {mergeGeometries} from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import {BRAKE_GEOMETRY as B, VEHICLE_SPEC as S} from './vehicle-spec'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { ROAD_TEARDOWN_SPEC as R } from './road-teardown-spec'
+import { BRAKE_GEOMETRY as B, VEHICLE_SPEC as S } from './vehicle-spec'
 
 export function brakeRing(inner: number, outer: number, depth: number) {
 	const shape = new T.Shape()
@@ -8,7 +9,7 @@ export function brakeRing(inner: number, outer: number, depth: number) {
 	const hole = new T.Path()
 	hole.absarc(0, 0, inner, 0, Math.PI * 2, true)
 	shape.holes.push(hole)
-	const geometry = new T.ExtrudeGeometry(shape, {depth, bevelEnabled: false, curveSegments: 64})
+	const geometry = new T.ExtrudeGeometry(shape, { depth, bevelEnabled: false, curveSegments: 64 })
 	geometry.translate(0, 0, -depth / 2)
 	return geometry
 }
@@ -33,54 +34,71 @@ export function brakePad(front: boolean) {
 	return geometry
 }
 
-/** A cup behind the inner piston, two bridges, and the outer reaction fingers. */
+/** Closed piston cup and two cast C ribs. The open throat straddles the disc,
+ * while the reaction fingers press the outer pad; no broad rectangular shell. */
 export function floatingCaliperBody(front: boolean) {
 	const spec = front ? S.brakes.front : S.brakes.rear
 	const gap = B.padGap * B.gapMagnification
 	const innerFace = -spec.thickness / 2 - gap - B.padThickness
+	const outerFace = spec.thickness / 2 + gap + B.padThickness
 	const cup = brakeRing(
 		spec.pistonDiameter / 2 + B.pistonWall / 2,
 		spec.pistonDiameter / 2 + B.caliperWall,
 		B.pistonLength,
 	)
 	cup.translate(-B.caliperRadialPosition, 0, innerFace - B.pistonLength / 2)
-	const pieces: T.BufferGeometry[] = [cup]
-	const addBox = (size: [number, number, number], pos: [number, number, number]) => {
-		const g = new T.BoxGeometry(...size).toNonIndexed()
-		g.translate(...pos)
-		pieces.push(g)
-	}
-	addBox(
-		[B.caliperWidth, B.caliperHeight, B.caliperWall],
-		[-B.caliperRadialPosition, 0, innerFace - B.pistonLength],
-	)
+	const cap = new T.CylinderGeometry(
+		spec.pistonDiameter / 2 + B.caliperWall,
+		spec.pistonDiameter / 2 + B.caliperWall,
+		B.caliperWall,
+		40,
+	).toNonIndexed()
+	cap.rotateX(Math.PI / 2)
+	cap.translate(-B.caliperRadialPosition, 0, innerFace - B.pistonLength - B.caliperWall / 2)
+	const pieces: T.BufferGeometry[] = [cup, cap]
+	const bridgeX = -spec.diameter / 2 - B.caliperWall * 2.5
+	const innerX = -B.caliperRadialPosition + B.caliperWidth * 0.36
+	const backZ = innerFace - B.pistonLength
+	const wall = B.caliperWall * 1.5
+	// In this profile, x is radial and y becomes axial z after extrusion.
+	const c = new T.Shape()
+	c.moveTo(innerX, backZ - wall)
+	c.lineTo(bridgeX + wall, backZ - wall)
+	c.quadraticCurveTo(bridgeX - wall, backZ - wall, bridgeX - wall, backZ + wall)
+	c.lineTo(bridgeX - wall, outerFace)
+	c.quadraticCurveTo(bridgeX - wall, outerFace + wall, bridgeX + wall, outerFace + wall)
+	c.lineTo(innerX, outerFace + wall)
+	c.lineTo(innerX, outerFace)
+	c.lineTo(bridgeX, outerFace)
+	c.lineTo(bridgeX, backZ)
+	c.lineTo(innerX, backZ)
+	c.closePath()
 	for (const side of [-1, 1]) {
-		// The bridge crosses around the disc's outer circumference, never through
-		// the friction annulus. Both fingers sit beyond the outer brake pad.
-		addBox(
-			[B.caliperWall * 2, B.caliperWall * 2, B.caliperBridgeDepth],
-			[-spec.diameter / 2 - B.caliperWall, side * B.caliperHeight * 0.37, 0],
+		const rib = new T.ExtrudeGeometry(c, {
+			depth: B.caliperWall * 2,
+			bevelEnabled: true,
+			bevelSegments: R.brakes.castingSegments,
+			bevelSize: R.brakes.castingBevel,
+			bevelThickness: R.brakes.castingBevel,
+			curveSegments: 12,
+		})
+		rib.translate(0, 0, -B.caliperWall)
+		rib.rotateX(Math.PI / 2)
+		rib.translate(0, side * B.caliperHeight * 0.31, 0)
+		pieces.push(rib)
+		// Cylindrical guide-pin bosses visibly connect the casting to its sliders.
+		const boss = brakeRing(
+			B.guidePinRadius * 1.18,
+			B.guidePinRadius + B.caliperWall,
+			B.caliperWall * 3,
 		)
-		addBox(
-			[B.caliperWidth, B.caliperWall * 2, B.caliperWall],
-			[
-				-B.caliperRadialPosition - B.caliperWall,
-				side * B.caliperHeight * 0.37,
-				spec.thickness / 2 + gap + B.padThickness + B.caliperWall / 2,
-			],
-		)
-		addBox(
-			[B.caliperWall * 2, B.caliperHeight * 0.65, B.caliperWall],
-			[
-				-B.caliperRadialPosition + side * B.caliperWidth * 0.26,
-				0,
-				spec.thickness / 2 + gap + B.padThickness + B.caliperWall / 2,
-			],
-		)
+		boss.translate(-B.caliperRadialPosition, side * B.guidePinOffsetY, backZ + B.caliperWall)
+		pieces.push(boss)
 	}
 	for (const geometry of pieces) geometry.deleteAttribute('uv')
 	const result = mergeGeometries(pieces)!
-	pieces.forEach((geometry) => geometry.dispose())
+	result.computeVertexNormals()
+	pieces.forEach((g) => g.dispose())
 	return result
 }
 
@@ -90,8 +108,8 @@ export function caliperXrayMaterial() {
 		depthWrite: false,
 		side: T.DoubleSide,
 		uniforms: {
-			color: {value: new T.Color(B.caliperXrayColor)},
-			opacity: {value: B.caliperXrayOpacity},
+			color: { value: new T.Color(B.caliperXrayColor) },
+			opacity: { value: B.caliperXrayOpacity },
 		},
 		vertexShader: `varying vec3 vNormal; varying vec3 vEye;
 		void main(){ vec4 p=modelViewMatrix*vec4(position,1.);vNormal=normalize(normalMatrix*normal);vEye=normalize(-p.xyz);gl_Position=projectionMatrix*p; }`,
