@@ -2,12 +2,13 @@ import { useEffect, useRef, type ComponentRef } from 'react'
 import { OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
+import { PRESENTATIONS } from '../presentation'
 import type { DesignSpec } from '../sim/types'
 
 export type CameraPreset = 'overview' | 'top' | 'close' | 'low'
 export function CameraRig({ design, preset, revision, reducedMotion, onInteract }: { design: DesignSpec; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void }) {
   const control = useRef<ComponentRef<typeof OrbitControls>>(null)
-  const { camera, size } = useThree()
+  const { camera, size, gl } = useThree()
   const lastInteraction = useRef(-Infinity)
   const flight = useRef<{ from: T.Vector3; to: T.Vector3; targetFrom: T.Vector3; target: T.Vector3; elapsed: number } | null>(null)
   const mounted = useRef(false)
@@ -28,18 +29,9 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
     if (preset === 'close') { to = new T.Vector3(urban ? 40 : 110, urban ? 45 : 74, urban ? 75 : 115); target = new T.Vector3(urban ? 0 : 40, 3, urban ? 0 : 25) }
     if (preset === 'low') { to = new T.Vector3(urban ? 15 : 78, urban ? 8 : 22, urban ? 80 : 230); target = new T.Vector3(0, 2, 0) }
     if (preset === 'overview') {
-      // A 22 degree view through a 60 degree vertical lens leaves the horizon
-      // at 15% height while preserving the interchange in the lower two thirds.
-      if (urban && design.id !== 'continuous-flow') { to.set(74, 72, 98); target.set(0, 0, 0) }
-      else if (service) { to.set(0, 150, 280); target.set(0, 12, 0) }
-      else if (design.id === 'cloverleaf') { to.set(225, 164, 290); target.set(0, 10, 0) }
-      else if (design.chapter === 4) { to.set(250,170,310); target.set(0,28,-15) }
-    }
-    if (mobile && preset === 'overview') {
-      if (urban && design.id !== 'continuous-flow') to.set(96, 98, 118)
-      else if (service) { to.set(0, 230, 370); target.set(0, 8, 0) }
-      else if (design.id === 'cloverleaf') { to.set(400, 360, 570); target.set(0, 16, 0) }
-      else { to.sub(target).multiplyScalar(1.45).add(target) }
+      const view = PRESENTATIONS[design.id]
+      to.fromArray(mobile ? view.mobile : view.position)
+      target.fromArray(mobile && view.mobileTarget ? view.mobileTarget : view.target)
     }
     if (design.id === 'continuous-flow' && preset === 'top') to.set(0,mobile ? 780 : 550,1)
     if (design.chapter === 4 && preset !== 'overview') {
@@ -49,7 +41,9 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
       if (preset === 'low') to.set(focus.x + 220, focus.y + 38, focus.z + 360)
     }
     const perspective = camera as T.PerspectiveCamera
-    perspective.fov = preset === 'overview' ? (urban ? (mobile ? 58 : design.id === 'continuous-flow' ? 55 : 48) : (service ? (mobile ? 60 : 52) : (mobile ? 60 : design.id === 'cloverleaf' ? 60 : design.camera.fov ?? 55))) : (mobile ? 50 : 42); perspective.updateProjectionMatrix()
+    const view = PRESENTATIONS[design.id]
+    perspective.fov = preset === 'overview' ? (mobile ? view.mobileFov ?? view.fov + 6 : view.fov) : (mobile ? 54 : 42)
+    perspective.updateProjectionMatrix()
     if (!mounted.current || reducedMotion) {
       camera.position.copy(to); control.current?.target.copy(target); camera.lookAt(target)
       mounted.current = true
@@ -70,6 +64,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract 
       if (t === 1) flight.current = null
     } else controls.autoRotate = !reducedMotion && performance.now() - lastInteraction.current > 8000 && preset !== 'top'
   })
-  return <OrbitControls ref={control} makeDefault enableDamping dampingFactor={0.08} minDistance={30} maxDistance={2500} maxPolarAngle={Math.PI / 2 - 0.025} minPolarAngle={0.015} autoRotateSpeed={0.1}
+  return <OrbitControls ref={control} makeDefault enableDamping dampingFactor={0.08} minDistance={30} maxDistance={2500} maxPolarAngle={Math.PI / 2 - 0.025} minPolarAngle={0.015} autoRotateSpeed={0.1} touches={{ ONE: T.TOUCH.ROTATE, TWO: T.TOUCH.DOLLY_PAN }}
+    onChange={() => { gl.domElement.dataset.camera = camera.position.toArray().map(n=>n.toFixed(2)).join(',') }}
     onStart={() => { lastInteraction.current = performance.now(); flight.current = null; onInteract() }} onEnd={() => { lastInteraction.current = performance.now() }} />
 }

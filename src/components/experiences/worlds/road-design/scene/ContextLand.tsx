@@ -23,12 +23,12 @@ export function contextLayout(network: Network): ContextLayout {
     return true
   })
   const ground = (x: number, z: number): Vec3 => ({ x, y: terrainHeight(network,x,z) + 0.02, z })
-  for (const axis of [0, 1]) for (const fixed of [-650,-450,-250,250,450,650]) for (let start = -700; start < 700; start += 50) {
-    const points = [0, .5, 1].map(t => axis ? ground(fixed, start+t*50) : ground(start+t*50,fixed))
+  for (const axis of [0, 1]) for (const fixed of [-1050,-850,-650,-450,-250,250,450,650,850,1050]) for (let start = -1100; start < 1100; start += 36) {
+    const points = [0, .5, 1].map(t => axis ? ground(fixed, start+t*36) : ground(start+t*36,fixed))
     if (points.some(p => !clear(p.x,p.z,24))) continue
     result.streets.push(points)
     const center = points[1]
-    result.lamps.push({ position: ground(center.x + (axis ? 4 : 0), center.z + (axis ? 0 : 4)), height: 8, urban: true, rotation: axis ? Math.PI : -Math.PI/2, radius: 24 })
+    result.lamps.push({ position: ground(center.x + (axis ? 4 : 0), center.z + (axis ? 0 : 4)), height: 8, urban: true, rotation: axis ? Math.PI : -Math.PI/2, radius: 27 })
   }
   for (const x of [-560,-350,350,560]) for (const z of [-580,-340,340,580]) {
     if (!clear(x,z,48)) continue

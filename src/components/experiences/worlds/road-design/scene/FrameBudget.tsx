@@ -14,7 +14,8 @@ export function FrameBudget() {
     const ceiling = Math.min(1.5, devicePixelRatio), current = state.viewport.dpr
     if (average > 1 / 52 && current > 0.85) {
       setDpr(Math.max(0.85, current - 0.15)); window.stable = 0
-    } else if (average < 1 / 85) {
+    // A 60 Hz display must be able to recover resolution after a busy frame.
+    } else if (average < 1 / 58) {
       window.stable += window.elapsed
       if (window.stable > 6 && current < ceiling) { setDpr(Math.min(ceiling, current + 0.1)); window.stable = 0 }
     } else window.stable = 0

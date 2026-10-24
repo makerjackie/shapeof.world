@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import type { Carriageway, Network } from '../sim/types'
@@ -11,7 +11,8 @@ interface Building extends Instance { size: Triple; seed: number; kind: number; 
 
 /** Façades are metre-scaled procedural windows, not thousands of window meshes. */
 export function CityBuildings({ urban, service = false, roads, network }: { urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
-  const shaderRef = useRef<T.WebGLProgramParametersWithUniforms | null>(null)
+  const meshRef = useRef<T.InstancedMesh>(null)
+  const lastCamera = useRef(new T.Vector3(Infinity, Infinity, Infinity))
   const assets = useMemo(() => {
     const blocks: Building[] = [], beacons: number[] = []
     let seed = 12963
@@ -44,6 +45,7 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
           const width = 18 + random() * 10, depth = 18 + random() * 10
           const x = sx * (48 + ix * 48 + (random() - 0.5) * 5), z = sz * (48 + iz * 49 + (random() - 0.5) * 5)
           const floors = near ? 4 + Math.floor(random() * 8) : 7 + Math.floor(random() ** 1.8 * 24)
+          if (network?.id === 'continuous-flow' && Math.abs(x) < 85 && Math.abs(z) < 210) continue
           building(x, z, width, depth, floors * 3.3, true)
         }
       }
@@ -64,12 +66,17 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
           return true
         })
       }
+      // Connected street-front blocks share the local 200 m grid. Closely spaced
+      // low-rise wings replace isolated luminous podium boxes in the meadow.
       for (const sx of [-1, 1]) for (const sz of [-1, 1]) {
-        for (const blockX of [190, 290, 420, 570]) for (const blockZ of [110, 240, 390, 550]) {
-          const width = 20 + random() * 10, depth = 18 + random() * 10
-          const x = sx * (blockX + (random() - 0.5) * 8), z = sz * (blockZ + (random() - 0.5) * 8)
-          if (!clearsRoads(x, z, width, depth)) continue
-          building(x, z, width, depth, (network?.id === 'huangjuewan' ? 12 + Math.floor(random() * 18) : 2 + Math.floor(random() * 6)) * 3.3, true)
+        for (const blockX of [310, 510]) for (const blockZ of [310, 510]) {
+          if (random() < .20) continue
+          for (let wing = 0; wing < 5; wing++) {
+            const x=sx*(blockX+(wing-2)*30), z=sz*(blockZ+(wing%2)*34)
+            const width=26+random()*4, depth=24+random()*6
+            if (!clearsRoads(x,z,width,depth)) continue
+            building(x,z,width,depth,(network?.id==='huangjuewan'?12+Math.floor(random()*18):3+Math.floor(random()*4))*3.3,network?.id==='huangjuewan')
+          }
         }
       }
     }
@@ -88,36 +95,19 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
     geometry.setAttribute('citySize', new T.InstancedBufferAttribute(new Float32Array(blocks.flatMap(b => b.size)), 3))
     geometry.setAttribute('citySeed', new T.InstancedBufferAttribute(new Float32Array(blocks.map(b => b.seed)), 1))
     geometry.setAttribute('cityKind', new T.InstancedBufferAttribute(new Float32Array(blocks.map(b => b.kind)), 1))
-    geometry.setAttribute('cityOcclusionCenter',new T.InstancedBufferAttribute(new Float32Array(blocks.flatMap(b=>b.occlusion.center)),3))
-    geometry.setAttribute('cityOcclusionSize',new T.InstancedBufferAttribute(new Float32Array(blocks.flatMap(b=>b.occlusion.size)),3))
     const material = new T.MeshStandardMaterial({ roughness: 0.9, metalness: 0.08, depthWrite: true, fog: false })
     material.onBeforeCompile = shader => {
-      shaderRef.current = shader
-      shader.uniforms.cityCamera = { value: new T.Vector3() }
-      shader.uniforms.cityFadeEnabled = { value: 1 }
       shader.vertexShader = `attribute vec3 citySize; attribute float citySeed; attribute float cityKind;
-        attribute vec3 cityOcclusionCenter; attribute vec3 cityOcclusionSize;
-        uniform vec3 cityCamera; uniform float cityFadeEnabled;
         varying vec3 cityLocal; varying vec3 cityNormal; varying vec3 cityWorld;
-        varying float cityRandom; varying float cityType; varying float cityFade;\n` + shader.vertexShader
+        varying float cityRandom; varying float cityType;\n` + shader.vertexShader
       shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
         cityLocal = position * citySize; cityLocal.y += citySize.y * 0.5;
         cityNormal = normal; cityRandom = citySeed; cityType = cityKind;
-        vec3 center = (modelMatrix * vec4(cityOcclusionCenter, 1.0)).xyz;
         cityWorld = (modelMatrix * instanceMatrix * vec4(position, 1.0)).xyz;
-        vec3 sight = vec3(0.0, 1.0, 0.0) - cityCamera;
-        float t = clamp(dot(center.xz - cityCamera.xz, sight.xz) / max(1.0, dot(sight.xz, sight.xz)), 0.0, 1.0);
-        vec3 ray = cityCamera + sight * t;
-        float radius = length(cityOcclusionSize.xz) * 0.62 + 30.0;
-        float overlap = (1.0-smoothstep(radius * 0.65, radius, distance(center.xz, ray.xz))) * step(0.02,t) * (1.0-step(0.93,t));
-        overlap *= (1.0-smoothstep(center.y+cityOcclusionSize.y*0.5+25.0,center.y+cityOcclusionSize.y*0.5+33.0,ray.y));
-        overlap *= 1.0-smoothstep(220.0, 320.0, length(center.xz));
-        cityFade = mix(1.0, 0.0, overlap * cityFadeEnabled);
       `)
       shader.fragmentShader = `varying vec3 cityLocal; varying vec3 cityNormal; varying vec3 cityWorld;
-        varying float cityRandom; varying float cityType; varying float cityFade;
+        varying float cityRandom; varying float cityType;
         float cityHash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}\n` + shader.fragmentShader
-      shader.fragmentShader = shader.fragmentShader.replace('#include <alphahash_fragment>', 'if (cityFade < 0.5) discard;\n#include <alphahash_fragment>')
       shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
         if (abs(cityNormal.y) < 0.5 && cityType < 2.5) {
           float horizontal = abs(cityNormal.z) > 0.5 ? cityLocal.x : cityLocal.z;
@@ -158,7 +148,6 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
           }
         }
         totalEmissiveRadiance += diffuseColor.rgb*(0.07+0.06*max(0.0,cityNormal.x*0.45+cityNormal.y*0.7+cityNormal.z*0.3));
-        totalEmissiveRadiance *= cityFade*cityFade;
       `)
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float cityDistance = distance(cameraPosition,cityWorld);
@@ -166,7 +155,7 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
         outgoingLight = mix(outgoingLight, vec3(0.0025,0.0035,0.0055), lowHaze);
         #include <opaque_fragment>`)
     }
-    material.customProgramCacheKey = () => 'road-city-facades-v5'
+    material.customProgramCacheKey = () => 'road-city-facades-v7'
     const beaconGeometry = new T.BufferGeometry()
     const beaconPosition: number[] = [], phase: number[] = []
     for (let i = 0; i < beacons.length; i += 4) { beaconPosition.push(...beacons.slice(i, i + 3)); phase.push(beacons[i + 3]) }
@@ -180,16 +169,41 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
           brightness=0.18+0.82*pow(max(0.0,sin(time*2.0+phase)),12.0); }`,
       fragmentShader: `varying float brightness; void main(){float r=length(gl_PointCoord-0.5)*2.0; if(r>1.0)discard;gl_FragColor=vec4(vec3(2.8,0.04,0.018)*brightness, exp(-r*r*4.0));}`,
     })
-    return { blocks, geometry, material, beaconGeometry, beaconMaterial }
+    const occluders = blocks.flatMap((b, index) => Math.hypot(b.occlusion.center[0], b.occlusion.center[2]) < 340
+      ? [{ index, volume: b.occlusion, hidden: false, matrix: new T.Matrix4() }] : [])
+    return { blocks, geometry, material, beaconGeometry, beaconMaterial, occluders, hiddenMatrix: new T.Matrix4().makeScale(0,0,0) }
   }, [urban, service, roads, network])
+  useLayoutEffect(() => {
+    if (!meshRef.current) return
+    fillInstances(meshRef.current, assets.blocks)
+    for (const item of assets.occluders) { meshRef.current.getMatrixAt(item.index, item.matrix); item.hidden = false }
+    lastCamera.current.set(Infinity, Infinity, Infinity)
+  }, [assets])
   useFrame(({ camera, clock, gl }) => {
-    shaderRef.current?.uniforms.cityCamera.value.copy(camera.position)
+    // Change the instance transform, so colour, depth and AO agree. Fragment
+    // discard alone can leave a near-clipped roof in another rendering pass.
+    const p = camera.position, mesh = meshRef.current
+    if (mesh && p.distanceToSquared(lastCamera.current) > .04) {
+      let changed = false
+      const length2 = Math.max(1, p.x*p.x+p.z*p.z)
+      for (const item of assets.occluders) {
+        const [x,y,z] = item.volume.center, [w,h,d] = item.volume.size
+        const t = T.MathUtils.clamp(((p.x-x)*p.x+(p.z-z)*p.z)/length2, 0, 1)
+        const radius = Math.hypot(w,d)*.5+30
+        const near = Math.hypot(x-p.x,z-p.z) < radius && p.y < y+h*.5+16
+        const across = t > .015 && t < .98 && Math.hypot(x-p.x*(1-t),z-p.z*(1-t)) < radius && p.y*(1-t) < y+h*.5+28
+        const hidden = near || across
+        if (hidden !== item.hidden) { mesh.setMatrixAt(item.index,hidden ? assets.hiddenMatrix : item.matrix); item.hidden=hidden; changed=true }
+      }
+      if (changed) mesh.instanceMatrix.needsUpdate = true
+      lastCamera.current.copy(p)
+    }
     assets.beaconMaterial.uniforms.time.value = clock.elapsedTime
     assets.beaconMaterial.uniforms.pixelRatio.value = gl.getPixelRatio()
   })
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose(); assets.beaconGeometry.dispose(); assets.beaconMaterial.dispose() }, [assets])
   return <>
-    <instancedMesh args={[assets.geometry, assets.material, assets.blocks.length]} ref={mesh => { if (mesh) fillInstances(mesh, assets.blocks) }} />
+    <instancedMesh args={[assets.geometry, assets.material, assets.blocks.length]} ref={meshRef} />
     <points geometry={assets.beaconGeometry} material={assets.beaconMaterial} frustumCulled={false} />
   </>
 }

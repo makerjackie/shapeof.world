@@ -72,7 +72,7 @@ function projectToRoad(p: Vec3, road: Carriageway) {
 
 function isAuxiliary(id: string) { return id.startsWith('aux-road-') || id.startsWith('hjw-accel-') }
 
-export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Network; atlas: T.Texture; lamps: Lamp[]; simulation: TrafficSimulation }) {
+export function RoadMeshes({ network, atlas, lamps, simulation, roof }: { network: Network; atlas: T.Texture; lamps: Lamp[]; simulation: TrafficSimulation; roof: T.Texture }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const hasUrban = urban || Boolean(network.urbanJunctions?.length)
   const assets = useMemo(() => {
@@ -226,8 +226,8 @@ export function RoadMeshes({ network, atlas, lamps, simulation }: { network: Net
         lampArms.push({ position: [p.x, p.y + h - 0.15, p.z], scale: [3.9, 0.15, 3.9] })
       }
     }
-    return { pavement: mergeGeometry(pavement), concrete: mergeGeometry(concrete), edgeCaps: mergeGeometry(edgeCaps), soffits: mergeGeometry(soffits), paint: mergeGeometry(paint), yellow: mergeGeometry(yellow), piers, caps, lampPoles, lampArms, luminaires, asphalt: litMaterial(atlas, urban ? '#1d1f23' : '#252628', urban ? 1.3 : 2.1), cement: litMaterial(atlas, '#777571', 1.6), edgeMaterial: litMaterial(atlas, '#aca69a', 2.4), underside: litMaterial(atlas, '#25272a', 0.22) }
-  }, [network, atlas, lamps, urban, hasUrban])
+    return { pavement: mergeGeometry(pavement), concrete: mergeGeometry(concrete), edgeCaps: mergeGeometry(edgeCaps), soffits: mergeGeometry(soffits), paint: mergeGeometry(paint), yellow: mergeGeometry(yellow), piers, caps, lampPoles, lampArms, luminaires, asphalt: litMaterial(atlas, urban ? '#1d1f23' : '#252628', urban ? 1.3 : 1.8, .9, roof), cement: litMaterial(atlas, '#5d6166', .85, .9, roof), edgeMaterial: litMaterial(atlas, '#8b8d8f', 1.25, .9, roof), underside: litMaterial(atlas, '#1b2028', 0.16, .9, roof) }
+  }, [network, atlas, lamps, urban, hasUrban, roof])
   useEffect(() => () => { assets.pavement.dispose(); assets.concrete.dispose(); assets.edgeCaps.dispose(); assets.soffits.dispose(); assets.paint.dispose(); assets.yellow.dispose(); assets.asphalt.dispose(); assets.cement.dispose(); assets.edgeMaterial.dispose(); assets.underside.dispose() }, [assets])
   return <>
     <mesh geometry={assets.pavement} material={assets.asphalt} />

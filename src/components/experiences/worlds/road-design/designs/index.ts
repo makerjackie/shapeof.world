@@ -18,7 +18,7 @@ import { continuousFlow } from './continuous-flow'
 const entries = [tJunction, crossroadsYield, crossroadsSignal, roundabout, crossroadsChannelized, continuousFlow, diamond, ddi, parclo, trumpet, cloverleaf, turbine, stack, huangjuewan]
 export const DESIGNS: DesignSpec[] = entries.map(design => ({ ...design, build: () => {
   const network = design.build()
-  network.defaultOD ??= createDefaultOD(network, design.chapter === 1 ? { urbanPerApproach: design.defaultDemand } : {})
+  network.defaultOD ??= createDefaultOD(network, design.chapter === 1 ? { urbanPerApproach: design.defaultDemand } : design.id === 'cloverleaf' ? { highwayOffRampShare: 0.22 } : {})
   return network
 } }))
 export { cloverleaf, tJunction, crossroadsYield, crossroadsSignal, roundabout, crossroadsChannelized, diamond, ddi, turbine, stack, huangjuewan, trumpet, parclo, continuousFlow }

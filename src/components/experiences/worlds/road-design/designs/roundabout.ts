@@ -66,6 +66,6 @@ export function buildRoundabout(): Network {
 
 export const roundabout: DesignSpec = {
   id: 'roundabout', name: '现代环岛', nameEn: 'Modern roundabout', chapter: 1,
-  description: '进环的车让环内车先行，把交叉冲突变成四处合流与四处分流。',
+  description: '八个冲突点，没有一个交叉。进环的车让环内车先行，用绕行换掉横穿。',
   defaultDemand: 300, camera: urbanCamera, build: buildRoundabout,
 }

@@ -6,7 +6,7 @@ import type { TrafficRuntime } from './runtime'
 // Each history segment is uploaded once; the GPU expands its four lamp ribbons.
 // 256 samples per car are retained by the distance/curvature adaptive recorder.
 const MAX_SEGMENTS = 256_000
-export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: TrafficRuntime; shutter: number; blueprint?: boolean }) {
+export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft = false }: { runtime: TrafficRuntime; shutter: number; blueprint?: boolean; highlightLeft?: boolean }) {
   const assets = useMemo(() => {
     const geometry = new T.InstancedBufferGeometry()
     const corners: number[] = [], indices: number[] = []
@@ -22,11 +22,11 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
     for (const [name, array] of Object.entries(arrays)) geometry.setAttribute(name, new T.InstancedBufferAttribute(array, name === 'times' ? 2 : name === 'properties' ? 4 : 3).setUsage(T.DynamicDrawUsage))
     const material = new T.ShaderMaterial({
       transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide, toneMapped: false,
-      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, minimumWidth: { value: 3.2 }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 } },
+      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, minimumWidth: { value: 3.2 }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 }, highlightLeft: { value: 0 } },
       vertexShader: `
         attribute vec4 corner; attribute vec3 start; attribute vec3 end;
         attribute vec3 directionA; attribute vec3 directionB; attribute vec2 times; attribute vec4 properties;
-        uniform vec2 resolution; uniform float minimumWidth; uniform float shutter; uniform float simTime; uniform float blueprint;
+        uniform vec2 resolution; uniform float minimumWidth; uniform float shutter; uniform float simTime; uniform float blueprint; uniform float highlightLeft;
         varying vec3 vLight; varying float vSide; varying float vFade;
         void main(){
           vec3 direction=normalize(mix(directionA,directionB,corner.x));
@@ -37,12 +37,14 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
           vec2 screenDir=(ahead.xy/ahead.w-clip.xy/clip.w)*resolution;
           vec2 perpendicular=normalize(vec2(-screenDir.y,screenDir.x)+vec2(0.000001));
           float pixelWidth=max(minimumWidth,0.23*projectionMatrix[1][1]*resolution.y/max(1.0,-view.z));
+          pixelWidth*=mix(1.0,properties.w< -0.5 ? 1.3 : 1.0,highlightLeft);
           clip.xy+=perpendicular*corner.y*pixelWidth/resolution*clip.w;
           gl_Position=clip;
           float facing=dot(direction*corner.z,normalize(cameraPosition-p));
-          float visibility=pow(max(0.0,facing),1.6);
+          float visibility=pow(max(0.0,facing),1.35)+0.075*smoothstep(-0.15,0.12,facing);
           float braking=mix(properties.x,properties.y,corner.x);
           vLight=(corner.z>0.0 ? vec3(10.0,8.8,7.0) : vec3(9.0,0.07,0.025)*(1.0+braking*0.8))*visibility;
+          vLight=mix(vLight,properties.w< -0.5 ? vec3(10.0,4.5,0.63)*max(visibility,0.18) : vLight*0.4,highlightLeft);
           vec3 flowColor=properties.w< -0.5 ? vec3(1.0,0.19,0.058) : properties.w>0.5 ? vec3(0.114,0.65,0.323) : vec3(0.254,0.456,1.0);
           vLight=mix(vLight,flowColor*1.4*max(0.0,corner.z),blueprint);
           vFade=pow(clamp(1.0-(simTime-mix(times.x,times.y,corner.x))/max(0.001,shutter),0.0,1.0),0.55);
@@ -59,7 +61,7 @@ export function LightTrails({ runtime, shutter, blueprint = false }: { runtime: 
     if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1 }
     const time = runtime.simulation.time
     assets.material.uniforms.resolution.value.set(size.width, size.height); assets.material.uniforms.minimumWidth.value = size.width < 720 ? 1.5 / Math.max(1, gl.getPixelRatio()) : 3.2
-    assets.material.uniforms.blueprint.value = blueprint ? 1 : 0;
+    assets.material.uniforms.blueprint.value = blueprint ? 1 : 0; assets.material.uniforms.highlightLeft.value = highlightLeft && !blueprint ? 1 : 0;
     assets.material.uniforms.shutter.value = shutter; assets.material.uniforms.simTime.value = time
     if (shutter <= 0.01) { assets.geometry.instanceCount = 0; assets.lastShutter = shutter; return }
     if (time === assets.lastTime && shutter === assets.lastShutter) return
