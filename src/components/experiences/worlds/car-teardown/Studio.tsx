@@ -4,6 +4,12 @@ import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial } from 
 import * as T from 'three'
 import { STUDIO_SPEC as G, VEHICLE_SPEC as S } from './vehicle-spec'
 
+/** Soft overhead pool of light on the floor, matching between the cove and the reflector disc. */
+const POOL = { strength: 1.1, inner: 0.4, outer: 6.0 } as const
+function studioPool(radius: number) {
+	return 1 + POOL.strength * (1 - T.MathUtils.smoothstep(radius, POOL.inner, POOL.outer))
+}
+
 /** A continuous surface of revolution: floor, quarter-circle cove, wall, dome. */
 export function createStudioGeometry() {
 	const p = [new T.Vector2(0, G.floorY), new T.Vector2(G.floorRadius, G.floorY)]
@@ -37,7 +43,7 @@ export function createStudioGeometry() {
 		color
 			.copy(floor)
 			.lerp(wall, T.MathUtils.smoothstep(radius + positions.getY(i) * 0.2, 2, 12))
-			.multiplyScalar(3.2)
+			.multiplyScalar(3.2 * studioPool(radius))
 		color.toArray(colors, i * 3)
 	}
 	geometry.setAttribute('color', new T.BufferAttribute(colors, 3))
@@ -159,7 +165,9 @@ export function Studio({ mobile }: { mobile: boolean }) {
 							// blurred reflected image is added; direct lights cannot tint a disc.
 							shader.fragmentShader = shader.fragmentShader.replace(
 								'#include <opaque_fragment>',
-								`outgoingLight = vec3(${floor.r}, ${floor.g}, ${floor.b}) + clamp(newMerge.rgb, 0.0, 8.0) * 0.045;\n#include <opaque_fragment>`,
+								`float poolRadius = length(vAlphaMapUv - 0.5) * ${(G.floorRadius * 2).toFixed(1)};\n` +
+									`float pool = 1.0 + ${POOL.strength.toFixed(2)} * (1.0 - smoothstep(${POOL.inner.toFixed(2)}, ${POOL.outer.toFixed(2)}, poolRadius));\n` +
+									`outgoingLight = vec3(${floor.r}, ${floor.g}, ${floor.b}) * pool + clamp(newMerge.rgb, 0.0, 8.0) * 0.065;\n#include <opaque_fragment>`,
 							)
 						}
 						material.needsUpdate = true

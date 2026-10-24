@@ -8,7 +8,7 @@ export default {
 	posterMobile: '/assets/posters/mobile/car-teardown.webp',
 	posterDesktop: '/assets/posters/desktop/car-teardown.webp',
 	posterTitle: '一辆车，一层一层拆开',
-	posterHook: '移开车门和外壳，露出安全笼；再走近仍在运转的机构。',
+	posterHook: '车身升起，线束浮在中间，发动机、传动和底盘留在下面。再拆到零件，机构还在动。',
 	posterSource: '原创程序化模型 · 虚构车辆代表值 · 理想机构模型',
 	posterPosition: '50% 50%',
 	question: '一辆车里的零件怎样一起工作？',
@@ -20,7 +20,7 @@ export default {
 		en: {
 			title: 'A car, taken apart layer by layer',
 			posterTitle: 'A car, taken apart layer by layer',
-			posterHook: 'Lift away doors and covers to reveal the safety cage. Explore mechanisms that keep moving as they come apart.',
+			posterHook: 'The body lifts away, the wiring floats in between, and the engine, drivetrain and chassis stay below. Take them down to parts and the mechanisms keep moving.',
 			posterSource: 'Original procedural model · Fictional vehicle values · Ideal mechanisms',
 			question: 'How do the parts of a car work together?',
 			hook: 'Split a rear-wheel-drive sedan into seven systems, then into parts. Watch cylinders fire, gears shift, wheels steer, brakes clamp and suspension cross a bump.',

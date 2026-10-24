@@ -113,6 +113,8 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			if (!isRoadMechanism(id) && isRoadMechanism(selected) && slowdown < 10)
 				setSlowdown(suggestedSlowdown(rpm))
 			if (id === 'chassis') mechanisms.setSuspensionRestart((n) => n + 1)
+			// Open the engine in X-ray: the running four-stroke is the frame worth seeing first.
+			if (id === 'powertrain' && selected !== 'powertrain') setXray(true)
 			setSelected(id)
 			setHovered(null)
 		},
@@ -257,7 +259,8 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 		const capture = query.get('capture') === '1'
 		setAssemblyId(query.get('assembly') ?? '')
 		if (query.get('tour') === '1') setGuideOpen(true)
-		const requested = query.get('system') ?? (capture ? 'body' : null)
+		// The poster is the seven-system split: the most legible "layer by layer" frame at thumbnail size.
+		const requested = query.get('system')
 		if (capture) {
 			setCaptureMode(true)
 			pausedRef.current = true
@@ -285,6 +288,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			setExplode(1)
 			if (SYSTEMS.some((system) => system.id === requested)) {
 				setSelected(requested as SystemId)
+				if (requested === 'powertrain' && query.get('xray') !== '0') setXray(true)
 				const amount = Number(query.get('parts') ?? (capture ? 1 : 0))
 				setPartsExplode(Number.isFinite(amount) ? Math.max(0, Math.min(1, amount)) : 0)
 				if (isRoadMechanism(requested as SystemId)) setSlowdown(10)
