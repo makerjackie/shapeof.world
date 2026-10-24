@@ -2,6 +2,7 @@
  * These are diagram spacing, not service removal distances. */
 export const AUXILIARY_TEARDOWN_GEOMETRY = {
 	drivetrain: {
+		detailHalfSpan: 0.29,
 		flywheel: [1.6, 0, 0],
 		disc: [1.38, 0, 0],
 		pressure: [1.15, 0, 0],
@@ -21,6 +22,11 @@ export const AUXILIARY_TEARDOWN_GEOMETRY = {
 		halfshafts: [0, 0.25, 0.64],
 	},
 	electrical: {
+		flatColumnSpacing: 0.65,
+		flatRowSpacing: 0.75,
+		flatOriginZ: 1.85,
+		flatGroundY: 0.035,
+		flatLampSpacing: 0.18,
 		battery: [0.05, 0.48, 0.28],
 		alternator: [0, 0.42, -0.3],
 		starter: [0, -0.16, 0.35],

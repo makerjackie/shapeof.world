@@ -7,7 +7,7 @@ import {
 	SUSPENSION_GEOMETRY as G,
 	VEHICLE_SPEC as S,
 } from './vehicle-spec'
-import { TeardownPart, useTeardownProgress } from './TeardownPart'
+import { TeardownPart, useTeardownProgress, useTeardown } from './TeardownPart'
 import { ROAD_TEARDOWN_SPEC as R, outwardOffset } from './road-teardown-spec'
 import { bodyPoint, cabinPoint } from './body-geometry'
 import type { SuspensionState } from './suspension-model'
@@ -257,6 +257,7 @@ function Corner({
 	side: -1 | 1
 	index: number
 }) {
+	const compact = !!useTeardown().assembly
 	const poseRef = useRef({ steer: 0, heave: 0 }),
 		spinRef = useRef(0)
 	const hub = useRef<T.Mesh>(null)
@@ -339,10 +340,10 @@ function Corner({
 	const track = axle === 'front' ? S.wheels.frontTrack : S.wheels.rearTrack
 	return (
 		<group>
-			<Wheel axle={axle} side={side} poseRef={poseRef} spinRef={spinRef} />
+			{!compact && <Wheel axle={axle} side={side} poseRef={poseRef} spinRef={spinRef} />}
 			<TeardownPart
 				id="susp-hubs"
-				representative={index === 2}
+				representative={index % 2 === 0}
 				offset={outwardOffset(R.suspension.hubs, side)}
 				anchor={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
 			>
@@ -380,15 +381,17 @@ function Corner({
 			))}
 			<TeardownPart
 				id="susp-knuckles"
-				representative={index === 2}
+				representative={index % 2 === 0}
 				offset={outwardOffset(R.suspension.knuckles, side)}
 				anchor={[axleX(axle), S.wheels.radius, side * (track / 2 - G.hubInset)]}
 			>
-				<MovingJoint
-					stateRef={stateRef}
-					point={points.ball}
-					id={`suspension-ball-joint-${index}`}
-				/>
+				{!compact && (
+					<MovingJoint
+						stateRef={stateRef}
+						point={points.ball}
+						id={`suspension-ball-joint-${index}`}
+					/>
+				)}
 				<MovingBar
 					stateRef={stateRef}
 					from={points.ball}
@@ -399,7 +402,7 @@ function Corner({
 			</TeardownPart>
 			<TeardownPart
 				id="susp-dampers"
-				representative={index === 2}
+				representative={index % 2 === 0}
 				offset={outwardOffset(R.suspension.dampers, side)}
 				anchor={[axleX(axle), 0.6, side * 0.65]}
 			>
@@ -413,7 +416,7 @@ function Corner({
 			</TeardownPart>
 			<TeardownPart
 				id="susp-springs"
-				representative={index === 2}
+				representative={index % 2 === 0}
 				offset={outwardOffset(R.suspension.springs, side)}
 				anchor={[axleX(axle), 0.72, side * 0.6]}
 			>
@@ -424,6 +427,25 @@ function Corner({
 					id={`spring-${index}`}
 				/>
 			</TeardownPart>
+			{compact && (
+				<>
+					<TeardownPart id="susp-top">
+						<MovingMount stateRef={stateRef} point={points.top} />
+					</TeardownPart>
+					<TeardownPart id="susp-ball">
+						<MovingJoint stateRef={stateRef} point={points.ball} id="corner-lower-ball" />
+					</TeardownPart>
+					<TeardownPart id="susp-drop-link">
+						<MovingBar
+							stateRef={stateRef}
+							from={anchor(axle, side, [0.12, 0.28, 0.5], 'body')}
+							to={anchor(axle, side, [0.12, 0.46, 0.63], 'wheel')}
+							radius={G.armRadius * 0.45}
+							id="corner-drop-link"
+						/>
+					</TeardownPart>
+				</>
+			)}
 		</group>
 	)
 }
@@ -666,24 +688,48 @@ diffuseColor.rgb*=1.0+(aggregate-.5)*${R.suspension.grainStrength.toFixed(2)};`,
 }
 
 /** All motion comes from stateRef: no independent oscillator or animation clock. */
-export function SuspensionMechanism({ stateRef }: { stateRef: StateRef }) {
+export function SuspensionMechanism({
+	stateRef,
+	assembly,
+}: {
+	stateRef: StateRef
+	assembly?: string
+}) {
 	const amount = useTeardownProgress()
 	return (
 		<group name="suspension-mechanism">
-			<MovingRoad stateRef={stateRef} />
+			{!assembly && <MovingRoad stateRef={stateRef} />}
 			{amount < 0.01 && <BodyOutline stateRef={stateRef} />}
-			<Subframes stateRef={stateRef} />
+			{!assembly && <Subframes stateRef={stateRef} />}
 			{(['front', 'rear'] as const).flatMap((axle, a) =>
-				([-1, 1] as const).map((side, i) => (
-					<Corner
-						key={`${axle}-${side}`}
-						stateRef={stateRef}
-						axle={axle}
-						side={side}
-						index={a * 2 + i + 1}
-					/>
-				)),
+				([-1, 1] as const).map((side, i) =>
+					assembly &&
+					(side < 0 || axle !== (assembly === 'susp-front' ? 'front' : 'rear')) ? null : (
+						<Corner
+							key={`${axle}-${side}`}
+							stateRef={stateRef}
+							axle={axle}
+							side={side}
+							index={a * 2 + i + 1}
+						/>
+					),
+				),
 			)}
 		</group>
+	)
+}
+
+function MovingMount({ stateRef, point }: { stateRef: StateRef; point: Point }) {
+	const ref = useRef<T.Mesh>(null)
+	useFrame(() => {
+		if (ref.current) point(stateRef.current, ref.current.position)
+	})
+	return (
+		<mesh ref={ref} userData={{ partId: 'strut-top-mount' }}>
+			<cylinderGeometry
+				args={[G.springRadius * 1.35, G.springRadius * 1.35, G.springRadius * 0.35, 40]}
+			/>
+			<meshStandardMaterial color="#414951" metalness={0.65} roughness={0.48} />
+		</mesh>
 	)
 }

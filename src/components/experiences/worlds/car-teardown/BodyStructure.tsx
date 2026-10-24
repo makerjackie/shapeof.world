@@ -2,7 +2,14 @@ import { useEffect, useMemo } from 'react'
 import { RoundedBox } from '@react-three/drei'
 import * as THREE from 'three'
 import { BODY_GEOMETRY as B, BODY_TEARDOWN_SPEC as S, VEHICLE_SPEC as V } from './vehicle-spec'
-import { createArchLiner, curveTube } from './body-geometry'
+import { createArchLiner } from './body-geometry'
+import {
+	stampedBeam,
+	stampedFlange,
+	stampedTower,
+	stampedFloor,
+	stampedBulkhead,
+} from './stamped-geometry'
 import { TeardownPart } from './TeardownPart'
 
 type Point = readonly [number, number, number]
@@ -17,31 +24,29 @@ function Beam({
 	height?: number
 	color: string
 }) {
-	const geometry = useMemo(() => {
-		const half = width / 2,
-			h = (height ?? width) / 2,
-			r = width * 0.15,
-			shape = new THREE.Shape()
-		shape.moveTo(-half + r, -h)
-		shape.lineTo(half - r, -h)
-		shape.quadraticCurveTo(half, -h, half, -h + r)
-		shape.lineTo(half, h - r)
-		shape.quadraticCurveTo(half, h, half - r, h)
-		shape.lineTo(-half + r, h)
-		shape.quadraticCurveTo(-half, h, -half, h - r)
-		shape.lineTo(-half, -h + r)
-		shape.quadraticCurveTo(-half, -h, -half + r, -h)
-		return new THREE.ExtrudeGeometry(shape, {
-			steps: 40,
-			bevelEnabled: false,
-			extrudePath: new THREE.CatmullRomCurve3(points.map((p) => new THREE.Vector3(...p))),
-		})
-	}, [points, width, height])
-	useEffect(() => () => geometry.dispose(), [geometry])
+	const taper = width === S.structure.bPillarRadius * 2 ? 0.46 : 0.85
+	const sectionKey = points.flat().join(',')
+	const geometries = useMemo(
+		() => [
+			stampedBeam(points, width, height ?? width * 0.55, taper),
+			...[-1, 1].map((side) => stampedFlange(points, width, height ?? width * 0.55, taper, side)),
+		],
+		[sectionKey, width, height],
+	)
+	useEffect(() => () => geometries.forEach((g) => g.dispose()), [geometries])
 	return (
-		<mesh geometry={geometry} castShadow receiveShadow>
-			<meshStandardMaterial color={color} metalness={0.72} roughness={0.43} />
-		</mesh>
+		<group>
+			{geometries.map((g, i) => (
+				<mesh key={i} geometry={g} castShadow receiveShadow>
+					<meshStandardMaterial
+						color={color}
+						metalness={0.72}
+						roughness={0.43}
+						side={THREE.DoubleSide}
+					/>
+				</mesh>
+			))}
+		</group>
 	)
 }
 const mirror = (points: readonly Point[], side: number) =>
@@ -51,74 +56,24 @@ export function BodyStructure() {
 		T = S.structure
 	const resources = useMemo(
 		() => ({
+			bowl: stampedTower(),
+			floor: stampedFloor(),
+			bulkhead: stampedBulkhead(),
 			liners: [V.dimensions.frontAxleX, V.dimensions.rearAxleX].flatMap((x) =>
 				[-1, 1].map((side) => createArchLiner(x, side)),
 			),
-			beads: Array.from({ length: Math.floor(U.floorLength / U.beadSpacing) - 1 }, (_, i) =>
-				[-1, 1].map((side) =>
-					curveTube(
-						[
-							new THREE.Vector3(
-								U.floorX - U.floorLength / 2 + (i + 1) * U.beadSpacing,
-								U.floorY + U.sheetThickness,
-								side * (U.tunnelWidth / 2 + U.beadRadius),
-							),
-							new THREE.Vector3(
-								U.floorX - U.floorLength / 2 + (i + 1) * U.beadSpacing,
-								U.floorY + U.sheetThickness,
-								side * (U.floorWidth / 2 - U.sillWidth),
-							),
-						],
-						U.beadRadius,
-						8,
-					),
-				),
-			).flat(),
-			tunnel: (() => {
-				const g = new THREE.CylinderGeometry(
-					U.tunnelWidth / 2,
-					U.tunnelWidth / 2,
-					U.floorLength,
-					32,
-					1,
-					true,
-					0,
-					Math.PI,
-				)
-				g.rotateZ(Math.PI / 2)
-				g.scale(1, U.tunnelHeight / (U.tunnelWidth / 2), 1)
-				return g
-			})(),
-			tower: (() => {
-				const shape = new THREE.Shape()
-				shape.absarc(0, 0, T.shockTowerRadius, 0, Math.PI * 2, false)
-				const hole = new THREE.Path()
-				hole.absarc(0, 0, T.towerBoreRadius, 0, Math.PI * 2, true)
-				shape.holes.push(hole)
-				const g = new THREE.ExtrudeGeometry(shape, {
-					depth: U.sheetThickness * 2,
-					bevelEnabled: true,
-					bevelThickness: U.sheetThickness / 2,
-					bevelSize: U.sheetThickness / 2,
-					bevelSegments: 2,
-					curveSegments: 48,
-				})
-				g.rotateX(-Math.PI / 2)
-				return g
-			})(),
 		}),
 		[],
 	)
 	useEffect(
 		() => () => {
 			resources.liners.forEach((g) => g.dispose())
-			resources.beads.forEach((g) => g.dispose())
-			resources.tunnel.dispose()
-			resources.tower.dispose()
+			resources.bowl.dispose()
+			resources.floor.dispose()
+			resources.bulkhead.dispose()
 		},
 		[resources],
 	)
-	const plateWidth = (U.floorWidth - U.tunnelWidth) / 2
 	return (
 		<group name="Body in white">
 			<TeardownPart id="body-hot-steel">
@@ -151,14 +106,7 @@ export function BodyStructure() {
 						</RoundedBox>
 					</group>
 				))}
-				<mesh geometry={resources.tunnel} position={[U.floorX, U.floorY, 0]}>
-					<meshStandardMaterial
-						color={S.steel.hot.color}
-						metalness={0.72}
-						roughness={0.43}
-						side={THREE.DoubleSide}
-					/>
-				</mesh>
+
 				<Beam
 					points={[
 						[T.bulkheadX, T.bulkheadY + T.bulkheadHeight / 2, -U.sillZ],
@@ -198,29 +146,12 @@ export function BodyStructure() {
 						/>
 						{[V.dimensions.frontAxleX, V.dimensions.rearAxleX].map((x) => (
 							<group key={x} position={[x, T.shockTowerY, side * T.shockTowerZ]}>
-								<mesh>
-									<cylinderGeometry
-										args={[
-											T.shockTowerRadius,
-											T.shockTowerRadius * 1.12,
-											T.shockTowerHeight,
-											48,
-											1,
-											true,
-										]}
-									/>
+								<mesh geometry={resources.bowl}>
 									<meshStandardMaterial
 										color={S.steel.high.color}
 										metalness={0.72}
 										roughness={0.42}
 										side={THREE.DoubleSide}
-									/>
-								</mesh>
-								<mesh position={[0, T.shockTowerHeight / 2, 0]} geometry={resources.tower}>
-									<meshStandardMaterial
-										color={S.steel.high.color}
-										metalness={0.72}
-										roughness={0.42}
 									/>
 								</mesh>
 							</group>
@@ -278,22 +209,14 @@ export function BodyStructure() {
 				))}
 			</TeardownPart>
 			<TeardownPart id="body-mild-steel">
-				{[-1, 1].map((side) => (
-					<mesh
-						key={side}
-						position={[U.floorX, U.floorY, side * (U.tunnelWidth / 2 + plateWidth / 2)]}
-						castShadow
-						receiveShadow
-					>
-						<boxGeometry args={[U.floorLength, U.sheetThickness, plateWidth]} />
-						<meshStandardMaterial color={S.steel.mild.color} metalness={0.67} roughness={0.46} />
-					</mesh>
-				))}
-				{resources.beads.map((g, i) => (
-					<mesh key={i} geometry={g}>
-						<meshStandardMaterial color={S.steel.mild.color} metalness={0.67} roughness={0.46} />
-					</mesh>
-				))}
+				<mesh geometry={resources.floor} castShadow receiveShadow>
+					<meshStandardMaterial
+						color={S.steel.mild.color}
+						metalness={0.67}
+						roughness={0.46}
+						side={THREE.DoubleSide}
+					/>
+				</mesh>
 				{resources.liners.map((g, i) => (
 					<mesh key={i} geometry={g}>
 						<meshStandardMaterial
@@ -304,9 +227,13 @@ export function BodyStructure() {
 						/>
 					</mesh>
 				))}
-				<mesh position={[T.bulkheadX, T.bulkheadY, 0]} castShadow>
-					<boxGeometry args={[T.bulkheadThickness, T.bulkheadHeight, T.bulkheadWidth]} />
-					<meshStandardMaterial color={S.steel.mild.color} metalness={0.67} roughness={0.46} />
+				<mesh geometry={resources.bulkhead} castShadow>
+					<meshStandardMaterial
+						color={S.steel.mild.color}
+						metalness={0.67}
+						roughness={0.46}
+						side={THREE.DoubleSide}
+					/>
 				</mesh>
 				<mesh position={[T.rearWallX, T.rearDeckY - T.rearWallHeight / 2, 0]}>
 					<boxGeometry args={[U.sheetThickness, T.rearWallHeight, T.bulkheadWidth]} />

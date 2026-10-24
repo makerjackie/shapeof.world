@@ -26,9 +26,16 @@ import {
 	VEHICLE_SPEC as S,
 } from './vehicle-spec'
 import { TeardownPart, useTeardown } from './TeardownPart'
+import { AxleTeardown } from './AxleTeardown'
+import type { SteeringState } from './steering-model'
 import { createDifferentialResources } from './differential-geometry'
 
-export type TransmissionProps = { stateRef: RefObject<TransmissionState>; xray: boolean }
+export type TransmissionProps = {
+	stateRef: RefObject<TransmissionState>
+	xray: boolean
+	assembly?: string
+	steeringRef: RefObject<SteeringState>
+}
 type Clock = { stateRef: RefObject<TransmissionState> }
 const HALF_PI = Math.PI / 2
 const AXIS_Y = S.transmission.axisY
@@ -338,17 +345,26 @@ function Clutch({ stateRef }: Clock) {
 	const teardown = useTeardown()
 	const flywheel = useRef<T.Mesh>(null),
 		disc = useRef<T.Mesh>(null),
-		plate = useRef<T.Group>(null)
+		plate = useRef<T.Group>(null),
+		release = useRef<T.Mesh>(null)
 	const material = useTorqueMaterial('clutch-pressure-plate', stateRef)
 	const discMaterial = useTorqueMaterial('clutch-disc', stateRef)
 	const discGeometry = useOwnedGeometry(() =>
 		createAnnulus(G.clutchRadius, G.shaftRadius, G.clutchThickness),
+	)
+	const releaseGeometry = useOwnedGeometry(() =>
+		createAnnulus(G.shaftRadius * 2.4, G.shaftRadius * 1.2, G.bearingWidth),
 	)
 	const plateGeometry = useOwnedGeometry(() =>
 		createAnnulus(G.pressurePlateRadius, G.clutchRadius * 0.6, G.pressurePlateThickness),
 	)
 	useFrame(() => {
 		const state = stateRef.current
+		if (release.current)
+			release.current.position.x =
+				G.clutchDiscX -
+				G.pressurePlateThickness * 2 -
+				(1 - state.clutchEngagement) * G.clutchReleaseTravel
 		if (flywheel.current) flywheel.current.rotation.x = state.inputAngle
 		if (disc.current) disc.current.rotation.x = state.inputAngle
 		if (plate.current) {
@@ -388,6 +404,15 @@ function Clutch({ stateRef }: Clock) {
 					geometry={discGeometry}
 					material={discMaterial}
 					userData={{ partId: 'clutch-disc' }}
+				/>
+			</TeardownPart>
+			<TeardownPart id="drive-release">
+				<mesh
+					ref={release}
+					position={[G.clutchDiscX - G.pressurePlateThickness * 2, AXIS_Y, 0]}
+					geometry={releaseGeometry}
+					material={material}
+					userData={{ partId: 'clutch-release-bearing' }}
 				/>
 			</TeardownPart>
 			<TeardownPart id="drive-pressure">
@@ -516,10 +541,15 @@ function RearDrive({ stateRef, xray }: Clock & { xray: boolean }) {
 					</group>
 				</group>
 			</TeardownPart>
-			<TeardownPart id="drive-joints">
-				<group position={route.position} quaternion={route.quaternion}>
-					<group ref={joints}>
-						{[-1, 1].map((side, i) => (
+			<group position={route.position} quaternion={route.quaternion}>
+				<group ref={joints}>
+					{[-1, 1].map((side, i) => (
+						<TeardownPart
+							key={side}
+							id="drive-joints"
+							representative={side > 0}
+							offset={teardown.assembly ? [side, 0, 0] : undefined}
+						>
 							<group
 								key={side}
 								position-x={(side * (route.length - G.jointLength)) / 2}
@@ -553,10 +583,10 @@ function RearDrive({ stateRef, xray }: Clock & { xray: boolean }) {
 									/>
 								</mesh>
 							</group>
-						))}
-					</group>
+						</TeardownPart>
+					))}
 				</group>
-			</TeardownPart>
+			</group>
 			{[-1, 1].map((side, i) => (
 				<TeardownPart
 					key={side}
@@ -671,8 +701,9 @@ function RearDrive({ stateRef, xray }: Clock & { xray: boolean }) {
 }
 
 /** Every animated part consumes the same pure-model clock; no component integrates time. */
-export function Transmission({ stateRef, xray }: TransmissionProps) {
+export function Transmission({ stateRef, xray, assembly, steeringRef }: TransmissionProps) {
 	const [idlerY, idlerZ] = reverseIdlerCentre()
+	if (assembly === 'rear-axle') return <AxleTeardown stateRef={steeringRef} />
 	return (
 		<group>
 			<Castings xray={xray} />

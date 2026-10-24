@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Html } from '@react-three/drei'
+import { Html, RoundedBox } from '@react-three/drei'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import { BRAKE_GEOMETRY as B, VEHICLE_SPEC as S, ROAD_TEARDOWN_SPEC as R } from './vehicle-spec'
@@ -197,7 +197,7 @@ function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef;
 	)
 }
 
-function FloatingCaliper({
+export function FloatingCaliper({
 	front,
 	stateRef,
 	closeup,
@@ -211,7 +211,7 @@ function FloatingCaliper({
 	const amount = useTeardownProgress()
 	const body = useRef<T.Group>(null),
 		piston = useRef<T.Mesh>(null),
-		innerPad = useRef<T.Mesh>(null)
+		innerPad = useRef<T.Group>(null)
 	const spec = front ? S.brakes.front : S.brakes.rear,
 		gap = B.padGap * B.gapMagnification
 	const innerZ = -spec.thickness / 2 - gap - B.padThickness / 2
@@ -247,7 +247,7 @@ function FloatingCaliper({
 				<group key={side}>
 					<TeardownPart
 						id="brake-guide-pins"
-						representative={index === 2}
+						representative={index % 2 === 0}
 						anchor={[-B.caliperRadialPosition, side * B.guidePinOffsetY, 0]}
 					>
 						<Cylinder
@@ -258,8 +258,25 @@ function FloatingCaliper({
 						/>
 					</TeardownPart>
 					<TeardownPart
+						id="brake-boots"
+						representative={index % 2 === 0 && side > 0}
+						anchor={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 4]}
+					>
+						<group
+							position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 4]}
+							userData={{ partId: `caliper-boot-${(index - 1) * 2 + (side > 0 ? 2 : 1)}` }}
+						>
+							{Array.from({ length: 5 }, (_, j) => (
+								<mesh key={j} position-z={(j - 2) * B.guidePinRadius * 0.8}>
+									<torusGeometry args={[B.guidePinRadius * 1.6, B.guidePinRadius * 0.42, 8, 24]} />
+									<meshStandardMaterial color="#202329" roughness={0.9} />
+								</mesh>
+							))}
+						</group>
+					</TeardownPart>
+					<TeardownPart
 						id="brake-carriers"
-						representative={index === 2}
+						representative={index % 2 === 0}
 						anchor={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 2]}
 					>
 						<mesh
@@ -275,7 +292,7 @@ function FloatingCaliper({
 			))}
 			<TeardownPart
 				id="brake-carriers"
-				representative={index === 2}
+				representative={index % 2 === 0}
 				anchor={[-B.caliperRadialPosition, 0, -B.guidePinLength / 2]}
 			>
 				<mesh
@@ -294,23 +311,36 @@ function FloatingCaliper({
 			<TeardownPart
 				id="brake-pads"
 				offset={R.brakes.innerPad}
-				representative={index === 2}
+				representative={index % 2 === 0}
 				anchor={[-B.caliperRadialPosition, 0, innerZ]}
 			>
-				<mesh
+				<group
 					ref={innerPad}
-					geometry={resources.pad}
 					position={[0, 0, innerZ]}
-					castShadow
 					userData={{ partId: `brake-inner-pad-${index}` }}
 				>
-					<meshStandardMaterial color={B.padColor} roughness={0.94} />
-				</mesh>
+					<mesh
+						geometry={resources.pad}
+						scale-z={0.7}
+						position-z={1 * B.padThickness * 0.15}
+						castShadow
+					>
+						<meshStandardMaterial color={B.padColor} roughness={0.94} />
+					</mesh>
+					<mesh
+						geometry={resources.pad}
+						scale-z={0.3}
+						position-z={-1 * B.padThickness * 0.35}
+						castShadow
+					>
+						<meshStandardMaterial color="#46515a" metalness={0.8} roughness={0.45} />
+					</mesh>
+				</group>
 			</TeardownPart>
 			<group ref={body}>
 				<TeardownPart
 					id="brake-castings"
-					representative={index === 2}
+					representative={index % 2 === 0}
 					anchor={[-B.caliperRadialPosition, 0, 0]}
 				>
 					<mesh
@@ -334,7 +364,7 @@ function FloatingCaliper({
 				</TeardownPart>
 				<TeardownPart
 					id="brake-pistons"
-					representative={index === 2}
+					representative={index % 2 === 0}
 					anchor={[-B.caliperRadialPosition, 0, pistonZ]}
 				>
 					<mesh
@@ -349,7 +379,7 @@ function FloatingCaliper({
 				</TeardownPart>
 				<TeardownPart
 					id="brake-seals"
-					representative={index === 2}
+					representative={index % 2 === 0}
 					anchor={[-B.caliperRadialPosition, 0, pistonZ]}
 				>
 					<mesh
@@ -366,14 +396,24 @@ function FloatingCaliper({
 					representative={false}
 					anchor={[-B.caliperRadialPosition, 0, -innerZ]}
 				>
-					<mesh
-						geometry={resources.pad}
-						position={[0, 0, -innerZ]}
-						castShadow
-						userData={{ partId: `brake-outer-pad-${index}` }}
-					>
-						<meshStandardMaterial color={B.padColor} roughness={0.94} />
-					</mesh>
+					<group position={[0, 0, -innerZ]} userData={{ partId: `brake-outer-pad-${index}` }}>
+						<mesh
+							geometry={resources.pad}
+							scale-z={0.7}
+							position-z={-1 * B.padThickness * 0.15}
+							castShadow
+						>
+							<meshStandardMaterial color={B.padColor} roughness={0.94} />
+						</mesh>
+						<mesh
+							geometry={resources.pad}
+							scale-z={0.3}
+							position-z={1 * B.padThickness * 0.35}
+							castShadow
+						>
+							<meshStandardMaterial color="#46515a" metalness={0.8} roughness={0.45} />
+						</mesh>
+					</group>
 				</TeardownPart>
 			</group>
 			{closeup && amount < 0.05 && (
@@ -481,7 +521,13 @@ function PressureLine({
 	)
 }
 
-function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
+function HydraulicHardware({
+	stateRef,
+	compact = false,
+}: {
+	stateRef: StateRef
+	compact?: boolean
+}) {
 	const pedal = useRef<T.Group>(null),
 		booster = B.boosterPosition,
 		abs = B.absPosition,
@@ -516,6 +562,16 @@ function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 					axis="x"
 					color="#343b42"
 				/>
+				{[-1, 1].map((side) => (
+					<mesh
+						key={side}
+						position={[booster[0] + side * B.boosterDepth * 0.4, booster[1], booster[2]]}
+						rotation-y={Math.PI / 2}
+					>
+						<torusGeometry args={[B.boosterRadius * 0.98, B.caliperWall * 0.4, 8, 64]} />
+						<meshStandardMaterial color="#47515b" metalness={0.65} roughness={0.5} />
+					</mesh>
+				))}
 			</TeardownPart>
 			<TeardownPart id="brake-master">
 				<Cylinder
@@ -525,9 +581,31 @@ function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 					length={B.masterLength}
 					axis="x"
 				/>
+				{[-1, 1].map((side) => (
+					<Cylinder
+						key={side}
+						position={[
+							booster[0] + B.boosterDepth / 2 + B.masterLength * (0.5 + side * 0.27),
+							booster[1] + B.masterOuterRadius,
+							booster[2],
+						]}
+						radius={B.masterOuterRadius * 0.45}
+						length={B.masterOuterRadius * 1.1}
+						axis="y"
+					/>
+				))}
+				<Cylinder
+					position={[booster[0] + B.boosterDepth * 0.55, booster[1], booster[2]]}
+					radius={B.masterOuterRadius * 1.8}
+					length={B.caliperWall}
+					axis="x"
+				/>
 			</TeardownPart>
 			<TeardownPart id="brake-fluid">
-				<mesh
+				<RoundedBox
+					args={[...B.reservoirSize]}
+					radius={B.caliperWall}
+					smoothness={4}
 					position={[
 						booster[0] + B.masterLength / 2,
 						booster[1] + B.masterOuterRadius + B.reservoirSize[1] / 2,
@@ -536,9 +614,8 @@ function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 					castShadow
 					userData={{ partId: 'brake-reservoir' }}
 				>
-					<boxGeometry args={[...B.reservoirSize]} />
 					<meshStandardMaterial color="#c4c7b4" roughness={0.45} transparent opacity={0.8} />
-				</mesh>
+				</RoundedBox>
 				<Cylinder
 					position={[
 						booster[0] + B.masterLength / 2,
@@ -552,10 +629,29 @@ function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 				/>
 			</TeardownPart>
 			<TeardownPart id="brake-abs">
-				<mesh position={[...abs]} castShadow userData={{ partId: 'abs-pump' }}>
-					<boxGeometry args={[...B.absSize]} />
+				<RoundedBox
+					position={[...abs]}
+					args={[...B.absSize]}
+					radius={B.caliperWall * 0.5}
+					smoothness={3}
+					castShadow
+					userData={{ partId: 'abs-pump' }}
+				>
 					<meshStandardMaterial {...S.materials.aluminum} />
-				</mesh>
+				</RoundedBox>
+				{Array.from({ length: 6 }, (_, i) => (
+					<mesh
+						key={i}
+						position={[
+							abs[0] + ((i % 3) - 1) * B.absSize[0] * 0.27,
+							abs[1] + B.absSize[1] / 2 + B.caliperWall,
+							abs[2] + (Math.floor(i / 3) - 0.5) * B.absSize[2] * 0.55,
+						]}
+					>
+						<cylinderGeometry args={[B.pipeRadius * 3, B.pipeRadius * 3, B.caliperWall * 2, 6]} />
+						<meshStandardMaterial color="#a48e65" metalness={0.7} roughness={0.4} />
+					</mesh>
+				))}
 				<Cylinder
 					position={[abs[0], abs[1], abs[2] - B.absSize[2] / 2 - B.absMotorLength / 2]}
 					radius={B.absMotorRadius}
@@ -563,23 +659,33 @@ function HydraulicHardware({ stateRef }: { stateRef: StateRef }) {
 					color="#333a42"
 				/>
 			</TeardownPart>
-			<PressureLine
-				id="brake-master-line"
-				stateRef={stateRef}
-				start={0}
-				end={0.3}
-				points={[
-					[booster[0] + B.boosterDepth / 2 + B.masterLength, booster[1], booster[2]],
-					[abs[0], booster[1] - B.masterOuterRadius * 2, abs[2]],
-					[abs[0], abs[1] + B.absSize[1] / 2, abs[2]],
-				]}
-			/>
+			{!compact && (
+				<PressureLine
+					id="brake-master-line"
+					stateRef={stateRef}
+					start={0}
+					end={0.3}
+					points={[
+						[booster[0] + B.boosterDepth / 2 + B.masterLength, booster[1], booster[2]],
+						[abs[0], booster[1] - B.masterOuterRadius * 2, abs[2]],
+						[abs[0], abs[1] + B.absSize[1] / 2, abs[2]],
+					]}
+				/>
+			)}
 		</>
 	)
 }
 
 /** Vehicle coordinates: rotor axes lie on ±Z; no explosion transform here. */
-export function BrakeMechanism({ stateRef, closeup }: { stateRef: StateRef; closeup: boolean }) {
+export function BrakeMechanism({
+	stateRef,
+	closeup,
+	assembly,
+}: {
+	stateRef: StateRef
+	closeup: boolean
+	assembly?: string
+}) {
 	const amount = useTeardownProgress()
 	const detail = closeup && amount < 0.01
 	const wheels = [
@@ -588,10 +694,17 @@ export function BrakeMechanism({ stateRef, closeup }: { stateRef: StateRef; clos
 	]
 	return (
 		<group name="hydraulic-brake-mechanism">
-			{!detail && <HydraulicHardware stateRef={stateRef} />}
+			{!detail && (!assembly || assembly === 'hydraulics') && (
+				<HydraulicHardware stateRef={stateRef} compact={!!assembly} />
+			)}
 			{wheels.flatMap((axle) =>
 				[-1, 1].map((side) => {
 					if (detail && (!axle.front || side < 0)) return null
+					if (
+						assembly &&
+						(assembly === 'hydraulics' || side < 0 || axle.front !== (assembly === 'brake-front'))
+					)
+						return null
 					const z = (side * axle.track) / 2,
 						index = (axle.front ? 0 : 2) + (side > 0 ? 2 : 1),
 						id = `brake-line-${index}`,
@@ -600,17 +713,15 @@ export function BrakeMechanism({ stateRef, closeup }: { stateRef: StateRef; clos
 					return (
 						<group key={id}>
 							<group position={[axle.x, S.wheels.radius, z]} scale={[1, 1, side]}>
-								<TeardownPart id="brake-discs" representative={index === 2} anchor={[0, 0, 0]}>
-									<Rotor front={axle.front} stateRef={stateRef} index={index} />
-								</TeardownPart>
-								<FloatingCaliper
+								<BrakeCorner
 									front={axle.front}
 									stateRef={stateRef}
-									closeup={detail && axle.front && side > 0}
 									index={index}
+									closeup={detail}
+									compact={!!assembly}
 								/>
 							</group>
-							{!detail && (
+							{!detail && !assembly && (
 								<PressureLine
 									id={id}
 									stateRef={stateRef}
@@ -633,5 +744,64 @@ export function BrakeMechanism({ stateRef, closeup }: { stateRef: StateRef; clos
 				}),
 			)}
 		</group>
+	)
+}
+
+export function BrakeCorner({
+	front,
+	stateRef,
+	index,
+	closeup = false,
+	compact = false,
+}: {
+	front: boolean
+	stateRef: StateRef
+	index: number
+	closeup?: boolean
+	compact?: boolean
+}) {
+	const hub = useMemo(
+		() => brakeRing(B.rotorBoreRadius, B.rotorHatRadius * 0.8, B.rotorHatDepth),
+		[],
+	)
+	useEffect(() => () => hub.dispose(), [hub])
+	return (
+		<>
+			<TeardownPart id="brake-discs" representative={index % 2 === 0} anchor={[0, 0, 0]}>
+				<Rotor front={front} stateRef={stateRef} index={index} />
+			</TeardownPart>
+			<FloatingCaliper front={front} stateRef={stateRef} index={index} closeup={closeup} />
+			{compact && (
+				<>
+					<TeardownPart id="brake-knuckle">
+						<group
+							position-z={-B.rotorHatDepth * 1.6}
+							userData={{ partId: 'brake-corner-knuckle' }}
+						>
+							<mesh>
+								<boxGeometry
+									args={[B.rotorHatRadius * 0.8, B.rotorHatRadius * 2.5, B.rotorHatDepth * 0.6]}
+								/>
+								<meshStandardMaterial {...S.materials.aluminum} />
+							</mesh>
+							<Cylinder
+								position={[0, 0, 0]}
+								radius={B.rotorHatRadius * 0.55}
+								length={B.rotorHatDepth}
+							/>
+						</group>
+					</TeardownPart>
+					<TeardownPart id="brake-hub">
+						<mesh
+							position-z={-B.rotorHatDepth}
+							geometry={hub}
+							userData={{ partId: 'brake-corner-hub' }}
+						>
+							<meshStandardMaterial {...S.materials.steel} />
+						</mesh>
+					</TeardownPart>
+				</>
+			)}
+		</>
 	)
 }

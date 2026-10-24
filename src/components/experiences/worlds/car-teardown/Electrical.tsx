@@ -6,7 +6,7 @@ import {
 	CHASSIS_GEOMETRY as G,
 	VEHICLE_SPEC as S,
 } from './vehicle-spec'
-import { TeardownPart } from './TeardownPart'
+import { TeardownPart, useTeardown } from './TeardownPart'
 import { Box } from './Systems'
 import type { Point3 } from './parts'
 const E = A.electrical,
@@ -329,6 +329,7 @@ function Coils() {
 	)
 }
 function Lamps() {
+	const flat = useTeardown().assembly?.id === 'knolling'
 	return (
 		<>
 			{[true, false].map((front) =>
@@ -337,6 +338,7 @@ function Lamps() {
 						key={`${front}-${side}`}
 						id={front ? 'electrical-headlights' : 'electrical-taillights'}
 						representative={side > 0}
+						anchor={[front ? E.lampFrontX : E.lampRearX, E.lampY, side * E.lampZ]}
 						offset={[
 							front ? E.frontLights[0] : E.rearLights[0],
 							front ? E.frontLights[1] : E.rearLights[1],
@@ -345,6 +347,7 @@ function Lamps() {
 					>
 						<group
 							position={[front ? E.lampFrontX : E.lampRearX, E.lampY, side * E.lampZ]}
+							rotation-y={flat && !front ? Math.PI : 0}
 							userData={{ partId: `${front ? 'headlight' : 'taillight'}-${i + 1}` }}
 						>
 							<Box position={[0, 0, 0]} size={E.lampSize} material="plastic" />

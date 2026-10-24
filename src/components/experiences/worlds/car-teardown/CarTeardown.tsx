@@ -1,3 +1,5 @@
+import { CarGuide } from './CarGuide'
+import { assemblyFor, assemblyParts, ASSEMBLIES } from './subassemblies'
 import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { useExperienceI18n } from '~/i18n/experience'
@@ -39,9 +41,19 @@ class SceneBoundary extends Component<
 export function CarTeardown({ controls, label }: { controls: ExperienceControls; label?: string }) {
 	const tx = useExperienceI18n()
 	const partText = usePartText()
+	const [guideOpen, setGuideOpen] = useState(false)
+	const [guideActive, setGuideActive] = useState(false)
+	const [guideStep, setGuideStep] = useState(0)
+	const guideTimers = useRef<ReturnType<typeof setTimeout>[]>([])
+	const clearGuideTimers = useCallback(() => {
+		guideTimers.current.forEach(clearTimeout)
+		guideTimers.current = []
+	}, [])
+	useEffect(() => clearGuideTimers, [clearGuideTimers])
 	const [captureMode, setCaptureMode] = useState(false)
 	const [explode, setExplode] = useState(0)
 	const [partsExplode, setPartsExplode] = useState(0)
+	const [assemblyId, setAssemblyId] = useState('')
 	const [hoveredPart, setHoveredPart] = useState<string | null>(null)
 	const [selectedPart, setSelectedPart] = useState<string | null>(null)
 	const partAnchorsRef = useRef<PartAnchors>({})
@@ -96,6 +108,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			setSelectedPart(null)
 			setHoveredPart(null)
 			setPartsExplode(0)
+			setAssemblyId('')
 			if (isRoadMechanism(id) && !isRoadMechanism(selected)) setSlowdown(1)
 			if (!isRoadMechanism(id) && isRoadMechanism(selected) && slowdown < 10)
 				setSlowdown(suggestedSlowdown(rpm))
@@ -150,12 +163,100 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 		},
 		[interact, reducedMotion],
 	)
+	const guideAction = useRef<(index: number) => void>(() => {})
+	guideAction.current = (index) => {
+		clearGuideTimers()
+		cancelAnimationFrame(animationRef.current)
+		setGuideActive(true)
+		setGuideStep(index)
+		setSelectedPart(null)
+		setHoveredPart(null)
+		setPartsExplode(0)
+		setAssemblyId('')
+		pausedRef.current = false
+		setPaused(false)
+		setSlowdown(40)
+		setRpm(1200)
+		setHovered(null)
+		const later = (ms: number, fn: () => void) => {
+			guideTimers.current.push(setTimeout(fn, ms))
+		}
+		const system = (id: SystemId) => {
+			setSelected(id)
+			setExplode(1)
+			interactionRef.current = true
+		}
+		if (index === 0) {
+			setSelected(null)
+			setExplode(0)
+			interactionRef.current = false
+		}
+		if (index === 1) {
+			setSelected(null)
+			setExplode(0)
+			interactionRef.current = true
+			later(250, () => animate(1))
+		}
+		if (index === 2) {
+			system('powertrain')
+			setXray(true)
+		}
+		if (index === 3) {
+			system('powertrain')
+			setXray(false)
+			later(500, () => animateParts(1))
+		}
+		if (index === 4) {
+			system('drivetrain')
+			setTransmissionView('gearbox')
+			setGear(1)
+			later(3500, () => setGear(3))
+		}
+		if (index === 5) {
+			system('steering')
+			setSlowdown(10)
+			mechanisms.setWheelAngle(520)
+			mechanisms.setSteeringView('top')
+			later(4800, () => mechanisms.setSteeringView('differential'))
+		}
+		if (index === 6) {
+			system('brakes')
+			setSlowdown(5)
+			mechanisms.setBrakeView('overview')
+			mechanisms.setPedalForce(0)
+			mechanisms.setBrakeRestart((n) => n + 1)
+			later(1600, () => mechanisms.setPedalForce(300))
+			later(5000, () => mechanisms.setBrakeView('caliper'))
+		}
+		if (index === 7) {
+			system('chassis')
+			setSlowdown(2)
+			mechanisms.setSuspensionRestart((n) => n + 1)
+			later(1800, () => mechanisms.setSuspensionRestart((n) => n + 1))
+			later(6000, () => mechanisms.setSuspensionRestart((n) => n + 1))
+		}
+		if (index === 8) {
+			system('body')
+			later(400, () => animateParts(1))
+		}
+	}
+	const onGuideStep = useCallback((index: number) => guideAction.current(index), [])
+	const exitGuide = useCallback(() => {
+		clearGuideTimers()
+		cancelAnimationFrame(animationRef.current)
+		setGuideOpen(false)
+		setGuideActive(false)
+	}, [clearGuideTimers])
+
 	const onReady = useCallback(() => setReady(true), [])
 	const selectedSystem = SYSTEMS.find((s) => s.id === selected)
-	const selectedParts = teardownParts(selected)
+	const assembly = partsExplode > 0.02 ? assemblyFor(selected, assemblyId) : undefined
+	const selectedParts = assembly ? assemblyParts(assembly) : teardownParts(selected)
 	useEffect(() => {
 		const query = new URLSearchParams(window.location.search)
 		const capture = query.get('capture') === '1'
+		setAssemblyId(query.get('assembly') ?? '')
+		if (query.get('tour') === '1') setGuideOpen(true)
 		const requested = query.get('system') ?? (capture ? 'body' : null)
 		if (capture) {
 			setCaptureMode(true)
@@ -192,13 +293,15 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 	}, [])
 	return (
 		<div
-			className={`ct-world ${selected ? 'has-selection' : ''} ${isRoadMechanism(selected) ? 'is-mechanism' : ''} ${selected === 'powertrain' ? 'is-engine' : ''} ${partsExplode > 0.05 && selected ? 'is-parts' : ''} ${captureMode ? 'is-capture' : ''}`}
+			className={`ct-world ${selected ? 'has-selection' : ''} ${isRoadMechanism(selected) ? 'is-mechanism' : ''} ${selected === 'powertrain' ? 'is-engine' : ''} ${partsExplode > 0.05 && selected ? 'is-parts' : ''} ${captureMode ? 'is-capture' : ''} ${guideActive ? 'is-guided' : ''}`}
+			data-guide-step={guideStep + 1}
 			onPointerDown={interact}
 			onWheel={interact}
 			role="region"
 			aria-label={label}
 			data-ready={ready}
 			data-capture={captureMode}
+			data-assembly={assembly?.id ?? ''}
 			data-explode={explode.toFixed(3)}
 			data-parts-explode={partsExplode.toFixed(3)}
 			data-selected={selected ?? 'car'}
@@ -209,6 +312,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 				<CarScene
 					{...{
 						captureMode,
+						assembly,
 						explode,
 						selected,
 						hovered,
@@ -240,6 +344,13 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					}}
 				/>
 			</SceneBoundary>
+			<CarGuide open={guideOpen} onStep={onGuideStep} onExit={exitGuide} />
+			{!guideActive && !captureMode && (
+				<button className="ct-guide-start" onClick={() => setGuideOpen(true)}>
+					{partText({ zh: '九站导览', en: 'Take the tour' })}
+					<span>↗</span>
+				</button>
+			)}
 			<nav className="ct-breadcrumb" aria-label={tx('拆解导航')}>
 				<button
 					onClick={() => {
@@ -310,7 +421,26 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 				onHover={setHovered}
 				onSelect={select}
 			/>
-			<MechanismViews selected={selected} model={mechanisms} onInteract={interact} />
+			{!assembly && <MechanismViews selected={selected} model={mechanisms} onInteract={interact} />}
+			{assembly && (
+				<div className="ct-view-switch ct-assembly-switch" aria-label={tx('子总成')}>
+					{ASSEMBLIES.filter((a) => a.system === selected).map((a) => (
+						<button
+							key={a.id}
+							data-assembly={a.id}
+							className={a.id === assembly.id ? 'is-active' : ''}
+							onClick={() => {
+								interact()
+								setAssemblyId(a.id)
+								setSelectedPart(null)
+								setHoveredPart(null)
+							}}
+						>
+							{partText(a.name)}
+						</button>
+					))}
+				</div>
+			)}
 			{(explode > 0.7 || selected) && (
 				<select
 					className="ct-system-picker"
@@ -328,7 +458,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					))}
 				</select>
 			)}
-			{selected === 'drivetrain' && (
+			{selected === 'drivetrain' && !assembly && (
 				<div className="ct-view-switch">
 					<button
 						className={transmissionView === 'gearbox' ? 'is-active' : ''}
@@ -353,7 +483,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			{selected && (
 				<>
 					<EnginePartsList
-						key={selected}
+						key={selected + (assembly?.id ?? '')}
 						parts={selectedParts}
 						title={selected === 'powertrain' ? '发动机零件' : '零件清单'}
 						hovered={hoveredPart}
