@@ -15,7 +15,7 @@ export const PRESENTATIONS: Record<string, Presentation> = {
   cloverleaf: { position: [225, 164, 290], mobile: [340, 330, 480], target: [0, 10, 0], mobileTarget: [0, 10, 0], fov: 60, mobileFov: 62, weaving: true },
   turbine: { position: [60, 610, 390], mobile: [65, 820, 450], target: [0, 23, 0], fov: 57, mobileFov: 64, left: true, stretch: true },
   stack: { position: [310, 150, 365], mobile: [335, 205, 430], target: [0, 38, 0], fov: 57, mobileFov: 66, left: true, stretch: true },
-  huangjuewan: { position: [220, 71, 345], mobile: [240, 115, 345], target: [0, 33, -15], mobileTarget: [0, 35, -15], fov: 42, mobileFov: 62 },
+  huangjuewan: { position: [205, 118, 300], mobile: [240, 115, 345], target: [-10, 20, -40], mobileTarget: [0, 35, -15], fov: 42, mobileFov: 62 },
 }
 
 export function defaultOverlays(id: string, firstHero = false) {

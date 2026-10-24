@@ -144,3 +144,15 @@
  .road-design-experience .rd-freebar-main { padding:7px 9px; }
  .road-design-experience .rd-freebar .experience-freebar-primary > .experience-freebar-seg button { min-width:32px; min-height:36px; }
 }
+/* Polish pass: overlay toggles live in the main row on desktop; the tour link sits under the title. */
+.rd-mobile-overlays { display:none; }
+.rd-overlay-main { display:contents; }
+.road-design-experience .rd-heading .rd-tour-button { pointer-events:auto; margin-top:12px; padding:3px 0; background:none; border:0; border-bottom:1px solid #ffffff2a; border-radius:0; color:#a8b7c7; font-size:11px; letter-spacing:.06em; cursor:pointer; }
+.road-design-experience .rd-heading .rd-tour-button:hover { color:#e6e9ef; border-bottom-color:#e6e9ef88; }
+.road-design-experience .rd-tools { flex-wrap:nowrap; max-width:none; }
+@media(max-width:720px) {
+ .rd-mobile-overlays { display:flex; }
+ .road-design-experience .rd-tools { flex-wrap:wrap; }
+ .road-design-experience .rd-heading .rd-tour-button { margin-top:8px; font-size:10px; }
+}
+@media(max-width:720px) { .road-design-experience .rd-heading .rd-tour-button { display:none; } }

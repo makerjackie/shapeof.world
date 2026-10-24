@@ -15,10 +15,10 @@ export function buildLamps(network: Network): Lamp[] {
   const lamps: Lamp[] = []
   if (!urban) for (const x of [-98, 98]) for (const z of [-98, 98]) lamps.push({ position: { x, y: terrainHeight(network,x,z), z }, height: 30, urban: false, rotation: 0 })
   for (const road of network.carriageways) {
-    if ((road.kind === 'ramp' && network.id !== 'huangjuewan') || road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
+    if (road.kind !== 'ramp' && road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
     const cityRoad=road.kind==='urban'
     const offset = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2 + (road.shoulder ?? 0) + 1.4
-    for (const { position: p, tangent: t } of samplePath(road.points, cityRoad ? 36 : 110)) {
+    for (const { position: p, tangent: t } of samplePath(road.points, cityRoad ? 36 : road.kind === 'ramp' && network.id !== 'huangjuewan' ? 95 : 110)) {
       if (cityRoad && urban && Math.hypot(p.x, p.z) < 28) continue
       for (const side of cityRoad && !road.oneWay ? [-1, 1] : [1]) {
         lamps.push({ position: { x: p.x - t.z * offset * side, y: p.y, z: p.z + t.x * offset * side }, height: cityRoad ? 9 : 28, urban:cityRoad, rotation: Math.atan2(t.x, t.z) + (side < 0 ? Math.PI : 0) })
