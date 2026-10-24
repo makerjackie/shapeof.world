@@ -269,8 +269,8 @@ async function mobileGestures(page, context) {
 
 try {
   browser = await chromium.launch({
-    channel: 'chrome', headless: false, timeout: 15_000,
-    args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-gpu-rasterization', '--mute-audio', '--hide-scrollbars', '--window-size=1800,1200', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'],
+    channel: 'chrome', headless: true, timeout: 15_000,
+    args: ['--headless=new', '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-gpu-rasterization', '--mute-audio', '--hide-scrollbars', '--window-size=1800,1200', '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows'],
   })
   watchdog = setTimeout(() => { timedOut = true; void browser.close() }, Math.max(1000, 110_000 - (Date.now() - start)))
   const desktop = await browser.newContext({ viewport: { width: 1600, height: 1000 }, deviceScaleFactor: 1, locale: 'zh-CN' })

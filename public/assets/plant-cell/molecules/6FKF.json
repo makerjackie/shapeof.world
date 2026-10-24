@@ -1,0 +1,411 @@
+{
+  "id": "6FKF",
+  "title": "Chloroplast F1Fo conformation 1",
+  "organism": "Spinacia oleracea",
+  "resolutionAngstrom": 3.15,
+  "citationTitle": "Structure, mechanism, and regulation of the chloroplast ATP synthase.",
+  "citationDOI": "10.1126/science.aat4318",
+  "pdbDOI": "10.2210/pdb6FKF/pdb",
+  "source": "https://files.rcsb.org/download/6FKF.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 39204,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "A",
+      "entity": "1",
+      "description": "ATP synthase subunit alpha, chloroplastic",
+      "group": 1,
+      "atomCount": 3858
+    },
+    {
+      "chain": "B@1",
+      "authorChain": "B",
+      "entity": "2",
+      "description": "ATP synthase subunit beta, chloroplastic",
+      "group": 2,
+      "atomCount": 3627
+    },
+    {
+      "chain": "C@1",
+      "authorChain": "C",
+      "entity": "1",
+      "description": "ATP synthase subunit alpha, chloroplastic",
+      "group": 1,
+      "atomCount": 3834
+    },
+    {
+      "chain": "D@1",
+      "authorChain": "D",
+      "entity": "2",
+      "description": "ATP synthase subunit beta, chloroplastic",
+      "group": 2,
+      "atomCount": 3619
+    },
+    {
+      "chain": "E@1",
+      "authorChain": "E",
+      "entity": "1",
+      "description": "ATP synthase subunit alpha, chloroplastic",
+      "group": 1,
+      "atomCount": 3819
+    },
+    {
+      "chain": "F@1",
+      "authorChain": "F",
+      "entity": "2",
+      "description": "ATP synthase subunit beta, chloroplastic",
+      "group": 2,
+      "atomCount": 3636
+    },
+    {
+      "chain": "G@1",
+      "authorChain": "g",
+      "entity": "3",
+      "description": "ATP synthase gamma chain, chloroplastic",
+      "group": 0,
+      "atomCount": 2497
+    },
+    {
+      "chain": "H@1",
+      "authorChain": "d",
+      "entity": "4",
+      "description": "ATP synthase delta chain, chloroplastic",
+      "group": 3,
+      "atomCount": 1383
+    },
+    {
+      "chain": "I@1",
+      "authorChain": "p",
+      "entity": "5",
+      "description": "ATP synthase subunit b', chloroplastic",
+      "group": 3,
+      "atomCount": 1124
+    },
+    {
+      "chain": "J@1",
+      "authorChain": "b",
+      "entity": "6",
+      "description": "ATP synthase subunit b, chloroplastic",
+      "group": 3,
+      "atomCount": 1288
+    },
+    {
+      "chain": "K@1",
+      "authorChain": "a",
+      "entity": "7",
+      "description": "ATP synthase subunit a, chloroplastic",
+      "group": 4,
+      "atomCount": 1741
+    },
+    {
+      "chain": "L@1",
+      "authorChain": "S",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "M@1",
+      "authorChain": "N",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "N@1",
+      "authorChain": "O",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "O@1",
+      "authorChain": "P",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "P@1",
+      "authorChain": "Q",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "Q@1",
+      "authorChain": "R",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "R@1",
+      "authorChain": "M",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "S@1",
+      "authorChain": "T",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "T@1",
+      "authorChain": "G",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "U@1",
+      "authorChain": "H",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "V@1",
+      "authorChain": "L",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "W@1",
+      "authorChain": "K",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "X@1",
+      "authorChain": "J",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "Y@1",
+      "authorChain": "I",
+      "entity": "8",
+      "description": "ATP synthase subunit c, chloroplastic",
+      "group": 0,
+      "atomCount": 544
+    },
+    {
+      "chain": "Z@1",
+      "authorChain": "e",
+      "entity": "9",
+      "description": "ATP synthase epsilon chain, chloroplastic",
+      "group": 0,
+      "atomCount": 1010
+    },
+    {
+      "chain": "AA@1",
+      "authorChain": "A",
+      "entity": "10",
+      "description": "ADENOSINE-5'-TRIPHOSPHATE",
+      "group": 5,
+      "atomCount": 31
+    },
+    {
+      "chain": "BA@1",
+      "authorChain": "A",
+      "entity": "11",
+      "description": "MAGNESIUM ION",
+      "group": 5,
+      "atomCount": 1
+    },
+    {
+      "chain": "CA@1",
+      "authorChain": "C",
+      "entity": "10",
+      "description": "ADENOSINE-5'-TRIPHOSPHATE",
+      "group": 5,
+      "atomCount": 31
+    },
+    {
+      "chain": "DA@1",
+      "authorChain": "C",
+      "entity": "11",
+      "description": "MAGNESIUM ION",
+      "group": 5,
+      "atomCount": 1
+    },
+    {
+      "chain": "EA@1",
+      "authorChain": "D",
+      "entity": "12",
+      "description": "ADENOSINE-5'-DIPHOSPHATE",
+      "group": 5,
+      "atomCount": 27
+    },
+    {
+      "chain": "FA@1",
+      "authorChain": "D",
+      "entity": "11",
+      "description": "MAGNESIUM ION",
+      "group": 5,
+      "atomCount": 1
+    },
+    {
+      "chain": "GA@1",
+      "authorChain": "E",
+      "entity": "10",
+      "description": "ADENOSINE-5'-TRIPHOSPHATE",
+      "group": 5,
+      "atomCount": 31
+    },
+    {
+      "chain": "HA@1",
+      "authorChain": "E",
+      "entity": "11",
+      "description": "MAGNESIUM ION",
+      "group": 5,
+      "atomCount": 1
+    },
+    {
+      "chain": "IA@1",
+      "authorChain": "F",
+      "entity": "12",
+      "description": "ADENOSINE-5'-DIPHOSPHATE",
+      "group": 5,
+      "atomCount": 27
+    },
+    {
+      "chain": "JA@1",
+      "authorChain": "F",
+      "entity": "11",
+      "description": "MAGNESIUM ION",
+      "group": 5,
+      "atomCount": 1
+    }
+  ],
+  "orientation": {
+    "method": "c14-ring heavy-atom centre to gamma-chain heavy-atom centre",
+    "helixCount": 0,
+    "sourceOriginAngstrom": [
+      186.54362907037765,
+      172.80694708508403,
+      120.37129359243727
+    ],
+    "sourceNormal": [
+      -0.028921578715971112,
+      0.052739915400571644,
+      0.9981893826364397
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {
+      "cRing": [
+        0,
+        0,
+        0
+      ],
+      "gamma": [
+        4.4408920985006264e-17,
+        6.654414714151558,
+        -2.131628207280301e-15
+      ],
+      "CF1": [
+        0.035143710945525576,
+        11.879796715107275,
+        -0.7087775889358966
+      ]
+    }
+  },
+  "minNm": [
+    -5.358173629917648,
+    -3.476074502715298,
+    -7.697725713421552
+  ],
+  "maxNm": [
+    6.2845153776438964,
+    19.021632408077227,
+    5.385935137563745
+  ],
+  "spansNm": [
+    11.642689007561543,
+    22.497706910792527,
+    13.083660850985297
+  ],
+  "warnings": [],
+  "atomFormat": {
+    "magic": "PCAT",
+    "version": 1,
+    "count": 39204,
+    "quantumNm": 0.001,
+    "headerBytes": 32,
+    "arrays": [
+      "int16 xyz",
+      "uint8 atomicNumber",
+      "uint8 group",
+      "uint8 occlusion",
+      "uint8 chain"
+    ],
+    "groups": {
+      "rotor": 0,
+      "alpha": 1,
+      "beta": 2,
+      "statorArm": 3,
+      "subunitA": 4,
+      "ligand": 5
+    },
+    "occlusion": "Number of other heavy atoms within 1 nm / 240, clamped to [0,1]; visual ambient-occlusion proxy, not an electrostatic calculation."
+  },
+  "atomGroupCounts": {
+    "rotor": 11123,
+    "alpha": 11511,
+    "beta": 10882,
+    "statorArm": 3795,
+    "subunitA": 1741,
+    "ligand": 152
+  },
+  "neighborCounts": {
+    "min": 11,
+    "max": 246,
+    "mean": 158.16937047240077
+  },
+  "atomCompressedBytes": 257601,
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.31622133638490657,
+    "gridResolution": 80,
+    "inputTriangles": 29804,
+    "triangles": 9016,
+    "vertices": 4500,
+    "compressedBytes": 77742,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "b4ceec414fe8e6b4913f2c99a8193b4c5c7b865b4cb4368b22248116a7047cc6"
+}

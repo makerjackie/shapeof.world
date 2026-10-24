@@ -3,7 +3,7 @@ import { LEAF_ENTRY, LEAF_MIDRIB_X } from './leaf-model'
 import { Euler, Quaternion, Vector3 } from 'three'
 
 /** s = log10(horizontal field of view / metre). Smaller values move inward. */
-export const SCALE_MIN = -6.5
+export const SCALE_MIN = -7.7
 export const SCALE_MAX = -0.58
 // A 70 µm-tall cell occupies ~78% of a 1600 × 1000 perspective viewport.
 export const HERO_SCALE = -3.86
@@ -11,7 +11,7 @@ export const MOBILE_HERO_SCALE = -4.22
 export const SCALE_DEFAULT = HERO_SCALE
 export const TRANSITION_WIDTH = 0.3
 
-export type PlantLayer = 'leaf' | 'section' | 'cell' | 'chloroplast'
+export type PlantLayer = 'leaf' | 'section' | 'cell' | 'chloroplast' | 'membrane' | 'motor'
 export type LayerWeights = Record<PlantLayer, number>
 export type PositionUm = [number, number, number]
 
@@ -20,6 +20,8 @@ export const LAYERS = [
   { id: 'section', label: '叶片截面', labelEn: 'Leaf section', scale: -3.0 },
   { id: 'cell', label: '叶肉细胞', labelEn: 'Mesophyll cell', scale: SCALE_DEFAULT },
   { id: 'chloroplast', label: '叶绿体', labelEn: 'Chloroplast', scale: -5.22 },
+  { id: 'membrane', label: '类囊体膜', labelEn: 'Thylakoid membrane', scale: -6.85 },
+  { id: 'motor', label: 'ATP 合酶', labelEn: 'ATP synthase', scale: -7.4 },
 ] as const
 
 export const SCALE_TICKS = [
@@ -29,6 +31,8 @@ export const SCALE_TICKS = [
   { scale: -4, label: '100 μm' },
   { scale: -5, label: '10 μm' },
   { scale: -6, label: '1 μm' },
+  { scale: -7, label: '100 nm' },
+  { scale: -7.7, label: '20 nm' },
 ] as const
 
 export const CHLOROPLAST_ANCHOR_UM: PositionUm = [13.55, 6, 0]
@@ -37,11 +41,18 @@ export const CHLOROPLAST_ROTATION: PositionUm = [0, Math.PI / 2, -Math.PI / 2]
 export const CHLOROPLAST_RADII_UM: PositionUm = [3, 1.9, 1.15]
 export const CHLOROPLAST_QUATERNION = new Quaternion().setFromEuler(new Euler(...CHLOROPLAST_ROTATION))
 export const GRANUM_EDGE_OFFSET_UM: PositionUm = new Vector3(...GRANUM_SECTION_ANCHOR_LOCAL).applyQuaternion(CHLOROPLAST_QUATERNION).toArray()
+/** Molecular +Y points into the stroma; the existing granum normal is local +Z. */
+export const MOLECULAR_ROTATION = new Quaternion().setFromEuler(new Euler(Math.PI / 2, 0, 0))
+export const MOLECULAR_WORLD_ROTATION = CHLOROPLAST_QUATERNION.clone().multiply(MOLECULAR_ROTATION)
+// Same motor as molecular-model.ts, in the unappressed lamella beside the rim.
+export const MOTOR_TARGET_LOCAL_UM: PositionUm = [0.028, -0.116, 0.008]
 
 const transitions = [
   { outer: 'leaf', inner: 'section', center: -2.8 },
   { outer: 'section', inner: 'cell', center: -3.6 },
   { outer: 'cell', inner: 'chloroplast', center: -5.1 },
+  { outer: 'chloroplast', inner: 'membrane', center: -6.5 },
+  { outer: 'membrane', inner: 'motor', center: -7.3 },
 ] as const
 
 export function clampScale(scale: number): number {
@@ -56,7 +67,7 @@ export function smoothstep(from: number, to: number, value: number): number {
 /** Only adjacent layers overlap, and their weights form a partition of unity. */
 export function getLayerWeights(scale: number): LayerWeights {
   const s = clampScale(scale)
-  const weights: LayerWeights = { leaf: 0, section: 0, cell: 0, chloroplast: 0 }
+  const weights: LayerWeights = { leaf: 0, section: 0, cell: 0, chloroplast: 0, membrane: 0, motor: 0 }
   for (const { outer, inner, center } of transitions) {
     const halfWidth = TRANSITION_WIDTH / 2
     if (s >= center + halfWidth) {
@@ -70,7 +81,7 @@ export function getLayerWeights(scale: number): LayerWeights {
       return weights
     }
   }
-  weights.chloroplast = 1
+  weights.motor = 1
   return weights
 }
 
@@ -91,12 +102,14 @@ export function getAnchorUm(scale: number, focus?: { positionUm: PositionUm; qua
   const sectionProgress = smoothstep(-2.65, -3.05, s) * (1 - smoothstep(-3.05, -3.75, s))
   const chloroplastProgress = smoothstep(-4.35, -4.95, s)
   const granumProgress = smoothstep(-5.45, -6.3, s)
+  const motorProgress = smoothstep(-6.5, -7.3, s)
   const lens = focus?.positionUm ?? CHLOROPLAST_ANCHOR_UM
   const edge = focus ? new Vector3(...GRANUM_SECTION_ANCHOR_LOCAL).applyQuaternion(new Quaternion(...focus.quaternion)).toArray() : GRANUM_EDGE_OFFSET_UM
+  const motor = new Vector3(...MOTOR_TARGET_LOCAL_UM).applyQuaternion(focus ? new Quaternion(...focus.quaternion) : CHLOROPLAST_QUATERNION)
   return [
-    (LEAF_MIDRIB_X * (1 - leafProgress) + LEAF_ENTRY[0] * leafProgress) * surfaceWeight + lens[0] * chloroplastProgress + edge[0] * granumProgress,
-    LEAF_ENTRY[1] * surfaceWeight - 190 * sectionProgress + lens[1] * chloroplastProgress + edge[1] * granumProgress,
-    (12000 * (1 - leafProgress) + LEAF_ENTRY[2] * leafProgress) * surfaceWeight + lens[2] * chloroplastProgress + edge[2] * granumProgress,
+    (LEAF_MIDRIB_X * (1 - leafProgress) + LEAF_ENTRY[0] * leafProgress) * surfaceWeight + lens[0] * chloroplastProgress + edge[0] * granumProgress + motor.x * motorProgress,
+    LEAF_ENTRY[1] * surfaceWeight - 190 * sectionProgress + lens[1] * chloroplastProgress + edge[1] * granumProgress + motor.y * motorProgress,
+    (12000 * (1 - leafProgress) + LEAF_ENTRY[2] * leafProgress) * surfaceWeight + lens[2] * chloroplastProgress + edge[2] * granumProgress + motor.z * motorProgress,
   ]
 }
 
@@ -132,4 +145,18 @@ export function getCameraPose(scale: number) {
   const membrane=smoothstep(-6.05,-6.5,s)
   const pitch=(70-30*dive-22*section)*(1-chloroplast)-9*chloroplast+3*membrane
   return {yaw:(35-27*chloroplast-6*membrane)*Math.PI/180,pitch:pitch*Math.PI/180,roll:chloroplast*Math.PI/2}
+}
+
+/** Orbit coordinates change basis smoothly to the molecular membrane frame. */
+export function getOrbitReference(scale: number) {
+  const pose = getCameraPose(scale)
+  const blend = smoothstep(-6.35, -6.85, scale)
+  const approach = smoothstep(-6.5, -7.25, scale)
+  const molecularYaw = (6 + 20 * approach) * Math.PI / 180
+  const molecularPitch = (2 + 16 * approach) * Math.PI / 180
+  return {
+    yaw: pose.yaw * (1 - blend) + molecularYaw * blend,
+    pitch: pose.pitch * (1 - blend) + molecularPitch * blend,
+    molecularYaw, molecularPitch, blend,
+  }
 }

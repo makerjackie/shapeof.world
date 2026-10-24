@@ -1,0 +1,216 @@
+{
+  "id": "5L8R",
+  "title": "The structure of plant photosystem I super-complex at 2.6 angstrom resolution.",
+  "organism": "Pisum sativum",
+  "resolutionAngstrom": 2.6,
+  "citationTitle": "Structure of the plant photosystem I supercomplex at 2.6 angstrom resolution.",
+  "citationDOI": "10.1038/nplants.2017.14",
+  "pdbDOI": "10.2210/pdb5L8R/pdb",
+  "source": "https://files.rcsb.org/download/5L8R.cif",
+  "license": "CC0-1.0",
+  "licenseURL": "https://www.rcsb.org/pages/usage-policy",
+  "assembly": "Biological assembly 1 from deposited mmCIF operators; first model and highest-occupancy atom conformer only.",
+  "assemblyOperators": [
+    "1"
+  ],
+  "heavyAtomCount": 37374,
+  "chains": [
+    {
+      "chain": "A@1",
+      "authorChain": "1",
+      "entity": "1",
+      "description": "Lhca1",
+      "group": 5,
+      "atomCount": 1508
+    },
+    {
+      "chain": "B@1",
+      "authorChain": "2",
+      "entity": "2",
+      "description": "Chlorophyll a-b binding protein, chloroplastic",
+      "group": 5,
+      "atomCount": 1620
+    },
+    {
+      "chain": "C@1",
+      "authorChain": "3",
+      "entity": "3",
+      "description": "Chlorophyll a-b binding protein 3, chloroplastic",
+      "group": 5,
+      "atomCount": 1699
+    },
+    {
+      "chain": "D@1",
+      "authorChain": "4",
+      "entity": "4",
+      "description": "Chlorophyll a-b binding protein P4, chloroplastic",
+      "group": 5,
+      "atomCount": 1559
+    },
+    {
+      "chain": "E@1",
+      "authorChain": "A",
+      "entity": "5",
+      "description": "Photosystem I P700 chlorophyll a apoprotein A1",
+      "group": 5,
+      "atomCount": 5858
+    },
+    {
+      "chain": "F@1",
+      "authorChain": "B",
+      "entity": "6",
+      "description": "Photosystem I P700 chlorophyll a apoprotein A2",
+      "group": 5,
+      "atomCount": 5857
+    },
+    {
+      "chain": "G@1",
+      "authorChain": "C",
+      "entity": "7",
+      "description": "Photosystem I iron-sulfur center",
+      "group": 5,
+      "atomCount": 612
+    },
+    {
+      "chain": "H@1",
+      "authorChain": "D",
+      "entity": "8",
+      "description": "PsaD",
+      "group": 5,
+      "atomCount": 1132
+    },
+    {
+      "chain": "I@1",
+      "authorChain": "E",
+      "entity": "9",
+      "description": "Putative uncharacterized protein",
+      "group": 5,
+      "atomCount": 528
+    },
+    {
+      "chain": "J@1",
+      "authorChain": "F",
+      "entity": "10",
+      "description": "Photosystem I reaction center subunit III",
+      "group": 5,
+      "atomCount": 1213
+    },
+    {
+      "chain": "K@1",
+      "authorChain": "G",
+      "entity": "11",
+      "description": "PsaG",
+      "group": 5,
+      "atomCount": 757
+    },
+    {
+      "chain": "L@1",
+      "authorChain": "H",
+      "entity": "12",
+      "description": "Photosystem I reaction center subunit VI",
+      "group": 5,
+      "atomCount": 673
+    },
+    {
+      "chain": "M@1",
+      "authorChain": "I",
+      "entity": "13",
+      "description": "Photosystem I reaction center subunit VIII",
+      "group": 5,
+      "atomCount": 232
+    },
+    {
+      "chain": "N@1",
+      "authorChain": "J",
+      "entity": "14",
+      "description": "Photosystem I reaction center subunit IX",
+      "group": 5,
+      "atomCount": 338
+    },
+    {
+      "chain": "O@1",
+      "authorChain": "K",
+      "entity": "15",
+      "description": "Photosystem I reaction center subunit X psaK",
+      "group": 5,
+      "atomCount": 515
+    },
+    {
+      "chain": "P@1",
+      "authorChain": "L",
+      "entity": "16",
+      "description": "Putative uncharacterized protein",
+      "group": 5,
+      "atomCount": 1174
+    }
+  ],
+  "orientation": {
+    "method": "Dominant direction of deposited long transmembrane alpha helices; signed using biochemical sidedness markers",
+    "helixCount": 32,
+    "sourceOriginAngstrom": [
+      15.885542968750002,
+      12.23990234375,
+      67.77160546875
+    ],
+    "sourceNormal": [
+      0.5299767812910455,
+      -0.8464624905951327,
+      0.05124317815932439
+    ],
+    "normal": [
+      0,
+      1,
+      0
+    ],
+    "stroma": "+Y",
+    "lumen": "-Y",
+    "landmarksNm": {
+      "PsaC": [
+        1.4331230564544684,
+        3.8626145821169056,
+        -1.3896985359702616
+      ],
+      "PsaD": [
+        2.9308672250358674,
+        4.036216197461786,
+        -1.2296496254218945
+      ],
+      "PsaE": [
+        -0.896561781366544,
+        4.127491976657441,
+        -0.5176501251398907
+      ]
+    }
+  },
+  "minNm": [
+    -7.427998695973322,
+    -4.50797921201687,
+    -7.546569433561252
+  ],
+  "maxNm": [
+    7.459547482452995,
+    6.137400937751163,
+    8.216429805387328
+  ],
+  "spansNm": [
+    14.887546178426316,
+    10.645380149768034,
+    15.76299923894858
+  ],
+  "warnings": [
+    "Pea (Pisum sativum; currently Lathyrus oleraceus in the PDB taxonomy), not spinach."
+  ],
+  "surface": {
+    "method": "Gaussian heavy-atom density, marching cubes, edge-collapse decimation",
+    "gaussianSigmaNm": 0.29,
+    "isovalue": 3.5,
+    "gridStepNm": 0.3146271057448912,
+    "gridResolution": 59,
+    "inputTriangles": 22016,
+    "triangles": 9016,
+    "vertices": 4500,
+    "compressedBytes": 77881,
+    "format": "PCMS v1: 32-byte header, int16 xyz (0.002 nm), int8 normals, uint8 linear RGB, uint16 triangle indices"
+  },
+  "sourceSha256": "1d92d03686465da89d15a701882cbdabea7431e642451771b96c180b0c4a790e"
+}
