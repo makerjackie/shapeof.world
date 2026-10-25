@@ -38,7 +38,7 @@
     "audit:seo-p0": "node scripts/audit-seo-p0-pages.mjs",
     "audit:smoke": "node scripts/smoke-worlds.mjs",
     "audit:deps": "pnpm --registry=https://registry.npmjs.org audit --prod",
-    "check:scripts": "node --test scripts/audit-seo-p0-pages.test.mjs scripts/world-audit-selection.test.mjs scripts/check-plan.test.mjs",
+    "check:scripts": "node --test scripts/audit-seo-p0-pages.test.mjs scripts/world-audit-selection.test.mjs scripts/check-plan.test.mjs scripts/world-load-manifest.test.mjs",
     "check:world": "pnpm exec vitest run src/data/worlds/experience-policy.test.ts src/lib/experience-capabilities.test.ts src/lib/motion.test.ts src/lib/next-world.test.ts src/lib/world-playback.test.ts src/components/experience-shell-policy.test.ts",
     "world:check": "node scripts/check-world.mjs",
     "music:dev": "pnpm --dir apps/music dev",

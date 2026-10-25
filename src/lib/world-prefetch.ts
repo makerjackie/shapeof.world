@@ -35,7 +35,7 @@ function shouldAvoidWarmup(): boolean {
 
 export type WarmupGate = {
   /** A world's renderer started loading; warming other worlds now competes with it. */
-  hold: (worldId: string) => void
+  hold: (worldId: string, untilRelease?: boolean) => void
   /** That renderer painted (or gave up); queued warm-ups start after a short settle. */
   release: (worldId: string) => void
   request: (worldId: string, warm: (worldId: string) => void) => void
@@ -56,9 +56,10 @@ export function createWarmupGate(
   const queued = new Map<string, (worldId: string) => void>()
 
   const gate: WarmupGate = {
-    hold(worldId) {
+    hold(worldId, untilRelease = false) {
       heldFor = worldId
       const current = ++generation
+      if (untilRelease) return
       schedule(() => {
         if (generation === current) gate.release(worldId)
       }, maxHoldMs)
@@ -94,7 +95,9 @@ const warmupGate = createWarmupGate((run, delayMs) => {
 })
 
 export function holdWorldWarmups(worldId: string): void {
-  warmupGate.hold(worldId)
+  // The renderer releases on paint, failure, stall, navigation or unmount.
+  // A healthy slow download must keep unrelated worlds off its connection.
+  warmupGate.hold(worldId, true)
 }
 
 export function releaseWorldWarmups(worldId: string): void {

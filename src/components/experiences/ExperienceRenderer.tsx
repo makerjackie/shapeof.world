@@ -6,12 +6,14 @@ import type { ExperienceControls } from '~/components/ExperienceShell'
 import { ExperienceFallback } from '~/components/experiences/ExperienceFallback'
 import { ExperienceLoading } from '~/components/experiences/ExperienceLoading'
 import { ExperienceOpeningPoster } from '~/components/experiences/ExperienceOpeningPoster'
+import { RendererErrorBoundary } from './RendererErrorBoundary'
 import type { DailyIssue } from '~/data/issues'
 import type { WorldExperience } from '~/data/worlds/types'
 import { trackEvent } from '~/lib/analytics'
 import { afterNextPaint } from '~/lib/after-next-paint'
 import { detectWebglSupport, runtimeNeedsWebgl } from '~/lib/webgl'
 import { holdWorldWarmups, releaseWorldWarmups } from '~/lib/world-prefetch'
+import { prepareWorldDownload } from '~/lib/world-download'
 
 const loadClientExperienceRenderer = createClientOnlyFn(() =>
   import('~/components/experiences/ExperienceRenderer.client').then((module) => ({
@@ -41,11 +43,14 @@ export function ExperienceRenderer({
   // this renderer's first paint instead of sharing its download.
   useEffect(() => {
     holdWorldWarmups(world.id)
+    // Begin observation before the client renderer/registry itself arrives.
+    // The lazy loader consumes the same promise and surfaces any failure.
+    void prepareWorldDownload(world.renderer).catch(() => undefined)
     return () => releaseWorldWarmups(world.id)
-  }, [world.id])
+  }, [world.id, world.renderer])
   useEffect(() => {
-    void loadClientExperienceRenderer()
-    afterNextPaint(() => setRendererReady(true))
+    void loadClientExperienceRenderer()?.catch(() => undefined)
+    return afterNextPaint(() => setRendererReady(true))
   }, [])
 
   // SSR 与首次渲染必须和服务端一致，所以能力探测放在 mount 之后。
@@ -64,9 +69,11 @@ export function ExperienceRenderer({
 
   return (
     <ClientOnly fallback={<ExperienceOpeningPoster world={world} />}>
-      <Suspense fallback={<ExperienceLoading key={world.id} world={world} />}>
-        <ClientExperienceRenderer world={world} issue={issue} controls={controls} />
-      </Suspense>
+      <RendererErrorBoundary key={world.id} world={world}>
+        <Suspense fallback={<ExperienceLoading key={world.id} world={world} />}>
+          <ClientExperienceRenderer world={world} issue={issue} controls={controls} />
+        </Suspense>
+      </RendererErrorBoundary>
     </ClientOnly>
   )
 }

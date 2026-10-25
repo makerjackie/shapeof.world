@@ -1,4 +1,5 @@
 import '@tanstack/react-start/client-only'
+import { prepareWorldDownload } from './world-download'
 
 const worldLoaders = import.meta.glob('../components/experiences/worlds/*/index.tsx')
 const dictionaryLoaders = import.meta.glob('../i18n/experience-en/*.json')
@@ -10,6 +11,7 @@ export function prefetchWorldExperience(worldId: string): void {
   // no dictionary) cannot produce an unhandled rejection.
   const swallow = () => undefined
   void import('~/components/experiences/ExperienceRenderer.client').catch(swallow)
-  void worldLoaders[`../components/experiences/worlds/${worldId}/index.tsx`]?.().catch(swallow)
+  const loadWorld = worldLoaders[`../components/experiences/worlds/${worldId}/index.tsx`]
+  if (loadWorld) void prepareWorldDownload(worldId).then(loadWorld).catch(swallow)
   void dictionaryLoaders[`../i18n/experience-en/${worldId}.json`]?.().catch(swallow)
 }

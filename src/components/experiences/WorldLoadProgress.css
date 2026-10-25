@@ -1,0 +1,19 @@
+.world-load-progress {
+  width: min(360px, calc(100vw - 64px));
+  color: rgba(245, 244, 238, .88);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: .02em;
+  line-height: 1.6;
+  text-transform: none;
+}
+.world-load-progress-caption { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.world-load-progress-bytes { white-space: nowrap; font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; color: rgba(245, 244, 238, .68); }
+.world-load-progress-track { height: 2px; margin-top: 10px; overflow: hidden; background: rgba(228, 231, 222, .2); }
+.world-load-progress-track > span { display: block; width: 100%; height: 100%; transform-origin: left; background: #b3bcb4; }
+.world-load-progress-track.is-indeterminate > span { width: 30%; animation: world-load-indeterminate 1.6s ease-in-out infinite alternate; }
+.world-opening-status { position: relative; z-index: 1; max-width: calc(100% - 32px); padding: 14px 18px; border-radius: 8px; background: rgba(6, 8, 10, .7); backdrop-filter: blur(10px); }
+.world-opening-status > .world-opening-label { margin: 0; padding: 0; border-radius: 0; background: none; backdrop-filter: none; text-transform: none; letter-spacing: .02em; }
+.world-load-progress-overlay { position: absolute; z-index: 12; left: 50%; bottom: max(24px, env(safe-area-inset-bottom)); transform: translateX(-50%); padding: 14px 18px; border-radius: 8px; background: rgba(6, 8, 10, .8); backdrop-filter: blur(10px); pointer-events: none; }
+@keyframes world-load-indeterminate { from { transform: translateX(0); } to { transform: translateX(230%); } }
+@media (prefers-reduced-motion: reduce) { .world-load-progress-track.is-indeterminate > span { animation: none; } }

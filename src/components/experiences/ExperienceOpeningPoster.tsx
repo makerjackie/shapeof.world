@@ -1,8 +1,10 @@
 import type { WorldExperience } from '~/data/worlds/types'
 import { useI18n } from '~/i18n/index'
+import type { LoadProgress } from '~/lib/world-load-progress'
+import { WorldLoadProgress } from './WorldLoadProgress'
 
 /** First paint for a world page: the poster is the LCP image, not a blank stage. */
-export function ExperienceOpeningPoster({ world }: { world: WorldExperience }) {
+export function ExperienceOpeningPoster({ world, progress }: { world: WorldExperience; progress?: LoadProgress }) {
   const { t, worldText } = useI18n()
   return (
     <div className="canvas-loading canvas-loading--poster">
@@ -22,7 +24,10 @@ export function ExperienceOpeningPoster({ world }: { world: WorldExperience }) {
           decoding="async"
         />
       </picture>}
-      <p>{t('experience.opening')} · {worldText(world, 'title')}</p>
+      <div className="world-opening-status">
+        {progress ? <WorldLoadProgress {...progress} label={t('experience.opening')} /> :
+          <p className="world-opening-label">{t('experience.opening')} · {worldText(world, 'title')}</p>}
+      </div>
     </div>
   )
 }

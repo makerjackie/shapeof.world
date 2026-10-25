@@ -14,6 +14,16 @@ function harness(options?: { settleMs?: number; maxHoldMs?: number }) {
 }
 
 describe('world warm-up gate', () => {
+  it('keeps a foreground download held until it explicitly finishes, however slow', () => {
+    const { gate, warm, warmed, runTimers } = harness()
+    gate.hold('slow-world', true)
+    gate.request('next-world', warm)
+    runTimers(20_000)
+    expect(warmed).toEqual([])
+    gate.release('slow-world')
+    runTimers(3_000)
+    expect(warmed).toEqual(['next-world'])
+  })
   it('warms immediately when no world is loading', () => {
     const { gate, warm, warmed } = harness()
     gate.request('aurora', warm)

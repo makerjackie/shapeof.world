@@ -4,6 +4,7 @@ import { createElement, lazy, type ComponentType, type LazyExoticComponent } fro
 
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import type { DailyIssue } from '~/data/issues'
+import { prepareWorldDownload } from '~/lib/world-download'
 import {
   ExperienceI18nProvider,
   type ExperienceDictionary,
@@ -42,7 +43,10 @@ function lazyExperience<TModule>(
     const loadDictionary = dictionaryLoaders[`../i18n/experience-en/${id}.json`]
     if (!loadDictionary) throw new Error(`Missing generated experience dictionary for ${id}`)
 
-    const [module, dictionary] = await Promise.all([loadModule(), loadDictionary()])
+    const dictionaryPromise = loadDictionary()
+    const [module, dictionary] = await Promise.all([
+      prepareWorldDownload(id).then(loadModule), dictionaryPromise,
+    ])
     const Renderer = selectRenderer(module)
     const LocalizedRenderer: RendererComponent = (props) => createElement(
       ExperienceI18nProvider,
