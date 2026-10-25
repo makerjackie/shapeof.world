@@ -1,67 +1,19 @@
-import { useEffect, useMemo } from 'react'
+import { memo, useEffect, useMemo } from 'react'
 import * as T from 'three'
-import type { Network, Vec3 } from '../sim/types'
+import type { Network } from '../sim/types'
 import { fillInstances, samplePath, type Instance } from './mesh-kit'
 import { CityBuildings } from './CityBuildings'
-import { ContextLand, contextLayout } from './ContextLand'
+import { ContextLand } from './ContextLand'
 import { Terrain } from './Terrain'
 import { ChongqingRiver } from './ChongqingRiver'
 import { terrainHeight } from '../sim/terrain'
+import { paintLightingAtlas, type Lamp } from './lights-data'
+export type { Lamp } from './lights-data'
 
-export interface Lamp { position: Vec3; height: number; urban: boolean; rotation: number; radius?: number }
-
-export function buildLamps(network: Network): Lamp[] {
-  const urban = network.carriageways.every(road => road.kind === 'urban')
-  const lamps: Lamp[] = []
-  if (!urban) for (const x of [-98, 98]) for (const z of [-98, 98]) lamps.push({ position: { x, y: terrainHeight(network,x,z), z }, height: 30, urban: false, rotation: 0 })
-  for (const road of network.carriageways) {
-    if (road.kind !== 'ramp' && road.oneWay && Math.hypot(road.points.at(-1)!.x-road.points[0].x,road.points.at(-1)!.z-road.points[0].z)<200) continue
-    const cityRoad=road.kind==='urban'
-    const offset = (road.laneCount * road.laneWidth + (road.medianWidth ?? 0)) / 2 + (road.shoulder ?? 0) + 1.4
-    for (const { position: p, tangent: t } of samplePath(road.points, cityRoad ? 36 : road.kind === 'ramp' && network.id !== 'huangjuewan' ? 95 : 110)) {
-      if (cityRoad && urban && Math.hypot(p.x, p.z) < 28) continue
-      for (const side of cityRoad && !road.oneWay ? [-1, 1] : [1]) {
-        lamps.push({ position: { x: p.x - t.z * offset * side, y: p.y, z: p.z + t.x * offset * side }, height: cityRoad ? 9 : 28, urban:cityRoad, rotation: Math.atan2(t.x, t.z) + (side < 0 ? Math.PI : 0) })
-      }
-    }
-  }
-  if(network.urbanJunctions?.length) {
-    for(const node of network.urbanJunctions) {
-      const x=(node.arms.find(arm=>arm.direction==='north'||arm.direction==='south')?.halfWidth??3.5)+3.35
-      const z=(node.arms.find(arm=>arm.direction==='east'||arm.direction==='west')?.halfWidth??3.5)+3.35
-      for(const sx of[-1,1])for(const sz of[-1,1]) lamps.push({position:{x:node.position.x+sx*(x+12),y:node.position.y,z:node.position.z+sz*z},height:Math.max(x,z)>13?12:9,urban:true,rotation:sz<0?-Math.PI/2:Math.PI/2,radius:Math.max(28,Math.hypot(x+12,z)*1.55)})
-    }
-  } else if(urban) {
-    const horizontal=network.carriageways.find(road=>Math.abs(road.points[0].x)>Math.abs(road.points[0].z))
-    const vertical=network.carriageways.find(road=>Math.abs(road.points[0].z)>Math.abs(road.points[0].x))
-    const x=(vertical?vertical.laneCount*vertical.laneWidth/2:3.5)+3.8
-    const z=(horizontal?horizontal.laneCount*horizontal.laneWidth/2:3.5)+3.8
-    for(const sx of[-1,1])for(const sz of[-1,1]) lamps.push({position:{x:sx*(x+12),y:0.1,z:sz*z},height:9,urban:true,rotation:sz<0?-Math.PI/2:Math.PI/2,radius:28})
-  }
-  lamps.push(...contextLayout(network).lamps)
-  return lamps
-}
-
-/** A single top-down irradiance atlas replaces hundreds of shadowed point lights. */
-export function makeLightingAtlas(lamps: Lamp[]) {
-  const canvas = document.createElement('canvas'); canvas.width = canvas.height = 2048
-  const context = canvas.getContext('2d')!
-  context.fillStyle = '#000'; context.fillRect(0, 0, 2048, 2048)
-  context.globalCompositeOperation = 'lighter'
-  const extent = 1800, scale = canvas.width / (extent * 2)
-  for (const { position: p, urban, rotation, radius } of lamps) {
-    // Urban luminaires project into the road, while mast lights cover a 52 m radius.
-    const cx = p.x + (urban ? Math.cos(rotation) * 4.5 : 0), cz = p.z - (urban ? Math.sin(rotation) * 4.5 : 0)
-    const x = (cx + extent) * scale, z = (cz + extent) * scale, r = (radius ?? (urban ? 26 : 52)) * scale
-    const gradient = context.createRadialGradient(x, z, 0, x, z, r)
-    gradient.addColorStop(0, urban ? 'rgba(255,206,144,1)' : 'rgba(255,237,201,1)')
-    gradient.addColorStop(0.21, urban ? 'rgba(255,198,130,0.85)' : 'rgba(255,228,182,0.85)')
-    gradient.addColorStop(0.48, 'rgba(255,218,166,0.46)')
-    gradient.addColorStop(0.76, 'rgba(245,208,163,0.10)')
-    gradient.addColorStop(1, 'rgba(0,0,0,0)')
-    context.fillStyle = gradient; context.fillRect(x - r, z - r, r * 2, r * 2)
-  }
-  const texture = new T.CanvasTexture(canvas)
+export function makeLightingAtlas(lamps:Lamp[],bitmap?:ImageBitmap|null) {
+  let texture:T.Texture
+  if(bitmap){texture=new T.Texture(bitmap);texture.flipY=false;texture.needsUpdate=true}
+  else {const canvas=document.createElement('canvas');canvas.width=canvas.height=2048;paintLightingAtlas(canvas,lamps);texture=new T.CanvasTexture(canvas)}
   texture.colorSpace = T.SRGBColorSpace
   texture.wrapS = texture.wrapT = T.ClampToEdgeWrapping
   return texture
@@ -177,7 +129,7 @@ function treeInstances(network: Network) {
   return { crowns, trunks }
 }
 
-export function NightWorld({ network, atlas }: { network: Network; atlas: T.Texture }) {
+export const NightWorld = memo(function NightWorld({ network, atlas, visible = true }: { network: Network; atlas: T.Texture; visible?:boolean }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const assets = useMemo(() => {
     const trees = urban ? { crowns: [], trunks: [] } : treeInstances(network)
@@ -198,7 +150,8 @@ export function NightWorld({ network, atlas }: { network: Network; atlas: T.Text
   }, [network, urban, atlas])
   useEffect(() => () => { assets.ground.dispose(); assets.foliage.dispose(); assets.sky.dispose() }, [assets])
   return <>
-    <fogExp2 attach="fog" args={['#18243a', 0.00019]} />
+    {visible && <fogExp2 attach="fog" args={['#18243a', 0.00019]} />}
+    <group visible={visible}>
     <hemisphereLight args={['#91a4cd', '#161e2a', 0.26]} />
     <directionalLight position={[-450, 750, -200]} color="#b9c9e2" intensity={0.52} />
     <mesh material={assets.sky}><sphereGeometry args={[7000, 32, 20]} /></mesh>
@@ -209,5 +162,6 @@ export function NightWorld({ network, atlas }: { network: Network; atlas: T.Text
     {network.id === 'huangjuewan' && <ChongqingRiver />}
     {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
     {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}
+    </group>
   </>
-}
+})

@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
-import type { TrafficRuntime } from './runtime'
+import type { WorkerTrafficRuntime as TrafficRuntime } from './worker-runtime'
+import { TRAIL_WIDTHS } from './frame-packet'
 
 // Each history segment is uploaded once; the GPU expands its four lamp ribbons.
 // 256 samples per car are retained by the distance/curvature adaptive recorder.
@@ -54,33 +55,21 @@ export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft
         void main(){ float core=exp(-vSide*vSide*10.0); float halo=exp(-vSide*vSide*2.4)*0.14;
           gl_FragColor=vec4(vLight,(core+halo)*vFade*0.92); }`,
     })
-    return { geometry, material, arrays, lastTime: -1, lastShutter: -1, simulation: runtime.simulation }
+    return { geometry, material, arrays, lastTime: -1, lastRevision: -1, lastShutter: -1, simulation: runtime.simulation }
   }, [])
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
   useFrame(({ size, gl }) => {
-    if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1 }
+    if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1; assets.lastRevision = -1 }
     const time = runtime.simulation.time
     assets.material.uniforms.resolution.value.set(size.width, size.height); assets.material.uniforms.minimumWidth.value = size.width < 720 ? 1.5 / Math.max(1, gl.getPixelRatio()) : 3.2
     assets.material.uniforms.blueprint.value = blueprint ? 1 : 0; assets.material.uniforms.highlightLeft.value = highlightLeft && !blueprint ? 1 : 0;
     assets.material.uniforms.shutter.value = shutter; assets.material.uniforms.simTime.value = time
     if (shutter <= 0.01) { assets.geometry.instanceCount = 0; assets.lastShutter = shutter; return }
-    if (time === assets.lastTime && shutter === assets.lastShutter) return
-    assets.lastTime = time; assets.lastShutter = shutter
-    let cursor = 0
-    for (const history of runtime.trails.values()) {
-      const samples = history.samples
-      const count = samples.length + (history.tip && history.tip.time > (samples.at(-1)?.time ?? 0) ? 1 : 0)
-      for (let i = 0; i < count - 1 && cursor < MAX_SEGMENTS; i++) {
-        const a = samples[i], b = samples[i + 1] ?? history.tip!
-        if (b.time < time - shutter || Math.hypot(b.position.x - a.position.x, b.position.z - a.position.z) > 35) continue
-        const k = cursor * 3, j = cursor * 2
-        for (const [name, point] of [['start', a.position], ['end', b.position], ['directionA', a.tangent], ['directionB', b.tangent]] as const) {
-          assets.arrays[name][k] = point.x; assets.arrays[name][k + 1] = point.y; assets.arrays[name][k + 2] = point.z
-        }
-        assets.arrays.times[j] = a.time; assets.arrays.times[j + 1] = b.time
-        assets.arrays.properties[cursor * 4] = +a.braking; assets.arrays.properties[cursor * 4 + 1] = +b.braking; assets.arrays.properties[cursor * 4 + 2] = b.length; assets.arrays.properties[cursor * 4 + 3] = history.turn
-        cursor++
-      }
+    if (runtime.revision === assets.lastRevision && shutter === assets.lastShutter) return
+    assets.lastTime = time; assets.lastShutter = shutter; assets.lastRevision = runtime.revision
+    const cursor = Math.min(runtime.frame.exposureCounts[Math.min(450,Math.ceil(shutter*30))], MAX_SEGMENTS)
+    for (const name of Object.keys(TRAIL_WIDTHS) as (keyof typeof TRAIL_WIDTHS)[]) {
+      assets.arrays[name].set(runtime.frame.trails[name].subarray(0,cursor*TRAIL_WIDTHS[name]))
     }
     for (const name of Object.keys(assets.arrays)) {
       const attr = assets.geometry.getAttribute(name) as T.BufferAttribute

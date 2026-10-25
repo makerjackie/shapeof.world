@@ -3,10 +3,10 @@ import { OrbitControls } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
 import { PRESENTATIONS } from '../presentation'
-import type { DesignSpec } from '../sim/types'
+import type { DesignInfo } from '../designs/catalogue'
 
 export type CameraPreset = 'overview' | 'top' | 'close' | 'low'
-export function CameraRig({ design, preset, revision, reducedMotion, onInteract }: { design: DesignSpec; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void }) {
+export function CameraRig({ design, preset, revision, reducedMotion, onInteract }: { design: DesignInfo; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void }) {
   const control = useRef<ComponentRef<typeof OrbitControls>>(null)
   const { camera, size, gl } = useThree()
   const lastInteraction = useRef(-Infinity)

@@ -255,8 +255,14 @@ export class TrafficSimulation {
 
   private leader(vehicle: Vehicle, laneId = vehicle.laneId, s = vehicle.s, route = vehicle.route, routeIndex = vehicle.routeIndex): Leader {
     let result: Leader = { gap: Infinity, speed: vehicle.v }
-    for (const body of this.bodies.get(laneId) ?? []) {
-      if (body.vehicle.id === vehicle.id || body.s < s - 1e-7) continue
+    const laneBodies = this.bodies.get(laneId) ?? []
+    // The index is sorted by front position. Skip the upstream platoon without
+    // changing tie order, source-lane occupancy or the selected leader.
+    let lo = 0, hi = laneBodies.length
+    while (lo < hi) { const mid = (lo + hi) >>> 1; if (laneBodies[mid].s < s - 1e-7) lo = mid + 1; else hi = mid }
+    for (let index = lo; index < laneBodies.length; index++) {
+      const body = laneBodies[index]
+      if (body.vehicle.id === vehicle.id) continue
       const gap = body.s - body.vehicle.length - s
       if (gap < result.gap) result = { gap, speed: body.vehicle.v, vehicle: body.vehicle }
       break
@@ -282,7 +288,9 @@ export class TrafficSimulation {
     let nearest: Body | undefined
     const inspect = (id: string, offset: number, next?: string) => {
       const bodies = this.bodies.get(id) ?? []
-      for (let index = bodies.length - 1; index >= 0; index--) {
+      let lo = 0, hi = bodies.length
+      while (lo < hi) { const mid = (lo + hi) >>> 1; if (bodies[mid].s - offset < s) lo = mid + 1; else hi = mid }
+      for (let index = lo - 1; index >= 0; index--) {
         const body = bodies[index], position = body.s - offset
         if (body.vehicle.id === vehicle.id || position >= s) continue
         if (next && body.vehicle.route[body.vehicle.routeIndex + 1] !== next && body.vehicle.laneChange?.fromLaneId !== id) continue
@@ -706,7 +714,8 @@ export class TrafficSimulation {
         const nextLane = this.laneMap.get(nextId)!
         const surplus = vehicle.s - lane.length
         // Sequential merge guard handles two simultaneous arrivals without accepting overlap.
-        const nearest = this.vehicles.filter(other => other.id !== vehicle.id && other.laneId === nextId && !completed.has(other.id)).sort((a, b) => a.s - b.s)[0]
+        let nearest: Vehicle | undefined
+        for (const other of this.vehicles) if (other.id !== vehicle.id && other.laneId === nextId && !completed.has(other.id) && (!nearest || other.s < nearest.s)) nearest = other
         if (nearest && nearest.s - nearest.length - surplus < 0.1) { vehicle.s = lane.length - 0.01; vehicle.v = 0; break }
         if (lane.merge) {
           const contender = this.vehicles.find(other => other.id !== vehicle.id && other.laneId !== lane.id && other.route[other.routeIndex + 1] === nextId && this.laneMap.get(other.laneId)!.length - other.s < 3 && other.v < 2)

@@ -1,9 +1,12 @@
-import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react'
+import { createContext, useContext, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import type { Network } from '../sim/types'
 import { terrainHeight } from '../sim/terrain'
 
+// Retained vehicle/trail materials may reuse an existing WebGL program across
+// networks. Refresh that program's uniform map as well as the compile hook.
+const compiledUniforms = new WeakMap<T.Material, Record<string, T.IUniform>>()
 const StretchContext = createContext<{ network: Network; factor: { value: number } } | null>(null)
 export function StretchAnchor({ position, children }: { position: [number, number, number]; children: ReactNode }) {
   const context = useContext(StretchContext), group = useRef<T.Group>(null)
@@ -26,7 +29,7 @@ export function DisplayStretch({ network, enabled, children }: { network: Networ
       rdClipToWorld: { value: new T.Matrix4() }, rdWorldToClip: { value: new T.Matrix4() },
     }, materials: new Map<T.Material, { compile: T.Material['onBeforeCompile']; key: T.Material['customProgramCacheKey'] }>() }
   }, [network])
-  useEffect(() => () => {
+  useLayoutEffect(() => () => {
     assets.texture.dispose()
     for (const [material, old] of assets.materials) { material.onBeforeCompile = old.compile; material.customProgramCacheKey = old.key; material.needsUpdate = true }
   }, [assets])
@@ -43,9 +46,12 @@ export function DisplayStretch({ network, enabled, children }: { network: Networ
         const old = { compile: material.onBeforeCompile, key: material.customProgramCacheKey }
         const key = old.key.call(material)
         assets.materials.set(material, old)
+        const existing = compiledUniforms.get(material)
+        if(existing)Object.assign(existing,u)
         material.onBeforeCompile = (shader, renderer) => {
           old.compile.call(material, shader, renderer)
           Object.assign(shader.uniforms, u)
+          compiledUniforms.set(material,shader.uniforms)
           shader.vertexShader = 'uniform float rdStretch; uniform sampler2D rdTerrain; uniform vec4 rdBounds; uniform mat4 rdClipToWorld; uniform mat4 rdWorldToClip;\n' + shader.vertexShader
           const end = shader.vertexShader.lastIndexOf('}')
           shader.vertexShader = shader.vertexShader.slice(0, end) + `
