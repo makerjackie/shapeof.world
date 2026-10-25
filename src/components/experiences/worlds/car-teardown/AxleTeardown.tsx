@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, type RefObject, type ReactNode } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import * as T from 'three'
 import { createDifferentialResources } from './differential-geometry'
 import { createAnnulus } from './transmission-geometry'

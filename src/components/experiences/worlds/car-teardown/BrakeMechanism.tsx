@@ -1,12 +1,13 @@
+import { caliperGeometry, rotorGeometry } from './brake-render-geometry'
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import { Html, RoundedBox } from '@react-three/drei'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import { BRAKE_GEOMETRY as B, VEHICLE_SPEC as S, ROAD_TEARDOWN_SPEC as R } from './vehicle-spec'
 import { caliperTravel, type BrakeState } from './brake-model'
 import { TeardownPart, useTeardownProgress } from './TeardownPart'
-import { brakePad, brakeRing, caliperXrayMaterial, floatingCaliperBody } from './brake-geometry'
+import { brakeRing, caliperXrayMaterial } from './brake-geometry'
 
 type Point = [number, number, number]
 type StateRef = RefObject<BrakeState>
@@ -94,12 +95,6 @@ function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef;
 	const rotating = useRef<T.Group>(null),
 		spec = front ? S.brakes.front : S.brakes.rear
 	const resources = useMemo(() => {
-		const ring = brakeRing(
-			B.rotorInnerRadius,
-			spec.diameter / 2,
-			front ? B.rotorFaceThickness : spec.thickness,
-		)
-		const hat = brakeRing(B.rotorBoreRadius, B.rotorHatRadius, B.rotorHatDepth)
 		// The flat inner face mostly reflects the dark room at this inspection
 		// angle. Give the machined cast-iron surface a modest diffuse component
 		// and a broader reflection; the modeled concentric grooves provide its
@@ -111,7 +106,7 @@ function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef;
 			roughness: 0.52,
 			envMapIntensity: 1.15,
 		})
-		return { ring, hat, disc }
+		return { ...rotorGeometry(front), disc }
 	}, [front])
 	useEffect(
 		() => () => Object.values(resources).forEach((resource) => resource.dispose()),
@@ -133,28 +128,11 @@ function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef;
 					castShadow
 				/>
 			))}
-			{front &&
-				Array.from({ length: B.rotorVanes }, (_, i) => {
-					const angle = (i / B.rotorVanes) * Math.PI * 2,
-						r = (radius + B.rotorInnerRadius) / 2
-					return (
-						<mesh
-							key={i}
-							position={[r * Math.cos(angle), r * Math.sin(angle), 0]}
-							rotation={[0, 0, angle]}
-							castShadow
-						>
-							<boxGeometry
-								args={[
-									radius - B.rotorInnerRadius,
-									B.rotorVaneThickness,
-									spec.thickness - B.rotorFaceThickness * 2,
-								]}
-							/>
-							<meshStandardMaterial {...S.materials.steel} color="#565b61" />
-						</mesh>
-					)
-				})}
+			{front && (
+				<mesh geometry={resources.vanes} castShadow>
+					<meshStandardMaterial {...S.materials.steel} color="#565b61" />
+				</mesh>
+			)}
 			<mesh
 				geometry={resources.hat}
 				material={resources.disc}
@@ -177,22 +155,9 @@ function Rotor({ front, stateRef, index }: { front: boolean; stateRef: StateRef;
 					/>
 				)
 			})}
-			{[-1, 1].flatMap((side) =>
-				Array.from({ length: B.rotorGrooveCount }, (_, i) => {
-					const r =
-						B.rotorInnerRadius +
-						((radius - B.rotorInnerRadius) * (i + 1)) / (B.rotorGrooveCount + 1)
-					return (
-						<mesh
-							key={`${side}-${i}`}
-							position={[0, 0, side * (spec.thickness / 2 + B.rotorGrooveWidth)]}
-						>
-							<torusGeometry args={[r, B.rotorGrooveWidth, 4, 96]} />
-							<meshStandardMaterial color="#899096" metalness={1} roughness={0.43} />
-						</mesh>
-					)
-				}),
-			)}
+			<mesh geometry={resources.grooves}>
+				<meshStandardMaterial color="#899096" metalness={1} roughness={0.43} />
+			</mesh>
 		</group>
 	)
 }
@@ -216,20 +181,10 @@ export function FloatingCaliper({
 		gap = B.padGap * B.gapMagnification
 	const innerZ = -spec.thickness / 2 - gap - B.padThickness / 2
 	const pistonZ = innerZ - B.padThickness / 2 - B.pistonLength / 2
-	const resources = useMemo(() => {
-		const casting = floatingCaliperBody(front)
-		return {
-			casting,
-			edges: new T.EdgesGeometry(casting, 40),
-			pad: brakePad(front),
-			piston: brakeRing(
-				spec.pistonDiameter / 2 - B.pistonWall,
-				spec.pistonDiameter / 2,
-				B.pistonLength,
-			),
-			xray: caliperXrayMaterial(),
-		}
-	}, [front])
+	const resources = useMemo(
+		() => ({ ...caliperGeometry(front), xray: caliperXrayMaterial() }),
+		[front],
+	)
 	useEffect(
 		() => () => Object.values(resources).forEach((resource) => resource.dispose()),
 		[resources],
@@ -266,12 +221,9 @@ export function FloatingCaliper({
 							position={[-B.caliperRadialPosition, side * B.guidePinOffsetY, -B.guidePinLength / 4]}
 							userData={{ partId: `caliper-boot-${(index - 1) * 2 + (side > 0 ? 2 : 1)}` }}
 						>
-							{Array.from({ length: 5 }, (_, j) => (
-								<mesh key={j} position-z={(j - 2) * B.guidePinRadius * 0.8}>
-									<torusGeometry args={[B.guidePinRadius * 1.6, B.guidePinRadius * 0.42, 8, 24]} />
-									<meshStandardMaterial color="#202329" roughness={0.9} />
-								</mesh>
-							))}
+							<mesh geometry={resources.boot}>
+								<meshStandardMaterial color="#202329" roughness={0.9} />
+							</mesh>
 						</group>
 					</TeardownPart>
 					<TeardownPart

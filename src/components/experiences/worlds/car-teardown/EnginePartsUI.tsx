@@ -125,10 +125,34 @@ export function EnginePartLabels({
 		if (!visible) return
 		const timer = setInterval(() => {
 			const r = host.current?.getBoundingClientRect()
-			if (r) setLayout({ width: r.width, height: r.height, anchors: { ...anchorsRef.current } })
+			if (!r) return
+			// Snapshot only this view. The renderer reuses mutable projection records;
+			// React keeps an immutable snapshot and can skip stationary SVG updates.
+			const anchors: PartAnchors = {}
+			for (const part of parts) {
+				const anchor = anchorsRef.current[part.id]
+				if (anchor) anchors[part.id] = { ...anchor }
+			}
+			setLayout((previous) => {
+				const unchanged =
+					previous.width === r.width &&
+					previous.height === r.height &&
+					Object.keys(previous.anchors).length === Object.keys(anchors).length &&
+					Object.entries(anchors).every(([id, a]) => {
+						const b = previous.anchors[id]
+						return (
+							a &&
+							b &&
+							a.visible === b.visible &&
+							Math.abs(a.x - b.x) < 0.2 &&
+							Math.abs(a.y - b.y) < 0.2
+						)
+					})
+				return unchanged ? previous : { width: r.width, height: r.height, anchors }
+			})
 		}, 60)
 		return () => clearInterval(timer)
-	}, [visible, anchorsRef])
+	}, [visible, anchorsRef, parts])
 	const mobile = layout.width < 700
 	return (
 		<svg

@@ -1,5 +1,6 @@
+import { radialGeometry } from './repeated-geometry'
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import * as T from 'three'
 import { createCastAluminumMaterial, createXrayMaterial } from './engine-geometry'
 import {
@@ -82,6 +83,14 @@ function Gear({ node, stateRef }: Clock & { node: GearNode }) {
 				: undefined
 	const dogSign = sleeve ? Math.sign(G.sleeves[sleeve].x - node.x) : 0
 	const dogX = (dogSign * (G.gearWidth + G.dogWidth)) / 2
+	const dogTeeth = useOwnedGeometry(() =>
+		radialGeometry(
+			new T.BoxGeometry(G.dogWidth, G.sleeveGroove * 0.6, G.sleeveGroove * 0.7),
+			G.dogTeeth,
+			G.dogRadius,
+			'x',
+		),
+	)
 	useFrame(() => {
 		if (ref.current) ref.current.rotation.x = gearboxGearAngle(node, stateRef.current)
 	})
@@ -91,19 +100,7 @@ function Gear({ node, stateRef }: Clock & { node: GearNode }) {
 			{sleeve && (
 				<group position-x={dogX}>
 					<mesh geometry={dogGeometry} material={material} />
-					{Array.from({ length: G.dogTeeth }, (_, i) => {
-						const a = (i * Math.PI * 2) / G.dogTeeth
-						return (
-							<mesh
-								key={i}
-								position={[0, Math.cos(a) * G.dogRadius, Math.sin(a) * G.dogRadius]}
-								rotation-x={a}
-								material={material}
-							>
-								<boxGeometry args={[G.dogWidth, G.sleeveGroove * 0.6, G.sleeveGroove * 0.7]} />
-							</mesh>
-						)
-					})}
+					<mesh geometry={dogTeeth} material={material} />
 				</group>
 			)}
 		</group>
@@ -358,6 +355,14 @@ function Clutch({ stateRef }: Clock) {
 	const plateGeometry = useOwnedGeometry(() =>
 		createAnnulus(G.pressurePlateRadius, G.clutchRadius * 0.6, G.pressurePlateThickness),
 	)
+	const fingers = useOwnedGeometry(() =>
+		radialGeometry(
+			new T.BoxGeometry(G.caseRib, G.clutchRadius * 0.46, G.caseWall * 1.3),
+			G.dogTeeth,
+			G.clutchRadius * 0.43,
+			'x',
+		),
+	)
 	useFrame(() => {
 		const state = stateRef.current
 		if (release.current)
@@ -422,23 +427,7 @@ function Clutch({ stateRef }: Clock) {
 					userData={{ partId: 'clutch-pressure-plate' }}
 				>
 					<mesh geometry={plateGeometry} material={material} />
-					{Array.from({ length: G.dogTeeth }, (_, i) => {
-						const a = (i * Math.PI * 2) / G.dogTeeth
-						return (
-							<mesh
-								key={i}
-								rotation-x={a}
-								position={[
-									0,
-									Math.cos(a) * G.clutchRadius * 0.43,
-									Math.sin(a) * G.clutchRadius * 0.43,
-								]}
-								material={material}
-							>
-								<boxGeometry args={[G.caseRib, G.clutchRadius * 0.46, G.caseWall * 1.3]} />
-							</mesh>
-						)
-					})}
+					<mesh geometry={fingers} material={material} />
 				</group>
 			</TeardownPart>
 		</>

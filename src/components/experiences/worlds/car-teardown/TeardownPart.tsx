@@ -8,7 +8,9 @@ import {
 	type ReactNode,
 	type RefObject,
 } from 'react'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useThree } from '@react-three/fiber'
+import { AnimationScope, useFrame } from './animation'
+import { guardHiddenGroup } from './visibility'
 import * as T from 'three'
 import { AUXILIARY_TEARDOWN_GEOMETRY as A } from './vehicle-spec'
 import type { Assembly } from './subassemblies'
@@ -69,12 +71,16 @@ export function TeardownPart({
 	rotationStage?: number
 	representative?: boolean
 }) {
+	const systemActive = useContext(AnimationScope)
 	const context = useTeardown(),
 		definition = context.parts.find((part) => part.id === id)
 	const root = useRef<T.Group>(null),
 		coordinates = useRef<T.Group>(null)
 	const { camera, size } = useThree()
 	const point = useRef(new T.Vector3())
+	const localCenter = useRef(new T.Vector3())
+	const centerReady = useRef(false)
+	const nextProjection = useRef(0)
 	const amount = definition ? context.amount : 0
 	const [flatShift, setFlatShift] = useState<[number, number, number]>([0, 0, 0])
 	const compact = context.assembly
@@ -123,7 +129,13 @@ export function TeardownPart({
 	const turn = smooth(amount / rotationStage)
 	const origin = pivot ?? [0, 0, 0]
 	useEffect(() => {
-		if (!definition || !root.current || (context.hovered !== id && context.selected !== id)) return
+		if (
+			!definition ||
+			!systemActive ||
+			!root.current ||
+			(context.hovered !== id && context.selected !== id)
+		)
+			return
 		const restores: (() => void)[] = []
 		root.current.traverse((object) => {
 			if (!(object instanceof T.Mesh)) return
@@ -149,7 +161,7 @@ export function TeardownPart({
 			})
 		})
 		return () => restores.forEach((restore) => restore())
-	}, [definition, context.hovered, context.selected, id])
+	}, [definition, context.hovered, context.selected, id, systemActive])
 	useEffect(() => {
 		if (compact?.id !== 'knolling' || id !== 'electrical-harness' || !root.current) return
 		const restore: (() => void)[] = []
@@ -169,26 +181,37 @@ export function TeardownPart({
 		})
 		return () => restore.forEach((f) => f())
 	}, [compact?.id, id])
-	useFrame(() => {
+	useLayoutEffect(() => {
+		centerReady.current = false
+	}, [compact?.id, id, Boolean(definition), representative, systemActive])
+	useFrame(({ clock }) => {
 		if (!definition || !coordinates.current || !context.anchorsRef || !representative) return
+		if (clock.elapsedTime < nextProjection.current) return
+		nextProjection.current = clock.elapsedTime + 1 / 30
 		coordinates.current.updateWorldMatrix(true, false)
 		if (compact) {
-			new T.Box3().setFromObject(coordinates.current).getCenter(point.current)
-			point.current.project(camera)
-		} else {
-			point.current.set(...(anchor ?? definition.anchor))
-			coordinates.current.localToWorld(point.current).project(camera)
-		}
-		context.anchorsRef.current[id] = {
-			x: ((point.current.x + 1) / 2) * size.width,
-			y: ((1 - point.current.y) / 2) * size.height,
-			visible: point.current.z < 1 && point.current.z > -1,
-		}
-	})
-	if (compact && !definition && id !== 'electrical-harness') return null
+			// Mechanisms position their children in frame callbacks. Cache only after
+			// those callbacks, so spring/strut labels use their assembled positions.
+			if (!centerReady.current) {
+				coordinates.current.updateWorldMatrix(true, true)
+				new T.Box3().setFromObject(coordinates.current).getCenter(localCenter.current)
+				coordinates.current.worldToLocal(localCenter.current)
+				centerReady.current = true
+			}
+			point.current.copy(localCenter.current)
+		} else point.current.set(...(anchor ?? definition.anchor))
+		coordinates.current.localToWorld(point.current).project(camera)
+		const projected = (context.anchorsRef.current[id] ??= { x: 0, y: 0, visible: false })
+		projected.x = ((point.current.x + 1) / 2) * size.width
+		projected.y = ((1 - point.current.y) / 2) * size.height
+		projected.visible = point.current.z < 1 && point.current.z > -1
+	}, 0.4)
+	const hidden = Boolean(compact && !definition && id !== 'electrical-harness')
 	return (
 		<group
 			ref={root}
+			visible={!hidden}
+			onUpdate={guardHiddenGroup}
 			position={[shift[0] * translation, shift[1] * translation, shift[2] * translation]}
 			userData={{
 				teardownId: definition ? id : undefined,
@@ -196,24 +219,36 @@ export function TeardownPart({
 				extractionAmount: amount,
 				excludeFromFit: id === 'electrical-harness',
 			}}
-			onPointerOver={(event) => {
-				if (definition) {
-					event.stopPropagation()
-					context.onHover?.(id)
-				}
-			}}
-			onPointerOut={(event) => {
-				if (definition) {
-					event.stopPropagation()
-					context.onHover?.(null)
-				}
-			}}
-			onClick={(event) => {
-				if (definition && event.delta < 5) {
-					event.stopPropagation()
-					context.onSelect?.(id)
-				}
-			}}
+			onPointerOver={
+				definition && systemActive
+					? (event) => {
+							if (definition) {
+								event.stopPropagation()
+								context.onHover?.(id)
+							}
+						}
+					: undefined
+			}
+			onPointerOut={
+				definition && systemActive
+					? (event) => {
+							if (definition) {
+								event.stopPropagation()
+								context.onHover?.(null)
+							}
+						}
+					: undefined
+			}
+			onClick={
+				definition && systemActive
+					? (event) => {
+							if (definition && event.delta < 5) {
+								event.stopPropagation()
+								context.onSelect?.(id)
+							}
+						}
+					: undefined
+			}
 		>
 			<group
 				position={origin as TeardownPoint}
@@ -222,7 +257,9 @@ export function TeardownPart({
 				}
 			>
 				<group ref={coordinates} position={[-origin[0], -origin[1], -origin[2]]}>
-					{children}
+					<AnimationScope.Provider value={systemActive && !hidden}>
+						{children}
+					</AnimationScope.Provider>
 				</group>
 			</group>
 		</group>

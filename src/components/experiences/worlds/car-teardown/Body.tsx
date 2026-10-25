@@ -1,4 +1,7 @@
-import { useEffect, useMemo } from 'react'
+import { RigidBatch } from './RigidBatch'
+import { guardHiddenGroup } from './visibility'
+import { AnimationScope } from './animation'
+import { useEffect, useMemo, useContext } from 'react'
 import { RoundedBox } from '@react-three/drei'
 import * as THREE from 'three'
 import { BODY_GEOMETRY as B, VEHICLE_SPEC as V } from './vehicle-spec'
@@ -812,5 +815,21 @@ function AssembledBody() {
 
 export function Body() {
 	const { system } = useTeardown()
-	return system === 'body' ? <BodyTeardown /> : <AssembledBody />
+	const active = useContext(AnimationScope)
+	return (
+		<>
+			<group onUpdate={guardHiddenGroup} visible={system !== 'body'}>
+				<AnimationScope.Provider value={active && system !== 'body'}>
+					<RigidBatch>
+						<AssembledBody />
+					</RigidBatch>
+				</AnimationScope.Provider>
+			</group>
+			<group onUpdate={guardHiddenGroup} visible={system === 'body'}>
+				<AnimationScope.Provider value={active && system === 'body'}>
+					<BodyTeardown />
+				</AnimationScope.Provider>
+			</group>
+		</>
+	)
 }

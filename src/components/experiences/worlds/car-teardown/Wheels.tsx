@@ -1,5 +1,6 @@
+import { radialGeometry, mergeOwned } from './repeated-geometry'
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import * as THREE from 'three'
 import { TeardownPart } from './TeardownPart'
 import { VEHICLE_SPEC as V, WHEEL_GEOMETRY as W } from './vehicle-spec'
@@ -120,13 +121,29 @@ export function Wheel({
 		}
 	})
 	const objects = useMemo(
-		() => ({ tyre: createTyre(), rubber: createRubber(), spoke: createSpoke() }),
+		() => ({
+			tyre: createTyre(),
+			rubber: createRubber(),
+			spoke: radialGeometry(createSpoke(), W.spokes, 0),
+			bolts: mergeOwned(
+				Array.from({ length: 5 }, (_, i) =>
+					new THREE.CylinderGeometry(W.boltRadius, W.boltRadius, W.hubDepth / 3, 6)
+						.rotateX(Math.PI / 2)
+						.translate(
+							Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+							Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
+							W.faceOffset + W.hubDepth / 10,
+						),
+				),
+			),
+		}),
 		[],
 	)
 	useEffect(
 		() => () => {
 			objects.tyre.dispose()
 			objects.spoke.dispose()
+			objects.bolts.dispose()
 			objects.rubber.dispose()
 		},
 		[objects],
@@ -184,17 +201,13 @@ export function Wheel({
 								<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
 							</mesh>
 						))}
-						{Array.from({ length: W.spokes }, (_, i) => (
-							<mesh
-								key={i}
-								geometry={objects.spoke}
-								position={[0, 0, W.faceOffset - W.spokeDepth]}
-								rotation={[0, 0, (i / W.spokes) * Math.PI * 2]}
-								castShadow
-							>
-								<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
-							</mesh>
-						))}
+						<mesh
+							geometry={objects.spoke}
+							position={[0, 0, W.faceOffset - W.spokeDepth]}
+							castShadow
+						>
+							<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
+						</mesh>
 						<mesh
 							position={[0, 0, W.faceOffset - W.hubDepth / 2]}
 							rotation={[Math.PI / 2, 0, 0]}
@@ -203,20 +216,9 @@ export function Wheel({
 							<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
 							<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
 						</mesh>
-						{Array.from({ length: 5 }, (_, i) => (
-							<mesh
-								key={i}
-								position={[
-									Math.sin((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-									Math.cos((i / 5) * Math.PI * 2) * W.boltCircleRadius,
-									W.faceOffset + W.hubDepth / 10,
-								]}
-								rotation={[Math.PI / 2, 0, 0]}
-							>
-								<cylinderGeometry args={[W.boltRadius, W.boltRadius, W.hubDepth / 3, 6]} />
-								<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
-							</mesh>
-						))}
+						<mesh geometry={objects.bolts}>
+							<meshStandardMaterial color="#31373d" metalness={1} roughness={0.3} />
+						</mesh>
 					</group>
 				</TeardownPart>
 			</group>

@@ -202,3 +202,15 @@ Parts views isolate one front/rear brake corner, the hydraulic actuation hardwar
 The body-in-white uses tapered rounded box sections with narrow weld flanges, an embossed floor/tunnel, roof crossmembers, a ribbed bulkhead and formed strut towers. These are representative stamped/welded shapes, not manufacturing tooling or finite-element crash models. The floating caliper uses a 68-degree arcuate casting outside the disc rim, a single inner piston boss, two outer fingers, guide ears/boots, inlet/bleeder details and separate friction/backing layers. Internal clearances remain exaggerated 20 times for visibility; no seal deformation or fluid-flow simulation is implied. No additional third-party assets or dependencies were added.
 
 白车身的变截面盒形梁、翻边和压筋为代表性冲压焊接结构，不是可制造图纸；不模拟焊点、压溃或碰撞。浮动卡钳为跨过盘缘约 68° 的铸件，含单侧活塞缸、外侧双钳爪、导向耳、防尘套和双层制动片；沿用 20 倍间隙示意，不模拟橡胶密封圈变形或液体流场。未新增依赖或第三方素材。
+
+## Rendering performance
+
+- Rigid rotor grooves, cooling vanes, rim spokes, crank journals/webs, flywheel bolts, alternator slots/fan, radiator fins and gear dogs are merged without changing their vertex topology or mechanical dimensions.
+- Hidden systems retain resources but suspend local animation callbacks. Their shared mechanism clock continues; visible mechanisms retain their original timing.
+- The soft floor reflection is cached at up to 30 Hz on desktop / 12 Hz on narrow screens. Contact shadows update on assembly motion at up to 10 Hz (5 Hz on narrow screens), and stay cached during camera-only movement. The main image, metal/paint environment reflections and mechanism animation retain the display frame rate. Shadow-map resolution and all material parameters are unchanged.
+- `StudioReflection.tsx` and `StudioShadows.tsx` adapt the already installed drei reflector/contact-shadow implementations. Source: `@react-three/drei/core/MeshReflectorMaterial` and `ContactShadows`; MIT license reproduced in `DREI-LICENSE.txt`. No new dependency or external visual asset.
+- Pointer hit testing uses a 4 mm line tolerance and retains only the nearest hit for each object. Camera drag/wheel gestures bypass 3D selection; hover and part selection remain available. This changes interaction cost, not visible geometry.
+
+- Rigid opaque subassemblies batch only exactly matching materials, preserving part boundaries, shadow flags, layers and all vertices. Transparent glass and custom clipped paint remain separate; articulated groups are not batched.
+
+- Retina rendering caps the WebGL pixel ratio at 1.5 (previously 1.6); narrow screens retain 1.15. Multisampling, AO quality, geometry and material settings remain unchanged. Four bounded brake-geometry templates avoid repeated casting/edge construction; each mounted corner owns disposable copies.
