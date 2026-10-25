@@ -94,7 +94,30 @@ export function explodedAssemblyBounds(root: T.Object3D) {
 	return bounds
 }
 
-/** Final transformed vertices avoid fitting empty corners or oversized spinning-disc boxes. */
+const sampledGeometry = new WeakMap<
+	T.BufferGeometry,
+	{ attribute: T.BufferAttribute; version: number; points: T.Vector3[] }
+>()
+/** Keep the silhouette instead of the empty corners of a spinning disc. A bounded
+ * sample avoids allocating hundreds of thousands of vectors during a camera cut. */
+export function framingSamples(geometry: T.BufferGeometry) {
+	const position = geometry.getAttribute('position') as T.BufferAttribute
+	const cached = sampledGeometry.get(geometry)
+	if (cached?.attribute === position && cached.version === position.version) return cached.points
+	const count = Math.min(position.count, 512),
+		points: T.Vector3[] = []
+	for (let i = 0; i < count; i++)
+		points.push(
+			new T.Vector3().fromBufferAttribute(
+				position,
+				Math.floor((i * (position.count - 1)) / Math.max(1, count - 1)),
+			),
+		)
+	sampledGeometry.set(geometry, { attribute: position, version: position.version, points })
+	return points
+}
+
+/** Final transformed silhouette samples, including repeated instances. */
 export function explodedAssemblyPoints(root: T.Object3D) {
 	root.updateWorldMatrix(true, true)
 	const points: T.Vector3[] = []
@@ -108,14 +131,16 @@ export function explodedAssemblyPoints(root: T.Object3D) {
 				delta.applyMatrix3(new T.Matrix3().setFromMatrix4(object.parent.matrixWorld))
 		}
 		if (object instanceof T.Mesh) {
-			const position = object.geometry.getAttribute('position')
-			for (let i = 0; i < position.count; i++)
-				points.push(
-					new T.Vector3()
-						.fromBufferAttribute(position, i)
-						.applyMatrix4(object.matrixWorld)
-						.add(delta),
-				)
+			const samples = framingSamples(object.geometry)
+			if (object instanceof T.InstancedMesh) {
+				const matrix = new T.Matrix4()
+				for (let instance = 0; instance < object.count; instance++) {
+					object.getMatrixAt(instance, matrix)
+					matrix.premultiply(object.matrixWorld)
+					for (const p of samples) points.push(p.clone().applyMatrix4(matrix).add(delta))
+				}
+			} else
+				for (const p of samples) points.push(p.clone().applyMatrix4(object.matrixWorld).add(delta))
 		}
 		object.children.forEach((child) => walk(child, delta))
 	}

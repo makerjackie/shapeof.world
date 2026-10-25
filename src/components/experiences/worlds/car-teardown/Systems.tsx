@@ -1,6 +1,7 @@
 import { BrakeCorner } from './BrakeMechanism'
 import { createBrakeState } from './brake-model'
-import { useMemo, useRef } from 'react'
+import { mergeOwned } from './repeated-geometry'
+import { useEffect, useMemo, useRef } from 'react'
 import * as T from 'three'
 import { CHASSIS_GEOMETRY as G, VEHICLE_SPEC as S } from './vehicle-spec'
 import type { Point3 } from './parts'
@@ -418,25 +419,28 @@ export function Electrical() {
 }
 export function PowertrainAccessories() {
 	const rp = S.engine.radiatorPosition
+	const fins = useMemo(
+		() =>
+			mergeOwned(
+				Array.from({ length: G.radiatorFins }, (_, i) =>
+					new T.CylinderGeometry(G.radiatorFinRadius, G.radiatorFinRadius, G.radiatorSize[2], 16)
+						.rotateX(Math.PI / 2)
+						.translate(
+							rp[0] + G.radiatorSize[0] * 0.55,
+							rp[1] - G.radiatorSize[1] / 2 + (i / (G.radiatorFins - 1)) * G.radiatorSize[1],
+							0,
+						),
+				),
+			),
+		[rp],
+	)
+	useEffect(() => () => fins.dispose(), [fins])
 	return (
 		<>
 			<Box id="radiator" position={rp} size={G.radiatorSize} material="plastic" />
-			{Array.from({ length: G.radiatorFins }, (_, i) => (
-				<Bar
-					key={i}
-					from={[
-						rp[0] + G.radiatorSize[0] * 0.55,
-						rp[1] - G.radiatorSize[1] / 2 + (i / (G.radiatorFins - 1)) * G.radiatorSize[1],
-						-G.radiatorSize[2] / 2,
-					]}
-					to={[
-						rp[0] + G.radiatorSize[0] * 0.55,
-						rp[1] - G.radiatorSize[1] / 2 + (i / (G.radiatorFins - 1)) * G.radiatorSize[1],
-						G.radiatorSize[2] / 2,
-					]}
-					radius={G.radiatorFinRadius}
-				/>
-			))}
+			<mesh geometry={fins} castShadow>
+				<meshStandardMaterial {...S.materials.steel} />
+			</mesh>
 			<mesh position={[rp[0] - G.radiatorSize[0], rp[1], 0]} rotation={[0, Math.PI / 2, 0]}>
 				<torusGeometry args={[G.fanRadius, G.radiatorFinRadius * 3, 8, 48]} />
 				<meshStandardMaterial {...S.materials.plastic} />

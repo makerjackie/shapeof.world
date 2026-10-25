@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import * as T from 'three'
 import {
 	BODY_GEOMETRY as B,

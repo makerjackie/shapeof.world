@@ -1,6 +1,8 @@
-import { useMemo, useEffect, useRef } from 'react'
+import { useMemo, useEffect, useRef, type RefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Lightformer, MeshReflectorMaterial } from '@react-three/drei'
+import { Environment, Lightformer } from '@react-three/drei'
+import { StudioReflection } from './StudioReflection'
+import { StudioShadows } from './StudioShadows'
 import * as T from 'three'
 import { STUDIO_SPEC as G, VEHICLE_SPEC as S } from './vehicle-spec'
 
@@ -49,7 +51,21 @@ export function createStudioGeometry() {
 	geometry.setAttribute('color', new T.BufferAttribute(colors, 3))
 	return geometry
 }
-export function Studio({ mobile }: { mobile: boolean }) {
+export function Studio({
+	mobile,
+	moving,
+	shadowMoving,
+	shadowPose,
+	revision,
+	pose,
+}: {
+	mobile: boolean
+	moving: () => boolean
+	shadowMoving: () => boolean
+	shadowPose: RefObject<number>
+	revision: string
+	pose: RefObject<number>
+}) {
 	const autoClear = useRef(false)
 	// Composer owns the main render at priority 1 and disables automatic clears.
 	// Drei's priority-0 contact-shadow/blur passes rely on fresh transparent targets.
@@ -153,7 +169,11 @@ export function Studio({ mobile }: { mobile: boolean }) {
 				onUpdate={(mesh) => mesh.layers.set(2)}
 			>
 				<planeGeometry args={[G.floorRadius * 2, G.floorRadius * 2]} />
-				<MeshReflectorMaterial
+				<StudioReflection
+					moving={moving}
+					pose={pose}
+					revision={revision}
+					mobile={mobile}
 					onUpdate={(material) => {
 						if (material.userData.charcoalReflection) return
 						material.userData.charcoalReflection = true
@@ -190,16 +210,7 @@ export function Studio({ mobile }: { mobile: boolean }) {
 					mirror={0.35}
 				/>
 			</mesh>
-			<ContactShadows
-				position={[0, G.floorY + 0.004, 0]}
-				opacity={0.72}
-				scale={12}
-				blur={2.8}
-				far={4.5}
-				resolution={mobile ? 256 : 512}
-				color="#000000"
-				frames={Infinity}
-			/>
+			<StudioShadows mobile={mobile} moving={shadowMoving} revision={revision} pose={shadowPose} />
 		</>
 	)
 }

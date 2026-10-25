@@ -1,6 +1,18 @@
+import { RigidBatch } from './RigidBatch'
+import { guardHiddenGroup } from './visibility'
+import { AnimationScope } from './animation'
+import { inspectionEvents } from './pointer-events'
 import { assemblyParts, type Assembly } from './subassemblies'
 import { assemblyFrame, explodedAssemblyPoints } from './assembly-framing'
-import { memo, Suspense, useEffect, useRef, type ReactNode, type RefObject } from 'react'
+import {
+	memo,
+	Suspense,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	type ReactNode,
+	type RefObject,
+} from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { CameraControls, CameraControlsImpl } from '@react-three/drei'
 import { Bloom, EffectComposer, N8AO, ToneMapping, Vignette } from '@react-three/postprocessing'
@@ -98,24 +110,32 @@ function System({
 }) {
 	const group = useRef<T.Group>(null)
 	const hidden = selected !== null && selected !== id
+	const pickable = amount >= 0.1 && selected === null
+
 	useEffect(() => {
-		group.current?.traverse((object) => {
+		if (selected || hovered !== id || !group.current) return
+		const seen = new Set<T.Material>()
+		const restores: (() => void)[] = []
+		const tint = new T.Color('#718591').multiplyScalar(0.14)
+		group.current.traverse((object) => {
 			if (!(object instanceof T.Mesh)) return
 			const materials = Array.isArray(object.material) ? object.material : [object.material]
 			for (const material of materials) {
-				if (!(material instanceof T.MeshStandardMaterial)) continue
-				material.userData.systemEmissive ??= material.emissive.clone()
-				material.userData.systemIntensity ??= material.emissiveIntensity
-				material.emissive.copy(material.userData.systemEmissive)
-				if (!selected && hovered === id)
-					material.emissive.add(new T.Color('#718591').multiplyScalar(0.14))
-				material.emissiveIntensity =
-					!selected && hovered === id
-						? Math.max(0.14, material.userData.systemIntensity)
-						: material.userData.systemIntensity
+				if (!(material instanceof T.MeshStandardMaterial) || seen.has(material)) continue
+				seen.add(material)
+				const emissive = material.emissive.clone(),
+					intensity = material.emissiveIntensity
+				material.emissive.add(tint)
+				material.emissiveIntensity = Math.max(0.14, intensity)
+				restores.push(() => {
+					material.emissive.copy(emissive)
+					material.emissiveIntensity = intensity
+				})
 			}
 		})
+		return () => restores.forEach((restore) => restore())
 	}, [hovered, id, selected])
+
 	const offset =
 		selected === id && (isRoadMechanism(id) || id === 'body' || id === 'electrical')
 			? ([0, 0, 0] as Point3)
@@ -123,23 +143,34 @@ function System({
 	return (
 		<group
 			ref={group}
+			onUpdate={guardHiddenGroup}
 			visible={!hidden}
 			name={`system-${id}`}
 			position={offset}
-			onPointerOver={(event) => {
-				if (amount < 0.1 || selected) return
-				event.stopPropagation()
-				onHover(id)
-			}}
-			onPointerOut={() => onHover(null)}
-			onClick={(event) => {
-				if (amount < 0.1 || selected) return
-				if (event.delta > 5) return
-				event.stopPropagation()
-				onSelect(id)
-			}}
+			onPointerOver={
+				pickable
+					? (event) => {
+							event.stopPropagation()
+							onHover(id)
+						}
+					: undefined
+			}
+			onPointerOut={pickable ? () => onHover(null) : undefined}
+			onClick={
+				pickable
+					? (event) => {
+							if (event.delta > 5) return
+							event.stopPropagation()
+							onSelect(id)
+						}
+					: undefined
+			}
 		>
-			{children}
+			<AnimationScope.Provider
+				value={!hidden && (amount > 0.01 || id === 'chassis' || id === 'brakes')}
+			>
+				{children}
+			</AnimationScope.Provider>
 		</group>
 	)
 }
@@ -475,12 +506,37 @@ function CameraRig({
 		/>
 	)
 }
+/** Preserve retina detail while bounding GPU fill cost; update on breakpoints too. */
+function RenderResolution() {
+	const width = useThree((state) => state.size.width)
+	const setDpr = useThree((state) => state.setDpr)
+	useLayoutEffect(() => {
+		setDpr(Math.max(1, Math.min(window.devicePixelRatio, width < 700 ? 1.15 : 1.5)))
+	}, [width, setDpr])
+	return null
+}
+/** The reflector, contact shadow and composer share one world-matrix update.
+ * Three otherwise walks the entire car once for each offscreen pass. */
+function SceneMatrices() {
+	const scene = useThree((state) => state.scene)
+	useLayoutEffect(() => {
+		const previous = scene.matrixWorldAutoUpdate
+		scene.matrixWorldAutoUpdate = false
+		return () => {
+			scene.matrixWorldAutoUpdate = previous
+		}
+	}, [scene])
+	useFrame(() => scene.updateMatrixWorld(), 0.55)
+	return null
+}
 function SceneContents(props: SceneProps) {
 	const { size, camera } = useThree()
 	const mobile = size.width < 700
 	const projection = useRef(new T.Vector3())
 	const turntable = useRef<T.Group>(null)
 	const rearSpinRef = useRef(0)
+	const studioPose = useRef(0)
+	const shadowPose = useRef(0)
 	useFrame((_, delta) => {
 		const m = props.mechanisms
 		const paused = props.pausedRef.current || isWorldPaused()
@@ -533,7 +589,7 @@ function SceneContents(props: SceneProps) {
 					(Math.min(delta, 0.075) * Math.PI * 2) / STUDIO_SPEC.turntablePeriod
 			if (props.explode > 0 || props.selected)
 				turntable.current.rotation.y = T.MathUtils.damp(turntable.current.rotation.y, 0, 8, delta)
-			turntable.current.updateMatrixWorld()
+			turntable.current.updateWorldMatrix(true, false)
 		}
 		if (!props.pausedRef.current && !isWorldPaused())
 			props.angleRef.current = advanceCrankAngle(
@@ -553,11 +609,22 @@ function SceneContents(props: SceneProps) {
 					visible: projection.current.z < 1,
 				}
 			}
+		studioPose.current =
+			props.selected === 'powertrain' || (props.selected === null && props.explode > 0)
+				? props.angleRef.current
+				: (turntable.current?.rotation.y ?? 0)
+		// In the seven-system overview the moving internals are enclosed in opaque
+		// casings. Their soft ground silhouette does not change with crank angle.
+		shadowPose.current =
+			props.selected === null ? (turntable.current?.rotation.y ?? 0) : studioPose.current
 		for (const system of SYSTEMS) {
 			const offset = systemOffset(system.id, props.explode)
 			projection.current
-				.set(...system.anchor)
-				.add(new T.Vector3(...offset))
+				.set(
+					system.anchor[0] + offset[0],
+					system.anchor[1] + offset[1],
+					system.anchor[2] + offset[2],
+				)
 				.applyMatrix4(turntable.current?.matrixWorld ?? new T.Matrix4())
 				.project(camera)
 			props.anchorsRef.current[system.id] = {
@@ -577,7 +644,30 @@ function SceneContents(props: SceneProps) {
 	return (
 		<>
 			<color attach="background" args={[S.materials.background]} />
-			<Studio mobile={mobile} />
+			<Studio
+				mobile={mobile}
+				pose={studioPose}
+				shadowPose={shadowPose}
+				shadowMoving={() =>
+					props.selected !== null &&
+					props.selected !== 'body' &&
+					props.selected !== 'electrical' &&
+					!props.pausedRef.current &&
+					!isWorldPaused()
+				}
+				revision={`${props.selected}/${props.assembly?.id}/${props.explode}/${props.partsExplode}/${props.xray}/${props.gear}/${props.mechanisms.wheelAngle}/${props.mechanisms.pedalForce}/${props.hovered}/${props.hoveredPart}/${props.selectedPart}`}
+				moving={() =>
+					!props.pausedRef.current &&
+					!isWorldPaused() &&
+					((props.explode > 0 && props.selected === null) ||
+						(props.selected !== null &&
+							props.selected !== 'body' &&
+							props.selected !== 'electrical') ||
+						((props.selected !== null || props.explode > 0) &&
+							Math.abs(turntable.current?.rotation.y ?? 0) > 0.0001) ||
+						(!props.interactionRef.current && !props.reducedMotion && props.explode === 0))
+				}
+			/>
 			<TeardownAssembly
 				system={props.selected}
 				amount={props.partsExplode}
@@ -605,7 +695,9 @@ function SceneContents(props: SceneProps) {
 							xray={props.xray && props.selected === 'powertrain'}
 						/>
 						<group name="engine-accessories" visible={props.selected !== 'powertrain'}>
-							<PowertrainAccessories />
+							<RigidBatch>
+								<PowertrainAccessories />
+							</RigidBatch>
 						</group>
 					</System>
 					<System id="drivetrain" {...common}>
@@ -627,7 +719,9 @@ function SceneContents(props: SceneProps) {
 							/>
 						) : (
 							<>
-								<Chassis />
+								<RigidBatch>
+									<Chassis />
+								</RigidBatch>
 								<Wheels
 									explode={systemProgress('chassis', props.explode)}
 									rearSpinRef={rearSpinRef}
@@ -679,6 +773,8 @@ function SceneContents(props: SceneProps) {
 				reducedMotion={props.reducedMotion}
 				onInteract={props.onInteract}
 			/>
+			<RenderResolution />
+			<SceneMatrices />
 			<StudioEffects mobile={mobile} />
 		</>
 	)
@@ -687,8 +783,9 @@ export function CarScene(props: SceneProps) {
 	return (
 		<Canvas
 			className="ct-canvas"
+			events={inspectionEvents}
 			shadows={{ type: T.PCFShadowMap }}
-			dpr={[1, typeof window !== 'undefined' && window.innerWidth < 700 ? 1.15 : 1.6]}
+			dpr={[1, typeof window !== 'undefined' && window.innerWidth < 700 ? 1.15 : 1.5]}
 			camera={{ position: [6.4, 2.8, 6.8], fov: 34, near: 0.015, far: 100 }}
 			gl={{
 				antialias: true,

@@ -1,5 +1,6 @@
+import { RigidBatch } from './RigidBatch'
 import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from '@react-three/fiber'
+import { useFrame } from './animation'
 import * as T from 'three'
 import {
 	AUXILIARY_TEARDOWN_GEOMETRY as A,
@@ -59,131 +60,139 @@ export function Electrical({
 	return (
 		<>
 			<TeardownPart id="electrical-battery">
-				<Box
-					id="battery"
-					position={S.electrical.batteryPosition}
-					size={G.batterySize}
-					material="plastic"
-				/>
-				{[-1, 1].map((side) => (
-					<mesh
-						key={side}
-						position={[
-							S.electrical.batteryPosition[0] + side * G.batterySize[0] * 0.3,
-							S.electrical.batteryPosition[1] + G.batterySize[1] / 2,
-							S.electrical.batteryPosition[2],
-						]}
-					>
-						<cylinderGeometry
-							args={[G.batteryTerminal, G.batteryTerminal, G.batteryTerminal, 12]}
-						/>
-						<meshStandardMaterial color={side > 0 ? '#874937' : '#767c82'} metalness={0.6} />
-					</mesh>
-				))}
+				<RigidBatch>
+					<Box
+						id="battery"
+						position={S.electrical.batteryPosition}
+						size={G.batterySize}
+						material="plastic"
+					/>
+					{[-1, 1].map((side) => (
+						<mesh
+							key={side}
+							position={[
+								S.electrical.batteryPosition[0] + side * G.batterySize[0] * 0.3,
+								S.electrical.batteryPosition[1] + G.batterySize[1] / 2,
+								S.electrical.batteryPosition[2],
+							]}
+						>
+							<cylinderGeometry
+								args={[G.batteryTerminal, G.batteryTerminal, G.batteryTerminal, 12]}
+							/>
+							<meshStandardMaterial color={side > 0 ? '#874937' : '#767c82'} metalness={0.6} />
+						</mesh>
+					))}
+				</RigidBatch>
 			</TeardownPart>
 			<TeardownPart id="electrical-ecu">
-				<Box id="ecu" position={G.ecuPosition} size={G.ecuSize} />
-				{Array.from({ length: E.ecuFinCount }, (_, i) => (
-					<Box
-						key={i}
-						position={[
-							G.ecuPosition[0] + (i / (E.ecuFinCount - 1) - 0.5) * G.ecuSize[0] * 0.85,
-							G.ecuPosition[1] + G.ecuSize[1] * 0.65,
-							G.ecuPosition[2],
-						]}
-						size={[G.ecuSize[0] / (E.ecuFinCount * 3), G.ecuSize[1] * 0.3, G.ecuSize[2] * 0.9]}
-					/>
-				))}
+				<RigidBatch>
+					<Box id="ecu" position={G.ecuPosition} size={G.ecuSize} />
+					{Array.from({ length: E.ecuFinCount }, (_, i) => (
+						<Box
+							key={i}
+							position={[
+								G.ecuPosition[0] + (i / (E.ecuFinCount - 1) - 0.5) * G.ecuSize[0] * 0.85,
+								G.ecuPosition[1] + G.ecuSize[1] * 0.65,
+								G.ecuPosition[2],
+							]}
+							size={[G.ecuSize[0] / (E.ecuFinCount * 3), G.ecuSize[1] * 0.3, G.ecuSize[2] * 0.9]}
+						/>
+					))}
+				</RigidBatch>
 			</TeardownPart>
 			<TeardownPart id="electrical-fuse">
-				<Box id="fuse-box" position={G.fusePosition} size={G.fuseSize} material="plastic" />
-				{[-1, 0, 1].map((row) => (
-					<Box
-						key={row}
-						position={[
-							G.fusePosition[0] + row * G.fuseSize[0] * 0.25,
-							G.fusePosition[1] + G.fuseSize[1] * 0.54,
-							G.fusePosition[2],
-						]}
-						size={[G.fuseSize[0] * 0.14, G.fuseSize[1] * 0.08, G.fuseSize[2] * 0.65]}
-					/>
-				))}
+				<RigidBatch>
+					<Box id="fuse-box" position={G.fusePosition} size={G.fuseSize} material="plastic" />
+					{[-1, 0, 1].map((row) => (
+						<Box
+							key={row}
+							position={[
+								G.fusePosition[0] + row * G.fuseSize[0] * 0.25,
+								G.fusePosition[1] + G.fuseSize[1] * 0.54,
+								G.fusePosition[2],
+							]}
+							size={[G.fuseSize[0] * 0.14, G.fuseSize[1] * 0.08, G.fuseSize[2] * 0.65]}
+						/>
+					))}
+				</RigidBatch>
 			</TeardownPart>
 			<TeardownPart id="electrical-harness">
-				<group userData={{ partId: 'wiring-harness' }}>
-					{[-1, 1].map((side) => (
-						<group key={side}>
-							<Pipe
-								points={[
-									[f, y, side * z],
-									[f * 0.6, y, side * z],
-									[0, y * 0.8, side * z],
-									[r * 0.65, y * 0.9, side * z],
-									[r, y, side * z],
-								]}
-								radius={G.wireRadius}
-								color="#32383c"
-							/>
-							{[-1, 0, 1].map((strand) => (
+				<RigidBatch>
+					<group userData={{ partId: 'wiring-harness' }}>
+						{[-1, 1].map((side) => (
+							<group key={side}>
 								<Pipe
-									key={strand}
 									points={[
-										[f, y + strand * G.branchRadius, side * z + G.wireRadius],
-										[f * 0.6, y + strand * G.branchRadius, side * z + G.wireRadius],
-										[0, y * 0.8 + strand * G.branchRadius, side * z + G.wireRadius],
-										[r * 0.65, y * 0.9 + strand * G.branchRadius, side * z + G.wireRadius],
-										[r, y + strand * G.branchRadius, side * z + G.wireRadius],
+										[f, y, side * z],
+										[f * 0.6, y, side * z],
+										[0, y * 0.8, side * z],
+										[r * 0.65, y * 0.9, side * z],
+										[r, y, side * z],
 									]}
-									radius={G.branchRadius * 0.42}
-									color={strand === 0 ? '#8a7452' : '#4b5964'}
+									radius={G.wireRadius}
+									color="#32383c"
 								/>
-							))}
-							{[
-								f,
-								S.engine.cylinder1X,
-								S.transmission.clutchX,
-								0,
-								S.engine.fuelTankPosition[0],
-								r,
-							].map((x, i) => (
-								<group key={x}>
+								{[-1, 0, 1].map((strand) => (
 									<Pipe
+										key={strand}
 										points={[
-											[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z],
-											[x - G.ecuSize[0], y * 0.88, side * z * 0.62],
-											[x - G.ecuSize[0], y * 0.9, side * z * 0.3],
+											[f, y + strand * G.branchRadius, side * z + G.wireRadius],
+											[f * 0.6, y + strand * G.branchRadius, side * z + G.wireRadius],
+											[0, y * 0.8 + strand * G.branchRadius, side * z + G.wireRadius],
+											[r * 0.65, y * 0.9 + strand * G.branchRadius, side * z + G.wireRadius],
+											[r, y + strand * G.branchRadius, side * z + G.wireRadius],
 										]}
-										radius={G.branchRadius * (i % 2 ? 1.3 : 1.9)}
-										color="#41494f"
+										radius={G.branchRadius * 0.42}
+										color={strand === 0 ? '#8a7452' : '#4b5964'}
 									/>
-									<Box
-										position={[x - G.ecuSize[0], y * 0.9, side * z * 0.3]}
-										size={G.connectorSize}
-										material="plastic"
-									/>
-									<mesh
-										position={[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z]}
-										rotation={[0, 0, Math.PI / 2]}
-									>
-										<cylinderGeometry
-											args={[G.wireRadius * 1.2, G.wireRadius * 1.2, G.harnessClipWidth, 12]}
+								))}
+								{[
+									f,
+									S.engine.cylinder1X,
+									S.transmission.clutchX,
+									0,
+									S.engine.fuelTankPosition[0],
+									r,
+								].map((x, i) => (
+									<group key={x}>
+										<Pipe
+											points={[
+												[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z],
+												[x - G.ecuSize[0], y * 0.88, side * z * 0.62],
+												[x - G.ecuSize[0], y * 0.9, side * z * 0.3],
+											]}
+											radius={G.branchRadius * (i % 2 ? 1.3 : 1.9)}
+											color="#41494f"
 										/>
-										<meshStandardMaterial color="#74716b" roughness={0.65} />
-									</mesh>
-								</group>
-							))}
-						</group>
-					))}
-					<Pipe
-						points={[
-							[f * 0.6, y, -z],
-							[f * 0.58, y, 0.0],
-							[f * 0.6, y, z],
-						]}
-						radius={G.wireRadius}
-						color="#32383c"
-					/>
-				</group>
+										<Box
+											position={[x - G.ecuSize[0], y * 0.9, side * z * 0.3]}
+											size={G.connectorSize}
+											material="plastic"
+										/>
+										<mesh
+											position={[x, y * (0.8 + 0.2 * Math.abs(x / f)), side * z]}
+											rotation={[0, 0, Math.PI / 2]}
+										>
+											<cylinderGeometry
+												args={[G.wireRadius * 1.2, G.wireRadius * 1.2, G.harnessClipWidth, 12]}
+											/>
+											<meshStandardMaterial color="#74716b" roughness={0.65} />
+										</mesh>
+									</group>
+								))}
+							</group>
+						))}
+						<Pipe
+							points={[
+								[f * 0.6, y, -z],
+								[f * 0.58, y, 0.0],
+								[f * 0.6, y, z],
+							]}
+							radius={G.wireRadius}
+							color="#32383c"
+						/>
+					</group>
+				</RigidBatch>
 			</TeardownPart>
 			{detailed && (
 				<>
