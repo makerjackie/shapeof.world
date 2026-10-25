@@ -23,7 +23,7 @@ export function ExperienceFallback({
   reason,
 }: {
   world: WorldExperience
-  reason: 'webgl' | 'slow'
+  reason: 'webgl' | 'stalled' | 'error'
 }) {
   const { t, worldText } = useI18n()
   const alternatives = worldArtifactManifest.fallbackWorlds
@@ -41,9 +41,9 @@ export function ExperienceFallback({
       />
       <div className="experience-fallback-body">
         <h2>{worldText(world, 'title')}</h2>
-        <p>{reason === 'webgl' ? t('experience.fallback.webgl') : t('experience.fallback.slow')}</p>
+        <p>{reason === 'webgl' ? t('experience.fallback.webgl') : reason === 'stalled' ? t('experience.fallback.stalled') : t('experience.error.body')}</p>
 
-        {reason === 'slow' && (
+        {reason !== 'webgl' && (
           <button className="experience-fallback-retry" type="button" onClick={() => window.location.reload()}>
             {t('system.retry')}
           </button>

@@ -1,7 +1,6 @@
-import { Link } from '@tanstack/react-router'
 import '@tanstack/react-start/client-only'
 
-import { Component, Suspense, useEffect, useRef, type ReactNode } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 
 import { ExperienceLoading } from '~/components/experiences/ExperienceLoading'
 import type { ExperienceControls } from '~/components/ExperienceShell'
@@ -10,51 +9,11 @@ import type { DailyIssue } from '~/data/issues'
 import type { WorldExperience } from '~/data/worlds/types'
 import { useI18n } from '~/i18n/index'
 import {trackEvent} from '~/lib/analytics'
-import { recoverFromChunkError } from '~/lib/chunk-load-recovery'
+import { RendererErrorBoundary } from './RendererErrorBoundary'
+import { WorldLoadProgressProvider } from './WorldLoadProgress'
 import { releaseWorldWarmups } from '~/lib/world-prefetch'
 import { getExperienceRenderer } from '~/worlds/experience-registry'
 import './styles/OpenSourceAdapters.css'
-
-class RendererErrorBoundary extends Component<{
-  children: ReactNode
-  title: string
-  body: string
-  report: string
-  retry: string
-  poster?: string
-  fallback: WorldExperience['fallback']
-  conclusion: string
-  worldId: string
-}, { failed: boolean }> {
-  state = { failed: false }
-
-  static getDerivedStateFromError() {
-    return { failed: true }
-  }
-
-  componentDidCatch(error: Error) {
-    recoverFromChunkError(error)
-    releaseWorldWarmups(this.props.worldId)
-    trackEvent({event: 'experience_error', worldId: this.props.worldId, value: /chunk|dynamic.*import|module.*fetch/i.test(error.message) ? 'chunk_load' : /webgl|context.*lost/i.test(error.message) ? 'webgl' : 'render'})
-    console.error(JSON.stringify({ type: 'oneworld_renderer_error', message: error.message.slice(0, 240) }))
-  }
-
-  render() {
-    if (!this.state.failed) return this.props.children
-    return (
-      <div className={`renderer-error is-${this.props.fallback}`} role="alert">
-        {this.props.fallback === 'poster' && this.props.poster && <img src={this.props.poster} alt="" />}
-        <div>
-          <h2>{this.props.title}</h2>
-          <p>{this.props.body}</p>
-          {this.props.fallback === 'text' && <blockquote>{this.props.conclusion}</blockquote>}
-          <button type="button" onClick={() => window.location.reload()}>{this.props.retry}</button>
-          <Link to="/feedback" search={{ world: this.props.worldId, kind: 'problem' }}>{this.props.report}</Link>
-        </div>
-      </div>
-    )
-  }
-}
 
 export function ClientExperienceRenderer({
   world,
@@ -85,21 +44,13 @@ export function ClientExperienceRenderer({
   }
 
   return (
-    <RendererErrorBoundary
-      key={world.id}
-      title={t('experience.error.title')}
-      body={t('experience.error.body')}
-      retry={t('system.retry')}
-      report={t('feedback.report')}
-      poster={world.poster}
-      fallback={world.fallback}
-      conclusion={conclusion}
-      worldId={world.id}
-    >
-      <Suspense fallback={<ExperienceLoading key={world.id} world={world} />}>
-        <Renderer controls={controls} issue={issue} />
-        <RendererReady worldId={world.id} started={rendererStart.current.at} />
-      </Suspense>
+    <RendererErrorBoundary key={world.id} world={world}>
+      <WorldLoadProgressProvider>
+        <Suspense fallback={<ExperienceLoading key={world.id} world={world} />}>
+          <Renderer controls={controls} issue={issue} />
+          <RendererReady worldId={world.id} started={rendererStart.current.at} />
+        </Suspense>
+      </WorldLoadProgressProvider>
     </RendererErrorBoundary>
   )
 }

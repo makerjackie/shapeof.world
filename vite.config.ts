@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process'
+import { randomUUID } from 'node:crypto'
+import { worldLoadManifest } from './scripts/lib/world-load-manifest.mjs'
 import release from './src/data/web-release.json'
 import { paraglideVitePlugin } from '@inlang/paraglide-js'
 import { defineConfig } from 'vite'
@@ -7,8 +9,14 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
+// Cloudflare can evaluate this config more than once in the same build.
+// Keep the client define and the emitting plugin on one build identifier.
+const worldLoadBuildId = process.env.SHAPE_WORLD_LOAD_BUILD_ID ??= randomUUID()
+const worldLoadDirectory = `generated/world-loads/${worldLoadBuildId}`
+
 export default defineConfig(({ command }) => ({
   define: {
+    __WORLD_LOAD_BASE__: JSON.stringify(command === 'build' ? `/${worldLoadDirectory}/` : ''),
     __WEB_BUILD__: JSON.stringify({
       version: release.version,
       commit: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(),
@@ -29,6 +37,7 @@ export default defineConfig(({ command }) => ({
     tsconfigPaths: true,
   },
   environments: {
+    client: { build: { manifest: true } },
     ssr: {
       build: {
         // Vite leaves SSR unminified by default. The Worker ships these chunks,
@@ -69,5 +78,6 @@ export default defineConfig(({ command }) => ({
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tanstackStart(),
     viteReact(),
+    worldLoadManifest(worldLoadDirectory),
   ],
 }))
