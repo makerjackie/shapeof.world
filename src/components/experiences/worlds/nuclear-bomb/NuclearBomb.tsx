@@ -241,12 +241,12 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
     else setSelectedPart((current) => current === id ? null : id)
   }, [controls, cutawayGuide])
 
-  const scrub = (value: number) => {
+  const scrub = useCallback((value: number) => {
     controls.registerInteraction()
     setPlaying(false)
     setPresentation({time: value, endingSeconds: 0})
     setManualMicro(null)
-  }
+  }, [controls])
 
   const play = () => {
     controls.registerInteraction()
@@ -257,14 +257,16 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
     setPlaying((value) => !value)
   }
 
-  const step = (direction: -1 | 1) => {
-    scrub(stepTimeline(time, direction))
-  }
+  const currentTime = useRef(time)
+  currentTime.current = time
+  const step = useCallback((direction: -1 | 1) => {
+    scrub(stepTimeline(currentTime.current, direction))
+  }, [scrub])
 
-  const sectionControls = (id: string) => <>
+  const sectionControls = useCallback((id: string) => <>
     <div className="nb-cut-controls"><span>{tx('剖开')}</span><div role="group" aria-label={tx('剖开角度')}>{([0, 90, 180] as const).map((angle) => <button type="button" key={angle} aria-pressed={cutAngle === angle} onClick={() => { controls.registerInteraction(); setCutAngle(angle) }}>{angle}°</button>)}</div></div>
     <label className="nb-explode"><span>{tx('拆开')}<output>{Math.round(explode * 100)}%</output></span><input id={id} type="range" min="0" max="1" step="0.01" value={explode} aria-label={tx('拆开程度')} onChange={(event) => { controls.registerInteraction(); touchedExplode.current = true; setExplode(Number(event.target.value)) }} /></label>
-  </>
+  </>, [controls, cutAngle, explode, tx])
 
   const labelPositions = useMemo(() => {
     const anchorById = new Map(anchors.map((anchor) => [anchor.id, anchor]))
@@ -341,6 +343,23 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
     })
     return `M${points.join(' L')}`
   }, [])
+
+  const atStart = time <= CHEMICAL_START
+  // Camera labels can move every frame without remeasuring the shared control tray.
+  const secondaryControls = useMemo(() => (
+    <div className="nb-secondary">
+      {atStart && !micro && (mobile || selected) && sectionControls('nb-explode-secondary')}
+      {!mobile && !micro && !reactionActive && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
+      <div className="nb-stepping" role="group" aria-label={tx('时间步进')}>
+        <button type="button" aria-label={tx('回到开始')} title={tx('回到开始')} onClick={() => { scrub(CHEMICAL_START); setManualMicro(false) }}><ArrowCounterClockwise size={17} /></button>
+        <button type="button" aria-label={tx('上一代')} title={tx('上一代')} onClick={() => step(-1)}><ArrowLeft size={15} /><span>1</span></button>
+        <button type="button" aria-label={tx('下一代')} title={tx('下一代')} onClick={() => step(1)}><span>1</span><ArrowRight size={15} /></button>
+        <button type="button" aria-pressed={reverse} aria-label={tx('倒放')} title={tx('倒放')} onClick={() => { controls.registerInteraction(); setReverse((value) => !value) }}><ArrowUUpLeft size={17} /><span>{tx('倒放')}</span></button>
+      </div>
+      <label className="nb-speed"><span>{tx('速度')}</span><select value={speed} aria-label={tx('播放速度')} onChange={(event) => { controls.registerInteraction(); setSpeed(Number(event.target.value)) }}>{[0.25, 0.5, 1, 2, 4].map((value) => <option key={value} value={value}>×{value}</option>)}</select></label>
+      <label className="nb-camera"><input type="checkbox" checked={autoCamera} onChange={(event) => { controls.registerInteraction(); setAutoCamera(event.target.checked); setManualMicro(null) }} /><span>{tx('自动镜头')}</span></label>
+    </div>
+  ), [atStart, mobile, selected, micro, reactionActive, reverse, speed, autoCamera, controls, sectionControls, step, scrub, tx])
 
   return (
     <div className={`nb-world${microscopyVisible ? ' is-micro' : ''}${reactionActive ? ' is-reacting' : ''}${reactionActive && sample.energyFraction > 0.2 && !presentation.complete && !forceMicro ? ' is-bright' : ''}${showCompletion ? ' is-complete' : ''}${selected ? ' has-selection' : ''}`} ref={host} data-nuclear-time={time.toFixed(4)} data-nuclear-ending={endingSeconds.toFixed(4)} data-nuclear-view={microscopyVisible ? 'micro' : 'cutaway'}>
@@ -445,20 +464,7 @@ function CutawayView({controls, active, guided, guidePosition}: {controls: Exper
 
       {error && <div className="nb-error" role="alert"><p>{tx('三维视图暂时无法显示。请使用支持 WebGL 的浏览器。')}</p></div>}
 
-      {active && !guided && <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={(
-        <div className="nb-secondary">
-          {time <= CHEMICAL_START && !micro && (mobile || selected) && sectionControls('nb-explode-secondary')}
-          {!mobile && !micro && !reactionActive && !selected && <span className="nb-playback-caption">{tx('播放，把不到一微秒慢下来。')}</span>}
-          <div className="nb-stepping" role="group" aria-label={tx('时间步进')}>
-            <button type="button" aria-label={tx('回到开始')} title={tx('回到开始')} onClick={() => { scrub(CHEMICAL_START); setManualMicro(false) }}><ArrowCounterClockwise size={17} /></button>
-            <button type="button" aria-label={tx('上一代')} title={tx('上一代')} onClick={() => step(-1)}><ArrowLeft size={15} /><span>1</span></button>
-            <button type="button" aria-label={tx('下一代')} title={tx('下一代')} onClick={() => step(1)}><span>1</span><ArrowRight size={15} /></button>
-            <button type="button" aria-pressed={reverse} aria-label={tx('倒放')} title={tx('倒放')} onClick={() => { controls.registerInteraction(); setReverse((value) => !value) }}><ArrowUUpLeft size={17} /><span>{tx('倒放')}</span></button>
-          </div>
-          <label className="nb-speed"><span>{tx('速度')}</span><select value={speed} aria-label={tx('播放速度')} onChange={(event) => { controls.registerInteraction(); setSpeed(Number(event.target.value)) }}>{[0.25, 0.5, 1, 2, 4].map((value) => <option key={value} value={value}>×{value}</option>)}</select></label>
-          <label className="nb-camera"><input type="checkbox" checked={autoCamera} onChange={(event) => { controls.registerInteraction(); setAutoCamera(event.target.checked); setManualMicro(null) }} /><span>{tx('自动镜头')}</span></label>
-        </div>
-      )}>
+      {active && !guided && <Freebar className="nb-freebar" ariaLabel={tx('剖面和时间控制')} primaryControlBudget={3} secondaryDefault="closed" secondary={secondaryControls}>
         <button type="button" className="nb-play" aria-label={tx(playing ? '暂停' : '播放')} onClick={play}>{playing ? <Pause size={18} weight="fill" /> : <Play size={18} weight="fill" />}<span>{tx(playing ? '暂停' : '播放')}</span></button>
         <div className="nb-timeline">
           <div className="nb-chemical-axis">

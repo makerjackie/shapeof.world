@@ -14,6 +14,7 @@ import {PARTS, MATERIALS, type Part} from './parts'
 import {sampleTimeline, samplePresentation} from './model'
 import {createMicroScene, getMicroFraming} from './micro-scene'
 import {createBackdrop, createExhibition} from './exhibition'
+import {OcclusionIndex} from './occlusion'
 
 export type SceneAnchor = {id: string; x: number; y: number; visible: boolean; occluded?: boolean; side?: 'left' | 'right'; bounds?: {left: number; right: number; top: number; bottom: number}; avoid?: {left: number; right: number; top: number; bottom: number}}
 type Props = {
@@ -77,7 +78,7 @@ function paintedFinish(material: T.MeshStandardMaterial, plate = false) {
 }
 
 /** All meridians and their closure faces use exactly the same display profile. */
-function createAssembly(angle: number) {
+function* createAssemblySteps(angle: number) {
   const group = new T.Group()
   const sections: Section[] = []
   const pickers: T.Mesh[] = []
@@ -132,6 +133,7 @@ function createAssembly(angle: number) {
       }
       group.add(half)
       sections.push({group: half, part, displacement: new T.Vector3().fromArray(profile.displacement), surfaces: [material], cuts})
+      yield group
     }
   }
 
@@ -193,7 +195,14 @@ function createAssembly(angle: number) {
   bolts.castShadow = true
   tail.add(bolts)
   group.add(tail)
-  return {group, sections, pickers, occluders, tail, tailMaterials, tailParts}
+  return {group, sections, pickers, occluders, tail, tailMaterials, tailParts, visibility: new OcclusionIndex(occluders)}
+}
+
+function createAssembly(angle: number) {
+  const steps = createAssemblySteps(angle)
+  let step = steps.next()
+  while (!step.done) step = steps.next()
+  return step.value
 }
 
 function disposeGroup(group: T.Group | T.Scene) {
@@ -256,13 +265,17 @@ export function NuclearScene(props: Props) {
       return
     }
     const capturing = new URLSearchParams(window.location.search).get('capture') === '1'
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, capturing ? 3 : window.innerWidth < 700 ? 1.25 : 2))
+    renderer.debug.checkShaderErrors = import.meta.env.DEV
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, capturing ? 3 : window.innerWidth < 700 ? 1.25 : 1.5))
     renderer.setClearColor('#0a0a0b')
     renderer.outputColorSpace = T.SRGBColorSpace
     renderer.toneMapping = T.ACESFilmicToneMapping
     renderer.toneMappingExposure = 0.95
     renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = T.PCFSoftShadowMap
+    renderer.shadowMap.autoUpdate = false
+    renderer.shadowMap.needsUpdate = true
+    // Use the runtime shadow type before precompiling translucent variants.
+    renderer.shadowMap.type = T.PCFShadowMap
     element.appendChild(renderer.domElement)
     renderer.domElement.setAttribute('aria-hidden', 'true')
     const scene = new T.Scene()
@@ -318,6 +331,8 @@ export function NuclearScene(props: Props) {
     let angle = latest.current.cutAngle
     let assembly = createAssembly(angle)
     scene.add(assembly.group)
+    const assemblies = new Map<number, typeof assembly>([[angle, assembly]])
+    let shadowState = ''
     let wave = createWave(angle)
     scene.add(wave.group)
 
@@ -327,7 +342,8 @@ export function NuclearScene(props: Props) {
     const microTarget = new T.WebGLRenderTarget(1, 1, {type: T.HalfFloatType})
     const microCamera = new T.PerspectiveCamera(36, 1, .05, 120)
     const composer = new EffectComposer(renderer)
-    composer.addPass(new RenderPass(scene, camera))
+    const renderPass = new RenderPass(scene, camera)
+    composer.addPass(renderPass)
     const ao = new GTAOPass(scene, camera, 1, 1)
     ao.blendIntensity = .35
     ao.updateGtaoMaterial({radius: .3, distanceExponent: 1.2, thickness: .6, scale: .65})
@@ -360,6 +376,11 @@ export function NuclearScene(props: Props) {
     let width = 1
     let height = 1
     let userOrbit = false
+    let orbitDragging = false
+    let motionUntil = 0
+    let qualityWake = 0
+    let previousTime = latest.current.time
+    let previousExplode = latest.current.explode
     let lastInteraction = performance.now()
     const homePosition = new T.Vector3()
     const oscillationStart = performance.now() + 6000
@@ -372,22 +393,54 @@ export function NuclearScene(props: Props) {
     }
     requestDraw.current = () => {
       window.clearTimeout(wake)
-      if (latest.current.active === false || document.hidden) { cancelAnimationFrame(raf); raf = 0 }
+      if (latest.current.active === false || document.hidden) {
+        cancelAnimationFrame(raf); raf = 0
+        orbitDragging = false; motionUntil = 0
+        window.clearTimeout(qualityWake); qualityWake = 0
+      }
       else invalidate()
     }
     const visibilityChanged = () => requestDraw.current()
     document.addEventListener('visibilitychange', visibilityChanged)
+    const updateResolution = (moving: boolean, resized = false) => {
+      const pixelRatio = Math.min(window.devicePixelRatio, capturing ? 3 : width < 700 || moving ? 1.25 : 1.5)
+      if (!resized && renderer.getPixelRatio() === pixelRatio) return
+      if (renderer.getPixelRatio() !== pixelRatio) {
+        renderer.setPixelRatio(pixelRatio)
+        composer.setPixelRatio(pixelRatio)
+      }
+      renderer.setSize(width, height)
+      // Preserve the existing apparent glow-dot size when the render target uses fewer pixels.
+      micro.setPointScale(pixelRatio / Math.min(window.devicePixelRatio, capturing ? 3 : width < 700 ? 1.25 : 2))
+      composer.setSize(width, height)
+      // AO is a smooth shading field; keep geometry, hatch lines and SMAA at full scene resolution.
+      const restRatio = Math.min(window.devicePixelRatio, width < 700 ? 1.25 : 1.5)
+      const aoScale = capturing ? pixelRatio : .75 * pixelRatio / restRatio
+      ao.setSize(Math.round(width * aoScale), Math.round(height * aoScale))
+      ao.updatePdMaterial({radius: capturing ? 8 : aoScale * 4})
+      microTarget.setSize(width * pixelRatio, height * pixelRatio)
+    }
+    const settleQuality = () => {
+      qualityWake = 0
+      if (disposed) return
+      const remaining = motionUntil - performance.now()
+      if (remaining > 0 || orbitDragging) qualityWake = window.setTimeout(settleQuality, Math.max(50, remaining))
+      else invalidate()
+    }
+    const markMotion = (now: number) => {
+      if (capturing || width < 700) return
+      motionUntil = now + 350
+      if (!qualityWake) qualityWake = window.setTimeout(settleQuality, 350)
+    }
     const resize = () => {
       width = element.clientWidth
       height = element.clientHeight
-      renderer.setSize(width, height)
-      composer.setSize(width, height)
+      updateResolution(orbitDragging || performance.now() < motionUntil, true)
       camera.aspect = width / height
       camera.fov = width < 700 ? 44 : 36
       microCamera.aspect = width / height
       microCamera.fov = width < 700 ? 50 : 36
       microCamera.updateProjectionMatrix()
-      microTarget.setSize(width * renderer.getPixelRatio(), height * renderer.getPixelRatio())
       // Preserve room for controls and the schematic caption on narrow displays.
       if (!userOrbit && !latest.current.micro) {
         camera.position.copy(macroPosition).multiplyScalar(width < 700 ? 1.6 : 1)
@@ -399,14 +452,48 @@ export function NuclearScene(props: Props) {
     const observer = new ResizeObserver(resize)
     observer.observe(element)
     resize()
+    // Prepare hidden states before the first displayed frame, including first-use GPU buffers.
+    renderer.setRenderTarget(microTarget)
+    // Allocate the shadow texture before warming materials that sample it.
+    renderer.render(scene, camera)
+    micro.update(125)
+    renderer.compile(micro.group, microCamera, scene)
+    micro.update(0)
+    renderer.compile(micro.group, microCamera, scene)
+    const fadeMaterials = [...assembly.sections.flatMap((section) => [...section.surfaces, ...section.cuts]), ...assembly.tailMaterials]
+    for (const material of fadeMaterials) material.transparent = true
+    renderer.compile(assembly.group, camera, scene)
+    const quad = new T.PlaneGeometry(2, 2)
+    for (const pass of [microscopeBlend, ending]) renderer.compile(new T.Mesh(quad, pass.material), camera)
+    quad.dispose()
+    renderer.shadowMap.needsUpdate = false
+    assembly.group.visible = exhibition.visible = wave.group.visible = false
+    micro.group.visible = true
+    const initialMicroFraming = getMicroFraming(0)
+    microCamera.position.set(...initialMicroFraming.position)
+    microCamera.lookAt(...initialMicroFraming.target)
+    renderer.render(scene, microCamera)
+    micro.update(125)
+    renderer.render(scene, microCamera)
+    micro.update(0)
+    micro.group.visible = false
+    assembly.group.visible = exhibition.visible = wave.group.visible = true
+    renderer.render(scene, camera)
+    wave.group.visible = false
+    for (const material of fadeMaterials) {material.transparent = false; material.needsUpdate = true}
+    for (const pass of [microscopeBlend, ending]) pass.render(renderer, composer.writeBuffer, composer.readBuffer, 0, false)
+    renderer.shadowMap.needsUpdate = true
+    renderer.setRenderTarget(null)
     const interacted = () => {
       userOrbit = true
+      orbitDragging = true
       lastInteraction = performance.now()
+      markMotion(lastInteraction)
       latest.current.onInteract?.()
       invalidate()
     }
     controls.addEventListener('start', interacted)
-    controls.addEventListener('end', () => {lastInteraction = performance.now(); invalidate()})
+    controls.addEventListener('end', () => {orbitDragging = false; lastInteraction = performance.now(); markMotion(lastInteraction); invalidate()})
     controls.addEventListener('change', invalidate)
     const raycaster = new T.Raycaster()
     const pointer = new T.Vector2()
@@ -425,10 +512,20 @@ export function NuclearScene(props: Props) {
     renderer.domElement.addEventListener('pointerup', pointerUp)
     renderer.domElement.addEventListener('webglcontextlost', lost)
     let previous = performance.now()
+    const heatColor = new T.Color()
+    const heatDark = new T.Color('#3a0a00')
+    const heatOrange = new T.Color('#ff5a1f')
+    const heatWarm = new T.Color('#ffd08a')
+    const heatWhite = new T.Color('#ffffff')
+    const cooledCore = new T.Color('#401811')
+    const microBackground = new T.Color('#08090a')
+    const orbitPosition = new T.Vector3()
     let lastLabels = 0
     let lastAnchorSnapshot = ''
     let renderCount = 0
     const projected = new T.Vector3()
+    const viewProjection = new T.Matrix4()
+    const objectProjection = new T.Matrix4()
     const anchorDepths = new Map<string, number>()
     const leaders = new T.Group()
     const leaderLines = new Map<string, T.Line>()
@@ -439,19 +536,65 @@ export function NuclearScene(props: Props) {
       leaderLines.set(part.id, line)
     }
     scene.add(leaders)
+    const warmTarget = new T.WebGLRenderTarget(8, 8, {type: T.HalfFloatType})
+    const warmAssembly = (group: T.Group) => {
+      const visibility = scene.children.map((object) => ({object, visible: object.visible}))
+      const target = renderer.getRenderTarget(), updateShadows = renderer.shadowMap.needsUpdate
+      for (const {object} of visibility) if (!(object instanceof T.Light)) object.visible = false
+      scene.add(group)
+      renderer.shadowMap.needsUpdate = false
+      renderer.setRenderTarget(warmTarget)
+      renderer.render(scene, camera)
+      renderer.setRenderTarget(target)
+      renderer.shadowMap.needsUpdate = updateShadows
+      scene.remove(group)
+      for (const {object, visible} of visibility) object.visible = visible
+    }
+    // Each idle slice prepares one shell half. Switching a warmed angle never rebuilds its buffers.
+    const preparationQueue = [0, 90, 180].filter((value) => value !== angle)
+    let preparation: ReturnType<typeof createAssemblySteps> | null = null
+    let preparingAngle = 0
+    let partialGroup: T.Group | null = null
+    let preparationHandle = 0
+    const schedulePreparation = () => {
+      preparationHandle = window.requestIdleCallback ? window.requestIdleCallback(prepare, {timeout: 500}) : window.setTimeout(prepare, 16)
+    }
+    const prepare = () => {
+      if (disposed) return
+      if (!preparation) {
+        const next = preparationQueue.shift()
+        if (next === undefined) return
+        preparingAngle = next
+        preparation = createAssemblySteps(next)
+      }
+      const step = preparation.next()
+      if (step.done) {
+        warmAssembly(step.value.group)
+        assemblies.set(preparingAngle, step.value)
+        preparation = null
+        partialGroup = null
+        invalidate()
+      } else partialGroup = step.value
+      if (preparation || preparationQueue.length) schedulePreparation()
+    }
+    schedulePreparation()
     animate = (now: number) => {
       raf = 0
       const state = latest.current
       if (state.active === false || document.hidden) return
+      if (orbitDragging || state.time !== previousTime || state.explode !== previousExplode) markMotion(now)
+      previousTime = state.time
+      previousExplode = state.explode
+      // Keep the static exhibit crisp; spend fewer pixels while the camera or timeline moves.
+      updateResolution(orbitDragging || now < motionUntil)
       const oscillating = !capturing && !state.guideCamera && !state.reducedMotion && state.time <= -3 && now - lastInteraction > 6000
       const dt = Math.min((now - previous) / 1000, 0.1)
       previous = now
       const requestedAngle = state.time >= 120 && state.micro ? 90 : state.cutAngle
-      if (angle !== requestedAngle) {
+      if (angle !== requestedAngle && assemblies.has(requestedAngle)) {
         scene.remove(assembly.group)
-        disposeGroup(assembly.group)
         angle = requestedAngle
-        assembly = createAssembly(angle)
+        assembly = assemblies.get(angle)!
         scene.add(assembly.group)
         scene.remove(wave.group)
         disposeGroup(wave.group)
@@ -477,7 +620,7 @@ export function NuclearScene(props: Props) {
         if (oscillating) {
           const azimuth = T.MathUtils.degToRad(3)
           const swing = Math.sin((now - oscillationStart) / 40000 * Math.PI * 2) * Math.PI / 6
-          const desired = homePosition.clone().sub(macroTarget)
+          const desired = orbitPosition.copy(homePosition).sub(macroTarget)
           const horizontal = Math.hypot(desired.x, desired.z)
           desired.x = Math.sin(azimuth + swing) * horizontal
           desired.z = Math.cos(azimuth + swing) * horizontal
@@ -500,10 +643,10 @@ export function NuclearScene(props: Props) {
       const returnToExhibit = state.forceMicro ? 0 : presentation.darkOpacity
       const glowAmount = frame.energyFraction * (1 - returnToExhibit)
       const residualHeat = returnToExhibit * .12
-      const heatColor = new T.Color('#3a0a00')
-      if (glowAmount < .18) heatColor.lerp(new T.Color('#ff5a1f'), glowAmount / .18)
-      else if (glowAmount < .6) heatColor.set('#ff5a1f').lerp(new T.Color('#ffd08a'), (glowAmount - .18) / .42)
-      else heatColor.set('#ffd08a').lerp(new T.Color('#ffffff'), (glowAmount - .6) / .4)
+      heatColor.copy(heatDark)
+      if (glowAmount < .18) heatColor.lerp(heatOrange, glowAmount / .18)
+      else if (glowAmount < .6) heatColor.copy(heatOrange).lerp(heatWarm, (glowAmount - .18) / .42)
+      else heatColor.copy(heatWarm).lerp(heatWhite, (glowAmount - .6) / .4)
       coreLight.color.copy(heatColor)
       coreLight.intensity = glowAmount * 110
       for (const section of assembly.sections) {
@@ -524,7 +667,7 @@ export function NuclearScene(props: Props) {
           material.uniforms.alpha.value = opacity
           material.uniforms.glow.value.copy(heatColor)
           material.uniforms.heat.value = glowAmount * (part.id === 'core' ? 28 : 5) + (part.id === 'core' ? residualHeat * 3 : 0)
-          if (part.id === 'core') material.uniforms.ink.value.set(MATERIALS.core.cut).lerp(new T.Color('#401811'), returnToExhibit * .8)
+          if (part.id === 'core') material.uniforms.ink.value.set(MATERIALS.core.cut).lerp(cooledCore, returnToExhibit * .8)
           material.transparent = faded
           material.depthWrite = !faded
         }
@@ -545,12 +688,15 @@ export function NuclearScene(props: Props) {
         lastLabels = now
         camera.updateMatrixWorld()
         assembly.group.updateMatrixWorld(true)
+        assembly.visibility.sync()
+        viewProjection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse)
         const bounds = {left: width, right: 0, top: height, bottom: 0}
         assembly.group.traverse((object) => {
           if (!(object instanceof T.Mesh) || object instanceof T.InstancedMesh || !object.visible) return
+          objectProjection.multiplyMatrices(viewProjection, object.matrixWorld)
           const vertices = object.geometry.getAttribute('position')
           for (let index = 0; index < vertices.count; index += Math.max(1, Math.floor(vertices.count / 500))) {
-            projected.fromBufferAttribute(vertices, index).applyMatrix4(object.matrixWorld).project(camera)
+            projected.fromBufferAttribute(vertices, index).applyMatrix4(objectProjection)
             const px = (projected.x + 1) * width / 2
             const py = (1 - projected.y) * height / 2
             bounds.left = Math.min(bounds.left, px)
@@ -562,9 +708,10 @@ export function NuclearScene(props: Props) {
         // Screen box of the tail shroud: leader lines must not run behind it.
         const tailBox = {left: width, right: 0, top: height, bottom: 0}
         for (const mesh of assembly.tailParts) {
+          objectProjection.multiplyMatrices(viewProjection, mesh.matrixWorld)
           const vertices = mesh.geometry.getAttribute('position')
           for (let index = 0; index < vertices.count; index += Math.max(1, Math.floor(vertices.count / 80))) {
-            projected.fromBufferAttribute(vertices, index).applyMatrix4(mesh.matrixWorld).project(camera)
+            projected.fromBufferAttribute(vertices, index).applyMatrix4(objectProjection)
             const px = (projected.x + 1) * width / 2
             const py = (1 - projected.y) * height / 2
             tailBox.left = Math.min(tailBox.left, px)
@@ -591,8 +738,7 @@ export function NuclearScene(props: Props) {
                 const direction = point.clone().sub(camera.position)
                 const distance = direction.length()
                 raycaster.set(camera.position, direction.normalize())
-                const hit = raycaster.intersectObjects(assembly.occluders)[0]
-                const occluded = angle === 0 || Boolean(hit && hit.distance < distance - .035)
+                const occluded = angle === 0 || assembly.visibility.occludes(raycaster.ray, distance - .035)
                 const screen = point.clone().project(camera)
                 const x = (screen.x + 1) * width / 2
                 const y = (1 - screen.y) * height / 2
@@ -606,7 +752,8 @@ export function NuclearScene(props: Props) {
           anchorDepths.set(part.id, anchor.screen.z)
           return {id: part.id, x: (anchor.screen.x + 1) / 2 * width, y: (1 - anchor.screen.y) / 2 * height, visible: anchor.screen.z < 1, occluded: anchor.occluded, side, bounds, avoid: hasTail ? tailBox : undefined}
         })
-        const snapshot = JSON.stringify(nextAnchors)
+        // Subpixel damping must not keep React and the on-demand renderer awake.
+        const snapshot = JSON.stringify(nextAnchors, (_key, value) => typeof value === 'number' ? Math.round(value * 10) / 10 : value)
         if (snapshot !== lastAnchorSnapshot) {
           lastAnchorSnapshot = snapshot
           latest.current.onAnchors(nextAnchors)
@@ -625,13 +772,21 @@ export function NuclearScene(props: Props) {
         line.geometry.computeBoundingSphere()
         ;(line.material as T.LineBasicMaterial).opacity = leader.opacity * .5
       }
+      const nextShadowState = `${angle}/${displayExplode}/${frame.compression}/${state.selectedPart}`
+      if (microBlend < 1 && nextShadowState !== shadowState) {
+        renderer.shadowMap.needsUpdate = true
+        shadowState = nextShadowState
+      }
+      renderPass.camera = camera
+      microscopeBlend.enabled = microBlend > 0 && microBlend < 1
+      ending.enabled = ending.uniforms.white.value > 0 || ending.uniforms.dark.value > 0
       if (isMicro) {
         assembly.group.visible = false
         exhibition.visible = false
         wave.group.visible = false
         micro.group.visible = true
         coreLight.intensity = 0
-        scene.background = new T.Color('#08090a')
+        scene.background = microBackground
         const microTime = state.forceMicro ? T.MathUtils.clamp(state.time, 0, 115) : state.time
         micro.update(microTime)
         const framing = getMicroFraming(microTime)
@@ -640,14 +795,22 @@ export function NuclearScene(props: Props) {
         if (!state.forceMicro) microCamera.position.z += presentation.macroBlend * 9
         microCamera.position.z -= Math.sin(Math.min(12, microTime / 10) * .24) * .12
         microCamera.lookAt(...framing.target)
-        renderer.setRenderTarget(microTarget)
-        renderer.render(scene, microCamera)
-        renderer.setRenderTarget(null)
-        micro.group.visible = false
-        assembly.group.visible = true
-        exhibition.visible = true
-        scene.background = backdrop
-        coreLight.intensity = glowAmount * 110
+        if (microBlend === 1) {
+          // The macro view contributes nothing at full microscopic opacity.
+          renderPass.camera = microCamera
+        } else {
+          const updateShadows = renderer.shadowMap.needsUpdate
+          renderer.shadowMap.needsUpdate = false
+          renderer.setRenderTarget(microTarget)
+          renderer.render(scene, microCamera)
+          renderer.setRenderTarget(null)
+          renderer.shadowMap.needsUpdate = updateShadows
+          micro.group.visible = false
+          assembly.group.visible = true
+          exhibition.visible = true
+          scene.background = backdrop
+          coreLight.intensity = glowAmount * 110
+        }
       }
       composer.render()
       renderer.domElement.dataset.renderCount = String(++renderCount)
@@ -660,8 +823,14 @@ export function NuclearScene(props: Props) {
     invalidate()
     return () => {
       disposed = true
+      if (window.cancelIdleCallback) window.cancelIdleCallback(preparationHandle)
+      else window.clearTimeout(preparationHandle)
+      if (partialGroup) disposeGroup(partialGroup)
+      scene.remove(assembly.group)
+      for (const cached of assemblies.values()) disposeGroup(cached.group)
       requestDraw.current = () => {}
       window.clearTimeout(wake)
+      window.clearTimeout(qualityWake)
       cancelAnimationFrame(raf)
       observer.disconnect()
       document.removeEventListener('visibilitychange', visibilityChanged)
@@ -675,6 +844,7 @@ export function NuclearScene(props: Props) {
       env.dispose()
       backdrop.dispose()
       microTarget.dispose()
+      warmTarget.dispose()
       composer.passes.forEach((pass) => pass.dispose())
       composer.dispose()
       key.shadow.dispose()
