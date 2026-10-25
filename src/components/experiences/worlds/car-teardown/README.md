@@ -31,4 +31,4 @@ Run `pnpm exec vitest run src/components/experiences/worlds/car-teardown` and `p
 - `RigidBatch.tsx` / `rigid-batch.ts`: only wrap fixed local transforms. Do not wrap moving links or shafts. Parent movement remains available; glass, custom shaders and teardown boundaries stay separate.
 
 - `brake-render-geometry.ts`: four CPU-only front/rear rotor and caliper templates, copied into each scene instance. Do not share disposable instance buffers; entering brakes must not rebuild every casting edge. System highlight traversal runs only while a system is hovered and restores each shared material once.
-- Retina canvas rendering is capped at DPR 1.5; narrow screens retain DPR 1.15. `RenderResolution` updates the budget on resize. Resizing also invalidates studio targets without disposing the reflector material prematurely.
+- Retina canvas rendering is capped at DPR 1.5; narrow screens retain DPR 1.15. The composer uses 2× MSAA on both layouts to reduce Retina render-target bandwidth; AO remains at its existing quality. `RenderResolution` updates the budget on resize. Resizing also invalidates studio targets without disposing the reflector material prematurely.
