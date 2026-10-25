@@ -159,7 +159,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       </select>
       <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={(event) => changeLight(Number(event.target.value))} /></div>
     </Freebar>
-    {!capture && <GuideTour worldId="plant-cell" steps={guideSteps} defaultOpen={guide} kicker={tx('导览')} exitLabel={tx('自由探索')} onExit={() => setGuide(false)} stagePlan={[{ position: 'bottom-left', mobilePosition: 'bottom-left', treatment: 'caption', tone: 'light', width: 'narrow', motion: 'fade' }]} />}
+    {!capture && <GuideTour worldId="plant-cell" steps={guideSteps} defaultOpen={guide} placement="stage" kicker={tx('导览')} exitLabel={tx('自由探索')} onExit={() => setGuide(false)} stagePlan={[{ position: 'bottom-left', mobilePosition: 'bottom-left', treatment: 'caption', tone: 'light', width: 'narrow', motion: 'fade' }]} />}
     {!capture && !guide && <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />}
   </div>
 }
