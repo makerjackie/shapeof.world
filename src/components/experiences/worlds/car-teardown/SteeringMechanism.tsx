@@ -704,7 +704,7 @@ function DifferentialLabel({
 					textShadow: '0 1px 5px #08090c',
 				}}
 			>
-				{tx(name)}{' '}
+				{name}{' '}
 				<span style={{ color: '#aabac6', fontSize: 10 }}>
 					· {teeth} {tx('齿')}
 				</span>
@@ -716,6 +716,7 @@ function DifferentialLabel({
 /** The planet label's anchor orbits with its actual gear. The left/top/right
  * label sectors keep the three short leaders apart at the close-up camera. */
 function DifferentialLabels({ stateRef }: Clock) {
+	const tx = useExperienceI18n()
 	const planet = useRef<T.Group>(null)
 	const planetAnchor = useMemo(
 		() => new T.Vector3(0, (G.bevelModule * S.transmission.differential.sideTeeth) / 2, 0),
@@ -735,7 +736,7 @@ function DifferentialLabels({ stateRef }: Clock) {
 					G.axleHousingRadius * 0.55,
 					(-G.bevelModule * S.transmission.finalDrive.driver) / 2,
 				]}
-				name="齿圈"
+				name={tx('齿圈')}
 				teeth={S.transmission.finalDrive.driven}
 				dx={85}
 				dy={-48}
@@ -746,7 +747,7 @@ function DifferentialLabels({ stateRef }: Clock) {
 					G.bevelModule * S.transmission.differential.sideTeeth * 0.35,
 					(G.bevelModule * S.transmission.differential.planetTeeth) / 2,
 				]}
-				name="半轴齿轮"
+				name={tx('半轴齿轮')}
 				teeth={S.transmission.differential.sideTeeth}
 				dx={-105}
 				dy={-58}
@@ -754,7 +755,7 @@ function DifferentialLabels({ stateRef }: Clock) {
 			<group ref={planet}>
 				<DifferentialLabel
 					position={[0, 0, 0]}
-					name="行星齿轮"
+					name={tx('行星齿轮')}
 					teeth={S.transmission.differential.planetTeeth}
 					dx={100}
 					dy={86}
