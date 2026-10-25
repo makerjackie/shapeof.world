@@ -1,12 +1,12 @@
 import { useExperienceI18n } from '~/i18n/experience'
-import type { DesignSpec } from './sim/types'
+import type { DesignInfo } from './designs/catalogue'
 import type { PressureSample } from './sim/metrics'
 
 export type PressureCurves = Record<string, PressureSample[]>
 const COLORS = ['#efc890', '#8ab4ff', '#c77dff', '#5fd39a', '#f09980', '#87d0dc', '#d8b5ff', '#f4e29e']
 
 /** Runs remain in React state when the scene changes; the model owns their samples. */
-export function PressurePanel({ curves, designs, current, running, progress, speed }: { curves: PressureCurves; designs: DesignSpec[]; current: string; running: boolean; progress: number; speed: number }) {
+export function PressurePanel({ curves, designs, current, running, progress, speed }: { curves: PressureCurves; designs: DesignInfo[]; current: string; running: boolean; progress: number; speed: number }) {
   const tx = useExperienceI18n()
   const entries = designs.filter(design => curves[design.id]?.length)
   const maximumDemand = Math.max(1000, ...entries.flatMap(design => curves[design.id].map(sample => sample.demand)))

@@ -156,3 +156,9 @@
  .road-design-experience .rd-heading .rd-tour-button { margin-top:8px; font-size:10px; }
 }
 @media(max-width:720px) { .road-design-experience .rd-heading .rd-tour-button { display:none; } }
+
+/* Reuse the shell's already downloaded poster while the worker warms traffic. */
+.road-design-experience[data-loading=true]{background:center / cover url('/assets/posters/desktop/road-design.webp')}
+@media(max-width:719px){.road-design-experience[data-loading=true]{background-image:url('/assets/posters/mobile/road-design.webp')}}
+
+.rd-catalog button[aria-busy=true]{border-color:#8b9bad;border-style:dashed}

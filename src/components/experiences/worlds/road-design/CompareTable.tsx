@@ -1,14 +1,12 @@
 import { useMemo } from 'react'
 import { useExperienceI18n } from '~/i18n/experience'
-import type { DesignSpec, Network } from './sim/types'
-import { calculateConflicts, summarizeConflicts } from './sim/conflicts'
-import { measureGeometry } from './sim/geometry-costs'
-import measured from './data/capacity.json'
+import { CATALOGUE, type DesignInfo } from './designs/catalogue'
+import measured from './data/capacity-display.json'
 import type { PressureCurves } from './PressurePanel'
 
-export function CompareTable({ designs, networks, curves: _curves, current, onSelect, onClose }: { designs: DesignSpec[]; networks: Map<string, Network>; curves: PressureCurves; current: string; onSelect: (design: DesignSpec) => void; onClose: () => void }) {
+export function CompareTable({ designs, curves: _curves, current, onSelect, onClose }: { designs: DesignInfo[]; curves: PressureCurves; current: string; onSelect: (design: DesignInfo) => void; onClose: () => void }) {
   const tx = useExperienceI18n(), format = (n: number) => Math.round(n).toLocaleString('en-US')
-  const rows = useMemo(() => designs.map(design => { const network = networks.get(design.id)!; return { design, cost: measureGeometry(network), conflicts: summarizeConflicts(calculateConflicts(network)) } }), [designs, networks])
+  const rows = useMemo(() => designs.map(design => ({design,...CATALOGUE.find(row=>row.id===design.id)!})), [designs])
   type Row = { vehiclesPerHour: number; turningVehiclesPerHour: number; status: string }
   const capacity = (id: string): Row => (measured.designs as Record<string, Row>)[id]
   const maxCapacity = Math.max(1,...designs.map(d=>capacity(d.id).vehiclesPerHour)), maxTurning = Math.max(1,...designs.map(d=>capacity(d.id).turningVehiclesPerHour)), maxArea = Math.max(...rows.map(row=>row.cost.landArea))

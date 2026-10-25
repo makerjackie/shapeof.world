@@ -1,5 +1,5 @@
 import './styles/RoadDesign.css'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState, type ComponentProps } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Bloom, EffectComposer, N8AO, ToneMapping, Vignette } from '@react-three/postprocessing'
 import { ToneMappingMode } from 'postprocessing'
@@ -12,18 +12,21 @@ import { TOUR } from './tour'
 import { GhostHint } from '~/components/experiences/GhostHint'
 import { isWorldPaused } from '~/lib/world-playback'
 import { useExperienceI18n } from '~/i18n/experience'
-import { DESIGNS } from './designs'
-import { calculateConflicts, summarizeConflicts } from './sim/conflicts'
-import type { DesignSpec, Network } from './sim/types'
-import { NightWorld, buildLamps, makeLightingAtlas } from './scene/NightWorld'
+import { CATALOGUE as DESIGNS, type DesignInfo } from './designs/catalogue'
+import { summarizeConflicts } from './sim/conflicts'
+import type { Network } from './sim/types'
+import { NightWorld, makeLightingAtlas } from './scene/NightWorld'
 import { RoadMeshes } from './scene/RoadMeshes'
 import { Vehicles } from './scene/Vehicles'
 import { LightTrails } from './scene/LightTrails'
 import { ConflictMarkers } from './scene/ConflictMarkers'
 import { CameraRig, type CameraPreset } from './scene/CameraRig'
-import { TrafficRuntime } from './scene/runtime'
+import { WorkerTrafficRuntime as TrafficRuntime } from './scene/worker-runtime'
 import { Blueprint, BlueprintGround } from './scene/Blueprint'
 import { FrameBudget } from './scene/FrameBudget'
+import { RenderProbe } from './scene/RenderProbe'
+import { PreparePrograms } from './scene/PreparePrograms'
+import { ComposerResources } from './scene/ComposerResources'
 import { PressurePanel, type PressureCurves } from './PressurePanel'
 import { CompareTable } from './CompareTable'
 import { PRESENTATIONS, defaultOverlays } from './presentation'
@@ -33,7 +36,6 @@ import { highestDeckTexture } from './scene/deck-shadow'
 import { CityLights } from './scene/CityLights'
 import { LeftRoutes } from './scene/LeftRoutes'
 import { WaitingOutline } from './scene/WaitingOutline'
-import { measureGeometry } from './sim/geometry-costs'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
 function numberQuery(name: string, fallback: number, max: number) {
@@ -42,29 +44,35 @@ function numberQuery(name: string, fallback: number, max: number) {
 }
 const PRESETS: { id: CameraPreset; name: string }[] = [{ id: 'overview', name: '鸟瞰' }, { id: 'top', name: '俯视' }, { id: 'close', name: '近看' }, { id: 'low', name: '路面' }]
 
-function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, highlightLeft, stretch, showWeaving, preset, revision, reducedMotion, blueprint, interact }: {
-  design: DesignSpec; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; highlightLeft: boolean; stretch: boolean; showWeaving: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void
+const Scene = memo(function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, highlightLeft, stretch, showWeaving, preset, revision, reducedMotion, blueprint, interact, onDprChange }: {
+  design: DesignInfo; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; highlightLeft: boolean; stretch: boolean; showWeaving: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void; onDprChange?:(dpr:number)=>void
 }) {
-  const lamps = useMemo(() => buildLamps(network), [network])
-  const atlas = useMemo(() => makeLightingAtlas(lamps), [lamps])
-  const conflicts = useMemo(() => calculateConflicts(network), [network])
-  const roof = useMemo(() => highestDeckTexture(network), [network])
+  const seenBlueprint = useMemo(()=>({current:false}),[network])
+  if(blueprint)seenBlueprint.current=true
+  const lamps = runtime.lamps
+  const atlas = useMemo(() => makeLightingAtlas(lamps,runtime.lighting), [lamps,runtime])
+  const conflicts = runtime.conflicts
+  const roof = useMemo(() => highestDeckTexture(runtime.roof), [runtime])
   useEffect(() => () => roof.dispose(), [roof])
   useEffect(() => () => atlas.dispose(), [atlas])
   useFrame((_, delta) => {
     runtime.frameMs = runtime.frameMs * 0.9 + delta * 1000 * 0.1
-    if (playing && !document.hidden && !isWorldPaused()) runtime.advance(Math.min(delta, 0.1) * speed)
+    const frozen=!playing||document.hidden||isWorldPaused()
+    runtime.setFrozen(frozen)
+    if(!frozen)runtime.advance(Math.min(delta,0.1)*speed)
   }, -2)
   return <>
-    <FrameBudget />
+    <FrameBudget version={`${network.id}:${blueprint}:${stretch}:${preset}:${revision}`} onDprChange={onDprChange} />
+    {query('profile')==='1' && <RenderProbe runtime={runtime} />}
+    <NightWorld network={network} atlas={atlas} visible={!blueprint} />
     {blueprint && <><color attach="background" args={['#07121f']} /><fogExp2 attach="fog" args={['#07121f',.00015]} /><ambientLight intensity={.65} color="#8ab4ff" /><BlueprintGround network={network} /></>}
-    {!blueprint && <NightWorld network={network} atlas={atlas} />}
-    <DisplayStretch key={network.id} network={network} enabled={stretch}>
-      {blueprint ? <Blueprint network={network} /> : <>
-        <RoadMeshes network={network} atlas={atlas} lamps={lamps} simulation={runtime.simulation} roof={roof} />
+    <DisplayStretch network={network} enabled={stretch}>
+      {seenBlueprint.current && <group visible={blueprint}><Blueprint key={network.id} network={network} prepared={runtime.blueprint} /></group>}
+      <group visible={!blueprint}>
+        <RoadMeshes network={network} atlas={atlas} prepared={runtime.geometry} simulation={runtime.simulation} roof={roof} />
         <CityLights lamps={lamps} network={network} />
         {design.id === 'crossroads-channelized' && <WaitingOutline network={network} />}
-      </>}
+      </group>
       {highlightLeft && !blueprint && <LeftRoutes network={network} />}
       <Vehicles runtime={runtime} />
       <LightTrails runtime={runtime} shutter={shutter} blueprint={blueprint} highlightLeft={highlightLeft} />
@@ -72,27 +80,55 @@ function Scene({ design, network, runtime, speed, playing, shutter, showConflict
     </DisplayStretch>
     <CameraRig design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} />
     <EffectComposer multisampling={0}>
-      {!blueprint && !stretch && query('ao') !== '0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} quality="medium" aoSamples={16} denoiseSamples={8} denoiseRadius={8} halfRes /> : <></>}
+      <ComposerResources />
+      <PreparePrograms version={`${network.id}:${blueprint}:${stretch}`} />
+      {!blueprint && !stretch && query('ao')!=='0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} aoSamples={12} denoiseSamples={6} denoiseRadius={12} halfRes /> : <></>}
       <Bloom luminanceThreshold={1.25} luminanceSmoothing={0.18} intensity={0.30} radius={0.45} mipmapBlur resolutionScale={0.6} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette offset={0.25} darkness={0.32} />
     </EffectComposer>
   </>
-}
+})
 
-function Diagram({ network }: { network: Network }) {
-  const range = network.id === 'huangjuewan' ? 1200 : network.carriageways.some(r => r.kind === 'main') ? (network.id === 'cloverleaf' ? 230 : 450) : network.id === 'crossroads-channelized' ? 105 : network.id === 'continuous-flow' ? 170 : 63
-  return <svg viewBox={`${-range} ${-range} ${range * 2} ${range * 2}`} aria-hidden="true">
-    {network.carriageways.map(road => <polyline key={road.id} points={road.points.map(p => `${p.x},${p.z}`).join(' ')} fill="none" stroke="currentColor" strokeWidth={road.laneCount * road.laneWidth + (road.medianWidth ?? 0)} opacity={road.level > 0 ? 0.95 : 0.4} />)}
-  </svg>
-}
+// Readouts tick twice a second. Keep them outside Canvas reconciliation, so
+// changing a number cannot reconfigure DPR or re-run instance ref callbacks.
+const RoadCanvas = memo(function RoadCanvas(props:ComponentProps<typeof Scene>) {
+  const dpr=useRef(Math.min(1.5,devicePixelRatio))
+  const rememberDpr=useCallback((value:number)=>{dpr.current=value},[])
+  return <Canvas camera={{position:[350,250,380],fov:35,near:.3,far:10000}} dpr={dpr.current} gl={{antialias:false,alpha:false,powerPreference:'high-performance',toneMapping:T.NoToneMapping}}><Scene {...props} onDprChange={rememberDpr} /></Canvas>
+})
+
+const Diagram = memo(function Diagram({ id }: { id: string }) {
+  const { range, roads } = DESIGNS.find(design=>design.id===id)!.diagram
+  return <svg viewBox={`${-range} ${-range} ${range*2} ${range*2}`} aria-hidden="true">{roads.map((road,i)=><polyline key={i} points={road.points} fill="none" stroke="currentColor" strokeWidth={road.width} opacity={road.opacity} />)}</svg>
+})
 
 export function RoadDesign({ controls }: { controls: ExperienceControls }) {
+  const [requested, requestDesign] = useState(() => DESIGNS.find(d=>d.id===query('design'))?.id ?? 'cloverleaf')
+  const [runtime, setRuntime] = useState<TrafficRuntime | null>(null)
+  const active = useRef<TrafficRuntime | null>(null)
+  const [error, setError] = useState<Error | null>(null)
+  useEffect(() => {
+    if(active.current?.network.id===requested)return
+    let cancelled=false
+    const next=new TrafficRuntime(requested, active.current ? 1 : Math.max(.25,numberQuery('multiplier',1,2.5)),error=>{if(!cancelled)setError(error)})
+    next.ready.then(()=>{
+      if(cancelled){next.dispose();return}
+      const previous=active.current;active.current=next;setRuntime(next);previous?.dispose()
+    }).catch(error=>{if(!cancelled)setError(error instanceof Error?error:new Error(String(error)))})
+    return ()=>{cancelled=true;if(active.current!==next)next.dispose()}
+  },[requested])
+  useEffect(()=>()=>{active.current?.dispose()},[])
+  if(error)throw error
+  if(!runtime)return <div className="road-design-experience" data-loading="true" />
+  return <RoadDesignSession controls={controls} runtime={runtime} requestDesign={requestDesign} pendingId={requested===runtime.network.id?null:requested} />
+}
+
+function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:ExperienceControls;runtime:TrafficRuntime;requestDesign:(id:string)=>void;pendingId:string|null}) {
   const tx = useExperienceI18n()
-  const [designId, setDesignId] = useState(() => DESIGNS.find(d => d.id === query('design'))?.id ?? 'cloverleaf')
+  const designId = runtime.network.id
   const design = DESIGNS.find(d => d.id === designId)!
-  const [networks] = useState(() => new Map(DESIGNS.map(d => [d.id, d.build()])))
-  const network = networks.get(designId)!
+  const network = runtime.network
   const [demand, setDemand] = useState(() => Math.max(0.25, numberQuery('multiplier', 1, 2.5)))
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [playing, setPlaying] = useState(!reducedMotion), [speed, setSpeed] = useState(1)
@@ -120,17 +156,12 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     return ()=>window.removeEventListener(GUIDE_AUTOPLAY_STATE_EVENT,listener)
   },[])
   const firstView = useRef(true)
-  // The simulation is persistent state, not a disposable memoization cache.
-  // Demand edits retain it; changing the design creates a reproducible new run.
-  const activeRuntime = useRef<{ id: string; runtime: TrafficRuntime } | null>(null)
-  if (activeRuntime.current?.id !== designId) activeRuntime.current = { id: designId, runtime: new TrafficRuntime(network, demand) }
-  const runtime = activeRuntime.current.runtime
   const [readout, setReadout] = useState(runtime.simulation.metrics)
   const stage = useRef<HTMLDivElement>(null)
   const capture = query('capture') === '1'
   const interact = useCallback(() => controls.registerInteraction(), [controls])
-  const conflicts = useMemo(() => summarizeConflicts(calculateConflicts(network)), [network])
-  const cost = useMemo(() => measureGeometry(network), [network])
+  const conflicts = useMemo(() => summarizeConflicts(runtime.conflicts), [network])
+  const cost = design.cost
   useEffect(() => { controls.completeOnboarding() }, [controls])
   useEffect(() => {
     if (firstView.current) { firstView.current = false; return }
@@ -150,7 +181,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     const timer = window.setInterval(() => {
       setReadout({ ...runtime.simulation.metrics })
       if (runtime.pressure) {
-        setDemand(runtime.simulation.demandMultiplier)
+        if(runtime.pressure.status!=='stopped')setDemand(runtime.simulation.demandMultiplier)
         setCurves(previous => ({ ...previous, [designId]: [...runtime.pressure!.samples] }))
       }
       if (stage.current) {
@@ -159,6 +190,8 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
         stage.current.dataset.frameMs = runtime.frameMs.toFixed(2)
         stage.current.dataset.warmupMs = runtime.warmupMs.toFixed(1)
         stage.current.dataset.simTime = runtime.simulation.time.toFixed(2)
+        stage.current.dataset.pendingSimSeconds = runtime.pendingSimSeconds.toFixed(2)
+        stage.current.dataset.packets = String(runtime.revision)
         stage.current.dataset.pressure = runtime.pressure?.status ?? 'idle'
         stage.current.dataset.pressureSamples = String(runtime.pressure?.samples.length ?? 0)
       }
@@ -185,7 +218,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     window.addEventListener('keydown', key)
     return () => window.removeEventListener('keydown', key)
   }, [interact])
-  const selectDesign = (next: DesignSpec) => {
+  const selectDesign = (next: DesignInfo) => {
     if (runtime.pressure?.status === 'running') setSpeed(1)
     runtime.stopPressure()
     if (runtime.pressure) setCurves(previous => ({ ...previous, [designId]: [...runtime.pressure!.samples] }))
@@ -195,7 +228,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     setHighlightLeft(manualOverlays.current.left ?? defaults.left)
     setStretch(next.chapter > 1 && (manualOverlays.current.stretch ?? defaults.stretch))
     setShowWeaving(manualOverlays.current.weaving ?? defaults.weaving)
-    setDesignId(next.id); setDemand(1); setPreset('overview'); setRevision(r => r + 1); interact()
+    requestDesign(next.id); setDemand(1); setPreset('overview'); setRevision(r => r + 1); interact()
   }
   const pressureRunning = runtime.pressure?.status === 'running'
   const pressureProgress = runtime.pressure ? Math.min(1, (runtime.simulation.time - runtime.pressure.startedAt) / runtime.pressure.duration) : 0
@@ -232,9 +265,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
     </div>
   </div>
   return <div ref={stage} className="road-design-experience" data-design={designId} data-capture={capture} data-blueprint={renderBlueprint} data-left-highlight={highlightLeft} data-stretch={stretch} data-conflicts={showConflicts} data-weaving={showWeaving} data-guide={tourActive}>
-    <Canvas camera={{ position: [350, 250, 380], fov: 35, near: 0.3, far: 10000 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: false, powerPreference: 'high-performance', toneMapping: T.NoToneMapping }}>
-      <Scene design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} highlightLeft={highlightLeft} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={renderBlueprint} interact={interact} />
-    </Canvas>
+    <RoadCanvas design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} highlightLeft={highlightLeft} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={renderBlueprint} interact={interact} />
     <div className="rd-view-transition" data-changing={viewChanging} aria-hidden="true" />
     {designId === 'huangjuewan' && <div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture && <>
@@ -260,11 +291,11 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
         {showPressure && <PressurePanel curves={curves} designs={DESIGNS} current={designId} running={pressureRunning} progress={pressureProgress} speed={speed} />}
         </div>
       </aside>
-      {showCompare && <CompareTable designs={DESIGNS} networks={networks} curves={curves} current={designId} onSelect={next => { selectDesign(next); setShowCompare(false) }} onClose={() => setShowCompare(false)} />}
+      {showCompare && <CompareTable designs={DESIGNS} curves={curves} current={designId} onSelect={next => { selectDesign(next); setShowCompare(false) }} onClose={() => setShowCompare(false)} />}
       <nav className="rd-catalog" aria-label={tx('道路图鉴')} data-experience-overlay="true">
         {[{ chapter: 1, name: '平面交叉' }, { chapter: 2, name: '服务型立交' }, { chapter: 3, name: '枢纽型立交' }, { chapter: 4, name: '真实案例' }].filter(group => DESIGNS.some(d => d.chapter === group.chapter)).map(group => <div className="rd-catalog-group" key={group.chapter}>
           <span className="rd-chapter">{tx(group.name)}</span>
-          <div>{DESIGNS.filter(d => d.chapter === group.chapter).map(d => <button key={d.id} type="button" data-design-id={d.id} aria-pressed={designId === d.id} onClick={() => selectDesign(d)}><Diagram network={networks.get(d.id)!} /><span>{tx(d.name)}</span></button>)}</div>
+          <div>{DESIGNS.filter(d => d.chapter === group.chapter).map(d => <button key={d.id} type="button" data-design-id={d.id} aria-busy={pendingId===d.id} aria-pressed={designId === d.id} onClick={() => selectDesign(d)}><Diagram id={d.id} /><span>{tx(d.name)}</span></button>)}</div>
         </div>)}
       </nav>
       <Freebar ariaLabel={tx('交通与镜头')} className="rd-freebar" mainClassName="rd-freebar-main" secondary={tools} secondaryDefault="closed">

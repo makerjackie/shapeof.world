@@ -3,7 +3,7 @@ import type { Network } from '../sim/types'
 
 /** Rasterize highest physical deck into a top-down height field (no shadow lights).
  * 1.76 m cells cover the junction core; source geometry remains unmodified. */
-export function highestDeckTexture(network: Network) {
+export function highestDeckPixels(network: Network) {
   const size = 2048, extent = 1800, cell = extent * 2 / size
   const heights = new Float32Array(size * size).fill(-1000)
   for (const road of network.carriageways) {
@@ -20,7 +20,11 @@ export function highestDeckTexture(network: Network) {
       }
     }
   }
-  const texture = new T.DataTexture(heights,size,size,T.RedFormat,T.FloatType)
+  return heights
+}
+
+export function highestDeckTexture(heights:Float32Array) {
+  const texture = new T.DataTexture(heights,2048,2048,T.RedFormat,T.FloatType)
   texture.needsUpdate=true
   return texture
 }
