@@ -25,8 +25,7 @@ function CaliperLabel({
 	dx: number
 	dy: number
 }) {
-	const tx = useExperienceI18n(),
-		left = dx < 0
+	const left = dx < 0
 	return (
 		<Html position={position} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
 			<svg
@@ -57,7 +56,7 @@ function CaliperLabel({
 					letterSpacing: '.04em',
 				}}
 			>
-				{tx(label)}
+				{label}
 			</span>
 		</Html>
 	)
@@ -173,6 +172,7 @@ export function FloatingCaliper({
 	closeup: boolean
 	index: number
 }) {
+	const tx = useExperienceI18n()
 	const amount = useTeardownProgress()
 	const body = useRef<T.Group>(null),
 		piston = useRef<T.Mesh>(null),
@@ -372,19 +372,19 @@ export function FloatingCaliper({
 				<>
 					<CaliperLabel
 						position={[-B.caliperRadialPosition, 0, pistonZ - B.pistonLength / 2]}
-						label="活塞 · 内片"
+						label={tx('活塞 · 内片')}
 						dx={-42}
 						dy={10}
 					/>
 					<CaliperLabel
 						position={[-B.caliperRadialPosition, B.guidePinOffsetY, -B.guidePinLength / 2]}
-						label="导向销"
+						label={tx('导向销')}
 						dx={30}
 						dy={-38}
 					/>
 					<CaliperLabel
 						position={[-B.caliperRadialPosition, -B.guidePinOffsetY * 0.45, -innerZ]}
-						label="外侧刹车片"
+						label={tx('外侧刹车片')}
 						dx={38}
 						dy={48}
 					/>
