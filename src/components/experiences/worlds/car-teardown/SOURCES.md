@@ -213,4 +213,4 @@ The body-in-white uses tapered rounded box sections with narrow weld flanges, an
 
 - Rigid opaque subassemblies batch only exactly matching materials, preserving part boundaries, shadow flags, layers and all vertices. Transparent glass and custom clipped paint remain separate; articulated groups are not batched.
 
-- Retina rendering caps the WebGL pixel ratio at 1.5 (previously 1.6); narrow screens retain 1.15. Multisampling, AO quality, geometry and material settings remain unchanged. Four bounded brake-geometry templates avoid repeated casting/edge construction; each mounted corner owns disposable copies.
+- Retina rendering caps the WebGL pixel ratio at 1.5 (previously 1.6); narrow screens retain 1.15. Desktop MSAA is 2× (previously 4×); narrow screens retain 2×. AO quality, geometry and material settings remain unchanged. Four bounded brake-geometry templates avoid repeated casting/edge construction; each mounted corner owns disposable copies.

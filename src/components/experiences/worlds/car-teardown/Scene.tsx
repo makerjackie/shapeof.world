@@ -77,7 +77,7 @@ export type SceneProps = {
 // the composer's depth buffers; doing that on every animation frame loses frames.
 const StudioEffects = memo(function StudioEffects({ mobile }: { mobile: boolean }) {
 	return (
-		<EffectComposer multisampling={mobile ? 2 : 4}>
+		<EffectComposer multisampling={2}>
 			<N8AO
 				aoRadius={0.22}
 				intensity={1.5}
