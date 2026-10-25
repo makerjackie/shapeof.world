@@ -70,8 +70,12 @@ export function makeCity() {
   blockMatrices.forEach((matrix, i) => blocks.setMatrixAt(i, matrix))
   blocks.instanceMatrix.needsUpdate = true
   const color = new T.Color()
+  let lastColors = ''
   const recolor = (radii: number[] | null, compact = false) => {
-    positions.forEach((p, i) => {
+    const colors = `${radii?.join('/') ?? 'none'}/${compact}`
+    if (colors === lastColors) return
+    lastColors = colors
+    if (!compact) positions.forEach((p, i) => {
       const distance = Math.hypot(p.x, p.z)
       const hex = radii ? (distance <= radii[0] ? '#d79a5c' : distance <= radii[1] ? '#b98a62' : distance <= radii[2] ? '#8e8072' : '#a8a29a') : '#a8a29a'
       mesh.setColorAt(i, color.set(hex).multiplyScalar(p.shade))
@@ -82,13 +86,12 @@ export function makeCity() {
       const distance = Math.hypot(matrix.elements[12], matrix.elements[14])
       const hex = radii ? (distance <= radii[0] ? '#d79a5c' : distance <= radii[1] ? '#b98a62' : distance <= radii[2] ? '#8e8072' : '#a8a29a') : '#a8a29a'
       blocks.setColorAt(i, color.set(hex).multiplyScalar(compact ? .58 : .23))
-      compactMesh.setColorAt(i, color.set(hex))
+      if (compact) compactMesh.setColorAt(i, color.set(hex))
     })
-    if (compactMesh.instanceColor) compactMesh.instanceColor.needsUpdate = true
+    if (compact && compactMesh.instanceColor) compactMesh.instanceColor.needsUpdate = true
     if (blocks.instanceColor) blocks.instanceColor.needsUpdate = true
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
+    if (!compact && mesh.instanceColor) mesh.instanceColor.needsUpdate = true
   }
-  recolor(null)
   return {mesh, compactMesh, blocks, recolor}
 }
 

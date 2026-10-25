@@ -143,16 +143,17 @@ function luminousPoints(capacity: number, soft = false) {
     transparent: true,
     depthWrite: false,
     blending: T.AdditiveBlending,
-    uniforms: {softness: {value: soft ? 1 : 0}, fade: {value: 1}},
+    uniforms: {softness: {value: soft ? 1 : 0}, fade: {value: 1}, pointScale: {value: 1}},
     vertexShader: `
       attribute vec3 glowColor;
       attribute float glowSize;
       varying vec3 vColor;
+      uniform float pointScale;
       void main() {
         vColor = glowColor;
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
         gl_Position = projectionMatrix * mv;
-        gl_PointSize = clamp(1100.0 * glowSize / max(0.1, -mv.z), 1.0, 90.0);
+        gl_PointSize = clamp(1100.0 * glowSize / max(0.1, -mv.z), 1.0, 90.0) * pointScale;
       }
     `,
     fragmentShader: `
@@ -450,6 +451,9 @@ export function createMicroScene() {
   return {
     group,
     update,
+    setPointScale(scale: number) {
+      for (const points of [glow, bokeh]) points.material.uniforms.pointScale.value = scale
+    },
     dispose() {
       heroGeometry.dispose()
       denseGeometry.dispose()
