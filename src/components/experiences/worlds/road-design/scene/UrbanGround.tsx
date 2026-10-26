@@ -11,7 +11,7 @@ const SIDEWALK_WIDTH = 5
 const CORNER_RADIUS = 12
 
 /** The street edge, rather than a square overlay, defines both paving and kerbs. */
-export function UrbanGround({ network, atlas }: { network: Network; atlas: T.Texture }) {
+export function UrbanGround({ network, atlas, model }: { network: Network; atlas: T.Texture; model?:{road:T.Material;edge:T.Material;structure:T.Material} }) {
   // A service interchange sits in open roadside land. Its sidewalks belong to
   // the junction, but an arbitrary square of city-block paving does not.
   const service = network.carriageways.some(road => road.kind === 'main')
@@ -24,11 +24,11 @@ export function UrbanGround({ network, atlas }: { network: Network; atlas: T.Tex
     })
     return { node, network: { ...network, carriageways } }
   }), [network])
-  if (nodes?.length) return <>{nodes.map(({ node, network: localNetwork }) => <group key={node.id} position={[node.position.x, node.position.y, node.position.z]}><JunctionGround network={localNetwork} atlas={atlas} radius={node.cornerRadius} roundabout={node.layout === 'roundabout'} islandRadius={node.islandRadius} frontagePaving={!service} /></group>)}</>
-  return <JunctionGround network={network} atlas={atlas} />
+  if (nodes?.length) return <>{nodes.map(({ node, network: localNetwork }) => <group key={node.id} position={[node.position.x, node.position.y, node.position.z]}><JunctionGround model={model} network={localNetwork} atlas={atlas} radius={node.cornerRadius} roundabout={node.layout === 'roundabout'} islandRadius={node.islandRadius} frontagePaving={!service} /></group>)}</>
+  return <JunctionGround model={model} network={network} atlas={atlas} />
 }
 
-function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = false, islandRadius = ROUNDABOUT_ISLAND_RADIUS, frontagePaving = true }: { network: Network; atlas: T.Texture; radius?: number; roundabout?: boolean; islandRadius?: number; frontagePaving?: boolean }) {
+function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = false, islandRadius = ROUNDABOUT_ISLAND_RADIUS, frontagePaving = true, model }: { model?:{road:T.Material;edge:T.Material;structure:T.Material}; network: Network; atlas: T.Texture; radius?: number; roundabout?: boolean; islandRadius?: number; frontagePaving?: boolean }) {
   const assets = useMemo(() => {
     const asphalt: T.BufferGeometry[] = [], blocks: T.BufferGeometry[] = [], paving: T.BufferGeometry[] = [], kerbs: T.BufferGeometry[] = [], pitRims: T.BufferGeometry[] = []
     const trunks: Instance[] = [], crowns: Instance[] = [], pits: Instance[] = []
@@ -146,15 +146,16 @@ function JunctionGround({ network, atlas, radius = CORNER_RADIUS, roundabout = f
     assets.asphaltMaterial.dispose(); assets.pavingMaterial.dispose(); assets.kerbMaterial.dispose(); assets.leafMaterial.dispose(); assets.trunkMaterial.dispose()
   }, [assets])
   return <>
-    <mesh geometry={assets.asphalt} material={assets.asphaltMaterial} />
+    <mesh geometry={assets.asphalt} material={model?.road??assets.asphaltMaterial} />
     {roundabout && <RoundaboutIslands atlas={atlas} radius={islandRadius} />}
-    {frontagePaving && <mesh geometry={assets.blocks} material={assets.blockMaterial} />}
-    <mesh geometry={assets.paving} material={assets.pavingMaterial} />
-    <mesh geometry={assets.kerbs} material={assets.kerbMaterial} />
-    <mesh geometry={assets.pitRims} material={assets.kerbMaterial} />
+    {frontagePaving && !model && <mesh geometry={assets.blocks} material={assets.blockMaterial} />}
+    <mesh geometry={assets.paving} material={model?.structure??assets.pavingMaterial} />
+    <mesh geometry={assets.kerbs} material={model?.edge??assets.kerbMaterial} />
+    <group visible={!model}><mesh geometry={assets.pitRims} material={model?.edge??assets.kerbMaterial} />
     <instancedMesh args={[undefined, undefined, assets.pits.length]} ref={m => { if (m) fillInstances(m, assets.pits) }}><boxGeometry /><meshStandardMaterial color="#11160e" roughness={1} /></instancedMesh>
     <instancedMesh args={[undefined, assets.trunkMaterial, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.65, 1, 6]} /></instancedMesh>
     <instancedMesh args={[undefined, assets.leafMaterial, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.5, 1]} /></instancedMesh>
+    </group>
   </>
 }
 

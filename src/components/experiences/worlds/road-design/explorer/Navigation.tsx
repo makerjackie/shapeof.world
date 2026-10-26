@@ -43,7 +43,7 @@ export function GroundNames({network,routes,route}:{network:Network;routes:Explo
  * auto-framing, close-ups and follow mode. DOM positions update without React. */
 export function Navigation({route}:{route?:ExploreRoute}){
  const tx=useExperienceI18n(),needle=useRef<SVGSVGElement>(null),entry=useRef<HTMLSpanElement>(null),exit=useRef<HTMLSpanElement>(null)
- const {size,gl}=useThree(),panel=useRef<HTMLElement|null>(null)
+ const {size,gl}=useThree(),panel=useRef<HTMLElement|null>(null),atlas=useRef<HTMLElement|null>(null)
  const scratch=useMemo(()=>({p:new T.Vector3(),north:new T.Vector3(),inverse:new T.Quaternion()}),[])
  useFrame(({camera,size})=>{
   scratch.inverse.copy(camera.quaternion).invert();scratch.north.set(0,0,-1).applyQuaternion(scratch.inverse)
@@ -51,17 +51,26 @@ export function Navigation({route}:{route?:ExploreRoute}){
   if(needle.current)needle.current.style.transform=`rotate(${Math.atan2(scratch.north.x,scratch.north.y)}rad)`
   if(!route)return
   if(!panel.current?.isConnected)panel.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-explorer')??null
-  const panelRect=panel.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
+  if(!atlas.current?.isConnected)atlas.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-atlas')??null
+  const panelRect=panel.current?.getBoundingClientRect(),atlasRect=atlas.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
   const mobile=size.width<720,left=mobile?14:24,right=mobile?size.width-14:(panelRect?panelRect.left-canvasRect.left-12:size.width-380)
-  const top=mobile?180:265,bottom=mobile&&panelRect?panelRect.top-canvasRect.top-55:size.height-205
+  const top=mobile?255:265,bottom=mobile&&panelRect?panelRect.top-canvasRect.top-90:size.height-205
   const points=[route.path.points[0],route.path.points.at(-1)!],positions:{x:number;y:number}[]=[]
   for(let i=0;i<2;i++){
    const element=(i?exit:entry).current;if(!element)continue
    const p=points[i];scratch.p.set(p.x,p.y+4,p.z).project(camera)
    let x=(scratch.p.x+1)*size.width/2,y=(1-scratch.p.y)*size.height/2
    if(scratch.p.z>1){x=size.width-x;y=size.height-y}
-   const half=Math.min(element.offsetWidth/2,(right-left)/2),cx=Math.max(left+half,Math.min(right-half,x))
+   const half=Math.min(element.offsetWidth/2,(right-left)/2)
+   let cx=Math.max(left+half,Math.min(right-half,x))
    let cy=Math.max(top,Math.min(Math.max(top,bottom),y))
+   // The atlas occupies the lower-left corner on desktop. Keep edge-clamped
+   // portal labels outside it as well as outside the journey panel.
+   if(atlasRect&&cx-half<atlasRect.right-canvasRect.left+8&&cx+half>atlasRect.left-canvasRect.left-8&&cy+18>atlasRect.top-canvasRect.top&&cy-18<atlasRect.bottom-canvasRect.top){
+    const beside=atlasRect.right-canvasRect.left+half+10
+    if(beside<=right-half)cx=beside
+    else cy=Math.min(Math.max(top,bottom),atlasRect.bottom-canvasRect.top+24)
+   }
    if(i&&positions[0]&&Math.abs(cx-positions[0].x)<half*2&&Math.abs(cy-positions[0].y)<38)cy=cy>top+45?cy-43:cy+43
    const clamped=Math.abs(x-cx)>2||Math.abs(y-cy)>2
    element.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`
