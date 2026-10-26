@@ -1,0 +1,8 @@
+node_modules
+out
+# Audio and photos are downloaded by tools/fetch.sh (music.shapeof.world, Wikimedia Commons, NASA).
+public/*.wav
+public/*.mp3
+public/sfx/
+public/photos/
+public/map/
