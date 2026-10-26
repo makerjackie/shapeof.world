@@ -8,7 +8,7 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { staticFile } from "remotion";
 import { Cam, H, setCamera, W } from "./camera";
-import { COL_W, COLS, ColId, MAP_X0, MAP_X1, MAP_Y0, MAP_Y1 } from "./geo";
+import { ALL_COLS, MAP_X0, MAP_X1, MAP_Y0, MAP_Y1 } from "./geo";
 
 export type ColState = {
   h: number; // height, km
@@ -16,11 +16,15 @@ export type ColState = {
   on?: number; // 0..1 visibility (columns rise out of the ground)
   hi?: number; // 0..1 highlight
   flash?: number; // 0..1 top flash (each step of a fall)
+  x?: number; // position, km (defaults to the column's home city)
+  y?: number;
+  lift?: number; // base above the ground while flying, km
+  glow?: number; // brightness multiplier (background columns are dim)
 };
 
 export type MapState = {
   cam: Cam;
-  cols: Partial<Record<ColId, ColState>>;
+  cols: Record<string, ColState | undefined>; // by column id (geo.ts COLS and BG)
   lights?: number; // city lights gain
   land?: number; // land brightness
   dim?: number; // whole map
@@ -113,6 +117,7 @@ uniform float uHi;
 uniform float uFlash;
 uniform float uGhost;
 uniform float uOn;
+uniform float uGlow;
 uniform vec3 uFog;
 uniform float uFogNear;
 uniform float uFogFar;
@@ -144,6 +149,7 @@ void main() {
     col += vec3(1.0, 0.95, 0.85) * uFlash * (isTop * 3.0 + 0.25 * g);
     a = uOn;
   }
+  col *= uGlow;
   float f = smoothstep(uFogNear, uFogFar, vDepth);
   col = mix(col, uFog, f * 0.85);
   if (any(isnan(col))) col = vec3(0.0); // one NaN pixel would smear into black blocks through the bloom
@@ -219,7 +225,7 @@ export const createEngine = (): Engine => {
   // Columns, their ghosts and ground spots.
   const box = new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0);
   const spotGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2);
-  const cols = COLS.map((c) => {
+  const cols = ALL_COLS.map((c) => {
     const color = new THREE.Color(c.color);
     const mk = (ghost: boolean) =>
       new THREE.ShaderMaterial({
@@ -235,6 +241,7 @@ export const createEngine = (): Engine => {
           uFlash: { value: 0 },
           uGhost: { value: ghost ? 1 : 0 },
           uOn: { value: 1 },
+          uGlow: { value: 1 },
           ...fogU,
         },
       });
@@ -246,11 +253,8 @@ export const createEngine = (): Engine => {
       new THREE.ShaderMaterial({ vertexShader: SPOT_VERT, fragmentShader: SPOT_FRAG, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, uniforms: { uColor: { value: color }, uOn: { value: 1 } } }),
     );
     spot.renderOrder = -1;
-    for (const m of [solid, ghost]) m.position.set(c.at[0], 0, -c.at[1]);
-    spot.position.set(c.at[0], 1, -c.at[1]);
-    spot.scale.set(COL_W * 5, 1, COL_W * 5);
     scene.add(solid, ghost, spot);
-    return { id: c.id, solid, ghost, spot };
+    return { def: c, solid, ghost, spot };
   });
 
   const composer = new EffectComposer(renderer, new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, samples: 4 }));
@@ -274,25 +278,34 @@ export const createEngine = (): Engine => {
     const pxPerKm = s.cam.z;
     const step = [10, 20, 50, 100, 200, 500, 1000].find((v) => v * pxPerKm >= 12) ?? 1000;
     for (const c of cols) {
-      const st = s.cols[c.id];
+      const st = s.cols[c.def.id];
       const on = st?.on ?? 0;
       const h = Math.max(0.01, st?.h ?? 0);
+      const x = st?.x ?? c.def.at[0];
+      const y = st?.y ?? c.def.at[1];
+      const lift = st?.lift ?? 0;
+      const w = c.def.w;
+      c.solid.position.set(x, lift, -y);
+      c.ghost.position.set(x, lift, -y);
+      c.spot.position.set(x, 1, -y);
+      c.spot.scale.set(w * 5, 1, w * 5);
       c.solid.visible = on > 0.001 && h > 0.5;
-      c.solid.scale.set(COL_W, h, COL_W);
+      c.solid.scale.set(w, h, w);
       const u = (c.solid.material as THREE.ShaderMaterial).uniforms;
       u.uH.value = h;
       u.uStep.value = step;
       u.uHi.value = st?.hi ?? 0;
       u.uFlash.value = st?.flash ?? 0;
       u.uOn.value = on;
+      u.uGlow.value = st?.glow ?? 1;
       const gh = st?.ghost ?? 0;
       c.ghost.visible = on > 0.001 && gh > h + 1;
-      c.ghost.scale.set(COL_W * 1.02, gh, COL_W * 1.02);
+      c.ghost.scale.set(w * 1.02, gh, w * 1.02);
       const gu = (c.ghost.material as THREE.ShaderMaterial).uniforms;
       gu.uH.value = gh;
       gu.uStep.value = step;
       gu.uOn.value = on;
-      (c.spot.material as THREE.ShaderMaterial).uniforms.uOn.value = on * dim;
+      (c.spot.material as THREE.ShaderMaterial).uniforms.uOn.value = on * dim * (st?.glow ?? 1) * Math.max(0, 1 - lift / 150);
     }
     bloom.strength = s.bloom ?? 0.6;
     renderer.toneMappingExposure = s.exposure ?? 1.0;
