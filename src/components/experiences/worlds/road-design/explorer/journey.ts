@@ -102,15 +102,49 @@ export function buildJourney(network:Network, route:ExploreRoute, pins:WhyPin[])
  if(!after&&inside.length>1)boundaries.push(Math.min(end-1,inside.at(-1)!.s+40))
  const sorted=[...new Set(boundaries)].sort((a,b)=>a-b)
  while(sorted.length>6)sorted.splice(2,1)
+ // Signal-controlled designs have meaningful lane landmarks before the actual
+ // turn. Keep them separate instead of labelling the whole connector chain left.
+ const span=(lane:typeof lanes[number])=>[projectToLane(path,lane.points[0]),projectToLane(path,lane.points.at(-1)!)]
+ let stages:{cuts:number[];titles:[string,string][]}|undefined
+ if(route.movement.turn==='left'){
+  const connector=lanes.find(l=>l.kind==='connector'),waiting=lanes.find(l=>l.waitingArea)
+  if(network.id==='crossroads-channelized'&&waiting&&connector){
+   const pocket=lanes[lanes.indexOf(waiting)-1]
+   stages={cuts:[0,span(pocket)[0],span(waiting)[0],span(connector)[0],span(connector)[1],length],titles:[
+    ['沿主线接近路口','Approach on the main road'],['进入左转专用车道','Enter the left-turn pocket'],
+    ['按信号进入待转区','Enter the waiting area on its signal'],['等左转绿灯后转向','Turn on the protected left-turn green'],['汇入出口方向','Join the exit road'],
+   ]}
+  }else if(network.id==='continuous-flow'){
+   const crossover=lanes.find(l=>l.id.endsWith('-crossover')),turn=lanes.find(l=>l.kind==='connector'&&l!==crossover)
+   if(crossover&&turn)stages={cuts:[0,span(crossover)[0],span(crossover)[1],span(turn)[0],span(turn)[1],length],titles:[
+    ['沿主线接近路口','Approach on the main road'],['按信号提前穿过对向车道','Cross opposing lanes early on the signal'],
+    ['沿换侧车道驶向主路口','Follow the displaced lane to the main junction'],['按主路口信号左转','Turn left on the main junction signal'],['汇入出口方向','Join the exit road'],
+   ]}
+  }else if(network.id==='ddi'&&connector){
+   const turn=lanes.find(l=>l.kind==='connector'&&l.id.endsWith('-er')),ramp=lanes.find(l=>l.kind==='ramp'&&!l.id.startsWith('aux-road-'))
+   if(turn&&ramp&&connector!==turn)stages={cuts:[0,span(connector)[0],span(connector)[1],span(turn)[0],span(ramp)[1],length],titles:[
+    ['沿主线接近路口','Approach on the main road'],['按信号换到道路另一侧','Cross to the other side on the signal'],
+    ['保持换侧行驶','Continue on the opposite side'],['从左侧驶入高速匝道','Enter the motorway ramp on the left'],['汇入出口方向','Join the exit road'],
+   ]}
+  }else if(network.id==='diamond'&&connector){
+   const ramp=lanes.find(l=>l.kind==='ramp'&&!l.id.startsWith('aux-road-'))
+   if(ramp&&span(ramp)[0]<span(connector)[0])stages={cuts:[0,span(ramp)[0],span(connector)[0],span(connector)[1],end,length],titles:[
+    ['沿主线接近路口','Approach on the main road'],['驶出高速，沿匝道到地面','Leave the motorway and descend to the surface'],
+    ['等灯、让行后左转','Wait, yield, then turn left'],['沿地面道路行驶','Continue on the surface road'],['汇入出口方向','Join the exit road'],
+   ]}
+  }
+ }
+ if(stages)sorted.splice(0,sorted.length,...stages.cuts)
  const steps=sorted.slice(0,-1).map((a,i):JourneyStep=>{
-  const b=sorted[i+1],hits=crossings.filter(c=>c.s>=a&&c.s<b),isTurn=a<=start+35&&b>start+1||loop&&a>=start&&a<end
+  const b=sorted[i+1],hits=crossings.filter(c=>c.s>=a&&c.s<b),isTurn=a<end-.01&&b>start+.01&&(a<=start+35||loop&&a<extent.end)
   let title=i===0?'沿主线接近路口':i===sorted.length-2?'汇入出口方向':a>=end-1?'汇入出口方向':hits.length===0&&a>start?'沿匝道下降':'驶入转向匝道',titleEn=i===0?'Approach on the main road':i===sorted.length-2?'Join the exit road':a>=end-1?'Join the exit road':hits.length===0&&a>start?'Descend along the ramp':'Enter the turning ramp',symbol=i===sorted.length-2?'↗':'↑'
   if(isTurn){title=loop?(network.id==='roundabout'?'沿环岛转向':'右侧驶出，绕 270°'):network.control.kind==='signal'&&first?.kind==='connector'?'等灯、让行后左转':'驶出主线，沿匝道左转';titleEn=loop?(network.id==='roundabout'?'Follow the roundabout':'Exit right and loop 270°'):network.control.kind==='signal'&&first?.kind==='connector'?'Wait, yield, then turn left':'Leave the main road and follow the ramp';symbol=loop?'↻':'↰'}
   if(isTurn&&!loop&&network.control.kind!=='signal'&&network.carriageways.every(road=>road.kind==='urban')){title='让行后左转';titleEn='Yield, then turn left'}
   if(route.movement.turn!=='left'&&isTurn&&!loop){title=route.movement.turn==='right'?'沿道路右转':'沿道路直行';titleEn=route.movement.turn==='right'?'Turn right along the road':'Continue straight';symbol=route.movement.turn==='right'?'↱':'↑'}
   if(title==='沿匝道下降'&&sampleLane(path,b).position.y>=sampleLane(path,a).position.y-1){title='沿匝道行驶';titleEn='Continue along the ramp'}
+  if(stages){[title,titleEn]=stages.titles[i];symbol=i===0?'↑':i===sorted.length-2?'↗':'↰'}
   const groups=groupCrossings(hits)
-  if(hits.length&&(!isTurn||!loop)){const group=groups.find(g=>g.over===hits[0].over)!;title=group.title;titleEn=group.titleEn;symbol=hits[0].over?'↗':'↘'}
+  if(hits.length&&(!isTurn||!loop)&&(!stages||title==='保持换侧行驶'||title==='沿地面道路行驶')){const group=groups.find(g=>g.over===hits[0].over)!;title=group.title;titleEn=group.titleEn;symbol=hits[0].over?'↗':'↘'}
   if(network.id==='huangjuewan'&&!hits.length){
    const midpoint=sampleLane(path,(a+b)/2).position
    // Lane IDs retain the imported OSM way ID; no names are inferred from axes.
