@@ -1,7 +1,7 @@
 // GPU-only section rendering; a probe samples five local trilinear stencils, returning 80 bytes.
 import { UniformStruct, computePipeline, bindGroup, layoutFromWGSL } from './engine/gpu.js';
 import { FIELDS, HEAT_COLORS, COOL_COLORS, decodeSample } from './fields';
-const fields = ['w','h','aspect','tanFov','px','py','pz','horizontal','fx','fy','fz','offset','rx','ry','rz','field','ux','uy','uz','opacity','qx','qy','qz','dx'];
+const fields = ['w','h','aspect','tanFov','px','py','pz','horizontal','fx','fy','fz','offset','rx','ry','rz','field','ux','uy','uz','opacity','qx','qy','qz','dx','cut'];
 function ramp(name, colors) {
   const entries = colors.map(hex => `vec3f(${[1,3,5].map(i => (parseInt(hex.slice(i,i+2),16)/255).toFixed(6)).join(',')})`);
   return `fn ${name}(t: f32) -> vec3f { let a = array<vec3f,5>(${entries.join(',')}); let x=clamp(t,0.0,1.0)*4.0; let i=min(u32(x),3u); return mix(a[i],a[i+1u],x-f32(i)); }`;
@@ -43,16 +43,19 @@ fn uvw(p: vec3f) -> vec3f { return (p + vec3f(.6,0,.6)) / vec3f(1.2,1.8,1.2); }
   if(P.field==3.0){value=a.y/.15;}
   if(P.field==4.0){value=clamp(1.0-a.y-b.x,0.0,1.0);}
   if(P.field==5.0){value=length(v)/6.0;}
-  if(P.field==6.0){value=length(textureSampleLevel(vort,lin,uv,0).xyz)/P.dx/100.0;}
+  if(P.field==7.0){value=length(textureSampleLevel(vort,lin,uv,0).xyz)/P.dx/100.0;}
+  if(P.field==6.0){value=b.y/max(a.y+b.x,.0001)*1000.0/200.0;}
   var color=select(cool(value),heat(value),P.field<2.0);
   let q=select(vec2f(p.x,p.y),vec2f(p.x,p.z),P.horizontal>0.5);
   let grid=abs(fract(q*10.0+.5)-.5);
   let line=1.0-smoothstep(.003,.009,min(grid.x,grid.y));
   color=mix(color,vec3f(.38,.58,.66),line*.18);
   // Hatch solid cells: these are not valid gas-temperature measurements.
+  if(g.z>.5 && P.cut>.5){discard;}
   if(g.z>.5){color=mix(vec3f(.10,.12,.15),vec3f(.24,.28,.31),step(.5,fract((q.x+q.y)*85.0)));}
   let edge=min(min(uv.x,1.0-uv.x),select(min(uv.y,1.0-uv.y),min(uv.z,1.0-uv.z),P.horizontal>.5));
   if(edge<.003){color=vec3f(.55,.82,.86);}
+  var arrow=false;
   // Velocity arrows on a 10 cm lattice; sample direction at each arrow centre.
   if(P.field==5.0){
     let center=floor(q*10.0)/10.0+.05;
@@ -63,9 +66,15 @@ fn uvw(p: vec3f) -> vec3f { return (p + vec3f(.6,0,.6)) / vec3f(1.2,1.8,1.2); }
     let along=dot(d,dir); let across=abs(dot(d,vec2f(-dir.y,dir.x)));
     let shaft=across<.0015 && abs(along)<.027;
     let head=abs(across-(.027-along)*.6)<.002 && along>.010 && along<.027;
-    if(mag>.05 && (shaft || head)){color=vec3f(.94,.98,1);}
+    if(mag>.05 && (shaft || head)){color=vec3f(.94,.98,1);arrow=true;}
   }
-  return vec4f(color,P.opacity);
+  // In cut mode the cold empty domain stays transparent: the remaining real fire must remain visible.
+  let signal=max(a.x*1.5,max(a.z*2.0,a.w*2.0));
+  var alpha=P.opacity;
+  if(P.cut>.5){alpha*=mix(.06,1.0,smoothstep(.02,.4,signal));if(edge<.003){alpha=.6;}}
+  if(arrow && P.opacity>0.0){alpha=max(alpha,.9);}
+  if(P.field==6.0 && a.y+b.x<.0001){alpha=0.0;}
+  return vec4f(color,alpha);
 }`;
     const module = device.createShaderModule({code:shader,label:'campfire-section'});
     const bgl = layoutFromWGSL(device,shader,GPUShaderStage.FRAGMENT);
@@ -84,7 +93,7 @@ out[2]=textureSampleLevel(vel,lin,u,0);out[3]=textureSampleLevel(vort,lin,u,0);o
     this.busy=false;
   }
   update(cam,w,h,slice,point=[0,.3,0]) {
-    this.U.set({w,h,aspect:w/h,tanFov:Math.tan(cam.fovY/2),px:cam.pos[0],py:cam.pos[1],pz:cam.pos[2],fx:cam.fwd[0],fy:cam.fwd[1],fz:cam.fwd[2],rx:cam.right[0],ry:cam.right[1],rz:cam.right[2],ux:cam.up[0],uy:cam.up[1],uz:cam.up[2],horizontal:+slice.horizontal,offset:slice.offset,field:FIELDS.findIndex(f=>f.id===slice.field),opacity:slice.opacity,qx:point[0],qy:point[1],qz:point[2],dx:this.sim.dx}).upload();
+    this.U.set({w,h,aspect:w/h,tanFov:Math.tan(cam.fovY/2),px:cam.pos[0],py:cam.pos[1],pz:cam.pos[2],fx:cam.fwd[0],fy:cam.fwd[1],fz:cam.fwd[2],rx:cam.right[0],ry:cam.right[1],rz:cam.right[2],ux:cam.up[0],uy:cam.up[1],uz:cam.up[2],horizontal:+slice.horizontal,offset:slice.offset,field:FIELDS.findIndex(f=>f.id===slice.field),opacity:slice.opacity,cut:+slice.cut,qx:point[0],qy:point[1],qz:point[2],dx:this.sim.dx}).upload();
   }
   draw(enc,view) { const pass=enc.beginRenderPass({colorAttachments:[{view,loadOp:'load',storeOp:'store'}]});pass.setPipeline(this.pipe);pass.setBindGroup(0,this.bg);pass.draw(3);pass.end(); }
   async sample(position,time) {

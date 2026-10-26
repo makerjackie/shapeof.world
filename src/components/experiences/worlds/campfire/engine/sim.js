@@ -73,6 +73,8 @@ export class FireSim {
     this.S = T('S'); this.SX = T('SX'); this.SY = T('SY');
     this.S2 = T('S2'); this.S2X = T('S2X'); this.S2Y = T('S2Y');
     this.vort = T('vort');
+    // Read-only diagnostic output: burned fuel fraction per second and pre-reaction temperature.
+    this.reaction = T('reaction');
     this.geo = T('geo');   // r: log pyrolysis band*heat, g: coal bed, b: solid, a: log sdf
 
     // Multigrid hierarchy.
@@ -224,6 +226,7 @@ fn outsideFade(c: vec3f) -> f32 {
 @group(0) @binding(9) var velOut: texture_storage_3d<rgba16float, write>;
 @group(0) @binding(10) var sOut: texture_storage_3d<rgba16float, write>;
 @group(0) @binding(11) var s2Out: texture_storage_3d<rgba16float, write>;
+@group(0) @binding(12) var reactionOut: texture_storage_3d<rgba16float, write>;
 
 fn noise4(q: vec3f) -> vec4f { return textureSampleLevel(noiseT, rep, q, 0.0) * 2.0 - 1.0; }
 
@@ -305,6 +308,7 @@ fn noise4(q: vec3f) -> vec4f { return textureSampleLevel(noiseT, rep, q, 0.0) * 
   s2.x = min(s2.x + (1.0 + P.rs) * b, 1.0);
   let dT = min(P.heatOut * b, max(2100.0 - T0, 0.0));
   var T = T0 + dT;
+  textureStore(reactionOut,id,vec4f(b/dt,T0,0.0,0.0));
   let q = dT / dt;                                     // K/s
   let phi = select(min(P.expansion * q / T, 60.0), 0.0, geo.b > 0.5);   // gas expansion (1/s), none in solids
 
@@ -557,7 +561,7 @@ fn pr(c: vec3i, me: f32) -> f32 {
     this.bgAdv1 = bindGroup(d, this.pAdv1, [U, this.vel, this.S, this.S2, this.lin, this.velX, this.SX, this.S2X]);
     this.bgAdv2 = bindGroup(d, this.pAdv2, [U, this.vel, this.S, this.S2, this.lin, this.velX, this.SX, this.S2X, this.velY, this.SY, this.S2Y]);
     this.bgCurl = bindGroup(d, this.pCurl, [this.velY, this.vort]);
-    this.bgForces = bindGroup(d, this.pForces, [U, this.velY, this.SY, this.S2Y, this.vort, this.noiseTex, this.curlTex, this.rep, this.geo, this.velX, this.S, this.S2]);
+    this.bgForces = bindGroup(d, this.pForces, [U, this.velY, this.SY, this.S2Y, this.vort, this.noiseTex, this.curlTex, this.rep, this.geo, this.velX, this.S, this.S2, this.reaction]);
     this.bgGeo = bindGroup(d, this.pGeo, [U, this.logBuf, this.geo]);
     const L0 = this.levels[0];
     this.bgDiv = bindGroup(d, this.pDiv, [this.velX, U, L0.b]);

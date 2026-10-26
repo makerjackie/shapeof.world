@@ -6,6 +6,7 @@ import { blackbodyLUT } from './blackbody.js';
 import { SCENE_SDF, SCENE_SURFACE } from './shaders/scene.js';
 
 export const RP_FIELDS = [
+  'cutEnabled', 'cutAxis', 'cutOffset', 'cutSign',
   'width', 'height', 'vw', 'vh', 'time', 'frame', 'nLogs', 'nStones',
   'camX', 'camY', 'camZ', 'tanFov', 'fwdX', 'fwdY', 'fwdZ', 'aspect', 'rgtX', 'rgtY', 'rgtZ', 'jitX', 'upX', 'upY', 'upZ', 'jitY',
   'ox', 'oy', 'oz', 'dx', 'sx', 'sy', 'sz', 'tempScale', 'nx', 'ny', 'nz', 'nLights',
@@ -17,6 +18,7 @@ export const RP_FIELDS = [
 ];
 
 export const RP_DEFAULTS = {
+  cutEnabled:0, cutAxis:2, cutOffset:0, cutSign:1,
   exposure: 15.0, stepMul: 0.7, sootAbs: 4.0, sootEmit: 10.0, emitK: 4.0, blueK: 0.05, smokeScat: 0.02, smokeG: 0.5,
   ambient: 1.0, detailAmt: 0.6, detailFreq: 2.2, detailSpeed: 0.9, hazeK: 1.0, glowK: 1.0, bloomK: 0.04, tonemap: 2,
   grain: 0.02, vignette: 0.6, saturation: 1.0, contrast: 1.0, bedGlow: 1.0, logGlow: 1.0, lightK: 1.0,
@@ -46,6 +48,7 @@ export class Renderer {
     this.lightBuf = device.createBuffer({ size: NLIGHTS * 32, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC });
     this.lightState = device.createBuffer({ size: NLIGHTS * 3 * 16, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
     this.lastLightTime = null;
+    this.surfaceFrame = 0;
 
     this.lin = device.createSampler({ magFilter: 'linear', minFilter: 'linear', addressModeU: 'clamp-to-edge', addressModeV: 'clamp-to-edge', addressModeW: 'clamp-to-edge' });
     this.rep = device.createSampler({ magFilter: 'linear', minFilter: 'linear', addressModeU: 'repeat', addressModeV: 'repeat', addressModeW: 'repeat' });
@@ -80,6 +83,8 @@ fn bbRow(t: texture_2d<f32>, T: f32, row: u32) -> vec3f {
 }
 fn bbLoad(t: texture_2d<f32>, T: f32) -> vec3f { return bbRow(t, T, 0u); }
 fn bbSoot(t: texture_2d<f32>, T: f32) -> vec3f { return bbRow(t, T, 1u); }
+fn cutDistance(p: vec3f) -> f32 { return R.cutSign*(p[u32(R.cutAxis)]-R.cutOffset); }
+fn cutSolid(d: f32, p: vec3f) -> f32 { return select(d,max(d,cutDistance(p)),R.cutEnabled>.5); }
 struct Light { pos: vec4f, col: vec4f };
 // Thin-lens camera: rays start on the aperture (lens offset in the camera plane) and pass through the
 // point where the pinhole ray meets the focal plane. focus <= 0 is a pinhole camera.
@@ -245,8 +250,13 @@ fn sampleCubic(g: vec3f, dims: vec3f) -> vec4f {
   let bmin = vec3f(R.ox, R.oy, R.oz); let bmax = bmin + vec3f(R.sx, R.sy, R.sz);
   let inv = 1.0 / rd;
   let t0 = (bmin - ro) * inv; let t1 = (bmax - ro) * inv;
-  let tn = max(max(max(min(t0.x, t1.x), min(t0.y, t1.y)), min(t0.z, t1.z)), 0.0);
-  let tf = min(min(min(max(t0.x, t1.x), max(t0.y, t1.y)), max(t0.z, t1.z)), sd);
+  var tn = max(max(max(min(t0.x, t1.x), min(t0.y, t1.y)), min(t0.z, t1.z)), 0.0);
+  var tf = min(min(min(max(t0.x, t1.x), max(t0.y, t1.y)), max(t0.z, t1.z)), sd);
+  if(R.cutEnabled>.5){
+    let a=u32(R.cutAxis);let den=R.cutSign*rd[a];
+    if(abs(den)<.000001){if(cutDistance(ro)>0.0){tf=-1.0;}}
+    else{let tc=(R.cutOffset-ro[a])/rd[a];if(den<0.0){tn=max(tn,tc);}else{tf=min(tf,tc);}}
+  }
   var L = vec3f(0.0); var Tr = 1.0; var haze = 0.0;
   if (tf > tn) {
     let ds = R.dx * R.stepMul;
@@ -589,6 +599,7 @@ fn camera(c: vec3f) -> vec3f {
     this.hdrAvg = tex2D(d, [w, h], 'rgba16float', 'hdrAvg', RA);
     this.hist = tex2D(d, [w, h], 'rgba16float', 'hist');
     this.histReset = true;
+    this.surfaceKey = null;
     this.acc = tex2D(d, [w, h], 'rgba32float', 'acc');
     this.blur = [];
     let bw = w, bh = h;
@@ -673,9 +684,16 @@ fn camera(c: vec3f) -> vec3f {
     let pass = enc.beginComputePass({ timestampWrites: prof?.pass('lights') });
     pass.setPipeline(this.pLights); pass.setBindGroup(0, this.bgLights); pass.dispatchWorkgroups(NLIGHTS);
     pass.end();
-    pass = enc.beginComputePass({ timestampWrites: prof?.pass('surface') });
-    pass.setPipeline(this.pSurface); pass.setBindGroup(0, this.bgSurface); pass.dispatchWorkgroups(Math.ceil(this.sw / 8), Math.ceil(this.sh / 8));
-    pass.end();
+    // Geometry is static. Reuse the lit surface between lighting refreshes; orbit/resize invalidates it.
+    const surfaceKey = [...this.cam.pos, ...this.cam.fwd, this.w, this.h, this.params.cutEnabled ?? 0,
+      this.params.cutAxis ?? 2, this.params.cutOffset ?? 0, this.params.cutSign ?? 1].join(':');
+    const refreshSurface = this.surfaceKey !== surfaceKey || (this.surfaceFrame++ % (this.surfaceEvery || 1) === 0);
+    if (refreshSurface) {
+      this.surfaceKey = surfaceKey;
+      pass = enc.beginComputePass({ timestampWrites: prof?.pass('surface') });
+      pass.setPipeline(this.pSurface); pass.setBindGroup(0, this.bgSurface); pass.dispatchWorkgroups(Math.ceil(this.sw / 8), Math.ceil(this.sh / 8));
+      pass.end();
+    }
     // prefilter once per simulation state (several jittered renders of one sub-step share it)
     const sharp = this.params.flameSharp > 0 && this.params.cubic > 0.5;
     if (sharp) {
@@ -683,7 +701,7 @@ fn camera(c: vec3f) -> vec3f {
       if (stamp !== this.sharpStamp) {
         this.sharpStamp = stamp;
         const [x, y, z] = this.sim.res;
-        pass = enc.beginComputePass();
+        pass = enc.beginComputePass({ timestampWrites: prof?.pass('prefilter') });
         pass.setPipeline(this.pSharpen); pass.setBindGroup(0, this.bgSharpen); pass.dispatchWorkgroups(Math.ceil(x / 4), Math.ceil(y / 4), Math.ceil(z / 4));
         pass.end();
       }
@@ -724,13 +742,13 @@ fn camera(c: vec3f) -> vec3f {
   }
 
   // Real-time: blend this frame with the clamped history into hdrAvg (then bloom/final from hdrAvg).
-  temporal(enc, weight = 0.35) {
+  temporal(enc, weight = 0.35, prof) {
     const d = this.device;
     if (!this.taU) this.taU = d.createBuffer({ size: 16, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
     if (this._taHdr !== this.hdr) { this._taHdr = this.hdr; this.bgTemporal = bindGroup(d, this.pTemporal, [this.hdr, this.hist, this.hdrAvg, this.taU]); this.histReset = true; }
     d.queue.writeBuffer(this.taU, 0, new Float32Array([weight, this.histReset ? 1 : 0, 0, 0]));
     this.histReset = false;
-    const pass = enc.beginComputePass();
+    const pass = enc.beginComputePass({ timestampWrites: prof?.pass('taa') });
     pass.setPipeline(this.pTemporal); pass.setBindGroup(0, this.bgTemporal); pass.dispatchWorkgroups(Math.ceil(this.w / 8), Math.ceil(this.h / 8));
     pass.end();
     enc.copyTextureToTexture({ texture: this.hdrAvg }, { texture: this.hist }, [this.w, this.h]);
@@ -756,7 +774,7 @@ fn camera(c: vec3f) -> vec3f {
     pass.end();
   }
 
-  final(enc, view, format, fromAvg) {
+  final(enc, view, format, fromAvg, prof) {
     const fp = this.getFinalPipe(format);
     let bg = fromAvg ? this.bgFinalAvg : this.bgFinalHdr;
     if (format !== this.format) {
@@ -764,7 +782,7 @@ fn camera(c: vec3f) -> vec3f {
       if (!this.bgFinalCache.has(key)) this.bgFinalCache.set(key, bindGroup(this.device, fp, [this.U.buffer, fromAvg ? this.hdrAvg : this.hdr, this.bloomOut, this.lin]));
       bg = this.bgFinalCache.get(key);
     }
-    const pass = enc.beginRenderPass({ colorAttachments: [{ view, loadOp: 'clear', storeOp: 'store', clearValue: [0, 0, 0, 1] }] });
+    const pass = enc.beginRenderPass({ timestampWrites: prof?.pass('final'), colorAttachments: [{ view, loadOp: 'clear', storeOp: 'store', clearValue: [0, 0, 0, 1] }] });
     pass.setPipeline(fp); pass.setBindGroup(0, bg); pass.draw(3);
     pass.end();
   }
