@@ -6,7 +6,7 @@ import { FONT, K, SERIF } from "../theme";
 import { clamp01, EIO, EO, lerp, ramp, sf as b, track } from "../timing";
 import { Cam, toScreen } from "../world/camera";
 import { heroHH } from "../world/city";
-import { NEED, passShares, YES_MAX, yesCount } from "./state";
+import { HOMES, hookYear, NEED, passShares, YES_MAX, yesCount } from "./state";
 import { fmt, SHADOW, useT } from "./ui";
 
 const fadeIO = (t: number, at: number, out: number, fi = 0.4, fo = 0.35) => Math.min(ramp(t, at, at + fi, EO), 1 - ramp(t, out - fo, out));
@@ -130,7 +130,7 @@ export const RushCounter: React.FC<{ at: number; out: number }> = ({ at, out }) 
   const t = useT();
   const o = fadeIO(t, at, out);
   if (o <= 0) return null;
-  const n = Math.round(lerp(0, 346, ramp(t, at + 0.2, at + 2.4, EO)));
+  const n = Math.round(lerp(0, 335, ramp(t, at + 0.2, at + 2.4, EO)));
   return (
     <div style={{ position: "absolute", right: 110, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>早上 8 点，下楼的人</div>
@@ -204,20 +204,20 @@ export const Tally: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   if (o <= 0) return null;
   const n = yesCount(t);
   const W = 560;
-  const stall = n >= YES_MAX && t > b(71.5);
+  const stall = n >= YES_MAX && t > b(68.7);
   return (
     <div style={{ position: "absolute", right: 110, top: 300, width: W, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL, boxSizing: "content-box" }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>同意再凑钱</div>
       <div style={{ fontSize: 118, fontWeight: 900, lineHeight: 1.05, color: K.green, fontVariantNumeric: "tabular-nums" }}>
         {n}
-        <span style={{ fontSize: 50, color: K.fg, fontWeight: 800 }}> / 132 户</span>
+        <span style={{ fontSize: 50, color: K.fg, fontWeight: 800 }}> / {HOMES} 户</span>
       </div>
       <div style={{ position: "relative", height: 26, marginTop: 22, background: "rgba(244,240,232,0.14)", borderRadius: 13 }}>
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: (W * n) / 132, background: K.green, borderRadius: 13, boxShadow: `0 0 18px ${K.green}` }} />
-        <div style={{ position: "absolute", left: (W * NEED) / 132 - 2, top: -16, width: 4, height: 58, background: K.fg }} />
+        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: (W * n) / HOMES, background: K.green, borderRadius: 13, boxShadow: `0 0 18px ${K.green}` }} />
+        <div style={{ position: "absolute", left: (W * NEED) / HOMES - 2, top: -16, width: 4, height: 58, background: K.fg }} />
       </div>
       <div style={{ position: "relative", height: 60 }}>
-        <div style={{ position: "absolute", left: (W * NEED) / 132, top: 14, transform: "translateX(-50%)", fontSize: 34, fontWeight: 800, whiteSpace: "nowrap", color: stall ? K.red : K.fg }}>
+        <div style={{ position: "absolute", left: (W * NEED) / HOMES, top: 14, transform: "translateX(-50%)", fontSize: 34, fontWeight: 800, whiteSpace: "nowrap", color: stall ? K.red : K.fg }}>
           {stall ? `还差 ${NEED - YES_MAX} 户` : `需要 ${NEED} 户`}
         </div>
       </div>
@@ -232,7 +232,7 @@ export const PassLegend: React.FC<{ at: number; out: number }> = ({ at, out }) =
   const o = fadeIO(t, at, out, 0.5, 0.4);
   if (o <= 0) return null;
   const p = passShares(t);
-  const own = 132 - p.rented - p.sub - p.empty;
+  const own = HOMES - p.rented - p.sub - p.empty;
   const rows: [string, number, string][] = [
     ["自住", own, "#ffb36b"],
     ["出租", p.rented, "#cfe0ff"],
@@ -384,3 +384,151 @@ export const Fade: React.FC<{ o: number; color?: string }> = ({ o, color = "#000
 
 void SERIF;
 void clamp01;
+
+// ---------- v7 pieces ----------
+
+// The year racing in the hook (top right, big).
+export const HookYear: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.15, 0.3);
+  if (o <= 0) return null;
+  const y = hookYear(t);
+  const a = y - 2010;
+  return (
+    <div style={{ position: "absolute", right: 110, top: 90, textAlign: "right", opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ fontSize: 150, fontWeight: 900, letterSpacing: -3, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+        {y}
+        <span style={{ fontSize: 54, fontWeight: 700, marginLeft: 8 }}>年</span>
+      </div>
+      <div style={{ fontSize: 44, fontWeight: 800, color: a >= 30 ? K.red : a >= 15 ? K.amber : "rgba(244,240,232,0.8)", marginTop: 6, fontVariantNumeric: "tabular-nums" }}>楼龄 {a} 年</div>
+    </div>
+  );
+};
+
+// A chapter marker: "第一笔账 · 钱" with a rule drawing out.
+export const Chapter: React.FC<{ at: number; out: number; n: string; title: string; sub?: string }> = ({ at, out, n, title, sub }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.3, 0.4);
+  if (o <= 0) return null;
+  const k = ramp(t, at, at + 0.9, EO);
+  const k2 = ramp(t, at + 0.35, at + 1.1, EO);
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: 120, display: "flex", flexDirection: "column", alignItems: "center", opacity: o, fontFamily: SERIF, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ fontSize: 40, fontWeight: 600, letterSpacing: 14, color: "rgba(244,240,232,0.75)", transform: `translateY(${(1 - k) * 16}px)`, opacity: k }}>{n}</div>
+      <div style={{ width: 360 * k, height: 3, background: K.gold, margin: "18px 0 22px", boxShadow: `0 0 18px ${K.gold}` }} />
+      <div style={{ fontSize: 150, fontWeight: 900, lineHeight: 1, letterSpacing: 10, opacity: k2, transform: `scale(${0.94 + 0.06 * k2})` }}>{title}</div>
+      {sub ? <div style={{ fontFamily: FONT, fontSize: 44, fontWeight: 700, marginTop: 26, opacity: k2, color: "rgba(244,240,232,0.9)" }}>{sub}</div> : null}
+    </div>
+  );
+};
+
+// A building's year: what comes in (fees) and what one item already costs (the lifts' upkeep).
+export const Budget: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  const k1 = ramp(t, at + 0.3, at + 1.3, EO);
+  const k2 = ramp(t, at + 1.6, at + 2.6, EO);
+  const W = 560;
+  return (
+    <div style={{ position: "absolute", right: 120, top: 260, width: W, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL, boxSizing: "content-box" }}>
+      <div style={{ fontSize: 34, fontWeight: 800, marginBottom: 20 }}>一栋楼，一年</div>
+      <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>收进来的物业费</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 18, margin: "8px 0 22px" }}>
+        <div style={{ width: W * 0.62 * k1, height: 40, background: K.gold, borderRadius: 6, boxShadow: `0 0 16px ${K.gold}` }} />
+        <div style={{ fontSize: 48, fontWeight: 900, opacity: k1 }}>约 15 万</div>
+      </div>
+      <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>两部老电梯，光维保</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 18, margin: "8px 0 22px" }}>
+        <div style={{ width: W * 0.62 * 0.4 * k2, height: 40, background: K.red, borderRadius: 6, boxShadow: `0 0 16px ${K.red}` }} />
+        <div style={{ fontSize: 48, fontWeight: 900, opacity: k2 }}>约 6 万</div>
+      </div>
+      <div style={{ fontSize: 28, fontWeight: 700, color: "rgba(244,240,232,0.7)", opacity: k2 }}>剩下的，还要付水泵电费、保洁、保安……</div>
+    </div>
+  );
+};
+
+// The same lift costs about the same everywhere; homes do not.
+export const PriceCompare: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  const k1 = ramp(t, at + 0.3, at + 1.3, EO);
+  const k2 = ramp(t, at + 1.0, at + 2.0, EO);
+  const k3 = ramp(t, at + 2.2, at + 3.0, EO);
+  const H = 400;
+  const col = (label: string, price: number, total: string, k: number, x: number, c: string) => (
+    <div style={{ position: "absolute", left: x, bottom: 0, width: 240, textAlign: "center" }}>
+      <div style={{ fontSize: 52, fontWeight: 900, color: c, opacity: k, fontVariantNumeric: "tabular-nums" }}>{fmt(Math.round(price * k), 0)}</div>
+      <div style={{ fontSize: 26, fontWeight: 700, color: "rgba(244,240,232,0.75)", opacity: k }}>元/平方米</div>
+      <div style={{ margin: "12px auto 0", width: 130, height: (H * price * k) / 64314, background: c, borderRadius: "8px 8px 0 0", boxShadow: `0 0 18px ${c}` }} />
+      <div style={{ fontSize: 34, fontWeight: 800, marginTop: 12 }}>{label}</div>
+      <div style={{ fontSize: 26, fontWeight: 700, color: "rgba(244,240,232,0.7)", opacity: k }}>100 平：{total}</div>
+    </div>
+  );
+  return (
+    <div style={{ position: "absolute", right: 110, top: 230, width: 600, height: 760, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL, boxSizing: "border-box" }}>
+      <div style={{ fontSize: 32, fontWeight: 800 }}>二手房均价 · 2025 年 12 月</div>
+      <div style={{ position: "absolute", left: 30, right: 30, bottom: 130, height: 560 }}>
+        {col("深圳", 64314, "约 643 万", k1, 10, K.lit)}
+        {col("100 城平均", 13016, "约 130 万", k2, 290, K.cyan)}
+      </div>
+      <div style={{ position: "absolute", left: 34, right: 34, bottom: 34, fontSize: 30, fontWeight: 800, opacity: k3, lineHeight: 1.35 }}>修一次电梯，每户都要摊几千元。</div>
+    </div>
+  );
+};
+
+// 212 estates whose managers left, 35% of them under five years old.
+export const ExodusGrid: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  const k = ramp(t, at + 0.2, at + 1.6, EO);
+  const k2 = ramp(t, at + 1.8, at + 2.8, EO);
+  const n = Math.round(212 * k);
+  const cols = 20;
+  const s = 24;
+  return (
+    <div style={{ position: "absolute", right: 110, top: 250, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
+      <div style={{ fontSize: 32, fontWeight: 800, marginBottom: 6 }}>物业撤场的小区</div>
+      <div style={{ fontSize: 26, fontWeight: 700, color: "rgba(244,240,232,0.7)", marginBottom: 18 }}>2025 年初 – 2026 年 3 月</div>
+      <svg width={cols * s} height={Math.ceil(212 / cols) * s}>
+        {Array.from({ length: n }, (_, i) => {
+          const young = i < 74;
+          return <rect key={i} x={(i % cols) * s + 2} y={Math.floor(i / cols) * s + 2} width={s - 5} height={s - 5} rx={3} fill={young && k2 > 0 ? K.red : "rgba(244,240,232,0.55)"} opacity={young ? 0.45 + 0.55 * k2 : 1} />;
+        })}
+      </svg>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 18, marginTop: 14 }}>
+        <span style={{ fontSize: 72, fontWeight: 900, fontVariantNumeric: "tabular-nums" }}>{n}</span>
+        <span style={{ fontSize: 30, fontWeight: 700 }}>个</span>
+        <span style={{ fontSize: 34, fontWeight: 800, color: K.red, opacity: k2, marginLeft: 20 }}>三成五，楼龄不到 5 年</span>
+      </div>
+    </div>
+  );
+};
+
+// Elsewhere: three ways a block is made to keep paying.
+export const Abroad: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  const cards = [
+    { at: at + 0.3, place: "新加坡 · 组屋", line1: "四分之三的人同意，", line2: "全楼一起换电梯，政府出大头。" },
+    { at: at + 1.2, place: "香港 · 私人楼宇", line1: "楼龄满 30 年，", line2: "政府每 10 年强制验一次楼。" },
+    { at: at + 2.1, place: "美国佛罗里达 · 公寓", line1: "欠交管理费，", line2: "业主协会可以申请拍卖你的房子。" },
+  ];
+  return (
+    <div style={{ position: "absolute", left: 110, right: 110, top: 330, display: "flex", gap: 34, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      {cards.map((c, i) => {
+        const k = ramp(t, c.at, c.at + 0.6, EO);
+        return (
+          <div key={i} style={{ flex: 1, opacity: k, transform: `translateY(${(1 - k) * 30}px)`, ...PANEL, padding: "34px 36px" }}>
+            <div style={{ fontSize: 34, fontWeight: 900, color: K.gold, marginBottom: 18 }}>{c.place}</div>
+            <div style={{ fontSize: 40, fontWeight: 800, lineHeight: 1.35 }}>{c.line1}</div>
+            <div style={{ fontSize: 40, fontWeight: 800, lineHeight: 1.35 }}>{c.line2}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

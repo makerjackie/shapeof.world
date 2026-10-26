@@ -228,7 +228,7 @@ void main() {
     lamp *= 0.55 + 0.45 * h31(vec3(ui, fl + 0.5, seed));
     lamp *= 0.7 + 0.45 * smoothstep(0.35, 0.95, fy);
     lamp *= mix(1.0, 0.42 * (0.8 + 0.2 * sin(u * 11.0)), curtain);
-    if (tone > 0.97) lamp *= 0.75 + 0.3 * sin(uTime * 9.0 + home * 60.0); // a television
+    if (tone > 0.97) lamp *= 0.8; // a television, steady
 
     // far away: window detail averages out, and further still whole flats do
     float share = office > 0.5 ? 0.8 : (longF ? (south > 0.5 ? 0.5 : 0.22) : 0.04);
@@ -669,18 +669,22 @@ void main() {
   if (face > 1.5 && face < 2.5) {
     float x = uv.x;
     float y = uv.y * Hh;
-    float furn = (1.0 - 0.75 * tenant) * (1.0 - gone) * (1.0 - sub);
-    float sofa = band(x, 0.1 + 0.1 * h11(seed), 0.42, 0.004) * band(y, 0.0, 0.8, 0.01);
-    float tv = band(x, 0.62, 0.84, 0.004) * band(y, 0.95, 1.6, 0.01);
-    float shelf = band(x, 0.88, 0.96, 0.004) * band(y, 0.0, 2.1, 0.01);
-    float pic = band(x, 0.18, 0.32, 0.004) * band(y, 1.35, 1.85, 0.01);
-    col = mix(col, col * 0.35, clamp(sofa + shelf, 0.0, 1.0) * furn);
-    col = mix(col, vec3(0.03, 0.05, 0.08) + vec3(0.25, 0.4, 0.6) * 0.15 * lit * (0.7 + 0.3 * sin(uTime * 7.0 + seed * 30.0)), tv * furn);
-    col = mix(col, col * 0.55 + vec3(0.1, 0.07, 0.04) * lit, pic * furn);
+    // anti-aliased by the pixel footprint; details fade out when they get smaller than a pixel
+    float ex = max(fwidth(x), 0.0005) * 1.5;
+    float ey = max(fwidth(y), 0.001) * 1.5;
+    float fine = 1.0 - smoothstep(0.012, 0.03, ex);
+    float furn = (1.0 - 0.75 * tenant) * (1.0 - gone) * (1.0 - sub) * fine;
+    float sofa = band(x, 0.1 + 0.1 * h11(seed), 0.42, ex) * band(y, 0.0, 0.8, ey);
+    float tv = band(x, 0.62, 0.84, ex) * band(y, 0.95, 1.6, ey);
+    float shelf = band(x, 0.88, 0.96, ex) * band(y, 0.0, 2.1, ey);
+    float pic = band(x, 0.18, 0.32, ex) * band(y, 1.35, 1.85, ey);
+    col = mix(col, col * 0.4, clamp(sofa + shelf, 0.0, 1.0) * furn);
+    col = mix(col, vec3(0.03, 0.05, 0.08) + vec3(0.25, 0.4, 0.6) * 0.12 * lit, tv * furn);
+    col = mix(col, col * 0.6 + vec3(0.1, 0.07, 0.04) * lit, pic * furn);
     float outer = step(unit, 0.5) + step(2.5, unit);
-    float win = outer * band(x, 0.46, 0.58, 0.004) * band(y, 0.9, 2.2, 0.01);
+    float win = outer * band(x, 0.46, 0.58, ex) * band(y, 0.9, 2.2, ey) * fine;
     col = mix(col, vec3(0.015, 0.02, 0.04) + vec3(0.05, 0.06, 0.1) * (1.0 - uNight), win);
-    float p1 = sub * (band(x, 0.325, 0.343, 0.002) + band(x, 0.657, 0.675, 0.002));
+    float p1 = sub * fine * (band(x, 0.325, 0.343, ex) + band(x, 0.657, 0.675, ex));
     col = mix(col, vec3(0.35, 0.33, 0.3) * (0.15 + 0.5 * I), clamp(p1, 0.0, 1.0));
   }
   if (face > 0.5 && face < 1.5) {
@@ -692,6 +696,14 @@ void main() {
   }
   // a home that has gone dark: bare and dusty
   col = mix(col, base * 0.035 + vec3(0.006), gone);
+  if (fl < 0.5) {
+    vec3 lobby = vec3(0.62, 0.58, 0.52) * (0.35 + 0.5 * fall) * vec3(1.0, 0.85, 0.65);
+    col = lobby * (1.0 - 0.5 * gone);
+    yes = 0.0;
+    no = 0.0;
+    noise = 0.0;
+    mark = 0.0;
+  }
   // votes, the noise, "you"
   vec3 vc = yes * vec3(0.12, 0.9, 0.48) + no * vec3(1.0, 0.18, 0.2);
   float va = clamp(yes + no, 0.0, 1.0) * uVote;

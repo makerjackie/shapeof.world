@@ -312,8 +312,8 @@ class Engine {
     for (let i = 0; i < 132; i++) {
       const f = Math.floor(i / 4);
       const [a, b] = UNITS[i % 4];
-      RA.set([(a + b) / 2, f * FH + 0.14, (ROOM_Z[0] + ROOM_Z[1]) / 2, i], i * 4);
-      RS.set([b - a - 0.3, FH - 0.28, ROOM_Z[1] - ROOM_Z[0], ((i * 0.6180339) % 1) * 0.999], i * 4);
+      RA.set([(a + b) / 2, f * FH + 0.17, (ROOM_Z[0] + ROOM_Z[1]) / 2, i], i * 4);
+      RS.set([b - a - 0.38, FH - 0.34, ROOM_Z[1] - ROOM_Z[0], ((i * 0.6180339) % 1) * 0.999], i * 4);
     }
     rgeo.setAttribute("aR", new THREE.InstancedBufferAttribute(RA, 4));
     rgeo.setAttribute("aS", new THREE.InstancedBufferAttribute(RS, 4));
@@ -329,18 +329,18 @@ class Engine {
     this.scene.add(this.rooms);
 
     this.concMat = new THREE.ShaderMaterial({ vertexShader: CONC_VERT, fragmentShader: CONC_FRAG, uniforms: { uNight: { value: 1 }, uDim: { value: 1 }, uAge: { value: 0 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } } });
-    this.slabs = new THREE.InstancedMesh(new THREE.BoxGeometry(HERO.w + 0.6, 0.28, HERO.d + 0.4), this.concMat, HERO.floors + 1);
+    this.slabs = new THREE.InstancedMesh(new THREE.BoxGeometry(HERO.w - 0.1, 0.28, 13.62), this.concMat, HERO.floors + 1);
     const m4 = new THREE.Matrix4();
     for (let f = 0; f <= HERO.floors; f++) {
-      m4.makeTranslation(0, f * FH, 0.2);
+      m4.makeTranslation(0, f * FH + 0.003, 0.12);
       this.slabs.setMatrixAt(f, m4);
     }
     this.slabs.frustumCulled = false;
     this.scene.add(this.slabs);
-    const wallXs = [-22, -11.75, -1.5, 1.5, 11.75, 22];
-    this.walls = new THREE.InstancedMesh(new THREE.BoxGeometry(0.3, HERO.h, HERO.d), this.concMat, wallXs.length);
+    const wallXs = [-11.75, -1.5, 1.5, 11.75];
+    this.walls = new THREE.InstancedMesh(new THREE.BoxGeometry(0.3, HERO.h - 0.02, 13.6), this.concMat, wallXs.length);
     wallXs.forEach((x, i) => {
-      m4.makeTranslation(x, HERO.h / 2, 0);
+      m4.makeTranslation(x, HERO.h / 2, 0.11);
       this.walls.setMatrixAt(i, m4);
     });
     this.walls.frustumCulled = false;

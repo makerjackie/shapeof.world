@@ -1,9 +1,10 @@
 // The world at every moment of the film: camera keys, the city, the hero tower (closed, cut open or X-rayed),
-// its 132 households and 264 residents. Times are film bars F (timing.ts, SCRIPT.md); b(F) gives film seconds.
+// its 128 households (floor 0 is the lobby) and their residents. Times are film bars F (timing.ts, SCRIPT.md);
+// b(F) gives film seconds.
 import { FH, HERO, UNITS } from "../world/city";
 import { Cam, mixCam } from "../world/camera";
 import { PEOPLE, WorldState } from "../world/engine";
-import { clamp01, EI, EIO, EO, ESO, lerp, ramp, sf as b, track, tween, win } from "../timing";
+import { clamp01, EIO, EO, ESO, lerp, ramp, sf as b, track, tween, win } from "../timing";
 
 const cam = (c: Partial<Cam>): Cam => ({ x: 0, y: 45, z: 0, dist: 240, yaw: 0, pitch: 4, fov: 36, ...c });
 type Key = [number, Cam, ((x: number) => number)?];
@@ -19,81 +20,86 @@ const camAt = (t: number, keys: Key[]): Cam => {
   return keys[keys.length - 1][1];
 };
 const LIN = (x: number) => x;
-
-// a floor's centre height
 export const yf = (f: number) => f * FH + 1.5;
 
+// ---------- the hook: fifty years in five seconds, then back ----------
+export const HOOK_END = b(2.6); // 2060 reached
+export const REWIND = [b(3.4), b(4.4)] as const; // back to 2010 while the camera pulls out
+export const hookYear = (t: number) => (t < REWIND[0] ? Math.round(lerp(2010, 2060, ramp(t, 0.15, HOOK_END, (x) => x * (0.6 + 0.4 * x)))) : Math.round(lerp(2060, 2010, ramp(t, REWIND[0], REWIND[1], EIO))));
+
 const KEYS: Key[] = [
-  // hook: a glide over the city, rising
-  [b(0), cam({ x: -1100, y: 30, z: 2600, dist: 420, yaw: 14, pitch: 7, fov: 42 })],
-  [b(6.2), cam({ x: -300, y: 60, z: 900, dist: 900, yaw: 8, pitch: 14, fov: 42 }), LIN],
-  // dive to the hero
-  [b(8), cam({ x: 0, y: 50, z: 0, dist: 250, yaw: -14, pitch: 3, fov: 38 }), EIO],
-  [b(9.4), cam({ x: 0, y: 50, z: 0, dist: 240, yaw: -10, pitch: 3, fov: 38 }), LIN],
-  // why so tall: low and side-on while it rises
+  // hook: close on the cut-open tower, pushing in while the years fly
+  [0, cam({ x: -4, y: 66, z: 0, dist: 100, yaw: -16, pitch: -2, fov: 40 })],
+  [b(2.4), cam({ x: 0, y: 52, z: 0, dist: 168, yaw: -8, pitch: 1, fov: 40 }), ESO],
+  [b(3.3), cam({ x: 0, y: 52, z: 0, dist: 160, yaw: -5, pitch: 1, fov: 40 }), LIN],
+  // rewind: pull out fast over the city
+  [b(4.6), cam({ x: 0, y: 0, z: -300, dist: 2400, yaw: 6, pitch: 16, fov: 42 }), EIO],
+  [b(7.6), cam({ x: -200, y: 0, z: -250, dist: 2700, yaw: 12, pitch: 18, fov: 42 }), LIN],
+  // down to the tower
+  [b(9.2), cam({ x: 0, y: 50, z: 0, dist: 245, yaw: -12, pitch: 3, fov: 38 }), EIO],
+  // why so tall: side-on while it rises
   [b(10.2), cam({ x: 0, y: 46, z: 0, dist: 255, yaw: -50, pitch: 2, fov: 38 }), EIO],
   [b(13.8), cam({ x: 0, y: 56, z: 0, dist: 285, yaw: -58, pitch: 1, fov: 38 }), LIN],
-  // a whole estate of the same height
   [b(15.6), cam({ x: 0, y: 60, z: -40, dist: 620, yaw: -24, pitch: 8, fov: 40 }), EIO],
-  // the cut: straight on, the wall peeling from the top
+  // the cut
   [b(16.6), cam({ x: 0, y: 52, z: 0, dist: 205, yaw: 0, pitch: 1, fov: 38 }), EIO],
   [b(19), cam({ x: 0, y: 50, z: 0, dist: 196, yaw: -3, pitch: 1, fov: 38 }), LIN],
   [b(22), cam({ x: 0, y: 50, z: 0, dist: 190, yaw: 3, pitch: 1, fov: 38 }), LIN],
-  // noise: floors 8–22 around flat 58
-  [b(24), cam({ x: 4, y: yf(14), z: 0, dist: 95, yaw: -4, pitch: 0, fov: 40 }), EIO],
-  [b(28), cam({ x: 4, y: yf(14), z: 0, dist: 88, yaw: 4, pitch: 0, fov: 40 }), LIN],
-  // 公摊: drift left, room for the plan on the right
-  [b(29), cam({ x: 26, y: 42, z: 0, dist: 190, yaw: -6, pitch: 1, fov: 38 }), EIO],
-  [b(32), cam({ x: 24, y: 44, z: 0, dist: 186, yaw: -2, pitch: 1, fov: 38 }), LIN],
-  // the morning rush: the core and its queues
-  [b(33), cam({ x: 0, y: yf(13), z: 0, dist: 78, yaw: -6, pitch: 1, fov: 42 }), EIO],
-  [b(36), cam({ x: 0, y: yf(19), z: 0, dist: 84, yaw: 4, pitch: 1, fov: 42 }), LIN],
-  // fire: back and to the side, the 50 m plane in the air
-  [b(37), cam({ x: 0, y: 52, z: 0, dist: 300, yaw: 32, pitch: 6, fov: 40 }), EIO],
-  [b(40), cam({ x: 0, y: 52, z: 0, dist: 290, yaw: 24, pitch: 6, fov: 40 }), LIN],
-  // fifteen years: a slow arc while time flies
-  [b(41.5), cam({ x: 0, y: 50, z: 0, dist: 250, yaw: 20, pitch: 4, fov: 38 }), EIO],
-  [b(47.8), cam({ x: 0, y: 50, z: 0, dist: 235, yaw: -22, pitch: 4, fov: 38 }), LIN],
-  // the machine
-  [b(48.6), cam({ x: -4, y: 50, z: 0, dist: 205, yaw: -34, pitch: 4, fov: 38 }), EIO],
-  [b(52), cam({ x: -4, y: 52, z: 0, dist: 196, yaw: -24, pitch: 4, fov: 38 }), LIN],
+  // noise around flat 58
+  [b(24), cam({ x: 4, y: yf(14), z: 0, dist: 92, yaw: -4, pitch: 0, fov: 40 }), EIO],
+  [b(27.5), cam({ x: 4, y: yf(14), z: 0, dist: 86, yaw: 4, pitch: 0, fov: 40 }), LIN],
+  // 公摊
+  [b(28.3), cam({ x: 26, y: 42, z: 0, dist: 190, yaw: -6, pitch: 1, fov: 38 }), EIO],
+  [b(31), cam({ x: 24, y: 44, z: 0, dist: 186, yaw: -2, pitch: 1, fov: 38 }), LIN],
+  // the rush
+  [b(31.8), cam({ x: 0, y: yf(13), z: 0, dist: 78, yaw: -6, pitch: 1, fov: 42 }), EIO],
+  [b(34.5), cam({ x: 0, y: yf(19), z: 0, dist: 84, yaw: 4, pitch: 1, fov: 42 }), LIN],
+  // the ladder
+  [b(35.4), cam({ x: 0, y: 52, z: 0, dist: 300, yaw: 32, pitch: 6, fov: 40 }), EIO],
+  [b(38), cam({ x: 0, y: 52, z: 0, dist: 290, yaw: 24, pitch: 6, fov: 40 }), LIN],
+  // fifteen years: the machine ages
+  [b(39.2), cam({ x: -4, y: 50, z: 0, dist: 215, yaw: -30, pitch: 4, fov: 38 }), EIO],
+  [b(43.6), cam({ x: -4, y: 52, z: 0, dist: 200, yaw: -16, pitch: 4, fov: 38 }), LIN],
   // every lift in the city
-  [b(53.4), cam({ x: 0, y: 0, z: -300, dist: 1800, yaw: 10, pitch: 15, fov: 40 }), EIO],
-  [b(55.8), cam({ x: 0, y: 0, z: -340, dist: 2000, yaw: 6, pitch: 16, fov: 40 }), LIN],
-  // the cost meter, then the jar in the garden
-  [b(56.8), cam({ x: -14, y: 46, z: 10, dist: 230, yaw: 14, pitch: 4, fov: 40 }), EIO],
-  [b(60), cam({ x: -10, y: 42, z: 14, dist: 215, yaw: 8, pitch: 3, fov: 40 }), LIN],
-  [b(61), cam({ x: 0, y: 30, z: 18, dist: 170, yaw: 4, pitch: -2, fov: 42 }), EIO],
-  [b(64), cam({ x: 0, y: 36, z: 14, dist: 175, yaw: 0, pitch: -1, fov: 42 }), LIN],
-  // the vote: straight on, cut open again
+  [b(44.8), cam({ x: 0, y: 0, z: -300, dist: 1800, yaw: 10, pitch: 15, fov: 40 }), EIO],
+  [b(46.8), cam({ x: 0, y: 0, z: -340, dist: 2000, yaw: 6, pitch: 16, fov: 40 }), LIN],
+  // three ledgers: back to the tower
+  [b(48.3), cam({ x: 0, y: 50, z: 0, dist: 260, yaw: 8, pitch: 4, fov: 38 }), EIO],
+  // money: the cost meter on the right
+  [b(49.6), cam({ x: -16, y: 48, z: 0, dist: 230, yaw: 14, pitch: 4, fov: 40 }), EIO],
+  [b(52.8), cam({ x: -12, y: 46, z: 0, dist: 222, yaw: 8, pitch: 4, fov: 40 }), LIN],
+  // the jar in the garden
+  [b(53.6), cam({ x: -6, y: 30, z: 18, dist: 175, yaw: 6, pitch: -2, fov: 42 }), EIO],
+  [b(60.3), cam({ x: -4, y: 34, z: 14, dist: 168, yaw: 0, pitch: -1, fov: 42 }), LIN],
+  // prices: the tower small on the left
+  [b(61.2), cam({ x: 34, y: 60, z: 0, dist: 330, yaw: -4, pitch: 3, fov: 40 }), EIO],
+  [b(64), cam({ x: 30, y: 58, z: 0, dist: 320, yaw: 0, pitch: 3, fov: 40 }), LIN],
+  // rules: the vote
   [b(64.8), cam({ x: 0, y: 50, z: 0, dist: 205, yaw: 0, pitch: 1, fov: 38 }), EIO],
-  [b(72), cam({ x: 0, y: 50, z: 0, dist: 198, yaw: 0, pitch: 1, fov: 38 }), LIN],
-  // nobody pays; the lifts stop; floor 11
-  [b(75), cam({ x: 0, y: 46, z: 0, dist: 190, yaw: 6, pitch: 1, fov: 38 }), LIN],
-  [b(77.2), cam({ x: -6, y: yf(10), z: 0, dist: 90, yaw: 6, pitch: 1, fov: 40 }), EIO],
-  [b(80), cam({ x: -6, y: yf(10), z: 0, dist: 84, yaw: 2, pitch: 1, fov: 40 }), LIN],
-  // (Florida: photographs, the world waits below)
-  [b(87.6), cam({ x: 0, y: 46, z: 0, dist: 260, yaw: -6, pitch: 2, fov: 38 }), LIN],
-  // rebuild: the walk-up next door
-  [b(88.6), cam({ x: 60, y: 16, z: 0, dist: 112, yaw: -30, pitch: 4, fov: 46 }), EIO],
-  [b(91.6), cam({ x: 54, y: 24, z: 0, dist: 128, yaw: -22, pitch: 3, fov: 46 }), LIN],
-  // one more 33 floors on top
-  [b(92.6), cam({ x: 0, y: 98, z: 0, dist: 470, yaw: -6, pitch: 1, fov: 38 }), EIO],
-  [b(94.2), cam({ x: 0, y: 92, z: 0, dist: 460, yaw: -4, pitch: 1, fov: 38 }), LIN],
-  // no way back: up over the whole city
-  [b(96), cam({ x: 0, y: 0, z: -200, dist: 2300, yaw: 4, pitch: 20, fov: 40 }), EIO],
-  // passing the baton: in again, cut open
-  [b(97.6), cam({ x: 0, y: 50, z: 0, dist: 215, yaw: 4, pitch: 1, fov: 38 }), EIO],
-  [b(104), cam({ x: 0, y: 50, z: 0, dist: 200, yaw: -4, pitch: 1, fov: 38 }), LIN],
-  // the people grow old
-  [b(107), cam({ x: 0, y: 50, z: 0, dist: 190, yaw: -2, pitch: 1, fov: 38 }), LIN],
-  [b(109.6), cam({ x: 0, y: 50, z: 0, dist: 230, yaw: 6, pitch: 2, fov: 38 }), LIN],
-  // the answer: over the city as its edges go dark
-  [b(112.6), cam({ x: 0, y: 0, z: 0, dist: 6200, yaw: 8, pitch: 40, fov: 42 }), EIO],
-  [b(116.2), cam({ x: 0, y: 0, z: 0, dist: 5600, yaw: 16, pitch: 36, fov: 42 }), LIN],
+  [b(69), cam({ x: 0, y: 50, z: 0, dist: 198, yaw: 0, pitch: 1, fov: 38 }), LIN],
+  // the managers leave (grid on the right): pull back a little
+  [b(69.6), cam({ x: -18, y: 50, z: 0, dist: 260, yaw: 6, pitch: 2, fov: 38 }), EIO],
+  [b(72), cam({ x: -16, y: 50, z: 0, dist: 252, yaw: 2, pitch: 2, fov: 38 }), LIN],
+  // 柳州: floor 11
+  [b(72.8), cam({ x: -6, y: yf(10), z: 0, dist: 90, yaw: 6, pitch: 1, fov: 40 }), EIO],
+  [b(76), cam({ x: -6, y: yf(10), z: 0, dist: 84, yaw: 2, pitch: 1, fov: 40 }), LIN],
+  // elsewhere: the city behind the cards
+  [b(77), cam({ x: 0, y: 0, z: -200, dist: 1500, yaw: 4, pitch: 12, fov: 42 }), EIO],
+  [b(80), cam({ x: 0, y: 0, z: -240, dist: 1600, yaw: 10, pitch: 13, fov: 42 }), LIN],
+  // people: cut open again
+  [b(81), cam({ x: 0, y: 50, z: 0, dist: 215, yaw: 4, pitch: 1, fov: 38 }), EIO],
+  [b(88), cam({ x: 0, y: 50, z: 0, dist: 200, yaw: -4, pitch: 1, fov: 38 }), LIN],
+  [b(92), cam({ x: -10, y: 50, z: 0, dist: 205, yaw: -2, pitch: 1, fov: 38 }), LIN],
+  [b(96), cam({ x: -14, y: 50, z: 0, dist: 230, yaw: 6, pitch: 2, fov: 38 }), LIN],
+  // the answer: over the city, quiet
+  [b(98), cam({ x: 0, y: 0, z: 0, dist: 3600, yaw: 8, pitch: 22, fov: 42 }), EIO],
+  [b(104), cam({ x: 0, y: 0, z: 0, dist: 4200, yaw: 14, pitch: 28, fov: 42 }), LIN],
+  // the climax: the edges go dark
+  [b(110), cam({ x: 0, y: 0, z: 0, dist: 6200, yaw: 20, pitch: 38, fov: 42 }), LIN],
   // dawn, the tower, "you"
-  [b(118.4), cam({ x: 0, y: 50, z: 0, dist: 300, yaw: 6, pitch: 3, fov: 38 }), EIO],
-  [b(121.5), cam({ x: -6, y: 60, z: 0, dist: 150, yaw: -4, pitch: 1, fov: 38 }), ESO],
+  [b(112.4), cam({ x: 0, y: 50, z: 0, dist: 320, yaw: 6, pitch: 3, fov: 38 }), EIO],
+  [b(116), cam({ x: 0, y: 52, z: 0, dist: 280, yaw: 0, pitch: 3, fov: 38 }), LIN],
+  [b(120.5), cam({ x: -6, y: 60, z: 0, dist: 150, yaw: -4, pitch: 1, fov: 38 }), ESO],
 ];
 
 // ---------- households ----------
@@ -104,44 +110,42 @@ const shuffle = (k: number, off: number) =>
     .reduce((acc, h, r) => ((acc[h] = r), acc), new Array(132) as number[]);
 const RANK_LIT = shuffle(0.6180339, 0.1);
 const RANK_YES = shuffle(0.7548776, 0.31);
-const RANK_PAY = shuffle(0.41421356, 0.77);
 const RANK_GO = shuffle(0.2360679, 0.53);
-export const YES_MAX = 87;
-export const NEED = 99;
+export const HOMES = 128;
+export const NEED = 96; // three quarters of 128
+export const YES_MAX = 85;
 export const NOISE_SRC = 58; // floor 14, the third flat
 export const YOU = 81; // floor 20, the second flat
 export const OLDIE = 42; // floor 10 (the 11th floor), the third flat
-export const yesCount = (t: number) => Math.round(track(t, [[b(69), 0], [b(71.4), YES_MAX]], EO));
-const vote1Of = (t: number) => win(t, b(64.9), b(68.8), 0.4);
+export const yesCount = (t: number) => Math.round(track(t, [[b(66.4), 0], [b(68.6), YES_MAX]], EO));
 
-// how the flats change hands in the second interlude
 export const passShares = (t: number) => {
-  const p = ramp(t, b(97.5), b(103.5), LIN);
-  return { rented: Math.round(lerp(0, 46, p)), sub: Math.round(lerp(0, 18, ramp(t, b(99.5), b(103.5), LIN))), empty: Math.round(lerp(0, 30, ramp(t, b(100.5), b(104), LIN))) };
+  const p = ramp(t, b(81.6), b(87.6), LIN);
+  return { rented: Math.round(lerp(0, 46, p)), sub: Math.round(lerp(0, 18, ramp(t, b(83.4), b(87.6), LIN))), empty: Math.round(lerp(0, 28, ramp(t, b(84.4), b(88), LIN))) };
 };
+
+const sm = (x: number) => x * x * (3 - 2 * x);
 
 const households = (t: number) => {
   const a = new Float32Array(132 * 4);
   const a2 = new Float32Array(132 * 4);
-  const lapse = t > b(41.5) && t < b(47.6);
-  const nightSeed = lapse ? Math.floor(t / 0.2) : Math.floor(t / 6);
-  const offShare = lapse ? 0.4 : 0.1;
-  const vote1 = vote1Of(t);
-  const rise1 = ramp(t, b(65.2), b(67), LIN);
+  // hook: each home fades out at its own moment, then fades back during the rewind
+  const hookK = ramp(t, 0.4, HOOK_END, LIN);
+  const backK = ramp(t, REWIND[0], REWIND[1], LIN);
+  const vote1 = win(t, b(64.9), b(66.3), 0.3);
+  const rise1 = ramp(t, b(65), b(66), LIN);
   const yesN = yesCount(t);
-  const vote2 = win(t, b(68.9), b(72), 0.4);
-  const unpaid = win(t, b(72.2), b(80.2), 0.5) * ramp(t, b(72.2), b(74), LIN);
-  const unpaidN = Math.round(132 * 0.29 * unpaid);
+  const vote2 = win(t, b(66.3), b(69.4), 0.4);
   const pass = passShares(t);
-  const passOn = t > b(97.4);
-  const fire = win(t, b(37.2), b(40.4), 0.4);
-  const nOn = win(t, b(24.3), b(28.4), 0.3);
+  const passOn = t > b(81.5) && t < b(112);
+  const fire = win(t, b(35.6), b(38.4), 0.4);
+  const nOn = win(t, b(24.3), b(28.2), 0.3);
   const srcF = Math.floor(NOISE_SRC / 4);
   const srcU = NOISE_SRC % 4;
   for (let i = 0; i < 132; i++) {
     const fl = Math.floor(i / 4);
     const un = i % 4;
-    let lit = ((i * 0.37 + nightSeed * 0.1309) % 1) < offShare ? 0 : 1;
+    let lit = RANK_LIT[i] < 14 ? 0 : 1; // a few homes out on any night, always the same ones
     let yes = 0;
     let no = 0;
     let gone = 0;
@@ -149,46 +153,57 @@ const households = (t: number) => {
     let sub = 0;
     let noise = 0;
     let mark = 0;
-    if (vote1 > 0 && fl < rise1 * 33) {
+    if (t < REWIND[1]) {
+      const at = RANK_GO[i] / 132;
+      const out = sm(clamp01((hookK - at * 0.92) / 0.08));
+      const back = sm(clamp01((backK - (1 - at) * 0.9) / 0.1));
+      const k = out * (1 - back);
+      if (RANK_GO[i] > 118) {
+        lit = 1; // a few stay to the end
+      } else {
+        gone = k;
+        lit = 1 - k;
+      }
+      if (RANK_GO[i] > 100 && RANK_GO[i] <= 118) tenant = k;
+    }
+    if (vote1 > 0 && fl < rise1 * 33 && fl > 0) {
       if (fl < 11) no = vote1;
       else yes = vote1;
     }
-    if (vote2 > 0) {
-      if (RANK_YES[i] < yesN) yes = vote2;
-      else no = 0.5 * vote2 * ramp(t, b(71.4), b(71.9));
+    if (vote2 > 0 && fl > 0) {
+      if (RANK_YES[i] < yesN + 4) yes = vote2;
+      else no = 0.5 * vote2 * ramp(t, b(68.6), b(69.1));
     }
-    if (RANK_PAY[i] < unpaidN) gone = 0.55;
     if (passOn) {
       const r = RANK_GO[i];
+      const fadeIn = (n: number, len: number) => clamp01((n - r) / 1.5 + 0.0) * (len > 0 ? 1 : 0);
       if (r < pass.empty) {
-        gone = 1;
-        lit = 0;
-      } else if (r < pass.empty + pass.sub) {
-        sub = 1;
-        lit = 1;
-      } else if (r < pass.empty + pass.sub + pass.rented) tenant = 1;
+        gone = fadeIn(pass.empty, 1);
+        lit = 1 - gone;
+      } else if (r < pass.empty + pass.sub) sub = 1;
+      else if (r < pass.empty + pass.sub + pass.rented) tenant = 1;
     }
     if (nOn > 0) {
       const d = Math.abs(fl - srcF) + Math.abs(un - srcU) * 0.6;
       const ph = (t - b(24.3)) * 2.2 - d * 0.32;
       const s = Math.sin(ph * Math.PI * 2);
       noise = nOn * (ph > 0 ? Math.max(0, s) * Math.max(0, s) : 0) * Math.exp(-d * 0.13);
-      if (i === NOISE_SRC) noise = nOn * (0.6 + 0.4 * Math.abs(Math.sin(t * 18)));
+      if (i === NOISE_SRC) noise = nOn * 0.85;
     }
     if (fire > 0 && fl * FH > 50) noise = Math.max(noise, 0.28 * fire);
-    const oldie = win(t, b(77.4), b(80.2), 0.4);
+    const oldie = win(t, b(72.9), b(76.2), 0.4);
     if (i === OLDIE && oldie > 0) {
       mark = oldie;
       lit = 1;
       gone = 0;
     }
-    if (i === YOU && t > b(119)) {
-      mark = ramp(t, b(119.5), b(120.5));
+    if (i === YOU && t > b(117)) {
+      mark = ramp(t, b(117.6), b(118.6));
       lit = 1;
       gone = 0;
       sub = 0;
+      tenant = 0;
     }
-    if (lit === 0 && RANK_LIT[i] > 125 && !lapse && !passOn) lit = 1;
     a.set([lit, yes, no, gone], i * 4);
     a2.set([tenant, sub, noise, mark], i * 4);
   }
@@ -201,13 +216,10 @@ const h1 = (n: number) => {
   const x = Math.sin(n * 127.1) * 43758.5453;
   return x - Math.floor(x);
 };
-// Each flat has two residents at home, drifting a little. In the rush (F32.4–36.6) they walk to the lift core,
-// queue, and are picked up.
 const peopleAt = (t: number, hh: Float32Array) => {
   const out = new Float32Array(PEOPLE * 4);
-  const rushT = t - b(32.4);
-  const rushOn = t > b(32.4) && t < b(36.6);
-  const back = ramp(t, b(36.6), b(37.2), LIN);
+  const rushT = t - b(31.6);
+  const rushOn = t > b(31.6) && t < b(35);
   const queues = new Map<string, number>();
   for (let p = 0; p < PEOPLE; p++) {
     const u = p >> 1;
@@ -216,35 +228,31 @@ const peopleAt = (t: number, hh: Float32Array) => {
     const [x0, x1] = UNITS[k];
     const hx = lerp(x0 + 1.4, x1 - 1.4, h1(p * 3.1));
     const hz = lerp(-2.6, 4.2, h1(p * 7.7));
-    const y = fl * FH + 0.14;
-    const drift = Math.sin(t * 0.4 + p) * 0.35;
-    let x = hx + drift;
+    const y = fl * FH + 0.17;
+    let x = hx + Math.sin(t * 0.35 + p) * 0.3;
     let z = hz;
-    let s = 1;
     const lit = hh[u * 4];
     const gone = hh[u * 4 + 3];
-    if (gone > 0.9) s = 0;
-    if (p % 2 === 1 && lit < 0.5) s = 0;
-    if (t > b(36.6) && t < b(37.2)) s *= back;
+    let s = fl === 0 ? 0 : clamp01(1 - gone * 1.5);
+    if (p % 2 === 1) s *= clamp01(lit * 1.5 - 0.3);
     if (rushOn && fl > 0) {
-      const start = h1(p * 1.7) * 1.4;
-      const walk = clamp01((rushT - start) / 1.2);
+      const start = h1(p * 1.7) * 1.2;
+      const walk = clamp01((rushT - start) / 1.1);
       const side = k < 2 ? -1 : 1;
       const key = `${fl}:${side}`;
       const qi = queues.get(key) ?? 0;
       queues.set(key, qi + 1);
-      const qx = side * (2.2 + qi * 0.62);
-      x = lerp(hx, qx, EIO(walk));
+      x = lerp(hx, side * (2.3 + qi * 0.62), EIO(walk));
       z = lerp(hz, 3.6, EIO(walk));
-      const board = start + 1.8 + h1(p * 5.3) * 1.2 + (fl / 33) * 1.6;
-      if (rushT > board) s = Math.max(0, 1 - (rushT - board) / 0.25);
+      const board = start + 1.6 + h1(p * 5.3) * 1.0 + (fl / 33) * 1.4;
+      if (rushT > board) s *= clamp01(1 - (rushT - board) / 0.3);
     }
+    if (t > b(35) && t < b(35.6)) s *= ramp(t, b(35), b(35.6), LIN);
     out.set([x, y, z, s], p * 4);
   }
   return out;
 };
 
-// Lift cars: ride between random floors; in the rush they run fast.
 export const liftY = (t: number, k: number, fast = 0) => {
   const period = lerp(7 + k * 2.3, 2.6 + k * 0.5, fast);
   const ph = (t + k * 4.1) / period;
@@ -259,77 +267,74 @@ export const liftY = (t: number, k: number, fast = 0) => {
 
 export const worldAt = (t: number): WorldState => {
   const lights = track(t, [
-    [0, 0.2],
-    [b(3), 0.52],
-    [b(8), 0.56],
-    [b(53), 0.56],
-    [b(53.8), 0.3],
-    [b(56), 0.3],
-    [b(56.8), 0.56],
-    [b(112), 0.58],
-    [b(118), 0.42],
+    [0, 0.5],
+    [b(4.4), 0.56],
+    [b(44.6), 0.56],
+    [b(45.2), 0.3],
+    [b(47.2), 0.3],
+    [b(48), 0.56],
+    [b(98), 0.58],
+    [b(110), 0.5],
+    [b(116), 0.36],
     [b(124), 0.3],
   ]);
-  const heroShot = Math.max(win(t, b(8), b(53), 0.8), win(t, b(56.6), b(95), 0.8), win(t, b(97), b(112), 0.8), win(t, b(117.5), b(130), 0.8));
-  const openShot = Math.max(win(t, b(16.4), b(40.4), 0.8), win(t, b(64.4), b(80.4), 0.6), win(t, b(96.8), b(112.4), 0.8), win(t, b(119), b(130), 0.8));
-  const darkR = track(t, [[b(112.4), 7000], [b(116.4), 1500]], EIO);
-  const darkAmt = t >= b(110) ? 0.95 : 0;
-  const patch = win(t, b(4.6), b(6.4), 0.35);
+  const heroShot = Math.max(win(t, 0, b(4.2), 0.3), win(t, b(8.8), b(44.4), 0.8), win(t, b(47.6), b(76.6), 0.8), win(t, b(80.6), b(97.6), 0.8), win(t, b(112), b(130), 0.8));
+  const openShot = Math.max(win(t, 0, b(4.0), 0.3), win(t, b(16.4), b(38.6), 0.8), win(t, b(64.4), b(76.4), 0.6), win(t, b(80.8), b(97.4), 0.8), win(t, b(117), b(130), 0.8));
+  const darkR = track(t, [[b(104), 7000], [b(110), 1500]], EIO);
+  const darkAmt = t >= b(103) && t < b(112.2) ? 0.95 : t >= b(112.2) ? 0.6 : 0;
 
+  // the tower: open in the hook, closed for its story, open again for the people chapters
   const built = t < b(9.6) ? 1 : track(t, [[b(9.6), 1], [b(10.2), 0.18], [b(10.6), 0.18], [b(13.4), 1]], EIO);
   const peel = Math.max(
-    t < b(41.6) ? track(t, [[b(16.2), 0], [b(18.6), 1], [b(40.2), 1], [b(41.4), 0]], EIO) : 0,
-    t > b(64.2) && t < b(80.6) ? track(t, [[b(64.2), 0], [b(64.9), 1], [b(80), 1], [b(80.5), 0]], EIO) : 0,
-    t > b(96.6) && t < b(112.7) ? track(t, [[b(96.6), 0], [b(97.6), 1], [b(112), 1], [b(112.6), 0]], EIO) : 0,
-    t > b(118.8) ? ramp(t, b(118.8), b(120), EIO) : 0,
+    t < b(4.6) ? 1 - ramp(t, b(3.9), b(4.5), EIO) : 0,
+    t > b(16) && t < b(39) ? track(t, [[b(16.2), 0], [b(18.6), 1], [b(38.2), 1], [b(38.9), 0]], EIO) : 0,
+    t > b(64.2) && t < b(76.6) ? track(t, [[b(64.2), 0], [b(64.9), 1], [b(76), 1], [b(76.5), 0]], EIO) : 0,
+    t > b(80.6) && t < b(97.8) ? track(t, [[b(80.6), 0], [b(81.4), 1], [b(97), 1], [b(97.6), 0]], EIO) : 0,
+    t > b(116.8) ? ramp(t, b(116.8), b(118), EIO) : 0,
   );
-  const xray = win(t, b(48.3), b(53.2), 0.6);
-  const age = track(t, [[b(41.5), 0], [b(47.6), 0.55], [b(64), 0.6], [b(96), 0.7], [b(112), 0.85]], LIN);
-  const water = track(t, [[b(48.6), -2], [b(50.6), HERO.h + 8]], EIO);
-  const rushFast = win(t, b(32.4), b(36.6), 0.5);
+  const xray = win(t, b(39.3), b(44.6), 0.6);
+  const hookAge = t < REWIND[1] ? ramp(t, 0.3, HOOK_END, LIN) * (1 - ramp(t, REWIND[0], REWIND[1], EIO)) : 0;
+  const age = Math.max(hookAge * 0.95, track(t, [[b(39.3), 0], [b(43.6), 0.55], [b(64), 0.6], [b(80), 0.7], [b(97), 0.85]], LIN));
+  const water = track(t, [[b(39.6), -2], [b(41.4), HERO.h + 8]], EIO);
+  const rushFast = win(t, b(31.6), b(35), 0.5);
   let lifts: [number, number] = [liftY(t, 0, rushFast), liftY(t, 1, rushFast)];
-  const stopped = win(t, b(75.2), b(80.2), 0.2);
+  const hookStop = t < REWIND[1] ? ramp(t, b(1.6), b(2.4), LIN) * (1 - ramp(t, REWIND[0], REWIND[1], LIN)) : 0;
+  const stopped = Math.max(win(t, b(73), b(76.2), 0.2), hookStop);
   if (stopped > 0) lifts = [lerp(lifts[0], 0, stopped), lerp(lifts[1], 0, stopped)];
-  if (t > b(119)) lifts = [tween(t, b(119.4), b(121.6), 0, 20 * FH, EIO), liftY(t, 1)];
+  if (t > b(117)) lifts = [tween(t, b(117.2), b(119.6), 0, 20 * FH, EIO), liftY(t, 1)];
   const liftGlow = 1 - stopped * 0.92;
-  const liftsFront = Math.max(win(t, b(19), b(24), 0.5), win(t, b(32.2), b(36.8), 0.4), win(t, b(75), b(80.2), 0.4), win(t, b(119), b(130), 0.6));
-  const stairs = ramp(t, b(75.6), b(77.2), LIN) * win(t, b(75.4), b(80.2), 0.3);
+  const liftsFront = Math.max(win(t, 0, b(4), 0.3), win(t, b(19), b(24), 0.5), win(t, b(31.4), b(35.2), 0.4), win(t, b(72.8), b(76.2), 0.4), win(t, b(117), b(130), 0.6));
+  const stairs = 0;
 
   const { a: hh, a2: hh2 } = households(t);
   const pos = peopleAt(t, hh);
 
-  const coinsT = tween(t, b(60.2), b(62.8), 0, 1, LIN);
-  const tankVis = win(t, b(56.8), b(64.2), 0.5);
-  const tankLevel = track(t, [[b(56.8), 0.02], [b(60.2), 0.02], [b(63), 0.34]], EIO);
-
-  const oldVis = win(t, b(88.2), b(92.6), 0.4);
-  const oldDrop = track(t, [[b(89.2), 0], [b(89.9), 1], [b(90.2), 1], [b(90.3), 0]], EI);
-  const oldFloors = t < b(90.1) ? 6 : tween(t, b(90.2), b(91.6), 0.2, 11, EO);
-  const ghostVis = win(t, b(92.4), b(94.6), 0.35);
-  const ghostLift = tween(t, b(92.4), b(93.4), 0, HERO.h, EO);
-  const outline = Math.max(win(t, b(8.1), b(9.8), 0.4), win(t, b(94.5), b(97.4), 0.6), win(t, b(112.4), b(117.4), 0.8));
+  // money: a year of fees rains into the jar; maintenance drains it; a lift replacement takes a big bite
+  const coinsT = tween(t, b(53.8), b(56.2), 0, 1, LIN);
+  const tankVis = win(t, b(53.5), b(61), 0.5);
+  const tankLevel = track(t, [[b(53.6), 0.02], [b(56.4), 0.7], [b(57.2), 0.7], [b(57.9), 0.42], [b(58.4), 0.85], [b(59.6), 0.85], [b(60.4), 0.48]], EIO);
 
   let c = camAt(t, KEYS);
   c = { ...c, yaw: c.yaw + Math.sin(t * 0.21) * 0.5, pitch: c.pitch + Math.sin(t * 0.17 + 1) * 0.2 };
 
-  const lapse = win(t, b(41.6), b(47.4), 0.6);
-  const lapseNight = 0.72 + 0.2 * Math.cos(((t - b(41.6)) / 1.4) * Math.PI * 2);
-  let night = track(t, [[0, 0.5], [b(8), 0.86], [b(12), 0.9], [b(115), 0.9], [b(123), 0.5]]);
+  const lapse = win(t, b(39.4), b(43.6), 0.6);
+  const lapseNight = 0.74 + 0.18 * Math.cos(((t - b(39.4)) / 1.6) * Math.PI * 2);
+  let night = track(t, [[0, 0.82], [b(4.4), 0.88], [b(110), 0.9], [b(121), 0.5]]);
   night = lerp(night, lapseNight, lapse);
 
   return {
     cam: c,
     time: t,
     night,
-    dim: ramp(t, 0, 0.6),
+    dim: 1,
     traffic: 1,
     bloom: 0.42,
-    outline,
+    outline: Math.max(win(t, b(8.6), b(9.8), 0.4), win(t, b(98), b(112), 0.8)),
     city: {
       lights,
-      patch,
-      elev: win(t, b(53.4), b(56.4), 0.6),
-      elevAge: tween(t, b(54.6), b(56), 0, 0.85, EIO),
+      patch: 0,
+      elev: win(t, b(44.8), b(47.6), 0.6),
+      elevAge: tween(t, b(45.6), b(47), 0, 0.85, EIO),
       darkR,
       darkAmt,
       dim: 1 - 0.45 * heroShot - 0.2 * openShot,
@@ -342,7 +347,7 @@ export const worldAt = (t: number): WorldState => {
       hh2,
       age,
       xray,
-      vote: Math.max(vote1Of(t), win(t, b(68.9), b(72), 0.4)),
+      vote: Math.max(vote1Of(t), win(t, b(66.3), b(69.4), 0.4)),
       peel,
       water,
       lifts,
@@ -351,12 +356,12 @@ export const worldAt = (t: number): WorldState => {
       stairs,
       line100: win(t, b(12.2), b(14.4), 0.5),
       refuge: win(t, b(12.6), b(14.4), 0.4),
-      fire: win(t, b(37.2), b(40.4), 0.4),
+      fire: win(t, b(35.6), b(38.4), 0.4),
     },
-    people: { pos, vis: peel > 0.5 ? 1 : 0, grey: ramp(t, b(104.2), b(107.5), LIN) * (t < b(118.8) ? 1 : 0) },
-    coins: { t: coinsT, vis: win(t, b(60.2), b(63.4), 0.3) },
+    people: { pos, vis: peel > 0.5 ? 1 : 0, grey: ramp(t, b(88.2), b(91.6), LIN) * (t < b(116.8) ? 1 : 0) },
+    coins: { t: coinsT, vis: win(t, b(53.8), b(56.6), 0.3) },
     tank: { vis: tankVis, level: tankLevel },
-    old: { vis: oldVis, floors: oldFloors, drop: oldDrop },
-    ghost: { vis: ghostVis, lift: ghostLift },
   };
 };
+
+const vote1Of = (t: number) => win(t, b(64.9), b(66.3), 0.3);
