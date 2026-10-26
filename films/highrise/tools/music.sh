@@ -1,9 +1,26 @@
 #!/bin/bash
-# Builds public/music.wav: 《看不见的晕》 from its start to A bar 78 (137.66 s, faded over its last two bars), then
-# 《冰的后退》 from its start, to the end of the film (src/timing.ts). Both from music.shapeof.world.
-cd "$(dirname "$0")/../public" || exit 1
-A_END=137.664
-B_LEN=134
-/opt/homebrew/bin/ffmpeg -nostdin -loglevel error -y -i invisible-halo.mp3 -i ice-retreat.mp3 -filter_complex \
-  "[0:a]atrim=0:${A_END},asetpts=PTS-STARTPTS,aresample=48000,afade=t=out:st=$(echo "$A_END-3.4" | bc):d=3.4[a];[1:a]atrim=0:${B_LEN},asetpts=PTS-STARTPTS,aresample=48000[b];[a][b]concat=n=2:v=0:a=1[m]" \
-  -map "[m]" -c:a pcm_s16le music.wav && echo "music.wav $(/opt/homebrew/bin/ffprobe -v error -show_entries format=duration -of csv=p=0 music.wav) s"
+# Builds public/music.wav from public/qnzh.m4a (《千年之后（氛围版）》, 和乐府, as on tower): track bars 0–64, 56–64,
+# 16–48, then 64 to the end, all cut on bar lines (111.62 BPM, first beat 0.487 s). Seams by bar chroma
+# (films/ai-impact/tools/barchroma.py method): 63→56 0.997/0.978, 63→16 0.997/0.993, 47→64 0.978/0.995. A 20 ms
+# crossfade centred on each seam keeps it click-free without moving the beat grid.
+cd "$(dirname "$0")/.." || exit 1
+python3 - <<'PY'
+import subprocess
+BAR = 4 * 60 / 111.62
+T = lambda b: 0.487 + b * BAR
+segs = [(0.0, T(64)), (T(56), T(64)), (T(16), T(48)), (T(64), None)]
+parts = []
+for i, (a, b) in enumerate(segs):
+    a2 = a if i == 0 else a - 0.01
+    end = "" if b is None else f":end={b + 0.01:.5f}"
+    parts.append(f"[0:a]atrim=start={a2:.5f}{end},asetpts=PTS-STARTPTS[s{i}]")
+chain = "[s0]"
+for i in range(1, len(segs)):
+    out = f"[x{i}]" if i < len(segs) - 1 else ""
+    parts.append(f"{chain}[s{i}]acrossfade=d=0.02:c1=tri:c2=tri{out}")
+    chain = f"[x{i}]"
+subprocess.run(["/opt/homebrew/bin/ffmpeg", "-nostdin", "-loglevel", "error", "-y", "-i", "public/qnzh.m4a",
+                "-filter_complex", ";".join(parts), "-ar", "48000", "-c:a", "pcm_s16le", "public/music.wav"], check=True)
+print("music.wav")
+PY
+/opt/homebrew/bin/ffprobe -v error -show_entries format=duration -of csv=p=0 public/music.wav

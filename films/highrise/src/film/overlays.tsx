@@ -1,59 +1,21 @@
-// Scene pieces drawn over the 3D world: the Zhihu question card, counters, the vote tally, the spiral of decline,
-// photo plates and the night-lights map of China.
+// Scene pieces drawn over the 3D world: counters, the floor plan, the noise rings, the cost meter, the vote
+// tally, the change-of-hands legend, ages and births, photographs.
 import React from "react";
-import { Img, interpolate, staticFile } from "remotion";
+import { Img, staticFile } from "remotion";
 import { FONT, K, SERIF } from "../theme";
-import { clamp01, EIO, EO, ESO, lerp, ramp, sa, sb, track, win } from "../timing";
+import { clamp01, EIO, EO, lerp, ramp, sf as b, track } from "../timing";
 import { Cam, toScreen } from "../world/camera";
-import { NEED, YES_MAX, yesCount } from "./state";
+import { heroHH } from "../world/city";
+import { NEED, passShares, YES_MAX, yesCount } from "./state";
 import { fmt, SHADOW, useT } from "./ui";
 
-const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+const fadeIO = (t: number, at: number, out: number, fi = 0.4, fo = 0.35) => Math.min(ramp(t, at, at + fi, EO), 1 - ramp(t, out - fo, out));
 
-// ---------- the question ----------
+// ---------- the year and the building's age ----------
 
-const Q_LINES = ["都说高层住宅几十年后会变成贫民窟，", "但是我国几乎全是高层住宅，", "总不能全变成贫民窟吧？"];
-
-export const QuestionCard: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+export const YearBadge: React.FC<{ at: number; out: number; keys: [number, number][] }> = ({ at, out, keys }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.5, EO), 1 - ramp(t, out - 0.4, out));
-  if (o <= 0) return null;
-  const k = ramp(t, at, at + 0.7, EO);
-  let idx = 0;
-  return (
-    <div style={{ position: "absolute", left: 960 - 560, top: 250, width: 1120, opacity: o, transform: `translateY(${(1 - k) * 30}px) scale(${0.97 + 0.03 * k})` }}>
-      <div style={{ fontFamily: FONT, fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.75)", letterSpacing: 4, marginBottom: 18, textShadow: SHADOW }}>知乎上，有个问题——</div>
-      <div
-        style={{
-          background: "rgba(246,243,236,0.95)",
-          borderRadius: 18,
-          padding: "40px 54px 44px",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
-        }}
-      >
-        {Q_LINES.map((l, li) => (
-          <div key={li} style={{ fontFamily: SERIF, fontSize: 56, fontWeight: 700, color: "#1a1d22", lineHeight: 1.45, whiteSpace: "nowrap" }}>
-            {Array.from(l).map((ch, ci) => {
-              const s = at + 0.45 + idx++ * 0.055;
-              const v = clamp01((t - s) / 0.12);
-              return (
-                <span key={ci} style={{ opacity: v }}>
-                  {ch}
-                </span>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// ---------- counters ----------
-
-export const YearBadge: React.FC<{ at: number; out: number; keys: [number, number][]; age?: boolean }> = ({ at, out, keys, age }) => {
-  const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.4, EO), 1 - ramp(t, out - 0.35, out));
+  const o = fadeIO(t, at, out);
   if (o <= 0) return null;
   const y = Math.round(track(t, keys, (x) => x));
   const a = y - 2010;
@@ -63,28 +25,126 @@ export const YearBadge: React.FC<{ at: number; out: number; keys: [number, numbe
         {y}
         <span style={{ fontSize: 48, fontWeight: 700, marginLeft: 8 }}>年</span>
       </div>
-      {age ? <div style={{ fontSize: 40, fontWeight: 700, color: a >= 15 ? K.amber : "rgba(244,240,232,0.75)", marginTop: 8 }}>楼龄 {a} 年</div> : null}
+      <div style={{ fontSize: 42, fontWeight: 800, color: a >= 15 ? K.amber : "rgba(244,240,232,0.78)", marginTop: 8 }}>楼龄 {a} 年</div>
     </div>
   );
 };
 
-// "要爬约 ___ 级台阶": the count follows the lit stairway.
-export const StairLine: React.FC<{ at: number; out: number; from: number; to: number }> = ({ at, out, from, to }) => {
+// floors 6 → 33 and the floor area that comes with them
+export const FloorsCounter: React.FC<{ at: number; out: number; from: number; to: number }> = ({ at, out, from, to }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.35, EO), 1 - ramp(t, out - 0.3, out));
+  const o = fadeIO(t, at, out);
   if (o <= 0) return null;
-  const n = Math.round(580 * ramp(t, from, to, (x) => x));
+  const k = ramp(t, from, to, EIO);
+  const floors = Math.round(lerp(6, 33, k));
   return (
-    <div style={{ fontFamily: FONT, fontSize: 76, fontWeight: 800, color: K.fg, textShadow: SHADOW, opacity: o, whiteSpace: "nowrap" }}>
-      要爬约 <span style={{ color: K.lit, fontVariantNumeric: "tabular-nums", display: "inline-block", minWidth: 150, textAlign: "right" }}>{n}</span> 级台阶。
+    <div style={{ position: "absolute", right: 120, top: 330, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.78)" }}>同一块地</div>
+      <div style={{ fontSize: 140, fontWeight: 900, lineHeight: 1.05, fontVariantNumeric: "tabular-nums" }}>
+        {floors}
+        <span style={{ fontSize: 56, fontWeight: 800, marginLeft: 8 }}>层</span>
+      </div>
+      <div style={{ fontSize: 46, fontWeight: 800, color: K.gold, fontVariantNumeric: "tabular-nums" }}>能卖的面积 × {(floors / 6).toFixed(1)}</div>
     </div>
   );
 };
 
-// 2013 → 2025: 301 万 → 1231 万 lifts.
+// ---------- noise: rings from the flat being renovated ----------
+
+export const NoiseRings: React.FC<{ cam: Cam; at: number; out: number; i: number }> = ({ cam, at, out, i }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.3, 0.3);
+  if (o <= 0) return null;
+  const [x, y, z] = heroHH(i);
+  const [sx, sy] = toScreen(cam, x, y, z + 0.5);
+  const rings = [0, 1, 2, 3, 4].map((k) => {
+    const ph = ((t - at) * 0.9 + k * 0.2) % 1;
+    return { r: 30 + ph * 520, a: (1 - ph) * 0.8 };
+  });
+  return (
+    <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: o }}>
+      {rings.map((r, k) => (
+        <ellipse key={k} cx={sx} cy={sy} rx={r.r * 0.75} ry={r.r} fill="none" stroke={K.red} strokeOpacity={r.a} strokeWidth={4} />
+      ))}
+    </svg>
+  );
+};
+
+// ---------- 公摊: one floor seen from above ----------
+
+export const FloorPlan: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.5, 0.4);
+  if (o <= 0) return null;
+  const k1 = ramp(t, at + 0.4, at + 1.4, EO); // the plan draws in
+  const k2 = ramp(t, at + 1.8, at + 3.2, EIO); // the shared parts light up
+  const k3 = ramp(t, at + 3.4, at + 4.6, EO); // the numbers
+  const S = 17; // px per metre
+  const W = 44 * S;
+  const H = 14 * S;
+  const x0 = 1920 - W - 120;
+  const y0 = 330;
+  const units: [number, number][] = [
+    [0, 10.25],
+    [10.25, 20.5],
+    [23.5, 33.75],
+    [33.75, 44],
+  ];
+  const shared = "rgba(255,90,95,0.55)";
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ position: "absolute", left: x0, top: y0 - 70, fontSize: 36, fontWeight: 800 }}>一层楼，从上往下看</div>
+      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+        <g opacity={k1}>
+          {units.map(([a, c], i) => (
+            <rect key={i} x={x0 + a * S + 4} y={y0 + 4} width={(c - a) * S - 8} height={H - 8} fill="rgba(255,217,160,0.16)" stroke="rgba(244,240,232,0.85)" strokeWidth={3} />
+          ))}
+          <rect x={x0} y={y0} width={W} height={H} fill="none" stroke={K.fg} strokeWidth={5} />
+        </g>
+        {/* the core, the corridor, the walls: shared */}
+        <g opacity={k2}>
+          <rect x={x0 + 20.5 * S} y={y0} width={3 * S} height={H} fill={shared} />
+          <rect x={x0 + 4} y={y0 + H - 2.2 * S} width={W - 8} height={2.2 * S - 4} fill={shared} />
+          {units.map(([a], i) => (
+            <rect key={i} x={x0 + a * S} y={y0} width={6} height={H} fill={shared} />
+          ))}
+        </g>
+      </svg>
+      <div style={{ position: "absolute", left: x0, top: y0 + H + 26, opacity: k2, fontSize: 30, fontWeight: 700, color: "#ff9a9d" }}>电梯、楼梯、走廊、墙，由每户分摊</div>
+      <div style={{ position: "absolute", left: x0, top: y0 + H + 86, opacity: k3, display: "flex", alignItems: "baseline", gap: 26 }}>
+        <span style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>买</span>
+        <span style={{ fontSize: 96, fontWeight: 900 }}>100</span>
+        <span style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>平方米，到手</span>
+        <span style={{ fontSize: 96, fontWeight: 900, color: K.gold }}>71–75</span>
+      </div>
+    </div>
+  );
+};
+
+// ---------- the morning rush ----------
+
+export const RushCounter: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out);
+  if (o <= 0) return null;
+  const n = Math.round(lerp(0, 346, ramp(t, at + 0.2, at + 2.4, EO)));
+  return (
+    <div style={{ position: "absolute", right: 110, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>早上 8 点，下楼的人</div>
+      <div style={{ fontSize: 150, fontWeight: 900, lineHeight: 1.05, fontVariantNumeric: "tabular-nums" }}>
+        {n}
+        <span style={{ fontSize: 56, fontWeight: 800, marginLeft: 10 }}>人</span>
+      </div>
+      <div style={{ fontSize: 52, fontWeight: 900, color: K.lit }}>2 部电梯</div>
+    </div>
+  );
+};
+
+// ---------- 15 years: lifts across the country ----------
+
 export const LiftCount: React.FC<{ at: number; out: number; run: [number, number] }> = ({ at, out, run }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.4, EO), 1 - ramp(t, out - 0.35, out));
+  const o = fadeIO(t, at, out);
   if (o <= 0) return null;
   const k = ramp(t, run[0], run[1], EIO);
   const year = Math.round(lerp(2013, 2025, k));
@@ -100,17 +160,51 @@ export const LiftCount: React.FC<{ at: number; out: number; run: [number, number
   );
 };
 
-// The second vote: yes count against the 99 needed.
+// ---------- what maintenance eats out of every 100 yuan of fees ----------
+
+export const CostMeter: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.5, 0.4);
+  if (o <= 0) return null;
+  // midpoints of 中国物业管理协会's ranges: <5 years 25–35%, 10–15 years 45–60%, ~15 years 70–100%
+  const steps = [
+    { at: at + 0.4, age: "5 年内", v: 30, r: "25–35" },
+    { at: at + 2.0, age: "10–15 年", v: 52, r: "45–60" },
+    { at: at + 3.6, age: "15 年左右", v: 85, r: "70–100" },
+  ];
+  const v = track(t, [[steps[0].at, 0], [steps[0].at + 0.8, 30], [steps[1].at, 30], [steps[1].at + 0.8, 52], [steps[2].at, 52], [steps[2].at + 0.9, 85]], EO);
+  const cur = t >= steps[2].at ? steps[2] : t >= steps[1].at ? steps[1] : steps[0];
+  const Hb = 520;
+  const col = v > 70 ? K.red : v > 45 ? K.amber : K.gold;
+  return (
+    <div style={{ position: "absolute", right: 150, top: 250, width: 520, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      <div style={{ fontSize: 34, fontWeight: 800, marginBottom: 18 }}>每 100 元物业费里，花在维护上的</div>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 34 }}>
+        <div style={{ position: "relative", width: 150, height: Hb, border: "3px solid rgba(244,240,232,0.7)", borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: (Hb * v) / 100, background: col, boxShadow: `0 0 24px ${col}` }} />
+        </div>
+        <div>
+          <div style={{ fontSize: 44, fontWeight: 800, color: "rgba(244,240,232,0.85)" }}>房龄 {cur.age}</div>
+          <div style={{ fontSize: 140, fontWeight: 900, lineHeight: 1, color: col, fontVariantNumeric: "tabular-nums" }}>{Math.round(v)}</div>
+          <div style={{ fontSize: 34, fontWeight: 700, color: "rgba(244,240,232,0.7)" }}>元左右（{cur.r}）</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- the vote ----------
+
 export const Tally: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.4, EO), 1 - ramp(t, out - 0.35, out));
+  const o = fadeIO(t, at, out);
   if (o <= 0) return null;
   const n = yesCount(t);
   const W = 560;
-  const stall = n >= YES_MAX && t > sa(61.2);
+  const stall = n >= YES_MAX && t > b(71.5);
   return (
     <div style={{ position: "absolute", right: 110, top: 300, width: W, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
-      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>同意再交钱</div>
+      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>同意再凑钱</div>
       <div style={{ fontSize: 118, fontWeight: 900, lineHeight: 1.05, color: K.green, fontVariantNumeric: "tabular-nums" }}>
         {n}
         <span style={{ fontSize: 50, color: K.fg, fontWeight: 800 }}> / 132 户</span>
@@ -120,264 +214,97 @@ export const Tally: React.FC<{ at: number; out: number }> = ({ at, out }) => {
         <div style={{ position: "absolute", left: (W * NEED) / 132 - 2, top: -16, width: 4, height: 58, background: K.fg }} />
       </div>
       <div style={{ position: "relative", height: 60 }}>
-        <div style={{ position: "absolute", left: (W * NEED) / 132, top: 14, transform: "translateX(-50%)", fontSize: 34, fontWeight: 800, whiteSpace: "nowrap", color: stall ? K.red : K.fg }}>需要 {NEED} 户</div>
-      </div>
-    </div>
-  );
-};
-
-// 36 万 updated vs 1231 万 in use.
-export const LiftBars: React.FC<{ at: number; out: number }> = ({ at, out }) => {
-  const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.4, EO), 1 - ramp(t, out - 0.35, out));
-  if (o <= 0) return null;
-  const k1 = ramp(t, at + 0.2, at + 1.0, EO);
-  const k2 = ramp(t, at + 1.4, at + 2.6, EIO);
-  const W = 1300;
-  const row = (label: string, v: number, k: number, c: string) => (
-    <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 18 }}>
-      <div style={{ width: 300, textAlign: "right", fontSize: 38, fontWeight: 800 }}>{label}</div>
-      <div style={{ width: (W * v * k) / 1231.59, minWidth: 6, height: 40, background: c, borderRadius: 6, boxShadow: `0 0 16px ${c}` }} />
-      <div style={{ fontSize: 40, fontWeight: 900, fontVariantNumeric: "tabular-nums", opacity: k }}>{fmt(Math.floor(v * k), 0)} 万台</div>
-    </div>
-  );
-  return (
-    <div style={{ position: "absolute", left: 60, bottom: 130, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
-      {row("已帮着更新", 36, k1, K.gold)}
-      {row("全国在用", 1231.59, k2, K.cyan)}
-    </div>
-  );
-};
-
-// ---------- the spiral of decline ----------
-
-const STEPS = ["人走了", "交钱的人少了", "没钱修", "更没人想住"];
-
-export const Spiral: React.FC<{ cam: Cam; at: number; out: number }> = ({ cam, at, out }) => {
-  const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.5, EO), 1 - ramp(t, out - 0.4, out));
-  if (o <= 0) return null;
-  const [cx, cy0] = toScreen(cam, 0, 50, 0);
-  const cy = cy0 + 60;
-  const R = 300;
-  const rx = R * 1.45;
-  const ry = R * 0.95;
-  const dur = out - at - 0.8;
-  const prog = clamp01((t - at - 0.3) / dur) * 4; // one turn of the loop, step by step
-  const pos = (i: number) => {
-    const a = -Math.PI / 2 + (i * Math.PI) / 2;
-    return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)] as const;
-  };
-  const arc = (i: number) => {
-    const a0 = -Math.PI / 2 + (i * Math.PI) / 2 + 0.32;
-    const a1 = a0 + Math.PI / 2 - 0.64;
-    const k = clamp01(prog - i - 0.4);
-    const a1k = lerp(a0, a1, EIO(k));
-    const p0 = [cx + rx * Math.cos(a0), cy + ry * Math.sin(a0)];
-    const p1 = [cx + rx * Math.cos(a1k), cy + ry * Math.sin(a1k)];
-    if (k <= 0) return null;
-    const large = 0;
-    return (
-      <g key={i}>
-        <path d={`M ${p0[0]} ${p0[1]} A ${rx} ${ry} 0 ${large} 1 ${p1[0]} ${p1[1]}`} fill="none" stroke={K.red} strokeOpacity={0.85} strokeWidth={5} strokeLinecap="round" />
-        {k > 0.95 ? <circle cx={p1[0]} cy={p1[1]} r={8} fill={K.red} /> : null}
-      </g>
-    );
-  };
-  return (
-    <div style={{ position: "absolute", inset: 0, opacity: o }}>
-      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-        {[0, 1, 2, 3].map(arc)}
-      </svg>
-      {STEPS.map((s, i) => {
-        const [x, y] = pos(i);
-        const k = clamp01((prog - i) * 2.5);
-        const hot = prog >= i && prog < i + 1.2;
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: x,
-              top: y,
-              transform: `translate(-50%, -50%) scale(${0.9 + 0.1 * k})`,
-              opacity: k,
-              fontFamily: FONT,
-              fontSize: 40,
-              fontWeight: 900,
-              color: hot ? K.fg : "rgba(244,240,232,0.75)",
-              background: hot ? "rgba(255,90,95,0.85)" : "rgba(20,22,28,0.72)",
-              padding: "10px 24px",
-              borderRadius: 40,
-              whiteSpace: "nowrap",
-              boxShadow: hot ? "0 0 30px rgba(255,90,95,0.6)" : "none",
-            }}
-          >
-            {s}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
-
-// ---------- photo plates ----------
-
-export const Photo: React.FC<{ src: string; at: number; out: number; x: number; y: number; w: number; rot?: number; caption: string; credit: string; from?: number; to?: number }> = ({
-  src,
-  at,
-  out,
-  x,
-  y,
-  w,
-  rot = 0,
-  caption,
-  credit,
-  from = 1.0,
-  to = 1.08,
-}) => {
-  const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.5, EO), 1 - ramp(t, out - 0.4, out));
-  if (o <= 0) return null;
-  const k = ramp(t, at, out, (v) => v);
-  const s = lerp(from, to, k);
-  const enter = ramp(t, at, at + 0.7, EO);
-  return (
-    <div style={{ position: "absolute", left: x, top: y, width: w, opacity: o, transform: `translateY(${(1 - enter) * 40}px) rotate(${rot}deg)` }}>
-      <div style={{ padding: 10, background: "#f2efe8", boxShadow: "0 24px 60px rgba(0,0,0,0.6)" }}>
-        <div style={{ overflow: "hidden", width: w - 20, aspectRatio: "4 / 3" }}>
-          <Img src={staticFile(src)} style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${s})` }} />
+        <div style={{ position: "absolute", left: (W * NEED) / 132, top: 14, transform: "translateX(-50%)", fontSize: 34, fontWeight: 800, whiteSpace: "nowrap", color: stall ? K.red : K.fg }}>
+          {stall ? `还差 ${NEED - YES_MAX} 户` : `需要 ${NEED} 户`}
         </div>
-        <div style={{ fontFamily: FONT, fontSize: 26, fontWeight: 800, color: "#1a1d22", marginTop: 10 }}>{caption}</div>
-        <div style={{ fontFamily: FONT, fontSize: 17, fontWeight: 500, color: "#5a5e66", marginTop: 2 }}>{credit}</div>
       </div>
     </div>
   );
 };
 
-// ---------- China at night ----------
+// ---------- passing the flats on ----------
 
-// china-lights.jpg: NASA Black Marble 2016, lon 73–136 E, lat 15–54 N, 37.5 px per degree.
-const MAP_W = 2363;
-const MAP_H = 1462;
-const px = (lon: number, lat: number) => [(lon - 73) * 37.5, (54 - lat) * 37.5] as const;
-
-type Region = { lon: number; lat: number; r: number; dim: number };
-// Provinces whose population fell 2010–2020 (census): the three north-eastern ones, Inner Mongolia, Shanxi, Gansu.
-const SHRINK: Region[] = [
-  { lon: 126.5, lat: 46.5, r: 320, dim: 0.85 },
-  { lon: 125.5, lat: 43.6, r: 220, dim: 0.85 },
-  { lon: 122.6, lat: 41.4, r: 200, dim: 0.85 },
-  { lon: 112.0, lat: 41.6, r: 260, dim: 0.85 },
-  { lon: 112.4, lat: 37.6, r: 140, dim: 0.85 },
-  { lon: 103.8, lat: 36.4, r: 180, dim: 0.85 },
-];
-
-export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+export const PassLegend: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.9, EIO), 1 - ramp(t, out - 0.9, out, EIO));
+  const o = fadeIO(t, at, out, 0.5, 0.4);
   if (o <= 0) return null;
-  // camera on the map: start wide, ease towards the east
-  const k = ramp(t, at, out, ESO);
-  const scale = lerp(0.9, 0.97, k);
-  const [fx, fy] = px(lerp(111.5, 113, k), lerp(33.4, 33.8, k));
-  const tx = 960 - fx * scale;
-  const ty = 560 - fy * scale;
-  const shrink = ramp(t, sb(28.8), sb(30.4), EIO);
-  const grow = ramp(t, sb(30.6), sb(32), EIO);
-  const later = ramp(t, sb(33), sb(35), EIO);
-  const pin = (lon: number, lat: number) => {
-    const [x, y] = px(lon, lat);
-    return [tx + x * scale, ty + y * scale] as const;
-  };
-  const [nx, ny] = pin(125.0, 45.6);
-  const [gx, gy] = pin(119.6, 23.9);
+  const p = passShares(t);
+  const own = 132 - p.rented - p.sub - p.empty;
+  const rows: [string, number, string][] = [
+    ["自住", own, "#ffb36b"],
+    ["出租", p.rented, "#cfe0ff"],
+    ["隔成群租", p.sub, "#9ad7ff"],
+    ["空着", p.empty, "#555b63"],
+  ];
   return (
-    <div style={{ position: "absolute", inset: 0, background: "#020307", opacity: o, overflow: "hidden" }}>
-      <div style={{ position: "absolute", left: 0, top: 0, width: MAP_W, height: MAP_H, transformOrigin: "0 0", transform: `translate(${tx}px, ${ty}px) scale(${scale})` }}>
-        <Img src={staticFile("map/china-lights.jpg")} style={{ position: "absolute", left: 0, top: 0, width: MAP_W, height: MAP_H, opacity: 1 - 0.5 * later }} />
-        {SHRINK.map((r, i) => {
-          const [x, y] = px(r.lon, r.lat);
-          return (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: x - r.r,
-                top: y - r.r,
-                width: r.r * 2,
-                height: r.r * 2,
-                borderRadius: "50%",
-                background: `radial-gradient(circle, rgba(2,3,7,${r.dim * shrink}) 0%, rgba(2,3,7,${r.dim * shrink * 0.7}) 45%, rgba(2,3,7,0) 72%)`,
-              }}
-            />
-          );
-        })}
-        {(() => {
-          const [x, y] = px(113.3, 23.2);
-          return (
-            <div
-              style={{
-                position: "absolute",
-                left: x - 140,
-                top: y - 140,
-                width: 280,
-                height: 280,
-                borderRadius: "50%",
-                mixBlendMode: "screen",
-                background: `radial-gradient(circle, rgba(255,190,110,${0.7 * grow}) 0%, rgba(255,160,80,${0.3 * grow}) 30%, rgba(0,0,0,0) 62%)`,
-              }}
-            />
-          );
-        })()}
+    <div style={{ position: "absolute", right: 120, top: 300, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      {rows.map(([label, n, c], i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 18 }}>
+          <div style={{ width: 34, height: 34, borderRadius: 6, background: c, boxShadow: i < 3 ? `0 0 16px ${c}` : "none" }} />
+          <div style={{ width: 200, fontSize: 42, fontWeight: 800 }}>{label}</div>
+          <div style={{ width: 120, textAlign: "right", fontSize: 54, fontWeight: 900, fontVariantNumeric: "tabular-nums" }}>{n}</div>
+          <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.7)" }}>户</div>
+        </div>
+      ))}
+      <div style={{ fontSize: 22, fontWeight: 500, color: "rgba(244,240,232,0.55)", marginTop: 6 }}>示意</div>
+    </div>
+  );
+};
+
+// ---------- owners age with the building ----------
+
+export const AgeCounter: React.FC<{ at: number; out: number; run: [number, number] }> = ({ at, out, run }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out);
+  if (o <= 0) return null;
+  const k = ramp(t, run[0], run[1], EIO);
+  const year = Math.round(lerp(2010, 2050, k));
+  const age = Math.round(lerp(29.5, 69.5, k));
+  return (
+    <div style={{ position: "absolute", right: 120, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>{year} 年 · 楼龄 {year - 2010} 年</div>
+      <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)", marginTop: 6 }}>第一批业主</div>
+      <div style={{ fontSize: 160, fontWeight: 900, lineHeight: 1.05, color: age > 60 ? K.grey : K.fg, fontVariantNumeric: "tabular-nums" }}>
+        {age}
+        <span style={{ fontSize: 60, fontWeight: 800, marginLeft: 10 }}>岁</span>
       </div>
-      <MapLabel x={nx} y={ny} at={sb(29)} out={out} text="东北三省" sub="10 年少了约 1100 万人" color="#9fb4d6" />
-      <MapLabel x={gx} y={gy} at={sb(30.8)} out={out} text="广东" sub="10 年多了约 2171 万人" color={K.lit} />
-      <div style={{ position: "absolute", right: 70, bottom: 76, fontFamily: FONT, fontSize: 20, color: "rgba(244,240,232,0.5)" }}>NASA Black Marble 2016 · 明暗变化为按人口增减所作示意</div>
     </div>
   );
 };
 
-const MapLabel: React.FC<{ x: number; y: number; at: number; out: number; text: string; sub: string; color: string }> = ({ x, y, at, out, text, sub, color }) => {
+// ---------- births: who takes the baton ----------
+
+export const Births: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.4, EO), 1 - ramp(t, out - 0.8, out));
+  const o = fadeIO(t, at, out, 0.4, 0.4);
   if (o <= 0) return null;
+  const k1 = ramp(t, at + 0.2, at + 1.2, EO);
+  const k2 = ramp(t, at + 1.4, at + 2.4, EO);
+  const Hmax = 560;
+  const bar = (label: string, v: number, k: number, c: string, x: number) => (
+    <div style={{ position: "absolute", left: x, bottom: 170, width: 220, textAlign: "center" }}>
+      <div style={{ fontSize: 64, fontWeight: 900, color: c, fontVariantNumeric: "tabular-nums", opacity: k }}>{fmt(Math.round(v * k), 0)}</div>
+      <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.75)", marginBottom: 12, opacity: k }}>万人出生</div>
+      <div style={{ margin: "0 auto", width: 150, height: (Hmax * v * k) / 2400, background: c, borderRadius: "8px 8px 0 0", boxShadow: `0 0 22px ${c}` }} />
+      <div style={{ fontSize: 40, fontWeight: 800, marginTop: 14 }}>{label}</div>
+    </div>
+  );
   return (
-    <div style={{ position: "absolute", left: x, top: y, transform: `translate(-50%, -50%)`, opacity: o, textAlign: "center", fontFamily: FONT, textShadow: SHADOW }}>
-      <div style={{ fontSize: 46, fontWeight: 900, color }}>{text}</div>
-      <div style={{ fontSize: 30, fontWeight: 700, color: K.fg }}>{sub}</div>
+    <div style={{ position: "absolute", inset: 0, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      {bar("1990 年前后", 2400, k1, K.lit, 1200)}
+      {bar("2025 年", 792, k2, K.red, 1500)}
     </div>
   );
 };
 
-// A ring round one window: "you".
-export const YouRing: React.FC<{ cam: Cam; at: number; out: number; p: [number, number, number] }> = ({ cam, at, out, p }) => {
-  const t = useT();
-  const o = Math.min(ramp(t, at, at + 0.6, EO), 1 - ramp(t, out - 0.3, out));
-  if (o <= 0) return null;
-  const [x, y] = toScreen(cam, p[0], p[1], p[2]);
-  const pulse = 1 + 0.06 * Math.sin((t - at) * 3);
-  const r = 64 * pulse * (0.6 + 0.4 * o);
-  return (
-    <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: o }}>
-      <circle cx={x} cy={y} r={r} fill="none" stroke={K.gold} strokeWidth={5} />
-      <circle cx={x} cy={y} r={r + 14} fill="none" stroke={K.gold} strokeOpacity={0.35} strokeWidth={2} />
-    </svg>
-  );
-};
+// ---------- photographs ----------
 
-export const Fade: React.FC<{ o: number; color?: string }> = ({ o, color = "#000" }) => (o <= 0 ? null : <div style={{ position: "absolute", inset: 0, background: color, opacity: o }} />);
-
-export const useWin = (a: number, b: number, f = 0.4) => win(useT(), a, b, f);
-export { interpolate, CL };
-
-// A large photograph in the dark, slowly pushed in. `darken` lays a shadow over it; `flash` is a white hit on entry.
 export const PhotoStage: React.FC<{
   src: string;
   at: number;
   out: number;
   zoom?: [number, number];
-  focus?: [number, number]; // transform origin, % of the photo
+  focus?: [number, number];
   darken?: number;
   flash?: boolean;
   caption: string;
@@ -388,7 +315,7 @@ export const PhotoStage: React.FC<{
   if (o <= 0) return null;
   const k = ramp(t, at, out, (v) => v);
   const s = lerp(zoom[0], zoom[1], k) * (flash ? 1 + 0.05 * (1 - ramp(t, at, at + 0.5, EO)) : 1);
-  const fl = flash ? 0.75 * (1 - ramp(t, at, at + 0.45)) : 0;
+  const fl = flash ? 0.6 * (1 - ramp(t, at, at + 0.45)) : 0;
   const W = 1060;
   const H = 706;
   const L = 1920 - W - 96;
@@ -410,3 +337,45 @@ export const PhotoStage: React.FC<{
     </div>
   );
 };
+
+// A timeline of three dates (Florida).
+export const Timeline: React.FC<{ at: number; out: number; items: { at: number; date: string; text: string; c?: string }[] }> = ({ at, out, items }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  return (
+    <div style={{ position: "absolute", left: 110, top: 330, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+      {items.map((it, i) => {
+        const k = ramp(t, it.at, it.at + 0.5, EO);
+        return (
+          <div key={i} style={{ display: "flex", gap: 26, alignItems: "baseline", marginBottom: 30, opacity: k, transform: `translateX(${(1 - k) * -30}px)` }}>
+            <div style={{ width: 230, fontSize: 46, fontWeight: 900, color: it.c ?? K.lit, fontVariantNumeric: "tabular-nums" }}>{it.date}</div>
+            <div style={{ fontSize: 42, fontWeight: 800, maxWidth: 520, lineHeight: 1.3 }}>{it.text}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// A ring round one flat: "you".
+export const YouRing: React.FC<{ cam: Cam; at: number; out: number; i: number }> = ({ cam, at, out, i }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.6, 0.3);
+  if (o <= 0) return null;
+  const [x, y, z] = heroHH(i);
+  const [sx, sy] = toScreen(cam, x, y, z);
+  const pulse = 1 + 0.05 * Math.sin((t - at) * 3);
+  const r = 70 * pulse * (0.6 + 0.4 * o);
+  return (
+    <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: o }}>
+      <ellipse cx={sx} cy={sy} rx={r * 1.5} ry={r * 0.62} fill="none" stroke={K.gold} strokeWidth={5} />
+      <ellipse cx={sx} cy={sy} rx={r * 1.5 + 16} ry={r * 0.62 + 12} fill="none" stroke={K.gold} strokeOpacity={0.35} strokeWidth={2} />
+    </svg>
+  );
+};
+
+export const Fade: React.FC<{ o: number; color?: string }> = ({ o, color = "#000" }) => (o <= 0 ? null : <div style={{ position: "absolute", inset: 0, background: color, opacity: o }} />);
+
+void SERIF;
+void clamp01;

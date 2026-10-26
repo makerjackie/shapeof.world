@@ -1,14 +1,11 @@
-// The world at every moment of the film: camera keys and the state of the city and the hero.
-// Times are film seconds from the music grid (sa = A bars, sb = B bars, see timing.ts and SCRIPT.md).
-// Pruitt-Igoe, 美孚新邨 (B8–B24) and the map of China (B24–B36) are 2D scenes drawn over a dark frame.
-import { HERO } from "../world/city";
+// The world at every moment of the film: camera keys, the city, the hero tower (closed, cut open or X-rayed),
+// its 132 households and 264 residents. Times are film bars F (timing.ts, SCRIPT.md); b(F) gives film seconds.
+import { FH, HERO, UNITS } from "../world/city";
 import { Cam, mixCam } from "../world/camera";
-import { WorldState } from "../world/engine";
-import { clamp01, EI, EIO, EO, ESO, lerp, ramp, sa, sb, track, tween, win } from "../timing";
+import { PEOPLE, WorldState } from "../world/engine";
+import { clamp01, EI, EIO, EO, ESO, lerp, ramp, sf as b, track, tween, win } from "../timing";
 
-const cam = (c: Partial<Cam>): Cam => ({ x: 0, y: 45, z: 0, dist: 240, yaw: 0, pitch: 6, fov: 36, ...c });
-
-// Camera keys: [time, camera, ease into this key]
+const cam = (c: Partial<Cam>): Cam => ({ x: 0, y: 45, z: 0, dist: 240, yaw: 0, pitch: 4, fov: 36, ...c });
 type Key = [number, Cam, ((x: number) => number)?];
 const camAt = (t: number, keys: Key[]): Cam => {
   if (t <= keys[0][0]) return keys[0][1];
@@ -21,255 +18,344 @@ const camAt = (t: number, keys: Key[]): Cam => {
   }
   return keys[keys.length - 1][1];
 };
-
 const LIN = (x: number) => x;
 
-const KEYS: Key[] = [
-  // hook: a low glide over the city from the river, northwards
-  [0, cam({ x: -900, y: 40, z: 2500, dist: 520, yaw: 12, pitch: 9, fov: 40 })],
-  [sa(9), cam({ x: -260, y: 60, z: 820, dist: 760, yaw: 6, pitch: 12, fov: 40 }), LIN],
-  // dive down to the empty plot, low, looking up
-  [sa(12.1), cam({ x: 0, y: 50, z: 0, dist: 150, yaw: -18, pitch: -14, fov: 54 }), EIO],
-  // the tower rises; crane up and back
-  [sa(16), cam({ x: 0, y: 50, z: 0, dist: 255, yaw: -14, pitch: 1, fov: 38 }), ESO],
-  // 33 floors and 100 m: from the side, measured
-  [sa(17.2), cam({ x: 0, y: 58, z: 0, dist: 300, yaw: -64, pitch: 1, fov: 38 }), EIO],
-  [sa(20.3), cam({ x: 0, y: 56, z: 0, dist: 290, yaw: -56, pitch: 1, fov: 38 }), LIN],
-  // X-ray: three-quarter view, slowly round
-  [sa(22), cam({ x: -4, y: 50, z: 0, dist: 205, yaw: -38, pitch: 4, fov: 38 }), EIO],
-  [sa(27.8), cam({ x: -6, y: 54, z: 0, dist: 190, yaw: -24, pitch: 5, fov: 38 }), LIN],
-  // lifts and stairs: close on the core (the target follows a car, see below)
-  [sa(29), cam({ x: 2, y: 40, z: -3, dist: 95, yaw: -28, pitch: 1, fov: 40 }), EIO],
-  [sa(31.6), cam({ x: 2, y: 60, z: -3, dist: 120, yaw: -20, pitch: 1, fov: 40 }), LIN],
-  [sa(32.8), cam({ x: 0, y: 50, z: 0, dist: 170, yaw: -10, pitch: 3, fov: 38 }), EIO],
-  // ageing: close along the facade while the years run
-  [sa(34.2), cam({ x: 6, y: 30, z: 7, dist: 115, yaw: 18, pitch: 2, fov: 42 }), EIO],
-  [sa(36.0), cam({ x: 5, y: 46, z: 7, dist: 118, yaw: 14, pitch: 2, fov: 42 }), LIN],
-  // what wears out: the whole tower, its machinery turning amber
-  [sa(37.2), cam({ x: -2, y: 52, z: 0, dist: 235, yaw: -24, pitch: 3, fov: 38 }), EIO],
-  [sa(40.2), cam({ x: -2, y: 52, z: 0, dist: 225, yaw: -18, pitch: 3, fov: 38 }), LIN],
-  // the 15-year-old lift
-  [sa(41.2), cam({ x: 0, y: 48, z: -3, dist: 140, yaw: -26, pitch: 2, fov: 40 }), EIO],
-  [sa(44), cam({ x: 0, y: 52, z: -3, dist: 150, yaw: -20, pitch: 2, fov: 40 }), LIN],
-  // the whole city's lifts
-  [sa(46), cam({ x: 0, y: 0, z: -300, dist: 1700, yaw: 10, pitch: 15, fov: 40 }), EIO],
-  [sa(48.2), cam({ x: 0, y: 0, z: -340, dist: 1900, yaw: 6, pitch: 16, fov: 40 }), LIN],
-  // who pays: low in the garden, the jar in front
-  [sa(49.6), cam({ x: 0, y: 34, z: 18, dist: 165, yaw: 6, pitch: -3, fov: 42 }), EIO],
-  [sa(52.2), cam({ x: 0, y: 40, z: 14, dist: 175, yaw: 2, pitch: -1, fov: 42 }), LIN],
-  // the vote: straight on, the tower filling the frame
-  [sa(53.2), cam({ x: 0, y: 50, z: 0, dist: 205, yaw: 0, pitch: 2, fov: 38 }), EIO],
-  [sa(56), cam({ x: 0, y: 50, z: 0, dist: 200, yaw: 0, pitch: 2, fov: 38 }), LIN],
-  // the money's gone: down to the jar
-  [sa(56.9), cam({ x: 0, y: 12, z: 34, dist: 62, yaw: 4, pitch: 8, fov: 40 }), EIO],
-  [sa(58.1), cam({ x: 0, y: 11, z: 34, dist: 58, yaw: 2, pitch: 8, fov: 40 }), LIN],
-  // the second vote, then the bars
-  [sa(59.2), cam({ x: 0, y: 50, z: 0, dist: 215, yaw: -6, pitch: 2, fov: 38 }), EIO],
-  [sa(64), cam({ x: 0, y: 52, z: 0, dist: 235, yaw: -2, pitch: 2, fov: 38 }), LIN],
-  // rebuild: from the south-east, the walk-up next door in front
-  [sa(65.4), cam({ x: 60, y: 16, z: 0, dist: 112, yaw: -30, pitch: 4, fov: 46 }), EIO],
-  [sa(69.8), cam({ x: 54, y: 24, z: 0, dist: 128, yaw: -22, pitch: 3, fov: 46 }), LIN],
-  // one more 33 floors on top: back and up
-  [sa(71), cam({ x: 0, y: 98, z: 0, dist: 470, yaw: -6, pitch: 1, fov: 38 }), EIO],
-  [sa(72.6), cam({ x: 0, y: 92, z: 0, dist: 460, yaw: -4, pitch: 1, fov: 38 }), LIN],
-  // no way back: rise over the whole city of towers
-  [sa(74.8), cam({ x: 0, y: 0, z: -200, dist: 2300, yaw: 4, pitch: 20, fov: 40 }), EIO],
-  // the question: down again, slowly
-  [sa(78), cam({ x: 0, y: 40, z: 0, dist: 700, yaw: 8, pitch: 8, fov: 38 }), ESO],
-  [sb(1.5), cam({ x: 0, y: 50, z: 0, dist: 285, yaw: 4, pitch: 3, fov: 38 }), EIO],
-  [sb(8), cam({ x: 0, y: 50, z: 0, dist: 255, yaw: -4, pitch: 3, fov: 38 }), LIN],
-];
+// a floor's centre height
+export const yf = (f: number) => f * FH + 1.5;
 
-// back in China, after the map: the city from above as its edges go dark, then down to the hero at dawn
-const KEYS2: Key[] = [
-  [sb(35.5), cam({ x: 0, y: 0, z: 0, dist: 9200, yaw: 6, pitch: 38, fov: 40 })],
-  [sb(44), cam({ x: 0, y: 0, z: 0, dist: 7800, yaw: 11, pitch: 33, fov: 40 }), LIN],
-  [sb(47.8), cam({ x: 0, y: 40, z: 0, dist: 900, yaw: 10, pitch: 6, fov: 38 }), EIO],
-  [sb(55.8), cam({ x: 0, y: 52, z: 0, dist: 330, yaw: 2, pitch: 2, fov: 38 }), ESO],
-  [sb(64), cam({ x: -6, y: 60, z: 0, dist: 175, yaw: -6, pitch: 1, fov: 38 }), ESO],
+const KEYS: Key[] = [
+  // hook: a glide over the city, rising
+  [b(0), cam({ x: -1100, y: 30, z: 2600, dist: 420, yaw: 14, pitch: 7, fov: 42 })],
+  [b(6.2), cam({ x: -300, y: 60, z: 900, dist: 900, yaw: 8, pitch: 14, fov: 42 }), LIN],
+  // dive to the hero
+  [b(8), cam({ x: 0, y: 50, z: 0, dist: 250, yaw: -14, pitch: 3, fov: 38 }), EIO],
+  [b(9.4), cam({ x: 0, y: 50, z: 0, dist: 240, yaw: -10, pitch: 3, fov: 38 }), LIN],
+  // why so tall: low and side-on while it rises
+  [b(10.2), cam({ x: 0, y: 46, z: 0, dist: 255, yaw: -50, pitch: 2, fov: 38 }), EIO],
+  [b(13.8), cam({ x: 0, y: 56, z: 0, dist: 285, yaw: -58, pitch: 1, fov: 38 }), LIN],
+  // a whole estate of the same height
+  [b(15.6), cam({ x: 0, y: 60, z: -40, dist: 620, yaw: -24, pitch: 8, fov: 40 }), EIO],
+  // the cut: straight on, the wall peeling from the top
+  [b(16.6), cam({ x: 0, y: 52, z: 0, dist: 205, yaw: 0, pitch: 1, fov: 38 }), EIO],
+  [b(19), cam({ x: 0, y: 50, z: 0, dist: 196, yaw: -3, pitch: 1, fov: 38 }), LIN],
+  [b(22), cam({ x: 0, y: 50, z: 0, dist: 190, yaw: 3, pitch: 1, fov: 38 }), LIN],
+  // noise: floors 8–22 around flat 58
+  [b(24), cam({ x: 4, y: yf(14), z: 0, dist: 95, yaw: -4, pitch: 0, fov: 40 }), EIO],
+  [b(28), cam({ x: 4, y: yf(14), z: 0, dist: 88, yaw: 4, pitch: 0, fov: 40 }), LIN],
+  // 公摊: drift left, room for the plan on the right
+  [b(29), cam({ x: 26, y: 42, z: 0, dist: 190, yaw: -6, pitch: 1, fov: 38 }), EIO],
+  [b(32), cam({ x: 24, y: 44, z: 0, dist: 186, yaw: -2, pitch: 1, fov: 38 }), LIN],
+  // the morning rush: the core and its queues
+  [b(33), cam({ x: 0, y: 40, z: 0, dist: 140, yaw: 0, pitch: 1, fov: 40 }), EIO],
+  [b(36), cam({ x: 0, y: 46, z: 0, dist: 150, yaw: 0, pitch: 1, fov: 40 }), LIN],
+  // fire: back and to the side, the 50 m plane in the air
+  [b(37), cam({ x: 0, y: 52, z: 0, dist: 300, yaw: 32, pitch: 6, fov: 40 }), EIO],
+  [b(40), cam({ x: 0, y: 52, z: 0, dist: 290, yaw: 24, pitch: 6, fov: 40 }), LIN],
+  // fifteen years: a slow arc while time flies
+  [b(41.5), cam({ x: 0, y: 50, z: 0, dist: 250, yaw: 20, pitch: 4, fov: 38 }), EIO],
+  [b(47.8), cam({ x: 0, y: 50, z: 0, dist: 235, yaw: -22, pitch: 4, fov: 38 }), LIN],
+  // the machine
+  [b(48.6), cam({ x: -4, y: 50, z: 0, dist: 205, yaw: -34, pitch: 4, fov: 38 }), EIO],
+  [b(52), cam({ x: -4, y: 52, z: 0, dist: 196, yaw: -24, pitch: 4, fov: 38 }), LIN],
+  // every lift in the city
+  [b(53.4), cam({ x: 0, y: 0, z: -300, dist: 1800, yaw: 10, pitch: 15, fov: 40 }), EIO],
+  [b(55.8), cam({ x: 0, y: 0, z: -340, dist: 2000, yaw: 6, pitch: 16, fov: 40 }), LIN],
+  // the cost meter, then the jar in the garden
+  [b(56.8), cam({ x: -14, y: 46, z: 10, dist: 230, yaw: 14, pitch: 4, fov: 40 }), EIO],
+  [b(60), cam({ x: -10, y: 42, z: 14, dist: 215, yaw: 8, pitch: 3, fov: 40 }), LIN],
+  [b(61), cam({ x: 0, y: 30, z: 18, dist: 170, yaw: 4, pitch: -2, fov: 42 }), EIO],
+  [b(64), cam({ x: 0, y: 36, z: 14, dist: 175, yaw: 0, pitch: -1, fov: 42 }), LIN],
+  // the vote: straight on, cut open again
+  [b(64.8), cam({ x: 0, y: 50, z: 0, dist: 205, yaw: 0, pitch: 1, fov: 38 }), EIO],
+  [b(72), cam({ x: 0, y: 50, z: 0, dist: 198, yaw: 0, pitch: 1, fov: 38 }), LIN],
+  // nobody pays; the lifts stop; floor 11
+  [b(75), cam({ x: 0, y: 46, z: 0, dist: 190, yaw: 6, pitch: 1, fov: 38 }), LIN],
+  [b(77.2), cam({ x: -6, y: yf(10), z: 0, dist: 90, yaw: 6, pitch: 1, fov: 40 }), EIO],
+  [b(80), cam({ x: -6, y: yf(10), z: 0, dist: 84, yaw: 2, pitch: 1, fov: 40 }), LIN],
+  // (Florida: photographs, the world waits below)
+  [b(87.6), cam({ x: 0, y: 46, z: 0, dist: 260, yaw: -6, pitch: 2, fov: 38 }), LIN],
+  // rebuild: the walk-up next door
+  [b(88.6), cam({ x: 60, y: 16, z: 0, dist: 112, yaw: -30, pitch: 4, fov: 46 }), EIO],
+  [b(91.6), cam({ x: 54, y: 24, z: 0, dist: 128, yaw: -22, pitch: 3, fov: 46 }), LIN],
+  // one more 33 floors on top
+  [b(92.6), cam({ x: 0, y: 98, z: 0, dist: 470, yaw: -6, pitch: 1, fov: 38 }), EIO],
+  [b(94.2), cam({ x: 0, y: 92, z: 0, dist: 460, yaw: -4, pitch: 1, fov: 38 }), LIN],
+  // no way back: up over the whole city
+  [b(96), cam({ x: 0, y: 0, z: -200, dist: 2300, yaw: 4, pitch: 20, fov: 40 }), EIO],
+  // passing the baton: in again, cut open
+  [b(97.6), cam({ x: 0, y: 50, z: 0, dist: 215, yaw: 4, pitch: 1, fov: 38 }), EIO],
+  [b(104), cam({ x: 0, y: 50, z: 0, dist: 200, yaw: -4, pitch: 1, fov: 38 }), LIN],
+  // the people grow old
+  [b(107), cam({ x: 0, y: 50, z: 0, dist: 190, yaw: -2, pitch: 1, fov: 38 }), LIN],
+  [b(109.6), cam({ x: 0, y: 50, z: 0, dist: 230, yaw: 6, pitch: 2, fov: 38 }), LIN],
+  // the answer: over the city as its edges go dark
+  [b(112.4), cam({ x: 0, y: 0, z: 0, dist: 7400, yaw: 8, pitch: 34, fov: 40 }), EIO],
+  [b(116), cam({ x: 0, y: 0, z: -100, dist: 4200, yaw: 14, pitch: 22, fov: 40 }), LIN],
+  // dawn, the tower, "you"
+  [b(118.4), cam({ x: 0, y: 50, z: 0, dist: 300, yaw: 6, pitch: 3, fov: 38 }), EIO],
+  [b(121.5), cam({ x: -6, y: 60, z: 0, dist: 150, yaw: -4, pitch: 1, fov: 38 }), ESO],
 ];
 
 // ---------- households ----------
 
-// Move-in order: a fixed shuffle, so lights come on scattered through the tower.
-const ORDER = Array.from({ length: 132 }, (_, i) => i).sort((a, b) => ((a * 0.6180339) % 1) - ((b * 0.6180339) % 1));
-const RANK = new Array(132);
-ORDER.forEach((h, k) => (RANK[h] = k));
-// Who agrees to put money in again: 87 of 132 say yes (short of 99), in a scattered order.
-const YES_ORDER = Array.from({ length: 132 }, (_, i) => i).sort((a, b) => ((a * 0.7548776 + 0.31) % 1) - ((b * 0.7548776 + 0.31) % 1));
-const YES_RANK = new Array(132);
-YES_ORDER.forEach((h, k) => (YES_RANK[h] = k));
+const shuffle = (k: number, off: number) =>
+  Array.from({ length: 132 }, (_, i) => i)
+    .sort((a, c) => ((a * k + off) % 1) - ((c * k + off) % 1))
+    .reduce((acc, h, r) => ((acc[h] = r), acc), new Array(132) as number[]);
+const RANK_LIT = shuffle(0.6180339, 0.1);
+const RANK_YES = shuffle(0.7548776, 0.31);
+const RANK_PAY = shuffle(0.41421356, 0.77);
+const RANK_GO = shuffle(0.2360679, 0.53);
 export const YES_MAX = 87;
 export const NEED = 99;
-// Homes that go dark when people leave: a scatter, the low floors a little first.
-const GONE_RANK = Array.from({ length: 132 }, (_, i) => i)
-  .map((i) => ({ i, k: ((i * 0.41421356) % 1) * 0.8 + (Math.floor(i / 4) < 8 ? -0.2 : 0) }))
-  .sort((a, b) => a.k - b.k)
-  .reduce((acc, x, k) => ((acc[x.i] = k), acc), new Array(132) as number[]);
+export const NOISE_SRC = 58; // floor 14, the third flat
+export const YOU = 81; // floor 20, the second flat
+export const OLDIE = 42; // floor 10 (the 11th floor), the third flat
+export const yesCount = (t: number) => Math.round(track(t, [[b(69), 0], [b(71.4), YES_MAX]], EO));
+const vote1Of = (t: number) => win(t, b(64.9), b(68.8), 0.4);
 
-export const yesCount = (t: number) => Math.round(track(t, [[sa(59.0), 0], [sa(61.2), YES_MAX]], EO));
-export const YOU = 81; // floor 20, second flat from the west
+// how the flats change hands in the second interlude
+export const passShares = (t: number) => {
+  const p = ramp(t, b(97.5), b(103.5), LIN);
+  return { rented: Math.round(lerp(0, 46, p)), sub: Math.round(lerp(0, 18, ramp(t, b(99.5), b(103.5), LIN))), empty: Math.round(lerp(0, 30, ramp(t, b(100.5), b(104), LIN))) };
+};
 
 const households = (t: number) => {
   const a = new Float32Array(132 * 4);
-  const moveIn = tween(t, sa(13.6), sa(15.8), 0, 132, LIN);
-  const vote1 = win(t, sa(52.6), sa(56.2), 0.5);
-  const vote1Rise = ramp(t, sa(52.8), sa(54.6), LIN);
+  const a2 = new Float32Array(132 * 4);
+  const lapse = t > b(41.5) && t < b(47.6);
+  const nightSeed = lapse ? Math.floor(t / 0.2) : Math.floor(t / 6);
+  const offShare = lapse ? 0.4 : 0.1;
+  const vote1 = vote1Of(t);
+  const rise1 = ramp(t, b(65.2), b(67), LIN);
   const yesN = yesCount(t);
-  const vote2 = win(t, sa(58.9), sa(63.9), 0.5);
-  // time-lapse while the years run: nights flicker past
-  const lapse = t > sa(33) && t < sa(44);
-  const nightSeed = lapse ? Math.floor(t / 0.18) : Math.floor(t / 7);
-  const offShare = lapse ? 0.35 : 0.12;
-  const gone = Math.round(
-    track(t, [
-      [sa(76.4), 0],
-      [sa(77.8), 26],
-      [sb(1), 26],
-      [sb(7.5), 60],
-      [sb(36), 60],
-      [sb(46), 70],
-      [sb(52), 74],
-    ]),
-  );
+  const vote2 = win(t, b(68.9), b(72), 0.4);
+  const unpaid = win(t, b(72.2), b(80.2), 0.5) * ramp(t, b(72.2), b(74), LIN);
+  const unpaidN = Math.round(132 * 0.29 * unpaid);
+  const pass = passShares(t);
+  const passOn = t > b(97.4);
+  const fire = win(t, b(37.2), b(40.4), 0.4);
+  const nOn = win(t, b(24.3), b(28.4), 0.3);
+  const srcF = Math.floor(NOISE_SRC / 4);
+  const srcU = NOISE_SRC % 4;
   for (let i = 0; i < 132; i++) {
-    const floor = Math.floor(i / 4);
-    let lit = RANK[i] < moveIn ? 1 : 0;
-    if (((i * 0.37 + nightSeed * 0.1309) % 1) < offShare) lit = 0;
+    const fl = Math.floor(i / 4);
+    const un = i % 4;
+    let lit = ((i * 0.37 + nightSeed * 0.1309) % 1) < offShare ? 0 : 1;
     let yes = 0;
     let no = 0;
-    if (vote1 > 0) {
-      if (floor < vote1Rise * 33) {
-        if (floor < 11) no = vote1;
-        else yes = vote1;
-      }
+    let gone = 0;
+    let tenant = 0;
+    let sub = 0;
+    let noise = 0;
+    let mark = 0;
+    if (vote1 > 0 && fl < rise1 * 33) {
+      if (fl < 11) no = vote1;
+      else yes = vote1;
     }
     if (vote2 > 0) {
-      if (YES_RANK[i] < yesN) yes = vote2;
-      else no = 0.55 * vote2 * ramp(t, sa(61.2), sa(61.8));
+      if (RANK_YES[i] < yesN) yes = vote2;
+      else no = 0.5 * vote2 * ramp(t, b(71.4), b(71.9));
     }
-    let g = GONE_RANK[i] < gone ? 1 : 0;
-    if (g) lit = 0;
-    if (i === YOU && t > sb(50)) {
-      g = 0;
+    if (RANK_PAY[i] < unpaidN) gone = 0.55;
+    if (passOn) {
+      const r = RANK_GO[i];
+      if (r < pass.empty) {
+        gone = 1;
+        lit = 0;
+      } else if (r < pass.empty + pass.sub) {
+        sub = 1;
+        lit = 1;
+      } else if (r < pass.empty + pass.sub + pass.rented) tenant = 1;
+    }
+    if (nOn > 0) {
+      const d = Math.abs(fl - srcF) + Math.abs(un - srcU) * 0.6;
+      const ph = (t - b(24.3)) * 2.2 - d * 0.32;
+      const s = Math.sin(ph * Math.PI * 2);
+      noise = nOn * (ph > 0 ? Math.max(0, s) * Math.max(0, s) : 0) * Math.exp(-d * 0.13);
+      if (i === NOISE_SRC) noise = nOn * (0.6 + 0.4 * Math.abs(Math.sin(t * 18)));
+    }
+    if (fire > 0 && fl * FH > 50) noise = Math.max(noise, 0.28 * fire);
+    const oldie = win(t, b(77.4), b(80.2), 0.4);
+    if (i === OLDIE && oldie > 0) {
+      mark = oldie;
       lit = 1;
+      gone = 0;
     }
-    a.set([lit, yes, no, g], i * 4);
+    if (i === YOU && t > b(119)) {
+      mark = ramp(t, b(119.5), b(120.5));
+      lit = 1;
+      gone = 0;
+      sub = 0;
+    }
+    if (lit === 0 && RANK_LIT[i] > 125 && !lapse && !passOn) lit = 1;
+    a.set([lit, yes, no, gone], i * 4);
+    a2.set([tenant, sub, noise, mark], i * 4);
   }
-  return a;
+  return { a, a2 };
 };
 
-// Lift cars: each rides between random floors, pausing at stops.
-export const liftY = (t: number, k: number) => {
-  const period = 7 + k * 2.3;
+// ---------- people ----------
+
+const h1 = (n: number) => {
+  const x = Math.sin(n * 127.1) * 43758.5453;
+  return x - Math.floor(x);
+};
+// Each flat has two residents at home, drifting a little. In the rush (F32.4–36.6) they walk to the lift core,
+// queue, and are picked up.
+const peopleAt = (t: number, hh: Float32Array) => {
+  const out = new Float32Array(PEOPLE * 4);
+  const rushT = t - b(32.4);
+  const rushOn = t > b(32.4) && t < b(36.6);
+  const back = ramp(t, b(36.6), b(37.2), LIN);
+  const queues = new Map<string, number>();
+  for (let p = 0; p < PEOPLE; p++) {
+    const u = p >> 1;
+    const fl = Math.floor(u / 4);
+    const k = u % 4;
+    const [x0, x1] = UNITS[k];
+    const hx = lerp(x0 + 1.4, x1 - 1.4, h1(p * 3.1));
+    const hz = lerp(-2.6, 4.2, h1(p * 7.7));
+    const y = fl * FH + 0.14;
+    const drift = Math.sin(t * 0.4 + p) * 0.35;
+    let x = hx + drift;
+    let z = hz;
+    let s = 1;
+    const lit = hh[u * 4];
+    const gone = hh[u * 4 + 3];
+    if (gone > 0.9) s = 0;
+    if (p % 2 === 1 && lit < 0.5) s = 0;
+    if (t > b(36.6) && t < b(37.2)) s *= back;
+    if (rushOn && fl > 0) {
+      const start = h1(p * 1.7) * 1.4;
+      const walk = clamp01((rushT - start) / 1.2);
+      const side = k < 2 ? -1 : 1;
+      const key = `${fl}:${side}`;
+      const qi = queues.get(key) ?? 0;
+      queues.set(key, qi + 1);
+      const qx = side * (2.2 + qi * 0.62);
+      x = lerp(hx, qx, EIO(walk));
+      z = lerp(hz, 3.6, EIO(walk));
+      const board = start + 1.8 + h1(p * 5.3) * 1.2 + (fl / 33) * 1.6;
+      if (rushT > board) s = Math.max(0, 1 - (rushT - board) / 0.25);
+    }
+    out.set([x, y, z, s], p * 4);
+  }
+  return out;
+};
+
+// Lift cars: ride between random floors; in the rush they run fast.
+export const liftY = (t: number, k: number, fast = 0) => {
+  const period = lerp(7 + k * 2.3, 2.6 + k * 0.5, fast);
   const ph = (t + k * 4.1) / period;
   const leg = Math.floor(ph);
   const f = ph - leg;
   const fl = (n: number) => Math.floor(((n * 0.7548776 + k * 0.3) % 1) * 33);
   const m = clamp01((f - 0.2) / 0.62);
-  return lerp(fl(leg) * 3, fl(leg + 1) * 3, EIO(m));
+  return lerp(fl(leg) * FH, fl(leg + 1) * FH, EIO(m));
 };
 
 // ---------- the world ----------
 
 export const worldAt = (t: number): WorldState => {
-  const main = t < sb(24) ? KEYS : KEYS2;
-
-  // city lights: switch on in the hook; a few estates blink off at the question; out one by one at the end
   const lights = track(t, [
-    [0, 0.18],
-    [sa(3), 0.5],
-    [sa(8), 0.56],
-    [sa(44.5), 0.56],
-    [sa(45.5), 0.3],
-    [sa(48.2), 0.3],
-    [sa(49), 0.56],
-    [sb(36), 0.58],
-    [sb(47.5), 0.5],
-    [sb(52.5), 0.2],
-    [sb(64), 0.16],
+    [0, 0.2],
+    [b(3), 0.52],
+    [b(8), 0.56],
+    [b(53), 0.56],
+    [b(53.8), 0.3],
+    [b(56), 0.3],
+    [b(56.8), 0.56],
+    [b(112), 0.58],
+    [b(118), 0.42],
+    [b(124), 0.3],
   ]);
-  const patch = win(t, sa(6.6), sa(8.6), 0.35);
-  // the ring of darkness closing in on the city (B36–B44)
-  const darkR = track(t, [[sb(36), 8000], [sb(44), 2300]], EIO);
-  const darkAmt = t >= sb(24) ? 0.95 : 0;
-  // how much the rest of the city steps back behind the hero
-  const heroShot = Math.max(win(t, sa(12), sa(44.4), 0.8), win(t, sa(48.6), sa(72), 0.8), win(t, sa(76), sb(8), 0.8), win(t, sb(48), sb(70), 1.2));
-  const xrayMain = win(t, sa(20.4), sa(32.6), 1.0);
-  const cityDim = 1 - 0.42 * heroShot - 0.38 * xrayMain;
+  const heroShot = Math.max(win(t, b(8), b(53), 0.8), win(t, b(56.6), b(95), 0.8), win(t, b(97), b(112), 0.8), win(t, b(117.5), b(130), 0.8));
+  const darkR = track(t, [[b(112), 8000], [b(116), 2400]], EIO);
+  const darkAmt = t >= b(110) ? 0.95 : 0;
+  const patch = win(t, b(4.6), b(6.4), 0.35);
 
-  // the hero
-  const built = ramp(t, sa(12.3), sa(13.7), EO);
-  const xray = Math.max(xrayMain, win(t, sa(37.3), sa(40.4), 0.6) * 0.7, win(t, sa(40.8), sa(43.9), 0.5) * 0.85, win(t, sb(57), sb(64), 1.2) * 0.4);
-  const age = track(t, [[sa(33), 0], [sa(36.5), 0.25], [sa(40), 0.45], [sa(44), 0.6], [sa(64), 0.62], [sb(1), 0.66], [sb(8), 1.0]], LIN);
-  const water = track(t, [[sa(24.3), -2], [sa(27.4), HERO.h + 8]], EIO);
-  let lifts: [number, number] = [liftY(t, 0), liftY(t, 1)];
-  const flick = t > sa(41.2) && t < sa(43.6) ? (Math.sin(t * 37) > 0.25 ? 1 : 0.12) : 1;
-  // the end: one car rises to the 21st floor and stops at "you"
-  if (t > sb(57)) lifts = [tween(t, sb(58), sb(61.6), 0, 20 * 3, EIO), liftY(t, 1)];
-  const stairs = ramp(t, sa(29.8), sa(31.8), LIN);
+  const built = t < b(9.6) ? 1 : track(t, [[b(9.6), 1], [b(10.2), 0.18], [b(10.6), 0.18], [b(13.4), 1]], EIO);
+  const peel = Math.max(
+    t < b(41.6) ? track(t, [[b(16.2), 0], [b(18.6), 1], [b(40.2), 1], [b(41.4), 0]], EIO) : 0,
+    t > b(64.2) && t < b(80.6) ? track(t, [[b(64.2), 0], [b(64.9), 1], [b(80), 1], [b(80.5), 0]], EIO) : 0,
+    t > b(96.6) && t < b(112.7) ? track(t, [[b(96.6), 0], [b(97.6), 1], [b(112), 1], [b(112.6), 0]], EIO) : 0,
+    t > b(118.8) ? ramp(t, b(118.8), b(120), EIO) : 0,
+  );
+  const xray = win(t, b(48.3), b(53.2), 0.6);
+  const age = track(t, [[b(41.5), 0], [b(47.6), 0.55], [b(64), 0.6], [b(96), 0.7], [b(112), 0.85]], LIN);
+  const water = track(t, [[b(48.6), -2], [b(50.6), HERO.h + 8]], EIO);
+  const rushFast = win(t, b(32.4), b(36.6), 0.5);
+  let lifts: [number, number] = [liftY(t, 0, rushFast), liftY(t, 1, rushFast)];
+  const stopped = win(t, b(75.2), b(80.2), 0.2);
+  if (stopped > 0) lifts = [lerp(lifts[0], 0, stopped), lerp(lifts[1], 0, stopped)];
+  if (t > b(119)) lifts = [tween(t, b(119.4), b(121.6), 0, 20 * FH, EIO), liftY(t, 1)];
+  const liftGlow = 1 - stopped * 0.92;
+  const liftsFront = Math.max(win(t, b(19), b(24), 0.5), win(t, b(32.2), b(36.8), 0.4), win(t, b(75), b(80.2), 0.4), win(t, b(119), b(130), 0.6));
+  const stairs = ramp(t, b(75.6), b(77.2), LIN) * win(t, b(75.4), b(80.2), 0.3);
 
-  const coinsT = tween(t, sa(49.6), sa(52.3), 0, 1, LIN);
-  const tankLevel = track(t, [[sa(49.6), 0.02], [sa(52.6), 0.82], [sa(56.4), 0.82], [sa(57.7), 0.03]], EIO);
-  const tankVis = win(t, sa(48.8), sa(58.8), 0.5);
+  const { a: hh, a2: hh2 } = households(t);
+  const pos = peopleAt(t, hh);
 
-  const oldVis = win(t, sa(64.4), sa(70.6), 0.4);
-  const oldDrop = track(t, [[sa(66.2), 0], [sa(66.9), 1], [sa(67.2), 1], [sa(67.3), 0]], EI);
-  const oldFloors = t < sa(67.1) ? 6 : tween(t, sa(67.2), sa(68.8), 0.2, 11, EO);
-  const ghostVis = win(t, sa(70.5), sa(72.8), 0.35);
-  const ghostLift = tween(t, sa(70.5), sa(71.6), 0, HERO.h, EO);
-  const outline = Math.max(win(t, sa(72.7), sa(78.5), 0.8), win(t, sb(40), sb(49), 1.2));
+  const coinsT = tween(t, b(60.2), b(62.8), 0, 1, LIN);
+  const tankVis = win(t, b(56.8), b(64.2), 0.5);
+  const tankLevel = track(t, [[b(56.8), 0.02], [b(60.2), 0.02], [b(63), 0.34]], EIO);
 
-  // camera; while the lifts are the subject, it follows car 0
-  let c = camAt(t, main);
-  const follow = win(t, sa(28.6), sa(31.4), 0.7);
-  if (follow > 0) c = { ...c, y: lerp(c.y, lifts[0] + 2, follow * 0.85) };
-  // a breath of drift so nothing is ever frozen
-  c = { ...c, yaw: c.yaw + Math.sin(t * 0.21) * 0.6, pitch: c.pitch + Math.sin(t * 0.17 + 1) * 0.25 };
+  const oldVis = win(t, b(88.2), b(92.6), 0.4);
+  const oldDrop = track(t, [[b(89.2), 0], [b(89.9), 1], [b(90.2), 1], [b(90.3), 0]], EI);
+  const oldFloors = t < b(90.1) ? 6 : tween(t, b(90.2), b(91.6), 0.2, 11, EO);
+  const ghostVis = win(t, b(92.4), b(94.6), 0.35);
+  const ghostLift = tween(t, b(92.4), b(93.4), 0, HERO.h, EO);
+  const outline = Math.max(win(t, b(94.5), b(97.4), 0.6), win(t, b(112.4), b(117.4), 0.8));
 
-  // night falls in the hook; at the end, dawn comes
-  const night = track(t, [[0, 0.55], [sa(9), 0.86], [sa(12), 0.92], [sb(47), 0.92], [sb(62), 0.5]]);
+  let c = camAt(t, KEYS);
+  c = { ...c, yaw: c.yaw + Math.sin(t * 0.21) * 0.5, pitch: c.pitch + Math.sin(t * 0.17 + 1) * 0.2 };
+
+  const lapse = win(t, b(41.6), b(47.4), 0.6);
+  const lapseNight = 0.72 + 0.2 * Math.cos(((t - b(41.6)) / 1.4) * Math.PI * 2);
+  let night = track(t, [[0, 0.5], [b(8), 0.86], [b(12), 0.9], [b(115), 0.9], [b(123), 0.5]]);
+  night = lerp(night, lapseNight, lapse);
 
   return {
     cam: c,
     time: t,
     night,
     dim: ramp(t, 0, 0.6),
-    site: 0,
     traffic: 1,
     bloom: 0.42,
     outline,
     city: {
       lights,
       patch,
-      elev: win(t, sa(45.2), sa(48.6), 0.6),
-      elevAge: tween(t, sa(46.6), sa(48.2), 0, 0.85, EIO),
+      elev: win(t, b(53.4), b(56.4), 0.6),
+      elevAge: tween(t, b(54.6), b(56), 0, 0.85, EIO),
       darkR,
       darkAmt,
-      dim: cityDim,
+      dim: 1 - 0.45 * heroShot,
       hideEast: true,
     },
     hero: {
       vis: 1,
       built,
-      hh: households(t),
+      hh,
+      hh2,
       age,
       xray,
-      vote: Math.max(win(t, sa(52.6), sa(56.2), 0.5), win(t, sa(58.9), sa(63.9), 0.5)),
+      vote: Math.max(vote1Of(t), win(t, b(68.9), b(72), 0.4)),
+      peel,
       water,
       lifts,
+      liftGlow,
+      liftsFront,
       stairs,
-      line100: win(t, sa(16.8), sa(20.6), 0.5),
-      refuge: win(t, sa(17.9), sa(20.2), 0.4),
-      liftGlow: flick,
+      line100: win(t, b(12.2), b(14.4), 0.5),
+      refuge: win(t, b(12.6), b(14.4), 0.4),
+      fire: win(t, b(37.2), b(40.4), 0.4),
     },
-    coins: { t: coinsT, vis: win(t, sa(49.6), sa(53), 0.3) },
+    people: { pos, vis: peel > 0.5 ? 1 : 0, grey: ramp(t, b(104.2), b(107.5), LIN) * (t < b(118.8) ? 1 : 0) },
+    coins: { t: coinsT, vis: win(t, b(60.2), b(63.4), 0.3) },
     tank: { vis: tankVis, level: tankLevel },
     old: { vis: oldVis, floors: oldFloors, drop: oldDrop },
     ghost: { vis: ghostVis, lift: ghostLift },
   };
 };
-
-void tween;
-void EO;
-void ESO;

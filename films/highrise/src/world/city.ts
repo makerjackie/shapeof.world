@@ -23,8 +23,6 @@ export const P = 300; // block pitch: a 264 m estate plus a 36 m road
 export const ROAD = 36;
 export const FH = 3;
 export const HERO = { w: 44, d: 14, floors: 33, units: 4, h: 99 };
-export const PRUITT_X = 30000;
-export const MEIFOO_X = -30000;
 
 // The river: a band of water south of the hero, 220 m wide, wandering east-west.
 export const RIVER_W = 220;
@@ -126,56 +124,35 @@ HOME.forEach(add);
 
 export const CITY: Bldg[] = out.splice(0, out.length);
 
-// ---------- Pruitt-Igoe (schematic): 33 slabs of 11 floors on a ~460 m site ----------
-
-const pr: Bldg[] = [];
-{
-  const rows = [5, 6, 6, 6, 5, 5];
-  let k = 0;
-  rows.forEach((n, ri) => {
-    for (let i = 0; i < n; i++) {
-      const w = [52, 64, 76][(i + ri) % 3];
-      const x = PRUITT_X - 210 + i * 84 + (ri % 2) * 30;
-      const z = -190 + ri * 76 + ((i % 2) * 14 - 7);
-      pr.push({ x, z, rot: (ri + i) % 4 === 0 ? Math.PI / 2 : 0, seed: (k++ * 0.6180339) % 1, w, d: 13, h: 11 * FH, kind: 3, occ: 0.95, group: 3, dist: 0 });
-    }
-  });
-}
-for (let i = 0; i < 260; i++) {
-  const a = (i * 2.399) % (Math.PI * 2);
-  const rr = 420 + ((i * 0.618) % 1) * 900;
-  pr.push({ x: PRUITT_X + Math.cos(a) * rr, z: Math.sin(a) * rr, rot: 0, seed: (i * 0.377) % 1, w: 14 + (i % 4) * 4, d: 10, h: (2 + (i % 2)) * FH, kind: 1, occ: 0.8, group: 6, dist: 0 });
-}
-export const PRUITT: Bldg[] = pr;
-
-// ---------- 美孚新邨 (schematic): 99 towers of 15–21 floors along the shore ----------
-
-const mf: Bldg[] = [];
-{
-  let k = 0;
-  for (let row = 0; row < 7 && k < 99; row++) {
-    for (let i = 0; i < 15 && k < 99; i++) {
-      const s = ((k * 0.6180339) % 1) * 0.999;
-      const x = MEIFOO_X - 560 + i * 78 + (row % 2) * 30 + Math.sin(k * 2.3) * 6;
-      const z = -230 + row * 62 + Math.cos(k * 1.7) * 5;
-      mf.push({ x, z, rot: 0, seed: s, w: 34 + (k % 3) * 4, d: 20, h: (15 + (k % 7)) * FH, kind: 3, occ: 0.97, group: 4, dist: 0 });
-      k++;
-    }
-  }
-}
-for (let i = 0; i < 220; i++) {
-  const x = MEIFOO_X - 1500 + ((i * 0.618) % 1) * 3000;
-  const z = -420 - ((i * 0.377) % 1) * 1300;
-  mf.push({ x, z, rot: 0, seed: (i * 0.271) % 1, w: 30 + (i % 3) * 6, d: 22, h: (18 + (i % 15)) * FH, kind: 0, occ: 0.95, group: 6, dist: 0 });
-}
-export const MEIFOO: Bldg[] = mf;
+// Lift machine rooms and water tanks on the housing roofs (kind 4: plain boxes, no windows).
+export const ROOFS: Bldg[] = CITY.filter((b) => b.kind !== 2 && b.h > 40 && b.group !== 9).map((b) => ({
+  x: b.x + (b.seed - 0.5) * b.w * 0.3,
+  z: b.z - b.d * 0.12,
+  rot: 0,
+  seed: b.seed,
+  w: Math.max(6, b.w * 0.22),
+  d: b.d * 0.55,
+  h: b.h + 4.5,
+  kind: 4,
+  occ: 0,
+  group: b.group,
+  dist: b.dist,
+}));
 
 // The old 6-floor block that is pulled down and rebuilt at 11 floors, where the hero's east neighbour stands.
 export const OLD = { x: 66, z: 0, w: 52, d: 11 };
 
-// Household i (0..131) of the hero: floor-major, units west to east. Point = middle of its south balcony.
+// The hero's plan: four flats a floor, two each side of a 3 m lift core in the middle (x in metres, west to east).
+export const UNITS: [number, number][] = [
+  [-22, -11.75],
+  [-11.75, -1.5],
+  [1.5, 11.75],
+  [11.75, 22],
+];
+export const ROOM_Z: [number, number] = [-6.6, 6.6];
+// Household i (0..131): floor-major, flats west to east. Point = middle of the flat's open front, mid-height.
 export const heroHH = (i: number): [number, number, number] => {
   const floor = Math.floor(i / HERO.units);
-  const unit = i % HERO.units;
-  return [-HERO.w / 2 + (unit + 0.5) * (HERO.w / HERO.units) - 2.0, floor * FH + 1.5, HERO.d / 2];
+  const [a, b] = UNITS[i % HERO.units];
+  return [(a + b) / 2, floor * FH + 1.5, HERO.d / 2];
 };

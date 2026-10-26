@@ -1,6 +1,7 @@
 // One WebGL scene for the whole film, rendered synchronously for each frame from a plain WorldState.
-// The city, the hero tower and the two far sites are all instanced slabs drawn by one shader (shaders.ts); the
-// hero's machinery (lift shafts, cars, stairs, water riser, roof tank, pump room) appears in X-ray.
+// The city is instanced slabs drawn by one shader (shaders.ts). The hero tower can be cut open (its south wall
+// peels away floor by floor) to show its 132 flats as lit rooms with people in them, or turned into an X-ray of
+// its machinery (lift shafts and cars, stairs, water riser, roof tank, pump room).
 import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
@@ -9,9 +10,29 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
 import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeometry.js";
-import { Bldg, CITY, FH, HERO, MEIFOO, MEIFOO_X, OLD, P, PRUITT, PRUITT_X, ROAD, heroHH } from "./city";
+import { Bldg, CITY, FH, HERO, OLD, P, ROAD, ROOFS, ROOM_Z, UNITS, heroHH } from "./city";
 import { Cam, H, W, setCamera } from "./camera";
-import { BLDG_FRAG, BLDG_VERT, COIN_FRAG, COIN_VERT, DOT_FRAG, DOT_VERT, GLOW_FRAG, GLOW_VERT, GROUND_FRAG, GROUND_VERT, SKY_FRAG, SKY_VERT } from "./shaders";
+import {
+  BLDG_FRAG,
+  BLDG_VERT,
+  COIN_FRAG,
+  COIN_VERT,
+  CONC_FRAG,
+  CONC_VERT,
+  DOT_FRAG,
+  DOT_VERT,
+  GLOW_FRAG,
+  GLOW_VERT,
+  GROUND_FRAG,
+  GROUND_VERT,
+  PERSON_FRAG,
+  ROOM_FRAG,
+  ROOM_VERT,
+  SKY_FRAG,
+  SKY_VERT,
+} from "./shaders";
+
+export const PEOPLE = 264; // two per flat
 
 export type WorldState = {
   cam: Cam;
@@ -19,31 +40,33 @@ export type WorldState = {
   night: number; // 0 blue hour .. 1 night
   bloom?: number;
   exposure?: number;
-  dim?: number; // whole picture (0 black .. 1)
-  site?: 0 | 1 | 2; // main city, Pruitt-Igoe, 美孚新邨
+  dim?: number;
   traffic?: number;
   city: { lights: number; darkR?: number; darkAmt?: number; patch?: number; elev?: number; elevAge?: number; dim?: number; hideEast?: boolean };
   hero: {
     vis: number;
-    built: number; // 0 nothing .. 1 full height
-    hh: Float32Array; // 132 x rgba
+    built: number;
+    hh: Float32Array; // 132 x [lit, yes, no, gone]
+    hh2: Float32Array; // 132 x [tenant, subdivided, noise, mark]
     age: number;
     xray: number;
     vote: number;
-    water: number; // metres the water has climbed the riser
-    lifts: [number, number]; // car heights (m)
-    stairs: number; // 0..1 of the stairway lit
-    line100?: number;
-    refuge?: number; // the extra refuge floor above the roof (0..1)
+    peel: number; // 0 closed .. 1 the whole south wall gone
+    water: number;
+    lifts: [number, number];
     liftGlow?: number;
+    liftsFront?: number; // lift cars shown in the open core (cut-open view)
+    stairs: number;
+    line100?: number;
+    refuge?: number;
+    fire?: number; // the 50 m ladder line
   };
-  coins?: { t: number; vis: number }; // t 0..1 through the coin rain
+  people?: { pos: Float32Array; vis: number; grey?: number }; // PEOPLE x [x, y, z, scale]
+  coins?: { t: number; vis: number };
   tank?: { vis: number; level: number };
   old?: { vis: number; floors: number; drop: number };
   ghost?: { vis: number; lift: number };
-  outline?: number; // the hero picked out in gold (city-wide shots)
-  pruitt?: { lights: number; drop: (i: number) => number; dust: number };
-  meifoo?: { lights: number };
+  outline?: number;
 };
 
 const C = (hex: string) => new THREE.Color(hex);
@@ -55,8 +78,6 @@ const unitBox = () => {
   g.translate(0, 0.5, 0);
   return g;
 };
-
-const kindOf = (b: Bldg) => b.kind;
 
 const makeInst = (list: Bldg[], mat: THREE.ShaderMaterial): Inst => {
   const base = unitBox();
@@ -70,7 +91,7 @@ const makeInst = (list: Bldg[], mat: THREE.ShaderMaterial): Inst => {
   const Cc = new Float32Array(n * 4);
   list.forEach((b, i) => {
     A.set([b.x, b.z, b.rot, b.seed], i * 4);
-    B.set([b.w, b.d, b.h, kindOf(b)], i * 4);
+    B.set([b.w, b.d, b.h, b.kind], i * 4);
     Cc.set([b.occ, b.group, b.dist, 0], i * 4);
   });
   geo.setAttribute("aA", new THREE.InstancedBufferAttribute(A, 4));
@@ -80,7 +101,6 @@ const makeInst = (list: Bldg[], mat: THREE.ShaderMaterial): Inst => {
   geo.setAttribute("aC", aC);
   geo.instanceCount = n;
   const mesh = new THREE.Mesh(geo, mat);
-  // the shader places each slab, so three's bounding box is meaningless: no frustum culling
   mesh.frustumCulled = false;
   return { mesh, geo, aB, aC, list };
 };
@@ -110,14 +130,14 @@ const segs = (pts: number[]) => {
   return g;
 };
 
-const glowMat = (color: string, color2: string, rim = 0.6) =>
+const glowMat = (color: string, color2: string, rim = 0.6, depthTest = false) =>
   new THREE.ShaderMaterial({
     vertexShader: GLOW_VERT,
     fragmentShader: GLOW_FRAG,
     uniforms: { uColor: { value: C(color) }, uColor2: { value: C(color2) }, uOpacity: { value: 0 }, uLevel: { value: 1e5 }, uFlow: { value: 0 }, uTime: { value: 0 }, uRim: { value: rim } },
     transparent: true,
     depthWrite: false,
-    depthTest: false,
+    depthTest,
     blending: THREE.AdditiveBlending,
   });
 
@@ -139,6 +159,18 @@ const dots = (pts: number[], seeds: number[], sizes: number[], color: string, bl
   return p;
 };
 
+const dataTex = (data: Float32Array) => {
+  const t = new THREE.DataTexture(data, 4, 33, THREE.RGBAFormat, THREE.FloatType);
+  t.magFilter = THREE.NearestFilter;
+  t.minFilter = THREE.NearestFilter;
+  t.needsUpdate = true;
+  return t;
+};
+
+// the lift core sits in the 3 m gap between the middle flats, open to the front when the tower is cut
+const LIFT_X = [-0.72, 0.72];
+const LIFT_Z_FRONT = 4.6;
+
 class Engine {
   canvas: HTMLCanvasElement;
   renderer: THREE.WebGLRenderer;
@@ -148,17 +180,23 @@ class Engine {
   bloom: UnrealBloomPass;
   sky: THREE.Mesh;
   skyU: Record<string, THREE.IUniform>;
-  ground: THREE.Mesh;
   groundU: Record<string, THREE.IUniform>;
   bMat: THREE.ShaderMaterial;
   heroMat: THREE.ShaderMaterial;
   city: Inst;
-  pruitt: Inst;
-  meifoo: Inst;
   old: Inst;
   hero: Inst;
-  hhTex: THREE.DataTexture;
   hhData = new Float32Array(4 * 33 * 4);
+  hh2Data = new Float32Array(4 * 33 * 4);
+  hhTex: THREE.DataTexture;
+  hh2Tex: THREE.DataTexture;
+  rooms: THREE.Mesh;
+  roomMat: THREE.ShaderMaterial;
+  slabs: THREE.InstancedMesh;
+  walls: THREE.InstancedMesh;
+  concMat: THREE.ShaderMaterial;
+  people: THREE.InstancedMesh;
+  personMat: THREE.ShaderMaterial;
   heroLines: LineSegments2;
   heroLinesMat: LineMaterial;
   stairLines: LineSegments2;
@@ -174,6 +212,10 @@ class Engine {
   line100Mat: LineMaterial;
   refuge: THREE.Mesh;
   refugeMat: THREE.ShaderMaterial;
+  fire: THREE.Mesh;
+  fireMat: THREE.ShaderMaterial;
+  fireLine: LineSegments2;
+  fireLineMat: LineMaterial;
   shafts: THREE.Mesh[] = [];
   cars: THREE.Mesh[] = [];
   carMat: THREE.ShaderMaterial;
@@ -193,9 +235,6 @@ class Engine {
   tankFillMat: THREE.ShaderMaterial;
   avLights: THREE.Points;
   lampHeads: THREE.Points;
-  dust: THREE.Points;
-  dustBase: Float32Array;
-  dustVel: Float32Array;
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -237,30 +276,24 @@ class Engine {
     };
     const gg = new THREE.PlaneGeometry(160000, 160000, 1, 1);
     gg.rotateX(-Math.PI / 2);
-    this.ground = new THREE.Mesh(gg, new THREE.ShaderMaterial({ vertexShader: GROUND_VERT, fragmentShader: GROUND_FRAG, uniforms: this.groundU }));
-    this.ground.frustumCulled = false;
-    this.scene.add(this.ground);
+    const ground = new THREE.Mesh(gg, new THREE.ShaderMaterial({ vertexShader: GROUND_VERT, fragmentShader: GROUND_FRAG, uniforms: this.groundU }));
+    ground.frustumCulled = false;
+    this.scene.add(ground);
 
-    // buildings
+    // the city, with machine rooms on the roofs
     this.bMat = new THREE.ShaderMaterial({ vertexShader: BLDG_VERT, fragmentShader: BLDG_FRAG, uniforms: bldgUniforms() });
-    this.city = makeInst(CITY, this.bMat);
+    this.city = makeInst([...CITY, ...ROOFS], this.bMat);
     this.scene.add(this.city.mesh);
-    this.pruitt = makeInst(PRUITT, this.bMat.clone());
-    this.scene.add(this.pruitt.mesh);
-    this.meifoo = makeInst(MEIFOO, this.bMat.clone());
-    this.scene.add(this.meifoo.mesh);
     this.old = makeInst([{ x: OLD.x, z: OLD.z, rot: 0, seed: 0.37, w: OLD.w, d: OLD.d, h: 6 * FH, kind: 1, occ: 0.9, group: 7, dist: 66 }], this.bMat.clone());
     this.scene.add(this.old.mesh);
 
     // the hero
-    this.hhTex = new THREE.DataTexture(this.hhData, 4, 33, THREE.RGBAFormat, THREE.FloatType);
-    this.hhTex.magFilter = THREE.NearestFilter;
-    this.hhTex.minFilter = THREE.NearestFilter;
-    this.hhTex.needsUpdate = true;
+    this.hhTex = dataTex(this.hhData);
+    this.hh2Tex = dataTex(this.hh2Data);
     this.heroMat = new THREE.ShaderMaterial({
       vertexShader: BLDG_VERT,
       fragmentShader: BLDG_FRAG,
-      uniforms: { ...bldgUniforms(), uHH: { value: this.hhTex }, uXray: { value: 0 }, uAge: { value: 0 }, uVote: { value: 0 } },
+      uniforms: { ...bldgUniforms(), uHH: { value: this.hhTex }, uXray: { value: 0 }, uAge: { value: 0 }, uVote: { value: 0 }, uPeelY: { value: 999 }, uFireY: { value: 50 }, uFire: { value: 0 } },
       defines: { HERO: 1 },
       transparent: true,
     });
@@ -268,7 +301,59 @@ class Engine {
     this.hero.mesh.renderOrder = 2;
     this.scene.add(this.hero.mesh);
 
-    // X-ray: floor outlines, core box
+    // the cut-open tower: one room box per flat, slabs, party walls, people
+    const rb = unitBox();
+    const rgeo = new THREE.InstancedBufferGeometry();
+    rgeo.index = rb.index;
+    rgeo.setAttribute("position", rb.getAttribute("position"));
+    rgeo.setAttribute("normal", rb.getAttribute("normal"));
+    const RA = new Float32Array(132 * 4);
+    const RS = new Float32Array(132 * 4);
+    for (let i = 0; i < 132; i++) {
+      const f = Math.floor(i / 4);
+      const [a, b] = UNITS[i % 4];
+      RA.set([(a + b) / 2, f * FH + 0.14, (ROOM_Z[0] + ROOM_Z[1]) / 2, i], i * 4);
+      RS.set([b - a - 0.3, FH - 0.28, ROOM_Z[1] - ROOM_Z[0], ((i * 0.6180339) % 1) * 0.999], i * 4);
+    }
+    rgeo.setAttribute("aR", new THREE.InstancedBufferAttribute(RA, 4));
+    rgeo.setAttribute("aS", new THREE.InstancedBufferAttribute(RS, 4));
+    rgeo.instanceCount = 132;
+    this.roomMat = new THREE.ShaderMaterial({
+      vertexShader: ROOM_VERT,
+      fragmentShader: ROOM_FRAG,
+      side: THREE.BackSide,
+      uniforms: { uHH: { value: this.hhTex }, uHH2: { value: this.hh2Tex }, uTime: { value: 0 }, uNight: { value: 1 }, uVote: { value: 0 }, uAge: { value: 0 }, uDim: { value: 1 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } },
+    });
+    this.rooms = new THREE.Mesh(rgeo, this.roomMat);
+    this.rooms.frustumCulled = false;
+    this.scene.add(this.rooms);
+
+    this.concMat = new THREE.ShaderMaterial({ vertexShader: CONC_VERT, fragmentShader: CONC_FRAG, uniforms: { uNight: { value: 1 }, uDim: { value: 1 }, uAge: { value: 0 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } } });
+    this.slabs = new THREE.InstancedMesh(new THREE.BoxGeometry(HERO.w + 0.6, 0.28, HERO.d + 0.4), this.concMat, HERO.floors + 1);
+    const m4 = new THREE.Matrix4();
+    for (let f = 0; f <= HERO.floors; f++) {
+      m4.makeTranslation(0, f * FH, 0.2);
+      this.slabs.setMatrixAt(f, m4);
+    }
+    this.slabs.frustumCulled = false;
+    this.scene.add(this.slabs);
+    const wallXs = [-22, -11.75, -1.5, 1.5, 11.75, 22];
+    this.walls = new THREE.InstancedMesh(new THREE.BoxGeometry(0.3, HERO.h, HERO.d), this.concMat, wallXs.length);
+    wallXs.forEach((x, i) => {
+      m4.makeTranslation(x, HERO.h / 2, 0);
+      this.walls.setMatrixAt(i, m4);
+    });
+    this.walls.frustumCulled = false;
+    this.scene.add(this.walls);
+
+    this.personMat = new THREE.ShaderMaterial({ vertexShader: CONC_VERT, fragmentShader: PERSON_FRAG, uniforms: { uDim: { value: 1 }, uGrey: { value: 0 } } });
+    const pg = new THREE.CapsuleGeometry(0.24, 1.05, 4, 8);
+    pg.translate(0, 0.77, 0);
+    this.people = new THREE.InstancedMesh(pg, this.personMat, PEOPLE);
+    this.people.frustumCulled = false;
+    this.scene.add(this.people);
+
+    // X-ray: floor outlines, party walls
     const hw = HERO.w / 2;
     const hd = HERO.d / 2;
     const fl: number[] = [];
@@ -277,36 +362,35 @@ class Engine {
       fl.push(-hw, y, -hd, hw, y, -hd, hw, y, -hd, hw, y, hd, hw, y, hd, -hw, y, hd, -hw, y, hd, -hw, y, -hd);
     }
     for (const [x, z] of [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]) fl.push(x, 0, z, x, HERO.h, z);
-    // party walls between the four homes
-    for (const x of [-11, 0, 11]) for (let f = 0; f < HERO.floors; f++) fl.push(x, f * FH, -hd, x, f * FH, hd);
+    for (const x of [-11.75, -1.5, 1.5, 11.75]) for (let f = 0; f < HERO.floors; f++) fl.push(x, f * FH, -hd, x, f * FH, hd);
     this.heroLinesMat = lineMat("#7fe3ff", 1.4);
     this.heroLines = new LineSegments2(segs(fl), this.heroLinesMat);
     this.heroLines.renderOrder = 3;
     this.heroLines.frustumCulled = false;
     this.scene.add(this.heroLines);
 
-    // lift shafts and cars (core, just north of centre)
+    // lift shafts and cars, in the core between the middle flats
     this.shaftMat = glowMat("#7fe3ff", "#7fe3ff", 1.2);
     this.carMat = glowMat("#fff4dc", "#fff4dc", 0.4);
-    for (const x of [-1.7, 1.7]) {
-      const s = new THREE.Mesh(new THREE.BoxGeometry(2.8, HERO.h + 4, 2.8), this.shaftMat);
-      s.position.set(x, (HERO.h + 4) / 2, -3);
+    for (const x of LIFT_X) {
+      const s = new THREE.Mesh(new THREE.BoxGeometry(1.3, HERO.h + 4, 2.4), this.shaftMat);
+      s.position.set(x, (HERO.h + 4) / 2, LIFT_Z_FRONT - 1.2);
       s.renderOrder = 4;
       this.shafts.push(s);
       this.scene.add(s);
-      const c = new THREE.Mesh(new THREE.BoxGeometry(2.2, 2.6, 2.2), this.carMat);
-      c.position.set(x, 1.3, -3);
+      const c = new THREE.Mesh(new THREE.BoxGeometry(1.15, 2.5, 1.6), this.carMat);
+      c.position.set(x, 1.3, LIFT_Z_FRONT - 1.0);
       c.renderOrder = 5;
       this.cars.push(c);
       this.scene.add(c);
     }
 
-    // stairs: one flight up and one back per floor, east of the core
+    // stairs, east of the core
     const st: number[] = [];
     for (let f = 0; f < HERO.floors; f++) {
       const y = f * FH;
-      st.push(4.2, y, -1.2, 8.2, y + FH / 2, -1.2);
-      st.push(8.2, y + FH / 2, -4.2, 4.2, y + FH, -4.2);
+      st.push(3.0, y, -1.2, 7.0, y + FH / 2, -1.2);
+      st.push(7.0, y + FH / 2, -4.2, 3.0, y + FH, -4.2);
     }
     this.stairCount = st.length / 6;
     this.stairMat = lineMat("#ffd9a0", 2.2);
@@ -315,7 +399,7 @@ class Engine {
     this.stairLines.frustumCulled = false;
     this.scene.add(this.stairLines);
 
-    // water: pump room at the west end of the ground floor, a riser up the west core, a tank on the roof
+    // water: pump room, riser, roof tank
     this.pumpMat = glowMat("#4fb4ff", "#4fb4ff", 1.0);
     this.pump = new THREE.Mesh(new THREE.BoxGeometry(6, 3.2, 6), this.pumpMat);
     this.pump.position.set(-16, 1.6, -2);
@@ -335,19 +419,33 @@ class Engine {
     this.machine.position.set(0, HERO.h + 2.5, -3);
     this.scene.add(this.machine);
 
-    // the extra refuge floor that 100 m would demand, and the 100 m line
+    // 100 m: the refuge floor and the line
     this.refugeMat = glowMat("#ff5a5f", "#ff5a5f", 1.4);
     this.refuge = new THREE.Mesh(new THREE.BoxGeometry(HERO.w, FH, HERO.d), this.refugeMat);
-    this.refuge.position.set(0, HERO.h + 1.5 + 0.2, 0);
+    this.refuge.position.set(0, HERO.h + 1.7, 0);
     this.refuge.renderOrder = 4;
     this.scene.add(this.refuge);
     this.line100Mat = lineMat("#ffffff", 1.6);
-    this.line100 = new LineSegments2(segs([-60, 100, HERO.d / 2 + 0.5, 60, 100, HERO.d / 2 + 0.5]), this.line100Mat);
+    this.line100 = new LineSegments2(segs([-70, 100, HERO.d / 2 + 0.5, 70, 100, HERO.d / 2 + 0.5]), this.line100Mat);
     this.line100.frustumCulled = false;
     this.line100.renderOrder = 6;
     this.scene.add(this.line100);
 
-    // the ghost of "one more 33-floor tower" above the hero
+    // 50 m: how high a ladder truck reaches
+    this.fireMat = glowMat("#ff3b30", "#ff3b30", 0.0, true);
+    const fp = new THREE.PlaneGeometry(90, 60);
+    fp.rotateX(-Math.PI / 2);
+    this.fire = new THREE.Mesh(fp, this.fireMat);
+    this.fire.position.set(0, 50, 10);
+    this.fire.renderOrder = 6;
+    this.scene.add(this.fire);
+    this.fireLineMat = lineMat("#ff6a5f", 2.4);
+    this.fireLine = new LineSegments2(segs([-45, 50, 40, 45, 50, 40, -45, 50, -20, 45, 50, -20, -45, 50, -20, -45, 50, 40, 45, 50, -20, 45, 50, 40]), this.fireLineMat);
+    this.fireLine.frustumCulled = false;
+    this.fireLine.renderOrder = 7;
+    this.scene.add(this.fireLine);
+
+    // "one more 33 floors" ghost, the gold outline, the walk-up's outline
     const gh: number[] = [];
     for (let f = 0; f <= HERO.floors; f += 3) {
       const y = f * FH;
@@ -359,8 +457,6 @@ class Engine {
     this.ghost.frustumCulled = false;
     this.ghost.renderOrder = 6;
     this.scene.add(this.ghost);
-
-    // the hero picked out in gold for the city-wide shots
     const ol: number[] = [];
     for (const y of [0, HERO.h]) ol.push(-hw, y, -hd, hw, y, -hd, hw, y, -hd, hw, y, hd, hw, y, hd, -hw, y, hd, -hw, y, hd, -hw, y, -hd);
     for (const [x, z] of [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]) ol.push(x, 0, z, x, HERO.h, z);
@@ -369,8 +465,6 @@ class Engine {
     this.outlineL.frustumCulled = false;
     this.outlineL.renderOrder = 8;
     this.scene.add(this.outlineL);
-
-    // the walk-up next door, outlined while it is the subject (a unit box, scaled each frame)
     const ub: number[] = [];
     for (const y of [0, 1]) ub.push(-0.5, y, -0.5, 0.5, y, -0.5, 0.5, y, -0.5, 0.5, y, 0.5, 0.5, y, 0.5, -0.5, y, 0.5, -0.5, y, 0.5, -0.5, y, -0.5);
     for (const [x, z] of [[-0.5, -0.5], [0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]]) ub.push(x, 0, z, x, 1, z);
@@ -391,8 +485,7 @@ class Engine {
     this.tankFill.renderOrder = 7;
     this.scene.add(this.tankFill);
     this.coinMat = new THREE.ShaderMaterial({ vertexShader: COIN_VERT, fragmentShader: COIN_FRAG, uniforms: { uOpacity: { value: 1 } }, depthWrite: true });
-    const cg = new THREE.CylinderGeometry(2.0, 2.0, 0.45, 28);
-    this.coins = new THREE.InstancedMesh(cg, this.coinMat, 132);
+    this.coins = new THREE.InstancedMesh(new THREE.CylinderGeometry(2.0, 2.0, 0.45, 28), this.coinMat, 132);
     this.coins.frustumCulled = false;
     this.scene.add(this.coins);
 
@@ -425,41 +518,6 @@ class Engine {
     this.lampHeads = dots(lp, ls, lz, "#ffb066", 0, 1);
     this.scene.add(this.lampHeads);
 
-    // implosion dust at Pruitt-Igoe
-    const dn = PRUITT.length * 48;
-    this.dustBase = new Float32Array(dn * 3);
-    this.dustVel = new Float32Array(dn * 3);
-    const dp = new Float32Array(dn * 3);
-    const dsd: number[] = [];
-    const dsz: number[] = [];
-    let k = 0;
-    PRUITT.forEach((b, bi) => {
-      for (let j = 0; j < 48; j++) {
-        const a = (j * 2.399 + bi) % (Math.PI * 2);
-        const rr = ((j * 0.618 + bi * 0.31) % 1) * 0.5;
-        this.dustBase.set([b.x + Math.cos(a) * b.w * rr, 2, b.z + Math.sin(a) * b.d * rr * 2], k * 3);
-        this.dustVel.set([Math.cos(a) * (8 + 10 * rr), 3 + ((j * 0.37) % 1) * 9, Math.sin(a) * (8 + 10 * rr)], k * 3);
-        dsd.push(bi);
-        dsz.push(9000 + 6000 * ((j * 0.77) % 1));
-        k++;
-      }
-    });
-    const dg = new THREE.BufferGeometry();
-    dg.setAttribute("position", new THREE.BufferAttribute(dp, 3));
-    dg.setAttribute("aSeed", new THREE.Float32BufferAttribute(dsd, 1));
-    dg.setAttribute("aSize", new THREE.Float32BufferAttribute(dsz, 1));
-    const dm = new THREE.ShaderMaterial({
-      vertexShader: DOT_VERT,
-      fragmentShader: DOT_FRAG,
-      uniforms: { uTime: { value: 0 }, uScale: { value: 1 }, uBlink: { value: 0 }, uColor: { value: C("#3a3530") }, uOpacity: { value: 0 } },
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.NormalBlending,
-    });
-    this.dust = new THREE.Points(dg, dm);
-    this.dust.frustumCulled = false;
-    this.scene.add(this.dust);
-
     // post
     const rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, samples: 4 });
     this.composer = new EffectComposer(this.renderer, rt);
@@ -475,7 +533,6 @@ class Engine {
     const t = s.time;
     const night = s.night;
     const dim = s.dim ?? 1;
-    // sky and fog: blue hour → night
     const hor = C("#3a4a6e").lerp(C("#1a2236"), night);
     const fog = hor.clone().add(new THREE.Color(0.014, 0.011, 0.01).multiplyScalar(night));
     this.skyU.uZen.value.copy(C("#0a1838").lerp(C("#03060e"), night));
@@ -483,11 +540,9 @@ class Engine {
     this.skyU.uHor.value.copy(hor);
     this.skyU.uNight.value = night;
     this.skyU.uDim.value = dim;
-    const site = s.site ?? 0;
-    // thinner haze when the camera is high above the city
-    const camH = (s.cam.y + Math.sin((s.cam.pitch * Math.PI) / 180) * s.cam.dist);
+    const camH = s.cam.y + Math.sin((s.cam.pitch * Math.PI) / 180) * s.cam.dist;
     const hk = Math.max(0, Math.min(1, (camH - 600) / 4000));
-    const fogD = site === 0 ? 1 / (7000 + 15000 * hk) : 1 / 3800;
+    const fogD = 1 / (7000 + 15000 * hk);
 
     const setB = (m: THREE.ShaderMaterial, lights: number, extraDim = 1) => {
       const u = m.uniforms;
@@ -506,13 +561,6 @@ class Engine {
     };
     setB(this.bMat, s.city.lights, s.city.dim ?? 1);
     this.bMat.uniforms.uHide.value = s.city.hideEast ? 9 : -99;
-    this.city.mesh.visible = site === 0;
-    setB(this.pruitt.mesh.material as THREE.ShaderMaterial, s.pruitt?.lights ?? 0.8);
-    (this.pruitt.mesh.material as THREE.ShaderMaterial).uniforms.uElev.value = 0;
-    this.pruitt.mesh.visible = site === 1;
-    setB(this.meifoo.mesh.material as THREE.ShaderMaterial, s.meifoo?.lights ?? 0.9);
-    (this.meifoo.mesh.material as THREE.ShaderMaterial).uniforms.uElev.value = 0;
-    this.meifoo.mesh.visible = site === 2;
 
     const gu = this.groundU;
     gu.uTime.value = t;
@@ -524,38 +572,12 @@ class Engine {
     gu.uDarkR.value = s.city.darkR ?? 99999;
     gu.uDarkAmt.value = s.city.darkAmt ?? 0;
     gu.uDim.value = dim;
-    gu.uSea.value = site === 2 ? 1 : 0;
-    gu.uSeaZ.value = 190;
-    gu.uSiteC.value.set(site === 1 ? PRUITT_X : site === 2 ? MEIFOO_X : 0, 0);
-    gu.uSiteR.value = site === 0 ? 5200 : 1600;
-    gu.uRiver.value = site === 0 ? 1 : 0;
-    gu.uP.value = site === 0 ? P : site === 1 ? 130 : 170;
-
-    // Pruitt-Igoe: each slab sinks as it is blown up
-    if (site === 1 && s.pruitt) {
-      const arr = this.pruitt.aC.array as Float32Array;
-      PRUITT.forEach((_, i) => (arr[i * 4 + 3] = s.pruitt!.drop(i)));
-      this.pruitt.aC.needsUpdate = true;
-      const pos = this.dust.geometry.getAttribute("position") as THREE.BufferAttribute;
-      const pa = pos.array as Float32Array;
-      const n = pa.length / 3;
-      for (let k = 0; k < n; k++) {
-        const bi = Math.floor(k / 48);
-        const dt = Math.max(0, s.pruitt.drop(bi) * 6);
-        const age = dt;
-        pa[k * 3] = this.dustBase[k * 3] + this.dustVel[k * 3] * age;
-        pa[k * 3 + 1] = this.dustBase[k * 3 + 1] + this.dustVel[k * 3 + 1] * age;
-        pa[k * 3 + 2] = this.dustBase[k * 3 + 2] + this.dustVel[k * 3 + 2] * age;
-      }
-      pos.needsUpdate = true;
-      (this.dust.material as THREE.ShaderMaterial).uniforms.uOpacity.value = s.pruitt.dust;
-      this.dust.visible = s.pruitt.dust > 0.001;
-    } else this.dust.visible = false;
 
     // the old walk-up next door (and its rebuild)
     const ov = s.old?.vis ?? 0;
-    this.old.mesh.visible = site === 0 && ov > 0.001;
-    if (s.old) {
+    this.old.mesh.visible = ov > 0.001;
+    this.oldLine.visible = false;
+    if (s.old && ov > 0.001) {
       const ob = this.old.aB.array as Float32Array;
       ob[2] = s.old.floors * FH;
       this.old.aB.needsUpdate = true;
@@ -563,12 +585,12 @@ class Engine {
       oc[3] = s.old.drop;
       this.old.aC.needsUpdate = true;
       setB(this.old.mesh.material as THREE.ShaderMaterial, 1.0);
+      (this.old.mesh.material as THREE.ShaderMaterial).uniforms.uElev.value = 0;
       const oh = s.old.floors * FH * (1 - s.old.drop);
       this.oldLine.scale.set(OLD.w + 1, Math.max(0.1, oh + 0.5), OLD.d + 1);
       this.oldLine.position.set(OLD.x, 0, OLD.z);
       this.oldLineMat.opacity = 0.8 * ov * (1 - s.old.drop);
-      this.oldLine.visible = this.old.mesh.visible && oh > 0.5;
-      (this.old.mesh.material as THREE.ShaderMaterial).uniforms.uElev.value = 0;
+      this.oldLine.visible = oh > 0.5;
     }
 
     // ---------- the hero ----------
@@ -579,15 +601,60 @@ class Engine {
     hu.uXray.value = he.xray;
     hu.uAge.value = he.age;
     hu.uVote.value = he.vote;
+    hu.uPeelY.value = he.peel > 0.0005 ? HERO.h * (1 - he.peel) - 0.01 : 999;
+    hu.uFire.value = he.fire ?? 0;
     this.hhData.set(he.hh);
     this.hhTex.needsUpdate = true;
+    this.hh2Data.set(he.hh2);
+    this.hh2Tex.needsUpdate = true;
     const hc = this.hero.aC.array as Float32Array;
     hc[3] = 1 - he.built;
     this.hero.aC.needsUpdate = true;
-    this.hero.mesh.visible = site === 0 && he.vis > 0.001;
+    this.hero.mesh.visible = he.vis > 0.001;
     this.heroMat.depthWrite = he.xray < 0.01;
-    const xr = site === 0 ? he.xray : 0;
-    // the machinery wears: cyan and blue turn amber as the tower ages (the frame stays cyan)
+
+    // cut-open interior
+    const open = he.peel > 0.0005 && he.built > 0.99;
+    this.rooms.visible = this.slabs.visible = this.walls.visible = open;
+    const ru = this.roomMat.uniforms;
+    ru.uTime.value = t;
+    ru.uNight.value = night;
+    ru.uVote.value = he.vote;
+    ru.uAge.value = he.age;
+    ru.uDim.value = dim;
+    ru.uFogC.value.copy(fog);
+    ru.uFogD.value = fogD;
+    const cu = this.concMat.uniforms;
+    cu.uNight.value = night;
+    cu.uDim.value = dim;
+    cu.uAge.value = he.age;
+    cu.uFogC.value.copy(fog);
+    cu.uFogD.value = fogD;
+    const pv = s.people?.vis ?? 0;
+    this.people.visible = open && pv > 0.001;
+    if (s.people && this.people.visible) {
+      const q = new THREE.Quaternion();
+      const v = new THREE.Vector3();
+      const sc = new THREE.Vector3();
+      const pm = new THREE.Matrix4();
+      const pa = s.people.pos;
+      for (let i = 0; i < PEOPLE; i++) {
+        v.set(pa[i * 4], pa[i * 4 + 1], pa[i * 4 + 2]);
+        const k = pa[i * 4 + 3] * pv;
+        sc.set(k, k, k);
+        pm.compose(v, q, sc);
+        this.people.setMatrixAt(i, pm);
+      }
+      this.people.instanceMatrix.needsUpdate = true;
+      this.personMat.uniforms.uDim.value = dim;
+      this.personMat.uniforms.uGrey.value = s.people.grey ?? 0;
+    }
+
+    // X-ray machinery; in the cut-open view the lift cars ride the open core
+    const xr = he.xray;
+    const front = he.liftsFront ?? 0;
+    this.heroLinesMat.opacity = 0.55 * xr;
+    this.heroLines.visible = xr > 0.001;
     const wear = Math.max(0, Math.min(1, (he.age - 0.12) / 0.4));
     const amber = C("#ffa040");
     this.shaftMat.uniforms.uColor.value.copy(C("#7fe3ff").lerp(amber, wear));
@@ -598,19 +665,15 @@ class Engine {
     this.pumpMat.uniforms.uColor2.value.copy(C("#4fb4ff").lerp(amber, wear));
     this.riserMat.uniforms.uColor.value.copy(C("#6cc6ff").lerp(amber, wear));
     this.roofTankMat.uniforms.uColor.value.copy(C("#4fb4ff").lerp(amber, wear));
-    this.heroLinesMat.opacity = 0.55 * xr;
-    this.heroLines.visible = xr > 0.001;
-    this.shaftMat.uniforms.uOpacity.value = 0.12 * xr;
-    this.carMat.uniforms.uOpacity.value = 1.6 * xr * (he.liftGlow ?? 1);
+    const liftVis = Math.max(xr, front);
+    this.shaftMat.uniforms.uOpacity.value = (0.12 * xr + 0.05 * front) * (he.liftGlow ?? 1);
+    this.carMat.uniforms.uOpacity.value = 1.6 * liftVis * (he.liftGlow ?? 1);
     this.cars.forEach((c, i) => (c.position.y = he.lifts[i] + 1.3));
-    [...this.shafts, ...this.cars].forEach((m) => (m.visible = xr > 0.001));
+    [...this.shafts, ...this.cars].forEach((m) => (m.visible = liftVis > 0.001));
     this.stairMat.opacity = he.stairs > 0 ? 0.95 * xr : 0;
     this.stairLines.visible = he.stairs > 0.001 && xr > 0.001;
     (this.stairLines.geometry as LineSegmentsGeometry).instanceCount = Math.max(1, Math.round(he.stairs * this.stairCount));
-    for (const m of [this.riserMat, this.roofTankMat, this.pumpMat]) {
-      m.uniforms.uTime.value = t;
-      m.uniforms.uOpacity.value = xr;
-    }
+    for (const m of [this.riserMat, this.roofTankMat, this.pumpMat]) m.uniforms.uTime.value = t;
     this.riserMat.uniforms.uLevel.value = he.water;
     this.riserMat.uniforms.uFlow.value = 1;
     this.riserMat.uniforms.uOpacity.value = 1.3 * xr;
@@ -619,24 +682,26 @@ class Engine {
     this.pumpMat.uniforms.uLevel.value = 1e4;
     this.pumpMat.uniforms.uOpacity.value = 0.55 * xr * (0.8 + 0.2 * Math.sin(t * 6));
     for (const m of [this.riser, this.roofTank, this.pump]) m.visible = xr > 0.001;
-    this.machine.visible = site === 0 && he.built > 0.99;
+    this.machine.visible = he.built > 0.99;
     this.refugeMat.uniforms.uOpacity.value = 0.5 * (he.refuge ?? 0);
     this.refuge.visible = (he.refuge ?? 0) > 0.001;
     this.line100Mat.opacity = 0.9 * (he.line100 ?? 0);
     this.line100.visible = (he.line100 ?? 0) > 0.001;
+    const fv = he.fire ?? 0;
+    this.fireMat.uniforms.uOpacity.value = 0.22 * fv;
+    this.fire.visible = this.fireLine.visible = fv > 0.001;
+    this.fireLineMat.opacity = 0.9 * fv;
 
-    this.outlineMat.opacity = s.outline ?? 0;
-    this.outlineL.visible = (s.outline ?? 0) > 0.001 && site === 0;
-
-    // ghost tower
     const gv = s.ghost?.vis ?? 0;
     this.ghostMat.opacity = 0.9 * gv;
     this.ghost.visible = gv > 0.001;
     this.ghost.position.y = s.ghost?.lift ?? HERO.h;
+    this.outlineMat.opacity = s.outline ?? 0;
+    this.outlineL.visible = (s.outline ?? 0) > 0.001;
 
     // fund jar and the coin rain
     const tv = s.tank?.vis ?? 0;
-    this.tankGlass.visible = this.tankFill.visible = tv > 0.001 && site === 0;
+    this.tankGlass.visible = this.tankFill.visible = tv > 0.001;
     this.tankGlassMat.uniforms.uOpacity.value = 0.18 * tv;
     this.tankGlassMat.uniforms.uLevel.value = -100;
     const lvl = Math.max(0.02, Math.min(1, s.tank?.level ?? 0));
@@ -645,9 +710,9 @@ class Engine {
     this.tankFillMat.uniforms.uOpacity.value = 0.95 * tv;
     this.tankFillMat.uniforms.uLevel.value = 1e4;
     const cv = s.coins?.vis ?? 0;
-    this.coins.visible = cv > 0.001 && site === 0;
+    this.coins.visible = cv > 0.001;
     if (s.coins && cv > 0.001) {
-      const m4 = new THREE.Matrix4();
+      const cm = new THREE.Matrix4();
       const q = new THREE.Quaternion();
       const sc = new THREE.Vector3(1, 1, 1);
       const zero = new THREE.Vector3(0, 0, 0);
@@ -656,34 +721,31 @@ class Engine {
         const start = (Math.floor(i / 4) / 33) * 0.55 + (i % 4) * 0.02;
         const k = Math.max(0, Math.min(1, (s.coins.t - start) / 0.4));
         if (k <= 0 || k >= 1) {
-          m4.compose(new THREE.Vector3(0, -50, 0), q, zero);
+          cm.compose(new THREE.Vector3(0, -50, 0), q, zero);
         } else {
           const e = k * k;
           const x = hx + (0 - hx) * k;
           const z = hz + 2 + (34 - hz - 2) * k;
           const y = hy + (21 - hy) * e + Math.sin(k * Math.PI) * 4;
           q.setFromEuler(new THREE.Euler(t * 3 + i, i, 0));
-          m4.compose(new THREE.Vector3(x, y, z), q, sc);
+          cm.compose(new THREE.Vector3(x, y, z), q, sc);
         }
-        this.coins.setMatrixAt(i, m4);
+        this.coins.setMatrixAt(i, cm);
       }
       this.coins.instanceMatrix.needsUpdate = true;
       this.coinMat.uniforms.uOpacity.value = cv;
     }
 
-    // lights
     const avm = this.avLights.material as THREE.ShaderMaterial;
     avm.uniforms.uTime.value = t;
     avm.uniforms.uOpacity.value = 0.9 * night * dim * (s.city.dim ?? 1);
-    this.avLights.visible = site === 0;
     const lpm = this.lampHeads.material as THREE.ShaderMaterial;
     lpm.uniforms.uOpacity.value = 0.55 * night * dim * (s.city.dim ?? 1);
-    this.lampHeads.visible = site === 0;
 
     setCamera(this.camera, s.cam);
     this.sky.position.copy(this.camera.position);
     this.renderer.toneMappingExposure = s.exposure ?? 1.0;
-    this.bloom.strength = s.bloom ?? 0.6;
+    this.bloom.strength = s.bloom ?? 0.42;
     this.composer.render();
     this.renderer.getContext().finish();
   }
