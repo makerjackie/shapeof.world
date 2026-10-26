@@ -853,37 +853,8 @@
     "posterPosition": "50% 42%"
   },
   {
-    "id": "fire-gravity",
-    "index": "30",
-    "poster": "/assets/posters/fire-gravity.webp",
-    "posterMobile": "/assets/posters/mobile/fire-gravity.webp",
-    "posterDesktop": "/assets/posters/desktop/fire-gravity.webp",
-    "title": "烛火里面，发生了什么？",
-    "posterTitle": "烛火里面，发生了什么？",
-    "posterHook": "剖开一簇烛火，看暗处的蜡蒸气、发亮的烟炱和外侧的反应。",
-    "question": "为什么最亮的内焰未必最热，暗暗的焰心里又有什么？",
-    "topicLabel": "烛火分区 · 燃料、氧气与发光",
-    "translations": {
-      "en": {
-        "title": "What happens inside a candle flame?",
-        "posterTitle": "What happens inside a candle flame?",
-        "posterHook": "Open a candle flame to find wax vapor, glowing soot and an outer reaction zone.",
-        "question": "Why is the brightest region not necessarily the hottest, and what is inside the dark core?",
-        "topicLabel": "Candle anatomy · Fuel, oxygen and light"
-      }
-    },
-    "primaryCategoryId": "chem-materials",
-    "renderer": "fire-gravity",
-    "runtime": "volume-3d",
-    "difficulty": "intro",
-    "duration": 420,
-    "evidence": "modeled",
-    "accent": "#efac60",
-    "posterPosition": "50% 48%"
-  },
-  {
     "id": "flybody",
-    "index": "31",
+    "index": "30",
     "poster": "/assets/posters/flybody.webp",
     "posterMobile": "/assets/posters/mobile/flybody.webp",
     "posterDesktop": "/assets/posters/desktop/flybody.webp",
@@ -912,7 +883,7 @@
   },
   {
     "id": "light-speed",
-    "index": "32",
+    "index": "31",
     "poster": "/assets/posters/light-speed.webp",
     "posterMobile": "/assets/posters/mobile/light-speed.webp",
     "posterDesktop": "/assets/posters/desktop/light-speed.webp",
@@ -941,7 +912,7 @@
   },
   {
     "id": "standard-model",
-    "index": "33",
+    "index": "32",
     "poster": "/assets/posters/standard-model.webp",
     "posterMobile": "/assets/posters/mobile/standard-model.webp",
     "posterDesktop": "/assets/posters/desktop/standard-model.webp",
@@ -970,7 +941,7 @@
   },
   {
     "id": "tshirt-world",
-    "index": "34",
+    "index": "33",
     "poster": "/assets/posters/tshirt-world.webp",
     "posterMobile": "/assets/posters/mobile/tshirt-world.webp",
     "posterDesktop": "/assets/posters/desktop/tshirt-world.webp",
@@ -999,7 +970,7 @@
   },
   {
     "id": "cafe-terrace",
-    "index": "35",
+    "index": "34",
     "poster": "/assets/posters/cafe-terrace.webp",
     "posterMobile": "/assets/posters/mobile/cafe-terrace.webp",
     "posterDesktop": "/assets/posters/desktop/cafe-terrace.webp",
@@ -1028,7 +999,7 @@
   },
   {
     "id": "earth-and-nature",
-    "index": "36",
+    "index": "35",
     "poster": "/assets/posters/earth-and-nature.webp",
     "posterMobile": "/assets/posters/mobile/earth-and-nature.webp",
     "posterDesktop": "/assets/posters/desktop/earth-and-nature.webp",
@@ -1057,7 +1028,7 @@
   },
   {
     "id": "frontscope",
-    "index": "37",
+    "index": "36",
     "poster": "/assets/posters/frontscope.webp",
     "posterMobile": "/assets/posters/mobile/frontscope.webp",
     "posterDesktop": "/assets/posters/desktop/frontscope.webp",
@@ -1086,7 +1057,7 @@
   },
   {
     "id": "starry-night",
-    "index": "38",
+    "index": "37",
     "poster": "/assets/posters/starry-night.webp",
     "posterMobile": "/assets/posters/mobile/starry-night.webp",
     "posterDesktop": "/assets/posters/desktop/starry-night.webp",
@@ -1115,7 +1086,7 @@
   },
   {
     "id": "vegetation-atlas",
-    "index": "39",
+    "index": "38",
     "poster": "/assets/posters/vegetation-atlas.webp",
     "posterMobile": "/assets/posters/mobile/vegetation-atlas.webp",
     "posterDesktop": "/assets/posters/desktop/vegetation-atlas.webp",
@@ -1144,7 +1115,7 @@
   },
   {
     "id": "ink-landscape",
-    "index": "40",
+    "index": "39",
     "poster": "/assets/posters/ink-landscape.webp",
     "posterMobile": "/assets/posters/mobile/ink-landscape.webp",
     "posterDesktop": "/assets/posters/desktop/ink-landscape.webp",
@@ -1173,7 +1144,7 @@
   },
   {
     "id": "follow-the-money",
-    "index": "41",
+    "index": "40",
     "poster": "/assets/posters/follow-the-money.webp",
     "posterMobile": "/assets/posters/mobile/follow-the-money.webp",
     "posterDesktop": "/assets/posters/desktop/follow-the-money.webp",
@@ -1202,7 +1173,7 @@
   },
   {
     "id": "black-hole-flyby",
-    "index": "42",
+    "index": "41",
     "poster": "/assets/posters/black-hole-flyby.webp",
     "posterMobile": "/assets/posters/mobile/black-hole-flyby.webp",
     "posterDesktop": "/assets/posters/desktop/black-hole-flyby.webp",
@@ -1231,7 +1202,7 @@
   },
   {
     "id": "ukulele",
-    "index": "43",
+    "index": "42",
     "poster": "/assets/posters/ukulele.webp",
     "posterMobile": "/assets/posters/mobile/ukulele.webp",
     "posterDesktop": "/assets/posters/desktop/ukulele.webp",

@@ -15,3 +15,8 @@ export const legacyWorldRedirects: Record<string, string> = {
   'p-versus-np': 'fluid-sim',
   'riemann-primes': 'fourier',
 }
+
+// Author-approved scene merges can point at an accessible `making` world. They do not publish it.
+export const legacyWorldSceneRedirects: Record<string, { worldId: string; scene: string }> = {
+  'fire-gravity': { worldId: 'campfire', scene: 'candle' },
+}

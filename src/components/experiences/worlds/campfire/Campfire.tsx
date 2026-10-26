@@ -1,5 +1,5 @@
 import './styles/Campfire.css'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Pause, Play, SpeakerHigh, SpeakerSlash, Fire, Scan, CirclesThree, Hand, X } from '@phosphor-icons/react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { GuideTour } from '~/components/experiences/GuideTour'
@@ -16,8 +16,19 @@ import { MoleculePanel } from './components/MoleculePanel'
 import { stationForReading, type MolecularStation } from './molecules'
 import { createCampfire, type CampfireRuntime, type CampfireStats } from './runtime.js'
 
-const FALLBACK_URL=import.meta.env.VITE_CAMPFIRE_VIDEO_URL||(import.meta.env.DEV?'/.local/campfire/campfire-loop.mp4':'/assets/campfire/campfire-loop.mp4')
+const FALLBACK_URL=import.meta.env.VITE_CAMPFIRE_VIDEO_URL||(import.meta.env.DEV?'/.local/campfire/campfire-round4-loop.mp4':'/assets/campfire/campfire-loop.mp4')
+const CandleScene=lazy(()=>import('./candle/CandleScene'))
 export function Campfire({ controls }: { controls: ExperienceControls }) {
+  const tx=useExperienceI18n(),[scene,setScene]=useState<'campfire'|'candle'|null>(null)
+  useEffect(()=>{const read=()=>setScene(new URLSearchParams(location.search).get('scene')==='candle'?'candle':'campfire');read();window.addEventListener('popstate',read);return()=>window.removeEventListener('popstate',read)},[])
+  const select=(next:'campfire'|'candle')=>{controls.registerInteraction();const url=new URL(location.href);if(next==='candle')url.searchParams.set('scene','candle');else url.searchParams.delete('scene');history.replaceState(history.state,'',url);setScene(next)}
+  return <div className="cf-experience">
+    {scene==='campfire'&&<CampfireFlame controls={controls}/>}
+    {scene==='candle'&&<Suspense fallback={<div className="cf-world"/>}><CandleScene onInteract={controls.registerInteraction}/></Suspense>}
+    <nav className="cf-scene-switch" aria-label={tx('选择火焰场景')} data-experience-overlay="true"><button aria-pressed={scene==='campfire'} onClick={()=>select('campfire')}>{tx('篝火')}</button><button aria-pressed={scene==='candle'} onClick={()=>select('candle')}>{tx('蜡烛')}</button></nav>
+  </div>
+}
+function CampfireFlame({ controls }: { controls: ExperienceControls }) {
   const tx=useExperienceI18n()
   const canvas=useRef<HTMLCanvasElement>(null),video=useRef<HTMLVideoElement>(null),runtime=useRef<CampfireRuntime|null>(null)
   const menu=useRef<HTMLDetailsElement>(null),planeDrag=useRef<{x:number;y:number;offset:number}|null>(null)
@@ -79,19 +90,19 @@ export function Campfire({ controls }: { controls: ExperienceControls }) {
       <label htmlFor="cf-quality">{tx('画质')}</label><select id="cf-quality" value={quality} onChange={e=>{setQuality(e.target.value as 'low'|'med');closeMenu()}}><option value="low">{tx('流畅（默认）')}</option><option value="med">{tx('精细（可能变慢）')}</option></select><small>{tx('更改画质会重新点火')}</small>
     </div></details>
     {!failure&&stage<3&&<div className="cf-loading" role="status"><span>{tx(['准备点火','建立燃烧网格','让火烧起来'][stage])}</span><progress max={3} value={stage}/><small>{stage} / 3</small></div>}
-    {failure&&<aside className="cf-fallback-note" data-experience-overlay="true"><strong>{tx(videoFailed?'火焰预览':'火焰录像')}</strong><p>{tx('换 Chrome / Edge / Safari 26 可以玩实时的火；也需要设备支持相应的 WebGPU 功能。')}</p><p>{tx(videoFailed?'循环视频暂时未能加载，正在显示静态预览。':'录像不能读出实时温度。黄色来自发光的烟炱，蓝色包含化学发光；颜色不能单独当温度计。')}</p><button onClick={()=>setBounds(true)}>{tx('了解这团火')}</button></aside>}
+    {failure&&<aside className="cf-fallback-note" data-experience-overlay="true"><strong>{tx(videoFailed?'火焰预览':'火焰录像')}</strong><p>{tx('换 Chrome / Edge / Safari 26 可以玩实时的火；也需要设备支持相应的 WebGPU 功能。')}</p><p>{tx(videoFailed?'循环视频暂时未能加载，正在显示静态预览。':'录像没有实时读数。黄色来自烟炱，蓝色含化学发光；颜色不能单独测温。')}</p><button onClick={()=>setBounds(true)}>{tx('了解这团火')}</button></aside>}
     {slice.enabled&&!hands&&!guide&&!molecule&&!failure&&<InspectionPanel slice={slice} reading={reading} saved={saved} paused={paused} blue={blue} onSlice={updateSlice} onSave={saveReading} onClear={()=>setSaved(null)} onBlue={toggleBlue} onCompare={id=>{stationSection(id);updateSlice({field:slice.field})}} onModel={()=>setBounds(true)} onMolecules={openMolecules}/>}
     {station&&!slice.enabled&&!guide&&!failure&&<AnatomyCard id={station} reading={reading} data={meters} onClose={()=>{setStation(null);runtime.current?.setAnnotations(true);runtime.current?.resetCamera()}} onSection={()=>stationSection(station)}/>}
     {hands&&!failure&&<ExperimentPanel value={experiment} data={meters} reading={reading} onFuel={setFuel} onGust={gust} onGravity={setGravity} onAir={showAir} onMeters={()=>{showFire();setInstrumentOpen(true)}}/>}
     {instrumentOpen&&!failure&&<InstrumentPanel data={meters} onClose={()=>setInstrumentOpen(false)}/>}
     {blue&&!failure&&<p className="cf-blue-badge">{tx('蓝光增强显示')} ×40</p>}
     {bounds && <aside className="cf-boundaries" data-experience-overlay="true" aria-label={tx('模型与读数')}><button className="cf-close" aria-label={tx('关闭')} onClick={()=>setBounds(false)}><X/></button><h2>{tx('模型与读数')}</h2>
-      <p>{tx('温度、燃料、烟炱和速度来自这团火的网格。点测使用相邻网格的插值，木柴内部不提供气体读数。')}</p>
-      <p>{tx('可用空气 = 1 − 燃料 − 产物与惰性气体。它不是氧气浓度；若假设新鲜空气中氧的质量分数为 23.2%，可估算氧质量分数。')}</p>
-      <p>{tx('放热图显示燃烧引起的升温率，单位 K/s，不是温度，也不是整团火的 kW。气体会同时辐射和混合冷却。')}</p>
-      <p>{tx('蓝光是放热驱动的化学发光近似；模型没有逐个求解 CH*、C₂*、OH 或 CO₂ 分子。颜色和亮度经过相机式处理。')}</p>
-      <p>{tx('剖面是一个位置的原始模拟场；实景是整条视线的光叠加，并加了细节噪声。两种颜色不能逐像素当作同一个量。')}</p>
-      <p>{tx('热解气从固定的木柴表面供给。模型没有木柴内部传热、消耗、水或分子扩散，不能直接当作灭火或微重力预测。')}</p>
+      <p>{tx('温度、燃料、烟炱、速度来自网格插值；木柴内部没有气体读数。')}</p>
+      <p>{tx('可用空气 = 1 − 燃料 − 产物与惰性气体。乘23.2%可估算氧质量分数，不是独立求解的氧浓度。')}</p>
+      <p>{tx('放热图是燃烧升温率K/s，不是温度或整团火的kW；气体还会辐射、混合冷却。')}</p>
+      <p>{tx('蓝光是放热驱动的近似，未逐个求解CH*、C₂*、OH或CO₂。颜色、亮度经过相机处理。')}</p>
+      <p>{tx('剖面读原始场；实景叠加整条视线的光和细节噪声。两种颜色不能逐像素等同。')}</p>
+      <p>{tx('固定木柴表面供气，未算木柴传热、消耗、水或分子扩散，不能作灭火或微重力预测。')}</p>
       <p>{tx('涡量由投影前的速度差分换算；它和最终速度的采样时刻相差一个求解步骤。')}</p>
       <a href="https://github.com/Leonxlnx/procedural-fire/tree/95ab0a9003e20f1b0a5556ac14b401dfa0a37596" target="_blank" rel="noreferrer">Leon Lin · procedural-fire · MIT</a>
     </aside>}

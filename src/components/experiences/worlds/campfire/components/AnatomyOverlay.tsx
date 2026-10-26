@@ -5,7 +5,7 @@ import type { Reading } from '../fields'
 import type { Instruments } from '../measurements'
 export function AnatomyPins({ active, onSelect }: { active: AnatomyId | null; onSelect(id: AnatomyId): void }) {
   const tx=useExperienceI18n()
-  return <div className="cf-anatomy" data-focused={active??undefined}><svg aria-hidden="true">{ANATOMY.map(a=><g key={a.id}><path data-cf-leader={a.id} data-active={active===a.id}/><circle data-cf-anchor={a.id} data-active={active===a.id} r={3}/></g>)}</svg>{ANATOMY.map((a,i)=><button key={a.id} className="cf-pin" data-cf-pin={a.id} aria-pressed={active===a.id} onClick={()=>onSelect(a.id)}><span>{String(i+1).padStart(2,'0')}</span><b>{tx(a.title)}</b></button>)}</div>
+  return <div className="cf-anatomy" data-focused={active??undefined}><svg aria-hidden="true">{ANATOMY.map(a=><g key={a.id}><path data-cf-leader={a.id} data-active={active===a.id}/><path data-cf-edge={a.id} d="M-7 -4 L0 0 L-7 4"/><circle data-cf-anchor={a.id} data-active={active===a.id} r={3}/></g>)}</svg>{ANATOMY.map((a,i)=><button key={a.id} className="cf-pin" data-cf-pin={a.id} aria-label={tx(a.title)} aria-pressed={active===a.id} onClick={()=>onSelect(a.id)}><span>{String(i+1).padStart(2,'0')}</span><b>{tx(a.title)}</b><i className="cf-offscreen" aria-hidden="true">↗</i></button>)}</div>
 }
 export function AnatomyCard({ id, reading, data, onClose, onSection }: { id: AnatomyId; reading: Reading | null; data: Instruments | null; onClose(): void; onSection(): void }) {
   const tx=useExperienceI18n(),a=ANATOMY.find(a=>a.id===id)!, valid=reading&&!reading.solid

@@ -40,3 +40,14 @@ describe('legacy entry paths', () => {
     expect(resolveLegacyEntryHref('/zh/lab')).not.toContain('v1.')
   })
 })
+
+// Scene merges preserve locale and campaign attribution without promoting a making world.
+describe('campfire candle scene merge', () => {
+  it('resolves both languages and old explore links into the candle scene', () => {
+    expect(resolveLegacyEntryHref('/fire-gravity')).toBe('/campfire?scene=candle')
+    expect(resolveLegacyEntryHref('/en/fire-gravity')).toBe('/en/campfire?scene=candle')
+    expect(resolveLegacyEntryHref('/en/explore/fire-gravity')).toBe('/en/campfire?scene=candle')
+    expect(resolveLegacyEntryHref('/w/fire-gravity')).toBe('/campfire?scene=candle')
+    expect(resolveLegacyEntryHref('/fire-gravity', '?utm_source=old&scene=wrong')).toBe('/campfire?utm_source=old&scene=candle')
+  })
+})

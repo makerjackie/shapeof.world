@@ -2,16 +2,22 @@ import type { FieldId, Vec3 } from './fields'
 export type AnatomyId = 'wood' | 'coal' | 'root' | 'yellow' | 'tip' | 'smoke' | 'spark' | 'plume'
 export type AnatomyStation = { id: AnatomyId; title: string; body: string; field: FieldId; position: Vec3; camera: { yaw: number; pitch: number; dist: number; ty: number }; horizontal?: boolean }
 export const ANATOMY: AnatomyStation[] = [
-  { id:'wood',title:'木柴',body:'木头先失去水分，受热后又分解出可燃气。眼前的火焰主要烧的是这些气体。',field:'fuel',position:[-.15,.108,.16],camera:{yaw:.6,pitch:.15,dist:1.7,ty:.25}},
-  { id:'coal',title:'炭',body:'炭也在燃烧。氧接触炭表面，让裂缝和余烬发红；这里读的是炭床上方的气体温度。',field:'heat',position:[.07,.055,-.04],camera:{yaw:-.5,pitch:.55,dist:1.6,ty:.12}},
-  { id:'root',title:'蓝色火根',body:'年轻气体还没积起很多烟炱。模型在气体年龄15–50毫秒时逐渐开启烟炱生成；微弱蓝光来自反应的化学发光。',field:'age',position:[.09,.12,.05],camera:{yaw:.78,pitch:.16,dist:1.7,ty:.23}},
-  { id:'yellow',title:'黄色火焰',body:'热烟炱发出黄光。亮度还受颗粒多少和视线厚度影响，最亮不一定最热。',field:'soot',position:[.06,.45,0],camera:{yaw:.78,pitch:.12,dist:2.1,ty:.45}},
+  { id:'wood',title:'木柴',body:'木头先失水，受热分解出可燃气；眼前的火焰主要烧这些气体。',field:'fuel',position:[-.15,.108,.16],camera:{yaw:.6,pitch:.15,dist:1.7,ty:.25}},
+  { id:'coal',title:'炭',body:'氧与炭反应，让裂缝、余烬发红。这里读炭床上方气温。',field:'heat',position:[.07,.055,-.04],camera:{yaw:-.5,pitch:.55,dist:1.6,ty:.12}},
+  { id:'root',title:'蓝色火根',body:'年轻气体少烟炱，15–50毫秒渐启生成；微弱蓝光来自反应的化学发光。',field:'age',position:[.09,.12,.05],camera:{yaw:.78,pitch:.16,dist:1.7,ty:.23}},
+  { id:'yellow',title:'黄色火焰',body:'热烟炱发黄光；颗粒多少、视线厚度也影响亮度，最亮未必最热。',field:'soot',position:[.06,.45,0],camera:{yaw:.78,pitch:.12,dist:2.1,ty:.45}},
   { id:'tip',title:'火尖',body:'上升的火舌会收细、断开。烟炱烧掉或冷却后，可见的光就弱下来了。',field:'soot',position:[0,.95,0],camera:{yaw:.3,pitch:.18,dist:2.5,ty:.9}},
-  { id:'smoke',title:'烟',body:'烟里有没烧完的颗粒和凝结物。热气还含许多看不见的气体；这个模型没有各气体的独立浓度。',field:'soot',position:[.13,1.3,-.06],camera:{yaw:-.45,pitch:.15,dist:2.8,ty:1}},
-  { id:'spark',title:'火星',body:'被气流带起的小炭粒一边飞，一边继续氧化，最后熄灭。读数来自当前存活的火星粒子。',field:'speed',position:[.2,.75,.08],camera:{yaw:-.6,pitch:.18,dist:2.9,ty:.65}},
-  { id:'plume',title:'热羽流与卷吸',body:'热气向上，周围的空气补进来。横切后，朝火心的箭头就是卷吸进来的空气。',field:'speed',position:[.3,.3,0],camera:{yaw:.78,pitch:.85,dist:2.5,ty:.35},horizontal:true},
+  { id:'smoke',title:'烟',body:'烟含未烧完的颗粒和凝结物；热气还含不可见气体，模型未分别求其浓度。',field:'soot',position:[.13,1.3,-.06],camera:{yaw:-.45,pitch:.15,dist:2.8,ty:1}},
+  { id:'spark',title:'火星',body:'小炭粒随气流飞起，继续氧化直到熄灭。读数来自当前存活火星。',field:'speed',position:[.2,.75,.08],camera:{yaw:-.6,pitch:.18,dist:2.9,ty:.65}},
+  { id:'plume',title:'热羽流与卷吸',body:'热气上升，周围空气补入。横切时朝火心的箭头显示卷吸。',field:'speed',position:[.3,.3,0],camera:{yaw:.78,pitch:.85,dist:2.5,ty:.35},horizontal:true},
 ]
 export type LabelPoint = { id: string; x: number; y: number }
+/** Clamp a real projected anchor to the safe viewport, retaining its offscreen direction. */
+export function containAnchor(point: LabelPoint, width: number, height: number) {
+  const left=12,right=width-12,top=height<600?126:190,bottom=height-118
+  const x=Math.max(left,Math.min(right,point.x)),y=Math.max(top,Math.min(bottom,point.y))
+  return {...point,x,y,offscreen:x!==point.x||y!==point.y,angle:Math.atan2(point.y-y,point.x-x)*180/Math.PI}
+}
 // Two sorted rails give 44 px touch targets without pairwise label overlaps.
 export function layoutLabels(points: LabelPoint[], width: number, height: number) {
   const mobile=width<721, labelWidth=mobile?124:142, gap=mobile?46:50

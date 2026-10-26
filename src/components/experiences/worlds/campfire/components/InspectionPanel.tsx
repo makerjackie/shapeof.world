@@ -16,9 +16,7 @@ export function InspectionPanel({ slice, reading, saved, paused, blue, onSlice, 
     <details className="cf-geometry"><summary>{tx('位置、方向与透明度')}</summary><div className="cf-section-tools"><button aria-pressed={!slice.horizontal} onClick={()=>onSlice({horizontal:false,offset:0})}>{tx('竖切')}</button><button aria-pressed={slice.horizontal} onClick={()=>onSlice({horizontal:true,offset:.3})}>{tx('横切')}</button><output>{slice.horizontal?'y':'z'} {slice.offset.toFixed(2)} m</output></div>
       <input className="cf-position" aria-label={tx('移动剖面')} type="range" min={slice.horizontal?.03:-.55} max={slice.horizontal?1.5:.55} step={.01} value={slice.offset} onChange={e=>onSlice({offset:Number(e.target.value)})}/>
       <label className="cf-field-label" htmlFor="cf-opacity">{tx('场图不透明度')}</label><input id="cf-opacity" className="cf-position" type="range" min={0} max={1} step={.05} value={slice.opacity} onChange={e=>onSlice({opacity:Number(e.target.value)})}/>
-      <label className="cf-ambient-toggle"><input type="checkbox" checked={slice.ambient} onChange={e=>onSlice({ambient:e.target.checked})}/>{tx('显示冷空气区域')}</label>
       <button className="cf-blue-toggle" aria-pressed={blue} onClick={onBlue}>{tx('蓝光增强显示')} ×40</button></details>
-    {slice.cut&&!slice.ambient&&!['air','speed','vorticity'].includes(slice.field)&&<p className="cf-cut-caption">{tx('高温切口 ≥900 K')}</p>}
     <div className="cf-probe-head"><strong>{tx('探针')}</strong><span>{tx(paused?'时间已冻结':'跟随火焰变化')}</span></div>
     <div className="cf-pick-pair"><span>{tx('对照两处')}</span><button onClick={()=>onCompare('yellow')}>{tx('黄色火焰')}</button><button onClick={()=>onCompare('root')}>{tx('火根')}</button></div>
     {!reading?<p className="cf-probe-empty">{tx('点切口上的任何位置，读出温度、烟炱和年龄。')}</p>:<>
@@ -29,7 +27,7 @@ export function InspectionPanel({ slice, reading, saved, paused, blue, onSlice, 
       <div className="cf-probe-actions"><button disabled={!valid} onClick={onSave}>{tx('留下对照点')}</button><button className="cf-details-toggle" aria-expanded={details} onClick={()=>setDetails(!details)}>{tx(details?'收起读数':'全部读数')}</button></div>
     </>}
     {saved&&<div className="cf-saved"><span>{tx('对照点')} · {saved.time.toFixed(2)} s</span><strong>{Math.round(saved.temperature)} K · {saved.soot.toFixed(3)} ppm · {saved.age!==null?(saved.age*1000).toFixed(0):'—'} ms</strong><button aria-label={tx('清除对照点')} onClick={onClear}><X size={14}/></button></div>}
-    {slice.field==='age'&&<p className="cf-age-note">{tx('15–50 ms是模型的烟炱生成门限；还需要足够高的温度。年龄记录燃料来源气体的老化，不是温度计。')}</p>}
+    {slice.field==='age'&&<p className="cf-age-note">{tx('烟炱生成门限为15–50 ms，还需高温。年龄计燃料来源气体的老化，不是温度。')}</p>}
     <button className="cf-model-link" onClick={onModel}>{tx('这些数是怎么来的？')}</button>
   </aside>
 }

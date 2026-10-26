@@ -20,7 +20,7 @@ export function ExperimentPanel({ value, data, reading, onFuel, onGust, onGravit
     </div>
     {value.event==='wind'&&<div className="cf-wind-reading"><div className="cf-colorbar" style={{background:`linear-gradient(90deg,${air.colors.join(',')})`}}/><div className="cf-scale"><span>0 %</span><span>{tx('可用空气')}</span><span>100 %</span></div><p>{tx('点切口比较同一位置的空气。')}{reading?.solid&&<b> {tx('这里是木柴，点旁边的气体。')}</b>}{reading&&!reading.solid&&<b> {(reading.air*100).toFixed(1)} %</b>}</p></div>}
     <div className="cf-experiment-block"><label className="cf-control-label" htmlFor="cf-gravity"><span>{tx('重力')}</span><output>{value.gravity.toFixed(1)} g</output></label><input id="cf-gravity" type="range" min={0} max={1} step={.1} value={value.gravity} onChange={e=>onGravity(Number(e.target.value))}/>
-      {value.gravity<1&&<p className="cf-gravity-note">{tx('真实失重下，烛火可依靠分子扩散成为小圆球。这个模型没有算分子扩散，源流和湍流仍在；眼前的变化不是NASA实验的复现。')} <a href="https://www.nasa.gov/image-article/candle-flame-1g-vs-microgravity/" target="_blank" rel="noreferrer">{tx('NASA实验图')} ↗</a></p>}
+      {value.gravity<1&&<p className="cf-gravity-note">{tx('微重力烛火靠分子扩散补氧。本模型没有这种扩散，源流和湍流仍在，不能复现NASA烛火。')} <a href="https://www.nasa.gov/image-article/candle-flame-1g-vs-microgravity/" target="_blank" rel="noreferrer">{tx('NASA实验图')} ↗</a></p>}
     </div>
     {value.event==='off'&&<p className="cf-action-note">{tx('供给已关。看剩余燃料烧完，功率降下来；炭床的余热仍在。')}</p>}
     {value.event==='fuel'&&<p className="cf-action-note">{tx('供给已改变。看看功率和火焰怎样跟着变。')}</p>}

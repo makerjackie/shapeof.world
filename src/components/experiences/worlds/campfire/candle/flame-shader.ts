@@ -1,3 +1,5 @@
+// Optical illustration migrated from fire-gravity (Shape of the World, AGPL-3.0).
+// No temperature, concentration or power is measured by this shader.
 export const vertex = `attribute vec2 position; void main(){gl_Position=vec4(position,0.,1.);}`
 export const fragment = `
 precision highp float;
@@ -72,11 +74,11 @@ float n=noise(vec3(p.x*12.,y*8.-time*2.2,1.));
 float r=max(.001,mix(micro,earth,b)*(1.+b*(n-.5)*.17*h));
 float x=p.x-sway;
 float end=smoothstep(0.,.055,h)*(1.-smoothstep(.94,1.,h));
-// Integrate emissive gas through eight depth samples. This is an artistic
+// Integrate emissive gas through twelve depth samples. This is an artistic
 // optical model, not a reacting-flow or measured temperature simulation.
 vec3 natural=vec3(0.);
-for(int k=0;k<8;k++){
-float z=(float(k)+.5)/8.*2.-1.;
+for(int k=0;k<12;k++){
+float z=(float(k)+.5)/12.*2.-1.;
 float radial=sqrt(x*x+z*z*r*r)/max(r,.001);
 float skin=1.-smoothstep(.74,1.05,radial);
 float fuelCore=(1.-smoothstep(.27,.53,h))*(1.-smoothstep(.18,.58,radial));
@@ -84,10 +86,10 @@ float soot=skin*(1.-fuelCore)*smoothstep(.04,.26,h);
 float eddy=noise(vec3(x*15.,h*10.-time*2.4,z*2.));
 soot*=.76+.28*eddy;
 vec3 hot=mix(vec3(3.8,.85,.07),vec3(4.8,2.7,.82),(1.-smoothstep(.20,.88,radial)));
-natural+=hot*soot*r*.83*b;
+natural+=hot*soot*r*.553333*b;
 float blue=skin*(1.-smoothstep(.055,.22,h));
-natural+=vec3(.035,.19,.72)*blue*.24;
-if(b<.99)natural+=vec3(.035,.20,.72)*skin*(1.-b)*.18;
+natural+=vec3(.035,.19,.72)*blue*.16;
+if(b<.99)natural+=vec3(.035,.20,.72)*skin*(1.-b)*.12;
 }
 float darkProjection=(1.-smoothstep(.12,.43,h))*(1.-smoothstep(.16,.64,abs(x)/max(r,.001)));
 natural*=end*flicker*(1.-.87*darkProjection);
