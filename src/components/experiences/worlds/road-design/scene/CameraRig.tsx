@@ -69,7 +69,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
     const controls = control.current
     if (!controls) return
     if(follow&&route&&demo&&demo.current.status!=='loading') {
-      const {position:p,tangent:t}=demo.current,urban=design.chapter===1,back=urban?44:105,height=urban?37:72
+      const {position:p,tangent:t}=demo.current,urban=design.chapter===1,back=urban?30:50,height=urban?22:30
       const target=new T.Vector3(p.x+t.x*12,p.y+2,p.z+t.z*12)
       const to=new T.Vector3(p.x-t.x*back,p.y+height,p.z-t.z*back)
       const ease=1-Math.exp(-Math.min(delta,.1)*3)

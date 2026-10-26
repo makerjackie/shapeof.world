@@ -279,7 +279,7 @@ JTG/T D21—2014 的官方扫描件链接见前文，本轮直接逐页复核。
 
 行驶按段压缩，过短的真实停车区间放慢到可读时长（红灯至少 2.5 s、让行至少 2.2 s）；它不是旅行时间测量。渲染使用记录的车辆位置与切线，场景信号读取同一回放时刻。有控制路口的背景车辆也使用该回放中的实际姿态，避免背景车辆与演示信号不同步；自由流场景保留降暗的日常车流。路径线的几何横移与示范车的实际 MOBIL 横移可以略有不同，但必须通过同一条目标匝道并到达原出口。超时或改道标为未完成，不冒称成功。
 
-选中后先框完整路线，再在车进入转向区域时放大沿线关键路段；跟车可手动开启，拖镜头即解除跟车，保留自由旋转。示范车为加大显示的识别符号，非按比例汽车模型。青色路线在遮挡路段也可读，为阅读辅助覆盖层，不代表高架上下关系被改变。
+选中后先框完整路线，再在车进入转向区域时放大沿线关键路段；跟车可手动开启，拖镜头即解除跟车，保留自由旋转。上轮示范车使用放大识别符号；本轮已替换为下文所述的小客车车形。青色路线在遮挡路段也可读，为阅读辅助覆盖层，不代表高架上下关系被改变。
 
 建筑原先按 urban / service / motorway 类型生成不同街区，还按镜头位置自动隐藏遮住核心的楼。新增统一且跨设计保留的“城市建筑”开关，取消隐式逐栋隐藏。街区布局仍随道路类型变化；图纸视图主动省略环境，其开关提示说明夜景中会保留用户设置。交通、图纸、冲突开关相互独立；图纸不再强制打开冲突点。没有新增第三方模型、图片或字体。
 
@@ -290,3 +290,38 @@ JTG/T D21—2014 的官方扫描件链接见前文，本轮直接逐页复核。
 - [Dinosaur Polo Club / Mini Motorways](https://dinopoloclub.com/games/mini-motorways/)：借鉴明确的起讫关系与克制的主控件；保留本世界夜景和工程线形，不采用商业游戏的素材或卡通风格。
 
 研究用参考图留在作者本地私有计划目录，含第三方版权的技术图不进入网站或本仓公开素材。
+
+## 全设计讲解与路线方位（2026-10-26，第二版第 2 轮）
+
+14 种设计共 53 条双语讲解。`explorer/design-notes.ts` 的 11 种新增设计与 `explorer/explanations.ts` 的原有 3 种设计均提供 3–5 个实际车道锚点。每条说明同时写出解决的关系和代价；它解释模型中的工程取舍，不推断某个现实工程的设计会议记录。
+
+| 设计 | 本轮核对的讲解重点 | 依据 |
+| --- | --- | --- |
+| T 字、无信号十字 | 主路优先、间隙接受、左转横穿、转弯减速 | 既有 `urban.ts` 的优先级与几何；下列 FHWA 信号路口指南关于冲突和间隙接受的定义 |
+| 信号十字 | 停止线、许可左转、黄灯和全红 | 上轮 FHWA-HRT-04-091 第 4 章、Signal Timing Manual 第 4 章；本模型配时 |
+| 现代环岛 | 入口让环内车、曲线降速、单车道出环 | [FHWA-SA-21-042, Roundabouts](https://highways.dot.gov/safety/proven-safety-countermeasures/roundabouts)；本模型是单环道，不把多车道环岛结论套入 |
+| 渠化与待转区 | 专用左转储车、分时保护左转、两级等候 | [FHWA, Signalized Intersections: Informational Guide, Second Edition, FHWA-SA-13-027](https://highways.dot.gov/sites/fhwa.dot.gov/files/2022-06/fhwasa13027.pdf)，几何渠化与左转车道；待转区的具体准入条件来自本模型，不声称美国指南要求设置中国式待转区 |
+| 连续流 | 上游换侧、中心同时放行、两处信号协调；仅南北改造 | [FHWA-HRT-09-060 第 2 章 DLT intersection](https://www.fhwa.dot.gov/publications/research/safety/09060/002.cfm)；[TxDOT 14.7.1 DLT Overview](https://www.txdot.gov/manuals/des/rdw/chapter-14--alternative-intersections-and-intercha/14-7-displaced-left-turn-intersection--dlt-/14-7-1-overview.html)。与 DLT **interchange** 的报告分开，不混称 |
+| 菱形、DDI | 高速直行分层、端点信号；DDI 两次换侧消除对应左转横穿 | [FHWA Crossover Intersections](https://highways.dot.gov/safety/intersection-safety/intersection-types/crossover-intersections)；[FHWA DDI Informational Guide (2014)](https://www.govinfo.gov/content/pkg/GOVPUB-TD2-PURL-gpo54357/pdf/GOVPUB-TD2-PURL-gpo54357.pdf)；下列 TxDOT 四岔立交章节 |
+| 部分苜蓿叶、全苜蓿叶 | 环道代替横穿、小半径低速、信号端点或相邻环间交织 | 上轮 [FHWA Interchange Design Promptlist](https://highways.dot.gov/field-offices/missouri/interchange-design-promptlist) 的 cloverleaf / parclo 章节；本模型 parclo 两环布置不标环间交织，但仍保留两个信号端点 |
+| 喇叭形 | 三岔一环、另一方向半定向左转、匝道合流 | FHWA Promptlist 的 Trumpet / Directional Interchange 章节；东进南出环道与南进西出 `south-left` 的具体方位由 `trumpet.ts` 验证 |
+| 涡轮、四层堆叠 | 定向左转、减少环间交织、向外展开与向上叠层的取舍 | [TxDOT Roadway Design Manual 15.3.2 Four-Leg Interchanges](https://www.txdot.gov/manuals/des/rdw/chapter-15-grade-separations-and-interchanges-/15-3-types-of-interchanges/15-3-2-four-leg-interchanges.html)，Directional / Turbine；最高层与独立匝道的细节由当前 `freeway-kit.ts` 验证，不把所有涡轮都限定成同样层数 |
+| 黄桷湾 | 真实去向、分支、分层、绕行及汇入 | 原有 HUANGJUEWAN-SOURCES.md 的 OSM / DEM / 净空推断；仍不宣称知道真实工程的历史决策动机 |
+
+### 三类冲突与读数口径
+
+[VDOT, Displaced Left Turn Interchange](https://www.vdot.virginia.gov/about/our-system/highways/innovative-intersections/displaced-left-turn-interchange/) 明确区分 crossing / merging / diverging。本轮直接按已有 `ConflictPoint.type` 分列，不重算或人为减少点数：交叉是同高横穿；合流是两股接成一股；分流是一股分出不同去向。信号改变放行时间，不删除几何交叉。交织另按已标记的共享段统计。
+
+苜蓿叶北进左转由模型得到 **交叉 0、合流 3、分流 3、交织 2 段**；不是“6 个平面横穿危险点”。十字信号路口同股左转保留 4 个几何交叉（另有 1 合流、1 分流）。各类均不是事故数、危险评分或道路安全预测。符号在图层与读数中相同：交叉 X、合流 Y、分流倒 Y。
+
+“上行 / 下行”使用既有代表路径层级变化计数；不是每一处竖曲线或实际上下桥次数。指北针以场景北向（负 Z）投影到当前镜头，路线入口/出口标签越界时贴边并指向原位置。黄桷湾使用已有真实道路去向名称。地面名称由浏览器字体绘制，没有引入第三方图片。
+
+### 示范车、界面与开发记录
+
+本轮替换上轮的放大识别方块：示范小客车采用普通车辆相同的 4.5 × 1.8 m 车身比例、圆角壳体、座舱与车灯位置，只加细青色车顶轮廓。箭头是更小的双细线折角，仍沿实际路线流动。车顶识别线和选路光带可透过遮挡，属于阅读辅助；车身与道路仍遵守实际遮挡关系。
+
+手机默认收为一行操作与一行可展开字幕；上拉整条路线工具栏、点手柄或路线名均可展开。桌面把读数压到两行，当前解释在可展开的口径和邻近比较之前。长篇双语内容在设计数据中保存中英字段，短控件继续走共享 `tx` 词典，避免把每段中文再复制成全局词典键；不放宽共享词典的 25 KB 检查。
+
+[React Performance tracks 官方文档](https://react.dev/reference/dev-tools/react-performance-tracks) 说明开发版默认记录组件信息。本地 React/R3F 开发构建在格式化 props 时会枚举 typed-array 索引：旧 `runtime.geometry` 等公开数据导致单条约 8,441,639 行、209,824,919 字符，随后传入 `performance.measure`。Worker runtime 的 GPU / 模型资源现用 ECMAScript 私有存储和原型 getter，RoadMeshes / Blueprint 接收资源接口；回放帧也使用私有资源封装。没有关闭 React 性能轨、拦截生产 API、修改依赖或用生产模式替代修复。私有验收日志保存修复前后原始计数和开发模式连续切换结果。
+
+DDI 和连续流的路线信号读数跟随当前车道或下一个实际停止线的 `signalGroups`，不沿用笼统 O-D 分组；没有信号门控的高速直行不显示红灯。剩余秒数累计至该方向真正变色，包含对向绿灯、黄灯和全红间隔。教学回放的停车状态仍读取同一交通仿真。

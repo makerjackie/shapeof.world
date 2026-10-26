@@ -7,10 +7,12 @@ import { signalState } from '../sim/control'
 import { sampleLane } from '../sim/geometry'
 import { fillInstances } from './mesh-kit'
 import { litMaterial } from './NightWorld'
-import { unpackRoadGeometry, type PackedRoadGeometry } from './road-geometry'
+import { unpackRoadGeometry } from './road-geometry'
+import type { WorkerTrafficRuntime } from './worker-runtime'
 import { UrbanGround } from './UrbanGround'
 
-export const RoadMeshes = memo(function RoadMeshes({ network, atlas, prepared, simulation, roof }: { network: Network; atlas: T.Texture; prepared: PackedRoadGeometry; simulation: SignalClock; roof: T.Texture }) {
+export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, simulation, roof }: { network: Network; atlas: T.Texture; runtime: WorkerTrafficRuntime; simulation: SignalClock; roof: T.Texture }) {
+  const prepared=runtime.geometry
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const hasUrban = urban || Boolean(network.urbanJunctions?.length)
   const assets = useMemo(() => {

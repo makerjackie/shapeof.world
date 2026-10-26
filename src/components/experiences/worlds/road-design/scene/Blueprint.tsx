@@ -6,11 +6,13 @@ import { useExperienceI18n } from '~/i18n/experience'
 import type { Network } from '../sim/types'
 import { StretchAnchor } from './DisplayStretch'
 import { LAYERS, screenLineMaterial } from './screen-lines'
-import { unpackBlueprint, type PackedBlueprint } from './blueprint-data'
+import { unpackBlueprint } from './blueprint-data'
+import type { WorkerTrafficRuntime } from './worker-runtime'
 export {screenLines} from './screen-lines'
 
 /** Screen-width drafting strokes, layer fills and animated one-way chevrons. */
-export function Blueprint({ prepared }: { network: Network; prepared:PackedBlueprint }) {
+export function Blueprint({ runtime }: { network: Network; runtime:WorkerTrafficRuntime }) {
+  const prepared=runtime.blueprint
   const tx=useExperienceI18n()
   const assets=useMemo(()=>{
     const data=unpackBlueprint(prepared)
