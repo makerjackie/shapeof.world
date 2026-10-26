@@ -14,9 +14,11 @@ import { Meter } from "./v13/Meter";
 import { Shelf } from "./v13/Shelf";
 import { SAMPLE_S } from "./v13/data";
 import { OPTIONS } from "./v14/Options";
+import { Open15, OPEN15_FRAMES } from "./v15/Open15";
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Open15" component={Open15} durationInFrames={OPEN15_FRAMES} fps={30} width={1920} height={1080} />
     {OPTIONS.map(([id, C]) => (
       <Composition key={id} id={id} component={C} durationInFrames={120} fps={30} width={1920} height={1080} />
     ))}
