@@ -4,7 +4,7 @@ import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame
 import { K } from "../theme";
 import { EO, FILM_FRAMES, FPS, ramp, sa, sb, win } from "../timing";
 import { World } from "../world/World";
-import { ChinaMap, Fade, LiftBars, LiftCount, Photo, QuestionCard, Spiral, StairLine, Tally, YearBadge, YouRing } from "./overlays";
+import { ChinaMap, Fade, LiftBars, LiftCount, PhotoStage, QuestionCard, Spiral, StairLine, Tally, YearBadge, YouRing } from "./overlays";
 import { worldAt } from "./state";
 import { At, BrandMark, EndCard, Line, Note, Pin, Sources } from "./ui";
 
@@ -33,8 +33,8 @@ const SFX: { id: string; t: number; vol: number }[] = [
   { id: "sfx-notification-18", t: sa(61.3), vol: 0.25 }, // short of 99
   { id: "sfx-impact-11", t: sa(66.1), vol: 0.35 }, // walk-up comes down
   { id: "sfx-transition-19", t: sa(67.0), vol: 0.3 }, // rises again
-  { id: "sfx-transition-15", t: sa(72.0), vol: 0.3 }, // ghost wiped
-  { id: "sfx-impact-16", t: sa(72.3), vol: 0.45 }, // no way back
+  { id: "sfx-transition-15", t: sa(72.4), vol: 0.3 }, // ghost wiped
+  { id: "sfx-impact-16", t: sa(72.7), vol: 0.45 }, // no way back
   { id: "sfx-impact-16", t: sb(13.6), vol: 0.5 }, // Pruitt-Igoe
   { id: "sfx-impact-11", t: sb(13.9), vol: 0.4 },
   { id: "sfx-transition-18", t: sb(14.2), vol: 0.35 },
@@ -47,7 +47,7 @@ export const Film: React.FC = () => {
   const t = frame / FPS;
   const s = worldAt(t);
   const cam = s.cam;
-  const mapOn = t > sb(23.6) && t < sb(36.4);
+  const offWorld = (t > sb(8.05) && t < sb(23.95)) || (t > sb(24.8) && t < sb(35.3));
   const musicVol = (f: number) => {
     const tt = f / FPS;
     return 0.9 * interpolate(tt, [0, 0.4], [0.5, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * interpolate(tt, [sb(68.5), FILM_FRAMES / FPS], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -62,7 +62,10 @@ export const Film: React.FC = () => {
           <Audio src={staticFile(`sfx/${x.id}.wav`)} volume={x.vol} />
         </Sequence>
       ))}
-      {!mapOn || t < sb(24.5) || t > sb(35.5) ? <World s={s} /> : null}
+      {!offWorld ? <World s={s} /> : null}
+      <PhotoStage src="photos/pruitt-aerial.jpg" at={sb(8.1)} out={sb(13.6)} zoom={[1.02, 1.16]} focus={[48, 52]} darken={0.55 * ramp(t, sb(11.0), sb(12.4))} caption="Pruitt-Igoe（普鲁伊特-艾戈），美国圣路易斯" credit="航拍：美国地质调查局 · 公有领域" />
+      <PhotoStage src="photos/pruitt-collapse.jpg" at={sb(13.5)} out={sb(15.9)} zoom={[1.0, 1.07]} focus={[60, 55]} flash caption="1972 年，第一批楼被炸掉" credit="照片：美国住房和城市发展部 · 公有领域" />
+      <PhotoStage src="photos/meifoo-2021.jpg" at={sb(16.1)} out={sb(23.8)} zoom={[1.0, 1.14]} focus={[52, 62]} caption="美孚新邨，香港荔枝角，2021 年" credit="照片：Wpcpey · CC BY 4.0" />
       <ChinaMap at={sb(24)} out={sb(36.2)} />
       <Fade o={dip} />
 
@@ -98,8 +101,8 @@ export const Film: React.FC = () => {
       <At x={110} y={880}>
         <Line at={sa(19.0)} out={sa(20.3)} size={S2} parts={["33 层，差不多就是 100 米。"]} />
       </At>
-      <Pin cam={cam} at={sa(16.7)} out={sa(20.4)} p={[56, 100, 7]} lift={0} dot={false} side="right" dx={10} text="100 米" color={K.fg} size={40} />
-      <Pin cam={cam} at={sa(17.9)} out={sa(19.9)} p={[-22, 101.5, 7]} lift={50} dx={-40} side="left" text="避难层" color={K.red} size={38} />
+      <Pin cam={cam} at={sa(16.9)} out={sa(20.4)} p={[0, 100, -60]} lift={0} dot={false} side="right" dx={10} text="100 米" color={K.fg} size={40} />
+      <Pin cam={cam} at={sa(18.1)} out={sa(20.0)} p={[0, 101.5, 7]} lift={70} dx={120} side="right" text="避难层" color={K.red} size={38} />
       <Note at={sa(17.8)} out={sa(20.3)}>《建筑设计防火规范》GB 50016：建筑高度大于 100 米的住宅建筑应设置避难层 · 33 层约 100 米按层高约 3 米估算</Note>
 
       {/* ---------- a machine ---------- */}
@@ -127,8 +130,8 @@ export const Film: React.FC = () => {
       <Note at={sa(29.6)} out={sa(32.4)}>按每层约 18 级估算</Note>
 
       {/* ---------- ageing ---------- */}
-      <At x={960} y={110} align="center">
-        <Line at={sa(32.5)} out={sa(36.1)} size={Q} serif weight={700} parts={["机器，是会", { t: "老", c: K.amber }, "的。"]} />
+      <At x={110} y={110}>
+        <Line at={sa(32.5)} out={sa(36.1)} size={104} serif weight={700} parts={["机器，是会", { t: "老", c: K.amber }, "的。"]} />
       </At>
       <YearBadge at={sa(33)} out={sa(44.2)} keys={[[sa(33), 2010], [sa(43.8), 2025]]} age />
       <At x={110} y={110}>
@@ -193,25 +196,28 @@ export const Film: React.FC = () => {
         <Line at={sa(64.2)} out={sa(65.7)} size={Q} serif weight={700} parts={["修不起，能不能", { t: "拆了重盖", c: L }, "？"]} />
       </At>
       <At x={110} y={110}>
-        <Line at={sa(65.8)} out={sa(68.1)} size={S} parts={["老的 6 层小区，还能往高盖："]} />
-        <Line at={sa(66.4)} out={sa(68.1)} size={S2} parts={["杭州浙工新村，", { t: "6 层", c: K.grey }, "拆了，盖成 ", { t: "11 层", c: L }, "。"]} />
+        <Line at={sa(65.7)} out={sa(68.0)} size={S} parts={["老小区可以：杭州浙工新村，"]} />
+        <Line at={sa(66.2)} out={sa(68.0)} size={S} parts={[{ t: "6 层", c: K.grey }, "拆了，盖成 ", { t: "11 层", c: L }, "。"]} />
       </At>
       <At x={110} y={110}>
-        <Line at={sa(68.2)} out={sa(70.2)} size={S} parts={["就算这样，钱", { t: "八成多", c: G }, "是业主自己出的。"]} />
+        <Line at={sa(68.1)} out={sa(70.3)} size={S} parts={["可就算这样，钱", { t: "八成多", c: G }, "是业主自己掏的。"]} />
       </At>
+      <Pin cam={cam} at={sa(65.9)} out={sa(66.9)} p={[66, 18, 6]} lift={50} text="6 层" color={K.grey} size={40} />
+      <Pin cam={cam} at={sa(68.6)} out={sa(70.3)} p={[66, 33, 6]} lift={50} text="11 层" color={L} size={40} />
+      <Pin cam={cam} at={sa(71.2)} out={sa(72.7)} p={[0, 150, 7]} lift={0} dot={false} dx={0} side="center" text="拆了重盖，还是 33 层" color={K.fg} size={40} />
+      <Pin cam={cam} at={sa(73.6)} out={sa(78.2)} p={[0, 99, 0]} lift={70} text="它" color={G} size={42} />
       <Note at={sa(65.8)} out={sa(70.2)}>浙工新村：1983 年建，13 幢 6 层 → 7 幢 11 层，548 户签约 547 户，业主出资占总资金 80% 以上（杭州日报、新华社、拱墅区住建局）</Note>
 
       <At x={110} y={110}>
-        <Line at={sa(70.3)} out={sa(72.2)} size={S} parts={["可 33 层，已经", { t: "盖到头", c: K.red }, "了。"]} />
-        <Line at={sa(70.8)} out={sa(72.2)} size={S2} parts={["拆一栋 33 层，最多再盖一栋 33 层。"]} />
-        <Line at={sa(71.4)} out={sa(72.2)} size={S2} parts={["钱，", { t: "132 户", c: L }, "全得自己出。"]} />
+        <Line at={sa(70.4)} out={sa(72.6)} size={S} parts={["33 层呢？已经", { t: "盖到头", c: K.red }, "了。"]} />
+        <Line at={sa(71.2)} out={sa(72.6)} size={S} parts={["钱，全得 ", { t: "132 户", c: L }, "自己出。"]} />
       </At>
-      <Note at={sa(70.3)} out={sa(72.2)}>《民法典》第 278 条：改建、重建建筑物，须经参与表决的业主双四分之三以上同意</Note>
+      <Note at={sa(70.4)} out={sa(72.6)}>《民法典》第 278 条：改建、重建建筑物，须经参与表决的业主双四分之三以上同意</Note>
       <At x={960} y={110} align="center">
-        <Line at={sa(72.3)} out={sa(74.4)} size={130} serif weight={900} parts={["高层，", { t: "没有退路", c: G }, "。"]} stagger={0.06} />
+        <Line at={sa(72.7)} out={sa(74.6)} size={130} serif weight={900} parts={["高层，", { t: "没有退路", c: G }, "。"]} stagger={0.06} />
       </At>
       <At x={960} y={110} align="center">
-        <Line at={sa(74.5)} out={sa(76.4)} size={96} serif weight={700} parts={["它只能，一直", { t: "修", c: L }, "下去。"]} />
+        <Line at={sa(74.7)} out={sa(76.5)} size={96} serif weight={700} parts={["它只能，一直", { t: "修", c: L }, "下去。"]} />
       </At>
       <At x={960} y={110} align="center">
         <Line at={sa(76.5)} out={sb(0.2)} size={Q} serif weight={700} parts={["那它，什么时候会变成", { t: "贫民窟", c: K.red }, "？"]} />
@@ -229,9 +235,8 @@ export const Film: React.FC = () => {
 
       {/* ---------- Pruitt-Igoe ---------- */}
       <At x={110} y={110}>
-        <Line at={sb(8.4)} out={sb(10.9)} size={S} parts={["这件事，美国见过。"]} />
-        <Line at={sb(9.2)} out={sb(10.9)} size={S2} parts={[{ t: "1954", c: L }, " 年，圣路易斯，33 栋 11 层的公寓，"]} />
-        <Line at={sb(9.8)} out={sb(10.9)} size={S2} parts={["住满了人。"]} />
+        <Line at={sb(8.3)} out={sb(10.95)} size={S} parts={["美国见过。", { t: "1954", c: L }, " 年，圣路易斯，"]} />
+        <Line at={sb(8.9)} out={sb(10.95)} size={S} parts={["33 栋公寓楼，住满了人。"]} />
       </At>
       <At x={110} y={110}>
         <Line at={sb(11.0)} out={sb(13.4)} size={S} parts={["不到 20 年，", { t: "三分之二", c: K.red }, "空了。"]} />
@@ -239,8 +244,7 @@ export const Film: React.FC = () => {
       <At x={110} y={110}>
         <Line at={sb(13.5)} out={sb(15.7)} size={92} serif weight={900} parts={[{ t: "1972", c: K.red }, " 年，开始炸。"]} />
       </At>
-      <Photo src="photos/pruitt-collapse.jpg" at={sb(13.9)} out={sb(15.8)} x={1180} y={420} w={620} rot={1.5} caption="Pruitt-Igoe（普鲁伊特-艾戈），1972 年" credit="照片：美国住房和城市发展部 · 公有领域" />
-      <Note at={sb(8.4)} out={sb(15.7)}>Pruitt-Igoe 是政府建的公共住房，和中国业主自有的房子不同 · 1970 年空置超过三分之二（HUD）· 楼群为示意</Note>
+      <Note at={sb(8.4)} out={sb(15.7)}>Pruitt-Igoe 是政府建的公共住房，和中国业主自有的房子不同 · 1954 年入住，2,870 套；1970 年空置超过三分之二（HUD）</Note>
 
       {/* ---------- 美孚新邨 ---------- */}
       <At x={110} y={110}>
@@ -251,12 +255,11 @@ export const Film: React.FC = () => {
         <Line at={sb(19.2)} out={sb(21.6)} size={S} parts={["快 60 年了，每平方英尺"]} />
         <Line at={sb(19.7)} out={sb(21.6)} size={S} parts={["还要卖 ", { t: "1 万港元", c: G }, "。"]} />
       </At>
-      <Photo src="photos/meifoo-full.jpg" at={sb(16.6)} out={sb(21.6)} x={1170} y={430} w={640} rot={-1.2} caption="美孚新邨，2015 年" credit="照片：Exploringlife · CC BY-SA 4.0" />
       <At x={110} y={110}>
         <Line at={sb(21.7)} out={sb(23.6)} size={S} parts={["差的不是楼有多高，"]} />
         <Line at={sb(22.3)} out={sb(23.6)} size={S} parts={["是有没有", { t: "人", c: G }, "想住进来。"]} />
       </At>
-      <Note at={sb(16.4)} out={sb(21.6)}>美孚新邨：1968–1978 年分 8 期入伙，99 座，13,149 个单位 · 2025 年 9 月二手平均呎价 10,177 港元（星岛头条）· 楼群为示意</Note>
+      <Note at={sb(16.4)} out={sb(21.6)}>美孚新邨：1968–1978 年分 8 期入伙，99 座，13,149 个单位 · 2025 年 9 月二手平均呎价 10,177 港元（星岛头条）</Note>
 
       {/* ---------- China ---------- */}
       <At x={110} y={110}>

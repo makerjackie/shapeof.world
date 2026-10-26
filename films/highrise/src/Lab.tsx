@@ -18,6 +18,10 @@ const base = (c: Partial<Cam>, extra: Partial<WorldState> = {}): WorldState => (
 });
 
 export const SHOTS: WorldState[] = [
+  base({ x: 0, y: 0, z: 200, dist: 6200, yaw: 6, pitch: 20, fov: 40 }, { night: 0.92, city: { lights: 0.0 } }),
+  base({ x: 0, y: 0, z: 200, dist: 6200, yaw: 6, pitch: 20, fov: 40 }, { night: 0.92, city: { lights: 0.58, darkR: 2300, darkAmt: 0.95 } }),
+  base({ x: 46, y: 26, z: 0, dist: 190, yaw: -26, pitch: 3, fov: 40 }, { old: { vis: 1, floors: 6, drop: 0 }, city: { lights: 0.6, hideEast: true } }),
+  base({ x: 46, y: 26, z: 0, dist: 190, yaw: -26, pitch: 3, fov: 40 }, { old: { vis: 1, floors: 11, drop: 0 }, city: { lights: 0.6, hideEast: false } }),
   base({ x: 0, y: 0, z: -400, dist: 3200, yaw: 20, pitch: 22, fov: 40 }),
   base({ x: 0, y: 60, z: 0, dist: 520, yaw: -25, pitch: 4, fov: 38 }, { night: 0.55 }),
   base({ x: 0, y: 50, z: 0, dist: 210, yaw: 0, pitch: 6, fov: 38 }),

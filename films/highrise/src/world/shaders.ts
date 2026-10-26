@@ -98,9 +98,9 @@ void main() {
   if (kind > 0.5 && kind < 1.5) paint = mix(vec3(0.4, 0.34, 0.31), vec3(0.48, 0.44, 0.4), h11(seed * 5.3));
   if (kind > 1.5 && kind < 2.5) paint = vec3(0.14, 0.17, 0.21);
   if (kind > 4.5) paint = vec3(0.64, 0.6, 0.54);
-  float amb = mix(0.11, 0.012, night);
+  float amb = mix(0.11, 0.006, night);
   vec3 sunDir = normalize(vec3(-0.8, 0.35, 0.3));
-  float sun = clamp(dot(n, sunDir), 0.0, 1.0) * 0.3 * (1.0 - night);
+  float sun = clamp(dot(n, sunDir), 0.0, 1.0) * 0.3 * (1.0 - night) * (1.0 - night);
 
   // lights: share of homes lit tonight
   float ring = 1.0 - uDarkAmt * smoothstep(uDarkR - 450.0, uDarkR + 450.0, dist);
@@ -223,11 +223,14 @@ void main() {
     rail *= 1.0 - far;
     frame *= 1.0 - far;
     acBox *= 1.0 - far;
-    lit = mix(lit, litP * 0.7, far2);
-    lamp = mix(lamp, vec3(1.0, 0.68, 0.38) * 0.62, far2);
+    // far away, keep the city sparkling: whole groups of flats are lit or dark together
+    float litF = step(h31(vec3(floor(ui / 2.0), floor(fl / 3.0), seed * 53.0)), litP * 0.85);
+    lit = mix(lit, litF, far2);
+    lamp = mix(lamp, vec3(1.0, 0.66, 0.36) * (0.55 + 0.6 * h31(vec3(floor(ui / 2.0), floor(fl / 3.0), seed * 7.0))), far2);
+    glass = mix(glass, glass * 0.75, far2);
 
     vec3 wall = paint * (amb + sun) + uSkyHor * 0.015;
-    wall += vec3(1.0, 0.55, 0.28) * 0.05 * night * exp(-y / 12.0); // street light from below
+    wall += vec3(1.0, 0.55, 0.28) * 0.035 * night * exp(-y / 12.0); // street light from below
     wall *= 1.0 - 0.25 * pil * (1.0 - far);
     wall = mix(wall, paint * (amb * 1.9 + sun * 1.2) + vec3(0.01), slabE * (1.0 - far));
     wall = mix(wall, vec3(0.05, 0.05, 0.055) * (amb * 6.0 + 0.1), acBox * 0.85);
@@ -261,10 +264,10 @@ void main() {
       float sp = 0.18 + 0.2 * h11(seed * 3.3);
       float carY = (0.5 + 0.5 * sin(uTime * sp + seed * 40.0)) * (hgt - 3.0) + 1.5;
       float dd = length(vec2((u - cu) * 1.6, (y - carY) * 0.7));
-      float car = 1.0 - smoothstep(0.0, 2.6 + eu * 3.0, dd);
+      float car = 1.0 - smoothstep(0.0, 3.2 + eu * 4.0, dd);
       vec3 ec = mix(vec3(0.75, 0.95, 1.0), vec3(1.0, 0.55, 0.15), step(h11(seed * 9.7 + 0.3), uElevAge));
       col = mix(col, col * 0.3, uElev * 0.7);
-      col += ec * (shaft * 0.1 + car * 1.4) * uElev;
+      col += ec * (shaft * 0.3 + car * 1.8) * uElev;
     }
 
 #ifdef HERO
@@ -272,16 +275,17 @@ void main() {
     float age = uAge;
     float streak = vnoise(vec2(u * 1.3, y * 0.08)) * vnoise(vec2(u * 0.4 + 7.0, y * 0.5));
     float under = band(fy, 0.0, 0.3, 0.05);
-    float stain = clamp(streak * 1.6 * age * (0.4 + 0.6 * under), 0.0, 0.85);
-    float tiles = step(h21(floor(vec2(u, y) / 0.9)), age * 0.06) * (1.0 - glass);
-    col *= 1.0 - stain * 0.6 * (1.0 - glass);
-    col = mix(col, col * 0.4, tiles);
+    float stain = clamp(streak * 2.2 * age * (0.45 + 0.55 * under), 0.0, 0.9);
+    float tiles = step(h21(floor(vec2(u, y) / 0.9)), age * 0.1) * (1.0 - glass);
+    col *= 1.0 - stain * 0.8 * (1.0 - glass);
+    col = mix(col, col * 0.3, tiles);
+    col = mix(col, vec3(dot(col, vec3(0.33))) * vec3(0.9, 0.92, 0.96), age * 0.35 * (1.0 - glass));
     // the vote: every home takes the colour of its answer (windows glow in it, walls tint)
     vec4 hh2 = texture2D(uHH, vec2((clamp(ui, 0.0, 3.0) + 0.5) / 4.0, (clamp(fl, 0.0, 32.0) + 0.5) / 33.0));
     float cell = longF ? inBody * band(uu, 0.3, uw - 0.3, eu) * band(fy, 0.05, 0.95, ef) : 0.0;
-    vec3 vc = hh2.g * vec3(0.1, 1.0, 0.5) + hh2.b * vec3(1.0, 0.16, 0.2);
+    vec3 vc = hh2.g * vec3(0.12, 0.62, 0.36) + hh2.b * vec3(0.95, 0.16, 0.18);
     float va = clamp(hh2.g + hh2.b, 0.0, 1.0) * cell * uVote;
-    col = mix(col, vc * mix(0.06, 1.5, clamp(glass, 0.0, 1.0)), va);
+    col = mix(col, vc * mix(0.1, 1.15, clamp(glass, 0.0, 1.0)), va);
     // a home that has gone: glass dark, nobody in
     col = mix(col, mix(wall * 0.7, dark * 0.6, glass), hh2.a * inBody * (longF ? 1.0 : 0.0));
     // X-ray: the skin goes dark and thin, floor lines stay
@@ -445,7 +449,8 @@ void main() {
   col = mix(col, uZen, smoothstep(0.18, 0.75, e));
   // sunset glow to the west, city glow on the horizon all round
   float west = clamp(dot(normalize(vec2(d.x, d.z)), normalize(vec2(-0.9, 0.35))), 0.0, 1.0);
-  col += uGlow * west * west * (1.0 - smoothstep(0.0, 0.35, e)) * (1.0 - uNight * 0.85);
+  float above = smoothstep(-0.005, 0.04, e);
+  col += uGlow * west * west * (1.0 - smoothstep(0.0, 0.35, e)) * (1.0 - uNight * 0.85) * above;
   col += vec3(0.35, 0.18, 0.08) * 0.12 * uNight * (1.0 - smoothstep(-0.02, 0.12, e));
   // a few stars
   vec2 sp = vec2(atan(d.z, d.x) * 180.0, e * 300.0);

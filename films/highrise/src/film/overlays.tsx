@@ -93,7 +93,7 @@ export const LiftCount: React.FC<{ at: number; out: number; run: [number, number
     <div style={{ position: "absolute", right: 120, bottom: 150, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.75)" }}>全国电梯 · {year} 年底</div>
       <div style={{ fontSize: 150, fontWeight: 900, lineHeight: 1.05, color: K.cyan, fontVariantNumeric: "tabular-nums" }}>
-        {fmt(n, 0)}
+        {fmt(Math.floor(n), 0)}
         <span style={{ fontSize: 60, fontWeight: 800, marginLeft: 10, color: K.fg }}>万台</span>
       </div>
     </div>
@@ -157,9 +157,10 @@ export const Spiral: React.FC<{ cam: Cam; at: number; out: number }> = ({ cam, a
   const t = useT();
   const o = Math.min(ramp(t, at, at + 0.5, EO), 1 - ramp(t, out - 0.4, out));
   if (o <= 0) return null;
-  const [cx, cy] = toScreen(cam, 0, 52, 0);
-  const R = 360;
-  const rx = R * 1.35;
+  const [cx, cy0] = toScreen(cam, 0, 50, 0);
+  const cy = cy0 + 60;
+  const R = 300;
+  const rx = R * 1.45;
   const ry = R * 0.95;
   const dur = out - at - 0.8;
   const prog = clamp01((t - at - 0.3) / dur) * 4; // one turn of the loop, step by step
@@ -202,7 +203,7 @@ export const Spiral: React.FC<{ cam: Cam; at: number; out: number }> = ({ cam, a
               transform: `translate(-50%, -50%) scale(${0.9 + 0.1 * k})`,
               opacity: k,
               fontFamily: FONT,
-              fontSize: 44,
+              fontSize: 40,
               fontWeight: 900,
               color: hot ? K.fg : "rgba(244,240,232,0.75)",
               background: hot ? "rgba(255,90,95,0.85)" : "rgba(20,22,28,0.72)",
@@ -369,3 +370,43 @@ export const Fade: React.FC<{ o: number; color?: string }> = ({ o, color = "#000
 
 export const useWin = (a: number, b: number, f = 0.4) => win(useT(), a, b, f);
 export { interpolate, CL };
+
+// A large photograph in the dark, slowly pushed in. `darken` lays a shadow over it; `flash` is a white hit on entry.
+export const PhotoStage: React.FC<{
+  src: string;
+  at: number;
+  out: number;
+  zoom?: [number, number];
+  focus?: [number, number]; // transform origin, % of the photo
+  darken?: number;
+  flash?: boolean;
+  caption: string;
+  credit: string;
+}> = ({ src, at, out, zoom = [1.0, 1.1], focus = [50, 50], darken = 0, flash, caption, credit }) => {
+  const t = useT();
+  const o = Math.min(ramp(t, at, at + (flash ? 0.12 : 0.6), EO), 1 - ramp(t, out - 0.5, out));
+  if (o <= 0) return null;
+  const k = ramp(t, at, out, (v) => v);
+  const s = lerp(zoom[0], zoom[1], k) * (flash ? 1 + 0.05 * (1 - ramp(t, at, at + 0.5, EO)) : 1);
+  const fl = flash ? 0.75 * (1 - ramp(t, at, at + 0.45)) : 0;
+  const W = 1060;
+  const H = 706;
+  const L = 1920 - W - 96;
+  const T = 292;
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o }}>
+      <div style={{ position: "absolute", left: L, top: T, width: W, height: H, padding: 9, background: "#ece8df", boxShadow: "0 30px 90px rgba(0,0,0,0.7)" }}>
+        <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#111" }}>
+          <Img src={staticFile(src)} style={{ width: "100%", height: "100%", objectFit: "cover", transformOrigin: `${focus[0]}% ${focus[1]}%`, transform: `scale(${s})` }} />
+          <div style={{ position: "absolute", inset: 0, background: "#05060a", opacity: darken }} />
+          <div style={{ position: "absolute", inset: 0, background: "#fff", opacity: fl }} />
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 90, background: "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.72))" }} />
+          <div style={{ position: "absolute", left: 22, bottom: 16, fontFamily: FONT, color: "rgba(244,240,232,0.92)" }}>
+            <span style={{ fontSize: 26, fontWeight: 800 }}>{caption}</span>
+            <span style={{ fontSize: 18, fontWeight: 500, marginLeft: 16, color: "rgba(244,240,232,0.68)" }}>{credit}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

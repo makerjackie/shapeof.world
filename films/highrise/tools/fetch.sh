@@ -9,7 +9,9 @@ for id in sfx-foley-02 sfx-mechanical-01 sfx-transition-08 sfx-mechanical-08 sfx
   [ -s "sfx/$id.wav" ] || curl -sS -A "$UA" -o "sfx/$id.wav" "https://music-cdn.shapeof.world/tracks/$id/v1/master.wav"
 done
 [ -s photos/pruitt-collapse.jpg ] || curl -sS -A "$UA" -o photos/pruitt-collapse.jpg "https://upload.wikimedia.org/wikipedia/commons/1/1b/Pruitt-Igoe-collapses.jpg"
-[ -s photos/meifoo-full.jpg ] || curl -sS -A "$UA" -o photos/meifoo-full.jpg "https://upload.wikimedia.org/wikipedia/commons/d/d3/Mei_Foo_Sun_Chuen_%28full_view%29.jpg"
+[ -s photos/pruitt-aerial.jpg ] || curl -sS -A "$UA" -o photos/pruitt-aerial.jpg "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pruitt-igoeUSGS02.jpg"
+[ -s photos/meifoo-2021.jpg ] || curl -sS -A "$UA" -o photos/meifoo-2021.jpg "https://upload.wikimedia.org/wikipedia/commons/5/56/Mei_Foo_Sun_Chuen_2021.jpg"
+for f in photos/*.jpg; do /opt/homebrew/bin/magick "$f" -resize "2400x2400>" -quality 90 "$f"; done
 if [ ! -s map/china-lights.jpg ]; then
   curl -sS -A "$UA" -o map/bm2016.jpg https://eoimages.gsfc.nasa.gov/images/imagerecords/144000/144898/BlackMarble_2016_3km.jpg
   /opt/homebrew/bin/magick map/bm2016.jpg -crop 2363x1462+9487+1350 +repage -quality 92 map/china-lights.jpg

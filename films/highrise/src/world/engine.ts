@@ -41,6 +41,7 @@ export type WorldState = {
   tank?: { vis: number; level: number };
   old?: { vis: number; floors: number; drop: number };
   ghost?: { vis: number; lift: number };
+  outline?: number; // the hero picked out in gold (city-wide shots)
   pruitt?: { lights: number; drop: (i: number) => number; dust: number };
   meifoo?: { lights: number };
 };
@@ -165,6 +166,8 @@ class Engine {
   stairCount: number;
   ghost: LineSegments2;
   ghostMat: LineMaterial;
+  outlineL: LineSegments2;
+  outlineMat: LineMaterial;
   line100: LineSegments2;
   line100Mat: LineMaterial;
   refuge: THREE.Mesh;
@@ -349,11 +352,21 @@ class Engine {
       gh.push(-hw, y, -hd, hw, y, -hd, hw, y, -hd, hw, y, hd, hw, y, hd, -hw, y, hd, -hw, y, hd, -hw, y, -hd);
     }
     for (const [x, z] of [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]) gh.push(x, 0, z, x, HERO.h, z);
-    this.ghostMat = lineMat("#ffffff", 1.6);
+    this.ghostMat = lineMat("#ffffff", 2.2);
     this.ghost = new LineSegments2(segs(gh), this.ghostMat);
     this.ghost.frustumCulled = false;
     this.ghost.renderOrder = 6;
     this.scene.add(this.ghost);
+
+    // the hero picked out in gold for the city-wide shots
+    const ol: number[] = [];
+    for (const y of [0, HERO.h]) ol.push(-hw, y, -hd, hw, y, -hd, hw, y, -hd, hw, y, hd, hw, y, hd, -hw, y, hd, -hw, y, hd, -hw, y, -hd);
+    for (const [x, z] of [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]]) ol.push(x, 0, z, x, HERO.h, z);
+    this.outlineMat = lineMat("#ffcf5a", 3);
+    this.outlineL = new LineSegments2(segs(ol), this.outlineMat);
+    this.outlineL.frustumCulled = false;
+    this.outlineL.renderOrder = 8;
+    this.scene.add(this.outlineL);
 
     // the repair fund: a glass jar in the garden, filled with gold
     this.tankGlassMat = glowMat("#cfe6ff", "#cfe6ff", 2.2);
@@ -452,7 +465,7 @@ class Engine {
     const dim = s.dim ?? 1;
     // sky and fog: blue hour → night
     const hor = C("#3a4a6e").lerp(C("#1a2236"), night);
-    const fog = hor.clone();
+    const fog = hor.clone().add(new THREE.Color(0.014, 0.011, 0.01).multiplyScalar(night));
     this.skyU.uZen.value.copy(C("#0a1838").lerp(C("#03060e"), night));
     this.skyU.uMid.value.copy(C("#1d3160").lerp(C("#0a1122"), night));
     this.skyU.uHor.value.copy(hor);
@@ -581,9 +594,12 @@ class Engine {
     this.line100Mat.opacity = 0.9 * (he.line100 ?? 0);
     this.line100.visible = (he.line100 ?? 0) > 0.001;
 
+    this.outlineMat.opacity = s.outline ?? 0;
+    this.outlineL.visible = (s.outline ?? 0) > 0.001 && site === 0;
+
     // ghost tower
     const gv = s.ghost?.vis ?? 0;
-    this.ghostMat.opacity = 0.7 * gv;
+    this.ghostMat.opacity = 0.9 * gv;
     this.ghost.visible = gv > 0.001;
     this.ghost.position.y = s.ghost?.lift ?? HERO.h;
 
