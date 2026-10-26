@@ -43,7 +43,11 @@ def limit(x, ceil_db):
     g = np.minimum(g, smooth)
     return x * g[:, None], g
 
-tmp = "/tmp/ep1-master/_tp.wav"
+# scratch on DevSSD, never the system disk
+import os
+TMPDIR = os.environ.get("TPMASTER_TMP", "/Volumes/DevSSD/tmp/tpmaster")
+os.makedirs(TMPDIR, exist_ok=True)
+tmp = os.path.join(TMPDIR, "_tp.wav")
 I0, tp0 = measure(raw)
 print(f"raw: I {I0:.1f} LUFS, TP {tp0:.1f} dBTP")
 gain_db = TARGET - I0
