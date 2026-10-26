@@ -31,7 +31,7 @@ const cam7 = (t: number) => {
 };
 
 // The phone's own status bar and notification, drawn inside the screen so they ride the camera.
-const ScreenStatus: React.FC<{ o: number }> = ({ o }) =>
+export const ScreenStatus: React.FC<{ o: number }> = ({ o }) =>
   o <= 0 ? null : (
     <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 34, opacity: o, background: "linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0))" }}>
       <span style={{ position: "absolute", left: 112, top: 7, fontFamily: NUM, fontWeight: 700, fontSize: 15, color: "#fff" }}>01:47</span>
@@ -46,7 +46,7 @@ const ScreenStatus: React.FC<{ o: number }> = ({ o }) =>
     </div>
   );
 
-const ScreenAlarm: React.FC<{ k: number }> = ({ k }) =>
+export const ScreenAlarm: React.FC<{ k: number }> = ({ k }) =>
   k <= 0 ? null : (
     <div style={{ position: "absolute", left: 555 - 170, top: -60 + 96 * EO(clamp01(k)), width: 340, height: 52, borderRadius: 14, background: "rgba(40,44,56,0.94)", boxShadow: "0 8px 22px rgba(0,0,0,0.5)", display: "flex", alignItems: "center", gap: 10, padding: "0 14px", boxSizing: "border-box" }}>
       <div style={{ width: 30, height: 30, borderRadius: 8, background: "linear-gradient(180deg, #ff9a3d, #ff6a2a)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -64,7 +64,7 @@ const ScreenAlarm: React.FC<{ k: number }> = ({ k }) =>
     </div>
   );
 
-const Open7: React.FC = () => {
+export const Open7: React.FC = () => {
   const t = useT();
   if (t > GAPWALL_AT + BEAT * 8) return null;
   const cam = cam7(t);
@@ -133,7 +133,7 @@ const Open7Text: React.FC = () => (
 );
 
 type Cue = { t: number; id: string; v: number };
-const CUES7: Cue[] = [
+export const CUES7: Cue[] = [
   ...HITS.slice(0, 4).map((h) => ({ t: h, id: "sfx-impact-13", v: 0.42 })),
   { t: HITS[4], id: "sfx-magic-16", v: 0.5 },
   { t: WIPE, id: "sfx-impact-16", v: 0.7 },
