@@ -13,7 +13,7 @@ const R = 1430;
 export const CARDS: Card[] = [
   { title: "晋级赛", icon: "star", c0: "#ffe08a", c1: "#f0a020", fill: 0.8, num: "4/5", chip: "再赢 1 局晋级", x: L, y: 170 },
   { title: "每日任务", icon: "list", c0: "#8ff0ff", c1: "#2a9fd8", fill: 0.667, num: "2/3", chip: "还差 1 局", x: R, y: 170 },
-  { title: "战令等级 49", icon: "crown", c0: "#d7b2ff", c1: "#8a4ff0", fill: 0.94, num: "1880/2000", chip: "还差 120 经验", x: L, y: 380 },
+  { title: "战令等级", icon: "crown", c0: "#d7b2ff", c1: "#8a4ff0", fill: 0.94, num: "1880/2000", chip: "还差 120 经验", x: L, y: 380 },
   { title: "积分夺宝", icon: "chest", c0: "#ffc49a", c1: "#ff6a3d", fill: 0.98, num: "98/100", chip: "再抽 2 次必得", x: R, y: 380 },
   { title: "皮肤碎片", icon: "shard", c0: "#ffb0dc", c1: "#e0409a", fill: 0.99, num: "99/100", chip: "还差 1 片", x: L, y: 590 },
   { title: "七日签到", icon: "cal", c0: "#b5f5a0", c1: "#3fbf5a", fill: 0.857, num: "6/7", chip: "明天领大奖", x: R, y: 590 },
@@ -69,19 +69,23 @@ const IconSvg: React.FC<{ icon: Icon }> = ({ icon }) => {
   }
 };
 
-const CardView: React.FC<{ c: Card; t: number; at: number; i: number }> = ({ c, t, at, i }) => {
+// full: the screen-POV layout (two columns across the frame, larger); otherwise around a phone in the middle.
+const place = (c: Card, i: number, full: boolean): [number, number, number] => (full ? [i % 2 === 0 ? 290 : 1110, 150 + Math.floor(i / 2) * 195, 1.24] : [c.x, c.y, 1]);
+
+const CardView: React.FC<{ c: Card; t: number; at: number; i: number; full: boolean }> = ({ c, t, at, i, full }) => {
   const k = clamp01((t - at) / 0.32);
   if (k <= 0) return null;
   const e = EO(k);
   const pop = 1 + 0.12 * Math.sin(Math.PI * clamp01((t - at) / 0.42));
-  const x = lerp(960 - CW / 2, c.x, e);
-  const y = lerp(540 - CH / 2, c.y, e);
+  const [px, py, sc] = place(c, i, full);
+  const x = lerp(960 - CW / 2, px + (CW * (sc - 1)) / 2, e);
+  const y = lerp(540 - CH / 2, py + (CH * (sc - 1)) / 2, e);
   const flash = Math.exp(-(t - at) / 0.12);
   const fill = c.fill * EO(clamp01((t - at - 0.1) / 0.5));
   const pulse = 0.55 + 0.45 * Math.sin(t * 7 + i);
   const shine = ((t - at) * 0.9) % 1.6;
   return (
-    <div style={{ position: "absolute", left: x, top: y, width: CW, height: CH, transform: `scale(${(0.3 + 0.7 * e) * pop})`, opacity: Math.min(1, k * 2) }}>
+    <div style={{ position: "absolute", left: x, top: y, width: CW, height: CH, transform: `scale(${(0.3 + 0.7 * e) * pop * sc})`, opacity: Math.min(1, k * 2) }}>
       <div style={{ position: "absolute", inset: -3, borderRadius: 20, background: "linear-gradient(135deg, #fff2c4 0%, #d9a440 35%, #7a5418 60%, #f5d68a 100%)", boxShadow: `0 10px 30px rgba(0,0,0,0.5), 0 0 ${30 * flash + 10}px ${c.c1}${flash > 0.1 ? "cc" : "55"}` }} />
       <div style={{ position: "absolute", inset: 0, borderRadius: 17, background: "linear-gradient(180deg, #223163 0%, #131b3b 100%)", overflow: "hidden" }}>
         <div style={{ position: "absolute", left: 0, top: 0, right: 0, height: 46, background: "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0))" }} />
@@ -105,13 +109,13 @@ const CardView: React.FC<{ c: Card; t: number; at: number; i: number }> = ({ c, 
   );
 };
 
-export const Cards: React.FC<{ t: number }> = ({ t }) => {
+export const Cards: React.FC<{ t: number; full?: boolean }> = ({ t, full = false }) => {
   const out = 1 - clamp01((t - WALL_AT) / 0.35);
   if (out <= 0 || t < CARD_AT(0)) return null;
   return (
     <div style={{ position: "absolute", inset: 0, opacity: out, transform: `scale(${1 - 0.15 * (1 - out)})` }}>
       {CARDS.map((c, i) => (
-        <CardView key={i} c={c} t={t} at={CARD_AT(i)} i={i} />
+        <CardView key={i} c={c} t={t} at={CARD_AT(i)} i={i} full={full} />
       ))}
     </div>
   );
