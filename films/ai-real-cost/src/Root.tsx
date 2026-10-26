@@ -7,9 +7,11 @@ import { FILM_FRAMES } from "./scenes";
 import { FPS } from "./timing";
 import { Sample, SAMPLE_FRAMES } from "./v10/Sample";
 import { Film10, FILM10_FRAMES } from "./v10/Film10";
+import { Race, RACE_FRAMES } from "./v11/Race";
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Race11" component={Race} durationInFrames={RACE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Ep1" component={Film10} durationInFrames={FILM10_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Sample10" component={Sample} durationInFrames={SAMPLE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Film" component={Film} durationInFrames={FILM_FRAMES} fps={FPS} width={1920} height={1080} />
