@@ -20,6 +20,7 @@ switch sfx-mechanical-01
 clip sfx-ui-12
 slap sfx-impact-14
 book sfx-foley-16
+brush sfx-foley-06
 LIST
 PY=${PY:-$HOME/.venvs/shapeof-films/bin/python}
 [ -f sfx/flaps.wav ] && [ -f sfx/meter.wav ] || $PY ../tools/synth-sfx.py sfx

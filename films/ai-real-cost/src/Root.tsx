@@ -18,9 +18,11 @@ import { Open15, OPEN15_FRAMES } from "./v15/Open15";
 import { Hook16, HOOK16_FRAMES } from "./v16/Hook16";
 import { Hook17, HOOK17_FRAMES } from "./v17/Hook17";
 import { Frames18, FRAMES18 } from "./v18/Frames";
+import { Sheet19, SHEET19_FRAMES } from "./v19/Sheet19";
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Sheet19" component={Sheet19} durationInFrames={SHEET19_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Frames18" component={Frames18} durationInFrames={FRAMES18} fps={30} width={1920} height={1080} />
     <Composition id="Hook17" component={Hook17} durationInFrames={HOOK17_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Hook16" component={Hook16} durationInFrames={HOOK16_FRAMES} fps={30} width={1920} height={1080} />
