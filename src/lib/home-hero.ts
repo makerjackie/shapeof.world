@@ -12,7 +12,6 @@ export const HERO_WORLD_IDS = [
   'flybody',
   'earth-and-nature',
   'ink-landscape',
-  'fire-gravity',
   'solar-system',
   'moon-voyage',
   'galaxy-collision',

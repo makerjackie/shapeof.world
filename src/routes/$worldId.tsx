@@ -118,10 +118,11 @@ export const Route = createFileRoute('/$worldId')({
    * not strip it on navigation; the mounted world decodes and validates it via
    * `useIncomingShareState`, which is where the allow-lists live.
    */
-  validateSearch: (search: Record<string, unknown>): { issue?: string; path?: string; s?: string; exploreAll?: boolean; collection?: 'featured' } => ({
+  validateSearch: (search: Record<string, unknown>): { issue?: string; path?: string; s?: string; exploreAll?: boolean; collection?: 'featured'; scene?: 'candle' } => ({
     ...(typeof search.issue === 'string' ? { issue: search.issue } : {}),
     ...(typeof search.path === 'string' ? { path: search.path } : {}),
     ...(typeof search.s === 'string' ? { s: search.s } : {}),
+    ...(search.scene === 'candle' ? { scene: 'candle' as const } : {}),
     ...(search.collection === 'featured' ? { collection: 'featured' as const } : {}),
     ...(search.exploreAll === true || search.exploreAll === 'true' ? { exploreAll: true } : {}),
   }),

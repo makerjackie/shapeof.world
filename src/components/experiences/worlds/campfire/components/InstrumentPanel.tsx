@@ -17,16 +17,16 @@ export function InstrumentPanel({ data, onClose }: { data: Instruments | null; o
       <path className="cf-line-chemical" d={path}/><text x="22" y="133">−20 s</text><text x="275" y="133">0 s</text><text x="270" y="17">kW</text>
     </svg>
     <details className="cf-measure-details"><summary>{tx('功率怎么量的')}</summary>
-      <p>{tx('把每格燃料消耗相加，假定有效热值14 MJ/kg、密度353/T kg/m³。克数是按同一热值折算的等效可燃气，不是木柴称重；电水壶按2 kW计。')}</p>
-      <p>{tx('另一个诊断量：温升热代理')} <b>{data?.thermalKw.toFixed(1)??'—'} kW</b>. {tx('它积分ρcp·q，使用反应后的温度；温度上限与密度近似使它不等于化学放热。两者都不是实验量热。')}</p>
+      <p>{tx('累加每格燃料消耗，假定14 MJ/kg、密度353/T kg/m³。克数是等效可燃气，非木柴称重；水壶按2 kW。')}</p>
+      <p>{tx('另一个诊断量：温升热代理')} <b>{data?.thermalKw.toFixed(1)??'—'} kW</b>. {tx('积分ρcp·q，温度取反应后。温度上限和密度近似使它不同于化学估算；两者都非实验量热。')}</p>
     </details>
     <div className="cf-meter-block"><h3>{tx('平均火焰高度')}</h3><div className="cf-meter-pair"><div><span>{tx('50%间歇高度')}</span><strong>{data?.height50==null?'—':`${data.heightCensored?'≥ ':''}${data.height50.toFixed(2)}`} <small>m</small></strong></div><div><span>{tx('Heskestad预测')}</span><strong>{data?.predictedHeight.toFixed(2)??'—'} <small>m</small></strong></div></div>
       <p className="cf-method">{tx('40秒里，一半时间有火的最高一层。')}</p>
-      <details className="cf-measure-details"><summary>{tx('高度怎么量的')}</summary><p>{tx('逐层累计有火的时间比例；按热烟炱或反应阈值判定，包含画面边缘淡出，从0.05 m燃料面起算。预测用同期平均功率与D=0.60 m；多木柴篝火不等同圆池火。')}</p></details>
+      <details className="cf-measure-details"><summary>{tx('高度怎么量的')}</summary><p>{tx('按热烟炱或反应阈值逐层计时，含边缘淡出，高度从0.05 m起算。预测用同期平均功率、直径0.60 m；木柴火不等同圆池火。')}</p></details>
     </div>
     <div className="cf-meter-block"><h3>{tx('火焰脉动')}</h3><div className="cf-meter-pair"><div><span>{tx('频谱测量')}</span><strong>{data?.frequency.hz?.toFixed(2)??'—'} <small>Hz</small></strong></div><div><span>1.5 / √D</span><strong>1.94 <small>Hz</small></strong></div></div>
       <p className="cf-measuring">{tx(data?.frequency.reason==='collecting'||!data?'正在积累40秒模拟数据':data.frequency.hz==null?'未检出稳定峰':'检出清晰频谱峰')}</p>
-      <details className="cf-measure-details"><summary>{tx('脉动怎么量的')}</summary><p>{tx('放热、火焰高度、0.25 / 0.50 / 0.80 m处温度，以20 Hz为目标采样。40秒频谱分辨率0.025 Hz；至少两种信号有清晰且相近的峰才报告频率。')}</p></details>
+      <details className="cf-measure-details"><summary>{tx('脉动怎么量的')}</summary><p>{tx('以20 Hz采放热、高度和三处温度。40秒频谱分辨率0.025 Hz，至少两种信号的清晰峰相近才报告。')}</p></details>
     </div>
     <p className="cf-reference">{tx('上游目标（不是本次测量）：60 kW · 0.60 m · 1.94 Hz')}</p>
     <p className="cf-coordinate">{tx('已采集')} {Math.min(40,data?.duration??0).toFixed(1)} / 40 s · {tx('每0.25秒更新')}</p>

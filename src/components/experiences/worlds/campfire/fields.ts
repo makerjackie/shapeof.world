@@ -1,6 +1,6 @@
 export type Vec3 = [number, number, number]
 export type FieldId = 'temperature' | 'heat' | 'soot' | 'fuel' | 'air' | 'speed' | 'vorticity' | 'age'
-export type Slice = { enabled: boolean; horizontal: boolean; offset: number; field: FieldId; opacity: number; cut: boolean; ambient: boolean }
+export type Slice = { enabled: boolean; horizontal: boolean; offset: number; field: FieldId; opacity: number; cut: boolean }
 export type Camera = { pos: number[]; fwd: number[]; right: number[]; up: number[]; fovY: number }
 // Five samples of the public-domain Inferno map (Smith & van der Walt, 2015).
 export const HEAT_COLORS = ['#000004', '#57106e', '#bc3754', '#f98e09', '#fcffa4']
@@ -15,7 +15,7 @@ export const FIELDS: { id: FieldId; label: string; unit: string; min: number; ma
   { id: 'age', label: '气体年龄', unit: 'ms', min: 0, max: 200, colors: COOL_COLORS },
   { id: 'vorticity', label: '涡量', unit: 's⁻¹', min: 0, max: 100, colors: COOL_COLORS },
 ]
-export const INITIAL_SLICE: Slice = { enabled: false, horizontal: false, offset: 0, field: 'temperature', opacity: 1, cut: true, ambient: false }
+export const INITIAL_SLICE: Slice = { enabled: false, horizontal: false, offset: 0, field: 'temperature', opacity: 1, cut: true }
 export type Reading = {
   position: Vec3; time: number; temperature: number; celsius: number; fuel: number; air: number;
   oxygenMassEstimate: number; soot: number; heatingRate: number; thermalPowerDensityEstimate: number;

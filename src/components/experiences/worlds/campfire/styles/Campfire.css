@@ -182,3 +182,30 @@
   .cf-molecular-layout { display:block; overflow-y:auto; padding-top:7px; }.cf-molecular-visual { min-height:400px; height:400px; }.cf-equation { font-size:16px; gap:10px; padding:13px 0 3px; }.cf-molecule-stage { min-height:210px; }.cf-molecular-hint { font-size:9px; margin-bottom:8px; }.cf-molecular-playback { padding:0; gap:5px; }.cf-molecular-playback button { padding:6px 8px; font-size:10px; }.cf-atom-ledger { gap:22px; margin:12px 0 4px; }.cf-atom-ledger > div { gap:6px; font-size:15px; }.cf-atom-ledger i { padding:0 4px; }.cf-element { width:25px; height:25px; font-size:11px; }.cf-ledger-caption { font-size:9px; margin-top:5px; }
   .cf-molecular-copy { overflow:visible; border-left:0; border-top:1px solid var(--cf-line); padding:15px 2px 12px; margin-top:20px; }.cf-molecular-origin { display:none; }.cf-molecular-copy h3 { margin:3px 0 10px; font-size:18px; }.cf-molecular-copy p { font-size:12px; line-height:1.8; }.cf-molecular-copy .cf-molecular-note { font-size:10px; }.cf-molecular-paused { font-size:9px; margin-top:8px; }.cf-energy h3 { margin-top:8px; }.cf-molecular-key { margin-top:15px; }
 }
+
+.cf-pin .cf-offscreen{display:none;font-style:normal;font-size:12px}.cf-pin[data-offscreen=true] .cf-offscreen{display:inline}.cf-pin[data-absent=true]{opacity:.65}.cf-anatomy [data-cf-edge]{fill:none;stroke:#b8d7dd;stroke-width:1.5}
+
+.cf-experience{position:absolute;inset:0;overflow:hidden;background:#05070a;color:#e3e9e7}
+.cf-scene-switch{position:absolute;z-index:15;left:50%;top:88px;transform:translateX(-50%);display:flex;background:#101c22e8;border:1px solid #55717f66;border-radius:24px;padding:3px;gap:2px}
+.cf-scene-switch button{min-height:38px;min-width:74px;padding:7px 16px;border:0;border-radius:20px;background:transparent;color:#a6b7bf;font:inherit;font-size:14px;cursor:pointer}
+.cf-scene-switch button[aria-pressed=true]{background:#dce7e5;color:#142028}.cf-scene-switch button:focus-visible{outline:2px solid #a2dce2;outline-offset:4px}
+.cf-experience:has([data-molecular=true]) .cf-scene-switch{display:none}
+.cf-candle-stage{position:absolute;inset:0}.cf-candle-canvas{display:block;width:100%;height:100%}
+.cf-candle-disclosure{position:absolute;z-index:2;top:139px;left:50%;transform:translateX(-50%);font-size:12px;color:#b5c4cd;white-space:nowrap}
+.cf-candle-copy{position:absolute;right:40px;top:230px;width:315px;max-height:calc(100% - 330px);overflow:auto;scrollbar-width:thin;padding:20px 0;color:#c4d0d4;line-height:1.75;font-size:14px}
+.cf-candle-copy h2{font-size:23px;font-weight:400;line-height:1.4;color:#edf0e9;margin:24px 0 14px}.cf-candle-copy p{margin:10px 0}.cf-candle-copy small{font-size:11px;color:#96a8b3;display:block}.cf-candle-copy a,.cf-candle-reference a{color:#add8dd;text-decoration:underline;text-underline-offset:3px}
+.cf-candle-tabs{display:flex;gap:4px}.cf-candle-tabs button{flex:1;padding:6px!important;min-height:42px!important;font-size:13px!important}
+.cf-candle-copy .cf-candle-fact{color:#e9cda5;font-size:12px;border-left:2px solid #b4905c;padding-left:12px;margin:20px 0 8px}
+.cf-candle-actions{display:flex;gap:10px;margin:22px 0 16px}.cf-candle-actions button:first-child{flex:1;min-height:44px}.cf-candle-copy details{border-top:1px solid #55717f55;padding-top:12px;margin-top:18px;font-size:12px}.cf-candle-copy summary{cursor:pointer;min-height:34px}.cf-candle-equation{color:#f1dcc2;white-space:nowrap}
+.cf-candle-reference{position:absolute;bottom:32px;left:40px;max-width:390px;font-size:11px;line-height:1.8;color:#8799a3;margin:0}
+.cf-candle-pins{position:absolute;inset:0;pointer-events:none}.cf-candle-pins svg{width:100%;height:100%;position:absolute;inset:0;overflow:hidden}.cf-candle-pins path{stroke:#d3c8b680;stroke-width:1;fill:none}.cf-candle-pins button{position:absolute;pointer-events:auto;width:88px;min-height:40px!important;background:#111b23bb!important;font-size:12px!important}
+.cf-candle-error{position:absolute;top:40%;left:25%;max-width:50%;font-size:14px}
+@media(max-width:1100px) and (min-width:721px){.cf-candle-copy{right:24px;width:270px;font-size:13px}.cf-candle-copy h2{font-size:20px}.cf-candle-stage{right:160px}}
+@media(max-width:720px){
+.cf-scene-switch{top:77px;padding:2px}.cf-scene-switch button{min-width:64px;min-height:34px;padding:6px 12px;font-size:12px}
+.cf-candle .cf-heading p{display:none}.cf-candle-disclosure{top:123px;font-size:11px;margin:0}.cf-candle-stage{top:145px;bottom:320px}
+.cf-candle-copy{left:18px;right:18px;top:auto;bottom:46px;width:auto;height:267px;max-height:none;padding:0 0 12px;background:linear-gradient(#05070a00,#05070a 25px);font-size:12px;line-height:1.65}
+.cf-candle-copy h2{font-size:18px;margin:14px 0 8px}.cf-candle-copy p{margin:8px 0}.cf-candle-copy .cf-candle-fact{margin:12px 0 7px}.cf-candle-actions{margin:14px 0 10px}.cf-candle-reference{bottom:8px;left:18px;right:18px;max-width:none;font-size:9px;line-height:1.5}
+.cf-candle-copy details{margin-top:12px}.cf-candle-pins button{width:82px;min-height:40px!important}
+}
+.cf-candle .cf-heading{z-index:2;pointer-events:none}.cf-candle-reference{max-width:600px}

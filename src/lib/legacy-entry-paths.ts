@@ -1,5 +1,5 @@
 import { parseWorldPath, worldPath } from './world-urls'
-import { legacyWorldRedirects } from '../data/legacy-redirects'
+import { legacyWorldRedirects, legacyWorldSceneRedirects } from '../data/legacy-redirects'
 import firstSeen from '../data/generated/world-first-seen.json'
 import routeReservations from '../data/generated/route-reservations.json'
 
@@ -28,6 +28,14 @@ export function resolveLegacyEntryHref(pathname: string, search = ''): string | 
   const query = !search || search.startsWith('?') ? search : `?${search}`
   const incoming = new URL(`https://shapeof.world${pathname}${query}`)
   const original = normalizePathname(incoming.pathname)
+  const mergedWorld = parseWorldPath(original.replace(/^\/(?:zh|w)\//, '/'))
+  const mergedScene = mergedWorld && Object.hasOwn(legacyWorldSceneRedirects, mergedWorld.worldId)
+    ? legacyWorldSceneRedirects[mergedWorld.worldId] : undefined
+  if (mergedScene && mergedWorld) {
+    incoming.pathname = worldPath(mergedScene.worldId, mergedWorld.locale)
+    incoming.searchParams.set('scene', mergedScene.scene)
+    return `${incoming.pathname}${incoming.search}${incoming.hash}`
+  }
   let path = original
   let locale: 'zh' | 'en' | undefined
 

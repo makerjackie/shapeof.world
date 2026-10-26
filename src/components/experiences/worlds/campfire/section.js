@@ -1,7 +1,7 @@
 // GPU-only section rendering; a probe samples five local trilinear stencils, returning 80 bytes.
 import { UniformStruct, computePipeline, bindGroup, layoutFromWGSL } from './engine/gpu.js';
 import { FIELDS, HEAT_COLORS, COOL_COLORS, decodeSample } from './fields';
-const fields = ['w','h','aspect','tanFov','px','py','pz','horizontal','fx','fy','fz','offset','rx','ry','rz','field','ux','uy','uz','opacity','qx','qy','qz','dx','cut','ambient'];
+const fields = ['w','h','aspect','tanFov','px','py','pz','horizontal','fx','fy','fz','offset','rx','ry','rz','field','ux','uy','uz','opacity','qx','qy','qz','dx','cut'];
 function ramp(name, colors) {
   const entries = colors.map(hex => `vec3f(${[1,3,5].map(i => (parseInt(hex.slice(i,i+2),16)/255).toFixed(6)).join(',')})`);
   return `fn ${name}(t: f32) -> vec3f { let a = array<vec3f,5>(${entries.join(',')}); let x=clamp(t,0.0,1.0)*4.0; let i=min(u32(x),3u); return mix(a[i],a[i+1u],x-f32(i)); }`;
@@ -68,12 +68,15 @@ fn uvw(p: vec3f) -> vec3f { return (p + vec3f(.6,0,.6)) / vec3f(1.2,1.8,1.2); }
     let head=abs(across-(.027-along)*.6)<.002 && along>.010 && along<.027;
     if(mag>.05 && (shaft || head)){color=vec3f(.94,.98,1);arrow=true;}
   }
-  // Opaque hot-gas cross-section, with a hard 900 K display boundary (not a simulation or measurement mask).
-  // Air and vector fields retain the entire plane; users can also show ambient gas for any field.
-  if(P.cut>.5 && P.ambient<.5 && P.field!=4.0 && P.field!=5.0 && P.field!=7.0 && a.x<.607){discard;}
-  var alpha=P.opacity;
-  if(arrow && P.opacity>0.0){alpha=max(alpha,.9);}
-  if(P.field==6.0 && a.y+b.x<.0001){alpha=0.0;}
+  // The entire cut stays legible: cold air is dark glass, hot gas is opaque.
+  // This display transfer function never masks probes or scientific reductions.
+  let hot=smoothstep(.157,.607,a.x); // 450–900 K
+  if(P.cut>.5){let fieldWeight=select(hot,.35+.65*hot,P.field==4.0 || P.field==5.0 || P.field==7.0);color=mix(vec3f(.045,.075,.095)+vec3f(.15,.23,.27)*line,color,fieldWeight);}
+  var alpha=P.opacity*select(1.0,mix(.30,1.0,hot),P.cut>.5);
+  if(arrow && P.opacity>0.0){color=vec3f(.94,.98,1);alpha=max(alpha,.9);}
+  // Fresh air has no gas age. Keep its glass substrate, without inventing an age color.
+  if(P.field==6.0 && a.y+b.x<.0001){color=vec3f(.045,.075,.095)+vec3f(.15,.23,.27)*line;alpha=.30*P.opacity;}
+  if(edge<.003){color=vec3f(.55,.82,.86);alpha=max(alpha,.85);}
   return vec4f(color,alpha);
 }`;
     const module = device.createShaderModule({code:shader,label:'campfire-section'});
@@ -93,7 +96,7 @@ out[2]=textureSampleLevel(vel,lin,u,0);out[3]=textureSampleLevel(vort,lin,u,0);o
     this.busy=false;
   }
   update(cam,w,h,slice,point=[0,.3,0]) {
-    this.U.set({w,h,aspect:w/h,tanFov:Math.tan(cam.fovY/2),px:cam.pos[0],py:cam.pos[1],pz:cam.pos[2],fx:cam.fwd[0],fy:cam.fwd[1],fz:cam.fwd[2],rx:cam.right[0],ry:cam.right[1],rz:cam.right[2],ux:cam.up[0],uy:cam.up[1],uz:cam.up[2],horizontal:+slice.horizontal,offset:slice.offset,field:FIELDS.findIndex(f=>f.id===slice.field),opacity:slice.opacity,cut:+slice.cut,ambient:+slice.ambient,qx:point[0],qy:point[1],qz:point[2],dx:this.sim.dx}).upload();
+    this.U.set({w,h,aspect:w/h,tanFov:Math.tan(cam.fovY/2),px:cam.pos[0],py:cam.pos[1],pz:cam.pos[2],fx:cam.fwd[0],fy:cam.fwd[1],fz:cam.fwd[2],rx:cam.right[0],ry:cam.right[1],rz:cam.right[2],ux:cam.up[0],uy:cam.up[1],uz:cam.up[2],horizontal:+slice.horizontal,offset:slice.offset,field:FIELDS.findIndex(f=>f.id===slice.field),opacity:slice.opacity,cut:+slice.cut,qx:point[0],qy:point[1],qz:point[2],dx:this.sim.dx}).upload();
   }
   draw(enc,view) { const pass=enc.beginRenderPass({colorAttachments:[{view,loadOp:'load',storeOp:'store'}]});pass.setPipeline(this.pipe);pass.setBindGroup(0,this.bg);pass.draw(3);pass.end(); }
   async sample(position,time) {

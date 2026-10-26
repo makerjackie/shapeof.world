@@ -23,8 +23,8 @@ var<workgroup> values:array<vec4f,128>;
 @group(0) @binding(1) var<storage,read_write> out:vec4f;
 @group(0) @binding(2) var<uniform> config:vec4f;
 @compute @workgroup_size(1) fn main(){out=vec4f(0);let count=u32(config.x);
- // A declared visibility threshold: exposed linear red >0.025, in two adjacent rows.
- for(var y=0u;y+1u<count;y++){if(rows[y].z*config.y>.025 && rows[y+1u].z*config.y>.025){out=rows[y];break;}}
+ // A declared visibility threshold: exposed linear red >0.15, in two adjacent rows.
+ for(var y=0u;y+1u<count;y++){if(rows[y].z*config.y>.15 && rows[y+1u].z*config.y>.15){out=rows[y];break;}}
 }`,'main','visible-tip-total');
   }
   async sample(key){
