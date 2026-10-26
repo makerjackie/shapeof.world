@@ -1,0 +1,30 @@
+import type { WorldExperience } from '../../types'
+export default {
+  id: 'campfire', publication: 'making',
+  title: '一团火，里面有什么？', posterTitle: '一团火，里面有什么？',
+  poster: '/assets/posters/campfire.webp', posterDesktop: '/assets/posters/desktop/campfire.webp', posterMobile: '/assets/posters/mobile/campfire.webp', posterPosition: '50% 55%',
+  posterHook: '围着篝火走一圈，再切开它，读出温度、烟炱和反应。',
+  posterSource: 'Leon Lin · procedural-fire · MIT · WebGPU 燃烧模拟',
+  question: '最亮的地方一定最热吗？',
+  hook: '这团火的光、烟和运动来自同一个燃烧网格。切开看温度，点一点，比较亮处和暗处。',
+  payoff: '火焰亮度取决于温度、烟炱和光穿过的厚度；蓝色包含化学发光。温度读数来自模拟场，而不是从颜色猜测。',
+  topicLabel: '篝火的流动与燃烧',
+  translations: { en: {
+    title: 'What is inside a fire?', posterTitle: 'What is inside a fire?',
+    posterHook: 'Walk around a campfire, then slice through temperature, soot and reactions.',
+    posterSource: 'Leon Lin · procedural-fire · MIT · WebGPU combustion simulation',
+    question: 'Is the brightest region always the hottest?',
+    hook: 'Light, smoke and motion share one combustion grid. Slice through its temperature and compare bright and dim regions.',
+    payoff: 'Brightness depends on temperature, soot and optical depth; blue light includes chemiluminescence. Read temperatures from the simulation rather than guessing from color.',
+    topicLabel: 'Campfire flow and combustion',
+  } },
+  primaryCategoryId: 'chem-materials', runtime: 'volume-3d', difficulty: 'intro', lane: 'flow', renderer: 'campfire',
+  duration: 420, evidence: 'modeled', accent: '#9ad9df', related: ['fire-gravity'], audioPolicy: 'world-owned',
+  experiencePolicy: { entryMode: 'autoplay', shellMode: 'minimal' },
+  sources: [
+    {label:'Leon Lin · 程序化篝火',labelEn:'Leon Lin · Procedural Fire',url:'https://github.com/Leonxlnx/procedural-fire/tree/95ab0a9003e20f1b0a5556ac14b401dfa0a37596',note:'MIT；保留实时燃烧、渲染、火星与声音，新增原始场剖面和点测。',noteEn:'MIT; real-time solver, rendering, sparks and sound, with added field sections and probes.'},
+    {label:'NIST · 浮力扩散火焰实验',labelEn:'NIST · Buoyant diffusion flame experiments',url:'https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir79-1910.pdf'},
+  ],
+  provenance: {origin:'open-source-adaptation',sourceProject:'procedural-fire (Leon Lin)',sourceUrl:'https://github.com/Leonxlnx/procedural-fire'},
+  presentation: 'full-bleed', transferBudgetMb: 2, fallback: 'poster',
+} satisfies WorldExperience
