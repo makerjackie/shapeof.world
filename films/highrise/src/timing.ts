@@ -16,7 +16,8 @@ export const barAt = (t: number) => (t - PHASE) / BAR;
 
 const TRACK_END = 181.91; // 《千年之后（氛围版）》 length, s
 export const MUSIC_S = sf(64) + 8 * BAR + 32 * BAR + (TRACK_END - sf(64));
-export const FILM_FRAMES = Math.floor((MUSIC_S - 0.1) * FPS);
+// the film ends on bar 122.9, about 4 s into the end card, while the music fades (its tail runs to ~124)
+export const FILM_FRAMES = Math.min(Math.floor((MUSIC_S - 0.1) * FPS), Math.floor(sf(122.9) * FPS));
 
 export const EO = Easing.bezier(0.16, 1, 0.3, 1);
 export const EIO = Easing.bezier(0.65, 0, 0.35, 1);
