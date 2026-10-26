@@ -41,7 +41,7 @@
 
 **节奏**
 
-- 第一帧就在动、有声音，开头几秒让人想看下去。
+- **前 3 秒定生死**（用户 2026-10-26 定）：观众只给你两三秒。第 0 帧就要有一个让人想看下去的画面在动，不从空镜、慢推、黑场或一句铺垫开始；2 秒内让观众知道这部片要回答什么问题。能用画面抓人就别只靠字，字和画面都抓不住人就重做开头。
 - 跟着音乐的段落和情绪走，不按固定的场景长度切：该快就快，该停就停；至少一次明显的加速和一段能喘口气的地方。
 - 关键动作落在拍子上；卡点是落点准，不是每拍都切，也不是画面抖。
 - 有用意的停留可以有，没用意的长停顿不要。
@@ -75,6 +75,7 @@
 - **AAC 编码会抬高真峰值**：ffmpeg 自带的 `aac` 能冲过 2.7 dB，还不单调。母带从原始 WAV 做，用 Apple 的 `aac_at` 编码（做法见 `films/ai-impact/tools/tpmaster.py`）。
 - **多个会话共用一个仓库**：在自己的 worktree 里干活；不要在主工作区 `git pull --rebase --autostash`，也不要 `git reset`。只提交自己的路径。
 - **渲染排队**：Mac 上最多同时跑两个 `remotion render`，开渲前先 `pgrep -fl "remotion render"`。
+- **共面会闪**：两个面贴在同一平面（房间盒子贴着楼板、隔墙贴着外墙）会 z-fighting，镜头一动就疯狂闪；几何上留 2 厘米以上的缝。细节（家具、窗框）按 fwidth 抗锯齿；灯光只做有意图的渐变，不要随时间随机开关或用 sin 闪电视。
 - **WebGL 截图要等 GPU**：three.js 在 layout effect 里同步渲染完，再调 `gl.finish()`，否则偶尔截到半帧（做法见 `films/tower/src/world/engine.ts`）。
 - **Overpass 公共服务器常 502、超时**：大片区的 OSM 建筑改用 Geofabrik 的分省 `.osm.pbf`，用 pyosmium 按范围裁（`films/tower/tools/pbf-nanshan.py`）。
 - **WebGL 在 Mac 上要走 Metal**：headless Chrome 加 `--use-angle=metal`，否则会慢好几倍。
