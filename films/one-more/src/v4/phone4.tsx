@@ -31,6 +31,36 @@ export const PhoneBody: React.FC<{ cam: Cam; o: number }> = ({ cam, o }) =>
     </g>
   );
 
+// Two hands holding the phone sideways, in silhouette, rim-lit by the screen: drawn before the body so only what is
+// outside the phone shows (the heels of the palms, the index fingertips on the top edge).
+const RIGHT_HAND = "M 520 -330 C 630 -370, 740 -290, 760 -110 C 780 60, 770 280, 720 640 L 330 640 C 360 440, 400 260, 480 150 Z";
+const LEFT_HAND = "M -520 -330 C -630 -370, -740 -290, -760 -110 C -780 60, -770 280, -720 640 L -330 640 C -360 440, -400 260, -480 150 Z";
+export const Hands: React.FC<{ cam: Cam; o: number }> = ({ cam, o }) =>
+  o <= 0 ? null : (
+    <g transform={camG(cam)} opacity={o}>
+      <defs>
+        <linearGradient id="h4-skin" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#2c2328" />
+          <stop offset="40%" stopColor="#17121a" />
+          <stop offset="100%" stopColor="#07060a" />
+        </linearGradient>
+      </defs>
+      {[RIGHT_HAND, LEFT_HAND].map((d, i) => (
+        <g key={i}>
+          <path d={d} fill="url(#h4-skin)" />
+          <path d={d} fill="none" stroke="#a9c8ff" strokeOpacity={0.28} strokeWidth={4} />
+        </g>
+      ))}
+      {[-470, 470].map((x) => (
+        <g key={x}>
+          <rect x={x - 46} y={-492} width={92} height={70} rx={34} fill="url(#h4-skin)" />
+          <rect x={x - 46} y={-492} width={92} height={70} rx={34} fill="none" stroke="#a9c8ff" strokeOpacity={0.3} strokeWidth={3} />
+          <rect x={x - 24} y={-486} width={48} height={30} rx={14} fill="#3a3038" opacity={0.6} />
+        </g>
+      ))}
+    </g>
+  );
+
 // The screen: children are laid out in screen pixels (1110 × 520), clipped to the rounded screen.
 export const PhoneScreen: React.FC<{ cam: Cam; o?: number; children: React.ReactNode }> = ({ cam, o = 1, children }) => {
   const [sx, sy] = w2s(cam, SCR.x, SCR.y);
@@ -51,7 +81,8 @@ export const PhoneTop: React.FC<{
   hole?: number;
   ripples?: { r: number; o: number; c: string }[];
   thumb?: { x: number; y: number; s: number; o: number };
-}> = ({ cam, btn, beatPhase, press = 0, hole = 0, ripples = [], thumb }) => {
+  leftThumb?: number; // the left thumb resting on the screen (0..1)
+}> = ({ cam, btn, beatPhase, press = 0, hole = 0, ripples = [], thumb, leftThumb = 0 }) => {
   const glow = 0.45 + 0.55 * Math.exp(-beatPhase * 5);
   return (
     <g transform={camG(cam)}>
@@ -76,6 +107,14 @@ export const PhoneTop: React.FC<{
       {ripples.map((rp, i) => (
         <circle key={i} cx={0} cy={0} r={rp.r} fill="none" stroke={rp.c} strokeWidth={3} opacity={rp.o} />
       ))}
+      {leftThumb > 0 ? (
+        <g opacity={leftThumb} transform="translate(-468 12) rotate(34)">
+          <path d={THUMB} transform="translate(-20 34)" fill="#000" opacity={0.35} />
+          <path d={THUMB} fill="#130f13" opacity={0.95} />
+          <path d={THUMB} fill="none" stroke="#ffd2bf" strokeOpacity={0.45} strokeWidth={3} />
+          <rect x={-36} y={-40} width={72} height={88} rx={32} fill="#2b2329" stroke="#ffd2bf" strokeOpacity={0.24} strokeWidth={2} />
+        </g>
+      ) : null}
       {thumb && thumb.o > 0 ? (
         <g opacity={thumb.o} transform={`translate(${thumb.x} ${thumb.y}) rotate(-34) scale(${thumb.s})`}>
           <path d={THUMB} transform="translate(20 34)" fill="#000" opacity={0.35} />

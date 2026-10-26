@@ -7,7 +7,7 @@ import { Box, EIN, EIO, EO, ESO, lerp, ramp, Say, useT, win } from "../kit";
 import { HAN, K, NUM } from "../theme";
 import { Cards, Wall, WALL_AT } from "./cards";
 import { FightScreen, ResultScreen } from "./fight";
-import { BTN_R, PhoneBody, PhoneScreen, PhoneTop } from "./phone4";
+import { BTN_R, Hands, PhoneBody, PhoneScreen, PhoneTop } from "./phone4";
 import { BEAT, beat } from "./time";
 
 export const PRESS = beat(9);
@@ -53,7 +53,8 @@ export const Open4: React.FC = () => {
   const kIn = ramp(t, beat(8.0), beat(8.6), EO);
   const kDown = ramp(t, PRESS - 0.25, PRESS, EIN);
   const kOut = ramp(t, PRESS + 0.2, PRESS + 0.8, EIN);
-  const tip: [number, number] = [lerp(lerp(lerp(380, hover[0], kIn), btn[0], kDown), 360, kOut), lerp(lerp(lerp(520, hover[1], kIn), btn[1], kDown), 560, kOut)];
+  const rest: [number, number] = [430, 40];
+  const tip: [number, number] = [lerp(lerp(lerp(rest[0], hover[0], kIn), btn[0], kDown), rest[0], kOut), lerp(lerp(lerp(rest[1], hover[1], kIn), btn[1], kDown), rest[1], kOut)];
   const ripples: { r: number; o: number; c: string }[] = [];
   for (let k = 0; k < 5; k++) {
     const age = t - PRESS - k * 0.22;
@@ -61,9 +62,14 @@ export const Open4: React.FC = () => {
     ripples.push({ r: BTN_R + 8 + 520 * EO(age / 1.6), o: 0.5 * (1 - age / 1.6), c: k % 2 ? K.cyan : K.want });
   }
   const phoneO = 1 - ramp(t, WALL_AT, WALL_AT + 0.45);
+  const handsO = phoneO * ramp(t, beat(6.9), beat(7.8));
+  const [gx, gy] = [960 + cam.z * (0 - cam.cx), 540 + cam.z * (-150 - cam.cy)];
   return (
     <div style={{ position: "absolute", inset: 0 }}>
+      {/* the screen's light on the blanket */}
+      <div style={{ position: "absolute", left: gx - 1500 * cam.z, top: gy - 1000 * cam.z, width: 3000 * cam.z, height: 2000 * cam.z, background: "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(80,130,220,0.42) 0%, rgba(50,90,180,0.16) 40%, rgba(20,40,90,0) 70%)", opacity: phoneO }} />
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+        <Hands cam={cam} o={handsO} />
         <PhoneBody cam={cam} o={phoneO * ramp(t, beat(6.8), beat(7.6))} />
       </svg>
       <PhoneScreen cam={cam} o={phoneO}>
@@ -71,7 +77,7 @@ export const Open4: React.FC = () => {
         {result > 0 ? <ResultScreen k={result} t={t - PRESS} matching={matching} /> : null}
       </PhoneScreen>
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: phoneO }}>
-        <PhoneTop cam={cam} btn={result * (1 - matching * 0.85)} beatPhase={beatPhase} press={press} ripples={ripples} thumb={{ x: tip[0], y: tip[1], s: 1.06 - 0.06 * press, o: kIn * (1 - kOut) }} />
+        <PhoneTop cam={cam} btn={result * (1 - matching * 0.85)} beatPhase={beatPhase} press={press} ripples={ripples} leftThumb={handsO} thumb={{ x: tip[0], y: tip[1], s: 1.06 - 0.06 * press, o: handsO }} />
       </svg>
       {result > 0 && matching < 1 ? <BtnLabel cam={cam} o={result * (1 - matching)} /> : null}
       <NightClock t={t} />

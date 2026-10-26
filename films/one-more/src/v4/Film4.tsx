@@ -7,14 +7,13 @@ import { HITS, LOSE, WIPE } from "./fight";
 import { Open4, OPEN4_END, PRESS } from "./open4";
 import { beat, fr } from "./time";
 
-// Night sky behind the phone once the camera pulls back (the teamfight fills the screen before that).
+// The blanket under the phone at night, once the camera pulls back (the teamfight fills the screen before that).
 const Backdrop4: React.FC = () => {
   const t = useT();
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: K.bg }} />
-      <Img src={staticFile("nebula.jpg")} style={{ position: "absolute", left: -240, top: -135, width: 2400, height: 1350, transform: `scale(${1.06 + 0.0006 * t}) translate(${-t * 1.2}px, ${-t * 0.4}px)`, opacity: 0.9 }} />
-      <AbsoluteFill style={{ background: "radial-gradient(ellipse 55% 60% at 55% 50%, rgba(40,90,170,0.22) 0%, rgba(20,40,90,0.08) 45%, transparent 75%)" }} />
+      <Img src={staticFile("bed.jpg")} style={{ position: "absolute", left: -240, top: -135, width: 2400, height: 1350, transform: `scale(${1.04 + 0.0004 * t})` }} />
     </AbsoluteFill>
   );
 };

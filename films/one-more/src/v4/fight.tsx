@@ -5,9 +5,9 @@ import React from "react";
 import { Img, staticFile } from "remotion";
 import { clamp01, EO, star } from "../kit";
 import { HAN, K, NUM, SERIF } from "../theme";
+import { Hero, Role } from "./hero";
 import { beat } from "./time";
 
-const BLUE = "#3fb6ff";
 const RED = "#ff4d63";
 const CX = 640; // the crystal
 const CY = 250;
@@ -30,36 +30,18 @@ export const hpAt = (t: number) => {
   return i === 0 ? HP[0] : prev + (HP[i] - prev) * k;
 };
 
-const OURS: [number, number][] = [
-  [470, 360],
-  [540, 420],
-  [410, 290],
-  [610, 450],
-  [470, 215],
+const OURS: [number, number, Role][] = [
+  [470, 380, "sword"],
+  [545, 440, "shield"],
+  [400, 300, "staff"],
+  [620, 470, "dagger"],
+  [470, 235, "bow"],
 ];
-const THEIRS: [number, number][] = [
-  [860, 210],
-  [900, 320],
-  [850, 420],
+const THEIRS: [number, number, Role][] = [
+  [860, 230, "sword"],
+  [905, 340, "staff"],
+  [850, 450, "shield"],
 ];
-
-const Token: React.FC<{ x: number; y: number; c: string; hp: number; dead: number; flash?: number }> = ({ x, y, c, hp, dead, flash = 0 }) => (
-  <g>
-    <ellipse cx={x} cy={y + 24} rx={26} ry={9} fill="#000" opacity={0.35} />
-    <circle cx={x} cy={y} r={30} fill={c} opacity={0.22 * (1 - dead)} />
-    <circle cx={x} cy={y} r={22} fill={dead > 0.5 ? "#555b66" : c} stroke="#fff" strokeWidth={3} />
-    <circle cx={x - 6} cy={y - 7} r={7} fill="#fff" opacity={0.35} />
-    {flash > 0 ? <circle cx={x} cy={y} r={24} fill="#fff" opacity={flash} /> : null}
-    {dead < 0.5 ? (
-      <>
-        <rect x={x - 26} y={y - 42} width={52} height={8} rx={4} fill="#0a0d14" opacity={0.85} />
-        <rect x={x - 26} y={y - 42} width={52 * clamp01(hp)} height={8} rx={4} fill={c === RED ? RED : "#5df08a"} />
-      </>
-    ) : (
-      <path d={`M ${x - 10} ${y - 10} L ${x + 10} ${y + 10} M ${x + 10} ${y - 10} L ${x - 10} ${y + 10}`} stroke="#fff" strokeWidth={4} strokeLinecap="round" />
-    )}
-  </g>
-);
 
 export const FightScreen: React.FC<{ t: number }> = ({ t }) => {
   const ts = Math.min(t, LOSE); // the scene freezes when the match is lost
@@ -117,7 +99,8 @@ export const FightScreen: React.FC<{ t: number }> = ({ t }) => {
     const age = ts - h;
     if (age < 0 || age > 0.7) return;
     const k = EO(clamp01(age / 0.7));
-    const [hx, hy] = OURS[i % OURS.length];
+    const [hx, hy0] = OURS[i % OURS.length];
+    const hy = hy0 - 40;
     const c = ["#8ff0ff", K.gold, "#c38bff", "#8ff0ff", K.gold][i];
     els.push(
       <g key={`hit${i}`} opacity={1 - k}>
@@ -136,18 +119,18 @@ export const FightScreen: React.FC<{ t: number }> = ({ t }) => {
     );
   });
   // our five heroes, lunging on each hit; wiped by a red shockwave
-  OURS.forEach(([x, y], i) => {
+  OURS.forEach(([x, y, role], i) => {
     const lunge = Math.exp(-since / 0.12) * (lastHit !== undefined && HITS.indexOf(lastHit) % 5 === i ? 18 : 6);
     const dx = (CX - x) / Math.hypot(CX - x, CY - y);
     const dy = (CY - y) / Math.hypot(CX - x, CY - y);
     const dead = wiped ? clamp01((ts - WIPE - i * 0.04) / 0.12) : 0;
-    els.push(<Token key={`o${i}`} x={x + dx * lunge + Math.sin(ts * 4 + i) * 4} y={y + dy * lunge + Math.cos(ts * 3 + i) * 3} c={BLUE} hp={0.35 + 0.5 * rnd(3, i) - 0.08 * Math.floor(ts / 0.5)} dead={dead} flash={wiped ? Math.exp(-(ts - WIPE) / 0.1) : 0} />);
+    els.push(<Hero key={`o${i}`} id={`o${i}`} x={x + dx * lunge + Math.sin(ts * 4 + i) * 4} y={y + dy * lunge + Math.cos(ts * 3 + i) * 3} team="blue" role={role} level={11 + i} hp={0.35 + 0.5 * rnd(3, i) - 0.08 * Math.floor(ts / 0.5)} dead={dead} flash={wiped ? Math.exp(-(ts - WIPE) / 0.1) : 0} />);
   });
   // their defenders dash in just before the wipe
   const arrive = clamp01((ts - beat(3.4)) / 0.3);
   if (arrive > 0)
-    THEIRS.forEach(([x, y], i) => {
-      els.push(<Token key={`t${i}`} x={x + (1 - EO(arrive)) * 260} y={y} c={RED} hp={0.9} dead={0} />);
+    THEIRS.forEach(([x, y, role], i) => {
+      els.push(<Hero key={`t${i}`} id={`t${i}`} x={x + (1 - EO(arrive)) * 260} y={y} team="red" role={role} level={13 + i} hp={0.9} dead={0} />);
     });
   if (wiped) {
     els.push(<circle key="sw" cx={800} cy={320} r={40 + 900 * EO(wipeK)} fill="none" stroke={RED} strokeWidth={60 * (1 - wipeK) + 4} opacity={1 - wipeK * 0.8} />);
@@ -193,11 +176,7 @@ export const FightScreen: React.FC<{ t: number }> = ({ t }) => {
       {grey > 0 ? <div style={{ position: "absolute", inset: 0, background: "#808080", mixBlendMode: "saturation", opacity: grey * 0.92 }} /> : null}
       {grey > 0 ? <div style={{ position: "absolute", inset: 0, background: "#05070c", opacity: grey * 0.55 }} /> : null}
       {grey > 0 ? <div style={{ position: "absolute", left: 0, right: 0, top: 330, height: 190, background: "linear-gradient(180deg, rgba(5,7,12,0) 0%, rgba(5,7,12,0.85) 45%, rgba(5,7,12,0.9) 100%)", opacity: grey }} /> : null}
-      {grey > 0 ? (
-        <div style={{ position: "absolute", left: 0, right: 0, top: 150, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 112, letterSpacing: 26, color: "#e3e7ef", textShadow: "0 6px 0 #1a1e28, 0 0 40px rgba(0,0,0,0.6)", opacity: grey, transform: `scale(${1.5 - 0.5 * EO(grey)})` }}>
-          失败
-        </div>
-      ) : null}
+      {grey > 0 ? <DefeatBanner k={grey} /> : null}
     </div>
   );
 };
@@ -211,7 +190,7 @@ export const ResultScreen: React.FC<{ k: number; t: number; matching?: number }>
       ))}
       <rect x={175} y={382} width={170} height={56} rx={28} fill="none" stroke="#6a7488" strokeWidth={2} />
     </svg>
-    <div style={{ position: "absolute", left: 0, right: 0, top: 108, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 112, letterSpacing: 26, color: "#d6dbe6" }}>失败</div>
+    <div style={{ position: "absolute", left: 0, right: 0, top: 108, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 112, letterSpacing: 26, background: "linear-gradient(180deg, #ffffff 0%, #c9cfdb 45%, #7d8698 55%, #e4e8f0 100%)", WebkitBackgroundClip: "text", color: "transparent" }}>失败</div>
     <div style={{ position: "absolute", left: 260, top: 410, transform: "translate(-50%, -50%)", fontFamily: HAN, fontWeight: 700, fontSize: 25, color: "#7d879c" }}>返回大厅</div>
     {matching > 0 ? (
       <div style={{ position: "absolute", inset: 0, background: "rgba(5,8,15,0.82)", opacity: matching, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14 }}>
@@ -221,3 +200,25 @@ export const ResultScreen: React.FC<{ k: number; t: number; matching?: number }>
     ) : null}
   </div>
 );
+
+// The defeat banner: a dark ribbon edged in silver, a broken shield behind, 失败 in brushed metal.
+const DefeatBanner: React.FC<{ k: number }> = ({ k }) => {
+  const e = EO(k);
+  return (
+    <div style={{ position: "absolute", left: 0, right: 0, top: 120, height: 200, opacity: k }}>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 40, height: 120, transform: `scaleX(${0.4 + 0.6 * e})`, background: "linear-gradient(90deg, rgba(14,16,24,0) 0%, rgba(14,16,24,0.94) 18%, rgba(14,16,24,0.94) 82%, rgba(14,16,24,0) 100%)" }}>
+        <div style={{ position: "absolute", left: "12%", right: "12%", top: 0, height: 2, background: "linear-gradient(90deg, rgba(200,206,220,0), #c8cedc, rgba(200,206,220,0))" }} />
+        <div style={{ position: "absolute", left: "12%", right: "12%", bottom: 0, height: 2, background: "linear-gradient(90deg, rgba(200,206,220,0), #c8cedc, rgba(200,206,220,0))" }} />
+      </div>
+      <svg width={1110} height={200} style={{ position: "absolute", left: 0, top: 0 }}>
+        <g transform={`translate(555 100) scale(${0.8 + 0.2 * e})`} opacity={0.55}>
+          <path d="M -70 -80 L 70 -80 L 70 0 Q 70 60 0 92 Q -70 60 -70 0 Z" fill="#2a2f3c" stroke="#8a93a6" strokeWidth={4} />
+          <path d="M -10 -80 L 12 -30 L -14 6 L 10 50 L 0 92" stroke="#0e1018" strokeWidth={7} fill="none" />
+        </g>
+      </svg>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 30, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 116, letterSpacing: 34, lineHeight: "140px", background: "linear-gradient(180deg, #ffffff 0%, #c9cfdb 45%, #7d8698 55%, #e4e8f0 100%)", WebkitBackgroundClip: "text", color: "transparent", transform: `scale(${1.35 - 0.35 * e})` }}>
+        失败
+      </div>
+    </div>
+  );
+};
