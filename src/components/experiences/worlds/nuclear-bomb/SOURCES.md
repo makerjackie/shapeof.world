@@ -27,6 +27,12 @@ This is a museum-level illustration of the order of layers and events. Geometry 
 
 The [National Naval Aviation Museum display article](https://navalaviationmuseum.org/museum-marches-to-commemorate-end-of-world-war-ii/) documents a Fat Man exterior replica. The elongated painted shell and open tail frame are broad visual references only. The decorative flange, bolts and museum cradles are original display geometry; no historical engineering dimensions are reproduced. No source image is embedded in the experience.
 
+## Gun-type and two-stage schematics
+
+The gun-type and two-stage (Teller–Ulam) panels in "An instant" are original flat drawings for this world. They show only what general encyclopedias and museum exhibits show: the names of the major parts and the order of events. Reference points are the public explanatory diagrams in the Wikipedia articles "Gun-type fission weapon" and "Teller–Ulam design" and Britannica's entry on nuclear weapons. No artwork was copied.
+
+The drawings carry no dimensions, masses, material quantities, component geometry, timings or other engineering parameters. Proportions exist only for legibility, and the panels say so. China's first hydrogen bomb test in 1967 is mentioned as history; its design is not public and is not drawn.
+
 ## Hiroshima geography and survey
 
 - **OpenStreetMap contributors, ODbL-1.0**: [copyright and attribution](https://www.openstreetmap.org/copyright), via [Geofabrik Chūgoku](https://download.geofabrik.de/asia/japan/chugoku.html), source `chugoku-261025.osm.pbf`. `data/build-city.py` clips the PBF, generalises roads/water/parks and generates our own MVT schema and ZIP. `hiroshima-mvt.zip` is the overview edition, source zooms 8–13; the overview excludes buildings. Zooming above 13 overzooms the same data. The modern background is not a 1945 reconstruction. Attribution and a machine-readable archive download remain on the map. No runtime OpenFreeMap or OSM tile service is used.

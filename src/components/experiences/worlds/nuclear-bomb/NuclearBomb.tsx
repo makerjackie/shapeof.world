@@ -6,6 +6,7 @@ import { FreebarTabs } from '~/components/experiences/Freebar';
 import { GuideTour, type GuideStep } from '~/components/experiences/GuideTour';
 import { useExperienceI18n } from '~/i18n/experience';
 import { CityView } from './CityView';
+import { DeviceSchematic, DeviceSwitch, type DeviceKind } from './DeviceSchematics';
 const CutawayView = lazy(() => import('./InstantView').then((m) => ({ default: m.CutawayView })));
 const EraView = lazy(() => import('./EraView').then((m) => ({ default: m.EraView })));
 type ExhibitView = 'cutaway' | 'scale' | 'history';
@@ -15,6 +16,7 @@ export function NuclearBomb({ controls }: { controls: ExperienceControls }) {
 	const [view, setView] = useState<ExhibitView>('scale');
 	const [visited, setVisited] = useState<Set<ExhibitView>>(() => new Set(['scale']));
 	const [guided, setGuided] = useState(false);
+	const [device, setDevice] = useState<DeviceKind>('implosion');
 	const changeView = useCallback(
 		(next: ExhibitView) => {
 			controls.registerInteraction();
@@ -60,11 +62,22 @@ export function NuclearBomb({ controls }: { controls: ExperienceControls }) {
 					inert={view !== 'cutaway'}
 				>
 					<Suspense fallback={null}>
-						<CutawayView controls={controls} active={view === 'cutaway'} guided={false} guidePosition={null} />
+						<CutawayView controls={controls} active={view === 'cutaway' && device === 'implosion'} guided={false} guidePosition={null} />
 					</Suspense>
-					<button className="na-return-city" onClick={() => changeView('scale')}>
-						{tx('这样一次释放，落在一座城市上是什么样子。')}
-					</button>
+					{device === 'implosion' ? (
+						<button className="na-return-city" onClick={() => changeView('scale')}>
+							{tx('这样一次释放，落在一座城市上是什么样子。')}
+						</button>
+					) : (
+						<DeviceSchematic kind={device} active={view === 'cutaway'} onReturnCity={() => changeView('scale')} />
+					)}
+					<DeviceSwitch
+						value={device}
+						onChange={(next) => {
+							controls.registerInteraction();
+							setDevice(next);
+						}}
+					/>
 				</div>
 			)}
 			{visited.has('history') && (
