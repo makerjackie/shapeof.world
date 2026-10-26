@@ -64,7 +64,7 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
     for (const { material, base, uniform, depth } of materials.current) {
       if (uniform) uniform.value = base * weight
       else material.opacity = base * weight
-      material.depthWrite = depth && weight > 0.98
+      material.depthWrite = depth && weight > 0.08
     }
   }, -1)
   return <group ref={root}>{children}</group>
@@ -211,11 +211,11 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
 
 function Backdrop({scale,light}:{scale:number;light:number}) {
   const {scene,camera}=useThree()
-  const paper=useMemo(()=>new T.Color('#e9eedb'),[]),warm=useMemo(()=>new T.Color('#f3e4c8'),[])
+  const paper=useMemo(()=>new T.Color('#f4f1e7'),[]),warm=useMemo(()=>new T.Color('#f4f1e7'),[])
   useFrame(()=>{
     paintState.paper.value.copy(paper).lerp(warm,smoothstep(-5.7,-6.7,scale))
     paintState.focus.value=camera.position.length()
-    paintState.illumination.value=.86+.14*Math.sqrt(Math.max(0,light)/2000)
+    paintState.illumination.value=.96+.04*Math.sqrt(Math.max(0,light)/2000)
     scene.background=paintState.paper.value
   })
   return null
@@ -268,7 +268,7 @@ function Contents(props: SceneProps) {
     <ScaleLayer layer="section" controller={controller}><SectionLayer opacity={1} mobile={mobile} stomataOpen={snapshot.stomatalOpening} water={snapshot.water} /></ScaleLayer>
     <ScaleLayer layer="cell" controller={controller}><CellLayer inspectable={!props.capture && getLayerWeights(viewScale).cell > .98} opacity={1} light={brightness} clock={clock} mobile={mobile} physiology={physiology} timeScale={inputs.timeScale} starch={snapshot.starchFraction} /></ScaleLayer>
     <group ref={lens} position={CHLOROPLAST_ANCHOR_UM} rotation={CHLOROPLAST_ROTATION}>
-      <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer detailOnly={viewScale < -6.25} opacity={1} mobile={mobile || viewScale < -6.25} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
+      <ScaleLayer layer="chloroplast" controller={controller}><ChloroplastLayer viewScale={viewScale} opacity={1} mobile={mobile} light={light} starch={snapshot.starchFraction} /></ScaleLayer>
       <group position={[...GRANUM_SECTION_ANCHOR_LOCAL]} rotation={[Math.PI/2,0,0]} scale={.001}>
         <Suspense fallback={null}><MolecularLayers capture={props.capture} opacity={getLayerWeights(viewScale).membrane + getLayerWeights(viewScale).motor} scale={viewScale} mobile={mobile} light={light} playing={inputs.playing} timeScale={inputs.timeScale} /></Suspense>
       </group>

@@ -9,7 +9,7 @@ import type { WaterReadings } from './water-model'
 
 type SurfaceKind = 'blade' | 'vein' | 'epidermis' | 'guard' | 'chloroplast'
 function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
-  const colors = { blade: '#8fb47b', vein: '#c6d39b', epidermis: '#9cba88', guard: '#7e9e72', chloroplast: '#527847' }
+  const colors = { blade: '#8fb47b', vein: '#bfd457', epidermis: '#9cba88', guard: '#7e9e72', chloroplast: '#527847' }
   const material = new T.MeshPhysicalMaterial({ color: colors[kind], roughness: kind === 'vein' ? .8 : .64,
     metalness: 0, clearcoat: kind === 'vein' ? .04 : .2, clearcoatRoughness: .42,
     side: T.DoubleSide, transparent: true, opacity: 1, depthWrite: kind === 'blade' || kind === 'vein',
@@ -17,7 +17,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
     emissive: kind === 'vein' ? '#4a5e22' : kind === 'blade' ? '#2a4f14' : '#1c300d', emissiveIntensity: kind === 'blade' || kind === 'vein' ? .3 : .11 })
   if(kind==='blade') {
     const pigment=new T.TextureLoader().load('/assets/plant-cell/leaf-pigment.webp')
-    pigment.colorSpace=T.SRGBColorSpace;material.map=pigment;material.color.set('#ffffff')
+    pigment.colorSpace=T.SRGBColorSpace;material.map=pigment;material.color.set('#a2db65')
   }
   material.userData.waterWilt = { value: 0 }
   material.userData.guardOpen = { value: .6 }
@@ -56,6 +56,8 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         vec2 p = vLeafPosition.xz / 1800.0;
         float mottling = .99 + .01 * sin(p.x * 1.7 + sin(p.y)) * sin(p.y * 2.1 + .2 * sin(p.x * 3.0));
         diffuseColor.rgb *= mottling;
+        float sheen=pow(max(0.,dot(normalize(vNormal),normalize(vec3(-.3,.5,1.)))),18.);
+        diffuseColor.rgb+=vec3(.015,.024,.003)*sheen;
         diffuseColor.a = opened;
         // Actual narrow pores pass through the blade underneath the two guards.
         vec2 siteIndex = floor((poreOffset - vec2(66.0, 78.0)) / vec2(176.0, 156.0) + .5);

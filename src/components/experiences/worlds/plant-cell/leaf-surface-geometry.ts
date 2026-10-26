@@ -21,7 +21,7 @@ function veinTube(points: T.Vector3[], radius: number, segments = 30) {
     const t = j / segments, point = curve.getPoint(t)
     curve.getTangent(t, tangent); across.crossVectors(tangent, up).normalize()
     const r = radius * (.2 + .8 * (1 - t) ** .65)
-    point.y = leafSurfaceY(point.x, point.z) + r * .25 + Math.min(180, r * 2)
+    point.y = leafSurfaceY(point.x, point.z) + r * .25 + Math.min(320, Math.max(50, r * 3))
     for (let k = 0; k <= sides; k++) {
       const angle = k / sides * Math.PI * 2
       positions.push(point.x + across.x * Math.sin(angle) * r, point.y + Math.cos(angle) * r, point.z + across.z * Math.sin(angle) * r)
@@ -43,7 +43,7 @@ export function createLeafVeins() {
     const z = 60000 - i / 31 * 119000
     return new T.Vector3(LEAF_MIDRIB_X + 500 * Math.sin(z / 27000), 0, z)
   })
-  main.push(veinTube(mainPoints, 380, 190))
+  main.push(veinTube(mainPoints, 650, 190))
   for (const side of [-1, 1]) {
     const ends: T.Vector3[] = []
     for (let row = 0; row < 10; row++) {
@@ -54,7 +54,7 @@ export function createLeafVeins() {
       const end = new T.Vector3(LEAF_MIDRIB_X + side * Math.min(span, leafHalfWidth(.5 - endZ / 120000) * .88), 0, endZ)
       const controls = [start, new T.Vector3(start.x + side * span * .4, 0, rootZ - span * .25), new T.Vector3(end.x * .82 + LEAF_MIDRIB_X * .18, 0, endZ + span * .25), end]
       const curve = new T.CatmullRomCurve3(controls)
-      secondary.push(veinTube(controls, 125 * (1 - row * .055), 42))
+      secondary.push(veinTube(controls, 260 * (1 - row * .055), 42))
       if (ends.length) {
         const previous = ends[ends.length - 1]
         secondary.push(veinTube([previous, previous.clone().lerp(end, .45).add(new T.Vector3(side * 850, 0, 0)), end], 64, 24))

@@ -82,7 +82,15 @@ export function buildLamellae(grana: Granum[], connections: [number, number][], 
 
 /** Unit radius, unit thickness, normal +Z. No per-instance Euler rotation. */
 export function makeMembraneDisk(segments: number) {
-  return new THREE.LatheGeometry([
+  const geometry = new THREE.LatheGeometry([
     [0, -0.5], [0.97, -0.5], [0.997, -0.42], [1, 0], [0.997, 0.42], [0.97, 0.5], [0, 0.5],
   ].map(([r, h]) => new THREE.Vector2(r, h)), segments).rotateX(Math.PI / 2)
+  const p = geometry.getAttribute('position')
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), a = Math.atan2(y, x)
+    const ripple = 1 + .018 * Math.sin(a * 5) + .009 * Math.sin(a * 9 + .7)
+    p.setXYZ(i, x * ripple, y * ripple, p.getZ(i) + .10 * Math.sin(a * 3) * Math.hypot(x, y))
+  }
+  geometry.computeVertexNormals()
+  return geometry
 }

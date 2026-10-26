@@ -48,7 +48,7 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
   const readings = getMolecularReadings(light, scale, timeScale, playing)
   const readingsRef = useRef(readings); readingsRef.current = readings
   const atomWeight = smooth(-7.12, -7.34, scale)
-  const sectionCutNm = 220 * smooth(-6.38, -6.88, scale)
+  const sectionCutNm = 220 * smooth(-6.08, -6.45, scale)
   const resourcesVisible = opacity > 0.002
   useEffect(() => {
     let mounted = true
@@ -290,7 +290,7 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
   const root = useRef<T.Group>(null)
   const d = getMolecularReadings(light)
   const cut = useMemo(() => ({ plane: new T.Vector4(0, 0, 1, -122), direction: new T.Vector3(0, 0, 1), eye: new T.Vector3(), alpha: { value: opacity }, section: { value: 0 }, opening: { value: 0 }, focus: new T.Vector3(...MOLECULAR_ATP_ANCHOR_NM) }), [])
-  cut.alpha.value = opacity; cut.section.value = 220 * smooth(-6.38, -6.88, scale); cut.opening.value = smooth(-7.05, -7.40, scale)
+  cut.alpha.value = opacity; cut.section.value = 220 * smooth(-6.08, -6.45, scale); cut.opening.value = smooth(-7.05, -7.40, scale)
   useFrame(({ camera }, dt) => {
     if (!root.current) return
     root.current.updateWorldMatrix(true, false)
@@ -303,17 +303,26 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
     const material = (color: string, alpha: number, heads: boolean) => {
       // Headgroups stay translucent. The absorbing bilayer core writes depth:
       // looking along a stack must not shade forty transparent full-screen slabs.
-      // Alpha hashing retains the continuous L3 handoff without that overdraw.
-      const m = new T.MeshStandardMaterial({ color, roughness: 0.95, transparent: heads, opacity: heads ? alpha : 1, alphaHash: !heads, side: T.DoubleSide, depthWrite: !heads, forceSinglePass: true })
+      // A shallow section window limits overlap during the continuous handoff.
+      const m = new T.MeshStandardMaterial({ color, roughness: 0.95, transparent: true, opacity: heads ? alpha : 1, alphaHash: false, side: T.DoubleSide, depthWrite: !heads, forceSinglePass: true })
       m.onBeforeCompile = (shader) => {
         shader.uniforms.molecularAlpha = cut.alpha; shader.uniforms.sectionCutNm = cut.section; shader.uniforms.molecularCut = { value: cut.plane }; shader.uniforms.molecularOpening = cut.opening
         shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 membranePosition;').replace('#include <begin_vertex>', '#include <begin_vertex>\nmembranePosition=(instanceMatrix*vec4(position,1.0)).xyz;')
         shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 membranePosition;uniform vec4 molecularCut;uniform float molecularOpening;uniform float molecularAlpha;uniform float sectionCutNm;')
-          .replace('#include <alphatest_fragment>', `if(membranePosition.z>sectionCutNm)discard;float nearSide=dot(vec4(membranePosition,1.0),molecularCut);float radius=distance(membranePosition.xz,vec2(28.0,116.0));if(nearSide>0.0&&radius<24.0*molecularOpening)discard;diffuseColor.a*=molecularAlpha;${heads ? '' : 'float grain=fract(sin(dot(floor(membranePosition*1.8),vec3(12.9898,78.233,43.21)))*43758.5453);diffuseColor.rgb*=.89+.15*grain;'}\n#include <alphatest_fragment>`)
+          .replace('#include <alphatest_fragment>', `
+            // Continue the granum's cut window around the selected water gap.
+            // Retain its neighboring membranes, rather than looking through 22 layers.
+            if(membranePosition.z>sectionCutNm || abs(membranePosition.y)>26.)discard;
+            float nearSide=dot(vec4(membranePosition,1.0),molecularCut);
+            float radius=distance(membranePosition.xz,vec2(28.0,116.0));
+            if(nearSide>0.0&&radius<24.0*molecularOpening)discard;
+            diffuseColor.a*=molecularAlpha;
+            ${heads ? '' : 'float grain=fract(sin(dot(floor(membranePosition*1.8),vec3(12.9898,78.233,43.21)))*43758.5453);diffuseColor.rgb*=.89+.15*grain;'}
+            #include <alphatest_fragment>`)
       }
       return preparePaintMaterial(m)
     }
-    return { core: material('#acb77e',1,false), heads: material('#89a477',.88,true) }
+    return { core: material('#8eb74c',1,false), heads: material('#518f42',1,true) }
   }, [cut])
   useEffect(() => () => Object.values(materials).forEach((m) => m.dispose()), [materials])
   const cylinders = useMemo(() => new T.CylinderGeometry(235, 235, 1, mobile ? 72 : 112), [mobile])

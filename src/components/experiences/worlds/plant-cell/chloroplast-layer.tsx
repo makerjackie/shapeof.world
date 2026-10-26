@@ -1,3 +1,4 @@
+import { smoothstep } from './scale-model'
 import { PaintMaterial, preparePaintMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
@@ -6,14 +7,15 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import { CHLOROPLAST_RADII, ENTRY_GRANUM, GRANUM_SECTION_Y, STARCH_LENSES, chloroplastRandom, createChloroplastMorphology, getThylakoidDimensions } from './chloro-model'
 import { buildLamellae, makeMembraneDisk } from './chloro-geometry'
 
-interface ChloroplastLayerProps { opacity: number; mobile?: boolean; light?: number; starch?: number; detailOnly?: boolean }
+interface ChloroplastLayerProps { opacity: number; mobile?: boolean; light?: number; starch?: number; detailOnly?: boolean; viewScale?: number }
 type Instance = { position: THREE.Vector3; scale: THREE.Vector3; rotation?: THREE.Euler; color?: THREE.Color }
 
-function OrganicInstances({ instances, geometry, color, opacity, clippingPlanes, roughness = 0.9, depthWrite = true, membrane = false }: {
+function OrganicInstances({ instances, geometry, color, opacity, clippingPlanes, roughness = 0.9, depthWrite = true, membrane = false, cutWindow = 0 }: {
   instances: Instance[]; geometry: THREE.BufferGeometry; color: string; opacity: number
-  clippingPlanes?: THREE.Plane[]; roughness?: number; depthWrite?: boolean; membrane?: boolean
+  cutWindow?: number; clippingPlanes?: THREE.Plane[]; roughness?: number; depthWrite?: boolean; membrane?: boolean
 }) {
   const ref = useRef<THREE.InstancedMesh>(null)
+  const windowUniform = useMemo(() => ({value:cutWindow}), []); windowUniform.value=cutWindow
   useLayoutEffect(() => {
     if (!ref.current) return
     const dummy = new THREE.Object3D()
@@ -30,18 +32,19 @@ function OrganicInstances({ instances, geometry, color, opacity, clippingPlanes,
   return <instancedMesh ref={ref} args={[geometry, undefined, instances.length]} frustumCulled={false}>
     <PaintMaterial color={color} roughness={roughness} metalness={0} transparent opacity={opacity} depthWrite={depthWrite} clippingPlanes={clippingPlanes} side={THREE.DoubleSide} forceSinglePass
       customProgramCacheKey={() => `chloroplast-membrane-grain-4-${membrane}`} onBeforeCompile={(shader) => {
-        shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOrganic;')
-          .replace('#include <begin_vertex>', '#include <begin_vertex>\nvOrganic = position;')
-        shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vOrganic;')
+        shader.uniforms.granumWindow=windowUniform
+        shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOrganic; varying vec3 granumPoint;')
+          .replace('#include <begin_vertex>', '#include <begin_vertex>\nvOrganic = position; granumPoint=(instanceMatrix*vec4(position,1.)).xyz;')
+        shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vOrganic; varying vec3 granumPoint; uniform float granumWindow;')
           .replace('#include <color_fragment>', `#include <color_fragment>
+          if(granumWindow>0. && abs(granumPoint.z-0.12)>.026 && granumPoint.y < ${GRANUM_SECTION_Y.toFixed(6)}+.46*granumWindow)discard;
           float grain = fract(sin(dot(floor(vOrganic * 170.0), vec3(12.9898,78.233,43.317))) * 43758.5453);
           diffuseColor.rgb *= 0.94 + 0.10 * grain;`)
         if (membrane) shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
           float grazing = pow(clamp(1.0 - abs(dot(normalize(normal), normalize(vViewPosition))), 0.0, 1.0), 2.1);
           // Stacked thylakoids transmit green light at their thin rims.
           outgoingLight += vec3(0.022, 0.05, 0.01) * grazing * grazing;
-          diffuseColor.a *= 0.91 + 0.09 * grazing;
-          #include <opaque_fragment>`)
+            #include <opaque_fragment>`)
       }} />
   </instancedMesh>
 }
@@ -51,7 +54,7 @@ function Envelope({ opacity, mobile }: { opacity: number; mobile: boolean }) {
   const ref = useRef<THREE.Group>(null)
   const state = useMemo(() => ({ plane: new THREE.Plane(), direction: new THREE.Vector3(0.15, -0.95, 0.25).normalize(), eye: new THREE.Vector3(), normal: new THREE.Vector3(), localPlane: new THREE.Plane(), planeUniform: new THREE.Vector4(), scale: { value: 1 } }), [])
   const material = useMemo(() => {
-    const m = new THREE.MeshStandardMaterial({ color: '#a7b78a', roughness: 0.96, transparent: true, opacity: opacity * 0.44, side: THREE.DoubleSide, depthWrite: false, clippingPlanes: [state.plane] })
+    const m = new THREE.MeshStandardMaterial({ color: '#70a64e', roughness: 0.96, transparent: true, opacity: opacity, side: THREE.DoubleSide, depthWrite: true, clippingPlanes: [state.plane] })
     m.onBeforeCompile = (shader) => {
       shader.uniforms.envelopePlane = { value: state.planeUniform }
       shader.uniforms.envelopeScale = state.scale
@@ -59,11 +62,10 @@ function Envelope({ opacity, mobile }: { opacity: number; mobile: boolean }) {
         .replace('#include <project_vertex>', '#include <project_vertex>\nvEnvelopeWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;')
       shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vEnvelopeWorld; uniform vec4 envelopePlane; uniform float envelopeScale;')
         .replace('#include <alphatest_fragment>', `
-        float edge = pow(clamp(1.0 - abs(dot(normalize(vNormal), normalize(vViewPosition))), 0.0, 1.0), 2.3);
         float cutDistance = abs(dot(vec4(vEnvelopeWorld, 1.0), envelopePlane)) / max(envelopeScale, 0.0001);
         float rim = 1.0 - smoothstep(0.0015, 0.008, cutDistance);
-        diffuseColor.a *= max(mix(0.035, 0.78, edge), rim * 0.9);
-        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.60, 0.66, 0.40), rim * 0.48);
+        if(!gl_FrontFacing)diffuseColor.rgb=vec3(.15,.32,.43);
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.06, 0.19, 0.08), rim * 0.48);
         #include <alphatest_fragment>`)
     }
     return preparePaintMaterial(m)
@@ -81,7 +83,7 @@ function Envelope({ opacity, mobile }: { opacity: number; mobile: boolean }) {
     state.scale.value = group.matrixWorld.elements[0] ** 2 + group.matrixWorld.elements[1] ** 2 + group.matrixWorld.elements[2] ** 2
     state.scale.value = Math.sqrt(state.scale.value)
   })
-  return <group ref={ref}>{[0, 0.02].map((inset) => <mesh key={inset} scale={CHLOROPLAST_RADII.map((r) => r - inset) as [number, number, number]} material={material} renderOrder={4}>
+  return <group ref={ref}>{[0, 0.02].map((inset) => <mesh key={inset} scale={CHLOROPLAST_RADII.map((r) => r - inset) as [number, number, number]} material={material} renderOrder={0}>
     <sphereGeometry args={[1, mobile ? 40 : 72, mobile ? 24 : 48]} />
   </mesh>)}</group>
 }
@@ -89,7 +91,7 @@ function Envelope({ opacity, mobile }: { opacity: number; mobile: boolean }) {
 /** Physically sized Rubisco / ribosome representatives, not screen-sized sparkles. */
 function StromalParticles({ mobile, opacity, light }: { mobile: boolean; opacity: number; light: number }) {
   const ref = useRef<THREE.InstancedMesh>(null)
-  const count = mobile ? 10000 : 30000
+  const count = mobile ? 7000 : 16000
   const data = useMemo(() => {
     const random = chloroplastRandom(813201), dummy = new THREE.Object3D()
     const { grana } = createChloroplastMorphology()
@@ -105,7 +107,7 @@ function StromalParticles({ mobile, opacity, light }: { mobile: boolean; opacity
     }
     return matrices
   }, [count])
-  const uniforms = useMemo(() => ({ alpha: { value: opacity * 0.65 }, illumination: { value: 1 } }), [opacity])
+  const uniforms = useMemo(() => ({ alpha: { value: opacity }, illumination: { value: 1 } }), [opacity])
   useEffect(() => { uniforms.illumination.value = 0.32 + Math.sqrt(Math.max(0, light) / 2000) * 0.75 }, [light, uniforms])
   useLayoutEffect(() => {
     if (!ref.current) return
@@ -131,18 +133,18 @@ function StromalParticles({ mobile, opacity, light }: { mobile: boolean; opacity
       fragmentShader={`uniform float alpha; uniform float illumination; varying vec2 vParticle; varying float vDepth;
       void main() {
         float r = dot(vParticle, vParticle); if (r > 1.0) discard;
-        float softness = pow(1.0-r, 1.6);
+        float softness = 1.;
         float shade = 0.64 + 0.30 * sqrt(max(0.0, 1.0-r));
         float visibility = alpha * softness * exp(-2.0 * vDepth * vDepth);
         if (visibility < 0.0008) discard;
-        gl_FragColor = vec4(vec3(0.37,0.50,0.53) * (.92+.08*shade), visibility);
+        gl_FragColor = vec4(vec3(0.12,0.36,0.58) * (r>.70?.35:1.), visibility);
         #include <colorspace_fragment>
       }`} />
   </instancedMesh>
 }
 
 /** L3 in micrometres; the parent places this lens with an Rz(90°) transform. */
-export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch = 0.35, detailOnly = false }: ChloroplastLayerProps) {
+export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch = 0.35, detailOnly = false, viewScale = -5.22 }: ChloroplastLayerProps) {
   const ref = useRef<THREE.Group>(null)
   const section = useMemo(() => ({ local: new THREE.Plane(new THREE.Vector3(0, 1, 0), -GRANUM_SECTION_Y), world: new THREE.Plane() }), [])
   const clippingPlanes = useMemo(() => [section.world], [section])
@@ -161,10 +163,10 @@ export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch 
     morphology.grana.forEach((granum, index) => {
       for (let layer = 0; layer < granum.layers; layer++) {
         const z = granum.center[2] + (layer - (granum.layers - 1) / 2) * repeat
-        const radius = granum.radius * (0.985 + 0.015 * Math.sin(layer * 0.43 + granum.phase))
+        const radius = granum.radius * (0.96 + 0.04 * Math.sin(layer * 0.43 + granum.phase))
         for (const side of [-1, 1]) {
           const membraneZ = z + side * (lumen + membrane) / 2
-          const instance: Instance = { position: new THREE.Vector3(granum.center[0], granum.center[1], membraneZ), scale: new THREE.Vector3(radius, radius, membrane), color: new THREE.Color().setHSL(0.28 + random() * 0.025, 0.24, 0.75 + random() * 0.055) }
+          const instance: Instance = { position: new THREE.Vector3(granum.center[0], granum.center[1], membraneZ), scale: new THREE.Vector3(radius, radius, membrane), color: new THREE.Color().setHSL(0.25 + random() * 0.025, 0.67, 0.50 + random() * 0.055) }
           ;(index === 0 ? focused : bulk).push(instance)
           if (index === 0) {
             const width = 2 * Math.sqrt(radius ** 2 - (GRANUM_SECTION_Y - granum.center[1]) ** 2)
@@ -215,16 +217,16 @@ export function ChloroplastLayer({ opacity, mobile = false, light = 400, starch 
   useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry])
   return <group ref={ref} visible={opacity > 0.001} userData={{ repeatNm: dimensions.repeat * 1000, lumenNm: dimensions.lumen * 1000, entryGranum: ENTRY_GRANUM.id }}>
     <group visible={!detailOnly}><Envelope opacity={opacity} mobile={mobile} /></group>
-    <group visible={!detailOnly}><OrganicInstances instances={resources.bulk} geometry={geometry.disk} color="#779b65" opacity={opacity * 0.9} membrane /></group>
-    <OrganicInstances instances={resources.focused} geometry={geometry.focusDisk} color="#779b65" opacity={opacity * 0.9} clippingPlanes={clippingPlanes} membrane />
-    <group visible={!detailOnly}><OrganicInstances instances={resources.rims} geometry={geometry.rim} color="#57734b" opacity={opacity * 0.75} membrane /></group>
-    <OrganicInstances instances={resources.focusedRims} geometry={geometry.rim} color="#57734b" opacity={opacity * 0.75} clippingPlanes={clippingPlanes} membrane />
-    <OrganicInstances instances={resources.caps} geometry={geometry.cap} color="#709163" opacity={opacity} />
-    <OrganicInstances instances={resources.proteins} geometry={geometry.protein} color="#4e7351" opacity={opacity} />
-    <group visible={!detailOnly}><mesh geometry={resources.lamellae}><PaintMaterial color="#7a9e69" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity * 0.82} /></mesh></group>
-    <mesh geometry={resources.focusedLamellae}><PaintMaterial color="#7a9e69" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity * 0.82} clippingPlanes={clippingPlanes} /></mesh>
-    <group visible={!detailOnly}><OrganicInstances instances={starchInstances} geometry={geometry.sphere} color="#ede8cd" opacity={opacity * 0.67} roughness={0.98} /></group>
-    <group visible={!detailOnly}><OrganicInstances instances={resources.oil} geometry={geometry.sphere} color="#b39c63" opacity={opacity * 0.82} roughness={0.9} /></group>
+    <group visible={!detailOnly}><OrganicInstances instances={resources.bulk} geometry={geometry.disk} color="#ffffff" opacity={opacity} clippingPlanes={viewScale < -5.65 ? clippingPlanes : undefined} membrane /></group>
+    <OrganicInstances instances={resources.focused} cutWindow={smoothstep(-5.7,-6.25,viewScale)} geometry={geometry.focusDisk} color="#ffffff" opacity={opacity} clippingPlanes={clippingPlanes} membrane />
+    <group visible={!detailOnly}><OrganicInstances instances={resources.rims} geometry={geometry.rim} color="#3a792f" opacity={opacity} clippingPlanes={viewScale < -5.65 ? clippingPlanes : undefined} membrane /></group>
+    <OrganicInstances instances={resources.focusedRims} cutWindow={smoothstep(-5.7,-6.25,viewScale)} geometry={geometry.rim} color="#3a792f" opacity={opacity} clippingPlanes={clippingPlanes} membrane />
+    <OrganicInstances instances={resources.caps} cutWindow={smoothstep(-5.7,-6.25,viewScale)} geometry={geometry.cap} color="#9cc747" opacity={opacity} />
+    <OrganicInstances instances={resources.proteins} cutWindow={smoothstep(-5.7,-6.25,viewScale)} geometry={geometry.protein} color="#39725c" opacity={opacity} />
+    <group visible={!detailOnly}><mesh geometry={resources.lamellae}><PaintMaterial color="#74ad37" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity} /></mesh></group>
+    <mesh geometry={resources.focusedLamellae}><PaintMaterial color="#74ad37" side={THREE.DoubleSide} roughness={0.94} transparent opacity={opacity} clippingPlanes={clippingPlanes} /></mesh>
+    <group visible={!detailOnly}><OrganicInstances instances={starchInstances} geometry={geometry.sphere} color="#eed589" opacity={opacity} roughness={0.98} /></group>
+    <group visible={!detailOnly}><OrganicInstances instances={resources.oil} geometry={geometry.sphere} color="#dc9a3a" opacity={opacity} roughness={0.9} /></group>
     <group visible={!detailOnly}><StromalParticles mobile={mobile} opacity={opacity} light={light} /></group>
     <group visible={!detailOnly}><mesh geometry={geometry.dna}><PaintMaterial color="#c3a77c" roughness={0.96} transparent opacity={opacity * 0.28} depthWrite={false} /></mesh></group>
   </group>

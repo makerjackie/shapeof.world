@@ -16,7 +16,7 @@ export function PigmentContours() {
       jump=max(jump,abs(inkZ(readDepth(uv+vec2(0.,inkPixel.y)))-d));
       jump=max(jump,abs(inkZ(readDepth(uv-vec2(0.,inkPixel.y)))-d));
       float ink=smoothstep(.0035,.016,jump/max(1.,d));
-      outputColor=vec4(mix(inputColor.rgb,inputColor.rgb*.49,ink*.47),inputColor.a);
+      outputColor=vec4(mix(inputColor.rgb,inputColor.rgb*.16,ink*.86),inputColor.a);
     }`,{blendFunction:BlendFunction.NORMAL,attributes:EffectAttribute.DEPTH,uniforms:new Map<string,Uniform>([['inkPixel',new Uniform(new Vector2(1/1600,1/1000))],['inkNear',new Uniform(.1)],['inkFar',new Uniform(2200)]])}),[])
   useFrame(({camera,size,gl})=>{
     const c=camera as PerspectiveCamera
