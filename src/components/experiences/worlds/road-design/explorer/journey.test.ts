@@ -33,17 +33,42 @@ it('names Huangjuewan crossings from the imported named roads and their connecti
   for(const c of j.crossings){expect(c.name).toMatch(/包茂高速|峡江路|渝航大道/);expect(c.title).not.toMatch(/另一条匝道|东西主线|南北主线/)}
  }
 })
-for(const id of ['cloverleaf','stack','crossroads-signal'])it(`${id}: partitions every route and preserves all anchors and distance`,()=>{
+for(const id of ['cloverleaf','stack','crossroads-signal','crossroads-channelized','continuous-flow','ddi','diamond','trumpet'])it(`${id}: partitions every route and preserves all anchors and distance`,()=>{
  const n=DESIGNS.find(d=>d.id===id)!.build()
  for(const r of buildExploreRoutes(n,[])){
   const pins=explanationPins(n,r),j=buildJourney(n,r,pins)
   expect(j.steps.length,r.movement.id).toBeGreaterThanOrEqual(3);expect(j.steps.length,r.movement.id).toBeLessThanOrEqual(5)
   expect(j.steps[0].start).toBe(0);expect(j.steps.at(-1)!.end).toBe(r.path.length)
   expect(j.steps.reduce((s,p)=>s+p.end-p.start,0)).toBeCloseTo(r.path.length,5)
+  expect(j.steps.every(s=>s.end>s.start),r.movement.id).toBe(true)
   expect(j.steps.flatMap(s=>s.pins)).toHaveLength(pins.length)
   expect(j.steps.flatMap(s=>s.crossings)).toHaveLength(j.crossings.length)
   expect(j.heights.every(p=>Number.isFinite(p.h)&&p.h>=0)).toBe(true)
  }
+})
+it('teaches the real pocket, waiting area and protected turn before the channelized exit',()=>{
+ const n=DESIGNS.find(d=>d.id==='crossroads-channelized')!.build(),r=signatureRoute(buildExploreRoutes(n,[]),n.id),j=buildJourney(n,r,[])
+ const waiting=n.lanes.find(l=>l.waitingArea&&r.laneIds.includes(l.id))!
+ const s=projectToLane(r.path,waiting.points[Math.floor(waiting.points.length/2)])
+ expect(j.steps[1].title).toContain('专用车道')
+ expect(j.steps.find(step=>s>=step.start&&s<step.end)!.title).toContain('待转区')
+ expect(j.steps[3].title).toContain('左转绿灯')
+ expect(j.steps.at(-1)!.title).toBe('汇入出口方向')
+})
+it('shows crossover before the main left turn, and the DDI left-side ramp',()=>{
+ for(const id of ['continuous-flow','ddi']){
+  const n=DESIGNS.find(d=>d.id===id)!.build(),r=signatureRoute(buildExploreRoutes(n,[]),n.id),j=buildJourney(n,r,[])
+  const crossing=j.steps.findIndex(s=>/提前穿过对向|道路另一侧/.test(s.title))
+  const turning=j.steps.findIndex(s=>/主路口信号左转|左侧驶入高速/.test(s.title))
+  expect(crossing).toBeGreaterThan(0);expect(turning).toBeGreaterThan(crossing)
+  expect(j.steps[crossing].end).toBeLessThanOrEqual(j.steps[turning].start)
+ }
+})
+it('does not repeat the trumpet loop instruction on its straight ramp tail',()=>{
+ const n=DESIGNS.find(d=>d.id==='trumpet')!.build(),r=signatureRoute(buildExploreRoutes(n,[]),n.id),j=buildJourney(n,r,[])
+ expect(j.steps.filter(s=>s.title.includes('270°'))).toHaveLength(1)
+ expect(j.steps.at(-2)!.title).toMatch(/沿匝道/)
+ expect(j.steps.at(-1)!.title).toBe('汇入出口方向')
 })
 it('reads both grade separations of the north cloverleaf, not at-grade conflicts',()=>{
  const n=DESIGNS.find(d=>d.id==='cloverleaf')!.build(),r=signatureRoute(buildExploreRoutes(n,[]),n.id),j=buildJourney(n,r,explanationPins(n,r))
