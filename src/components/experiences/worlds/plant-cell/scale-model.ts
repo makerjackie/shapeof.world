@@ -52,7 +52,7 @@ const transitions = [
   { outer: 'leaf', inner: 'section', center: -2.8 },
   { outer: 'section', inner: 'cell', center: -3.6 },
   { outer: 'cell', inner: 'chloroplast', center: -5.1 },
-  { outer: 'chloroplast', inner: 'membrane', center: -6.35 },
+  { outer: 'chloroplast', inner: 'membrane', center: -6.23 },
   { outer: 'membrane', inner: 'motor', center: -7.3 },
 ] as const
 

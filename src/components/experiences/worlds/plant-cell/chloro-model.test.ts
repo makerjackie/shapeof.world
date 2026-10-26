@@ -19,9 +19,9 @@ describe('thylakoid ultrastructure', () => {
     expect(light.lumen).toBeGreaterThan(dark.lumen)
   })
 
-  it('keeps 50 non-overlapping parallel stacks inside the lens', () => {
+  it('keeps 32 non-overlapping parallel stacks inside the lens', () => {
     const { grana, connections } = createChloroplastMorphology()
-    expect(grana).toHaveLength(50)
+    expect(grana).toHaveLength(32)
     expect(grana[0]).toEqual(ENTRY_GRANUM)
     for (const [i, granum] of grana.entries()) {
       expect(granum.layers).toBeGreaterThanOrEqual(5)

@@ -48,16 +48,16 @@ export function chloroplastRandom(seed: number) {
 export function createChloroplastMorphology() {
   const random = chloroplastRandom(623014)
   const grana: Granum[] = [ENTRY_GRANUM]
-  for (let attempt = 0; grana.length < 50 && attempt < 25000; attempt++) {
+  for (let attempt = 0; grana.length < 32 && attempt < 25000; attempt++) {
     const x = (random() * 2 - 1) * 2.54
     const y = (random() * 2 - 1) * 1.46
-    const radius = 0.155 + random() * 0.07
+    const radius = 0.18 + random() * 0.11
     if ((x / 2.65) ** 2 + (y / 1.62) ** 2 > 1) continue
     // Keep the foreground of the selected section open to the incoming camera.
     if (y < ENTRY_GRANUM.center[1] && Math.abs(x - ENTRY_GRANUM.center[0]) < 0.43) continue
     if (STARCH_LENSES.some(({ center, radii }) => ((x - center[0]) / (radii[0] + 0.07)) ** 2 + ((y - center[1]) / (radii[1] + 0.07)) ** 2 < 1)) continue
     if (grana.some((other) => Math.hypot(x - other.center[0], y - other.center[1]) < radius + other.radius + 0.025)) continue
-    const z = (random() - 0.5) * 0.12
+    const z = (random() - 0.5) * 0.42
     const layers = 5 + Math.floor(random() * 21)
     const top = Math.abs(z) + layers * 0.0191 / 2
     // Check the stack's perimeter and height, not just its centre, against the lens.

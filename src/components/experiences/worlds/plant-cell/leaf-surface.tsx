@@ -9,7 +9,7 @@ import type { WaterReadings } from './water-model'
 
 type SurfaceKind = 'blade' | 'vein' | 'epidermis' | 'guard' | 'chloroplast'
 function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
-  const colors = { blade: '#8fb47b', vein: '#bfd457', epidermis: '#9cba88', guard: '#7e9e72', chloroplast: '#527847' }
+  const colors = { blade: '#8fb47b', vein: '#9bc54b', epidermis: '#9cba88', guard: '#7e9e72', chloroplast: '#527847' }
   const material = new T.MeshPhysicalMaterial({ color: colors[kind], roughness: kind === 'vein' ? .8 : .64,
     metalness: 0, clearcoat: kind === 'vein' ? .04 : .2, clearcoatRoughness: .42,
     side: T.DoubleSide, transparent: true, opacity: 1, depthWrite: kind === 'blade' || kind === 'vein',
@@ -25,8 +25,9 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
   material.onBeforeCompile = (shader) => {
     shader.uniforms.waterWilt = material.userData.waterWilt
     shader.uniforms.guardOpen = material.userData.guardOpen
-    shader.vertexShader = 'varying vec3 vLeafPosition; uniform float guardOpen; uniform float waterWilt;\n' + shader.vertexShader
+    shader.vertexShader = 'varying vec3 leafLocalNormal; varying vec3 vLeafPosition; uniform float guardOpen; uniform float waterWilt;\n' + shader.vertexShader
     shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      leafLocalNormal=normal;
       ${kind === 'guard' ? 'transformed.x += guardOpen * 4.0 * sin(clamp((position.z / 25.0 + .5), 0.0, 1.0) * 3.141593);' : ''}
       vec4 leafPoint = vec4(transformed, 1.0);
       #ifdef USE_INSTANCING
@@ -41,7 +42,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         transformed.x = mix(transformed.x, -1500.0 + (transformed.x + 1500.0) * (1.0 - .14 * edgeCurl), waterWilt * outsideAnchor);
       ` : ''}
     `)
-    shader.fragmentShader = 'varying vec3 vLeafPosition; uniform float guardOpen;\n' + shader.fragmentShader
+    shader.fragmentShader = 'varying vec3 leafLocalNormal; varying vec3 vLeafPosition; uniform float guardOpen;\n' + shader.fragmentShader
     shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
       vec2 poreOffset = vLeafPosition.xz - vec2(${LEAF_ENTRY[0]}, ${LEAF_ENTRY[2]});
       float radial = length(poreOffset);
@@ -55,7 +56,10 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
       ${kind === 'blade' ? `
         vec2 p = vLeafPosition.xz / 1800.0;
         float mottling = .99 + .01 * sin(p.x * 1.7 + sin(p.y)) * sin(p.y * 2.1 + .2 * sin(p.x * 3.0));
-        diffuseColor.rgb *= mottling;
+        float midribSide=smoothstep(-8000.,3200.,vLeafPosition.x+1500.);
+        float leafLight=dot(normalize(leafLocalNormal),normalize(vec3(-.7,.35,.4)));
+        float shade=mix(.017,1.,smoothstep(.14,.56,leafLight))*mix(.40,1.,midribSide);
+        diffuseColor.rgb *= mottling*shade;
         float sheen=pow(max(0.,dot(normalize(vNormal),normalize(vec3(-.3,.5,1.)))),18.);
         diffuseColor.rgb+=vec3(.015,.024,.003)*sheen;
         diffuseColor.a = opened;
@@ -71,12 +75,12 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         float poreDistance = min(length(slit / vec2(width, 11.0)), length(poreOffset / vec2(width, 11.0)));
         float poreMask = smoothstep(.80, 1.03, poreDistance);
         diffuseColor.a *= mix(1.0, poreMask, detail * surfacePatch);
-      ` : isMicro ? 'diffuseColor.a = detail * surfacePatch * opened;' : 'diffuseColor.a = opened;'}
+      ` : kind === 'vein' ? 'diffuseColor.rgb*=mix(.045,1.05,smoothstep(-.15,.55,normalize(vNormal).x));diffuseColor.a=opened;' : isMicro ? 'diffuseColor.a = detail * surfacePatch * opened;' : 'diffuseColor.a = opened;'}
       if (diffuseColor.a < .01) discard;
       diffuseColor.rgb += vec3(.19, .17, .10) * boundary;
     `)
   }
-  material.customProgramCacheKey = () => `plant-cell-leaf-surface-${kind}-${detailRadius}-2`
+  material.customProgramCacheKey = () => `plant-cell-leaf-surface-${kind}-${detailRadius}-4`
   return preparePaintMaterial(material)
 }
 
