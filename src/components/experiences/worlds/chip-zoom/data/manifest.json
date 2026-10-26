@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "unit": "nm",
+  "name": "alu_top",
+  "sourceCommit": "90098b825ac7e1bf1a97555da7a55bf656491ef3",
+  "gdsSha256": "7db89b760cd058e125290989f529363c93a56c85c40645f51947a5c9ccf1a2f7",
+  "bounds": [
+    0,
+    0,
+    150000,
+    170000
+  ],
+  "polygonCounts": {
+    "nwell": 2430,
+    "diff": 3762,
+    "poly": 4016,
+    "licon": 20456,
+    "li": 11080,
+    "mcon": 35777,
+    "m1": 8853,
+    "v1": 1950,
+    "m2": 2018,
+    "v2": 961,
+    "m3": 574,
+    "v3": 830,
+    "m4": 16
+  },
+  "cell": {
+    "name": "sky130_fd_sc_hd__inv_2",
+    "bounds": [
+      67430,
+      105840,
+      69190,
+      109040
+    ]
+  },
+  "jsonBytes": 5569005,
+  "gzipBytes": 1212043
+}
