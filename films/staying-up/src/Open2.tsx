@@ -42,15 +42,20 @@ const EXCUSES = [
   { from: 98, to: 140, time: "1:07", text: "……最后一个。" },
 ];
 const BLAME = [
-  { at: 148, time: "1:26", text: "又这么晚了。", size: 44 },
-  { at: 182, time: "1:48", text: "你怎么又这样。", size: 47 },
-  { at: 210, time: "2:13", text: "明天一定早睡。", size: 50 },
-  { at: 236, time: "2:31", text: "再这样下去，就完了。", size: 54 },
+  { at: 148, time: "1:26", text: "又这么晚了。", size: 58 },
+  { at: 182, time: "1:48", text: "你怎么又这样。", size: 62 },
+  { at: 210, time: "2:13", text: "明天一定早睡。", size: 66 },
+  { at: 236, time: "2:31", text: "再这样下去，就完了。", size: 70 },
 ];
+// each thought is answered by the next swipe
+const answer = (at: number) => SWIPES.find((s) => s > at) ?? at + 10;
+
+const PX = 760; // phone centre x, left of centre to leave room for the thoughts
+const TX = 1020; // thought column
 
 const Line: React.FC<{ time: string; text: string; size: number; o: number; y: number; dx: number; bold?: boolean }> = ({ time, text, size, o, y, dx, bold }) => (
-  <div style={{ position: "absolute", left: 1190 + dx, top: y, display: "flex", alignItems: "baseline", gap: 22, opacity: o, whiteSpace: "nowrap" }}>
-    <span style={{ fontFamily: FONT, fontWeight: 300, fontSize: 26, color: K.muted, letterSpacing: 1 }}>{time}</span>
+  <div style={{ position: "absolute", left: TX + dx, top: y, display: "flex", alignItems: "baseline", gap: 22, opacity: o, whiteSpace: "nowrap" }}>
+    <span style={{ fontFamily: FONT, fontWeight: 300, fontSize: Math.round(size * 0.5), color: K.muted, letterSpacing: 1 }}>{time}</span>
     <span style={{ fontFamily: SANS, fontWeight: bold ? 700 : 500, fontSize: size, color: K.fg }}>{text}</span>
   </div>
 );
@@ -63,7 +68,12 @@ export const Open2: React.FC = () => {
   const back = interpolate(f, [DIM, DIM + 40], [0, 1], { ...CL, easing: EIO });
   const zoom = push + (1.02 - push) * back;
 
-  const dim = interpolate(f, [DIM, DIM + 24], [1, 0.22], { ...CL, easing: EIO });
+  // while a thought is "said" the screen sinks and the line takes the frame; the swipe takes it back
+  const thinking = [...EXCUSES.map((e) => e.from), ...BLAME.map((b) => b.at)].reduce((m, at) => {
+    const back = answer(at);
+    return Math.max(m, interpolate(f, [at, at + 5, back, back + 5], [0, 1, 1, 0], CL));
+  }, 0);
+  const dim = interpolate(f, [DIM, DIM + 24], [1, 0.22], { ...CL, easing: EIO }) * (1 - 0.6 * thinking);
   const thoughtsO = interpolate(f, [DIM, DIM + 24], [1, 0.0], CL);
   const feedC = FEED[Math.min(FEED.length - 1, Math.round(feedPos(f, SWIPES)) % FEED.length)];
 
@@ -78,15 +88,15 @@ export const Open2: React.FC = () => {
 
       <AbsoluteFill style={{ transform: `scale(${zoom})`, transformOrigin: "50% 50%" }}>
         {/* the screen's light on the dark around it */}
-        <div style={{ position: "absolute", left: 960 - 700, top: 540 - 700, width: 1400, height: 1400, borderRadius: "50%", background: `radial-gradient(circle, ${feedC.blob}26 0%, ${feedC.a}16 30%, rgba(0,0,0,0) 62%)`, opacity: dim }} />
-        <div style={{ position: "absolute", left: 960, top: 540, width: 0, height: 0 }}>
+        <div style={{ position: "absolute", left: PX - 700, top: 540 - 700, width: 1400, height: 1400, borderRadius: "50%", background: `radial-gradient(circle, ${feedC.blob}26 0%, ${feedC.a}16 30%, rgba(0,0,0,0) 62%)`, opacity: dim }} />
+        <div style={{ position: "absolute", left: PX, top: 540, width: 0, height: 0 }}>
           <Phone f={f} swipes={SWIPES} clock={clockAt(f)} bannerIn={BANNER_IN} bannerOut={SWIPES[2]} dim={dim} />
         </div>
 
         {/* excuses, one at a time */}
         {EXCUSES.map((e, i) => {
           const o = interpolate(f, [e.from, e.from + 8, e.to - 8, e.to], [0, 1, 1, 0], CL);
-          return o > 0 ? <Line key={i} time={e.time} text={e.text} size={44} o={0.85 * o} y={500 - (1 - o) * -10} dx={0} /> : null;
+          return o > 0 ? <Line key={i} time={e.time} text={e.text} size={58} o={o * (0.55 + 0.45 * thinking)} y={490 + (1 - o) * 10} dx={0} /> : null;
         })}
 
         {/* blame, piling up: each new line pushes the older ones up and dims them */}
@@ -94,9 +104,10 @@ export const Open2: React.FC = () => {
           if (f < b.at) return null;
           const k = interpolate(f, [b.at, b.at + 10], [0, 1], { ...CL, easing: EO });
           const newer = BLAME.filter((n) => f >= n.at).length - 1 - i; // how many lines came after this one
-          const lift = BLAME.slice(i + 1).reduce((s, n) => s + interpolate(f, [n.at, n.at + 10], [0, 1], { ...CL, easing: EO }) * 74, 0);
-          const o = k * (newer === 0 ? 1 : Math.max(0.28, 0.62 - (newer - 1) * 0.14)) * thoughtsO;
-          return <Line key={i} time={b.time} text={b.text} size={b.size} o={o} y={500 - lift + (1 - k) * 16} dx={0} bold={i === BLAME.length - 1} />;
+          const lift = BLAME.slice(i + 1).reduce((s, n) => s + interpolate(f, [n.at, n.at + 10], [0, 1], { ...CL, easing: EO }) * 96, 0);
+          const said = interpolate(f, [answer(b.at), answer(b.at) + 8], [1, 0.55], CL);
+          const o = k * (newer === 0 ? said : Math.max(0.22, 0.45 - (newer - 1) * 0.1)) * thoughtsO;
+          return <Line key={i} time={b.time} text={b.text} size={b.size} o={o} y={490 - lift + (1 - k) * 16} dx={0} bold={i === BLAME.length - 1} />;
         })}
       </AbsoluteFill>
 
@@ -140,6 +151,23 @@ const Open2Sound: React.FC = () => (
         <Audio src={sfx("swipe")} volume={0.42 + i * 0.03} />
       </Sequence>
     ))}
+    {/* the video's own sound leaking from the speaker: a new clip with every swipe, ducked while a thought is said */}
+    {[0, ...SWIPES].map((at, i) => {
+      const next = i < SWIPES.length ? SWIPES[i] : STOP;
+      const len = Math.max(4, (i < SWIPES.length ? next : STOP) - at);
+      const thoughts = [...EXCUSES.map((e) => e.from), ...BLAME.map((b) => b.at)].filter((t) => t >= at && t < at + len);
+      return (
+        <Sequence key={`b${i}`} from={at + 4} durationInFrames={Math.max(4, len - 2)}>
+          <Audio
+            src={sfx(`bleed-${(i % 6) + 1}`)}
+            volume={(t) => {
+              const duck = thoughts.reduce((m, th) => Math.max(m, interpolate(t + at + 4, [th, th + 5, th + 30], [0, 1, 1], CL)), 0);
+              return interpolate(t, [0, 3], [0, 0.32], CL) * (1 - 0.65 * duck);
+            }}
+          />
+        </Sequence>
+      );
+    })}
     <Sequence from={BANNER_IN} durationInFrames={40}>
       <Audio src={sfx("notify")} volume={0.45} />
     </Sequence>
