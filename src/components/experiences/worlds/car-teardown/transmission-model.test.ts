@@ -44,7 +44,7 @@ describe('three-shaft constant-mesh transmission', () => {
 		}
 		expect(run(4).outputAngle).toBeCloseTo(run(4).inputAngle, 12)
 		expect(run('R').wheelAngle).toBeLessThan(0)
-		expect(run(4).speedKmh).toBeCloseTo(101.64968, 4)
+		expect(run(4).speedKmh).toBeCloseTo(116.444713, 4)
 	})
 	it('distinguishes real RPM and speed readings from the slowed animation', () => {
 		const a = run(2)
@@ -65,15 +65,12 @@ describe('three-shaft constant-mesh transmission', () => {
 				for (let i = 0; i <= 100; i++) {
 					const p = i / 100,
 						state = shiftState(from, to, p * G.shiftDuration)
-					expect(
-						Object.values(state.sleevePositions).filter((x) => Math.abs(x) > 1e-10).length,
-					).toBeLessThanOrEqual(1)
+					expect(Object.values(state.sleevePositions).filter((x) => Math.abs(x) > 1e-10).length).toBeLessThanOrEqual(1)
 					if (p >= G.shiftStages.neutral && p <= G.shiftStages.select) {
 						expect(Object.values(state.sleevePositions).every((x) => x === 0)).toBe(true)
 						expect(state.gear).toBe('N')
 					}
-					if (p >= G.shiftStages.clutchOpen && p <= G.shiftStages.engaged)
-						expect(state.clutchEngagement).toBe(0)
+					if (p >= G.shiftStages.clutchOpen && p <= G.shiftStages.engaged) expect(state.clutchEngagement).toBe(0)
 				}
 				expect(shiftState(from, to, G.shiftDuration).sleevePositions).toEqual(sleevePositions(to))
 			}

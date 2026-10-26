@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
-import { GuideTour, type GuideStep } from '~/components/experiences/GuideTour'
-import { usePartText } from './localized-parts'
-import { bilingual as b } from './teardown-types'
+import {useMemo} from 'react'
+import {GuideTour, type GuideStep} from '~/components/experiences/GuideTour'
+import {usePartText} from './localized-parts'
+import {bilingual as b} from './teardown-types'
 const STOPS = [
 	b('从一辆车开始', 'Start with a whole car'),
 	b('七个系统，各司其职', 'Seven systems, one car'),
@@ -11,13 +11,10 @@ const STOPS = [
 	b('外侧轮多走一段路', 'The outside wheel travels farther'),
 	b('一只活塞，夹住两面', 'One piston clamps both sides'),
 	b('轮子先动，车身随后', 'The wheel moves first'),
-	b('藏在车门后面的安全笼', 'The safety cage beneath the skin'),
+	b('车壳与座舱分开看', 'Separate the skin and cabin'),
 ]
 const COPY = [
-	b(
-		'拖动可以绕车看。也可以跟着这九站，把一辆车拆到会动的零件。',
-		'Orbit the car yourself, or follow nine stops down to its moving parts.',
-	),
+	b('拖动可以绕车看。也可以跟着这九站，把一辆车拆到会动的零件。', 'Orbit the car yourself, or follow nine stops down to its moving parts.'),
 	b(
 		'车身、动力、传动、悬架、转向、制动和电气，沿各自的装配方向分开。',
 		'Body, engine, driveline, suspension, steering, brakes and electrics separate into seven layers.',
@@ -47,19 +44,11 @@ const COPY = [
 		'The spring takes the impact; the damper settles the bounce. The traces show the body following the wheel.',
 	),
 	b(
-		'柱和门槛是冲压焊接的盒形结构。乘员舱守住空间，前纵梁按设计压溃吸能。',
-		'Stamped and welded box sections protect the cabin. The front rails are designed to crush and absorb energy.',
+		'车身外壳和内饰按层分开。导入的概念车不是量产白车身；这里不展示未经验证的钢材分区。',
+		'Separate the body and interior. The imported concept car is not a production body-in-white; no unverified steel-strength zones are shown.',
 	),
 ]
-export function CarGuide({
-	open,
-	onStep,
-	onExit,
-}: {
-	open: boolean
-	onStep: (index: number) => void
-	onExit: () => void
-}) {
+export function CarGuide({open, onStep, onExit}: {open: boolean; onStep: (index: number) => void; onExit: () => void}) {
 	const text = usePartText()
 	const steps = useMemo<GuideStep[]>(
 		() =>

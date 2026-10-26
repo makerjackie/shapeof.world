@@ -1,0 +1,536 @@
+/* The imported coupe lives on an aluminium inspection table. Controls stay quiet. */
+.ct-world {
+	background: #e5e8e8;
+	color: #263940;
+	--ct-muted: #586d74;
+	--ct-line: #aab7bb;
+	--ct-accent: #346b79;
+	--world-accent: #346b79;
+}
+.ct-world button:not(:where(.guide-tour *)),
+.ct-world select {
+	background: #edf0f0;
+	border-color: #acb9bc;
+	color: #263940;
+}
+.ct-world button:not(:where(.guide-tour *)):hover {
+	background: #dce5e7;
+	border-color: #5b7c87;
+}
+.ct-world button:focus-visible,
+.ct-world input:focus-visible {
+	outline-color: #346b79;
+}
+.ct-world input[type='range'] {
+	accent-color: #346b79;
+}
+.ct-world .ct-breadcrumb {
+	top: 86px;
+	color: #526970;
+}
+.ct-world .ct-breadcrumb button {
+	color: #263940;
+	background: none;
+	border: 0;
+}
+.ct-world .ct-title {
+	top: 128px;
+	left: 40px;
+	right: 340px;
+}
+.ct-world .ct-title h1 {
+	font-size: 28px;
+	letter-spacing: 0;
+	font-weight: 500;
+}
+.ct-world .ct-title p {
+	font-size: 13px;
+	line-height: 1.65;
+	letter-spacing: 0;
+	color: #526970;
+	max-width: 600px;
+}
+.ct-system-rail {
+	position: absolute;
+	top: 213px;
+	left: 40px;
+	right: 40px;
+	display: flex;
+	gap: 5px;
+	z-index: 7;
+	width: max-content;
+	max-width: calc(100% - 80px);
+}
+.ct-system-rail button {
+	padding: 9px 15px;
+	font-size: 12px !important;
+	white-space: nowrap;
+}
+.ct-world .ct-system-rail button[aria-pressed='true'],
+.ct-world .ct-engine-views button[aria-pressed='true'] {
+	background: #346b79;
+	color: #fff;
+	border-color: #346b79;
+}
+.ct-engine-views {
+	position: absolute;
+	top: 268px;
+	left: 40px;
+	display: flex;
+	gap: 5px;
+	z-index: 7;
+}
+.ct-engine-views button {
+	font-size: 12px !important;
+	padding: 8px 12px;
+}
+.ct-world .ct-system-picker {
+	display: none;
+}
+.ct-world .ct-view-switch {
+	top: 268px;
+	left: 40px;
+	right: auto;
+	bottom: auto;
+}
+.ct-world .ct-view-switch button.is-active {
+	background: #346b79;
+	color: #fff;
+}
+.ct-world .ct-instruments {
+	top: 214px;
+	right: 35px;
+	width: 292px;
+	max-height: calc(100% - 365px);
+	border: 1px solid #b1bec1;
+	background: #f1f4f3ed;
+	color: #263940;
+	box-shadow: none;
+	backdrop-filter: blur(12px);
+}
+.ct-world .ct-instruments.is-open {
+	max-height: calc(100% - 365px);
+}
+.ct-world .ct-instrument-content {
+	color: #263940;
+}
+.ct-world .ct-function {
+	font-size: 12px;
+	line-height: 1.8;
+	margin: 0 0 17px;
+	color: #3e5963;
+}
+.ct-world .ct-panel-heading {
+	color: #263940;
+}
+.ct-world .ct-rpm-reading strong {
+	color: #263940;
+}
+.ct-world .ct-timing-chart svg text {
+	fill: #415c65;
+}
+.ct-world .ct-timing-chart line[stroke='#f7f3e7'],
+.ct-world .ct-timing-chart path[fill='#f7f3e7'] {
+	stroke: #263940;
+	fill: #263940;
+}
+.ct-world .ct-timing-grid {
+	stroke: #91a5ab;
+}
+.ct-world .ct-h-pattern path {
+	stroke: #82979f;
+}
+.ct-world .ct-h-pattern g circle {
+	fill: #e0e8e9;
+	stroke: #80969f;
+}
+.ct-world .ct-h-pattern g text {
+	fill: #263940;
+}
+.ct-world .ct-h-pattern .is-active circle {
+	fill: #346b79;
+	stroke: #346b79;
+}
+.ct-world .ct-h-pattern .is-active text {
+	fill: #fff;
+}
+.ct-world .ct-transmission-readings dd,
+.ct-world .ct-gear-readout strong {
+	color: #263940;
+}
+.ct-world .ct-transmission-fact,
+.ct-world .ct-panel-note,
+.ct-world .ct-mechanism-note {
+	color: #516a73;
+}
+.ct-world .ct-system-detail {
+	top: 285px;
+	background: #edf1f0eb;
+	color: #263940;
+	border-color: #aab7bb;
+}
+.ct-world .ct-bottom {
+	width: min(650px, calc(100% - 80px));
+	bottom: 28px;
+}
+.ct-world .ct-explode-control {
+	border-color: #9eafb5;
+}
+.ct-world .ct-bottom-meta,
+.ct-world .ct-orbit-hint {
+	color: #526970;
+}
+.ct-world .ct-explode-control > button {
+	background: #346b79;
+	color: #fff;
+	border-color: #346b79;
+}
+.ct-world .ct-idle {
+	bottom: 200px;
+	color: #263940;
+	background: none;
+	border-color: #9eafb5;
+}
+.ct-world .ct-idle > div,
+.ct-world .ct-idle > span,
+.ct-world .ct-idle small {
+	color: #526970;
+}
+.ct-world .ct-guide-start {
+	top: 87px;
+	right: 35px;
+	color: #526970;
+}
+.ct-asset-progress {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: min(320px, 80%);
+	background: #f1f4f3f5;
+	border: 1px solid #aab7bb;
+	padding: 20px;
+	z-index: 10;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: 12px;
+	font-size: 13px;
+	color: #263940;
+}
+.ct-asset-progress span {
+	grid-column: 1/-1;
+}
+.ct-asset-progress progress {
+	width: 100%;
+	accent-color: #346b79;
+}
+.ct-asset-progress small {
+	font-variant-numeric: tabular-nums;
+}
+.ct-asset-progress.is-detail {
+	top: auto;
+	bottom: 150px;
+	transform: translateX(-50%);
+	padding: 12px 16px;
+}
+.ct-world .ct-labels {
+	color: #36505c;
+}
+.ct-world .ct-labels text {
+	fill: #263940;
+}
+.ct-world .ct-labels path {
+	stroke: #6d8995;
+}
+.ct-world .ct-mechanism-clock {
+	border-color: #a8b7bd;
+}
+.ct-world .ct-readings dd,
+.ct-world .ct-speed strong {
+	color: #263940;
+}
+.ct-world .ct-assembly-switch {
+	display: none;
+}
+@media (max-width: 700px) {
+	.ct-world .ct-title {
+		top: 116px;
+		left: 20px;
+		right: 20px;
+	}
+	.ct-world .ct-title h1 {
+		font-size: 21px;
+		line-height: 1.3;
+	}
+	.ct-world .ct-title p {
+		font-size: 11px;
+		margin: 8px 0;
+		line-height: 1.6;
+	}
+	.ct-world .ct-breadcrumb {
+		top: 83px;
+		left: 20px;
+		font-size: 10px;
+		gap: 8px;
+	}
+	.ct-world .ct-guide-start {
+		top: 86px;
+		right: 20px;
+		font-size: 10px;
+	}
+	.ct-system-rail {
+		top: 193px;
+		left: 20px;
+		right: 20px;
+		width: auto;
+		max-width: none;
+		overflow: auto;
+		scrollbar-width: none;
+		gap: 4px;
+		padding-bottom: 3px;
+	}
+	.ct-system-rail button {
+		padding: 9px 11px;
+		font-size: 11px !important;
+		flex-shrink: 0;
+	}
+	.ct-engine-views {
+		top: 241px;
+		left: 20px;
+		right: 20px;
+	}
+	.ct-engine-views button {
+		padding: 7px 9px;
+		font-size: 11px !important;
+	}
+	.ct-world .ct-view-switch {
+		top: 241px;
+		left: 20px;
+		right: 20px;
+		flex-wrap: wrap;
+	}
+	.ct-world .ct-canvas {
+		top: 225px !important;
+		height: calc(100% - 370px) !important;
+		bottom: auto !important;
+	}
+	.ct-world.has-selection .ct-canvas {
+		top: 280px !important;
+		height: calc(100% - 610px) !important;
+	}
+	.ct-world .ct-instruments,
+	.ct-world.is-mechanism .ct-instruments,
+	.ct-world.is-parts .ct-instruments {
+		top: auto;
+		left: 20px;
+		right: 20px;
+		bottom: 112px;
+		width: auto;
+		max-height: 228px;
+		padding: 13px 15px;
+		background: #f1f4f3f5;
+	}
+	.ct-world .ct-instruments.is-open {
+		max-height: 228px;
+	}
+	.ct-world .ct-panel-heading {
+		padding-bottom: 10px !important;
+		font-size: 12px !important;
+	}
+	.ct-world .ct-drawer-toggle {
+		display: block;
+	}
+	.ct-world .ct-rpm-reading strong {
+		font-size: 25px;
+	}
+	.ct-world .ct-function {
+		font-size: 11px;
+		line-height: 1.6;
+		margin-bottom: 10px;
+	}
+	.ct-world .ct-timing-chart,
+	.ct-world .ct-timing-heading,
+	.ct-world .ct-stroke-legend {
+		display: block;
+	}
+	.ct-world .ct-timing-chart svg {
+		height: 110px;
+		width: 100%;
+	}
+	.ct-world .ct-slow-controls {
+		gap: 5px;
+		flex-wrap: wrap;
+	}
+	.ct-world .ct-slow-controls button {
+		font-size: 11px !important;
+		padding: 7px;
+	}
+	.ct-world .ct-bottom {
+		left: 20px;
+		right: 20px;
+		bottom: 17px;
+		width: auto;
+		transform: none;
+	}
+	.ct-world .ct-orbit-hint {
+		display: none;
+	}
+	.ct-world .ct-explode-control {
+		gap: 10px;
+		padding: 10px 0;
+		font-size: 11px;
+	}
+	.ct-world .ct-explode-control > button {
+		padding: 9px 12px;
+		min-width: 86px;
+		margin-left: 0;
+	}
+	.ct-world .ct-bottom-meta {
+		font-size: 8px;
+		margin-top: 8px;
+	}
+	.ct-world .ct-idle {
+		bottom: 157px;
+		right: 20px;
+		font-size: 10px;
+		padding: 8px 12px;
+		min-width: 110px;
+	}
+	.ct-world .ct-idle strong {
+		font-size: 28px;
+	}
+	.ct-world .ct-system-detail {
+		top: auto;
+		bottom: 120px;
+		left: 20px;
+		right: 20px;
+		width: auto;
+		max-height: 170px;
+	}
+	.ct-asset-progress.is-detail {
+		bottom: 355px;
+		font-size: 11px;
+	}
+}
+.ct-world:before {
+	content: '';
+	position: absolute;
+	inset: 0 0 auto;
+	height: 61px;
+	background: #344b55;
+	z-index: 1;
+	pointer-events: none;
+}
+.ct-world .ct-timing-heading,
+.ct-world .ct-stroke-legend,
+.ct-world .ct-mechanical-readings,
+.ct-world .ct-mechanical-readings b,
+.ct-world .ct-scale,
+.ct-world .ct-gear-readout span {
+	color: #4c6772;
+}
+.ct-world .ct-xray,
+.ct-world .ct-xray.is-active {
+	background: #dce6e8;
+	color: #263940;
+	border-color: #92aab2;
+}
+.ct-world .ct-mechanical-readings {
+	border-color: #9baeb6;
+}
+
+.ct-world .ct-instruments label,
+.ct-world .ct-instruments label > span,
+.ct-world .ct-instruments label > b,
+.ct-world .ct-instruments strong,
+.ct-world .ct-instruments small,
+.ct-world .ct-instruments dt {
+	color: #3d5963;
+}
+.ct-world .ct-instruments svg text {
+	fill: #415d68;
+}
+.ct-world .ct-mechanism-status,
+.ct-world .ct-mechanism-clock strong {
+	color: #3d5963;
+}
+@media (max-width: 700px) {
+	.ct-world.has-selection .ct-canvas {
+		top: 278px !important;
+		height: calc(100% - 582px) !important;
+	}
+	.ct-world .ct-instruments,
+	.ct-world.is-mechanism .ct-instruments,
+	.ct-world.is-parts .ct-instruments {
+		max-height: 210px;
+	}
+	.ct-world .ct-instruments.is-open {
+		max-height: 210px;
+	}
+	.ct-world .ct-instruments:not(.is-open) {
+		max-height: 48px;
+	}
+}
+
+@media (min-width: 701px) {
+	.ct-world .ct-canvas {
+		top: 304px !important;
+		left: 50px !important;
+		right: 350px !important;
+		width: calc(100% - 400px) !important;
+		height: calc(100% - 470px) !important;
+		bottom: auto !important;
+	}
+	.ct-world:not(.has-selection) .ct-canvas {
+		right: 50px !important;
+		width: calc(100% - 100px) !important;
+	}
+}
+
+.ct-section-label span {
+	display: block;
+	white-space: nowrap;
+	font-size: 11px;
+	color: #344f5b;
+	background: #edf1efdd;
+	padding: 4px 8px;
+	border-left: 1px solid #7d969e;
+	transform: translateX(38px);
+}
+.ct-world .ct-instruments b,
+.ct-world .ct-instruments output,
+.ct-world .ct-instruments .ct-muted {
+	color: #526b74;
+}
+.ct-world .ct-canvas canvas {
+	outline: none;
+}
+@media (max-width: 700px) {
+	.ct-section-label span {
+		font-size: 10px;
+		padding: 3px 5px;
+		transform: translateX(18px);
+	}
+}
+
+.ct-world .ct-canvas {
+	background: #e5e8e8;
+	border-radius: 5px;
+	overflow: hidden;
+}
+.ct-world .ct-instruments .ct-instrument-content {
+	overflow: auto;
+}
+.ct-world .ct-shift-comparison {
+	font-size: 12px;
+	line-height: 1.7;
+	color: #365965;
+}
+
+.ct-world .ct-instruments dd,
+.ct-world .ct-instruments .ct-value {
+	color: #36535f;
+}
+.ct-world .ct-labels g {
+	color: #536d77;
+}

@@ -1,19 +1,16 @@
-import { radialGeometry, mergeOwned } from './repeated-geometry'
-import { useEffect, useMemo, useRef, type RefObject } from 'react'
-import { useFrame } from './animation'
+import {useCarAsset, ConceptWheel} from './ConceptCar'
+import {radialGeometry, mergeOwned} from './repeated-geometry'
+import {useEffect, useMemo, useRef, type RefObject} from 'react'
+import {useFrame} from './animation'
 import * as THREE from 'three'
-import { TeardownPart } from './TeardownPart'
-import { VEHICLE_SPEC as V, WHEEL_GEOMETRY as W } from './vehicle-spec'
+import {TeardownPart} from './TeardownPart'
+import {VEHICLE_SPEC as V, WHEEL_GEOMETRY as W} from './vehicle-spec'
 
 /** A moulded tyre section with rounded shoulders. Tread is a procedural bump
  * field in metres, so its circumferential channels remain visible up close. */
 function createTyre() {
-	const curve = new THREE.CatmullRomCurve3(
-		W.tyreProfile.map(([r, z]) => new THREE.Vector3(r * V.wheels.radius, z * V.wheels.width, 0)),
-	)
-	const profile = curve
-		.getPoints(W.sidewallSegments * (W.tyreProfile.length - 1))
-		.map((p) => new THREE.Vector2(p.x, p.y))
+	const curve = new THREE.CatmullRomCurve3(W.tyreProfile.map(([r, z]) => new THREE.Vector3(r * V.wheels.radius, z * V.wheels.width, 0)))
+	const profile = curve.getPoints(W.sidewallSegments * (W.tyreProfile.length - 1)).map((p) => new THREE.Vector2(p.x, p.y))
 	const geometry = new THREE.LatheGeometry(profile, W.radialSegments)
 	geometry.rotateX(Math.PI / 2)
 	return geometry
@@ -23,10 +20,7 @@ function createRubber() {
 	const material = new THREE.MeshStandardMaterial(V.materials.rubber)
 	material.onBeforeCompile = (shader) => {
 		shader.vertexShader = 'varying vec3 vTyrePoint;\n' + shader.vertexShader
-		shader.vertexShader = shader.vertexShader.replace(
-			'#include <begin_vertex>',
-			'#include <begin_vertex>\nvTyrePoint = position;',
-		)
+		shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvTyrePoint = position;')
 		shader.fragmentShader = 'varying vec3 vTyrePoint;\n' + shader.fragmentShader
 		shader.fragmentShader = shader.fragmentShader.replace(
 			'#include <normal_fragment_maps>',
@@ -74,14 +68,7 @@ function createSpoke() {
 		tip,
 	)
 	shape.lineTo(W.spokeBend + W.spokeTipWidth / 2, tip)
-	shape.bezierCurveTo(
-		W.spokeBend + W.spokeTipWidth / 2,
-		tip * 0.88,
-		W.spokeRootWidth / 2,
-		(root + tip) / 2,
-		W.spokeRootWidth / 2,
-		root,
-	)
+	shape.bezierCurveTo(W.spokeBend + W.spokeTipWidth / 2, tip * 0.88, W.spokeRootWidth / 2, (root + tip) / 2, W.spokeRootWidth / 2, root)
 	shape.closePath()
 	return new THREE.ExtrudeGeometry(shape, {
 		depth: W.spokeDepth,
@@ -94,8 +81,8 @@ function createSpoke() {
 	})
 }
 
-export type WheelPose = { steer: number; heave: number }
-export function Wheel({
+export type WheelPose = {steer: number; heave: number}
+function ProceduralWheel({
 	axle,
 	side,
 	explode = 0,
@@ -126,7 +113,7 @@ export function Wheel({
 			rubber: createRubber(),
 			spoke: radialGeometry(createSpoke(), W.spokes, 0),
 			bolts: mergeOwned(
-				Array.from({ length: 5 }, (_, i) =>
+				Array.from({length: 5}, (_, i) =>
 					new THREE.CylinderGeometry(W.boltRadius, W.boltRadius, W.hubDepth / 3, 6)
 						.rotateX(Math.PI / 2)
 						.translate(
@@ -158,25 +145,11 @@ export function Wheel({
 			rotation={[0, side < 0 ? Math.PI : 0, 0]}
 		>
 			<group ref={spin}>
-				<TeardownPart
-					id="susp-tyres"
-					representative={axle === 'front' && side > 0}
-					anchor={[0, 0, 0]}
-				>
-					<mesh
-						geometry={objects.tyre}
-						material={objects.rubber}
-						castShadow
-						receiveShadow
-						userData={{ partId: `tyre-${corner}` }}
-					/>
+				<TeardownPart id="susp-tyres" representative={axle === 'front' && side > 0} anchor={[0, 0, 0]}>
+					<mesh geometry={objects.tyre} material={objects.rubber} castShadow receiveShadow userData={{partId: `tyre-${corner}`}} />
 				</TeardownPart>
-				<TeardownPart
-					id="susp-rims"
-					representative={axle === 'front' && side > 0}
-					anchor={[0, 0, 0]}
-				>
-					<group userData={{ partId: `rim-${corner}` }}>
+				<TeardownPart id="susp-rims" representative={axle === 'front' && side > 0} anchor={[0, 0, 0]}>
+					<group userData={{partId: `rim-${corner}`}}>
 						<mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
 							<cylinderGeometry
 								args={[
@@ -188,12 +161,7 @@ export function Wheel({
 									true,
 								]}
 							/>
-							<meshStandardMaterial
-								color="#60666c"
-								metalness={1}
-								roughness={0.29}
-								side={THREE.DoubleSide}
-							/>
+							<meshStandardMaterial color="#60666c" metalness={1} roughness={0.29} side={THREE.DoubleSide} />
 						</mesh>
 						{[-1, 1].map((end) => (
 							<mesh key={end} position={[0, 0, end * W.faceOffset]} castShadow>
@@ -201,18 +169,10 @@ export function Wheel({
 								<meshStandardMaterial color="#c2c6cb" metalness={1} roughness={0.21} />
 							</mesh>
 						))}
-						<mesh
-							geometry={objects.spoke}
-							position={[0, 0, W.faceOffset - W.spokeDepth]}
-							castShadow
-						>
+						<mesh geometry={objects.spoke} position={[0, 0, W.faceOffset - W.spokeDepth]} castShadow>
 							<meshStandardMaterial color="#bfc4c9" metalness={1} roughness={0.25} />
 						</mesh>
-						<mesh
-							position={[0, 0, W.faceOffset - W.hubDepth / 2]}
-							rotation={[Math.PI / 2, 0, 0]}
-							castShadow
-						>
+						<mesh position={[0, 0, W.faceOffset - W.hubDepth / 2]} rotation={[Math.PI / 2, 0, 0]} castShadow>
 							<cylinderGeometry args={[W.hubRadius, W.hubRadius, W.hubDepth, 48]} />
 							<meshStandardMaterial color="#b4bbc3" metalness={1} roughness={0.25} />
 						</mesh>
@@ -224,6 +184,11 @@ export function Wheel({
 			</group>
 		</group>
 	)
+}
+
+export function Wheel(props: Parameters<typeof ProceduralWheel>[0]) {
+	const asset = useCarAsset()
+	return asset ? <ConceptWheel asset={asset} {...props} /> : <ProceduralWheel {...props} />
 }
 
 export function Wheels({
@@ -241,13 +206,7 @@ export function Wheels({
 				.filter((axle) => !axleFilter || axle === axleFilter)
 				.flatMap((axle) =>
 					([-1, 1] as const).map((side) => (
-						<Wheel
-							key={`${axle}-${side}`}
-							axle={axle}
-							side={side}
-							explode={explode}
-							rearSpinRef={rearSpinRef}
-						/>
+						<Wheel key={`${axle}-${side}`} axle={axle} side={side} explode={explode} rearSpinRef={rearSpinRef} />
 					)),
 				)}
 		</group>

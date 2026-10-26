@@ -64,17 +64,14 @@ export function SteeringInstruments({
 		return () => clearInterval(timer)
 	}, [stateRef])
 	return (
-		<aside
-			className={`ct-instruments ct-steering-panel ${open ? 'is-open' : ''}`}
-			aria-label={tx('转向仪表')}>
+		<aside className={`ct-instruments ct-steering-panel ${open ? 'is-open' : ''}`} aria-label={tx('转向仪表')}>
 			<button className="ct-panel-heading" onClick={() => setOpen(!open)} aria-expanded={open}>
 				<span>{tx('四个轮子，四条轨迹。')}</span>
 				<span className="ct-drawer-toggle">{open ? '−' : '+'}</span>
 			</button>
 			<div className="ct-instrument-content">
-				<p className="ct-transmission-fact">
-					{tx('转弯时外侧轮要多走一段路，差速器让左右轮可以转得不一样快。')}
-				</p>
+				<p className="ct-function">{tx('内侧轮走的圆更小，所以要转得更多；两轮指向同一个转弯中心。')}</p>
+				<p className="ct-transmission-fact">{tx('转弯时外侧轮要多走一段路，差速器让左右轮可以转得不一样快。')}</p>
 				<div className="ct-mechanism-status">
 					<span>{tx('转弯直径')}</span>
 					<strong>
@@ -166,15 +163,9 @@ export function SteeringInstruments({
 				</dl>
 				{clock}
 
-				<p className="ct-mechanism-note">
-					{tx('齿圈 = 左右后轮平均；行星自转 = 轮速差 ÷ 2 × 16/10。')}
-				</p>
-				<p className="ct-mechanism-note">
-					{tx('理想阿克曼，不计轮胎侧偏。车速取后轴中心；画面保持车身原地，轮速按各自轨迹计算。')}
-				</p>
-				<p className="ct-mechanism-note">
-					{tx('两对等角万向节消除转速波动。桥内为直齿锥齿轮示意，未模拟真实准双曲面齿面。')}
-				</p>
+				<p className="ct-mechanism-note">{tx('齿圈 = 左右后轮平均；行星自转 = 轮速差 ÷ 2 × 16/10。')}</p>
+				<p className="ct-mechanism-note">{tx('理想阿克曼，不计轮胎侧偏。车速取后轴中心；画面保持车身原地，轮速按各自轨迹计算。')}</p>
+				<p className="ct-mechanism-note">{tx('两对等角万向节消除转速波动。桥内为直齿锥齿轮示意，未模拟真实准双曲面齿面。')}</p>
 			</div>
 		</aside>
 	)

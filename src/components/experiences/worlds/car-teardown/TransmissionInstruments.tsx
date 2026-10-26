@@ -42,9 +42,7 @@ export function TransmissionInstruments({
 		{gear: 'N', x: 204, y: 82},
 	]
 	return (
-		<aside
-			className={`ct-instruments ct-transmission-panel ${open ? 'is-open' : ''}`}
-			aria-label={tx('传动仪表')}>
+		<aside className={`ct-instruments ct-transmission-panel ${open ? 'is-open' : ''}`} aria-label={tx('传动仪表')}>
 			<button className="ct-panel-heading" onClick={() => setOpen(!open)} aria-expanded={open}>
 				<span>{tx('五挡手动变速箱')}</span>
 				<span className="ct-drawer-toggle">{open ? '−' : '+'}</span>
@@ -75,7 +73,8 @@ export function TransmissionInstruments({
 									e.preventDefault()
 									onGear(p.gear)
 								}
-							}}>
+							}}
+						>
 							<circle cx={p.x} cy={p.y} r={18} />
 							<text x={p.x} y={p.y + 5} textAnchor="middle">
 								{p.gear}
@@ -137,12 +136,15 @@ export function TransmissionInstruments({
 						</dd>
 					</div>
 				</dl>
-				<p className="ct-transmission-fact">
-					{tx('所有齿轮一直咬在一起转，换挡只是把其中一个锁到输出轴上。')}
-				</p>
-				<p className="ct-mechanism-note">
-					{tx('车轮悬空；车速按轮胎滚动半径计算。同步器转速匹配为运动学示意。')}
-				</p>
+				{ratio !== null && state.shiftPhase === 'steady' && (
+					<p className="ct-shift-comparison">
+						{tx('相同发动机转速，相比 1 挡：')} <strong>{Math.abs(gearRatio(1)! / ratio).toFixed(2)}×</strong> /{' '}
+						{Math.abs(gearRatio(1)! / ratio) - 1 >= 0 ? '+' : ''}
+						{((Math.abs(gearRatio(1)! / ratio) - 1) * 100).toFixed(0)}%
+					</p>
+				)}
+				<p className="ct-transmission-fact">{tx('所有齿轮一直咬在一起转，换挡只是把其中一个锁到输出轴上。')}</p>
+				<p className="ct-mechanism-note">{tx('车轮悬空；车速按轮胎滚动半径计算。同步器转速匹配为运动学示意。')}</p>
 			</div>
 		</aside>
 	)

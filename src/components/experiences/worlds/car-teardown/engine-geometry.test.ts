@@ -4,19 +4,13 @@ import {createBoredCasting, createCamLobe, cylinderX, ENGINE_CENTER_X} from './e
 import {cycleAngle, valveLift} from './model'
 import {VEHICLE_SPEC as S} from './vehicle-spec'
 import {ENGINE_GEOMETRY as C} from './vehicle-spec'
-import {
-	createEngineBlock,
-	createCylinderHead,
-	createCamCover,
-	createOilPan,
-	camCoverRoofY,
-} from './engine-castings'
+import {createEngineBlock, createCylinderHead, createCamCover, createOilPan, camCoverRoofY} from './engine-castings'
 import {ENGINE_PARTS, enginePartAnchor, enginePartOffset} from './engine-parts'
 
 const E = S.engine
 const G = E.geometry
 
-describe('visible engine geometry follows the mechanical model', () => {
+describe('retained procedural casting geometry follows the mechanical model', () => {
 	it('leaves all four bores physically open but retains the walls between them', () => {
 		const height = G.deckY - G.blockBottom
 		const geometry = createBoredCasting(G.blockLength, G.blockWidth, height, E.bore / 2)
@@ -24,17 +18,11 @@ describe('visible engine geometry follows the mechanical model', () => {
 		const mesh = new Mesh(geometry, material)
 		mesh.updateMatrixWorld()
 		for (const cylinder of [1, 2, 3, 4] as const) {
-			const ray = new Raycaster(
-				new Vector3(cylinderX(cylinder) - ENGINE_CENTER_X, height + 1, 0),
-				new Vector3(0, -1, 0),
-			)
+			const ray = new Raycaster(new Vector3(cylinderX(cylinder) - ENGINE_CENTER_X, height + 1, 0), new Vector3(0, -1, 0))
 			expect(ray.intersectObject(mesh)).toHaveLength(0)
 		}
 		const wall = (cylinderX(1) + cylinderX(2)) / 2 - ENGINE_CENTER_X
-		expect(
-			new Raycaster(new Vector3(wall, height + 1, 0), new Vector3(0, -1, 0)).intersectObject(mesh)
-				.length,
-		).toBeGreaterThanOrEqual(2)
+		expect(new Raycaster(new Vector3(wall, height + 1, 0), new Vector3(0, -1, 0)).intersectObject(mesh).length).toBeGreaterThanOrEqual(2)
 		geometry.dispose()
 		material.dispose()
 	})
@@ -58,15 +46,11 @@ describe('visible engine geometry follows the mechanical model', () => {
 				for (let crank = 0; crank < 720; crank += 31) {
 					mesh.rotation.x = (crank * Math.PI) / 360
 					mesh.updateMatrixWorld()
-					const ray = new Raycaster(
-						direction.clone().multiplyScalar(0.1),
-						direction.clone().negate(),
-					)
+					const ray = new Raycaster(direction.clone().multiplyScalar(0.1), direction.clone().negate())
 					const hit = ray.intersectObject(mesh)[0]
 					expect(hit).toBeDefined()
 					const actualRadius = hit.point.length()
-					const expectedRadius =
-						E.timing.camBaseRadius + valveLift(cycleAngle(crank, cylinder), valve)
+					const expectedRadius = E.timing.camBaseRadius + valveLift(cycleAngle(crank, cylinder), valve)
 					// Sampled flank plus the 0.313 mm edge bevel permit sub-mm mesh error.
 					expect(Math.abs(actualRadius - expectedRadius)).toBeLessThan(0.0005)
 				}
@@ -89,31 +73,16 @@ describe('round-two casting cavities and disassembly', () => {
 		mesh.updateMatrixWorld()
 		for (const cylinder of [1, 2, 3, 4] as const) {
 			const x = cylinderX(cylinder)
+			expect(new Raycaster(new Vector3(x, G.deckY + 0.1, 0), new Vector3(0, -1, 0)).intersectObject(mesh)).toHaveLength(0)
 			expect(
-				new Raycaster(new Vector3(x, G.deckY + 0.1, 0), new Vector3(0, -1, 0)).intersectObject(
-					mesh,
-				),
-			).toHaveLength(0)
-			expect(
-				new Raycaster(
-					new Vector3(x, G.deckY + 0.1, E.bore / 2 + C.linerWall / 2),
-					new Vector3(0, -1, 0),
-				).intersectObject(mesh).length,
+				new Raycaster(new Vector3(x, G.deckY + 0.1, E.bore / 2 + C.linerWall / 2), new Vector3(0, -1, 0)).intersectObject(mesh).length,
 			).toBeGreaterThanOrEqual(2)
 			const jacketZ = (E.bore / 2 + C.linerWall + C.jacketInnerWidth / 2) / 2
 			expect(
-				new Raycaster(
-					new Vector3(x, G.deckY - C.deckThickness - 0.001, jacketZ),
-					new Vector3(0, -1, 0),
-				).intersectObject(mesh),
+				new Raycaster(new Vector3(x, G.deckY - C.deckThickness - 0.001, jacketZ), new Vector3(0, -1, 0)).intersectObject(mesh),
 			).toHaveLength(0)
 		}
-		expect(
-			new Raycaster(
-				new Vector3(E.cylinder1X + 0.2, E.crankY, 0),
-				new Vector3(-1, 0, 0),
-			).intersectObject(mesh),
-		).toHaveLength(0)
+		expect(new Raycaster(new Vector3(E.cylinder1X + 0.2, E.crankY, 0), new Vector3(-1, 0, 0)).intersectObject(mesh)).toHaveLength(0)
 		geometry.dispose()
 		material.dispose()
 	})
@@ -140,16 +109,8 @@ describe('round-two casting cavities and disassembly', () => {
 		const mesh = new Mesh(geometry, material)
 		mesh.updateMatrixWorld()
 		for (const cylinder of [1, 2, 3, 4] as const) {
-			expect(
-				new Raycaster(
-					new Vector3(cylinderX(cylinder), 1, 0),
-					new Vector3(0, -1, 0),
-				).intersectObject(mesh),
-			).toHaveLength(0)
-			const roof = new Raycaster(
-				new Vector3(cylinderX(cylinder), 1, G.camZ),
-				new Vector3(0, -1, 0),
-			).intersectObject(mesh)[0]
+			expect(new Raycaster(new Vector3(cylinderX(cylinder), 1, 0), new Vector3(0, -1, 0)).intersectObject(mesh)).toHaveLength(0)
+			const roof = new Raycaster(new Vector3(cylinderX(cylinder), 1, G.camZ), new Vector3(0, -1, 0)).intersectObject(mesh)[0]
 			expect(roof).toBeDefined()
 			expect(Math.abs(roof.point.y - camCoverRoofY(G.camZ) - C.wall)).toBeLessThan(0.001)
 		}
@@ -179,18 +140,14 @@ describe('round-two casting cavities and disassembly', () => {
 		expect(new Set(ids).size).toBe(ids.length)
 		for (const part of ENGINE_PARTS) {
 			expect(enginePartAnchor(part.id, 0)).toEqual(part.anchor)
-			expect(enginePartAnchor(part.id, 1)).toEqual(
-				part.anchor.map((value, index) => value + part.offset[index]),
-			)
+			expect(enginePartAnchor(part.id, 1)).toEqual(part.anchor.map((value, index) => value + part.offset[index]))
 			expect(part.name.zh.length).toBeGreaterThan(0)
 			expect(part.name.en.length).toBeGreaterThan(0)
 		}
 		expect(enginePartOffset('crankshaft', 1)).toEqual([0, -0.3, 0])
-		expect(enginePartOffset('piston-assemblies', 1)).toEqual([0, 0.3, 0])
+		expect(enginePartOffset('piston-assemblies', 1)).toEqual([0, 0.4, 0])
 		// Even at bottom dead centre, the rod big end clears the block deck.
-		expect(
-			E.crankY - E.crankRadius - G.rodBigRadius + enginePartOffset('piston-assemblies', 1)[1],
-		).toBeGreaterThan(G.deckY)
+		expect(E.crankY - E.crankRadius - G.rodBigRadius + enginePartOffset('piston-assemblies', 1)[1]).toBeGreaterThan(G.deckY)
 		expect(enginePartOffset('flywheel', 1)).toEqual([-0.3, 0, 0])
 	})
 })

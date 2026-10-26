@@ -9,8 +9,7 @@ import {SuspensionInstruments} from './SuspensionInstruments'
 import type {SystemId} from './parts'
 import {VEHICLE_SPEC as S} from './vehicle-spec'
 
-export const isRoadMechanism = (id: SystemId | null) =>
-	id === 'steering' || id === 'brakes' || id === 'chassis'
+export const isRoadMechanism = (id: SystemId | null) => id === 'steering' || id === 'brakes' || id === 'chassis'
 export function useMechanisms() {
 	const steeringRef = useRef(createSteeringState())
 	const brakeRef = useRef(createBrakeState(40))
@@ -21,7 +20,7 @@ export function useMechanisms() {
 	const [pedalForce, setPedalForce] = useState(0)
 	const [brakeSpeed, setBrakeSpeed] = useState(40)
 	const [brakeRestart, setBrakeRestart] = useState(0)
-	const [brakeView, setBrakeView] = useState<'overview' | 'caliper'>('overview')
+	const [brakeView, setBrakeView] = useState<'overview' | 'caliper'>('caliper')
 	const [suspensionSpeed, setSuspensionSpeed] = useState(30)
 	const [bumpHeight, setBumpHeight] = useState<number>(S.suspension.bumpHeight)
 	const [damping, setDamping] = useState<number>(S.suspension.damping)
@@ -142,15 +141,7 @@ export function MechanismPanel({
 		)
 	return null
 }
-export function MechanismViews({
-	selected,
-	model: m,
-	onInteract,
-}: {
-	selected: SystemId | null
-	model: Mechanisms
-	onInteract: () => void
-}) {
+export function MechanismViews({selected, model: m, onInteract}: {selected: SystemId | null; model: Mechanisms; onInteract: () => void}) {
 	const tx = useExperienceI18n()
 	return (
 		<div className="ct-view-switch">
@@ -169,7 +160,8 @@ export function MechanismViews({
 						onClick={() => {
 							onInteract()
 							m.setSteeringView(view)
-						}}>
+						}}
+					>
 						{tx(label)}
 					</button>
 				))}
@@ -187,7 +179,8 @@ export function MechanismViews({
 						onClick={() => {
 							onInteract()
 							m.setBrakeView(view)
-						}}>
+						}}
+					>
 						{tx(label)}
 					</button>
 				))}
