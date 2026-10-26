@@ -39,6 +39,7 @@ export const PRICE: Record<ColId, number> = { chatgpt: 50, claude: 20, kimi: 10,
 // Cost per Artificial Analysis Intelligence Index task at API prices, each at its strongest setting (2026-10).
 export const TASK: Record<ColId, number> = { chatgpt: 3.26, claude: 5.98, kimi: 2.11, glm: 2.01, deepseek: 0.26 };
 // The same task on a fully used subscription: API cost ÷ how many dollars of API usage the plan buys.
-// Claude Max $200 → $7,121 (36×, wokey.ai median); ChatGPT Pro $200 → $2,897 (14.5×, SemiAnalysis, Astra);
-// GLM Coding Plan 4–13× (upper end shown); DeepSeek has no plan; Kimi does not publish its plan quotas.
-export const PLAN: Record<ColId, number> = { chatgpt: 0.22, claude: 0.17, kimi: 2.11, glm: 0.15, deepseek: 0.26 };
+// Both $200 plans by the same SemiAnalysis method (every weekly limit used up): Claude Max → $11,726 (58.6×),
+// ChatGPT Pro → $2,897 (14.5×, GPT-6 Astra). GLM Coding Plan 4–13× (upper end shown); DeepSeek has no plan;
+// Kimi publishes no quota and nobody has measured it, so its column keeps the pay-per-use price.
+export const PLAN: Record<ColId, number> = { chatgpt: 0.22, claude: 0.1, kimi: 2.11, glm: 0.15, deepseek: 0.26 };
