@@ -35,7 +35,7 @@ export function GroundNames({network,routes,route}:{network:Network;routes:Explo
  const large=network.carriageways.some(r=>r.kind!=='urban')
  return <>{labels.map(label=><group key={label.key}>
   <GroundWord text={tx(label.name)} position={label.position} tangent={label.tangent} large={large}/>
-  {(route?[`in:${route.movement.from}`,`out:${route.movement.to}`].includes(label.key):label.key.startsWith('out:'))&&<Html center position={[label.position.x-label.tangent.z*(large?25:9),label.position.y+2,label.position.z+label.tangent.x*(large?25:9)]} zIndexRange={[4,1]} style={{pointerEvents:'none'}}><span className="rd-portal-name">{tx(label.name)}</span></Html>}
+  {(!route&&label.key.startsWith('out:'))&&<Html center position={[label.position.x-label.tangent.z*(large?25:9),label.position.y+2,label.position.z+label.tangent.x*(large?25:9)]} zIndexRange={[4,1]} style={{pointerEvents:'none'}}><span className="rd-portal-name">{tx(label.name)}</span></Html>}
  </group>)}</>
 }
 
@@ -47,12 +47,13 @@ export function Navigation({route}:{route?:ExploreRoute}){
  const scratch=useMemo(()=>({p:new T.Vector3(),north:new T.Vector3(),inverse:new T.Quaternion()}),[])
  useFrame(({camera,size})=>{
   scratch.inverse.copy(camera.quaternion).invert();scratch.north.set(0,0,-1).applyQuaternion(scratch.inverse)
-  if(needle.current)needle.current.style.transform=`rotate(${Math.atan2(scratch.north.x,-scratch.north.y)}rad)`
+  // CSS rotates an upward-pointing needle clockwise; camera +Y is screen up.
+  if(needle.current)needle.current.style.transform=`rotate(${Math.atan2(scratch.north.x,scratch.north.y)}rad)`
   if(!route)return
   if(!panel.current?.isConnected)panel.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-explorer')??null
   const panelRect=panel.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
   const mobile=size.width<720,left=mobile?14:24,right=mobile?size.width-14:(panelRect?panelRect.left-canvasRect.left-12:size.width-380)
-  const top=mobile?180:265,bottom=mobile&&panelRect?panelRect.top-canvasRect.top-55:size.height-170
+  const top=mobile?180:265,bottom=mobile&&panelRect?panelRect.top-canvasRect.top-55:size.height-205
   const points=[route.path.points[0],route.path.points.at(-1)!],positions:{x:number;y:number}[]=[]
   for(let i=0;i<2;i++){
    const element=(i?exit:entry).current;if(!element)continue
@@ -71,7 +72,7 @@ export function Navigation({route}:{route?:ExploreRoute}){
  })
  return <Html calculatePosition={()=>[0,0]} zIndexRange={[8,7]} style={{pointerEvents:'none',width:size.width,height:size.height}}>
   <div className="rd-navigation" aria-label={tx('方向与路线端点')}>
-   <div className="rd-compass" aria-label={tx('指北针')}><svg ref={needle} viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" opacity=".15"/><path d="M22 4 16 28 22 24 28 28Z" fill="currentColor" fillOpacity=".2" stroke="currentColor"/><path d="M22 24V39" stroke="currentColor" opacity=".35"/></svg><span>N · {tx('北')}</span></div>
+   <div className="rd-compass" aria-label={tx('指北针')}><svg ref={needle} viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" opacity=".15"/><path data-north-tip="true" d="M22 4 16 22 28 22Z" fill="currentColor"/><path d="M22 39 16 22 28 22Z" fill="none" stroke="currentColor" opacity=".65"/></svg><span>N · {tx('北')}</span></div>
    {route&&<><span ref={entry} className="rd-endpoint rd-endpoint-in" data-endpoint="entry"><i/>{tx('入口')} · {tx(approachName(route.movement.from))}</span><span ref={exit} className="rd-endpoint rd-endpoint-out" data-endpoint="exit"><i/>{tx('出口')} · {tx(exitName(route.movement.to))}</span></>}
   </div>
  </Html>

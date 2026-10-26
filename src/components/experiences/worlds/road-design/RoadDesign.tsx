@@ -61,6 +61,7 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
   const lamps = runtime.lamps
   const atlas = useMemo(() => makeLightingAtlas(lamps,runtime.lighting), [lamps,runtime])
   const conflicts = runtime.conflicts
+  const junctionPoints=useMemo(()=>design.chapter===1&&(showConflicts||explorer.route||explorer.explaining)?network.lanes.filter(l=>l.kind==='connector').flatMap(l=>l.points):undefined,[design.chapter,showConflicts,explorer.route,explorer.explaining,network])
   const roof = useMemo(() => highestDeckTexture(runtime.roof), [runtime])
   useEffect(() => () => roof.dispose(), [roof])
   useEffect(() => () => atlas.dispose(), [atlas])
@@ -87,14 +88,14 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
         {design.id === 'crossroads-channelized' && <WaitingOutline network={network} />}
       </group>
       {traffic&&(!explorer.route||network.control.kind==='free')&&<><Vehicles runtime={runtime} dim={!!explorer.route} /><LightTrails runtime={runtime} shutter={shutter} blueprint={blueprint} dim={!!explorer.route} /></>}
-      {(showConflicts || showWeaving) && <ConflictMarkers network={network} conflicts={showConflicts ? conflicts : []} showWeaving={showWeaving} />}
+      {(showConflicts || showWeaving) && <ConflictMarkers network={network} conflicts={showConflicts ? conflicts : []} showWeaving={showWeaving} selected={explorer.route?.reading.conflicts} />}
     </DisplayStretch>
     {!explorer.route&&!explorer.explaining&&<EntryArrows routes={explorer.routes} onSelect={explorer.onSelect} />}
     <GroundNames network={network} routes={explorer.routes} route={explorer.route}/>
     <Navigation route={explorer.route}/>
-    {explorer.route&&<RouteScene route={explorer.route} replay={explorer.replay} revision={explorer.revision} playing={playing&&!isWorldPaused()} demo={explorer.demo} pins={explorer.pins} activePin={explorer.activePin} onPin={explorer.onPin} explaining={explorer.explaining} traffic={traffic} />}
-    {!explorer.route&&explorer.explaining&&explorer.pins.map((p,i)=><WhyMarker key={p.id} pin={p} number={i+1} active={explorer.activePin===p.id} onClick={()=>explorer.onPin(p.id)}/>)}
-    <CameraRig route={explorer.route} follow={explorer.follow} demo={explorer.demo} onStopFollow={explorer.onStopFollow} design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} />
+    {explorer.route&&<RouteScene route={explorer.route} replay={explorer.replay} revision={explorer.revision} playing={playing&&!isWorldPaused()} demo={explorer.demo} pins={explorer.pins} activePin={explorer.activePin} onPin={explorer.onPin} explaining={explorer.explaining} traffic={traffic} follow={explorer.follow} showPins={!showConflicts} />}
+    {!showConflicts&&!explorer.route&&explorer.explaining&&explorer.pins.map((p,i)=>explorer.activePin===p.id&&<WhyMarker key={p.id} pin={p} number={i+1} active onClick={()=>explorer.onPin(p.id)}/>)}
+    <CameraRig route={explorer.route} follow={explorer.follow} demo={explorer.demo} onStopFollow={explorer.onStopFollow} design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} junctionPoints={junctionPoints} />
     <EffectComposer multisampling={0}>
       <ComposerResources />
       <PreparePrograms version={`${network.id}:${blueprint}:${stretch}`} />

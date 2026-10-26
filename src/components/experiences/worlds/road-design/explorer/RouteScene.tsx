@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, type MutableRefObject } from 'react'
 import { Html, Line } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { useExperienceI18n } from '~/i18n/experience'
@@ -33,7 +33,7 @@ export function EntryArrows({routes,selected,onSelect}:{routes:ExploreRoute[];se
   })}</>
 }
 
-export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean}) {
+export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic,follow,showPins}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean;follow:boolean;showPins:boolean}) {
   const tx=useExperienceI18n(),car=useRef<T.Group>(null),arrows=useRef<T.InstancedMesh>(null),background=useRef<T.InstancedMesh>(null)
   const elapsed=useRef(0)
   const vectors=useMemo(()=>route.path.points.map(p=>new T.Vector3(p.x,p.y+.85,p.z)),[route])
@@ -62,21 +62,22 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
       for(let i=0;i<count;i++){
         const {position:p,tangent:t}=sampleLane(route.path,(i*spacing+phase)%route.path.length)
         scratch.position.set(p.x,p.y+1.3,p.z);scratch.rotation.set(0,Math.atan2(t.x,t.z),0)
-        scratch.scale.setScalar(.6);scratch.updateMatrix();arrows.current.setMatrixAt(i,scratch.matrix)
+        // 2.8 m wide before scaling; follow mode stays below half a 1.8 m car.
+        scratch.scale.setScalar(follow?.25:.6);scratch.updateMatrix();arrows.current.setMatrixAt(i,scratch.matrix)
       }
       arrows.current.count=count;arrows.current.instanceMatrix.needsUpdate=true
     }
   },-1)
   return <>
     {traffic&&<instancedMesh ref={background} args={[undefined,undefined,300]} frustumCulled={false}><boxGeometry/><meshStandardMaterial color="#627985" emissive="#355365" emissiveIntensity={.35}/></instancedMesh>}
-    <Line points={vectors} color="#073d60" lineWidth={10} transparent opacity={.65} depthTest={false} renderOrder={8} />
-    <Line points={vectors} color="#65e1f2" lineWidth={3} transparent opacity={.93} depthTest={false} renderOrder={9} />
-    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#80dbe8" depthTest={false} depthWrite={false} side={T.DoubleSide} toneMapped={false}/></instancedMesh>
+    <Line points={vectors} color="#073d60" lineWidth={10} transparent opacity={.28} depthTest={false} depthWrite={false} renderOrder={8} />
+    <Line points={vectors} color="#65e1f2" lineWidth={3} transparent opacity={.93} depthWrite={false} renderOrder={9} />
+    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#80dbe8" depthWrite={false} side={T.DoubleSide} toneMapped={false}/></instancedMesh>
     <group ref={car}>
       <DemonstrationCar/>
       {replay&&<Html center position={[0,4,0]} zIndexRange={[6,2]} style={{pointerEvents:'none'}}><span className="rd-demo-label">{tx('示范车')}</span></Html>}
     </group>
-    {pins.filter(p=>explaining||p.laneIds.some(id=>route.laneIds.includes(id))).map((p,i)=><WhyMarker key={p.id} pin={p} number={i+1} active={activePin===p.id||(!activePin&&p.laneIds.includes(demo.current.laneId))} onClick={()=>onPin(p.id)}/>) }
+    {showPins&&pins.map((p,i)=>p.id===activePin&&(explaining||p.laneIds.some(id=>route.laneIds.includes(id)))&&<WhyMarker key={p.id} pin={p} number={i+1} active onClick={()=>onPin(p.id)} compact={follow}/>)}
   </>
 }
 
@@ -91,7 +92,26 @@ function DemonstrationCar(){
   <Line points={[[-.8,1.49,-1.4],[-.8,1.49,1.1],[.8,1.49,1.1],[.8,1.49,-1.4],[-.8,1.49,-1.4]]} color="#65e1f2" lineWidth={1.5} toneMapped={false} depthTest={false} renderOrder={11}/>
  </>
 }
-export function WhyMarker({pin,number,active,onClick}:{pin:WhyPin;number:number;active:boolean;onClick:()=>void}) {
+export function WhyMarker({pin,number,active,onClick,compact=false}:{pin:WhyPin;number:number;active:boolean;onClick:()=>void;compact?:boolean}) {
   const copy=useEditorialText(),p=pin.position
-  return <><Line points={[[p.x,p.y+1,p.z],[p.x,p.y+26,p.z]]} color={active?"#98dcea":"#47718c"} lineWidth={1} transparent opacity={.7}/><Html position={[p.x,p.y+26,p.z]} center zIndexRange={[7,3]}><button className="rd-why-pin" type="button" aria-pressed={active} aria-label={copy(pin,'title')} onClick={onClick}><b>{number}</b></button></Html></>
+  const {gl}=useThree(),button=useRef<HTMLButtonElement>(null),panel=useRef<HTMLElement|null>(null)
+  const stem=useRef<T.Group>(null),label=useRef<T.Group>(null),offset=useMemo(()=>new T.Vector3(),[])
+  useFrame(({camera,size})=>{
+    // Cap the leader at 40 screen pixels in every close view; omit it in follow.
+    const mpp=2*camera.position.distanceTo(offset.set(p.x,p.y,p.z))*Math.tan((camera as T.PerspectiveCamera).fov*Math.PI/360)/size.height
+    const height=Math.min(26,mpp*40)
+    if(stem.current)stem.current.scale.y=height
+    if(label.current)label.current.position.y=p.y+height
+    // An approach note can be outside the close-up until the car reaches it.
+    // Hide its annotation there instead of drawing it offscreen or over UI.
+    if(!panel.current?.isConnected)panel.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-explorer')??null
+    offset.set(p.x,p.y+height,p.z).project(camera)
+    const rect=gl.domElement.getBoundingClientRect(),edge=panel.current?.getBoundingClientRect()
+    const x=(offset.x+1)*size.width/2,y=(1-offset.y)*size.height/2,mobile=size.width<720
+    const visible=offset.z<1&&x>20&&x<(mobile?size.width-20:(edge?.left??rect.right)-rect.left-20)&&y>(mobile?180:285)&&y<(mobile&&edge?edge.top-rect.top-55:size.height-175)
+    if(button.current)button.current.style.visibility=visible?'visible':'hidden'
+    if(stem.current)stem.current.visible=visible
+  })
+  if(compact)return null
+  return <><group ref={stem} position={[p.x,p.y+1,p.z]}><Line points={[[0,0,0],[0,1,0]]} color={active?"#98dcea":"#47718c"} lineWidth={1} transparent opacity={.7}/></group><group ref={label} position={[p.x,p.y+26,p.z]}><Html center zIndexRange={[7,3]}><button ref={button} className="rd-why-pin" type="button" aria-pressed={active} aria-label={copy(pin,'title')} onClick={onClick}><b>{number}</b></button></Html></group></>
 }
