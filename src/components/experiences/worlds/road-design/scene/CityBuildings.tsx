@@ -66,15 +66,19 @@ export function CityBuildings({ urban, service = false, roads, network, visible 
             totalEmissiveRadiance += vec3(0.42,0.245,0.112)*storefront*mullion*(0.5+0.5*cityHash(vec2(floor(horizontal/5.2),cityRandom)));
           }
         }
-        totalEmissiveRadiance += diffuseColor.rgb*(0.07+0.06*max(0.0,cityNormal.x*0.45+cityNormal.y*0.7+cityNormal.z*0.3));
+        // Give roofs and the lit facade distinct planes even in an oblique
+        // city panorama; distant windows must not be the only visible surface.
+        float facadeFill=0.35+0.85*max(0.0,dot(cityNormal,normalize(vec3(-0.45,0.8,0.35))));
+        totalEmissiveRadiance += (diffuseColor.rgb*0.2+vec3(0.018,0.024,0.031))*facadeFill;
       `)
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float cityDistance = distance(cameraPosition,cityWorld);
-        float lowHaze = 1.0-exp(-max(0.0,cityDistance-280.0) * 0.00077 * exp(-max(0.0,cityWorld.y)*0.0035));
+        float cityHorizontalDistance=length(cameraPosition.xz-cityWorld.xz);
+        float lowHaze = 1.0-exp(-max(0.0,cityHorizontalDistance-600.0) * 0.00048 * exp(-max(0.0,cityWorld.y)*0.0035));
         outgoingLight = mix(outgoingLight, vec3(0.0025,0.0035,0.0055), lowHaze);
         #include <opaque_fragment>`)
     }
-    material.customProgramCacheKey = () => 'road-city-facades-v7'
+    material.customProgramCacheKey = () => 'road-city-facades-v8'
     const beaconGeometry = new T.BufferGeometry()
     const beaconPosition: number[] = [], phase: number[] = []
     for (let i = 0; i < beacons.length; i += 4) { beaconPosition.push(...beacons.slice(i, i + 3)); phase.push(beacons[i + 3]) }

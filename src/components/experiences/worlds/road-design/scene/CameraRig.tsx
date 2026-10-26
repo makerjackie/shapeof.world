@@ -7,9 +7,10 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
 import { PRESENTATIONS } from '../presentation'
 import type { DesignInfo } from '../designs/catalogue'
+import type { Vec3 } from '../sim/types'
 
 export type CameraPreset = 'overview' | 'top' | 'close' | 'low'
-export function CameraRig({ design, preset, revision, reducedMotion, onInteract, route, follow = false, demo, onStopFollow }: { design: DesignInfo; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void; route?: ExploreRoute; follow?:boolean; demo?:MutableRefObject<DemoState>; onStopFollow?:()=>void }) {
+export function CameraRig({ design, preset, revision, reducedMotion, onInteract, route, follow = false, demo, onStopFollow, junctionPoints }: { design: DesignInfo; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void; route?: ExploreRoute; follow?:boolean; demo?:MutableRefObject<DemoState>; onStopFollow?:()=>void; junctionPoints?:Vec3[] }) {
   const control = useRef<ComponentRef<typeof OrbitControls>>(null)
   const { camera, size, gl } = useThree()
   const flight = useRef<{ from: T.Vector3; to: T.Vector3; targetFrom: T.Vector3; target: T.Vector3; elapsed: number } | null>(null)
@@ -47,7 +48,11 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
     const view = PRESENTATIONS[design.id]
     perspective.fov = preset === 'overview' ? (mobile ? view.mobileFov ?? view.fov + 6 : view.fov) : (mobile ? 54 : 42)
     if (route) {
-      const box=new T.Box3().setFromPoints(route.path.points.map(p=>new T.Vector3(p.x,p.y,p.z)))
+      // Approach tails are kilometres long. Keep the interchange mechanism at
+      // readable scale; Navigation still points to both complete route ends.
+      const local=design.chapter===4?route.path.points.filter(p=>Math.hypot(p.x-focus.x,p.z-focus.z)<500):route.focusPoints
+      const points=local.length>1?local:route.focusPoints
+      const box=new T.Box3().setFromPoints(points.map(p=>new T.Vector3(p.x,p.y,p.z)))
       const center=box.getCenter(new T.Vector3()), span=box.getSize(new T.Vector3())
       const radius=span.length()/2
       perspective.fov=mobile?52:42
@@ -55,16 +60,33 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
       const angle=Math.min(perspective.fov*Math.PI/360,Math.atan(Math.tan(perspective.fov*Math.PI/360)*size.width/size.height))
       const distance=Math.max(150,radius/Math.sin(angle)/Math.max(.24,available))
       target.copy(center)
-      to.copy(center).add((preset==='top'?new T.Vector3(0,1,.001):new T.Vector3(.28,.87,.40)).normalize().multiplyScalar(distance))
+      // Mountain interchanges need a 42° oblique view to reveal their decks.
+      to.copy(center).add((preset==='top'?new T.Vector3(0,1,.001):design.chapter>=3?new T.Vector3(.55,.90,.84):new T.Vector3(.28,.87,.40)).normalize().multiplyScalar(distance))
+      if(design.chapter===4)coreFocused.current=true
       // Move the projected route into the unobstructed upper half on phones.
       if(mobile){const shift=distance*.12;target.z+=shift;to.z+=shift}
+    }
+    if(junctionPoints?.length) {
+      const box=new T.Box3().setFromPoints(junctionPoints.map(p=>new T.Vector3(p.x,p.y,p.z)))
+      const center=box.getCenter(new T.Vector3()),span=box.getSize(new T.Vector3())
+      perspective.fov=mobile?52:42
+      const halfFov=perspective.fov*Math.PI/360
+      // The complete connector core fills >= 1/3 of the canvas width, rather
+      // than fitting kilometre-long approach roads around a tiny intersection.
+      const distance=Math.max(55,Math.max(span.x,span.z)/(2*Math.tan(halfFov)*size.width/size.height*(mobile?.66:.43)))
+      target.copy(center)
+      const direction=(preset==='top'?new T.Vector3(0,1,.001):new T.Vector3(.38,.79,.48)).normalize()
+      const shift=new T.Vector3().crossVectors(new T.Vector3(0,1,0),direction).normalize().multiplyScalar(mobile?0:distance*.13)
+      target.add(shift);to.copy(target).add(direction.multiplyScalar(distance))
+      if(mobile){target.z+=distance*.13;to.z+=distance*.13}
+      coreFocused.current=true
     }
     perspective.updateProjectionMatrix()
     if (!mounted.current || reducedMotion) {
       camera.position.copy(to); control.current?.target.copy(target); camera.lookAt(target)
       mounted.current = true
     } else flight.current = { from: camera.position.clone(), to, targetFrom: control.current?.target.clone() ?? new T.Vector3(), target, elapsed: 0 }
-  }, [design, preset, revision, camera, size.width, size.height, reducedMotion, route])
+  }, [design, preset, revision, camera, size.width, size.height, reducedMotion, route, junctionPoints])
   useFrame((_, delta) => {
     const controls = control.current
     if (!controls) return
@@ -85,7 +107,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
         const fov=(camera as T.PerspectiveCamera).fov*Math.PI/360
         const angle=Math.min(fov,Math.atan(Math.tan(fov)*size.width/size.height))
         const distance=r/Math.sin(angle)/available
-        const target=center.clone(),to=center.clone().add((preset==='top'?new T.Vector3(0,1,.001):new T.Vector3(.38,.79,.48)).normalize().multiplyScalar(distance))
+        const target=center.clone(),to=center.clone().add((preset==='top'?new T.Vector3(0,1,.001):design.chapter>=3?new T.Vector3(.55,.90,.84):new T.Vector3(.38,.79,.48)).normalize().multiplyScalar(distance))
         if(mobile){target.z+=distance*.12;to.z+=distance*.12}
         else {target.x+=distance*.09;to.x+=distance*.09}
         flight.current={from:camera.position.clone(),to,targetFrom:controls.target.clone(),target,elapsed:0};coreFocused.current=true
@@ -103,6 +125,11 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
     } else controls.autoRotate = false // Keep entry targets still while the reader chooses a flow.
   })
   return <OrbitControls ref={control} makeDefault enableDamping dampingFactor={0.08} minDistance={30} maxDistance={12000} maxPolarAngle={Math.PI / 2 - 0.025} minPolarAngle={0.015} autoRotateSpeed={0.1} touches={{ ONE: T.TOUCH.ROTATE, TWO: T.TOUCH.DOLLY_PAN }}
-    onChange={() => { gl.domElement.dataset.camera = camera.position.toArray().map(n=>n.toFixed(2)).join(',') }}
+    onChange={() => {
+      gl.domElement.dataset.camera = camera.position.toArray().map(n=>n.toFixed(2)).join(',')
+      // Small numeric observation surface for projection/compass acceptance.
+      gl.domElement.dataset.viewProjection=JSON.stringify(new T.Matrix4().multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse).elements)
+      gl.domElement.dataset.target=JSON.stringify(control.current?.target.toArray()??[0,0,0])
+    }}
     onStart={() => { flight.current = null; manual.current=true; onStopFollow?.(); onInteract() }} />
 }
