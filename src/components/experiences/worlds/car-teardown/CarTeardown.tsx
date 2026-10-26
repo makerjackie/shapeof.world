@@ -1,44 +1,33 @@
-import { CarGuide } from './CarGuide'
-import { assemblyFor, assemblyParts, ASSEMBLIES } from './subassemblies'
-import { Component, useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
-import type { ExperienceControls } from '~/components/ExperienceShell'
-import { useExperienceI18n } from '~/i18n/experience'
-import { CarScene, type AnchorMap } from './Scene'
-import { EngineeringLabels, EngineInstruments } from './Instruments'
-import {
-	EnginePartsList,
-	EnginePartLabels,
-	EnginePartCard,
-	type PartAnchors,
-} from './EnginePartsUI'
-import { SYSTEMS, PARTS, partCount, type SystemId } from './parts'
-import { suggestedSlowdown } from './model'
-import { VEHICLE_SPEC as S, type Gear } from './vehicle-spec'
-import { createTransmissionState } from './transmission-model'
-import { TransmissionInstruments } from './TransmissionInstruments'
-import { useMechanisms, MechanismPanel, MechanismViews, isRoadMechanism } from './MechanismControls'
-import { teardownParts } from './teardown-registry'
-import { SteelLegend } from './SteelLegend'
+import type {AssetProgress} from './asset-config'
+import {CarGuide} from './CarGuide'
+import {assemblyFor, assemblyParts, ASSEMBLIES} from './subassemblies'
+import {Component, useCallback, useEffect, useRef, useState, type ReactNode} from 'react'
+import type {ExperienceControls} from '~/components/ExperienceShell'
+import {useExperienceI18n} from '~/i18n/experience'
+import {CarScene, type AnchorMap} from './Scene'
+import {EngineeringLabels, EngineInstruments} from './Instruments'
+import type {PartAnchors} from './EnginePartsUI'
+import {SYSTEMS, PARTS, partCount, type SystemId} from './parts'
+import {suggestedSlowdown} from './model'
+import {VEHICLE_SPEC as S, type Gear} from './vehicle-spec'
+import {createTransmissionState} from './transmission-model'
+import {TransmissionInstruments} from './TransmissionInstruments'
+import {useMechanisms, MechanismPanel, MechanismViews, isRoadMechanism} from './MechanismControls'
+import {teardownParts} from './teardown-registry'
 import './styles/car-teardown.css'
-import { usePartText } from './localized-parts'
+import './styles/inspection.css'
+import {usePartText} from './localized-parts'
 
-class SceneBoundary extends Component<
-	{ children: ReactNode; message: string },
-	{ failed: boolean }
-> {
-	state = { failed: false }
+class SceneBoundary extends Component<{children: ReactNode; message: string}, {failed: boolean}> {
+	state = {failed: false}
 	static getDerivedStateFromError() {
-		return { failed: true }
+		return {failed: true}
 	}
 	render() {
-		return this.state.failed ? (
-			<div className="ct-error">{this.props.message}</div>
-		) : (
-			this.props.children
-		)
+		return this.state.failed ? <div className="ct-error">{this.props.message}</div> : this.props.children
 	}
 }
-export function CarTeardown({ controls, label }: { controls: ExperienceControls; label?: string }) {
+export function CarTeardown({controls, label}: {controls: ExperienceControls; label?: string}) {
 	const tx = useExperienceI18n()
 	const partText = usePartText()
 	const [guideOpen, setGuideOpen] = useState(false)
@@ -73,6 +62,8 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 	const pausedRef = useRef(false)
 	const [xray, setXray] = useState(false)
 	const [ready, setReady] = useState(false)
+	const [engineView, setEngineView] = useState<'bay' | 'section' | 'assembly'>('section')
+	const [assetProgress, setAssetProgress] = useState<AssetProgress>({phase: 'body', loaded: 0, total: 0, ready: false})
 	const [reducedMotion, setReducedMotion] = useState(false)
 	const angleRef = useRef(25)
 	const interactionRef = useRef(false)
@@ -110,15 +101,15 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			setPartsExplode(0)
 			setAssemblyId('')
 			if (isRoadMechanism(id) && !isRoadMechanism(selected)) setSlowdown(1)
-			if (!isRoadMechanism(id) && isRoadMechanism(selected) && slowdown < 10)
-				setSlowdown(suggestedSlowdown(rpm))
+			if (!isRoadMechanism(id) && isRoadMechanism(selected) && slowdown < 10) setSlowdown(suggestedSlowdown(rpm))
+			if (id === 'drivetrain' && gear === 'N') setGear(1)
 			if (id === 'chassis') mechanisms.setSuspensionRestart((n) => n + 1)
 			// Open the engine in X-ray: the running four-stroke is the frame worth seeing first.
 			if (id === 'powertrain' && selected !== 'powertrain') setXray(true)
 			setSelected(id)
 			setHovered(null)
 		},
-		[interact, selected, slowdown, rpm, mechanisms.setSuspensionRestart],
+		[interact, selected, slowdown, rpm, gear, mechanisms.setSuspensionRestart],
 	)
 	const returnToSystems = useCallback(() => {
 		setSelected(null)
@@ -149,6 +140,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 	const animateParts = useCallback(
 		(target: number) => {
 			interact()
+			if (selected === 'powertrain') setEngineView('assembly')
 			cancelAnimationFrame(animationRef.current)
 			const from = currentPartsExplode.current,
 				start = performance.now()
@@ -163,7 +155,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			}
 			animationRef.current = requestAnimationFrame(tick)
 		},
-		[interact, reducedMotion],
+		[interact, reducedMotion, selected],
 	)
 	const guideAction = useRef<(index: number) => void>(() => {})
 	guideAction.current = (index) => {
@@ -202,10 +194,12 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 		if (index === 2) {
 			system('powertrain')
 			setXray(true)
+			setEngineView('section')
 		}
 		if (index === 3) {
 			system('powertrain')
 			setXray(false)
+			setEngineView('assembly')
 			later(500, () => animateParts(1))
 		}
 		if (index === 4) {
@@ -251,6 +245,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 	}, [clearGuideTimers])
 
 	const onReady = useCallback(() => setReady(true), [])
+	const onLoad = useCallback((state: AssetProgress) => setAssetProgress(state), [])
 	const selectedSystem = SYSTEMS.find((s) => s.id === selected)
 	const assembly = partsExplode > 0.02 ? assemblyFor(selected, assemblyId) : undefined
 	const selectedParts = assembly ? assemblyParts(assembly) : teardownParts(selected)
@@ -267,29 +262,25 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			setPaused(true)
 		}
 		const view = query.get('view')
+		if (view === 'bay' || view === 'section' || view === 'assembly') setEngineView(view)
 		if (view === 'side' || view === 'rear') interactionRef.current = true
 		if (['top', 'perspective', 'differential'].includes(view ?? ''))
 			mechanisms.setSteeringView(view as 'top' | 'perspective' | 'differential')
 		if (view === 'caliper' || view === 'overview') mechanisms.setBrakeView(view)
 		if (view === 'gearbox' || view === 'path') setTransmissionView(view)
-		if (query.has('wheel'))
-			mechanisms.setWheelAngle(Math.max(-540, Math.min(540, Number(query.get('wheel')) || 0)))
-		if (query.has('pedal'))
-			mechanisms.setPedalForce(Math.max(0, Math.min(400, Number(query.get('pedal')) || 0)))
+		if (query.has('wheel')) mechanisms.setWheelAngle(Math.max(-540, Math.min(540, Number(query.get('wheel')) || 0)))
+		if (query.has('pedal')) mechanisms.setPedalForce(Math.max(0, Math.min(400, Number(query.get('pedal')) || 0)))
 		const requestedGear = query.get('gear')
 		if (['R', 'N', '1', '2', '3', '4', '5'].includes(requestedGear ?? ''))
-			setGear(
-				(requestedGear === 'R' || requestedGear === 'N'
-					? requestedGear
-					: Number(requestedGear)) as Gear,
-			)
-		if (requested || capture) {
+			setGear((requestedGear === 'R' || requestedGear === 'N' ? requestedGear : Number(requestedGear)) as Gear)
+		if (query.has('explode')) setExplode(Math.max(0, Math.min(1, Number(query.get('explode')) || 0)))
+		if (requested || (capture && !query.has('explode'))) {
 			interactionRef.current = true
 			setExplode(1)
 			if (SYSTEMS.some((system) => system.id === requested)) {
 				setSelected(requested as SystemId)
 				if (requested === 'powertrain' && query.get('xray') !== '0') setXray(true)
-				const amount = Number(query.get('parts') ?? (capture ? 1 : 0))
+				const amount = Number(query.get('parts') ?? 0)
 				setPartsExplode(Number.isFinite(amount) ? Math.max(0, Math.min(1, amount)) : 0)
 				if (isRoadMechanism(requested as SystemId)) setSlowdown(10)
 			}
@@ -316,6 +307,8 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 				<CarScene
 					{...{
 						captureMode,
+						engineView,
+						onLoad,
 						assembly,
 						explode,
 						selected,
@@ -351,7 +344,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			<CarGuide open={guideOpen} onStep={onGuideStep} onExit={exitGuide} />
 			{!guideActive && !captureMode && (
 				<button className="ct-guide-start" onClick={() => setGuideOpen(true)}>
-					{partText({ zh: '九站导览', en: 'Take the tour' })}
+					{partText({zh: '九站导览', en: 'Take the tour'})}
 					<span>↗</span>
 				</button>
 			)}
@@ -360,6 +353,8 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					onClick={() => {
 						interact()
 						returnToSystems()
+						setExplode(0)
+						setPartsExplode(0)
 					}}
 				>
 					{tx('整车')}
@@ -405,19 +400,63 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 				<p>
 					{tx(
 						selected === 'powertrain'
-							? '曲轴每转两圈，每个缸点一次火。'
+							? '燃油的能量，让活塞推动曲轴。'
 							: selected === 'drivetrain'
-								? '沿琥珀色路径，看动力怎样抵达后轮。'
+								? '把发动机的转速变成车轮要的转速和力。'
 								: selected === 'steering'
-									? '转向决定轨迹，差速器分配左右轮速。'
+									? '转弯时，内侧前轮需要转得更多。'
 									: selected === 'brakes'
-										? '从液压到摩擦，动能变成热。'
+										? '活塞推内片，卡钳滑动拉住外片，两面夹紧。'
 										: selected === 'chassis'
 											? '弹簧承受冲击，阻尼让振动停下来。'
-											: '前置纵置 · 后轮驱动 · 2.0 升直列四缸',
+											: '双门概念车 · 后轮驱动 · 2.5 升直列四缸',
 					)}
 				</p>
 			</div>
+
+			<div className="ct-system-rail" aria-label={tx('选择系统')}>
+				{(
+					[
+						['powertrain', '发动机'],
+						['drivetrain', '变速箱'],
+						['steering', '转向'],
+						['brakes', '刹车'],
+						['chassis', '悬架'],
+						['body', '车身'],
+						['electrical', '电气'],
+					] as const
+				).map(([id, name]) => (
+					<button key={id} data-system={id} aria-pressed={selected === id} onClick={() => select(id)}>
+						{tx(name)}
+					</button>
+				))}
+			</div>
+			{selected === 'powertrain' && (
+				<div className="ct-engine-views" aria-label={tx('发动机视角')}>
+					{(
+						[
+							['bay', '打开机舱'],
+							['section', '单缸剖切'],
+							['assembly', '完整发动机'],
+						] as const
+					).map(([view, name]) => (
+						<button
+							key={view}
+							data-engine-view={view}
+							aria-pressed={engineView === view}
+							onClick={() => {
+								interact()
+								setEngineView(view)
+								setPartsExplode(0)
+								setXray(view === 'section')
+							}}
+						>
+							{tx(name)}
+						</button>
+					))}
+				</div>
+			)}
+
 			<EngineeringLabels
 				anchorsRef={anchorsRef}
 				visible={explode > 0.78 && !selected}
@@ -450,9 +489,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					className="ct-system-picker"
 					value={selected ?? ''}
 					aria-label={tx('选择系统')}
-					onChange={(e) =>
-						e.target.value ? select(e.target.value as SystemId) : returnToSystems()
-					}
+					onChange={(e) => (e.target.value ? select(e.target.value as SystemId) : returnToSystems())}
 				>
 					<option value="">{tx('全部系统')}</option>
 					{SYSTEMS.map((s) => (
@@ -484,43 +521,9 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					</button>
 				</div>
 			)}
-			{selected && (
-				<>
-					<EnginePartsList
-						key={selected + (assembly?.id ?? '')}
-						parts={selectedParts}
-						title={selected === 'powertrain' ? '发动机零件' : '零件清单'}
-						hovered={hoveredPart}
-						selected={selectedPart}
-						onHover={setHoveredPart}
-						onSelect={(id) => {
-							interact()
-							setSelectedPart(id)
-						}}
-					/>
-					<EnginePartLabels
-						parts={selectedParts}
-						selected={selectedPart}
-						anchorsRef={partAnchorsRef}
-						visible={partsExplode > 0.65}
-						hovered={hoveredPart}
-						onHover={setHoveredPart}
-						onSelect={(id) => {
-							interact()
-							setSelectedPart(id)
-						}}
-					/>
-				</>
-			)}
-			{selected && selectedPart ? (
-				<EnginePartCard
-					parts={selectedParts}
-					id={selectedPart}
-					onClose={() => setSelectedPart(null)}
-				/>
-			) : selected === 'powertrain' ? (
+			{selected === 'powertrain' ? (
 				<EngineInstruments
-					{...{ angleRef, rpm, slowdown, paused, xray }}
+					{...{angleRef, rpm, slowdown, paused, xray}}
 					onRpm={(v) => {
 						interact()
 						setRpm(v)
@@ -538,6 +541,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					onXray={(v) => {
 						interact()
 						setXray(v)
+						setEngineView(v ? 'section' : 'assembly')
 					}}
 					onScrub={(v) => {
 						interact()
@@ -588,9 +592,7 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 			) : selectedSystem ? (
 				<aside className="ct-system-detail">
 					<span>{tx(selectedSystem.name)}</span>
-					<strong>
-						{partCount(selectedSystem.id)} <small>{tx('件')}</small>
-					</strong>
+					<strong>{tx(selectedSystem.id === 'body' ? '车身与内饰' : '供电与线束')}</strong>
 					<p>
 						{partText({
 							zh: PARTS.find((p) => p.system === selectedSystem.id)!.function,
@@ -623,11 +625,11 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 					</aside>
 				)
 			)}
-			{selected === 'body' && partsExplode > 0.05 && <SteelLegend onSelect={setSelectedPart} />}
+
 			<div className="ct-bottom">
 				<div className="ct-orbit-hint">
 					{tx('拖动旋转 · 滚动缩放')}
-					<span>4.85 × 1.85 × 1.45 m</span>
+					<span>4.36 × 2.54 × 1.15 m</span>
 				</div>
 				<div className="ct-explode-control">
 					<span>{tx(selected !== null ? '系统' : '整车')}</span>
@@ -646,8 +648,10 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 						onChange={(e) => {
 							interact()
 							cancelAnimationFrame(animationRef.current)
-							if (selected !== null) setPartsExplode(Number(e.target.value))
-							else {
+							if (selected !== null) {
+								if (selected === 'powertrain') setEngineView('assembly')
+								setPartsExplode(Number(e.target.value))
+							} else {
 								returnToSystems()
 								setExplode(Number(e.target.value))
 							}
@@ -657,31 +661,43 @@ export function CarTeardown({ controls, label }: { controls: ExperienceControls;
 								animateParts(currentPartsExplode.current > 0.5 ? 1 : 0)
 								return
 							}
-							if (currentExplode.current > 0 && currentExplode.current < 1)
-								animate(currentExplode.current > 0.5 ? 1 : 0)
+							if (currentExplode.current > 0 && currentExplode.current < 1) animate(currentExplode.current > 0.5 ? 1 : 0)
 						}}
 					/>
 					<span>{tx(selected !== null ? '零件' : '系统')}</span>
 					<button
 						data-action="explode"
-						onClick={() =>
-							selected !== null
-								? animateParts(partsExplode > 0.5 ? 0 : 1)
-								: animate(explode > 0.5 ? 0 : 1)
-						}
+						onClick={() => (selected !== null ? animateParts(partsExplode > 0.5 ? 0 : 1) : animate(explode > 0.5 ? 0 : 1))}
 					>
 						{tx((selected !== null ? partsExplode : explode) > 0.5 ? '合上' : '拆开')}
 						<span>{(selected !== null ? partsExplode : explode) > 0.5 ? '−' : '+'}</span>
 					</button>
 				</div>
 				<div className="ct-bottom-meta">
-					<span>{tx('虚构车辆 · 程序化建模')}</span>
-					<span>
-						{tx('七个系统')} / {PARTS.length} {tx('件')}
-					</span>
+					<span>{tx('虚构概念车 · 真实机构计算')}</span>
+					<span>{tx('车身 · 内饰 · 动力 · 底盘 · 车轮')}</span>
 				</div>
 			</div>
-			{!ready && <div className="ct-loading">{tx('正在搭建摄影棚…')}</div>}
+			{(!assetProgress.ready || assetProgress.error) && (
+				<div className={`ct-asset-progress ${ready ? 'is-detail' : ''}`} role="status" aria-live="polite">
+					<span>
+						{tx(
+							assetProgress.error
+								? '模型未能载入，请重试。'
+								: assetProgress.phase === 'body'
+									? '正在载入车身与影棚'
+									: '正在载入发动机与底盘',
+						)}
+					</span>
+					{!assetProgress.error && (
+						<>
+							<progress aria-label={tx('素材加载进度')} value={assetProgress.loaded} max={Math.max(1, assetProgress.total)} />
+							<small>{assetProgress.total ? `${Math.round((assetProgress.loaded / assetProgress.total) * 100)}%` : tx('准备中')}</small>
+						</>
+					)}
+					{assetProgress.error && <button onClick={() => window.location.reload()}>{tx('重试')}</button>}
+				</div>
+			)}
 		</div>
 	)
 }

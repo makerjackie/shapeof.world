@@ -21,7 +21,7 @@ import {
 	wrapDegrees,
 } from './model'
 
-describe('the specified 2.0-litre inline four', () => {
+describe('the specified 2.5-litre inline four', () => {
 	it('reaches both exact slider-crank dead centres and the specified stroke', () => {
 		const e = S.engine
 		expect(pistonPosition(0)).toBeCloseTo(e.crankRadius + e.rodLength, 12)
@@ -30,7 +30,7 @@ describe('the specified 2.0-litre inline four', () => {
 		// Finite rod length puts the piston below the sinusoidal approximation.
 		expect(pistonPosition(90)).toBeCloseTo(Math.sqrt(e.rodLength ** 2 - e.crankRadius ** 2), 12)
 		expect(pistonPosition(90)).toBeLessThan(e.rodLength)
-		expect(displacementCc()).toBeCloseTo(1998.229, 3)
+		expect(displacementCc()).toBeCloseTo(2488.45554, 3)
 	})
 
 	it('satisfies the rod-length constraint throughout both revolutions', () => {
@@ -60,11 +60,7 @@ describe('the specified 2.0-litre inline four', () => {
 			// Check actual flashes, which occur before the corresponding firing TDC.
 			const angle = index * 180 - advance + S.engine.ignition.duration / 2
 			expect(cylinderState(angle, cylinder, 3000).sparkIntensity).toBeCloseTo(1, 12)
-			expect(
-				([1, 2, 3, 4] as CylinderNumber[]).filter(
-					(c) => cylinderState(angle, c, 3000).spark > 0.01,
-				),
-			).toEqual([cylinder])
+			expect(([1, 2, 3, 4] as CylinderNumber[]).filter((c) => cylinderState(angle, c, 3000).spark > 0.01)).toEqual([cylinder])
 		}
 	})
 
@@ -126,10 +122,7 @@ describe('valves, camshafts and ignition share the same cycle', () => {
 			for (let theta = 0; theta < 720; theta += 13.1) {
 				for (const valve of ['intake', 'exhaust'] as const) {
 					const contactRadius = camLobeRadius(-camAngle(theta), cylinder, valve)
-					expect(contactRadius - S.engine.timing.camBaseRadius).toBeCloseTo(
-						valveLift(cycleAngle(theta, cylinder), valve),
-						12,
-					)
+					expect(contactRadius - S.engine.timing.camBaseRadius).toBeCloseTo(valveLift(cycleAngle(theta, cylinder), valve), 12)
 				}
 			}
 		}
@@ -174,12 +167,12 @@ describe('the five-speed transmission prepared for round two', () => {
 		expect(gearRatio('N')).toBeNull()
 	})
 
-	it('predicts about 101.7 km/h in fourth at 3000 RPM using rolling radius', () => {
+	it('predicts about 116.4 km/h in fourth at 3000 RPM using rolling radius', () => {
 		expect(finalDriveRatio()).toBeCloseTo(3.7272727, 7)
-		expect(vehicleSpeedKmh(3000, 4)).toBeCloseTo(101.64968, 4)
+		expect(vehicleSpeedKmh(3000, 4)).toBeCloseTo(116.444713, 4)
 		expect(vehicleSpeedKmh(3000, 'R')).toBeLessThan(0)
 		expect(vehicleSpeedKmh(3000, 'N')).toBeNull()
-		expect(S.wheels.nominalDiameter).toBeCloseTo(0.6706, 10)
+		expect(S.wheels.nominalDiameter).toBeCloseTo(0.767518, 10)
 	})
 
 	it('keeps an open differential carrier at the average wheel speed', () => {

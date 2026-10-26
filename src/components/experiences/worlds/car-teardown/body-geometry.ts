@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { BODY_GEOMETRY as B, VEHICLE_SPEC as V } from './vehicle-spec'
+import {BODY_GEOMETRY as B, VEHICLE_SPEC as V} from './vehicle-spec'
 
 type NumericRows = readonly (readonly number[])[]
 
@@ -17,8 +17,7 @@ function naturalSpline(rows: NumericRows, column: number) {
 	const c = new Array<number>(n).fill(0)
 	const b = new Array<number>(n - 1).fill(0)
 	const d = new Array<number>(n - 1).fill(0)
-	for (let i = 1; i < n - 1; i++)
-		alpha[i] = 3 * ((a[i + 1] - a[i]) / h[i] - (a[i] - a[i - 1]) / h[i - 1])
+	for (let i = 1; i < n - 1; i++) alpha[i] = 3 * ((a[i + 1] - a[i]) / h[i] - (a[i] - a[i - 1]) / h[i - 1])
 	for (let i = 1; i < n - 1; i++) {
 		l[i] = 2 * (x[i + 1] - x[i - 1]) - h[i - 1] * mu[i - 1]
 		mu[i] = h[i] / l[i]
@@ -52,7 +51,7 @@ export function bodySection(x: number) {
 }
 
 export function bodyPoint(x: number, angle: number, lift = 0) {
-	const { top, shoulder, width, bottom } = bodySection(x)
+	const {top, shoulder, width, bottom} = bodySection(x)
 	const turn = THREE.MathUtils.euclideanModulo(angle, Math.PI * 2)
 	const side = turn <= Math.PI ? 1 : -1
 	const q = (turn <= Math.PI ? turn : Math.PI * 2 - turn) / Math.PI
@@ -72,9 +71,7 @@ export function bodyPoint(x: number, angle: number, lift = 0) {
 		z = width - B.sillInset - B.sillBevelWidth * (1 - Math.cos(t))
 	} else {
 		y = bottom
-		z =
-			(width - B.sillInset - B.sillBevelWidth) *
-			(1 - (q - B.undersideParameter) / (1 - B.undersideParameter))
+		z = (width - B.sillInset - B.sillBevelWidth) * (1 - (q - B.undersideParameter) / (1 - B.undersideParameter))
 	}
 	return new THREE.Vector3(x, y + lift, side * z)
 }
@@ -82,7 +79,7 @@ export function bodyPoint(x: number, angle: number, lift = 0) {
 /** The side is almost vertical below a deliberate shoulder: a 25 mm inset
  * from shoulder to sill, with a small rolled lower edge, never an ellipse. */
 export function bodySide(x: number, y: number, side = 1, offset = 0) {
-	const { top, shoulder, width, bottom } = bodySection(x)
+	const {top, shoulder, width, bottom} = bodySection(x)
 	let z: number
 	if (y >= shoulder) {
 		const crown = Math.min(B.upperCrown, (top - shoulder) * 0.45)
@@ -109,11 +106,7 @@ export function cabinPoint(x: number, angle: number, lift = 0) {
 	const top = cabinSplines[0](x)
 	const bottom = cabinSplines[1](x)
 	const width = cabinSplines[2](x)
-	return new THREE.Vector3(
-		x,
-		bottom + (top - bottom) * (1 - Math.abs(Math.sin(angle)) ** B.cabinExponent) + lift,
-		width * Math.sin(angle),
-	)
+	return new THREE.Vector3(x, bottom + (top - bottom) * (1 - Math.abs(Math.sin(angle)) ** B.cabinExponent) + lift, width * Math.sin(angle))
 }
 
 function createLoft(cabin: boolean) {
@@ -182,9 +175,7 @@ export function fasciaX(y: number, z: number, front: boolean) {
 	const cornerBlend = front
 		? Math.max(0, 1 - (Math.abs(z) / Math.max(halfWidth, Number.EPSILON)) ** B.capCornerPower)
 		: Math.sqrt(Math.max(0, 1 - corner * corner))
-	const profile = front
-		? Math.min(V.dimensions.frontAxleX + V.dimensions.frontOverhang, frontProfile(y))
-		: Math.max(V.dimensions.rearAxleX - V.dimensions.rearOverhang, rearProfile(y))
+	const profile = front ? Math.min(B.envelope.front, frontProfile(y)) : Math.max(B.envelope.rear, rearProfile(y))
 	const recess = front
 		? B.fascia.lowerRecess *
 			Math.exp(-(((y - B.lowerIntake.y) / B.fascia.recessBlendHeight) ** 4)) *
@@ -198,13 +189,7 @@ export function fasciaX(y: number, z: number, front: boolean) {
 	return row[0] + (profile - row[0] - recess + rearRecess) * cornerBlend
 }
 
-function fasciaGrid(
-	front: boolean,
-	ymin: number,
-	ymax: number,
-	widthAtY: (y: number) => number,
-	lift: number,
-) {
+function fasciaGrid(front: boolean, ymin: number, ymax: number, widthAtY: (y: number) => number, lift: number) {
 	const rows = B.fascia.segments
 	const columns = B.fascia.segments
 	const positions: number[] = []
@@ -234,7 +219,7 @@ export function createBodyCap(front: boolean) {
 	return fasciaGrid(front, row[4], row[1], (y) => Math.abs(bodySide(row[0], y).z), 0)
 }
 
-export function createIntakeSurface(grille: { y: number; width: number; height: number }) {
+export function createIntakeSurface(grille: {y: number; width: number; height: number}) {
 	const radius = grille.height / 3
 	return fasciaGrid(
 		true,
@@ -268,14 +253,7 @@ export function createRearPanel(plate: boolean) {
 
 export function createArchBack(axleX: number, side: number) {
 	const shape = new THREE.Shape()
-	shape.absarc(
-		0,
-		0,
-		B.wheelArchRadius,
-		-B.archLipAngleOverrun,
-		Math.PI + B.archLipAngleOverrun,
-		false,
-	)
+	shape.absarc(0, 0, B.wheelArchRadius, -B.archLipAngleOverrun, Math.PI + B.archLipAngleOverrun, false)
 	shape.closePath()
 	const geometry = new THREE.ShapeGeometry(shape, 96)
 	const z = bodySide(axleX, V.wheels.radius, side).z - side * B.wheelArchDepth
@@ -315,13 +293,9 @@ export function applyBodyClip<T extends THREE.Material>(material: T, surface: Cl
 			'#include <begin_vertex>',
 			'#include <begin_vertex>\nvCarPosition = position; vCarUv = uv;',
 		)
-		shader.fragmentShader =
-			'varying vec3 vCarPosition; varying vec2 vCarUv;\n' + shader.fragmentShader
+		shader.fragmentShader = 'varying vec3 vCarPosition; varying vec2 vCarUv;\n' + shader.fragmentShader
 		const code =
-			surface === 'shell'
-				? wheelClip
-				: glazingFunction +
-					(surface === 'glass' ? '\nif (!isGlass) discard;' : '\nif (isGlass) discard;')
+			surface === 'shell' ? wheelClip : glazingFunction + (surface === 'glass' ? '\nif (!isGlass) discard;' : '\nif (isGlass) discard;')
 		shader.fragmentShader = shader.fragmentShader.replace(
 			'#include <clipping_planes_fragment>',
 			'#include <clipping_planes_fragment>\n' + code,
@@ -331,10 +305,7 @@ export function applyBodyClip<T extends THREE.Material>(material: T, surface: Cl
 			// Suppress its narrow white studio reflection without altering the roof.
 			const satinPillar = `pillar && windowAngle > ${f(G.sideTopAngle)}`
 			shader.fragmentShader = shader.fragmentShader
-				.replace(
-					'#include <color_fragment>',
-					`#include <color_fragment>\nif (${satinPillar}) diffuseColor.rgb *= 0.22;`,
-				)
+				.replace('#include <color_fragment>', `#include <color_fragment>\nif (${satinPillar}) diffuseColor.rgb *= 0.22;`)
 				.replace(
 					'#include <roughnessmap_fragment>',
 					`#include <roughnessmap_fragment>\nif (${satinPillar}) roughnessFactor = max(roughnessFactor, 0.68);`,
@@ -350,10 +321,7 @@ export function applyBodyClip<T extends THREE.Material>(material: T, surface: Cl
 }
 
 export function bodyDepthMaterial(surface: ClipSurface) {
-	return applyBodyClip(
-		new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide }),
-		surface,
-	)
+	return applyBodyClip(new THREE.MeshDepthMaterial({depthPacking: THREE.RGBADepthPacking, side: THREE.DoubleSide}), surface)
 }
 
 export function curveTube(points: readonly THREE.Vector3[], radius: number, segments = 96) {

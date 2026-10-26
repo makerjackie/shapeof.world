@@ -21,8 +21,7 @@ const parameters = {
 }
 function run(duration: number, fps = 60, damping: number = S.suspension.damping, slowdown = 1) {
 	const state = createSuspensionState({damping})
-	for (let i = 0; i < Math.round(duration * fps); i++)
-		advanceSuspension(state, {...parameters, damping, slowdown, dt: 1 / fps})
+	for (let i = 0; i < Math.round(duration * fps); i++) advanceSuspension(state, {...parameters, damping, slowdown, dt: 1 / fps})
 	return state
 }
 
@@ -31,14 +30,8 @@ describe('suspension at its loaded static equilibrium', () => {
 		const sag = staticSuspensionSag()
 		expect(sag.spring).toBeCloseTo(0.11772, 8)
 		expect(sag.tyre).toBeCloseTo(0.015696, 8)
-		expect(sag.spring * S.suspension.springRate).toBeCloseTo(
-			S.suspension.sprungMass * G.gravity,
-			10,
-		)
-		expect(sag.tyre * S.suspension.tyreStiffness).toBeCloseTo(
-			(S.suspension.sprungMass + S.suspension.unsprungMass) * G.gravity,
-			10,
-		)
+		expect(sag.spring * S.suspension.springRate).toBeCloseTo(S.suspension.sprungMass * G.gravity, 10)
+		expect(sag.tyre * S.suspension.tyreStiffness).toBeCloseTo((S.suspension.sprungMass + S.suspension.unsprungMass) * G.gravity, 10)
 		expect(quarterCarDerivative([0, 0, 0, 0], 0)).toEqual([0, -0, 0, 0])
 	})
 	it('has a single smooth 5 cm road bump and the exact rear-wheel delay L/v', () => {
@@ -48,12 +41,9 @@ describe('suspension at its loaded static equilibrium', () => {
 		expect(suspensionBump(G.bumpWidth, 0.05)).toBe(0)
 		expect(suspensionBump(G.bumpWidth + 1, 0.05)).toBe(0)
 		const delay = rearAxleDelay(20)
-		expect(delay).toBeCloseTo(0.513, 12)
+		expect(delay).toBeCloseTo(0.50395374, 12)
 		for (let t = 0; t <= 3; t += 0.013)
-			expect(suspensionRoad(t + delay, 'rear', 20, 0.05)).toBeCloseTo(
-				suspensionRoad(t, 'front', 20, 0.05),
-				12,
-			)
+			expect(suspensionRoad(t + delay, 'rear', 20, 0.05)).toBeCloseTo(suspensionRoad(t, 'front', 20, 0.05), 12)
 	})
 	it('is not driven before the first front contact and responds at the rear later', () => {
 		const before = run(G.firstContactTime)
@@ -88,16 +78,13 @@ describe('fixed-step RK4 and damping', () => {
 		}
 		const low = run(4, 60, 2000),
 			damped = run(4, 60, 4500)
-		const ringdown = (state: typeof low) =>
-			Math.max(...state.history.filter((p) => p.time > 1.6).map((p) => Math.abs(p.body)))
+		const ringdown = (state: typeof low) => Math.max(...state.history.filter((p) => p.time > 1.6).map((p) => Math.abs(p.body)))
 		expect(ringdown(damped)).toBeLessThan(ringdown(low) * 0.4)
 	})
 	it('reduces rebound overshoot through soft, standard and firm damping presets', () => {
 		// Higher damping also transmits more of the first impact. The overshoot
 		// being compared is the rebound below the original static ride height.
-		const rebound = G.dampingPresets.map(
-			(damping) => -Math.min(...run(4, 60, damping).history.map((p) => p.body)),
-		)
+		const rebound = G.dampingPresets.map((damping) => -Math.min(...run(4, 60, damping).history.map((p) => p.body)))
 		expect(rebound[1]).toBeLessThan(rebound[0])
 		expect(rebound[2]).toBeLessThan(rebound[1])
 	})
@@ -106,8 +93,7 @@ describe('fixed-step RK4 and damping', () => {
 			for (const bumpHeight of G.bumpRange)
 				for (const damping of G.dampingPresets) {
 					const state = createSuspensionState({speedKmh, bumpHeight, damping})
-					for (let i = 0; i < 600; i++)
-						advanceSuspension(state, {...parameters, speedKmh, bumpHeight, damping, dt: 1 / 60})
+					for (let i = 0; i < 600; i++) advanceSuspension(state, {...parameters, speedKmh, bumpHeight, damping, dt: 1 / 60})
 					expect(state.settled).toBe(true)
 					for (const p of state.history) {
 						expect(Number.isFinite(p.body + p.wheel)).toBe(true)

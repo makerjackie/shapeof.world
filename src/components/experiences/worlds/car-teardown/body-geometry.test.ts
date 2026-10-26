@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'vitest'
 import {bodySide, fasciaX, createBodyCap} from './body-geometry'
-import {BODY_GEOMETRY as B, VEHICLE_SPEC as S} from './vehicle-spec'
-describe('continuous rounded sedan ends', () => {
+import {BODY_GEOMETRY as B} from './vehicle-spec'
+describe('retained procedural body cap tooling', () => {
 	it('joins the loft at both cap rims without a vertical gap', () => {
 		for (const front of [false, true]) {
 			const row = front ? B.sections.at(-1)! : B.sections[0]
@@ -19,12 +19,8 @@ describe('continuous rounded sedan ends', () => {
 				positions = geometry.attributes.position,
 				normals = geometry.attributes.normal
 			for (let i = 0; i < positions.count; i++) {
-				expect(positions.getX(i)).toBeLessThanOrEqual(
-					S.dimensions.frontAxleX + S.dimensions.frontOverhang + 1e-6,
-				)
-				expect(positions.getX(i)).toBeGreaterThanOrEqual(
-					S.dimensions.rearAxleX - S.dimensions.rearOverhang - 1e-6,
-				)
+				expect(positions.getX(i)).toBeLessThanOrEqual(B.envelope.front + 1e-6)
+				expect(positions.getX(i)).toBeGreaterThanOrEqual(B.envelope.rear - 1e-6)
 				expect(Number.isFinite(normals.getX(i) + normals.getY(i) + normals.getZ(i))).toBe(true)
 			}
 			geometry.dispose()

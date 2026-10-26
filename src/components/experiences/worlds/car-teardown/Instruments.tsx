@@ -2,7 +2,7 @@ import {useEffect, useRef, useState, type RefObject} from 'react'
 import {useExperienceI18n} from '~/i18n/experience'
 import {cylinderState, cycleAngle, ignitionAdvance, strokeAt} from './model'
 import {VEHICLE_SPEC as S, type CylinderNumber, type Stroke} from './vehicle-spec'
-import {SYSTEMS, partCount, type SystemId} from './parts'
+import {SYSTEMS, type SystemId} from './parts'
 import type {AnchorMap} from './Scene'
 import {layoutLeaders} from './label-layout'
 
@@ -46,17 +46,14 @@ export function EngineeringLabels({
 				return anchor ? [{id: s.id, ...anchor}] : []
 			}),
 			{
-				top: mobile ? 235 : 230,
+				top: mobile ? 280 : 345,
 				bottom: layout.height - (mobile ? 255 : 205),
 				gap: mobile ? 70 : 65,
 			},
 		).map((a) => [a.id, a]),
 	)
 	return (
-		<svg
-			ref={host}
-			className={`ct-labels ${visible ? 'is-visible' : ''}`}
-			aria-label={tx('系统标注')}>
+		<svg ref={host} className={`ct-labels ${visible ? 'is-visible' : ''}`} aria-label={tx('系统标注')}>
 			{shown.map((s) => {
 				const anchor = layout.anchors[s.id]
 				if (!anchor || !anchor.visible) return null
@@ -72,7 +69,7 @@ export function EngineeringLabels({
 						role="button"
 						tabIndex={visible ? 0 : -1}
 						className={hovered === s.id ? 'is-hovered' : ''}
-						aria-label={`${tx(s.name)} ${partCount(s.id)} ${tx('件')}`}
+						aria-label={tx(s.name)}
 						onPointerEnter={() => onHover(s.id)}
 						onPointerLeave={() => onHover(null)}
 						onClick={() => onSelect(s.id)}
@@ -81,26 +78,17 @@ export function EngineeringLabels({
 								e.preventDefault()
 								onSelect(s.id)
 							}
-						}}>
+						}}
+					>
 						<circle cx={anchor.x} cy={anchor.y} r={2.4} fill="currentColor" />
 						<path d={`M${anchor.x},${anchor.y} L${elbow},${y} H${lineEnd}`} />
-						<rect
-							x={x - 8}
-							y={y - 25}
-							width={mobile ? 116 : 185}
-							height={51}
-							fill="transparent"
-							stroke="none"
-						/>
+						<rect x={x - 8} y={y - 25} width={mobile ? 116 : 185} height={51} fill="transparent" stroke="none" />
 						<circle cx={x + 8} cy={y - 9} r={9} />
 						<text x={x + 8} y={y - 5} textAnchor="middle" className="ct-label-number">
 							{SYSTEMS.indexOf(s) + 1}
 						</text>
 						<text x={x + 25} y={y - 5} className="ct-label-name">
 							{tx(s.name)}
-						</text>
-						<text x={x + 25} y={y + 13} className="ct-label-count">
-							{partCount(s.id)} {tx('件')}
 						</text>
 					</g>
 				)
@@ -143,11 +131,12 @@ export function EngineInstruments({
 		<aside className={`ct-instruments ${open ? 'is-open' : ''}`} aria-label={tx('发动机仪表')}>
 			<button className="ct-panel-heading" onClick={() => setOpen(!open)} aria-expanded={open}>
 				<span>
-					{tx('直列四缸')} <span className="ct-muted">2.0 L · DOHC</span>
+					{tx('直列四缸')} <span className="ct-muted">2.5 L · DOHC</span>
 				</span>
 				<span className="ct-drawer-toggle">{open ? '−' : '+'}</span>
 			</button>
 			<div className="ct-instrument-content">
+				<p className="ct-function">{tx('曲轴转一圈，每个活塞上下一次。两圈完成四个冲程。')}</p>
 				<div className="ct-rpm-reading">
 					<div>
 						<span>{tx('真实转速')}</span>
@@ -182,10 +171,7 @@ export function EngineInstruments({
 						{tx(paused ? '播放' : '暂停')}
 					</button>
 				</div>
-				<button
-					className={`ct-xray ${xray ? 'is-active' : ''}`}
-					aria-pressed={xray}
-					onClick={() => onXray(!xray)}>
+				<button className={`ct-xray ${xray ? 'is-active' : ''}`} aria-pressed={xray} onClick={() => onXray(!xray)}>
 					<span>{tx('X 光')}</span>
 					<span>{tx(xray ? '开启' : '关闭')}</span>
 				</button>
@@ -251,14 +237,7 @@ export function EngineInstruments({
 								</g>
 							)
 						})}
-						<line
-							x1={26 + (angle / 720) * 196}
-							x2={26 + (angle / 720) * 196}
-							y1="16"
-							y2="130"
-							stroke="#f7f3e7"
-							strokeWidth="1.2"
-						/>
+						<line x1={26 + (angle / 720) * 196} x2={26 + (angle / 720) * 196} y1="16" y2="130" stroke="#f7f3e7" strokeWidth="1.2" />
 						<path d={`M${22 + (angle / 720) * 196},14h8l-4,5z`} fill="#f7f3e7" />
 					</svg>
 					<input
@@ -299,9 +278,7 @@ export function EngineInstruments({
 						<b>{ignitionAdvance(rpm).toFixed(0)}°</b>
 					</span>
 				</div>
-				<p className="ct-panel-note">
-					{tx('气门正时固定，点火提前为示意；真实发动机随工况调整。')}
-				</p>
+				<p className="ct-panel-note">{tx('气门正时固定，点火提前为示意；真实发动机随工况调整。')}</p>
 			</div>
 		</aside>
 	)
