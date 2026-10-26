@@ -5,8 +5,8 @@ import { CL, EO } from "./kit";
 
 // 189–199 s. Sources, then the end card (no sting, no URL).
 
-export const S8_LEN = 300;
-const CARD = 130;
+export const S8_LEN = 270;
+const CARD = 96;
 
 const ROWS = [
   "《2025 年中国睡眠健康调查报告》，中国睡眠研究会等，2025",

@@ -145,7 +145,7 @@ const sfx = (n: string, ext = "wav") => staticFile(`sfx/${n}.${ext}`);
 const Open2Sound: React.FC<{ music: boolean }> = ({ music }) => (
   <>
     {/* room tone, cut to near nothing at the stop */}
-    <Audio src={sfx("brown")} volume={(f) => interpolate(f, [0, 12, STOP - 2, STOP + 2, C1, 450], [0, 0.16, 0.2, 0.05, 0.05, 0.04], CL)} />
+    <Audio src={sfx("brown")} volume={(f) => interpolate(f, [0, 12, STOP - 2, STOP + 2, C1, 450], [0, 0.08, 0.1, 0.0, 0.0, 0.0], CL)} />
     {SWIPES.map((at, i) => (
       <Sequence key={`s${at}`} from={at} durationInFrames={20}>
         <Audio src={sfx("swipe")} volume={0.42 + i * 0.03} />

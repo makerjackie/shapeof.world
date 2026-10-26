@@ -9,15 +9,15 @@ import { D0, rnd } from "./stack";
 // small lights on the water — everyone still awake. Then the lights go out one by one, back to yours,
 // and the last line.
 
-export const S7_LEN = 930;
+export const S7_LEN = 600;
 const HZ = 470; // horizon
 const ME = { x: 960, y: 890 }; // your orb in the bay framing
 const ME_S = 0.45; // your orb is drawn smaller in the bay, so the pull-back starts at 1 / ME_S
-const PULL_TO = 220;
-const OUT_FROM = 540;
-const PUSH_FROM = 650;
-const PUSH_TO = 760;
-const DIM_FROM = 800;
+const PULL_TO = 150;
+const OUT_FROM = 330;
+const PUSH_FROM = 410;
+const PUSH_TO = 490;
+const DIM_FROM = 540;
 
 const BUILDINGS = (() => {
   const out: { x: number; w: number; h: number; seed: number }[] = [];
@@ -41,7 +41,7 @@ const WINDOWS = BUILDINGS.flatMap((b) => {
     for (let c = 0; c < cols; c++) {
       const h = rnd(b.seed * 100 + r * 13 + c * 7);
       if (h > 0.3) continue;
-      out.push({ x: b.x + 6 + c * 16, y: HZ - b.h + 8 + r * 18, cool: h < 0.09, off: OUT_FROM + rnd(h * 999) * 130 });
+      out.push({ x: b.x + 6 + c * 16, y: HZ - b.h + 8 + r * 18, cool: h < 0.09, off: OUT_FROM + rnd(h * 999) * 90 });
     }
   return out;
 });
@@ -49,7 +49,7 @@ const WINDOWS = BUILDINGS.flatMap((b) => {
 const OTHERS = Array.from({ length: 140 }, (_, i) => {
   const z = 1.6 + Math.pow(rnd(i * 4.3), 0.7) * 14;
   const x = 960 + (rnd(i * 6.1) - 0.5) * 2600 * (z / 6);
-  return { x, z, y: HZ + 420 / z, r: 58 / z, ph: rnd(i * 2.2) * 6, off: OUT_FROM + rnd(i * 8.8) * 120 };
+  return { x, z, y: HZ + 420 / z, r: 58 / z, ph: rnd(i * 2.2) * 6, off: OUT_FROM + rnd(i * 8.8) * 80 };
 }).filter((o) => o.x > -100 && o.x < 2020 && Math.abs(o.x - ME.x) + Math.abs(o.y - ME.y) > 160);
 
 export const S7City: React.FC = () => {
@@ -58,7 +58,7 @@ export const S7City: React.FC = () => {
   const push = interpolate(f, [PUSH_FROM, PUSH_TO], [0, 1], { ...CL, easing: EIO });
   const zoom = (1 / ME_S) * (1 - pull) + pull + 1.6 * push;
   const intro = interpolate(f, [0, 22], [1, 0], CL); // the close water scene fading away
-  const meDim = interpolate(f, [DIM_FROM, S7_LEN - 20], [1, 0], { ...CL, easing: EIO });
+  const meDim = interpolate(f, [DIM_FROM, S7_LEN - 6], [1, 0], { ...CL, easing: EIO });
   const cityDim = interpolate(f, [PUSH_FROM, PUSH_TO + 40], [1, 0.25], CL);
 
   return (
@@ -103,16 +103,16 @@ export const S7City: React.FC = () => {
 
       {intro > 0 && (
         <AbsoluteFill style={{ opacity: intro }}>
-          <WaterScene f={f + 4290} orbs={[{ x: 960, d: D0, v: 0 }]} />
+          <WaterScene f={f + 2460} orbs={[{ x: 960, d: D0, v: 0 }]} />
         </AbsoluteFill>
       )}
 
-      <Say f={f} at={120} out={250} text="今晚，有很多人和你一样醒着。" top={110} size={72} />
-      <Say f={f} at={262} out={410} text="一半以上的 00 后，零点以后才睡。" gold="零点以后" top={110} size={72} />
-      <Src f={f} at={270} out={410} text="《2025 年中国睡眠健康调查报告》" />
-      <Say f={f} at={420} out={PUSH_FROM - 10} text="他们心里，大概也有那个声音。" top={110} size={72} />
-      <Say f={f} at={PUSH_TO - 40} out={S7_LEN - 30} text="今晚要是又熬了，" top={170} size={72} weight={600} dim={0.9} />
-      <Say f={f} at={PUSH_TO + 14} out={S7_LEN - 30} text="别怪自己。" gold="别怪自己" top={290} size={104} />
+      <Say f={f} at={60} out={180} text="今晚，有很多人和你一样醒着。" top={110} size={80} />
+      <Say f={f} at={186} out={300} text="一半以上的 00 后，零点以后才睡。" gold="零点以后" top={110} size={80} />
+      <Src f={f} at={190} out={300} text="《2025 年中国睡眠健康调查报告》" />
+      <Say f={f} at={306} out={PUSH_FROM - 4} text="他们心里，大概也有那个声音。" top={110} size={80} />
+      <Say f={f} at={PUSH_TO - 30} out={S7_LEN - 14} text="今晚要是又熬了，" top={170} size={76} weight={600} dim={0.9} />
+      <Say f={f} at={PUSH_TO + 6} out={S7_LEN - 14} text="别怪自己。" gold="别怪自己" top={290} size={116} />
 
       <Dressing />
     </AbsoluteFill>

@@ -7,9 +7,9 @@ import { D0, SURFACE, simulateStack } from "./stack";
 
 // 130–158 s. Three things to try tonight, each acted out once.
 
-export const S6_LEN = 840;
-const M2 = 270;
-const M3 = 560;
+export const S6_LEN = 480;
+const M2 = 160;
+const M3 = 320;
 
 const C1: CardSpec[] = [
   { kind: "notice", text: "你怎么又这样。", size: 46 },
@@ -18,8 +18,8 @@ const C1: CardSpec[] = [
 const M1SIM = simulateStack({
   frames: M2,
   cards: [
-    { at: 70, h: cardH(C1[0]), weight: 50, rot: -1, vanishAt: 100 },
-    { at: 140, h: cardH(C1[1]), weight: 50, rot: 1, vanishAt: 168 },
+    { at: 40, h: cardH(C1[0]), weight: 50, rot: -1, vanishAt: 64 },
+    { at: 84, h: cardH(C1[1]), weight: 50, rot: 1, vanishAt: 106 },
   ],
 });
 
@@ -46,15 +46,15 @@ export const S6Methods: React.FC = () => {
 
   // --- 2: give the night an ending ---
   const phoneIn = interpolate(f, [M2, M2 + 24, M3 - 16, M3 + 6], [0, 1, 1, 0], { ...CL, easing: EIO });
-  const prog = interpolate(f, [M2 + 30, M2 + 170], [0.35, 1], CL);
-  const done = interpolate(f, [M2 + 172, M2 + 186], [0, 1], { ...CL, easing: EO });
-  const screenOff = interpolate(f, [M2 + 220, M2 + 262], [1, 0], { ...CL, easing: EIO });
+  const prog = interpolate(f, [M2 + 10, M2 + 80], [0.6, 1], CL);
+  const done = interpolate(f, [M2 + 82, M2 + 92], [0, 1], { ...CL, easing: EO });
+  const screenOff = interpolate(f, [M2 + 110, M2 + 140], [1, 0], { ...CL, easing: EIO });
 
   // --- 3: twenty minutes, then get up ---
   const water3 = interpolate(f, [M3 - 6, M3 + 20], [0, 1], CL);
-  const timer = interpolate(f, [M3 + 50, M3 + 160], [0, 1], { ...CL, easing: EIO });
-  const up = interpolate(f, [M3 + 168, M3 + 200, M3 + 236, S6_LEN - 30], [0, 1, 1, 0], { ...CL, easing: EIO });
-  const away = interpolate(f, [M3 + 180, M3 + 236, S6_LEN - 30], [0, 1, 0], { ...CL, easing: EIO });
+  const timer = interpolate(f, [M3 + 24, M3 + 84], [0, 1], { ...CL, easing: EIO });
+  const up = interpolate(f, [M3 + 88, M3 + 108, M3 + 128, S6_LEN - 6], [0, 1, 1, 0], { ...CL, easing: EIO });
+  const away = interpolate(f, [M3 + 96, M3 + 128, S6_LEN - 6], [0, 1, 0], { ...CL, easing: EIO });
   const o3 = { x: 960 + 260 * away, d: D0 - 150 * up + Math.sin(f / 14) * 2, v: 0 };
   const minutes = Math.round(timer * 20);
 
@@ -63,20 +63,20 @@ export const S6Methods: React.FC = () => {
       {waterO1 > 0 && m1 && (
         <AbsoluteFill style={{ opacity: waterO1 }}>
           <WaterScene
-            f={f + 3450}
+            f={f + 1980}
             orbs={[{ x: 960, d: m1.d, v: m1.v, glow: 1.1 }]}
             render={() => (
               <>
                 <StackCards fr={m1} specs={C1} />
-                <Motes f={f} at={100} x={960} y={m1.cards[0].bottom - 40} />
-                <Motes f={f} at={168} x={960} y={m1.cards[1].bottom - 40} />
+                <Motes f={f} at={64} x={960} y={m1.cards[0].bottom - 40} />
+                <Motes f={f} at={106} x={960} y={m1.cards[1].bottom - 40} />
               </>
             )}
           />
         </AbsoluteFill>
       )}
-      <Say f={f} at={-20} out={70} text="今晚，可以试试这三件事。" top={420} size={72} />
-      <Title f={f} at={60} out={M2 - 6} n="一" title="不跟自己吵。" sub={"想刷，就承认：「我现在就是想放松一下。」"} />
+      <Say f={f} at={-10} out={26} text="今晚，可以试试这三件事。" top={420} size={80} />
+      <Title f={f} at={24} out={M2 - 4} n="一" title="不跟自己吵。" sub={"想刷，就承认：「我现在就是想放松一下。」"} />
 
       {phoneIn > 0 && (
         <AbsoluteFill style={{ opacity: phoneIn }}>
@@ -100,39 +100,35 @@ export const S6Methods: React.FC = () => {
           </div>
         </AbsoluteFill>
       )}
-      <Title f={f} at={M2 + 14} out={M3 - 4} n="二" title="给夜晚一个结尾。" sub={"看完这一集就停。\n没有尽头的信息流，最难停下。"} left={150} top={330} />
+      <Title f={f} at={M2 + 8} out={M3 - 4} n="二" title="给夜晚一个结尾。" sub={"看完这一集就停。\n没有尽头的信息流，最难停下。"} left={150} top={330} />
 
       {water3 > 0 && (
         <AbsoluteFill style={{ opacity: water3 }}>
-          <WaterScene f={f + 3450} orbs={[o3]} ripples={[{ f: M3 + 176, x: 960, p: 0.7 }, { f: S6_LEN - 34, x: 960, p: 0.5 }]} />
+          <WaterScene f={f + 1980} orbs={[o3]} ripples={[{ f: M3 + 92, x: 960, p: 0.7 }, { f: S6_LEN - 10, x: 960, p: 0.5 }]} />
           {/* a twenty-minute ring round the orb while it lies there */}
-          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, opacity: interpolate(f, [M3 + 40, M3 + 56, M3 + 176, M3 + 200], [0, 1, 1, 0], CL) }}>
+          <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, opacity: interpolate(f, [M3 + 16, M3 + 26, M3 + 90, M3 + 104], [0, 1, 1, 0], CL) }}>
             <circle cx={960} cy={SURFACE + D0} r={120} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={4} />
             <circle cx={960} cy={SURFACE + D0} r={120} fill="none" stroke={K.gold} strokeWidth={4} strokeLinecap="round" strokeDasharray={`${timer * 754} 754`} transform={`rotate(-90 960 ${SURFACE + D0})`} />
           </svg>
-          <div style={{ position: "absolute", left: 1110, top: SURFACE + D0 - 60, fontFamily: FONT, fontWeight: 300, fontSize: 48, color: K.fg, opacity: interpolate(f, [M3 + 50, M3 + 62, M3 + 176, M3 + 200], [0, 0.85, 0.85, 0], CL) }}>
+          <div style={{ position: "absolute", left: 1110, top: SURFACE + D0 - 60, fontFamily: FONT, fontWeight: 300, fontSize: 48, color: K.fg, opacity: interpolate(f, [M3 + 20, M3 + 30, M3 + 90, M3 + 104], [0, 0.85, 0.85, 0], CL) }}>
             {minutes} 分钟
           </div>
         </AbsoluteFill>
       )}
-      <Title f={f} at={M3 + 20} out={S6_LEN - 4} n="三" title="躺 20 分钟还睡不着，就起来。" sub={"去别处坐一会儿，困了再回床上。不硬睡。"} top={120} />
-      <Src f={f} at={M3 + 40} out={S6_LEN - 4} text="失眠认知行为疗法（CBT-I）的常用做法" />
+      <Title f={f} at={M3 + 8} out={S6_LEN - 2} n="三" title="躺 20 分钟还睡不着，就起来。" sub={"去别处坐一会儿，困了再回床上。不硬睡。"} top={120} />
+      <Src f={f} at={M3 + 20} out={S6_LEN - 2} text="失眠认知行为疗法（CBT-I）的常用做法" />
 
       <Dressing />
-      <Audio src={staticFile("sfx/under.wav")} volume={(t) => interpolate(t, [0, M2 - 20, M2, M3, M3 + 30, S6_LEN], [0.18, 0.18, 0, 0, 0.18, 0.18], CL)} />
-      {[100, 168].map((t) => (
+      {[64, 106].map((t) => (
         <Sequence key={t} from={t} durationInFrames={70}>
-          <Audio src={staticFile("sfx/shimmer.wav")} volume={0.35} />
+          <Audio src={staticFile("sfx/shimmer.wav")} volume={0.22} />
         </Sequence>
       ))}
-      <Sequence from={M2 + 172} durationInFrames={30}>
+      <Sequence from={M2 + 82} durationInFrames={30}>
         <Audio src={staticFile("sfx/tap.wav")} volume={0.5} />
       </Sequence>
-      <Sequence from={M3 + 166} durationInFrames={60}>
-        <Audio src={staticFile("sfx/rise.wav")} volume={0.35} />
-      </Sequence>
-      <Sequence from={S6_LEN - 34} durationInFrames={34}>
-        <Audio src={staticFile("sfx/drop.wav")} volume={0.4} />
+      <Sequence from={M3 + 88} durationInFrames={40}>
+        <Audio src={staticFile("sfx/cloth.wav")} volume={0.4} />
       </Sequence>
     </AbsoluteFill>
   );

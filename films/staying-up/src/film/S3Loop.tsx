@@ -9,7 +9,7 @@ import { S2_END_STATE } from "./S2Press";
 // 31.5–42.3 s. The loop drawn on the water: staying up → blaming yourself → feeling bad → the phone →
 // staying up. The orb runs it faster and faster on the music's lift.
 
-export const S3_LEN = 324;
+export const S3_LEN = 270;
 const CX = 960;
 const RX = 560;
 const RY = 120;
@@ -20,15 +20,15 @@ const NODES = [
   { a: (3 * Math.PI) / 2, text: "难受" }, // back
   { a: 0, text: "刷手机" }, // right
 ];
-const ON = 40; // the orb joins the ring
-const OFF = 290; // and leaves it
-const DRAW_FROM = 6;
-const DRAW_TO = 40;
+const ON = 18; // the orb joins the ring
+const OFF = 238; // and leaves it
+const DRAW_FROM = 0;
+const DRAW_TO = 22;
 
 // angle of the orb on the ring: speeds up steadily (rad/frame from 0.035 to 0.24)
 const angleAt = (f: number) => {
   let a = Math.PI / 2;
-  for (let t = ON; t < Math.min(f, OFF); t++) a += 0.035 + 0.205 * Math.pow((t - ON) / (OFF - ON), 1.6);
+  for (let t = ON; t < Math.min(f, OFF); t++) a += 0.05 + 0.25 * Math.pow(Math.min(1, (t - ON) / (190 - ON)), 1.4);
   return a;
 };
 const ptAt = (a: number) => ({ x: CX + Math.cos(a) * RX, y: CY + Math.sin(a) * RY });
@@ -65,7 +65,7 @@ export const S3Loop: React.FC = () => {
     ox = CX + (front.x - CX) * settle;
     oy = oy + (front.y - 6 - oy) * settle;
   }
-  const speed = f >= ON && f < OFF ? 0.035 + 0.205 * Math.pow((f - ON) / (OFF - ON), 1.6) : 0;
+  const speed = f >= ON && f < OFF ? 0.05 + 0.25 * Math.pow(Math.min(1, (f - ON) / (190 - ON)), 1.4) : 0;
 
   // trail: the last few positions
   const trail = f >= ON && f < OFF + 10 ? Array.from({ length: 22 }, (_, i) => ptAt(angleAt(f - i * 1.0))) : [];
@@ -80,13 +80,13 @@ export const S3Loop: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: K.bg }}>
       <WaterScene
-        f={f + 495}
+        f={f + 270}
         orbs={[]}
         ripples={[]}
         render={(under) =>
           under ? null : (
             <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, overflow: "visible", opacity: ringO }}>
-              <ellipse cx={CX} cy={CY} rx={RX} ry={RY} fill="none" stroke="rgba(255,214,150,0.55)" strokeWidth={2.5} strokeDasharray={`${draw * 2300} 2300`} />
+              <ellipse cx={CX} cy={CY} rx={RX} ry={RY} fill="none" stroke="rgba(255,214,150,0.6)" strokeWidth={4} strokeDasharray={`${draw * 2300} 2300`} style={{ filter: "drop-shadow(0 0 8px rgba(255,190,110,0.8))" }} />
             </svg>
           )
         }
@@ -98,9 +98,9 @@ export const S3Loop: React.FC = () => {
             <rect x={0} y={CY} width={1920} height={400} />
           </clipPath>
         </defs>
-        <ellipse cx={CX} cy={CY} rx={RX} ry={RY} fill="none" stroke="rgba(255,214,150,0.7)" strokeWidth={3} clipPath="url(#front)" strokeDasharray={`${draw * 2300} 2300`} />
+        <ellipse cx={CX} cy={CY} rx={RX} ry={RY} fill="none" stroke="rgba(255,214,150,0.8)" strokeWidth={4.5} clipPath="url(#front)" strokeDasharray={`${draw * 2300} 2300`} style={{ filter: "drop-shadow(0 0 10px rgba(255,190,110,0.9))" }} />
         {trail.map((p, i) => (
-          <circle key={i} cx={p.x} cy={p.y - 6} r={Math.max(1, 22 - i)} fill="rgba(255,200,130,1)" opacity={(1 - i / 22) * 0.18 * Math.min(1, speed * 6)} />
+          <circle key={i} cx={p.x} cy={p.y - 6} r={Math.max(1, 22 - i)} fill="rgba(255,200,130,1)" opacity={(1 - i / 22) * 0.3 * Math.min(1, speed * 5)} />
         ))}
       </svg>
 
@@ -143,18 +143,13 @@ export const S3Loop: React.FC = () => {
         </div>
       </div>
 
-      <Say f={f} at={36} out={120} text="怪自己，会让你难受。" top={110} size={72} />
-      <Say f={f} at={126} out={226} text="难受的时候，手机是最快的止痛药。" gold="最快的止痛药" top={110} size={72} />
-      <Say f={f} at={232} out={S3_LEN - 8} text="于是，越转越快。" top={110} size={84} />
-      <Src f={f} at={130} out={S3_LEN - 8} text="拖延的核心，常常是在躲开坏情绪 · Sirois & Pychyl, 2013" />
+      <Say f={f} at={16} out={88} text="怪自己，会让你难受。" top={110} size={80} />
+      <Say f={f} at={92} out={168} text="难受的时候，手机是最快的止痛药。" gold="最快的止痛药" top={110} size={80} />
+      <Say f={f} at={172} out={S3_LEN - 8} text="于是，越转越快。" top={110} size={92} />
+      <Src f={f} at={96} out={S3_LEN - 8} text="拖延的核心，常常是在躲开坏情绪 · Sirois & Pychyl, 2013" />
 
       <Dressing />
-      {LAPS.map((l) => (
-        <Sequence key={l} from={l} durationInFrames={18}>
-          <Audio src={staticFile("sfx/swipe.wav")} volume={0.35} />
-        </Sequence>
-      ))}
-      <Audio src={staticFile("sfx/under.wav")} volume={0.22} />
+
     </AbsoluteFill>
   );
 };

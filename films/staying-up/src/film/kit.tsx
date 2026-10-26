@@ -28,7 +28,7 @@ export const Say: React.FC<{
   serif?: boolean;
   dim?: number;
 }> = ({ f, at, out = 1e9, text, gold, size = 76, top, left, weight = 700, serif = true, dim = 1 }) => {
-  const k = interpolate(f, [at, at + 16, out, out + 12], [0, 1, 1, 0], { ...CL, easing: EO });
+  const k = interpolate(f, [at, at + 9, out, out + 8], [0, 1, 1, 0], { ...CL, easing: EO });
   if (k <= 0) return null;
   const parts = gold && text.includes(gold) ? text.split(gold) : [text];
   return (
@@ -45,7 +45,7 @@ export const Say: React.FC<{
         letterSpacing: serif ? size * 0.07 : 1,
         color: K.fg,
         opacity: k * dim,
-        transform: `translateY(${(1 - k) * 18}px)`,
+        transform: `translateY(${(1 - k) * 12}px)`,
         textShadow: "0 2px 24px rgba(0,0,0,0.6)",
         whiteSpace: "nowrap",
       }}

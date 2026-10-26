@@ -9,6 +9,7 @@ LIST = {
     "under": "ambience-water-05", "brown": "ambience-texture-02",
     "swipe": "sfx-transition-01", "notify": "sfx-notification-04", "tap": "sfx-ui-01",
     "lift": "sfx-transition-19", "shimmer": "sfx-magic-19",
+    "paper": "sfx-foley-01", "card": "sfx-foley-02", "cloth": "sfx-foley-03", "soft": "sfx-impact-17",
     "music-floating": "scene-dub-90",  # 漂浮物件 · 90: melancholic piano over pads
     "music-warm": "scene-soul-90",  # 温暖电路 · 90: piano and strings, melancholic yet hopeful
 }

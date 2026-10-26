@@ -27,7 +27,8 @@ export const T = (() => {
 })();
 export const FILM_FRAMES = T.end;
 const A_AT = 382; // the claim; the track's first notes sit 1.2 s in
-const B_AT = T.s5 + 10;
+const A_END = T.s4 + 1196; // A's own near-silence (61.6 s into the track)
+const B_AT = T.s4 + 1215;
 
 const FadeIn: React.FC<{ len: number; children: React.ReactNode }> = ({ len, children }) => {
   const f = useCurrentFrame();
@@ -65,11 +66,11 @@ export const Film: React.FC = () => (
       <S8End />
     </Sequence>
 
-    <Sequence from={A_AT - 6} durationInFrames={T.s5 - A_AT + 6}>
-      <Audio src={staticFile("sfx/music-floating.mp3")} startFrom={36} volume={(f) => interpolate(f, [0, 10], [0, 0.6], CL)} />
+    <Sequence from={A_AT - 6} durationInFrames={A_END - A_AT + 6}>
+      <Audio src={staticFile("sfx/music-floating.mp3")} startFrom={36} volume={(f) => interpolate(f, [0, 10, A_END - A_AT - 6, A_END - A_AT + 6], [0, 0.72, 0.72, 0], CL)} />
     </Sequence>
     <Sequence from={B_AT} durationInFrames={T.end - B_AT}>
-      <Audio src={staticFile("sfx/music-warm.mp3")} volume={(f) => interpolate(f, [0, 20, T.s8 - B_AT + 40, T.s8 - B_AT + 120], [0, 0.6, 0.6, 0], CL)} />
+      <Audio src={staticFile("sfx/music-warm.mp3")} volume={(f) => interpolate(f, [0, 60, T.s8 - B_AT, T.s8 - B_AT + 150], [0, 0.72, 0.72, 0], CL)} />
     </Sequence>
   </AbsoluteFill>
 );
