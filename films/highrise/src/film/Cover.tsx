@@ -28,7 +28,7 @@ const shot = (tall: boolean): WorldState => ({
   dim: 1,
   traffic: 1,
   bloom: 0.42,
-  city: { lights: 0.42, dim: 0.85, hideEast: false, focus: [0, 0, 120], iso: 0.9, lampK: 0.82 },
+  city: { lights: 0.42, dim: 0.85, hideEast: false, focus: [0, 0, 12], iso: 0.95, lampK: 0.82 },
   grade: { vig: 0.55, grain: 0.015, fade: 0 },
   hero: {
     vis: 1,
