@@ -1,0 +1,4 @@
+node_modules
+out/
+# Sounds come from music.shapeof.world; re-fetch with tools/fetch-sfx.py
+public/sfx/

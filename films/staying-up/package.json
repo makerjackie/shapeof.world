@@ -1,0 +1,8 @@
+{
+  "name": "staying-up",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "sample": "remotion render Press out/sample-press.mp4 --crf=18 --audio-bitrate=192k"
+  }
+}
