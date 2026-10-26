@@ -1,0 +1,67 @@
+{
+  "slug": "2026-10-26-site-trailer",
+  "name": "世界的形状 · 网站预告片",
+  "subtitle": "这些都不是视频，每一个都能亲手玩",
+  "finalizedAt": "2026-10-26",
+  "status": "定稿",
+  "summary": "约 33 秒的网站预告片（v4）。开头是一台电脑上的 shapeof.world 首页，光标点开《星月夜》，镜头推进屏幕；接着按原创配乐的拍子快切网站上的世界：星空、流体、鸟群、星系、日食、极光、火焰、光子、三体、航运、果蝇、人体、森林、17 种基本粒子、彩虹，中间一拍 3×3 全景格；最后黑洞从全屏拉回到那台电脑里，落一句“这些都不是视频 / 每个世界，都能亲手玩”，片名“一个可以亲手玩的科学宇宙”翻成“世界的形状”。画面全部是网站实时页面的录屏，无旁白，配乐为原创（用代码合成）。",
+  "video": {
+    "key": "site-trailer/2026-10-26/site-trailer-v4-1080p.mp4",
+    "filename": "世界的形状-网站预告片-v4-1080p.mp4",
+    "duration": "0:33",
+    "spec": "1920×1080 · 30fps · H.264 + AAC",
+    "bytes": 29492303,
+    "note": "抖音、B站、视频号、YouTube 都直接上传这一个文件。另有一段 9 秒的静音循环（首页或背景用）：/media/site-trailer/2026-10-26/site-trailer-v4-loop.mp4"
+  },
+  "coversKey": "site-trailer/2026-10-26/covers",
+  "titles": [
+    {
+      "id": "a",
+      "text": "这些都不是视频，每一个都能亲手玩",
+      "for": "抖音、B站、视频号",
+      "note": "和片尾那句话一致，点进来就能验证。",
+      "recommended": true
+    },
+    {
+      "id": "b",
+      "text": "None of this is video. Every world is playable.",
+      "for": "YouTube、X（英文）",
+      "note": "英文标题，片内文字为中英双语。"
+    }
+  ],
+  "descriptions": [
+    {
+      "id": "a",
+      "name": "中文简介",
+      "recommended": true,
+      "text": "黑洞把星光弯成一个环，两个星系撞成一个，咖啡里搅出涡旋，没有重力的火焰会变圆。\n片子里的每一个画面，都是网站上能直接打开、亲手转动的世界，不是视频。\n看见世界如何运行：shapeof.world\n\n配乐为原创，用代码合成。\n\n#vibe知识大赏 @抖音科技"
+    },
+    {
+      "id": "b",
+      "name": "English",
+      "text": "A black hole bending starlight into a ring, two galaxies merging into one, vortices in a stirred cup of coffee, a flame that turns round without gravity.\nEvery shot in this trailer is a live, interactive world on shapeof.world. Open it and play with it yourself.\nSee how the world works: shapeof.world\n\nOriginal score, synthesized in code."
+    }
+  ],
+  "covers": [
+    {
+      "id": "a",
+      "name": "A · 黑洞",
+      "note": "结尾的黑洞；4:3 从 16:9 向右裁，把黑洞放在中间。",
+      "recommended": true
+    }
+  ],
+  "chapters": "0:00 电脑里的 shapeof.world，点开《星月夜》\n0:04 快剪：网站上的世界\n0:19 3×3 全景格\n0:24 黑洞，从全屏拉回电脑里\n0:28 世界的形状",
+  "tags": [
+    "世界的形状",
+    "shapeof.world",
+    "科普",
+    "可视化",
+    "交互",
+    "黑洞",
+    "物理",
+    "数据可视化",
+    "科学"
+  ],
+  "sourcesShort": "画面：shapeof.world 网站上的实时页面录屏。配乐和音效：原创，用代码合成。\n环境光照：“Studio Small 08”，Sergej Majboroda，CC0，Poly Haven。",
+  "sourcesFull": "画面\n- 全部是 shapeof.world 网站上的实时交互页面录屏，没有素材库画面。\n\n配乐和音效\n- 原创，用 Web Audio 在代码里合成，没有采样，没有授权曲目。\n\n电脑\n- 开头和结尾的笔记本电脑在代码里用 three.js 基本几何体搭建，不是第三方模型，没有品牌标志。\n\n环境光照\n- Poly Haven HDRI “Studio Small 08”，作者 Sergej Majboroda，CC0（公共领域）：https://polyhaven.com/a/studio_small_08\n\n字体\n- Inter、Noto Sans SC、Noto Serif SC、JetBrains Mono（SIL OFL 1.1）。"
+}
