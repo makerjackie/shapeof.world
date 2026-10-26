@@ -1,8 +1,10 @@
+import { CorticalCrowding } from './cortical-crowding'
+import { PaintMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef, type MutableRefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import { cellRadius, cellSurface, cutRim, curveGeometry, cytoplasmicTracks, erNetwork } from './cell-geometry'
-import { LightSheet, Membrane, ParticleMaterial } from './cell-materials'
+import { Membrane, ParticleMaterial } from './cell-materials'
 import { Cutaway, TissueMaterial, useCutaway } from './cutaway'
 import type { PhysiologyState } from './model'
 import { getWaterReadings } from './water-model'
@@ -49,10 +51,10 @@ function WallChloroplasts({ opacity, physiology, starch, light }: { opacity: num
   })
   return <>
     <instancedMesh name="wall-chloroplasts" ref={ref} args={[geometry,undefined,200]} castShadow receiveShadow frustumCulled={false}>
-      <TissueMaterial color="#45712f" kind="chloroplast" opacity={opacity*0.94} starch={starch} glow={light*1.5} roughness={0.55} />
+      <TissueMaterial color="#7d9f65" kind="chloroplast" opacity={opacity*0.94} starch={starch} glow={light*1.5} roughness={0.55} />
     </instancedMesh>
     <instancedMesh ref={caps} args={[undefined,undefined,200]} frustumCulled={false} renderOrder={2} receiveShadow>
-      <circleGeometry args={[1,40]} /><TissueMaterial color="#35582b" kind="chloroplast-cut" clipped={false} opacity={opacity} />
+      <circleGeometry args={[1,40]} /><TissueMaterial color="#466b45" kind="chloroplast-cut" clipped={false} opacity={opacity} />
     </instancedMesh>
 
   </>
@@ -89,7 +91,7 @@ function NuclearCut({ opacity }: { opacity: number }) {
     ref.current.scale.setScalar(radius)
     ref.current.visible=Math.abs(distance)<4
   })
-  return <mesh ref={ref} renderOrder={2} receiveShadow><circleGeometry args={[1,48]} /><TissueMaterial color="#6d828a" kind="nucleus" clipped={false} opacity={opacity*0.8} /></mesh>
+  return <mesh ref={ref} renderOrder={2} receiveShadow><circleGeometry args={[1,48]} /><TissueMaterial color="#a58bab" kind="nucleus" clipped={false} opacity={opacity*0.8} /></mesh>
 }
 
 function Nucleus({ opacity }: { opacity: number }) {
@@ -114,15 +116,15 @@ function Nucleus({ opacity }: { opacity: number }) {
   }, [])
   return <group name="cell-nucleus" position={[-8.9, -12, -4.5]} rotation={[0, 0.2, 0.16]}>
     <NuclearCut opacity={opacity} />
-    <mesh castShadow receiveShadow><sphereGeometry args={[4, 40, 28]} /><TissueMaterial color="#8d9ea4" kind="nucleus" opacity={opacity*0.5} roughness={0.5} /></mesh>
+    <mesh castShadow receiveShadow><sphereGeometry args={[4, 40, 28]} /><TissueMaterial color="#b7a1bb" kind="nucleus" opacity={opacity*0.5} roughness={0.5} /></mesh>
     <mesh scale={[1.23,1.3,1.12]}><sphereGeometry args={[4,24,16]} /><Membrane color="#c1c5a8" opacity={opacity} strength={0.05} base={0.005} /></mesh>
     <mesh><sphereGeometry args={[3.92, 32, 24]} /><Membrane color="#8197a5" opacity={opacity} strength={0.18} base={0.002} /></mesh>
-    <mesh position={[-0.6, 0.25, 0.1]} scale={[1.2, 1, 0.9]}><sphereGeometry args={[1.25, 24, 20]} /><TissueMaterial color="#4c5866" roughness={0.95} opacity={opacity * 0.9} /></mesh>
+    <mesh position={[-0.6, 0.25, 0.1]} scale={[1.2, 1, 0.9]}><sphereGeometry args={[1.25, 24, 20]} /><TissueMaterial color="#826f98" roughness={0.95} opacity={opacity * 0.9} /></mesh>
     <instancedMesh ref={pores} args={[undefined, undefined, 340]}>
       <torusGeometry args={[0.05, 0.013, 4, 8]} /><TissueMaterial color="#c3cbbf" opacity={opacity*0.3} />
     </instancedMesh>
     <instancedMesh ref={chromatin} args={[undefined, undefined, 300]}>
-      <icosahedronGeometry args={[1, 0]} /><TissueMaterial color="#81919c" roughness={1} opacity={opacity * 0.65} />
+      <icosahedronGeometry args={[1, 0]} /><TissueMaterial color="#a58cb1" roughness={1} opacity={opacity * 0.65} />
     </instancedMesh>
   </group>
 }
@@ -248,18 +250,18 @@ function StreamingOrganelles({ opacity, clock, mobile, timeScale, physiology }: 
     positions.needsUpdate = true
   })
   return <>
-    <mesh geometry={tracksMesh}><TissueMaterial color="#899b83" opacity={opacity*0.1} depthWrite={false} /></mesh>
-    <mesh geometry={trails} visible={fast}><TissueMaterial color="#b59f80" opacity={opacity*0.18} depthWrite={false} /></mesh>
-    <instancedMesh visible={!fast} name="streaming-mitochondria" ref={mitochondria} args={[undefined, undefined, 240]} frustumCulled={false}><sphereGeometry args={[1, 12, 8]} /><TissueMaterial color="#977c60" roughness={0.6} opacity={opacity*0.88} /></instancedMesh>
-    <instancedMesh visible={!fast} name="streaming-peroxisomes" ref={peroxisomes} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#a0aca0" opacity={opacity*0.8} /></instancedMesh>
-    <instancedMesh visible={!fast} name="streaming-golgi" ref={golgi} args={[golgiGeometry, undefined, 250]} frustumCulled={false}><TissueMaterial color="#9d9a86" opacity={opacity*0.8} /></instancedMesh>
+    <mesh geometry={tracksMesh}><TissueMaterial color="#7ba39a" opacity={opacity*0.48} depthWrite={false} /></mesh>
+    <mesh geometry={trails} visible={fast}><TissueMaterial color="#b59f80" opacity={opacity*0.48} depthWrite={false} /></mesh>
+    <instancedMesh visible={!fast} name="streaming-mitochondria" ref={mitochondria} args={[undefined, undefined, 240]} frustumCulled={false}><sphereGeometry args={[1, 12, 8]} /><TissueMaterial color="#c49a80" roughness={0.6} opacity={opacity*0.88} /></instancedMesh>
+    <instancedMesh visible={!fast} name="streaming-peroxisomes" ref={peroxisomes} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 10, 7]} /><TissueMaterial color="#91b6ae" opacity={opacity*0.8} /></instancedMesh>
+    <instancedMesh visible={!fast} name="streaming-golgi" ref={golgi} args={[golgiGeometry, undefined, 250]} frustumCulled={false}><TissueMaterial color="#c69caa" opacity={opacity*0.8} /></instancedMesh>
     <points visible={!fast} ref={particles} geometry={particleGeometry} frustumCulled={false}><ParticleMaterial opacity={opacity*0.45} /></points>
   </>
 }
 
 // Neighbouring palisade cells, kept out of focus: two flanking the hero cell,
 // two further back on the left so the frame reads as tissue, not a lone cell.
-const NEIGHBOR_CELLS: Array<[number, number, number]> = [[-34, -8, -34], [34, 8, -70], [-78, 3, -92], [-122, -6, -60]]
+const NEIGHBOR_CELLS: Array<[number, number, number]> = [[-31,-3,-25],[31,3,-25],[-16,-5,-52],[16,2,-52],[-48,1,-53],[48,2,-52]]
 
 function Neighbors({ opacity }: { opacity: number }) {
   const geometry = useMemo(() => cellSurface(true), [])
@@ -277,15 +279,15 @@ function Neighbors({ opacity }: { opacity: number }) {
     if (chloroplasts.current) chloroplasts.current.instanceMatrix.needsUpdate = true
   }, [])
   return <group>
-    {NEIGHBOR_CELLS.map((position, i) => <mesh key={i} geometry={geometry} position={position}><Membrane color="#5d8068" strength={0.16} base={0.012} opacity={opacity} /></mesh>)}
-    <instancedMesh ref={chloroplasts} args={[undefined, undefined, NEIGHBOR_CELLS.length * 160]}><sphereGeometry args={[1, 10, 6]} /><meshStandardMaterial color="#365a29" emissive="#173010" emissiveIntensity={0.45} roughness={0.8} transparent opacity={opacity * 0.78} /></instancedMesh>
+    {NEIGHBOR_CELLS.map((position, i) => <mesh key={i} geometry={geometry} position={position}><Membrane color="#5d8068" strength={0.38} base={0.035} opacity={opacity} /></mesh>)}
+    <instancedMesh ref={chloroplasts} args={[undefined, undefined, NEIGHBOR_CELLS.length * 160]}><sphereGeometry args={[1, 10, 6]} /><PaintMaterial color="#8eaa7b" emissive="#173010" emissiveIntensity={0.45} roughness={0.8} transparent opacity={opacity * 0.78} /></instancedMesh>
   </group>
 }
 
 function SliceEdge({ geometry, opacity }: { geometry: T.BufferGeometry; opacity: number }) {
   const ref=useRef<T.Mesh>(null), cut=useCutaway()
   useFrame(() => { if(ref.current&&cut) ref.current.rotation.y=cut.angle })
-  return <mesh ref={ref} geometry={geometry} renderOrder={3}><meshStandardMaterial color="#efe6cf" roughness={0.9} side={T.DoubleSide} transparent opacity={opacity} /></mesh>
+  return <mesh ref={ref} geometry={geometry} renderOrder={3}><PaintMaterial color="#efe6cf" roughness={0.9} side={T.DoubleSide} transparent opacity={opacity} /></mesh>
 }
 
 function CellContext({ opacity }: { opacity: number }) {
@@ -306,7 +308,7 @@ function CellContext({ opacity }: { opacity: number }) {
   return <group>
     <Neighbors opacity={opacity} />
     {Array.from({length:9},(_,i)=><mesh key={i} geometry={epidermis} position={[(i%3-1)*31,47.5,-35-Math.floor(i/3)*31]} scale={[15,12.5,15]}><Membrane color="#bbc3b8" strength={0.045} base={0.0015} opacity={opacity*0.4} /></mesh>)}
-    <mesh position={[0,60,-55]} scale={[96,0.4,80]}><boxGeometry /><meshStandardMaterial color="#ded8be" roughness={0.6} transparent opacity={opacity*0.05} /></mesh>
+    <mesh position={[0,60,-55]} scale={[96,0.4,80]}><boxGeometry /><PaintMaterial color="#ded8be" roughness={0.6} transparent opacity={opacity*0.05} /></mesh>
     {Array.from({length:12},(_,i)=><mesh key={i} position={[(i%4-1.5)*31,-65-Math.floor(i/4)*34,-35-Math.sin(i)*15]} scale={[12,10,11]}><sphereGeometry args={[1,16,12]} /><Membrane color="#354833" strength={0.07} base={0.005} opacity={opacity*0.5} /></mesh>)}
   </group>
 }
@@ -331,7 +333,7 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
     <Cutaway>
       <CellInspection enabled={inspectable} physiology={physiology}>
       <group name="cell-water-wall" scale={[water.wallRadial,water.wallAxial,water.wallRadial]}>
-      <mesh geometry={wall} receiveShadow><TissueMaterial color="#b5ba9a" kind="wall" opacity={opacity*0.19} roughness={0.96} depthWrite={false} /></mesh>
+      <mesh geometry={wall} receiveShadow><TissueMaterial color="#b5c19d" kind="wall" opacity={opacity*0.31} roughness={0.96} depthWrite={false} /></mesh>
       <SliceEdge geometry={rim} opacity={opacity} />
       <WallPores opacity={opacity} />
       </group>
@@ -345,12 +347,14 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#afc5bb" opacity={opacity*0.012} depthWrite={false} /></mesh>
       <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
       <mesh geometry={strands}><Membrane color="#c4cabb" opacity={opacity} strength={0.13} base={0.02} /></mesh>
-      <mesh name="cell-er" geometry={er}><TissueMaterial color="#929b91" opacity={opacity*0.18} /></mesh>
+      <mesh geometry={membrane} scale={[.975,.995,.975]}><TissueMaterial color="#c9d5b1" opacity={opacity*.24} depthWrite={false} /></mesh>
+      <mesh name="cell-er" geometry={er}><TissueMaterial color="#a3a4bc" opacity={opacity*0.48} /></mesh>
 
+      <CorticalCrowding mobile={mobile} physiology={physiology} clock={clock} />
       <WallChloroplasts opacity={opacity} physiology={physiology} starch={starch} light={light} />
       <Nucleus opacity={opacity} />
       <StreamingOrganelles opacity={opacity} clock={clock} mobile={mobile} timeScale={timeScale} physiology={physiology} />
-      {[[-2,3,-5],[4,4,-10],[-6,5,0]].map((p,i)=><mesh key={i} position={p as [number,number,number]} rotation={[0,i*.75,-.08]} scale={[18-i*3,61,1]}><planeGeometry /><LightSheet intensity={light*opacity*(1-i*.18)*3.8} /></mesh>)}
+
     </Cutaway>
     </group>
       </CellInspection>

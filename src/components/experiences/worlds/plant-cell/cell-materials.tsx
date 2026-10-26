@@ -16,7 +16,7 @@ void main(){
  gl_Position=projectionMatrix*mv;
 }`
 
-export function Membrane({ opacity = 1, color = '#cfe2e6', strength = 0.3, base = 0.015, fibers = false }: {
+export function Membrane({ opacity = 1, color = '#9aaa88', strength = 0.3, base = 0.015, fibers = false }: {
   opacity?: number; color?: string; strength?: number; base?: number; fibers?: boolean
 }) {
   const cut = useCutaway()
@@ -34,7 +34,7 @@ export function Membrane({ opacity = 1, color = '#cfe2e6', strength = 0.3, base 
       float f1=pow(0.5+0.5*sin(vUv.x*780.0+vUv.y*460.0),24.0);
       float f2=pow(0.5+0.5*sin(vUv.x*720.0-vUv.y*380.0),26.0);
       float grain=fract(sin(dot(vLocal.xy,vec2(127.1,311.7)))*43758.5453);
-      gl_FragColor=vec4(tint*(0.75+0.25*grain),alpha*(face+edge*rim+fibers*(f1+f2)*0.004));
+      gl_FragColor=vec4(tint*(0.96+0.04*grain),alpha*(face+edge*rim+fibers*(f1+f2)*0.016));
       #include <tonemapping_fragment>
       #include <colorspace_fragment>
     }`} />
@@ -51,7 +51,7 @@ export function ParticleMaterial({ opacity=0.3, diameter=0.045 }: { opacity?: nu
       gl_PointSize=clamp(pixels,1.0,14.0);gl_Position=projectionMatrix*mv;}`}
     fragmentShader={`uniform vec4 clip; uniform float alpha; varying vec3 world; varying float coverage;
       void main(){if(dot(clip,vec4(world,1.0))<0.0) discard;float d=length(gl_PointCoord-0.5)*2.0;if(d>1.0)discard;
-      gl_FragColor=vec4(vec3(0.47,0.54,0.41),alpha*coverage*(1.0-smoothstep(0.2,1.0,d)));}`} />
+      gl_FragColor=vec4(vec3(0.39,0.53,0.52),alpha*coverage*(1.0-smoothstep(0.2,1.0,d)));}`} />
 }
 
 export function LightSheet({ intensity }: { intensity: number }) {

@@ -55,3 +55,7 @@ not capture screenshots; use the project owner's private `gpu-shot.mjs`.
 each view, settles for 7 seconds and samples 5 seconds of frame intervals.
 This separates steady rendering from repeated navigation and retained contexts.
 `guide=1` opens the optional tour for capture; ordinary entry stays in free exploration.
+
+## Original leaf pigment
+
+`build-leaf-pigment.py` reproduces `public/assets/plant-cell/leaf-pigment.webp` (numpy, scipy, Pillow; offline tooling only). Run from the repository root. The large PNG stays in `.local/plant-cell/`. The original procedural pigment is an illustration, not a scanned spinach specimen.

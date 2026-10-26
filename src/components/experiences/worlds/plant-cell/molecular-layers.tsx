@@ -1,9 +1,9 @@
+import { PaintMaterial, preparePaintMaterial, ATP_PIGMENTS, PROTEIN_COLORS, IllustratedAtomMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
 import * as T from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
-import { SphereImpostorMaterial } from '~/components/experiences/SphereImpostorMaterial'
 import { useExperienceI18n } from '~/i18n/experience'
 import { isWorldPaused } from '~/lib/world-playback'
 import { loadATPAtoms, loadMoleculeSurface, loadMetabolite, type MetaboliteData, type MetaboliteId } from './molecule-data'
@@ -52,10 +52,11 @@ export function MolecularLayers({ opacity = 1, mobile = false, light = 400, play
   const resourcesVisible = opacity > 0.002
   useEffect(() => {
     let mounted = true
+    if (scale > -5.65) return
     PDB_IDS.forEach((pdb) => { loadMoleculeSurface(pdb).then((data) => { if (mounted) setSurfaces((old) => ({ ...old, [pdb]: data })) }).catch(() => { if (mounted) setLoadError(true) }) })
     loadATPAtoms().then((data) => { if (mounted) setAtoms(data) }).catch(() => { if (mounted) setLoadError(true) })
     return () => { mounted = false }
-  }, [])
+  }, [scale < -5.65])
   useEffect(() => { if (!resourcesVisible || capture) setInspection(null) }, [resourcesVisible, capture])
   useFrame(({ gl }, dt) => {
     const stopped = !playing || isWorldPaused() || document.hidden
@@ -129,7 +130,12 @@ function geometryFromData(data: SurfaceData) {
   const geometry = new T.BufferGeometry()
   geometry.setAttribute('position', new T.BufferAttribute(data.positions, 3))
   geometry.setAttribute('normal', new T.BufferAttribute(data.normals, 3))
-  geometry.setAttribute('color', new T.BufferAttribute(data.colors, 3))
+  const colors=new Float32Array(data.colors)
+  if(data.metadata.id==='6FKF') {
+    const before=['#c87f4f','#d8cdb0','#b9a882','#8f9aa3','#a49c7a'].map(h=>new T.Color(h)),after=ATP_PIGMENTS.map(h=>new T.Color(h))
+    for(let i=0;i<colors.length;i+=3){let best=0,dist=Infinity;before.forEach((c,j)=>{const d=(colors[i]-c.r)**2+(colors[i+1]-c.g)**2+(colors[i+2]-c.b)**2;if(d<dist){dist=d;best=j}});after[best].toArray(colors,i)}
+  }
+  geometry.setAttribute('color',new T.BufferAttribute(colors,3))
   geometry.setIndex(new T.BufferAttribute(data.indices, 1)); geometry.computeBoundingSphere()
   return geometry
 }
@@ -162,7 +168,7 @@ function SurfacePopulation({ data, pdb, poses, opacity, elapsed, light, inspect,
     event.stopPropagation(); inspect(pdb, poses[event.instanceId ?? 0], data.metadata, event.type === 'click')
   }
   return <instancedMesh ref={ref} args={[geometry, undefined, poses.length]} frustumCulled={false} onPointerOver={pointer} onPointerOut={dismiss} onClick={pointer} name={`pdb-${pdb}`}>
-    <meshLambertMaterial vertexColors color="#b8baa6" transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
+    <PaintMaterial color={PROTEIN_COLORS[pdb]} transparent opacity={opacity} depthWrite={opacity > 0.98} onBeforeCompile={(shader) => {
       shader.uniforms.sectionCutNm = cutoff
       shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;').replace('#include <begin_vertex>', '#include <begin_vertex>\nmoleculePosition=(instanceMatrix*vec4(position,1.0)).xyz;')
       shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 moleculePosition;uniform float sectionCutNm;').replace('#include <alphatest_fragment>', 'if(moleculePosition.z>sectionCutNm)discard;\n#include <alphatest_fragment>')
@@ -180,7 +186,7 @@ function ATPOverview({ data, opacity, motor, inspect }: { data: SurfaceData; opa
   useEffect(()=>()=>geometries.forEach(g=>g.dispose()),[geometries])
   useFrame(()=>{if(rotor.current)rotor.current.rotation.y=motor.current.angle})
   return <group visible={opacity>.002}>{geometries.map((geometry,i)=><mesh key={i} ref={i===0?rotor:undefined} geometry={geometry} onPointerOver={e=>{e.stopPropagation();inspect()}} onClick={e=>{e.stopPropagation();inspect()}}>
-    <meshStandardMaterial vertexColors color="#cec7b6" roughness={.96} transparent opacity={opacity} depthWrite={opacity>.98}/>
+    <PaintMaterial vertexColors color="#ffffff" roughness={.96} transparent opacity={opacity} depthWrite={opacity>.98}/>
   </mesh>)}</group>
 }
 
@@ -212,17 +218,12 @@ function AtomicMotor({ data, opacity, motor, inspect, light }: { data: AtomData;
 
 function AtomCloud({ data, indices, opacity, light }: { data: AtomData; indices: number[]; opacity: number; light: number }) {
   const ref = useRef<T.InstancedMesh>(null), lastScale = useRef(-1)
-  const colors = useMemo(() => ['#c87f4f', '#d8cdb0', '#b9a882', '#8f9aa3', '#8f9aa3', '#95917b'].map((hex) => new T.Color(hex)), [])
+  const colors = useMemo(() => ATP_PIGMENTS.map((hex) => new T.Color(hex)), [])
   useLayoutEffect(() => {
     const mesh = ref.current; if (!mesh) return
-    const material = mesh.material as T.ShaderMaterial
-    if (!material.userData.plantMatte) {
-      material.fragmentShader = material.fragmentShader.replace('gloss*0.65', 'gloss*0.055')
-      material.userData.plantMatte = true; material.needsUpdate = true
-    }
     indices.forEach((atom, i) => {
       const color = colors[data.groups[atom]]?.clone() ?? colors[5].clone()
-      color.multiplyScalar((0.52 + 0.48 * (1 - data.occlusion[atom])) * (0.27 + 0.73 * Math.log1p(400) / Math.log1p(2000)))
+      color.multiplyScalar((.94 + .06 * (1 - data.occlusion[atom])))
       mesh.setColorAt(i, color)
     })
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
@@ -244,7 +245,7 @@ function AtomCloud({ data, indices, opacity, light }: { data: AtomData; indices:
     mesh.instanceMatrix.needsUpdate = true
   })
   return <instancedMesh ref={ref} args={[undefined, undefined, indices.length]} frustumCulled={false}>
-    <planeGeometry args={[2, 2]} /><SphereImpostorMaterial />
+    <planeGeometry args={[2, 2]} /><IllustratedAtomMaterial />
   </instancedMesh>
 }
 
@@ -310,9 +311,9 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
         shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 membranePosition;uniform vec4 molecularCut;uniform float molecularOpening;uniform float molecularAlpha;uniform float sectionCutNm;')
           .replace('#include <alphatest_fragment>', `if(membranePosition.z>sectionCutNm)discard;float nearSide=dot(vec4(membranePosition,1.0),molecularCut);float radius=distance(membranePosition.xz,vec2(28.0,116.0));if(nearSide>0.0&&radius<24.0*molecularOpening)discard;diffuseColor.a*=molecularAlpha;${heads ? '' : 'float grain=fract(sin(dot(floor(membranePosition*1.8),vec3(12.9898,78.233,43.21)))*43758.5453);diffuseColor.rgb*=.89+.15*grain;'}\n#include <alphatest_fragment>`)
       }
-      return m
+      return preparePaintMaterial(m)
     }
-    return { core: material('#283a32', 1, false), heads: material('#899676', 0.68, true) }
+    return { core: material('#acb77e',1,false), heads: material('#89a477',.88,true) }
   }, [cut])
   useEffect(() => () => Object.values(materials).forEach((m) => m.dispose()), [materials])
   const cylinders = useMemo(() => new T.CylinderGeometry(235, 235, 1, mobile ? 72 : 112), [mobile])
@@ -375,11 +376,11 @@ function ElectronTraffic({ opacity, light, elapsed, speed }: { opacity: number; 
     }
   })
   return <group>
-    <mesh position={[-12,0,57]}><sphereGeometry args={[.65,12,8]}/><meshStandardMaterial color="#a5aa78" roughness={1} transparent opacity={opacity*.8}/></mesh>
-    <mesh position={[19,18,109]} visible={light>0}><sphereGeometry args={[.8,12,8]}/><meshStandardMaterial color="#c8be91" roughness={1} transparent opacity={opacity*.7}/></mesh>
+    <mesh position={[-12,0,57]}><sphereGeometry args={[.65,12,8]}/><PaintMaterial color="#a5aa78" roughness={1} transparent opacity={opacity*.8}/></mesh>
+    <mesh position={[19,18,109]} visible={light>0}><sphereGeometry args={[.8,12,8]}/><PaintMaterial color="#c8be91" roughness={1} transparent opacity={opacity*.7}/></mesh>
     <instancedMesh ref={electrons} args={[undefined, undefined, 5]} frustumCulled={false}><sphereGeometry args={[1, 8, 6]} /><meshBasicMaterial color="#e9dba7" transparent opacity={opacity * .85} /></instancedMesh>
     <instancedMesh ref={protons} args={[undefined, undefined, 100]} frustumCulled={false}><sphereGeometry args={[1, 6, 4]} /><meshBasicMaterial color="#ca8c60" transparent opacity={opacity * .6} depthWrite={false} /></instancedMesh>
-    <instancedMesh ref={oxygen} args={[undefined, undefined, 4]} frustumCulled={false}><sphereGeometry args={[1, 8, 6]} /><meshStandardMaterial color="#9dadaf" roughness={1} transparent opacity={opacity * .5} /></instancedMesh>
+    <instancedMesh ref={oxygen} args={[undefined, undefined, 4]} frustumCulled={false}><sphereGeometry args={[1, 8, 6]} /><PaintMaterial color="#9dadaf" roughness={1} transparent opacity={opacity * .5} /></instancedMesh>
   </group>
 }
 
@@ -438,5 +439,5 @@ function NucleotideMarker({ id, opacity }: { id: MetaboliteId; opacity: number }
     const merged=mergeGeometries(parts);parts.forEach(g=>g.dispose());return merged
   },[data])
   useEffect(()=>()=>geometry?.dispose(),[geometry])
-  return geometry?<mesh geometry={geometry}><meshStandardMaterial vertexColors roughness={1} transparent opacity={opacity}/></mesh>:null
+  return geometry?<mesh geometry={geometry}><PaintMaterial vertexColors roughness={1} transparent opacity={opacity}/></mesh>:null
 }

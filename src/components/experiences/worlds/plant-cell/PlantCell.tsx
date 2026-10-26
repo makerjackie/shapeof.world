@@ -8,7 +8,7 @@ import { GhostHint } from '~/components/experiences/GhostHint'
 import { useExperienceI18n } from '~/i18n/experience'
 import { DEFAULT_INPUTS, createPhysiology, getPhysiologySnapshot, type PlantInputs, type PhysiologyState } from './model'
 import { PlantScene, flyToScale, type ScaleController } from './scene'
-import { SCALE_DEFAULT, MOBILE_HERO_SCALE, SCALE_MIN, SCALE_MAX, SCALE_TICKS, LAYERS, clampScale, getActiveLayer, getScaleBar, getFramedScale, formatLength } from './scale-model'
+import { SCALE_DEFAULT, ENTRY_SCALE, MOBILE_HERO_SCALE, SCALE_MIN, SCALE_MAX, SCALE_TICKS, LAYERS, clampScale, getActiveLayer, getScaleBar, getFramedScale, formatLength } from './scale-model'
 import { getMolecularReadings } from './molecular-model'
 import { parseCaptureParams } from './capture-params'
 
@@ -23,6 +23,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const [snapshot, setSnapshot] = useState(() => getPhysiologySnapshot(physiology.current, DEFAULT_INPUTS))
   const [bounds, setBounds] = useState(false), [expandedReadouts, setExpandedReadouts] = useState(false)
   const [hintVersion, setHintVersion] = useState(0), [lightHint, setLightHint] = useState(false)
+  const autoWater = useRef(false)
   const lastLight = useRef(400)
   const manualSpeed = useRef(false)
   useEffect(() => {
@@ -31,8 +32,8 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     const timer = window.setTimeout(() => setLightHint(false), 6000)
     return () => window.clearTimeout(timer)
   }, [hintVersion])
-  const [reading, setReading] = useState({ scale: SCALE_DEFAULT, width: 1600 })
-  const controller = useRef<ScaleController>({ current: SCALE_DEFAULT, target: SCALE_DEFAULT, touched: false, flight: null, reset: 0 })
+  const [reading, setReading] = useState({ scale: ENTRY_SCALE, width: 1600 })
+  const controller = useRef<ScaleController>({ current: ENTRY_SCALE, target: ENTRY_SCALE, touched: false, flight: null, reset: 0 })
   useEffect(() => {
     const phone = window.innerWidth < 720
     const initial = parseCaptureParams(window.location.search, phone)
@@ -57,11 +58,20 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     interact(); setInputs({ ...DEFAULT_INPUTS }); physiology.current = createPhysiology(DEFAULT_INPUTS)
     setSnapshot(getPhysiologySnapshot(physiology.current, DEFAULT_INPUTS)); lastLight.current=400; setLightHint(false)
     controller.current.initialOrbit = undefined; controller.current.reset++; flyToScale(controller.current, mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT)
-    manualSpeed.current = false
+    manualSpeed.current = false; autoWater.current = false
   }
+  const changeWater = (water: PlantInputs['water']) => {
+    interact(); autoWater.current=true; manualSpeed.current=true
+    setInputs(current=>({...current,water,playing:true,timeScale:water==='saltwater'?60:3600}))
+  }
+  useEffect(()=>{
+    if(autoWater.current && physiology.current.water.mode===inputs.water && physiology.current.water.progress>=.999){
+      autoWater.current=false;setInputs(current=>({...current,timeScale:1}))
+    }
+  },[snapshot,inputs.water])
   const changeLight = (I: number) => {
     interact(); if(I > 0) lastLight.current=I
-    setInputs((current) => ({ ...current, I })); setHintVersion((value) => value + 1)
+    setInputs((current) => ({ ...current, I })); if(active==='cell')setHintVersion((value) => value + 1)
   }
   const active = getActiveLayer(reading.scale)
   const molecular = active === 'membrane' || active === 'motor'
@@ -78,11 +88,25 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
     { title: tx('叶肉细胞'), body: tx('小细胞器沿胞质索流动。叶绿体留在壁边，用几分钟调整向光的位置。'), scale: mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT },
     { title: tx('叶绿体'), body: tx('一摞摞类囊体组成基粒，伸出的薄膜把它们连接起来。'), scale: -5.22 },
     { title: tx('类囊体膜'), body: tx('光系统让电子接力前进，把质子积累到腔内。伸向基质的大分子只能站在空隙足够的膜面。'), scale: -6.85 },
-    { title: tx('ATP 合酶'), body: tx('铜色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。'), scale: mobile ? -7.7 : -7.34 },
+    { title: tx('ATP 合酶'), body: tx('蓝色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。'), scale: mobile ? -7.7 : -7.34 },
   ].map(step => ({ title: step.title, body: step.body, durationMs: 7500, action: () => {
     flyToScale(controller.current, step.scale)
   } })), [tx, mobile])
-  const captions = { leaf: tx('一片叶子，也是一整个世界。'), section: tx('紧密的栅栏下面，是有空隙的海绵组织。'), cell: tx('小细胞器快速流动，叶绿体用几分钟挪向合适的光。'), chloroplast: tx('一摞摞基粒，被薄薄的膜连在一起。'), membrane: tx('膜上的分子各有位置。电子一路走，质子留在腔里。'), motor: tx('转子转一圈，14 个质子通过，3 个 ATP 离开。') }
+  const captions = {
+    leaf: tx('一片菠菜叶，约 12 厘米。沿着叶脉，往里放大。'),
+    section: tx('约 500 微米厚的叶片。栅栏细胞紧密排列，下面留出气隙。'),
+    cell: tx('一颗栅栏细胞，约 30 × 70 微米。小细胞器沿胞质流动。'),
+    chloroplast: tx('一颗叶绿体，约 6 微米。基粒把薄膜一层层叠起来。'),
+    membrane: tx('一片类囊体膜，厚约 4 纳米。光照驱动电子接力。'),
+    motor: tx('一台 ATP 合酶，约 22 纳米高。转一圈，做出 3 个 ATP。'),
+  }
+  const scaleNames={leaf:tx('叶片'),section:tx('组织'),cell:tx('细胞'),chloroplast:tx('叶绿体'),membrane:tx('膜'),motor:tx('分子')}
+  const process = active==='motor' ? `${tx('转速')} ${molecularReading.actualRps.toFixed(0)} ${tx('圈/秒')} · ${tx('画面慢放')}`
+    : active==='cell' ? inputs.water==='drought' ? `${tx('干旱：细胞壁和内部一起皱缩')} · ${Math.round(snapshot.water.relativeVolume*100)}%`
+      : inputs.water==='saltwater' ? `${tx('盐水：原生质体离开细胞壁')} · ${Math.round(snapshot.water.relativeVolume*100)}%` : tx('小细胞器在流，叶绿体留在壁边')
+    : active==='chloroplast' ? tx('基粒随光照舒展，淀粉慢慢积累')
+      : active==='membrane' ? tx('光越强，电子接力越频繁') : active==='leaf' ? tx(mobile ? '双指放大，或点右侧的尺度' : '滚动放大，或点右侧的尺度') : tx('紧密的栅栏层，连通的气隙')
+
   return <div className="pc-experience" data-plant-cell-layer={active} data-capture={capture}>
     {ready && <PlantScene capture={capture} controller={controller} viewScale={reading.scale} inputs={inputs} physiology={physiology} onPhysiology={setSnapshot} mobile={mobile} reducedMotion={reducedMotion} onScale={updateReading} onInteract={interact} />}
     <div className="pc-atmosphere" aria-hidden="true" />
@@ -91,6 +115,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <h1>{tx(LAYERS.find((layer) => layer.id === active)!.label)}</h1>
       <span>{captions[active]}</span>
     </header>
+    <p className="pc-process" data-experience-overlay="true" role="status">{process}{autoWater.current && <small>{tx('过程快进')} ×{inputs.timeScale}</small>}</p>
     <aside className={`pc-readout ${expandedReadouts ? 'is-expanded' : ''}`} data-experience-overlay="true" aria-label={tx('读数')}>
       <div><span>{tx('视野宽度')}</span><strong>{formatLength(10 ** getFramedScale(reading.scale, mobile))}</strong></div>
       <div className="pc-time-reading"><span>{tx('时间倍率')}</span><strong>{inputs.playing ? inputs.timeScale === .001 ? '1/1000×' : `${inputs.timeScale}×` : tx('暂停')}</strong></div>
@@ -110,7 +135,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
         <div><span>H⁺ / ATP</span><strong>4.67</strong></div>
         <div><span>{tx('真实转速（数量级）')}</span><strong>{molecularReading.actualRps.toFixed(0)} <small>rev/s</small></strong></div>
         <div><span>{tx('局部慢放')}</span><strong>{molecularReading.slowdown > 0 ? `1/${Math.round(molecularReading.slowdown)}×` : '—'}</strong></div>
-        <p>{tx(snapshot.actualPPFD === 0 ? '黑暗中，γ 亚基的氧化还原开关锁住转子。' : '铜色转子逆时针转动（从基质侧看）；外面的定子不动。')}</p>
+        <p>{tx(snapshot.actualPPFD === 0 ? '黑暗中，γ 亚基的氧化还原开关锁住转子。' : '蓝色转子逆时针转动（从基质侧看）；外面的定子不动。')}</p>
         {molecularReading.motionCapped && <p>{tx('高速时转动显示限于每秒 2 圈；局部倍率按实际显示速度计算。')}</p>}
       </>}
       {inputs.dayCycle && <div><span>{tx('一天中的时间')}</span><strong>{`${Math.floor(snapshot.daySeconds/3600).toString().padStart(2,'0')}:${Math.floor(snapshot.daySeconds%3600/60).toString().padStart(2,'0')}`}</strong></div>}
@@ -129,7 +154,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
         {SCALE_TICKS.map((tick) => <span key={tick.scale} className="pc-major-tick" style={{ top: `${position(tick.scale)}%` }}>{tick.label}</span>)}
         <b className="pc-cursor" style={{ top: `${position(reading.scale)}%` }} />
       </div>
-      <div className="pc-layer-names">{LAYERS.map((layer) => <button key={layer.id} aria-current={active === layer.id ? 'location' : undefined} style={{ top: `${position(layer.scale)}%` }} onClick={() => go(mobile && layer.id === 'motor' ? -7.7 : layer.id === 'cell' && mobile ? MOBILE_HERO_SCALE : layer.scale)}>{tx(layer.label)}</button>)}</div>
+      <div className="pc-layer-names">{LAYERS.map((layer) => <button key={layer.id} data-scale-layer={layer.id} aria-label={tx(layer.label)} aria-current={active === layer.id ? 'location' : undefined} onClick={() => go(mobile && layer.id === 'motor' ? -7.7 : layer.id === 'cell' && mobile ? MOBILE_HERO_SCALE : layer.scale)}>{scaleNames[layer.id]}</button>)}</div>
     </nav>
     <div className="pc-scale-bar" data-experience-overlay="true" aria-label={tx('比例尺')}><span>{bar.label}</span><i style={{ width: bar.widthPx }} /><small>{tx(molecular ? 'PDB 实验结构 · 排布与运动为示意' : '程序化参照结构 · 非标本扫描')}</small></div>
     <p className="pc-gesture" data-experience-overlay="true">{tx(mobile ? '拖动旋转 · 双指缩放' : '拖动旋转 · 滚动缩放')}</p>
@@ -146,18 +171,20 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <p>{tx('分子过程采用局部慢放。ATP 合酶转速是百圈每秒的数量级参照，不是菠菜在该光强下的实测值；L5 另按可见转速调整慢放倍率。')}</p>
     </aside>}
     {lightHint && !capture && <p className="pc-light-hint" role="status">{tx(inputs.timeScale >= 60 ? '叶绿体正在慢慢挪位，需要几分钟。' : '叶绿体要几分钟才挪完，把时间调到 ×60 看看。')}</p>}
-    <Freebar className={`pc-freebar ${guide ? 'pc-guide-active' : ''}`} ariaLabel={tx('光照和时间')} primaryControlBudget={3} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
-      <div className="pc-water-control" role="group" aria-label={tx('水分')}>{([{id:'normal',label:'正常'},{id:'drought',label:'干旱'},{id:'saltwater',label:'泡盐水'}] as const).map(option=><button key={option.id} type="button" data-water={option.id} aria-pressed={inputs.water===option.id} onClick={()=>{interact();setInputs(current=>({...current,water:option.id}))}}>{tx(option.label)}</button>)}</div>
-      <button type="button" data-pc-guide onClick={() => { controls.registerInteraction(); setGuide(true) }}>{tx('七站导览')}</button>
+    <Freebar className={`pc-freebar ${guide ? 'pc-guide-active' : ''}`} ariaLabel={tx('光照和时间')} primaryControlBudget={4} secondaryDefault="closed" mobileDensity="comfortable" secondary={<div className="pc-tools">
+      <button type="button" data-pc-guide onClick={() => { controls.registerInteraction(); setGuide(true) }}>{tx('导览')}</button>
       <button type="button" onClick={reset}><ArrowCounterClockwise />{tx('回到细胞')}</button>
-      <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs((current)=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>
-      <button type="button" aria-expanded={bounds} onClick={() => { interact(); setBounds((value) => !value) }}>{tx('模型边界')}</button>
+      <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs(current=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>
+      <button type="button" aria-expanded={bounds} onClick={()=>{interact();setBounds(value=>!value)}}>{tx('模型边界')}</button>
     </div>}>
       <button className="pc-light-switch" type="button" aria-label={tx(inputs.I > 0 ? '关灯' : '开灯')} onClick={() => changeLight(inputs.I > 0 ? 0 : lastLight.current)}>{inputs.I > 0 ? <Sun /> : <Moon />}</button>
-      <select id="pc-time" className="pc-time-control" aria-label={tx('时间倍率')} value={inputs.playing?inputs.timeScale:0} onChange={(event)=>{interact();manualSpeed.current=true;const rate=Number(event.target.value);setInputs((current)=>({...current,playing:rate!==0,timeScale:rate===0?current.timeScale:rate as PlantInputs['timeScale']}))}}>
+      <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={event=>changeLight(Number(event.target.value))} /></div>
+      <label className="pc-select-field pc-water-field">{tx('水分')}<select id="pc-water" aria-label={tx('水分')} value={inputs.water} onChange={event=>changeWater(event.target.value as PlantInputs['water'])}>
+        <option value="normal">{tx('正常')}</option><option value="drought">{tx('干旱')}</option><option value="saltwater">{tx('泡盐水')}</option>
+      </select></label>
+      <label className="pc-select-field pc-time-field">{tx('时间')}<select id="pc-time" className="pc-time-control" aria-label={tx('时间倍率')} value={inputs.playing?inputs.timeScale:0} onChange={event=>{interact();autoWater.current=false;manualSpeed.current=true;const rate=Number(event.target.value);setInputs(current=>({...current,playing:rate!==0,timeScale:rate===0?current.timeScale:rate as PlantInputs['timeScale']}))}}>
         <option value={0}>{tx('暂停')}</option><option value={.001}>1/1000×</option><option value={1}>1×</option><option value={60}>×60</option><option value={3600}>×3600</option>
-      </select>
-      <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={(event) => changeLight(Number(event.target.value))} /></div>
+      </select></label>
     </Freebar>
     {!capture && <GuideTour worldId="plant-cell" steps={guideSteps} defaultOpen={guide} placement="stage" kicker={tx('导览')} exitLabel={tx('自由探索')} onExit={() => setGuide(false)} stagePlan={[{ position: 'bottom-left', mobilePosition: 'bottom-left', treatment: 'caption', tone: 'light', width: 'narrow', motion: 'fade' }]} />}
     {!capture && !guide && <GhostHint worldId="plant-cell" gesture={{ type: 'drag', target: '.pc-scene canvas', dx: 35, dy: 0, label: tx(mobile ? '双指缩放，从叶子钻进分子' : '滚动放大，从叶子钻进分子') }} />}
