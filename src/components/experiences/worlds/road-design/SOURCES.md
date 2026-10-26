@@ -325,3 +325,11 @@ JTG/T D21—2014 的官方扫描件链接见前文，本轮直接逐页复核。
 [React Performance tracks 官方文档](https://react.dev/reference/dev-tools/react-performance-tracks) 说明开发版默认记录组件信息。本地 React/R3F 开发构建在格式化 props 时会枚举 typed-array 索引：旧 `runtime.geometry` 等公开数据导致单条约 8,441,639 行、209,824,919 字符，随后传入 `performance.measure`。Worker runtime 的 GPU / 模型资源现用 ECMAScript 私有存储和原型 getter，RoadMeshes / Blueprint 接收资源接口；回放帧也使用私有资源封装。没有关闭 React 性能轨、拦截生产 API、修改依赖或用生产模式替代修复。私有验收日志保存修复前后原始计数和开发模式连续切换结果。
 
 DDI 和连续流的路线信号读数跟随当前车道或下一个实际停止线的 `signalGroups`，不沿用笼统 O-D 分组；没有信号门控的高速直行不显示红灯。剩余秒数累计至该方向真正变色，包含对向绿灯、黄灯和全红间隔。教学回放的停车状态仍读取同一交通仿真。
+
+## Route learning view (2026-10-26)
+
+The design strip groups left-turn mechanisms for teaching, not as a regulatory classification. Crossover designs follow [FHWA Crossover Intersections](https://highways.dot.gov/safety/intersection-safety/intersection-types/crossover-intersections); loop, directional, diamond and mixed layouts were checked against [TxDOT Roadway Design Manual §15.3](https://www.txdot.gov/manuals/des/rdw/chapter-15-grade-separations-and-interchanges-/15-3-types-of-interchanges.html) and [MassDOT PDDG Chapter 7](https://www.mass.gov/info-details/pddg-chapter-7-interchanges). These references inform text only; no third-party artwork or code was copied.
+
+Route bands use the existing representative lane-change path and lane width. Steps partition that path using existing ramp endpoints, curvature and plan intersections; distances sum to the existing full-route reading. Grade labels compare actual model Y coordinates at plan intersections (at least 2.5 m difference), grouping adjacent carriageways of the same main road. They are separate from the unchanged traffic-conflict counts. The profile subtracts model terrain height, so Huangjuewan retains its existing inferred-elevation limitation. The plan view crops approach tails to show the interchange core; a dot at its edge indicates a vehicle outside that view. Full distance and height remain visible in the linear profile. Lighting and contact shading are presentation only, with no change to road coordinates, grade, traffic solving or capacity data.
+
+The catalogue miniatures are original drawings sampled from each signature left turn. Regenerate with `node src/components/experiences/worlds/road-design/prepare-signatures.mjs` after geometry changes.

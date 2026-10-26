@@ -9,29 +9,34 @@ import { fillInstances } from './mesh-kit'
 import { litMaterial } from './NightWorld'
 import { unpackRoadGeometry } from './road-geometry'
 import type { WorkerTrafficRuntime } from './worker-runtime'
+import { modelMaterial } from './FocusWorld'
 import { UrbanGround } from './UrbanGround'
 
-export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, simulation, roof }: { network: Network; atlas: T.Texture; runtime: WorkerTrafficRuntime; simulation: SignalClock; roof: T.Texture }) {
+export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, simulation, roof, focus = false, day = false }: { network: Network; atlas: T.Texture; runtime: WorkerTrafficRuntime; simulation: SignalClock; roof: T.Texture; focus?:boolean; day?:boolean }) {
   const prepared=runtime.geometry
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const hasUrban = urban || Boolean(network.urbanJunctions?.length)
   const assets = useMemo(() => {
     return { ...unpackRoadGeometry(prepared), asphalt: litMaterial(atlas, urban ? '#1d1f23' : '#2b2d30', urban ? 1.3 : 2.4, .9, roof), cement: litMaterial(atlas, '#5d6166', .85, .9, roof), edgeMaterial: litMaterial(atlas, '#9a9c9e', 1.7, .9, roof), underside: litMaterial(atlas, '#1b2028', 0.16, .9, roof) }
   }, [prepared, atlas, urban, roof])
+  const model=useMemo(()=>({road:modelMaterial(day?'#a9b6be':'#9aa8b3',roof),structure:modelMaterial(day?'#99a9b3':'#7c8d9a',roof),edge:modelMaterial(day?'#cbd3d8':'#637480',roof),bottom:modelMaterial(day?'#87969f':'#364651',roof)}),[roof,day])
+  useEffect(()=>()=>Object.values(model).forEach(m=>m.dispose()),[model])
   useEffect(() => () => { assets.pavement.dispose(); assets.concrete.dispose(); assets.edgeCaps.dispose(); assets.soffits.dispose(); assets.paint.dispose(); assets.yellow.dispose(); assets.asphalt.dispose(); assets.cement.dispose(); assets.edgeMaterial.dispose(); assets.underside.dispose() }, [assets])
   return <>
-    <mesh geometry={assets.pavement} material={assets.asphalt} />
-    {hasUrban && <UrbanGround network={network} atlas={atlas} />}
-    <mesh geometry={assets.concrete} material={assets.cement} />
-    <mesh geometry={assets.edgeCaps} material={assets.edgeMaterial} />
-    <mesh geometry={assets.soffits} material={assets.underside} />
-    <mesh geometry={assets.paint}><meshStandardMaterial color="#d9d6cc" emissive="#c8bd9b" emissiveIntensity={0.12} roughness={0.8} side={T.DoubleSide} /></mesh>
+    <mesh geometry={assets.pavement} material={focus?model.road:assets.asphalt} />
+    {hasUrban && <UrbanGround network={network} atlas={atlas} model={focus?model:undefined} />}
+    <mesh geometry={assets.concrete} material={focus?model.structure:assets.cement} />
+    <mesh geometry={assets.edgeCaps} material={focus?model.edge:assets.edgeMaterial} />
+    <mesh geometry={assets.soffits} material={focus?model.bottom:assets.underside} />
+    <group visible={!focus||hasUrban}><mesh geometry={assets.paint}><meshStandardMaterial color={focus?'#607583':'#d9d6cc'} emissive="#c8bd9b" emissiveIntensity={focus?0:0.12} roughness={0.8} side={T.DoubleSide} /></mesh>
     <mesh geometry={assets.yellow}><meshStandardMaterial color="#d4a72c" emissive="#9f7200" emissiveIntensity={0.15} side={T.DoubleSide} /></mesh>
-    <instancedMesh args={[undefined, assets.cement, assets.piers.length]} ref={m => { if (m) fillInstances(m, assets.piers) }}><cylinderGeometry args={[0.5, 0.64, 1, 12]} /></instancedMesh>
-    <instancedMesh args={[undefined, assets.cement, assets.caps.length]} ref={m => { if (m) fillInstances(m, assets.caps) }}><boxGeometry /></instancedMesh>
-    <instancedMesh args={[undefined, undefined, assets.lampPoles.length]} ref={m => { if (m) fillInstances(m, assets.lampPoles) }}><cylinderGeometry args={[0.5, 0.7, 1, 8]} /><meshStandardMaterial color="#5e666c" metalness={0.6} roughness={0.45} /></instancedMesh>
+    </group>
+    <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.piers.length]} ref={m => { if (m) fillInstances(m, assets.piers) }}><cylinderGeometry args={[0.5, 0.64, 1, 12]} /></instancedMesh>
+    <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.caps.length]} ref={m => { if (m) fillInstances(m, assets.caps) }}><boxGeometry /></instancedMesh>
+    <group visible={!focus}><instancedMesh args={[undefined, undefined, assets.lampPoles.length]} ref={m => { if (m) fillInstances(m, assets.lampPoles) }}><cylinderGeometry args={[0.5, 0.7, 1, 8]} /><meshStandardMaterial color="#5e666c" metalness={0.6} roughness={0.45} /></instancedMesh>
     <instancedMesh args={[undefined, undefined, assets.lampArms.length]} ref={m => { if (m) fillInstances(m, assets.lampArms) }}><boxGeometry /><meshStandardMaterial color="#505a64" metalness={0.6} roughness={0.4} /></instancedMesh>
     <instancedMesh args={[undefined, undefined, assets.luminaires.length]} ref={m => { if (m) fillInstances(m, assets.luminaires) }}><boxGeometry /><meshBasicMaterial color={[4, 3.8, 3.5]} toneMapped={false} /></instancedMesh>
+    </group>
     {network.control.kind === 'signal' && <SignalLights network={network} simulation={simulation} />}
   </>
 })

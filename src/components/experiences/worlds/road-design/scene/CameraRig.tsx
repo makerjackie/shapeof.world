@@ -1,4 +1,5 @@
 import type { MutableRefObject } from 'react'
+import { corePoints } from '../explorer/journey'
 import type { ExploreRoute } from '../explorer/routes'
 import type { DemoState } from '../explorer/replay'
 import { useEffect, useRef, type ComponentRef } from 'react'
@@ -10,7 +11,7 @@ import type { DesignInfo } from '../designs/catalogue'
 import type { Vec3 } from '../sim/types'
 
 export type CameraPreset = 'overview' | 'top' | 'close' | 'low'
-export function CameraRig({ design, preset, revision, reducedMotion, onInteract, route, follow = false, demo, onStopFollow, junctionPoints }: { design: DesignInfo; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void; route?: ExploreRoute; follow?:boolean; demo?:MutableRefObject<DemoState>; onStopFollow?:()=>void; junctionPoints?:Vec3[] }) {
+export function CameraRig({ design, preset, revision, reducedMotion, onInteract, route, follow = false, demo, onStopFollow, junctionPoints, focusPoint }: { design: DesignInfo; preset: CameraPreset; revision: number; reducedMotion: boolean; onInteract: () => void; route?: ExploreRoute; follow?:boolean; demo?:MutableRefObject<DemoState>; onStopFollow?:()=>void; junctionPoints?:Vec3[];focusPoint?:Vec3|null }) {
   const control = useRef<ComponentRef<typeof OrbitControls>>(null)
   const { camera, size, gl } = useThree()
   const flight = useRef<{ from: T.Vector3; to: T.Vector3; targetFrom: T.Vector3; target: T.Vector3; elapsed: number } | null>(null)
@@ -51,7 +52,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
       // Approach tails are kilometres long. Keep the interchange mechanism at
       // readable scale; Navigation still points to both complete route ends.
       const local=design.chapter===4?route.path.points.filter(p=>Math.hypot(p.x-focus.x,p.z-focus.z)<500):route.focusPoints
-      const points=local.length>1?local:route.focusPoints
+      const points=design.chapter===3?corePoints(route):local.length>1?local:route.focusPoints
       const box=new T.Box3().setFromPoints(points.map(p=>new T.Vector3(p.x,p.y,p.z)))
       const center=box.getCenter(new T.Vector3()), span=box.getSize(new T.Vector3())
       const radius=span.length()/2
@@ -62,9 +63,10 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
       target.copy(center)
       // Mountain interchanges need a 42° oblique view to reveal their decks.
       to.copy(center).add((preset==='top'?new T.Vector3(0,1,.001):design.chapter>=3?new T.Vector3(.55,.90,.84):new T.Vector3(.28,.87,.40)).normalize().multiplyScalar(distance))
-      if(design.chapter===4)coreFocused.current=true
+      if(design.chapter>=3)coreFocused.current=true
       // Move the projected route into the unobstructed upper half on phones.
       if(mobile){const shift=distance*.12;target.z+=shift;to.z+=shift}
+      else {const shift=new T.Vector3().subVectors(to,target).cross(new T.Vector3(0,1,0)).normalize().multiplyScalar(-distance*.045);target.add(shift);to.add(shift)}
     }
     if(junctionPoints?.length) {
       const box=new T.Box3().setFromPoints(junctionPoints.map(p=>new T.Vector3(p.x,p.y,p.z)))
@@ -81,12 +83,18 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
       if(mobile){target.z+=distance*.13;to.z+=distance*.13}
       coreFocused.current=true
     }
+    if(focusPoint){
+      target.set(focusPoint.x,focusPoint.y,focusPoint.z)
+      const distance=design.chapter===1?85:250
+      to.copy(target).add(new T.Vector3(.55,.7,.84).normalize().multiplyScalar(distance))
+      coreFocused.current=true
+    }
     perspective.updateProjectionMatrix()
     if (!mounted.current || reducedMotion) {
       camera.position.copy(to); control.current?.target.copy(target); camera.lookAt(target)
       mounted.current = true
     } else flight.current = { from: camera.position.clone(), to, targetFrom: control.current?.target.clone() ?? new T.Vector3(), target, elapsed: 0 }
-  }, [design, preset, revision, camera, size.width, size.height, reducedMotion, route, junctionPoints])
+  }, [design, preset, revision, camera, size.width, size.height, reducedMotion, route, junctionPoints, focusPoint])
   useFrame((_, delta) => {
     const controls = control.current
     if (!controls) return
@@ -98,7 +106,7 @@ export function CameraRig({ design, preset, revision, reducedMotion, onInteract,
       camera.position.lerp(to,ease);controls.target.lerp(target,ease);controls.autoRotate=false;controls.update();flight.current=null;return
     }
     if(route&&demo&&!coreFocused.current&&!manual.current&&demo.current.at>3) {
-      const box=new T.Box3().setFromPoints(route.focusPoints.map(p=>new T.Vector3(p.x,p.y,p.z)))
+      const box=new T.Box3().setFromPoints((design.chapter===3?corePoints(route):route.focusPoints).map(p=>new T.Vector3(p.x,p.y,p.z)))
       const p=demo.current.position
       if(box.clone().expandByScalar(80).containsPoint(new T.Vector3(p.x,p.y,p.z))) {
         const mobile=size.width<720, center=box.getCenter(new T.Vector3()),span=box.getSize(new T.Vector3())

@@ -6,7 +6,7 @@ import {cityLayout} from './city-layout'
 import { fillInstances } from './mesh-kit'
 
 /** Façades are metre-scaled procedural windows, not thousands of window meshes. */
-export function CityBuildings({ urban, service = false, roads, network, visible = true }: { visible?: boolean; urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
+export function CityBuildings({ urban, service = false, roads, network, visible = true, muted = false, day = false }: { visible?: boolean; muted?: boolean; day?: boolean; urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
   const meshRef = useRef<T.InstancedMesh>(null)
   const assets = useMemo(() => {
     const {blocks,beacons}=cityLayout(urban,service,roads,network)
@@ -76,9 +76,10 @@ export function CityBuildings({ urban, service = false, roads, network, visible 
         float cityHorizontalDistance=length(cameraPosition.xz-cityWorld.xz);
         float lowHaze = 1.0-exp(-max(0.0,cityHorizontalDistance-600.0) * 0.00048 * exp(-max(0.0,cityWorld.y)*0.0035));
         outgoingLight = mix(outgoingLight, vec3(0.0025,0.0035,0.0055), lowHaze);
+        ${muted ? `outgoingLight=mix(vec3(${day?'0.62,0.67,0.7':'0.009,0.018,0.03'}),outgoingLight,${day?'.06':'.14'});` : ''}
         #include <opaque_fragment>`)
     }
-    material.customProgramCacheKey = () => 'road-city-facades-v8'
+    material.customProgramCacheKey = () => `road-city-facades-v8-${muted}-${day}`
     const beaconGeometry = new T.BufferGeometry()
     const beaconPosition: number[] = [], phase: number[] = []
     for (let i = 0; i < beacons.length; i += 4) { beaconPosition.push(...beacons.slice(i, i + 3)); phase.push(beacons[i + 3]) }
@@ -93,7 +94,7 @@ export function CityBuildings({ urban, service = false, roads, network, visible 
       fragmentShader: `varying float brightness; void main(){float r=length(gl_PointCoord-0.5)*2.0; if(r>1.0)discard;gl_FragColor=vec4(vec3(2.8,0.04,0.018)*brightness, exp(-r*r*4.0));}`,
     })
     return { blocks, geometry, material, beaconGeometry, beaconMaterial }
-  }, [urban, service, roads, network])
+  }, [urban, service, roads, network, muted, day])
   useLayoutEffect(() => {
     if (!meshRef.current) return
     fillInstances(meshRef.current, assets.blocks)
@@ -105,6 +106,6 @@ export function CityBuildings({ urban, service = false, roads, network, visible 
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose(); assets.beaconGeometry.dispose(); assets.beaconMaterial.dispose() }, [assets])
   return <group visible={visible}>
     <instancedMesh args={[assets.geometry, assets.material, assets.blocks.length]} ref={meshRef} />
-    <points geometry={assets.beaconGeometry} material={assets.beaconMaterial} frustumCulled={false} />
+    <points visible={!muted} geometry={assets.beaconGeometry} material={assets.beaconMaterial} frustumCulled={false} />
   </group>
 }

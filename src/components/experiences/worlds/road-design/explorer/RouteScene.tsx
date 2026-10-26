@@ -4,6 +4,11 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { useExperienceI18n } from '~/i18n/experience'
+import { strip } from '../scene/mesh-kit'
+import { terrainHeight } from '../sim/terrain'
+import type { Network } from '../sim/types'
+import type { Journey } from './journey'
+import { journeyDistance, stepAt } from './journey'
 import { sampleLane } from '../sim/geometry'
 import { approachName, exitName, TURN_NAMES, TURN_SYMBOLS, turnKey, type ExploreRoute } from './routes'
 import { replayAt, type DemoReplay, type DemoState } from './replay'
@@ -33,10 +38,14 @@ export function EntryArrows({routes,selected,onSelect}:{routes:ExploreRoute[];se
   })}</>
 }
 
-export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic,follow,showPins}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean;follow:boolean;showPins:boolean}) {
+export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic,follow,showPins,journey,network,seek}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean;follow:boolean;showPins:boolean;journey:Journey;network:Network;seek:{at:number;revision:number}|null}) {
   const tx=useExperienceI18n(),car=useRef<T.Group>(null),arrows=useRef<T.InstancedMesh>(null),background=useRef<T.InstancedMesh>(null)
   const elapsed=useRef(0)
-  const vectors=useMemo(()=>route.path.points.map(p=>new T.Vector3(p.x,p.y+.85,p.z)),[route])
+  const ribbon=useMemo(()=>strip(route.path.points,route.path.width,0,.16),[route])
+  const shadow=useMemo(()=>strip(route.path.points.map(p=>({...p,y:terrainHeight(network,p.x,p.z)+.03})),route.path.width*1.8),[route,network])
+  const drops=useMemo(()=>Array.from({length:24},(_,i)=>sampleLane(route.path,route.path.length*i/23).position).filter(p=>p.y-terrainHeight(network,p.x,p.z)>3),[route,network])
+  useEffect(()=>()=>{ribbon.dispose();shadow.dispose()},[ribbon,shadow])
+  useEffect(()=>{if(seek)elapsed.current=seek.at},[seek])
   const arrowGeometry=useMemo(()=>{
     const g=new T.BufferGeometry()
     // Two thin strokes, about one car long, sharing the route ink's hue.
@@ -57,11 +66,11 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
       background.current.count=count;background.current.instanceMatrix.needsUpdate=true
     }
     if(arrows.current){
-      const count=Math.min(80,Math.max(12,Math.ceil(route.path.length/42)))
+      const count=Math.min(80,Math.max(6,Math.ceil(route.path.length/80)))
       const spacing=route.path.length/count,phase=playing?state.clock.elapsedTime*8:0
       for(let i=0;i<count;i++){
         const {position:p,tangent:t}=sampleLane(route.path,(i*spacing+phase)%route.path.length)
-        scratch.position.set(p.x,p.y+1.3,p.z);scratch.rotation.set(0,Math.atan2(t.x,t.z),0)
+        scratch.position.set(p.x,p.y+.27,p.z);scratch.rotation.set(0,Math.atan2(t.x,t.z),0)
         // 2.8 m wide before scaling; follow mode stays below half a 1.8 m car.
         scratch.scale.setScalar(follow?.25:.6);scratch.updateMatrix();arrows.current.setMatrixAt(i,scratch.matrix)
       }
@@ -70,14 +79,16 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
   },-1)
   return <>
     {traffic&&<instancedMesh ref={background} args={[undefined,undefined,300]} frustumCulled={false}><boxGeometry/><meshStandardMaterial color="#627985" emissive="#355365" emissiveIntensity={.35}/></instancedMesh>}
-    <Line points={vectors} color="#073d60" lineWidth={10} transparent opacity={.28} depthTest={false} depthWrite={false} renderOrder={8} />
-    <Line points={vectors} color="#65e1f2" lineWidth={3} transparent opacity={.93} depthWrite={false} renderOrder={9} />
-    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#80dbe8" depthWrite={false} side={T.DoubleSide} toneMapped={false}/></instancedMesh>
+    <mesh geometry={shadow}><meshBasicMaterial color="#183440" transparent opacity={.12} depthWrite={false} side={T.DoubleSide}/></mesh>
+    <mesh geometry={ribbon} renderOrder={2}><meshBasicMaterial color="#00a9c4" side={T.DoubleSide} toneMapped={false} polygonOffset polygonOffsetFactor={-1}/></mesh>
+    {drops.map((p,i)=><Line key={i} points={[[p.x,terrainHeight(network,p.x,p.z)+.05,p.z],[p.x,p.y,p.z]]} color="#6695a3" lineWidth={1} transparent opacity={.4}/>)}
+    <CrossingScene route={route} journey={journey} demo={demo} follow={follow}/>
+    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#ffffff" depthWrite={false} side={T.DoubleSide} toneMapped={false}/></instancedMesh>
     <group ref={car}>
       <DemonstrationCar/>
       {replay&&<Html center position={[0,4,0]} zIndexRange={[6,2]} style={{pointerEvents:'none'}}><span className="rd-demo-label">{tx('示范车')}</span></Html>}
     </group>
-    {showPins&&pins.map((p,i)=>p.id===activePin&&(explaining||p.laneIds.some(id=>route.laneIds.includes(id)))&&<WhyMarker key={p.id} pin={p} number={i+1} active onClick={()=>onPin(p.id)} compact={follow}/>)}
+    {showPins&&!journey&&pins.map((p,i)=>p.id===activePin&&(explaining||p.laneIds.some(id=>route.laneIds.includes(id)))&&<WhyMarker key={p.id} pin={p} number={i+1} active onClick={()=>onPin(p.id)} compact={follow}/>)}
   </>
 }
 
@@ -114,4 +125,14 @@ export function WhyMarker({pin,number,active,onClick,compact=false}:{pin:WhyPin;
   })
   if(compact)return null
   return <><group ref={stem} position={[p.x,p.y+1,p.z]}><Line points={[[0,0,0],[0,1,0]]} color={active?"#98dcea":"#47718c"} lineWidth={1} transparent opacity={.7}/></group><group ref={label} position={[p.x,p.y+26,p.z]}><Html center zIndexRange={[7,3]}><button ref={button} className="rd-why-pin" type="button" aria-pressed={active} aria-label={copy(pin,'title')} onClick={onClick}><b>{number}</b></button></Html></group></>
+}
+
+function CrossingScene({route,journey,demo,follow}:{route:ExploreRoute;journey:Journey;demo:MutableRefObject<DemoState>;follow:boolean}){
+ const copy=useEditorialText(),groups=useRef<(T.Group|null)[]>([]),labels=useRef<(HTMLSpanElement|null)[]>([])
+ useFrame(()=>{const s=journeyDistance(route,demo.current.position),step=journey.steps[stepAt(journey,s)],nearest=step?.crossings.reduce<Journey['crossings'][number]|undefined>((a,b)=>!a||Math.abs(b.s-s)<Math.abs(a.s-s)?b:a,undefined);groups.current.forEach((g,i)=>{const visible=!follow&&nearest===journey.crossings[i];if(g)g.visible=visible;if(labels.current[i])labels.current[i]!.style.display=visible?'block':'none'})})
+ return <>{journey.crossings.map((c,i)=><group key={i} ref={g=>{groups.current[i]=g}}>
+  {c.lines.map((line,j)=><Line key={j} points={line.map(p=>[p.x,p.y,p.z] as [number,number,number])} color="#e5a24a" lineWidth={5} transparent opacity={.85}/>)}
+  <Line points={[[c.position.x,c.position.y+.2,c.position.z],[c.position.x,c.position.y+18,c.position.z]]} color="#d39a4d" lineWidth={1}/>
+  <Html position={[c.position.x,c.position.y+20,c.position.z]} center zIndexRange={[8,3]} style={{pointerEvents:'none'}}><span ref={el=>{labels.current[i]=el}} className="rd-crossing-label" data-grade-crossing={c.over?'over':'under'}>{copy(c,'title')}</span></Html>
+ </group>)}</>
 }
