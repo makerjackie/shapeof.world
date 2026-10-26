@@ -36,6 +36,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
         if (cutDistance > 0.0) discard;
         float received = .88 + .12 * exp(min(0.0,cutDistance)*.006);
         diffuseColor.rgb *= received;
+        ${kind === 'wall' ? 'float tissueFacing=abs(dot(normalize(vNormal),normalize(vViewPosition))); diffuseColor.rgb*=mix(.035,1.,smoothstep(.12,.65,tissueFacing));' : ''}
         ${kind === 'wall' || kind === 'cuticle' ? `
           vec2 topPore = (vSection.xz - vec2(${LEAF_ENTRY[0]}, ${LEAF_ENTRY[2]})) / vec2(5.7, 12.0);
           if (vSection.y > 34.0 && dot(topPore, topPore) < 1.0) discard;
@@ -53,7 +54,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
         #include <opaque_fragment>
       `)
     }
-    mat.customProgramCacheKey = () => `plant-section-${kind}-3`
+    mat.customProgramCacheKey = () => `plant-section-${kind}-4`
     return preparePaintMaterial(mat)
     // The opening is a uniform; it does not rebuild any material or geometry.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,6 +106,7 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: Lay
   }, [resources, poses, water.radial, water.axial])
   useEffect(() => () => { resources.tissue.dispose(); resources.protoplast.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
   return <group>
+    <mesh position={[0,-190,-20]}><boxGeometry args={[814,500,80]}/><SectionMaterial kind="cuticle" color="#142d34" opacity={opacity}/></mesh>
     <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity} color="#ffffff" /></mesh>
     <mesh geometry={resources.protoplast} visible={water.immersion > .001}><SectionMaterial opacity={opacity * .65} color="#a9c1aa" /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>

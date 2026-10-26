@@ -19,6 +19,9 @@ const ORGANELLES = {
   'streaming-mitochondria': ['线粒体', 'Mitochondrion', '0.5–1.5 μm'],
   'streaming-peroxisomes': ['过氧化物酶体', 'Peroxisome', '1 μm'],
   'streaming-golgi': ['高尔基体', 'Golgi apparatus', '≈ 1 μm'],
+  'cell-nucleolus': ['核仁', 'Nucleolus', '≈ 2–3 μm'],
+  'cell-nuclear-pores': ['核孔', 'Nuclear pore', '≈ 100 nm'],
+  'cell-plasmodesmata': ['胞间连丝', 'Plasmodesma', '≈ 20–50 nm'],
   'cell-er': ['内质网', 'Endoplasmic reticulum', '60–100 nm'],
 } as const
 type Organelle = keyof typeof ORGANELLES
@@ -50,21 +53,31 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
       if (hit.object instanceof T.Mesh) {
         const materials = Array.isArray(hit.object.material) ? hit.object.material : [hit.object.material]
         const clipped = materials.some(material => {
-          if (material.clippingPlanes?.some((plane: T.Plane) => plane.distanceToPoint(hit.point) < -.001)) return true
+          if(material.userData.plantSelectiveCut && cut.wedge){
+            const center=new T.Vector3();if(hit.object instanceof T.InstancedMesh && hit.instanceId!==undefined){hit.object.getMatrixAt(hit.instanceId,matrix);center.setFromMatrixPosition(matrix)}
+            hit.object.localToWorld(center)
+            const unit=hit.object.matrixWorld.elements,unitLength=Math.hypot(unit[0],unit[1],unit[2])
+            const edgeDistance=Math.min(...cut.planes.map(p=>Math.abs(p.distanceToPoint(center))))/Math.max(unitLength,1e-5)
+            if(((hit.instanceId??0)%4===0||edgeDistance>3.1)&&cut.planes.every(p=>p.distanceToPoint(hit.point)<-.001))return true
+          }
+          const planes=material.clippingPlanes
+          if(planes?.length && (material.clipIntersection ? planes.every((plane:T.Plane)=>plane.distanceToPoint(hit.point)<-.001) : planes.some((plane:T.Plane)=>plane.distanceToPoint(hit.point)<-.001)))return true
           const plane = (material as T.ShaderMaterial).uniforms?.clip?.value
-          return plane instanceof T.Vector4 && plane.x * hit.point.x + plane.y * hit.point.y + plane.z * hit.point.z + plane.w < -.001
+          const second=(material as T.ShaderMaterial).uniforms?.clipB?.value
+          return plane instanceof T.Vector4 && plane.dot(new T.Vector4(hit.point.x,hit.point.y,hit.point.z,1))<-.001 && (!(second instanceof T.Vector4) || second.dot(new T.Vector4(hit.point.x,hit.point.y,hit.point.z,1))<-.001)
         })
         if (clipped) continue
       }
       if (hit.object.name.startsWith('cell-cut-')) {
         const local = hit.object.worldToLocal(hit.point.clone())
-        const radius = cellRadius(local.y), boundary = Math.sqrt(Math.max(0, radius*radius-1.44))-Math.abs(local.x)
+        const radius = cellRadius(local.y), boundary = radius-local.z
         let kind: Organelle = 'cell-wall'
         if (hit.object.name === 'cell-cut-contents') {
-          if (boundary < .65) continue
-          const inside = Math.min(cellRadius(local.y/.94)*.80-Math.abs(local.x), Math.hypot(local.x+8.9,local.y+12)-4.7)
-          kind = boundary < .84 ? 'cell-membrane' : inside > 0 ? 'cell-vacuole' : 'cell-cytoplasm'
+          if (boundary < .72 || point.distanceTo(new T.Vector3(-8.3,-10,7.7))<4.1) continue
+          const inside = cellRadius(local.y/.94)*.80-local.z
+          kind = boundary < .90 ? 'cell-membrane' : inside > 0 ? 'cell-vacuole' : 'cell-cytoplasm'
         }
+        if(hit.object.name==='cell-cut-wall' && boundary>.72)continue
         setSelection({kind,position:point.toArray(),object:hit.object})
         return
       }
@@ -89,6 +102,9 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     : selection?.kind === 'streaming-mitochondria' ? '进行呼吸作用，随胞质流移动并翻转。'
     : selection?.kind === 'streaming-peroxisomes' ? '参与光呼吸和氧化物代谢，常在叶绿体旁停留。'
     : selection?.kind === 'streaming-golgi' ? '加工和分拣分子，沿胞质索走走停停。'
+    : selection?.kind === 'cell-nucleolus' ? '组装核糖体的地方，深紫色团块位于核内。'
+    : selection?.kind === 'cell-nuclear-pores' ? '穿过双层核膜，让分子在核内外通行。'
+    : selection?.kind === 'cell-plasmodesmata' ? '细通道穿过相邻细胞的壁，连接两边胞质。'
     : selection?.kind === 'cell-er' ? '在膜网络上合成和运输蛋白与脂质。'
     : '保存遗传信息，核孔连接核内外运输。'
   return <group onPointerMove={pick} onClick={pick} onPointerLeave={() => setSelection(null)} onPointerMissed={() => setSelection(null)}>

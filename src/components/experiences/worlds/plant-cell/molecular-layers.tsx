@@ -1,3 +1,4 @@
+import { LipidCutEdge } from './lipid-cut-edge'
 import { PaintMaterial, preparePaintMaterial, ATP_PIGMENTS, PROTEIN_COLORS, IllustratedAtomMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useFrame, type ThreeEvent } from '@react-three/fiber'
@@ -317,7 +318,7 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
             float radius=distance(membranePosition.xz,vec2(28.0,116.0));
             if(nearSide>0.0&&radius<24.0*molecularOpening)discard;
             diffuseColor.a*=molecularAlpha;
-            ${heads ? '' : 'float grain=fract(sin(dot(floor(membranePosition*1.8),vec3(12.9898,78.233,43.21)))*43758.5453);diffuseColor.rgb*=.89+.15*grain;'}
+            ${heads ? '' : 'if(membranePosition.z>min(164.2,sectionCutNm-1.6) && membranePosition.z>78.)discard;float grain=fract(sin(dot(floor(membranePosition*1.8),vec3(12.9898,78.233,43.21)))*43758.5453);diffuseColor.rgb*=.89+.15*grain;'}
             #include <alphatest_fragment>`)
       }
       return preparePaintMaterial(m)
@@ -343,6 +344,7 @@ function MembraneArchitecture({ opacity, light, mobile, scale }: { opacity: numb
     <StaticInstances geometry={cylinders} material={materials.core} poses={membraneInstances} scaling={[1, d.membraneNm, 1]} />
     <StaticInstances geometry={lamellaGeometry} material={materials.core} poses={lamellaInstances} scaling={[170, d.membraneNm, 88]} />
     <StaticInstances geometry={headGeometry} material={materials.heads} poses={heads} />
+    <LipidCutEdge opacity={opacity} membrane={d.membraneNm} lumen={d.lumenNm} section={cut.section.value}/>
   </group>
 }
 

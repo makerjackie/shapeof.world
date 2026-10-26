@@ -61,7 +61,7 @@ export function buildLamellae(grana: Granum[], connections: [number, number][], 
         const t = i / 6, theta = angle + Math.PI + 0.7 * t
         points.push(new THREE.Vector3(b.center[0] + Math.cos(theta) * (b.radius - 0.012), b.center[1] + Math.sin(theta) * (b.radius - 0.012), bz - 0.022 + t * 0.022))
       }
-      addPaired(points, 0.065 + (connection % 3) * 0.014)
+      addPaired(points, 0.105 + (connection % 3) * 0.020)
       sheets.push(bridge)
     }
     if (connection % 3 === 0) {

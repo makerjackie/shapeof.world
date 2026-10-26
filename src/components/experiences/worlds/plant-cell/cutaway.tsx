@@ -3,14 +3,14 @@ import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import { illustrateShader } from './illustration'
 
-export interface CutState { plane: T.Plane; normal: T.Vector3; angle: number; offset: number; fromWorld: T.Matrix4 }
+export interface CutState { plane: T.Plane; normal: T.Vector3; angle: number; offset: number; wedge: boolean; planes: T.Plane[]; facePlanes: T.Plane[][]; fromWorld: T.Matrix4 }
 const CutContext = createContext<CutState | null>(null)
 export const useCutaway = () => useContext(CutContext)
 
 /** Keep the cut oblique to the view: a 35° reveal preserves the slice's depth. */
-export function Cutaway({ children, offset = -1.2, reveal = 35 }: { children: ReactNode; offset?: number; reveal?: number }) {
+export function Cutaway({ children, offset = -1.2, reveal = 35, wedge = false }: { children: ReactNode; offset?: number; reveal?: number; wedge?: boolean }) {
   const group = useRef<T.Group>(null)
-  const cut = useMemo<CutState>(() => ({ plane: new T.Plane(), normal: new T.Vector3(0, 0, 1), angle: 0, offset, fromWorld: new T.Matrix4() }), [offset])
+  const cut = useMemo<CutState>(() => ({ plane: new T.Plane(), normal: new T.Vector3(0, 0, 1), angle: 0, offset: wedge ? 0 : offset, wedge, planes: Array.from({length:wedge?2:1},()=>new T.Plane()), facePlanes: [[new T.Plane()], [new T.Plane()]], fromWorld: new T.Matrix4() }), [offset, wedge])
   const scratch = useMemo(() => ({ eye: new T.Vector3(), point: new T.Vector3(), normal: new T.Vector3() }), [])
   const initialized = useRef(false)
   useFrame(({ camera }, dt) => {
@@ -26,18 +26,35 @@ export function Cutaway({ children, offset = -1.2, reveal = 35 }: { children: Re
     scratch.normal.copy(cut.normal).negate().transformDirection(group.current.matrixWorld)
     scratch.point.copy(cut.normal).multiplyScalar(offset); group.current.localToWorld(scratch.point)
     cut.plane.setFromNormalAndCoplanarPoint(scratch.normal, scratch.point)
+    if (wedge) {
+      // Remove the intersection of two half-spaces: a 120° longitudinal wedge.
+      // The two faces meet at the cell axis, so the remaining shell stays 3D.
+      for (let i=0;i<2;i++) {
+        const a=cut.angle+(i===0?1:-1)*Math.PI/6
+        scratch.normal.set(Math.sin(a),0,Math.cos(a)).negate().transformDirection(group.current.matrixWorld)
+        scratch.point.set(0,0,0); group.current.localToWorld(scratch.point)
+        cut.planes[i].setFromNormalAndCoplanarPoint(scratch.normal,scratch.point)
+      }
+      cut.facePlanes[0][0].copy(cut.planes[1]).negate()
+      cut.facePlanes[1][0].copy(cut.planes[0]).negate()
+    } else cut.planes[0].copy(cut.plane)
   }, -0.5)
   return <CutContext.Provider value={cut}><group ref={group}>{children}</group></CutContext.Provider>
 }
 
 /** Lit surfaces share real clipping/shadows; only membranes use Fresnel alpha. */
-export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid', roughness = 0.72, clipped = true, attenuation = true, depthWrite = true, starch = 0, glow = 0, ...props }: {
-  color?: string; opacity?: number; kind?: 'solid' | 'chloroplast' | 'chloroplast-cut' | 'nucleus' | 'wall'; roughness?: number; clipped?: boolean; attenuation?: boolean; depthWrite?: boolean; starch?: number; glow?: number
+export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid', roughness = 0.72, clipped = true, attenuation = true, depthWrite = true, starch = 0, glow = 0, face, selectiveCut = false, ...props }: {
+  color?: string; opacity?: number; kind?: 'solid' | 'chloroplast' | 'chloroplast-cut' | 'nucleus' | 'wall' | 'vacuole'; roughness?: number; clipped?: boolean; attenuation?: boolean; depthWrite?: boolean; starch?: number; glow?: number; face?: number; selectiveCut?: boolean
 }) {
   const cut = useCutaway()
+  // ScaleLayer stores the unfaded alpha here. Preserve it across React renders,
+  // including entry while this layer is hidden and the later pause action.
+  const paintData=useMemo(()=>({plantSelectiveCut:selectiveCut,plantBaseOpacity:opacity,plantDepthWrite:depthWrite}),[selectiveCut,opacity,depthWrite])
+  const selectivePlanes=useMemo(()=>({a:{value:new T.Vector4()},b:{value:new T.Vector4()}}),[])
+  useFrame(()=>{if(cut&&selectiveCut)for(const [i,key]of(['a','b']as const).entries()){const p=cut.planes[i]??cut.plane;selectivePlanes[key].value.set(p.normal.x,p.normal.y,p.normal.z,p.constant)}})
   const starchUniform = useRef({ value: starch }); starchUniform.current.value = starch
   const glowUniform = useRef({ value: glow }); glowUniform.current.value = glow
-  const planes = useMemo(() => cut && clipped ? [cut.plane] : [], [cut, clipped])
+  const planes = useMemo(() => cut && face !== undefined && cut.wedge ? cut.facePlanes[face] : cut && clipped ? cut.planes : [], [cut, clipped, face])
   const grana = useMemo(() => {
     if (kind !== 'chloroplast') return null
     const size = 128, data = new Uint8Array(size * size)
@@ -56,24 +73,36 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
   }, [kind])
   useEffect(() => () => grana?.dispose(), [grana])
   return <meshPhysicalMaterial {...props} color={color} roughness={roughness} metalness={0} clearcoat={0} clearcoatRoughness={0.55}
-    transparent opacity={opacity} side={T.DoubleSide} clippingPlanes={planes} clipShadows depthWrite={depthWrite}
-    customProgramCacheKey={() => `plant-${kind}-${attenuation}`}
+    forceSinglePass userData={paintData} transparent opacity={opacity} side={T.DoubleSide} clippingPlanes={planes} clipIntersection={!!cut?.wedge && face === undefined} clipShadows depthWrite={depthWrite}
+    customProgramCacheKey={() => `plant-${kind}-${attenuation}-${selectiveCut}`}
     onBeforeCompile={(shader) => {
+      shader.uniforms.cutFaceA=selectivePlanes.a;shader.uniforms.cutFaceB=selectivePlanes.b
       shader.uniforms.cellFromWorld = { value: cut?.fromWorld ?? new T.Matrix4() }
       shader.uniforms.granaMap = { value: grana }
       shader.uniforms.starchAmount = starchUniform.current
       shader.uniforms.glowAmount = glowUniform.current
-      shader.vertexShader = 'uniform mat4 cellFromWorld; varying vec3 vTissue; varying vec3 vShape;\n' + shader.vertexShader
+      shader.vertexShader = 'varying float cutOrdinal; varying float tissueUnit; varying vec3 tissueCenter; varying vec3 tissueWorld; uniform mat4 cellFromWorld; varying vec3 vTissue; varying vec3 vShape;\n' + shader.vertexShader
       shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+        cutOrdinal=0.;
+        #ifdef USE_INSTANCING
+        cutOrdinal=mod(float(gl_InstanceID),4.);
+        #endif
         vShape=position; vec4 tissueP=vec4(transformed,1.0);
         #ifdef USE_INSTANCING
         tissueP=instanceMatrix*tissueP;
         #endif
-        vTissue=(cellFromWorld*modelMatrix*tissueP).xyz;`)
-      shader.fragmentShader = 'uniform sampler2D granaMap; uniform float starchAmount; uniform float glowAmount; varying vec3 vTissue; varying vec3 vShape;\n' + shader.fragmentShader
+        tissueUnit=length(modelMatrix[0].xyz);tissueCenter=(modelMatrix*vec4(0.,0.,0.,1.)).xyz;
+        #ifdef USE_INSTANCING
+        tissueCenter=(modelMatrix*instanceMatrix*vec4(0.,0.,0.,1.)).xyz;
+        #endif
+        tissueWorld=(modelMatrix*tissueP).xyz;vTissue=(cellFromWorld*modelMatrix*tissueP).xyz;`)
+      shader.fragmentShader = 'uniform vec4 cutFaceA;uniform vec4 cutFaceB; varying float cutOrdinal; varying float tissueUnit; varying vec3 tissueCenter; varying vec3 tissueWorld; uniform sampler2D granaMap; uniform float starchAmount; uniform float glowAmount; varying vec3 vTissue; varying vec3 vShape;\n' + shader.fragmentShader
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+        ${selectiveCut ? 'float edgeDistance=min(abs(dot(cutFaceA,vec4(tissueCenter,1.))),abs(dot(cutFaceB,vec4(tissueCenter,1.))))/max(tissueUnit,.00001);if((cutOrdinal<.5 || edgeDistance>3.1) && dot(cutFaceA,vec4(tissueWorld,1.))<0. && dot(cutFaceB,vec4(tissueWorld,1.))<0.)discard;' : ''}
         ${attenuation ? 'float received=.92+.08*exp(-max(0.0,35.0-vTissue.y)*0.026); diffuseColor.rgb*=received;' : ''}
         ${kind === 'chloroplast' ? `
+        float chloroplastLight=dot(normalize(vShape/vec3(3.,1.9,1.15)),normalize(vec3(-.5,.4,1.)));
+        diffuseColor.rgb*=mix(.48,1.,smoothstep(-.3,.6,chloroplastLight));
         float thickness=sqrt(max(0.0,1.0-dot(vShape.xy/vec2(3.0,1.9),vShape.xy/vec2(3.0,1.9))));
         diffuseColor.rgb*=mix(vec3(1.08,1.08,1.02),vec3(.90,.98,.89),thickness);
         float stipple=texture2D(granaMap,vShape.xy/vec2(6.0,3.8)+0.5).r;
@@ -84,8 +113,18 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
         diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.42,0.45,0.32),starchSpot*0.38);
         if(!gl_FrontFacing) diffuseColor.rgb*=.83;
         ` : ''}
-        ${kind === 'chloroplast-cut' ? 'float lines=smoothstep(0.1,0.7,abs(sin(vShape.y*100.0+sin(vShape.x*4.0)*0.3))); diffuseColor.rgb*=0.6+0.6*lines;' : ''}
-        ${kind === 'nucleus' ? 'if(!gl_FrontFacing) diffuseColor.rgb*=0.52+0.18*sin(vShape.x*18.0)*sin(vShape.y*14.0);' : ''}
+        ${kind === 'chloroplast-cut' ? 'float stacks=step(.36,fract(vShape.x*3.+sin(vShape.y*4.)*.16)); float lines=smoothstep(.16,.38,abs(sin(vShape.y*38.))); diffuseColor.rgb=mix(vec3(.12,.34,.15),vec3(.40,.69,.26),1.-stacks*(1.-lines));' : ''}
+        ${kind === 'vacuole' ? 'if(distance(vTissue,vec3(-8.3,-10.,7.7))<4.2)discard;' : ''}
+        ${kind === 'wall' ? 'float fiberA=pow(.5+.5*sin(vTissue.y*17.+vTissue.x*4.),12.);float fiberB=pow(.5+.5*sin(vTissue.y*13.-vTissue.z*8.),14.);diffuseColor.rgb*=.68+.30*min(1.,fiberA+fiberB);' : ''}
+        ${kind === 'nucleus' ? `
+          vec3 unit=normalize(vShape);float baseIndex=floor((1.-unit.y)*63.-.5);
+          for(int k=-3;k<=3;k++){
+            float fi=clamp(baseIndex+float(k),0.,125.),yy=1.-(fi+.5)/63.,rr=sqrt(max(0.,1.-yy*yy));
+            vec3 pore=vec3(rr*cos(fi*2.399963),yy,rr*sin(fi*2.399963));
+            if(dot(unit,pore)>.9993)discard;
+          }
+          if(!gl_FrontFacing)diffuseColor.rgb*=.68;
+        ` : ''}
       `)
       // Thin lens rims transmit sunlight: a soft chlorophyll glow, darker where grana sit.
       if (kind === 'chloroplast') shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>

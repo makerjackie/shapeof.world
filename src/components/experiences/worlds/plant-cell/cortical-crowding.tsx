@@ -22,13 +22,13 @@ export function CorticalCrowding({mobile,physiology,clock}:{mobile:boolean;physi
     const g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(position,3));g.setAttribute('color',new T.BufferAttribute(colors,3));g.setAttribute('diameter',new T.BufferAttribute(diameters,1));return g
   },[count])
   useEffect(()=>()=>geometry.dispose(),[geometry])
-  const uniforms=useMemo(()=>({alpha:{value:1},clip:{value:new T.Vector4(0,0,0,1)},time:{value:0},fold:{value:0},pixels:{value:1}}),[])
+  const uniforms=useMemo(()=>({alpha:{value:1},clip:{value:new T.Vector4(0,0,0,1)},clipB:{value:new T.Vector4(0,0,0,1)},time:{value:0},fold:{value:0},pixels:{value:1}}),[])
   useFrame(({size,camera})=>{
-    if(cut)uniforms.clip.value.set(cut.plane.normal.x,cut.plane.normal.y,cut.plane.normal.z,cut.plane.constant)
+    if(cut){const a=cut.planes[0],b=cut.planes[1]??a;uniforms.clip.value.set(a.normal.x,a.normal.y,a.normal.z,a.constant);uniforms.clipB.value.set(b.normal.x,b.normal.y,b.normal.z,b.constant)}
     uniforms.time.value=clock.current;uniforms.fold.value=getWaterReadings(physiology.current.water).wrinkles
     uniforms.pixels.value=size.height/(2*Math.tan((camera as T.PerspectiveCamera).fov*Math.PI/360))
   })
-  return <points name="cortical-protein-crowding" geometry={geometry} frustumCulled={false}>
+  return <points raycast={() => {}} name="cortical-protein-crowding" geometry={geometry} frustumCulled={false}>
     <shaderMaterial uniforms={uniforms} vertexColors transparent depthWrite={false} vertexShader={`
       uniform float time;uniform float fold;uniform float pixels;attribute float diameter;
       varying vec3 pigment;varying vec3 world;varying float coverage;
@@ -39,8 +39,8 @@ export function CorticalCrowding({mobile,physiology,clock}:{mobile:boolean;physi
         float px=diameter*length(modelMatrix[0].xyz)*pixels/max(.01,-mv.z);
         coverage=min(1.,px*px);pigment=color;gl_PointSize=clamp(px,1.,9.);gl_Position=projectionMatrix*mv;
       }`} fragmentShader={`
-      uniform float alpha;uniform vec4 clip;varying vec3 pigment;varying vec3 world;varying float coverage;
-      void main(){if(dot(clip,vec4(world,1.))<0.)discard;float r=length(gl_PointCoord-.5)*2.;if(r>1.)discard;
+      uniform float alpha;uniform vec4 clip;uniform vec4 clipB;varying vec3 pigment;varying vec3 world;varying float coverage;
+      void main(){if(dot(clip,vec4(world,1.))<0. && dot(clipB,vec4(world,1.))<0.)discard;float r=length(gl_PointCoord-.5)*2.;if(r>1.)discard;
         vec3 c=mix(pigment,pigment*.55,smoothstep(.65,1.,r)*.45);gl_FragColor=vec4(c,alpha*coverage*.8);
         #include <colorspace_fragment>
       }`} />
