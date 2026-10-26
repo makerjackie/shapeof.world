@@ -1156,3 +1156,312 @@
  .na-return-city {top:calc(var(--experience-safe-top,76px) + 140px);bottom:auto;width:calc(100% - 40px);max-width:none;min-height:32px;font-size:10px;white-space:normal}
  .na-experience .nb-world.is-micro .nb-caption {top:calc(var(--experience-safe-top,76px) + 182px);bottom:auto;background:#e9edefed;padding:5px 8px}
 }
+
+/* 三种装置：内爆式（三维剖面）、枪式与两级热核（平面示意） */
+.na-device-switch {
+	position: absolute;
+	z-index: 7;
+	top: 92px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	width: max-content;
+	padding: 3px;
+	gap: 2px;
+	background: #e9edefe6;
+	border: 1px solid var(--na-line);
+}
+.na-device-switch button {
+	padding: 7px 16px;
+	white-space: nowrap;
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	color: var(--na-muted);
+	background: transparent;
+	border: 0;
+	cursor: pointer;
+}
+.na-device-switch button.is-active {
+	color: #f4f7f8;
+	background: #587a90;
+}
+.na-schematic {
+	position: absolute;
+	z-index: 7;
+	inset: 0;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+	grid-template-rows: auto minmax(0, 1fr);
+	gap: 8px 40px;
+	padding: 140px 40px 96px;
+	background: var(--na-paper);
+	color: var(--na-ink);
+}
+.na-schem-heading p {
+	margin: 0 0 12px;
+	font-size: 11px;
+	letter-spacing: 0.12em;
+	color: var(--na-muted);
+}
+.na-schem-heading h1 {
+	margin: 0 0 10px;
+	font-family: 'Noto Serif SC', 'Songti SC', serif;
+	font-size: 40px;
+	font-weight: 500;
+	line-height: 1.15;
+}
+.na-schem-heading span {
+	font-size: 13px;
+	color: var(--na-muted);
+}
+.na-schem-stage {
+	grid-column: 1;
+	min-height: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.na-schem-figure {
+	width: 100%;
+	height: 100%;
+	max-height: 480px;
+	overflow: visible;
+}
+.na-schem-panel {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+	align-self: start;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	max-height: 100%;
+	overflow: auto;
+	padding: 20px;
+	background: #f2f5f6;
+	border-top: 2px solid #587a90;
+}
+.na-schem-steps {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+.na-schem-steps button {
+	display: grid;
+	grid-template-columns: 24px 1fr;
+	gap: 2px 10px;
+	width: 100%;
+	padding: 9px 10px;
+	text-align: left;
+	color: var(--na-muted);
+	background: transparent;
+	border: 0;
+	border-left: 2px solid transparent;
+	cursor: pointer;
+}
+.na-schem-steps strong {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--na-ink);
+}
+.na-schem-steps button > span:last-child {
+	grid-column: 2;
+	font-size: 12px;
+	line-height: 1.6;
+}
+.na-schem-steps li:not(.is-current) button > span:last-child {
+	display: none;
+}
+.na-schem-steps .is-current button {
+	background: #ffffff;
+	border-left-color: #be7162;
+	color: var(--na-ink);
+}
+.na-schem-steps .is-done strong {
+	color: var(--na-muted);
+}
+.na-schem-index {
+	grid-row: 1 / span 2;
+	width: 22px;
+	height: 22px;
+	border: 1px solid var(--na-line);
+	border-radius: 50%;
+	font-size: 11px;
+	line-height: 20px;
+	text-align: center;
+}
+.na-schem-steps .is-current .na-schem-index {
+	color: #ffffff;
+	background: #be7162;
+	border-color: #be7162;
+}
+.na-schem-controls {
+	display: flex;
+	gap: 6px;
+}
+.na-schem-controls button {
+	display: grid;
+	place-items: center;
+	width: 36px;
+	height: 32px;
+	color: var(--na-ink);
+	background: #ffffff;
+	border: 1px solid var(--na-line);
+	cursor: pointer;
+}
+.na-schem-controls button:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+.na-schem-note {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.7;
+}
+.na-schem-disclaimer {
+	margin: 0;
+	font-size: 11px;
+	line-height: 1.6;
+	color: var(--na-muted);
+}
+.na-schematic .na-schem-return {
+	padding: 9px 12px;
+	font-size: 13px !important;
+	line-height: 1.5;
+	text-align: left;
+	color: var(--na-ink);
+	background: #ffffff;
+	border: 1px solid var(--na-line);
+	cursor: pointer;
+}
+.na-schem-casing {
+	fill: #dfe7eb;
+	stroke: #587a90;
+	stroke-width: 2;
+}
+.na-schem-fin {
+	fill: #cbd7de;
+	stroke: #587a90;
+	stroke-width: 2;
+}
+.na-schem-charge {
+	fill: #a99459;
+	transition: fill 0.4s;
+}
+.na-schem-charge.is-firing {
+	fill: #e0a24c;
+}
+.na-schem-barrel {
+	fill: #f5f7f8;
+	stroke: #8eabbc;
+	stroke-width: 2;
+}
+.na-schem-tamper,
+.na-schem-pusher {
+	fill: #587a90;
+}
+.na-schem-fissile {
+	fill: #be7162;
+	transition: fill 0.6s;
+}
+.na-schem-fissile.is-hot {
+	fill: #f0b48f;
+}
+.na-schem-projectile {
+	transition: transform 1.6s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.na-schem-secondary {
+	transition: transform 1.2s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.na-schem-case {
+	fill: #cbd7de;
+	stroke: #587a90;
+	stroke-width: 3;
+}
+.na-schem-foam-dot {
+	fill: #9fb3bf;
+}
+.na-schem-shell {
+	fill: #8eabbc;
+}
+.na-schem-explosive {
+	fill: #ddd5ba;
+}
+.na-schem-fuel {
+	fill: #e4cf8f;
+}
+.na-schem-xray,
+.na-schem-glow {
+	animation: na-schem-fade 0.9s ease-out both;
+}
+.na-schem-arrows path {
+	fill: none;
+	stroke: #783440;
+	stroke-width: 2;
+	stroke-dasharray: 7 5;
+}
+.na-schem-arrowhead {
+	fill: #783440;
+}
+.na-schem-label line {
+	stroke: #617682;
+	stroke-width: 1;
+}
+.na-schem-label circle {
+	fill: #293e4b;
+}
+.na-schem-label text {
+	font-size: 15px;
+	fill: #293e4b;
+}
+.na-schem-label.is-dim {
+	opacity: 0.45;
+}
+@keyframes na-schem-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@media (max-width: 720px) {
+	.na-device-switch {
+		top: 60px;
+	}
+	.na-device-switch button {
+		padding: 6px 10px;
+	}
+	.na-schematic {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto minmax(180px, 34vh) minmax(0, 1fr);
+		gap: 6px;
+		padding: 112px 16px 76px;
+	}
+	.na-schem-heading h1 {
+		font-size: 26px;
+	}
+	.na-schem-stage {
+		grid-row: 2;
+	}
+	.na-schem-panel {
+		grid-column: 1;
+		grid-row: 3;
+		padding: 14px;
+		gap: 10px;
+	}
+	.na-schem-label text {
+		font-size: 30px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.na-schem-projectile,
+	.na-schem-secondary,
+	.na-schem-xray,
+	.na-schem-glow {
+		transition: none;
+		animation: none;
+	}
+}
