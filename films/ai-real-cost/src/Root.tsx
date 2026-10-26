@@ -5,9 +5,11 @@ import { CoverMockG } from "./CoverMock";
 import { Film } from "./Film";
 import { FILM_FRAMES } from "./scenes";
 import { FPS } from "./timing";
+import { Sample, SAMPLE_FRAMES } from "./v10/Sample";
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Sample10" component={Sample} durationInFrames={SAMPLE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Film" component={Film} durationInFrames={FILM_FRAMES} fps={FPS} width={1920} height={1080} />
     <Still id="cover-A-16x9" component={CoverA} width={1920} height={1080} defaultProps={{ wide: true }} />
     <Still id="cover-A-4x3" component={CoverA} width={1440} height={1080} defaultProps={{ wide: false }} />
