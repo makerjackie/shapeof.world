@@ -21,6 +21,7 @@
   "放大": "Zoom in",
   "放到": "put in",
   "分离": "Separation",
+  "风": "wind",
   "峰值": "Peak",
   "根": "root",
   "共": "Total",
@@ -365,6 +366,8 @@
   "离地高度": "Height above ground",
   "跟着路线走": "Follow the route",
   "夜景": "Night",
-  "白天白模": "Day model",
-  "左转怎么办": "How to turn left"
+  "左转怎么办": "How to turn left",
+  "白模": "White model",
+  "画风": "Appearance",
+  "逐处查看穿越": "Inspect each crossing"
 }

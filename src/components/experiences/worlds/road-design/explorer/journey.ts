@@ -3,6 +3,7 @@ import { cumulativeLengths, projectToLane, sampleLane } from '../sim/geometry'
 import { terrainHeight } from '../sim/terrain'
 import type { ExploreRoute } from './routes'
 import type { WhyPin } from './explanations'
+import huangjuewanNames from '../data/huangjuewan-road-names.json'
 
 export const LEFT_GROUPS = [
  {title:'等灯或让行',titleEn:'Wait or yield',ids:['t-junction','crossroads-yield','crossroads-signal','crossroads-channelized','diamond']},
@@ -28,11 +29,12 @@ export const LEFT_STORIES:Record<string,{title:string;titleEn:string}>= {
  huangjuewan:{title:'多方向、多层匝道混合连接，先认出口再转向。',titleEn:'Many directions connect through layered ramps. Choose your exit early.'},
 }
 export function signatureRoute(routes:ExploreRoute[], id:string) {
- const preferred=id==='trumpet'?'east':id==='t-junction'?'south':id==='ddi'?'west':'north'
+ const preferred=id==='huangjuewan'?'xiajiang-west':id==='trumpet'?'east':id==='t-junction'?'south':id==='ddi'?'west':'north'
  return routes.find(r=>r.movement.from===preferred&&r.movement.turn==='left')??routes.find(r=>r.movement.turn==='left')??routes[0]
 }
-export interface Crossing {s:number;position:Vec3;other:Vec3;over:boolean;roadIds:string[];title:string;titleEn:string;lines:Vec3[][]}
-export interface JourneyStep {start:number;end:number;focus:number;title:string;titleEn:string;symbol:string;pins:WhyPin[];crossings:Crossing[]}
+export interface Crossing {s:number;position:Vec3;other:Vec3;over:boolean;roadIds:string[];name:string;nameEn:string;main:boolean;title:string;titleEn:string;lines:Vec3[][]}
+export interface CrossingGroup {title:string;titleEn:string;over:boolean;items:Crossing[]}
+export interface JourneyStep {start:number;end:number;focus:number;title:string;titleEn:string;symbol:string;pins:WhyPin[];crossings:Crossing[];groups:CrossingGroup[]}
 export interface Journey {steps:JourneyStep[];crossings:Crossing[];heights:{s:number;h:number}[]}
 const cross=(a:Vec3,b:Vec3)=>a.x*b.z-a.z*b.x
 const sub=(a:Vec3,b:Vec3)=>({x:a.x-b.x,y:a.y-b.y,z:a.z-b.z})
@@ -52,26 +54,45 @@ export function routeCrossings(network:Network, route:ExploreRoute):Crossing[] {
     const p=lerp(a,b,t),other=lerp(c,d,q),gap=p.y-other.y
     if(Math.abs(gap)<2.5)continue
     const s=dist[i-1]+(dist[i]-dist[i-1])*t,over=gap>0
-    const axis=Math.abs(v.x)>Math.abs(v.z),main=road.kind==='main'||road.id.startsWith('aux-road-'),name=main?(axis?'东西主线':'南北主线'):'另一条匝道',en=main?(axis?'east–west main road':'north–south main road'):'another ramp'
+    const axis=Math.abs(v.x)>Math.abs(v.z),main=road.kind==='main'||road.id.startsWith('aux-road-')
+    const roadKey=road.id.replace(/^(?:aux-road-)?hjw-accel-(\d+)-.*$/,'hjw-road-$1')
+    const actual=network.id==='huangjuewan'?huangjuewanNames[roadKey as keyof typeof huangjuewanNames]:undefined
+    const name=actual?`${actual.name}${road.id.includes('accel-')?'汇入车道':''}`:(main?(axis?'东西主线':'南北主线'):'另一条匝道'),en=actual?`${actual.nameEn}${road.id.includes('accel-')?' merge lane':''}`:(main?(axis?'east–west main road':'north–south main road'):'another ramp')
     const title=`${over?'从上方跨过':'从下方穿过'} ${name}`,titleEn=`${over?'Over':'Under'} ${main?'the ':''}${en}`
     const length=Math.hypot(v.x,v.z),line=[{x:other.x-v.x/length*35,y:other.y+.12,z:other.z-v.z/length*35},{x:other.x+v.x/length*35,y:other.y+.12,z:other.z+v.z/length*35}]
-    const existing=hits.find(h=>h.title===title&&Math.abs(h.s-s)<(main?80:40))
+    const existing=hits.find(h=>h.title===title&&(main||h.roadIds.includes(road.id))&&Math.abs(h.s-s)<(main?80:40))
     if(existing){if(!existing.roadIds.includes(road.id)){existing.roadIds.push(road.id);existing.lines.push(line)}}
-    else hits.push({s,position:p,other,over,roadIds:[road.id],title,titleEn,lines:[line]})
+    else hits.push({s,position:p,other,over,roadIds:[road.id],name,nameEn:en,main,title,titleEn,lines:[line]})
    }
   }
  }
  return hits.sort((a,b)=>a.s-b.s)
+}
+/** Merge labels, never physical events: every height-profile tick stays put. */
+export function groupCrossings(crossings:Crossing[]):CrossingGroup[]{
+ return [true,false].flatMap(over=>{
+  const items=crossings.filter(c=>c.over===over)
+  if(!items.length)return []
+  if(items.length===1)return [{title:items[0].title,titleEn:items[0].titleEn,over,items}]
+  const ramps=items.filter(c=>!c.main),named=items.filter(c=>c.main)
+  const names=[...new Set(named.map(c=>c.name))],english=[...new Set(named.map(c=>c.nameEn))]
+  if(ramps.length){
+   const n=new Set(ramps.flatMap(c=>c.roadIds)).size
+   if(ramps.length===1&&ramps[0].name!=='另一条匝道'){names.push(ramps[0].name);english.push(ramps[0].nameEn)}
+   else {names.push(`${n} 条${ramps.some(c=>c.name!=='另一条匝道')?'连接':''}匝道`);english.push(`${n} connecting ramp${n===1?'':'s'}`)}
+  }
+  return [{title:`${over?'从上方跨过':'从下方穿过'} ${names.join('、')}`,titleEn:`${over?'Over':'Under'} ${english.join(' and ')}`,over,items}]
+ })
 }
 /** Steps partition the unchanged route by turn geometry and grade crossings.
  * The display distances are measured along the same representative path as readings. */
 export function buildJourney(network:Network, route:ExploreRoute, pins:WhyPin[]):Journey {
  const path=route.path,length=path.length,crossings=routeCrossings(network,route)
  const lanes=route.laneIds.map(id=>network.lanes.find(l=>l.id===id)!)
- const loop=lanes.find(l=>l.id.includes('loop')||l.circulating)
- const turning=loop?[loop]:lanes.filter(l=>(l.kind==='connector'||l.kind==='ramp')&&!l.id.startsWith('aux-road-'))
+ const loops=lanes.filter(l=>(l.id.includes('loop')&&!l.id.includes('after-loop'))||l.circulating),loop=loops[0]
+ const turning=loop?loops:lanes.filter(l=>(l.kind==='connector'||l.kind==='ramp')&&!l.id.startsWith('aux-road-'))
  const first=turning[0],last=turning.at(-1)
- const extent=turnExtent(route),start=loop?projectToLane(path,loop.points[0]):first?projectToLane(path,first.points[0]):extent.start,end=loop?projectToLane(path,loop.points.at(-1)!):Math.min(length-80,last?projectToLane(path,last.points.at(-1)!):extent.end)
+ const extent=turnExtent(route),start=first?projectToLane(path,first.points[0]):extent.start,end=loop?projectToLane(path,last!.points.at(-1)!):Math.min(length-80,last?projectToLane(path,last.points.at(-1)!):extent.end)
  const boundaries=[0,Math.max(1,start),Math.min(length-1,Math.max(end,start+1)),length]
  const before=crossings.find(c=>c.s<start),after=[...crossings].reverse().find(c=>c.s>=end)
  if(before)boundaries.push(Math.max(1,before.s-40))
@@ -87,8 +108,20 @@ export function buildJourney(network:Network, route:ExploreRoute, pins:WhyPin[])
   if(isTurn){title=loop?(network.id==='roundabout'?'沿环岛转向':'右侧驶出，绕 270°'):network.control.kind==='signal'&&first?.kind==='connector'?'等灯、让行后左转':'驶出主线，沿匝道左转';titleEn=loop?(network.id==='roundabout'?'Follow the roundabout':'Exit right and loop 270°'):network.control.kind==='signal'&&first?.kind==='connector'?'Wait, yield, then turn left':'Leave the main road and follow the ramp';symbol=loop?'↻':'↰'}
   if(isTurn&&!loop&&network.control.kind!=='signal'&&network.carriageways.every(road=>road.kind==='urban')){title='让行后左转';titleEn='Yield, then turn left'}
   if(route.movement.turn!=='left'&&isTurn&&!loop){title=route.movement.turn==='right'?'沿道路右转':'沿道路直行';titleEn=route.movement.turn==='right'?'Turn right along the road':'Continue straight';symbol=route.movement.turn==='right'?'↱':'↑'}
-  if(hits.length&&(!isTurn||!loop)){title=hits[0].title;titleEn=hits[0].titleEn;symbol=hits[0].over?'↗':'↘'}
-  return {start:a,end:b,focus:hits[0]?.s??(isTurn?(start+Math.min(end,b))*.5:(a+b)*.5),title,titleEn,symbol,pins:[],crossings:hits}
+  if(title==='沿匝道下降'&&sampleLane(path,b).position.y>=sampleLane(path,a).position.y-1){title='沿匝道行驶';titleEn='Continue along the ramp'}
+  const groups=groupCrossings(hits)
+  if(hits.length&&(!isTurn||!loop)){const group=groups.find(g=>g.over===hits[0].over)!;title=group.title;titleEn=group.titleEn;symbol=hits[0].over?'↗':'↘'}
+  if(network.id==='huangjuewan'&&!hits.length){
+   const midpoint=sampleLane(path,(a+b)/2).position
+   // Lane IDs retain the imported OSM way ID; no names are inferred from axes.
+   const current=lanes.reduce((best,l)=>{
+    const p=sampleLane(l,projectToLane(l,midpoint)).position,q=sampleLane(best,projectToLane(best,midpoint)).position
+    return Math.hypot(p.x-midpoint.x,p.y-midpoint.y,p.z-midpoint.z)<Math.hypot(q.x-midpoint.x,q.y-midpoint.y,q.z-midpoint.z)?l:best
+   },lanes[0])
+   const id=current.id.replace(/^hjw-(?:accel-)?(\d+)-.*$/,'hjw-road-$1'),roadName=huangjuewanNames[id as keyof typeof huangjuewanNames]
+   if(roadName){title=`${i===sorted.length-2?'汇入':'沿'}${roadName.name}${i===sorted.length-2?'':'行驶'}`;titleEn=`${i===sorted.length-2?'Join':'Follow'} ${roadName.nameEn}`}
+  }
+  return {start:a,end:b,focus:hits[0]?.s??(isTurn?(start+Math.min(end,b))*.5:(a+b)*.5),title,titleEn,symbol,pins:[],crossings:hits,groups}
  })
  for(const pin of pins){const s=projectToLane(path,pin.position);(steps.find(step=>s>=step.start&&s<step.end)??steps.at(-1)!).pins.push(pin)}
  const heights=Array.from({length:161},(_,i)=>{const s=length*i/160,p=sampleLane(path,s).position;return {s,h:Math.max(0,p.y-terrainHeight(network,p.x,p.z))}})

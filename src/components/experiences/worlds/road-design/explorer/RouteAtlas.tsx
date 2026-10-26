@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useExperienceI18n } from '~/i18n/experience'
 import { CATALOGUE } from '../designs/catalogue'
 import type { Network } from '../sim/types'
@@ -9,6 +9,14 @@ import { useEditorialText } from './use-editorial-text'
 
 export function RouteAtlas({network,route,journey,demo,onStep}:{network:Network;route:ExploreRoute;journey:Journey;demo:DemoState;onStep:(i:number,s?:number)=>void}){
  const tx=useExperienceI18n(),copy=useEditorialText(),[open,setOpen]=useState(false)
+ const atlas=useRef<HTMLElement>(null)
+ useEffect(()=>{
+  if(!open)return
+  const outside=(event:PointerEvent)=>{if(matchMedia('(max-width:720px)').matches&&!atlas.current?.contains(event.target as Node))setOpen(false)}
+  const escape=(event:KeyboardEvent)=>{if(event.key==='Escape')setOpen(false)}
+  document.addEventListener('pointerdown',outside,{passive:true});document.addEventListener('keydown',escape)
+  return()=>{document.removeEventListener('pointerdown',outside);document.removeEventListener('keydown',escape)}
+ },[open])
  const map=useMemo(()=>{
   const range=CATALOGUE.find(d=>d.id===network.id)!.diagram.range
   const ps=network.id==='huangjuewan'?corePoints(route):[{x:-range,z:-range},{x:range,z:range}],xs=ps.map(p=>p.x),zs=ps.map(p=>p.z),minX=Math.min(...xs)-100,minZ=Math.min(...zs)-100,w=Math.max(...xs)-minX+100,h=Math.max(...zs)-minZ+100,scale=220/Math.max(w,h)
@@ -17,7 +25,7 @@ export function RouteAtlas({network,route,journey,demo,onStep}:{network:Network;
  },[network,route])
  const s=journeyDistance(route,demo.position),p=map.point(demo.position).map(v=>Math.max(10,Math.min(240,v))),maxH=Math.max(10,...journey.heights.map(h=>h.h)),x=(n:number)=>26+208*n/route.path.length,y=(n:number)=>72-54*n/maxH
  const h=journey.heights[Math.min(160,Math.round(s/route.path.length*160))]?.h??0
- return <aside className="rd-atlas" data-open={open} data-experience-overlay="true">
+ return <aside ref={atlas} className="rd-atlas" data-open={open} data-experience-overlay="true">
   <button type="button" className="rd-atlas-toggle" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{tx('平面与高度')} <span>{open?'−':'+'}</span></button>
   <div className="rd-atlas-content">
    <svg className="rd-plan" viewBox="0 0 260 246" role="img" aria-label={tx('路线平面示意图')}>
@@ -35,7 +43,7 @@ export function RouteAtlas({network,route,journey,demo,onStep}:{network:Network;
     <circle cx={x(s)} cy={y(h)} r="3.5" fill="var(--route-ink)" stroke="white"/>
     <text x="26" y="91">0</text><text x="234" y="91" textAnchor="end">{Math.round(route.path.length).toLocaleString('en-US')} m</text>
    </svg>
-   <div className="rd-atlas-crossings">{journey.crossings.map((c,i)=><button key={i} type="button" onClick={()=>onStep(journey.steps.findIndex(step=>step.crossings.includes(c)),c.s)}>{c.over?'↑':'↓'} {copy(c,'title')}</button>)}</div>
+   <div className="rd-atlas-crossings">{journey.steps.flatMap((step,i)=>step.groups.map((c,j)=><button key={`${i}:${j}`} type="button" onClick={()=>onStep(i,c.items[0].s)}>{c.over?'↑':'↓'} {copy(c,'title')}</button>))}</div>
   </div>
  </aside>
 }

@@ -16,7 +16,22 @@ export function ExplorerPanel({network,routes,route,onSelect,onExit,onReplay,fol
  const [expanded,setExpanded]=useState(false),[view,setView]=useState<'why'|'readings'|'choose'>('why')
  const currentStep=route&&journey?stepAt(journey,journeyDistance(route,demo.position)):0
  const gesture=useRef({y:0,dragged:false,active:false})
+ const panel=useRef<HTMLElement>(null)
  useEffect(()=>{setExpanded(false);setPicker(false);setView('why')},[route?.movement.id])
+ useEffect(()=>{
+  const frame=requestAnimationFrame(()=>{
+   const element=panel.current,active=element?.querySelector<HTMLElement>(`[data-step="${currentStep+1}"] .rd-step-target`)
+   if(!element||!active||!active.getClientRects().length)return
+   const mobile=matchMedia('(max-width:720px)').matches
+   if(mobile&&(!expanded||view!=='why'))return
+   const scroller=mobile?element.querySelector<HTMLElement>('.rd-panel-content'):element
+   if(!scroller)return
+   const box=scroller.getBoundingClientRect(),target=active.getBoundingClientRect()
+   const delta=target.bottom>box.bottom-14?target.bottom-box.bottom+14:target.top<box.top+14?target.top-box.top-14:0
+   if(delta)scroller.scrollBy({top:delta,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})
+  })
+  return()=>cancelAnimationFrame(frame)
+ },[currentStep,expanded,view])
  const approaches=[...new Set(routes.map(r=>r.movement.from))],current=approaches.includes(from)?from:approaches[0]
  const options=routes.filter(r=>r.movement.from===current),reading=route?.reading
  const signal=route?routeSignal(network,route.movement,demo.laneId,demo.time):undefined,color=signal?.color
@@ -31,7 +46,8 @@ export function ExplorerPanel({network,routes,route,onSelect,onExit,onReplay,fol
   {journey.steps.map((step,i)=><li key={i} data-step={i+1} data-active={currentStep===i}>
    <button className="rd-step-target" type="button" onClick={()=>onStep(i)} aria-label={`${i+1}. ${copy(step,'title')}`}><b>{step.symbol}</b><span><small>{tx('第')} {i+1} {locale==='zh'?tx('步'):''} <em>{Math.round(step.end-step.start).toLocaleString('en-US')} m</em></small><strong>{copy(step,'title')}</strong></span></button>
    <div className="rd-step-detail">
-    {step.crossings.filter(c=>c.title!==step.title).map((c,j)=><button type="button" className="rd-step-crossing" key={j} onClick={()=>onStep(i,c.s)}>{copy(c,'title')}</button>)}
+    {step.groups.filter(c=>c.title!==step.title).map((c,j)=><button type="button" className="rd-step-crossing" key={j} onClick={()=>onStep(i,c.items[0].s)}>{copy(c,'title')}</button>)}
+    {network.id==='huangjuewan'&&step.crossings.length>1&&<details className="rd-crossing-details"><summary>{tx('逐处查看穿越')}</summary>{step.crossings.map((c,j)=><button type="button" className="rd-step-crossing" key={j} onClick={()=>onStep(i,c.s)}>{Math.round(c.s).toLocaleString('en-US')} m · {copy(c,'title')}</button>)}</details>}
     {step.pins.map(p=><details key={p.id} className="rd-step-why" open={currentStep===i&&p.id===activePin||undefined}><summary onClick={()=>onPin(p.id)}>{copy(p,'title')}</summary><p className="rd-why-body">{copy(p,'body')}</p></details>)}
    </div>
   </li>)}
@@ -58,7 +74,7 @@ export function ExplorerPanel({network,routes,route,onSelect,onExit,onReplay,fol
  const neighbours=<details className="rd-neighbours"><summary>{tx('与相邻设计对比')}</summary>{COMPARISONS[network.id]?.map(c=><div key={c.id}><button type="button" onClick={()=>onDesign(c.id)}>{tx(c.label)} ↗</button><p>{copy(c,'body')}</p></div>)}</details>
  return <>
   {route&&journey&&!expanded&&<button className="rd-why-subtitle" type="button" onClick={()=>{setView('why');setExpanded(true)}}><span>{tx('第')} {currentStep+1} {locale==='zh'?tx('步'):''} · {copy(journey.steps[currentStep],'title')}</span><b>⌃</b></button>}
-  <aside className="rd-explorer" aria-label={tx('选车流')} data-has-route={!!route} data-expanded={expanded} data-view={view} data-experience-overlay="true">
+  <aside ref={panel} className="rd-explorer" aria-label={tx('选车流')} data-has-route={!!route} data-expanded={expanded} data-view={view} data-experience-overlay="true">
    {route&&<div className="rd-mobile-route"
     onPointerDown={e=>{gesture.current={y:e.clientY,dragged:false,active:true}}}
     onPointerMove={e=>{if(!gesture.current.active)return;const dy=e.clientY-gesture.current.y;if(Math.abs(dy)>22){gesture.current.dragged=true;e.currentTarget.setPointerCapture(e.pointerId);setExpanded(dy<0)}}}
