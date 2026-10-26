@@ -291,9 +291,22 @@ const Title: React.FC<{ t: number }> = ({ t }) => {
           <span>AI 的</span>
           <span style={{ position: "relative" }}>
             标价
-            <svg viewBox="0 0 100 20" preserveAspectRatio="none" style={{ position: "absolute", left: "-6%", width: "112%", top: "38%", height: "26%", overflow: "visible" }}>
-              <path d="M 0 11 C 30 4, 60 17, 100 7" fill="none" stroke={RED} strokeWidth={9} strokeLinecap="round" vectorEffect="non-scaling-stroke" pathLength={1} strokeDasharray={1} strokeDashoffset={1 - strike} opacity={0.94} style={{ strokeWidth: TFS * 0.13 }} />
-            </svg>
+            {/* the red marker stroke, drawn left to right */}
+            <span
+              style={{
+                position: "absolute",
+                left: "-7%",
+                width: "114%",
+                top: "47%",
+                height: TFS * 0.12,
+                borderRadius: TFS * 0.06,
+                background: RED,
+                opacity: 0.94,
+                transform: `rotate(-2.5deg) scaleX(${strike})`,
+                transformOrigin: "left center",
+                boxShadow: `0 0 ${TFS * 0.12}px ${rgba(RED, 0.35)}`,
+              }}
+            />
           </span>
         </span>
         <span
