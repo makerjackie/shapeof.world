@@ -81,7 +81,7 @@ export const Sample: React.FC = () => {
     chatgpt: t > 5.0 ? <span style={{ opacity: ramp(t, 5.0, 5.4, EO) * (1 - ramp(t, 6.8, 7.3, EO)) }}>包月 $200 · 15 倍</span> : undefined,
     glm: t > 6.8 ? <span style={{ opacity: ramp(t, 6.8, 7.2, EO) }}>编程包月 最多 13 倍</span> : undefined,
     deepseek: t > 7.4 ? <span style={{ opacity: ramp(t, 7.4, 7.8, EO) }}>没有包月</span> : undefined,
-    kimi: t > 7.8 ? <span style={{ opacity: ramp(t, 7.8, 8.2, EO) }}>包月能用多少：还没有公开测算</span> : undefined,
+    kimi: t > 7.8 ? <span style={{ opacity: ramp(t, 7.8, 8.2, EO) }}>包月额度：未公开</span> : undefined,
   };
 
   return (
