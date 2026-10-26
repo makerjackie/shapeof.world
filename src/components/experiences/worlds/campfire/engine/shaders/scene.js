@@ -746,7 +746,7 @@ fn mapScene(p: vec3f, detail: bool) -> vec3f {
   } else { res.x = min(res.x, dS); }
   let nl = i32(R.nLogs);
   for (var i = 0; i < nl; i++) {
-    let d = logSDF(p, i, detail);
+    let d = cutSolid(logSDF(p, i, detail),p);
     if (d < res.x) { res = vec3f(d, 1.0, f32(i)); }
   }
   return res;
@@ -757,7 +757,7 @@ fn mapShadow(p: vec3f) -> f32 {
   let nl = i32(R.nLogs);
   for (var i = 0; i < nl; i++) {
     let A = logs[i * 2]; let B = logs[i * 2 + 1];
-    d = min(d, sdCapsule(p, A.xyz, B.xyz, A.w) + burnThin(p, A.w, B.w));
+    d = min(d, cutSolid(sdCapsule(p, A.xyz, B.xyz, A.w) + burnThin(p, A.w, B.w),p));
   }
   let rr = length(p.xz);
   if (rr > STONE_RMIN - 0.03 && rr < STONE_RMAX + 0.03 && p.y < STONE_YMAX + 0.03) {
@@ -774,7 +774,7 @@ fn mapShadow(p: vec3f) -> f32 {
 }
 // SDF of the object that was hit only (cheaper normals).
 fn mapHit(p: vec3f, mat: f32, idx: i32, detail: bool) -> f32 {
-  if (mat < 1.5) { return logSDF(p, idx, detail); }
+  if (mat < 1.5) { return cutSolid(logSDF(p, idx, detail),p); }
   if (mat < 2.5) { return stoneSDF(p, idx, detail); }
   if (mat < 4.5) { return coalField(p, terrain(p.xz), detail).x; }
   let gh = groundH(p.xz, detail);
@@ -1527,6 +1527,13 @@ fn stars(rd: vec3f, pixAng: f32) -> vec3f {
     else if (mat < 3.5) { S = shadeGround(p, n); }
     else if (mat < 4.5) { S = shadeCoal(p, n, m.z); }
     else { S = shadePebble(p, n, m.z); }
+    // Newly exposed wood is a geometric cut, not a simulated wood temperature.
+    if(mat<1.5 && R.cutEnabled>.5 && abs(cutDistance(p))<eps*3.0){
+      let A=logs[i32(m.z)*2];let B=logs[i32(m.z)*2+1];let axis=normalize(B.xyz-A.xyz);
+      let q=p-A.xyz;let radius=length(q-axis*dot(q,axis));
+      let rings=.72+.28*sin(radius*850.0+gn3(p*45.0)*1.4);
+      S.alb=vec3f(.22,.105,.035)*rings;S.emit=vec3f(0.0);S.rough=.95;S.occ=1.0;S.lit=1.0;
+    }
     let rxz = length(p.xz);
     var nsh = 1;
     if (gDet > 0.5) { nsh = select(2, 3, gDet > 0.95); }
