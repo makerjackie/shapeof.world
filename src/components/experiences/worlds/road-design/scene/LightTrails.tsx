@@ -7,7 +7,7 @@ import { TRAIL_WIDTHS } from './frame-packet'
 // Each history segment is uploaded once; the GPU expands its four lamp ribbons.
 // 256 samples per car are retained by the distance/curvature adaptive recorder.
 const MAX_SEGMENTS = 256_000
-export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft = false }: { runtime: TrafficRuntime; shutter: number; blueprint?: boolean; highlightLeft?: boolean }) {
+export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft = false, dim = false }: { runtime: TrafficRuntime; shutter: number; blueprint?: boolean; highlightLeft?: boolean; dim?: boolean }) {
   const assets = useMemo(() => {
     const geometry = new T.InstancedBufferGeometry()
     const corners: number[] = [], indices: number[] = []
@@ -23,7 +23,7 @@ export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft
     for (const [name, array] of Object.entries(arrays)) geometry.setAttribute(name, new T.InstancedBufferAttribute(array, name === 'times' ? 2 : name === 'properties' ? 4 : 3).setUsage(T.DynamicDrawUsage))
     const material = new T.ShaderMaterial({
       transparent: true, blending: T.AdditiveBlending, depthWrite: false, side: T.DoubleSide, toneMapped: false,
-      uniforms: { resolution: { value: new T.Vector2(1600, 1000) }, minimumWidth: { value: 3.2 }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 }, highlightLeft: { value: 0 } },
+      uniforms: { brightness: { value: 1 }, resolution: { value: new T.Vector2(1600, 1000) }, minimumWidth: { value: 3.2 }, shutter: { value: 6 }, simTime: { value: 0 }, blueprint: { value: 0 }, highlightLeft: { value: 0 } },
       vertexShader: `
         attribute vec4 corner; attribute vec3 start; attribute vec3 end;
         attribute vec3 directionA; attribute vec3 directionB; attribute vec2 times; attribute vec4 properties;
@@ -51,15 +51,16 @@ export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft
           vFade=pow(clamp(1.0-(simTime-mix(times.x,times.y,corner.x))/max(0.001,shutter),0.0,1.0),0.55);
           vSide=corner.y;
         }`,
-      fragmentShader: `varying vec3 vLight; varying float vSide; varying float vFade;
+      fragmentShader: `uniform float brightness; varying vec3 vLight; varying float vSide; varying float vFade;
         void main(){ float core=exp(-vSide*vSide*10.0); float halo=exp(-vSide*vSide*2.4)*0.14;
-          gl_FragColor=vec4(vLight,(core+halo)*vFade*0.92); }`,
+          gl_FragColor=vec4(vLight*brightness,(core+halo)*vFade*0.92); }`,
     })
     return { geometry, material, arrays, lastTime: -1, lastRevision: -1, lastShutter: -1, simulation: runtime.simulation }
   }, [])
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
   useFrame(({ size, gl }) => {
     if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1; assets.lastRevision = -1 }
+    assets.material.uniforms.brightness.value=dim?.018:1
     const time = runtime.simulation.time
     assets.material.uniforms.resolution.value.set(size.width, size.height); assets.material.uniforms.minimumWidth.value = size.width < 720 ? 1.5 / Math.max(1, gl.getPixelRatio()) : 3.2
     assets.material.uniforms.blueprint.value = blueprint ? 1 : 0; assets.material.uniforms.highlightLeft.value = highlightLeft && !blueprint ? 1 : 0;
