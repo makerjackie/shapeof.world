@@ -15,7 +15,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
   const cut = useCutaway()
   const material = useMemo(() => {
     const mat = new T.MeshPhysicalMaterial({ color, roughness: kind === 'cuticle' ? .55 : .83, clearcoat: kind === 'guard' ? .1 : .02,
-      vertexColors: false, side: T.DoubleSide, transparent: true, depthWrite: kind !== 'wall' && kind !== 'cuticle' })
+      vertexColors: kind === 'wall', side: T.DoubleSide, transparent: true, depthWrite: true })
     mat.userData.open = { value: open }
     mat.onBeforeCompile = (shader) => {
       shader.uniforms.sectionCut = { value: cut?.normal ?? new T.Vector3(0, 0, 1) }
@@ -45,7 +45,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
       if (kind === 'wall') shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
         float facing = abs(dot(normal, normalize(vViewPosition)));
         float edge = pow(clamp(1.0 - facing, 0.0, 1.0), 1.8);
-        diffuseColor.a *= .3 + .7 * edge;
+        diffuseColor.a *= 1.;
         outgoingLight = mix(outgoingLight, vec3(.56, .61, .45) * received, edge * .65);
         float rim = 1.0 - smoothstep(.12, .65, -cutDistance);
         outgoingLight = mix(outgoingLight, vec3(.88, .81, .65) * received, rim);
@@ -105,13 +105,13 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: Lay
   }, [resources, poses, water.radial, water.axial])
   useEffect(() => () => { resources.tissue.dispose(); resources.protoplast.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
   return <group>
-    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .85} color="#c2d0b4" /></mesh>
+    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity} color="#ffffff" /></mesh>
     <mesh geometry={resources.protoplast} visible={water.immersion > .001}><SectionMaterial opacity={opacity * .65} color="#a9c1aa" /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>
-      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#7f9e69" opacity={opacity * .95} />
+      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#39872e" opacity={opacity * .95} />
     </instancedMesh>
-    <mesh geometry={resources.xylem.wall}><SectionMaterial kind="xylem" color="#d6cfb0" opacity={opacity * .78} /></mesh>
-    <mesh geometry={resources.xylem.spiral}><SectionMaterial kind="xylem" color="#eee3c8" opacity={opacity * .85} /></mesh>
+    <mesh geometry={resources.xylem.wall}><SectionMaterial kind="xylem" color="#dc9142" opacity={opacity} /></mesh>
+    <mesh geometry={resources.xylem.spiral}><SectionMaterial kind="xylem" color="#9a5429" opacity={opacity * .85} /></mesh>
     <instancedMesh ref={guardsRef} args={[resources.guard, undefined, poses.guards.length]}><SectionMaterial kind="guard" color="#68834b" opacity={opacity} open={stomataOpen} /></instancedMesh>
     <instancedMesh ref={guardChloroplastRef} args={[undefined, undefined, poses.chloroplasts.length]}>
       <sphereGeometry args={[1, 8, 6]} /><SectionMaterial kind="chloroplast" color="#35532d" opacity={opacity} />
@@ -122,7 +122,7 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: Lay
       </mesh>)}
     </group>)}
     {[60, -440].map((y) => <mesh key={y} position={[0, y, -20]}>
-      <boxGeometry args={[814, .6, 80]} /><SectionMaterial kind="cuticle" color="#d4cfb5" opacity={opacity * .13} />
+      <boxGeometry args={[814, .6, 80]} /><SectionMaterial kind="cuticle" color="#d4cfb5" opacity={opacity * .9} />
     </mesh>)}
   </group>
 }

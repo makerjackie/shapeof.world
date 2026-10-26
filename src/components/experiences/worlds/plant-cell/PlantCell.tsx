@@ -104,7 +104,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
   const process = active==='motor' ? `${tx('转速')} ${molecularReading.actualRps.toFixed(0)} ${tx('圈/秒')} · ${tx('画面慢放')}`
     : active==='cell' ? inputs.water==='drought' ? `${tx('干旱：细胞壁和内部一起皱缩')} · ${Math.round(snapshot.water.relativeVolume*100)}%`
       : inputs.water==='saltwater' ? `${tx('盐水：原生质体离开细胞壁')} · ${Math.round(snapshot.water.relativeVolume*100)}%` : tx('小细胞器在流，叶绿体留在壁边')
-    : active==='chloroplast' ? tx('基粒随光照舒展，淀粉慢慢积累')
+    : active==='chloroplast' ? reading.scale > -5.55 ? tx('剖开的叶绿体：绿色层片之间留着缝') : reading.scale > -6.05 ? tx('靠近一摞基粒：每一片都是一个扁囊') : reading.scale > -6.35 ? tx('沿基粒切口进入：膜与膜之间是水相') : tx('抵达基粒边缘的膜面，蛋白开始显现')
       : active==='membrane' ? tx('光越强，电子接力越频繁') : active==='leaf' ? tx(mobile ? '双指放大，或点右侧的尺度' : '滚动放大，或点右侧的尺度') : tx('紧密的栅栏层，连通的气隙')
 
   return <div className="pc-experience" data-plant-cell-layer={active} data-capture={capture}>

@@ -139,7 +139,6 @@
   "干旱：细胞壁和内部一起皱缩": "Drought: the wall and cell contents shrink together",
   "盐水：原生质体离开细胞壁": "Salt water: the protoplast pulls away from the wall",
   "小细胞器在流，叶绿体留在壁边": "Small organelles flow; chloroplasts stay by the wall",
-  "基粒随光照舒展，淀粉慢慢积累": "Light expands grana spacing; starch slowly accumulates",
   "光越强，电子接力越频繁": "Stronger light drives more electron-transfer events",
   "滚动放大，或点右侧的尺度": "Scroll inward or choose a scale on the right",
   "紧密的栅栏层，连通的气隙": "Packed palisade tissue and connected air spaces",
@@ -147,5 +146,17 @@
   "蓝色转子转一圈通过 14 个质子，三个催化位点释放 3 个 ATP。关灯，它会锁住。": "The blue rotor passes 14 protons per turn. Three catalytic sites release three ATP. Turn off the light to lock it.",
   "蓝色转子逆时针转动（从基质侧看）；外面的定子不动。": "The blue rotor turns counterclockwise from the stroma side; the outer stator stays still.",
   "过程快进": "Process accelerated",
-  "双指放大，或点右侧的尺度": "Pinch to zoom, or tap a scale on the right"
+  "双指放大，或点右侧的尺度": "Pinch to zoom, or tap a scale on the right",
+  "细胞壁": "Cell wall",
+  "细胞膜": "Plasma membrane",
+  "胞质": "Cytoplasm",
+  "液泡": "Vacuole",
+  "最外面的纤维壁支撑细胞。": "The outer fibrous wall supports the cell.",
+  "紧贴壁内侧，控制物质进出。": "Just inside the wall, it controls what enters and leaves.",
+  "细胞器和蛋白挤在壁与液泡之间。": "Organelles and proteins crowd between the wall and the vacuole.",
+  "中央浅蓝区域储存水，膨压帮助细胞撑起来。": "The pale blue center stores water. Turgor helps support the cell.",
+  "剖开的叶绿体：绿色层片之间留着缝": "Inside a cut chloroplast: gaps separate the green sheets",
+  "靠近一摞基粒：每一片都是一个扁囊": "Approaching a granum: each sheet is a flattened sac",
+  "沿基粒切口进入：膜与膜之间是水相": "Entering the cut: water fills the spaces between membranes",
+  "抵达基粒边缘的膜面，蛋白开始显现": "At the granum margin: membrane proteins come into view"
 }

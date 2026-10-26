@@ -8,7 +8,7 @@ export const SCALE_MAX = -0.5
 // A 70 µm-tall cell occupies ~78% of a 1600 × 1000 perspective viewport.
 export const HERO_SCALE = -3.86
 export const MOBILE_HERO_SCALE = -4.22
-export const SCALE_DEFAULT = -4.14
+export const SCALE_DEFAULT = -3.84
 export const ENTRY_SCALE = -0.54
 export const TRANSITION_WIDTH = 0.3
 
@@ -52,7 +52,7 @@ const transitions = [
   { outer: 'leaf', inner: 'section', center: -2.8 },
   { outer: 'section', inner: 'cell', center: -3.6 },
   { outer: 'cell', inner: 'chloroplast', center: -5.1 },
-  { outer: 'chloroplast', inner: 'membrane', center: -6.5 },
+  { outer: 'chloroplast', inner: 'membrane', center: -6.35 },
   { outer: 'membrane', inner: 'motor', center: -7.3 },
 ] as const
 
@@ -103,7 +103,7 @@ export function getAnchorUm(scale: number, focus?: { positionUm: PositionUm; qua
   const sectionProgress = smoothstep(-2.65, -3.05, s) * (1 - smoothstep(-3.05, -3.75, s))
   const chloroplastProgress = smoothstep(-4.35, -4.95, s)
   const granumProgress = smoothstep(-5.45, -6.3, s)
-  const motorProgress = smoothstep(-6.5, -7.3, s)
+  const motorProgress = smoothstep(-5.65, -6.45, s)
   const lens = focus?.positionUm ?? CHLOROPLAST_ANCHOR_UM
   const edge = focus ? new Vector3(...GRANUM_SECTION_ANCHOR_LOCAL).applyQuaternion(new Quaternion(...focus.quaternion)).toArray() : GRANUM_EDGE_OFFSET_UM
   const motor = new Vector3(...MOTOR_TARGET_LOCAL_UM).applyQuaternion(focus ? new Quaternion(...focus.quaternion) : CHLOROPLAST_QUATERNION)
@@ -146,7 +146,7 @@ export function getCameraPose(scale: number) {
   const dive=smoothstep(-1.7,-2.65,s), section=smoothstep(-2.65,-3.55,s), chloroplast=smoothstep(-4.85,-5.5,s)
   const membrane=smoothstep(-6.05,-6.5,s)
   const pitch=(70-30*dive-22*section)*(1-chloroplast)-9*chloroplast+3*membrane
-  return {yaw:(35-27*chloroplast-6*membrane)*Math.PI/180,pitch:pitch*Math.PI/180,roll:chloroplast*Math.PI/2}
+  return {yaw:(35-27*chloroplast-8*membrane)*Math.PI/180,pitch:pitch*Math.PI/180,roll:chloroplast*Math.PI/2}
 }
 
 /** Orbit coordinates change basis smoothly to the molecular membrane frame. */
@@ -155,7 +155,7 @@ export function getOrbitReference(scale: number) {
   const blend = smoothstep(-6.35, -6.85, scale)
   const approach = smoothstep(-6.5, -7.25, scale)
   const molecularYaw = (6 + 20 * approach) * Math.PI / 180
-  const molecularPitch = (2 + 16 * approach) * Math.PI / 180
+  const molecularPitch = (18 * approach) * Math.PI / 180
   return {
     yaw: pose.yaw * (1 - blend) + molecularYaw * blend,
     pitch: pose.pitch * (1 - blend) + molecularPitch * blend,
@@ -165,5 +165,6 @@ export function getOrbitReference(scale: number) {
 
 /** Portrait motor close-up: optical magnification, also applied to physical readout/bar. */
 export function getFramedScale(scale: number, mobile: boolean) {
-  return scale - (mobile ? .055 * smoothstep(-7.05, -7.65, scale) : 0)
+  const overview = .20 * smoothstep(-4.85, -5.20, scale) * (1 - smoothstep(-5.30, -5.8, scale))
+  return scale + overview - (mobile ? .055 * smoothstep(-7.05, -7.65, scale) : 0)
 }

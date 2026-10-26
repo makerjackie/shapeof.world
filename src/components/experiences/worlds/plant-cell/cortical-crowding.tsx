@@ -13,7 +13,7 @@ export function CorticalCrowding({mobile,physiology,clock}:{mobile:boolean;physi
   const geometry=useMemo(()=>{
     let seed=76211;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296}
     const position=new Float32Array(count*3),colors=new Float32Array(count*3),diameters=new Float32Array(count)
-    const palette=['#789eac','#a889b1','#c69c6b','#76a895'].map(h=>new T.Color(h))
+    const palette=['#57a2da','#9b66c2','#e3a245','#5f75c3'].map(h=>new T.Color(h))
     for(let i=0;i<count;i++){
       const y=(random()-.5)*62,a=random()*Math.PI*2,r=cellRadius(y)-.3-random()*1.7
       position.set([Math.cos(a)*r,y,Math.sin(a)*r],i*3)

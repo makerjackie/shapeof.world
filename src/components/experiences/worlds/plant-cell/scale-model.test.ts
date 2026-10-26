@@ -1,7 +1,8 @@
+import { Vector3 } from 'three'
 import { describe, expect, it } from 'vitest'
 import { advanceSimulation, DEFAULT_ENVIRONMENT, getLightAppearance, seededRandom } from './model'
 import { LEAF_ENTRY } from './leaf-model'
-import { CHLOROPLAST_ANCHOR_UM, GRANUM_EDGE_OFFSET_UM, clampScale, getAnchorUm, getCameraPose, getLayerWeights, getScaleBar, LAYERS, SCALE_MAX, SCALE_MIN, scaleToMicrometers } from './scale-model'
+import { CHLOROPLAST_ANCHOR_UM, GRANUM_EDGE_OFFSET_UM, CHLOROPLAST_QUATERNION, MOTOR_TARGET_LOCAL_UM, clampScale, getAnchorUm, getCameraPose, getLayerWeights, getScaleBar, LAYERS, SCALE_MAX, SCALE_MIN, scaleToMicrometers } from './scale-model'
 
 describe('physical zoom scale', () => {
   it('never loses the scene or displays more than two adjacent layers', () => {
@@ -26,7 +27,8 @@ describe('physical zoom scale', () => {
     }
     expect(getAnchorUm(-4.35)).toEqual([0, 0, 0])
     expect(getAnchorUm(-4.95)).toEqual(CHLOROPLAST_ANCHOR_UM)
-    expect(getAnchorUm(-6.5)).toEqual(CHLOROPLAST_ANCHOR_UM.map((v, i) => v + GRANUM_EDGE_OFFSET_UM[i]))
+    const margin=new Vector3(...MOTOR_TARGET_LOCAL_UM).applyQuaternion(CHLOROPLAST_QUATERNION).toArray()
+    expect(getAnchorUm(-6.5)).toEqual(CHLOROPLAST_ANCHOR_UM.map((v, i) => v + GRANUM_EDGE_OFFSET_UM[i] + margin[i]))
   })
 
   it('frames the full leaf section before returning smoothly to the upper cell', () => {

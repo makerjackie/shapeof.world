@@ -69,7 +69,7 @@ export function createTissueGeometry(cells: TissueCell[]) {
   for (const cell of cells) {
     const source = cell.kind === 'palisade' ? capsule : sphere
     const attr = source.getAttribute('position'), offset = positions.length / 3
-    const tone = cell.kind === 'epidermis' ? new T.Color('#c0c3aa') : cell.kind === 'sheath' ? new T.Color('#a9b292') : cell.kind === 'phloem' ? new T.Color('#aaa394') : new T.Color('#839477')
+    const tone = cell.kind === 'epidermis' ? new T.Color(cell.center.y > 0 ? '#d2b956' : '#d69b60') : cell.kind === 'sheath' ? new T.Color('#9e6baf') : cell.kind === 'phloem' ? new T.Color('#d66a75') : new T.Color(cell.kind === 'palisade' ? '#8b82c4' : '#64a8b2')
     tone.multiplyScalar(.93 + .12 * Math.sin(cell.phase * 2))
     for (let i = 0; i < attr.count; i++) {
       sectionPoint(cell, point.fromBufferAttribute(attr, i), point)

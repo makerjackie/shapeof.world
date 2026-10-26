@@ -4,9 +4,14 @@ import { useFrame, type ThreeEvent } from '@react-three/fiber'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import type { PhysiologyState } from './model'
+import { cellRadius } from './cell-geometry'
 import { useCutaway } from './cutaway'
 
 const ORGANELLES = {
+  'cell-wall': ['细胞壁', 'Cell wall', '≈ 0.2 μm'],
+  'cell-membrane': ['细胞膜', 'Plasma membrane', '≈ 7 nm'],
+  'cell-cytoplasm': ['胞质', 'Cytoplasm', '≈ 2–3 μm'],
+  'cell-vacuole': ['液泡', 'Vacuole', '≈ 80%'],
   'cell-saline-gap': ['外液间隙', 'Extracellular saline gap', '0.5 M NaCl'],
   'cell-hechtian-strands': ['赫氏丝', 'Hechtian strands', '50–100 nm'],
   'wall-chloroplasts': ['叶绿体', 'Chloroplast', '5.2–6 × 3.3–3.8 × 2–2.3 μm'],
@@ -32,7 +37,7 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     }
     selection.object.localToWorld(point); point.applyMatrix4(cut.fromWorld)
     // ER is an extended network; retain its actual picked point.
-    if (['cell-er', 'cell-saline-gap', 'cell-hechtian-strands'].includes(selection.kind)) point.fromArray(selection.position)
+    if (['cell-er', 'cell-saline-gap', 'cell-hechtian-strands', 'cell-wall', 'cell-membrane', 'cell-cytoplasm', 'cell-vacuole'].includes(selection.kind)) point.fromArray(selection.position)
     anchor.current.position.copy(point)
   })
   useEffect(() => { if (!enabled) setSelection(null) }, [enabled])
@@ -51,6 +56,18 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
         })
         if (clipped) continue
       }
+      if (hit.object.name.startsWith('cell-cut-')) {
+        const local = hit.object.worldToLocal(hit.point.clone())
+        const radius = cellRadius(local.y), boundary = Math.sqrt(Math.max(0, radius*radius-1.44))-Math.abs(local.x)
+        let kind: Organelle = 'cell-wall'
+        if (hit.object.name === 'cell-cut-contents') {
+          if (boundary < .65) continue
+          const inside = Math.min(cellRadius(local.y/.94)*.80-Math.abs(local.x), Math.hypot(local.x+8.9,local.y+12)-4.7)
+          kind = boundary < .84 ? 'cell-membrane' : inside > 0 ? 'cell-vacuole' : 'cell-cytoplasm'
+        }
+        setSelection({kind,position:point.toArray(),object:hit.object})
+        return
+      }
       let object: T.Object3D | null = hit.object
       while (object && !(object.name in ORGANELLES)) object = object.parent
       if (!object) continue
@@ -61,7 +78,11 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
     setSelection(null)
   }
   const state = physiology.current
-  const activity = selection?.kind === 'cell-saline-gap' ? '原生质体收缩后，外面的盐水填入壁与膜之间；不是空气。'
+  const activity = selection?.kind === 'cell-wall' ? '最外面的纤维壁支撑细胞。'
+    : selection?.kind === 'cell-membrane' ? '紧贴壁内侧，控制物质进出。'
+    : selection?.kind === 'cell-cytoplasm' ? '细胞器和蛋白挤在壁与液泡之间。'
+    : selection?.kind === 'cell-vacuole' ? '中央浅蓝区域储存水，膨压帮助细胞撑起来。'
+    : selection?.kind === 'cell-saline-gap' ? '原生质体收缩后，外面的盐水填入壁与膜之间；不是空气。'
     : selection?.kind === 'cell-hechtian-strands' ? '质膜仍在这些点连接细胞壁，被拉成细丝。'
     : selection?.kind === 'wall-chloroplasts'
     ? state.actualPPFD === 0 ? '黑暗中消耗淀粉，缓慢移向底部和侧壁。' : state.chloroplasts.modeWeights.avoidance > .5 ? '缓慢移向侧壁，减少强光照射。' : '进行光合作用，缓慢调整向光位置。'
