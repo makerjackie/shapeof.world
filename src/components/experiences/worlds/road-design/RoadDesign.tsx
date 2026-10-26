@@ -10,6 +10,7 @@ import { GuideTour, GUIDE_REPLAY_EVENT } from '~/components/experiences/GuideTou
 import { TOUR } from './tour'
 import { isWorldPaused } from '~/lib/world-playback'
 import { useExperienceI18n } from '~/i18n/experience'
+import { useI18n } from '~/i18n'
 import { CATALOGUE as DESIGNS, type DesignInfo } from './designs/catalogue'
 import type { Network } from './sim/types'
 import { NightWorld, makeLightingAtlas } from './scene/NightWorld'
@@ -34,11 +35,13 @@ import { CityLights } from './scene/CityLights'
 import { buildExploreRoutes } from './explorer/routes'
 import { ExplorerPanel } from './explorer/ExplorerPanel'
 import { EntryArrows, RouteScene, WhyMarker, INITIAL_DEMO } from './explorer/RouteScene'
-import { explanationPins, DESIGN_SUMMARY } from './explorer/explanations'
+import { explanationPins, DESIGN_SUMMARY, DESIGN_SUMMARY_EN } from './explorer/explanations'
 import type { DemoReplay, DemoState } from './explorer/replay'
 import type { ExploreRoute } from './explorer/routes'
 import type { WhyPin } from './explorer/explanations'
 import { WaitingOutline } from './scene/WaitingOutline'
+import { GroundNames, Navigation } from './explorer/Navigation'
+import { ConflictLegend } from './explorer/ConflictLegend'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
 function numberQuery(name: string, fallback: number, max: number) {
@@ -64,7 +67,7 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
   useFrame(({scene,camera}, delta) => {
     // A full O-D can put the camera kilometres above the interchange. Preserve
     // the night contrast instead of letting the original near-view fog wash it out.
-    if(!blueprint&&scene.fog instanceof T.FogExp2)scene.fog.density=.00019*(explorer.route?Math.min(1,1600/camera.position.length()):1)
+    if(!blueprint&&scene.fog instanceof T.FogExp2)scene.fog.density=.00019*(explorer.route?Math.min(1,400/camera.position.length()):1)
     signalTime.time=explorer.route&&explorer.replay?explorer.demo.current.time:runtime.simulation.time
     runtime.frameMs = runtime.frameMs * 0.9 + delta * 1000 * 0.1
     const frozen=!playing||document.hidden||isWorldPaused()
@@ -77,9 +80,9 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
     <NightWorld network={network} atlas={atlas} visible={!blueprint} buildings={buildings} />
     {blueprint && <><color attach="background" args={['#07121f']} /><fogExp2 attach="fog" args={['#07121f',.00015]} /><ambientLight intensity={.65} color="#8ab4ff" /><BlueprintGround network={network} /></>}
     <DisplayStretch network={network} enabled={stretch}>
-      {seenBlueprint.current && <group visible={blueprint}><Blueprint key={network.id} network={network} prepared={runtime.blueprint} /></group>}
+      {seenBlueprint.current && <group visible={blueprint}><Blueprint key={network.id} network={network} runtime={runtime} /></group>}
       <group visible={!blueprint}>
-        <RoadMeshes network={network} atlas={atlas} prepared={runtime.geometry} simulation={signalTime} roof={roof} />
+        <RoadMeshes network={network} atlas={atlas} runtime={runtime} simulation={signalTime} roof={roof} />
         <CityLights lamps={lamps} network={network} />
         {design.id === 'crossroads-channelized' && <WaitingOutline network={network} />}
       </group>
@@ -87,6 +90,8 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
       {(showConflicts || showWeaving) && <ConflictMarkers network={network} conflicts={showConflicts ? conflicts : []} showWeaving={showWeaving} />}
     </DisplayStretch>
     {!explorer.route&&!explorer.explaining&&<EntryArrows routes={explorer.routes} onSelect={explorer.onSelect} />}
+    <GroundNames network={network} routes={explorer.routes} route={explorer.route}/>
+    <Navigation route={explorer.route}/>
     {explorer.route&&<RouteScene route={explorer.route} replay={explorer.replay} revision={explorer.revision} playing={playing&&!isWorldPaused()} demo={explorer.demo} pins={explorer.pins} activePin={explorer.activePin} onPin={explorer.onPin} explaining={explorer.explaining} traffic={traffic} />}
     {!explorer.route&&explorer.explaining&&explorer.pins.map((p,i)=><WhyMarker key={p.id} pin={p} number={i+1} active={explorer.activePin===p.id} onClick={()=>explorer.onPin(p.id)}/>)}
     <CameraRig route={explorer.route} follow={explorer.follow} demo={explorer.demo} onStopFollow={explorer.onStopFollow} design={design} preset={preset} revision={revision} reducedMotion={reducedMotion} onInteract={interact} />
@@ -136,7 +141,7 @@ export function RoadDesign({ controls }: { controls: ExperienceControls }) {
 }
 
 function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:ExperienceControls;runtime:TrafficRuntime;requestDesign:(id:string)=>void;pendingId:string|null}) {
-  const tx=useExperienceI18n(), network=runtime.network, designId=network.id, design=DESIGNS.find(d=>d.id===designId)!
+  const {locale}=useI18n(),tx=useExperienceI18n(), network=runtime.network, designId=network.id, design=DESIGNS.find(d=>d.id===designId)!
   const [playing,setPlaying]=useState(()=>!window.matchMedia('(prefers-reduced-motion: reduce)').matches),[speed,setSpeed]=useState(1),[shutter,setShutter]=useState(8)
   const [demand,setDemand]=useState(1),[buildings,setBuildings]=useState(true),[traffic,setTraffic]=useState(true)
   const [blueprint,setBlueprint]=useState(false),[showConflicts,setShowConflicts]=useState(false),[showWeaving,setShowWeaving]=useState(false),[stretch,setStretch]=useState(false)
@@ -170,7 +175,7 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   useEffect(()=>{if(runtime.pressure?.status!=='running')runtime.simulation.setDemandMultiplier(demand)},[runtime,demand])
   useEffect(()=>{
     const timer=setInterval(()=>{
-      setReadout({...runtime.simulation.metrics});setDemoReadout({...demo.current})
+      setReadout({...runtime.simulation.metrics});setDemoReadout({...demo.current,others:undefined})
       if(runtime.pressure){setCurves(c=>({...c,[designId]:[...runtime.pressure!.samples]}));if(runtime.pressure.status==='complete')setSpeed(1)}
       if(stage.current){stage.current.dataset.vehicles=String(runtime.simulation.vehicles.length);stage.current.dataset.frameMs=runtime.frameMs.toFixed(2);stage.current.dataset.demoStatus=demo.current.status;stage.current.dataset.demoProgress=demo.current.progress.toFixed(3);stage.current.dataset.demoLane=demo.current.laneId}
     },200)
@@ -195,9 +200,10 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
     {designId==='huangjuewan'&&<div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture&&<>
       <GuideTour worldId="road-design" placement="stage" steps={DESIGNS.map(d=>({title:tx(d.name),body:tx(TOUR[d.id]),durationMs:12000,action:()=>{selectDesign(d);setPlaying(true)}}))} kicker={tx('道路图鉴')} exitLabel={tx('结束导览')} stagePlan={DESIGNS.map(()=>({position:'center-left',mobilePosition:'bottom-center',tone:'dark',width:'narrow',treatment:'caption'}))}/>
-      <header className="rd-heading" data-experience-overlay="true"><label htmlFor="rd-design">{tx('选设计')}</label><select id="rd-design" aria-label={tx('选设计')} value={pendingId??designId} onChange={e=>selectDesign(DESIGNS.find(d=>d.id===e.target.value)!)}>{DESIGNS.map(d=><option key={d.id} value={d.id}>{tx(d.name)}</option>)}</select><p>{tx(DESIGN_SUMMARY[designId]??design.description)}</p></header>
+      <header className="rd-heading" data-experience-overlay="true"><label htmlFor="rd-design">{tx('选设计')}</label><select id="rd-design" aria-label={tx('选设计')} value={pendingId??designId} onChange={e=>selectDesign(DESIGNS.find(d=>d.id===e.target.value)!)}>{DESIGNS.map(d=><option key={d.id} value={d.id}>{tx(d.name)}</option>)}</select><p>{tx((locale==='en'?DESIGN_SUMMARY_EN[designId]:DESIGN_SUMMARY[designId])??design.description)}</p></header>
       <div className="rd-layers" role="group" aria-label={tx('图层')} data-experience-overlay="true">{layers.map(l=><button key={l.key} type="button" data-layer={l.key} title={l.key==='buildings'&&blueprint?tx('平面图纸暂不显示建筑，夜景保留此开关'):undefined} aria-pressed={l.value} onClick={()=>{l.set(!l.value);interact()}}><i/>{tx(l.name)}</button>)}{blueprint&&<small className="rd-layer-note">{tx('平面图纸暂不显示建筑，夜景保留此开关')}</small>}</div>
       {pendingId&&<div className="rd-pending" role="status">{tx('正在载入道路')}</div>}
+      {showConflicts&&<div className="rd-conflict-legend" data-experience-overlay="true"><ConflictLegend/></div>}
       <ExplorerPanel key={designId} network={network} routes={routes} route={route} onSelect={selectRoute} onExit={exit} onReplay={()=>{setReplayRevision(v=>v+1);setRevision(v=>v+1);setPlaying(true);interact()}} follow={follow} onFollow={()=>{setFollow(v=>!v);if(follow)setRevision(r=>r+1);interact()}} demo={demoReadout} pins={pins} activePin={effectivePin} onPin={pin} explaining={explaining} onExplain={()=>{setExplaining(v=>!v);interact()}} onDesign={id=>selectDesign(DESIGNS.find(d=>d.id===id)!)}/>
       <nav className="rd-catalog" aria-label={tx('道路图鉴')} data-experience-overlay="true">{DESIGNS.map(d=><button key={d.id} type="button" data-design-id={d.id} aria-busy={pendingId===d.id} aria-pressed={designId===d.id} onClick={()=>selectDesign(d)}><Diagram id={d.id}/><span>{tx(d.name)}</span></button>)}</nav>
       <div className="rd-main-tools" data-experience-overlay="true"><button type="button" aria-label={tx(playing?'暂停':'播放')} onClick={()=>{setPlaying(v=>!v);interact()}}>{playing?<Pause weight="fill"/>:<Play weight="fill"/>}</button><button type="button" onClick={()=>{setFollow(false);setPreset(preset==='top'?'overview':'top');setRevision(r=>r+1);interact()}}>{tx(preset==='top'?'鸟瞰':'俯视')}</button><button type="button" aria-pressed={showCompare} onClick={()=>setShowCompare(v=>!v)}>{tx('设计对比')}</button><button type="button" aria-expanded={showMore} onClick={()=>setShowMore(v=>!v)}>{tx('更多')}</button></div>

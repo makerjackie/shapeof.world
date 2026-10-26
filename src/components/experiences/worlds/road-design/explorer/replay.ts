@@ -2,6 +2,7 @@ import { TrafficSimulation } from '../sim/simulation'
 import { signalState } from '../sim/control'
 import type { Network, Vec3 } from '../sim/types'
 import { distance } from '../designs/kit'
+import { routeSignal } from './route-signal'
 
 export type DemoStatus = 'driving' | 'red' | 'yield' | 'queue' | 'done' | 'loading' | 'failed'
 export interface DemoSample { at: number; time: number; position: Vec3; tangent: Vec3; status: DemoStatus; laneId: string; speed: number; others?: number[] }
@@ -34,7 +35,7 @@ export function recordDemo(network: Network, movementId: string): DemoReplay {
   for(let i=0;i<18000;i++) {
     if(i%6===0) {
       const pose=sim.sampleVehicle(car)
-      const color=signalState(network.control,sim.time,movement.signalGroup??movement.from)
+      const color=routeSignal(network,movement,car.laneId,sim.time)?.color??'green'
       const status:DemoStatus=car.v<.8 ? car.permissiveWaiting&&!car.admitted?'yield':color!=='green'&&!car.admitted?'red':'queue':'driving'
       const sample:DemoSample={at,time:sim.time,...pose,status,laneId:car.laneId,speed:car.v,
         others:network.control.kind==='free'?undefined:sim.vehicles.filter(v=>v!==car).flatMap(v=>{const p=sim.sampleVehicle(v);return [v.id,p.position.x,p.position.y,p.position.z,Math.atan2(p.tangent.x,p.tangent.z),v.length,v.width]})}

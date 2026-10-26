@@ -1,4 +1,5 @@
 import type { DemoReplay } from '../explorer/replay'
+import { DemoRecording } from '../explorer/recording'
 import type { ConflictPoint, Network, SimulationMetrics } from '../sim/types'
 import { packetBuffers, type RenderPacket } from './frame-packet'
 import type { TrafficRuntime } from './runtime'
@@ -15,14 +16,25 @@ export class WorkerTrafficRuntime {
   private demoResolve?: (replay: DemoReplay) => void
   readonly worker: Worker
   readonly ready: Promise<void>
-  lighting:ImageBitmap|null=null
-  lamps!:Lamp[]
-  geometry!:PackedRoadGeometry
-  blueprint!:PackedBlueprint
-  roof!:Float32Array
-  network!: Network
+  // GPU/model payloads are resources, not component inspection state. React's
+  // development performance tracks recursively enumerate public props, including
+  // every typed-array index (millions of rows per design change). Private storage
+  // and prototype getters keep normal access while bounding those recordings.
+  #lighting:ImageBitmap|null=null
+  #lamps!:Lamp[]
+  #geometry!:PackedRoadGeometry
+  #blueprint!:PackedBlueprint
+  #roof!:Float32Array
+  #network!:Network
+  get lighting(){return this.#lighting}
+  get lamps(){return this.#lamps}
+  get geometry(){return this.#geometry}
+  get blueprint(){return this.#blueprint}
+  get roof(){return this.#roof}
+  get network(){return this.#network}
   conflicts: ConflictPoint[] = []
-  frame!: RenderPacket
+  #frame!:RenderPacket
+  get frame(){return this.#frame}
   revision = 0
   frameMs = 0
   stepMs = 0
@@ -51,9 +63,9 @@ export class WorkerTrafficRuntime {
       this.worker.onmessage=event=>{
         if(this.disposed)return
         const message=event.data
-        if(message.type==='demo'){if(message.requestId===this.demoRequest)this.demoResolve?.(message.replay);return}
+        if(message.type==='demo'){if(message.requestId===this.demoRequest)this.demoResolve?.(new DemoRecording(message.replay));return}
         if(message.type==='error'){fail(new Error(message.message));return}
-        if(message.type==='ready'){this.network=message.network;this.conflicts=message.conflicts;this.lamps=message.lamps;this.geometry=message.geometry;this.blueprint=message.blueprint;this.roof=message.roof;this.lighting=message.lighting;if(message.context)primeContextLayout(this.network,message.context);if(message.city)primeCityLayout(this.network,message.city)}
+        if(message.type==='ready'){this.#network=message.network;this.conflicts=message.conflicts;this.#lamps=message.lamps;this.#geometry=message.geometry;this.#blueprint=message.blueprint;this.#roof=message.roof;this.#lighting=message.lighting;if(message.context)primeContextLayout(this.network,message.context);if(message.city)primeCityLayout(this.network,message.city)}
         if(message.packet&&(message.epoch??0)!==this.epoch)return
         if(message.packet){this.receive(message.packet);this.busy=false;this.warming=false;resolve()}
       }
@@ -63,7 +75,7 @@ export class WorkerTrafficRuntime {
   private receive(packet:RenderPacket) {
     if(this.frame&&this.frozen){this.deferred=packet;return}
     if(this.frame)this.recycle=this.frame
-    this.frame=packet;this.revision++
+    this.#frame=packet;this.revision++
     this.simulation.vehicles.length=packet.carCount
     this.simulation.time=packet.time;this.simulation.metrics=packet.metrics;this.simulation.demandMultiplier=packet.demandMultiplier
     if(this.pressureStopped&&packet.pressure)packet.pressure.status='stopped'

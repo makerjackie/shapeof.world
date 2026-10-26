@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import type { WorkerTrafficRuntime } from './worker-runtime'
 
-interface FrameTiming { time:number; mainMs:number; submitMs:number; gpuMs:number|null; calls:number; triangles:number; textures:number; geometries:number; programs:number; postPixels:[number,number]; dpr:number; vehicles:number; stepMs:number; revision:number; pendingSimSeconds:number }
+interface FrameTiming { time:number; mainMs:number; submitMs:number; gpuMs:number|null; calls:number; triangles:number; textures:number; geometries:number; programs:number; postPixels:[number,number]; dpr:number; vehicles:number; stepMs:number; revision:number; pendingSimSeconds:number; cameraDistance:number; fogDensity:number|null }
 /** Opt-in diagnostics only (?profile=1), not part of the scored RAF benchmark.
  * GPU query completion is polled asynchronously; never readPixels/gl.finish. */
 export function RenderProbe({runtime}:{runtime:WorkerTrafficRuntime}) {
@@ -23,14 +23,14 @@ export function RenderProbe({runtime}:{runtime:WorkerTrafficRuntime}) {
     return ()=>{renderer.render=original;renderer.info.autoReset=autoReset;for(const q of state.queries)state.gl.deleteQuery(q)}
   },[renderer,state])
   useFrame(()=>{state.start=performance.now();state.submit=0;renderer.info.reset()},-100)
-  useFrame(()=>{
+  useFrame(({camera,scene})=>{
     if(state.active){state.gl.endQuery(state.ext.TIME_ELAPSED_EXT);state.queries.push(state.active);state.active=null}
     const query=state.queries[0]
     if(query&&state.gl.getQueryParameter(query,state.gl.QUERY_RESULT_AVAILABLE)){
       if(!state.gl.getParameter(state.ext.GPU_DISJOINT_EXT))state.gpu=state.gl.getQueryParameter(query,state.gl.QUERY_RESULT)/1e6
       state.gl.deleteQuery(query);state.queries.shift()
     }
-    state.frames.push({time:performance.now(),mainMs:performance.now()-state.start,submitMs:state.submit,gpuMs:state.gpu,calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,geometries:renderer.info.memory.geometries,programs:renderer.info.programs?.length??0,postPixels:[Number(renderer.domElement.dataset.postWidth),Number(renderer.domElement.dataset.postHeight)],dpr:renderer.getPixelRatio(),vehicles:runtime.simulation.vehicles.length,stepMs:runtime.stepMs,revision:runtime.revision,pendingSimSeconds:runtime.pendingSimSeconds})
+    state.frames.push({time:performance.now(),mainMs:performance.now()-state.start,submitMs:state.submit,gpuMs:state.gpu,calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,geometries:renderer.info.memory.geometries,programs:renderer.info.programs?.length??0,postPixels:[Number(renderer.domElement.dataset.postWidth),Number(renderer.domElement.dataset.postHeight)],dpr:renderer.getPixelRatio(),vehicles:runtime.simulation.vehicles.length,stepMs:runtime.stepMs,revision:runtime.revision,pendingSimSeconds:runtime.pendingSimSeconds,cameraDistance:camera.position.length(),fogDensity:scene.fog&&'density' in scene.fog?scene.fog.density:null})
     if(state.frames.length>1200)state.frames.splice(0,600)
   },2)
   return null

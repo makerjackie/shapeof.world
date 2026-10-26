@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Html } from '@react-three/drei'
+import { Html, Line } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
@@ -29,9 +29,13 @@ function Marker({ conflict, active, onHover }: { conflict: ConflictPoint; active
   return <group ref={face}>
     <mesh material={glow}><planeGeometry args={[4, 4]} /></mesh>
     <mesh onPointerOver={e => { e.stopPropagation(); onHover(conflict.id) }} onPointerOut={() => onHover(null)} onClick={e => { e.stopPropagation(); onHover(active ? null : conflict.id) }}>
-      {conflict.separatedBySignal ? <ringGeometry args={[0.68, 1, 32]} /> : <circleGeometry args={[1, 24]} />}
-      <meshBasicMaterial color={new T.Color(COLORS[conflict.type]).multiplyScalar(1.7)} toneMapped={false} depthWrite={false} />
+      <circleGeometry args={[1.3, 24]} />
+      <meshBasicMaterial transparent opacity={0} depthWrite={false} />
     </mesh>
+    {conflict.type==='crossing'?<><Line points={[[-.8,-.8,0],[.8,.8,0]]} color={COLORS.crossing} lineWidth={1.8}/><Line points={[[.8,-.8,0],[-.8,.8,0]]} color={COLORS.crossing} lineWidth={1.8}/></>:<>
+      <Line points={[[-.8,conflict.type==='merge'?.8:-.8,0],[0,0,0],[.8,conflict.type==='merge'?.8:-.8,0]]} color={COLORS[conflict.type]} lineWidth={1.8}/>
+      <Line points={[[0,0,0],[0,conflict.type==='merge'?-.9:.9,0]]} color={COLORS[conflict.type]} lineWidth={1.8}/>
+    </>}
   </group>
 }
 export function ConflictMarkers({ network, conflicts, showWeaving = true }: { network: Network; conflicts: ConflictPoint[]; showWeaving?: boolean }) {

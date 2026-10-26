@@ -83,17 +83,20 @@ function groundMaterial(atlas: T.Texture, urban: boolean, cloverleaf: boolean) {
     material.onBeforeCompile = (shader, renderer) => {
       groundLighting(shader, renderer)
       shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
-        float groundDistance=distance(cameraPosition,roadWorld);
-        float horizonHaze=1.0-exp(-max(0.0,groundDistance-650.0)*0.00045);
+        float groundDistance=length(cameraPosition.xz-roadWorld.xz);
+        float grazing=1.0-smoothstep(0.06,0.5,abs(cameraPosition.y-roadWorld.y)/max(1.0,distance(cameraPosition,roadWorld)));
+        float horizonHaze=(1.0-exp(-max(0.0,groundDistance-650.0)*0.00045))*grazing;
         outgoingLight=max(outgoingLight,vec3(0.0075,0.0100,0.0120)*(0.85+0.3*terrainNoise(roadWorld.xz*0.009)));
         outgoingLight=mix(outgoingLight,vec3(0.006,0.008,0.011),horizonHaze);
         #include <opaque_fragment>`)
       shader.fragmentShader = shader.fragmentShader.replace('#include <fog_fragment>', `#include <fog_fragment>
-        float horizonBlend=smoothstep(900.0,8500.0,distance(cameraPosition,roadWorld));
+        // Height above a plan view is not distance toward the horizon. Without
+        // this angle term the complete O-D view turns the whole ground blue.
+        float horizonBlend=smoothstep(900.0,8500.0,length(cameraPosition.xz-roadWorld.xz))*grazing;
         gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(0.030,0.045,0.076),horizonBlend);
       `)
     }
-  material.customProgramCacheKey = () => `road-terrain-v7-${urban}-${cloverleaf}`
+  material.customProgramCacheKey = () => `road-terrain-v8-${urban}-${cloverleaf}`
   return material
 }
 

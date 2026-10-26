@@ -24,6 +24,12 @@ const ready=async()=>{
 }
 afterEach(()=>vi.unstubAllGlobals())
 describe('worker transport and control semantics',()=>{
+  it('keeps GPU payloads out of enumerable component inspection state',async()=>{
+    const {runtime}=await ready()
+    for(const key of ['network','geometry','blueprint','roof','frame','lamps','lighting'])expect(Object.keys(runtime)).not.toContain(key)
+    expect(runtime.network.id).toBe('t-junction');expect(runtime.frame.cars.byteLength).toBe(56)
+    runtime.dispose()
+  })
   it('maintains 30 Hz poses despite alternating RAF intervals and conserves model time',async()=>{
     const {runtime,worker}=await ready()
     let total=0,time=240
