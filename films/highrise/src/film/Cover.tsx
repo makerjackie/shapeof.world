@@ -68,10 +68,11 @@ export const Cover: React.FC<{ tall: boolean }> = ({ tall }) => {
       />
       <div style={{ position: "absolute", left: tall ? 76 : 110, top: tall ? bar + 90 : bar + 220, fontFamily: FONT, color: K.fg, textShadow: "0 4px 30px rgba(0,0,0,0.6)" }}>
         <div style={{ fontSize: tall ? 60 : 62, fontWeight: 800, color: "rgba(244,240,232,0.88)", marginBottom: 16, letterSpacing: 2 }}>高层住宅</div>
-        <div style={{ fontSize: tall ? 120 : 128, fontWeight: 900, lineHeight: 1.16, letterSpacing: -3 }}>
+        <div style={{ fontSize: tall ? 120 : 128, fontWeight: 900, lineHeight: 1.16, letterSpacing: -3, whiteSpace: "nowrap" }}>
           几十年后，
           <br />
-          会变成<span style={{ color: K.gold }}>“贫民窟”</span>吗？
+          会变成{tall ? <br /> : null}
+          <span style={{ color: K.gold }}>“贫民窟”</span>吗？
         </div>
       </div>
       <Bar h={bar} w={W} />
