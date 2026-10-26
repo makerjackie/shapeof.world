@@ -125,7 +125,8 @@ const Half: React.FC<{ ch: string; top: boolean; color: string; style?: React.CS
   </div>
 );
 
-const Tile: React.FC<{ x: number; y: number; changes: Change[]; t: number; seed: number; color: string }> = ({ x, y, changes, t, seed, color }) => {
+export type { Change };
+export const Tile: React.FC<{ x: number; y: number; changes: Change[]; t: number; seed: number; color: string }> = ({ x, y, changes, t, seed, color }) => {
   const [from, to, ph] = charAt(changes, t, seed);
   return (
     <div style={{ position: "absolute", left: x, top: y, width: W, height: H, perspective: 420, boxShadow: "0 3px 6px rgba(0,0,0,0.6)", borderRadius: 5 }}>

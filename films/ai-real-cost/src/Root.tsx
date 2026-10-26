@@ -13,9 +13,13 @@ import { FlapBoard } from "./v13/FlapBoard";
 import { Meter } from "./v13/Meter";
 import { Shelf } from "./v13/Shelf";
 import { SAMPLE_S } from "./v13/data";
+import { OPTIONS } from "./v14/Options";
 
 export const Root: React.FC = () => (
   <>
+    {OPTIONS.map(([id, C]) => (
+      <Composition key={id} id={id} component={C} durationInFrames={120} fps={30} width={1920} height={1080} />
+    ))}
     <Composition id="Flap13" component={FlapBoard} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
     <Composition id="Meter13" component={Meter} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
     <Composition id="Shelf13" component={Shelf} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
