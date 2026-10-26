@@ -1,13 +1,27 @@
-import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
-import { loadFont as loadNoto } from "@remotion/google-fonts/NotoSansSC";
-import { loadFont as loadSerif } from "@remotion/google-fonts/NotoSerifSC";
+import { continueRender, delayRender, staticFile } from "remotion";
 
-const inter = loadInter("normal", { weights: ["500", "700", "900"], subsets: ["latin"] });
-const noto = loadNoto("normal", { weights: ["500", "700", "900"], ignoreTooManyRequestsWarning: true });
-const serif = loadSerif("normal", { weights: ["600", "700", "900"], ignoreTooManyRequestsWarning: true });
+// Fonts are local subsets (tools/fonts.sh) of Noto Sans SC and Noto Serif SC, variable weight, loaded before any
+// frame renders.
+const load = (family: string, file: string) => {
+  if (typeof document === "undefined") return;
+  const handle = delayRender(`font ${family}`);
+  const face = new FontFace(family, `url('${staticFile(file)}') format('woff2')`, { weight: "100 900" });
+  face
+    .load()
+    .then(() => {
+      document.fonts.add(face);
+      continueRender(handle);
+    })
+    .catch((e) => {
+      console.error(e);
+      continueRender(handle);
+    });
+};
+load("HR Sans", "fonts/NotoSansSC.woff2");
+load("HR Serif", "fonts/NotoSerifSC.woff2");
 
-export const FONT = `${inter.fontFamily}, ${noto.fontFamily}, "PingFang SC", sans-serif`;
-export const SERIF = `${serif.fontFamily}, serif`;
+export const FONT = `"HR Sans", "PingFang SC", sans-serif`;
+export const SERIF = `"HR Serif", "Songti SC", serif`;
 
 // The film's colours. Window light is warm; the money is gold; the X-ray of the building's machinery is a cool
 // cyan and its water a clear blue; votes use the usual green / red.

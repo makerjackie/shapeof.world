@@ -138,7 +138,7 @@ export const LiftBars: React.FC<{ at: number; out: number }> = ({ at, out }) => 
     <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 18 }}>
       <div style={{ width: 300, textAlign: "right", fontSize: 38, fontWeight: 800 }}>{label}</div>
       <div style={{ width: (W * v * k) / 1231.59, minWidth: 6, height: 40, background: c, borderRadius: 6, boxShadow: `0 0 16px ${c}` }} />
-      <div style={{ fontSize: 40, fontWeight: 900, fontVariantNumeric: "tabular-nums", opacity: k }}>{fmt(v * k, 0)} 万台</div>
+      <div style={{ fontSize: 40, fontWeight: 900, fontVariantNumeric: "tabular-nums", opacity: k }}>{fmt(Math.floor(v * k), 0)} 万台</div>
     </div>
   );
   return (
@@ -357,10 +357,10 @@ export const YouRing: React.FC<{ cam: Cam; at: number; out: number; p: [number, 
   if (o <= 0) return null;
   const [x, y] = toScreen(cam, p[0], p[1], p[2]);
   const pulse = 1 + 0.06 * Math.sin((t - at) * 3);
-  const r = 46 * pulse * (0.6 + 0.4 * o);
+  const r = 64 * pulse * (0.6 + 0.4 * o);
   return (
     <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: o }}>
-      <circle cx={x} cy={y} r={r} fill="none" stroke={K.gold} strokeWidth={4} />
+      <circle cx={x} cy={y} r={r} fill="none" stroke={K.gold} strokeWidth={5} />
       <circle cx={x} cy={y} r={r + 14} fill="none" stroke={K.gold} strokeOpacity={0.35} strokeWidth={2} />
     </svg>
   );

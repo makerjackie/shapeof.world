@@ -94,6 +94,7 @@ for (let gx = -N; gx <= N; gx++) {
     const cz = gz * P;
     const d = Math.hypot(cx, cz) * (0.92 + 0.16 * Math.sin(gx * 1.7 + gz * 0.9));
     if (gx === 0 && gz === 0) continue;
+    if (gz === 1 && Math.abs(gx) <= 1) continue; // a park in front of the hero's estate (the camera works there)
     if (d > 5300) continue;
     if (nearRiver(cx, cz, 140) || nearRiver(cx - 130, cz, 140) || nearRiver(cx + 130, cz, 140)) continue;
     const roll = rng();

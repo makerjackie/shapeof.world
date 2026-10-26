@@ -29,7 +29,7 @@ const KEYS: Key[] = [
   [0, cam({ x: -900, y: 40, z: 2500, dist: 520, yaw: 12, pitch: 9, fov: 40 })],
   [sa(9), cam({ x: -260, y: 60, z: 820, dist: 760, yaw: 6, pitch: 12, fov: 40 }), LIN],
   // dive down to the empty plot, low, looking up
-  [sa(12.1), cam({ x: 0, y: 46, z: 0, dist: 230, yaw: -22, pitch: -9, fov: 40 }), EIO],
+  [sa(12.1), cam({ x: 0, y: 50, z: 0, dist: 150, yaw: -18, pitch: -14, fov: 54 }), EIO],
   // the tower rises; crane up and back
   [sa(16), cam({ x: 0, y: 50, z: 0, dist: 255, yaw: -14, pitch: 1, fov: 38 }), ESO],
   // 33 floors and 100 m: from the side, measured
@@ -42,10 +42,15 @@ const KEYS: Key[] = [
   [sa(29), cam({ x: 2, y: 40, z: -3, dist: 95, yaw: -28, pitch: 1, fov: 40 }), EIO],
   [sa(31.6), cam({ x: 2, y: 60, z: -3, dist: 120, yaw: -20, pitch: 1, fov: 40 }), LIN],
   [sa(32.8), cam({ x: 0, y: 50, z: 0, dist: 170, yaw: -10, pitch: 3, fov: 38 }), EIO],
-  // ageing: close along the facade, rising with the years
-  [sa(34.5), cam({ x: 6, y: 26, z: 7, dist: 120, yaw: 18, pitch: 2, fov: 40 }), EIO],
-  [sa(40), cam({ x: 4, y: 62, z: 7, dist: 125, yaw: 10, pitch: 1, fov: 40 }), LIN],
-  [sa(44), cam({ x: 0, y: 54, z: 0, dist: 210, yaw: 4, pitch: 3, fov: 38 }), ESO],
+  // ageing: close along the facade while the years run
+  [sa(34.2), cam({ x: 6, y: 30, z: 7, dist: 115, yaw: 18, pitch: 2, fov: 42 }), EIO],
+  [sa(36.0), cam({ x: 5, y: 46, z: 7, dist: 118, yaw: 14, pitch: 2, fov: 42 }), LIN],
+  // what wears out: the whole tower, its machinery turning amber
+  [sa(37.2), cam({ x: -2, y: 52, z: 0, dist: 235, yaw: -24, pitch: 3, fov: 38 }), EIO],
+  [sa(40.2), cam({ x: -2, y: 52, z: 0, dist: 225, yaw: -18, pitch: 3, fov: 38 }), LIN],
+  // the 15-year-old lift
+  [sa(41.2), cam({ x: 0, y: 48, z: -3, dist: 140, yaw: -26, pitch: 2, fov: 40 }), EIO],
+  [sa(44), cam({ x: 0, y: 52, z: -3, dist: 150, yaw: -20, pitch: 2, fov: 40 }), LIN],
   // the whole city's lifts
   [sa(46), cam({ x: 0, y: 0, z: -300, dist: 1700, yaw: 10, pitch: 15, fov: 40 }), EIO],
   [sa(48.2), cam({ x: 0, y: 0, z: -340, dist: 1900, yaw: 6, pitch: 16, fov: 40 }), LIN],
@@ -62,8 +67,8 @@ const KEYS: Key[] = [
   [sa(59.2), cam({ x: 0, y: 50, z: 0, dist: 215, yaw: -6, pitch: 2, fov: 38 }), EIO],
   [sa(64), cam({ x: 0, y: 52, z: 0, dist: 235, yaw: -2, pitch: 2, fov: 38 }), LIN],
   // rebuild: from the south-east, the walk-up next door in front
-  [sa(65.4), cam({ x: 46, y: 26, z: 0, dist: 190, yaw: -26, pitch: 3, fov: 40 }), EIO],
-  [sa(69.8), cam({ x: 42, y: 30, z: 0, dist: 182, yaw: -20, pitch: 3, fov: 40 }), LIN],
+  [sa(65.4), cam({ x: 60, y: 16, z: 0, dist: 112, yaw: -30, pitch: 4, fov: 46 }), EIO],
+  [sa(69.8), cam({ x: 54, y: 24, z: 0, dist: 128, yaw: -22, pitch: 3, fov: 46 }), LIN],
   // one more 33 floors on top: back and up
   [sa(71), cam({ x: 0, y: 98, z: 0, dist: 470, yaw: -6, pitch: 1, fov: 38 }), EIO],
   [sa(72.6), cam({ x: 0, y: 92, z: 0, dist: 460, yaw: -4, pitch: 1, fov: 38 }), LIN],
@@ -77,8 +82,8 @@ const KEYS: Key[] = [
 
 // back in China, after the map: the city from above as its edges go dark, then down to the hero at dawn
 const KEYS2: Key[] = [
-  [sb(35.5), cam({ x: 0, y: 0, z: 200, dist: 6200, yaw: 6, pitch: 20, fov: 40 })],
-  [sb(43.5), cam({ x: 0, y: 0, z: -100, dist: 3600, yaw: 12, pitch: 14, fov: 40 }), LIN],
+  [sb(35.5), cam({ x: 0, y: 0, z: 0, dist: 9200, yaw: 6, pitch: 38, fov: 40 })],
+  [sb(44), cam({ x: 0, y: 0, z: 0, dist: 7800, yaw: 11, pitch: 33, fov: 40 }), LIN],
   [sb(47.8), cam({ x: 0, y: 40, z: 0, dist: 900, yaw: 10, pitch: 6, fov: 38 }), EIO],
   [sb(55.8), cam({ x: 0, y: 52, z: 0, dist: 330, yaw: 2, pitch: 2, fov: 38 }), ESO],
   [sb(64), cam({ x: -6, y: 60, z: 0, dist: 175, yaw: -6, pitch: 1, fov: 38 }), ESO],
@@ -195,8 +200,8 @@ export const worldAt = (t: number): WorldState => {
 
   // the hero
   const built = ramp(t, sa(12.3), sa(13.7), EO);
-  const xray = Math.max(xrayMain, win(t, sa(37.4), sa(40.4), 0.6) * 0.65, win(t, sa(40.6), sa(43.8), 0.5) * 0.8, win(t, sb(57), sb(64), 1.2) * 0.4);
-  const age = track(t, [[sa(33), 0], [sa(44), 0.55], [sa(64), 0.6], [sb(1), 0.65], [sb(8), 1.0]], LIN);
+  const xray = Math.max(xrayMain, win(t, sa(37.3), sa(40.4), 0.6) * 0.7, win(t, sa(40.8), sa(43.9), 0.5) * 0.85, win(t, sb(57), sb(64), 1.2) * 0.4);
+  const age = track(t, [[sa(33), 0], [sa(36.5), 0.25], [sa(40), 0.45], [sa(44), 0.6], [sa(64), 0.62], [sb(1), 0.66], [sb(8), 1.0]], LIN);
   const water = track(t, [[sa(24.3), -2], [sa(27.4), HERO.h + 8]], EIO);
   let lifts: [number, number] = [liftY(t, 0), liftY(t, 1)];
   const flick = t > sa(41.2) && t < sa(43.6) ? (Math.sin(t * 37) > 0.25 ? 1 : 0.12) : 1;

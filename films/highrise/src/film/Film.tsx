@@ -138,7 +138,7 @@ export const Film: React.FC = () => {
         <Line at={sa(36.3)} out={sa(40.2)} size={S} parts={["混凝土的骨架，按 ", { t: "50 年", c: L }, "设计。"]} />
         <Line at={sa(37.0)} out={sa(40.2)} size={S} parts={["先老的，是那些", { t: "会动", c: K.amber }, "的东西："]} />
       </At>
-      <Pin cam={cam} at={sa(37.6)} out={sa(40.2)} p={[0, 104, -3]} lift={40} text="电梯" color={K.amber} size={36} />
+      <Pin cam={cam} at={sa(37.6)} out={sa(40.2)} p={[1.7, 70, -3]} lift={30} dx={90} side="right" text="电梯" color={K.amber} size={36} />
       <Pin cam={cam} at={sa(37.9)} out={sa(40.2)} p={[-16, 3, -2]} lift={60} dx={-50} side="left" text="水泵" color={K.amber} size={36} />
       <Pin cam={cam} at={sa(38.2)} out={sa(40.2)} p={[-16, 55, -2]} lift={30} dx={-80} side="left" text="水管" color={K.amber} size={36} />
       <Pin cam={cam} at={sa(38.5)} out={sa(40.2)} p={[22, 64, 7]} lift={30} dx={80} side="right" text="外墙" color={K.amber} size={36} />
@@ -172,7 +172,7 @@ export const Film: React.FC = () => {
         <Line at={sa(52.5)} out={sa(56.1)} size={S} parts={["可要动用它，得业主", { t: "投票", c: L }, "。"]} />
       </At>
       <Pin cam={cam} at={sa(53.3)} out={sa(56.1)} p={[-22, 4.5, 7]} lift={10} dx={-90} side="left" dot={false} text="一楼：“我又不坐电梯。”" color={K.red} size={38} />
-      <Pin cam={cam} at={sa(54.4)} out={sa(56.1)} p={[-22, 97.5, 7]} lift={10} dx={-90} side="left" dot={false} text="33 楼：“我天天坐。”" color={K.green} size={38} />
+      <Pin cam={cam} at={sa(54.4)} out={sa(56.1)} p={[22, 97.5, 7]} lift={10} dx={90} side="right" dot={false} text="33 楼：“我天天坐。”" color={K.green} size={38} />
       <Note at={sa(52.5)} out={sa(56.1)}>《民法典》第 278 条：使用维修资金，须经参与表决的业主面积、人数双过半同意（示意）</Note>
 
       <At x={960} y={110} align="center">
@@ -202,7 +202,7 @@ export const Film: React.FC = () => {
       <At x={110} y={110}>
         <Line at={sa(68.1)} out={sa(70.3)} size={S} parts={["可就算这样，钱", { t: "八成多", c: G }, "是业主自己掏的。"]} />
       </At>
-      <Pin cam={cam} at={sa(65.9)} out={sa(66.9)} p={[66, 18, 6]} lift={50} text="6 层" color={K.grey} size={40} />
+      <Pin cam={cam} at={sa(65.9)} out={sa(66.9)} p={[66, 18, 6]} lift={50} text="6 层老楼" color={K.fg} size={40} />
       <Pin cam={cam} at={sa(68.6)} out={sa(70.3)} p={[66, 33, 6]} lift={50} text="11 层" color={L} size={40} />
       <Pin cam={cam} at={sa(71.2)} out={sa(72.7)} p={[0, 150, 7]} lift={0} dot={false} dx={0} side="center" text="拆了重盖，还是 33 层" color={K.fg} size={40} />
       <Pin cam={cam} at={sa(73.6)} out={sa(78.2)} p={[0, 99, 0]} lift={70} text="它" color={G} size={42} />

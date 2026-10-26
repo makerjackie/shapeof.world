@@ -168,6 +168,8 @@ class Engine {
   ghostMat: LineMaterial;
   outlineL: LineSegments2;
   outlineMat: LineMaterial;
+  oldLine: LineSegments2;
+  oldLineMat: LineMaterial;
   line100: LineSegments2;
   line100Mat: LineMaterial;
   refuge: THREE.Mesh;
@@ -320,7 +322,7 @@ class Engine {
     this.pump.renderOrder = 4;
     this.scene.add(this.pump);
     this.riserMat = glowMat("#6cc6ff", "#16324a", 0.5);
-    this.riser = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, HERO.h + 4, 12, 1, true), this.riserMat);
+    this.riser = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, HERO.h + 4, 16, 1, true), this.riserMat);
     this.riser.position.set(-16, (HERO.h + 4) / 2, -2);
     this.riser.renderOrder = 4;
     this.scene.add(this.riser);
@@ -367,6 +369,16 @@ class Engine {
     this.outlineL.frustumCulled = false;
     this.outlineL.renderOrder = 8;
     this.scene.add(this.outlineL);
+
+    // the walk-up next door, outlined while it is the subject (a unit box, scaled each frame)
+    const ub: number[] = [];
+    for (const y of [0, 1]) ub.push(-0.5, y, -0.5, 0.5, y, -0.5, 0.5, y, -0.5, 0.5, y, 0.5, 0.5, y, 0.5, -0.5, y, 0.5, -0.5, y, 0.5, -0.5, y, -0.5);
+    for (const [x, z] of [[-0.5, -0.5], [0.5, -0.5], [0.5, 0.5], [-0.5, 0.5]]) ub.push(x, 0, z, x, 1, z);
+    this.oldLineMat = lineMat("#e8e2d4", 2.2);
+    this.oldLine = new LineSegments2(segs(ub), this.oldLineMat);
+    this.oldLine.frustumCulled = false;
+    this.oldLine.renderOrder = 8;
+    this.scene.add(this.oldLine);
 
     // the repair fund: a glass jar in the garden, filled with gold
     this.tankGlassMat = glowMat("#cfe6ff", "#cfe6ff", 2.2);
@@ -472,7 +484,10 @@ class Engine {
     this.skyU.uNight.value = night;
     this.skyU.uDim.value = dim;
     const site = s.site ?? 0;
-    const fogD = site === 0 ? 1 / 7000 : 1 / 3800;
+    // thinner haze when the camera is high above the city
+    const camH = (s.cam.y + Math.sin((s.cam.pitch * Math.PI) / 180) * s.cam.dist);
+    const hk = Math.max(0, Math.min(1, (camH - 600) / 4000));
+    const fogD = site === 0 ? 1 / (7000 + 15000 * hk) : 1 / 3800;
 
     const setB = (m: THREE.ShaderMaterial, lights: number, extraDim = 1) => {
       const u = m.uniforms;
@@ -547,7 +562,12 @@ class Engine {
       const oc = this.old.aC.array as Float32Array;
       oc[3] = s.old.drop;
       this.old.aC.needsUpdate = true;
-      setB(this.old.mesh.material as THREE.ShaderMaterial, 0.85);
+      setB(this.old.mesh.material as THREE.ShaderMaterial, 1.0);
+      const oh = s.old.floors * FH * (1 - s.old.drop);
+      this.oldLine.scale.set(OLD.w + 1, Math.max(0.1, oh + 0.5), OLD.d + 1);
+      this.oldLine.position.set(OLD.x, 0, OLD.z);
+      this.oldLineMat.opacity = 0.8 * ov * (1 - s.old.drop);
+      this.oldLine.visible = this.old.mesh.visible && oh > 0.5;
       (this.old.mesh.material as THREE.ShaderMaterial).uniforms.uElev.value = 0;
     }
 
@@ -567,6 +587,17 @@ class Engine {
     this.hero.mesh.visible = site === 0 && he.vis > 0.001;
     this.heroMat.depthWrite = he.xray < 0.01;
     const xr = site === 0 ? he.xray : 0;
+    // the machinery wears: cyan and blue turn amber as the tower ages (the frame stays cyan)
+    const wear = Math.max(0, Math.min(1, (he.age - 0.12) / 0.4));
+    const amber = C("#ffa040");
+    this.shaftMat.uniforms.uColor.value.copy(C("#7fe3ff").lerp(amber, wear));
+    this.shaftMat.uniforms.uColor2.value.copy(C("#7fe3ff").lerp(amber, wear));
+    this.carMat.uniforms.uColor.value.copy(C("#fff4dc").lerp(C("#ffb060"), wear));
+    this.carMat.uniforms.uColor2.value.copy(C("#fff4dc").lerp(C("#ffb060"), wear));
+    this.pumpMat.uniforms.uColor.value.copy(C("#4fb4ff").lerp(amber, wear));
+    this.pumpMat.uniforms.uColor2.value.copy(C("#4fb4ff").lerp(amber, wear));
+    this.riserMat.uniforms.uColor.value.copy(C("#6cc6ff").lerp(amber, wear));
+    this.roofTankMat.uniforms.uColor.value.copy(C("#4fb4ff").lerp(amber, wear));
     this.heroLinesMat.opacity = 0.55 * xr;
     this.heroLines.visible = xr > 0.001;
     this.shaftMat.uniforms.uOpacity.value = 0.12 * xr;
