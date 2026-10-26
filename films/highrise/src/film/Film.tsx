@@ -1,4 +1,4 @@
-// 《高层住宅，几十年后会变成贫民窟吗？》v8. One main line (SCRIPT.md): a high-rise is a machine that a hundred-odd
+// 《高层住宅，几十年后会变成“贫民窟”吗？》v9. One main line (SCRIPT.md): a high-rise is a machine that a hundred-odd
 // households must keep paying for together; it ages all at once, the money design is weak, every flat has its own
 // owner; those who can leave do, the machine stops, and the tower goes dark from the top down.
 import React from "react";
@@ -6,8 +6,8 @@ import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame
 import { K } from "../theme";
 import { FILM_FRAMES, FPS, lerp, ramp, sf as b } from "../timing";
 import { World } from "../world/World";
-import { AgeCounter, Archive, Births, Budget, Crack, ExodusGrid, Japan, LiftCount, NoiseRings, PassLegend, Quote, RushCounter, ShanghaiDots, Tally, YearBadge, YouRing } from "./overlays";
-import { NOISE_SRC, T, worldAt, YOU, yf } from "./state";
+import { AgeCounter, Archive, BillRibbon, Births, Budget, Crack, ExodusGrid, Japan, JapanFund, LiftCount, Loop, NoiseRings, PassLegend, Quote, RushCounter, ShanghaiDots, Tally, YearBadge, YouRing } from "./overlays";
+import { BILLS, billT, NOISE_SRC, T, worldAt, YOU, yf } from "./state";
 import { At, BrandMark, EndCard, Line, Note, Pin, Scrim, Sources } from "./ui";
 
 const G = K.gold;
@@ -61,7 +61,12 @@ const SFX: { id: string; t: number; vol: number }[] = [
   { id: "sfx-scifi-17", t: b(T.stop + 0.3), vol: 0.28 },
   { id: "sfx-transition-15", t: b(T.leave), vol: 0.2 },
   ...darkClicks(T.dark[0], T.dark[1], 0.1),
-  { id: "sfx-impact-19", t: b(T.you + 0.4), vol: 0.28 },
+  { id: "sfx-transition-16", t: b(T.climax + 0.2), vol: 0.22 },
+  { id: "sfx-transition-16", t: b(T.goodLoop), vol: 0.2 },
+  { id: "sfx-mechanical-08", t: b(T.build), vol: 0.26 },
+  ...BILLS.map((e) => ({ id: e.k === "all" ? "sfx-impact-19" : "sfx-ui-13", t: billT(e.y), vol: e.k === "all" ? 0.3 : 0.12 })),
+  { id: "sfx-transition-07", t: b(T.city2), vol: 0.3 },
+  { id: "sfx-impact-20", t: b(T.you + 0.3), vol: 0.26 },
 ];
 
 export const Film: React.FC = () => {
@@ -89,7 +94,7 @@ export const Film: React.FC = () => {
       <Scrim at={0} out={b(T.hookX)} kind="tl" k={0.5} />
       <At x={x0} y={y0}>
         <Line at={0.2} out={b(T.hookX + 0.1)} size={98} serif weight={900} stagger={0.03} parts={["高层住宅，几十年后"]} />
-        <Line at={0.6} out={b(T.hookX + 0.1)} size={98} serif weight={900} stagger={0.03} parts={["会变成", { t: "贫民窟", c: R }, "吗？"]} />
+        <Line at={0.6} out={b(T.hookX + 0.1)} size={98} serif weight={900} stagger={0.03} parts={["会变成", { t: "“贫民窟”", c: R }, "吗？"]} />
       </At>
       <Note at={0.4} out={b(T.hookX)}>示意：一栋普通的 33 层住宅</Note>
       <Scrim at={b(T.hookX + 0.2)} out={b(T.hookOut)} kind="tl" />
@@ -248,15 +253,17 @@ export const Film: React.FC = () => {
         <Line at={b(T.fund + 0.4)} out={b(T.drain - 0.1)} size={S} parts={["买房时交一次。"]} />
         <Line at={b(T.fund + 0.8)} out={b(T.drain - 0.1)} size={S2} parts={["南京的高层，每平米 120 元；"]} />
         <Line at={b(T.fund + 1.3)} out={b(T.drain - 0.1)} size={S2} parts={["一栋楼约 150 万，要管几十年。"]} />
-        <Line at={b(T.drain)} out={b(T.refill - 0.1)} size={S} parts={["换一部电梯，就要", { t: "几十万", c: R }, "；"]} />
-        <Line at={b(T.drain + 0.6)} out={b(T.refill - 0.1)} size={S2} parts={["外墙、水管、消防，排着队。"]} />
+        <Line at={b(T.drain)} out={b(T.jpFund - 0.1)} size={S} parts={["换一部电梯，就要", { t: "几十万", c: R }, "；"]} />
+        <Line at={b(T.drain + 0.6)} out={b(T.jpFund - 0.1)} size={S2} parts={["外墙、水管、消防，排着队。"]} />
         <Line at={b(T.refill)} out={b(T.why - 0.1)} size={S} parts={["余额不足三成，"]} />
         <Line at={b(T.refill + 0.3)} out={b(T.why - 0.1)} size={S} parts={["按规定要续交。"]} />
         <Line at={b(T.refill + 0.7)} out={b(T.why - 0.1)} size={S} parts={["续交，要大家", { t: "重新点头", c: G }, "。"]} />
       </At>
-      <Pin cam={cam} at={b(T.fund + 0.5)} out={b(T.why)} p={[8.5, 18, 34]} lift={40} dx={90} side="right" text="维修资金" color={G} size={38} />
+      <Pin cam={cam} at={b(T.fund + 0.5)} out={b(T.jpFund)} p={[8.5, 18, 34]} lift={40} dx={90} side="right" text="维修资金" color={G} size={38} />
       <Note at={b(T.fund + 0.8)} out={b(T.drain - 0.1)}>估算：128 户 × 100 平方米 × 120 元（南京高层首期标准，宁房物字〔2017〕159 号）</Note>
-      <Note at={b(T.drain)} out={b(T.refill - 0.1)}>南方都市报 2025-04：30 层电梯安装约 10–30 万元，梯价另计</Note>
+      <Note at={b(T.drain)} out={b(T.jpFund - 0.1)}>南方都市报 2025-04：30 层电梯安装约 10–30 万元，梯价另计</Note>
+      <JapanFund at={b(T.jpFund)} out={b(T.refill - 0.1)} />
+      <Note at={b(T.jpFund + 0.4)} out={b(T.refill - 0.1)}>国土交通省《マンションの修繕積立金に関するガイドライン》（2021 年修订）：20 层以上计划期平均 338 日元/平方米·月，按 1 日元≈0.047 元折算；令和 5 年度マンション総合調査：36.6% 的管理组合积立金低于计划</Note>
       <Note at={b(T.refill)} out={b(T.why - 0.1)}>各地住宅专项维修资金管理办法：分户账余额不足首期交存额 30% 时，应当及时续交</Note>
 
       {/* ---------- 6 how many owners ---------- */}
@@ -324,38 +331,58 @@ export const Film: React.FC = () => {
       </At>
       <Births at={b(T.births + 0.3)} out={b(T.climax - 0.1)} />
       <Note at={b(T.births + 0.3)} out={b(T.climax - 0.1)}>《中国统计年鉴》：1990 年出生率 21.06‰（约 11.4 亿人，推算约 2400 万）；国家统计局：2025 年出生 792 万</Note>
-      <Scrim at={b(T.climax)} out={b(T.answer)} kind="tl" />
+      {/* ---------- 7b the circle: the tower spins down ---------- */}
       <At x={x0} y={y0}>
-        <Line at={b(T.climax + 0.2)} out={b(T.dark[0] + 0.4)} size={S} parts={["钱越来越少，机器越来越老。"]} />
-        <Line at={b(T.dark[0] + 0.5)} out={b(T.answer - 0.1)} size={S} parts={["电梯一停，"]} />
-        <Line at={b(T.dark[0] + 1.0)} out={b(T.answer - 0.1)} size={S} parts={["高处的家，", { t: "一层一层空下去", c: K.grey }, "，"]} />
-        <Line at={b(T.dark[0] + 2.4)} out={b(T.answer - 0.1)} size={S} parts={["最后只剩下，"]} />
-        <Line at={b(T.dark[0] + 2.7)} out={b(T.answer - 0.1)} size={S} parts={[{ t: "爬得动的那几层", c: L }, "。"]} />
+        <Line at={b(T.climax + 0.2)} out={b(T.darkLines - 0.1)} size={S} parts={["钱越来越少，机器越来越老，"]} />
+        <Line at={b(T.climax + 0.6)} out={b(T.darkLines - 0.1)} size={S} parts={["楼掉进一个", { t: "越转越快", c: R }, "的循环："]} />
       </At>
-      <Scrim at={b(T.answer)} out={b(T.lift)} kind="tc" />
-      <At x={960} y={110} align="center">
-        <Line at={b(T.answer + 0.2)} out={b(T.answer + 2.0)} size={H} serif weight={800} parts={["所以，会变成贫民窟吗？"]} />
-        <Line at={b(T.answer + 2.1)} out={b(T.lift - 0.1)} size={S2} parts={["钱够、人齐的楼，会老得很体面："]} />
-        <Line at={b(T.answer + 2.6)} out={b(T.lift - 0.1)} size={S2} parts={["北京前三门的高楼快 50 岁，电梯还在换新。"]} />
-        <Line at={b(T.answer + 3.8)} out={b(T.lift - 0.1)} size={S} parts={["人一直在走的地方，楼会", { t: "一层一层空下去", c: K.grey }, "。"]} />
+      <Loop at={b(T.climax + 0.4)} out={b(T.darkLines)} cx={560} cy={650} r={235} color={R} center="越转越快" nodes={["账单来了", "钱凑不齐", "修不好", "能走的先走", "掏钱的人更少"]} turns={2.4} size={36} />
+      <Scrim at={b(T.darkLines)} out={b(T.answer)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.darkLines + 0.1)} out={b(T.answer - 0.1)} size={S} parts={["电梯一停，"]} />
+        <Line at={b(T.darkLines + 0.5)} out={b(T.answer - 0.1)} size={S} parts={["高处的家，", { t: "一层一层空下去", c: K.grey }, "，"]} />
+        <Line at={b(T.darkLines + 1.9)} out={b(T.answer - 0.1)} size={S} parts={["最后只剩下，"]} />
+        <Line at={b(T.darkLines + 2.2)} out={b(T.answer - 0.1)} size={S} parts={[{ t: "爬得动的那几层", c: L }, "。"]} />
       </At>
-      <Note at={b(T.answer + 2.6)} out={b(T.lift - 0.1)}>新京报 2025-01-06：前三门住宅楼 2023 年完成 11 部电梯的更换和大修，费用由公共维修资金和产权方首开集团承担 · 城市为示意</Note>
 
-      {/* ---------- 8 lift ---------- */}
-      <At x={960} y={150} align="center" gap={6}>
-        <Line at={b(T.lift + 0.4)} out={b(T.goes - 0.1)} size={116} serif weight={900} stagger={0.07} parts={["盖一栋楼，三年。"]} />
-        <Line at={b(T.lift + 2.0)} out={b(T.goes - 0.1)} size={116} serif weight={900} stagger={0.07} parts={["养一栋楼，", { t: "五十年", c: G }, "。"]} />
+      {/* ---------- 7c the answer ---------- */}
+      <Scrim at={b(T.answer)} out={b(T.build)} kind="tc" />
+      <At x={960} y={110} align="center">
+        <Line at={b(T.answer + 0.2)} out={b(T.goodLoop - 0.1)} size={H} serif weight={800} parts={["所以，会变成“贫民窟”吗？"]} />
+        <Line at={b(T.goodLoop + 0.1)} out={b(T.emptyLine - 0.1)} size={S2} parts={["钱够、人齐的楼，同一个循环会", { t: "反过来转", c: G }, "："]} />
+        <Line at={b(T.emptyLine)} out={b(T.build - 0.1)} size={S} parts={["人一直在走的地方，"]} />
+        <Line at={b(T.emptyLine + 0.4)} out={b(T.build - 0.1)} size={S} parts={["楼会", { t: "一层一层空下去", c: K.grey }, "。"]} />
       </At>
-      <At x={960} y={170} align="center">
-        <Line at={b(T.goes)} out={b(T.hundred - 0.1)} size={100} serif weight={900} parts={["人会走，楼走不了。"]} />
+      <Loop at={b(T.goodLoop + 0.2)} out={b(T.emptyLine)} cx={960} cy={585} r={245} color={G} center="反过来转" nodes={["钱凑得齐", "修得好", "住得舒服", "人愿意留下", "愿意掏钱的人多"]} turns={1.6} size={38} />
+      <At x={960} y={890} align="center">
+        <Line at={b(T.goodLoop + 1.2)} out={b(T.emptyLine - 0.1)} size={44} parts={["北京前三门的高楼快 50 岁，电梯还在换新。"]} />
       </At>
-      <At x={960} y={150} align="center" gap={14}>
-        <Line at={b(T.hundred)} out={b(T.you - 0.1)} size={74} serif weight={800} parts={["楼能不能老得体面，"]} />
-        <Line at={b(T.hundred + 0.8)} out={b(T.you - 0.1)} size={74} serif weight={800} parts={["看楼里的一百多户，能不能", { t: "一起付下去", c: G }, "。"]} />
+      <Note at={b(T.goodLoop + 1.2)} out={b(T.emptyLine - 0.1)}>新京报 2025-01-06：前三门住宅楼 2023 年完成 11 部电梯的更换和大修，费用由公共维修资金和产权方首开集团承担</Note>
+      <Note at={b(T.emptyLine)} out={b(T.build - 0.1)}>城市为示意</Note>
+
+      {/* ---------- 8 three years to build, fifty to keep ---------- */}
+      <Scrim at={b(T.build)} out={b(T.city2)} kind="tc" k={0.55} />
+      <At x={960} y={96} align="center">
+        <Line at={b(T.build + 0.1)} out={b(T.city2 - 0.1)} size={96} serif weight={900} stagger={0.06} parts={["盖一栋楼，三年。"]} />
+      </At>
+      <At x={960} y={214} align="center">
+        <Line at={b(T.keep)} out={b(T.city2 - 0.1)} size={96} serif weight={900} stagger={0.06} parts={["养一栋楼，", { t: "五十年", c: G }, "。"]} />
+      </At>
+      <YearBadge at={b(T.keep)} out={b(T.city2)} base={2013} keys={[[b(T.years[0]), 2013], [b(T.years[1]), 2063]]} style={{ bottom: undefined, top: 400 }} />
+      <BillRibbon at={b(T.years[0] - 0.2)} out={b(T.city2 + 0.2)} bills={BILLS} yearAt={(tt) => lerp(2013, 2063, ramp(tt, b(T.years[0]), b(T.years[1]), (x) => x))} />
+      <Note at={b(T.years[0])} out={b(T.city2)}>示意：电梯约 15 年一轮（住房城乡建设部、财政部 2015）；火灾报警器一般不超过 12 年（GB 29837—2013）；屋面防水设计工作年限不低于 20 年（GB 55030—2022）；设计使用年限 50 年（GB 50352）</Note>
+      <Scrim at={b(T.city2 + 0.3)} out={b(T.hundred)} kind="tc" />
+      <At x={960} y={130} align="center">
+        <Line at={b(T.city2 + 0.4)} out={b(T.hundred - 0.1)} size={S} parts={["全国 ", { t: "102 万栋", c: G }, "高层住宅，"]} />
+        <Line at={b(T.city2 + 0.9)} out={b(T.hundred - 0.1)} size={S} parts={["每一栋，都要这样养五十年。"]} />
+      </At>
+      <At x={960} y={130} align="center" gap={12}>
+        <Line at={b(T.hundred + 0.1)} out={b(T.you - 0.1)} size={76} serif weight={800} parts={["楼能不能老得体面，"]} />
+        <Line at={b(T.hundred + 0.7)} out={b(T.you - 0.1)} size={76} serif weight={800} parts={["看楼里的一百多户，能不能", { t: "一起付下去", c: G }, "。"]} />
       </At>
       <Scrim at={b(T.you + 0.2)} out={b(T.sources)} kind="tc" />
       <At x={960} y={110} align="center">
-        <Line at={b(T.you + 0.3)} out={b(T.sources)} size={96} serif weight={900} parts={["你，就是其中", { t: "一户", c: G }, "。"]} />
+        <Line at={b(T.you + 0.3)} out={b(T.sources)} size={100} serif weight={900} parts={["你，就是其中", { t: "一户", c: G }, "。"]} />
       </At>
       <YouRing cam={cam} at={b(T.you + 0.8)} out={b(T.sources)} i={YOU} />
 

@@ -71,7 +71,7 @@ export const Cover: React.FC<{ tall: boolean }> = ({ tall }) => {
         <div style={{ fontSize: tall ? 120 : 128, fontWeight: 900, lineHeight: 1.16, letterSpacing: -3 }}>
           几十年后，
           <br />
-          会变成<span style={{ color: K.gold }}>贫民窟</span>吗？
+          会变成<span style={{ color: K.gold }}>“贫民窟”</span>吗？
         </div>
       </div>
       <Bar h={bar} w={W} />

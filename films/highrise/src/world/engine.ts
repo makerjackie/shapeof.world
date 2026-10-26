@@ -70,6 +70,7 @@ export type WorldState = {
   alarms?: { vis: number; alive: Float32Array }; // 33 floors
   climbers?: { vis: number; t: number; top: number };
   fireSys?: number; // X-ray: the fire mains and pump in red
+  pulse?: { lift: number; roof: number }; // a bill comes due: the part flashes gold
   hero: {
     vis: number;
     built: number;
@@ -823,8 +824,17 @@ class Engine {
     this.riserMat.uniforms.uColor.value.copy(C("#6cc6ff").lerp(amber, wear));
     this.roofTankMat.uniforms.uColor.value.copy(C("#4fb4ff").lerp(amber, wear));
     const liftVis = Math.max(xr, front);
-    this.shaftMat.uniforms.uOpacity.value = (0.12 * xr + 0.05 * front) * (he.liftGlow ?? 1);
-    this.carMat.uniforms.uOpacity.value = 1.6 * liftVis * (he.liftGlow ?? 1);
+    const pl = s.pulse?.lift ?? 0;
+    const pr = s.pulse?.roof ?? 0;
+    const gold = C("#ffcf5a");
+    if (pl > 0.01) {
+      this.shaftMat.uniforms.uColor.value.lerp(gold, pl);
+      this.shaftMat.uniforms.uColor2.value.lerp(gold, pl);
+      this.carMat.uniforms.uColor.value.lerp(gold, pl);
+      this.carMat.uniforms.uColor2.value.lerp(gold, pl);
+    }
+    this.shaftMat.uniforms.uOpacity.value = (0.12 * xr + 0.05 * front) * (he.liftGlow ?? 1) * (1 + 3 * pl);
+    this.carMat.uniforms.uOpacity.value = 1.6 * liftVis * (he.liftGlow ?? 1) * (1 + 1.2 * pl);
     this.cars.forEach((c, i) => (c.position.y = he.lifts[i] + 1.3));
     [...this.shafts, ...this.cars].forEach((m) => (m.visible = liftVis > 0.001));
     this.stairMat.opacity = he.stairs > 0 ? 0.95 * xr : 0;
@@ -835,7 +845,8 @@ class Engine {
     this.riserMat.uniforms.uFlow.value = 1;
     this.riserMat.uniforms.uOpacity.value = 1.3 * xr;
     this.roofTankMat.uniforms.uLevel.value = he.water > HERO.h ? HERO.h + Math.min(4.5, (he.water - HERO.h) * 0.6) : -10;
-    this.roofTankMat.uniforms.uOpacity.value = 0.9 * xr;
+    this.roofTankMat.uniforms.uOpacity.value = 0.9 * xr * (1 + 2.5 * pr);
+    if (pr > 0.01) this.roofTankMat.uniforms.uColor.value.lerp(C("#ffcf5a"), pr);
     this.pumpMat.uniforms.uLevel.value = 1e4;
     this.pumpMat.uniforms.uOpacity.value = 0.55 * xr * (0.8 + 0.2 * Math.sin(t * 6));
     for (const m of [this.riser, this.roofTank, this.pump]) m.visible = xr > 0.001;

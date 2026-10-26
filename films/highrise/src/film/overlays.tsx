@@ -27,14 +27,14 @@ const Label: React.FC<{ children: React.ReactNode; c?: string; size?: number; st
 
 // ---------- the year and the building's age ----------
 
-export const YearBadge: React.FC<{ at: number; out: number; keys: [number, number][] }> = ({ at, out, keys }) => {
+export const YearBadge: React.FC<{ at: number; out: number; keys: [number, number][]; base?: number; style?: React.CSSProperties }> = ({ at, out, keys, base = 2010, style }) => {
   const t = useT();
   const o = fadeIO(t, at, out);
   if (o <= 0) return null;
   const y = Math.round(track(t, keys, (x) => x));
-  const a = y - 2010;
+  const a = y - base;
   return (
-    <div style={{ position: "absolute", right: 120, bottom: 120, textAlign: "right", opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+    <div style={{ position: "absolute", right: 120, bottom: 120, textAlign: "right", opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW, ...style }}>
       <div style={pool(360, 200)} />
       <div style={{ fontSize: 132, fontWeight: 900, letterSpacing: -2, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
         {y}
@@ -554,5 +554,187 @@ export const YouRing: React.FC<{ cam: Cam; at: number; out: number; i: number }>
       <ellipse cx={sx} cy={sy} rx={r * 1.5} ry={r * 0.62} fill="none" stroke={K.gold} strokeWidth={4} />
       <ellipse cx={sx} cy={sy} rx={r * 1.5 + 16} ry={r * 0.62 + 12} fill="none" stroke={K.gold} strokeOpacity={0.3} strokeWidth={2} />
     </svg>
+  );
+};
+
+// ---------- v9: the circle, Japan's fund, fifty years of bills ----------
+
+// A loop of causes, drawn as a ring of nodes with a comet running round it, faster each turn. "bad" spins the
+// tower down (red), "good" is the same loop turning the other way (gold).
+export const Loop: React.FC<{ at: number; out: number; cx: number; cy: number; r: number; nodes: string[]; color: string; center: string; turns?: number; size?: number }> = ({
+  at,
+  out,
+  cx,
+  cy,
+  r,
+  nodes,
+  color,
+  center,
+  turns = 2.2,
+  size = 34,
+}) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.5, 0.4);
+  if (o <= 0) return null;
+  const n = nodes.length;
+  const dur = out - at - 0.4;
+  // accelerating: angle grows with the square of time
+  const u = clamp01((t - at - 0.3) / Math.max(0.1, dur));
+  const ang = turns * Math.PI * 2 * (0.35 * u + 0.65 * u * u);
+  const pos = (a: number, rr = r): [number, number] => [cx + rr * Math.sin(a), cy - rr * Math.cos(a)];
+  const arcs: React.ReactNode[] = [];
+  for (let i = 0; i < n; i++) {
+    const a0 = (i / n) * Math.PI * 2 + 0.32;
+    const a1 = ((i + 1) / n) * Math.PI * 2 - 0.32;
+    const [x0, y0] = pos(a0);
+    const [x1, y1] = pos(a1);
+    const k = ramp(t, at + 0.25 + i * 0.12, at + 0.7 + i * 0.12, EO);
+    const [hx, hy] = pos(a1, r);
+    const tang = a1 + Math.PI / 2;
+    arcs.push(
+      <g key={i} opacity={k}>
+        <path d={`M${x0},${y0} A${r},${r} 0 0 1 ${x1},${y1}`} fill="none" stroke={color} strokeOpacity={0.55} strokeWidth={3} />
+        <path d={`M${hx},${hy} l${-14 * Math.cos(tang - 0.5)},${-14 * Math.sin(tang - 0.5)} M${hx},${hy} l${-14 * Math.cos(tang + 0.5)},${-14 * Math.sin(tang + 0.5)}`} stroke={color} strokeOpacity={0.8} strokeWidth={3} fill="none" />
+      </g>,
+    );
+  }
+  const trail: React.ReactNode[] = [];
+  for (let j = 0; j < 14; j++) {
+    const [x, y] = pos(ang - j * 0.05);
+    trail.push(<circle key={j} cx={x} cy={y} r={10 - j * 0.6} fill={color} opacity={(1 - j / 14) * 0.9 * clamp01(u * 8)} />);
+  }
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ position: "absolute", left: cx - r * 1.9, top: cy - r * 1.7, width: r * 3.8, height: r * 3.4, background: "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(3,5,10,0.75), rgba(3,5,10,0.4) 55%, rgba(3,5,10,0) 75%)" }} />
+      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+        {arcs}
+        <g style={{ filter: `drop-shadow(0 0 10px ${color})` }}>{trail}</g>
+      </svg>
+      {nodes.map((label, i) => {
+        const a = (i / n) * Math.PI * 2;
+        const [x, y] = pos(a);
+        const k = ramp(t, at + 0.2 + i * 0.12, at + 0.6 + i * 0.12, EO);
+        // lit when the comet passes
+        let d = (((ang - a) % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+        if (u <= 0) d = 9;
+        const hot = Math.exp(-d * 2.2);
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: x,
+              top: y,
+              transform: `translate(-50%, -50%) scale(${0.92 + 0.08 * k + 0.08 * hot})`,
+              opacity: k,
+              fontSize: size,
+              fontWeight: 900,
+              whiteSpace: "nowrap",
+              padding: "8px 18px",
+              borderRadius: 30,
+              background: `rgba(4,6,10,${0.55 + 0.25 * hot})`,
+              border: `2px solid ${color}`,
+              boxShadow: `0 0 ${10 + 26 * hot}px ${color}`,
+              color: hot > 0.4 ? "#fff" : K.fg,
+            }}
+          >
+            {label}
+          </div>
+        );
+      })}
+      <div style={{ position: "absolute", left: cx, top: cy, transform: "translate(-50%, -50%)", fontFamily: SERIF, fontSize: size * 1.05, fontWeight: 900, color, opacity: ramp(t, at + 0.9, at + 1.4, EO), whiteSpace: "nowrap" }}>{center}</div>
+    </div>
+  );
+};
+
+// Japan's fund guideline against the one-off deposit here, for one 100 m² flat.
+export const JapanFund: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.5, 0.4);
+  if (o <= 0) return null;
+  const kA = ramp(t, at + 0.6, at + 1.1, EO);
+  const run = ramp(t, at + 1.2, at + 3.6, (x) => x);
+  const years = Math.max(1, Math.round(run * 30));
+  const kB = ramp(t, at + 2.0, at + 2.5, EO);
+  const kC = ramp(t, at + 4.4, at + 4.9, EO);
+  const W = 1240; // px for 57 万
+  const perYear = 1.9;
+  const x0 = 340;
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ position: "absolute", left: x0, top: 170, fontFamily: SERIF, fontSize: 60, fontWeight: 900, opacity: ramp(t, at, at + 0.5, EO) }}>日本的公寓，是怎么准备这笔钱的？</div>
+      <div style={{ position: "absolute", left: x0, top: 320, opacity: kA }}>
+        <Label c={K.gold} size={32}>日本 · 国土交通省建议（20 层以上的公寓）</Label>
+        <div style={{ fontSize: 54, fontWeight: 900, marginTop: 8 }}>每个月存，每平米 338 日元</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 24, marginTop: 18 }}>
+          <svg width={W} height={40}>
+            {Array.from({ length: years }, (_, i) => (
+              <rect key={i} x={(i * W) / 30 + 1} y={2} width={W / 30 - 3} height={36} rx={3} fill={K.gold} opacity={0.55 + 0.45 * (i === years - 1 ? 1 : 0.6)} />
+            ))}
+          </svg>
+        </div>
+        <div style={{ display: "flex", gap: 30, alignItems: "baseline", marginTop: 10 }}>
+          <span style={{ fontSize: 38, fontWeight: 800 }}>一套 100 平，一年约 1.9 万元</span>
+          <span style={{ fontSize: 40, fontWeight: 900, color: K.gold, fontVariantNumeric: "tabular-nums" }}>
+            {years} 年：约 {Math.round(years * perYear)} 万
+          </span>
+        </div>
+      </div>
+      <div style={{ position: "absolute", left: x0, top: 640, opacity: kB }}>
+        <Label c={K.cyan} size={32}>我们 · 南京高层的首期标准</Label>
+        <div style={{ fontSize: 54, fontWeight: 900, marginTop: 8 }}>买房时交一次，每平米 120 元</div>
+        <svg width={W} height={40} style={{ marginTop: 18 }}>
+          <rect x={1} y={2} width={(W / 57) * 1.2} height={36} rx={3} fill={K.cyan} />
+        </svg>
+        <div style={{ fontSize: 38, fontWeight: 800, marginTop: 10 }}>一套 100 平，约 1.2 万元，要管几十年</div>
+      </div>
+      <div style={{ position: "absolute", left: x0, top: 905, opacity: kC, fontSize: 38, fontWeight: 800, color: K.amber }}>就算这样，日本仍有 36.6% 的公寓，修缮金不够。</div>
+    </div>
+  );
+};
+
+// Fifty years of bills along a ribbon at the foot of the frame; each pops as the year passes.
+export const BillRibbon: React.FC<{ at: number; out: number; yearAt: (t: number) => number; bills: { y: number; k: string; t: string }[] }> = ({ at, out, yearAt, bills }) => {
+  const t = useT();
+  const o = fadeIO(t, at, out, 0.4, 0.4);
+  if (o <= 0) return null;
+  const x0 = 200;
+  const x1 = 1720;
+  const y = 940;
+  const X = (yr: number) => x0 + ((yr - 2013) / 50) * (x1 - x0);
+  const now = yearAt(t);
+  const col = (k: string) => (k === "lift" ? K.cyan : k === "alarm" ? K.red : k === "roof" ? K.water : K.gold);
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ position: "absolute", left: 0, right: 0, top: y - 180, height: 300, background: "linear-gradient(rgba(3,5,10,0), rgba(3,5,10,0.7) 45%, rgba(3,5,10,0.8))" }} />
+      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+        <line x1={x0} y1={y} x2={x1} y2={y} stroke="rgba(244,240,232,0.25)" strokeWidth={3} />
+        <line x1={x0} y1={y} x2={X(Math.min(2063, now))} y2={y} stroke={K.fg} strokeWidth={3} />
+        {[2013, 2023, 2033, 2043, 2053, 2063].map((yr) => (
+          <g key={yr}>
+            <line x1={X(yr)} y1={y - 8} x2={X(yr)} y2={y + 8} stroke="rgba(244,240,232,0.5)" strokeWidth={2} />
+            <text x={X(yr)} y={y + 42} fill="rgba(244,240,232,0.6)" fontSize={24} fontWeight={700} textAnchor="middle" fontFamily={FONT}>
+              {yr}
+            </text>
+          </g>
+        ))}
+        {bills.map((e, i) => {
+          if (now < e.y) return null;
+          const k = clamp01((now - e.y) / 1.5);
+          const up = i % 2 === 0 ? 1 : 2;
+          const yy = y - 34 - (up - 1) * 52;
+          const c = col(e.k);
+          return (
+            <g key={i} opacity={0.35 + 0.65 * k}>
+              <circle cx={X(e.y)} cy={y} r={8 + 10 * (1 - k)} fill={c} style={{ filter: `drop-shadow(0 0 8px ${c})` }} />
+              <line x1={X(e.y)} y1={y - 10} x2={X(e.y)} y2={yy + 8} stroke={c} strokeWidth={2} strokeOpacity={0.7} />
+              <text x={X(e.y)} y={yy} fill={c} fontSize={30} fontWeight={900} textAnchor="middle" fontFamily={FONT}>
+                {e.t}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
   );
 };
