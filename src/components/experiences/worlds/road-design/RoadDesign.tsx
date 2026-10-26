@@ -50,6 +50,12 @@ import type { Vec3 } from './sim/types'
 import { ConflictLegend } from './explorer/ConflictLegend'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
+const STYLE_KEY='shapeof.road-design.style.v1'
+function initialDay(){
+  const requested=query('style')
+  if(requested==='day'||requested==='night')return requested==='day'
+  try{return localStorage.getItem(STYLE_KEY)!=='night'}catch{return true}
+}
 function numberQuery(name: string, fallback: number, max: number) {
   const value = Number(query(name) ?? fallback)
   return Number.isFinite(value) ? Math.max(0, Math.min(max, value)) : fallback
@@ -157,7 +163,8 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   const [showMore,setShowMore]=useState(false),[showCompare,setShowCompare]=useState(false),[showPressure,setShowPressure]=useState(false)
   const [curves,setCurves]=useState<PressureCurves>({}),[readout,setReadout]=useState(runtime.simulation.metrics)
   const [selected,setSelected]=useState<string|null>('signature'),[follow,setFollow]=useState(false),[replay,setReplay]=useState<DemoReplay|null>(null),[replayRevision,setReplayRevision]=useState(0)
-  const [day,setDay]=useState(()=>query('style')==='day'),[seek,setSeek]=useState<{at:number;revision:number}|null>(null),[focusPoint,setFocusPoint]=useState<Vec3|null>(null)
+  const [day,setDay]=useState(initialDay),[seek,setSeek]=useState<{at:number;revision:number}|null>(null),[focusPoint,setFocusPoint]=useState<Vec3|null>(null)
+  const chooseStyle=(next:boolean)=>{setDay(next);try{localStorage.setItem(STYLE_KEY,next?'day':'night')}catch{/* Storage may be disabled. */}interact()}
   const [explaining,setExplaining]=useState(false),[activePin,setActivePin]=useState<string|null>(null)
   const demo=useRef<DemoState>({...INITIAL_DEMO}),[demoReadout,setDemoReadout]=useState<DemoState>({...INITIAL_DEMO})
   const stage=useRef<HTMLDivElement>(null), capture=query('capture')==='1'
@@ -223,12 +230,13 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   const startPressure=()=>{exit();if(pressureRunning){runtime.stopPressure();setSpeed(1)}else{runtime.startPressure(2.5);setShowPressure(true);setPlaying(true);setSpeed(16)};interact()}
   const layers=[{key:'buildings',name:'城市建筑',value:buildings,set:setBuildings},{key:'traffic',name:'车流',value:traffic,set:setTraffic},{key:'blueprint',name:'平面图纸',value:blueprint,set:setBlueprint},{key:'conflicts',name:'冲突点',value:showConflicts,set:setShowConflicts}]
   return <div ref={stage} className="road-design-experience" data-design={designId} data-style={day?'day':'night'} data-focus={!!route} data-playing={playing} data-capture={capture} data-buildings={buildings} data-traffic={traffic} data-blueprint={blueprint} data-selected-route={route?.movement.id??''} data-follow={follow} data-conflicts={showConflicts}>
+    {day&&!capture&&<div className="rd-header-shade" aria-hidden="true"/>}
     <RoadCanvas design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={blueprint} interact={interact} buildings={buildings} traffic={traffic} explorer={explorer} day={day}/>
     {designId==='huangjuewan'&&<div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture&&<>
       <GuideTour worldId="road-design" placement="stage" steps={DESIGNS.map(d=>({title:tx(d.name),body:tx(TOUR[d.id]),durationMs:12000,action:()=>{selectDesign(d);setPlaying(true)}}))} kicker={tx('道路图鉴')} exitLabel={tx('结束导览')} stagePlan={DESIGNS.map(()=>({position:'center-left',mobilePosition:'bottom-center',tone:'dark',width:'narrow',treatment:'caption'}))}/>
       <header className="rd-heading" data-experience-overlay="true"><label htmlFor="rd-design">{tx('选设计')}</label><select id="rd-design" aria-label={tx('选设计')} value={pendingId??designId} onChange={e=>selectDesign(DESIGNS.find(d=>d.id===e.target.value)!)}>{LEFT_GROUPS.map(group=><optgroup key={group.titleEn} label={tx(locale==='en'?group.titleEn:group.title)}>{group.ids.map(id=>{const d=DESIGNS.find(d=>d.id===id)!;return <option key={id} value={id}>{tx(d.name)}</option>})}</optgroup>)}</select><p>{tx((locale==='en'?LEFT_STORIES[designId]?.titleEn:LEFT_STORIES[designId]?.title)??design.description)}</p></header>
-      <div className="rd-layers" role="group" aria-label={tx('图层')} data-experience-overlay="true">{layers.map(l=><button key={l.key} type="button" data-layer={l.key} title={l.key==='buildings'&&blueprint?tx('平面图纸暂不显示建筑，夜景保留此开关'):undefined} aria-pressed={l.value} onClick={()=>{l.set(!l.value);interact()}}><i/>{tx(l.name)}</button>)}<button type="button" data-style-toggle aria-pressed={day} onClick={()=>setDay(v=>!v)}>{tx(day?'白天白模':'夜景')}</button>{blueprint&&<small className="rd-layer-note">{tx('平面图纸暂不显示建筑，夜景保留此开关')}</small>}</div>
+      <div className="rd-layers" role="group" aria-label={tx('图层')} data-experience-overlay="true">{layers.map(l=><button key={l.key} type="button" data-layer={l.key} title={l.key==='buildings'&&blueprint?tx('平面图纸暂不显示建筑，夜景保留此开关'):undefined} aria-pressed={l.value} onClick={()=>{l.set(!l.value);interact()}}><i/>{tx(l.name)}</button>)}<div className="rd-style-switch" role="group" aria-label={tx('画风')}><button type="button" data-style-choice="day" aria-pressed={day} onClick={()=>chooseStyle(true)}>{tx('白模')}</button><button type="button" data-style-choice="night" aria-pressed={!day} onClick={()=>chooseStyle(false)}>{tx('夜景')}</button></div>{blueprint&&<small className="rd-layer-note">{tx('平面图纸暂不显示建筑，夜景保留此开关')}</small>}</div>
       {pendingId&&<div className="rd-pending" role="status">{tx('正在载入道路')}</div>}
       {showConflicts&&<div className="rd-conflict-legend" data-experience-overlay="true"><ConflictLegend/></div>}
       <ExplorerPanel journey={journey} onStep={inspectStep} traffic={traffic} onTraffic={()=>{setTraffic(v=>!v);interact()}} key={designId} network={network} routes={routes} route={route} onSelect={selectRoute} onExit={exit} onReplay={()=>{setSeek(null);setFocusPoint(null);setReplayRevision(v=>v+1);setRevision(v=>v+1);setPlaying(true);interact()}} follow={follow} onFollow={()=>{setFollow(v=>!v);if(follow)setRevision(r=>r+1);interact()}} demo={demoReadout} pins={pins} activePin={effectivePin} onPin={pin} explaining={explaining} onExplain={()=>{setExplaining(v=>!v);interact()}} onDesign={id=>selectDesign(DESIGNS.find(d=>d.id===id)!)}/>

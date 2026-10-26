@@ -103,3 +103,21 @@
 }
 .road-design-experience button.rd-step-crossing{display:block;padding:2px 0;min-height:25px;font-size:11px;border:0;color:var(--cross-ink);background:none;text-align:left}
 .road-design-experience[data-style=day] .rd-mobile-route .rd-mobile-name{color:#22566b}.road-design-experience[data-style=day] .rd-demo-state i{background:#008fa9}
+
+/* White model: a quiet site base and a readable header, scoped to this world. */
+.rd-header-shade{position:absolute;inset:0 0 auto;height:78px;z-index:2;pointer-events:none;background:linear-gradient(180deg,#253b4bb8 0%,#253b4b88 58%,#253b4b00 100%)}
+.rd-style-switch{display:flex;gap:0;border:1px solid #9babb866;border-radius:2px;overflow:hidden}
+.road-design-experience .rd-style-switch button{border:0;border-radius:0;min-width:54px;background:transparent}
+.road-design-experience .rd-style-switch button[aria-pressed=true]{background:#d2ebef;color:#00697c;box-shadow:inset 0 -2px #007f98}
+.road-design-experience[data-style=night] .rd-style-switch button[aria-pressed=true]{background:#163442;color:#c3f5ff}
+.rd-atlas-crossings button{white-space:normal;line-height:1.55}
+.rd-crossing-label{width:max-content;max-width:260px;white-space:normal;line-height:1.5;text-align:center}
+@media(max-width:720px){
+ .rd-header-shade{height:61px}
+ .rd-layers{flex-wrap:wrap}.rd-layers>button{flex:1}.rd-style-switch{flex:0 0 auto}.road-design-experience .rd-style-switch button{min-width:40px;font-size:10px;padding:4px}
+ .rd-atlas{width:244px}.rd-atlas[data-open=true] .rd-atlas-content{display:grid;grid-template-columns:1fr 1fr;align-items:center}.rd-atlas .rd-atlas-toggle{min-height:30px!important}
+ .rd-atlas .rd-plan{height:86px}.rd-atlas .rd-profile{height:86px;border-top:0;border-left:1px solid #758f9e30}.rd-atlas .rd-atlas-crossings{display:none}
+ .rd-crossing-label{max-width:205px}
+}
+.rd-crossing-details{font-size:11px;line-height:1.65;color:var(--cross-ink);margin:6px 0}.rd-crossing-details summary{cursor:pointer;padding:5px 0}.rd-crossing-details .rd-step-crossing{line-height:1.6;margin:3px 0 7px}
+@media(max-width:720px){.rd-atlas text{font-size:15px}}

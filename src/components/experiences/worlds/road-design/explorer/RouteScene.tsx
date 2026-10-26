@@ -40,6 +40,7 @@ export function EntryArrows({routes,selected,onSelect}:{routes:ExploreRoute[];se
 
 export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic,follow,showPins,journey,network,seek}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean;follow:boolean;showPins:boolean;journey:Journey;network:Network;seek:{at:number;revision:number}|null}) {
   const tx=useExperienceI18n(),car=useRef<T.Group>(null),arrows=useRef<T.InstancedMesh>(null),background=useRef<T.InstancedMesh>(null)
+  const {gl}=useThree(),label=useRef<HTMLSpanElement>(null),labelCheck=useRef(0),overlays=useRef<HTMLElement[]>([])
   const elapsed=useRef(0)
   const ribbon=useMemo(()=>strip(route.path.points,route.path.width,0,.16),[route])
   const shadow=useMemo(()=>strip(route.path.points.map(p=>({...p,y:terrainHeight(network,p.x,p.z)+.03})),route.path.width*1.8),[route,network])
@@ -58,6 +59,13 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
     if(playing&&!document.hidden&&replay)elapsed.current+=Math.min(delta,.1)
     if(replay)demo.current=replayAt(replay,elapsed.current)
     if(car.current){const p=demo.current.position,t=demo.current.tangent;car.current.position.set(p.x,p.y,p.z);car.current.rotation.set(-Math.atan2(t.y,Math.hypot(t.x,t.z)),Math.atan2(t.x,t.z),0,'YXZ');car.current.visible=!!replay}
+    if(label.current&&state.clock.elapsedTime-labelCheck.current>.1){
+      labelCheck.current=state.clock.elapsedTime
+      if(!overlays.current[0]?.isConnected)overlays.current=Array.from(gl.domElement.closest('.road-design-experience')?.querySelectorAll<HTMLElement>('.rd-atlas,.rd-explorer,.rd-heading,.rd-layers,.rd-catalog,.rd-main-tools')??[])
+      const a=label.current.getBoundingClientRect()
+      const obscured=overlays.current.some(e=>{const b=e.getBoundingClientRect();return b.width&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top})
+      label.current.style.visibility=obscured?'hidden':'visible'
+    }
     if(background.current){
       const others=demo.current.others??[],count=Math.min(300,others.length/7)
       for(let i=0;i<count;i++){
@@ -80,13 +88,13 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
   return <>
     {traffic&&<instancedMesh ref={background} args={[undefined,undefined,300]} frustumCulled={false}><boxGeometry/><meshStandardMaterial color="#627985" emissive="#355365" emissiveIntensity={.35}/></instancedMesh>}
     <mesh geometry={shadow}><meshBasicMaterial color="#183440" transparent opacity={.12} depthWrite={false} side={T.DoubleSide}/></mesh>
-    <mesh geometry={ribbon} renderOrder={2}><meshBasicMaterial color="#00a9c4" side={T.DoubleSide} toneMapped={false} polygonOffset polygonOffsetFactor={-1}/></mesh>
+    <mesh geometry={ribbon} renderOrder={2}><meshBasicMaterial color="#00a9c4" side={T.DoubleSide} toneMapped={false} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-3}/></mesh>
     {drops.map((p,i)=><Line key={i} points={[[p.x,terrainHeight(network,p.x,p.z)+.05,p.z],[p.x,p.y,p.z]]} color="#6695a3" lineWidth={1} transparent opacity={.4}/>)}
     <CrossingScene route={route} journey={journey} demo={demo} follow={follow}/>
-    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#ffffff" depthWrite={false} side={T.DoubleSide} toneMapped={false}/></instancedMesh>
+    <instancedMesh ref={arrows} args={[arrowGeometry,undefined,80]} frustumCulled={false} renderOrder={10}><meshBasicMaterial color="#ffffff" depthWrite={false} side={T.DoubleSide} toneMapped={false} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-3}/></instancedMesh>
     <group ref={car}>
       <DemonstrationCar/>
-      {replay&&<Html center position={[0,4,0]} zIndexRange={[6,2]} style={{pointerEvents:'none'}}><span className="rd-demo-label">{tx('示范车')}</span></Html>}
+      {replay&&<Html center position={[0,4,0]} zIndexRange={[6,2]} style={{pointerEvents:'none'}}><span ref={label} className="rd-demo-label">{tx('示范车')}</span></Html>}
     </group>
     {showPins&&!journey&&pins.map((p,i)=>p.id===activePin&&(explaining||p.laneIds.some(id=>route.laneIds.includes(id)))&&<WhyMarker key={p.id} pin={p} number={i+1} active onClick={()=>onPin(p.id)} compact={follow}/>)}
   </>

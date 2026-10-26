@@ -3,10 +3,35 @@ import {DESIGNS} from '../designs'
 import {buildExploreRoutes} from './routes'
 import {buildJourney,LEFT_GROUPS,signatureRoute} from './journey'
 import {explanationPins} from './explanations'
+import {projectToLane} from '../sim/geometry'
 
 it('groups every design exactly once and selects a real left turn',()=>{
  expect(LEFT_GROUPS.flatMap(g=>g.ids).sort()).toEqual(DESIGNS.map(d=>d.id).sort())
- for(const d of DESIGNS){const n=d.build(),r=signatureRoute(buildExploreRoutes(n,[]),d.id);expect(r.movement.turn,d.id).toBe('left')}
+ for(const d of DESIGNS){
+  const n=d.build(),r=signatureRoute(buildExploreRoutes(n,[]),d.id);expect(r.movement.turn,d.id).toBe('left')
+  const j=buildJourney(n,r,explanationPins(n,r))
+  expect(j.steps.length,d.id).toBeGreaterThanOrEqual(3);expect(j.steps.length,d.id).toBeLessThanOrEqual(5)
+  expect(j.steps.flatMap(s=>s.groups.flatMap(g=>g.items))).toHaveLength(j.crossings.length)
+  if(d.id==='roundabout'){
+   const turn=j.steps.find(s=>s.title==='沿环岛转向')!
+   for(const lane of n.lanes.filter(l=>l.circulating&&r.laneIds.includes(l.id))){const s=projectToLane(r.path,lane.points[Math.floor(lane.points.length/2)]);expect(s).toBeGreaterThanOrEqual(turn.start);expect(s).toBeLessThanOrEqual(turn.end)}
+  }
+ }
+})
+it('summarises repeated stack ramps without removing physical profile events',()=>{
+ const n=DESIGNS.find(d=>d.id==='stack')!.build(),r=signatureRoute(buildExploreRoutes(n,[]),n.id),j=buildJourney(n,r,[])
+ const step=j.steps.find(s=>s.crossings.filter(c=>!c.main).length>=2)!
+ expect(step.title).toContain('2 条匝道')
+ expect(step.title).toContain('东西主线')
+ expect(step.groups).toHaveLength(1)
+ expect(step.groups[0].items.length).toBeGreaterThanOrEqual(4)
+})
+it('names Huangjuewan crossings from the imported named roads and their connections',()=>{
+ const n=DESIGNS.find(d=>d.id==='huangjuewan')!.build()
+ for(const r of buildExploreRoutes(n,[])){
+  const j=buildJourney(n,r,[])
+  for(const c of j.crossings){expect(c.name).toMatch(/包茂高速|峡江路|渝航大道/);expect(c.title).not.toMatch(/另一条匝道|东西主线|南北主线/)}
+ }
 })
 for(const id of ['cloverleaf','stack','crossroads-signal'])it(`${id}: partitions every route and preserves all anchors and distance`,()=>{
  const n=DESIGNS.find(d=>d.id===id)!.build()

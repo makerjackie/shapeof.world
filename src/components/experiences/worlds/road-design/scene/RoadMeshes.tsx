@@ -19,7 +19,10 @@ export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, si
   const assets = useMemo(() => {
     return { ...unpackRoadGeometry(prepared), asphalt: litMaterial(atlas, urban ? '#1d1f23' : '#2b2d30', urban ? 1.3 : 2.4, .9, roof), cement: litMaterial(atlas, '#5d6166', .85, .9, roof), edgeMaterial: litMaterial(atlas, '#9a9c9e', 1.7, .9, roof), underside: litMaterial(atlas, '#1b2028', 0.16, .9, roof) }
   }, [prepared, atlas, urban, roof])
-  const model=useMemo(()=>({road:modelMaterial(day?'#a9b6be':'#9aa8b3',roof),structure:modelMaterial(day?'#99a9b3':'#7c8d9a',roof),edge:modelMaterial(day?'#cbd3d8':'#637480',roof),bottom:modelMaterial(day?'#87969f':'#364651',roof)}),[roof,day])
+  const model=useMemo(()=>({road:modelMaterial(day?'#87959d':'#9aa8b3',roof),structure:modelMaterial(day?'#72818b':'#7c8d9a',roof),edge:modelMaterial(day?'#a5b1b7':'#637480',roof),bottom:modelMaterial(day?'#64747e':'#364651',roof)}),[roof,day])
+  // Depth bias prevents coplanar terrain/road flicker at the long OSM leads.
+  // It changes neither deck coordinates nor the measured elevation profile.
+  model.road.polygonOffset=true;model.road.polygonOffsetFactor=0;model.road.polygonOffsetUnits=-1
   useEffect(()=>()=>Object.values(model).forEach(m=>m.dispose()),[model])
   useEffect(() => () => { assets.pavement.dispose(); assets.concrete.dispose(); assets.edgeCaps.dispose(); assets.soffits.dispose(); assets.paint.dispose(); assets.yellow.dispose(); assets.asphalt.dispose(); assets.cement.dispose(); assets.edgeMaterial.dispose(); assets.underside.dispose() }, [assets])
   return <>
@@ -28,8 +31,8 @@ export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, si
     <mesh geometry={assets.concrete} material={focus?model.structure:assets.cement} />
     <mesh geometry={assets.edgeCaps} material={focus?model.edge:assets.edgeMaterial} />
     <mesh geometry={assets.soffits} material={focus?model.bottom:assets.underside} />
-    <group visible={!focus||hasUrban}><mesh geometry={assets.paint}><meshStandardMaterial color={focus?'#607583':'#d9d6cc'} emissive="#c8bd9b" emissiveIntensity={focus?0:0.12} roughness={0.8} side={T.DoubleSide} /></mesh>
-    <mesh geometry={assets.yellow}><meshStandardMaterial color="#d4a72c" emissive="#9f7200" emissiveIntensity={0.15} side={T.DoubleSide} /></mesh>
+    <group visible={!focus||hasUrban||day}><mesh geometry={assets.paint}><meshStandardMaterial color={day?'#c5ced1':focus?'#607583':'#d9d6cc'} emissive="#c8bd9b" emissiveIntensity={focus?0:0.12} roughness={0.8} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
+    <mesh geometry={assets.yellow}><meshStandardMaterial color="#d4a72c" emissive="#9f7200" emissiveIntensity={0.15} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
     </group>
     <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.piers.length]} ref={m => { if (m) fillInstances(m, assets.piers) }}><cylinderGeometry args={[0.5, 0.64, 1, 12]} /></instancedMesh>
     <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.caps.length]} ref={m => { if (m) fillInstances(m, assets.caps) }}><boxGeometry /></instancedMesh>

@@ -1,0 +1,354 @@
+{
+  "hjw-road-31280778": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-42503750": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-137432993": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-137433740": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-140313727": {
+    "name": "包茂高速连接匝道",
+    "nameEn": "Baomao Expressway connector ramp"
+  },
+  "hjw-road-207107287": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-207107289": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-207107291": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-207107293": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-207107305": {
+    "name": "包茂高速连接匝道",
+    "nameEn": "Baomao Expressway connector ramp"
+  },
+  "hjw-road-207107309": {
+    "name": "包茂高速连接匝道",
+    "nameEn": "Baomao Expressway connector ramp"
+  },
+  "hjw-road-207107314": {
+    "name": "包茂高速连接匝道",
+    "nameEn": "Baomao Expressway connector ramp"
+  },
+  "hjw-road-276972918": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-276972919": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-276972920": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-277943378": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-328936341": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-328936342": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-328936344": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-328936347": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-328936348": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-328936349": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122783": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122785": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122787": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122791": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122796": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122799": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-497122801": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-497122809": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-497122811": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122814": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122816": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122819": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122822": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122826": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122828": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122831": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122834": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122835": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122837": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122839": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122841": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122844": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122846": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122849": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122851": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497122853": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122855": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497122857": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497124712": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497124713": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497124714": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497124715": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497124716": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497124717": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497125659": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-497125660": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497335092": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497335093": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-497715799": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-508349134": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-508349135": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-704505745": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-713874402": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-713874403": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-779904981": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-783321561": {
+    "name": "包茂高速连接匝道",
+    "nameEn": "Baomao Expressway connector ramp"
+  },
+  "hjw-road-837040882": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-1039689594": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-1039689595": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-1039689596": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-1039689597": {
+    "name": "渝航大道",
+    "nameEn": "Yuhang Avenue"
+  },
+  "hjw-road-1369658687": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1419141572": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1419141573": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1419141574": {
+    "name": "峡江路／渝航大道连接匝道",
+    "nameEn": "Xiajiang Road / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1484066435": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-1484066436": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-1484066438": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-1484066439": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-1484066440": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  },
+  "hjw-road-1484066444": {
+    "name": "渝航大道连接匝道",
+    "nameEn": "Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1531072051": {
+    "name": "包茂高速／渝航大道连接匝道",
+    "nameEn": "Baomao Expressway / Yuhang Avenue connector ramp"
+  },
+  "hjw-road-1531072052": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-1531072059": {
+    "name": "包茂高速",
+    "nameEn": "Baomao Expressway"
+  },
+  "hjw-road-1531072060": {
+    "name": "包茂高速／峡江路连接匝道",
+    "nameEn": "Baomao Expressway / Xiajiang Road connector ramp"
+  },
+  "hjw-road-1537557926": {
+    "name": "峡江路",
+    "nameEn": "Xiajiang Road"
+  }
+}

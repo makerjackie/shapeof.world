@@ -19,11 +19,11 @@ export function modelMaterial(color:string,roof:T.Texture){
  return m
 }
 export function FocusWorld({network,roof,day}:{network:Network;roof:T.Texture;day:boolean}){
- const ground=useMemo(()=>modelMaterial(day?'#dce2e4':'#293b4b',roof),[day,roof])
+ const ground=useMemo(()=>modelMaterial(day?'#ede9df':'#293b4b',roof),[day,roof])
  useEffect(()=>()=>ground.dispose(),[ground])
  return <>
-  <color attach="background" args={[day?'#e7edf0':'#08121e']}/>
-  <fogExp2 attach="fog" args={[day?'#e7edf0':'#08121e',day?.000035:.0001]}/>
+  <color attach="background" args={[day?'#eae7e0':'#08121e']}/>
+  <fogExp2 attach="fog" args={[day?'#eae7e0':'#08121e',day?.000035:.0001]}/>
   <hemisphereLight args={[day?'#ffffff':'#c9d6e5',day?'#9fa9ad':'#172433',day?1.3:1.3]}/>
   <directionalLight position={[-450,750,-200]} color={day?'#ffffff':'#a9c3df'} intensity={day?1.6:.9}/>
   <mesh rotation={[-Math.PI/2,0,0]} position={[0,network.terrain?Math.min(...network.terrain.values)-.5:-.16,0]} material={ground}><planeGeometry args={[30000,30000]}/></mesh>
