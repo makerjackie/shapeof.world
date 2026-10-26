@@ -1,5 +1,6 @@
 #!/bin/bash
-# Fetch the v12 sound effects from music.shapeof.world (our own CC0 synthesis library) into public/sfx/.
+# Fetch the sound effects from music.shapeof.world (our own CC0 synthesis library) into public/sfx/,
+# then synthesise the few the library lacks (tools/synth-sfx.py).
 set -e
 cd "$(dirname "$0")/../public"
 mkdir -p sfx
@@ -15,5 +16,10 @@ reveal sfx-transition-20
 punch sfx-impact-14
 deep sfx-transition-12
 sub sfx-impact-16
+switch sfx-mechanical-01
+clip sfx-ui-12
+slap sfx-impact-14
 LIST
+PY=${PY:-$HOME/.venvs/shapeof-films/bin/python}
+[ -f sfx/flaps.wav ] && [ -f sfx/meter.wav ] || $PY ../tools/synth-sfx.py sfx
 ls -la sfx

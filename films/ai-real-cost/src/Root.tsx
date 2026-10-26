@@ -9,9 +9,16 @@ import { Sample, SAMPLE_FRAMES } from "./v10/Sample";
 import { Film10, FILM10_FRAMES } from "./v10/Film10";
 import { Race, RACE_FRAMES } from "./v11/Race";
 import { Noir12, NOIR12_FRAMES } from "./v12/Noir12";
+import { FlapBoard } from "./v13/FlapBoard";
+import { Meter } from "./v13/Meter";
+import { Shelf } from "./v13/Shelf";
+import { SAMPLE_S } from "./v13/data";
 
 export const Root: React.FC = () => (
   <>
+    <Composition id="Flap13" component={FlapBoard} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
+    <Composition id="Meter13" component={Meter} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
+    <Composition id="Shelf13" component={Shelf} durationInFrames={Math.round(SAMPLE_S * 30)} fps={30} width={1920} height={1080} />
     <Composition id="Noir12" component={Noir12} durationInFrames={NOIR12_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Race11" component={Race} durationInFrames={RACE_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Ep1" component={Film10} durationInFrames={FILM10_FRAMES} fps={30} width={1920} height={1080} />
