@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as T from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import type { FeatureCollection } from 'geojson';
@@ -6,6 +6,8 @@ import { useExperienceI18n } from '~/i18n/experience';
 import earthUrl from './earth-china.geojson?url';
 import doe from './doe-events.json';
 import { COUNTRY_COLORS, ERA_SITES } from './era-sites';
+import { activityFocus, markerRadius, siteActivity } from './era-activity';
+import { useI18n } from '~/i18n';
 
 function xyz(lon: number, lat: number, r = 3.115) {
 	const a = (lon * Math.PI) / 180,
@@ -16,18 +18,22 @@ function xyz(lon: number, lat: number, r = 3.115) {
 export function EraGlobe({
 	year,
 	active,
+	playing,
 	onSite,
 	onInteract,
 }: {
 	year: number;
 	active: boolean;
+	playing: boolean;
 	onSite: (id: string) => void;
 	onInteract: () => void;
 }) {
 	const tx = useExperienceI18n(),
+		{ locale } = useI18n(),
 		host = useRef<HTMLDivElement>(null);
-	const latest = useRef({ year, active, onSite, onInteract });
-	latest.current = { year, active, onSite, onInteract };
+	const activity = useMemo(() => siteActivity(year), [year]);
+	const latest = useRef({ year, active, playing, activity, onSite, onInteract });
+	latest.current = { year, active, playing, activity, onSite, onInteract };
 	const [failed, setFailed] = useState(false);
 	useEffect(() => {
 		if (!host.current) return;
@@ -52,7 +58,17 @@ export function EraGlobe({
 		orbit.enablePan = false;
 		orbit.minDistance = 8;
 		orbit.maxDistance = 20;
-		orbit.addEventListener('start', () => latest.current.onInteract());
+		let dragging = false,
+			follow = true;
+		orbit.addEventListener('start', () => {
+			dragging = true;
+			follow = false;
+			latest.current.onInteract();
+		});
+		orbit.addEventListener('end', () => {
+			dragging = false;
+		});
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		scene.add(new T.HemisphereLight('#f5faff', '#b0b8ba', 1.4));
 		const key = new T.DirectionalLight('#fff9f0', 1.6);
 		key.position.set(-5, 6, -8);
@@ -64,10 +80,10 @@ export function EraGlobe({
 		scene.add(globe);
 		const dots = new T.Group();
 		scene.add(dots);
-		const siteGeometry = new T.SphereGeometry(0.028, 12, 8);
+		const siteGeometry = new T.SphereGeometry(1, 20, 12);
 		const siteMeshes = ERA_SITES.map((s) => {
-			const mesh = new T.Mesh(siteGeometry, new T.MeshBasicMaterial({ color: COUNTRY_COLORS[s.country] }));
-			mesh.position.copy(xyz(s.lon, s.lat, 3.13));
+			const mesh = new T.Mesh(siteGeometry, new T.MeshBasicMaterial({ color: COUNTRY_COLORS[s.country], transparent: true }));
+			mesh.position.copy(xyz(s.lon, s.lat, 3.14));
 			mesh.userData.site = s.id;
 			dots.add(mesh);
 			return mesh;
@@ -82,6 +98,12 @@ export function EraGlobe({
 			disposed = false,
 			frame = 0,
 			texture: T.CanvasTexture | undefined;
+		let focus: ReturnType<typeof activityFocus> = null,
+			changedAt = 0,
+			lastTime = 0,
+			wasPlaying = false;
+		const desired = new T.Vector3(),
+			projected = new T.Vector3();
 		void fetch(earthUrl)
 			.then((r) => r.json())
 			.then((data) => {
@@ -160,16 +182,19 @@ export function EraGlobe({
 		};
 		renderer.domElement.addEventListener('pointerdown', start);
 		renderer.domElement.addEventListener('pointerup', click);
-		const render = () => {
+		const render = (now = performance.now()) => {
 			frame = requestAnimationFrame(render);
 			if (!latest.current.active) return;
+			const delta = Math.min(0.05, (now - lastTime) / 1000 || 0.016);
+			lastTime = now;
+			if (latest.current.playing && !wasPlaying) follow = true;
+			wasPlaying = latest.current.playing;
 			const y = latest.current.year;
 			if (dataYear !== y) {
 				dataYear = y;
-				siteMeshes.forEach((m, i) => {
-					m.visible = ERA_SITES[i].start <= y;
-					m.scale.setScalar(y <= ERA_SITES[i].end ? 1.8 : 0.8);
-				});
+				changedAt = now;
+				focus = activityFocus(y) ?? focus;
+				if (!dragging) follow = true;
 				let count = 0;
 				for (const e of doe.events) {
 					if (Number(e.date.slice(0, 4)) > y || !e.coordinates) continue;
@@ -179,7 +204,35 @@ export function EraGlobe({
 				points.geometry.setAttribute('position', new T.BufferAttribute(positions, 3));
 				points.geometry.setDrawRange(0, count);
 			}
+			if (follow && !dragging && focus) {
+				desired.copy(xyz(focus.lon, focus.lat, camera.position.length()));
+				if (reducedMotion) camera.position.copy(desired);
+				else camera.position.lerp(desired, 1 - Math.exp(-delta * 2.4)).setLength(desired.length());
+			}
 			orbit.update();
+			const elapsed = now - changedAt;
+			const pulse = reducedMotion || elapsed > 1100 ? 1 : 1 + 0.18 * Math.sin((Math.PI * elapsed) / 1100);
+			const labels: Array<{ element: HTMLElement; x: number; y: number }> = [];
+			siteMeshes.forEach((mesh, i) => {
+				const s = latest.current.activity[i];
+				mesh.visible = s.start <= y;
+				mesh.scale.setScalar(markerRadius(s.annual) * ((s.annual ?? 0) > 0 ? pulse : 1));
+				mesh.material.color.set(COUNTRY_COLORS[s.countCountry]);
+				mesh.material.opacity = (s.annual ?? 0) > 0 ? 1 : 0.55;
+				const label = el.querySelector<HTMLElement>(`[data-site-label="${s.id}"]`);
+				if (!label) return;
+				projected.copy(mesh.position).project(camera);
+				const visible = mesh.position.dot(camera.position) > mesh.position.lengthSq();
+				label.style.visibility = visible ? 'visible' : 'hidden';
+				if (visible)
+					labels.push({ element: label, x: ((projected.x + 1) * el.clientWidth) / 2, y: ((1 - projected.y) * el.clientHeight) / 2 + 12 });
+			});
+			let lastBottom = -Infinity;
+			for (const label of labels.sort((a, b) => a.y - b.y)) {
+				const y = el.clientWidth < 500 ? Math.max(label.y, lastBottom + 4) : label.y;
+				label.element.style.transform = `translate(${label.x}px, ${y}px) translateX(-50%)`;
+				lastBottom = y + label.element.offsetHeight;
+			}
 			renderer.render(scene, camera);
 		};
 		render();
@@ -202,6 +255,14 @@ export function EraGlobe({
 	}, []);
 	return (
 		<div className="na-globe" ref={host} aria-label={tx('可旋转的核试验地球仪')}>
+			{activity
+				.filter((s) => (s.annual ?? 0) > 0)
+				.map((s) => (
+					<button key={s.id} className="na-site-label" data-site-label={s.id} onClick={() => onSite(s.id)}>
+						{locale === 'en' ? s.en : s.zh}
+						<b>{s.annual}</b>
+					</button>
+				))}
 			{failed && <p role="alert">{tx('地球暂时无法显示，年度数据仍可查看。')}</p>}
 		</div>
 	);

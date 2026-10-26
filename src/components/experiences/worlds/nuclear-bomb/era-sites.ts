@@ -3,6 +3,28 @@
  * not a claim that a test occurred there in every intervening year. */
 export const ERA_SITES = [
 	{
+		id: 'trinity',
+		zh: '三位一体试验场',
+		en: 'Trinity',
+		country: 'USA',
+		lon: -106.5,
+		lat: 33.7,
+		start: 1945,
+		end: 1945,
+		source: 'https://nnss.gov/wp-content/uploads/2023/08/DOE_NV-209_Rev16.pdf',
+	},
+	{
+		id: 'johnston',
+		zh: '约翰斯顿岛及周边',
+		en: 'Johnston Island region',
+		country: 'USA',
+		lon: -169.5,
+		lat: 16.7,
+		start: 1958,
+		end: 1962,
+		source: 'https://nnss.gov/wp-content/uploads/2023/08/DOE_NV-209_Rev16.pdf',
+	},
+	{
 		id: 'nevada',
 		zh: '内华达',
 		en: 'Nevada',
@@ -87,8 +109,8 @@ export const ERA_SITES = [
 		lon: -157.4,
 		lat: 1.9,
 		start: 1957,
-		end: 1958,
-		source: 'https://www.un.org/en/observances/end-nuclear-tests-day/history',
+		end: 1962,
+		source: 'https://nnss.gov/wp-content/uploads/2023/08/DOE_NV-209_Rev16.pdf',
 	},
 	{
 		id: 'reggane',

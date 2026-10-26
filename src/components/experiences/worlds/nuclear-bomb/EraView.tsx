@@ -8,6 +8,7 @@ import { EraGlobe } from './EraGlobe';
 import { HISTORY_EVENTS } from './history';
 import doe from './doe-events.json';
 import eventsUrl from './doe-events.json?url';
+import { siteActivity } from './era-activity';
 
 const start = 1945,
 	end = 2026,
@@ -46,6 +47,7 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 		[tests],
 	);
 	const selected = ERA_SITES.find((s) => s.id === site)!;
+	const selectedActivity = useMemo(() => siteActivity(year).find((s) => s.id === site)!, [year, site]);
 	const usEvents = useMemo(
 		() => doe.events.filter((e) => Number(e.date.slice(0, 4)) === year).sort((a, b) => a.date.localeCompare(b.date)),
 		[year],
@@ -62,7 +64,7 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 					}
 					return y + 1;
 				}),
-			500,
+			1600,
 		);
 		return () => clearInterval(timer);
 	}, [active, playing]);
@@ -76,12 +78,17 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 			<EraGlobe
 				year={year}
 				active={active}
+				playing={playing}
 				onSite={(id) => {
 					setSite(id);
 					setShowSites(true);
+					setPlaying(false);
 					controls.registerInteraction();
 				}}
-				onInteract={controls.registerInteraction}
+				onInteract={() => {
+					setPlaying(false);
+					controls.registerInteraction();
+				}}
 			/>
 			<header className="na-heading">
 				<p>1945 — 2026</p>
@@ -140,7 +147,8 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 				<button className="na-sites-entry" onClick={() => setShowSites(!showSites)} aria-expanded={showSites}>
 					{tx('试验场与逐次记录')}
 				</button>
-				<small className="na-data-scope">{tx('地球：美国逐次坐标，其他国家试验场级。点不代表次数。')}</small>
+				<small className="na-data-scope">{tx('大圆点面积表示已知当年次数；小圆点含次数未知的场址。细点为美国逐次坐标。')}</small>
+				<small className="na-camera-note">{tx('镜头跟随当年试验最多的国家。拖动可自由旋转，再播放恢复跟随。')}</small>
 			</aside>
 			<div className="na-era-bottom">
 				<div className="na-year-control">
@@ -261,9 +269,26 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 					</label>
 					<p>
 						{COUNTRY_NAMES[selected.country][lang]} · {selected.start}–{selected.end}
+						{selected.id === 'kiritimati' && <> · {COUNTRY_NAMES.USA[lang]} 1962</>}
 						<br />
 						{tx('试验场级，中心坐标约到 0.1°。使用区间不表示每年都有试验。')}
 					</p>
+					<dl className="na-site-counts">
+						<div>
+							<dt>
+								{year} · {tx('当年次数')}
+							</dt>
+							<dd>{selectedActivity.annual === null ? tx('未知') : f(selectedActivity.annual)}</dd>
+						</div>
+						<div>
+							<dt>{tx('累计至该年')}</dt>
+							<dd>{selectedActivity.cumulative === null ? tx('未知') : f(selectedActivity.cumulative)}</dd>
+						</div>
+					</dl>
+					{selectedActivity.annual !== null && <p>{tx('次数按 DOE 试验编号去重；仅含美国清单。未把爆炸记录条数当作试验次数。')}</p>}
+					{selected.id === 'kiritimati' && <p>{tx('英国与美国都使用过此区域；这里的次数仅为美国 1962 年记录，未含英国试验。')}</p>}
+					{selected.id === 'johnston' && <p>{tx('约翰斯顿岛及周边作业区，包含离岛空中试验；细点仍是原始坐标。')}</p>}
+					{year === 1962 && <p>{tx('1962 年：DOE 清单含 98 次，OWID 美国为 96 次、英国为 2 次；美英联合试验的归属口径不同。')}</p>}
 					<p>{tx('其他国家暂为场址名录，没有把国家年度总数分配到这些地点；名录也未覆盖所有场址。')}</p>
 					<a href={selected.source} target="_blank" rel="noreferrer">
 						{tx('场址来源')}
