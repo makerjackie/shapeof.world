@@ -309,7 +309,7 @@ export const Film: React.FC = () => {
       </At>
       <YouRing cam={cam} at={sb(61.6)} out={sb(63.8)} p={[-22 + 11 + 3.5, 20 * 3 + 1.5, 7.2]} />
 
-      <Sources at={sb(64)} out={sb(67.6)} />
+      <Sources at={sb(64)} out={sb(68.2)} />
       <EndCard at={sb(67.6)} />
       <BrandMark o={1 - ramp(t, sb(67.4), sb(67.7))} />
     </AbsoluteFill>

@@ -265,12 +265,12 @@ const px = (lon: number, lat: number) => [(lon - 73) * 37.5, (54 - lat) * 37.5] 
 type Region = { lon: number; lat: number; r: number; dim: number };
 // Provinces whose population fell 2010–2020 (census): the three north-eastern ones, Inner Mongolia, Shanxi, Gansu.
 const SHRINK: Region[] = [
-  { lon: 126.5, lat: 46.5, r: 300, dim: 0.62 },
-  { lon: 125.5, lat: 43.6, r: 200, dim: 0.62 },
-  { lon: 122.6, lat: 41.4, r: 190, dim: 0.75 },
-  { lon: 112.0, lat: 41.6, r: 260, dim: 0.75 },
-  { lon: 112.4, lat: 37.6, r: 130, dim: 0.78 },
-  { lon: 103.8, lat: 36.4, r: 170, dim: 0.75 },
+  { lon: 126.5, lat: 46.5, r: 320, dim: 0.85 },
+  { lon: 125.5, lat: 43.6, r: 220, dim: 0.85 },
+  { lon: 122.6, lat: 41.4, r: 200, dim: 0.85 },
+  { lon: 112.0, lat: 41.6, r: 260, dim: 0.85 },
+  { lon: 112.4, lat: 37.6, r: 140, dim: 0.85 },
+  { lon: 103.8, lat: 36.4, r: 180, dim: 0.85 },
 ];
 
 export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => {
@@ -279,8 +279,8 @@ export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => 
   if (o <= 0) return null;
   // camera on the map: start wide, ease towards the east
   const k = ramp(t, at, out, ESO);
-  const scale = lerp(0.98, 1.22, k);
-  const [fx, fy] = px(lerp(108, 116, k), lerp(35.5, 37, k));
+  const scale = lerp(0.9, 0.97, k);
+  const [fx, fy] = px(lerp(111.5, 113, k), lerp(33.4, 33.8, k));
   const tx = 960 - fx * scale;
   const ty = 560 - fy * scale;
   const shrink = ramp(t, sb(28.8), sb(30.4), EIO);
@@ -290,8 +290,8 @@ export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => 
     const [x, y] = px(lon, lat);
     return [tx + x * scale, ty + y * scale] as const;
   };
-  const [nx, ny] = pin(126.0, 45.0);
-  const [gx, gy] = pin(113.3, 23.1);
+  const [nx, ny] = pin(125.0, 45.6);
+  const [gx, gy] = pin(119.6, 23.9);
   return (
     <div style={{ position: "absolute", inset: 0, background: "#020307", opacity: o, overflow: "hidden" }}>
       <div style={{ position: "absolute", left: 0, top: 0, width: MAP_W, height: MAP_H, transformOrigin: "0 0", transform: `translate(${tx}px, ${ty}px) scale(${scale})` }}>
@@ -319,13 +319,13 @@ export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => 
             <div
               style={{
                 position: "absolute",
-                left: x - 150,
-                top: y - 150,
-                width: 300,
-                height: 300,
+                left: x - 140,
+                top: y - 140,
+                width: 280,
+                height: 280,
                 borderRadius: "50%",
                 mixBlendMode: "screen",
-                background: `radial-gradient(circle, rgba(255,190,110,${0.55 * grow}) 0%, rgba(255,160,80,${0.25 * grow}) 30%, rgba(0,0,0,0) 65%)`,
+                background: `radial-gradient(circle, rgba(255,190,110,${0.7 * grow}) 0%, rgba(255,160,80,${0.3 * grow}) 30%, rgba(0,0,0,0) 62%)`,
               }}
             />
           );
@@ -333,7 +333,7 @@ export const ChinaMap: React.FC<{ at: number; out: number }> = ({ at, out }) => 
       </div>
       <MapLabel x={nx} y={ny} at={sb(29)} out={out} text="东北三省" sub="10 年少了约 1100 万人" color="#9fb4d6" />
       <MapLabel x={gx} y={gy} at={sb(30.8)} out={out} text="广东" sub="10 年多了约 2171 万人" color={K.lit} />
-      <div style={{ position: "absolute", right: 70, bottom: 34, fontFamily: FONT, fontSize: 20, color: "rgba(244,240,232,0.5)" }}>NASA Black Marble 2016 · 明暗变化为按人口增减所作示意</div>
+      <div style={{ position: "absolute", right: 70, bottom: 76, fontFamily: FONT, fontSize: 20, color: "rgba(244,240,232,0.5)" }}>NASA Black Marble 2016 · 明暗变化为按人口增减所作示意</div>
     </div>
   );
 };
