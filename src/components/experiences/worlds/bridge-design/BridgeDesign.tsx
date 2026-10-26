@@ -6,6 +6,8 @@ import { useExperienceI18n } from '~/i18n/experience'
 import { isWorldPaused } from '~/lib/world-playback'
 import { BridgeScene } from './BridgeScene'
 import { BRIDGES } from './content'
+import { Silhouette } from './Silhouette'
+import { SpanView } from './SpanView'
 import { bridgeResponse, type BridgeKind, type Member } from './model'
 
 const FOCUS: Record<BridgeKind, Member['family'][][]> = {
@@ -17,16 +19,8 @@ const FOCUS: Record<BridgeKind, Member['family'][][]> = {
 
 function query(key: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(key) }
 
-function Silhouette({ kind }: { kind: BridgeKind }) {
-  return <svg viewBox="0 0 100 40" fill="none" aria-hidden="true"><path d="M5 28H95M15 28V37M85 28V37" />
-    {kind === 'beam' && <path d="M15 31H85M15 25H85" />}
-    {kind === 'arch' && <path d="M15 37Q50 -2 85 37M28 28V24M40 28V19M60 28V19M72 28V24" />}
-    {kind === 'suspension' && <path d="M22 37V4M78 37V4M5 29L22 7Q50 31 78 7L95 29M30 28V13M40 28V18M50 28V19M60 28V18M70 28V13" />}
-    {kind === 'stayed' && <path d="M50 37V3M10 28L50 5L90 28M25 28L50 5L75 28M38 28L50 5L62 28" />}
-  </svg>
-}
 
-export function BridgeDesign({ controls }: { controls: ExperienceControls }) {
+function LoadPathView({ controls }: { controls: ExperienceControls }) {
   const tx = useExperienceI18n()
   const [kind, setKind] = useState<BridgeKind>('suspension')
   const [position, setPosition] = useState(.32)
@@ -86,5 +80,17 @@ export function BridgeDesign({ controls }: { controls: ExperienceControls }) {
     </section>
     <p className="bd-model-note">{tx('理想静力模型 · 含桥面自重 · 流点表示传力路线，不是力的传播速度')}</p>
     <GuideTour worldId="bridge-design" placement="stage" steps={BRIDGES.map(b => ({ title: tx(b.name), body: tx(b.heading), action: () => { setKind(b.id); setPosition(.5); setPlaying(false); setDetail(false); setStep(null); setForces(true) }, durationMs: 8500 }))} kicker={tx('看见力的路径')} exitLabel={tx('结束导览')} stagePlan={BRIDGES.map(() => ({ position: 'bottom-left', mobilePosition: 'bottom-center', tone: 'dark', treatment: 'caption', width: 'narrow' }))} />
+  </div>
+}
+
+export function BridgeDesign({ controls }: { controls: ExperienceControls }) {
+  const tx = useExperienceI18n()
+  const [mode, setMode] = useState(query('view') === 'span' ? 'span' : 'forces')
+  return <div className="bridge-world" data-view={mode}>
+    <nav className="bd-views" aria-label={tx('切换视图')}>
+      <button type="button" aria-pressed={mode === 'forces'} onClick={() => { setMode('forces'); controls.registerInteraction() }}>{tx('力的路径')}</button>
+      <button type="button" aria-pressed={mode === 'span'} onClick={() => { setMode('span'); controls.registerInteraction() }}>{tx('跨度与桥型')}</button>
+    </nav>
+    {mode === 'forces' ? <LoadPathView controls={controls} /> : <SpanView controls={controls} />}
   </div>
 }
