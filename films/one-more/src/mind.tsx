@@ -104,10 +104,10 @@ const clock = (m: number) => {
 };
 
 const Night: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, sB(10.45), sB(13.3), 0.4, 0.35);
+  const o = win(t, sB(10.3), sB(13.3), 0.4, 0.35);
   if (o <= 0) return null;
-  const m = 227 * ramp(t, sB(10.85), sB(12.6), EIO);
-  const axis = ramp(t, sB(10.5), sB(10.9), EO);
+  const m = 227 * ramp(t, sB(10.55), sB(12.55), EIO);
+  const axis = ramp(t, sB(10.32), sB(10.7), EO);
   // the scissors: shade where wanting runs above liking
   const shade: string[] = [];
   for (let q = 0; q <= m; q += 2) {
@@ -149,7 +149,7 @@ const Night: React.FC<{ t: number }> = ({ t }) => {
         {end > 0 ? <line x1={mx(227) + 30} x2={mx(227) + 30} y1={vy(valAt(WANT_V, 227))} y2={vy(valAt(LIKE_V, 227))} stroke={K.fg} strokeWidth={2} opacity={end} /> : null}
       </svg>
       {[0, 60, 120, 180].map((q) => (
-        <Tag key={q} x={mx(q)} y={CH.y0 + 40} at={sB(10.6)} out={sB(13.4)} color={K.muted} size={24}>
+        <Tag key={q} x={mx(q)} y={CH.y0 + 40} at={sB(10.4)} out={sB(13.4)} color={K.muted} size={24}>
           <span style={{ fontFamily: NUM, fontWeight: 600 }}>{clock(q)}</span>
         </Tag>
       ))}
@@ -284,9 +284,9 @@ const Slots: React.FC<{ t: number }> = ({ t }) => {
 // ---------- the brain across the chapter ----------
 const brainPose = (t: number) => {
   // centre-right for the two systems, small at the left while the two lines leave it, centre-right again for knowing
-  const x = t < sB(6.3) ? 1240 : t < sB(7.4) ? tween(t, sB(6.25), sB(6.7), 1240, 430, ESO) : t < sB(13.2) ? 430 : tween(t, sB(13.2), sB(13.8), 1100, 1240, ESO);
+  const x = t < sB(6.3) ? 1240 : t < sB(7.4) ? tween(t, sB(6.25), sB(6.7), 1240, 430, ESO) : t < sB(13.2) ? 430 : tween(t, sB(13.2), sB(13.8), 1100, 1240, ESO) - 50 * ramp(t, sB(13.8), sB(17), (u) => u);
   const y = t < sB(6.3) ? 570 : t < sB(13.2) ? tween(t, sB(6.25), sB(6.7), 570, 600, ESO) : 570;
-  const s = t < sB(6.3) ? 1.05 : t < sB(13.2) ? tween(t, sB(6.25), sB(6.7), 1.05, 0.56, ESO) : tween(t, sB(13.2), sB(13.8), 0.9, 1.08, ESO);
+  const s = t < sB(6.3) ? 1.05 : t < sB(13.2) ? tween(t, sB(6.25), sB(6.7), 1.05, 0.56, ESO) : tween(t, sB(13.2), sB(13.8), 0.9, 1.08, ESO) + 0.14 * ramp(t, sB(13.8), sB(17), (u) => u);
   return { x, y, s };
 };
 
@@ -365,7 +365,7 @@ export const MindWorld: React.FC = () => {
       <Note at={sB(0.25)} out={sB(2.5)}>猴子实验 · Fiorillo 等，Science 2003 · 信号为示意</Note>
       <Note at={sB(3.5)} out={sB(6.25)}>在大鼠脑里，管“喜欢”的热点每个只有约 1 立方毫米（Peciña & Berridge 2005）· 脑区位置为示意</Note>
       <Note at={sB(7.35)} out={sB(10.3)}>Clark 等，Neuron 2009：差一点时，大脑里平时为赢而亮的区域也亮了；只在自己动手转时出现 · 条形为示意</Note>
-      <Note at={sB(10.8)} out={sB(13.3)}>示意：一个人一夜里的“喜欢”和“想要”</Note>
+      <Note at={sB(10.5)} out={sB(13.3)}>示意：一个人一夜里的“喜欢”和“想要”</Note>
     </div>
   );
 };

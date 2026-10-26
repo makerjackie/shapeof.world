@@ -243,10 +243,11 @@ const Return: React.FC<{ t: number }> = ({ t }) => {
   const beat = (((t - C.start - C.first) / BEAT) % 1 + 1) % 1;
   const lift = ramp(t, sC(17.4), sC(18.1), EIN);
   const bob = Math.sin(t * 2.2) * 6;
-  const ui = 1 - 0.85 * ramp(t, sC(17.6), sC(18.6), EIO);
+  const ui = 1 - 0.94 * ramp(t, sC(17.6), sC(18.6), EIO);
   const lines = 0.4 * win(t, sC(13.4), sC(17.6), 0.6, 0.8);
-  const cam: Cam = { ...PHONE_CAM, z: PHONE_CAM.z + 0.03 * ramp(t, sC(13), sC(21), EIO) };
-  const s = { o, ui, stamp: 1, beat, lit: 4, touch: { x: 30, y: -70 + bob - 260 * lift, s: 1.1, o: 0.95 * (1 - lift) } };
+  const push = ramp(t, sC(13), sC(21.5), (u) => u);
+  const cam: Cam = { cx: PHONE_CAM.cx - 14 * push, cy: PHONE_CAM.cy + 10 * push, z: 0.88 + 0.1 * push };
+  const s = { o, ui, stamp: 1, beat, lit: 4, touch: { x: 96 + 220 * lift, y: 84 + bob + 320 * lift, s: 1.08, o: 0.95 * (1 - lift) } };
   const scissor = (from: number, to: number) => {
     const pts: string[] = [];
     for (let x = 0; x <= 1920; x += 24) pts.push(`${x},${(lerp(from, to, x / 1920) + 8 * Math.sin(x / 140 + t)).toFixed(1)}`);

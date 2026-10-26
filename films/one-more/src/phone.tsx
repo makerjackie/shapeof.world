@@ -7,6 +7,8 @@ import { FONT, HAN, K, NUM } from "./theme";
 
 export const PHONE = { x: 0, y: -150, w: 1180, h: 580, r: 72 };
 export const BTN_R = 68;
+// A thumb, tip at the origin, running down its own +y axis (rotated into place by the caller).
+const THUMB = "M -62 0 C -62 -86, 62 -86, 62 0 L 74 900 L -74 900 Z";
 
 export type PhoneState = {
   o: number; // whole phone
@@ -92,16 +94,13 @@ export const PhoneSvg: React.FC<{ cam: Cam; s: PhoneState }> = ({ cam, s }) => {
       ))}
       {s.touch && s.touch.o > 0 ? (
         <g opacity={s.touch.o}>
-          <defs>
-            <radialGradient id="ph-touch">
-              <stop offset="0%" stopColor="#fff6f0" stopOpacity={0.85} />
-              <stop offset="60%" stopColor="#ffd8c8" stopOpacity={0.3} />
-              <stop offset="100%" stopColor="#ffd8c8" stopOpacity={0} />
-            </radialGradient>
-          </defs>
-          <ellipse cx={s.touch.x + 18} cy={s.touch.y + 24} rx={74 * s.touch.s} ry={86 * s.touch.s} fill="#000" opacity={0.25} />
-          <ellipse cx={s.touch.x} cy={s.touch.y} rx={70 * s.touch.s} ry={82 * s.touch.s} fill="url(#ph-touch)" />
-          <ellipse cx={s.touch.x} cy={s.touch.y} rx={44 * s.touch.s} ry={54 * s.touch.s} fill="none" stroke="#fff3ea" strokeOpacity={0.45} strokeWidth={2.5} />
+          {/* a thumb in silhouette, coming in from the lower right, rim-lit by the screen */}
+          <g transform={`translate(${s.touch.x} ${s.touch.y}) rotate(-34) scale(${s.touch.s})`}>
+            <path d={THUMB} transform="translate(20 34)" fill="#000" opacity={0.32} />
+            <path d={THUMB} fill="#120e12" opacity={0.94} />
+            <path d={THUMB} fill="none" stroke="#ffd2bf" strokeOpacity={0.42} strokeWidth={3} />
+            <rect x={-36} y={-40} width={72} height={88} rx={32} fill="#2a2228" stroke="#ffd2bf" strokeOpacity={0.22} strokeWidth={2} />
+          </g>
         </g>
       ) : null}
     </g>

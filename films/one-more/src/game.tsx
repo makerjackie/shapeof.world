@@ -10,7 +10,6 @@ import { A, A_END, FPS, sA } from "./timing";
 
 const BEAT = A.bar / 4;
 const HOOK: Cam = { cx: -318, cy: -150, z: 0.92 };
-const RINGS: Cam = { cx: -300, cy: 0, z: 1 };
 
 const camA = (t: number) =>
   camAt(
@@ -23,8 +22,17 @@ const camA = (t: number) =>
       [sA(5.85), { cx: 0, cy: 0, z: 2.75 }, EIO],
       [sA(6.55), HOOK, ESO],
       [sA(10.0), { cx: -312, cy: -150, z: 0.97 }, EIO],
-      [sA(11.2), RINGS, ESO],
-      [sA(20.5), { cx: -300, cy: 0, z: 1.03 }, EIO],
+      // close on the first loop, then a step back each time a bigger loop appears; the button stays at x ≈ 1260
+      [sA(11.2), { cx: -176, cy: 0, z: 1.7 }, ESO],
+      [sA(12.0), { cx: -178, cy: 0, z: 1.68 }, EIO],
+      [sA(12.0) + 1.2, { cx: -200, cy: 0, z: 1.5 }, ESO],
+      [sA(14.5), { cx: -203, cy: 0, z: 1.48 }, EIO],
+      [sA(14.5) + 1.2, { cx: -227, cy: 0, z: 1.32 }, ESO],
+      [sA(16.5), { cx: -230, cy: 0, z: 1.3 }, EIO],
+      [sA(16.5) + 1.2, { cx: -254, cy: 0, z: 1.18 }, ESO],
+      [sA(18.5), { cx: -257, cy: 0, z: 1.16 }, EIO],
+      [sA(18.5) + 1.2, { cx: -283, cy: 0, z: 1.06 }, ESO],
+      [sA(20.5), { cx: -291, cy: 0, z: 1.03 }, EIO],
       [sA(24.0), { cx: -284, cy: 0, z: 1.09 }, EIO],
       [sA(26.6), { cx: -172, cy: 0, z: 1.72 }, ESO],
       [sA(27.15), { cx: -150, cy: 0, z: 1.9 }, EIO],
@@ -68,7 +76,9 @@ const phoneState = (t: number): PhoneState => {
   const press = sA(3.0);
   const touchO = Math.min(ramp(t, sA(2.3), sA(2.55), EO), 1 - ramp(t, sA(3.3), sA(3.7), EIO));
   const k = ramp(t, sA(2.35), press, EIO);
-  const touch = { x: 300 * (1 - k) + 4, y: -290 * (1 - k) + 4 - 120 * ramp(t, sA(3.3), sA(3.7), EIN), s: t < press ? 1.2 - 0.2 * k : 0.86 + 0.14 * ramp(t, press + 0.12, press + 0.4, EO), o: touchO };
+  // the thumb comes in from the lower right, presses, and lifts back the way it came
+  const lift = ramp(t, sA(3.3), sA(3.8), EIN);
+  const touch = { x: 250 * (1 - k) + 8 + 220 * lift, y: 330 * (1 - k) + 10 + 320 * lift, s: t < press ? 1.12 - 0.08 * k : 0.97 + 0.07 * ramp(t, press + 0.12, press + 0.4, EO), o: touchO };
   const ripples: { r: number; o: number; c: string }[] = [];
   for (let i = 0; i < 10; i++) {
     const t0 = press + i * 0.38;
@@ -92,7 +102,7 @@ const phoneState = (t: number): PhoneState => {
   };
 };
 
-const Rings: React.FC<{ t: number; cam: Cam }> = ({ t, cam }) => {
+export const Rings: React.FC<{ t: number; cam: Cam }> = ({ t, cam }) => {
   const els: React.ReactNode[] = [];
   RINGS_DEF.forEach((rg, i) => {
     const draw = ramp(t, rg.at, rg.at + 0.9, EO);

@@ -29,7 +29,7 @@ export const CUES: Cue[] = [
   { t: sB(7.85), id: "sfx-mechanical-19", v: 0.3 },
   { t: sB(8.1), id: "sfx-mechanical-19", v: 0.35 },
   { t: sB(9.2), id: "sfx-impact-05", v: 0.65 }, // the one discovery
-  { t: sB(10.85), id: "sfx-transition-10", v: 0.28 }, // tonight's lines
+  { t: sB(10.55), id: "sfx-transition-10", v: 0.28 }, // tonight's lines
   { t: sB(15.4), id: "sfx-impact-16", v: 0.5 }, // the second after a loss
   // C · not only games
   { t: sC(0.9), id: "sfx-transition-05", v: 0.32 },

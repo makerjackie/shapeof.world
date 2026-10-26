@@ -67,7 +67,9 @@ def main() -> None:
     src = [fetch(t, "music") for t in MUSIC]
     for s in SFX:
         fetch(s, "sfx")
-    gains = [LEVEL - lufs(p) for p in src]
+    # the synthwave of chapter A is denser than the other two: level it lower so the limiter does not squeeze it
+    trims = [-1.5, 0.5, 0.5]
+    gains = [LEVEL + tr - lufs(p) for p, tr in zip(src, trims)]
     print("gains dB", [round(g, 1) for g in gains])
     fmt = "aformat=sample_rates=48000:channel_layouts=stereo"
     x0, x1 = OPEN - 0.2, OPEN
