@@ -456,7 +456,7 @@ export const PriceCompare: React.FC<{ at: number; out: number }> = ({ at, out })
   const k1 = ramp(t, at + 0.3, at + 1.3, EO);
   const k2 = ramp(t, at + 1.0, at + 2.0, EO);
   const k3 = ramp(t, at + 2.2, at + 3.0, EO);
-  const H = 400;
+  const H = 300;
   const col = (label: string, price: number, total: string, k: number, x: number, c: string) => (
     <div style={{ position: "absolute", left: x, bottom: 0, width: 240, textAlign: "center" }}>
       <div style={{ fontSize: 52, fontWeight: 900, color: c, opacity: k, fontVariantNumeric: "tabular-nums" }}>{fmt(Math.round(price * k), 0)}</div>
@@ -513,9 +513,9 @@ export const Abroad: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const o = fadeIO(t, at, out, 0.4, 0.4);
   if (o <= 0) return null;
   const cards = [
-    { at: at + 0.3, place: "新加坡 · 组屋", line1: "四分之三的人同意，", line2: "全楼一起换电梯，政府出大头。" },
-    { at: at + 1.2, place: "香港 · 私人楼宇", line1: "楼龄满 30 年，", line2: "政府每 10 年强制验一次楼。" },
-    { at: at + 2.1, place: "美国佛罗里达 · 公寓", line1: "欠交管理费，", line2: "业主协会可以申请拍卖你的房子。" },
+    { at: at + 0.3, place: "新加坡 · 组屋", lines: ["四分之三的人同意，", "全楼一起换电梯，", "政府出大头。"] },
+    { at: at + 1.2, place: "香港 · 私人楼宇", lines: ["楼龄满 30 年，", "政府每 10 年", "强制验一次楼。"] },
+    { at: at + 2.1, place: "美国佛罗里达 · 公寓", lines: ["欠交管理费，", "业主协会可以申请", "拍卖你的房子。"] },
   ];
   return (
     <div style={{ position: "absolute", left: 110, right: 110, top: 330, display: "flex", gap: 34, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
@@ -524,8 +524,11 @@ export const Abroad: React.FC<{ at: number; out: number }> = ({ at, out }) => {
         return (
           <div key={i} style={{ flex: 1, opacity: k, transform: `translateY(${(1 - k) * 30}px)`, ...PANEL, padding: "34px 36px" }}>
             <div style={{ fontSize: 34, fontWeight: 900, color: K.gold, marginBottom: 18 }}>{c.place}</div>
-            <div style={{ fontSize: 40, fontWeight: 800, lineHeight: 1.35 }}>{c.line1}</div>
-            <div style={{ fontSize: 40, fontWeight: 800, lineHeight: 1.35 }}>{c.line2}</div>
+            {c.lines.map((l, j) => (
+              <div key={j} style={{ fontSize: 42, fontWeight: 800, lineHeight: 1.4, whiteSpace: "nowrap" }}>
+                {l}
+              </div>
+            ))}
           </div>
         );
       })}
