@@ -661,7 +661,8 @@ void main() {
     lampC = mix(vec3(1.0, 0.86, 0.7), vec3(0.78, 0.9, 1.0), h11(cell * 3.0 + seed));
   }
   vec3 base = face < 0.5 ? floorC : (face < 1.5 ? vec3(0.92, 0.9, 0.86) : wallC);
-  vec3 col = base * (0.02 + 0.03 * (1.0 - uNight)) + base * lampC * I * 0.62;
+  I *= 1.0 + 0.35 * max(tenant, sub);
+  vec3 col = base * (0.02 + 0.03 * (1.0 - uNight)) + base * lampC * I * 0.86;
   // depth: the back of the room is darker than the front, where the cut is
   col *= mix(0.62, 1.0, clamp((vP.z / D) + 0.5, 0.0, 1.0));
 

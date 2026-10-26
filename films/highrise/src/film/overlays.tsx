@@ -10,6 +10,8 @@ import { NEED, passShares, YES_MAX, yesCount } from "./state";
 import { fmt, SHADOW, useT } from "./ui";
 
 const fadeIO = (t: number, at: number, out: number, fi = 0.4, fo = 0.35) => Math.min(ramp(t, at, at + fi, EO), 1 - ramp(t, out - fo, out));
+// dark glass behind data panels, so numbers never sit on the busy city
+const PANEL: React.CSSProperties = { background: "rgba(6,8,12,0.78)", borderRadius: 18, padding: "26px 34px", boxShadow: "0 20px 60px rgba(0,0,0,0.45)", border: "1px solid rgba(244,240,232,0.08)" };
 
 // ---------- the year and the building's age ----------
 
@@ -20,7 +22,7 @@ export const YearBadge: React.FC<{ at: number; out: number; keys: [number, numbe
   const y = Math.round(track(t, keys, (x) => x));
   const a = y - 2010;
   return (
-    <div style={{ position: "absolute", right: 110, top: 96, textAlign: "right", opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+    <div style={{ position: "absolute", right: 110, bottom: 110, textAlign: "right", opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
       <div style={{ fontSize: 132, fontWeight: 900, letterSpacing: -2, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
         {y}
         <span style={{ fontSize: 48, fontWeight: 700, marginLeft: 8 }}>年</span>
@@ -38,7 +40,7 @@ export const FloorsCounter: React.FC<{ at: number; out: number; from: number; to
   const k = ramp(t, from, to, EIO);
   const floors = Math.round(lerp(6, 33, k));
   return (
-    <div style={{ position: "absolute", right: 120, top: 330, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 120, top: 330, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.78)" }}>同一块地</div>
       <div style={{ fontSize: 140, fontWeight: 900, lineHeight: 1.05, fontVariantNumeric: "tabular-nums" }}>
         {floors}
@@ -93,11 +95,12 @@ export const FloorPlan: React.FC<{ at: number; out: number }> = ({ at, out }) =>
   const shared = "rgba(255,90,95,0.55)";
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o, fontFamily: FONT, color: K.fg, textShadow: SHADOW }}>
+      <div style={{ position: "absolute", left: x0 - 40, top: y0 - 110, width: W + 80, height: H + 340, ...PANEL, padding: 0 }} />
       <div style={{ position: "absolute", left: x0, top: y0 - 70, fontSize: 36, fontWeight: 800 }}>一层楼，从上往下看</div>
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
         <g opacity={k1}>
           {units.map(([a, c], i) => (
-            <rect key={i} x={x0 + a * S + 4} y={y0 + 4} width={(c - a) * S - 8} height={H - 8} fill="rgba(255,217,160,0.16)" stroke="rgba(244,240,232,0.85)" strokeWidth={3} />
+            <rect key={i} x={x0 + a * S + 4} y={y0 + 4} width={(c - a) * S - 8} height={H - 8} fill="rgba(255,217,160,0.22)" stroke="rgba(244,240,232,0.85)" strokeWidth={3} />
           ))}
           <rect x={x0} y={y0} width={W} height={H} fill="none" stroke={K.fg} strokeWidth={5} />
         </g>
@@ -129,7 +132,7 @@ export const RushCounter: React.FC<{ at: number; out: number }> = ({ at, out }) 
   if (o <= 0) return null;
   const n = Math.round(lerp(0, 346, ramp(t, at + 0.2, at + 2.4, EO)));
   return (
-    <div style={{ position: "absolute", right: 110, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 110, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>早上 8 点，下楼的人</div>
       <div style={{ fontSize: 150, fontWeight: 900, lineHeight: 1.05, fontVariantNumeric: "tabular-nums" }}>
         {n}
@@ -172,12 +175,12 @@ export const CostMeter: React.FC<{ at: number; out: number }> = ({ at, out }) =>
     { at: at + 2.0, age: "10–15 年", v: 52, r: "45–60" },
     { at: at + 3.6, age: "15 年左右", v: 85, r: "70–100" },
   ];
-  const v = track(t, [[steps[0].at, 0], [steps[0].at + 0.8, 30], [steps[1].at, 30], [steps[1].at + 0.8, 52], [steps[2].at, 52], [steps[2].at + 0.9, 85]], EO);
+  const v = track(t, [[steps[0].at, 30], [steps[0].at + 0.8, 30], [steps[1].at, 30], [steps[1].at + 0.8, 52], [steps[2].at, 52], [steps[2].at + 0.9, 85]], EO);
   const cur = t >= steps[2].at ? steps[2] : t >= steps[1].at ? steps[1] : steps[0];
   const Hb = 520;
   const col = v > 70 ? K.red : v > 45 ? K.amber : K.gold;
   return (
-    <div style={{ position: "absolute", right: 150, top: 250, width: 520, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 120, top: 230, width: 560, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       <div style={{ fontSize: 34, fontWeight: 800, marginBottom: 18 }}>每 100 元物业费里，花在维护上的</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 34 }}>
         <div style={{ position: "relative", width: 150, height: Hb, border: "3px solid rgba(244,240,232,0.7)", borderRadius: 10, overflow: "hidden" }}>
@@ -203,7 +206,7 @@ export const Tally: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const W = 560;
   const stall = n >= YES_MAX && t > b(71.5);
   return (
-    <div style={{ position: "absolute", right: 110, top: 300, width: W, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 110, top: 300, width: W, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL, boxSizing: "content-box" }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>同意再凑钱</div>
       <div style={{ fontSize: 118, fontWeight: 900, lineHeight: 1.05, color: K.green, fontVariantNumeric: "tabular-nums" }}>
         {n}
@@ -237,7 +240,7 @@ export const PassLegend: React.FC<{ at: number; out: number }> = ({ at, out }) =
     ["空着", p.empty, "#555b63"],
   ];
   return (
-    <div style={{ position: "absolute", right: 120, top: 300, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 120, top: 300, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       {rows.map(([label, n, c], i) => (
         <div key={i} style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 18 }}>
           <div style={{ width: 34, height: 34, borderRadius: 6, background: c, boxShadow: i < 3 ? `0 0 16px ${c}` : "none" }} />
@@ -261,7 +264,7 @@ export const AgeCounter: React.FC<{ at: number; out: number; run: [number, numbe
   const year = Math.round(lerp(2010, 2050, k));
   const age = Math.round(lerp(29.5, 69.5, k));
   return (
-    <div style={{ position: "absolute", right: 120, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
+    <div style={{ position: "absolute", right: 120, top: 280, textAlign: "right", fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o, ...PANEL }}>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)" }}>{year} 年 · 楼龄 {year - 2010} 年</div>
       <div style={{ fontSize: 40, fontWeight: 700, color: "rgba(244,240,232,0.8)", marginTop: 6 }}>第一批业主</div>
       <div style={{ fontSize: 160, fontWeight: 900, lineHeight: 1.05, color: age > 60 ? K.grey : K.fg, fontVariantNumeric: "tabular-nums" }}>
@@ -282,7 +285,7 @@ export const Births: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const k2 = ramp(t, at + 1.4, at + 2.4, EO);
   const Hmax = 560;
   const bar = (label: string, v: number, k: number, c: string, x: number) => (
-    <div style={{ position: "absolute", left: x, bottom: 170, width: 220, textAlign: "center" }}>
+    <div style={{ position: "absolute", left: x, bottom: 170, width: 260, textAlign: "center" }}>
       <div style={{ fontSize: 64, fontWeight: 900, color: c, fontVariantNumeric: "tabular-nums", opacity: k }}>{fmt(Math.round(v * k), 0)}</div>
       <div style={{ fontSize: 30, fontWeight: 700, color: "rgba(244,240,232,0.75)", marginBottom: 12, opacity: k }}>万人出生</div>
       <div style={{ margin: "0 auto", width: 150, height: (Hmax * v * k) / 2400, background: c, borderRadius: "8px 8px 0 0", boxShadow: `0 0 22px ${c}` }} />
@@ -291,8 +294,9 @@ export const Births: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   );
   return (
     <div style={{ position: "absolute", inset: 0, fontFamily: FONT, color: K.fg, textShadow: SHADOW, opacity: o }}>
-      {bar("1990 年前后", 2400, k1, K.lit, 1200)}
-      {bar("2025 年", 792, k2, K.red, 1500)}
+      <div style={{ position: "absolute", left: 1150, top: 250, width: 640, height: 700, ...PANEL, padding: 0 }} />
+      {bar("1990 年前后", 2400, k1, K.lit, 1190)}
+      {bar("2025 年", 792, k2, K.red, 1490)}
     </div>
   );
 };
@@ -309,15 +313,16 @@ export const PhotoStage: React.FC<{
   flash?: boolean;
   caption: string;
   credit: string;
-}> = ({ src, at, out, zoom = [1.0, 1.1], focus = [50, 50], darken = 0, flash, caption, credit }) => {
+  w?: number;
+}> = ({ src, at, out, zoom = [1.0, 1.1], focus = [50, 50], darken = 0, flash, caption, credit, w = 1060 }) => {
   const t = useT();
   const o = Math.min(ramp(t, at, at + (flash ? 0.12 : 0.6), EO), 1 - ramp(t, out - 0.5, out));
   if (o <= 0) return null;
   const k = ramp(t, at, out, (v) => v);
   const s = lerp(zoom[0], zoom[1], k) * (flash ? 1 + 0.05 * (1 - ramp(t, at, at + 0.5, EO)) : 1);
   const fl = flash ? 0.6 * (1 - ramp(t, at, at + 0.45)) : 0;
-  const W = 1060;
-  const H = 706;
+  const W = w;
+  const H = Math.round(w * 0.666);
   const L = 1920 - W - 96;
   const T = 292;
   return (
@@ -350,7 +355,7 @@ export const Timeline: React.FC<{ at: number; out: number; items: { at: number; 
         return (
           <div key={i} style={{ display: "flex", gap: 26, alignItems: "baseline", marginBottom: 30, opacity: k, transform: `translateX(${(1 - k) * -30}px)` }}>
             <div style={{ width: 230, fontSize: 46, fontWeight: 900, color: it.c ?? K.lit, fontVariantNumeric: "tabular-nums" }}>{it.date}</div>
-            <div style={{ fontSize: 42, fontWeight: 800, maxWidth: 520, lineHeight: 1.3 }}>{it.text}</div>
+            <div style={{ fontSize: 40, fontWeight: 800, maxWidth: 480, lineHeight: 1.3 }}>{it.text}</div>
           </div>
         );
       })}

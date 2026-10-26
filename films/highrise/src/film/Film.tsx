@@ -62,8 +62,8 @@ export const Film: React.FC = () => {
         </Sequence>
       ))}
       {!offWorld ? <World s={s} /> : null}
-      <PhotoStage src="photos/surfside-before.jpg" at={b(80.3)} out={b(85.9)} zoom={[1.02, 1.12]} focus={[45, 45]} caption="Champlain Towers South，美国佛罗里达" credit="照片：Mapillary 用户 · CC BY-SA 4.0" />
-      <PhotoStage src="photos/surfside-rescue3.jpg" at={b(85.8)} out={b(87.9)} zoom={[1.0, 1.05]} focus={[50, 55]} caption="2021 年 6 月 24 日" credit="照片：Miami-Dade Fire Rescue · 公有领域" />
+      <PhotoStage w={880} src="photos/surfside-before.jpg" at={b(80.3)} out={b(85.9)} zoom={[1.02, 1.12]} focus={[45, 45]} caption="Champlain Towers South，美国佛罗里达" credit="照片：Mapillary 用户 · CC BY-SA 4.0" />
+      <PhotoStage w={880} src="photos/surfside-rescue3.jpg" at={b(85.8)} out={b(87.9)} zoom={[1.0, 1.05]} focus={[50, 55]} caption="2021 年 6 月 24 日" credit="照片：Miami-Dade Fire Rescue · 公有领域" />
       <PhotoStage src="photos/meifoo-2021.jpg" at={b(110.2)} out={b(112.6)} zoom={[1.0, 1.08]} focus={[52, 62]} caption="美孚新邨，香港荔枝角，2021 年" credit="照片：Wpcpey · CC BY 4.0" />
       <Fade o={dip} />
 

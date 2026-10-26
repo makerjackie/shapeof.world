@@ -46,8 +46,8 @@ const KEYS: Key[] = [
   [b(29), cam({ x: 26, y: 42, z: 0, dist: 190, yaw: -6, pitch: 1, fov: 38 }), EIO],
   [b(32), cam({ x: 24, y: 44, z: 0, dist: 186, yaw: -2, pitch: 1, fov: 38 }), LIN],
   // the morning rush: the core and its queues
-  [b(33), cam({ x: 0, y: 40, z: 0, dist: 140, yaw: 0, pitch: 1, fov: 40 }), EIO],
-  [b(36), cam({ x: 0, y: 46, z: 0, dist: 150, yaw: 0, pitch: 1, fov: 40 }), LIN],
+  [b(33), cam({ x: 0, y: yf(13), z: 0, dist: 78, yaw: -6, pitch: 1, fov: 42 }), EIO],
+  [b(36), cam({ x: 0, y: yf(19), z: 0, dist: 84, yaw: 4, pitch: 1, fov: 42 }), LIN],
   // fire: back and to the side, the 50 m plane in the air
   [b(37), cam({ x: 0, y: 52, z: 0, dist: 300, yaw: 32, pitch: 6, fov: 40 }), EIO],
   [b(40), cam({ x: 0, y: 52, z: 0, dist: 290, yaw: 24, pitch: 6, fov: 40 }), LIN],
@@ -89,8 +89,8 @@ const KEYS: Key[] = [
   [b(107), cam({ x: 0, y: 50, z: 0, dist: 190, yaw: -2, pitch: 1, fov: 38 }), LIN],
   [b(109.6), cam({ x: 0, y: 50, z: 0, dist: 230, yaw: 6, pitch: 2, fov: 38 }), LIN],
   // the answer: over the city as its edges go dark
-  [b(112.4), cam({ x: 0, y: 0, z: 0, dist: 7400, yaw: 8, pitch: 34, fov: 40 }), EIO],
-  [b(116), cam({ x: 0, y: 0, z: -100, dist: 4200, yaw: 14, pitch: 22, fov: 40 }), LIN],
+  [b(112.6), cam({ x: 0, y: 0, z: 0, dist: 6200, yaw: 8, pitch: 40, fov: 42 }), EIO],
+  [b(116.2), cam({ x: 0, y: 0, z: 0, dist: 5600, yaw: 16, pitch: 36, fov: 42 }), LIN],
   // dawn, the tower, "you"
   [b(118.4), cam({ x: 0, y: 50, z: 0, dist: 300, yaw: 6, pitch: 3, fov: 38 }), EIO],
   [b(121.5), cam({ x: -6, y: 60, z: 0, dist: 150, yaw: -4, pitch: 1, fov: 38 }), ESO],
@@ -271,7 +271,8 @@ export const worldAt = (t: number): WorldState => {
     [b(124), 0.3],
   ]);
   const heroShot = Math.max(win(t, b(8), b(53), 0.8), win(t, b(56.6), b(95), 0.8), win(t, b(97), b(112), 0.8), win(t, b(117.5), b(130), 0.8));
-  const darkR = track(t, [[b(112), 8000], [b(116), 2400]], EIO);
+  const openShot = Math.max(win(t, b(16.4), b(40.4), 0.8), win(t, b(64.4), b(80.4), 0.6), win(t, b(96.8), b(112.4), 0.8), win(t, b(119), b(130), 0.8));
+  const darkR = track(t, [[b(112.4), 7000], [b(116.4), 1500]], EIO);
   const darkAmt = t >= b(110) ? 0.95 : 0;
   const patch = win(t, b(4.6), b(6.4), 0.35);
 
@@ -306,7 +307,7 @@ export const worldAt = (t: number): WorldState => {
   const oldFloors = t < b(90.1) ? 6 : tween(t, b(90.2), b(91.6), 0.2, 11, EO);
   const ghostVis = win(t, b(92.4), b(94.6), 0.35);
   const ghostLift = tween(t, b(92.4), b(93.4), 0, HERO.h, EO);
-  const outline = Math.max(win(t, b(94.5), b(97.4), 0.6), win(t, b(112.4), b(117.4), 0.8));
+  const outline = Math.max(win(t, b(8.1), b(9.8), 0.4), win(t, b(94.5), b(97.4), 0.6), win(t, b(112.4), b(117.4), 0.8));
 
   let c = camAt(t, KEYS);
   c = { ...c, yaw: c.yaw + Math.sin(t * 0.21) * 0.5, pitch: c.pitch + Math.sin(t * 0.17 + 1) * 0.2 };
@@ -331,7 +332,7 @@ export const worldAt = (t: number): WorldState => {
       elevAge: tween(t, b(54.6), b(56), 0, 0.85, EIO),
       darkR,
       darkAmt,
-      dim: 1 - 0.45 * heroShot,
+      dim: 1 - 0.45 * heroShot - 0.2 * openShot,
       hideEast: true,
     },
     hero: {
