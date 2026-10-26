@@ -14,7 +14,7 @@ const EO = Easing.bezier(0.16, 1, 0.3, 1);
 const EIO = Easing.inOut(Easing.cubic);
 
 // ---------- timeline (frames @30) ----------
-const SWIPES = [14, 44, 92, 118, 160, 194, 222, 244, 261, 274]; // gaps shrink: the spiral speeds up
+export const SWIPES = [14, 44, 92, 118, 160, 194, 222, 244, 261, 274]; // gaps shrink: the spiral speeds up
 const BANNER_IN = 58;
 const STOP = 286; // the swiping stops; silence
 const DIM = 300; // the phone dims, the question comes up
@@ -60,7 +60,7 @@ const Line: React.FC<{ time: string; text: string; size: number; o: number; y: n
   </div>
 );
 
-export const Open2: React.FC = () => {
+export const Open2: React.FC<{ music?: boolean }> = ({ music = true }) => {
   const f = useCurrentFrame();
 
   // camera: a slow push toward the phone while the spiral tightens, eased back for the question
@@ -134,7 +134,7 @@ export const Open2: React.FC = () => {
       <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 100%)", pointerEvents: "none" }} />
       <AbsoluteFill style={{ backgroundImage: `url(${staticFile("grain.svg")})`, opacity: 0.07, mixBlendMode: "overlay" }} />
       <Brand />
-      <Open2Sound />
+      <Open2Sound music={music} />
     </AbsoluteFill>
   );
 };
@@ -142,7 +142,7 @@ export const Open2: React.FC = () => {
 // ---------- sound ----------
 const sfx = (n: string, ext = "wav") => staticFile(`sfx/${n}.${ext}`);
 
-const Open2Sound: React.FC = () => (
+const Open2Sound: React.FC<{ music: boolean }> = ({ music }) => (
   <>
     {/* room tone, cut to near nothing at the stop */}
     <Audio src={sfx("brown")} volume={(f) => interpolate(f, [0, 12, STOP - 2, STOP + 2, C1, 450], [0, 0.16, 0.2, 0.05, 0.05, 0.04], CL)} />
@@ -176,9 +176,9 @@ const Open2Sound: React.FC = () => (
       <Audio src={sfx("swell")} volume={(f) => interpolate(f, [0, 50, 57], [0.15, 0.7, 0], CL)} />
     </Sequence>
     {/* the music comes in with the claim */}
-    <Sequence from={C1 - 6} durationInFrames={450 - C1 + 6}>
+    {music && <Sequence from={C1 - 6} durationInFrames={450 - C1 + 6}>
       <Audio src={sfx("music-floating", "mp3")} startFrom={36} volume={(f) => interpolate(f, [0, 10, 62], [0, 0.6, 0.6], CL)} />
-    </Sequence>
+    </Sequence>}
     <Sequence from={C1} durationInFrames={40}>
       <Audio src={sfx("sub")} volume={0.45} />
     </Sequence>

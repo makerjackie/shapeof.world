@@ -10,6 +10,7 @@ LIST = {
     "swipe": "sfx-transition-01", "notify": "sfx-notification-04", "tap": "sfx-ui-01",
     "lift": "sfx-transition-19", "shimmer": "sfx-magic-19",
     "music-floating": "scene-dub-90",  # 漂浮物件 · 90: melancholic piano over pads
+    "music-warm": "scene-soul-90",  # 温暖电路 · 90: piano and strings, melancholic yet hopeful
 }
 here = os.path.dirname(os.path.abspath(__file__))
 out = os.path.join(here, "..", "public", "sfx"); os.makedirs(out, exist_ok=True)
