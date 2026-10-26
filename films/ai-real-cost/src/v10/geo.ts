@@ -42,23 +42,55 @@ export const COLS: (ColDef & { id: ColId })[] = [
 ];
 
 // The rest of the market, standing behind the protagonists like the city around the tower film's hero building:
-// other models of the same makers and their neighbours, at their makers' cities (schematic offsets). Heights use
-// Artificial Analysis cost per Intelligence Index task (2026-10), the same measure as the protagonists' second pass.
-export const BG: (ColDef & { task: number })[] = [
-  { id: "bg-fable", name: "Claude Fable 5.1", model: "", at: near(CITY.sf, 380, 260), color: "#c9a089", side: "right", w: BG_W, bg: true, task: 7.63 },
-  { id: "bg-sonnet", name: "Claude Sonnet 5.5", model: "", at: near(CITY.sf, 520, -120), color: "#c9a089", side: "right", w: BG_W, bg: true, task: 5.46 },
-  { id: "bg-sol", name: "GPT-6.1 Sol", model: "", at: near(CITY.sf, -420, 220), color: "#9cc7bd", side: "left", w: BG_W, bg: true, task: 0.72 },
-  { id: "bg-gemini", name: "Gemini 4 Argon", model: "", at: near(CITY.mountainView, 120, -380), color: "#a4b3d6", side: "right", w: BG_W, bg: true, task: 1.99 },
-  { id: "bg-geminiflash", name: "Gemini 3.8 Flash", model: "", at: near(CITY.mountainView, 380, -560), color: "#a4b3d6", side: "right", w: BG_W, bg: true, task: 1.24 },
-  { id: "bg-muse", name: "Meta Muse Wonder", model: "", at: near(CITY.menloPark, -360, -330), color: "#b7b3c9", side: "left", w: BG_W, bg: true, task: 4.54 },
-  { id: "bg-qwen", name: "通义千问 3.8 Max", model: "", at: near(CITY.hangzhou, -330, -160), color: "#b6a6d8", side: "left", w: BG_W, bg: true, task: 5.41 },
-  { id: "bg-v4pro", name: "DeepSeek V4 Pro", model: "", at: near(CITY.hangzhou, 260, -260), color: "#93a2d6", side: "right", w: BG_W, bg: true, task: 0.67 },
-  { id: "bg-mimo", name: "小米 MiMo", model: "", at: near(CITY.beijing, -480, 260), color: "#c7b49a", side: "left", w: BG_W, bg: true, task: 0.13 },
-  { id: "bg-minimax", name: "MiniMax M3", model: "", at: near(CITY.shanghai, 330, 120), color: "#d6a3b8", side: "right", w: BG_W, bg: true, task: 0.51 },
-  { id: "bg-minimaxflash", name: "MiniMax M3.1 Flash", model: "", at: near(CITY.shanghai, 520, -150), color: "#d6a3b8", side: "right", w: BG_W, bg: true, task: 0.22 },
+// other models of the same makers and their neighbours, at their makers' cities (schematic offsets). Heights are
+// output list prices per million tokens (OpenRouter, 2026-10-26); they are background, never discussed.
+const bg = (id: string, name: string, at: [number, number], price: number, color: string): ColDef & { price: number } => ({
+  id: `bg-${id}`,
+  name,
+  model: "",
+  at,
+  color,
+  side: "right",
+  w: BG_W,
+  bg: true,
+  price,
+});
+const US = "#b9b2a6";
+const CN = "#a9b2c8";
+export const BG: (ColDef & { price: number })[] = [
+  bg("fable", "Claude Fable 5.1", near(CITY.sf, 609, 435), 50, US),
+  bg("sonnet", "Claude Sonnet 5.5", near(CITY.sf, 870, -116), 10, US),
+  bg("haiku", "Claude Haiku 5.5", near(CITY.sf, 551, -478), 0.5, US),
+  bg("sol", "GPT-6.1 Sol", near(CITY.sf, -682, 377), 10, US),
+  bg("luna", "GPT-6 Luna", near(CITY.sf, -899, -87), 0.5, US),
+  bg("gemini", "Gemini 4 Argon", near(CITY.mountainView, 203, -609), 10, US),
+  bg("geminiflash", "Gemini 3.8 Flash", near(CITY.mountainView, 624, -899), 4.1, US),
+  bg("muse", "Meta Muse Wonder", near(CITY.menloPark, -609, -551), 20, US),
+  bg("musespark", "Meta Muse Spark", near(CITY.menloPark, -232, -928), 4.3, US),
+  bg("grok", "Grok 4.7", near(CITY.sf, -377, 812), 6, US),
+  bg("nova", "Amazon Nova Premier", geo(47.61, -122.33), 12.5, US),
+  bg("doubao", "豆包 Seed 2.1", near(CITY.beijing, -754, 464), 2.5, CN),
+  bg("doubaocode", "豆包 Seed Code", near(CITY.beijing, -1102, 116), 3.0, CN),
+  bg("k27", "Kimi K2.7 Code", near(CITY.beijing, -435, 754), 3.35, CN),
+  bg("glmflash", "智谱 GLM Flash", near(CITY.beijing, 667, 493), 0.5, CN),
+  bg("mimo", "小米 MiMo", near(CITY.beijing, 87, 928), 0.87, CN),
+  bg("longcat", "美团 LongCat", near(CITY.beijing, 928, 87), 1.2, CN),
+  bg("qwen", "通义千问 3.8 Max", near(CITY.hangzhou, -522, -246), 6, CN),
+  bg("qwenplus", "通义千问 3.7 Plus", near(CITY.hangzhou, -812, 174), 1.28, CN),
+  bg("qwenflash", "通义千问 3.8 Flash", near(CITY.hangzhou, -290, -624), 0.47, CN),
+  bg("v4pro", "DeepSeek V4 Pro", near(CITY.hangzhou, 362, -435), 1.98, CN),
+  bg("minimax", "MiniMax M3", near(CITY.shanghai, 522, 261), 1.2, CN),
+  bg("minimaxflash", "MiniMax M3.1 Flash", near(CITY.shanghai, 812, -174), 0.6, CN),
+  bg("step", "阶跃 Step 5", near(CITY.shanghai, 478, -551), 2.7, CN),
+  bg("hy4", "腾讯混元 Hy4", near(CITY.shenzhen, 377, 174), 2.5, CN),
+  bg("hy3", "腾讯混元 Hy3", near(CITY.shenzhen, -290, 377), 0.53, CN),
 ];
 
-export const ALL_COLS: ColDef[] = [...COLS, ...BG];
+// Two columns that appear once: the opening's $200-a-month subscriber in San Francisco, and GPT-4 in 2023.
+export const HOOK_COL: ColDef = { id: "hook", name: "", model: "", at: near(CITY.sf, 0, -40), color: "#ffc857", side: "right", w: 140 };
+export const GPT4_COL: ColDef = { id: "gpt4", name: "GPT-4", model: "", at: near(CITY.sf, -60, 120), color: "#e8e2d4", side: "right", w: 140 };
+
+export const ALL_COLS: ColDef[] = [...COLS, ...BG, HOOK_COL, GPT4_COL];
 
 // The stage: mid-Pacific, where the five protagonists line up side by side whenever they are compared, so heights
 // are read at one distance from the camera and the empty ocean carries the story.

@@ -101,7 +101,7 @@ export const Sample: React.FC = () => {
     cols[c.id] = { h: v * KM_PER_USD * zoom, ghost, on: 1, flash, x, y, lift };
   }
   const bgGlow = 0.42 * (1 - 0.45 * ramp(t, 3.2, 5.6, EIO));
-  for (const b of BG) cols[b.id] = { h: b.task * KM_PER_USD, on: 1, glow: bgGlow };
+  for (const b of BG) cols[b.id] = { h: b.price * 40, on: 1, glow: bgGlow };
 
   const s: MapState = { cam, cols, dim: ramp(t, 0, 0.6, (v) => v) * (1 - ramp(t, 14.5, 15, (v) => v)), lights: 1, land: 1, bloom: 0.62, time: t };
   const labelO = fade(t, 0.3, 14.7, 0.4);

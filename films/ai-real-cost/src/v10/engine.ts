@@ -26,6 +26,7 @@ export type MapState = {
   cam: Cam;
   cols: Record<string, ColState | undefined>; // by column id (geo.ts COLS and BG)
   lights?: number; // city lights gain
+  spark?: number; // 0..1 twinkle on the city lights
   land?: number; // land brightness
   dim?: number; // whole map
   bloom?: number;
@@ -53,6 +54,8 @@ uniform float uDim;
 uniform vec3 uFog;
 uniform float uFogNear;
 uniform float uFogFar;
+uniform float uSpark;
+uniform float uTime;
 varying vec2 vUv;
 varying float vDepth;
 void main() {
@@ -63,6 +66,11 @@ void main() {
   float lights = smoothstep(0.05, 0.55, lum) * warm;
   vec3 land = mix(vec3(lum), c, 0.55) * uLand * vec3(0.55, 0.68, 1.0);
   vec3 col = land + vec3(1.0, 0.74, 0.42) * pow(max(lights, 0.0), 1.15) * uLights;
+  // twinkle: each small cell of city light flares white now and then (the opening's free apps, the token boom)
+  vec2 cell = floor(vUv * vec2(3000.0, 1200.0));
+  float hsh = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453);
+  float tw = smoothstep(0.82, 1.0, sin(uTime * 2.2 + hsh * 60.0) * 0.5 + 0.5);
+  col += vec3(0.75, 0.88, 1.0) * smoothstep(0.08, 0.5, lights) * tw * uSpark * 3.0;
   // (smoothstep needs edge0 < edge1; reversed edges are undefined in GLSL and give NaN on Metal)
   float e = smoothstep(0.0, 0.07, vUv.x) * (1.0 - smoothstep(0.93, 1.0, vUv.x)) * smoothstep(0.0, 0.1, vUv.y) * (1.0 - smoothstep(0.82, 1.0, vUv.y));
   // the picture dissolves into the haze at its edges, so the map never shows a hard border
@@ -202,7 +210,7 @@ export const createEngine = (): Engine => {
     vertexShader: GROUND_VERT,
     fragmentShader: GROUND_FRAG,
     depthWrite: false,
-    uniforms: { uMap: { value: tex }, uLights: { value: 1 }, uLand: { value: 1 }, uDim: { value: 1 }, ...fogU },
+    uniforms: { uMap: { value: tex }, uLights: { value: 1 }, uLand: { value: 1 }, uDim: { value: 1 }, uSpark: { value: 0 }, uTime: { value: 0 }, ...fogU },
   });
   const gw = MAP_X1 - MAP_X0;
   const gh = MAP_Y1 - MAP_Y0;
@@ -274,6 +282,8 @@ export const createEngine = (): Engine => {
     groundMat.uniforms.uLights.value = (s.lights ?? 1) * 2.4;
     groundMat.uniforms.uLand.value = (s.land ?? 1) * 1.7;
     groundMat.uniforms.uDim.value = dim;
+    groundMat.uniforms.uSpark.value = s.spark ?? 0;
+    groundMat.uniforms.uTime.value = s.time ?? 0;
     // floor lines every ~14 px on screen, snapped to a round number of km
     const pxPerKm = s.cam.z;
     const step = [10, 20, 50, 100, 200, 500, 1000].find((v) => v * pxPerKm >= 12) ?? 1000;
