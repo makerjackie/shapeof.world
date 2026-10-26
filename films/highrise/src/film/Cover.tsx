@@ -28,11 +28,13 @@ const shot = (tall: boolean): WorldState => ({
   dim: 1,
   traffic: 1,
   bloom: 0.42,
-  city: { lights: 0.45, dim: 0.5, hideEast: true },
+  city: { lights: 0.42, dim: 0.85, hideEast: false, focus: [0, 0, 120], iso: 0.9, lampK: 0.82 },
+  grade: { vig: 0.55, grain: 0.015, fade: 0 },
   hero: {
     vis: 1,
     built: 1,
-    hh: makeHH((i) => [((i * 0.6180339) % 1) < 0.62 ? 1 : 0, 0, 0, ((i * 0.41421356) % 1) < 0.3 ? 1 : 0]),
+    // the film's image: the floors have gone dark from the top; only the walkable ones are still lit
+    hh: makeHH((i, f) => [f <= 6 ? (((i * 0.6180339) % 1) < 0.9 ? 1 : 0) : f === 7 && i % 4 === 1 ? 0.6 : 0, 0, 0, f > 6 ? 1 : 0]),
     hh2: new Float32Array(132 * 4),
     age: 0.75,
     xray: 0,

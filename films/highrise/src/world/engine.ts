@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { LineMaterial } from "three/examples/jsm/lines/LineMaterial.js";
 import { LineSegments2 } from "three/examples/jsm/lines/LineSegments2.js";
@@ -13,8 +14,13 @@ import { LineSegmentsGeometry } from "three/examples/jsm/lines/LineSegmentsGeome
 import { Bldg, CITY, FH, HERO, OLD, P, ROAD, ROOFS, ROOM_Z, UNITS, heroHH } from "./city";
 import { Cam, H, W, setCamera } from "./camera";
 import {
+  ADOT_FRAG,
+  ADOT_VERT,
   BLDG_FRAG,
   BLDG_VERT,
+  GRADE_FRAG,
+  GRADE_VERT,
+  SMOKE_FRAG,
   COIN_FRAG,
   COIN_VERT,
   CONC_FRAG,
@@ -33,6 +39,7 @@ import {
 } from "./shaders";
 
 export const PEOPLE = 264; // two per flat
+export const CLIMBERS = 26; // people on the stairs when the lifts stop
 
 export type WorldState = {
   cam: Cam;
@@ -42,12 +49,34 @@ export type WorldState = {
   exposure?: number;
   dim?: number;
   traffic?: number;
-  city: { lights: number; darkR?: number; darkAmt?: number; patch?: number; elev?: number; elevAge?: number; dim?: number; hideEast?: boolean };
+  blur?: number; // CSS blur of the whole world, px (behind full-screen typography)
+  grade?: { vig: number; grain: number; fade: number };
+  city: {
+    lights: number;
+    darkR?: number;
+    darkAmt?: number;
+    patch?: number;
+    elev?: number;
+    elevAge?: number;
+    dim?: number;
+    hideEast?: boolean;
+    focus?: [number, number, number]; // x, z, radius
+    iso?: number;
+    lampK?: number;
+  };
+  walkup?: { vis: number; rise: number }; // the 6-floor walk-up beside the hero
+  smoke?: { vis: number; level: number };
+  ladder?: { vis: number; ext: number };
+  alarms?: { vis: number; alive: Float32Array }; // 33 floors
+  climbers?: { vis: number; t: number; top: number };
+  fireSys?: number; // X-ray: the fire mains and pump in red
   hero: {
     vis: number;
     built: number;
     hh: Float32Array; // 132 x [lit, yes, no, gone]
     hh2: Float32Array; // 132 x [tenant, subdivided, noise, mark]
+    hh3?: Float32Array; // 132 x [unpaid, smoke, cold, spare]
+    owners?: number;
     age: number;
     xray: number;
     vote: number;
@@ -119,7 +148,30 @@ const bldgUniforms = () => ({
   uElevAge: { value: 0 },
   uDim: { value: 1 },
   uHide: { value: -99 },
+  uFocus: { value: new THREE.Vector3(0, 0, 1e5) },
+  uIso: { value: 0 },
+  uLampK: { value: 1 },
 });
+
+const adots = (n: number, color: string) => {
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(n * 3), 3));
+  g.setAttribute("aAlpha", new THREE.Float32BufferAttribute(new Float32Array(n), 1));
+  g.setAttribute("aSize", new THREE.Float32BufferAttribute(new Float32Array(n).fill(1), 1));
+  const m = new THREE.ShaderMaterial({
+    vertexShader: ADOT_VERT,
+    fragmentShader: ADOT_FRAG,
+    uniforms: { uColor: { value: C(color) }, uOpacity: { value: 1 } },
+    transparent: true,
+    depthWrite: false,
+    depthTest: false,
+    blending: THREE.AdditiveBlending,
+  });
+  const p = new THREE.Points(g, m);
+  p.frustumCulled = false;
+  p.renderOrder = 9;
+  return p;
+};
 
 const lineMat = (color: string, width: number) =>
   new LineMaterial({ color: C(color).getHex(), linewidth: width, transparent: true, opacity: 0, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending, resolution: new THREE.Vector2(W, H) });
@@ -235,6 +287,20 @@ class Engine {
   tankFillMat: THREE.ShaderMaterial;
   avLights: THREE.Points;
   lampHeads: THREE.Points;
+  hh3Data = new Float32Array(4 * 33 * 4);
+  hh3Tex: THREE.DataTexture;
+  smoke: THREE.Mesh;
+  smokeMat: THREE.ShaderMaterial;
+  ladder: LineSegments2;
+  ladderMat: LineMaterial;
+  truck: THREE.Mesh;
+  alarms: THREE.Points;
+  climbers: THREE.Points;
+  fireRiser: THREE.Mesh;
+  fireRiserMat: THREE.ShaderMaterial;
+  firePump: THREE.Mesh;
+  firePumpMat: THREE.ShaderMaterial;
+  grade: ShaderPass;
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -273,6 +339,8 @@ class Engine {
       uSiteC: { value: new THREE.Vector2(0, 0) },
       uSiteR: { value: 5200 },
       uRiver: { value: 1 },
+      uFocus: { value: new THREE.Vector3(0, 0, 1e5) },
+      uIso: { value: 0 },
     };
     const gg = new THREE.PlaneGeometry(160000, 160000, 1, 1);
     gg.rotateX(-Math.PI / 2);
@@ -290,6 +358,7 @@ class Engine {
     // the hero
     this.hhTex = dataTex(this.hhData);
     this.hh2Tex = dataTex(this.hh2Data);
+    this.hh3Tex = dataTex(this.hh3Data);
     this.heroMat = new THREE.ShaderMaterial({
       vertexShader: BLDG_VERT,
       fragmentShader: BLDG_FRAG,
@@ -322,13 +391,25 @@ class Engine {
       vertexShader: ROOM_VERT,
       fragmentShader: ROOM_FRAG,
       side: THREE.BackSide,
-      uniforms: { uHH: { value: this.hhTex }, uHH2: { value: this.hh2Tex }, uTime: { value: 0 }, uNight: { value: 1 }, uVote: { value: 0 }, uAge: { value: 0 }, uDim: { value: 1 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } },
+      uniforms: {
+        uHH: { value: this.hhTex },
+        uHH2: { value: this.hh2Tex },
+        uHH3: { value: this.hh3Tex },
+        uOwners: { value: 0 },
+        uTime: { value: 0 },
+        uNight: { value: 1 },
+        uVote: { value: 0 },
+        uAge: { value: 0 },
+        uDim: { value: 1 },
+        uFogC: { value: C("#141a28") },
+        uFogD: { value: 1 / 9000 },
+      },
     });
     this.rooms = new THREE.Mesh(rgeo, this.roomMat);
     this.rooms.frustumCulled = false;
     this.scene.add(this.rooms);
 
-    this.concMat = new THREE.ShaderMaterial({ vertexShader: CONC_VERT, fragmentShader: CONC_FRAG, uniforms: { uNight: { value: 1 }, uDim: { value: 1 }, uAge: { value: 0 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } } });
+    this.concMat = new THREE.ShaderMaterial({ vertexShader: CONC_VERT, fragmentShader: CONC_FRAG, uniforms: { uNight: { value: 1 }, uDim: { value: 1 }, uAge: { value: 0 }, uCut: { value: 1 }, uFogC: { value: C("#141a28") }, uFogD: { value: 1 / 9000 } } });
     this.slabs = new THREE.InstancedMesh(new THREE.BoxGeometry(HERO.w - 0.1, 0.28, 13.62), this.concMat, HERO.floors + 1);
     const m4 = new THREE.Matrix4();
     for (let f = 0; f <= HERO.floors; f++) {
@@ -518,7 +599,52 @@ class Engine {
     this.lampHeads = dots(lp, ls, lz, "#ffb066", 0, 1);
     this.scene.add(this.lampHeads);
 
-    // post
+    // fire: smoke climbing the open core, the ladder truck, an alarm on every floor, the fire main and pump
+    this.smokeMat = new THREE.ShaderMaterial({
+      vertexShader: GLOW_VERT,
+      fragmentShader: SMOKE_FRAG,
+      uniforms: { uOpacity: { value: 0 }, uLevel: { value: 0 }, uTime: { value: 0 } },
+      transparent: true,
+      depthWrite: false,
+    });
+    this.smoke = new THREE.Mesh(new THREE.BoxGeometry(9, HERO.h + 3, 9), this.smokeMat);
+    this.smoke.position.set(0, (HERO.h + 3) / 2, 2.6);
+    this.smoke.renderOrder = 5;
+    this.scene.add(this.smoke);
+    const lad: number[] = [];
+    const L = 1; // unit length along the ladder; scaled at render time
+    for (const off of [-0.55, 0.55]) lad.push(off, 0, 0, off, 0, L);
+    for (let k = 0; k <= 40; k++) lad.push(-0.55, 0, (k / 40) * L, 0.55, 0, (k / 40) * L);
+    this.ladderMat = lineMat("#ffb0a0", 4);
+    this.ladder = new LineSegments2(segs(lad), this.ladderMat);
+    this.ladder.frustumCulled = false;
+    this.ladder.renderOrder = 8;
+    this.scene.add(this.ladder);
+    this.truck = new THREE.Mesh(new THREE.BoxGeometry(3.2, 3.4, 12), new THREE.MeshBasicMaterial({ color: C("#a8261c") }));
+    this.truck.position.set(-34, 1.6, 44);
+    this.scene.add(this.truck);
+    this.alarms = adots(33, "#ff4a3a");
+    {
+      const pa = (this.alarms.geometry.getAttribute("position") as THREE.BufferAttribute).array as Float32Array;
+      for (let f = 0; f < 33; f++) pa.set([0, f * FH + 2.55, 6.2], f * 3);
+      (this.alarms.geometry.getAttribute("aSize") as THREE.BufferAttribute).array.fill(4.2);
+    }
+    this.scene.add(this.alarms);
+    this.climbers = adots(CLIMBERS, "#ffd9a0");
+    (this.climbers.geometry.getAttribute("aSize") as THREE.BufferAttribute).array.fill(2.6);
+    this.scene.add(this.climbers);
+    this.fireRiserMat = glowMat("#ff5a4a", "#ff5a4a", 0.6);
+    this.fireRiser = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, HERO.h + 2, 12, 1, true), this.fireRiserMat);
+    this.fireRiser.position.set(16, (HERO.h + 2) / 2, -2);
+    this.fireRiser.renderOrder = 4;
+    this.scene.add(this.fireRiser);
+    this.firePumpMat = glowMat("#ff5a4a", "#ff5a4a", 1.0);
+    this.firePump = new THREE.Mesh(new THREE.BoxGeometry(6, 3.2, 6), this.firePumpMat);
+    this.firePump.position.set(16, 1.6, -2);
+    this.firePump.renderOrder = 4;
+    this.scene.add(this.firePump);
+
+    // post: bloom, tone mapping, then the grade (split tone, vignette, grain)
     const rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, samples: 4 });
     this.composer = new EffectComposer(this.renderer, rt);
     this.composer.setPixelRatio(1);
@@ -527,6 +653,10 @@ class Engine {
     this.bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.45, 0.5, 0.92);
     this.composer.addPass(this.bloom);
     this.composer.addPass(new OutputPass());
+    this.grade = new ShaderPass(
+      new THREE.ShaderMaterial({ vertexShader: GRADE_VERT, fragmentShader: GRADE_FRAG, uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uVig: { value: 0.45 }, uGrain: { value: 0.022 }, uFade: { value: 0 } } }),
+    );
+    this.composer.addPass(this.grade);
   }
 
   render(s: WorldState) {
@@ -558,9 +688,18 @@ class Engine {
       u.uElev.value = s.city.elev ?? 0;
       u.uElevAge.value = s.city.elevAge ?? 0;
       u.uDim.value = dim * extraDim;
+      const fo = s.city.focus ?? [0, 0, 1e5];
+      u.uFocus.value.set(fo[0], fo[1], fo[2]);
+      u.uIso.value = s.city.iso ?? 0;
+      u.uLampK.value = s.city.lampK ?? 1;
     };
     setB(this.bMat, s.city.lights, s.city.dim ?? 1);
     this.bMat.uniforms.uHide.value = s.city.hideEast ? 9 : -99;
+    {
+      const fo = s.city.focus ?? [0, 0, 1e5];
+      this.groundU.uFocus.value.set(fo[0], fo[1], fo[2]);
+      this.groundU.uIso.value = s.city.iso ?? 0;
+    }
 
     const gu = this.groundU;
     gu.uTime.value = t;
@@ -573,10 +712,24 @@ class Engine {
     gu.uDarkAmt.value = s.city.darkAmt ?? 0;
     gu.uDim.value = dim;
 
-    // the old walk-up next door (and its rebuild)
-    const ov = s.old?.vis ?? 0;
-    this.old.mesh.visible = ov > 0.001;
+    // the walk-up beside the hero (it rises out of the ground for the comparison)
+    const wv = s.walkup?.vis ?? 0;
+    this.old.mesh.visible = wv > 0.001;
     this.oldLine.visible = false;
+    if (s.walkup && wv > 0.001) {
+      const ob = this.old.aB.array as Float32Array;
+      ob[2] = 6 * FH;
+      this.old.aB.needsUpdate = true;
+      const oc = this.old.aC.array as Float32Array;
+      oc[3] = 1 - s.walkup.rise;
+      this.old.aC.needsUpdate = true;
+      setB(this.old.mesh.material as THREE.ShaderMaterial, 1.0);
+      const om = (this.old.mesh.material as THREE.ShaderMaterial).uniforms;
+      om.uElev.value = 0;
+      om.uIso.value = 0;
+    }
+    const ov = s.old?.vis ?? 0;
+    if (!s.walkup) this.old.mesh.visible = ov > 0.001;
     if (s.old && ov > 0.001) {
       const ob = this.old.aB.array as Float32Array;
       ob[2] = s.old.floors * FH;
@@ -607,6 +760,10 @@ class Engine {
     this.hhTex.needsUpdate = true;
     this.hh2Data.set(he.hh2);
     this.hh2Tex.needsUpdate = true;
+    if (he.hh3) this.hh3Data.set(he.hh3);
+    else this.hh3Data.fill(0);
+    this.hh3Tex.needsUpdate = true;
+    this.roomMat.uniforms.uOwners.value = he.owners ?? 0;
     const hc = this.hero.aC.array as Float32Array;
     hc[3] = 1 - he.built;
     this.hero.aC.needsUpdate = true;
@@ -742,10 +899,86 @@ class Engine {
     const lpm = this.lampHeads.material as THREE.ShaderMaterial;
     lpm.uniforms.uOpacity.value = 0.55 * night * dim * (s.city.dim ?? 1);
 
+    // fire
+    const sv = s.smoke?.vis ?? 0;
+    this.smoke.visible = sv > 0.001;
+    this.smokeMat.uniforms.uOpacity.value = sv;
+    this.smokeMat.uniforms.uLevel.value = s.smoke?.level ?? 0;
+    this.smokeMat.uniforms.uTime.value = t;
+    const lv = s.ladder?.vis ?? 0;
+    this.ladder.visible = this.truck.visible = lv > 0.001;
+    if (lv > 0.001) {
+      const base = new THREE.Vector3(-34, 3.4, 40);
+      const tip = new THREE.Vector3(-15, 50, 8.5);
+      const dir = tip.clone().sub(base);
+      const len = dir.length() * Math.max(0.02, s.ladder!.ext);
+      this.ladder.position.copy(base);
+      this.ladder.lookAt(tip);
+      this.ladder.scale.set(1, 1, len);
+      this.ladderMat.opacity = 0.95 * lv;
+      (this.truck.material as THREE.MeshBasicMaterial).opacity = lv;
+    }
+    const av = s.alarms?.vis ?? 0;
+    this.alarms.visible = av > 0.001;
+    if (s.alarms && av > 0.001) {
+      const aa = this.alarms.geometry.getAttribute("aAlpha") as THREE.BufferAttribute;
+      (aa.array as Float32Array).set(s.alarms.alive);
+      aa.needsUpdate = true;
+      (this.alarms.material as THREE.ShaderMaterial).uniforms.uOpacity.value = av;
+    }
+    const cv2 = s.climbers?.vis ?? 0;
+    this.climbers.visible = cv2 > 0.001;
+    if (s.climbers && cv2 > 0.001) {
+      const pa = this.climbers.geometry.getAttribute("position") as THREE.BufferAttribute;
+      const al = this.climbers.geometry.getAttribute("aAlpha") as THREE.BufferAttribute;
+      const P3 = pa.array as Float32Array;
+      const A1 = al.array as Float32Array;
+      for (let i = 0; i < CLIMBERS; i++) {
+        // each climber is a few floors up the zigzag stair, moving up at about a floor every 2.5 s
+        const start = ((i * 0.6180339) % 1) * s.climbers.top;
+        const sp = 0.32 + 0.12 * ((i * 0.381966) % 1);
+        const pos = Math.min(s.climbers.top, start + s.climbers.t * sp);
+        const f = Math.floor(pos);
+        const fr = pos - f;
+        const y = f * FH + 0.6;
+        let x: number;
+        let z: number;
+        let yy: number;
+        if (fr < 0.5) {
+          const k = fr / 0.5;
+          x = 3 + 4 * k;
+          z = -1.2;
+          yy = y + (FH / 2) * k;
+        } else {
+          const k = (fr - 0.5) / 0.5;
+          x = 7 - 4 * k;
+          z = -4.2;
+          yy = y + FH / 2 + (FH / 2) * k;
+        }
+        P3.set([x, yy, z], i * 3);
+        A1[i] = 1;
+      }
+      pa.needsUpdate = true;
+      al.needsUpdate = true;
+      (this.climbers.material as THREE.ShaderMaterial).uniforms.uOpacity.value = cv2;
+    }
+    const fs = s.fireSys ?? 0;
+    this.fireRiser.visible = this.firePump.visible = fs > 0.001;
+    this.fireRiserMat.uniforms.uOpacity.value = 1.1 * fs;
+    this.fireRiserMat.uniforms.uLevel.value = 1e4;
+    this.fireRiserMat.uniforms.uTime.value = t;
+    this.firePumpMat.uniforms.uOpacity.value = 0.6 * fs;
+    this.firePumpMat.uniforms.uLevel.value = 1e4;
+
     setCamera(this.camera, s.cam);
     this.sky.position.copy(this.camera.position);
     this.renderer.toneMappingExposure = s.exposure ?? 1.0;
     this.bloom.strength = s.bloom ?? 0.42;
+    const gu2 = this.grade.uniforms;
+    gu2.uTime.value = t;
+    gu2.uVig.value = s.grade?.vig ?? 0.45;
+    gu2.uGrain.value = s.grade?.grain ?? 0.022;
+    gu2.uFade.value = s.grade?.fade ?? 0;
     this.composer.render();
     this.renderer.getContext().finish();
   }

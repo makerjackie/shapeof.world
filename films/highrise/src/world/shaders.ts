@@ -60,6 +60,9 @@ uniform float uPatch;
 uniform float uElev;
 uniform float uElevAge;
 uniform float uDim; // whole layer dimmed (behind the hero in close-ups)
+uniform vec3 uFocus; // x, z, radius: buildings beyond the radius sink into the haze (a depth-of-field stand-in)
+uniform float uIso;
+uniform float uLampK; // window lamp brightness for the city
 #ifdef HERO
 uniform sampler2D uHH; // 4 x 33 households: r lit, g voted yes, b voted no, a gone
 uniform float uXray;
@@ -121,7 +124,9 @@ void main() {
   } else if (kind > 3.5 && kind < 4.5) {
     // lift machine rooms and tanks on the roofs: plain walls
     col = paint * (amb * 0.8 + sun) + uSkyHor * 0.012;
-    col = fogIt(col, camD, uFogC, uFogD, 0.0) * uDim;
+    col = fogIt(col, camD, uFogC, uFogD, 0.0);
+    float isoM = uIso * smoothstep(uFocus.z, uFocus.z * 2.6 + 40.0, length(vA.xy - uFocus.xy));
+    col = mix(col, uFogC * 0.55 + col * 0.22, isoM * 0.82) * uDim;
     gl_FragColor = vec4(clamp(col, vec3(0.0), vec3(8.0)), alpha);
     return;
   } else {
@@ -320,15 +325,28 @@ void main() {
     float cutE = (1.0 - smoothstep(0.0, 0.35, abs(y - uPeelY))) * step(uPeelY, hgt - 0.05) * (longF ? 1.0 : 0.0);
     col += vec3(1.0, 0.78, 0.45) * cutE * 1.6;
     // floors above the reach of a ladder truck
-    col = mix(col, col * 0.45 + vec3(0.42, 0.05, 0.04), uFire * step(uFireY, y) * 0.65);
+    col = mix(col, col * 0.8 + vec3(0.2, 0.02, 0.015), uFire * smoothstep(uFireY, uFireY + 8.0, y) * 0.32);
 #endif
     float isLight = clamp(glass * lit, 0.0, 1.0);
+#ifndef HERO
+    col *= mix(1.0, uLampK, isLight);
+#endif
     col = fogIt(col, camD, uFogC, uFogD, isLight * 0.5);
+#ifndef HERO
+    // away from the subject the city sinks into a soft haze, lights fade to embers
+    float iso = uIso * smoothstep(uFocus.z, uFocus.z * 2.6 + 40.0, length(vA.xy - uFocus.xy));
+    col = mix(col, uFogC * 0.55 + col * 0.22, iso * 0.82);
+#endif
     col *= uDim;
     gl_FragColor = vec4(clamp(col, vec3(0.0), vec3(8.0)), alpha);
     return;
   }
-  col = fogIt(col, camD, uFogC, uFogD, 0.0) * uDim;
+  col = fogIt(col, camD, uFogC, uFogD, 0.0);
+#ifndef HERO
+  float isoR = uIso * smoothstep(uFocus.z, uFocus.z * 2.6 + 40.0, length(vA.xy - uFocus.xy));
+  col = mix(col, uFogC * 0.55 + col * 0.22, isoR * 0.82);
+#endif
+  col *= uDim;
   gl_FragColor = vec4(clamp(col, vec3(0.0), vec3(8.0)), alpha);
 }
 `;
@@ -359,6 +377,8 @@ uniform float uSeaZ;
 uniform vec2 uSiteC;
 uniform float uSiteR;
 uniform float uRiver;
+uniform vec3 uFocus;
+uniform float uIso;
 varying vec3 vW;
 ${COMMON}
 
@@ -393,7 +413,14 @@ void main() {
   vec3 grass = mix(vec3(0.03, 0.045, 0.035), vec3(0.05, 0.06, 0.045), vnoise(p * 0.02));
   vec3 paving = vec3(0.05, 0.05, 0.052);
   vec3 ground = mix(grass, paving, 0.35 + 0.3 * vnoise(p * 0.05));
+  // estate gardens: clumps of tree canopy, a little lighter at the top of each crown, lamplit paths between
+  float canopyN = vnoise(p * 0.09) * 0.65 + vnoise(p * 0.31) * 0.35;
+  float canopy = smoothstep(0.56, 0.6 + ex * 0.02, canopyN) * (1.0 - far);
+  vec3 tree = mix(vec3(0.018, 0.03, 0.022), vec3(0.04, 0.06, 0.04), smoothstep(0.6, 0.78, canopyN));
+  ground = mix(ground, tree, canopy * 0.85);
   ground *= mix(0.9, 0.18, night);
+  float pathL = band(fract(p.x / 37.0 + 0.5 * floor(p.y / 74.0)) * 37.0, 17.6, 19.4, ex) * (1.0 - canopy);
+  ground += vec3(1.0, 0.62, 0.32) * pathL * 0.01 * night * (1.0 - far);
   vec3 asphalt = vec3(0.022, 0.023, 0.026) * mix(1.6, 0.6, night);
   vec3 col = mix(ground, asphalt, road * urban);
 
@@ -446,7 +473,9 @@ void main() {
     col = mix(col, sea, shore);
   }
 
-  col = fogIt(col, camD, uFogC, uFogD, 0.0) * uDim;
+  col = fogIt(col, camD, uFogC, uFogD, 0.0);
+  float iso = uIso * smoothstep(uFocus.z, uFocus.z * 2.6 + 40.0, length(p - uFocus.xy));
+  col = mix(col, uFogC * 0.5 + col * 0.2, iso * 0.8) * uDim;
   gl_FragColor = vec4(max(col, vec3(0.0)), 1.0);
 }
 `;
@@ -479,10 +508,17 @@ void main() {
   float above = smoothstep(-0.005, 0.04, e);
   col += uGlow * west * west * (1.0 - smoothstep(0.0, 0.35, e)) * (1.0 - uNight * 0.85) * above;
   col += vec3(0.35, 0.18, 0.08) * 0.12 * uNight * (1.0 - smoothstep(-0.02, 0.12, e));
+  // a thin deck of cloud, lit from below by the city
+  float az = atan(d.z, d.x);
+  vec2 cp = vec2(az * 2.2, e * 9.0 / max(0.08, e + 0.06));
+  float cl = vnoise(cp * vec2(1.0, 0.7)) * 0.6 + vnoise(cp * 2.3 + 3.1) * 0.3 + vnoise(cp * 5.1 + 7.7) * 0.1;
+  float cloud = smoothstep(0.5, 0.78, cl) * smoothstep(0.015, 0.07, e) * (1.0 - smoothstep(0.22, 0.5, e));
+  vec3 cloudC = mix(uMid * 1.6 + vec3(0.02, 0.016, 0.02), vec3(0.16, 0.1, 0.08), uNight * (1.0 - smoothstep(0.03, 0.3, e)));
+  col = mix(col, cloudC, cloud * 0.55);
   // a few stars
   vec2 sp = vec2(atan(d.z, d.x) * 180.0, e * 300.0);
   float st = step(0.9965, h21(floor(sp))) * smoothstep(0.08, 0.4, e) * uNight;
-  col += vec3(0.9) * st * 0.6;
+  col += vec3(0.9) * st * 0.5 * (1.0 - cloud);
   col = max(col, vec3(0.0)) * uDim;
   gl_FragColor = vec4(col, 1.0);
 }
@@ -608,11 +644,13 @@ void main() {
 export const ROOM_FRAG = /* glsl */ `
 uniform sampler2D uHH;  // lit, yes, no, gone
 uniform sampler2D uHH2; // tenant, subdivided, noise, mark
+uniform sampler2D uHH3; // unpaid, smoke, cold (power cut, nobody can get home), spare
 uniform float uTime;
 uniform float uNight;
 uniform float uVote;
 uniform float uAge;
 uniform float uDim;
+uniform float uOwners; // every flat in its own owner's colour
 uniform vec3 uFogC;
 uniform float uFogD;
 varying vec3 vP;
@@ -621,6 +659,10 @@ varying vec4 vS;
 varying float vU;
 varying vec3 vW;
 ${COMMON}
+vec3 hsv(float h, float s, float v) {
+  vec3 k = clamp(abs(mod(h * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
+  return v * mix(vec3(1.0), k, s);
+}
 void main() {
   vec3 n = normalize(vN);
   float unit = mod(vU, 4.0);
@@ -628,6 +670,7 @@ void main() {
   vec2 tc = vec2((unit + 0.5) / 4.0, (fl + 0.5) / 33.0);
   vec4 a = texture2D(uHH, tc);
   vec4 b = texture2D(uHH2, tc);
+  vec4 c3 = texture2D(uHH3, tc);
   float lit = a.r;
   float yes = a.g;
   float no = a.b;
@@ -636,6 +679,9 @@ void main() {
   float sub = b.g;
   float noise = b.b;
   float mark = b.a;
+  float unpaid = c3.r;
+  float smoke = c3.g;
+  float cold = c3.b;
   float W = vS.x;
   float Hh = vS.y;
   float D = vS.z;
@@ -647,13 +693,17 @@ void main() {
   else if (n.z < -0.5) { face = 2.0; uv = vec2(vP.x / W + 0.5, vP.y / Hh); }
 
   float pickW = h11(seed * 7.3);
-  vec3 wallC = pickW < 0.45 ? vec3(0.62, 0.55, 0.46) : (pickW < 0.75 ? vec3(0.5, 0.53, 0.56) : vec3(0.58, 0.47, 0.4));
-  vec3 floorC = mix(vec3(0.34, 0.23, 0.15), vec3(0.45, 0.42, 0.38), step(0.5, h11(seed * 3.1)));
-  vec3 lampC = mix(vec3(1.0, 0.7, 0.4), vec3(0.82, 0.9, 1.0), tenant);
+  vec3 wallC = pickW < 0.3 ? vec3(0.66, 0.58, 0.48) : (pickW < 0.55 ? vec3(0.56, 0.58, 0.58) : (pickW < 0.8 ? vec3(0.62, 0.5, 0.42) : vec3(0.52, 0.56, 0.5)));
+  vec3 floorC = mix(vec3(0.36, 0.24, 0.15), vec3(0.46, 0.43, 0.39), step(0.5, h11(seed * 3.1)));
+  float warm = h11(seed * 11.0 + fl);
+  vec3 lampC = warm < 0.7 ? vec3(1.0, 0.68, 0.38) : vec3(1.0, 0.82, 0.62);
+  lampC = mix(lampC, vec3(0.82, 0.9, 1.0), tenant);
+  vec3 owner = hsv(h11(vU * 3.17 + 0.3), 0.46, 1.0);
+  lampC = mix(lampC, owner, uOwners * 0.7);
   vec3 dl = vP - vec3(0.0, Hh - 0.1, 0.0);
   float fall = 1.0 / (1.0 + dot(dl, dl) * 0.11);
-  float bright = 0.45 + 0.6 * h11(seed * 13.0 + fl * 0.37);
-  float I = lit * bright * (0.25 + 1.05 * fall);
+  float bright = 0.5 + 0.5 * h11(seed * 13.0 + fl * 0.37);
+  float I = lit * bright * (0.22 + 1.1 * fall);
   if (sub > 0.5) {
     float cell = floor(clamp(vP.x / W + 0.5, 0.0, 0.999) * 3.0);
     float on = step(0.3, h11(cell + seed * 9.0 + fl));
@@ -661,10 +711,14 @@ void main() {
     lampC = mix(vec3(1.0, 0.86, 0.7), vec3(0.78, 0.9, 1.0), h11(cell * 3.0 + seed));
   }
   vec3 base = face < 0.5 ? floorC : (face < 1.5 ? vec3(0.92, 0.9, 0.86) : wallC);
-  I *= 1.0 + 0.35 * max(tenant, sub);
-  vec3 col = base * (0.02 + 0.03 * (1.0 - uNight)) + base * lampC * I * 0.86;
-  // depth: the back of the room is darker than the front, where the cut is
-  col *= mix(0.62, 1.0, clamp((vP.z / D) + 0.5, 0.0, 1.0));
+  I *= 1.0 + 0.3 * max(tenant, sub);
+  vec3 col = base * (0.018 + 0.03 * (1.0 - uNight)) + base * lampC * I * 0.86;
+  // depth: the back of the room is darker than the open front
+  col *= mix(0.58, 1.0, clamp((vP.z / D) + 0.5, 0.0, 1.0));
+  // soft corners: light falls off into the edges of each face
+  float eU = min(uv.x, 1.0 - uv.x);
+  float eV = min(uv.y, 1.0 - uv.y);
+  col *= 0.5 + 0.5 * smoothstep(0.0, 0.2, min(eU, eV));
 
   if (face > 1.5 && face < 2.5) {
     float x = uv.x;
@@ -678,14 +732,17 @@ void main() {
     float tv = band(x, 0.62, 0.84, ex) * band(y, 0.95, 1.6, ey);
     float shelf = band(x, 0.88, 0.96, ex) * band(y, 0.0, 2.1, ey);
     float pic = band(x, 0.18, 0.32, ex) * band(y, 1.35, 1.85, ey);
+    float plant = band(x, 0.045, 0.085, ex) * band(y, 0.0, 1.1 + 0.3 * h11(seed * 5.0), ey) * step(0.5, h11(seed * 2.3));
     col = mix(col, col * 0.4, clamp(sofa + shelf, 0.0, 1.0) * furn);
     col = mix(col, vec3(0.03, 0.05, 0.08) + vec3(0.25, 0.4, 0.6) * 0.12 * lit, tv * furn);
     col = mix(col, col * 0.6 + vec3(0.1, 0.07, 0.04) * lit, pic * furn);
+    col = mix(col, vec3(0.03, 0.06, 0.035) * (0.4 + I), plant * furn);
     float outer = step(unit, 0.5) + step(2.5, unit);
     float win = outer * band(x, 0.46, 0.58, ex) * band(y, 0.9, 2.2, ey) * fine;
     col = mix(col, vec3(0.015, 0.02, 0.04) + vec3(0.05, 0.06, 0.1) * (1.0 - uNight), win);
     float p1 = sub * fine * (band(x, 0.325, 0.343, ex) + band(x, 0.657, 0.675, ex));
     col = mix(col, vec3(0.35, 0.33, 0.3) * (0.15 + 0.5 * I), clamp(p1, 0.0, 1.0));
+    col = mix(col, owner * (0.08 + 0.5 * I), uOwners * 0.35);
   }
   if (face > 0.5 && face < 1.5) {
     float r = length(vP.xz);
@@ -695,7 +752,9 @@ void main() {
     col += lampC * I * base * 0.25 * (1.0 - smoothstep(0.0, 4.0, length(vP.xz)));
   }
   // a home that has gone dark: bare and dusty
-  col = mix(col, base * 0.035 + vec3(0.006), gone);
+  col = mix(col, base * 0.03 + vec3(0.005), gone);
+  // the power is cut: nobody can get home up here
+  col = mix(col, col * 0.18 + vec3(0.012, 0.018, 0.03), cold);
   if (fl < 0.5) {
     vec3 lobby = vec3(0.62, 0.58, 0.52) * (0.35 + 0.5 * fall) * vec3(1.0, 0.85, 0.65);
     col = lobby * (1.0 - 0.5 * gone);
@@ -703,14 +762,18 @@ void main() {
     no = 0.0;
     noise = 0.0;
     mark = 0.0;
+    unpaid = 0.0;
   }
-  // votes, the noise, "you"
+  // votes, the noise, "you", fees not paid, smoke
   vec3 vc = yes * vec3(0.12, 0.9, 0.48) + no * vec3(1.0, 0.18, 0.2);
   float va = clamp(yes + no, 0.0, 1.0) * uVote;
   float onBack = (face > 1.5 && face < 2.5) ? 0.95 : 0.55;
   col = mix(col, vc * onBack, va * 0.88);
   col += vec3(1.0, 0.22, 0.12) * noise * 1.1;
   col = mix(col, col * 0.7 + vec3(1.0, 0.72, 0.25) * 0.7, mark * 0.8);
+  col = mix(col, vec3(dot(col, vec3(0.3))) * 0.45 + vec3(0.02), unpaid * 0.85);
+  float sw = vnoise(vec2(vP.x * 0.7 + uTime * 0.3, vP.y * 1.3 - uTime * 0.8));
+  col = mix(col, vec3(0.075, 0.07, 0.068) * (0.7 + 0.6 * sw) + vec3(0.5, 0.16, 0.05) * 0.04 * (1.0 - uv.y), smoke * 0.9);
   col *= 1.0 - 0.3 * uAge * (1.0 - 0.6 * lit);
   float camD = length(vW - cameraPosition);
   col = fogIt(col, camD, uFogC, uFogD, 0.3) * uDim;
@@ -718,13 +781,16 @@ void main() {
 }
 `;
 
-// Slabs and party walls of the cut-open tower: bare concrete, the cut faces catch a little light.
+// Slabs and party walls of the cut-open tower, drawn like a section: the cut faces are pale and crisp (poché),
+// the slab soffits dark, so every floor reads as a clean line between the rooms.
 export const CONC_VERT = /* glsl */ `
 varying vec3 vN;
 varying vec3 vW;
+varying vec3 vL;
 void main() {
   vec4 wp = modelMatrix * instanceMatrix * vec4(position, 1.0);
   vW = wp.xyz;
+  vL = position;
   vN = normalize(mat3(modelMatrix * instanceMatrix) * normal);
   gl_Position = projectionMatrix * viewMatrix * wp;
 }
@@ -736,15 +802,20 @@ uniform float uDim;
 uniform float uAge;
 uniform vec3 uFogC;
 uniform float uFogD;
+uniform float uCut; // 1 while the tower is cut open: the section faces glow pale
 varying vec3 vN;
 varying vec3 vW;
+varying vec3 vL;
 ${COMMON}
 void main() {
   vec3 n = normalize(vN);
   vec3 c = vec3(0.56, 0.54, 0.5) * (1.0 - 0.25 * uAge);
   float front = clamp(n.z, 0.0, 1.0);
-  float lightK = 0.05 + 0.1 * (1.0 - uNight) + 0.12 * front + 0.05 * clamp(n.y, 0.0, 1.0);
-  vec3 col = c * lightK + vec3(1.0, 0.7, 0.45) * 0.02 * front;
+  float lightK = 0.05 + 0.1 * (1.0 - uNight) + 0.05 * clamp(n.y, 0.0, 1.0);
+  vec3 col = c * lightK;
+  // the section cut: a pale warm face, brightest at its edges
+  vec3 cut = vec3(0.86, 0.8, 0.7) * (0.22 + 0.1 * (1.0 - uNight));
+  col = mix(col, cut, front * uCut);
   float camD = length(vW - cameraPosition);
   col = fogIt(col, camD, uFogC, uFogD, 0.0) * uDim;
   gl_FragColor = vec4(col, 1.0);
@@ -762,5 +833,87 @@ void main() {
   float rim = 1.0 - abs(dot(normalize(vN), v));
   vec3 col = mix(vec3(0.035, 0.03, 0.03), vec3(0.3, 0.29, 0.28), uGrey) + vec3(1.0, 0.68, 0.38) * rim * rim * rim * 0.12;
   gl_FragColor = vec4(col * uDim, 1.0);
+}
+`;
+
+// The finishing pass, after tone mapping: a gentle split tone (cool shadows, warm highlights), a soft S-curve,
+// a vignette and a fine film grain that moves every frame.
+export const GRADE_VERT = /* glsl */ `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+export const GRADE_FRAG = /* glsl */ `
+uniform sampler2D tDiffuse;
+uniform float uTime;
+uniform float uVig;
+uniform float uGrain;
+uniform float uFade; // fade to black
+varying vec2 vUv;
+float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+void main() {
+  vec3 col = texture2D(tDiffuse, vUv).rgb;
+  float l = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  col += vec3(0.006, 0.012, 0.03) * (1.0 - smoothstep(0.0, 0.3, l));
+  col *= mix(vec3(1.0), vec3(1.03, 1.0, 0.95), smoothstep(0.35, 0.9, l));
+  col = mix(col, col * col * (3.0 - 2.0 * col), 0.22);
+  vec2 q = vUv - 0.5;
+  q.x *= 1.777;
+  col *= 1.0 - uVig * smoothstep(0.38, 1.08, length(q));
+  float g = hash(vUv * vec2(1920.0, 1080.0) + fract(uTime * 7.31) * 113.0) - 0.5;
+  col += g * uGrain * (0.6 + 0.4 * (1.0 - l));
+  col *= 1.0 - uFade;
+  gl_FragColor = vec4(max(col, vec3(0.0)), 1.0);
+}
+`;
+
+// Smoke climbing the core: dense, slow-swirling grey from the ground up to uLevel, a red glow at its foot.
+export const SMOKE_FRAG = /* glsl */ `
+uniform float uOpacity;
+uniform float uLevel;
+uniform float uTime;
+varying vec3 vW;
+varying vec3 vP;
+varying vec3 vN;
+${COMMON}
+void main() {
+  float y = vW.y;
+  float top = 1.0 - smoothstep(uLevel - 6.0, uLevel + 2.0, y);
+  float sw = vnoise(vec2(vW.x * 0.35 + sin(y * 0.05) * 2.0, y * 0.12 - uTime * 1.6)) * 0.6 + vnoise(vec2(vW.z * 0.5, y * 0.31 - uTime * 2.4)) * 0.4;
+  float dens = top * (0.55 + 0.45 * sw);
+  // lit from below by the fire and from the sides by the rooms: a warm grey, darker in its core
+  vec3 col = vec3(0.15, 0.135, 0.13) * (0.4 + 0.9 * sw * sw) + vec3(1.0, 0.34, 0.08) * (0.05 + 1.5 * exp(-y / 12.0));
+  float edge = 1.0 - smoothstep(2.6, 4.6, abs(vW.x));
+  gl_FragColor = vec4(col, clamp(dens * uOpacity * (0.35 + 0.6 * edge), 0.0, 0.92));
+}
+`;
+
+// Points with their own alpha (fire alarms on every floor; people on the stairs).
+export const ADOT_VERT = /* glsl */ `
+attribute float aAlpha;
+attribute float aSize;
+varying float vA;
+void main() {
+  vec4 mv = viewMatrix * modelMatrix * vec4(position, 1.0);
+  gl_Position = projectionMatrix * mv;
+  vA = aAlpha;
+  gl_PointSize = clamp(aSize * 900.0 / max(1.0, -mv.z), 1.5, 48.0);
+}
+`;
+
+export const ADOT_FRAG = /* glsl */ `
+uniform vec3 uColor;
+uniform float uOpacity;
+varying float vA;
+void main() {
+  vec2 q = gl_PointCoord - 0.5;
+  float r = length(q) * 2.0;
+  float core = 1.0 - smoothstep(0.0, 0.45, r);
+  float halo = 1.0 - smoothstep(0.0, 1.0, r);
+  float a = (core * 0.9 + halo * halo * 0.5) * uOpacity * vA;
+  gl_FragColor = vec4(uColor * a, a);
 }
 `;

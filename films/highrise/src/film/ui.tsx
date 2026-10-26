@@ -148,6 +148,21 @@ export const Pin: React.FC<{
   );
 };
 
+// A soft pool of shade behind a block of type, fading with it: tl / tc / c / r / bl.
+export const Scrim: React.FC<{ at: number; out: number; kind: "tl" | "tc" | "c" | "r" | "bl"; k?: number }> = ({ at, out, kind, k = 0.62 }) => {
+  const t = useT();
+  const o = Math.min(interpolate(t, [at - 0.2, at + 0.4], [0, 1], CL), interpolate(t, [out - 0.3, out + 0.2], [1, 0], CL));
+  if (o <= 0) return null;
+  const shape = {
+    tl: "ellipse 62% 58% at 0% 0%",
+    tc: "ellipse 70% 46% at 50% 0%",
+    c: "ellipse 58% 46% at 50% 50%",
+    r: "ellipse 52% 72% at 100% 50%",
+    bl: "ellipse 62% 50% at 0% 100%",
+  }[kind];
+  return <div style={{ position: "absolute", inset: 0, opacity: o, background: `radial-gradient(${shape}, rgba(3,5,10,${k}), rgba(3,5,10,${k * 0.55}) 40%, rgba(3,5,10,0) 78%)` }} />;
+};
+
 export const fmt = (v: number, d = 0) => v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
 export const fade = (t: number, a: number, b: number, f = 0.35) => Math.min(clamp01((t - a) / f), clamp01((b - t) / f));
@@ -184,15 +199,14 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const o = Math.min(interpolate(t, [at, at + 0.4], [0, 1], CL), interpolate(t, [out - 0.35, out], [1, 0], CL));
   if (o <= 0) return null;
   const rows = [
-    "高层住宅约 102.3 万栋（2023 年底）：中国消防协会科普教育工作委员会委员许传升，据《中国新闻周刊》2024",
-    "《建筑设计防火规范》GB 50016；《民法典》第 278 条；第七次全国人口普查（家庭户 2.62 人）",
-    "得房率：中国新闻网 2022-08；云梯高度：第一财经；电梯费用与维保：南方都市报 2025-04",
-    "电梯数量：市场监管总局 2025、质检总局 2013；住房城乡建设部、财政部 2015 年通知",
-    "维护占物业费：中国物业管理协会；柳州东悦佳苑：南方周末（均据智谷趋势 2026-07）",
-    "物业撤场：中指研究院《2026 中国物业服务百强企业研究报告》（第一财经 2026-04）；房价：中指研究院 2025-12",
-    "维修资金：南京市住房保障和房产局 2017；新加坡建屋发展局；香港屋宇署；美国佛罗里达州法规 §718.116",
-    "购房年龄：贝壳研究院 2018；出生：《中国统计年鉴》、国家统计局 2026-01；美孚新邨：星岛头条 2025-10",
-    "照片：美孚新邨 Wpcpey（CC BY 4.0）· 城市与楼由代码逐帧生成，是示意 · 音乐《千年之后（氛围版）》",
+    "广安停梯：极目新闻 2025-03-20 · 高层住宅约 102.3 万栋（2023 年底）：许传升，据《中国新闻周刊》2024",
+    "哈尔滨利民学苑：中新网 2023-05 · 宏福苑：香港特区政府保安局 2026-01 · 南京明尚西苑：“2·23”火灾调查报告",
+    "云梯高度：第一财经 · 火灾探测报警产品寿命、上海排查：上海市应急管理局 沪应急函〔2024〕38 号",
+    "电梯数量：市场监管总局 2026-04、质检总局 2013 · 日本：国土交通省 2024、マンション総合調査 2023",
+    "物业费下调：界面新闻 2025-03 · 收缴率、物业撤场：中指研究院 2026 · 维修资金：南京 宁房物字〔2017〕159 号",
+    "北京老高层：新京报 2025-01-05、01-06 · 《民法典》第 278 条 · 住宅专项维修资金续交：各地管理办法",
+    "购房年龄：贝壳研究院 2018 · 出生：《中国统计年鉴》、国家统计局 2026-01 · 家庭户 2.62 人：七普",
+    "城市与楼由代码逐帧生成，是示意 · 音乐《千年之后（氛围版）》",
   ];
   return (
     <div style={{ position: "absolute", inset: 0, background: `rgba(5,6,8,${0.86 * o})`, opacity: o }}>

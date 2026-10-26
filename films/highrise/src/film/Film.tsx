@@ -1,45 +1,67 @@
-// 《高层住宅，几十年后会变成贫民窟吗？》v7: fifty years in the first five seconds, then one 33-floor tower cut
-// open — the everyday costs, and the three ledgers (money, rules, people) that decide how it ages (SCRIPT.md).
+// 《高层住宅，几十年后会变成贫民窟吗？》v8. One main line (SCRIPT.md): a high-rise is a machine that a hundred-odd
+// households must keep paying for together; it ages all at once, the money design is weak, every flat has its own
+// owner; those who can leave do, the machine stops, and the tower goes dark from the top down.
 import React from "react";
 import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { K } from "../theme";
-import { FILM_FRAMES, FPS, ramp, sf as b } from "../timing";
+import { FILM_FRAMES, FPS, lerp, ramp, sf as b } from "../timing";
 import { World } from "../world/World";
-import { Abroad, AgeCounter, Births, Budget, Chapter, CostMeter, ExodusGrid, FloorPlan, FloorsCounter, HookYear, LiftCount, NoiseRings, PassLegend, PhotoStage, PriceCompare, RushCounter, Tally, YouRing } from "./overlays";
-import { NOISE_SRC, REWIND, worldAt, YOU, yf } from "./state";
-import { At, BrandMark, EndCard, Line, Note, Pin, Sources } from "./ui";
+import { AgeCounter, Archive, Births, Budget, Crack, ExodusGrid, Japan, LiftCount, NoiseRings, PassLegend, Quote, RushCounter, ShanghaiDots, Tally, YearBadge, YouRing } from "./overlays";
+import { NOISE_SRC, T, worldAt, YOU, yf } from "./state";
+import { At, BrandMark, EndCard, Line, Note, Pin, Scrim, Sources } from "./ui";
 
 const G = K.gold;
 const L = K.lit;
-const S = 72;
-const S2 = 60;
-const Q = 112;
+const R = K.red;
+const S = 70;
+const S2 = 58;
+const H = 104;
+
+// one click per floor as the lights go out from the top (same curve as state.ts fromTop)
+const darkClicks = (f0: number, f1: number, vol: number) => {
+  const t0 = b(f0);
+  const t1 = b(f1);
+  const out: { id: string; t: number; vol: number }[] = [];
+  for (let idx = 0; idx < 26; idx++) {
+    // n(x) = 26 * x * (0.75 + 0.25x) = idx  →  x
+    const a = 0.25 * 26;
+    const c = -idx;
+    const x = (-0.75 * 26 + Math.sqrt(0.75 * 26 * 0.75 * 26 - 4 * a * c)) / (2 * a);
+    out.push({ id: "sfx-mechanical-14", t: lerp(t0, t1, x), vol: vol * (0.75 + 0.25 * ((idx * 0.618) % 1)) });
+  }
+  return out;
+};
 
 const SFX: { id: string; t: number; vol: number }[] = [
-  ...Array.from({ length: 16 }, (_, i) => ({ id: "sfx-mechanical-14", t: 0.15 + i * 0.32 * (1 - i * 0.025), vol: 0.13 })),
-  { id: "sfx-scifi-17", t: b(2.1), vol: 0.3 },
-  { id: "sfx-transition-07", t: REWIND[0] - 0.3, vol: 0.38 },
-  { id: "sfx-transition-19", t: b(10.5), vol: 0.22 },
-  { id: "sfx-transition-16", t: b(16.2), vol: 0.32 },
-  ...Array.from({ length: 6 }, (_, i) => ({ id: "sfx-mechanical-16", t: b(24.4) + i * 0.6, vol: 0.2 })),
-  { id: "sfx-foley-02", t: b(28.2), vol: 0.25 },
-  { id: "sfx-mechanical-18", t: b(31.8), vol: 0.25 },
-  { id: "sfx-mechanical-18", t: b(33.4), vol: 0.22 },
-  { id: "sfx-impact-08", t: b(35.6), vol: 0.3 },
-  ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-mechanical-14", t: b(39.4) + i * 0.5, vol: 0.1 })),
-  { id: "sfx-transition-05", t: b(44.6), vol: 0.25 },
-  { id: "sfx-impact-20", t: b(48.4), vol: 0.35 },
-  ...Array.from({ length: 12 }, (_, i) => ({ id: "sfx-impact-03", t: b(54) + i * 0.24, vol: 0.1 + (i % 4) * 0.02 })),
-  { id: "sfx-water-10", t: b(57.5), vol: 0.25 },
-  { id: "sfx-water-10", t: b(59.8), vol: 0.3 },
-  { id: "sfx-impact-20", t: b(64.3), vol: 0.35 },
-  ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-ui-13", t: b(66.4) + i * 0.42, vol: 0.1 })),
-  { id: "sfx-notification-18", t: b(68.8), vol: 0.22 },
-  { id: "sfx-scifi-17", t: b(73), vol: 0.3 },
-  { id: "sfx-foley-02", t: b(76.9), vol: 0.22 },
-  { id: "sfx-impact-20", t: b(80.4), vol: 0.35 },
-  { id: "sfx-transition-16", t: b(80.7), vol: 0.22 },
-  { id: "sfx-impact-19", t: b(119.5), vol: 0.3 },
+  ...darkClicks(T.hookDark[0], T.hookDark[1], 0.12),
+  { id: "sfx-scifi-17", t: b(T.hookX), vol: 0.28 },
+  { id: "sfx-transition-07", t: b(T.hookOut) + 0.2, vol: 0.34 },
+  { id: "sfx-transition-16", t: b(T.machine + 0.3), vol: 0.26 },
+  { id: "sfx-transition-19", t: b(T.walkup), vol: 0.2 },
+  { id: "sfx-scifi-17", t: b(T.cutPower), vol: 0.24 },
+  { id: "sfx-transition-16", t: b(T.village), vol: 0.3 },
+  ...Array.from({ length: 6 }, (_, i) => ({ id: "sfx-mechanical-16", t: b(T.noise) + i * 0.55, vol: 0.18 })),
+  { id: "sfx-mechanical-18", t: b(T.rush + 0.2), vol: 0.24 },
+  { id: "sfx-impact-11", t: b(T.crack + 0.5), vol: 0.26 },
+  { id: "sfx-impact-20", t: b(T.fire), vol: 0.32 },
+  { id: "sfx-transition-18", t: b(T.nanjing + 0.3), vol: 0.22 },
+  { id: "sfx-mechanical-08", t: b(T.ladder + 0.3), vol: 0.22 },
+  ...Array.from({ length: 8 }, (_, i) => ({ id: "sfx-ui-13", t: b(T.alarmsAge + 0.5) + i * 0.22, vol: 0.06 })),
+  { id: "sfx-impact-16", t: b(T.quote + 0.6), vol: 0.22 },
+  ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-mechanical-14", t: b(T.ageing + 0.2) + i * 0.48, vol: 0.08 })),
+  { id: "sfx-transition-05", t: b(T.lifts + 0.2), vol: 0.24 },
+  { id: "sfx-impact-20", t: b(T.money), vol: 0.32 },
+  ...Array.from({ length: 12 }, (_, i) => ({ id: "sfx-impact-03", t: b(T.fund + 0.25) + i * 0.22, vol: 0.09 + (i % 4) * 0.02 })),
+  { id: "sfx-water-10", t: b(T.drain + 0.2), vol: 0.24 },
+  { id: "sfx-water-10", t: b(T.drain + 0.9), vol: 0.2 },
+  { id: "sfx-transition-08", t: b(T.archive), vol: 0.22 },
+  { id: "sfx-impact-20", t: b(T.owners + 0.4), vol: 0.3 },
+  ...Array.from({ length: 10 }, (_, i) => ({ id: "sfx-ui-13", t: b(T.vote + 0.6) + i * 0.4, vol: 0.09 })),
+  { id: "sfx-notification-18", t: b(T.vote + 2.8), vol: 0.2 },
+  { id: "sfx-scifi-17", t: b(T.stop + 0.3), vol: 0.28 },
+  { id: "sfx-transition-15", t: b(T.leave), vol: 0.2 },
+  ...darkClicks(T.dark[0], T.dark[1], 0.1),
+  { id: "sfx-impact-19", t: b(T.you + 0.4), vol: 0.28 },
 ];
 
 export const Film: React.FC = () => {
@@ -49,8 +71,10 @@ export const Film: React.FC = () => {
   const cam = s.cam;
   const musicVol = (f: number) => {
     const tt = f / FPS;
-    return 0.92 * interpolate(tt, [b(122), FILM_FRAMES / FPS], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return 0.92 * interpolate(tt, [b(T.end - 0.2), FILM_FRAMES / FPS], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   };
+  const x0 = 120;
+  const y0 = 112;
   return (
     <AbsoluteFill style={{ background: "#040508", overflow: "hidden" }}>
       <Audio src={staticFile("music.wav")} volume={musicVol} />
@@ -60,218 +84,284 @@ export const Film: React.FC = () => {
         </Sequence>
       ))}
       <World s={s} />
-      <PhotoStage w={900} src="photos/meifoo-2021.jpg" at={b(100.2)} out={b(103.8)} zoom={[1.0, 1.08]} focus={[52, 62]} caption="美孚新邨，香港荔枝角，2021 年" credit="照片：Wpcpey · CC BY 4.0" />
 
-      {/* ---------- hook: fifty years in five seconds ---------- */}
-      <HookYear at={0} out={REWIND[1] + 0.2} />
-      <At x={110} y={110}>
-        <Line at={0.25} out={b(2.5)} size={96} serif weight={900} stagger={0.03} parts={["这栋楼，"]} />
-        <Line at={0.55} out={b(2.5)} size={96} serif weight={900} stagger={0.03} parts={[{ t: "50 年", c: G }, "后会怎样？"]} />
+      {/* ---------- 0 hook: the lights go out from the top ---------- */}
+      <Scrim at={0} out={b(T.hookX)} kind="tl" k={0.5} />
+      <At x={x0} y={y0}>
+        <Line at={0.2} out={b(T.hookX + 0.1)} size={98} serif weight={900} stagger={0.03} parts={["高层住宅，几十年后"]} />
+        <Line at={0.6} out={b(T.hookX + 0.1)} size={98} serif weight={900} stagger={0.03} parts={["会变成", { t: "贫民窟", c: R }, "吗？"]} />
       </At>
-      <Note at={0.3} out={b(4.3)}>示意：一栋普通的 33 层住宅</Note>
-      <At x={110} y={110}>
-        <Line at={b(2.6)} out={b(4.3)} size={88} serif weight={700} parts={["有人说：会变成", { t: "贫民窟", c: K.red }, "。"]} />
+      <Note at={0.4} out={b(T.hookX)}>示意：一栋普通的 33 层住宅</Note>
+      <Scrim at={b(T.hookX + 0.2)} out={b(T.hookOut)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.hookX + 0.2)} out={b(T.hookOut)} size={S2} parts={["去年 3 月，四川广安，一个高层小区。"]} />
+        <Line at={b(T.hookX + 0.9)} out={b(T.hookOut)} size={S2} parts={["物业费每平米 ", { t: "8 毛", c: G }, "，只收上来四成。"]} />
+        <Line at={b(T.hookX + 1.7)} out={b(T.hookOut)} size={S2} parts={["物业走了，电梯没人维保，", { t: "被责令停用", c: R }, "。"]} />
+        <Line at={b(T.hookX + 2.6)} out={b(T.hookOut)} size={S} parts={[{ t: "20 到 30 楼", c: L }, "的人，每天爬楼。"]} />
       </At>
-      <At x={110} y={110}>
-        <Line at={b(4.6)} out={b(6.3)} size={S} parts={["中国约有 ", { t: "102 万栋", c: G }, "高层住宅。"]} />
+      <Note at={b(T.hookX + 0.2)} out={b(T.hookOut)}>极目新闻 2025-03-20：四川广安市广安区北辰街道一高层小区，物业费每月每平方米 0.8 元，收缴率约 40%</Note>
+      <Scrim at={b(T.hookOut + 0.3)} out={b(T.machine + 0.2)} kind="tl" k={0.5} />
+      <At x={x0} y={y0}>
+        <Line at={b(T.hookOut + 0.3)} out={b(T.machine + 0.1)} size={S} parts={["中国有 ", { t: "102 万栋", c: G }, "高层住宅。"]} />
+        <Line at={b(T.hookOut + 0.9)} out={b(T.machine + 0.1)} size={S} parts={["一栋高楼，靠什么活着？"]} />
       </At>
-      <Note at={b(4.6)} out={b(6.3)}>约 102.3 万栋，截至 2023 年底（中国消防协会科普教育工作委员会委员许传升，据《中国新闻周刊》）</Note>
-      <At x={960} y={420} align="center">
-        <Line at={b(6.4)} out={b(8.4)} size={Q} serif weight={700} parts={["会吗？"]} />
-        <Line at={b(6.9)} out={b(8.4)} size={56} parts={["先看懂一栋高楼。"]} />
-      </At>
+      <Note at={b(T.hookOut + 0.3)} out={b(T.machine)}>约 102.3 万栋，截至 2023 年底（中国消防协会科普教育工作委员会委员许传升，据《中国新闻周刊》）</Note>
 
-      {/* ---------- one tower ---------- */}
-      <At x={110} y={110}>
-        <Line at={b(8.6)} out={b(9.9)} size={S} parts={[{ t: "33", c: L }, " 层，", { t: "128", c: L }, " 户，三百多人。"]} />
-      </At>
-      <Note at={b(8.6)} out={b(9.9)}>示意：首层大堂，32 层住人，一层 4 户；每户按 2.62 人（第七次全国人口普查）估算</Note>
-      <At x={110} y={110}>
-        <Line at={b(10)} out={b(12)} size={S} parts={["为什么盖这么高？"]} />
-        <Line at={b(10.5)} out={b(12)} size={S2} parts={["地贵：同一块地，盖得越高，能卖的房子越多。"]} />
-      </At>
-      <FloorsCounter at={b(10.3)} out={b(12)} from={b(10.6)} to={b(11.9)} />
-      <At x={110} y={110}>
-        <Line at={b(12.1)} out={b(14.1)} size={S} parts={["可住宅过了 ", { t: "100 米", c: K.red }, "，"]} />
-        <Line at={b(12.5)} out={b(14.1)} size={S2} parts={["就要加避难层，造价跳一截。"]} />
-      </At>
-      <Pin cam={cam} at={b(12.3)} out={b(14.2)} p={[0, 100, -60]} lift={0} dot={false} side="right" dx={10} text="100 米" color={K.fg} size={40} />
-      <Note at={b(12.1)} out={b(14.1)}>《建筑设计防火规范》GB 50016：建筑高度大于 100 米的住宅建筑应设置避难层</Note>
-      <At x={110} y={110}>
-        <Line at={b(14.2)} out={b(16)} size={S} parts={["于是全国长出了一片片 ", { t: "33 层", c: L }, "："]} />
-        <Line at={b(14.7)} out={b(16)} size={S2} parts={["差一点，就到 100 米。"]} />
-      </At>
-
-      {/* ---------- cut open: living together ---------- */}
+      {/* ---------- 1 the machine ---------- */}
+      <Scrim at={b(T.machine + 0.3)} out={b(T.walkup)} kind="tc" />
       <At x={960} y={96} align="center">
-        <Line at={b(16.6)} out={b(19)} size={Q} serif weight={700} parts={["剖开看，它是一座", { t: "竖起来的村子", c: L }, "。"]} />
+        <Line at={b(T.machine + 0.4)} out={b(T.machine + 2.0)} size={H} serif weight={800} parts={["剖开看，它是一台", { t: "机器", c: K.cyan }, "。"]} />
+        <Line at={b(T.machine + 2.1)} out={b(T.walkup)} size={S2} parts={["电梯送人，水泵送水，消防管网守着整栋楼。"]} />
       </At>
-      <At x={110} y={110}>
-        <Line at={b(19.1)} out={b(22)} size={S2} parts={[{ t: "128", c: L }, " 户，合用两部电梯、一套水泵、"]} />
-        <Line at={b(19.6)} out={b(22)} size={S2} parts={["一根根管道、一个屋顶。"]} />
+      <Pin cam={cam} at={b(T.machine + 1.0)} out={b(T.walkup - 0.1)} p={[-0.72, 70, 3.4]} lift={26} dx={-120} side="left" text="两部电梯" color={K.cyan} size={36} />
+      <Pin cam={cam} at={b(T.machine + 1.4)} out={b(T.walkup - 0.1)} p={[-16, 2.5, -2]} lift={60} dx={-90} side="left" text="水泵房" color={K.water} size={36} />
+      <Pin cam={cam} at={b(T.machine + 1.7)} out={b(T.walkup - 0.1)} p={[-14, 103, -2]} lift={30} dx={-90} side="left" text="楼顶水箱" color={K.water} size={36} />
+      <Pin cam={cam} at={b(T.machine + 2.0)} out={b(T.walkup - 0.1)} p={[16, 60, -2]} lift={30} dx={110} side="right" text="消防管网" color={R} size={36} />
+      <Scrim at={b(T.cutPower)} out={b(T.village - 0.2)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.cutPower + 0.1)} out={b(T.cutPower + 2.0)} size={S} parts={[{ t: "6 层", c: L }, "的楼，电梯停了，"]} />
+        <Line at={b(T.cutPower + 0.4)} out={b(T.cutPower + 2.0)} size={S} parts={["还能爬。"]} />
+        <Line at={b(T.cutPower + 0.8)} out={b(T.cutPower + 2.0)} size={S} parts={[{ t: "33 层", c: L }, "的楼，电梯一停，"]} />
+        <Line at={b(T.cutPower + 1.3)} out={b(T.cutPower + 2.0)} size={S} parts={["高处的家就", { t: "回不去了", c: R }, "。"]} />
+        <Line at={b(T.cutPower + 2.1)} out={b(T.village - 0.2)} size={H * 0.86} serif weight={800} parts={["楼越高，"]} />
+        <Line at={b(T.cutPower + 2.4)} out={b(T.village - 0.2)} size={H * 0.86} serif weight={800} parts={["人越离不开这台", { t: "机器", c: K.cyan }, "。"]} />
       </At>
-      <Pin cam={cam} at={b(19.4)} out={b(22)} p={[0, 66, 5]} lift={30} dx={120} side="right" text="两部电梯" color={K.lit} size={36} />
+
+      {/* ---------- 2 a village stood on end ---------- */}
+      <Scrim at={b(T.village + 0.4)} out={b(T.noise)} kind="tc" />
       <At x={960} y={96} align="center">
-        <Line at={b(22.1)} out={b(24)} size={Q} serif weight={700} parts={["住在一起，天天有代价。"]} />
+        <Line at={b(T.village + 0.5)} out={b(T.noise - 0.1)} size={H} serif weight={800} parts={["它也是一座", { t: "竖起来的村子", c: L }, "。"]} />
+        <Line at={b(T.village + 1.3)} out={b(T.noise - 0.1)} size={S2} parts={["一百多户，共用电梯、水管、墙和楼板。"]} />
       </At>
-      <At x={110} y={110}>
-        <Line at={b(24.3)} out={b(28.1)} size={S} parts={["一户装修，"]} />
-        <Line at={b(24.9)} out={b(28.1)} size={S} parts={[{ t: "三百多人", c: K.red }, "一起听。"]} />
+      <Scrim at={b(T.noise)} out={b(T.crack)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.noise + 0.1)} out={b(T.rush - 0.1)} size={S} parts={["一户装修，"]} />
+        <Line at={b(T.noise + 0.4)} out={b(T.rush - 0.1)} size={S} parts={[{ t: "整栋楼", c: R }, "都听得见。"]} />
+        <Line at={b(T.rush + 0.1)} out={b(T.crack - 0.1)} size={S2} parts={["早高峰，三百多人，"]} />
+        <Line at={b(T.rush + 0.5)} out={b(T.crack - 0.1)} size={S2} parts={["等 ", { t: "2 部电梯", c: K.cyan }, "。"]} />
       </At>
-      <NoiseRings cam={cam} at={b(24.3)} out={b(28)} i={NOISE_SRC} />
-      <At x={110} y={110}>
-        <Line at={b(28.2)} out={b(31.4)} size={S} parts={["买 100 平方米，"]} />
-        <Line at={b(28.7)} out={b(31.4)} size={S} parts={["到手往往", { t: "七十几平", c: G }, "。"]} />
+      <NoiseRings cam={cam} at={b(T.noise)} out={b(T.rush - 0.1)} i={NOISE_SRC} />
+      <RushCounter at={b(T.rush + 0.2)} out={b(T.crack - 0.1)} />
+      <Note at={b(T.rush + 0.2)} out={b(T.crack - 0.1)}>示意：128 户 × 2.62 人（第七次全国人口普查家庭户规模）</Note>
+      <Scrim at={b(T.crack + 0.1)} out={b(T.fire)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.crack + 0.2)} out={b(T.fire)} size={S2} parts={["2023 年 4 月，哈尔滨，"]} />
+        <Line at={b(T.crack + 0.5)} out={b(T.fire)} size={S2} parts={["一栋 31 层的楼："]} />
+        <Line at={b(T.crack + 0.8)} out={b(T.fire)} size={S2} parts={["3 楼一户私拆", { t: "承重墙", c: R }, "，"]} />
+        <Line at={b(T.crack + 1.3)} out={b(T.fire)} size={S2} parts={["裂缝一直爬到 21 楼，"]} />
+        <Line at={b(T.crack + 1.8)} out={b(T.fire)} size={S} parts={[{ t: "200 多户", c: R }, "连夜撤离。"]} />
       </At>
-      <FloorPlan at={b(28.2)} out={b(31.4)} />
-      <Note at={b(28.6)} out={b(31.4)}>中国新闻网 2022-08：深圳 40 层以上在售新房得房率普遍 71%–75%；多层、小高层一般在 80% 以上</Note>
-      <At x={110} y={110}>
-        <Line at={b(31.6)} out={b(35)} size={S} parts={["早高峰，", { t: "2 部电梯", c: L }, "。"]} />
-        <Line at={b(32.3)} out={b(35)} size={S2} parts={["住得越高，等得越久。"]} />
-      </At>
-      <RushCounter at={b(31.6)} out={b(35)} />
-      <Note at={b(31.8)} out={b(35)}>128 户 × 2.62 人，估算</Note>
-      <At x={110} y={110}>
-        <Line at={b(35.6)} out={b(38.6)} size={S} parts={["大多数城市的云梯，只够到 ", { t: "50 米", c: K.red }, "左右。"]} />
-        <Line at={b(36.4)} out={b(38.6)} size={S2} parts={["再往上，着火只能靠楼里自己的消防。"]} />
-      </At>
-      <Pin cam={cam} at={b(35.8)} out={b(38.6)} p={[45, 50, 40]} lift={0} dot={false} side="right" dx={12} text="50 米" color={K.red} size={42} />
-      <Note at={b(35.6)} out={b(38.6)}>第一财经：云梯有高度限制，通常在 50 米左右</Note>
+      <Crack cam={cam} at={b(T.crack + 0.7)} out={b(T.fire)} from={3} to={21} run={[b(T.crack + 0.8), b(T.crack + 1.8)]} />
+      <Note at={b(T.crack + 0.2)} out={b(T.fire)}>中新网 2023-05-07：哈尔滨松北区利民学苑小区 B 栋 · 示意</Note>
 
-      {/* ---------- fifteen years: the machine ---------- */}
-      <At x={110} y={110}>
-        <Line at={b(39.2)} out={b(44.6)} size={88} serif weight={700} parts={["这台", { t: "机器", c: K.cyan }, "，用到十五年，"]} />
-        <Line at={b(40)} out={b(44.6)} size={88} serif weight={700} parts={["开始", { t: "一起老", c: K.amber }, "。"]} />
-      </At>
-      <At x={110} y={850}>
-        <Line at={b(41.2)} out={b(44.6)} size={S2} parts={["电梯、水泵、管道、外墙、防水……"]} />
-      </At>
-      <Pin cam={cam} at={b(39.6)} out={b(44.4)} p={[-16, 3, -2]} lift={60} dx={-70} side="left" text="水泵" color={K.water} size={36} />
-      <Pin cam={cam} at={b(40.2)} out={b(44.4)} p={[-14, 104, -2]} lift={40} dx={-70} side="left" text="楼顶水箱" color={K.water} size={36} />
-      <Note at={b(41.2)} out={b(44.6)}>住房城乡建设部、财政部 2015 年通知：运行超过 15 年的老旧电梯，可以使用维修资金更新改造</Note>
-      <At x={110} y={110}>
-        <Line at={b(44.8)} out={b(47.7)} size={S} parts={["全国的电梯，四台里有三台，"]} />
-        <Line at={b(45.3)} out={b(47.7)} size={S} parts={["是最近 12 年装的：它们会", { t: "一起变老", c: K.amber }, "。"]} />
-      </At>
-      <LiftCount at={b(44.8)} out={b(47.7)} run={[b(45), b(46.3)]} />
-      <Note at={b(44.8)} out={b(47.7)}>市场监管总局：2025 年底 1231.59 万台；质检总局：2013 年底 300.93 万台</Note>
+      {/* ---------- 3 fire ---------- */}
+      <Scrim at={b(T.fire + 0.1)} out={b(T.nanjing)} kind="tc" k={0.7} />
       <At x={960} y={110} align="center">
-        <Line at={b(47.8)} out={b(49.3)} size={92} serif weight={700} parts={["它会怎样老去，看", { t: "三笔账", c: G }, "。"]} />
+        <Line at={b(T.fire + 0.2)} out={b(T.nanjing - 0.1)} size={H * 1.06} serif weight={900} parts={["高楼最怕的，是", { t: "火", c: R }, "。"]} />
+        <Line at={b(T.hk)} out={b(T.nanjing - 0.1)} size={S2} parts={["2025 年 11 月，香港宏福苑大火，", { t: "168 人", c: R }, "遇难。"]} />
       </At>
+      <Note at={b(T.hk)} out={b(T.nanjing - 0.1)}>香港特区政府保安局 2026-01-15：遇难者 168 人</Note>
+      <Scrim at={b(T.nanjing)} out={b(T.ladder)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.nanjing + 0.1)} out={b(T.ladder - 0.1)} size={S} parts={["火和烟，都往", { t: "上", c: R }, "走。"]} />
+        <Line at={b(T.nanjing + 0.9)} out={b(T.ladder - 0.1)} size={S2} parts={["2024 年 2 月，南京明尚西苑："]} />
+        <Line at={b(T.nanjing + 1.4)} out={b(T.ladder - 0.1)} size={S2} parts={["架空层一辆电动车起火，"]} />
+        <Line at={b(T.nanjing + 1.9)} out={b(T.ladder - 0.1)} size={S2} parts={["火和烟顺着天井往上窜，"]} />
+        <Line at={b(T.nanjing + 2.3)} out={b(T.ladder - 0.1)} size={S} parts={[{ t: "15 人", c: R }, "遇难。"]} />
+      </At>
+      <Note at={b(T.nanjing + 0.9)} out={b(T.ladder - 0.1)}>南京“2·23”火灾调查报告：违规改装电动自行车锂电池热失控起火，烟囱效应下火焰和烟气突破天井内住户外窗 · 示意</Note>
+      <Scrim at={b(T.ladder)} out={b(T.fireSys)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.ladder + 0.2)} out={b(T.fireSys - 0.1)} size={S} parts={["大多数城市的云梯，"]} />
+        <Line at={b(T.ladder + 0.6)} out={b(T.fireSys - 0.1)} size={S} parts={["只够到 ", { t: "50 米", c: R }, "左右，十六七层。"]} />
+        <Line at={b(T.ladder + 1.3)} out={b(T.fireSys - 0.1)} size={S2} parts={["再往上，只能靠楼自己的消防。"]} />
+      </At>
+      <Pin cam={cam} at={b(T.ladder + 1.0)} out={b(T.fireSys)} p={[-15, 50, 8.5]} lift={0} dot={false} side="right" dx={14} text="50 米" color={R} size={42} />
+      <Note at={b(T.ladder + 0.2)} out={b(T.fireSys - 0.1)}>第一财经：消防云梯有高度限制，通常在 50 米左右</Note>
+      <Scrim at={b(T.fireSys)} out={b(T.shanghai)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.fireSys + 0.1)} out={b(T.alarmsAge - 0.1)} size={S2} parts={["报警器、消火栓、"]} />
+        <Line at={b(T.fireSys + 0.3)} out={b(T.alarmsAge - 0.1)} size={S2} parts={["消防水泵、防烟楼梯……"]} />
+        <Line at={b(T.fireSys + 0.8)} out={b(T.alarmsAge - 0.1)} size={S} parts={["平时用不上，"]} />
+        <Line at={b(T.fireSys + 1.1)} out={b(T.alarmsAge - 0.1)} size={S} parts={["关键时刻一样都不能坏。"]} />
+        <Line at={b(T.alarmsAge)} out={b(T.shanghai - 0.1)} size={S} parts={["可它们也会老："]} />
+        <Line at={b(T.alarmsAge + 0.5)} out={b(T.shanghai - 0.1)} size={S} parts={["火灾报警器，"]} />
+        <Line at={b(T.alarmsAge + 0.8)} out={b(T.shanghai - 0.1)} size={S} parts={["一般用不过 ", { t: "12 年", c: K.amber }, "。"]} />
+      </At>
+      <Pin cam={cam} at={b(T.fireSys + 0.3)} out={b(T.alarmsAge)} p={[16, 2.5, -2]} lift={50} dx={110} side="right" text="消防水泵" color={R} size={36} />
+      <Note at={b(T.alarmsAge + 0.4)} out={b(T.shanghai - 0.1)}>《火灾探测报警产品的维修保养与报废》GB 29837—2013 第 6.1.1 条（据上海市应急管理局 沪应急函〔2024〕38 号）</Note>
+      <At x={960} y={170} align="center">
+        <Line at={b(T.shanghai + 0.1)} out={b(T.quote - 0.1)} size={S} parts={["2022 年，上海把全市小区查了一遍："]} />
+      </At>
+      <ShanghaiDots at={b(T.shanghai + 0.2)} out={b(T.quote - 0.1)} />
+      <Note at={b(T.shanghai + 0.2)} out={b(T.quote - 0.1)}>上海市应急管理局 沪应急函〔2024〕38 号：跟踪督改 578 个存在建筑消防设施无法正常启动、自动报警系统无法接收报警信号等较为严重的高层住宅小区</Note>
+      <Quote at={b(T.quote)} out={b(T.ageing - 0.1)} lead="修这些设备，卡在哪？上海市应急管理局写道：" parts={["多方沟通难", "维修资金不足", "补缴难"]} src="上海市应急管理局 沪应急函〔2024〕38 号（原文：业主、业委会、物业公司多方主体沟通难度大，专项维修资金不足、补缴难）" />
 
-      {/* ---------- ledger one: money ---------- */}
-      <Chapter at={b(49.4)} out={b(50.6)} n="第一笔账" title="钱" />
-      <At x={110} y={110}>
-        <Line at={b(50.7)} out={b(53.5)} size={S} parts={["机器越老，", { t: "越费钱", c: K.red }, "。"]} />
+      {/* ---------- 4 ageing together ---------- */}
+      <Scrim at={b(T.ageing)} out={b(T.lifts)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.ageing + 0.1)} out={b(T.lifts - 0.1)} size={S2} parts={["电梯、水泵、管道、外墙、报警器，"]} />
+        <Line at={b(T.ageing + 0.7)} out={b(T.lifts - 0.1)} size={S} parts={["用到十几年，"]} />
+        <Line at={b(T.ageing + 1.0)} out={b(T.lifts - 0.1)} size={S} parts={["开始一个个", { t: "到期", c: K.amber }, "。"]} />
+        <Line at={b(T.ageing + 2.4)} out={b(T.lifts - 0.1)} size={S2} parts={["就连楼本身，"]} />
+        <Line at={b(T.ageing + 2.7)} out={b(T.lifts - 0.1)} size={S2} parts={["设计使用年限也是 50 年。"]} />
       </At>
-      <CostMeter at={b(50.7)} out={b(53.5)} />
-      <Note at={b(50.8)} out={b(53.5)}>中国物业管理协会：房龄 5 年以下维护约占物业费 25%–35%，10–15 年约 45%–60%，15 年左右约 70%–100%（据智谷趋势 2026-07 转引）</Note>
-      <At x={110} y={110}>
-        <Line at={b(53.7)} out={b(57.4)} size={S} parts={["日常开销，靠物业费。"]} />
-        <Line at={b(54.3)} out={b(57.4)} size={S2} parts={["按每平米 1 元算，一栋楼一年约 15 万元。"]} />
+      <YearBadge at={b(T.ageing + 0.2)} out={b(T.lifts - 0.1)} keys={[[b(T.ageing + 0.3), 2010], [b(T.ageing + 3.6), 2030]]} />
+      <Note at={b(T.ageing + 2.4)} out={b(T.lifts - 0.1)}>《民用建筑设计统一标准》GB 50352：普通房屋设计使用年限 50 年</Note>
+      <Scrim at={b(T.lifts + 0.2)} out={b(T.japan)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.lifts + 0.3)} out={b(T.japan - 0.1)} size={S} parts={["全国的电梯，四台里有三台，"]} />
+        <Line at={b(T.lifts + 0.8)} out={b(T.japan - 0.1)} size={S} parts={["是 2014 年以后装的。"]} />
+        <Line at={b(T.lifts + 1.5)} out={b(T.japan - 0.1)} size={S} parts={["同一代楼，会", { t: "一起到期", c: K.amber }, "。"]} />
       </At>
-      <Budget at={b(54.6)} out={b(57.4)} />
-      <Note at={b(53.7)} out={b(57.4)}>估算：128 户 × 100 平方米 × 1 元 × 12 个月；南方都市报 2025-04：20 年梯龄的高层电梯年均维保约 3 万元</Note>
-      <At x={110} y={110}>
-        <Line at={b(57.5)} out={b(61)} size={S} parts={["大修，靠买房时交的", { t: "维修资金", c: G }, "。"]} />
-        <Line at={b(58.1)} out={b(61)} size={S2} parts={["一栋楼约 150 万元；"]} />
-        <Line at={b(58.8)} out={b(61)} size={S2} parts={["换一部 30 层的电梯，连拆带装就要几十万。"]} />
-      </At>
-      <Pin cam={cam} at={b(58)} out={b(61)} p={[8.5, 18, 34]} lift={40} dx={80} side="right" text="维修资金" color={G} size={38} />
-      <Note at={b(57.5)} out={b(61)}>估算：128 户 × 100 平方米 × 120 元（南京高层首期标准，宁房物字〔2017〕159 号）；南方都市报 2025-04：30 层电梯安装约 10–30 万元，梯价另计</Note>
-      <At x={110} y={110}>
-        <Line at={b(61.2)} out={b(64.1)} size={S} parts={["同一部电梯，在哪换都差不多贵。"]} />
-        <Line at={b(61.9)} out={b(64.1)} size={S} parts={["可房子越便宜，这笔钱就越", { t: "扎眼", c: K.red }, "。"]} />
-      </At>
-      <PriceCompare at={b(61.2)} out={b(64.1)} />
-      <Note at={b(61.2)} out={b(64.1)}>中指研究院：2025 年 12 月百城二手住宅均价 13,016 元/平方米；深圳样本均价 64,314 元/平方米</Note>
+      <LiftCount at={b(T.lifts + 0.3)} out={b(T.japan - 0.1)} run={[b(T.lifts + 0.5), b(T.lifts + 1.6)]} />
+      <Note at={b(T.lifts + 0.3)} out={b(T.japan - 0.1)}>市场监管总局：2025 年底电梯 1231.59 万台；质检总局：2013 年底 300.93 万台</Note>
+      <Japan at={b(T.japan)} out={b(T.money - 0.1)} />
+      <Note at={b(T.japan + 0.5)} out={b(T.money - 0.1)}>国土交通省：築 40 年以上の分譲マンション 2023 年末 136.9 万戸，2043 年末推计 463.8 万戸；令和 5 年度マンション総合調査</Note>
 
-      {/* ---------- ledger two: rules ---------- */}
-      <Chapter at={b(64.3)} out={b(65.5)} n="第二笔账" title="规矩" />
-      <At x={110} y={110}>
-        <Line at={b(65.6)} out={b(69.4)} size={S} parts={["钱，要 128 户", { t: "一起", c: G }, "出。"]} />
-        <Line at={b(66.2)} out={b(69.4)} size={S2} parts={["再凑钱，要四分之三的人点头。"]} />
-      </At>
-      <Pin cam={cam} at={b(65.8)} out={b(68.4)} p={[-16.9, yf(1), 7]} lift={10} dx={-80} side="left" dot={false} text="2 楼：“我走楼梯。”" color={K.red} size={34} />
-      <Pin cam={cam} at={b(66.3)} out={b(68.4)} p={[16.9, yf(4), 7]} lift={10} dx={80} side="right" dot={false} text="5 楼：“房子又不是我的。”" color="#cfe0ff" size={34} />
-      <Pin cam={cam} at={b(66.8)} out={b(68.4)} p={[-16.9, yf(8), 7]} lift={10} dx={-80} side="left" dot={false} text="9 楼：“今年没了工作。”" color={K.amber} size={34} />
-      <Tally at={b(66.4)} out={b(69.4)} />
-      <Note at={b(65.6)} out={b(69.4)}>《民法典》第 278 条：筹集维修资金、改建重建须经参与表决的业主面积、人数双四分之三以上同意 · 住户理由为示意</Note>
-      <At x={110} y={110}>
-        <Line at={b(69.6)} out={b(72.6)} size={S} parts={["收不上钱，物业就", { t: "撤", c: K.red }, "。"]} />
-        <Line at={b(70.2)} out={b(72.6)} size={S2} parts={["新楼也一样。"]} />
-      </At>
-      <ExodusGrid at={b(69.6)} out={b(72.6)} />
-      <Note at={b(69.6)} out={b(72.6)}>中指研究院《2026 中国物业服务百强企业研究报告》（据第一财经 2026-04-28）：2025 年初至 2026 年 3 月底，监测到住宅物业撤场 212 个，楼龄 5 年以内的次新房占 35%</Note>
-      <At x={110} y={110}>
-        <Line at={b(72.8)} out={b(76.4)} size={S2} parts={["柳州一个小区，电梯全停。"]} />
-        <Line at={b(73.4)} out={b(76.4)} size={S2} parts={["11 楼一位要透析的老人，"]} />
-        <Line at={b(74)} out={b(76.4)} size={S2} parts={["家里花 ", { t: "3000 元", c: G }, "买了爬楼轮椅。"]} />
-      </At>
-      <Pin cam={cam} at={b(73.2)} out={b(76.3)} p={[6.6, yf(10), 7]} lift={50} dx={90} side="right" text="11 楼" color={G} size={40} />
-      <Note at={b(72.8)} out={b(76.4)}>南方周末（据智谷趋势 2026-07 转引）：柳州东悦佳苑，物业费每平方米 0.8 元收不齐，18–24 层楼的电梯全部关停</Note>
-      <At x={960} y={130} align="center">
-        <Line at={b(76.8)} out={b(80.2)} size={80} serif weight={700} parts={["高楼活得好的地方，", { t: "修楼不全靠自觉", c: G }, "。"]} />
-      </At>
-      <Abroad at={b(77.2)} out={b(80.2)} />
-      <Note at={b(77.2)} out={b(80.2)}>新加坡建屋发展局：组屋电梯翻新计划须四分之三合资格住户同意，政府承担大部分费用 · 香港屋宇署：强制验楼计划 · 美国佛罗里达州法规 §718.116：业主协会可就欠缴的管理费申请留置权并强制拍卖</Note>
-
-      {/* ---------- ledger three: people ---------- */}
-      <Chapter at={b(80.4)} out={b(81.6)} n="第三笔账" title="人" />
-      <At x={110} y={110}>
-        <Line at={b(81.7)} out={b(84.6)} size={S} parts={["先走的，是", { t: "走得起", c: L }, "的人。"]} />
-        <Line at={b(82.3)} out={b(84.6)} size={S2} parts={["房子租出去，再隔成群租……"]} />
-      </At>
-      <At x={110} y={110}>
-        <Line at={b(84.7)} out={b(88)} size={S2} parts={["一路往下传。留下的，"]} />
-        <Line at={b(85.3)} out={b(88)} size={S} parts={["是最", { t: "付不起维修费", c: K.red }, "的人。"]} />
-      </At>
-      <PassLegend at={b(81.6)} out={b(88)} />
-      <At x={110} y={110}>
-        <Line at={b(88.2)} out={b(92)} size={S} parts={["楼里的人，也在和楼", { t: "一起老", c: K.amber }, "。"]} />
-        <Line at={b(88.9)} out={b(92)} size={S2} parts={["第一次买房，平均 29.5 岁；楼 40 岁那年，他们快 70 了。"]} />
-      </At>
-      <AgeCounter at={b(88.2)} out={b(92)} run={[b(88.6), b(91.2)]} />
-      <Note at={b(88.2)} out={b(92)}>贝壳研究院 2018 年全国购房调查：购房者平均年龄 29.5 岁</Note>
-      <At x={110} y={110}>
-        <Line at={b(92.2)} out={b(96)} size={S} parts={["接下一棒的人呢？"]} />
-        <Line at={b(92.7)} out={b(96)} size={S2} parts={["1990 年前后，每年出生约 2400 万人；"]} />
-        <Line at={b(93.4)} out={b(96)} size={S2} parts={["2025 年，", { t: "792 万", c: K.red }, "。"]} />
-      </At>
-      <Births at={b(92.2)} out={b(96)} />
-      <Note at={b(92.2)} out={b(96)}>《中国统计年鉴》：1990 年出生率 21.06‰（约 11.4 亿人，推算约 2400 万）；国家统计局：2025 年出生 792 万</Note>
-
-      {/* ---------- the answer ---------- */}
-      <At x={960} y={130} align="center">
-        <Line at={b(96.4)} out={b(100)} size={Q} serif weight={700} parts={["所以，会变成贫民窟吗？"]} />
-        <Line at={b(97.6)} out={b(100)} size={S} parts={["不看楼有多高，看这", { t: "三笔账", c: G }, "。"]} />
-      </At>
-      <At x={110} y={110}>
-        <Line at={b(100.2)} out={b(104)} size={S} parts={["钱够、规矩硬、人还在："]} />
-        <Line at={b(100.8)} out={b(104)} size={S2} parts={["香港美孚新邨，快 60 年，仍是抢手货。"]} />
-      </At>
-      <Note at={b(100.2)} out={b(104)}>美孚新邨：1968–1978 年入伙，99 座；2025 年 9 月二手平均呎价 10,177 港元（星岛头条）</Note>
+      {/* ---------- 5 money ---------- */}
+      <Scrim at={b(T.money)} out={b(T.fees)} kind="tc" />
       <At x={960} y={110} align="center">
-        <Line at={b(104.2)} out={b(110)} size={92} serif weight={700} parts={["三笔账都不够的地方，"]} />
-        <Line at={b(105.2)} out={b(110)} size={92} serif weight={700} parts={["它会", { t: "一层一层暗下去", c: K.grey }, "。"]} />
+        <Line at={b(T.money + 0.1)} out={b(T.fees)} size={H} serif weight={800} parts={["养这台机器，钱从", { t: "两个口袋", c: G }, "来。"]} />
       </At>
+      <Scrim at={b(T.fees)} out={b(T.unpaid)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.fees + 0.1)} out={b(T.feeCut - 0.1)} size={S} parts={["日常的钱：", { t: "物业费", c: G }, "。"]} />
+        <Line at={b(T.feeCut)} out={b(T.unpaid - 0.1)} size={S2} parts={["交房时就定了，很难涨，"]} />
+        <Line at={b(T.feeCut + 0.4)} out={b(T.unpaid - 0.1)} size={S2} parts={["这两年还在", { t: "降", c: R }, "："]} />
+        <Line at={b(T.feeCut + 0.9)} out={b(T.unpaid - 0.1)} size={S2} parts={["2024 年下半年以来，"]} />
+        <Line at={b(T.feeCut + 1.2)} out={b(T.unpaid - 0.1)} size={S2} parts={["光武汉就有近百个小区下调。"]} />
+      </At>
+      <Budget at={b(T.fees + 0.3)} out={b(T.unpaid - 0.1)} />
+      <Note at={b(T.fees + 0.3)} out={b(T.feeCut)}>估算：128 户 × 100 平方米 × 1 元 × 12 个月；南方都市报 2025-04：20 年梯龄的高层电梯年均维保约 3 万元</Note>
+      <Note at={b(T.feeCut + 0.9)} out={b(T.unpaid - 0.1)}>界面新闻 2025-03-06：重庆、武汉、南昌、银川等多个城市均有项目物业费下调</Note>
+      <Scrim at={b(T.unpaid)} out={b(T.fund)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.unpaid + 0.2)} out={b(T.fund - 0.1)} size={S2} parts={["就算是百强物业，2025 年，"]} />
+        <Line at={b(T.unpaid + 0.7)} out={b(T.fund - 0.1)} size={S} parts={["平均", { t: "每 8 户", c: R }, "里，"]} />
+        <Line at={b(T.unpaid + 1.0)} out={b(T.fund - 0.1)} size={S} parts={["也有 1 户没交。"]} />
+      </At>
+      <Note at={b(T.unpaid + 0.2)} out={b(T.fund - 0.1)}>中指研究院《2026 中国物业服务百强企业研究》：2025 年百强企业平均物业费收缴率 87.32% · 示意</Note>
+      <Scrim at={b(T.fund)} out={b(T.why)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.fund + 0.1)} out={b(T.drain - 0.1)} size={S} parts={["大修的钱：", { t: "维修资金", c: G }, "，"]} />
+        <Line at={b(T.fund + 0.4)} out={b(T.drain - 0.1)} size={S} parts={["买房时交一次。"]} />
+        <Line at={b(T.fund + 0.8)} out={b(T.drain - 0.1)} size={S2} parts={["南京的高层，每平米 120 元；"]} />
+        <Line at={b(T.fund + 1.3)} out={b(T.drain - 0.1)} size={S2} parts={["一栋楼约 150 万，要管几十年。"]} />
+        <Line at={b(T.drain)} out={b(T.refill - 0.1)} size={S} parts={["换一部电梯，就要", { t: "几十万", c: R }, "；"]} />
+        <Line at={b(T.drain + 0.6)} out={b(T.refill - 0.1)} size={S2} parts={["外墙、水管、消防，排着队。"]} />
+        <Line at={b(T.refill)} out={b(T.why - 0.1)} size={S} parts={["余额不足三成，"]} />
+        <Line at={b(T.refill + 0.3)} out={b(T.why - 0.1)} size={S} parts={["按规定要续交。"]} />
+        <Line at={b(T.refill + 0.7)} out={b(T.why - 0.1)} size={S} parts={["续交，要大家", { t: "重新点头", c: G }, "。"]} />
+      </At>
+      <Pin cam={cam} at={b(T.fund + 0.5)} out={b(T.why)} p={[8.5, 18, 34]} lift={40} dx={90} side="right" text="维修资金" color={G} size={38} />
+      <Note at={b(T.fund + 0.8)} out={b(T.drain - 0.1)}>估算：128 户 × 100 平方米 × 120 元（南京高层首期标准，宁房物字〔2017〕159 号）</Note>
+      <Note at={b(T.drain)} out={b(T.refill - 0.1)}>南方都市报 2025-04：30 层电梯安装约 10–30 万元，梯价另计</Note>
+      <Note at={b(T.refill)} out={b(T.why - 0.1)}>各地住宅专项维修资金管理办法：分户账余额不足首期交存额 30% 时，应当及时续交</Note>
 
-      {/* ---------- lift ---------- */}
+      {/* ---------- 6 how many owners ---------- */}
+      <At x={960} y={430} align="center">
+        <Line at={b(T.why + 0.1)} out={b(T.archive - 0.1)} size={H * 0.92} serif weight={800} parts={["同样是老高楼，"]} />
+        <Line at={b(T.why + 0.5)} out={b(T.archive - 0.1)} size={H * 0.92} serif weight={800} parts={["为什么有的", { t: "修得动", c: G }, "，有的修不动？"]} />
+      </At>
+      <Archive at={b(T.archive)} out={b(T.owners)} />
+      <Note at={b(T.archive + 0.5)} out={b(T.owners)}>新京报 2025-01-05、01-06：《北京三大老高层住宅“探梯”》《探访北京“现役最老”高层电梯》；朝阳区亚运村街道 2024-12 公开回复</Note>
+      <Scrim at={b(T.owners)} out={b(T.vote)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.owners + 0.2)} out={b(T.vote - 0.1)} size={S2} parts={["1998 年房改以后，"]} />
+        <Line at={b(T.owners + 0.5)} out={b(T.vote - 0.1)} size={S2} parts={["房子一套套卖给了个人。"]} />
+        <Line at={b(T.owners + 1.0)} out={b(T.vote - 0.1)} size={S} parts={["一栋 33 层的楼，"]} />
+        <Line at={b(T.owners + 1.3)} out={b(T.vote - 0.1)} size={S} parts={["有", { t: "一百多个主人", c: G }, "。"]} />
+      </At>
+      <Scrim at={b(T.vote)} out={b(T.stop)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.vote + 0.1)} out={b(T.stop - 0.1)} size={S2} parts={["要再凑钱，"]} />
+        <Line at={b(T.vote + 0.3)} out={b(T.stop - 0.1)} size={S2} parts={["参与表决的人里，"]} />
+        <Line at={b(T.vote + 0.6)} out={b(T.stop - 0.1)} size={S2} parts={["得", { t: "四分之三", c: G }, "点头。"]} />
+        <Line at={b(T.vote + 3.0)} out={b(T.stop - 0.1)} size={S2} parts={["只要四分之一多一点的人"]} />
+        <Line at={b(T.vote + 3.3)} out={b(T.stop - 0.1)} size={S2} parts={["摇头，钱就", { t: "凑不起来", c: R }, "。"]} />
+      </At>
+      <Pin cam={cam} at={b(T.vote + 0.7)} out={b(T.vote + 2.9)} p={[-16.9, yf(1), 7]} lift={10} dx={-80} side="left" dot={false} text="2 楼：“我走楼梯。”" color={R} size={34} />
+      <Pin cam={cam} at={b(T.vote + 1.1)} out={b(T.vote + 2.9)} p={[16.9, yf(5), 7]} lift={10} dx={80} side="right" dot={false} text="6 楼：“房子租出去了。”" color="#cfe0ff" size={34} />
+      <Pin cam={cam} at={b(T.vote + 1.5)} out={b(T.vote + 2.9)} p={[-16.9, yf(9), 7]} lift={10} dx={-80} side="left" dot={false} text="10 楼：“今年没了工作。”" color={K.amber} size={34} />
+      <Pin cam={cam} at={b(T.vote + 1.9)} out={b(T.vote + 2.9)} p={[16.9, yf(27), 7]} lift={10} dx={80} side="right" dot={false} text="28 楼：“反正要卖了。”" color={K.grey} size={34} />
+      <Tally at={b(T.vote + 0.6)} out={b(T.stop - 0.1)} />
+      <Note at={b(T.vote + 0.1)} out={b(T.stop - 0.1)}>《民法典》第 278 条：筹集维修资金，须经参与表决的专有部分面积、人数均四分之三以上的业主同意 · 住户理由为示意</Note>
+      <Scrim at={b(T.stop)} out={b(T.exodus)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.stop + 0.1)} out={b(T.exodus - 0.1)} size={S} parts={["钱凑不齐，物业撤场；"]} />
+        <Line at={b(T.stop + 0.6)} out={b(T.exodus - 0.1)} size={S} parts={["电梯没人维保，就得", { t: "停", c: R }, "。"]} />
+        <Line at={b(T.stop + 1.4)} out={b(T.exodus - 0.1)} size={S2} parts={["广安的电梯，就是这样停的。"]} />
+      </At>
+      <Scrim at={b(T.exodus)} out={b(T.leave)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.exodus + 0.1)} out={b(T.leave - 0.1)} size={S} parts={["这不只发生在老楼。"]} />
+      </At>
+      <ExodusGrid at={b(T.exodus + 0.2)} out={b(T.leave - 0.1)} />
+      <Note at={b(T.exodus + 0.2)} out={b(T.leave - 0.1)}>中指研究院《2026 中国物业服务百强企业研究报告》（据第一财经 2026-04-28）：监测到住宅物业撤场 212 个，楼龄 5 年以内占 35%</Note>
+
+      {/* ---------- 7 who leaves, and the dark ---------- */}
+      <Scrim at={b(T.leave)} out={b(T.ageOwners)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.leave + 0.1)} out={b(T.leave + 2.6)} size={S} parts={["先离开的，"]} />
+        <Line at={b(T.leave + 0.4)} out={b(T.leave + 2.6)} size={S} parts={["是", { t: "走得起", c: L }, "的人。"]} />
+        <Line at={b(T.leave + 1.0)} out={b(T.leave + 2.6)} size={S2} parts={["房子租出去，再隔成群租。"]} />
+        <Line at={b(T.leave + 2.7)} out={b(T.ageOwners - 0.1)} size={S2} parts={["每走一户，"]} />
+        <Line at={b(T.leave + 3.0)} out={b(T.ageOwners - 0.1)} size={S2} parts={["楼里就少一个愿意掏钱的人。"]} />
+        <Line at={b(T.leave + 3.7)} out={b(T.ageOwners - 0.1)} size={S2} parts={["留下的，往往最", { t: "掏不起钱", c: R }, "。"]} />
+      </At>
+      <PassLegend at={b(T.leave + 0.3)} out={b(T.ageOwners - 0.1)} />
+      <Scrim at={b(T.ageOwners)} out={b(T.births)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.ageOwners + 0.1)} out={b(T.births - 0.1)} size={S} parts={["人也在和楼", { t: "一起老", c: K.amber }, "："]} />
+        <Line at={b(T.ageOwners + 0.7)} out={b(T.births - 0.1)} size={S2} parts={["第一次买房，平均 29.5 岁；"]} />
+        <Line at={b(T.ageOwners + 1.2)} out={b(T.births - 0.1)} size={S2} parts={["楼 40 岁那年，他们快 70 了。"]} />
+      </At>
+      <AgeCounter at={b(T.ageOwners + 0.2)} out={b(T.births - 0.1)} run={[b(T.ageOwners + 0.6), b(T.ageOwners + 2.8)]} />
+      <Note at={b(T.ageOwners + 0.2)} out={b(T.births - 0.1)}>贝壳研究院 2018 年全国购房调查：购房者平均年龄 29.5 岁</Note>
+      <At x={300} y={300}>
+        <Line at={b(T.births + 0.1)} out={b(T.climax - 0.1)} size={H * 0.9} serif weight={800} parts={["接下一棒的人呢？"]} />
+      </At>
+      <Births at={b(T.births + 0.3)} out={b(T.climax - 0.1)} />
+      <Note at={b(T.births + 0.3)} out={b(T.climax - 0.1)}>《中国统计年鉴》：1990 年出生率 21.06‰（约 11.4 亿人，推算约 2400 万）；国家统计局：2025 年出生 792 万</Note>
+      <Scrim at={b(T.climax)} out={b(T.answer)} kind="tl" />
+      <At x={x0} y={y0}>
+        <Line at={b(T.climax + 0.2)} out={b(T.dark[0] + 0.4)} size={S} parts={["钱越来越少，机器越来越老。"]} />
+        <Line at={b(T.dark[0] + 0.5)} out={b(T.answer - 0.1)} size={S} parts={["电梯一停，"]} />
+        <Line at={b(T.dark[0] + 1.0)} out={b(T.answer - 0.1)} size={S} parts={["高处的家，", { t: "一层一层空下去", c: K.grey }, "，"]} />
+        <Line at={b(T.dark[0] + 2.4)} out={b(T.answer - 0.1)} size={S} parts={["最后只剩下，"]} />
+        <Line at={b(T.dark[0] + 2.7)} out={b(T.answer - 0.1)} size={S} parts={[{ t: "爬得动的那几层", c: L }, "。"]} />
+      </At>
+      <Scrim at={b(T.answer)} out={b(T.lift)} kind="tc" />
+      <At x={960} y={110} align="center">
+        <Line at={b(T.answer + 0.2)} out={b(T.answer + 2.0)} size={H} serif weight={800} parts={["所以，会变成贫民窟吗？"]} />
+        <Line at={b(T.answer + 2.1)} out={b(T.lift - 0.1)} size={S2} parts={["钱够、人齐的楼，会老得很体面："]} />
+        <Line at={b(T.answer + 2.6)} out={b(T.lift - 0.1)} size={S2} parts={["北京前三门的高楼快 50 岁，电梯还在换新。"]} />
+        <Line at={b(T.answer + 3.8)} out={b(T.lift - 0.1)} size={S} parts={["人一直在走的地方，楼会", { t: "一层一层空下去", c: K.grey }, "。"]} />
+      </At>
+      <Note at={b(T.answer + 2.6)} out={b(T.lift - 0.1)}>新京报 2025-01-06：前三门住宅楼 2023 年完成 11 部电梯的更换和大修，费用由公共维修资金和产权方首开集团承担 · 城市为示意</Note>
+
+      {/* ---------- 8 lift ---------- */}
       <At x={960} y={150} align="center" gap={6}>
-        <Line at={b(110.4)} out={b(116.6)} size={116} serif weight={900} stagger={0.07} parts={["盖一栋楼，三年。"]} />
-        <Line at={b(112.2)} out={b(116.6)} size={116} serif weight={900} stagger={0.07} parts={["养一栋楼，", { t: "五十年", c: G }, "。"]} />
+        <Line at={b(T.lift + 0.4)} out={b(T.goes - 0.1)} size={116} serif weight={900} stagger={0.07} parts={["盖一栋楼，三年。"]} />
+        <Line at={b(T.lift + 2.0)} out={b(T.goes - 0.1)} size={116} serif weight={900} stagger={0.07} parts={["养一栋楼，", { t: "五十年", c: G }, "。"]} />
       </At>
-      <At x={110} y={110}>
-        <Line at={b(117)} out={b(121)} size={84} serif weight={900} parts={["人会走，楼走不了。"]} />
+      <At x={960} y={170} align="center">
+        <Line at={b(T.goes)} out={b(T.hundred - 0.1)} size={100} serif weight={900} parts={["人会走，楼走不了。"]} />
       </At>
-      <At x={110} y={850}>
-        <Line at={b(118.2)} out={b(121)} size={88} serif weight={900} parts={["你，就是其中", { t: "一户", c: G }, "。"]} />
+      <At x={960} y={150} align="center" gap={14}>
+        <Line at={b(T.hundred)} out={b(T.you - 0.1)} size={74} serif weight={800} parts={["楼能不能老得体面，"]} />
+        <Line at={b(T.hundred + 0.8)} out={b(T.you - 0.1)} size={74} serif weight={800} parts={["看楼里的一百多户，能不能", { t: "一起付下去", c: G }, "。"]} />
       </At>
-      <YouRing cam={cam} at={b(118.6)} out={b(121)} i={YOU} />
+      <Scrim at={b(T.you + 0.2)} out={b(T.sources)} kind="tc" />
+      <At x={960} y={110} align="center">
+        <Line at={b(T.you + 0.3)} out={b(T.sources)} size={96} serif weight={900} parts={["你，就是其中", { t: "一户", c: G }, "。"]} />
+      </At>
+      <YouRing cam={cam} at={b(T.you + 0.8)} out={b(T.sources)} i={YOU} />
 
-      <Sources at={b(121)} out={b(122.4)} />
-      <EndCard at={b(122.3)} />
-      <BrandMark o={1 - ramp(t, b(122.1), b(122.4))} />
+      <Sources at={b(T.sources)} out={b(T.end + 0.1)} />
+      <EndCard at={b(T.end)} />
+      <BrandMark o={1 - ramp(t, b(T.end - 0.2), b(T.end + 0.1))} />
     </AbsoluteFill>
   );
 };

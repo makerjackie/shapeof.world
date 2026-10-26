@@ -17,7 +17,8 @@ export const World: React.FC<{ s: WorldState }> = ({ s }) => {
   useLayoutEffect(() => {
     engine().render(s);
   });
-  return <div ref={ref} style={{ position: "absolute", left: 0, top: 0, width: W, height: H }} />;
+  const bl = s.blur ?? 0;
+  return <div ref={ref} style={{ position: "absolute", left: 0, top: 0, width: W, height: H, filter: bl > 0.05 ? `blur(${bl.toFixed(2)}px) brightness(${(1 - 0.07 * bl).toFixed(3)})` : undefined, transform: bl > 0.05 ? `scale(${(1 + 0.02 * Math.min(1, bl / 6)).toFixed(4)})` : undefined }} />;
 };
 
 // Household state for the hero: 132 homes x [lit, yes, no, gone].
