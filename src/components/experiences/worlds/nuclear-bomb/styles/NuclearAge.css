@@ -19,6 +19,54 @@
 	font: inherit;
 	color: inherit;
 }
+.na-header-shade {
+	position: absolute;
+	inset: 0 0 auto;
+	height: calc(env(safe-area-inset-top, 0px) + 82px);
+	z-index: 20;
+	pointer-events: none;
+	background: linear-gradient(180deg, #253b4bc7 0%, #253b4b94 54%, #253b4b00 100%);
+}
+.na-globe .na-site-label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+	font-size: 11px;
+	padding: 5px 8px;
+	border: 1px solid #587a9066;
+	background: #f3f7f9ed;
+	white-space: nowrap;
+	z-index: 1;
+}
+.na-site-label b {
+	margin-left: 7px;
+	color: #587a90;
+}
+.na-site-counts {
+	display: flex;
+	gap: 28px;
+	margin: 18px 0;
+}
+.na-site-counts div {
+	display: grid;
+	gap: 5px;
+}
+.na-site-counts dt {
+	font-size: 11px;
+	color: #617682;
+}
+.na-site-counts dd {
+	margin: 0;
+	font-size: 26px;
+}
+.na-camera-note {
+	display: block;
+	margin: 10px 0;
+	font-size: 10px;
+	line-height: 1.6;
+	color: #617682;
+}
 .na-experience button {
 	cursor: pointer;
 }
@@ -892,6 +940,11 @@
 	.na-data-scope {
 		grid-column: 1/-1;
 		font-size: 8px;
+	}
+	.na-camera-note {
+		grid-column: 1/-1;
+		font-size: 8px;
+		margin: 0;
 	}
 	.na-sites-entry {
 		font-size: 9px;

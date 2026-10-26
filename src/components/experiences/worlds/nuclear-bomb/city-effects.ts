@@ -2,7 +2,8 @@
  * Public, macroscopic effects for a fixed historical exhibit. No height optimiser.
  * Brode and clear-air nomogram adapted from GOFAI/glasstone 0.0.1,
  * 23e1e97d35b45a6e80b8899c86c8ff256fc2217d. MIT; see vendor/glasstone-LICENSE.
- * The upstream thermal model is Soviet (1987), not the 1977 US textbook.
+ * The upstream thermal function (Soviet 1987) is retained for regression only.
+ * The displayed 8 cal/cm² reference now uses the 1977 US textbook Fig.7.42.
  */
 export const HIROSHIMA = { longitude: 132.4525, latitude: 34.3947, yieldKt: 16, heightKm: 0.6, version: 'RERF DS02 / RR 7-06' } as const;
 export const CITY_PRESETS = [
@@ -69,6 +70,29 @@ export function radiantExposureCalCm2(yieldKt: number, slantKm: number, partitio
 	return (yieldKt * 4.184e12 * partition * transmittance) / (4 * Math.PI * (slantKm * 1000) ** 2) / 41840;
 }
 
+/** 1977 Ch.VII Fig.7.42, p.291: manually read 8 cal/cm² curve, miles.
+ * Cloudless, 12-mile visibility, airburst <=15,000 ft (§§7.42,7.99).
+ * Coarse log-log interpolation, ~5% graphical reading tolerance. Only this
+ * exhibit's fixed exposure reference; not a general inverse effects API.
+ * The printed §7.43 1 Mt / ~7 mi example is held out of these knots.
+ */
+const BOOK_THERMAL_8 = [
+	[1, 0.35],
+	[10, 1.1],
+	[100, 3],
+	[500, 5.5],
+	[2000, 9.1],
+	[10000, 15],
+] as const;
+export function textbookThermalSlantKm(yieldKt: number): number | null {
+	if (!Number.isFinite(yieldKt) || yieldKt < 1 || yieldKt > 10000) return null;
+	const index = BOOK_THERMAL_8.findIndex(([w]) => w >= yieldKt);
+	if (index === 0) return BOOK_THERMAL_8[0][1] * 1.609344;
+	const [w0, r0] = BOOK_THERMAL_8[index - 1],
+		[w1, r1] = BOOK_THERMAL_8[index];
+	return r0 * (r1 / r0) ** (Math.log(yieldKt / w0) / Math.log(w1 / w0)) * 1.609344;
+}
+
 // Sample outward along a fixed scenario, interpolate the first threshold crossing.
 // This is contour construction only; no adjustable location, target or burst-height search.
 function contour(sample: (r: number) => number, threshold: number, min: number, max: number) {
@@ -87,12 +111,8 @@ function contour(sample: (r: number) => number, threshold: number, min: number, 
 export function cityEffects(preset: CityPreset) {
 	const heightKm = HIROSHIMA.heightKm * Math.cbrt(preset.yieldKt / HIROSHIMA.yieldKt);
 	const pressure = (r: number) => pressurePsi(preset.yieldKt, r, heightKm);
-	const thermal = contour(
-		(r) => thermalCalCm2(preset.yieldKt, Math.hypot(r, heightKm)),
-		8,
-		0.16,
-		Math.sqrt(10 ** (2 * THERMAL_X.at(-1)!) - heightKm ** 2),
-	);
+	const thermalSlant = heightKm <= 4.572 ? textbookThermalSlantKm(preset.yieldKt) : null;
+	const thermal = thermalSlant !== null && thermalSlant > heightKm ? Math.sqrt(thermalSlant ** 2 - heightKm ** 2) : null;
 	return {
 		heightKm,
 		fireballKm: fireballKm(preset.yieldKt),

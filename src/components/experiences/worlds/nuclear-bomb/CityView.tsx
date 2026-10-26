@@ -275,7 +275,7 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 					<i />
 					<span>
 						{tx('热辐射')}
-						<small>8 cal/cm² · IVC 9</small>
+						<small>8 cal/cm² · {tx('模型')}</small>
 					</span>
 					<b>
 						{n(effects.thermalKm)}
@@ -283,7 +283,7 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 					</b>
 				</div>
 				<p className="na-model-status">
-					{tx(effects.thermalKm === null ? '热辐射超出图表范围，未外推。' : '热辐射：晴朗条件候选模型，待原书校核。')}
+					{tx(effects.thermalKm === null ? '热辐射超出图表范围，未外推。' : '热辐射模型：1977 图 7.42，能见度 12 英里。')}
 				</p>
 				{presetId !== 'hiroshima' && (
 					<p className="na-ratio">
@@ -382,8 +382,12 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 							<dd>{n(effects.heightKm)} km</dd>
 						</div>
 					</dl>
-					<p>{tx('超压：Brode 1986，经 glasstone 移植。热辐射：1987 苏联晴朗条件图表，经 glasstone 移植。超出图表范围显示破折号。')}</p>
-					<p>{tx('热辐射尚未完成与 1977 原书相同能见度条件的校核。')}</p>
+					<p>{tx('超压：Brode 1986，经 glasstone 移植。热辐射：1977 图 7.42 的 8 cal/cm² 曲线，读图插值。超出图表范围显示破折号。')}</p>
+					<p>
+						{tx(
+							'同条件校核：1 Mt、无云、能见度 12 英里。书中斜距约 7 英里，模型 7.07 英里，相差约 +1.1%。读图精度约 5%，不是实测火灾边界。',
+						)}
+					</p>
 					<a href="https://fas.org/wp-content/uploads/2025/01/United-States-nuclear-weapons-2025.pdf" target="_blank" rel="noreferrer">
 						W76-1 · FAS 2025
 					</a>

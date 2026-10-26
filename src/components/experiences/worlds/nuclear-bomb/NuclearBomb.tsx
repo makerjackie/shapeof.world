@@ -50,6 +50,7 @@ export function NuclearBomb({ controls }: { controls: ExperienceControls }) {
 	);
 	return (
 		<div className="nb-experience na-experience" data-exhibit-view={view}>
+			<div className="na-header-shade" aria-hidden="true" />
 			{visited.has('scale') && (
 				<div className={`nb-view-layer${view === 'scale' ? ' is-active' : ''}`} aria-hidden={view !== 'scale'} inert={view !== 'scale'}>
 					<CityView controls={controls} active={view === 'scale'} />
