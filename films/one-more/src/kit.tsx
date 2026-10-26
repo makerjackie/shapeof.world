@@ -41,7 +41,7 @@ export const Say: React.FC<{
   color?: string;
   stagger?: number; // frames per character
   style?: React.CSSProperties;
-}> = ({ at, out, parts, size = 64, weight = 800, serif, color = K.fg, stagger = 1.4, style }) => {
+}> = ({ at, out, parts, size = 64, weight = 800, serif, color = K.fg, stagger = 1.0, style }) => {
   const frame = useCurrentFrame();
   const f0 = at * FPS;
   if (frame < f0 - 1) return null;

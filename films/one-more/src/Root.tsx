@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition, Still } from "remotion";
 import { Cover } from "./Cover";
+import { Cover8 } from "./v4/cover8";
 import { Film } from "./Film";
 import { Film3, FILM3_FRAMES, SAMPLE3_FRAMES } from "./v3/Film3";
 import { Film4, SAMPLE4_FRAMES } from "./v4/Film4";
@@ -20,5 +21,7 @@ export const Root: React.FC = () => (
     <Composition id="Film8" component={Film8} durationInFrames={FILM8_FRAMES} fps={FPS} width={1920} height={1080} />
     <Still id="cover-16x9" component={Cover} width={1920} height={1080} defaultProps={{ tall: false }} />
     <Still id="cover-3x4" component={Cover} width={1080} height={1440} defaultProps={{ tall: true }} />
+    <Still id="cover8-16x9" component={Cover8} width={1920} height={1080} defaultProps={{ tall: false }} />
+    <Still id="cover8-3x4" component={Cover8} width={1080} height={1440} defaultProps={{ tall: true }} />
   </>
 );

@@ -119,7 +119,7 @@ const Open7Text: React.FC = () => (
       <Say at={beat(6)} out={beat(7.25)} size={116} weight={900} parts={["就差", want("一点"), "。"]} />
     </Box>
     <Box x={110} y={360} gap={16}>
-      <Say at={beat(12)} out={beat(15.6)} size={72} weight={900} parts={["为什么差一点输掉，"]} />
+      <Say at={beat(12)} out={beat(15.6)} size={72} weight={900} parts={["为什么差一点就赢，"]} />
       <Say at={beat(12.8)} out={beat(15.6)} size={72} weight={900} parts={["反而更想", want("再来一局"), "？"]} />
     </Box>
     <Box x={960} y={905} align="center">
