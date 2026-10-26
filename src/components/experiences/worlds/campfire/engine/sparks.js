@@ -9,7 +9,7 @@ import { HASH } from './shaders/lib.js';
 export const SPARK_FIELDS = [
   'dt', 'time', 'frame', 'count', 'nBase', 'nBurst', 'burstX', 'burstY', 'burstZ', 'burstSpeed', 'burstRadius',
   'ox', 'oy', 'oz', 'sx', 'sy', 'sz', 'turb', 'lifeK', 'bedRadius', 'seed', 'sizeK', 'upK',
-  'burstFan', 'burstSize', 'aimX', 'aimZ',
+  'burstFan', 'burstSize', 'aimX', 'aimZ', 'gravity',
 ];
 
 const STRIDE = 64; // 4 x vec4f
@@ -26,7 +26,7 @@ export class Sparks {
     this.bursts = [];         // { t0, n, pos, speed, radius, dur }
     this.time = 0;
     this.frame = 0;
-    this.params = { turb: 1.0, lifeK: 1.0, sizeK: 1.0, upK: 1.0, brightness: 13.0 };
+    this.params = { turb: 1.0, lifeK: 1.0, sizeK: 1.0, upK: 1.0, brightness: 13.0, gravity: 1.0 };
     this.U = new UniformStruct(device, 'SP', SPARK_FIELDS);
     this.buf = device.createBuffer({ size: count * STRIDE, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
     this.counter = device.createBuffer({ size: 16, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
@@ -123,7 +123,7 @@ fn fluidVel(p: vec3f) -> vec3f {
   u += textureSampleLevel(curlT, rep, tq, 0.0).xyz * turbAmp;
   let k = 1.0 - exp(-dt / tau);
   v = mix(v, u, k);
-  v.y -= 9.81 * (1.0 - 0.004) * dt * select(1.0, 0.2, dmm < 0.3);   // light sparks are mostly carried
+  v.y -= S.gravity * 9.81 * (1.0 - 0.004) * dt * select(1.0, 0.2, dmm < 0.3);   // light sparks are mostly carried
   s.q = vec4f(p, s.q.w);
   p += v * dt;
   var T = s.q.w;
@@ -267,7 +267,7 @@ fn toPx(c: vec3f) -> vec2f {
       burstX: B ? B.pos[0] : 0, burstY: B ? B.pos[1] : 0, burstZ: B ? B.pos[2] : 0, burstSpeed: B ? B.speed : 0, burstRadius: B ? B.radius : 0,
       burstFan: B ? (B.fan ?? 0.6) : 0, burstSize: B ? (B.size ?? 1.3) : 1, aimX: B?.aim ? B.aim[0] : 0, aimZ: B?.aim ? B.aim[2] : 0,
       ox: sim.origin[0], oy: sim.origin[1], oz: sim.origin[2], sx: sim.size[0], sy: sim.size[1], sz: sim.size[2],
-      turb: this.params.turb, lifeK: this.params.lifeK, bedRadius: 0.2, seed: 1234, sizeK: this.params.sizeK, upK: this.params.upK,
+      gravity: this.params.gravity, turb: this.params.turb, lifeK: this.params.lifeK, bedRadius: 0.2, seed: 1234, sizeK: this.params.sizeK, upK: this.params.upK,
     }).upload();
     this.device.queue.writeBuffer(this.counter, 0, new Uint32Array(4));
     const pass = enc.beginComputePass();

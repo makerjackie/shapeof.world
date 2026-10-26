@@ -5,7 +5,7 @@ import type { Reading } from '../fields'
 import type { Instruments } from '../measurements'
 export function AnatomyPins({ active, onSelect }: { active: AnatomyId | null; onSelect(id: AnatomyId): void }) {
   const tx=useExperienceI18n()
-  return <div className="cf-anatomy" data-focused={active??undefined}><svg aria-hidden="true">{ANATOMY.map(a=><path key={a.id} data-cf-leader={a.id}/>)}</svg>{ANATOMY.map((a,i)=><button key={a.id} className="cf-pin" data-cf-pin={a.id} aria-pressed={active===a.id} onClick={()=>onSelect(a.id)}><span>{String(i+1).padStart(2,'0')}</span>{tx(a.title)}</button>)}</div>
+  return <div className="cf-anatomy" data-focused={active??undefined}><svg aria-hidden="true">{ANATOMY.map(a=><g key={a.id}><path data-cf-leader={a.id} data-active={active===a.id}/><circle data-cf-anchor={a.id} data-active={active===a.id} r={3}/></g>)}</svg>{ANATOMY.map((a,i)=><button key={a.id} className="cf-pin" data-cf-pin={a.id} aria-pressed={active===a.id} onClick={()=>onSelect(a.id)}><span>{String(i+1).padStart(2,'0')}</span><b>{tx(a.title)}</b></button>)}</div>
 }
 export function AnatomyCard({ id, reading, data, onClose, onSection }: { id: AnatomyId; reading: Reading | null; data: Instruments | null; onClose(): void; onSection(): void }) {
   const tx=useExperienceI18n(),a=ANATOMY.find(a=>a.id===id)!, valid=reading&&!reading.solid
@@ -13,7 +13,7 @@ export function AnatomyCard({ id, reading, data, onClose, onSection }: { id: Ana
   if(id==='wood'){label='邻近可燃气';value=valid?`${(reading.fuel*100).toFixed(2)} %`:'—'}
   if(id==='coal')label='炭床上方气温'
   if(id==='root'){label='气体年龄';value=valid&&reading.age!==null?`${(reading.age*1000).toFixed(1)} ms`:'—'}
-  if(id==='yellow'||id==='tip'){label='烟炱';value=valid?`${reading.soot.toFixed(3)} ppm`:'—'}
+  if(id==='yellow'||id==='tip'){label=id==='tip'?'尖端附近烟炱':'烟炱';value=valid?`${reading.soot.toFixed(3)} ppm`:'—'}
   if(id==='smoke'){label='有机烟示踪量';value=valid?reading.smoke.toFixed(4):'—'}
   if(id==='plume'){label='气流速度';value=valid?`${reading.speed.toFixed(2)} m/s`:'—'}
   if(id==='spark'){label='存活火星';value=data?`${data.spark.count}`:'—'}
