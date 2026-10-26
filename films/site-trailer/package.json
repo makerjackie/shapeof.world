@@ -3,22 +3,27 @@
   "private": true,
   "scripts": {
     "studio": "remotion studio",
-    "render": "remotion render Film /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v3-raw.mp4 --crf=12 --concurrency=2",
-    "render:loop": "remotion render Loop /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v3-loop-raw.mp4 --crf=12 --concurrency=2",
-    "finish": "bash tools/finish.sh /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out site-trailer-v3"
+    "render": "remotion render Film /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v4-raw.mp4 --crf=12 --concurrency=2",
+    "render:loop": "remotion render Loop /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out/site-trailer-v4-loop-raw.mp4 --crf=12 --concurrency=2",
+    "finish": "bash tools/finish.sh /Volumes/DevSSD/Projects/code/shapeof.world-reports/site-trailer/out site-trailer-v4"
   },
   "dependencies": {
+    "@react-three/drei": "10.7.6",
+    "@react-three/fiber": "9.3.0",
     "@remotion/cli": "4.0.380",
     "@remotion/google-fonts": "4.0.380",
     "@remotion/noise": "4.0.380",
+    "@remotion/three": "4.0.380",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "remotion": "4.0.380"
+    "remotion": "4.0.380",
+    "three": "0.178.0"
   },
   "devDependencies": {
     "@remotion/bundler": "4.0.380",
     "@remotion/renderer": "4.0.380",
     "@types/react": "19.1.0",
+    "@types/three": "0.178.0",
     "typescript": "5.9.3"
   },
   "allowScripts": {

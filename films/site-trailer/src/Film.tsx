@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, Audio, Easing, Img, interpolate, random, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { b2f, BOOKEND, CARD_AT, FILM_FRAMES, FPS, GRID, GRID_AT, GRID_LABEL, GRID_ORDER, Label, LINES, Shot, SHOTS, Tile } from "./edl";
 import { Frame } from "./Frame";
-import { Bookend, Intro } from "./Story";
+import { Bookend3D, Intro3D } from "./Story3D";
 import { FONT, K, MONO, SERIF } from "./theme";
 
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
@@ -215,11 +215,11 @@ export const Film: React.FC = () => {
     <AbsoluteFill style={{ background: "#000", overflow: "hidden" }}>
       <Audio src={staticFile("score.wav")} volume={(f) => interpolate(f, [FILM_FRAMES - 15, FILM_FRAMES - 1], [1, 0], CL)} />
       <Sequence durationInFrames={b2f(SHOTS[0].at)}>
-        <Intro />
+        <Intro3D />
       </Sequence>
       <Shots shots={SHOTS} />
       <Sequence from={b2f(BOOKEND.at)} durationInFrames={b2f(BOOKEND.len)} premountFor={20}>
-        <Bookend />
+        <Bookend3D />
       </Sequence>
       <Sequence from={b2f(GRID_AT)} durationInFrames={b2f(4)} premountFor={20}>
         <Grid />

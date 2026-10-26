@@ -25,7 +25,7 @@ export type Shot = {
 };
 
 // Section A, bars 0–3: two beats a shot. Swirl → swirl → swirl → spiral, then ring → ring on a sphere → sphere → round flame.
-// Section B, bars 4–5: one beat a shot, lines and silk. Bar 6: the ink landscape, slow then fast.
+// Section B, bars 4–5: one beat a shot, lines and silk. Bar 6: the dive from you to a quark, slow then fast.
 // Bar 7: life and machines. Bar 8: the grid (Grid.tsx). Bar 9: out of the grid's middle tile.
 // Bar 10: eighth-note recap that ends on a ring, one beat of black, then the black hole (bars 11–15).
 // All footage is 1080p (v2 clips are rendered at DPR 2–3 and downscaled, so they are sharper, not bigger). Tight
@@ -45,21 +45,21 @@ const MONTAGE: Shot[] = [
   { id: "complex-zeta", at: 18, len: 1, src: 1.0, rate: 1.5, zoom: [1.0, 1.08], label: ["黎曼 ζ 函数", "RIEMANN ZETA"] },
   { id: "equation-blackhole", at: 19, len: 1, src: 1.0, rate: 1.5, zoom: [1.0, 1.06], label: ["公式 · 卷进黑洞", "EQUATION BLACK HOLE"] },
   { id: "three-body-gallery", at: 20, len: 1, src: 1.0, rate: 2, zoom: [1.0, 1.05], label: ["三体 · 一起跳的周期轨道", "THREE-BODY ORBITS"] },
-  { id: "rain-carves-valleys", at: 21, len: 1, src: 1.0, zoom: [1.0, 1.08], label: ["雨水 · 刻出山谷", "RIVERS CARVE VALLEYS"] },
+  { id: "trade-night", at: 21, len: 1, src: 1.0, zoom: [1.0, 1.06], label: ["航运 · 七个卡住世界的海峡", "TRADE CHOKEPOINTS"] },
   { id: "earth-terminator", at: 22, len: 1, src: 1.0, rate: 2, zoom: [1.05, 1.1], label: ["地球 · 白天与黑夜", "EARTH"] },
   { id: "mandel-spiral", at: 23, len: 1, src: 1.0, zoom: [1.0, 1.1], label: ["曼德博集合 · 无限放大", "MANDELBROT ZOOM"] },
 
-  { id: "ink-landscape-flight", at: 24, len: 4, src: 0.2, rate: 0.5, ramp: { at: 30, rate: 3 }, zoom: [1.0, 1.08], label: ["水墨山水 · 飞进留白", "INK LANDSCAPE"] },
+  { id: "sm-dive", at: 24, len: 4, src: 0.6, rate: 1, ramp: { at: 30, rate: 3.9 }, zoom: [1.0, 1.05], label: ["从你到夸克", "FROM YOU TO A QUARK"] },
 
   { id: "fly-neurons", at: 28, len: 1, src: 2.0, rate: 1.2, zoom: [1.0, 1.06], origin: [0.45, 0.5], label: ["果蝇 · 整个大脑的连线", "FLY CONNECTOME"] },
   { id: "human-explode", at: 29, len: 1, src: 3.3, rate: 1.5, zoom: [1.0, 1.06], origin: [0.72, 0.45], label: ["人体 · 一层层拆开", "HUMAN BODY"] },
   { id: "vegetation-forest", at: 30, len: 1, src: 2.0, rate: 1.2, zoom: [1.0, 1.05], label: ["森林 · 从树冠到根系", "FOREST"] },
-  { id: "ukulele-play", at: 31, len: 1, src: 1.5, zoom: [1.0, 1.05], origin: [0.5, 0.8], label: ["尤克里里 · 自己弹", "UKULELE"] },
+  { id: "sm-museum", at: 31, len: 1, src: 1.0, zoom: [1.0, 1.08], label: ["17 种基本粒子", "THE STANDARD MODEL"] },
 
   // bar 8 is the grid; its middle tile is flight-network from GRID_MID_SRC
   { id: "flight-network", at: 36, len: 2, src: 1.0 + 56 / 30, zoom: [1.0, 1.08], label: ["航线 · 没有国界的地图", "FLIGHT NETWORK"] },
   { id: "weather-front", at: 38, len: 1, src: 1.5, zoom: [1.02, 1.1], label: ["冷锋 · 天气为什么会变", "COLD FRONT"] },
-  { id: "rainbow-double", at: 39, len: 1, src: 1.0, zoom: [1.02, 1.1], label: ["双彩虹", "DOUBLE RAINBOW"] },
+  { id: "rainbow-swing", at: 39, len: 1, src: 2.2, rate: 1.3, zoom: [1.0, 1.04], label: ["彩虹 · 42° 的圆锥", "THE 42° RAINBOW CONE"] },
 
   { id: "starry-night-orbit", at: 40, len: 0.5, src: 3.0, rate: 1.5, zoom: [1.05, 1.1] },
   { id: "equation-tunnel", at: 40.5, len: 0.5, src: 2.5, rate: 1.5, zoom: [1.05, 1.1] },
@@ -72,7 +72,7 @@ const MONTAGE: Shot[] = [
 export const SHOTS: Shot[] = MONTAGE.map((s) => ({ ...s, at: s.at + INTRO }));
 
 // The black hole in the laptop: starts full frame on beat 44, pulls back to the browser (4K screen recording).
-export const BOOKEND = { id: "bh-drag", at: 44 + INTRO, len: 18, src: 0.3 };
+export const BOOKEND = { id: "bh-orbit", at: 44 + INTRO, len: 18, src: 0.3 };
 
 // The grid (bar 8): 3×3 tiles, appearing on sixteenths from the middle outwards, then the push into the middle.
 export const GRID_AT = 32 + INTRO;

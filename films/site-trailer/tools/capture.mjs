@@ -42,7 +42,9 @@
  *   hide? [css selectors to hide], css? extra css, init? js run before the page's own scripts, mode?, fps?, size?, ss?,
  *   crop? [x,y,w,h] viewport fractions (keep 16:9; pair with ss:2 for a sharp punch-in),
  *   native? true = keep the DPR-scaled size (ss:2 -> 3840x2160 output) for footage that is scaled up in the edit,
- *   cursor? true = draw a visible arrow cursor in the page that follows the mouse (screenshots have no OS cursor),
+ *   cursor? true | scale = draw a visible arrow cursor in the page that follows the mouse (screenshots have no OS
+ *                        cursor); a number scales it (1 = 30x38 CSS px, true = 1.47),
+ *   clockTime? ISO date the page's clock starts at (step mode), e.g. to pin the homepage's world of the day,
  *   chrome? true = keep the site's own UI (skip the overlay-hiding CSS; the cursor, music and cookie bars stay hidden),
  *   canvasOnly? true = hide every non-canvas element in page, iframes and shadow roots (clean plate;
  *   not for DOM/SVG worlds), shadowCss? css injected into shadow roots + iframes, why, label {zh, en}
@@ -281,11 +283,12 @@ async function recordShot(s) {
       localStorage.setItem('oneworld.site-bgm.muted.v1', '1')
     } catch {}
   }, s.worldId)
+  // the fake clock first, so a shot's init script can wrap its requestAnimationFrame
+  if (mode === 'step') await ctx.clock.install(s.clockTime ? { time: new Date(s.clockTime) } : undefined)
   if (s.init) await ctx.addInitScript(s.init)
-  if (s.cursor) await ctx.addInitScript(CURSOR_JS)
+  if (s.cursor) { const k = typeof s.cursor === 'number' ? s.cursor : 1.47; await ctx.addInitScript(CURSOR_JS.replace('width="44" height="56"', `width="${Math.round(30 * k)}" height="${Math.round(38 * k)}"`)) }
   await ctx.route('https://music-cdn.shapeof.world/**', (r) => r.abort())
   await ctx.route(/googletagmanager|google-analytics|plausible\.io|cloudflareinsights/, (r) => r.abort())
-  if (mode === 'step') await ctx.clock.install()
   const page = await ctx.newPage()
   page.on('pageerror', (e) => meta.errors.push(`page: ${e.message}`.slice(0, 300)))
   page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource|music-cdn/.test(m.text())) meta.errors.push(`console: ${m.text()}`.slice(0, 300)) })

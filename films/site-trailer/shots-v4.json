@@ -1,0 +1,212 @@
+{
+  "version": 4,
+  "notes": "v4: the 3D-laptop screen recordings (bigger pointer, the click at 1.0 s) and four new montage worlds. cursor: <n> scales the drawn pointer (1 = 30x38 CSS px).",
+  "shots": [
+    {
+      "id": "home-click",
+      "worldId": "home",
+      "url": "https://shapeof.world/",
+      "query": {
+        "capture": null,
+        "ghost": null
+      },
+      "chrome": true,
+      "cursor": 2.2,
+      "native": true,
+      "ss": 2,
+      "fps": 30,
+      "duration": 2.2,
+      "settle": 6000,
+      "warmup": 0.2,
+      "actions": [
+        {
+          "at": 0,
+          "type": "move",
+          "from": [
+            0.34,
+            0.66
+          ],
+          "to": [
+            0.66,
+            0.45
+          ],
+          "dur": 0.8,
+          "ease": "inout"
+        },
+        {
+          "at": 0.8,
+          "type": "move",
+          "from": [
+            0.66,
+            0.45
+          ],
+          "to": [
+            0.68,
+            0.43
+          ],
+          "dur": 0.15,
+          "ease": "inout"
+        },
+        {
+          "at": 1.0,
+          "type": "down"
+        }
+      ],
+      "why": "The homepage with a large pointer that reaches the Starry Night card and presses it at 1.0 s: the 3D laptop intro's screen. The page clock is pinned to the day the homepage featured The Starry Night, so the card opens into the montage's first shot.",
+      "clockTime": "2026-10-24T00:08:00+08:00"
+    },
+    {
+      "id": "bh-orbit",
+      "worldId": "black-hole-flyby",
+      "cursor": 2.2,
+      "native": true,
+      "ss": 2,
+      "fps": 30,
+      "duration": 9,
+      "settle": 7000,
+      "steps": [
+        {
+          "clickText": "^近看$"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "actions": [
+        {
+          "at": 0,
+          "type": "move",
+          "from": [
+            0.86,
+            0.66
+          ],
+          "to": [
+            0.62,
+            0.56
+          ],
+          "dur": 1.2,
+          "ease": "inout"
+        },
+        {
+          "at": 1.2,
+          "type": "drag",
+          "from": [
+            0.62,
+            0.56
+          ],
+          "to": [
+            0.5,
+            0.6
+          ],
+          "dur": 6.5,
+          "ease": "inout"
+        }
+      ],
+      "why": "bh-drag again with the larger pointer, for the 3D laptop bookend."
+    },
+    {
+      "id": "sm-dive",
+      "worldId": "standard-model",
+      "ss": 2,
+      "duration": 6.4,
+      "settle": 2500,
+      "init": "(()=>{const P=window.requestAnimationFrame.bind(window);window.requestAnimationFrame=function(cb){return P(function hold(t){if(window.__go)cb(t);else P(hold)})}})()",
+      "css": ".smf-top, .smf-card { opacity: 0 !important; }",
+      "actions": [
+        {
+          "at": 0,
+          "type": "eval",
+          "js": "window.__go = true"
+        }
+      ],
+      "why": "The powers-of-ten dive: you on a scale, a finger, an atom, the nucleus, a proton, three quarks. The page's rAF is held until frame 0 so the 5.2 s dive starts on the recording.",
+      "label": {
+        "zh": "从你到夸克",
+        "en": "FROM YOU TO A QUARK"
+      }
+    },
+    {
+      "id": "trade-night",
+      "worldId": "trade-chokepoints",
+      "ss": 2,
+      "duration": 4,
+      "settle": 8000,
+      "why": "The night chart: shipping lanes glowing, ships streaming through the chokepoints.",
+      "label": {
+        "zh": "航运 · 七个卡住世界的海峡",
+        "en": "TRADE CHOKEPOINTS"
+      }
+    },
+    {
+      "id": "sm-museum",
+      "worldId": "standard-model",
+      "url": "https://shapeof.world/standard-model#museum",
+      "ss": 2,
+      "duration": 4,
+      "settle": 8000,
+      "init": "localStorage.setItem('oneworld:standard-model:collection:v1', JSON.stringify(['u','d','c','s','t','b','e','mu','tau','ve','vmu','vtau','gamma','gluon','w','z','higgs']))",
+      "crop": [
+        0.12,
+        0.15,
+        0.75,
+        0.75
+      ],
+      "why": "The particle museum: the dark wall of all 17 Standard Model particles, every card collected. The legend row is hidden and the crop leaves the lower fifth empty for the label.",
+      "label": {
+        "zh": "17 种基本粒子",
+        "en": "THE STANDARD MODEL"
+      },
+      "css": ".smm-periodic-bottom { opacity: 0 !important; }"
+    },
+    {
+      "id": "rainbow-swing",
+      "worldId": "rainbow",
+      "ss": 2,
+      "duration": 4.5,
+      "settle": 6000,
+      "steps": [
+        {
+          "clickText": "^几何线$"
+        },
+        {
+          "drag": {
+            "from": [
+              0.8,
+              0.5
+            ],
+            "to": [
+              0.45,
+              0.5
+            ],
+            "ms": 600,
+            "steps": 20
+          }
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "actions": [
+        {
+          "at": 0.3,
+          "type": "drag",
+          "from": [
+            0.3,
+            0.5
+          ],
+          "to": [
+            0.68,
+            0.5
+          ],
+          "dur": 3.4,
+          "ease": "inout"
+        }
+      ],
+      "why": "From the 45° oblique view (observer, shadow line, the 42° cone) the camera swings round behind the observer until the coloured double bow fills the sky.",
+      "label": {
+        "zh": "彩虹 · 42° 的圆锥",
+        "en": "THE 42° RAINBOW CONE"
+      }
+    }
+  ]
+}

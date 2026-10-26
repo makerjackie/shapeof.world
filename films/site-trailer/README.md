@@ -25,11 +25,22 @@
 ln -sfn /path/to/shapeof.world-reports/site-trailer/footage public/footage
 ```
 
+## v4：真 3D 电脑和四个新镜头
+
+- 电脑换成真 3D（`Laptop3D.tsx`，@remotion/three + react-three-fiber）。模型是在代码里用 three.js 基本几何体搭的（铝合金机身、一颗颗键帽、触控板、转轴、黑玻璃边框），没有下载第三方模型，所以没有模型授权问题，也没有任何品牌标志。灯光：Poly Haven 的 HDRI「Studio Small 08」（CC0，作者 Sergej Majboroda，`public/hdri/`），加一盏暖色主光、一盏暖色补光和一盏冷色轮廓光；暗色地面加接触阴影。
+- 屏幕不是贴图：浏览器栏和 16:9 网页是一层 DOM，用 CSS 单应矩阵（homography）贴到屏幕四个角在画面上的投影位置。这样 4K 录屏始终清楚，镜头正对屏幕时网页正好铺满 1920×1080，推进和回拉都不用剪。`fullPose()` 就是这个机位。
+- 开头（`Story3D.tsx` 的 `Intro3D`）：一开始就很近，略高，看得到键盘；光标更大（`cursor: 2.2`），第 1.0 秒点下《星月夜》卡片，第 100 帧推到正对全屏，第 0 小节重拍时已经是快剪第一镜。首页录屏用 `clockTime` 把页面时钟固定在首页推荐《星月夜》的那一天。
+- 结尾（`Bookend3D`）：同一台 3D 电脑，从全屏黑洞拉回到四分之三侧面，电脑停在右边。
+- 四个新镜头（`shots-v4.json`）：水墨山水那一格换成标准模型的尺度之旅（你站在秤上 → 手指 → 原子 → 原子核 → 质子 → 夸克，`sm-dive`；用 `init` 先拦住页面的 requestAnimationFrame，录制第一帧才放行，让 5.2 秒的镜头从头开始）；雨水刻山谷换成夜间航运图（`trade-night`）；尤克里里换成 17 种基本粒子的博物馆墙（`sm-museum`）；双彩虹换成从 45° 斜侧（观察者、影子方向、42° 圆锥线）转到观察者身后、彩色双虹出现的一镜（`rainbow-swing`）。
+- 录制工具新增：`clockTime`（页面时钟起点）、`cursor` 可设大小；shot 的 `init` 现在在假时钟之后注入，可以包住它的 requestAnimationFrame。
+- 渲染时把 `TMPDIR` 指到 DevSSD（Mac 系统盘只剩约 3 GB，Remotion 打包和 Chrome 缓存会写满它）。
+- 交付：`out/site-trailer-v4*.mp4`、`poster-v4.jpg`、`contact-v4.jpg`，v1–v3 保留。
+
 ## v3：开头的电脑和结尾的回拉
 
 v3 保留 v2 的整段快剪，只在前后各加一段，让人一眼看懂这是一个网站：
 
-- 开头两小节（`Story.tsx` 的 `Intro`）：一台用 CSS 画的通用笔记本（`Laptop.tsx`，没有任何品牌），屏幕里是真实的 shapeof.world 首页（`home-cursor`），光标滑到《星月夜》卡片上按下，卡片展开铺满网页，镜头推进屏幕，最后一帧正好等于快剪第一镜。网页区域是 16:9，推到 `FULL` 倍时正好铺满 1920×1080，所以推进不需要剪切。
+- 开头两小节（`Story.tsx` 的 `Intro`）：一台用 CSS 画的通用笔记本（v4 起换成 3D，见上），屏幕里是真实的 shapeof.world 首页（`home-cursor`），光标滑到《星月夜》卡片上按下，卡片展开铺满网页，镜头推进屏幕，最后一帧正好等于快剪第一镜。网页区域是 16:9，推到 `FULL` 倍时正好铺满 1920×1080，所以推进不需要剪切。
 - 结尾（`Bookend`）：黑洞从全屏开始，在"这些都不是视频"时拉回，露出它正在同一台电脑的浏览器里运行，光标在拖动黑洞（`bh-drag`）。
 - 这两段屏幕录像用 `native: true` 保留 3840×2160，推拉时放大也清楚；`cursor: true` 在页面里画一个可见的光标（截图里没有系统光标）；首页用 `chrome: true` 保留网站自己的界面。镜头见 `shots-v3.json`。
 - 配乐前面多了两小节（`score.js` 的 `T0 = 2 * BAR`）：轻的脉冲、闭合的琶音、铺底慢慢打开，光标按下时一声 tick，然后上升音接到原来第 0 小节的重拍。剪辑表的拍数仍从第 0 小节算，导出时统一加 `INTRO`。
