@@ -1,3 +1,4 @@
+import type { DemoReplay } from '../explorer/replay'
 import type { ConflictPoint, Network, SimulationMetrics } from '../sim/types'
 import { packetBuffers, type RenderPacket } from './frame-packet'
 import type { TrafficRuntime } from './runtime'
@@ -10,6 +11,8 @@ import type {PackedBlueprint} from './blueprint-data'
 /** Main-thread view of a worker-owned model. No model integration or warmup runs
  * here. One request in flight prevents message queues from growing unbounded. */
 export class WorkerTrafficRuntime {
+  private demoRequest = 0
+  private demoResolve?: (replay: DemoReplay) => void
   readonly worker: Worker
   readonly ready: Promise<void>
   lighting:ImageBitmap|null=null
@@ -48,6 +51,7 @@ export class WorkerTrafficRuntime {
       this.worker.onmessage=event=>{
         if(this.disposed)return
         const message=event.data
+        if(message.type==='demo'){if(message.requestId===this.demoRequest)this.demoResolve?.(message.replay);return}
         if(message.type==='error'){fail(new Error(message.message));return}
         if(message.type==='ready'){this.network=message.network;this.conflicts=message.conflicts;this.lamps=message.lamps;this.geometry=message.geometry;this.blueprint=message.blueprint;this.roof=message.roof;this.lighting=message.lighting;if(message.context)primeContextLayout(this.network,message.context);if(message.city)primeCityLayout(this.network,message.city)}
         if(message.packet&&(message.epoch??0)!==this.epoch)return
@@ -77,6 +81,10 @@ export class WorkerTrafficRuntime {
     // subsequent worker packets, never as an unlimited main-thread while loop.
     const elapsed=Math.min(this.pendingSeconds,1.6);this.pendingSeconds-=elapsed
     this.worker.postMessage({type:'advance',seconds:elapsed,recycle,epoch:this.epoch},recycle?packetBuffers(recycle):[])
+  }
+  prepareDemo(movementId:string):Promise<DemoReplay> {
+    const requestId=++this.demoRequest
+    return new Promise(resolve=>{this.demoResolve=resolve;this.worker.postMessage({type:'demo',movementId,requestId})})
   }
   get pendingSimSeconds(){return this.pendingSeconds}
   setFrozen(value:boolean){this.frozen=value;if(!value&&this.deferred){const next=this.deferred;this.deferred=undefined;this.receive(next)}}

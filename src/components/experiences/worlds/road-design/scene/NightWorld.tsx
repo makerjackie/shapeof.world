@@ -129,7 +129,7 @@ function treeInstances(network: Network) {
   return { crowns, trunks }
 }
 
-export const NightWorld = memo(function NightWorld({ network, atlas, visible = true }: { network: Network; atlas: T.Texture; visible?:boolean }) {
+export const NightWorld = memo(function NightWorld({ network, atlas, visible = true, buildings = true }: { network: Network; atlas: T.Texture; visible?:boolean; buildings?:boolean }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const assets = useMemo(() => {
     const trees = urban ? { crowns: [], trunks: [] } : treeInstances(network)
@@ -158,7 +158,7 @@ export const NightWorld = memo(function NightWorld({ network, atlas, visible = t
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, network.terrain ? Math.min(...network.terrain.values) - .5 : -.15, 0]} material={assets.ground}><planeGeometry args={[30000, 30000]} /></mesh>
     <Terrain network={network} material={assets.ground} />
     <ContextLand network={network} atlas={atlas} />
-    <CityBuildings urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
+    <CityBuildings visible={buildings} urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
     {network.id === 'huangjuewan' && <ChongqingRiver />}
     {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
     {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}

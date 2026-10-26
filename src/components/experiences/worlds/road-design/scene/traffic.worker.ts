@@ -1,3 +1,4 @@
+import { recordDemo } from '../explorer/replay'
 import { createDefaultOD } from '../sim/demand'
 import type { DesignSpec } from '../sim/types'
 import { TrafficRuntime } from './runtime'
@@ -28,6 +29,10 @@ self.onmessage = async (event: MessageEvent) => {
       const packet = packFrame(runtime, 15)
       self.postMessage({type:'ready',network,conflicts:calculateConflicts(network),packet,lamps,geometry,roof,lighting,context,city,blueprint}, {transfer:[...packetBuffers(packet),...roadGeometryBuffers(geometry),...blueprintBuffers(blueprint),roof.buffer,...(lighting?[lighting]:[])]})
     } else if (runtime) {
+      if(message.type==='demo') {
+        const replay=recordDemo(runtime.simulation.network,message.movementId)
+        self.postMessage({type:'demo',replay,requestId:message.requestId}); return
+      }
       if (message.type === 'demand') { runtime.stopPressure(); runtime.simulation.setDemandMultiplier(message.value); runtime.simulation.refreshMetrics(); return }
       if (message.type === 'stop-pressure') { runtime.stopPressure(); return }
       if (message.type === 'pressure') runtime.startPressure(message.to)

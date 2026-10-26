@@ -250,3 +250,43 @@ JTG/T D21—2014 的官方扫描件链接见前文，本轮直接逐页复核。
 `data/huangjuewan-runtime.json` 是上述 OSM/DEM 审计输入的紧凑派生文件，许可和署名不变：道路坐标以原有毫米精度存储差分，地形以原有厘米精度存储二维预测残差，未增加量化误差。原始审计 JSON 仍保留在目录中；运行时不下载未使用的审计字段，只在选择黄桷湾时加载该派生文件。`data/capacity-display.json`、`data/presentation.json` 是原容量测量、几何和冲突计算的显示缓存，测试逐项校验，并非新的测量或人为调数。
 
 重生成命令、传输和暂停语义、无头生产测量方法见 [PERFORMANCE.md](./PERFORMANCE.md)。下载评估采用文件的原始字节数与 gzip 大小；站点实际传输仍由 Cloudflare 的内容压缩处理，没有提交预压缩副本。
+
+## 路线阅读器与讲解（2026-10-26，第二版第 1 轮）
+
+### 沿线内容依据
+
+- [FHWA, Interchange Design Promptlist](https://highways.dot.gov/field-offices/missouri/interchange-design-promptlist)，*Interchange Configurations* / *Full Cloverleaf*：环道需要向右驶出以完成原本的左转；相邻环道“先汇入、后驶出”产生交织。解释牌将其拆成绕圈、慢速、交织、主线分层四个位置。270° 是本模型圆弧的实际扫角，R60 / 40 km/h 来自已有几何与 D21 设计基准，未将其他实例的尺寸套入本模型。
+- [FHWA-HRT-04-091, Signalized Intersections: Informational Guide, Chapter 4](https://www.fhwa.dot.gov/publications/research/safety/04091/04.cfm)，4.2.1 *Permissive-Only Left-Turn Phasing*、4.7.4 *Vehicle Clearance*；[FHWA Traffic Signal Timing Manual, Chapter 4](https://ops.fhwa.dot.gov/publications/fhwahop08024/chapter4.htm)。许可左转绿灯仍让对向直行；不可写成左转专用受保护相位。本模型 32 s 绿 / 3 s 黄 / 2 s 全红是既有场景配时，并非 FHWA 为所有路口规定的固定值。
+- [交通运输部发布 JTG/T D21-2014 的公告](https://xxgk.mot.gov.cn/jigou/glj/202006/t20200623_3312204.html) 及 [官方全文](https://xxgk.mot.gov.cn/jigou/glj/202006/P020240611387130375167.pdf)。半径、设计车速及匝道参数继续使用上文已核对的表 4.3.2、8.2.1、8.3.1。没有把 `sqrt(aR)`、离散曲线的半径或模型限速单独宣称为完整工程设计校核。
+- AASHTO *A Policy on Geometric Design of Highways and Streets* 通过已有 MassDOT / FHWA 公开引用交叉核对；未取得 Green Book 原书，不新增“逐页读过原书”的声明。
+- 黄桷湾使用已有 [HUANGJUEWAN-SOURCES.md](./HUANGJUEWAN-SOURCES.md) 的 OSM 拓扑、DEM 和高度约束。关于桥梁、爬坡与绕行的解释是一般工程原理和当前路网的可见结果，不声称掌握原设计团队的决策记录。多方向、分层与连通关系可由数据检查；真实历史动机未作推断。
+
+### 读数边界
+
+`explorer/routes.ts` 由 `Network.movements` 的真实车道序列生成可选择的路线。相同入口/出口/转向的多车道直行折叠为一个代表路线，不删除任何 O-D；同入口回到同出口时标为掉头。路线明确从当前模型入口到出口，包含远端引道。
+
+- 路线长度：沿车道中心线的三维折线长度。拓扑中的相邻车道转换不直接首尾连接（那会倒退并重复计长），在同一纵向段 30%–70% 处以 smoothstep 构造代表横移。它是几何示意线，实际车辆换道位置由 MOBIL 决定，因车而异。
+- 比直线多走：上述三维长度减同一对端点的平面欧氏距离，四舍五入为米。直线不保证可施工、可通行，也不是“另一条合法最短路线”。黄桷湾“最绕”仅指当前模型所有代表 O-D 中这一差值最大者，不能泛化为整个重庆路网的最绕路线。
+- 最小转弯半径：各实际车道相邻三个采样点在 XZ 平面上的外接圆半径取最小值，不把任意横移轨迹当作道路设计弯道。排除重合点与数值共线；直线显示 ∞。黄桷湾稀疏折线可能有局部折角，结果不等于测绘或施工曲率。
+- 该段模型车速：半径最小处所在 lane 的 `speedLimit` 换算为 km/h；不是由一个半径自动反推标准设计车速，也不是给现实驾驶的速度建议。参数化匝道保留原 D21 对应档位；城市连接段和 OSM 路段仍为既有仿真假设。
+- 经过层级：路线经过的不同 `lane.level + 1`（显示层号）；这是路网标记的层级集合，不是坡度起伏次数或实测桥梁标高。黄桷湾高度仍明确为推断。
+- 冲突：先由 O-D / 局部连接车道 / OSM 分支标识关联既有单车道冲突示意线，再统计位于这组线或实际路线上的静态 `ConflictPoint`（三维投影容差 0.005 m），覆盖交叉、合流、分流。这样不会把邻近另一股车流的交叉也计入。它是既有示意路网的冲突点数，不是碰撞数、事故概率或严格车辆扫掠包络计算。
+- 交织：路线经过已有 `WeavingSection.lanes` 或其几何位置的段数。仅统计已有标注；黄桷湾没有完整交织标注时显示 0 并明确提示不代表现实不存在。不能从未标注推得“无交织”。
+
+### 示范车、镜头与图层
+
+`explorer/replay.ts` 用同一 `TrafficSimulation`（IDM、MOBIL、间隙接受、信号控制）独立生成种子 18181 的单车示范记录，未改变日常车流或容量实验。自由流道路不额外生成背景到达；有控制的路口用 0.2× 背景到达。信号十字左转示范加入五辆对向直行车，形成可重复观察的“红灯停止 → 绿灯让对向直行 → 通过”场景；这是一项教学工况，非现场记录。
+
+行驶按段压缩，过短的真实停车区间放慢到可读时长（红灯至少 2.5 s、让行至少 2.2 s）；它不是旅行时间测量。渲染使用记录的车辆位置与切线，场景信号读取同一回放时刻。有控制路口的背景车辆也使用该回放中的实际姿态，避免背景车辆与演示信号不同步；自由流场景保留降暗的日常车流。路径线的几何横移与示范车的实际 MOBIL 横移可以略有不同，但必须通过同一条目标匝道并到达原出口。超时或改道标为未完成，不冒称成功。
+
+选中后先框完整路线，再在车进入转向区域时放大沿线关键路段；跟车可手动开启，拖镜头即解除跟车，保留自由旋转。示范车为加大显示的识别符号，非按比例汽车模型。青色路线在遮挡路段也可读，为阅读辅助覆盖层，不代表高架上下关系被改变。
+
+建筑原先按 urban / service / motorway 类型生成不同街区，还按镜头位置自动隐藏遮住核心的楼。新增统一且跨设计保留的“城市建筑”开关，取消隐式逐栋隐藏。街区布局仍随道路类型变化；图纸视图主动省略环境，其开关提示说明夜景中会保留用户设置。交通、图纸、冲突开关相互独立；图纸不再强制打开冲突点。没有新增第三方模型、图片或字体。
+
+### 同类方法
+
+- [Martin Treiber / Traffic Simulation](https://traffic-simulation.de/)，[原仓库](https://github.com/movsim/traffic-simulation-de)：借鉴直接操作道路、即时车辆反馈；未复制新代码，继续使用已有 IDM/MOBIL 实现。
+- [Cities: Skylines TrafficReport 模组](https://github.com/lisa-lionheart/TrafficReport)：借鉴按路线筛选与关注流向，不复制游戏素材，且不把第一代模组功能误称为第二代游戏现状。
+- [Dinosaur Polo Club / Mini Motorways](https://dinopoloclub.com/games/mini-motorways/)：借鉴明确的起讫关系与克制的主控件；保留本世界夜景和工程线形，不采用商业游戏的素材或卡通风格。
+
+研究用参考图留在作者本地私有计划目录，含第三方版权的技术图不进入网站或本仓公开素材。

@@ -1,3 +1,4 @@
+import { preparePrograms } from './prepare-programs'
 import { useContext, useLayoutEffect, useMemo } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { EffectComposerContext } from '@react-three/postprocessing'
@@ -9,11 +10,11 @@ import { EffectComposerContext } from '@react-three/postprocessing'
 export function PreparePrograms({version}:{version:string}) {
   const {composer,scene,camera}=useContext(EffectComposerContext)
   const gl=useThree(state=>state.gl)
-  const state=useMemo(()=>({started:false,ready:false,disposed:false}),[composer,version])
+  const state=useMemo(()=>({started:false,ready:false,disposed:false,cancel:undefined as (()=>void)|undefined}),[composer,version])
   useLayoutEffect(()=>{
     const render=composer.render
     composer.render=function(delta){if(state.ready)render.call(composer,delta)}
-    return ()=>{state.disposed=true;composer.render=render}
+    return ()=>{state.disposed=true;state.cancel?.();composer.render=render}
   },[composer,state])
   // DisplayStretch installs its material hooks at -1. EffectComposer draws at 1.
   useFrame(()=>{
@@ -21,12 +22,8 @@ export function PreparePrograms({version}:{version:string}) {
     state.started=true
     const previous=gl.getRenderTarget()
     gl.setRenderTarget(composer.inputBuffer)
-    const pending=gl.compileAsync(scene,camera)
-    gl.setRenderTarget(previous)
-    pending.then(()=>{if(!state.disposed)state.ready=true}).catch(error=>{
-      console.error('Road material preparation failed',error)
-      if(!state.disposed)state.ready=true
-    })
+    try { state.cancel=preparePrograms(gl,scene,camera,()=>{if(!state.disposed)state.ready=true}) }
+    finally {gl.setRenderTarget(previous)}
   },.5)
   return null
 }

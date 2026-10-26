@@ -6,9 +6,8 @@ import {cityLayout} from './city-layout'
 import { fillInstances } from './mesh-kit'
 
 /** Façades are metre-scaled procedural windows, not thousands of window meshes. */
-export function CityBuildings({ urban, service = false, roads, network }: { urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
+export function CityBuildings({ urban, service = false, roads, network, visible = true }: { visible?: boolean; urban: boolean; service?: boolean; roads?: readonly Carriageway[]; network?: Network }) {
   const meshRef = useRef<T.InstancedMesh>(null)
-  const lastCamera = useRef(new T.Vector3(Infinity, Infinity, Infinity))
   const assets = useMemo(() => {
     const {blocks,beacons}=cityLayout(urban,service,roads,network)
     const geometry = new T.BoxGeometry()
@@ -89,41 +88,19 @@ export function CityBuildings({ urban, service = false, roads, network }: { urba
           brightness=0.18+0.82*pow(max(0.0,sin(time*2.0+phase)),12.0); }`,
       fragmentShader: `varying float brightness; void main(){float r=length(gl_PointCoord-0.5)*2.0; if(r>1.0)discard;gl_FragColor=vec4(vec3(2.8,0.04,0.018)*brightness, exp(-r*r*4.0));}`,
     })
-    const occluders = blocks.flatMap((b, index) => Math.hypot(b.occlusion.center[0], b.occlusion.center[2]) < 340
-      ? [{ index, volume: b.occlusion, hidden: false, matrix: new T.Matrix4() }] : [])
-    return { blocks, geometry, material, beaconGeometry, beaconMaterial, occluders, hiddenMatrix: new T.Matrix4().makeScale(0,0,0) }
+    return { blocks, geometry, material, beaconGeometry, beaconMaterial }
   }, [urban, service, roads, network])
   useLayoutEffect(() => {
     if (!meshRef.current) return
     fillInstances(meshRef.current, assets.blocks)
-    for (const item of assets.occluders) { meshRef.current.getMatrixAt(item.index, item.matrix); item.hidden = false }
-    lastCamera.current.set(Infinity, Infinity, Infinity)
   }, [assets])
-  useFrame(({ camera, clock, gl }) => {
-    // Change the instance transform, so colour, depth and AO agree. Fragment
-    // discard alone can leave a near-clipped roof in another rendering pass.
-    const p = camera.position, mesh = meshRef.current
-    if (mesh && p.distanceToSquared(lastCamera.current) > .04) {
-      let changed = false
-      const length2 = Math.max(1, p.x*p.x+p.z*p.z)
-      for (const item of assets.occluders) {
-        const [x,y,z] = item.volume.center, [w,h,d] = item.volume.size
-        const t = T.MathUtils.clamp(((p.x-x)*p.x+(p.z-z)*p.z)/length2, 0, 1)
-        const radius = Math.hypot(w,d)*.5+30
-        const near = Math.hypot(x-p.x,z-p.z) < radius && p.y < y+h*.5+16
-        const across = t > .015 && t < .98 && Math.hypot(x-p.x*(1-t),z-p.z*(1-t)) < radius && p.y*(1-t) < y+h*.5+28
-        const hidden = near || across
-        if (hidden !== item.hidden) { mesh.setMatrixAt(item.index,hidden ? assets.hiddenMatrix : item.matrix); item.hidden=hidden; changed=true }
-      }
-      if (changed) mesh.instanceMatrix.needsUpdate = true
-      lastCamera.current.copy(p)
-    }
+  useFrame(({ clock, gl }) => {
     assets.beaconMaterial.uniforms.time.value = clock.elapsedTime
     assets.beaconMaterial.uniforms.pixelRatio.value = gl.getPixelRatio()
   })
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose(); assets.beaconGeometry.dispose(); assets.beaconMaterial.dispose() }, [assets])
-  return <>
+  return <group visible={visible}>
     <instancedMesh args={[assets.geometry, assets.material, assets.blocks.length]} ref={meshRef} />
     <points geometry={assets.beaconGeometry} material={assets.beaconMaterial} frustumCulled={false} />
-  </>
+  </group>
 }
