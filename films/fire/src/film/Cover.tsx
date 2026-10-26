@@ -17,11 +17,11 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
 );
 
 const shot = (tall: boolean): WorldState => ({
-  cam: tall ? { x: 4.2, y: 12.5, z: -2.4, dist: 34, yaw: -30, pitch: -2, fov: 40 } : { x: -6.1, y: 7.2, z: 3.5, dist: 27, yaw: -30, pitch: -2, fov: 40 },
+  cam: tall ? { x: 3.6, y: 13.5, z: -2.0, dist: 31, yaw: -30, pitch: 28, fov: 40 } : { x: -5.2, y: 8.0, z: 3.0, dist: 23, yaw: -32, pitch: 27, fov: 40 },
   piles: [{ x: 0, z: 0, n: 400, seed: 1, glow: 0.03 }],
   flyers: [
-    { p: [-1.6, 13.2, -1.2], r: [0.2, 0.5, 0.1], s: 1 },
-    { p: [0.9, 14.6, 0.6], r: [-0.15, 1.3, 0.2], s: 1 },
+    { p: [-1.6, 13.4, -1.2], r: [0.25, 0.5, 0.12], s: 1 },
+    { p: [1.2, 15.2, 1.0], r: [-0.2, 1.3, 0.25], s: 1 },
   ],
   focus: [0, 0, 20],
   floorGlow: 0.9,

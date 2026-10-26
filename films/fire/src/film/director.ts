@@ -77,8 +77,8 @@ const CAM: CK[] = [
   [F(18.6), C(30, 5, GZ - 47, 52, -14, 26), ESO],
   [F(20.2), C(8, 4, GZ - 30, 92, -6, 34), EIO],
   [F(25.5), C(0, 4, GZ + 30, 96, 0, 36), LIN],
-  [F(27.0), A(0, 0, GZ + 2, 205, 0, 76, 0, 40), EIO],
-  [F(29.8), A(0, 0, GZ + 2, 195, 0, 75, 0, 40), LIN],
+  [F(27.0), A(0, 0, GZ + 2, 160, 0, 72, 0, 50), EIO],
+  [F(29.8), A(0, 0, GZ + 2, 150, 0, 71, 0, 50), LIN],
   [F(31.5), C(0, 2, GZ + 26, 120, 0, 46), ESO],
   // to the 1966 replay
   [F(33.0), A(ORD[0], 5, ORD[1], 34, -18, 10, 300), EIO],
@@ -87,7 +87,9 @@ const CAM: CK[] = [
   [F(40.0), C(ORD[0], 7, ORD[1], 46, -2, 10), EIO],
   [F(41.6), C(ORD[0], 11, ORD[1], 60, 2, 10), EIO],
   [F(43.6), C(ORD[0], 7.5, ORD[1], 46, 4, 10), EIO],
-  [F(47.5), C(ORD[0], 6, ORD[1], 42, 0, 9), LIN],
+  [F(45.4), C(ORD[0] - 4.5, 3, ORD[1], 26, -14, 12), EIO],
+  [F(46.4), C(ORD[0], 7, ORD[1], 46, 2, 10), EIO],
+  [F(47.5), C(ORD[0], 6.5, ORD[1], 44, 0, 9), LIN],
   // back to the grid for 50 years
   [F(49.0), A(0, 0, GZ - 7, 180, 0, 66, 0, 40), EIO],
   [F(55.0), A(0, 0, GZ - 7, 172, 0, 65, 0, 40), LIN],
@@ -103,15 +105,16 @@ const CAM: CK[] = [
   [F(79.6), C(0, 6, 0, 55, 0, 16), LIN],
   // everyone: crane up over a sea of piles
   [F(81.5), C(0, 6, 0, 150, -18, 30), EIO],
-  [F(85.5), C(0, 6, 0, 210, -24, 36), LIN],
+  [F(85.6), C(0, 6, 0, 210, -24, 36), LIN],
+  [F(86.3), C(0, 6, 0, 200, -24, 34), LIN],
   // back to the one pile
-  [F(87.0), C(0, 6.5, 0, 34, -26, 9), EIO],
-  [F(92.6), C(0, 6.5, 0, 40, -34, 11), LIN],
+  [F(87.2), C(0, 6.5, 0, 34, -26, 9), EIO],
+  [F(91.8), C(0, 6.5, 0, 40, -34, 11), LIN],
   // the days
-  [F(94.6), C(0, 2, -40, 120, 0, 24), EIO],
-  [F(95.8), C(0, 2, -44, 110, 0, 20), LIN],
-  [F(96.9), C(0, 1.0, -2, 22, 0, 12), EIO],
-  [F(100.5), C(0, 1.0, -2, 20, 0, 11), LIN],
+  [F(93.4), C(0, 2, -40, 120, 0, 24), EIO],
+  [F(94.3), C(0, 2, -44, 112, 0, 21), LIN],
+  [F(95.2), C(0, 1.0, -2, 22, 0, 12), EIO],
+  [F(100.5), C(0, 1.0, -2, 19, 0, 11), LIN],
 ];
 const camAt = (t: number): Cam => {
   if (t <= CAM[0][0]) return CAM[0][1];
@@ -143,25 +146,27 @@ const burst = (from: number, to: number, x0: number, z0: number, t: number, t0: 
 // a small house built from bricks (Sam's)
 const HOUSE: { x: number; y: number; z: number; yaw: number }[] = (() => {
   const out: { x: number; y: number; z: number; yaw: number }[] = [];
+  // walls: four layers round a 4 x 3 footprint, the front facing +z (the camera)
   for (let L = 0; L < 4; L++) {
     const y = L * SY + BH / 2;
     for (let c = 0; c < 4; c++) {
+      if (!(L < 2 && (c === 1 || c === 2))) out.push({ x: (c - 1.5) * 1.6, y, z: 1.9, yaw: 0 }); // a door in the front
       out.push({ x: (c - 1.5) * 1.6, y, z: -1.9, yaw: 0 });
-      out.push({ x: (c - 1.5) * 1.6, y, z: 1.9, yaw: 0 });
     }
     for (let r = 0; r < 2; r++) {
       out.push({ x: -3.0, y, z: (r - 0.5) * 1.6, yaw: Math.PI / 2 });
       out.push({ x: 3.0, y, z: (r - 0.5) * 1.6, yaw: Math.PI / 2 });
     }
   }
-  for (let L = 0; L < 4; L++) {
+  // gable roof: rows narrowing upward, front to back
+  const rows = [4, 3, 2, 1];
+  rows.forEach((k, L) => {
     const y = (4 + L) * SY + BH / 2;
-    const zz = 1.9 - L * 0.62;
-    for (let c = 0; c < 4; c++) {
-      out.push({ x: (c - 1.5) * 1.6, y, z: zz, yaw: 0 });
-      out.push({ x: (c - 1.5) * 1.6, y, z: -zz, yaw: 0 });
+    for (let c = 0; c < k; c++) {
+      const x = (c - (k - 1) / 2) * 1.6;
+      for (let zz = -1.9; zz <= 1.91; zz += 0.8) out.push({ x, y, z: zz, yaw: 0 });
     }
-  }
+  });
   return out;
 })();
 
@@ -174,6 +179,7 @@ const SEA: { x: number; z: number; h: number; d: number }[] = (() => {
       const z = gz * 7.5 + (hash(gx + gz * 17) - 0.5) * 3;
       const d = Math.hypot(x, z);
       if (d < 14 || d > 320) continue;
+      if (z > 8 && Math.abs(x) < 40) continue;
       if (hash(gx * 7 + gz * 13) < 0.25) continue;
       out.push({ x, z, h: 3 + hash(gx * 3 + gz * 5) * 9, d });
     }
@@ -288,7 +294,7 @@ export const shot = (t: number): Shot => {
       });
       const grow = ramp(t, F(14.0), F(14.9), ESO);
       n = 300 - used + grow * 34;
-      glow = 0.2 * Math.sin(Math.PI * clamp01((t - F(14.0)) / F(1.0)));
+      glow = 0.1 * Math.sin(Math.PI * clamp01((t - F(14.0)) / F(1.0)));
       rain = grow > 0 && grow < 1 ? 8 : 0;
     }
     // a crash: the top bricks break off at once
@@ -326,6 +332,8 @@ export const shot = (t: number): Shot => {
       piles.push(p);
     }
     labels.push(...yearLabels(1928, 1996, Y, 1 - out, (s) => (P30[s].fail !== null ? clamp01((Y - s - P30[s].fail! - 0.4) / 0.6) : 0)));
+    const rowA = win(t, F(26.6), F(30.4), 0.5) * (1 - out);
+    if (rowA > 0) labels.push({ text: "1964—1969", x: slot(1960)[0] - 7.5, z: slot(1960)[1] + 1.2, size: 3.4, color: "#e0483c", alpha: rowA, weight: 800, align: "right" });
     focus = [0, GZ, 70];
     fog = 0.0030;
     exposure = 0.9;
@@ -354,7 +362,7 @@ export const shot = (t: number): Shot => {
       const a = crumble(SEQ.fwd, SEQ.fwdFail, age);
       const b = crumble(SEQ.rev, SEQ.revFail, age);
       piles.push({ x: ox - 6, z: oz, n: (age > 0 ? a.n : 300 * reb) * (1 - leave), ash: a.ash, fall: a.fall, seed: 67, rain: reb < 1 ? 30 : 0 });
-      piles.push({ x: ox + 6, z: oz, n: (age > 0 ? b.n : 300 * reb) * (1 - leave), seed: 68, rain: reb < 1 ? 30 : 4, glow: age >= 29 ? 0.1 * ramp(t, F(43.0), F(43.6)) : 0 });
+      piles.push({ x: ox + 6, z: oz, n: (age > 0 ? b.n : 300 * reb) * (1 - leave), seed: 68, rain: reb < 1 ? 30 : 4, glow: age >= 29 ? 0.05 * ramp(t, F(43.0), F(43.6)) : 0 });
       labels.push({ text: "按真实顺序", x: ox - 6, z: oz + 4.4, size: 1.0, alpha: reb * (1 - leave), weight: 600 });
       labels.push({ text: "倒过来", x: ox + 6, z: oz + 4.4, size: 1.0, alpha: reb * (1 - leave), weight: 600 });
     }
@@ -437,7 +445,7 @@ export const shot = (t: number): Shot => {
 
   // ---- S9: three savers (F72 .. F80)
   if (t >= F(72.2) && t < F(81.0)) {
-    const yr = tween(t, F(73.6), F(76.4), 0, 66, LIN);
+    const yr = tween(t, F(73.6), F(77.4), 0, 66, LIN);
     const enter = ramp(t, F(72.2), F(73.0), EO);
     const fade = ramp(t, F(80.2), F(81.0));
     const lanes: [keyof typeof LANES, number, string][] = [
@@ -449,8 +457,7 @@ export const shot = (t: number): Shot => {
       const L = LANES[k];
       const n = Math.min(400, at(L, yr));
       const done = yr >= L.length - 1;
-      piles.push({ x, z: 0, n: n * (1 - fade), seed: 10 + x, glow: done ? 0.1 * (1 - fade) : 0, rain: n > 0 && !done ? 6 : 0 });
-      labels.push({ text: name, x, z: 4.6, size: 1.25, alpha: enter * (1 - fade), weight: 700 });
+      piles.push({ x, z: 0, n: n * (1 - fade), seed: 10 + x, glow: 0, rain: n > 0 && !done ? 6 : 0 });
     });
     focus = [0, 0, 30];
     floorGlow = 0.4;
@@ -461,8 +468,8 @@ export const shot = (t: number): Shot => {
     const rise = (d: number) => ramp(t, F(80.0) + d / 320 * F(1.4), F(80.6) + d / 320 * F(1.4), EO);
     const g1 = ramp(t, F(81.5), F(82.4), ESO);
     const g2 = ramp(t, F(83.0), F(83.9), ESO);
-    const sink = ramp(t, F(86.0), F(87.2), EI);
-    blocks = SEA.map((b) => ({ x: b.x, z: b.z, h: b.h * (1 + 0.45 * g1 + 0.35 * g2), vis: rise(b.d) * (1 - sink) })).filter((b) => (b.vis ?? 1) > 0.03);
+    const sink = ramp(t, F(85.7), F(86.5), EI);
+    blocks = SEA.map((b) => ({ x: b.x, z: b.z, h: b.h * (1 + 0.45 * g1 + 0.35 * g2), vis: rise(b.d) * (1 - sink) })).filter((b) => (b.vis ?? 1) > 0.15);
     piles.push({ x: 0, z: 0, n: 400 * ramp(t, F(80.2), F(81.0), ESO), seed: 4, glow: 0.05, scale: 1 + 0.1 * g1 + 0.08 * g2 });
     focus = [0, 0, 90];
     fog = 0.0042;
@@ -471,18 +478,18 @@ export const shot = (t: number): Shot => {
 
   // ---- S11: back to one pile; then the days (F86 ..)
   if (t >= F(86.6)) {
-    const dissolve = ramp(t, F(93.0), F(94.0), EIO);
+    const dissolve = ramp(t, F(92.0), F(93.0), EIO);
     const n = 400 * (1 - dissolve);
     if (n > 0.5) piles.push({ x: 0, z: 0, n, seed: 4, glow: 0.04 + 0.4 * dissolve });
-    if (t >= F(93.0)) lights = { vis: ramp(t, F(93.0), F(93.6)) * (1 - ramp(t, F(99.0), F(99.6))), t: tween(t, F(93.0), F(96.2), 0, 1.4, LIN), origin: [0, 12, 0] };
+    if (t >= F(92.0)) lights = { vis: ramp(t, F(92.0), F(92.6)) * (1 - ramp(t, F(97.4), F(97.8))), t: tween(t, F(92.0), F(95.0), 0, 1.4, LIN), origin: [0, 12, 0] };
     // the last brick
-    if (t >= F(96.3)) {
-      const u = ramp(t, F(96.3), F(96.7), EI);
+    if (t >= F(94.7)) {
+      const u = ramp(t, F(94.7), F(95.1), EI);
       flyers.push({ p: [0, lerp(14, BH / 2, u), 0], r: [0, 0.35, 0], s: 1, glow: 0.12 });
     }
     focus = [0, -10, 40];
-    floorGlow = 0.5 + 0.4 * ramp(t, F(93.0), F(95.0));
-    bloom = 0.35 + 0.25 * ramp(t, F(93.0), F(94.0));
+    floorGlow = 0.5 + 0.4 * ramp(t, F(92.0), F(94.0));
+    bloom = 0.32 + 0.18 * ramp(t, F(92.0), F(93.0));
   }
 
   // ------------------------------------------------------------ type
@@ -511,7 +518,7 @@ export const shot = (t: number): Shot => {
     { t0: F(15.0), t1: F(16.4), text: "可股市会大跌。", x: 140, y: 230, size: 52, align: "left", serif: true },
     { t0: F(15.5), t1: F(16.4), text: "300块，{真的够吗}？", x: 140, y: 310, size: 52, align: "left", serif: true },
     // S4
-    { t0: F(16.5), t1: F(18.3), text: "他把美国的历史重演了一遍。我们也重演一遍：", x: W / 2, y: 150, size: 48, serif: true },
+    { t0: F(16.85), t1: F(18.3), text: "他把美国的历史重演了一遍。我们也重演一遍：", x: W / 2, y: 150, size: 48, serif: true },
     { t0: F(18.4), t1: F(21.4), text: "1928到1996年，每年都有一个人带着300块砖退休，", x: W / 2, y: 150, size: 44, serif: true },
     { t0: F(18.9), t1: F(21.4), text: "剩下的砖，跟着美国股票和债券真实地涨跌。", x: W / 2, y: 214, size: 44, serif: true },
     { t0: F(26.3), t1: F(27.9), text: "撑过30年的：64个。", x: W / 2, y: 150, size: 54, serif: true },
@@ -558,11 +565,11 @@ export const shot = (t: number): Shot => {
     // S11
     { t0: F(86.9), t1: F(87.9), text: "攒够了，就好了吗？", x: W / 2, y: 180, size: 64, serif: true },
     { t0: F(87.9), t1: F(88.9), text: "多根说：“提前退休很好，但也可能很孤独。”", x: W / 2, y: 180, size: 50, serif: true },
-    { t0: F(88.9), t1: F(92.9), text: "钱能买回时间。", x: W / 2, y: 150, size: 56, serif: true },
-    { t0: F(89.4), t1: F(92.9), text: "可醒来以后做什么，{钱不管}。", x: W / 2, y: 230, size: 56, serif: true },
-    { t0: F(93.1), t1: F(95.4), text: "400块砖，撑起50年：{一万八千多个早上}。", x: W / 2, y: 170, size: 60, serif: true },
-    { t0: F(96.9), t1: F(98.3), text: "攒齐第400块砖的那天早上，", x: W / 2, y: 210, size: 62, serif: true },
-    { t0: F(97.4), t1: F(98.3), text: "你想做什么？", x: W / 2, y: 300, size: 62, serif: true, color: "#ffd166" },
+    { t0: F(88.9), t1: F(91.9), text: "钱能买回时间。", x: W / 2, y: 150, size: 56, serif: true },
+    { t0: F(89.4), t1: F(91.9), text: "可醒来以后做什么，{钱不管}。", x: W / 2, y: 230, size: 56, serif: true },
+    { t0: F(92.1), t1: F(94.3), text: "400块砖，撑起50年：{一万八千多个早上}。", x: W / 2, y: 170, size: 60, serif: true },
+    { t0: F(95.25), t1: F(97.35), text: "攒齐第400块砖的那天早上，", x: W / 2, y: 210, size: 62, serif: true },
+    { t0: F(95.7), t1: F(97.35), text: "你想做什么？", x: W / 2, y: 300, size: 62, serif: true, color: "#ffd166" },
   ];
   const N: Num[] = [
     { t0: F(7.6), t1: F(8.3), value: 600, x: 140, y: 400, size: 120, suffix: "个月", align: "left", color: "#ffd166" },
@@ -589,16 +596,16 @@ export const shot = (t: number): Shot => {
     N.push({ t0: F(40.2), t1: F(47.9), value: Math.round(b), x: 1360, y: 900, size: 72, suffix: "块", color: age >= 29.9 ? "#ffd166" : "#f1ecdf", label: age >= 29.9 ? "第30年：还剩436块" : "倒过来", live: true });
   }
   if (t >= F(73.4) && t < F(80.0)) {
-    const yr = tween(t, F(73.6), F(76.4), 0, 66, LIN);
-    const lanes: [keyof typeof LANES, number][] = [
-      ["half", 560],
-      ["third", 960],
-      ["tenth", 1360],
+    const yr = tween(t, F(73.6), F(77.4), 0, 66, LIN);
+    const lanes: [keyof typeof LANES, number, string][] = [
+      ["half", 560, "存一半"],
+      ["third", 960, "存三成"],
+      ["tenth", 1360, "存一成"],
     ];
-    lanes.forEach(([k, x]) => {
+    lanes.forEach(([k, x, name]) => {
       const L = LANES[k];
       const y = Math.min(L.length - 1, Math.floor(yr));
-      N.push({ t0: F(73.4), t1: F(80.0), value: y, x, y: 900, size: 76, suffix: "年", color: yr >= L.length - 1 ? "#ffd166" : "#f1ecdf", live: true });
+      N.push({ t0: F(73.4), t1: F(80.0), value: y, x, y: 890, size: 76, suffix: "年", color: yr >= L.length - 1 ? "#ffd166" : "#f1ecdf", live: true, label: name, labelSize: 34 });
     });
   }
   // calendar year over the grid
@@ -622,7 +629,7 @@ export const shot = (t: number): Shot => {
   }
 
   const G: Tag[] = [
-    { t0: 0.35, t1: F(1.05), text: "400万", at: [0, 12.6, 0], dy: -40, size: 64, color: "#ffd166" },
+    { t0: 0.35, t1: F(1.05), text: "400万", at: [0, 0, 2.6], dy: 96, size: 64, color: "#ffd166" },
     { t0: F(1.45), t1: F(2.95), text: "¥4,167", small: "400万一个月的利息", at: [12.5, 1.0, -6], dy: -30, size: 56, color: "#ffd166" },
     { t0: F(2.35), t1: F(2.95), text: "¥4,260", small: "城镇居民人均月收入（中位数）", at: [18, 1.0, -10], dy: -30, size: 56, color: "#f1ecdf" },
     // S8: what makes the brick bigger
@@ -631,19 +638,19 @@ export const shot = (t: number): Shot => {
     { t0: F(65.6), t1: F(66.95), text: "孩子", chip: true, at: [0, 9, 0], dx: -380, dy: 40, size: 38 },
     { t0: F(66.1), t1: F(66.95), text: "父母老了", chip: true, at: [0, 9, 0], dx: 400, dy: -20, size: 38 },
     { t0: F(66.6), t1: F(66.95), text: "房租或房贷", chip: true, at: [0, 9, 0], dx: 300, dy: 170, size: 38 },
-    { t0: F(90.2), t1: F(92.9), text: "几点起床？", chip: true, at: [-6, 3, 4], dx: -120, size: 38 },
-    { t0: F(90.7), t1: F(92.9), text: "见谁？", chip: true, at: [6, 7, 3], dx: 130, size: 38 },
-    { t0: F(91.2), t1: F(92.9), text: "每天忙什么？", chip: true, at: [-6, 10, -3], dx: -140, size: 38 },
-    { t0: F(91.7), t1: F(92.9), text: "别人问起，你说你是做什么的？", chip: true, at: [6, 12, -3], dx: 200, size: 38 },
+    { t0: F(89.8), t1: F(91.9), text: "几点起床？", chip: true, at: [-6, 3, 4], dx: -120, size: 40 },
+    { t0: F(90.2), t1: F(91.9), text: "见谁？", chip: true, at: [6, 6, 3], dx: 140, size: 40 },
+    { t0: F(90.6), t1: F(91.9), text: "每天忙什么？", chip: true, at: [-6, 8.5, -3], dx: -150, size: 40 },
+    { t0: F(91.0), t1: F(91.9), text: "别人问起，你说你是做什么的？", chip: true, at: [6, 9.5, -3], dx: 230, size: 40 },
     { t0: F(68.8), t1: F(71.9), text: "300万美元", at: [13, 9.4, 0], dy: -16, size: 44, color: "#ffd166" },
   ];
 
   const world: WorldState = { cam, piles, flyers, labels, blocks, lights, band, focus, floorGlow, exposure, fog, bloom };
-  const dark = ramp(t, F(98.2), F(98.5));
+  const dark = ramp(t, F(97.4), F(97.7));
   // a soft dark band behind type that sits over busy pictures
-  const scrim = Math.max(win(t, F(17.0), F(32.2), 0.6), win(t, F(48.2), F(56.3), 0.6), win(t, F(79.8), F(86.6), 0.6));
+  const scrim = Math.max(win(t, F(17.0), F(32.2), 0.6), win(t, F(48.2), F(56.3), 0.6), win(t, F(79.8), F(86.6), 0.6), win(t, F(92.2), F(97.5), 0.8));
   const veil = win(t, F(55.3), F(56.3), 0.25) * 0.6;
-  const sources = win(t, F(98.4), F(99.3), 0.2);
-  const card = ramp(t, F(99.3), F(99.5));
+  const sources = win(t, F(97.6), F(99.05), 0.2);
+  const card = ramp(t, F(99.0), F(99.2));
   return { scrim, veil, world, texts: T.filter((x) => t >= x.t0 - 0.05 && t <= x.t1 + 0.45), nums: N.filter((x) => x.size > 0 && t >= x.t0 - 0.05 && t <= x.t1 + 0.45), tags: G.filter((x) => t >= x.t0 - 0.05 && t <= x.t1 + 0.45), dark, card, sources };
 };

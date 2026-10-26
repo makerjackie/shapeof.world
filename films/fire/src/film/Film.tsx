@@ -32,7 +32,7 @@ export const Film: React.FC = () => {
       {(s.sources ?? 0) > 0 && <Sources vis={s.sources!} />}
       {(s.card ?? 0) > 0 && <EndCard vis={s.card!} t={t} />}
       <Brand vis={1 - Math.max(s.card ?? 0, s.sources ?? 0)} />
-      <Audio src={staticFile("music.wav")} volume={0.82} />
+      <Audio src={staticFile("music.wav")} volume={0.7} />
       {SFX.map(([at, file, vol], i) => (
         <Sequence key={`s${i}`} from={Math.max(0, Math.round(at * FPS))} durationInFrames={Math.round(3 * FPS)}>
           <Audio src={staticFile(`sfx/${file}.wav`)} volume={vol} />

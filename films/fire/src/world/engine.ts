@@ -466,7 +466,7 @@ class Engine {
     const fsh = (this.floorMat as any).userData.sh;
     if (fsh) fsh.uniforms.uGlow.value = s.floorGlow ?? 0;
     this.grade.uniforms.uSeed.value = (frame % 97) * 1.37;
-    this.grade.uniforms.uGrain.value = s.grain ?? 0.035;
+    this.grade.uniforms.uGrain.value = s.grain ?? 0.026;
 
     // shadow camera follows the focus
     const [fx, fz, fr] = s.focus ?? [s.cam.x, s.cam.z, 40];

@@ -137,7 +137,7 @@ const SOURCES = [
   "4%法则：William Bengen, Journal of Financial Planning, 1994",
   "历史重演：Damodaran 美国股票、十年期国债、通胀年度数据（1928—2025），股债各半，按年再平衡，本片自算",
   "17国：Wade Pfau, 2010；萨姆·多根：Fortune 2023、CNBC 2024",
-  "人均预期寿命：国家卫健委 2025年统计公报；退休年龄：全国人大常委会 2024年决定",
+  "人均预期寿命：国家卫健委《2025年我国卫生健康事业发展统计公报》；音乐：《千年之后（氛围版）》",
 ];
 
 export const Sources: React.FC<{ vis: number }> = ({ vis }) => (
