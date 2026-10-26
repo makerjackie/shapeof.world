@@ -111,9 +111,81 @@ illustrative. The insulating layer separates the gate from the channel: the
 gate's electric field changes the channel, rather than electrons passing from
 the gate through the oxide. The cutaway is original geometry, not a SEM image.
 
-## Scope
+## Round 2: scale journey, modern structures, logic and atoms
 
-Phone, package, SoC floorplan, logic-gate assembly, numeric adder and atomic-scale
-views are not yet implemented. No unsourced modern SoC area percentages or
-node-name-to-transistor-size conversions are used. The explicit model notes
-separate a historical open process from future modern-chip schematics.
+All new models and circuit code are authored for this project. No external
+photos, slide illustrations, brand marks or meshes are shipped.
+
+### Continuous scales and original schematics
+
+The phone (150 × 72 mm), package (14 mm), and die/floorplan (8 mm) are chosen
+illustrative dimensions, not a manufacturer's product or measured area ratios.
+CPU, GPU, cache and NPU blocks explain roles, not their market-specific layout.
+A persistent sample-change message separates these schematics from the real
+150 × 170 μm Tiny Tapeout macro. The scale ladder and pinch, wheel and slider
+all change the logarithm of the horizontal orthographic field in metres.
+Adjacent scenes change size continuously and crossfade. The macro-to-cell
+anchor uses the actual inverter's GDS centre. All Z dimensions and schematic
+sizes remain illustrative. The transistor view's scale bar says schematic field;
+it is not a metrology view of any of the three transistor shapes.
+
+### Aluminium and modern transistor shapes
+
+[Tim Edwards, Introduction to the SkyWater PDK (2021)](https://isn.ucsd.edu/courses/beng207/lectures/Tim_Edwards_2021_slides.pdf)
+identifies the SKY130 routing stack as five layers of aluminium. This macro still
+contains only M1–M4. The renderer uses silvery reflective material with subtle
+false-color tint. A procedural Three.js RoomEnvironment supplies reflections;
+no environment image is downloaded. Via geometry remains from the source GDS.
+
+[imec: A view on the logic technology roadmap](https://www.imec-int.com/en/articles/view-logic-technology-roadmap)
+describes three-sided electrostatic control in FinFETs and gate-all-around control
+of suspended sheets. Our planar, fin and nanosheet models are independent,
+non-proportional cutaways. A translucent front portion reveals the wrapped
+channel. The same teaching current model is used in all three to isolate the
+causal experiment; it does **not** predict or compare process performance.
+
+[Intel, Mark Bohr, 14 nm Process Technology (2014)](https://www.intel.com/content/dam/www/public/us/en/documents/technology-briefs/bohr-14nm-idf-2014-brief.pdf),
+PDF pages 11, 14 and 17: fin width 8 nm, transistor gate pitch 70 nm, fin height
+42 nm. These are a specific published example, not universal FinFET dimensions,
+and not SKY130 values. Only factual dimensions are cited. No Intel image, slide,
+logo or code is reproduced. GAA is shown structurally without invented process
+dimensions.
+
+### Hair comparison
+
+[NASA/JPL-Caltech: Orion microchip at 500X](https://science.nasa.gov/resource/orion-microchip-at-500x-magnification/)
+uses roughly 100 μm for a hair diameter. The UI computes
+`100,000 nm / 70 nm = 1,428.57` and says about 1,400 **gate pitches**. Gate pitch
+includes spacing; it is not a complete device width, a universal hair diameter,
+or the pitch of this SKY130 layout. The hair graphic and pitch marks are original
+schematics. No NASA image is used.
+
+### Teaching netlist
+
+The actual [pinned ALU RTL](https://github.com/TinyTapeout/tinytapeout-02/blob/90098b825ac7e1bf1a97555da7a55bf656491ef3/verilog/rtl/007_alu_top.v)
+and [gate netlist](https://github.com/TinyTapeout/tinytapeout-02/blob/90098b825ac7e1bf1a97555da7a55bf656491ef3/verilog/gl/alu_top.v)
+were inspected under the same pinned Apache-2.0 license. The wrapper takes
+**two-bit operands**, A from io_in[7:6], B from io_in[5:4], and a four-bit operation
+selector. It is not the required four-bit input adder. No part of that netlist is
+copied into the browser and no GDS route is falsely colored as a verified signal.
+
+`logic-model.ts` is an original 36-NAND Boolean network: nine NAND gates per
+full-adder bit, with two four-NAND XOR networks and one final carry NAND.
+C0 is zero for four-bit addition; the one-bit lesson exposes C0 as an input.
+The fifth output bit preserves overflow (15 + 15 = 30). All 256 four-bit input
+pairs and all eight one-bit input triples are tested. Gate depth determines
+when a value is revealed. The animation's ticks are a teaching topological order,
+not real gate delays, transient voltages or a timing-accurate CMOS simulation.
+The inverter and NAND lessons show ideal PMOS/NMOS on/off states; no analogue
+cross-conduction or dynamic power is modeled.
+
+### Diamond-cubic silicon
+
+[NIST 2022 CODATA complete listing](https://physics.nist.gov/cuu/Constants/Table/allascii.txt)
+gives the silicon lattice parameter `5.431020511 × 10^-10 m`; the display rounds
+to **0.543 nm**. The generated positions use the diamond-cubic basis: an FCC
+lattice plus the (1/4, 1/4, 1/4) offset. Nearest neighbours are separated by
+`sqrt(3) a / 4`, approximately 0.235 nm. Interior atoms have four neighbours;
+a finite cropped surface has fewer. Sphere radii, bond cylinders and colors are
+visual symbols, not measured atomic boundaries, electron orbitals or bonds as
+physical rods. Nothing is presented as quantum simulation.
