@@ -1,0 +1,37 @@
+import type { WorldExperience } from '../../types'
+
+export default {
+  id: 'chip-zoom',
+  publication: 'making',
+  title: '芯片的形状',
+  poster: '/assets/posters/chip-zoom.webp',
+  posterMobile: '/assets/posters/mobile/chip-zoom.webp',
+  posterDesktop: '/assets/posters/desktop/chip-zoom.webp',
+  posterTitle: '芯片的形状',
+  posterHook: '剥开真实版图，找到硅表面的开关。',
+  posterSource: 'Tiny Tapeout 02 · SKY130 · Apache-2.0',
+  question: '芯片里的连线和开关是什么样？',
+  hook: '拆开一块真实开放芯片的四层金属连线，放大标准单元，再用栅极电压控制一个晶体管。',
+  payoff: '版图来自 Tiny Tapeout 02 的 ALU 宏，平面尺寸 150 × 170 微米。只展示真实存在的 M1–M4、局部互连与器件层，垂直尺寸夸张、介质省略、颜色为分层示意。晶体管另用平面 NMOS 教学模型；阈值与相对电流未经器件标定。手机到原子的完整旅程和加法器仍在制作。',
+  topicLabel: '芯片与半导体',
+  translations: { en: {
+    title: 'Inside a chip', posterTitle: 'Inside a chip',
+    posterHook: 'Peel back a real layout and find the switches on silicon.',
+    posterSource: 'Tiny Tapeout 02 · SKY130 · Apache-2.0',
+    question: 'What do the wires and switches inside a chip look like?',
+    hook: 'Peel four metal layers from a real open chip layout, inspect a standard cell, then control a transistor with gate voltage.',
+    payoff: 'The layout is a 150 × 170 micrometre ALU macro from Tiny Tapeout 02. Only its actual M1–M4, local interconnect and device masks are displayed. Vertical dimensions are exaggerated, dielectrics omitted and colors illustrative. The separate planar NMOS is a teaching model with uncalibrated threshold and relative current. The phone-to-atom journey and adder are still in development.',
+    topicLabel: 'Chips & semiconductors',
+  } },
+  primaryCategoryId: 'computing-engineering', runtime: 'scene-3d', difficulty: 'standard', lane: 'flow', renderer: 'chip-zoom',
+  experiencePolicy: { entryMode: 'direct', shellMode: 'standard' },
+  duration: 420, evidence: 'modeled', accent: '#77aba8', related: [],
+  sources: [
+    { label: 'Tiny Tapeout 02 — 开放 GDS 版图（Apache-2.0）', labelEn: 'Tiny Tapeout 02 — open GDS layout (Apache-2.0)', url: 'https://github.com/TinyTapeout/tinytapeout-02/tree/90098b825ac7e1bf1a97555da7a55bf656491ef3' },
+    { label: 'Ryan Cornateanu — ALU 设计（Apache-2.0）', labelEn: 'Ryan Cornateanu — ALU design (Apache-2.0)', url: 'https://github.com/ryancor/tt02-submission-template' },
+    { label: 'SkyWater — 工艺层定义', labelEn: 'SkyWater — process layer definitions', url: 'https://skywater-pdk.readthedocs.io/en/main/rules/layers.html' },
+    { label: 'SkyWater — 平面 MOSFET 器件资料', labelEn: 'SkyWater — planar MOSFET device documentation', url: 'https://skywater-pdk.readthedocs.io/en/main/rules/device-details.html' },
+  ],
+  provenance: { origin: 'open-source-adaptation', sourceProject: 'Tiny Tapeout 02 / SKY130', sourceUrl: 'https://github.com/TinyTapeout/tinytapeout-02' },
+  presentation: 'full-bleed', transferBudgetMb: 4, fallback: 'text',
+} satisfies WorldExperience
