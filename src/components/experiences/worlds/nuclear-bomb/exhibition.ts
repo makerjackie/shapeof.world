@@ -3,8 +3,8 @@ import * as T from 'three'
 /** Scenic display geometry, with arbitrary, unitless proportions. */
 export function createExhibition() {
   const group = new T.Group()
-  const black = new T.MeshStandardMaterial({color: '#120e09', metalness: .04, roughness: .82, envMapIntensity: .04})
-  const floor = new T.Mesh(new T.PlaneGeometry(2000, 2000), new T.MeshBasicMaterial({color: '#0a0a0b'}))
+  const black = new T.MeshStandardMaterial({color: '#dce3e6', metalness: .04, roughness: .82, envMapIntensity: .04})
+  const floor = new T.Mesh(new T.PlaneGeometry(2000, 2000), new T.MeshBasicMaterial({color: '#e9edef'}))
   floor.rotation.x = -Math.PI / 2
   floor.position.y = -3.48
   group.add(floor)
@@ -13,14 +13,14 @@ export function createExhibition() {
   platform.position.set(-.6, -3.22, 0)
   platform.receiveShadow = true
   group.add(platform)
-  const ring = new T.Mesh(new T.TorusGeometry(5.34, .013, 8, 192), new T.MeshStandardMaterial({color: '#b49a6a', metalness: .76, roughness: .35, transparent: true, opacity: .46}))
+  const ring = new T.Mesh(new T.TorusGeometry(5.34, .013, 8, 192), new T.MeshStandardMaterial({color: '#8eabbc', metalness: .76, roughness: .35, transparent: true, opacity: .46}))
   ring.rotation.x = Math.PI / 2
   ring.position.set(-.6, -2.964, 0)
   group.add(ring)
 
   const pool = new T.Mesh(new T.PlaneGeometry(11.3, 11.3), new T.ShaderMaterial({
     transparent: true, depthWrite: false, blending: T.AdditiveBlending,
-    uniforms: {tint: {value: new T.Color('#5d4631')}},
+    uniforms: {tint: {value: new T.Color('#cbd9e1')}},
     vertexShader: 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
     fragmentShader: 'uniform vec3 tint;varying vec2 vUv;void main(){vec2 p=(vUv-.5)*2.;float a=exp(-dot(p,p)*3.8)*.20;gl_FragColor=vec4(tint,a);}',
   }))
@@ -29,7 +29,7 @@ export function createExhibition() {
   group.add(pool)
 
   // Low curved display cradles, not parts of the historical object.
-  const saddleMaterial = new T.MeshStandardMaterial({color: '#22252a', metalness: .72, roughness: .4})
+  const saddleMaterial = new T.MeshStandardMaterial({color: '#9baeb7', metalness: .72, roughness: .4})
   for (const x of [-1.55, 1.55]) {
     const shape = new T.Shape()
     shape.moveTo(-1.48, -2.91)
@@ -61,7 +61,7 @@ export function createExhibition() {
   contact.position.y = -2.952
   group.add(contact)
 
-  const axis = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(0, -2.4, 0), new T.Vector3(0, 5.15, 0)]), new T.LineDashedMaterial({color: '#b49a6a', dashSize: .06, gapSize: .09, transparent: true, opacity: .25, depthWrite: false}))
+  const axis = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(0, -2.4, 0), new T.Vector3(0, 5.15, 0)]), new T.LineDashedMaterial({color: '#8eabbc', dashSize: .06, gapSize: .09, transparent: true, opacity: .25, depthWrite: false}))
   axis.computeLineDistances()
   group.add(axis)
   return {group, axis}
@@ -73,8 +73,8 @@ export function createBackdrop() {
   canvas.height = 512
   const ctx = canvas.getContext('2d')!
   const gradient = ctx.createRadialGradient(245, 220, 0, 256, 256, 340)
-  gradient.addColorStop(0, '#141312')
-  gradient.addColorStop(1, '#0a0a0b')
+  gradient.addColorStop(0, '#f3f6f7')
+  gradient.addColorStop(1, '#e9edef')
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, 512, 512)
   const texture = new T.CanvasTexture(canvas)

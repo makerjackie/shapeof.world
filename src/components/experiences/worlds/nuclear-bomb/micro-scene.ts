@@ -228,8 +228,8 @@ function heatField() {
         vec2 p = (vUv - 0.5) * vec2(1.5, 1.0);
         float texture = field(p * 13.0 + vec2(generation * 0.007, -generation * 0.003));
         float veil = exp(-dot(p, p) * 9.0);
-        vec3 bg = vec3(0.0030, 0.0030, 0.0035);
-        vec3 dimField = vec3(0.05, 0.009, 0.002) * veil * (0.4 + texture) * transition;
+        vec3 bg = vec3(0.8148, 0.8469, 0.8632);
+        vec3 dimField = vec3(0.005, 0.009, 0.014) * veil * (0.4 + texture) * transition;
         vec3 hot = blackbody(clamp(energy * 1.2, 0.0, 1.0));
         vec3 radiance = hot * energy * 3.4 * mix(0.6, 1.15, texture) * mix(veil, 1.0, energy);
         vec3 color = mix(bg + dimField + radiance, vec3(3.0), pow(whiteout, 3.0));
@@ -269,6 +269,7 @@ export function createMicroScene() {
   }
   const backgroundMaterial = new T.MeshStandardMaterial({
     color: '#ffffff', roughness: 0.78, metalness: 0.2, envMapIntensity: 0.08,
+    transparent: true, opacity: 0.2, depthWrite: false,
   })
   const nuclei = new T.InstancedMesh(denseGeometry, nucleusMaterial, atoms.length)
   const focusNuclei = new T.InstancedMesh(heroGeometry, nucleusMaterial, 7)
@@ -312,12 +313,12 @@ export function createMicroScene() {
   const p = new T.Vector3()
   const tail = new T.Vector3()
   const color = new T.Color()
-  const bronze = new T.Color('#6b5a4a')
+  const bronze = new T.Color('#587a90')
   const darkBronze = bronze.clone()
-  const cooledBronze = new T.Color('#41251a')
-  const neutronColor = new T.Color('#a8e6ff')
+  const cooledBronze = new T.Color('#617682')
+  const neutronColor = new T.Color('#426c86')
   const flashWhite = new T.Color('#fff3dd')
-  const flashAmber = new T.Color('#ffa24d')
+  const flashAmber = new T.Color('#be7162')
   const backdropRandom = seeded(0x6d696372)
   let bokehCount = 0
   for (let i = 0; i < backdrop.count; i += 1) {
@@ -437,8 +438,8 @@ export function createMicroScene() {
     tailGeometry.getAttribute('color').needsUpdate = true
     backdrop.visible = visibility > 0
     bokeh.mesh.visible = visibility > 0
-    backgroundMaterial.opacity = visibility
-    backgroundMaterial.transparent = handoff > 0
+    backgroundMaterial.opacity = visibility * 0.2
+    backgroundMaterial.transparent = true
     bokeh.material.uniforms.fade.value = visibility
     const uniforms = field.material.uniforms
     uniforms.generation.value = generation

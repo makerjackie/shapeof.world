@@ -39,12 +39,12 @@ function profiles(id: string, outer: number, inner: number, separation: number) 
 }
 
 export const MATERIALS = {
-  casing: {surface: '#5a5f57', cut: '#8b9096', hatch: 1, metalness: 0.52, roughness: 0.55},
-  explosive: {surface: '#b8955a', cut: '#c9a35a', hatch: 2, metalness: 0.05, roughness: 0.73},
-  pusher: {surface: '#939ba2', cut: '#b9c1c8', hatch: 3, metalness: 0.35, roughness: 0.7},
-  reflector: {surface: '#3f4753', cut: '#4b5563', hatch: 4, metalness: 0.45, roughness: 0.62},
-  core: {surface: '#8a5a40', cut: '#c8744a', hatch: 0, metalness: 0.28, roughness: 0.7},
-  source: {surface: '#f2d48a', cut: '#f2d48a', hatch: 0, metalness: 0.25, roughness: 0.38},
+  casing: {surface: '#8eabbc', cut: '#c6d6df', hatch: 1, metalness: 0.52, roughness: 0.55},
+  explosive: {surface: '#b4c3c8', cut: '#d2dde1', hatch: 2, metalness: 0.05, roughness: 0.73},
+  pusher: {surface: '#a1b2bd', cut: '#c2d1da', hatch: 3, metalness: 0.35, roughness: 0.7},
+  reflector: {surface: '#587a90', cut: '#8ca8b8', hatch: 4, metalness: 0.45, roughness: 0.62},
+  core: {surface: '#a3695c', cut: '#be7162', hatch: 0, metalness: 0.28, roughness: 0.7},
+  source: {surface: '#d4c4a1', cut: '#d4c4a1', hatch: 0, metalness: 0.25, roughness: 0.38},
 } as const
 
 export const PARTS: ReadonlyArray<Part> = [

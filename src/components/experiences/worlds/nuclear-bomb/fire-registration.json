@@ -1,0 +1,146 @@
+{
+  "source": "USSBS 1946 Extent of Fire, Hiroshima",
+  "sourceImageSize": [
+    3200,
+    3101
+  ],
+  "crs": "EPSG:3857 / coordinates EPSG:4326",
+  "method": "Affine least squares; hand-identified stable crossings",
+  "status": "provisional; independent cartographic review pending",
+  "matrix": [
+    [
+      4.24332448891981,
+      -0.747281731564739
+    ],
+    [
+      0.16727456644997565,
+      -4.261199103942203
+    ],
+    [
+      14738331.74381299,
+      4087741.2643230124
+    ]
+  ],
+  "rmseGroundM": 37.53675090448382,
+  "maxResidualGroundM": 53.10005782808106,
+  "leaveOneOutRmseGroundM": 60.460006044897845,
+  "corners": [
+    [
+      132.39668667891127,
+      34.437805975418065
+    ],
+    [
+      132.5186656627153,
+      34.42008749369478
+    ],
+    [
+      132.52332538965854,
+      34.322110098531645
+    ],
+    [
+      132.40134640585455,
+      34.33984932086649
+    ]
+  ],
+  "controls": [
+    {
+      "name": "Aioi Bridge / main crossing",
+      "pixel": [
+        1426,
+        1045
+      ],
+      "longitude": 132.452531,
+      "latitude": 34.39656,
+      "residualGroundM": 39.710479440904386,
+      "leaveOneOutGroundM": 46.681585523347806
+    },
+    {
+      "name": "Motoyasu Bridge",
+      "pixel": [
+        1460,
+        1134
+      ],
+      "longitude": 132.453662,
+      "latitude": 34.394096,
+      "residualGroundM": 40.67732893124766,
+      "leaveOneOutGroundM": 47.237205637217315
+    },
+    {
+      "name": "Honkawa Bridge",
+      "pixel": [
+        1368,
+        1148
+      ],
+      "longitude": 132.450583,
+      "latitude": 34.3937,
+      "residualGroundM": 31.033375749004723,
+      "leaveOneOutGroundM": 38.47848843177439
+    },
+    {
+      "name": "Misasa Bridge",
+      "pixel": [
+        1555,
+        687
+      ],
+      "longitude": 132.457181,
+      "latitude": 34.407739,
+      "residualGroundM": 31.47479395116036,
+      "leaveOneOutGroundM": 48.289229511802056
+    },
+    {
+      "name": "Yokogawa Bridge",
+      "pixel": [
+        1367,
+        777
+      ],
+      "longitude": 132.450235,
+      "latitude": 34.405523,
+      "residualGroundM": 31.981314380837617,
+      "leaveOneOutGroundM": 50.78290986891192
+    },
+    {
+      "name": "Tokiwa Bridge",
+      "pixel": [
+        1844,
+        761
+      ],
+      "longitude": 132.467611,
+      "latitude": 34.40379,
+      "residualGroundM": 53.10005782808106,
+      "leaveOneOutGroundM": 85.17367998338518
+    },
+    {
+      "name": "Kyobashi Bridge",
+      "pixel": [
+        1870,
+        1053
+      ],
+      "longitude": 132.469944,
+      "latitude": 34.394187,
+      "residualGroundM": 36.17186304339138,
+      "leaveOneOutGroundM": 54.72966281051103
+    },
+    {
+      "name": "Tsurumi Bridge",
+      "pixel": [
+        1856,
+        1310
+      ],
+      "longitude": 132.469504,
+      "latitude": 34.385953,
+      "residualGroundM": 24.568956879652887,
+      "leaveOneOutGroundM": 50.99141428441512
+    },
+    {
+      "name": "Sumiyoshi Bridge",
+      "pixel": [
+        1253,
+        1491
+      ],
+      "longitude": 132.446683,
+      "latitude": 34.384155,
+      "residualGroundM": 41.7290157573534,
+      "leaveOneOutGroundM": 96.16040337672491
+    }
+  ]
+}

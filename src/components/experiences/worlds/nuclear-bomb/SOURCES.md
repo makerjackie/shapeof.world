@@ -19,119 +19,53 @@ This is a museum-level illustration of the order of layers and events. Geometry 
 - The chemical segment has a separate, unitless storyboard coordinate. Its screen duration is an editorial choice. No physical duration or slowdown factor is assigned to that segment.
 - Chain playback gradually changes from 2.5 to 0.3 screen seconds per generation. The slowdown readout uses the instantaneous speed, including the user-selected playback rate.
 - Internal layer thicknesses, spacing, displayed compression, particle paths, particle size, and heat colors are chosen for legibility. They do not reproduce measured structures, temperatures or motion. The heat field represents cumulative energy, not a temperature calculation.
-- The first twelve generations are a seeded abstract illustration in a dense, dark field of nuclei. Its spherical front is a visual arrangement, not a spatial simulation. Generations 12–14 crossfade back to the closed cutaway; internal emission then represents cumulative energy. Changing time only samples this fixed illustration. No particle state is accumulated.
+- The first twelve generations are a seeded abstract illustration in a pale blue-grey field of nuclei. Its spherical front is a visual arrangement, not a spatial simulation. Generations 12–14 crossfade back to the closed cutaway; internal emission then represents cumulative energy. Changing time only samples this fixed illustration. No particle state is accumulated.
 - At the endpoint the physical clock freezes. A separate two-second presentation clock fades white back to a dim, closed cutaway with a residual red glow; it can also be played backward. The numerical summary stays in the readout panel. Scrubbing directly to the physical endpoint shows its white frame. No numerical “disassembly duration” is added to the physical clock.
-- All geometry and animation are programmatically authored for this project. No third-party models, images or textures are incorporated.
+- The cutaway and chain-reaction geometry and animation are programmatically authored for this project; these two scenes incorporate no third-party models, images or textures. Map and globe data have separate credits below.
 
 ## Exterior reference
 
 The [National Naval Aviation Museum display article](https://navalaviationmuseum.org/museum-marches-to-commemorate-end-of-world-war-ii/) documents a Fat Man exterior replica. The elongated painted shell and open tail frame are broad visual references only. The decorative flange, bolts and museum cradles are original display geometry; no historical engineering dimensions are reproduced. No source image is embedded in the experience.
 
-## Effects view: fixed illustrative relations
+## Hiroshima geography and survey
 
-`W` is the TNT-equivalent yield in kilotons. The slider is logarithmic over `0.001 ≤ W ≤ 50,000`, while distances in the scene are linear. Below 1 kt, only the energy equivalence is displayed: no fireball, height or effect circles are calculated or shown. The visual model is bounded to this range and is not a general prediction tool.
+- **OpenStreetMap contributors, ODbL-1.0**: [copyright and attribution](https://www.openstreetmap.org/copyright), via [Geofabrik Chūgoku](https://download.geofabrik.de/asia/japan/chugoku.html), source `chugoku-261025.osm.pbf`. `data/build-city.py` clips the PBF, generalises roads/water/parks and generates our own MVT schema and ZIP. `hiroshima-mvt.zip` is the overview edition, source zooms 8–13; the overview excludes buildings. Zooming above 13 overzooms the same data. The modern background is not a 1945 reconstruction. Attribution and a machine-readable archive download remain on the map. No runtime OpenFreeMap or OSM tile service is used.
+- **USSBS, US government work / public domain**: *The Effects of Atomic Bombs on Hiroshima and Nagasaki* (1946), [Hiroshima plate](https://www.atomicarchive.com/resources/documents/bombing-survey/map_hiroshima.html), [original scan](https://www.atomicarchive.com/resources/documents/bombing-survey/images/hiroshima_map.jpg). Only the government plate is reused, not the host site's editorial content. `data/register-fire.py` extracts its red **Extent of fire** area and converts it to muted hatching. Small morphology operations close gaps in the scanned ink; this is a processed image, not a new ground survey.
+- `fire-registration.json` records nine manually identified stable bridge crossings, source pixels (3200 × 3101), modern WGS84 coordinates, a six-parameter least-squares affine transform to EPSG:3857 and all residuals. Distances are converted to local ground metres. Fit RMSE **37.54 m**, maximum **53.10 m**; leave-one-out RMSE **60.46 m**. Leave-one-out is internal cross-validation, not an independent check survey. Bridge identification, old surveying, paper distortion, scanning and fire-boundary interpretation add uncertainty. Independent cartographic review is pending. The fitted residual is not the accuracy of the fire boundary; no destruction-area statistic is derived.
+- The persistent “about 2 km, nearly 3 km north” is an approximate reading of the main mapped fire area. It is not a circular perimeter, not a claim that every direction extends that far, and excludes small detached patches. Fire extent, structural damage, thermal exposure and radiation dose are distinct.
 
-| Quantity | Relation used, in km unless noted | Source and interpretation |
+## Fixed macroscopic effects
+
+`city-effects.ts` replaces the former illustrative scale relations. It only supplies four fixed yields around historical Hiroshima. There is no arbitrary location, address search, target model, casualty calculator or burst-height optimiser.
+
+**Historical version:** [RERF RR 7-06 / DS02](https://www.rerf.or.jp/en/library/archives-en/scientific_pub/rrtoc/rr2006-en/rr0607-en/) revises Hiroshima to 16 kt / 600 m. These are historical estimates. Other presets scale that historical height by the cube root of the yield ratio, solely to compare similar fixed scenarios. These are neither each weapon's actual deployment conditions nor optimal heights.
+
+**Code attribution:** Edward Geist / GOFAI, [glasstone 0.0.1](https://github.com/GOFAI/glasstone/tree/23e1e97d35b45a6e80b8899c86c8ff256fc2217d), commit `23e1e97d35b45a6e80b8899c86c8ff256fc2217d`, **MIT**, copyright 2016 GOFAI. Full license retained in `vendor/glasstone-LICENSE`. Adapted only the Brode forward peak-pressure fit and one clear-air forward thermal curve into TypeScript, with explicit units and domain errors. No reverse-model API, fallout or optimisation is ported. Fireball radius is directly transcribed from the 1977 text; it is not a function offered by this upstream subset.
+
+Book: Samuel Glasstone and Philip J. Dolan, *The Effects of Nuclear Weapons*, third edition, 1977, US government publication, [UNT record](https://digital.library.unt.edu/ark:/67531/metadc1197666/), [original chapter III scan](https://www.fourmilab.ch/etexts/www/effects/eonw_3.pdf), [chapter VII scan](https://www.fourmilab.ch/etexts/www/effects/eonw_7.pdf). Government originals are public domain; this does not license the mirror's separate software or redrawn assets.
+
+| Calculation | Actual origin and book comparison | Validation status |
 | --- | --- | --- |
-| Energy | `4.184 × 10^12 × W` joules; `1,000 × W` tons TNT | [TNT equivalent](https://en.wikipedia.org/wiki/TNT_equivalent#Kiloton_and_megaton). |
-| Illustrative air-burst height | `0.2 × W^(1/3)` | The height family accompanying the [Wikipedia effects summary table](https://en.wikipedia.org/wiki/Effects_of_nuclear_explosions#Summary_of_the_effects). This fixed comparison condition is not an optimization for any target or overpressure. |
-| Maximum fireball radius | `0.06096 × W^0.4` | Glasstone & Dolan, *The Effects of Nuclear Weapons* (1977), [§2.127](https://www.atomicarchive.com/resources/documents/effects/glasstone-dolan/chapter2.html): air-burst breakaway radius approximately `100 × W^0.4` feet; maximum radius approximately twice the breakaway radius. Converting twice that radius to km gives the displayed coefficient. |
-| 20 psi (about 140 kPa) ground range | `0.24 × W^(1/3)` | Cube-root scaling from [§§3.60–3.61](https://www.atomicarchive.com/resources/documents/effects/glasstone-dolan/chapter3.html); reference coefficient from the summary table’s 1 Mt column, 2.4 km divided by 10. |
-| 5 psi (about 34 kPa) ground range | `0.62 × W^(1/3)` | The same scaling; reference coefficient from 6.2 km at 1 Mt, divided by 10. |
-| 1 psi (about 6.9 kPa) ground range | `1.70 × W^(1/3)` | The same cube-root scaling; reference coefficient from the summary table’s 17 km at 1 Mt, divided by 10. |
-| Third-degree-burn ground range, clear skies | Log-log interpolation of `(W, km) = (1, 0.6), (20, 2.5), (1,000, 12), (20,000, 38)` | The four anchors are the summary table’s third-degree-burn row. Above 20 Mt the last log-log segment is extrapolated only as far as the 50 Mt exhibit limit. |
+| Maximum airborne fireball radius | 1977 Ch.II §2.127: approximately twice the 100 W^0.4-foot breakaway radius; converted to km. This paragraph, not an invented figure number, is the source. | Equation/unit checks pass. The displayed circle is its horizontal projection, not a ground burn zone. |
+| Peak incident overpressure | Upstream Brode 1986, pp.60–71. Not an equation from the 1977 book. Historical comparison: Ch.III Fig.3.73b / p.112 worked example, 1 kt, 400 ft horizontal range, 500 ft height, approximately 50 psi. | TS 46.7068 psi, −6.59% versus the printed example; within the declared 15% graphical tolerance. Seven independent upstream Python samples match to 10 decimal places. This is limited verification, not whole-domain validation. |
+| Clear-air radiant exposure | Upstream *Iadernoe oruzhie*, 4th ed. (1987), pp.49–50; nomogram curve 1 / IVC 9. The curve is log-range interpolated; the 0.157–40.016 km slant-range domain is retained. | Six independent upstream samples match to 10 decimal places. **Not yet validated against the 1977 book under matching visibility.** The interface labels it a candidate model. |
+| Independent thermal energy/area identity | 1977 Ch.VII Eq.7.96.1, partition definition/Table7.88 and transmittance Fig.7.98. SI conversions are checked in tests. | Unit checks only. An assumed transmittance is not an independent atmospheric model or validation of the displayed Soviet nomogram. |
 
-The book sections above were checked in Atomic Archive’s transcription of the 1977 text. The government-hosted full-book PDF could not be retrieved during this check; it is not presented as separately verified evidence.
+The 1977 Ch.VII Fig.7.42 / §7.43 worked example is 8 cal/cm² at about 7 miles slant range for 1 Mt and 12-mile visibility, below 15,000 feet. IVC9 clear air is a different atmospheric condition, so agreement with upstream cannot be called agreement with this figure. Same-condition thermal validation remains incomplete. The 8 cal/cm² contour in this experience is an exposure reference, not an ignition, skin injury or casualty boundary. No thermal contour is extrapolated for the 50 Mt preset.
 
-Verification examples calculated by `effects.ts`:
+Pressure contours sample outward along the fixed scenario and interpolate a threshold crossing; this is a rendering step, not a search for destructive conditions. Rings assume a flat surface and a standard atmosphere. Buildings, shelter, terrain, fire spread, weather and dose are not simulated. Radius and area multipliers are separately labelled; neither is a casualty multiplier.
 
-| Yield | Maximum fireball radius | Illustrative height | 5 psi ground range | Third-degree-burn ground range |
-| --- | --- | --- | --- | --- |
-| 15 kt | 0.18009 km | 0.49324 km | 1.52905 km | 2.17982 km |
-| 1,000 kt | 0.96615 km | 2 km | 6.2 km | 12 km |
-| 50,000 kt | 4.61990 km | 7.36806 km | 22.84100 km | 54.06305 km |
+Preset public facts: W76-1 approximately 90 kt from [FAS US Nuclear Weapons 2025](https://fas.org/wp-content/uploads/2025/01/United-States-nuclear-weapons-2025.pdf); B83-1 up to 1.2 Mt from [UCS fact sheet](https://ucs-documents.s3.amazonaws.com/nuclear-weapons/b83-fact-sheet.pdf); 50 Mt Tsar Bomba historical reference from the existing [1961 history entry](https://en.wikipedia.org/wiki/Tsar_Bomba). Only these yield facts are used, not internal or delivery specifications.
 
-At 15 kt the 1 psi circle is 4.19256 km; at 50,000 kt it is 62.62854 km. Tests verify that the fireball radius stays below the illustrative height **within 1–50,000 kt only**. No claim is made for unbounded yields.
+**Residual radiation:** [RERF FAQ](https://www.rerf.or.jp/en/faq/) distinguishes radioactive fallout from neutron activation. Black rain is a historical precipitation phenomenon involving soot and other matter; fallout is deposition of radioactive matter, sometimes with precipitation; activation makes irradiated surface materials radioactive. Airbursts can leave residual radioactivity. This version draws no fallout, black-rain or activation boundary and includes no WSEG-10 calculation.
 
-The equivalent TNT cube uses the [TNT article’s density](https://en.wikipedia.org/wiki/TNT), 1.654 g/cm³ = 1.654 tons/m³. Its edge in metres is the cube root of equivalent tons divided by 1.654. The cube is an abstract comparison of energy-equivalent volume, not a representation of material inside the cutaway. Reference edges are 0.84558 m at 1 ton, 8.45580 m at 1 kt, 20.85380 m at 15 kt, 125.89046 m at 3.3 Mt, and 311.51443 m at 50 Mt. The cube, 300 m tower and 1.7 m person use a common linear scale; the truck is an original generic silhouette, not a specific vehicle model or capacity claim.
+## An era: data and precision
 
-The city is an original seeded architectural model. Desktop street blocks contain one to four simple buildings; small viewports use one simplified volume in the same occupied block, retaining the seeded height and street pattern. This level-of-detail change does not alter the city extent, circle distances, tower, TNT cube, or person scale. Shading at building bases approximates contact darkening; it is not a simulation of material damage. The mountain has an original, deliberately compact horizontal footprint and a fixed 8,848 m peak, not measured terrain.
+- **OWID / Arms Control Association, CC BY 4.0:** [annual tests](https://ourworldindata.org/grapher/number-of-nuclear-weapons-tests), [full origin metadata, indicator 1229477](https://api.ourworldindata.org/v1/indicators/1229477.metadata.json), based on Daryl Kimball, *The Nuclear Testing Tally*. Origin metadata explicitly declares CC BY 4.0 and `nonRedistributable: false`, rechecked 2026-10-26. Dataset version 2026-05-13, observations 1945–2024. The chart excludes Hiroshima/Nagasaki and Vela and counts some simultaneous detonations as one test. Missing years after 2024 are not zeros.
+- **OWID / Federation of American Scientists, CC BY 4.0:** [stockpiles](https://ourworldindata.org/grapher/nuclear-warhead-stockpiles), [origin metadata 1229473](https://api.ourworldindata.org/v1/indicators/1229473.metadata.json). Attribution: Hans M. Kristensen, Matt Korda, Robert S. Norris, Eliana Johns and Mackenzie Knight, *Estimated Global Nuclear Warhead Inventories*. Existing `history-data.json` snapshot (1945–2026, version 2026-05-13) retained without changing observations. Country stockpiles exclude retired weapons awaiting dismantlement; the separate OWID World series includes them and is not summed into this chart. The country-sum peak is computed from the rows: 1986, 64,452. Tests peak: 1962, 178; USA 96, USSR 79, UK 2, France 1. Counts and stockpiles have separate linear vertical axes and one shared year cursor. These are inventories, not measures of destructive power.
+- CSV SHA-256, preserved in the snapshot: stockpiles `5fa030e5a7e312c74884adf5d9154afef16fd2fc7fe6b33eaa6ee72401dd7a9b`; tests `4a184bf157d180c91f71e1817f922bf571861b5961b964e0ca758a9101907984`.
+- **US Department of Energy, US government work / public domain:** [DOE/NV-209 Rev.16, September 2015](https://nnss.gov/wp-content/uploads/2023/08/DOE_NV-209_Rev16.pdf), *United States Nuclear Tests July 1945 through September 1992*. `data/extract-doe.py` extracts the Tests By Name table into downloadable `doe-events.json`: name, UTC calendar date, published coordinates, test identifier and PDF page. Engineering columns are discarded. There are 1,054 distinct tests and 1,149 detonations; one coordinate is unavailable and omitted from the globe. No coordinate jitter or national-total allocation is used. The annual ACA series and DOE detonations deliberately retain their different definitions.
+- **Other countries:** `era-sites.ts` is a small directory of public geographic facts and use intervals, with per-entry source links to DOE and the [UN historical overview](https://www.un.org/en/observances/end-nuclear-tests-day/history). Rounded centres (0.1°) are labelled **site level**, not individual detonation positions. This directory is incomplete; it is not a licensed global event database, and no per-site annual counts have been manufactured. The generic overview supports site history, not precision coordinates; centres are approximate geographic labels. Intervals do not assert activity in every year. Marker size and point density are not test counts.
+- **Natural Earth, public domain:** [official China POV](https://www.naturalearthdata.com/blog/admin-0-countries-point-of-views/), [5.1.1 source ZIP](https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_0_countries_chn.zip), [terms](https://www.naturalearthdata.com/about/terms-of-use/). `earth-china.geojson` is a 0.08° simplified, four-decimal derived overview. Geometry, not just colour, uses the official China POV. Tests verify Taipei, Tawang and Itanagar fall inside the China feature. Only geometry is used, not the source's de-facto-based area/population fields. Canvas colours, light and porcelain material are original.
 
-The abstract city has no real geographic location, population or casualty estimate. The circles assume flat ground and clear skies. Buildings, terrain, shielding, reflections, weather, fallout and radiation are not modelled. The source table itself cautions that simple scaling can overestimate real-world effects. A fireball radius in the air and a ground-effect radius are distinct quantities. Historical yield presets change only this comparison’s energy input; they do not reconstruct each historical event’s actual conditions. The marker height and circles appear together to explain scale, not to choose a real detonation condition.
-
-## Historical yield presets
-
-The first two presets are energy-unit references, not historical events: 1 ton TNT (`0.001 kt`) and 1 kt. The remaining seven use the following dates and widely cited approximate yields. Source use is limited to these public historical facts.
-
-| Preset | Year | Yield | Source |
-| --- | --- | --- | --- |
-| Hiroshima / Little Boy | 1945 | 15 kt | [Little Boy](https://en.wikipedia.org/wiki/Little_Boy) |
-| Nagasaki / Fat Man | 1945 | 21 kt | [Fat Man](https://en.wikipedia.org/wiki/Fat_Man) |
-| China’s first atomic test / 596 | 1964 | 22 kt | [596](https://en.wikipedia.org/wiki/596_(nuclear_test)) |
-| China’s first hydrogen-bomb test / Test No. 6 | 1967 | 3,300 kt | [Test No. 6](https://en.wikipedia.org/wiki/Test_No._6), currently redirects to Project 639 |
-| Ivy Mike | 1952 | 10,400 kt | [Ivy Mike](https://en.wikipedia.org/wiki/Ivy_Mike) |
-| Castle Bravo | 1954 | 15,000 kt | [Castle Bravo](https://en.wikipedia.org/wiki/Castle_Bravo) |
-| Tsar Bomba | 1961 | 50,000 kt | [Tsar Bomba](https://en.wikipedia.org/wiki/Tsar_Bomba) |
-
-The Tsar Bomba article notes historical estimates from 50 to 58 Mt; this exhibit retains its common 50 Mt reference. Little Boy and Fat Man yields are estimates, not exact measurements. No internal specifications are extracted from these articles.
-
-## Historical timeline
-
-Dates and claims were checked against the linked articles on 2026-10-23. Month-only dates retain that precision. The “Today” endpoint marks the present day; it adds no claim about present policy or treaty status.
-
-| Date | Fact used | Source |
-| --- | --- | --- |
-| 1938-12 | Hahn and Strassmann’s fission discovery; Meitner and Frisch publish its explanation in early 1939 | [Discovery of nuclear fission](https://en.wikipedia.org/wiki/Discovery_of_nuclear_fission) |
-| 1942-12-02 | First human-made, self-sustaining nuclear chain reaction | [Chicago Pile-1](https://en.wikipedia.org/wiki/Chicago_Pile-1) |
-| 1945-07-16 | Trinity, first nuclear explosion | [Trinity](https://en.wikipedia.org/wiki/Trinity_(nuclear_test)) |
-| 1945-08-06 / 1945-08-09 | Hiroshima and Nagasaki; estimated deaths by the end of 1945, respectively 90,000–166,000 and 60,000–80,000 | [Atomic bombings of Hiroshima and Nagasaki](https://en.wikipedia.org/wiki/Atomic_bombings_of_Hiroshima_and_Nagasaki) |
-| 1949-08-29 | First Soviet nuclear test | [RDS-1](https://en.wikipedia.org/wiki/RDS-1) |
-| 1952-11-01 | First full-scale two-stage thermonuclear test | [Ivy Mike](https://en.wikipedia.org/wiki/Ivy_Mike) |
-| 1954-03-01 | Castle Bravo, about 15 Mt | [Castle Bravo](https://en.wikipedia.org/wiki/Castle_Bravo) |
-| 1961-10-30 | Tsar Bomba, largest nuclear test conducted, about 50 Mt | [Tsar Bomba](https://en.wikipedia.org/wiki/Tsar_Bomba) |
-| 1963-08-05 | Partial Test Ban Treaty signed | [Partial Nuclear Test Ban Treaty](https://en.wikipedia.org/wiki/Partial_Nuclear_Test_Ban_Treaty) |
-| 1964-10-16 | China’s first nuclear test; same-day no-first-use declaration | [596](https://en.wikipedia.org/wiki/596_(nuclear_test)); [No first use, China](https://en.wikipedia.org/wiki/No_first_use#China) |
-| 1967-06-17 | China’s first hydrogen-bomb test, 3.3 Mt | [Test No. 6](https://en.wikipedia.org/wiki/Test_No._6) |
-| 1968-07-01 | Non-Proliferation Treaty opened for signature | [Treaty on the Non-Proliferation of Nuclear Weapons](https://en.wikipedia.org/wiki/Treaty_on_the_Non-Proliferation_of_Nuclear_Weapons) |
-| 1996-09-24 | Comprehensive Nuclear-Test-Ban Treaty opened for signature | [Comprehensive Nuclear-Test-Ban Treaty](https://en.wikipedia.org/wiki/Comprehensive_Nuclear-Test-Ban_Treaty) |
-
-Source-check clarifications:
-
-- Meitner and Frisch formed their explanation around Christmas 1938; the relevant papers appeared in early 1939. The display says “publish its explanation” to distinguish publication from conception.
-- The 1967 China entry says that this exhibit does not display the internal configuration. It does not make the unsupported blanket claim that no configuration information is public.
-- The CTBT’s opening for signature on 24 September 1996 is distinct from its adoption on 10 September.
-- The casualty ranges are historical estimates through the end of 1945. They are never derived from, or altered by, the scale controls.
-
-## Calendar-month comparison
-
-The bars compare each country’s first atomic test with its first two-stage or megaton-scale thermonuclear test. Width is linear from zero. Code computes **complete calendar months**, without rounding up remaining days. These are dates of milestones, not scores of scientific or national capability.
-
-| Country | Start | End | Complete months |
-| --- | --- | --- | --- |
-| United States | [Trinity](https://en.wikipedia.org/wiki/Trinity_(nuclear_test)), 1945-07-16 | [Ivy Mike](https://en.wikipedia.org/wiki/Ivy_Mike), 1952-11-01 | 87 |
-| Soviet Union | [RDS-1](https://en.wikipedia.org/wiki/RDS-1), 1949-08-29 | [RDS-37](https://en.wikipedia.org/wiki/RDS-37), 1955-11-22 | 74 |
-| United Kingdom | [Operation Hurricane](https://en.wikipedia.org/wiki/Operation_Hurricane), 1952-10-03 | [Grapple X](https://en.wikipedia.org/wiki/Operation_Grapple#Grapple_X), 1957-11-08 | 61 |
-| France | [Gerboise Bleue](https://en.wikipedia.org/wiki/Gerboise_Bleue), 1960-02-13 | [Canopus](https://en.wikipedia.org/wiki/Canopus_(nuclear_test)), 1968-08-24 | 102 |
-| China | [596](https://en.wikipedia.org/wiki/596_(nuclear_test)), 1964-10-16 | [Test No. 6](https://en.wikipedia.org/wiki/Test_No._6), 1967-06-17 | 32 |
-
-Hurricane uses the local date of 3 October; its UTC date is 2 October. China’s interval is 32 complete months plus one day, shown as 2 years and 8 months.
-
-## Historical data charts: provenance and reuse
-
-Two public CSV snapshots were downloaded from Our World in Data on 2026-10-23. Their chart metadata links to full indicator metadata; both upstream `origins[].license.name` values explicitly read **CC BY 4.0**. The derived `history-data.json` retains that license, producer attribution, original-source links, download date, dataset version, and SHA-256 checksums of the downloaded CSV bytes. This data license is separate from the project's original-content license. Conversion selects the year and country observation columns and reorganizes rows; it does not alter the observations.
-
-| Chart | CSV and chart metadata | Full metadata / upstream producer | Snapshot coverage |
-| --- | --- | --- | --- |
-| Country nuclear warhead stockpiles | [CSV](https://ourworldindata.org/grapher/nuclear-warhead-stockpiles.csv), [metadata](https://ourworldindata.org/grapher/nuclear-warhead-stockpiles.metadata.json) | [Indicator 1229473](https://api.ourworldindata.org/v1/indicators/1229473.metadata.json); Federation of American Scientists, *Estimated Global Nuclear Warhead Inventories*, credited to Hans M. Kristensen, Matt Korda, Robert S. Norris, Eliana Johns and Mackenzie Knight | 1945–2026; dataset version 2026-05-13 |
-| Annual nuclear weapons tests | [CSV](https://ourworldindata.org/grapher/number-of-nuclear-weapons-tests.csv), [metadata](https://ourworldindata.org/grapher/number-of-nuclear-weapons-tests.metadata.json) | [Indicator 1229477](https://api.ourworldindata.org/v1/indicators/1229477.metadata.json); Arms Control Association, *The Nuclear Testing Tally*, Daryl Kimball | 1945–2024; dataset version 2026-05-13 |
-
-- Attribution in the interface: Our World in Data, based on the Federation of American Scientists / Arms Control Association, CC BY 4.0. [License terms](https://creativecommons.org/licenses/by/4.0/).
-- The stockpile chart stacks the ten country series. These exclude retired warheads awaiting dismantlement; the dataset's `World` aggregate includes retired warheads and is deliberately **not** used as the sum of that stack. The count is an estimate, not a measure of total energy or destructive power. The country-sum peak is computed from the snapshot (1986, 64,452), rather than encoded as a chart constant.
-- The test chart sums the eight country series. As the metadata states, these are officially announced or reported tests; Hiroshima and Nagasaki are excluded, the Vela incident is excluded, and some simultaneous detonations are counted as a single test. The snapshot's maximum annual count is computed from its rows (1962, 178).
-- The full timeline runs from 1938 to the present year, while the graphs stop at the available observations. Years before the data begins and after it ends remain empty. Published zeros stay zero; missing observations remain `null`. No observations are interpolated, extrapolated or typed from memory.
-- The two plots and event ticks share a linear year coordinate. Stockpile area and test-bar height use independent linear vertical count axes, both starting at zero. The 1963 and 1996 treaty annotations are chronological reference lines, not causal estimates.
-- Source CSV checksums: stockpiles `5fa030e5a7e312c74884adf5d9154afef16fd2fc7fe6b33eaa6ee72401dd7a9b`; tests `4a184bf157d180c91f71e1817f922bf571861b5961b964e0ca758a9101907984`.
-
-## Scope
-
-Only the implosion cutaway is available. Gun-type and thermonuclear internal configurations are not implemented. The scale and history views add effects comparisons and historical facts, without extending the internal construction model. No new weapon architecture, material specification, critical calculation or operational procedure is provided.
+The prior historical milestone data remains in `history.ts`; its individual reference URLs are shown for milestones matching the selected year. 596 and the 1967 Chinese thermonuclear milestone appear only as historical facts. There are no new internal weapon schematics or process animations. The existing implosion and abstract chain-reaction illustrations receive palette changes only.

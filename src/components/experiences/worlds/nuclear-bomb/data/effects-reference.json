@@ -1,0 +1,80 @@
+{
+  "sourceCommit": "23e1e97d35b45a6e80b8899c86c8ff256fc2217d",
+  "method": "Original upstream Python functions, executed independently with NumPy; SI input converted to kilofeet for Brode",
+  "pressure": [
+    {
+      "yieldKt": 16,
+      "rangeKm": 1,
+      "heightKm": 0.6,
+      "pressurePsi": 10.372658697414444
+    },
+    {
+      "yieldKt": 16,
+      "rangeKm": 2,
+      "heightKm": 0.6,
+      "pressurePsi": 3.5849327627958476
+    },
+    {
+      "yieldKt": 16,
+      "rangeKm": 3,
+      "heightKm": 0.6,
+      "pressurePsi": 1.8865139202724523
+    },
+    {
+      "yieldKt": 100,
+      "rangeKm": 3,
+      "heightKm": 1.1052094495921159,
+      "pressurePsi": 5.090812333223602
+    },
+    {
+      "yieldKt": 1000,
+      "rangeKm": 6,
+      "heightKm": 2.381101577952299,
+      "pressurePsi": 5.721147860369042
+    },
+    {
+      "yieldKt": 50000,
+      "rangeKm": 20,
+      "heightKm": 8.772053214638596,
+      "pressurePsi": 6.65465352256447
+    },
+    {
+      "yieldKt": 1,
+      "rangeKm": 0.12192,
+      "heightKm": 0.1524,
+      "pressurePsi": 46.70679774805031
+    }
+  ],
+  "thermal": [
+    {
+      "yieldKt": 16,
+      "slantKm": 1,
+      "calCm2": 54.67338165025437
+    },
+    {
+      "yieldKt": 16,
+      "slantKm": 2,
+      "calCm2": 12.378638453437102
+    },
+    {
+      "yieldKt": 16,
+      "slantKm": 3,
+      "calCm2": 5.178276950832935
+    },
+    {
+      "yieldKt": 100,
+      "slantKm": 5,
+      "calCm2": 12.044506149847747
+    },
+    {
+      "yieldKt": 1000,
+      "slantKm": 10,
+      "calCm2": 27.376558765638812
+    },
+    {
+      "yieldKt": 50000,
+      "slantKm": 30,
+      "calCm2": 69.77615954771953
+    }
+  ]
+}

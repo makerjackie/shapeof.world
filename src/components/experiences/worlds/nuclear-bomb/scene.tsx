@@ -267,7 +267,7 @@ export function NuclearScene(props: Props) {
     const capturing = new URLSearchParams(window.location.search).get('capture') === '1'
     renderer.debug.checkShaderErrors = import.meta.env.DEV
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, capturing ? 3 : window.innerWidth < 700 ? 1.25 : 1.5))
-    renderer.setClearColor('#0a0a0b')
+    renderer.setClearColor('#e9edef')
     renderer.outputColorSpace = T.SRGBColorSpace
     renderer.toneMapping = T.ACESFilmicToneMapping
     renderer.toneMappingExposure = 0.95
@@ -279,7 +279,7 @@ export function NuclearScene(props: Props) {
     element.appendChild(renderer.domElement)
     renderer.domElement.setAttribute('aria-hidden', 'true')
     const scene = new T.Scene()
-    scene.fog = new T.Fog('#0a0a0b', 28, 65)
+    scene.fog = new T.Fog('#e9edef', 28, 65)
     const backdrop = createBackdrop()
     scene.background = backdrop
     const camera = new T.PerspectiveCamera(36, 1, 0.05, 120)
@@ -302,11 +302,11 @@ export function NuclearScene(props: Props) {
     const room = new RoomEnvironment()
     const env = pmrem.fromScene(room, 0.04)
     scene.environment = env.texture
-    scene.environmentIntensity = 0.22
+    scene.environmentIntensity = 0.45
     room.dispose()
     pmrem.dispose()
-    scene.add(new T.HemisphereLight('#b9c4d5', '#23190f', 0.3))
-    const key = new T.SpotLight('#ffe2c0', 330, 42, Math.PI / 4.3, 0.8, 2)
+    scene.add(new T.HemisphereLight('#f0f6ff', '#a0abb0', 1.4))
+    const key = new T.SpotLight('#fffaf3', 220, 42, Math.PI / 4.3, 0.8, 2)
     key.position.set(-4, 8, 6)
     key.target.position.set(0, -2, 0)
     key.castShadow = true
@@ -315,7 +315,7 @@ export function NuclearScene(props: Props) {
     key.shadow.normalBias = 0.035
     key.shadow.radius = 4
     scene.add(key, key.target)
-    const rim = new T.DirectionalLight('#9db4d6', 3.0)
+    const rim = new T.DirectionalLight('#c4deec', 1.0)
     rim.position.set(4, 1.3, -5)
     scene.add(rim)
     const fill = new T.DirectionalLight('#ffe2c0', 0.35)
@@ -518,7 +518,7 @@ export function NuclearScene(props: Props) {
     const heatWarm = new T.Color('#ffd08a')
     const heatWhite = new T.Color('#ffffff')
     const cooledCore = new T.Color('#401811')
-    const microBackground = new T.Color('#08090a')
+    const microBackground = new T.Color('#e9edef')
     const orbitPosition = new T.Vector3()
     let lastLabels = 0
     let lastAnchorSnapshot = ''
@@ -530,7 +530,7 @@ export function NuclearScene(props: Props) {
     const leaders = new T.Group()
     const leaderLines = new Map<string, T.Line>()
     for (const part of PARTS) {
-      const line = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(), new T.Vector3(), new T.Vector3()]), new T.LineBasicMaterial({color: '#c7bca6', transparent: true, opacity: .3, depthTest: false, depthWrite: false}))
+      const line = new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(), new T.Vector3(), new T.Vector3()]), new T.LineBasicMaterial({color: '#587a90', transparent: true, opacity: .3, depthTest: false, depthWrite: false}))
       line.renderOrder = 20
       leaders.add(line)
       leaderLines.set(part.id, line)
