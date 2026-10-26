@@ -16,7 +16,7 @@ import { MoleculePanel } from './components/MoleculePanel'
 import { stationForReading, type MolecularStation } from './molecules'
 import { createCampfire, type CampfireRuntime, type CampfireStats } from './runtime.js'
 
-const FALLBACK_URL=import.meta.env.VITE_CAMPFIRE_VIDEO_URL||(import.meta.env.DEV?'/.local/campfire/campfire-round4-loop.mp4':'/assets/campfire/campfire-loop.mp4')
+const FALLBACK_URL=import.meta.env.VITE_CAMPFIRE_VIDEO_URL||(import.meta.env.DEV?'/.local/campfire/campfire-round4-loop.mp4':'https://press.shapeof.world/media/worlds/campfire/campfire-loop-2026-10-26.mp4')
 const CandleScene=lazy(()=>import('./candle/CandleScene'))
 export function Campfire({ controls }: { controls: ExperienceControls }) {
   const tx=useExperienceI18n(),[scene,setScene]=useState<'campfire'|'candle'|null>(null)
