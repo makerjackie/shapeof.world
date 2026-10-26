@@ -14,7 +14,7 @@
 
 脑子里：科学家发现，大脑里管"想要"和管"喜欢"的是两套不同的系统，管"想要"的那一套大得多，也更容易被点燃。剑桥大学 2009 年的一个老虎机实验里，"差一点就中"比"差很远"更难受，却让人更想再来一把。
 
-这台制造"想要"的机器，不只在游戏里。想要，可以被设计；喜欢，只有你自己知道。
+这种"还差一点"的设计，不只在游戏里。想要，可以被设计；喜欢，只有你自己知道。
 
 画面由代码逐帧生成。游戏界面是自己画的示意，不对应任何一款游戏；一夜里"喜欢"和"想要"的两条线、大脑里各系统的位置都是示意。
 
@@ -26,7 +26,7 @@
 
 完整说明在 `research/sources.md`。
 
-- 猴子实验：Fiorillo, Tobler, Schultz《Discrete coding of reward probability and uncertainty by dopamine neurons》，Science 299，2003（奖励概率 50% 时，持续的期待信号最强）
+- 猴子实验：Fiorillo, Tobler, Schultz《Discrete coding of reward probability and uncertainty by dopamine neurons》，Science 299，2003（线索出现时的反应随概率增加；奖励概率 50% 时，一段持续的、和不确定性有关的信号最强）
 - 想要与喜欢：Berridge & Robinson《Liking, wanting, and the incentive-sensitization theory of addiction》，American Psychologist 71(8)，2016
 - 喜欢的热点约 1 立方毫米（大鼠）：Peciña & Berridge，Journal of Neuroscience，2005
 - 老虎机实验：Clark, Lawrence, Astley-Jones, Gray《Gambling near-misses enhance motivation to gamble and recruit win-related brain circuitry》，Neuron 61(3)，2009（剑桥大学；行为实验 40 人，脑成像 15 人；差一点比差很远更不愉快，"继续玩"的评分更高，只在自己动手时出现）

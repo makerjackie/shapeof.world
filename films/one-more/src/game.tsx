@@ -330,14 +330,13 @@ const GameText: React.FC<{ t: number }> = () => (
       <Say at={sA(3.18)} out={sA(3.95)} size={80} weight={900} parts={["还是", want("停不下来"), "？"]} />
     </Box>
     {/* it is not the fun */}
-    <Box x={110} y={360} gap={16}>
-      <Say at={sA(6.25)} out={sA(7.95)} size={62} parts={["如果只是因为", { t: "好玩", c: K.like }, "，"]} />
-      <Say at={sA(6.85)} out={sA(7.95)} size={62} parts={["不好玩了，就该停了。"]} />
+    <Box x={110} y={380} gap={16}>
+      <Say at={sA(6.25)} out={sA(7.95)} size={66} parts={["让你停不下来的，"]} />
+      <Say at={sA(6.65)} out={sA(7.95)} size={66} parts={["不是", { t: "好玩", c: K.like }, "。"]} />
     </Box>
-    <Box x={110} y={340} gap={16}>
-      <Say at={sA(8.05)} out={sA(10.15)} size={58} parts={["让你停不下来的，"]} />
-      <Say at={sA(8.4)} out={sA(10.15)} size={58} parts={["是别的东西。"]} />
-      <Say at={sA(9.0)} out={sA(10.15)} size={50} weight={700} color={K.sub} parts={["它藏在", { t: "游戏里", c: K.cyan }, "，也藏在", want("你脑子里"), "。"]} style={{ marginTop: 22 }} />
+    <Box x={110} y={380} gap={16}>
+      <Say at={sA(8.05)} out={sA(10.15)} size={56} weight={700} color={K.sub} parts={["它藏在两个地方："]} />
+      <Say at={sA(8.6)} out={sA(10.15)} size={64} parts={[{ t: "游戏里", c: K.cyan }, "，和", want("你脑子里"), "。"]} />
     </Box>
     {/* the rings */}
     <Box x={110} y={360} gap={14}>
@@ -353,20 +352,16 @@ const GameText: React.FC<{ t: number }> = () => (
     </Box>
     <Box x={110} y={380} gap={14}>
       <Say at={sA(16.55)} out={sA(18.4)} size={62} parts={["赛季", want("还剩 9 天"), "。"]} />
-      <Say at={sA(17.3)} out={sA(18.4)} size={54} weight={700} color={K.sub} parts={["过了，就没了。"]} />
+      <Say at={sA(17.3)} out={sA(18.4)} size={54} weight={700} color={K.sub} parts={["过了，奖励就没了。"]} />
     </Box>
     <Box x={110} y={380} gap={14}>
       <Say at={sA(18.55)} out={sA(20.4)} size={46} weight={700} color={K.sub} parts={["好友发来："]} />
       <Say at={sA(18.85)} out={sA(20.4)} size={66} parts={["“差一个，来不来？”"]} />
     </Box>
-    <Box x={110} y={330} gap={16}>
-      <Say at={sA(20.6)} out={sA(22.55)} size={58} parts={["每合上一个圈，"]} />
-      <Say at={sA(21.2)} out={sA(22.55)} size={58} parts={["总有一个更大的圈，"]} />
-      <Say at={sA(21.65)} out={sA(22.55)} size={58} parts={["还", want("开着口"), "。"]} />
-    </Box>
+    {/* the rings spin up with no words for a moment, then one line */}
     <Box x={110} y={380} gap={16}>
-      <Say at={sA(22.7)} out={sA(24.0)} size={58} parts={["你想停的那一刻，"]} />
-      <Say at={sA(23.1)} out={sA(24.0)} size={58} parts={["总有一个圈，", want("还差一点"), "。"]} />
+      <Say at={sA(21.5)} out={sA(24.0)} size={62} parts={["你想停的那一刻，"]} />
+      <Say at={sA(22.0)} out={sA(24.0)} size={62} parts={["总有一个圈，", want("还差一点"), "。"]} />
     </Box>
     <Box x={110} y={360} gap={16}>
       <Say at={sA(24.15)} out={sA(26.35)} size={52} weight={700} parts={["每一局，系统都会找"]} />

@@ -65,7 +65,7 @@ const Monkey: React.FC<{ t: number }> = ({ t }) => {
           能喝到果汁的可能
         </Tag>
         <Tag x={cueX(2) + 40} y={CUE_Y - 82 - sig(0.5) - 40} at={sB(1.75)} out={sB(2.6)} color={K.wantHi} size={32}>
-          期待最强
+          悬着，最强
         </Tag>
       </div>
     </>
@@ -104,10 +104,10 @@ const clock = (m: number) => {
 };
 
 const Night: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, sB(10.3), sB(13.3), 0.4, 0.35);
+  const o = win(t, sB(10.9), sB(13.3), 0.4, 0.35);
   if (o <= 0) return null;
-  const m = 227 * ramp(t, sB(10.55), sB(12.55), EIO);
-  const axis = ramp(t, sB(10.32), sB(10.7), EO);
+  const m = 227 * ramp(t, sB(11.0), sB(12.55), EIO);
+  const axis = ramp(t, sB(10.92), sB(11.2), EO);
   // the scissors: shade where wanting runs above liking
   const shade: string[] = [];
   for (let q = 0; q <= m; q += 2) {
@@ -149,7 +149,7 @@ const Night: React.FC<{ t: number }> = ({ t }) => {
         {end > 0 ? <line x1={mx(227) + 30} x2={mx(227) + 30} y1={vy(valAt(WANT_V, 227))} y2={vy(valAt(LIKE_V, 227))} stroke={K.fg} strokeWidth={2} opacity={end} /> : null}
       </svg>
       {[0, 60, 120, 180].map((q) => (
-        <Tag key={q} x={mx(q)} y={CH.y0 + 40} at={sB(10.4)} out={sB(13.4)} color={K.muted} size={24}>
+        <Tag key={q} x={mx(q)} y={CH.y0 + 40} at={sB(11.0)} out={sB(13.4)} color={K.muted} size={24}>
           <span style={{ fontFamily: NUM, fontWeight: 600 }}>{clock(q)}</span>
         </Tag>
       ))}
@@ -219,7 +219,7 @@ const Machine: React.FC<{ x: number; y: number; t: number; stops: number[]; fina
 };
 
 const Slots: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, sB(7.25), sB(10.35), 0.4, 0.35);
+  const o = win(t, sB(7.25), sB(10.95), 0.4, 0.35);
   if (o <= 0) return null;
   const L = 640;
   const R = 1330;
@@ -315,7 +315,7 @@ export const MindWorld: React.FC = () => {
   const pose = brainPose(t);
   const brainO = Math.max(win(t, sB(2.5), sB(7.3), 0.3, 0.35), win(t, sB(13.2), sC(1.5), 0.4, 0.5));
   const draw = t < sB(13) ? ramp(t, sB(2.5), sB(3.3), EIO) : 1;
-  const flash = t > sB(15.4) ? Math.exp(-(t - sB(15.4)) * 1.6) : 0;
+  const flash = t > sB(15.5) ? Math.exp(-(t - sB(15.5)) * 1.6) : 0;
   const shrink = ramp(t, sC(0.5), sC(1.4), EIN);
   const bx = lerp(pose.x, 1040, shrink);
   const by = lerp(pose.y, 440, shrink);
@@ -326,13 +326,14 @@ export const MindWorld: React.FC = () => {
     like: t < sB(13) ? ramp(t, sB(3.45), sB(3.95), EO) : 0.35,
     want: t < sB(13) ? ramp(t, sB(4.35), sB(5.1), EIO) : 1,
     flow: t < sB(13) ? 0.4 : t < sB(14.8) ? 0.35 : 0.8 + 0.2 * flash,
-    know: t < sB(13) ? 0 : ramp(t, sB(14.25), sB(14.7), EO) * (1 - 0.7 * ramp(t, sB(15.4), sB(15.7), EO)),
+    know: t < sB(13) ? 0 : ramp(t, sB(14.25), sB(14.7), EO) * (1 - 0.75 * ramp(t, sB(15.5), sB(15.65), EO) * (1 - ramp(t, sB(16.3), sB(17.2), EIO))),
     flash: t < sB(13) ? 0 : flash,
   };
   const L = (p: [number, number]) => bpt(bx, by, bs, p);
   const [lx, ly] = L(HOTSPOTS[0]);
   const [wx, wy] = L([430, 150]);
   const [kx, ky] = L(NODE.pfc);
+  const [vx, vy] = L(NODE.vta);
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       <Monkey t={t} />
@@ -349,6 +350,9 @@ export const MindWorld: React.FC = () => {
       <Tag x={wx + 40} y={wy - 40} at={sB(4.45)} out={sB(6.25)} color={K.want} size={34} anchor="left">
         想要 · 一大片
       </Tag>
+      <Tag x={vx + 40} y={vy + 96} at={sB(5.3)} out={sB(6.25)} color={K.wantHi} size={26} anchor="left">
+        ↖ 猴子那段“悬着”的信号，在这一套里
+      </Tag>
       <Tag x={kx - 30} y={ky - 70} at={sB(14.3)} out={sB(17)} color={K.know} size={34} anchor="right">
         知道
       </Tag>
@@ -364,8 +368,8 @@ export const MindWorld: React.FC = () => {
       <MindText />
       <Note at={sB(0.25)} out={sB(2.5)}>猴子实验 · Fiorillo 等，Science 2003 · 信号为示意</Note>
       <Note at={sB(3.5)} out={sB(6.25)}>在大鼠脑里，管“喜欢”的热点每个只有约 1 立方毫米（Peciña & Berridge 2005）· 脑区位置为示意</Note>
-      <Note at={sB(7.35)} out={sB(10.3)}>Clark 等，Neuron 2009：差一点时，大脑里平时为赢而亮的区域也亮了；只在自己动手转时出现 · 条形为示意</Note>
-      <Note at={sB(10.5)} out={sB(13.3)}>示意：一个人一夜里的“喜欢”和“想要”</Note>
+      <Note at={sB(7.35)} out={sB(10.9)}>Clark 等，Neuron 2009：差一点时，大脑里平时为赢而亮的区域也亮了；只在自己动手转时出现 · 条形为示意</Note>
+      <Note at={sB(11.0)} out={sB(13.3)}>示意：一个人一夜里的“喜欢”和“想要”</Note>
     </div>
   );
 };
@@ -373,12 +377,13 @@ export const MindWorld: React.FC = () => {
 const MindText: React.FC = () => (
   <>
     <Box x={110} y={150} gap={14}>
-      <Say at={sB(0.12)} out={sB(1.45)} size={56} parts={["科学家给猴子看五种信号，"]} />
+      <Say at={sB(0.12)} out={sB(1.45)} size={56} parts={["科学家给猴子看五种图案，"]} />
       <Say at={sB(0.5)} out={sB(1.45)} size={56} parts={["代表能喝到果汁的可能。"]} />
     </Box>
-    <Box x={110} y={150} gap={14}>
-      <Say at={sB(1.5)} out={sB(2.5)} size={60} parts={["一半一半的时候，"]} />
-      <Say at={sB(1.78)} out={sB(2.5)} size={60} parts={["它脑子里的", want("期待"), "，最强。"]} />
+    <Box x={110} y={150} gap={12}>
+      <Say at={sB(1.5)} out={sB(2.5)} size={56} parts={["一半一半的时候，"]} />
+      <Say at={sB(1.72)} out={sB(2.5)} size={56} parts={["它脑子里有一段"]} />
+      <Say at={sB(1.92)} out={sB(2.5)} size={56} parts={[want("“悬着”"), "的信号，最强。"]} />
     </Box>
     <Box x={110} y={400} gap={14}>
       <Say at={sB(2.6)} out={sB(3.4)} size={64} parts={["大脑里，"]} />
@@ -408,13 +413,14 @@ const MindText: React.FC = () => (
       <Say at={sB(8.75)} out={sB(9.15)} size={56} parts={["却", want("更想再来一把"), "。"]} />
     </Box>
     <Box x={110} y={150} gap={14}>
-      <Say at={sB(9.2)} out={sB(10.3)} size={92} weight={900} parts={["更难受，", { t: "却更想要。", mark: true }]} />
+      <Say at={sB(9.2)} out={sB(10.0)} size={92} weight={900} parts={["更难受，", { t: "却更想要。", mark: true }]} />
     </Box>
     <Box x={110} y={150} gap={14}>
-      <Say at={sB(10.35)} out={sB(11.2)} size={52} weight={700} parts={["游戏里，每一局都是你自己动手。"]} />
+      <Say at={sB(10.05)} out={sB(11.2)} size={54} parts={["只有自己动手转，才会这样。"]} />
+      <Say at={sB(10.45)} out={sB(11.2)} size={54} parts={["游戏里，每一局都是你", want("亲手打的"), "。"]} />
     </Box>
     <Box x={110} y={150} gap={14}>
-      <Say at={sB(11.25)} out={sB(12.6)} size={54} parts={[like("“喜欢”"), "早就往下走了，"]} />
+      <Say at={sB(11.3)} out={sB(12.6)} size={54} parts={[like("“喜欢”"), "早就往下走了，"]} />
       <Say at={sB(11.8)} out={sB(12.6)} size={54} parts={[want("“想要”"), "还在往上。"]} />
     </Box>
     <Box x={110} y={150} gap={14}>
@@ -424,17 +430,18 @@ const MindText: React.FC = () => (
       <Say at={sB(13.4)} out={sB(14.25)} size={62} parts={["那“明知道该停”的你呢？"]} />
     </Box>
     <Box x={110} y={380} gap={16}>
-      <Say at={sB(14.3)} out={sB(15.4)} size={56} parts={[{ t: "“知道”", c: K.know }, "很慢，要想。"]} />
-      <Say at={sB(14.85)} out={sB(15.4)} size={56} parts={[want("“想要”"), "很快，不用想。"]} />
+      <Say at={sB(14.3)} out={sB(15.2)} size={56} parts={[{ t: "“知道”", c: K.know }, "很慢，要想。"]} />
+      <Say at={sB(14.7)} out={sB(15.2)} size={56} parts={[want("“想要”"), "很快，不用想。"]} />
     </Box>
     <Box x={110} y={380} gap={16}>
-      <Say at={sB(15.45)} out={sB(16.2)} size={56} parts={["刚输的那一秒："]} />
-      <Say at={sB(15.65)} out={sB(16.2)} size={56} parts={[want("想要"), "最强，", { t: "知道", c: K.know }, "最弱。"]} />
+      <Say at={sB(15.25)} out={sB(16.15)} size={56} parts={["刚输的那一秒："]} />
+      <Say at={sB(15.5)} out={sB(16.15)} size={56} parts={[want("“想要”"), "已经到了，"]} />
+      <Say at={sB(15.72)} out={sB(16.15)} size={56} parts={[{ t: "“知道”", c: K.know }, "还在路上。"]} />
     </Box>
     <Box x={110} y={380} gap={16}>
-      <Say at={sB(16.25)} out={sC(0.9)} size={60} parts={["不是你意志力差。"]} />
-      <Say at={sB(16.6)} out={sC(0.9)} size={60} parts={["是做决定的那个你，"]} />
-      <Say at={sB(16.9)} out={sC(0.9)} size={60} parts={[{ t: "不在现场", c: K.know }, "。"]} />
+      <Say at={sB(16.2)} out={sC(0.9)} size={58} parts={["这不全是意志力的事。"]} />
+      <Say at={sB(16.55)} out={sC(0.9)} size={58} parts={["做决定的那一秒，"]} />
+      <Say at={sB(16.85)} out={sC(0.9)} size={58} parts={[{ t: "“知道”的那个你", c: K.know }, "，还不在现场。"]} />
     </Box>
   </>
 );

@@ -149,8 +149,8 @@ const Needs: React.FC<{ t: number }> = ({ t }) => {
   const happy = ramp(t, sC(6.6), sC(7.1), EO);
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o }}>
-      <Person x={1010} y={560} full k={ramp(t, sC(4.6), sC(5.0), EO)} t={t} play={0.5 * play} happy={0.84 * happy} />
-      <Person x={1520} y={560} full={false} k={ramp(t, sC(4.75), sC(5.15), EO)} t={t} play={0.9 * play} happy={0.3 * happy} />
+      <Person x={1130} y={560} full k={ramp(t, sC(4.6), sC(5.0), EO)} t={t} play={0.5 * play} happy={0.84 * happy} />
+      <Person x={1600} y={560} full={false} k={ramp(t, sC(4.75), sC(5.15), EO)} t={t} play={0.9 * play} happy={0.3 * happy} />
     </div>
   );
 };
@@ -288,7 +288,7 @@ export const LifeWorld: React.FC = () => {
 const LifeText: React.FC = () => (
   <>
     <Box x={110} y={330} gap={14}>
-      <Say at={sC(0.95)} out={sC(2.6)} size={60} parts={["这台制造", want("“想要”"), "的机器，"]} />
+      <Say at={sC(0.95)} out={sC(2.6)} size={60} parts={["这种", want("“还差一点”"), "的设计，"]} />
       <Say at={sC(1.45)} out={sC(2.6)} size={60} parts={["不只在游戏里。"]} />
     </Box>
     <Box x={110} y={330} gap={22}>
@@ -296,14 +296,15 @@ const LifeText: React.FC = () => (
       <Say at={sC(3.15)} out={sC(4.45)} size={58} parts={["限时优惠。"]} />
       <Say at={sC(3.6)} out={sC(4.45)} size={58} parts={["没点开的", want("小红点"), "。"]} />
     </Box>
-    <Box x={110} y={300} gap={14}>
-      <Say at={sC(4.65)} out={sC(8.4)} size={44} weight={700} color={K.sub} parts={["研究发现："]} />
-      <Say at={sC(4.95)} out={sC(8.4)} size={54} parts={["生活里越缺这三样的人，"]} />
-      <Say at={sC(5.9)} out={sC(8.4)} size={54} parts={["越容易", want("停不下来"), "，"]} style={{ marginTop: 18 }} />
-      <Say at={sC(6.6)} out={sC(8.4)} size={54} parts={["也玩得越", like("不开心"), "。"]} />
+    <Box x={110} y={260} gap={12}>
+      <Say at={sC(4.65)} out={sC(8.4)} size={42} weight={700} color={K.sub} parts={[{ t: "2009", num: true }, " 年一项玩家调查："]} />
+      <Say at={sC(4.95)} out={sC(8.4)} size={52} parts={["生活里越少感到"]} />
+      <Say at={sC(5.2)} out={sC(8.4)} size={52} parts={[like("能做好、能自己选、有人一起"), "，"]} />
+      <Say at={sC(5.9)} out={sC(8.4)} size={52} parts={["越容易", want("停不下来"), "，"]} style={{ marginTop: 16 }} />
+      <Say at={sC(6.6)} out={sC(8.4)} size={52} parts={["也玩得越", like("不开心"), "。"]} />
     </Box>
     <Box x={960} y={820} gap={14} align="center">
-      <Say at={sC(8.7)} out={sC(10.85)} size={58} parts={["游戏没有骗你。它给的回应，是真的。"]} />
+      <Say at={sC(8.7)} out={sC(10.85)} size={62} parts={["游戏给你的回应，是真的。"]} />
     </Box>
     <Box x={960} y={820} gap={14} align="center">
       <Say at={sC(10.95)} out={sC(12.95)} size={58} parts={["只是它给的，常常是你在", like("别处没拿到"), "的。"]} />
