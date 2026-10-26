@@ -44,13 +44,13 @@ const RIPPLES = SIM.events.map((e) => ({ f: e.f, p: e.kind === "land" ? 0.45 : e
 
 // ---------- pieces ----------
 
-const Orb: React.FC<{ s: Frame; f: number; under: boolean }> = ({ s, f, under }) => {
+export const Orb: React.FC<{ s: { d: number; v: number; ox: number }; f: number; under: boolean; flareAt?: number; strainFrom?: number; strainTo?: number }> = ({ s, f, under, flareAt = RELEASE, strainFrom = 300, strainTo = RELEASE }) => {
   const y = SURFACE + s.d;
   const deep = Math.max(0, s.d - D0);
   const breath = 1 + Math.sin(f / 9) * 0.02;
-  const strain = interpolate(f, [300, RELEASE], [0, 1], CL) * (f < RELEASE ? 1 : 0);
+  const strain = interpolate(f, [strainFrom, strainTo], [0, 1], CL) * (f < strainTo ? 1 : 0);
   const glowK = under ? Math.max(0.35, 1 - deep / 520) : 1;
-  const flare = interpolate(f, [RELEASE + 10, RELEASE + 22, RELEASE + 70], [0, 1, 0], CL);
+  const flare = interpolate(f, [flareAt + 10, flareAt + 22, flareAt + 70], [0, 1, 0], CL);
   const r = R * breath;
   const stretch = s.d < 0 ? 1 + Math.min(0.14, Math.abs(s.v) / 220) : 1;
   return (
@@ -78,7 +78,7 @@ const Orb: React.FC<{ s: Frame; f: number; under: boolean }> = ({ s, f, under })
 // and later the same words as your own lock-screen notifications.
 const PAPER_EDGE = "polygon(0% 6%, 3% 0%, 9% 4%, 16% 1%, 24% 5%, 33% 0%, 41% 4%, 50% 1%, 58% 5%, 67% 0%, 75% 4%, 84% 1%, 92% 5%, 97% 0%, 100% 6%, 100% 94%, 97% 100%, 91% 96%, 83% 100%, 74% 95%, 66% 100%, 57% 96%, 49% 100%, 40% 95%, 32% 100%, 23% 96%, 15% 100%, 8% 95%, 2% 100%, 0% 94%)";
 
-const Paper: React.FC<{ kind: string; size: number; h: number; text: string }> = ({ kind, size, h, text }) => {
+export const Paper: React.FC<{ kind: string; size: number; h: number; text: string }> = ({ kind, size, h, text }) => {
   const teacher = kind === "teacher";
   return (
     <div
@@ -103,7 +103,7 @@ const Paper: React.FC<{ kind: string; size: number; h: number; text: string }> =
   );
 };
 
-const Notice: React.FC<{ size: number; h: number; text: string }> = ({ size, h, text }) => (
+export const Notice: React.FC<{ size: number; h: number; text: string }> = ({ size, h, text }) => (
   <div
     style={{
       height: h,
@@ -222,7 +222,7 @@ const Surface: React.FC<{ s: Frame; f: number }> = ({ s, f }) => {
   );
 };
 
-const Brand: React.FC = () => (
+export const Brand: React.FC = () => (
   <div style={{ position: "absolute", left: 44, top: 34, display: "flex", alignItems: "center", gap: 12, opacity: 0.7 }}>
     <Img src={staticFile("mark-disc.png")} style={{ width: 44, height: 44 }} />
     <span style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 28, color: K.fg, letterSpacing: 2 }}>世界的形状</span>

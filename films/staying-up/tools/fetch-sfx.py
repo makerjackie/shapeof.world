@@ -7,6 +7,9 @@ LIST = {
     "bubble": "sfx-water-20", "rise": "sfx-water-04", "drop": "sfx-water-01", "ping": "sfx-water-13",
     "sub": "sfx-impact-16", "thump": "sfx-impact-08", "swell": "sfx-transition-07",
     "under": "ambience-water-05", "brown": "ambience-texture-02",
+    "swipe": "sfx-transition-01", "notify": "sfx-notification-04", "tap": "sfx-ui-01",
+    "lift": "sfx-transition-19", "shimmer": "sfx-magic-19",
+    "music-floating": "scene-dub-90",  # 漂浮物件 · 90: melancholic piano over pads
 }
 here = os.path.dirname(os.path.abspath(__file__))
 out = os.path.join(here, "..", "public", "sfx"); os.makedirs(out, exist_ok=True)
