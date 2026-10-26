@@ -6,6 +6,10 @@ export type CampfireRuntime = {
   setSlice(patch: Partial<Slice>): void
   setPlayback(paused: boolean, speed: number): void
   setSound(on: boolean): Promise<boolean>
+  setOccluded(on: boolean): void
+  setFuel(factor: number): void
+  gust(): void
+  setGravity(g: number): void
   setBlue(on: boolean): void
   setAnnotations(on: boolean): void
   selectAnnotation(id: AnatomyId, cut?: boolean): { position: Vec3; slice: Slice } | null
