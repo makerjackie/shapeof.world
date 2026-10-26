@@ -1,5 +1,5 @@
 import { DEFAULT_INPUTS, clampLight, type PlantInputs } from './model'
-import { clampScale, getActiveLayer, MOBILE_HERO_SCALE, SCALE_DEFAULT } from './scale-model'
+import { clampScale, getActiveLayer, ENTRY_SCALE } from './scale-model'
 
 /** Read once on entry; navigation and controls never rewrite the URL. */
 export function parseCaptureParams(search: string, mobile = false) {
@@ -10,7 +10,7 @@ export function parseCaptureParams(search: string, mobile = false) {
     const value = Number(raw)
     return Number.isFinite(value) ? value : undefined
   }
-  const scale = clampScale(number('scale') ?? (mobile ? MOBILE_HERO_SCALE : SCALE_DEFAULT))
+  const scale = clampScale(number('scale') ?? ENTRY_SCALE)
   const molecular = ['membrane', 'motor'].includes(getActiveLayer(scale))
   const speed = number('speed')
   const manualSpeed = speed !== undefined && [0, .001, 1, 60, 3600].includes(speed)

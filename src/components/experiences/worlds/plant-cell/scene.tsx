@@ -1,8 +1,11 @@
+import { PigmentContours } from './pigment-contours'
+import { paintState } from './illustration'
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, type MutableRefObject, type ReactNode } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Bloom, DepthOfField, EffectComposer, Noise, SMAA, Vignette } from '@react-three/postprocessing'
+import { Preload } from '@react-three/drei'
+import { EffectComposer, Noise, SMAA } from '@react-three/postprocessing'
 import * as T from 'three'
-import { BlendFunction, type DepthOfFieldEffect } from 'postprocessing'
+import { BlendFunction } from 'postprocessing'
 import { isWorldPaused } from '~/lib/world-playback'
 import { getWaterReadings } from './water-model'
 import { CellLayer } from './cell-layer'
@@ -206,21 +209,15 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
   return null
 }
 
-/** Dark field with a faint warm lift at the top, where sunlight enters the leaf. */
-function Backdrop() {
-  const { scene } = useThree()
-  useEffect(() => {
-    const canvas = document.createElement('canvas'); canvas.width = 4; canvas.height = 256
-    const context = canvas.getContext('2d')
-    if (!context) return
-    const gradient = context.createLinearGradient(0, 0, 0, 256)
-    gradient.addColorStop(0, '#17221c'); gradient.addColorStop(0.42, '#0a1314'); gradient.addColorStop(1, '#030607')
-    context.fillStyle = gradient; context.fillRect(0, 0, 4, 256)
-    const texture = new T.CanvasTexture(canvas); texture.colorSpace = T.SRGBColorSpace
-    const previous = scene.background
-    scene.background = texture
-    return () => { scene.background = previous; texture.dispose() }
-  }, [scene])
+function Backdrop({scale,light}:{scale:number;light:number}) {
+  const {scene,camera}=useThree()
+  const paper=useMemo(()=>new T.Color('#e9eedb'),[]),warm=useMemo(()=>new T.Color('#f3e4c8'),[])
+  useFrame(()=>{
+    paintState.paper.value.copy(paper).lerp(warm,smoothstep(-5.7,-6.7,scale))
+    paintState.focus.value=camera.position.length()
+    paintState.illumination.value=.86+.14*Math.sqrt(Math.max(0,light)/2000)
+    scene.background=paintState.paper.value
+  })
   return null
 }
 
@@ -235,9 +232,6 @@ function Contents(props: SceneProps) {
   const displayKey = getLightAppearance(light).keyIntensity*(1-molecularDisplay)+getLightAppearance(400).keyIntensity*molecularDisplay
   const displayFill = getLightAppearance(light).fillIntensity*(1-molecularDisplay)+getLightAppearance(400).fillIntensity*molecularDisplay
   const skipElapsed = useRef(false)
-  // Optical depth of field belongs to the microscope scales; molecules stay crisp.
-  const dof = useRef<DepthOfFieldEffect>(null)
-  useFrame(() => { if (dof.current) dof.current.bokehScale = (mobile ? 2 : 4) * (1 - 0.7 * smoothstep(-6.55, -7.0, controller.current.current)) })
   useEffect(() => {
     const change=()=>{skipElapsed.current=true}
     document.addEventListener('visibilitychange',change)
@@ -281,7 +275,7 @@ function Contents(props: SceneProps) {
     </group>
   </>
   return <>
-    <Backdrop />
+    <Backdrop scale={viewScale} light={light} />
     <ambientLight color="#6a8c9b" intensity={0.025 + displayBrightness * 0.14 + moonFill} />
     <hemisphereLight args={['#ddd8b7', '#304640', displayBrightness * 0.24]} />
     <directionalLight position={[-12,85,26]} color="#ffecc8" intensity={displayKey} castShadow shadow-mapSize={[mobile?1024:2048,mobile?1024:2048]} shadow-camera-left={-65} shadow-camera-right={65} shadow-camera-top={65} shadow-camera-bottom={-65} shadow-camera-near={1} shadow-camera-far={250} shadow-bias={-0.0004} shadow-normalBias={0.08} shadow-radius={4} />
@@ -290,18 +284,17 @@ function Contents(props: SceneProps) {
     <group ref={root}>{layers}</group>
     <CameraAndScale {...props} />
     <EffectComposer multisampling={0}>
-      <DepthOfField ref={dof} target={[0,0,0]} focusRange={42} bokehScale={mobile?2:4} height={mobile ? 400 : 700} />
-      <Bloom intensity={0.08} luminanceThreshold={0.82} luminanceSmoothing={0.5} mipmapBlur />
-      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.1} />
-      <Vignette offset={0.3} darkness={0.55} />
+      <Noise blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.025} />
+      <PigmentContours />
       <SMAA />
     </EffectComposer>
+    <Preload all />
   </>
 }
 
 export function PlantScene(props: SceneProps) {
   return <div className="pc-scene">
-    <Canvas shadows={{type:T.PCFShadowMap}} camera={{ position: [65,37,94], fov:30, near:0.1, far:2200 }} onCreated={({gl})=>{gl.localClippingEnabled=true}} dpr={props.mobile ? [1, 1.25] : [1, 1.5]} gl={{ antialias: false, powerPreference: 'high-performance', toneMapping: T.ACESFilmicToneMapping, toneMappingExposure: 1.32 }}>
+    <Canvas camera={{ position: [65,37,94], fov:30, near:0.1, far:2200 }} onCreated={({gl})=>{gl.localClippingEnabled=true}} dpr={props.mobile ? [1, 1.25] : [1, 1.5]} gl={{ antialias: false, powerPreference: 'high-performance', toneMapping: T.NoToneMapping, toneMappingExposure: 1 }}>
       <Suspense fallback={null}><Contents {...props} /></Suspense>
     </Canvas>
   </div>

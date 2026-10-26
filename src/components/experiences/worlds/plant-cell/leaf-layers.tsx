@@ -1,3 +1,4 @@
+import { preparePaintMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import * as T from 'three'
 import { Cutaway, useCutaway } from './cutaway'
@@ -14,7 +15,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
   const cut = useCutaway()
   const material = useMemo(() => {
     const mat = new T.MeshPhysicalMaterial({ color, roughness: kind === 'cuticle' ? .55 : .83, clearcoat: kind === 'guard' ? .1 : .02,
-      vertexColors: kind === 'wall', side: T.DoubleSide, transparent: true, depthWrite: kind !== 'wall' && kind !== 'cuticle' })
+      vertexColors: false, side: T.DoubleSide, transparent: true, depthWrite: kind !== 'wall' && kind !== 'cuticle' })
     mat.userData.open = { value: open }
     mat.onBeforeCompile = (shader) => {
       shader.uniforms.sectionCut = { value: cut?.normal ?? new T.Vector3(0, 0, 1) }
@@ -33,7 +34,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
         float cutDistance = dot(vSection, sectionCut) + 1.2;
         if (cutDistance > 0.0) discard;
-        float received = (.38 + .62 * exp(-max(0.0, 60.0 - vSection.y) * .0026)) * (.3 + .7 * exp(min(0.0, cutDistance) * .025));
+        float received = .88 + .12 * exp(min(0.0,cutDistance)*.006);
         diffuseColor.rgb *= received;
         ${kind === 'wall' || kind === 'cuticle' ? `
           vec2 topPore = (vSection.xz - vec2(${LEAF_ENTRY[0]}, ${LEAF_ENTRY[2]})) / vec2(5.7, 12.0);
@@ -53,7 +54,7 @@ function SectionMaterial({ opacity, kind = 'wall', color = '#ffffff', open = .6 
       `)
     }
     mat.customProgramCacheKey = () => `plant-section-${kind}-3`
-    return mat
+    return preparePaintMaterial(mat)
     // The opening is a uniform; it does not rebuild any material or geometry.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [color, kind, cut])
@@ -104,13 +105,13 @@ function SectionTissue({ opacity, mobile = false, stomataOpen = .6, water }: Lay
   }, [resources, poses, water.radial, water.axial])
   useEffect(() => () => { resources.tissue.dispose(); resources.protoplast.dispose(); resources.xylem.wall.dispose(); resources.xylem.spiral.dispose(); resources.guard.dispose() }, [resources])
   return <group>
-    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .9} color="#c2d0b4" /></mesh>
+    <mesh geometry={resources.tissue}><SectionMaterial opacity={opacity * .85} color="#c2d0b4" /></mesh>
     <mesh geometry={resources.protoplast} visible={water.immersion > .001}><SectionMaterial opacity={opacity * .65} color="#a9c1aa" /></mesh>
     <instancedMesh ref={chloroplastRef} args={[undefined, undefined, resources.chloroplasts.matrices.length]}>
-      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#97c969" opacity={opacity * .95} />
+      <sphereGeometry args={[1, mobile ? 7 : 10, 6]} /><SectionMaterial kind="chloroplast" color="#7f9e69" opacity={opacity * .95} />
     </instancedMesh>
     <mesh geometry={resources.xylem.wall}><SectionMaterial kind="xylem" color="#d6cfb0" opacity={opacity * .78} /></mesh>
-    <mesh geometry={resources.xylem.spiral}><SectionMaterial kind="xylem" color="#eee3c8" opacity={opacity * .9} /></mesh>
+    <mesh geometry={resources.xylem.spiral}><SectionMaterial kind="xylem" color="#eee3c8" opacity={opacity * .85} /></mesh>
     <instancedMesh ref={guardsRef} args={[resources.guard, undefined, poses.guards.length]}><SectionMaterial kind="guard" color="#68834b" opacity={opacity} open={stomataOpen} /></instancedMesh>
     <instancedMesh ref={guardChloroplastRef} args={[undefined, undefined, poses.chloroplasts.length]}>
       <sphereGeometry args={[1, 8, 6]} /><SectionMaterial kind="chloroplast" color="#35532d" opacity={opacity} />

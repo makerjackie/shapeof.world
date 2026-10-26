@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, type ReactNode } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
+import { illustrateShader } from './illustration'
 
 export interface CutState { plane: T.Plane; normal: T.Vector3; angle: number; offset: number; fromWorld: T.Matrix4 }
 const CutContext = createContext<CutState | null>(null)
@@ -54,7 +55,7 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
     return texture
   }, [kind])
   useEffect(() => () => grana?.dispose(), [grana])
-  return <meshPhysicalMaterial {...props} color={color} roughness={roughness} metalness={0} clearcoat={kind === 'chloroplast' ? 0.15 : 0.04} clearcoatRoughness={0.55}
+  return <meshPhysicalMaterial {...props} color={color} roughness={roughness} metalness={0} clearcoat={0} clearcoatRoughness={0.55}
     transparent opacity={opacity} side={T.DoubleSide} clippingPlanes={planes} clipShadows depthWrite={depthWrite}
     customProgramCacheKey={() => `plant-${kind}-${attenuation}`}
     onBeforeCompile={(shader) => {
@@ -71,17 +72,17 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
         vTissue=(cellFromWorld*modelMatrix*tissueP).xyz;`)
       shader.fragmentShader = 'uniform sampler2D granaMap; uniform float starchAmount; uniform float glowAmount; varying vec3 vTissue; varying vec3 vShape;\n' + shader.fragmentShader
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
-        ${attenuation ? 'float received=0.4+0.8*exp(-max(0.0,35.0-vTissue.y)*0.026); diffuseColor.rgb*=received;' : ''}
+        ${attenuation ? 'float received=.92+.08*exp(-max(0.0,35.0-vTissue.y)*0.026); diffuseColor.rgb*=received;' : ''}
         ${kind === 'chloroplast' ? `
         float thickness=sqrt(max(0.0,1.0-dot(vShape.xy/vec2(3.0,1.9),vShape.xy/vec2(3.0,1.9))));
-        diffuseColor.rgb*=mix(vec3(1.75,1.48,1.15),vec3(0.48,0.61,0.46),thickness);
+        diffuseColor.rgb*=mix(vec3(1.08,1.08,1.02),vec3(.90,.98,.89),thickness);
         float stipple=texture2D(granaMap,vShape.xy/vec2(6.0,3.8)+0.5).r;
         diffuseColor.rgb*=1.0-0.42*min(1.0,stipple);
         float sr=max(0.001,0.7*pow(starchAmount,0.333333));
         vec2 sp=(vShape.xy-vec2(-0.6,0.35))/vec2(sr,sr*0.43);
         float starchSpot=exp(-dot(sp,sp)*2.0)*smoothstep(0.0,0.05,starchAmount);
         diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.42,0.45,0.32),starchSpot*0.38);
-        if(!gl_FrontFacing) { float stripe=smoothstep(0.28,0.5,abs(sin(vShape.y*48.0))); diffuseColor.rgb=vec3(0.035,0.095,0.025)*mix(0.5,1.5,stripe); }
+        if(!gl_FrontFacing) diffuseColor.rgb*=.83;
         ` : ''}
         ${kind === 'chloroplast-cut' ? 'float lines=smoothstep(0.1,0.7,abs(sin(vShape.y*100.0+sin(vShape.x*4.0)*0.3))); diffuseColor.rgb*=0.6+0.6*lines;' : ''}
         ${kind === 'nucleus' ? 'if(!gl_FrontFacing) diffuseColor.rgb*=0.52+0.18*sin(vShape.x*18.0)*sin(vShape.y*14.0);' : ''}
@@ -90,5 +91,6 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
       if (kind === 'chloroplast') shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
         if(gl_FrontFacing) totalEmissiveRadiance+=glowAmount*${attenuation ? 'received' : '1.0'}*vec3(0.07,0.13,0.03)*(0.35+0.65*(1.0-thickness))*(1.0-0.55*min(1.0,stipple));
       `)
+      illustrateShader(shader)
     }} />
 }

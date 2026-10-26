@@ -11,7 +11,7 @@ export default {
   posterHook: '从整片菠菜叶，穿过细胞与叶绿体，一直放大到转动的 ATP 合酶。',
   posterSource: '程序化细胞 · PDB 实验分子结构',
   question: '一片菠菜叶里面，正在发生什么？',
-  hook: '从叶片钻进一台分子马达。调一调光，看叶绿体挪位、膜上的电子传递，以及铜色转子怎样做出 ATP。',
+  hook: '从叶片钻进一台分子马达。调一调光，看叶绿体挪位、膜上的电子传递，以及蓝色转子怎样做出 ATP。',
   payoff: '14 个质子推动转子转一圈，3 个 ATP 离开。许多分子结构直接来自菠菜实验；细胞里的秒、分钟、小时，与膜上的极速过程连成一个世界。',
   topicLabel: '植物细胞',
   translations: {
@@ -21,7 +21,7 @@ export default {
       posterHook: 'Zoom from a spinach leaf through its cells and chloroplasts into a rotating ATP synthase.',
       posterSource: 'Procedural cells · Experimental PDB molecular structures',
       question: 'What is happening inside a spinach leaf?',
-      hook: 'Dive from a leaf into a molecular motor. Change the light to watch chloroplast relocation, membrane electron transfer and a copper rotor making ATP.',
+      hook: 'Dive from a leaf into a molecular motor. Change the light to watch chloroplast relocation, membrane electron transfer and a blue rotor making ATP.',
       payoff: 'Fourteen protons drive one turn and three ATP molecules leave. Many structures come directly from spinach experiments, connecting seconds, minutes and hours in the cell to rapid molecular processes.',
       topicLabel: 'Plant cells',
     },
@@ -35,7 +35,7 @@ export default {
   renderer: 'plant-cell',
   duration: 600,
   evidence: 'modeled',
-  accent: '#cfe3a0',
+  accent: '#8fae7f',
   related: ['human-atlas'],
   sources: [
     {

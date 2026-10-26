@@ -21,7 +21,7 @@ function veinTube(points: T.Vector3[], radius: number, segments = 30) {
     const t = j / segments, point = curve.getPoint(t)
     curve.getTangent(t, tangent); across.crossVectors(tangent, up).normalize()
     const r = radius * (.2 + .8 * (1 - t) ** .65)
-    point.y = leafSurfaceY(point.x, point.z) - r * .8
+    point.y = leafSurfaceY(point.x, point.z) + r * .25 + Math.min(180, r * 2)
     for (let k = 0; k <= sides; k++) {
       const angle = k / sides * Math.PI * 2
       positions.push(point.x + across.x * Math.sin(angle) * r, point.y + Math.cos(angle) * r, point.z + across.z * Math.sin(angle) * r)

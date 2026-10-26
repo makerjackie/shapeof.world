@@ -1,3 +1,4 @@
+import { preparePaintMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
@@ -8,12 +9,16 @@ import type { WaterReadings } from './water-model'
 
 type SurfaceKind = 'blade' | 'vein' | 'epidermis' | 'guard' | 'chloroplast'
 function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
-  const colors = { blade: '#3d6b29', vein: '#7c9a55', epidermis: '#487133', guard: '#537d38', chloroplast: '#244a20' }
+  const colors = { blade: '#8fb47b', vein: '#c6d39b', epidermis: '#9cba88', guard: '#7e9e72', chloroplast: '#527847' }
   const material = new T.MeshPhysicalMaterial({ color: colors[kind], roughness: kind === 'vein' ? .8 : .64,
     metalness: 0, clearcoat: kind === 'vein' ? .04 : .2, clearcoatRoughness: .42,
     side: T.DoubleSide, transparent: true, opacity: 1, depthWrite: kind === 'blade' || kind === 'vein',
     vertexColors: kind === 'epidermis', // Backlit blade: the lamina transmits warm green, veins (less chlorophyll) read paler.
     emissive: kind === 'vein' ? '#4a5e22' : kind === 'blade' ? '#2a4f14' : '#1c300d', emissiveIntensity: kind === 'blade' || kind === 'vein' ? .3 : .11 })
+  if(kind==='blade') {
+    const pigment=new T.TextureLoader().load('/assets/plant-cell/leaf-pigment.webp')
+    pigment.colorSpace=T.SRGBColorSpace;material.map=pigment;material.color.set('#ffffff')
+  }
   material.userData.waterWilt = { value: 0 }
   material.userData.guardOpen = { value: .6 }
   const isMicro = ['epidermis', 'guard', 'chloroplast'].includes(kind)
@@ -49,7 +54,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
       float boundary = exp(-pow((radial - aperture) / 3.0, 2.0)) * step(8.0, aperture);
       ${kind === 'blade' ? `
         vec2 p = vLeafPosition.xz / 1800.0;
-        float mottling = .93 + .09 * sin(p.x * 1.7 + sin(p.y)) * sin(p.y * 2.1 + .2 * sin(p.x * 3.0));
+        float mottling = .99 + .01 * sin(p.x * 1.7 + sin(p.y)) * sin(p.y * 2.1 + .2 * sin(p.x * 3.0));
         diffuseColor.rgb *= mottling;
         diffuseColor.a = opened;
         // Actual narrow pores pass through the blade underneath the two guards.
@@ -70,7 +75,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
     `)
   }
   material.customProgramCacheKey = () => `plant-cell-leaf-surface-${kind}-${detailRadius}-2`
-  return material
+  return preparePaintMaterial(material)
 }
 
 /** The blade, its epidermal patch and entry pore all share L1's physical frame. */
@@ -95,7 +100,7 @@ export function LeafLayer({ opacity, mobile = false, stomataOpen = .6, water }: 
   }, [poses])
   useEffect(() => () => {
     for (const geometry of [resources.blade, resources.veins.main, resources.veins.secondary, resources.veins.fine, resources.epidermis.geometry, resources.guard, resources.stalk]) geometry.dispose()
-    Object.values(resources.materials).forEach((material) => material.dispose())
+    Object.values(resources.materials).forEach((material) => { material.map?.dispose(); material.dispose() })
   }, [resources])
   const scale = useMemo(() => new T.Vector3(), [])
   useFrame(() => {
