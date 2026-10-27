@@ -13,7 +13,7 @@ const PAINT=['#a7aaa8','#252c32','#4e5960','#48555e','#5c3331','#c4bfb1','#1a242
 export function Vehicles({runtime,dim=false}:{runtime:WorkerTrafficRuntime;dim?:boolean}) {
   const assets=useMemo(()=>{
     const buffer=new T.InstancedInterleavedBuffer(new Float32Array(CAPACITY*CAR_STRIDE),CAR_STRIDE).setUsage(T.DynamicDrawUsage)
-    const uniforms={brightness:{value:1},simTime:{value:0},paints:{value:PAINT}}
+    const uniforms={brightness:{value:1},lampBrightness:{value:1},simTime:{value:0},paints:{value:PAINT}}
     const geometry=(base:T.BufferGeometry)=>{
       const g=new T.InstancedBufferGeometry();T.BufferGeometry.prototype.copy.call(g,base);base.dispose()
       g.setAttribute('carPosition',new T.InterleavedBufferAttribute(buffer,3,1))
@@ -60,16 +60,17 @@ export function Vehicles({runtime,dim=false}:{runtime:WorkerTrafficRuntime;dim?:
         else placement=`float lit=abs(carIndicator)*float(mod(floor(simTime*3.0),2.0)<0.5);transformed*=lit;
           transformed+=carPosition+vec3(carTangent.x,0.0,carTangent.z)*carShape.x*0.48*lampEnd+vec3(-carTangent.z*carIndicator*carShape.y*0.48,0.8,carTangent.x*carIndicator*carShape.y*0.48);vehicleColor=vec3(6.0,2.4,0.1);`
         shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>',`vec3 transformed=vehicleRotation()*(position*vehicleScale());${placement}`)
-        shader.fragmentShader='uniform float brightness; varying vec3 vehicleColor;\n'+shader.fragmentShader
-        shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\n diffuseColor.rgb*=vehicleColor*brightness;')
+        shader.fragmentShader='uniform float brightness; uniform float lampBrightness; varying vec3 vehicleColor;\n'+shader.fragmentShader
+        shader.fragmentShader=shader.fragmentShader.replace('#include <color_fragment>',`#include <color_fragment>\n diffuseColor.rgb*=vehicleColor*${shell?'brightness':'lampBrightness'};`)
       }
-      material.customProgramCacheKey=()=>`road-vehicle-pose-${kind}-v1`
+      material.customProgramCacheKey=()=>`road-vehicle-pose-${kind}-v2`
       return {kind,geometry:g,material}
     })
     return {buffer,uniforms,rows,revision:-1,runtime}
   },[])
   useFrame(()=>{
-    assets.uniforms.brightness.value=dim?.12:1
+    // Beside a chosen route, other cars recede but keep their lamps.
+    assets.uniforms.brightness.value=dim?.18:1;assets.uniforms.lampBrightness.value=dim?.6:1
     assets.uniforms.simTime.value=runtime.simulation.time
     if(assets.revision===runtime.revision&&assets.runtime===runtime)return
     assets.runtime=runtime;assets.revision=runtime.revision

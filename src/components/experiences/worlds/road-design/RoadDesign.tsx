@@ -31,7 +31,6 @@ import { PRESENTATIONS } from './presentation'
 import { PhaseRings } from './PhaseRings'
 import { DisplayStretch } from './scene/DisplayStretch'
 import { highestDeckTexture } from './scene/deck-shadow'
-import { CityLights } from './scene/CityLights'
 import { buildExploreRoutes } from './explorer/routes'
 import { ExplorerPanel } from './explorer/ExplorerPanel'
 import { EntryArrows, RouteScene, WhyMarker, INITIAL_DEMO } from './explorer/RouteScene'
@@ -50,12 +49,6 @@ import type { Vec3 } from './sim/types'
 import { ConflictLegend } from './explorer/ConflictLegend'
 
 function query(name: string) { return typeof window === 'undefined' ? null : new URLSearchParams(window.location.search).get(name) }
-const STYLE_KEY='shapeof.road-design.style.v1'
-function initialDay(){
-  const requested=query('style')
-  if(requested==='day'||requested==='night')return requested==='day'
-  try{return localStorage.getItem(STYLE_KEY)!=='night'}catch{return true}
-}
 function numberQuery(name: string, fallback: number, max: number) {
   const value = Number(query(name) ?? fallback)
   return Number.isFinite(value) ? Math.max(0, Math.min(max, value)) : fallback
@@ -64,8 +57,8 @@ const PRESETS: { id: CameraPreset; name: string }[] = [{ id: 'overview', name: '
 
 interface ExplorerSceneState { routes:ExploreRoute[]; route?:ExploreRoute; journey?:Journey; seek:{at:number;revision:number}|null; focusPoint:Vec3|null; replay:DemoReplay|null; revision:number; demo:React.MutableRefObject<DemoState>; follow:boolean; pins:WhyPin[]; activePin:string|null; explaining:boolean; onSelect:(id:string)=>void; onPin:(id:string)=>void; onStopFollow:()=>void }
 
-const Scene = memo(function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, stretch, showWeaving, preset, revision, reducedMotion, blueprint, interact, onDprChange, buildings, traffic, explorer, day }: {
-  design: DesignInfo; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; buildings:boolean; traffic:boolean; day:boolean; explorer:ExplorerSceneState; stretch: boolean; showWeaving: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void; onDprChange?:(dpr:number)=>void
+const Scene = memo(function Scene({ design, network, runtime, speed, playing, shutter, showConflicts, stretch, showWeaving, preset, revision, reducedMotion, blueprint, interact, onDprChange, buildings, traffic, explorer }: {
+  design: DesignInfo; network: Network; runtime: TrafficRuntime; speed: number; playing: boolean; shutter: number; showConflicts: boolean; buildings:boolean; traffic:boolean; explorer:ExplorerSceneState; stretch: boolean; showWeaving: boolean; preset: CameraPreset; revision: number; reducedMotion: boolean; blueprint: boolean; interact: () => void; onDprChange?:(dpr:number)=>void
 }) {
   const seenBlueprint = useMemo(()=>({current:false}),[network])
   if(blueprint)seenBlueprint.current=true
@@ -90,14 +83,13 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
   return <>
     <FrameBudget version={`${network.id}:${blueprint}:${stretch}:${preset}:${revision}`} onDprChange={onDprChange} />
     {query('profile')==='1' && <RenderProbe runtime={runtime} />}
-    <NightWorld network={network} atlas={atlas} visible={!blueprint} buildings={buildings} contextOnly={!!explorer.route||day} day={day} />
-    {(explorer.route||day)&&!blueprint&&<FocusWorld network={network} roof={roof} day={day}/>}
-    {blueprint && <><color attach="background" args={['#07121f']} /><fogExp2 attach="fog" args={['#07121f',.00015]} /><ambientLight intensity={.65} color="#8ab4ff" /><BlueprintGround network={network} /></>}
+    <NightWorld network={network} atlas={atlas} visible={!blueprint} buildings={buildings} contextOnly />
+    {!blueprint&&<FocusWorld network={network} roof={roof}/>}
+    {blueprint && <><color attach="background" args={['#191d23']} /><fogExp2 attach="fog" args={['#191d23',.00015]} /><ambientLight intensity={.65} color="#8ab4ff" /><BlueprintGround network={network} /></>}
     <DisplayStretch network={network} enabled={stretch}>
       {seenBlueprint.current && <group visible={blueprint}><Blueprint key={network.id} network={network} runtime={runtime} /></group>}
       <group visible={!blueprint}>
-        <RoadMeshes network={network} atlas={atlas} runtime={runtime} simulation={signalTime} roof={roof} focus={!!explorer.route||day} day={day} />
-        {!explorer.route&&!day&&<CityLights lamps={lamps} network={network} />}
+        <RoadMeshes network={network} atlas={atlas} runtime={runtime} simulation={signalTime} roof={roof} focus />
         {design.id === 'crossroads-channelized' && <WaitingOutline network={network} />}
       </group>
       {traffic&&(!explorer.route||network.control.kind==='free')&&<><Vehicles runtime={runtime} dim={!!explorer.route} /><LightTrails runtime={runtime} shutter={shutter} blueprint={blueprint} dim={!!explorer.route} /></>}
@@ -115,7 +107,7 @@ const Scene = memo(function Scene({ design, network, runtime, speed, playing, sh
       {!blueprint && !stretch && query('ao')!=='0' ? <N8AO key="ao" aoRadius={1.6} intensity={0.35} distanceFalloff={1} aoSamples={12} denoiseSamples={6} denoiseRadius={12} halfRes /> : <></>}
       <Bloom luminanceThreshold={1.25} luminanceSmoothing={0.18} intensity={0.30} radius={0.45} mipmapBlur resolutionScale={0.6} />
       <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
-      <Vignette offset={0.25} darkness={day?0.08:0.32} />
+      <Vignette offset={0.25} darkness={0.28} />
     </EffectComposer>
   </>
 })
@@ -163,11 +155,10 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   const [showMore,setShowMore]=useState(false),[showCompare,setShowCompare]=useState(false),[showPressure,setShowPressure]=useState(false)
   const [curves,setCurves]=useState<PressureCurves>({}),[readout,setReadout]=useState(runtime.simulation.metrics)
   const [selected,setSelected]=useState<string|null>('signature'),[follow,setFollow]=useState(false),[replay,setReplay]=useState<DemoReplay|null>(null),[replayRevision,setReplayRevision]=useState(0)
-  const [day,setDay]=useState(initialDay),[seek,setSeek]=useState<{at:number;revision:number}|null>(null),[focusPoint,setFocusPoint]=useState<Vec3|null>(null)
-  const chooseStyle=(next:boolean)=>{setDay(next);try{localStorage.setItem(STYLE_KEY,next?'day':'night')}catch{/* Storage may be disabled. */}interact()}
+  const [seek,setSeek]=useState<{at:number;revision:number}|null>(null),[focusPoint,setFocusPoint]=useState<Vec3|null>(null)
   const [explaining,setExplaining]=useState(false),[activePin,setActivePin]=useState<string|null>(null)
   const demo=useRef<DemoState>({...INITIAL_DEMO}),[demoReadout,setDemoReadout]=useState<DemoState>({...INITIAL_DEMO})
-  const stage=useRef<HTMLDivElement>(null), capture=query('capture')==='1'
+  const stage=useRef<HTMLDivElement>(null), topLeft=useRef<HTMLDivElement>(null), capture=query('capture')==='1'
   const [reducedMotion]=useState(()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const interact=useCallback(()=>controls.registerInteraction(),[controls])
   const routes=useMemo(()=>buildExploreRoutes(network,runtime.conflicts),[network,runtime])
@@ -185,6 +176,15 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   const stopFollow=useCallback(()=>setFollow(false),[])
   const pin=useCallback((id:string)=>{setActivePin(id);interact()},[interact])
   useEffect(()=>{controls.completeOnboarding()},[controls])
+  // On phones the plan atlas and compass sit under the heading column, whose
+  // height depends on the design's story and the language.
+  useEffect(()=>{
+    const column=topLeft.current,root=stage.current
+    if(!column||!root)return
+    const place=()=>root.style.setProperty('--rd-top-left-bottom',`${Math.round(column.getBoundingClientRect().bottom-root.getBoundingClientRect().top+8)}px`)
+    const observer=new ResizeObserver(place);observer.observe(column);place()
+    return()=>observer.disconnect()
+  },[capture])
   // Reset on the user's design-change event, not in an arrival effect. The
   // latter can erase a route selected immediately after the new panel appears.
   // Scope selection by design because many networks reuse north-east IDs.
@@ -229,16 +229,17 @@ function RoadDesignSession({controls,runtime,requestDesign,pendingId}:{controls:
   const pressureRunning=runtime.pressure?.status==='running'
   const startPressure=()=>{exit();if(pressureRunning){runtime.stopPressure();setSpeed(1)}else{runtime.startPressure(2.5);setShowPressure(true);setPlaying(true);setSpeed(16)};interact()}
   const layers=[{key:'buildings',name:'城市建筑',value:buildings,set:setBuildings},{key:'traffic',name:'车流',value:traffic,set:setTraffic},{key:'blueprint',name:'平面图纸',value:blueprint,set:setBlueprint},{key:'conflicts',name:'冲突点',value:showConflicts,set:setShowConflicts}]
-  return <div ref={stage} className="road-design-experience" data-design={designId} data-style={day?'day':'night'} data-focus={!!route} data-playing={playing} data-capture={capture} data-buildings={buildings} data-traffic={traffic} data-blueprint={blueprint} data-selected-route={route?.movement.id??''} data-follow={follow} data-conflicts={showConflicts}>
-    {day&&!capture&&<div className="rd-header-shade" aria-hidden="true"/>}
-    <RoadCanvas design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={blueprint} interact={interact} buildings={buildings} traffic={traffic} explorer={explorer} day={day}/>
+  return <div ref={stage} className="road-design-experience" data-design={designId} data-focus={!!route} data-playing={playing} data-capture={capture} data-buildings={buildings} data-traffic={traffic} data-blueprint={blueprint} data-selected-route={route?.movement.id??''} data-follow={follow} data-conflicts={showConflicts}>
+    <RoadCanvas design={design} network={network} runtime={runtime} playing={playing} speed={speed} shutter={shutter} showConflicts={showConflicts} stretch={stretch} showWeaving={showWeaving} preset={preset} revision={revision} reducedMotion={reducedMotion} blueprint={blueprint} interact={interact} buildings={buildings} traffic={traffic} explorer={explorer}/>
     {designId==='huangjuewan'&&<div className="rd-attribution"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors</a><small>{tx('高度由图层与净空约束反推，非实测高程')}</small></div>}
     {!capture&&<>
       <GuideTour worldId="road-design" placement="stage" steps={DESIGNS.map(d=>({title:tx(d.name),body:tx(TOUR[d.id]),durationMs:12000,action:()=>{selectDesign(d);setPlaying(true)}}))} kicker={tx('道路图鉴')} exitLabel={tx('结束导览')} stagePlan={DESIGNS.map(()=>({position:'center-left',mobilePosition:'bottom-center',tone:'dark',width:'narrow',treatment:'caption'}))}/>
-      <header className="rd-heading" data-experience-overlay="true"><label htmlFor="rd-design">{tx('选设计')}</label><select id="rd-design" aria-label={tx('选设计')} value={pendingId??designId} onChange={e=>selectDesign(DESIGNS.find(d=>d.id===e.target.value)!)}>{LEFT_GROUPS.map(group=><optgroup key={group.titleEn} label={tx(locale==='en'?group.titleEn:group.title)}>{group.ids.map(id=>{const d=DESIGNS.find(d=>d.id===id)!;return <option key={id} value={id}>{tx(d.name)}</option>})}</optgroup>)}</select><p>{tx((locale==='en'?LEFT_STORIES[designId]?.titleEn:LEFT_STORIES[designId]?.title)??design.description)}</p></header>
-      <div className="rd-layers" role="group" aria-label={tx('图层')} data-experience-overlay="true">{layers.map(l=><button key={l.key} type="button" data-layer={l.key} title={l.key==='buildings'&&blueprint?tx('平面图纸暂不显示建筑，夜景保留此开关'):undefined} aria-pressed={l.value} onClick={()=>{l.set(!l.value);interact()}}><i/>{tx(l.name)}</button>)}<div className="rd-style-switch" role="group" aria-label={tx('画风')}><button type="button" data-style-choice="day" aria-pressed={day} onClick={()=>chooseStyle(true)}>{tx('白模')}</button><button type="button" data-style-choice="night" aria-pressed={!day} onClick={()=>chooseStyle(false)}>{tx('夜景')}</button></div>{blueprint&&<small className="rd-layer-note">{tx('平面图纸暂不显示建筑，夜景保留此开关')}</small>}</div>
+      <div className="rd-top-left" ref={topLeft}>
+       <header className="rd-heading" data-experience-overlay="true"><label htmlFor="rd-design">{tx('选设计')}</label><select id="rd-design" aria-label={tx('选设计')} value={pendingId??designId} onChange={e=>selectDesign(DESIGNS.find(d=>d.id===e.target.value)!)}>{LEFT_GROUPS.map(group=><optgroup key={group.titleEn} label={tx(locale==='en'?group.titleEn:group.title)}>{group.ids.map(id=>{const d=DESIGNS.find(d=>d.id===id)!;return <option key={id} value={id}>{tx(d.name)}</option>})}</optgroup>)}</select><p>{tx((locale==='en'?LEFT_STORIES[designId]?.titleEn:LEFT_STORIES[designId]?.title)??design.description)}</p></header>
+       <div className="rd-layers" role="group" aria-label={tx('图层')} data-experience-overlay="true">{layers.map(l=><button key={l.key} type="button" data-layer={l.key} title={l.key==='buildings'&&blueprint?tx('平面图纸暂不显示建筑，关掉图纸后恢复'):undefined} aria-pressed={l.value} onClick={()=>{l.set(!l.value);interact()}}><i/>{tx(l.name)}</button>)}{blueprint&&<small className="rd-layer-note">{tx('平面图纸暂不显示建筑，关掉图纸后恢复')}</small>}</div>
+       {showConflicts&&<div className="rd-conflict-legend" data-experience-overlay="true"><ConflictLegend/></div>}
+      </div>
       {pendingId&&<div className="rd-pending" role="status">{tx('正在载入道路')}</div>}
-      {showConflicts&&<div className="rd-conflict-legend" data-experience-overlay="true"><ConflictLegend/></div>}
       <ExplorerPanel journey={journey} onStep={inspectStep} traffic={traffic} onTraffic={()=>{setTraffic(v=>!v);interact()}} key={designId} network={network} routes={routes} route={route} onSelect={selectRoute} onExit={exit} onReplay={()=>{setSeek(null);setFocusPoint(null);setReplayRevision(v=>v+1);setRevision(v=>v+1);setPlaying(true);interact()}} follow={follow} onFollow={()=>{setFollow(v=>!v);if(follow)setRevision(r=>r+1);interact()}} demo={demoReadout} pins={pins} activePin={effectivePin} onPin={pin} explaining={explaining} onExplain={()=>{setExplaining(v=>!v);interact()}} onDesign={id=>selectDesign(DESIGNS.find(d=>d.id===id)!)}/>
       {route&&journey&&<RouteAtlas key={`atlas-${designId}`} network={network} route={route} journey={journey} demo={demoReadout} onStep={inspectStep}/>}
       <nav className="rd-catalog" aria-label={tx('左转怎么办')} data-experience-overlay="true">{LEFT_GROUPS.map(group=><section className="rd-design-group" key={group.titleEn}><h2>{tx(locale==='en'?group.titleEn:group.title)}</h2><div>{group.ids.map(id=>{const d=DESIGNS.find(d=>d.id===id)!;return <button key={id} type="button" data-design-id={id} aria-busy={pendingId===id} aria-pressed={designId===id} onClick={()=>selectDesign(d)}><Diagram id={id}/><span>{tx(d.name)}</span></button>})}</div></section>)}</nav>

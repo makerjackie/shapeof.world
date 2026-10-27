@@ -33,7 +33,7 @@ export function Blueprint({ runtime }: { network: Network; runtime:WorkerTraffic
 
 /** The drawing floor stays at physical height when infrastructure is stretched. */
 export function BlueprintGround({ network }: { network: Network }) {
-  const material = useMemo(() => new T.ShaderMaterial({uniforms:{base:{value:new T.Color('#07121f')},ink:{value:new T.Color('#12263d')}},vertexShader:'varying vec3 p;void main(){p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:`varying vec3 p;uniform vec3 base;uniform vec3 ink;void main(){vec2 q=p.xy/20.;vec2 a=abs(fract(q-.5)-.5)/max(fwidth(q),vec2(.0001));float line=1.-min(1.,min(a.x,a.y));gl_FragColor=vec4(mix(base,ink,line*exp(-length(p.xy)*.00035)*.65),1.);}`}), [])
+  const material = useMemo(() => new T.ShaderMaterial({uniforms:{base:{value:new T.Color('#191d23')},ink:{value:new T.Color('#2a3d52')}},vertexShader:'varying vec3 p;void main(){p=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:`varying vec3 p;uniform vec3 base;uniform vec3 ink;void main(){vec2 q=p.xy/20.;vec2 a=abs(fract(q-.5)-.5)/max(fwidth(q),vec2(.0001));float line=1.-min(1.,min(a.x,a.y));gl_FragColor=vec4(mix(base,ink,line*exp(-length(p.xy)*.00035)*.65),1.);}`}), [])
   useEffect(() => () => material.dispose(), [material])
   return <mesh rotation={[-Math.PI/2,0,0]} position={[0,network.terrain?Math.min(...network.terrain.values)-2:-.22,0]} material={material}><planeGeometry args={[20000,20000]}/></mesh>
 }
