@@ -4,9 +4,9 @@ import { ArrowCounterClockwise, ArrowDown, ArrowRight, Pause, Play } from '@phos
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { GuideTour } from '~/components/experiences/GuideTour'
 import { useExperienceI18n } from '~/i18n/experience'
-import { ChipScene } from './scene'
+import { ChipScene, type Frame } from './scene'
 import { LogicLab } from './LogicLab'
-import { PALETTES, PEEL_LAYERS, transistorState, type Layout, type Palette } from './model'
+import { PALETTE, PEEL_LAYERS, transistorState, type Layout } from './model'
 import { STAGES, SCALES, SCALE_MIN, SCALE_MAX, stageIndex, ruler, formatLength, fittedFieldScale, type Stage, type TransistorKind } from './scale-model'
 import { useJourney } from './use-journey'
 import layoutUrl from './data/alu-layout.json.gz?url'
@@ -14,18 +14,23 @@ import { decodeLayout } from './load-layout'
 const query=(name:string)=>typeof window==='undefined'?null:new URLSearchParams(window.location.search).get(name)
 const initialStage=():Stage=>{const value=query('stage')??query('view');return STAGES.some(s=>s.id===value)?value as Stage:'phone'}
 export function ChipZoom({controls}:{controls:ExperienceControls}) {
- const tx=useExperienceI18n(),opening=useRef(0),sceneElement=useRef<HTMLDivElement>(null),panelElement=useRef<HTMLElement>(null)
+ const tx=useExperienceI18n(),opening=useRef(0),sceneElement=useRef<HTMLDivElement>(null),frameElement=useRef<HTMLDivElement>(null),panelElement=useRef<HTMLElement>(null)
  const [layout,setLayout]=useState<Layout|null>(null),[failed,setFailed]=useState(false),[retry,setRetry]=useState(0),[ready,setReady]=useState(false)
- const [palette,setPalette]=useState<Palette>(()=>query('style')==='micrograph'?'micrograph':'slice')
  const [peeled,setPeeled]=useState(()=>initialStage()==='cell'?5:0),[spacing,setSpacing]=useState(.1),[tilt,setTilt]=useState(0)
  const [gate,setGate]=useState(0),[drain,setDrain]=useState(1.8),[kind,setKind]=useState<TransistorKind>('planar'),[cutaway,setCutaway]=useState(true)
  const [playing,setPlaying]=useState(true),[speed,setSpeed]=useState(1),[revision,setRevision]=useState(0),[phoneOpen,setPhoneOpen]=useState(.75),[packageOpen,setPackageOpen]=useState(.75),[region,setRegion]=useState('cpu')
  const [guide,setGuide]=useState(false),[details,setDetails]=useState(false),[hair,setHair]=useState(false),[logic,setLogic]=useState(()=>query('mode')==='logic')
- const [canvasSize,setCanvasSize]=useState({width:900,height:600}),[panelHeight,setPanelHeight]=useState(250)
+ const [canvasSize,setCanvasSize]=useState({width:900,height:600}),[frame,setFrame]=useState<Frame>({left:190,top:195,right:355,bottom:150}),[panelHeight,setPanelHeight]=useState(250)
  const interact=useCallback(()=>{cancelAnimationFrame(opening.current);controls.registerInteraction()},[controls])
  const {scale,flying,fly,scrub}=useJourney(initialStage(),sceneElement,interact)
- const index=stageIndex(scale),stage=STAGES[index].id,state=transistorState(gate,drain),colors=PALETTES[palette]
- useEffect(()=>{const el=sceneElement.current;if(!el)return;const observer=new ResizeObserver(entries=>setCanvasSize({width:entries[0].contentRect.width,height:entries[0].contentRect.height}));observer.observe(el);return()=>observer.disconnect()},[])
+ const index=stageIndex(scale),stage=STAGES[index].id,state=transistorState(gate,drain),colors=PALETTE
+ useEffect(()=>{
+  // The canvas is full-bleed (no visible box); the framed area is where each specimen is fitted.
+  const el=frameElement.current,scene=sceneElement.current;if(!el||!scene)return
+  const measure=()=>{const f=el.getBoundingClientRect(),s=scene.getBoundingClientRect(),next={left:f.left-s.left,top:f.top-s.top,right:s.right-f.right,bottom:s.bottom-f.bottom}
+   setFrame(p=>Math.abs(p.left-next.left)+Math.abs(p.top-next.top)+Math.abs(p.right-next.right)+Math.abs(p.bottom-next.bottom)<1?p:next);setCanvasSize(p=>Math.abs(p.width-f.width)+Math.abs(p.height-f.height)<1?p:{width:f.width,height:f.height})}
+  const observer=new ResizeObserver(measure);observer.observe(el);observer.observe(scene);measure();return()=>observer.disconnect()
+ },[])
  useEffect(()=>{
   const abort=new AbortController();setFailed(false)
   fetch(layoutUrl,{signal:abort.signal}).then(r=>{if(!r.ok)throw new Error(`Layout HTTP ${r.status}`);return r.arrayBuffer()}).then(buffer=>{if(!abort.signal.aborted)setLayout(decodeLayout(buffer))}).catch(()=>{if(!abort.signal.aborted)setFailed(true)})
@@ -54,9 +59,10 @@ export function ChipZoom({controls}:{controls:ExperienceControls}) {
   {title:tx('用电场打开一条路'),body:tx('提高栅源电压，比较平面、鳍式与环栅怎样控制沟道。'),action:()=>choose('transistor')},
   {title:tx('让开关算一次加法'),body:tx('从反相器、与非门走到四位加法器，输入两个数，跟着进位走。'),action:()=>setLogic(true)},
  ]
- return <div className="cz-world" style={{'--cz-panel-height':`${panelHeight}px`} as CSSProperties} data-style={palette} data-view={stage} data-scale={scale.toFixed(5)} data-flying={flying} data-peeled={peeled} data-ready={ready} data-flowing={state.flowing} data-kind={kind} data-capture={query('capture')==='1'} data-mode={logic?'logic':'journey'}>
-  <div className="cz-scene" ref={sceneElement} aria-label={tx('可旋转和连续缩放的芯片旅程')}>
-   {layout&&<ChipScene layout={layout} scale={scale} fieldScale={fieldScale} peeled={peeled} spacing={spacing} palette={palette} gate={gate} drain={drain} playing={playing} speed={speed} tilt={tilt} revision={revision} kind={kind} cutaway={cutaway} phoneOpen={phoneOpen} packageOpen={packageOpen} region={region} onRegion={id=>{interact();setRegion(id)}} onInteract={interact} onReady={onReady} onNext={next}/>}
+ return <div className="cz-world" style={{'--cz-panel-height':`${panelHeight}px`} as CSSProperties} data-view={stage} data-scale={scale.toFixed(5)} data-flying={flying} data-peeled={peeled} data-ready={ready} data-flowing={state.flowing} data-kind={kind} data-capture={query('capture')==='1'} data-mode={logic?'logic':'journey'}>
+  <div className="cz-frame" ref={frameElement} aria-hidden="true"/>
+  <div className="cz-scene" ref={sceneElement} style={{'--fl':`${frame.left}px`,'--ft':`${frame.top}px`,'--fr':`${frame.right}px`,'--fb':`${frame.bottom}px`} as CSSProperties} aria-label={tx('可旋转和连续缩放的芯片旅程')}>
+   {layout&&<ChipScene layout={layout} scale={scale} fieldScale={fieldScale} peeled={peeled} spacing={spacing} frame={frame} gate={gate} drain={drain} playing={playing} speed={speed} tilt={tilt} revision={revision} kind={kind} cutaway={cutaway} phoneOpen={phoneOpen} packageOpen={packageOpen} region={region} onRegion={id=>{interact();setRegion(id)}} onInteract={interact} onReady={onReady} onNext={next}/>}
    {!ready&&<div className="cz-loading" role="status">{failed?<>{tx('版图加载失败')}<button onClick={()=>setRetry(v=>v+1)}>{tx('重新加载')}</button></>:tx('正在展开真实版图')}</div>}
   </div>
   <div className="cz-heading"><p>{stage==='layers'||stage==='cell'?tx('真实开放版图'):stage==='atoms'?tx('硅晶格模型'):tx('结构示意')}</p><h1>{titles[index]}</h1><span>{subtitles[index]}</span></div>
@@ -71,7 +77,7 @@ export function ChipZoom({controls}:{controls:ExperienceControls}) {
     <div className="cz-layer-list">{PEEL_LAYERS.map((mask,i)=><button key={mask} className="cz-layer" data-removed={i<peeled||stage==='cell'} aria-label={`${tx('查看')} ${mask.toUpperCase()}`} onClick={()=>{interact();setPeeled(i);if(stage==='cell')fly('layers')}}><i style={{background:colors[mask]}}/><b>{mask.toUpperCase()}</b><span>{layerNames[i]}</span><small>{i<peeled?tx('已移开'):i===peeled?tx('最上层'):''}</small></button>)}</div>
     {stage==='layers'&&peeled<5?<button className="cz-primary" disabled={!ready||flying} onClick={()=>{interact();setPeeled(p=>Math.min(5,p+1))}}><ArrowDown size={18}/>{tx('剥开最上层')}<b>{PEEL_LAYERS[peeled].toUpperCase()}</b></button>:<button className="cz-primary" onClick={()=>choose(stage==='cell'?'transistor':'cell')}>{stage==='cell'?tx('让一个晶体管导通'):tx('放大一个真实单元')}<ArrowRight size={18}/></button>}
     <p className="cz-feedback" aria-live="polite">{stage==='cell'?tx('真实单元 sky130_fd_sc_hd__inv_2；有 NMOS 与 PMOS。'):peeled===0?tx('实际四层铝金属，下面还有局部互连。'):peeled===5?tx('露出有源区与栅，继续放大看交叉处。'):`${tx('已移开')} ${PEEL_LAYERS[peeled-1].toUpperCase()}${tx('，继续向下看。')}`}</p>
-    {stage==='layers'&&<><div className="cz-view-buttons"><button aria-pressed={tilt===0} onClick={()=>{interact();setTilt(0);setSpacing(.1);setRevision(v=>v+1)}}>{tx('俯视')}</button><button aria-pressed={tilt>0} onClick={()=>{interact();setTilt(1);setSpacing(.22)}}>{tx('倾斜并拉开')}</button></div><label className="cz-spacing">{tx('竖向夸张')}<input type="range" min="0.06" max="1.2" step="0.02" value={spacing} aria-label={tx('竖向夸张')} onChange={e=>{interact();setSpacing(Number(e.target.value))}}/></label></>}
+    {stage==='layers'&&<><div className="cz-view-buttons"><button aria-pressed={tilt===0} onClick={()=>{interact();setTilt(0);setSpacing(.1);setRevision(v=>v+1)}}>{tx('俯视')}</button><button aria-pressed={tilt>0} onClick={()=>{interact();setTilt(1);setSpacing(.4)}}>{tx('倾斜并拉开')}</button></div><label className="cz-spacing">{tx('竖向夸张')}<input type="range" min="0.06" max="1.2" step="0.02" value={spacing} aria-label={tx('竖向夸张')} onChange={e=>{interact();setSpacing(Number(e.target.value))}}/></label></>}
     <button className="cz-text-button" onClick={()=>{interact();setPeeled(0);if(stage==='cell')fly('layers')}}><ArrowCounterClockwise size={14}/>{tx('放回所有层')}</button>
     {stage==='cell'&&<button className="cz-secondary" onClick={()=>{interact();setLogic(true)}}>{tx('算一次加法')}</button>}
    </>:stage==='transistor'?<>
@@ -87,7 +93,7 @@ export function ChipZoom({controls}:{controls:ExperienceControls}) {
     <button className="cz-secondary" onClick={()=>choose('atoms')}>{tx('继续到原子')}<ArrowRight size={14}/></button>
    </>:<>
     <h2>{stage==='phone'?tx('先找到芯片'):stage==='package'?tx('外面是连接，里面是硅'):stage==='die'?tx('不同区域，处理不同任务'):tx('原子不是小小的晶体管')}</h2>
-    <p className="cz-stage-body">{stage==='phone'?tx('透明外壳下，电池、电路板和芯片分层摆放。点亮框里的处理器，继续向里。'):stage==='package'?tx('封装把微小的裸片接到更大的电路板上。抬起上盖，看见里面的硅。'):stage==='die'?regionDescriptions[region]:tx('晶体管由大量原子构成。硅晶格的重复边长约 0.543 nm；图中只显示一小块晶格。')}</p>
+    <p className="cz-stage-body">{stage==='phone'?tx('屏幕像书页一样翻开，下面是电池、电路板和处理器。点亮框里的处理器，继续向里。'):stage==='package'?tx('封装把微小的裸片接到更大的电路板上。抬起上盖，看见里面的硅。'):stage==='die'?regionDescriptions[region]:tx('晶体管由大量原子构成。硅晶格的重复边长约 0.543 nm；图中只显示一小块晶格。')}</p>
     {(stage==='phone'||stage==='package')&&<label className="cz-spacing">{tx('拆开外层')}<input type="range" min="0" max="1" step="0.01" value={stage==='phone'?phoneOpen:packageOpen} aria-label={tx('拆开外层')} onChange={e=>{interact();(stage==='phone'?setPhoneOpen:setPackageOpen)(Number(e.target.value))}}/></label>}
     {stage==='die'&&<div className="cz-regions">{['cpu','gpu','cache','npu'].map(id=><button key={id} aria-pressed={region===id} onClick={()=>{interact();setRegion(id)}}>{id==='cache'?tx('缓存'):id.toUpperCase()}</button>)}</div>}
     {index<6?<button className="cz-primary" onClick={next} disabled={flying}>{stage==='die'?tx('换到真实开放电路'):tx('继续放大')}<ArrowRight size={18}/></button>:<button className="cz-primary" onClick={()=>{interact();setLogic(true)}}>{tx('让这些开关算一次加法')}<ArrowRight size={18}/></button>}
@@ -95,10 +101,10 @@ export function ChipZoom({controls}:{controls:ExperienceControls}) {
     {stage==='atoms'&&<button className="cz-text-button" onClick={()=>choose('phone')}>{tx('回到手里的手机')}</button>}
    </>}
   </aside>
-  <div className="cz-toolbar"><button aria-label={playing?tx('暂停动画'):tx('播放动画')} onClick={()=>{interact();setPlaying(v=>!v)}}>{playing?<Pause size={17}/>:<Play size={17}/>}</button>{stage==='transistor'&&<button onClick={()=>setSpeed(speed===1?.3:1)}>{speed}×</button>}<button onClick={()=>{interact();setRevision(v=>v+1)}}>{tx('复位镜头')}</button><button onClick={()=>{interact();setPalette(palette==='slice'?'micrograph':'slice')}}>{palette==='slice'?tx('暗场配色'):tx('明场配色')}</button><button onClick={()=>setGuide(v=>!v)}>{tx('导览')}</button><button onClick={()=>setDetails(v=>!v)}>{tx('真实与示意')}</button><button className="cz-lab-entry" onClick={()=>{interact();setLogic(v=>!v)}}>{logic?tx('返回尺度旅程'):tx('算一次加法')}</button></div>
+  <div className="cz-toolbar"><button aria-label={playing?tx('暂停动画'):tx('播放动画')} onClick={()=>{interact();setPlaying(v=>!v)}}>{playing?<Pause size={17}/>:<Play size={17}/>}</button>{stage==='transistor'&&<button onClick={()=>setSpeed(speed===1?.3:1)}>{speed}×</button>}<button onClick={()=>{interact();setRevision(v=>v+1)}}>{tx('复位镜头')}</button><button onClick={()=>setGuide(v=>!v)}>{tx('导览')}</button><button onClick={()=>setDetails(v=>!v)}>{tx('真实与示意')}</button><button className="cz-lab-entry" onClick={()=>{interact();setLogic(v=>!v)}}>{logic?tx('返回尺度旅程'):tx('算一次加法')}</button></div>
   {hair&&<div className="cz-note cz-hair"><button className="cz-close" aria-label={tx('关闭')} onClick={()=>setHair(false)}>×</button><h2>{tx('头发，和一排开关')}</h2><div className="cz-hair-strip"/><strong>100 μm ÷ 70 nm ≈ 1,428</strong><p>{tx('取约 100 μm 宽的头发作比较，约能跨过 1,400 个晶体管栅极节距。')}</p><p>{tx('70 nm 是公开的 Intel 14 nm 工艺栅极节距，含相邻栅的间隔；不是完整晶体管宽度，也不是本页 SKY130 的尺寸。')}</p><a href="https://science.nasa.gov/resource/orion-microchip-at-500x-magnification/" target="_blank" rel="noreferrer">NASA · {tx('头发宽度')}</a><a href="https://www.intel.com/content/dam/www/public/us/en/documents/technology-briefs/bohr-14nm-idf-2014-brief.pdf" target="_blank" rel="noreferrer">Intel · {tx('栅极节距')}</a></div>}
   {details&&<div className="cz-note"><button className="cz-close" aria-label={tx('关闭')} onClick={()=>setDetails(false)}>×</button><h2>{tx('哪些是真的？')}</h2><p>{tx('手机、封装、功能区是自制示意，不对应某款产品。进入开放电路时切换到 Ryan Cornateanu 的 Tiny Tapeout 02 ALU。')}</p><p>{tx('GDS 保留实际平面图形。只显示 M1–M4、局部互连、接触孔与器件掩膜。颜色、厚度和层距用于辨认，介质等层省略。')}</p><p>{tx('三种晶体管独立建模，结构不按比例。共用的 0.65 V 阈值和电流模型只用于因果实验，不能比较不同工艺性能。')}</p><p>{tx('加法器是独立的 36 个与非门教学网表，不是 ALU 宏的真实仿真。原子位置取金刚石型晶格，原子半径与键为示意。')}</p></div>}
   {logic&&<LogicLab onClose={()=>setLogic(false)} onInteract={interact}/>}
-  <GuideTour worldId="chip-zoom" steps={guideSteps} defaultOpen={guide} placement="stage" stagePlan={[{position:'bottom-left',mobilePosition:'top-left',treatment:'caption',tone:palette==='slice'?'light':'dark',width:'narrow',motion:'fade'}]} onExit={()=>setGuide(false)} exitLabel={tx('自由探索')}/>
+  <GuideTour worldId="chip-zoom" steps={guideSteps} defaultOpen={guide} placement="stage" stagePlan={[{position:'bottom-left',mobilePosition:'top-left',treatment:'caption',tone:'light',width:'narrow',motion:'fade'}]} onExit={()=>setGuide(false)} exitLabel={tx('自由探索')}/>
  </div>
 }

@@ -114,7 +114,9 @@ the gate through the oxide. The cutaway is original geometry, not a SEM image.
 ## Round 2: scale journey, modern structures, logic and atoms
 
 All new models and circuit code are authored for this project. No external
-photos, slide illustrations, brand marks or meshes are shipped.
+photos, slide illustrations, brand marks or meshes are shipped. The board,
+screen, battery, display-back, die-top and aluminium-grain textures are drawn
+procedurally in `textures.ts` at run time.
 
 ### Continuous scales and original schematics
 
