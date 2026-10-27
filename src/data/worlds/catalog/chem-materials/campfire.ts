@@ -1,9 +1,10 @@
 import type { WorldExperience } from '../../types'
 export default {
   id: 'campfire',
-  publication: 'making',
+  publication: 'public',
   title: '一团火，里面有什么？', posterTitle: '一团火，里面有什么？',
-  poster: '/assets/posters/campfire.webp', posterDesktop: '/assets/posters/desktop/campfire.webp', posterMobile: '/assets/posters/mobile/campfire.webp', posterPosition: '50% 55%',
+  poster: '/assets/posters/campfire.webp', posterDesktop: '/assets/posters/desktop/campfire.webp', posterMobile: '/assets/posters/mobile/campfire.webp',
+  posterPosition: '50% 55%',
   posterHook: '围着篝火走一圈，再切开它，读出温度、烟炱和反应。',
   posterSource: 'Leon Lin · procedural-fire · MIT · WebGPU 燃烧模拟',
   question: '最亮的地方一定最热吗？',

@@ -81,6 +81,65 @@
         "origin": "ai-prototype"
       }
     },
+    "campfire": {
+      "question": {
+        "zh": "最亮的地方一定最热吗？",
+        "en": "Is the brightest region always the hottest?"
+      },
+      "hook": {
+        "zh": "这团火的光、烟和运动来自同一个燃烧网格。切开看温度，点一点，比较亮处和暗处。",
+        "en": "Light, smoke and motion share one combustion grid. Slice through its temperature and compare bright and dim regions."
+      },
+      "payoff": {
+        "zh": "火焰亮度取决于温度、烟炱和光穿过的厚度；蓝色包含化学发光。温度读数来自模拟场，而不是从颜色猜测。",
+        "en": "Brightness depends on temperature, soot and optical depth; blue light includes chemiluminescence. Read temperatures from the simulation rather than guessing from color."
+      },
+      "topicLabel": {
+        "zh": "篝火与蜡烛",
+        "en": "Campfires and candles"
+      },
+      "evidence": "modeled",
+      "fieldNotes": [],
+      "sources": [
+        {
+          "label": {
+            "zh": "NIST · 蜡烛火焰测量",
+            "en": "NIST · Characterization of candle flames"
+          },
+          "url": "https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=101159"
+        },
+        {
+          "label": {
+            "zh": "NASA · 地球与微重力烛火",
+            "en": "NASA · Candle flames in Earth gravity and microgravity"
+          },
+          "url": "https://www.nasa.gov/image-article/candle-flame-1g-vs-microgravity/"
+        },
+        {
+          "label": {
+            "zh": "Leon Lin · 程序化篝火",
+            "en": "Leon Lin · Procedural Fire"
+          },
+          "url": "https://github.com/Leonxlnx/procedural-fire/tree/95ab0a9003e20f1b0a5556ac14b401dfa0a37596",
+          "note": {
+            "zh": "MIT；保留实时燃烧、渲染、火星与声音，新增原始场剖面和点测。",
+            "en": "MIT; real-time solver, rendering, sparks and sound, with added field sections and probes."
+          }
+        },
+        {
+          "label": {
+            "zh": "NIST · 浮力扩散火焰实验",
+            "en": "NIST · Buoyant diffusion flame experiments"
+          },
+          "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/IR/nbsir79-1910.pdf"
+        }
+      ],
+      "provenance": {
+        "origin": "open-source-adaptation",
+        "sourceProject": "procedural-fire (Leon Lin)",
+        "sourceUrl": "https://github.com/Leonxlnx/procedural-fire"
+      }
+    },
     "periodic-table": {
       "question": {
         "zh": "元素符号背后，物质是什么模样？",
