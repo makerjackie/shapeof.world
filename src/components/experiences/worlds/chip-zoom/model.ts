@@ -12,8 +12,8 @@ export const PEEL_LAYERS = ['m4', 'm3', 'm2', 'm1', 'li'] as const
 /** One dark palette. Mask colours are an identification legend, not real material colours;
  * the four metals are tinted aluminium and the contacts/vias are warm tungsten-like plugs. */
 export const PALETTE = {
-  background: '#07090b', substrate: '#1a2030', well: '#4e4970', diff: '#2f9873', poly: '#c24886', li: '#4aa59d',
-  m1: '#78c8b8', m2: '#d697bd', m3: '#90a9e4', m4: '#ccd4df', via: '#e3bf7c',
+  background: '#07090b', substrate: '#1a2030', well: '#4e4970', diff: '#2f9873', poly: '#c24886', li: '#3f9189',
+  m1: '#5fb3a3', m2: '#c27aa6', m3: '#6f86c6', m4: '#8b96a8', via: '#cfa864',
 } as const
 export function clamp(value: number, min: number, max: number) {
   return Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : min
