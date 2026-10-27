@@ -15,16 +15,17 @@ export function FrequencyChart({ run, time, previous, windowSeconds }: { run: Ru
   const path = (r: Run, until: number) => r.samples.filter((p, i) => p.t <= Math.min(until, windowSeconds) && (windowSeconds === 30 || i % 3 === 0)).map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.hz).toFixed(1)}`).join(' ')
   const nadir = run ? nadirUntil(run, time) : null
   return <svg ref={ref} className="pg-chart" viewBox={`0 0 ${width} ${height}`} role="img" aria-label={tx('频率随时间变化；最低值显示在图上方')} preserveAspectRatio="none">
-    {[max, 50, 49, min].filter((v,i,a) => a.indexOf(v)===i).map(hz => <g key={hz}><line x1={left} x2={right} y1={y(hz)} y2={y(hz)} stroke={hz===49?'#bd6556':'#b8c6bf'} strokeDasharray={hz===49?'5 5':undefined}/><text x={left-8} y={y(hz)+4} textAnchor="end">{hz.toFixed(1)}</text></g>)}
+    <defs><filter id="pg-curve-glow" filterUnits="userSpaceOnUse" x="0" y="0" width={width} height={height}><feGaussianBlur stdDeviation="3.2" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    {Array.from({length:width<500?4:7},(_,i)=>i*windowSeconds/(width<500?3:6)).map(t=><g key={t}><line x1={x(t)} x2={x(t)} y1="16" y2={bottom} className="pg-grid-line"/><text x={x(t)} y={height-7} textAnchor="middle">{t}{t===windowSeconds?' s':''}</text></g>)}
+    {[max, 50, 49, min].filter((v,i,a) => a.indexOf(v)===i).map(hz => <g key={hz}><line x1={left} x2={right} y1={y(hz)} y2={y(hz)} className={hz===49?'pg-threshold-line':hz===50?'pg-nominal-line':'pg-grid-line'}/><text x={left-8} y={y(hz)+4} textAnchor="end">{hz.toFixed(1)}</text></g>)}
     <text x={left} y="12">Hz</text>
     <text x={right} y={y(49)-7} textAnchor="end" className="pg-threshold">{tx('49.0 Hz · 教学切负荷线')}</text>
-    {Array.from({length:width<500?4:7},(_,i)=>i*windowSeconds/(width<500?3:6)).map(t=><g key={t}><line x1={x(t)} x2={x(t)} y1="16" y2={bottom} stroke="#849b8c" opacity=".13"/><text x={x(t)} y={height-7} textAnchor="middle">{t}{t===windowSeconds?' s':''}</text></g>)}
-    {previous&&<path d={path(previous, windowSeconds)} fill="none" stroke="#8e9a97" strokeWidth="2" strokeDasharray="5 5"/>}
+    {previous&&<path d={path(previous, windowSeconds)} className="pg-previous" fill="none" strokeWidth="2" strokeDasharray="5 5"/>}
     {run ? <>
-      <path d={path(run,time)} fill="none" stroke="var(--pg-accent)" strokeWidth="3" strokeLinejoin="round"/>
-      {time<=windowSeconds&&<line x1={x(time)} x2={x(time)} y1="16" y2={bottom} stroke="var(--pg-ink)" opacity=".35"/>}
+      <path d={path(run,time)} fill="none" stroke="var(--pg-accent)" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" filter="url(#pg-curve-glow)"/>
+      {time<=windowSeconds&&<line x1={x(time)} x2={x(time)} y1="16" y2={bottom} stroke="var(--pg-ink)" opacity=".28"/>}
       {nadir&&nadir.t<=windowSeconds&&<circle cx={x(nadir.t)} cy={y(nadir.hz)} r="4.5" fill="var(--pg-alert)"/>}
-      {run.events.filter(e=>e.type==='shed'&&e.t<=Math.min(time,windowSeconds)).map(e=><circle key={e.t} cx={x(e.t)} cy={y(e.hz)} r="5" fill="var(--pg-alert)" stroke="white" strokeWidth="2"/>)}
-    </>:<line x1={left} x2={right} y1={y(50)} y2={y(50)} stroke="var(--pg-accent)" strokeWidth="3"/>}
+      {run.events.filter(e=>e.type==='shed'&&e.t<=Math.min(time,windowSeconds)).map(e=><circle key={e.t} cx={x(e.t)} cy={y(e.hz)} r="5" fill="var(--pg-alert)" stroke="var(--pg-panel)" strokeWidth="2"/>)}
+    </>:<line x1={left} x2={right} y1={y(50)} y2={y(50)} stroke="var(--pg-accent)" strokeWidth="2.5" filter="url(#pg-curve-glow)"/>}
   </svg>
 }
