@@ -21,7 +21,6 @@
   "放大": "Zoom in",
   "放到": "put in",
   "分离": "Separation",
-  "风": "wind",
   "峰值": "Peak",
   "根": "root",
   "共": "Total",
@@ -132,6 +131,7 @@
   "高度": "Altitude",
   "关": "Off",
   "过渡": "Transition",
+  "恢复": "Restore",
   "级": "rank",
   "几何": "Geometry",
   "架": " aircraft",
@@ -341,7 +341,6 @@
   "无信号十字路口": "Unsignalized crossroads",
   "渠化路口": "Channelized junction",
   "示范车使用同一交通模型的独立回放；行驶加快，短暂停车放慢，便于观察。": "The demo is a separate replay of the same traffic model. Driving is accelerated and brief stops slowed down for clarity.",
-  "平面图纸暂不显示建筑，夜景保留此开关": "Blueprint omits buildings; this setting is preserved for the night view.",
   "完整模型入口到出口；直线仅作距离基准。半径取车道线形，车速为该段模型设定，不代表安全限速。": "Measured between model endpoints. The straight line is only a distance reference. Radius comes from lane geometry; speed is the model setting, not a safe speed limit.",
   "交叉：不同方向在同一高度横穿。合流：两股车接入同一股。分流：一股车分向不同出口。信号只分配通过时间，不删除几何交叉。": "Crossing: paths cross at the same height. Merge: two streams become one. Diverge: one stream splits toward different exits. Signals separate time, not geometric crossing points.",
   "交织区：驶入与驶出车辆在同一段路上交换位置，按路网标记单列。各类只计所选路线涉及的模型点位，不是危险程度或事故预测。": "Weaving: entering and exiting vehicles exchange positions along a shared section, counted separately from network tags. Counts cover this route only; they are not danger scores or crash predictions.",
@@ -365,9 +364,7 @@
   "平面示意": "Plan view",
   "离地高度": "Height above ground",
   "跟着路线走": "Follow the route",
-  "夜景": "Night",
   "左转怎么办": "How to turn left",
-  "白模": "White model",
-  "画风": "Appearance",
-  "逐处查看穿越": "Inspect each crossing"
+  "逐处查看穿越": "Inspect each crossing",
+  "平面图纸暂不显示建筑，关掉图纸后恢复": "Blueprint omits buildings; they return when it is off."
 }

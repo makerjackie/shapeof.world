@@ -80,7 +80,7 @@ function RouteConflictLabels({conflicts}:{conflicts:ConflictPoint[]}) {
   return <Html calculatePosition={()=>[0,0]} zIndexRange={[6,5]} style={{pointerEvents:'none'}}><svg ref={root} width={size.width} height={size.height} style={{overflow:'hidden'}}>{conflicts.map(c=>{
     const n=conflicts.filter(p=>p.type===c.type).findIndex(p=>p.id===c.id)+1
     return <g key={c.id} color={COLORS[c.type]}><path stroke="currentColor" strokeWidth="1" opacity=".7"/><circle r="2" fill="currentColor"/><g data-route-conflict={c.type} data-conflict-id={c.id} data-world-position={JSON.stringify(c.position)}>
-      <rect x="-19" y="-11" width="38" height="22" rx="3" fill="#06111f" stroke="currentColor"/>
+      <rect x="-19" y="-11" width="38" height="22" rx="3" fill="#0e1114" stroke="currentColor"/>
       <path d={c.type==='crossing'?'M-12-4L-4 4M-4-4L-12 4':c.type==='merge'?'M-12-4L-8 0L-4-4M-8 0V5':'M-12 4L-8 0L-4 4M-8 0V-5'} fill="none" stroke="currentColor" strokeWidth="1.6"/>
       <text x="7" y="4" textAnchor="middle" fill="currentColor" fontSize="11" fontFamily="sans-serif">{n}</text>
     </g></g>

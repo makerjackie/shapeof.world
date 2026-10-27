@@ -60,7 +60,7 @@ export function LightTrails({ runtime, shutter, blueprint = false, highlightLeft
   useEffect(() => () => { assets.geometry.dispose(); assets.material.dispose() }, [assets])
   useFrame(({ size, gl }) => {
     if (assets.simulation !== runtime.simulation) { assets.simulation = runtime.simulation; assets.lastTime = -1; assets.lastRevision = -1 }
-    assets.material.uniforms.brightness.value=dim?.018:1
+    assets.material.uniforms.brightness.value=dim?.07:1
     const time = runtime.simulation.time
     assets.material.uniforms.resolution.value.set(size.width, size.height); assets.material.uniforms.minimumWidth.value = size.width < 720 ? 1.5 / Math.max(1, gl.getPixelRatio()) : 3.2
     assets.material.uniforms.blueprint.value = blueprint ? 1 : 0; assets.material.uniforms.highlightLeft.value = highlightLeft && !blueprint ? 1 : 0;

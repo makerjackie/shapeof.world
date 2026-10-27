@@ -9,17 +9,18 @@ import { fillInstances } from './mesh-kit'
 import { litMaterial } from './NightWorld'
 import { unpackRoadGeometry } from './road-geometry'
 import type { WorkerTrafficRuntime } from './worker-runtime'
-import { modelMaterial } from './FocusWorld'
+import { deckHeights, modelMaterial } from './FocusWorld'
 import { UrbanGround } from './UrbanGround'
 
-export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, simulation, roof, focus = false, day = false }: { network: Network; atlas: T.Texture; runtime: WorkerTrafficRuntime; simulation: SignalClock; roof: T.Texture; focus?:boolean; day?:boolean }) {
+export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, simulation, roof, focus = false }: { network: Network; atlas: T.Texture; runtime: WorkerTrafficRuntime; simulation: SignalClock; roof: T.Texture; focus?:boolean }) {
   const prepared=runtime.geometry
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const hasUrban = urban || Boolean(network.urbanJunctions?.length)
   const assets = useMemo(() => {
     return { ...unpackRoadGeometry(prepared), asphalt: litMaterial(atlas, urban ? '#1d1f23' : '#2b2d30', urban ? 1.3 : 2.4, .9, roof), cement: litMaterial(atlas, '#5d6166', .85, .9, roof), edgeMaterial: litMaterial(atlas, '#9a9c9e', 1.7, .9, roof), underside: litMaterial(atlas, '#1b2028', 0.16, .9, roof) }
   }, [prepared, atlas, urban, roof])
-  const model=useMemo(()=>({road:modelMaterial(day?'#87959d':'#9aa8b3',roof),structure:modelMaterial(day?'#72818b':'#7c8d9a',roof),edge:modelMaterial(day?'#a5b1b7':'#637480',roof),bottom:modelMaterial(day?'#64747e':'#364651',roof)}),[roof,day])
+  // Dark plaster: tops mid-grey, parapets catch the light, soffits recede.
+  const model=useMemo(()=>{const heights=deckHeights(network);return {road:modelMaterial('#8d97a2',roof,{heights}),structure:modelMaterial('#6c7682',roof,{heights,rim:.10}),edge:modelMaterial('#b3bcc6',roof,{heights,rim:.16}),bottom:modelMaterial('#39414b',roof,{heights}),pier:modelMaterial('#8a949f',roof,{heights,rim:.12})}},[roof,network])
   // Depth bias prevents coplanar terrain/road flicker at the long OSM leads.
   // It changes neither deck coordinates nor the measured elevation profile.
   model.road.polygonOffset=true;model.road.polygonOffsetFactor=0;model.road.polygonOffsetUnits=-1
@@ -31,10 +32,10 @@ export const RoadMeshes = memo(function RoadMeshes({ network, atlas, runtime, si
     <mesh geometry={assets.concrete} material={focus?model.structure:assets.cement} />
     <mesh geometry={assets.edgeCaps} material={focus?model.edge:assets.edgeMaterial} />
     <mesh geometry={assets.soffits} material={focus?model.bottom:assets.underside} />
-    <group visible={!focus||hasUrban||day}><mesh geometry={assets.paint}><meshStandardMaterial color={day?'#c5ced1':focus?'#607583':'#d9d6cc'} emissive="#c8bd9b" emissiveIntensity={focus?0:0.12} roughness={0.8} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
-    <mesh geometry={assets.yellow}><meshStandardMaterial color="#d4a72c" emissive="#9f7200" emissiveIntensity={0.15} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
+    <group><mesh geometry={assets.paint}><meshStandardMaterial color={focus?'#c3cbd2':'#d9d6cc'} emissive="#c8bd9b" emissiveIntensity={focus?0:0.12} roughness={0.8} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
+    <mesh geometry={assets.yellow}><meshStandardMaterial color={focus?'#b59a5c':'#d4a72c'} emissive="#9f7200" emissiveIntensity={focus?0:0.15} side={T.DoubleSide} polygonOffset polygonOffsetFactor={0} polygonOffsetUnits={-2} /></mesh>
     </group>
-    <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.piers.length]} ref={m => { if (m) fillInstances(m, assets.piers) }}><cylinderGeometry args={[0.5, 0.64, 1, 12]} /></instancedMesh>
+    <instancedMesh args={[undefined, focus?model.pier:assets.cement, assets.piers.length]} ref={m => { if (m) fillInstances(m, assets.piers) }}><cylinderGeometry args={[0.5, 0.64, 1, 12]} /></instancedMesh>
     <instancedMesh args={[undefined, focus?model.structure:assets.cement, assets.caps.length]} ref={m => { if (m) fillInstances(m, assets.caps) }}><boxGeometry /></instancedMesh>
     <group visible={!focus}><instancedMesh args={[undefined, undefined, assets.lampPoles.length]} ref={m => { if (m) fillInstances(m, assets.lampPoles) }}><cylinderGeometry args={[0.5, 0.7, 1, 8]} /><meshStandardMaterial color="#5e666c" metalness={0.6} roughness={0.45} /></instancedMesh>
     <instancedMesh args={[undefined, undefined, assets.lampArms.length]} ref={m => { if (m) fillInstances(m, assets.lampArms) }}><boxGeometry /><meshStandardMaterial color="#505a64" metalness={0.6} roughness={0.4} /></instancedMesh>

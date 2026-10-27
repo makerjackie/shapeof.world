@@ -132,7 +132,7 @@ function treeInstances(network: Network) {
   return { crowns, trunks }
 }
 
-export const NightWorld = memo(function NightWorld({ network, atlas, visible = true, buildings = true, contextOnly = false, day = false }: { network: Network; atlas: T.Texture; visible?:boolean; buildings?:boolean; contextOnly?:boolean; day?:boolean }) {
+export const NightWorld = memo(function NightWorld({ network, atlas, visible = true, buildings = true, contextOnly = false }: { network: Network; atlas: T.Texture; visible?:boolean; buildings?:boolean; contextOnly?:boolean }) {
   const urban = network.carriageways.every(road => road.kind === 'urban')
   const assets = useMemo(() => {
     const trees = urban ? { crowns: [], trunks: [] } : treeInstances(network)
@@ -166,6 +166,6 @@ export const NightWorld = memo(function NightWorld({ network, atlas, visible = t
     {!!assets.crowns.length && <instancedMesh args={[undefined, assets.foliage, assets.crowns.length]} ref={m => { if (m) fillInstances(m, assets.crowns) }}><icosahedronGeometry args={[0.65, 1]} /></instancedMesh>}
     {!!assets.trunks.length && <instancedMesh args={[undefined, undefined, assets.trunks.length]} ref={m => { if (m) fillInstances(m, assets.trunks) }}><cylinderGeometry args={[0.5, 0.7, 1, 6]} /><meshStandardMaterial color="#2d2921" /></instancedMesh>}
     </group>
-    <CityBuildings visible={visible&&buildings} muted={contextOnly} day={day} urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
+    <CityBuildings visible={visible&&buildings} muted={contextOnly} urban={urban} service={network.id === 'diamond' || network.id === 'ddi' || network.id === 'parclo'} roads={network.carriageways} network={network} />
   </>
 })

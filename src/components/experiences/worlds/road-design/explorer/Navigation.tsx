@@ -11,7 +11,7 @@ function GroundWord({text,position,tangent,large}:{text:string;position:Vec3;tan
  const texture=useMemo(()=>{
   const canvas=document.createElement('canvas');canvas.width=512;canvas.height=96
   const context=canvas.getContext('2d')!;context.font='500 38px sans-serif';context.textAlign='center';context.textBaseline='middle'
-  context.fillStyle='#b1d9e1';context.fillText(text,256,48,490)
+  context.fillStyle='#d6d3cc';context.fillText(text,256,48,490)
   return new T.CanvasTexture(canvas)
  },[text])
  useEffect(()=>()=>texture.dispose(),[texture])
@@ -35,7 +35,7 @@ export function GroundNames({network,routes,route}:{network:Network;routes:Explo
  const large=network.carriageways.some(r=>r.kind!=='urban')
  return <>{labels.map(label=><group key={label.key}>
   <GroundWord text={tx(label.name)} position={label.position} tangent={label.tangent} large={large}/>
-  {(!route&&label.key.startsWith('out:'))&&<Html center position={[label.position.x-label.tangent.z*(large?25:9),label.position.y+2,label.position.z+label.tangent.x*(large?25:9)]} zIndexRange={[4,1]} style={{pointerEvents:'none'}}><span className="rd-portal-name">{tx(label.name)}</span></Html>}
+  {(!route&&label.key.startsWith('out:'))&&<Html center position={[label.position.x+label.tangent.z*(large?25:9),label.position.y+2,label.position.z-label.tangent.x*(large?25:9)]} zIndexRange={[4,1]} style={{pointerEvents:'none'}}><span className="rd-portal-name">{tx(label.name)}</span></Html>}
  </group>)}</>
 }
 
@@ -43,7 +43,7 @@ export function GroundNames({network,routes,route}:{network:Network;routes:Explo
  * auto-framing, close-ups and follow mode. DOM positions update without React. */
 export function Navigation({route}:{route?:ExploreRoute}){
  const tx=useExperienceI18n(),needle=useRef<SVGSVGElement>(null),entry=useRef<HTMLSpanElement>(null),exit=useRef<HTMLSpanElement>(null)
- const {size,gl}=useThree(),panel=useRef<HTMLElement|null>(null),atlas=useRef<HTMLElement|null>(null)
+ const {size,gl}=useThree(),panel=useRef<HTMLElement|null>(null),atlas=useRef<HTMLElement|null>(null),heading=useRef<HTMLElement|null>(null)
  const scratch=useMemo(()=>({p:new T.Vector3(),north:new T.Vector3(),inverse:new T.Quaternion()}),[])
  useFrame(({camera,size})=>{
   scratch.inverse.copy(camera.quaternion).invert();scratch.north.set(0,0,-1).applyQuaternion(scratch.inverse)
@@ -52,9 +52,13 @@ export function Navigation({route}:{route?:ExploreRoute}){
   if(!route)return
   if(!panel.current?.isConnected)panel.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-explorer')??null
   if(!atlas.current?.isConnected)atlas.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-atlas')??null
-  const panelRect=panel.current?.getBoundingClientRect(),atlasRect=atlas.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
+  if(!heading.current?.isConnected)heading.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-top-left')??null
+  const panelRect=panel.current?.getBoundingClientRect(),atlasRect=atlas.current?.getBoundingClientRect(),headingRect=heading.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
   const mobile=size.width<720,left=mobile?14:24,right=mobile?size.width-14:(panelRect?panelRect.left-canvasRect.left-12:size.width-380)
-  const top=mobile?255:265,bottom=mobile&&panelRect?panelRect.top-canvasRect.top-90:size.height-205
+  // Stay below the design card and layer switches (and, on phones, the
+  // atlas toggle and compass beneath them); their height varies by language.
+  const headingBottom=headingRect?.height?headingRect.bottom-canvasRect.top:0
+  const top=Math.max(mobile?255:265,headingBottom+(mobile?72:24)),bottom=mobile&&panelRect?panelRect.top-canvasRect.top-90:size.height-205
   const points=[route.path.points[0],route.path.points.at(-1)!],positions:{x:number;y:number}[]=[]
   for(let i=0;i<2;i++){
    const element=(i?exit:entry).current;if(!element)continue
