@@ -1228,5 +1228,34 @@
     "evidence": "modeled",
     "accent": "#f0a050",
     "posterPosition": "50% 58%"
+  },
+  {
+    "id": "campfire",
+    "index": "43",
+    "poster": "/assets/posters/campfire.webp",
+    "posterMobile": "/assets/posters/mobile/campfire.webp",
+    "posterDesktop": "/assets/posters/desktop/campfire.webp",
+    "title": "一团火，里面有什么？",
+    "posterTitle": "一团火，里面有什么？",
+    "posterHook": "围着篝火走一圈，再切开它，读出温度、烟炱和反应。",
+    "question": "最亮的地方一定最热吗？",
+    "topicLabel": "篝火与蜡烛",
+    "translations": {
+      "en": {
+        "title": "What is inside a fire?",
+        "posterTitle": "What is inside a fire?",
+        "posterHook": "Walk around a campfire, then slice through temperature, soot and reactions.",
+        "question": "Is the brightest region always the hottest?",
+        "topicLabel": "Campfires and candles"
+      }
+    },
+    "primaryCategoryId": "chem-materials",
+    "renderer": "campfire",
+    "runtime": "volume-3d",
+    "difficulty": "intro",
+    "duration": 420,
+    "evidence": "modeled",
+    "accent": "#9ad9df",
+    "posterPosition": "50% 55%"
   }
 ]

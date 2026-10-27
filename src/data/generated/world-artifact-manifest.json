@@ -3,7 +3,7 @@
   "pageSize": 48,
   "tailAbsorb": 12,
   "bucketCount": 256,
-  "total": 42,
+  "total": 43,
   "pageCount": 1,
   "categories": [
     {
@@ -38,7 +38,7 @@
     },
     {
       "id": "chem-materials",
-      "count": 2,
+      "count": 3,
       "pageCount": 1
     },
     {

@@ -40,17 +40,19 @@ color+=vec3(1.,.68,.38)*exp(-dot(p-mote,p-mote)/size)*lit*burn*.55;
 }
 // Warm subsurface wax, a concave liquid pool and irregular raised rim.
 float flicker=.95+.035*sin(time*5.7)+.015*sin(time*11.3);
-float waxWidth=.185+.0018*sin(p.y*11.+1.)+.0008*sin(p.y*29.);
+float waxWidth=.185+.0018*sin(p.y*11.+1.)+.0008*sin(p.y*29.)+(p.x>0.?.011*exp(-pow((p.y+.11)/.06,2.)):0.);
 if(p.y<.0 && p.y>-.9 && abs(p.x)<waxWidth){
-float side=sqrt(max(0.,1.-pow(p.x/waxWidth,2.)));
-float light=(.09+.91*burn*flicker)*exp(p.y*1.65)*(.10+.90*side);
-float texture=noise(vec3(p*120.,2.));
-vec3 wax=mix(vec3(.065,.060,.052),vec3(.65,.53,.38),light);
-float translucent=exp(p.y*7.)*pow(side,2.)*burn;
-color=wax*(.34+.03*texture)+vec3(.28,.105,.024)*translucent;
-// Light leaking through the thin wax wall near the edges.
-color+=vec3(.20,.10,.035)*pow(1.-side,2.5)*exp(p.y*2.4)*burn*flicker*.8;
-color+=vec3(.008,.007,.005)*noise(vec3(p*70.,3.))*light;
+float xs=p.x/waxWidth;
+float side=sqrt(max(0.,1.-xs*xs));
+// Lit from the flame above, slightly from the left; vertical streaks where wax once ran.
+float light=burn*flicker*exp(p.y*3.4)*(.10+.90*pow(side,1.4))*(.85+.15*(-xs));
+float streak=noise(vec3(p.x*46.,p.y*5.,2.));
+vec3 wax=mix(vec3(.018,.015,.013),vec3(.70,.53,.36),light)*(.88+.12*streak);
+// Subsurface glow under the melt pool, and transmission through the thin outer wall.
+wax+=vec3(.78,.30,.06)*exp(p.y*9.)*burn*flicker*(.35+.65*side);
+wax+=vec3(.30,.13,.04)*pow(1.-side,3.)*exp(p.y*3.)*burn*flicker;
+wax+=vec3(.010,.009,.008)*side;
+color=wax;
 }
 float pool=length(vec2(p.x/.186,(p.y+.005)/.038));
 if(pool<1.08){

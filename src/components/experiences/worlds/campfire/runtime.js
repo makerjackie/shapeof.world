@@ -51,7 +51,8 @@ export async function createCampfire(canvas, { signal, onProgress, onReading, on
     const meters=new Meters(device,sim,sparks),visibleTip=new VisibleTip(device,renderer);let instruments=null,nextMeter=0,nextFrequency=0,lastVisibleTip=0;
     const profiler=new Profiler(device,import.meta.env.DEV && new URLSearchParams(location.search).has('profile'));
     mark("pipelines");onProgress(2);await nextPaint();
-    const state={yaw:-2.4,pitch:.14,dist:mobile?2.65:2.1,ty:.37,fov:38,paused:false,speed:1,annotations:false,activeAnnotation:null,slice:{...INITIAL_SLICE},pixelScale:1,occluded:false,fuel:1,gravity:1,gustUntil:0};
+    const home=()=>({yaw:-2.9,pitch:.1,dist:mobile?2.6:1.85,ty:mobile?.45:.41});
+    const state={...home(),fov:38,paused:false,speed:1,annotations:false,activeAnnotation:null,slice:{...INITIAL_SLICE},pixelScale:1,occluded:false,fuel:1,gravity:1,gustUntil:0};
     let point=null, lastProbe=0, frameNo=0, last=performance.now(),acc=0, lastStats=0,popClock=1.1;
     let lightMean=0,lastL=1, lightSeq=0, lastLightT=0,lastExposureRead=-1;
     let soundOn=false, audioContext=null, audioPending=null, probeVersion=0;
@@ -180,7 +181,7 @@ export async function createCampfire(canvas, { signal, onProgress, onReading, on
     last=performance.now();raf=requestAnimationFrame(loop);
     return {
       state,sim,renderer,device,section,frames,camera,profiler,meters,positions,startup,
-      setSlice(patch){Object.assign(state.slice,patch);if(patch.horizontal!==undefined || patch.offset!==undefined || patch.enabled===false){probeVersion++;point=null;onReading(null);}if(patch.enabled===true){state.ty=.85;state.dist=4;state.yaw=.78;state.pitch=.24;}if(patch.enabled===false)state.ty=.37;if(patch.horizontal===true)state.pitch=.75;if(patch.horizontal===false)state.pitch=.24;renderer.histReset=true;},
+      setSlice(patch){Object.assign(state.slice,patch);if(patch.horizontal!==undefined || patch.offset!==undefined || patch.enabled===false){probeVersion++;point=null;onReading(null);}if(patch.enabled===true){state.ty=.88;state.dist=mobile?3.7:3.35;state.yaw=.78;state.pitch=.24;}if(patch.enabled===false)Object.assign(state,home());if(patch.horizontal===true)state.pitch=.75;if(patch.horizontal===false)state.pitch=.24;renderer.histReset=true;},
       setPlayback(paused,speed){if(paused&&!state.paused&&!meters.busy)meters.sample(sim.time,false).then(m=>{if(m&&!disposed){instruments=m;onMetrics(m);}}).catch(e=>{if(!disposed)onError(e);});state.paused=paused;state.speed=Math.max(.1,Math.min(1,speed));acc=0;if(audioContext){if(paused)audioContext.suspend();else if(soundOn)audioContext.resume();}},
       async setSound(on){
         soundOn=on;
@@ -212,7 +213,7 @@ export async function createCampfire(canvas, { signal, onProgress, onReading, on
       setGravity(g){state.gravity=Math.max(0,Math.min(1,g));sim.params.buoyancy=EARTH_BUOYANCY*state.gravity;meters.history.fast=[];},
       setBlue(on){renderer.params.blueK=on?2:.05;renderer.histReset=true;},
       focusRoot(){Object.assign(state,{yaw:.35,pitch:.12,dist:1.2,ty:.14});renderer.histReset=true;},
-      resetCamera(){Object.assign(state,{yaw:-2.4,pitch:.14,dist:state.annotations?(mobile?3.1:2.8):(mobile?2.65:2.1),ty:state.annotations?.5:.37});renderer.histReset=true;},
+      resetCamera(){Object.assign(state,home(),state.annotations?{pitch:.14,dist:mobile?3.1:2.8,ty:.5}:{});renderer.histReset=true;},
       async probeAt(p){while(section.busy&&!disposed)await nextPaint();if(disposed)return null;point=p;return sample(p);},
       dispose(){abort();ctx.unconfigure();if(audioContext?.state!=='closed')audioContext?.close().catch(()=>{});signal.removeEventListener('abort',abort);},
     };

@@ -70,7 +70,7 @@ fn uvw(p: vec3f) -> vec3f { return (p + vec3f(.6,0,.6)) / vec3f(1.2,1.8,1.2); }
   }
   // The entire cut stays legible: cold air is dark glass, hot gas is opaque.
   // This display transfer function never masks probes or scientific reductions.
-  let hot=smoothstep(.157,.607,a.x); // 450–900 K
+  let hot=smoothstep(.03,.45,a.x); // 323–743 K: the warm plume shows, not only the flame sheets
   if(P.cut>.5){let fieldWeight=select(hot,.35+.65*hot,P.field==4.0 || P.field==5.0 || P.field==7.0);color=mix(vec3f(.045,.075,.095)+vec3f(.15,.23,.27)*line,color,fieldWeight);}
   var alpha=P.opacity*select(1.0,mix(.30,1.0,hot),P.cut>.5);
   if(arrow && P.opacity>0.0){color=vec3f(.94,.98,1);alpha=max(alpha,.9);}

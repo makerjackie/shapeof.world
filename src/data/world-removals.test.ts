@@ -16,7 +16,7 @@ describe('author-directed catalogue removal', () => {
     }
     for (const target of Object.values(legacyWorldRedirects)) expect(getWorld(target)?.publication).toBe('public')
     for (const {worldId} of Object.values(legacyWorldSceneRedirects)) expect(['making','public']).toContain(getWorld(worldId)?.publication)
-    expect(getWorld('campfire')?.publication).toBe('making')
+    expect(getWorld('campfire')?.publication).toBe('public')
     expect(legacyWorldRedirects['money-creation']).toBe('follow-the-money')
     expect(legacyWorldRedirects['money-flow-atlas']).toBe('follow-the-money')
     expect(paths.every(path => path.worldIds.length >= 2)).toBe(true)
