@@ -39,12 +39,13 @@ function profiles(id: string, outer: number, inner: number, separation: number) 
 }
 
 export const MATERIALS = {
-  casing: {surface: '#8eabbc', cut: '#c6d6df', hatch: 1, metalness: 0.52, roughness: 0.55},
-  explosive: {surface: '#b4c3c8', cut: '#d2dde1', hatch: 2, metalness: 0.05, roughness: 0.73},
-  pusher: {surface: '#a1b2bd', cut: '#c2d1da', hatch: 3, metalness: 0.35, roughness: 0.7},
-  reflector: {surface: '#587a90', cut: '#8ca8b8', hatch: 4, metalness: 0.45, roughness: 0.62},
-  core: {surface: '#a3695c', cut: '#be7162', hatch: 0, metalness: 0.28, roughness: 0.7},
-  source: {surface: '#d4c4a1', cut: '#d4c4a1', hatch: 0, metalness: 0.25, roughness: 0.38},
+  // Dark plaster greys for the engineering layers; the fissile core carries the world's fire colour.
+  casing: {surface: '#8d98a4', cut: '#aab4be', hatch: 1, metalness: 0.45, roughness: 0.6},
+  explosive: {surface: '#5e6974', cut: '#7d8894', hatch: 2, metalness: 0.05, roughness: 0.8},
+  pusher: {surface: '#a3adb8', cut: '#bcc5ce', hatch: 3, metalness: 0.3, roughness: 0.72},
+  reflector: {surface: '#4a6a82', cut: '#6f93ad', hatch: 4, metalness: 0.4, roughness: 0.62},
+  core: {surface: '#a84a35', cut: '#e2603c', hatch: 0, metalness: 0.2, roughness: 0.7},
+  source: {surface: '#ffd9a0', cut: '#ffd9a0', hatch: 0, metalness: 0.2, roughness: 0.38},
 } as const
 
 export const PARTS: ReadonlyArray<Part> = [

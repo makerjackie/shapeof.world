@@ -35,7 +35,7 @@ export function NuclearBomb({ controls }: { controls: ExperienceControls }) {
 			},
 			{
 				title: '回到一瞬。',
-				body: '浅色展品保留已有的示意。拖动旋转，或查看链式反应。',
+				body: '剖面展品保留已有的示意。拖动旋转，或查看链式反应。',
 				durationMs: 10000,
 				action: () => changeView('cutaway'),
 			},
@@ -50,7 +50,6 @@ export function NuclearBomb({ controls }: { controls: ExperienceControls }) {
 	);
 	return (
 		<div className="nb-experience na-experience" data-exhibit-view={view}>
-			<div className="na-header-shade" aria-hidden="true" />
 			{visited.has('scale') && (
 				<div className={`nb-view-layer${view === 'scale' ? ' is-active' : ''}`} aria-hidden={view !== 'scale'} inert={view !== 'scale'}>
 					<CityView controls={controls} active={view === 'scale'} />

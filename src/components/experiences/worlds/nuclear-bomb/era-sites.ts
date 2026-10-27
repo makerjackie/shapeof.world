@@ -213,15 +213,16 @@ export const COUNTRY_NAMES: Record<string, [string, string]> = {
 	ISR: ['以色列', 'Israel'],
 	ZAF: ['南非', 'South Africa'],
 };
+// Country colours for the dark page: bright but not neon; the US and USSR keep their blue/coral contrast.
 export const COUNTRY_COLORS: Record<string, string> = {
-	USA: '#587a90',
-	RUS: '#be7162',
-	GBR: '#948565',
-	FRA: '#9b9fab',
-	CHN: '#783440',
-	IND: '#ac965d',
-	PAK: '#688576',
-	PRK: '#5c5365',
-	ISR: '#a5a9a3',
-	ZAF: '#8a8e76',
+	USA: '#6aaee0',
+	RUS: '#e57a62',
+	GBR: '#b39ddb',
+	FRA: '#c9c2b2',
+	CHN: '#e8c15a',
+	IND: '#7cc9a6',
+	PAK: '#4aa6a4',
+	PRK: '#d08cc4',
+	ISR: '#9aa3ad',
+	ZAF: '#a2ad72',
 };

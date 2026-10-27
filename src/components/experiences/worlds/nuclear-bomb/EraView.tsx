@@ -199,7 +199,7 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 								x2="1025"
 								y1={bottom - (v / stockMax) * 110}
 								y2={bottom - (v / stockMax) * 110}
-								stroke="#c8d3d9"
+								stroke="rgba(244,240,232,0.12)"
 								strokeWidth=".6"
 							/>
 							<text x="36" y={bottom - (v / stockMax) * 110 + 3} textAnchor="end">
@@ -208,7 +208,7 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 						</g>
 					))}
 					{areas.map((d, i) => (
-						<path key={i} d={d} fill={COUNTRY_COLORS[HISTORY_DATA.stockpiles.countries[i].code]} opacity=".86" />
+						<path key={i} d={d} fill={COUNTRY_COLORS[HISTORY_DATA.stockpiles.countries[i].code]} opacity=".82" />
 					))}
 					<text x={x(STOCKPILE_PEAK.year) + 8} y="14">
 						{STOCKPILE_PEAK.year} · {f(STOCKPILE_PEAK.total)}
@@ -241,7 +241,7 @@ export function EraView({ controls, active = true }: { controls: ExperienceContr
 							{y}
 						</text>
 					))}
-					<line x1={x(year)} x2={x(year)} y1="8" y2="203" stroke="#783440" strokeWidth="1.5" />
+					<line x1={x(year)} x2={x(year)} y1="8" y2="203" stroke="#f4f0e8" strokeWidth="1.5" />
 				</svg>
 				<div className="na-chart-caption">
 					<span>{tx('上：库存（枚） · 下：试验（次）')}</span>

@@ -92,16 +92,24 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 					style: {
 						version: 8,
 						sources: { hiroshima: { type: 'vector', tiles: ['hiroshima://{z}/{x}/{y}'], minzoom: 8, maxzoom: 13 } },
+						// Dark basemap: near-black land, deep-blue water, thin light-grey roads, all drawn from our own OSM vector tiles.
 						layers: [
-							{ id: 'paper', type: 'background', paint: { 'background-color': '#e9edef' } },
-							{ id: 'park', type: 'fill', source: 'hiroshima', 'source-layer': 'park', paint: { 'fill-color': '#d8e0dc' } },
-							{ id: 'water', type: 'fill', source: 'hiroshima', 'source-layer': 'water', paint: { 'fill-color': '#aec5d0' } },
+							{ id: 'paper', type: 'background', paint: { 'background-color': '#0b0e11' } },
+							{ id: 'park', type: 'fill', source: 'hiroshima', 'source-layer': 'park', paint: { 'fill-color': '#0f1513' } },
+							{ id: 'water', type: 'fill', source: 'hiroshima', 'source-layer': 'water', paint: { 'fill-color': '#0e2131' } },
 							{
 								id: 'waterway',
 								type: 'line',
 								source: 'hiroshima',
 								'source-layer': 'waterway',
-								paint: { 'line-color': '#aec5d0', 'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 12] },
+								paint: { 'line-color': '#0e2131', 'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 12] },
+							},
+							{
+								id: 'buildings',
+								type: 'fill',
+								source: 'hiroshima',
+								'source-layer': 'building',
+								paint: { 'fill-color': '#13181d', 'fill-opacity': 0.9 },
 							},
 							{
 								id: 'roads',
@@ -109,17 +117,10 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 								source: 'hiroshima',
 								'source-layer': 'road',
 								paint: {
-									'line-color': '#fbfcfc',
-									'line-opacity': 0.65,
-									'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.35, 14, 1.1, 16, 3],
+									'line-color': '#b8bcc0',
+									'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.16, 13, 0.24, 16, 0.32],
+									'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.3, 14, 0.8, 16, 2],
 								},
-							},
-							{
-								id: 'buildings',
-								type: 'fill',
-								source: 'hiroshima',
-								'source-layer': 'building',
-								paint: { 'fill-color': '#ccd5d9', 'fill-outline-color': '#bec9cf', 'fill-opacity': 0.75 },
 							},
 						],
 					},
@@ -147,19 +148,20 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 						},
 					});
 					instance.addSource('effects', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+					// Brightened for the dark map: overpressure in blue (stronger = lighter), thermal in amber, fireball in orange-red.
 					for (const [id, color, dash] of [
-						['blast1Km', '#71838c', [2, 3]],
-						['blast5Km', '#587a90', [1, 0]],
-						['blast20Km', '#be7162', [1, 0]],
-						['thermalKm', '#a38d4b', [6, 3]],
-						['fireball', '#be7162', [1, 2]],
+						['blast1Km', '#7d93a4', [2, 3]],
+						['blast5Km', '#7fbde6', [1, 0]],
+						['blast20Km', '#d6ecfb', [1, 0]],
+						['thermalKm', '#f2b84b', [6, 3]],
+						['fireball', '#ff8a5c', [1, 2]],
 					] as const) {
 						instance.addLayer({
 							id,
 							type: 'line',
 							source: 'effects',
 							filter: ['==', ['get', 'id'], id],
-							paint: { 'line-color': color, 'line-width': id === 'blast5Km' ? 2.8 : 1.5, 'line-dasharray': [...dash] },
+							paint: { 'line-color': color, 'line-width': id === 'blast5Km' ? 2.8 : 1.6, 'line-dasharray': [...dash] },
 						});
 					}
 					const landmarks = [
@@ -194,7 +196,7 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 		const map = mapRef.current;
 		if (!ready || !map) return;
 		(map.getSource('effects') as GeoJSONSource).setData(featureData);
-		map.setPaintProperty('fire', 'raster-opacity', history ? 0.78 : 0);
+		map.setPaintProperty('fire', 'raster-opacity', history ? 0.82 : 0);
 		for (const id of ['blast1Km', 'blast5Km', 'blast20Km', 'thermalKm', 'fireball'])
 			map.setLayoutProperty(id, 'visibility', model ? 'visible' : 'none');
 	}, [ready, featureData, history, model]);

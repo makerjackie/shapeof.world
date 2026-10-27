@@ -41,7 +41,7 @@ labs,num=label(mask);sizes=np.bincount(labs.ravel());sizes[0]=0
 mask=sizes[labs]>2500
 yy,xx=np.indices(mask.shape)
 alpha=np.where(mask,np.where((xx+yy)%22<5,195,20),0).astype('uint8')
-layer=np.zeros((*mask.shape,4),dtype='uint8');layer[:,:,:3]=[120,52,64];layer[:,:,3]=alpha
+layer=np.zeros((*mask.shape,4),dtype='uint8');layer[:,:,:3]=[255,106,61];layer[:,:,3]=alpha
 Image.fromarray(layer).resize((1600,1551),Image.Resampling.LANCZOS).save(out/'registered-fire.png',optimize=True)
 corners=[inverse.transform(*(np.array([x,y,1])@matrix)) for x,y in [(0,0),(im.width,0),(im.width,im.height),(0,im.height)]]
 report=dict(source='USSBS 1946 Extent of Fire, Hiroshima',sourceImageSize=list(im.size),crs='EPSG:3857 / coordinates EPSG:4326',method='Affine least squares; hand-identified stable crossings',status='provisional; independent cartographic review pending',matrix=matrix.tolist(),rmseGroundM=float(np.sqrt(np.mean(res**2))),maxResidualGroundM=float(max(res)),leaveOneOutRmseGroundM=float(np.sqrt(np.mean(np.array(loo)**2))),corners=corners,controls=[dict(name=n,pixel=[x,y],longitude=lon,latitude=lat,residualGroundM=float(e),leaveOneOutGroundM=l) for (n,x,y,lon,lat),e,l in zip(controls,res,loo)])
