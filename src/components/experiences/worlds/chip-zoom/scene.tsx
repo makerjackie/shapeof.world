@@ -3,40 +3,44 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group, Mesh, Material, OrthographicCamera, PMREMGenerator, Vector3 } from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import type { Layout, Palette } from './model'
-import { PALETTES } from './model'
+import type { Layout } from './model'
+import { PALETTE } from './model'
 import { LayoutModel } from './layout-scene'
-import { Phone, Package, Die, Transistor, Atoms } from './specimens'
+import { Phone, Package, Die, Transistor, Atoms, phoneShift } from './specimens'
 import { SCALES, STAGES, stageIndex, stageWeight, smooth, type TransistorKind } from './scale-model'
+/** Where the specimen should sit inside the full-bleed canvas, in CSS pixels from each edge. */
+export type Frame = {left:number;top:number;right:number;bottom:number}
 type SceneProps = {
- layout:Layout;scale:number;fieldScale:number;peeled:number;spacing:number;palette:Palette;gate:number;drain:number;playing:boolean;speed:number
+ layout:Layout;scale:number;fieldScale:number;peeled:number;spacing:number;frame:Frame;gate:number;drain:number;playing:boolean;speed:number
  tilt:number;revision:number;kind:TransistorKind;cutaway:boolean;phoneOpen:number;packageOpen:number;region:string;onRegion:(id:string)=>void
  onInteract:()=>void;onReady:()=>void;onNext:()=>void
 }
 function ReflectionStudio() {
  const {gl,scene}=useThree()
- useEffect(()=>{const generator=new PMREMGenerator(gl),room=new RoomEnvironment(),map=generator.fromScene(room,.04);scene.environment=map.texture;scene.environmentIntensity=.55;room.dispose();return()=>{scene.environment=null;map.dispose();generator.dispose()}},[gl,scene])
+ useEffect(()=>{const generator=new PMREMGenerator(gl),room=new RoomEnvironment(),map=generator.fromScene(room,.04);scene.environment=map.texture;scene.environmentIntensity=.45;room.dispose();return()=>{scene.environment=null;map.dispose();generator.dispose()}},[gl,scene])
  return null
 }
-function Specimen({index,scale,fieldScale,children,layout,fadeMaterials=true}:{index:number;scale:number;fieldScale:number;children:ReactNode;layout:Layout;fadeMaterials?:boolean}) {
+function Specimen({index,scale,fieldScale,children,layout,fadeMaterials=true,phoneOpen}:{index:number;scale:number;fieldScale:number;children:ReactNode;layout:Layout;fadeMaterials?:boolean;phoneOpen:number}) {
  const group=useRef<Group>(null!)
  const weight=stageWeight(index,scale),factor=2*STAGES[index].width/10**fieldScale
  const progress=index===6?0:smooth(SCALES[index],SCALES[index+1],scale)
- const anchor=index===0?[0,0,-3.8]:index===3?[(layout.cell.bounds[0]+layout.cell.bounds[2]-layout.bounds[2])/2/15000,0,-(layout.cell.bounds[1]+layout.cell.bounds[3]-layout.bounds[3])/2/15000]:[0,0,0]
+ const anchor=index===0?[phoneShift(phoneOpen),0,-3.8]:index===3?[(layout.cell.bounds[0]+layout.cell.bounds[2]-layout.bounds[2])/2/15000,0,-(layout.cell.bounds[1]+layout.cell.bounds[3]-layout.bounds[3])/2/15000]:[0,0,0]
  useFrame(()=>{
   if(!fadeMaterials)return
-  group.current.traverse(obj=>{if(!(obj instanceof Mesh))return;const materials=Array.isArray(obj.material)?obj.material:[obj.material];materials.forEach((m:Material)=>{m.userData.initialOpacity??=m.opacity;const base=m.userData.baseOpacity??m.userData.initialOpacity;m.transparent=weight<.999||base<1;m.opacity=base*weight;m.depthWrite=weight>.45})})
+  group.current.traverse(obj=>{if(!(obj instanceof Mesh))return;const materials=Array.isArray(obj.material)?obj.material:[obj.material];materials.forEach((m:Material)=>{m.userData.initialOpacity??=m.opacity;const base=m.userData.baseOpacity??m.userData.initialOpacity;m.opacity=base*weight;if(m.userData.fixedBlend)return;m.transparent=weight<.999||base<1;m.depthWrite=weight>.45})})
  })
  return <group ref={group} scale={factor} position={[-anchor[0]*factor*progress,0,-anchor[2]*factor*progress]}>{children}</group>
 }
-function Camera({index,tilt,revision,onInteract}:{index:number;tilt:number;revision:number;onInteract:()=>void}) {
+function Camera({index,tilt,revision,frame,onInteract}:{index:number;tilt:number;revision:number;frame:Frame;onInteract:()=>void}) {
  const orbit=useRef<ComponentRef<typeof OrbitControls>>(null!)
  const {camera,size}=useThree()
  const settling=useRef(true),angle=useRef(.01),azimuth=useRef(0)
- useEffect(()=>{settling.current=true},[index,tilt,revision,size.width,size.height])
+ useEffect(()=>{settling.current=true},[index,tilt,revision,size.width,size.height,frame.left,frame.top,frame.right,frame.bottom])
  useFrame((_,dt)=>{
   const c=camera as OrthographicCamera
-  c.left=-10;c.right=10;c.top=10*size.height/size.width;c.bottom=-c.top;c.near=.01;c.far=100000;c.updateProjectionMatrix()
+  // The canvas fills the world; twenty units span the framed area, so the specimen sits clear of the panels.
+  const unit=20/Math.max(1,size.width-frame.left-frame.right),half=(size.height-frame.top-frame.bottom)/2
+  c.left=-10-frame.left*unit;c.right=10+frame.right*unit;c.top=(half+frame.top)*unit;c.bottom=-(half+frame.bottom)*unit;c.near=.01;c.far=600;c.updateProjectionMatrix()
   if(!settling.current)return
   const target=Math.max(.01,index===3?tilt*.95:index===2?.15:index===0?.38:index===4?.5:.88)
   const d=1-Math.exp(-Math.min(dt,.05)*4)
@@ -51,15 +55,15 @@ function Camera({index,tilt,revision,onInteract}:{index:number;tilt:number;revis
 }
 function Ready({onReady}:{onReady:()=>void}){const frames=useRef(0);useFrame(()=>{if(++frames.current===3)onReady()});return null}
 export const ChipScene=memo(function ChipScene(props:SceneProps){
- const index=stageIndex(props.scale),colors=PALETTES[props.palette]
- return <Canvas orthographic dpr={[1,1.5]} camera={{position:[0,38,.01],zoom:1,near:.01,far:100000}} gl={{antialias:true,alpha:false,powerPreference:'low-power'}}>
-  <color attach="background" args={[colors.background]}/><ambientLight intensity={.2}/><hemisphereLight args={['#ffffff','#859aa8',.55]}/><directionalLight position={[-12,20,12]} intensity={1.5}/><directionalLight position={[15,8,-10]} intensity={.5} color="#c4d9ec"/><ReflectionStudio/>
+ const index=stageIndex(props.scale)
+ return <Canvas orthographic dpr={[1,1.5]} camera={{position:[0,38,.01],zoom:1,near:.01,far:600}} gl={{antialias:true,alpha:false,powerPreference:'low-power'}}>
+  <color attach="background" args={[PALETTE.background]}/><ambientLight intensity={.1}/><hemisphereLight args={['#c9d6e2','#0b0f13',.3]}/><directionalLight position={[-10,22,14]} intensity={1.4} color="#fff4e6"/><directionalLight position={[12,9,-22]} intensity={1.8} color="#9cc6ff"/><ReflectionStudio/>
   {STAGES.map((stage,i)=>{
    const weight=stageWeight(i,props.scale)
    if(weight<.008)return null
    const labels=index===i&&weight>.9
-   return <Specimen key={stage.id} index={i} scale={props.scale} fieldScale={props.fieldScale} layout={props.layout} fadeMaterials={i!==3&&i!==4}>
-    {i===0?<Phone open={props.phoneOpen} onChip={props.onNext} labels={labels}/>:i===1?<Package open={props.packageOpen} labels={labels}/>:i===2?<Die labels={labels} selected={props.region} onRegion={props.onRegion}/>:i===3||i===4?<LayoutModel layout={props.layout} view={i===3?'layers':'cell'} peeled={i===4?5:props.peeled} spacing={props.spacing} palette={props.palette} labels={labels} fade={weight}/>:i===5?<Transistor {...props} labels={labels}/>:<Atoms labels={labels}/>}
+   return <Specimen key={stage.id} index={i} scale={props.scale} fieldScale={props.fieldScale} layout={props.layout} fadeMaterials={i!==3&&i!==4} phoneOpen={props.phoneOpen}>
+    {i===0?<Phone open={props.phoneOpen} onChip={props.onNext} labels={labels}/>:i===1?<Package open={props.packageOpen} labels={labels}/>:i===2?<Die labels={labels} selected={props.region} onRegion={props.onRegion}/>:i===3||i===4?<LayoutModel layout={props.layout} view={i===3?'layers':'cell'} peeled={i===4?5:props.peeled} spacing={props.spacing} labels={labels} fade={weight}/>:i===5?<Transistor {...props} labels={labels}/>:<Atoms labels={labels}/>}
    </Specimen>
   })}
   <Camera index={index} {...props}/><Ready onReady={props.onReady}/>

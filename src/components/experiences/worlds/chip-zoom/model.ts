@@ -1,5 +1,4 @@
 export type View = 'layers' | 'cell' | 'transistor'
-export type Palette = 'slice' | 'micrograph'
 export type Mask = 'nwell' | 'diff' | 'poly' | 'licon' | 'li' | 'mcon' | 'm1' | 'v1' | 'm2' | 'v2' | 'm3' | 'v3' | 'm4'
 export type Layout = {
   schema: number
@@ -10,11 +9,12 @@ export type Layout = {
 }
 
 export const PEEL_LAYERS = ['m4', 'm3', 'm2', 'm1', 'li'] as const
-export const PALETTES = {
-  slice: { background: '#e6edf0', substrate: '#8394a5', well: '#a99abd', diff: '#529879', poly: '#b16b93', li: '#438981', m1: '#4f9e97', m2: '#ac6a9b', m3: '#6285b0', m4: '#a6b9ca', via: '#82969e' },
-  micrograph: { background: '#25283d', substrate: '#51566e', well: '#716e92', diff: '#82b793', poly: '#d8a4bd', li: '#64b4ac', m1: '#66c7b2', m2: '#c68ab2', m3: '#8da6dc', m4: '#b9c7e7', via: '#a7a8c4' },
+/** One dark palette. Mask colours are an identification legend, not real material colours;
+ * the four metals are tinted aluminium and the contacts/vias are warm tungsten-like plugs. */
+export const PALETTE = {
+  background: '#07090b', substrate: '#1a2030', well: '#4e4970', diff: '#2f9873', poly: '#c24886', li: '#4aa59d',
+  m1: '#78c8b8', m2: '#d697bd', m3: '#90a9e4', m4: '#ccd4df', via: '#e3bf7c',
 } as const
-
 export function clamp(value: number, min: number, max: number) {
   return Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : min
 }

@@ -4,8 +4,9 @@ import { BufferGeometry, Float32BufferAttribute, ShapeUtils, Vector2 } from 'thr
  * Top and sides only: bottom faces are hidden by the substrate/underlying mask.
  */
 export function maskGeometry(polygons: number[][], center: [number, number], scale: number, thickness: number) {
-  const positions: number[] = []
-  const vertex = (p: Vector2, y: number) => positions.push((p.x - center[0]) * scale, y, -(p.y - center[1]) * scale)
+  const positions: number[] = [], uvs: number[] = []
+  // UVs in GDS micrometres (one texture tile per 4 μm) carry the aluminium grain.
+  const vertex = (p: Vector2, y: number) => { positions.push((p.x - center[0]) * scale, y, -(p.y - center[1]) * scale); uvs.push(p.x / 4, p.y / 4) }
   for (const coordinates of polygons) {
     const points: Vector2[] = []
     for (let i = 0; i < coordinates.length; i += 2) points.push(new Vector2(coordinates[i] / 1000, coordinates[i + 1] / 1000))
@@ -21,6 +22,7 @@ export function maskGeometry(polygons: number[][], center: [number, number], sca
   }
   const geometry = new BufferGeometry()
   geometry.setAttribute('position', new Float32BufferAttribute(positions, 3))
+  geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2))
   geometry.computeVertexNormals()
   geometry.computeBoundingSphere()
   return geometry
