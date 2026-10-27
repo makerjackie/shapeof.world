@@ -1,5 +1,5 @@
 import './styles/SpanView.css'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, type ReactNode } from 'react'
 import type { ExperienceControls } from '~/components/ExperienceShell'
 import { useExperienceI18n } from '~/i18n/experience'
 import { BRIDGES } from './content'
@@ -8,6 +8,7 @@ import { BRIDGE_EXAMPLES, type BridgeExample } from './bridge-examples'
 import { SpanScene } from './SpanScene'
 import { feasibleKinds, SCHEME_LIMITS, SLIDER_MAX, SPAN_KINDS, SPAN_MIN, spanResponse } from './span-model'
 import { Silhouette } from './Silhouette'
+import { rangeFill } from './palette'
 
 const FEATURED = ['shibanpo', 'pingnan', 'husutong', 'yangsigang']
 
@@ -22,7 +23,7 @@ function initialSpan() {
   const value = Number(new URLSearchParams(window.location.search).get('span') ?? 50)
   return Number.isFinite(value) ? Math.max(SPAN_MIN, Math.min(2023, value)) : 50
 }
-export function SpanView({ controls }: { controls: ExperienceControls }) {
+export function SpanView({ controls, views }: { controls: ExperienceControls; views?: ReactNode }) {
   const tx = useExperienceI18n()
   const [span, setSpan] = useState(initialSpan)
   const [selected, setSelected] = useState<BridgeKind | null>(null)
@@ -45,6 +46,7 @@ export function SpanView({ controls }: { controls: ExperienceControls }) {
     : span > 1000 ? '超过一千米，斜拉和悬索都还可行。' : '桥越长，承重的方法也要跟着变。'
   return <div className="bridge-design bd-span" data-span={span} data-scheme={kind}>
     <div className="bs-scroll" ref={scroll}>
+      {views}
       <header className="bs-heading"><h1>{tx('跨度越大，为什么要换桥型')}</h1><p>{tx(idea)}</p></header>
       {example && <section className="bs-example" aria-label={tx('所选实桥')} data-example={example.id}>
         <div><span>{tx(example.country)} · {tx(example.structure)}</span><h2>{tx(example.name)}</h2><p>{tx(example.distinction)}</p></div>
@@ -72,7 +74,7 @@ export function SpanView({ controls }: { controls: ExperienceControls }) {
       </div>
       <section className="bs-ruler" aria-label={tx('跨度滑杆和实桥刻度')}>
         <div className="bs-ruler-heading"><label htmlFor="bridge-span">{tx('拖动跨度')} <strong><output htmlFor="bridge-span">{span.toLocaleString('en-US')}</output><small> m</small></strong></label><div className="bs-presets">{[50, 500, 1000, 1500].map(value => <button key={value} type="button" aria-pressed={span === value} onClick={() => chooseSpan(value)}>{value.toLocaleString('en-US')} m</button>)}</div></div>
-        <div className="bs-range"><input id="bridge-span" type="range" min={SPAN_MIN} max={sliderMax} step="1" value={span} aria-label={tx('桥梁跨度')} onChange={e => chooseSpan(Number(e.target.value))} />
+        <div className="bs-range"><input id="bridge-span" type="range" min={SPAN_MIN} max={sliderMax} step="1" value={span} style={rangeFill(span, SPAN_MIN, sliderMax)} aria-label={tx('桥梁跨度')} onChange={e => chooseSpan(Number(e.target.value))} />
           <div className="bs-real-ticks" aria-hidden="true">{BRIDGE_EXAMPLES.map(b => <i key={b.id} style={{ left: `${(Math.min(sliderMax, b.span) - SPAN_MIN) / (sliderMax - SPAN_MIN) * 100}%`, top: SPAN_KINDS.indexOf(b.kind) * 5 }} />)}</div>
           <div className="bs-featured">{FEATURED.map((id, index) => { const b = BRIDGE_EXAMPLES.find(item => item.id === id)!; return <button type="button" key={id} data-example-tick={id} aria-label={`${tx(b.name)} · ${b.span} m`} style={{ left: `${(b.span - SPAN_MIN) / (sliderMax - SPAN_MIN) * 100}%`, top: index % 2 * 38 }} onClick={() => chooseExample(b)}><span>{tx(b.short)}</span><small>{b.span.toLocaleString('en-US')} m</small></button> })}</div>
         </div>
