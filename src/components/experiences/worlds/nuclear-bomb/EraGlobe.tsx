@@ -69,15 +69,33 @@ export function EraGlobe({
 			dragging = false;
 		});
 		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		scene.add(new T.HemisphereLight('#f5faff', '#b0b8ba', 1.4));
-		const key = new T.DirectionalLight('#fff9f0', 1.6);
-		key.position.set(-5, 6, -8);
-		scene.add(key);
+		// Globe on a dark page: low ambient, a key light that follows the camera, and a faint back-side halo to lift the sphere off the background.
+		scene.add(new T.HemisphereLight('#c9d6e4', '#1a2028', 1.6));
+		const key = new T.DirectionalLight('#fff4e6', 2.7);
+		key.position.set(-4, 5, 3);
+		camera.add(key);
+		scene.add(camera);
 		const globe = new T.Mesh(
 			new T.SphereGeometry(3.1, 128, 80),
-			new T.MeshStandardMaterial({ color: '#dce6e9', roughness: 0.6, metalness: 0 }),
+			new T.MeshStandardMaterial({ color: '#0c141c', roughness: 0.85, metalness: 0 }),
 		);
 		scene.add(globe);
+		const atmosphere = new T.Mesh(
+			new T.SphereGeometry(3.32, 96, 64),
+			new T.ShaderMaterial({
+				transparent: true,
+				depthWrite: false,
+				side: T.BackSide,
+				blending: T.AdditiveBlending,
+				uniforms: { tint: { value: new T.Color('#6aa6d8') } },
+				// Fresnel by view ray: zero at the halo's outer edge, brightest at the limb; alpha output avoids a black ring on the transparent canvas.
+				vertexShader:
+					'varying vec3 vN;varying vec3 vV;void main(){vec4 p=modelViewMatrix*vec4(position,1.);vN=normalize(normalMatrix*normal);vV=normalize(-p.xyz);gl_Position=projectionMatrix*p;}',
+				fragmentShader:
+					'uniform vec3 tint;varying vec3 vN;varying vec3 vV;void main(){float t=clamp(-dot(vN,vV),0.,1.);float a=pow(smoothstep(0.,.36,t),2.2)*.32;gl_FragColor=vec4(tint,a);}',
+			}),
+		);
+		scene.add(atmosphere);
 		const dots = new T.Group();
 		scene.add(dots);
 		const siteGeometry = new T.SphereGeometry(1, 20, 12);
@@ -91,7 +109,7 @@ export function EraGlobe({
 		const positions = new Float32Array(doe.events.length * 3);
 		const points = new T.Points(
 			new T.BufferGeometry(),
-			new T.PointsMaterial({ color: '#587a90', size: 0.025, sizeAttenuation: true, transparent: true, opacity: 0.7 }),
+			new T.PointsMaterial({ color: '#a9d6f5', size: 0.025, sizeAttenuation: true, transparent: true, opacity: 0.6 }),
 		);
 		scene.add(points);
 		let dataYear = -1,
@@ -113,7 +131,7 @@ export function EraGlobe({
 				cv.width = 3072;
 				cv.height = 1536;
 				const ctx = cv.getContext('2d')!;
-				ctx.fillStyle = '#dce6e9';
+				ctx.fillStyle = '#122130';
 				ctx.fillRect(0, 0, cv.width, cv.height);
 				for (const f of geo.features) {
 					if (f.geometry.type !== 'Polygon' && f.geometry.type !== 'MultiPolygon') continue;
@@ -128,13 +146,13 @@ export function EraGlobe({
 							});
 							ctx.closePath();
 						}
-					ctx.fillStyle = f.properties?.ADM0_A3 === 'CHN' ? '#8eabbc' : '#aebfc8';
+					ctx.fillStyle = f.properties?.ADM0_A3 === 'CHN' ? '#566a7a' : '#3c4752';
 					ctx.fill('evenodd');
-					ctx.strokeStyle = '#e9edef';
+					ctx.strokeStyle = '#1a242d';
 					ctx.lineWidth = 0.8;
 					ctx.stroke();
 				}
-				ctx.strokeStyle = '#b4c5ce80';
+				ctx.strokeStyle = 'rgba(127, 189, 230, 0.12)';
 				ctx.lineWidth = 0.7;
 				for (let lon = -180; lon <= 180; lon += 30) {
 					ctx.beginPath();

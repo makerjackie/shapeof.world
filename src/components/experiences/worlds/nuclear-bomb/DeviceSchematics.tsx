@@ -89,8 +89,8 @@ function GunFigure({ step }: { step: number }) {
 			<defs>
 				<radialGradient id="na-glow-gun">
 					<stop offset="0" stopColor="#fff6e6" />
-					<stop offset="0.45" stopColor="#f0b48f" stopOpacity="0.85" />
-					<stop offset="1" stopColor="#be7162" stopOpacity="0" />
+					<stop offset="0.45" stopColor="#ffa070" stopOpacity="0.8" />
+					<stop offset="1" stopColor="#ff6a3d" stopOpacity="0" />
 				</radialGradient>
 			</defs>
 			{/* 尾翼与弹壳 */}
@@ -141,17 +141,17 @@ function StagedFigure({ step }: { step: number }) {
 				</pattern>
 				<radialGradient id="na-glow-primary">
 					<stop offset="0" stopColor="#fff6e6" />
-					<stop offset="0.5" stopColor="#f0b48f" stopOpacity="0.8" />
-					<stop offset="1" stopColor="#be7162" stopOpacity="0" />
+					<stop offset="0.5" stopColor="#ffa070" stopOpacity="0.75" />
+					<stop offset="1" stopColor="#ff6a3d" stopOpacity="0" />
 				</radialGradient>
 				<radialGradient id="na-glow-secondary">
 					<stop offset="0" stopColor="#ffffff" />
-					<stop offset="0.4" stopColor="#f7d79c" stopOpacity="0.9" />
-					<stop offset="1" stopColor="#be7162" stopOpacity="0" />
+					<stop offset="0.4" stopColor="#ffd98a" stopOpacity="0.85" />
+					<stop offset="1" stopColor="#ff6a3d" stopOpacity="0" />
 				</radialGradient>
 				<linearGradient id="na-xray" x1="0" x2="1">
-					<stop offset="0" stopColor="#c9dbe6" stopOpacity="0.95" />
-					<stop offset="1" stopColor="#c9dbe6" stopOpacity="0.35" />
+					<stop offset="0" stopColor="#9fd2f5" stopOpacity="0.36" />
+					<stop offset="1" stopColor="#9fd2f5" stopOpacity="0.08" />
 				</linearGradient>
 				<marker id="na-arrow-in" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
 					<path d="M0 0 L10 5 L0 10 z" className="na-schem-arrowhead" />
