@@ -17,9 +17,10 @@ function rawRelief(x: number, z: number) {
   const u = x - LEAF_MIDRIB_X, v = -z
   const macro = 1600 * Math.sin(v / 22000) + 6500 * (u / 40000) ** 2 * Math.sin(v / 31000 + .6)
   const folded = 580 * Math.sin(u / 4500 + v / 15000) * Math.abs(u / 40000) ** .6
-  // Rounded interveinal pillows, not fine serrations at the margin.
+  // Rounded interveinal pillows, kept shallow: at leaf scale the blade should
+  // read as a smooth lamina, not crumpled paper.
   const a = Math.sin((u + .35 * v) / 1050), b = Math.sin((v - .21 * u) / 1420)
-  const pillows = 95 * (a * a) * (b * b) + 32 * Math.sin(u / 360 + Math.sin(v / 700))
+  const pillows = 38 * (a * a) * (b * b) + 7 * Math.sin(u / 360 + Math.sin(v / 700))
   return macro + folded + pillows
 }
 const entryHeight = rawRelief(LEAF_ENTRY[0], LEAF_ENTRY[2])
@@ -57,7 +58,11 @@ export function createLeafGeometry() {
       const basalLobe = 27000 * Math.exp(-(((t - .12) / .075) ** 2)) * Math.abs(u) ** 1.8
       const z = -v + basalLobe
       positions.push(x, leafSurfaceY(x, z), z)
-      uv.push((x - LEAF_MIDRIB_X) / 80000 + .5, t)
+      // Stretch the pigment map's own outline (tools/build-leaf-pigment.py) to
+      // this blade, so the margin and basal lobes never sample past its edge.
+      const pigmentV = 1 - t
+      const pigmentHalfWidth = .78 * Math.sin(Math.PI * pigmentV) ** .8 * (.78 + .22 * pigmentV) * (1 + .035 * Math.sin(pigmentV * 46))
+      uv.push((.035 * Math.sin(pigmentV * 8) + u * pigmentHalfWidth * .97 + 1) / 2, t)
       if (column < us.length - 1 && row < vs.length - 1) {
         const a = row * us.length + column, b = a + us.length
         indices.push(a, a + 1, b, a + 1, b + 1, b)
@@ -67,7 +72,18 @@ export function createLeafGeometry() {
   const geometry = new THREE.BufferGeometry()
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
   geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
-  geometry.setIndex(indices); geometry.computeVertexNormals()
+  geometry.setIndex(indices)
+  // The blade is a height field. Analytic normals stay smooth where the basal
+  // lobes fold rows of the grid together; mesh normals streak there.
+  const normals: number[] = []
+  for (let i = 0; i < positions.length; i += 3) {
+    const x = positions[i], z = positions[i + 2], h = 20
+    const dx = (leafSurfaceY(x + h, z) - leafSurfaceY(x - h, z)) / (2 * h)
+    const dz = (leafSurfaceY(x, z + h) - leafSurfaceY(x, z - h)) / (2 * h)
+    const length = Math.hypot(dx, 1, dz)
+    normals.push(-dx / length, 1 / length, -dz / length)
+  }
+  geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
   return geometry
 }
 

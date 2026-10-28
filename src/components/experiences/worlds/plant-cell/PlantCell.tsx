@@ -177,7 +177,7 @@ export function PlantCell({ controls }: { controls: ExperienceControls }) {
       <button type="button" data-pc-day-cycle aria-pressed={inputs.dayCycle} onClick={()=>{interact();setInputs(current=>({...current,dayCycle:!current.dayCycle}))}}>{tx('昼夜循环')}</button>
       <button type="button" aria-expanded={bounds} onClick={()=>{interact();setBounds(value=>!value)}}>{tx('模型边界')}</button>
     </div>}>
-      <button className="pc-light-switch" type="button" aria-label={tx(inputs.I > 0 ? '关灯' : '开灯')} onClick={() => changeLight(inputs.I > 0 ? 0 : lastLight.current)}>{inputs.I > 0 ? <Sun /> : <Moon />}</button>
+      <button className="pc-light-switch" type="button" data-on={inputs.I > 0} aria-label={tx(inputs.I > 0 ? '关灯' : '开灯')} onClick={() => changeLight(inputs.I > 0 ? 0 : lastLight.current)}>{inputs.I > 0 ? <Sun /> : <Moon />}</button>
       <div className="experience-freebar-field pc-light"><label htmlFor="pc-light">{tx(inputs.dayCycle?'正午光照':'光照')}<output>{inputs.I} <small>μmol m⁻² s⁻¹</small></output></label><input id="pc-light" type="range" min={0} max={2000} step={10} value={inputs.I} onChange={event=>changeLight(Number(event.target.value))} /></div>
       <label className="pc-select-field pc-water-field">{tx('水分')}<select id="pc-water" aria-label={tx('水分')} value={inputs.water} onChange={event=>changeWater(event.target.value as PlantInputs['water'])}>
         <option value="normal">{tx('正常')}</option><option value="drought">{tx('干旱')}</option><option value="saltwater">{tx('泡盐水')}</option>

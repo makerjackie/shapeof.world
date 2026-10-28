@@ -60,10 +60,13 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
   }, [children])
   useFrame(() => {
     const weight = getLayerWeights(controller.current.current)[layer]
-    if (root.current) root.current.visible = weight > 0.0001
+    // On the dark ground a few percent of a pale outgoing layer reads as haze;
+    // let the last 4% of each cross-fade drop out instead of lingering.
+    const alpha = Math.max(0, (weight - 0.04) / 0.96)
+    if (root.current) root.current.visible = alpha > 0.0001
     for (const { material, base, uniform, depth } of materials.current) {
-      if (uniform) uniform.value = base * weight
-      else material.opacity = base * weight
+      if (uniform) uniform.value = base * alpha
+      else material.opacity = base * alpha
       material.depthWrite = depth && weight > 0.08
     }
   }, -1)
@@ -211,10 +214,14 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
 
 function Backdrop({scale,light}:{scale:number;light:number}) {
   const {scene,camera}=useThree()
-  const paper=useMemo(()=>new T.Color('#f4f1e7'),[]),warm=useMemo(()=>new T.Color('#f4f1e7'),[])
+  // Deep ink green around leaf and cells; a cooler blue-black around molecules.
+  // The canvas clear colour doubles as depth fog, so distant layers sink into it.
+  const ink=useMemo(()=>new T.Color('#060a08'),[]),deep=useMemo(()=>new T.Color('#06090c'),[])
   useFrame(()=>{
-    paintState.paper.value.copy(paper).lerp(warm,smoothstep(-5.7,-6.7,scale))
+    paintState.paper.value.copy(ink).lerp(deep,smoothstep(-5.7,-6.7,scale))
     paintState.focus.value=camera.position.length()
+    // The pale vacuole would fill the frame as the camera passes it toward the wall.
+    paintState.dive.value=1-.6*smoothstep(-4.22,-4.52,scale)
     paintState.illumination.value=.96+.04*Math.sqrt(Math.max(0,light)/2000)
     scene.background=paintState.paper.value
   })
