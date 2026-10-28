@@ -32,7 +32,7 @@ export default {
   experiencePolicy: { entryMode: 'direct', shellMode: 'standard' },
   duration: 600,
   evidence: 'modeled',
-  accent: '#387b6d',
+  accent: '#4fd8c4',
   related: [],
   sources: [
     { label: 'Kundur《电力系统稳定与控制》（1994）第 3、11 章', labelEn: 'Kundur — Power System Stability and Control (1994), Chapters 3 and 11', url: 'https://books.google.com/books?id=wOlSAAAAMAAJ', note: '摇摆方程、一次调频与二次调频的理论来源；参数为教学假设。', noteEn: 'Theory for the swing equation, primary and secondary frequency control; parameters are illustrative.' },
