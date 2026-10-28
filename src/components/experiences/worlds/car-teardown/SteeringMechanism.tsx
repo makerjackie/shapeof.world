@@ -877,6 +877,7 @@ function AckermannConstruction({ stateRef }: Clock) {
 				<Html
 					position={[0, 0, -G.constructionMarkerRadius * 3]}
 					center
+					zIndexRange={[3, 0]}
 					style={{
 						pointerEvents: 'none',
 						color: '#b9c7d0',
@@ -1020,6 +1021,7 @@ function SteeringAngle({ stateRef, side }: Clock & { side: -1 | 1 }) {
 					side * R.steering.angleArcRadius * 0.45,
 				]}
 				center
+				zIndexRange={[3, 0]}
 				style={{ pointerEvents: 'none', color: AMBER, fontSize: 10, whiteSpace: 'nowrap' }}
 			>
 				<span ref={label} />

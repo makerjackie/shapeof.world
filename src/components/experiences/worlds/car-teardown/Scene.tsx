@@ -1,4 +1,4 @@
-import {lazy, Suspense, useEffect, useRef, useState, type RefObject} from 'react'
+import {lazy, Suspense, useEffect, useLayoutEffect, useRef, useState, type RefObject} from 'react'
 import {Canvas, useFrame, useThree} from '@react-three/fiber'
 import {CameraControls, CameraControlsImpl} from '@react-three/drei'
 import * as T from 'three'
@@ -17,6 +17,7 @@ import {isWorldPaused} from '~/lib/world-playback'
 import {loadCarAsset, loadStudio} from './asset-loader'
 import {type AssetProgress, ASSET_INSTALL as I, CAR_ASSET_BYTES} from './asset-config'
 import {CarAssetContext, ConceptBody, ConceptWheel, layerProgress} from './ConceptCar'
+import {Studio, STAGE} from './Studio'
 const CadEngine = lazy(() => import('./CadEngine').then((m) => ({default: m.CadEngine})))
 const MechanismsScene = lazy(() => import('./MechanismScene'))
 export type ProjectedAnchor = {x: number; y: number; visible: boolean}
@@ -114,11 +115,12 @@ function ViewCamera(p: SceneProps) {
 			eye = [6.5, 4, 7]
 			target = [0, 1.3, 0]
 		}
-		if (mobile) {
-			const factor = p.selected ? 1.02 : 1.85
-			eye = eye.map((v, i) => target[i] + (v - target[i]) * factor) as typeof eye
-		}
-		c.setFocalOffset(mobile ? 0 : p.selected ? 0.12 : 0.3, 0, 0, !p.reducedMotion)
+		// The canvas fills the viewport under glass panels; these views were framed for a smaller canvas.
+		// Pull back so the subject fits the free area between panels (portrait phones lose most width).
+		const factor = p.selected === 'body' ? (mobile ? 1.9 : 1.05) : mobile ? (p.selected ? 2.4 : 3.1) : 1.6
+		const spread = p.selected === 'powertrain' && p.partsExplode > 0.1 ? 1.3 : 1
+		eye = eye.map((v, i) => target[i] + (v - target[i]) * factor * spread) as typeof eye
+		c.setFocalOffset(0, 0, 0, !p.reducedMotion)
 		void c.setLookAt(...eye, ...target, !p.reducedMotion)
 	}, [
 		p.selected,
@@ -135,7 +137,7 @@ function ViewCamera(p: SceneProps) {
 			ref={controls}
 			makeDefault
 			minDistance={0.25}
-			maxDistance={18}
+			maxDistance={30}
 			maxPolarAngle={Math.PI * 0.49}
 			smoothTime={0.4}
 			onStart={p.onInteract}
@@ -148,13 +150,34 @@ function ViewCamera(p: SceneProps) {
 		/>
 	)
 }
+/** The canvas fills the viewport under glass overlays. Shift the projection centre into the
+ * free area between them, in pixels, so the subject is not framed behind a panel. */
+function StageFraming({selected}: {selected: boolean}) {
+	const camera = useThree((state) => state.camera) as T.PerspectiveCamera
+	const width = useThree((state) => state.size.width),
+		height = useThree((state) => state.size.height)
+	useLayoutEffect(() => {
+		const mobile = width < 700
+		const dx = mobile ? 0 : selected ? Math.min(170, width * 0.1) : Math.min(60, width * 0.04)
+		const dy = mobile ? (selected ? 50 : -40) : selected ? -10 : -20
+		camera.setViewOffset(width, height, dx, dy, width, height)
+		camera.updateProjectionMatrix()
+		return () => {
+			camera.clearViewOffset()
+			camera.updateProjectionMatrix()
+		}
+	}, [camera, width, height, selected])
+	return null
+}
 function Contents(p: SceneProps) {
 	const {gl, scene, size} = useThree()
 	const [car, setCar] = useState<GLTF | null>(null),
 		[engine, setEngine] = useState<GLTF | null>(null)
 	const [detailRequested, setDetailRequested] = useState(false)
 	const turntable = useRef<T.Group>(null),
-		rearSpin = useRef(0)
+		rearSpin = useRef(0),
+		studioPose = useRef(0),
+		shadowPose = useRef(0)
 	const needDetails = p.explode > 0.01 || p.selected !== null
 	const onLoad = useRef(p.onLoad)
 	onLoad.current = p.onLoad
@@ -244,6 +267,12 @@ function Contents(p: SceneProps) {
 				? turntable.current.rotation.y + dt * 0.035
 				: T.MathUtils.damp(turntable.current.rotation.y, 0, 7, dt)
 		}
+		// Floor reflection and contact shadow caches compare these poses between frames.
+		studioPose.current =
+			p.selected === 'powertrain' || (p.selected === null && p.explode > 0)
+				? p.angleRef.current
+				: (turntable.current?.rotation.y ?? 0)
+		shadowPose.current = p.selected === null ? (turntable.current?.rotation.y ?? 0) : studioPose.current
 
 		const viewport = gl.domElement.getBoundingClientRect()
 		const host = gl.domElement.closest('.ct-world')?.getBoundingClientRect()
@@ -288,11 +317,12 @@ function Contents(p: SceneProps) {
 	const showWheels = !p.selected || p.selected === 'body' || bay
 	return (
 		<CarAssetContext.Provider value={car}>
-			<color attach="background" args={['#e5e8e8']} />
-			<hemisphereLight args={['#f5f8fa', '#a0aaad', 1.7]} />
+			<color attach="background" args={[STAGE.background]} />
+			<hemisphereLight args={['#d6e0ea', '#07090b', 0.55]} />
 			<directionalLight
 				position={[2, 7, 4]}
-				intensity={2.2}
+				intensity={2.4}
+				color="#fff3e2"
 				castShadow
 				shadow-mapSize={[2048, 2048]}
 				shadow-camera-left={-6}
@@ -302,11 +332,26 @@ function Contents(p: SceneProps) {
 				shadow-bias={-0.00008}
 				shadow-normalBias={0.006}
 			/>
-			<directionalLight position={[-4, 3, -4]} intensity={1.4} color="#e1ecf3" />
-			<mesh rotation-x={-Math.PI / 2} position-y={-0.012} receiveShadow>
-				<planeGeometry args={[200, 200]} />
-				<meshStandardMaterial color="#e5e8e8" roughness={0.86} metalness={0.12} />
-			</mesh>
+			{/* Rim and kicker lights separate dark parts from the dark stage. */}
+			<directionalLight position={[-4.5, 3.2, -4]} intensity={3.2} color="#cfdcef" />
+			<directionalLight position={[4.5, 1.6, -3.5]} intensity={1.4} color="#dfe8f2" />
+			<Studio
+				mobile={size.width < 700}
+				pose={studioPose}
+				shadowPose={shadowPose}
+				revision={`${p.selected}/${p.assembly?.id}/${p.explode}/${p.partsExplode}/${p.xray}/${p.engineView}/${p.transmissionView}/${p.gear}/${p.mechanisms.wheelAngle}/${p.mechanisms.pedalForce}/${p.mechanisms.steeringView}/${p.mechanisms.brakeView}/${!!car}/${!!engine}`}
+				shadowMoving={() =>
+					p.selected !== null && p.selected !== 'body' && p.selected !== 'electrical' && !p.pausedRef.current && !isWorldPaused()
+				}
+				moving={() =>
+					!p.pausedRef.current &&
+					!isWorldPaused() &&
+					((p.explode > 0 && p.selected === null) ||
+						(p.selected !== null && p.selected !== 'body' && p.selected !== 'electrical') ||
+						((p.selected !== null || p.explode > 0) && Math.abs(turntable.current?.rotation.y ?? 0) > 0.0001) ||
+						(!p.interactionRef.current && !p.reducedMotion && p.explode === 0))
+				}
+			/>
 			<group ref={turntable}>
 				{car && showBody && <ConceptBody asset={car} amount={bay ? 0 : p.selected === 'body' ? p.partsExplode : p.explode} hood={bay} />}
 				{car &&
@@ -346,6 +391,7 @@ function Contents(p: SceneProps) {
 				)}
 			</group>
 			<ViewCamera {...p} />
+			<StageFraming selected={p.selected !== null} />
 		</CarAssetContext.Provider>
 	)
 }
@@ -363,7 +409,9 @@ export function CarScene(p: SceneProps) {
 				toneMappingExposure: 1.0,
 				localClippingEnabled: true,
 			}}
-			onCreated={({scene}) => {
+			onCreated={({scene, camera}) => {
+				// Studio floor, reflection disc and contact shadow occupy layer 2.
+				camera.layers.enable(2)
 				if (import.meta.env.DEV) (window as unknown as {__carScene: T.Scene}).__carScene = scene
 			}}
 		>

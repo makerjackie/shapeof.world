@@ -38,8 +38,26 @@ export function disposeAssetMaterials(scene: T.Group) {
 	})
 	seen.forEach((m) => m.dispose())
 }
+/** The asset's dark teal paint vanishes on the dark stage. A light graphite metallic keeps the body's
+ * form readable and leaves amber free for the active part. Only the main paint changes; the lower trim stays dark. */
+const STAGE_PAINT = {color: '#8a9199', metalness: 0.88, roughness: 0.3}
+function stagePaint(model: T.Object3D) {
+	model.traverse((o) => {
+		if (!(o instanceof T.Mesh)) return
+		for (const m of Array.isArray(o.material) ? o.material : [o.material])
+			if (m instanceof T.MeshStandardMaterial && m.name.startsWith('Paint 1')) {
+				m.color.set(STAGE_PAINT.color)
+				m.metalness = STAGE_PAINT.metalness
+				m.roughness = STAGE_PAINT.roughness
+			}
+	})
+}
 export function ConceptBody({asset, amount, hood, bodyOnly = false}: {asset: GLTF; amount: number; hood: boolean; bodyOnly?: boolean}) {
-	const model = useMemo(() => cloneAsset(asset.scene), [asset])
+	const model = useMemo(() => {
+		const clone = cloneAsset(asset.scene)
+		stagePaint(clone)
+		return clone
+	}, [asset])
 	useEffect(() => () => disposeAssetMaterials(model), [model])
 	useFrame(() => {
 		for (const node of model.children) {
