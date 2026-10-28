@@ -2,6 +2,7 @@ import { preparePaintMaterial } from './illustration'
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as T from 'three'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { createLeafGeometry, LEAF_ENTRY, LEAF_MIDRIB_X, leafSurfaceY } from './leaf-model'
 import { createEpidermis, createGuardGeometry, createLeafVeins, guardCellMatrices } from './leaf-surface-geometry'
 
@@ -18,6 +19,8 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
   if(kind==='blade') {
     const pigment=new T.TextureLoader().load('/assets/plant-cell/leaf-pigment.webp')
     pigment.colorSpace=T.SRGBColorSpace;material.map=pigment;material.color.set('#a2db65')
+    // Smooth two-tone shading: a hard band threshold streaks across the near-flat blade.
+    material.defines={...material.defines,PAINT_SOFT_BAND:''}
   }
   material.userData.waterWilt = { value: 0 }
   material.userData.guardOpen = { value: .6 }
@@ -58,7 +61,11 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         float mottling = .99 + .01 * sin(p.x * 1.7 + sin(p.y)) * sin(p.y * 2.1 + .2 * sin(p.x * 3.0));
         float midribSide=smoothstep(-8000.,3200.,vLeafPosition.x+1500.);
         float leafLight=dot(normalize(leafLocalNormal),normalize(vec3(-.7,.35,.4)));
-        float shade=mix(.017,1.,smoothstep(.14,.56,leafLight))*mix(.40,1.,midribSide);
+        float shade=mix(.34,1.,smoothstep(-.05,.62,leafLight))*mix(.62,1.,midribSide);
+        // The pigment map is transparent black beyond its own outline; the basal
+        // lobes and margin reach past it. Fill there with the lamina's mean tone.
+        float pigmentCover = smoothstep(.2, .95, texture2D(map, vMapUv).a);
+        diffuseColor.rgb = mix(diffuse * vec3(.27, .41, .19), diffuseColor.rgb, pigmentCover);
         diffuseColor.rgb *= mottling*shade;
         float sheen=pow(max(0.,dot(normalize(vNormal),normalize(vec3(-.3,.5,1.)))),18.);
         diffuseColor.rgb+=vec3(.015,.024,.003)*sheen;
@@ -75,7 +82,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
         float poreDistance = min(length(slit / vec2(width, 11.0)), length(poreOffset / vec2(width, 11.0)));
         float poreMask = smoothstep(.80, 1.03, poreDistance);
         diffuseColor.a *= mix(1.0, poreMask, detail * surfacePatch);
-      ` : kind === 'vein' ? 'diffuseColor.rgb*=mix(.045,1.05,smoothstep(-.15,.55,normalize(vNormal).x));diffuseColor.a=opened;' : isMicro ? 'diffuseColor.a = detail * surfacePatch * opened;' : 'diffuseColor.a = opened;'}
+      ` : kind === 'vein' ? 'diffuseColor.rgb*=mix(.2,1.05,smoothstep(-.15,.55,normalize(vNormal).x));diffuseColor.a=opened;' : isMicro ? 'diffuseColor.a = detail * surfacePatch * opened;' : 'diffuseColor.a = opened;'}
       if (diffuseColor.a < .01) discard;
       diffuseColor.rgb += vec3(.19, .17, .10) * boundary;
     `)
@@ -84,17 +91,41 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
   return preparePaintMaterial(material)
 }
 
+/** A short cut petiole: it bends gently below the blade, tapers and ends in a
+ * closed cut face inside the frame instead of trailing out of view. */
+function createPetiole() {
+  const curve = new T.CatmullRomCurve3([
+    new T.Vector3(LEAF_MIDRIB_X, leafSurfaceY(LEAF_MIDRIB_X, 59900), 59900),
+    new T.Vector3(LEAF_MIDRIB_X - 600, -700, 72000), new T.Vector3(LEAF_MIDRIB_X - 1700, -2300, 84000),
+  ])
+  const tubular = 24, radial = 10, radius = 680, endScale = .74
+  const tube = new T.TubeGeometry(curve, tubular, radius, radial, false)
+  const position = tube.getAttribute('position') as T.BufferAttribute, center = new T.Vector3(), point = new T.Vector3()
+  for (let i = 0; i <= tubular; i++) {
+    curve.getPointAt(i / tubular, center)
+    const taper = 1 - (1 - endScale) * (i / tubular) ** 1.4
+    for (let j = 0; j <= radial; j++) {
+      const k = i * (radial + 1) + j
+      point.fromBufferAttribute(position, k).sub(center).multiplyScalar(taper).add(center)
+      position.setXYZ(k, point.x, point.y, point.z)
+    }
+  }
+  // The gentle taper barely tilts the surface; keep the tube's seam-free normals.
+  const end = curve.getPointAt(1), tangent = curve.getTangentAt(1)
+  const cap = new T.CircleGeometry(radius * endScale, radial)
+  cap.applyQuaternion(new T.Quaternion().setFromUnitVectors(new T.Vector3(0, 0, 1), tangent)).translate(end.x, end.y, end.z)
+  const merged = mergeGeometries([tube, cap], false) ?? tube
+  if (merged !== tube) { tube.dispose(); cap.dispose() }
+  return merged
+}
+
 /** The blade, its epidermal patch and entry pore all share L1's physical frame. */
 export function LeafLayer({ opacity, mobile = false, stomataOpen = .6, water }: { opacity: number; mobile?: boolean; stomataOpen?: number; water: WaterReadings }) {
   const root = useRef<T.Group>(null), detail = useRef<T.Group>(null)
   const guardsRef = useRef<T.InstancedMesh>(null), chloroplastRef = useRef<T.InstancedMesh>(null)
   const resources = useMemo(() => {
     const blade = createLeafGeometry(), veins = createLeafVeins(), epidermis = createEpidermis(mobile), guard = createGuardGeometry()
-    const stalkCurve = new T.CatmullRomCurve3([
-      new T.Vector3(LEAF_MIDRIB_X, leafSurfaceY(LEAF_MIDRIB_X, 59900), 59900),
-      new T.Vector3(LEAF_MIDRIB_X - 2200, -1500, 88000), new T.Vector3(LEAF_MIDRIB_X - 6500, -6500, 130000),
-    ])
-    const stalk = new T.TubeGeometry(stalkCurve, 28, 680, 10, false)
+    const stalk = createPetiole()
     const materials = Object.fromEntries(['blade', 'vein', 'epidermis', 'guard', 'chloroplast'].map((kind) => [kind, surfaceMaterial(kind as SurfaceKind, epidermis.radius)])) as Record<SurfaceKind, T.MeshPhysicalMaterial>
     return { blade, veins, epidermis, guard, stalk, materials }
   }, [mobile])

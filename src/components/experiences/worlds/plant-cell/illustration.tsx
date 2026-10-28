@@ -2,13 +2,15 @@ import type { ThreeElements } from '@react-three/fiber'
 import * as T from 'three'
 
 /** One pigment language across all six anatomical scales. */
-export const paintState = { focus: { value: 117 }, paper: { value: new T.Color('#f4f1e7') }, illumination: { value: 1 } }
+// `dive` is 1 at the hero cell and falls while the camera passes through it.
+export const paintState = { focus: { value: 117 }, paper: { value: new T.Color('#060a08') }, illumination: { value: 1 }, dive: { value: 1 } }
 type CompiledShader = Parameters<T.Material['onBeforeCompile']>[0]
 export function illustrateShader(shader: CompiledShader) {
   shader.uniforms.paintFocus = paintState.focus
   shader.uniforms.paintPaper = paintState.paper
   shader.uniforms.paintIllumination = paintState.illumination
-  shader.fragmentShader = `uniform float paintFocus; uniform vec3 paintPaper; uniform float paintIllumination;\n${shader.fragmentShader}`
+  shader.uniforms.paintDive = paintState.dive
+  shader.fragmentShader = `uniform float paintFocus; uniform vec3 paintPaper; uniform float paintIllumination; uniform float paintDive;\n${shader.fragmentShader}`
   shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
     float paintFacing = abs(dot(normalize(normal), normalize(vViewPosition)));
     float paintDepth = clamp((length(vViewPosition) / max(paintFocus,1.0) - 1.32) / .85, 0.0, 1.0);
@@ -18,7 +20,15 @@ export function illustrateShader(shader: CompiledShader) {
     float paintDerivative = max(fwidth(paintFacing),.0005);
     float paintInk = 1.0-smoothstep(paintDerivative*paintWidth*.35,paintDerivative*paintWidth*1.5,paintFacing);
     float paintGrain = fract(sin(dot(floor(gl_FragCoord.xy),vec2(12.9898,78.233)))*43758.5453);
-    vec3 paintPigment = diffuseColor.rgb * mix(.82,1.0,step(.45,paintBand)) * (.985 + .03*paintGrain) * paintIllumination;
+    #ifdef PAINT_SOFT_BAND
+    float paintTone = smoothstep(.25,.65,paintBand);
+    #else
+    float paintTone = step(.45,paintBand);
+    #endif
+    vec3 paintPigment = diffuseColor.rgb * mix(.82,1.0,paintTone) * (.985 + .03*paintGrain) * paintIllumination;
+    // Dark ground: a pale rim just inside each silhouette keeps forms apart.
+    float paintRim = pow(clamp(1.0-paintFacing,0.0,1.0),2.6);
+    paintPigment = mix(paintPigment, min(vec3(1.0), paintPigment*1.45+vec3(.05,.065,.055)), paintRim*.55);
     paintPigment = mix(paintPigment, diffuseColor.rgb*.16, paintInk*.95*paintWobble);
     outgoingLight = mix(paintPigment,paintPaper,paintDepth*.22);
     #include <opaque_fragment>
