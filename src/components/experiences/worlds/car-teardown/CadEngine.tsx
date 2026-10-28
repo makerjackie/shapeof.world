@@ -385,7 +385,7 @@ function SectionLabels() {
 					[0.144, -0.01, 0.03, '曲轴'],
 				] as const
 			).map(([x, y, z, text]) => (
-				<Html key={text} position={[x, y, z]} className="ct-section-label" style={{pointerEvents: 'none'}}>
+				<Html key={text} position={[x, y, z]} className="ct-section-label" zIndexRange={[3, 0]} style={{pointerEvents: 'none'}}>
 					<span>{tx(text)}</span>
 				</Html>
 			))}

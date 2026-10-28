@@ -115,12 +115,17 @@ export function StudioShadows({
 	}, 0.7)
 	return (
 		<group ref={group}>
-			<mesh position={[0, G.floorY + 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[1, -1, 1]}>
+			<mesh
+				position={[0, G.floorY + 0.004, 0]}
+				rotation={[-Math.PI / 2, 0, 0]}
+				scale={[1, -1, 1]}
+				onUpdate={(mesh) => mesh.layers.set(2)}
+			>
 				<planeGeometry args={[12, 12]} />
 				<meshBasicMaterial
 					map={resources.target.texture}
 					transparent
-					opacity={0.72}
+					opacity={0.85}
 					depthWrite={false}
 				/>
 			</mesh>

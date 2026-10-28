@@ -15,7 +15,6 @@ import {TransmissionInstruments} from './TransmissionInstruments'
 import {useMechanisms, MechanismPanel, MechanismViews, isRoadMechanism} from './MechanismControls'
 import {teardownParts} from './teardown-registry'
 import './styles/car-teardown.css'
-import './styles/inspection.css'
 import {usePartText} from './localized-parts'
 
 class SceneBoundary extends Component<{children: ReactNode; message: string}, {failed: boolean}> {
@@ -342,121 +341,181 @@ export function CarTeardown({controls, label}: {controls: ExperienceControls; la
 				/>
 			</SceneBoundary>
 			<CarGuide open={guideOpen} onStep={onGuideStep} onExit={exitGuide} />
-			{!guideActive && !captureMode && (
-				<button className="ct-guide-start" onClick={() => setGuideOpen(true)}>
-					{partText({zh: '九站导览', en: 'Take the tour'})}
-					<span>↗</span>
-				</button>
-			)}
-			<nav className="ct-breadcrumb" aria-label={tx('拆解导航')}>
-				<button
-					onClick={() => {
-						interact()
-						returnToSystems()
-						setExplode(0)
-						setPartsExplode(0)
-					}}
-				>
-					{tx('整车')}
-				</button>
-				<span>/</span>
-				{selectedSystem ? (
-					<>
+			<header className="ct-hud">
+				<div className="ct-hud-row">
+					<nav className="ct-breadcrumb" aria-label={tx('拆解导航')}>
 						<button
 							onClick={() => {
 								interact()
 								returnToSystems()
+								setExplode(0)
+								setPartsExplode(0)
 							}}
 						>
-							{tx(selectedSystem.name)}
+							{tx('整车')}
 						</button>
-						{selected === 'powertrain' && (
+						<span>/</span>
+						{selectedSystem ? (
 							<>
-								<span>/</span>
-								<span>{tx('发动机')}</span>
+								<button
+									onClick={() => {
+										interact()
+										returnToSystems()
+									}}
+								>
+									{tx(selectedSystem.name)}
+								</button>
+								{selected === 'powertrain' && (
+									<>
+										<span>/</span>
+										<span>{tx('发动机')}</span>
+									</>
+								)}
 							</>
+						) : (
+							<span>{tx(explode > 0.1 ? '七个系统' : '结构探索')}</span>
 						)}
-					</>
-				) : (
-					<span>{tx(explode > 0.1 ? '七个系统' : '结构探索')}</span>
-				)}
-			</nav>
-			<div className="ct-title">
-				<h1>
-					{tx(
-						selected === 'powertrain'
-							? '四个缸，轮流做功。'
-							: selected === 'drivetrain'
-								? '齿轮常啮合，换挡只锁一个。'
-								: selected === 'steering'
-									? '转一个弯，四个轮速。'
-									: selected === 'brakes'
-										? '一脚踏板，四轮同时夹紧。'
-										: selected === 'chassis'
-											? '轮子过坎，车身慢一点。'
-											: '一辆车，一层一层拆开。',
+					</nav>
+					{!guideActive && !captureMode && (
+						<button className="ct-guide-start" onClick={() => setGuideOpen(true)}>
+							{partText({zh: '九站导览', en: 'Take the tour'})}
+							<span>↗</span>
+						</button>
 					)}
-				</h1>
-				<p>
-					{tx(
-						selected === 'powertrain'
-							? '燃油的能量，让活塞推动曲轴。'
-							: selected === 'drivetrain'
-								? '把发动机的转速变成车轮要的转速和力。'
-								: selected === 'steering'
-									? '转弯时，内侧前轮需要转得更多。'
-									: selected === 'brakes'
-										? '活塞推内片，卡钳滑动拉住外片，两面夹紧。'
-										: selected === 'chassis'
-											? '弹簧承受冲击，阻尼让振动停下来。'
-											: '双门概念车 · 后轮驱动 · 2.5 升直列四缸',
-					)}
-				</p>
-			</div>
+				</div>
+				<div className="ct-title">
+					<h1>
+						{tx(
+							selected === 'powertrain'
+								? '四个缸，轮流做功。'
+								: selected === 'drivetrain'
+									? '齿轮常啮合，换挡只锁一个。'
+									: selected === 'steering'
+										? '转一个弯，四个轮速。'
+										: selected === 'brakes'
+											? '一脚踏板，四轮同时夹紧。'
+											: selected === 'chassis'
+												? '轮子过坎，车身慢一点。'
+												: '一辆车，一层一层拆开。',
+						)}
+					</h1>
+					<p>
+						{tx(
+							selected === 'powertrain'
+								? '燃油的能量，让活塞推动曲轴。'
+								: selected === 'drivetrain'
+									? '把发动机的转速变成车轮要的转速和力。'
+									: selected === 'steering'
+										? '转弯时，内侧前轮需要转得更多。'
+										: selected === 'brakes'
+											? '活塞推内片，卡钳滑动拉住外片，两面夹紧。'
+											: selected === 'chassis'
+												? '弹簧承受冲击，阻尼让振动停下来。'
+												: '双门概念车 · 后轮驱动 · 2.5 升直列四缸',
+						)}
+					</p>
+				</div>
 
-			<div className="ct-system-rail" aria-label={tx('选择系统')}>
-				{(
-					[
-						['powertrain', '发动机'],
-						['drivetrain', '变速箱'],
-						['steering', '转向'],
-						['brakes', '刹车'],
-						['chassis', '悬架'],
-						['body', '车身'],
-						['electrical', '电气'],
-					] as const
-				).map(([id, name]) => (
-					<button key={id} data-system={id} aria-pressed={selected === id} onClick={() => select(id)}>
-						{tx(name)}
-					</button>
-				))}
-			</div>
-			{selected === 'powertrain' && (
-				<div className="ct-engine-views" aria-label={tx('发动机视角')}>
+				<div className="ct-system-rail" aria-label={tx('选择系统')}>
 					{(
 						[
-							['bay', '打开机舱'],
-							['section', '单缸剖切'],
-							['assembly', '完整发动机'],
+							['powertrain', '发动机'],
+							['drivetrain', '变速箱'],
+							['steering', '转向'],
+							['brakes', '刹车'],
+							['chassis', '悬架'],
+							['body', '车身'],
+							['electrical', '电气'],
 						] as const
-					).map(([view, name]) => (
-						<button
-							key={view}
-							data-engine-view={view}
-							aria-pressed={engineView === view}
-							onClick={() => {
-								interact()
-								setEngineView(view)
-								setPartsExplode(0)
-								setXray(view === 'section')
-							}}
-						>
+					).map(([id, name]) => (
+						<button key={id} data-system={id} aria-pressed={selected === id} onClick={() => select(id)}>
 							{tx(name)}
 						</button>
 					))}
 				</div>
-			)}
-
+				{selected === 'powertrain' && (
+					<div className="ct-engine-views" aria-label={tx('发动机视角')}>
+						{(
+							[
+								['bay', '打开机舱'],
+								['section', '单缸剖切'],
+								['assembly', '完整发动机'],
+							] as const
+						).map(([view, name]) => (
+							<button
+								key={view}
+								data-engine-view={view}
+								aria-pressed={engineView === view}
+								onClick={() => {
+									interact()
+									setEngineView(view)
+									setPartsExplode(0)
+									setXray(view === 'section')
+								}}
+							>
+								{tx(name)}
+							</button>
+						))}
+					</div>
+				)}
+				{!assembly && <MechanismViews selected={selected} model={mechanisms} onInteract={interact} />}
+				{assembly && (
+					<div className="ct-view-switch ct-assembly-switch" aria-label={tx('子总成')}>
+						{ASSEMBLIES.filter((a) => a.system === selected).map((a) => (
+							<button
+								key={a.id}
+								data-assembly={a.id}
+								className={a.id === assembly.id ? 'is-active' : ''}
+								onClick={() => {
+									interact()
+									setAssemblyId(a.id)
+									setSelectedPart(null)
+									setHoveredPart(null)
+								}}
+							>
+								{partText(a.name)}
+							</button>
+						))}
+					</div>
+				)}
+				{(explode > 0.7 || selected) && (
+					<select
+						className="ct-system-picker"
+						value={selected ?? ''}
+						aria-label={tx('选择系统')}
+						onChange={(e) => (e.target.value ? select(e.target.value as SystemId) : returnToSystems())}
+					>
+						<option value="">{tx('全部系统')}</option>
+						{SYSTEMS.map((s) => (
+							<option key={s.id} value={s.id}>
+								{tx(s.name)}
+							</option>
+						))}
+					</select>
+				)}
+				{selected === 'drivetrain' && !assembly && (
+					<div className="ct-view-switch">
+						<button
+							className={transmissionView === 'gearbox' ? 'is-active' : ''}
+							onClick={() => {
+								interact()
+								setTransmissionView('gearbox')
+							}}
+						>
+							{tx('齿轮特写')}
+						</button>
+						<button
+							className={transmissionView === 'path' ? 'is-active' : ''}
+							onClick={() => {
+								interact()
+								setTransmissionView('path')
+							}}
+						>
+							{tx('完整传动')}
+						</button>
+					</div>
+				)}
+			</header>
 			<EngineeringLabels
 				anchorsRef={anchorsRef}
 				visible={explode > 0.78 && !selected}
@@ -464,63 +523,6 @@ export function CarTeardown({controls, label}: {controls: ExperienceControls; la
 				onHover={setHovered}
 				onSelect={select}
 			/>
-			{!assembly && <MechanismViews selected={selected} model={mechanisms} onInteract={interact} />}
-			{assembly && (
-				<div className="ct-view-switch ct-assembly-switch" aria-label={tx('子总成')}>
-					{ASSEMBLIES.filter((a) => a.system === selected).map((a) => (
-						<button
-							key={a.id}
-							data-assembly={a.id}
-							className={a.id === assembly.id ? 'is-active' : ''}
-							onClick={() => {
-								interact()
-								setAssemblyId(a.id)
-								setSelectedPart(null)
-								setHoveredPart(null)
-							}}
-						>
-							{partText(a.name)}
-						</button>
-					))}
-				</div>
-			)}
-			{(explode > 0.7 || selected) && (
-				<select
-					className="ct-system-picker"
-					value={selected ?? ''}
-					aria-label={tx('选择系统')}
-					onChange={(e) => (e.target.value ? select(e.target.value as SystemId) : returnToSystems())}
-				>
-					<option value="">{tx('全部系统')}</option>
-					{SYSTEMS.map((s) => (
-						<option key={s.id} value={s.id}>
-							{tx(s.name)}
-						</option>
-					))}
-				</select>
-			)}
-			{selected === 'drivetrain' && !assembly && (
-				<div className="ct-view-switch">
-					<button
-						className={transmissionView === 'gearbox' ? 'is-active' : ''}
-						onClick={() => {
-							interact()
-							setTransmissionView('gearbox')
-						}}
-					>
-						{tx('齿轮特写')}
-					</button>
-					<button
-						className={transmissionView === 'path' ? 'is-active' : ''}
-						onClick={() => {
-							interact()
-							setTransmissionView('path')
-						}}
-					>
-						{tx('完整传动')}
-					</button>
-				</div>
-			)}
 			{selected === 'powertrain' ? (
 				<EngineInstruments
 					{...{angleRef, rpm, slowdown, paused, xray}}

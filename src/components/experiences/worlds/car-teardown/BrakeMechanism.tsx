@@ -17,7 +17,7 @@ const AXIS_Z: Point = [Math.PI / 2, 0, 0]
 function CaliperLabel({position, label, dx, dy}: {position: Point; label: string; dx: number; dy: number}) {
 	const left = dx < 0
 	return (
-		<Html position={position} zIndexRange={[20, 0]} style={{pointerEvents: 'none'}}>
+		<Html position={position} zIndexRange={[3, 0]} style={{pointerEvents: 'none'}}>
 			<svg width="1" height="1" style={{overflow: 'visible', position: 'absolute'}} aria-hidden="true">
 				<path d={`M0 0 L${dx * 0.65} ${dy} H${dx}`} fill="none" stroke="#a5b9c6" strokeWidth=".7" opacity=".8" />
 				<circle r="1.6" fill="#e4af70" />
