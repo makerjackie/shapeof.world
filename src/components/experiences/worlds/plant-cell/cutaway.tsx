@@ -114,7 +114,7 @@ export function TissueMaterial({ color = '#2f5a24', opacity = 1, kind = 'solid',
         if(!gl_FrontFacing) diffuseColor.rgb*=.83;
         ` : ''}
         ${kind === 'chloroplast-cut' ? 'float stacks=step(.36,fract(vShape.x*3.+sin(vShape.y*4.)*.16)); float lines=smoothstep(.16,.38,abs(sin(vShape.y*38.))); diffuseColor.rgb=mix(vec3(.12,.34,.15),vec3(.40,.69,.26),1.-stacks*(1.-lines));' : ''}
-        ${kind === 'vacuole' ? 'if(distance(vTissue,vec3(-8.3,-10.,7.7))<4.2)discard;diffuseColor.rgb*=paintDive;' : ''}
+        ${kind === 'vacuole' ? 'if(distance(vTissue,vec3(-8.3,-10.,7.7))<4.2)discard;float sap=sin(vTissue.x*1.7+sin(vTissue.y*.9))*sin(vTissue.z*1.3+vTissue.y*.4);diffuseColor.rgb*=.82+.3*(.5+.5*sap);' : ''}
         ${kind === 'wall' ? 'float fiberA=pow(.5+.5*sin(vTissue.y*17.+vTissue.x*4.),12.);float fiberB=pow(.5+.5*sin(vTissue.y*13.-vTissue.z*8.),14.);diffuseColor.rgb*=.68+.30*min(1.,fiberA+fiberB);' : ''}
         ${kind === 'nucleus' ? `
           vec3 unit=normalize(vShape);float baseIndex=floor((1.-unit.y)*63.-.5);

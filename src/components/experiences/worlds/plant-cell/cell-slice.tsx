@@ -49,7 +49,7 @@ export function CellSlice({ part, opacity, wrinkles, concavity }: {
             float vc=max(0.,abs(vy)-23.)/12.;
             float vr=15.*sqrt(max(.00001,1.-vc*vc))*(.985+.015*cos(vy*.14))*.80;
             float inside=vr-slicePoint.z;
-            if(inside>0.)diffuseColor.rgb=inside<.20?vec3(.045,.22,.34):vec3(.48,.72,.79)*paintDive;
+            if(inside>0.)diffuseColor.rgb=inside<.20?vec3(.2,.48,.52):vec3(.011,.028,.03);
             else {
               vec2 tile=floor(slicePoint.zy*17.);
               float n=fract(sin(dot(tile,vec2(12.9898,78.233)))*43758.5453);

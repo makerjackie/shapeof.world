@@ -94,7 +94,7 @@ export function CellInspection({ children, enabled, physiology }: { children: Re
   const activity = selection?.kind === 'cell-wall' ? '最外面的纤维壁支撑细胞。'
     : selection?.kind === 'cell-membrane' ? '紧贴壁内侧，控制物质进出。'
     : selection?.kind === 'cell-cytoplasm' ? '细胞器和蛋白挤在壁与液泡之间。'
-    : selection?.kind === 'cell-vacuole' ? '中央浅蓝区域储存水，膨压帮助细胞撑起来。'
+    : selection?.kind === 'cell-vacuole' ? '中央蓝绿色的液泡储存水，膨压帮助细胞撑起来。'
     : selection?.kind === 'cell-saline-gap' ? '原生质体收缩后，外面的盐水填入壁与膜之间；不是空气。'
     : selection?.kind === 'cell-hechtian-strands' ? '质膜仍在这些点连接细胞壁，被拉成细丝。'
     : selection?.kind === 'wall-chloroplasts'
