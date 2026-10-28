@@ -154,7 +154,6 @@
   "最外面的纤维壁支撑细胞。": "The outer fibrous wall supports the cell.",
   "紧贴壁内侧，控制物质进出。": "Just inside the wall, it controls what enters and leaves.",
   "细胞器和蛋白挤在壁与液泡之间。": "Organelles and proteins crowd between the wall and the vacuole.",
-  "中央浅蓝区域储存水，膨压帮助细胞撑起来。": "The pale blue center stores water. Turgor helps support the cell.",
   "剖开的叶绿体：绿色层片之间留着缝": "Inside a cut chloroplast: gaps separate the green sheets",
   "靠近一摞基粒：每一片都是一个扁囊": "Approaching a granum: each sheet is a flattened sac",
   "沿基粒切口进入：膜与膜之间是水相": "Entering the cut: water fills the spaces between membranes",
@@ -164,5 +163,6 @@
   "胞间连丝": "Plasmodesma",
   "组装核糖体的地方，深紫色团块位于核内。": "The dark purple body inside the nucleus assembles ribosomes.",
   "穿过双层核膜，让分子在核内外通行。": "These openings cross the double envelope and regulate traffic.",
-  "细通道穿过相邻细胞的壁，连接两边胞质。": "Small channels cross neighboring walls and connect their cytoplasm."
+  "细通道穿过相邻细胞的壁，连接两边胞质。": "Small channels cross neighboring walls and connect their cytoplasm.",
+  "中央蓝绿色的液泡储存水，膨压帮助细胞撑起来。": "The blue-green vacuole in the center stores water. Turgor helps support the cell."
 }

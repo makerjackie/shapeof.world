@@ -2,15 +2,13 @@ import type { ThreeElements } from '@react-three/fiber'
 import * as T from 'three'
 
 /** One pigment language across all six anatomical scales. */
-// `dive` is 1 at the hero cell and falls while the camera passes through it.
-export const paintState = { focus: { value: 117 }, paper: { value: new T.Color('#060a08') }, illumination: { value: 1 }, dive: { value: 1 } }
+export const paintState = { focus: { value: 117 }, paper: { value: new T.Color('#060a08') }, illumination: { value: 1 } }
 type CompiledShader = Parameters<T.Material['onBeforeCompile']>[0]
 export function illustrateShader(shader: CompiledShader) {
   shader.uniforms.paintFocus = paintState.focus
   shader.uniforms.paintPaper = paintState.paper
   shader.uniforms.paintIllumination = paintState.illumination
-  shader.uniforms.paintDive = paintState.dive
-  shader.fragmentShader = `uniform float paintFocus; uniform vec3 paintPaper; uniform float paintIllumination; uniform float paintDive;\n${shader.fragmentShader}`
+  shader.fragmentShader = `uniform float paintFocus; uniform vec3 paintPaper; uniform float paintIllumination;\n${shader.fragmentShader}`
   shader.fragmentShader = shader.fragmentShader.replace('#include <opaque_fragment>', `
     float paintFacing = abs(dot(normalize(normal), normalize(vViewPosition)));
     float paintDepth = clamp((length(vViewPosition) / max(paintFocus,1.0) - 1.32) / .85, 0.0, 1.0);
@@ -31,6 +29,8 @@ export function illustrateShader(shader: CompiledShader) {
     paintPigment = mix(paintPigment, min(vec3(1.0), paintPigment*1.45+vec3(.05,.065,.055)), paintRim*.55);
     paintPigment = mix(paintPigment, diffuseColor.rgb*.16, paintInk*.95*paintWobble);
     outgoingLight = mix(paintPigment,paintPaper,paintDepth*.22);
+    // A fading layer sinks into the dark ground instead of greying the frame.
+    outgoingLight = mix(paintPaper, outgoingLight, smoothstep(0.0,.45,opacity));
     #include <opaque_fragment>
   `)
 }

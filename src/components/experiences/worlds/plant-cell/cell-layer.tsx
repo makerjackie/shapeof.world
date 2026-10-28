@@ -221,7 +221,7 @@ function Neighbors({ opacity }: { opacity: number }) {
     {NEIGHBOR_CELLS.map((position,i)=><group key={i} position={position}>
       <mesh geometry={geometry}><PaintMaterial color="#8c7b43" transparent opacity={opacity*.26}/></mesh>
       <mesh geometry={geometry} scale={[.94,.985,.94]}><PaintMaterial color="#66578b" transparent opacity={opacity*.36}/></mesh>
-      <mesh geometry={geometry} scale={[.78,.91,.78]}><PaintMaterial color="#7a9297" transparent opacity={opacity*.82}/></mesh>
+      <mesh geometry={geometry} scale={[.78,.91,.78]}><PaintMaterial color="#2b4547" transparent opacity={opacity*.82}/></mesh>
     </group>)}
     <instancedMesh ref={chloroplasts} args={[undefined, undefined, NEIGHBOR_CELLS.length * 72]}><sphereGeometry args={[1, 10, 6]} /><PaintMaterial color="#53733c" emissive="#173010" emissiveIntensity={0} roughness={0.8} transparent opacity={opacity * .92} /></instancedMesh>
   </group>
@@ -284,8 +284,9 @@ export function CellLayer({ opacity, light, clock, mobile = false, physiology, t
     <Cutaway wedge reveal={18}>
       <CellSlice part="contents" opacity={opacity} wrinkles={water.wrinkles} concavity={water.concavity} />
       <mesh geometry={membrane}><Membrane color="#d6dcc6" opacity={opacity} strength={water.immersion > .01 ? .23 : .11} base={.001 + .012 * water.immersion} fibers /></mesh>
-      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#acd9e1" kind="vacuole" opacity={opacity} /></mesh>
-      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#cfe2e6" opacity={opacity} strength={0.035} base={0.0003} /></mesh>
+      {/* Dark ground: a deep, translucent sap with a bright tonoplast rim, not a pale slab. */}
+      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]} receiveShadow><TissueMaterial color="#163233" kind="vacuole" opacity={opacity * .72} depthWrite={false} /></mesh>
+      <mesh geometry={vacuole} scale={[0.84,0.94,0.84]}><Membrane color="#9ad8d8" opacity={opacity} strength={0.42} base={0.0006} /></mesh>
       <mesh geometry={strands}><Membrane color="#c4cabb" opacity={opacity} strength={0.13} base={0.02} /></mesh>
       <mesh geometry={membrane} scale={[.975,.995,.975]}><TissueMaterial color="#7862ad" opacity={opacity} /></mesh>
       <mesh name="cell-er" geometry={er}><TissueMaterial color="#7466b9" opacity={opacity*0.48} /></mesh>

@@ -220,8 +220,6 @@ function Backdrop({scale,light}:{scale:number;light:number}) {
   useFrame(()=>{
     paintState.paper.value.copy(ink).lerp(deep,smoothstep(-5.7,-6.7,scale))
     paintState.focus.value=camera.position.length()
-    // The pale vacuole would fill the frame as the camera passes it toward the wall.
-    paintState.dive.value=1-.6*smoothstep(-4.22,-4.52,scale)
     paintState.illumination.value=.96+.04*Math.sqrt(Math.max(0,light)/2000)
     scene.background=paintState.paper.value
   })
