@@ -55,7 +55,7 @@
 .rd-reading-notes summary::after,.rd-neighbours summary::after{content:'⌄';margin-left:auto;color:var(--text-3)}.rd-reading-notes[open] summary::after,.rd-neighbours[open] summary::after{transform:rotate(180deg)}
 .rd-measurements{padding:13px 15px 10px;border-top:1px solid var(--line)}.rd-levels{grid-column:span 2}
 .rd-route-conflicts{font-size:11px;border-top:1px solid var(--line);padding-top:8px}.rd-conflict-types{display:flex;gap:14px;align-items:center}.rd-conflict-types>span{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;color:var(--text-2)}.rd-conflict-types b{font-weight:500;color:var(--text);margin-left:2px}
-.rd-conflict-icon{width:17px;height:17px;flex:none}.rd-crossing{color:#ff7185}.rd-merge{color:#f0c674}.rd-diverge{color:#6ccfe7}
+.rd-conflict-icon{width:17px;height:17px;flex:none}.rd-crossing{color:#ff7185}.rd-merge{color:#f0c674}.rd-diverge{color:#ffa066}
 .rd-picker{display:none}.rd-picker-open{display:block}.rd-mobile-route,.rd-mobile-tabs,.rd-why-subtitle{display:none}
 
 /* Journey steps. */

@@ -6,7 +6,8 @@ import { useExperienceI18n } from '~/i18n/experience'
 import type { ConflictPoint, Network } from '../sim/types'
 import { strip } from './mesh-kit'
 
-const COLORS = { crossing: '#ff3d5a', merge: '#ffc23d', diverge: '#3dd6ff' }
+/** Conflicts are one warm family, so none reads as the chosen route's cyan. */
+const COLORS = { crossing: '#ff3d5a', merge: '#ffc23d', diverge: '#ff8a3d' }
 const NAMES = { crossing: '交叉', merge: '合流', diverge: '分流' }
 function Marker({ conflict, active, hovered, dim, onHover }: { conflict: ConflictPoint; active: boolean; hovered:boolean; dim:boolean; onHover: (id: string | null) => void }) {
   const face = useRef<T.Group>(null), world = useMemo(() => new T.Vector3(), [])

@@ -54,7 +54,8 @@ export function Navigation({route}:{route?:ExploreRoute}){
   if(!atlas.current?.isConnected)atlas.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-atlas')??null
   if(!heading.current?.isConnected)heading.current=gl.domElement.closest('.road-design-experience')?.querySelector('.rd-top-left')??null
   const panelRect=panel.current?.getBoundingClientRect(),atlasRect=atlas.current?.getBoundingClientRect(),headingRect=heading.current?.getBoundingClientRect(),canvasRect=gl.domElement.getBoundingClientRect()
-  const mobile=size.width<720,left=mobile?14:24,right=mobile?size.width-14:(panelRect?panelRect.left-canvasRect.left-12:size.width-380)
+  // Phones keep a 20 px safe gutter, clear of the screen edge and rounded corners.
+  const mobile=size.width<720,left=mobile?20:24,right=mobile?size.width-20:(panelRect?panelRect.left-canvasRect.left-12:size.width-380)
   // Stay below the design card and layer switches (and, on phones, the
   // atlas toggle and compass beneath them); their height varies by language.
   const headingBottom=headingRect?.height?headingRect.bottom-canvasRect.top:0

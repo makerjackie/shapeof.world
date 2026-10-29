@@ -35,7 +35,7 @@ export function modelMaterial(color:string,roof:T.Texture,{heights=[0,12],rim=0,
    vec2 sunPlan=normalize(sunDirection.xz); float sunRise=sunDirection.y/length(sunDirection.xz);
    for(int i=1;i<=16;i++){float d=float(i)*(1.4+float(i)*.22);float deck=texture2D(deckRoof,uv+sunPlan*d/3600.0).r;castShade=max(castShade,smoothstep(.4,1.6,deck-(modelWorld.y+.35+d*sunRise)));}
    float inside=step(abs(modelWorld.x),1790.0)*step(abs(modelWorld.z),1790.0);
-   outgoingLight*=(1.0-shade*.09)*(1.0-castShade*inside*${ground ? '.55' : '.5'});
+   outgoingLight*=(1.0-shade*.09)*(1.0-castShade*inside*${ground ? '.7' : '.62'});
    ${ground ? '' : `float lift=smoothstep(heightRange.x,heightRange.y,modelWorld.y);
    outgoingLight*=mix(.74,1.32,lift);`}
    ${rim ? `vec3 viewDirection=normalize(cameraPosition-modelWorld);
@@ -43,7 +43,7 @@ export function modelMaterial(color:string,roof:T.Texture,{heights=[0,12],rim=0,
    outgoingLight+=rimColor*rimEdge*${rim.toFixed(3)};` : ''}
    #include <opaque_fragment>`)
  }
- m.customProgramCacheKey=()=>`road-plaster-v1-${rim}-${ground}`
+ m.customProgramCacheKey=()=>`road-plaster-v2-${rim}-${ground}`
  return m
 }
 
@@ -67,7 +67,7 @@ function groundMaterial(roof:T.Texture,contours:boolean){
    outgoingLight+=vec3(.012,.016,.020)*contour;` : ''}
    #include <opaque_fragment>`)
  }
- m.customProgramCacheKey=()=>`road-plaster-ground-v1-${contours}`
+ m.customProgramCacheKey=()=>`road-plaster-ground-v2-${contours}`
  return m
 }
 
