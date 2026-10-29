@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, type MutableRefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
-import { BufferGeometry, Color, Group, LineBasicMaterial, MeshBasicMaterial, MeshPhysicalMaterial, MeshStandardMaterial, Vector3, type Texture } from 'three'
+import { BufferGeometry, Color, DoubleSide, Group, LineBasicMaterial, MeshBasicMaterial, MeshPhysicalMaterial, MeshStandardMaterial, Vector3, type Texture } from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import { maskGeometry } from './geometry'
 import { grainTexture } from './textures'
+import { cellRouting, routingFade, routingGeometry } from './routing'
 import { PALETTE, maskVisible, type Layout, type Mask } from './model'
 const MASKS: Mask[] = ['nwell', 'diff', 'poly', 'licon', 'li', 'mcon', 'm1', 'v1', 'm2', 'v2', 'm3', 'v3', 'm4']
 const HEIGHTS: Record<Mask, number> = { nwell: .006, diff: .035, poly: .12, licon: .19, li: .6, mcon: .68, m1: 1.4, v1: 1.49, m2: 2.4, v2: 2.49, m3: 3.4, v3: 3.49, m4: 4.4 }
@@ -67,6 +68,43 @@ function MaskLayer({ mask, polygons, bounds, peeled, spacing, light, contacts, t
   </group>
 }
 
+const ROUTING_LAYERS = [
+  { key: 'm1', y: HEIGHTS.m1, color: PALETTE.m1, metal: true },
+  { key: 'm2', y: HEIGHTS.m2, color: PALETTE.m2, metal: true },
+  { key: 'v1', y: HEIGHTS.m1, color: PALETTE.via, metal: false },
+] as const
+/** The cell is shown at the transistor level, so its own metal is peeled away. Around it, illustrative M1 (across)
+ * and M2 (up) wiring with V1 plugs shows what sits on top in a real block; the wiring stops short of the cell. */
+function CellRouting({ bounds, rails, spacing, light }: { bounds: number[]; rails: number[][]; spacing: number; light: number }) {
+  const halfWidth = (bounds[2] - bounds[0]) / 2000, halfHeight = (bounds[3] - bounds[1]) / 2000
+  const scale = 10 / (halfWidth * 2)
+  const routing = useMemo(() => {
+    const centre = (bounds[1] + bounds[3]) / 2000
+    return cellRouting(halfWidth, halfHeight, rails.map(p => { const ys = p.filter((_, i) => i % 2); return (Math.min(...ys) + Math.max(...ys)) / 2000 - centre }))
+  }, [bounds, rails, halfWidth, halfHeight])
+  const viaHeight = Math.max(.01, (HEIGHTS.m2 - HEIGHTS.m1) * spacing - .035)
+  const geometries = useMemo(() => {
+    const fade = (x: number, z: number) => routingFade(x, z, halfWidth, halfHeight)
+    return { m1: routingGeometry(routing.m1, scale, .035, fade), m2: routingGeometry(routing.m2, scale, .035, fade), v1: routingGeometry(routing.v1, scale, viaHeight, fade) }
+  }, [routing, scale, viaHeight, halfWidth, halfHeight])
+  useEffect(() => () => Object.values(geometries).forEach(g => g.dispose()), [geometries])
+  const materials = useRef<(MeshStandardMaterial | null)[]>([])
+  const bases = useMemo(() => ROUTING_LAYERS.map(l => new Color(l.color)), [])
+  useFrame(() => materials.current.forEach((m, i) => {
+    if (!m) return
+    // Same dimming as the real masks: darken by colour first, so the zoom never passes through a pale wash.
+    // Context, not subject: about half as bright as the masks, so the cell stays the brightest thing on screen.
+    m.color.copy(bases[i]).multiplyScalar(light * .55)
+    m.envMapIntensity = .6 * light
+    m.opacity = Math.min(1, light * 3)
+  }))
+  return <group visible={light > .004}>
+    {ROUTING_LAYERS.map((l, i) => <mesh key={l.key} geometry={geometries[l.key]} renderOrder={l.key === 'm1' ? 1 : l.key === 'v1' ? 2 : 3} position={[0, l.y * spacing + (l.key === 'v1' ? .035 : 0), 0]}>
+      <meshStandardMaterial ref={m => { materials.current[i] = m }} vertexColors color={l.color} roughness={l.metal ? .48 : .32} metalness={l.metal ? .7 : .85} side={DoubleSide} transparent depthWrite={false} opacity={0} />
+    </mesh>)}
+  </group>
+}
+
 export function LayoutModel({ layout, view, peeled, spacing, labels = true, light = 1, field = 1e-3, tilt = 0 }: LayoutProps) {
   const tx = useExperienceI18n()
   const dataset = view === 'cell' ? layout.cell : layout
@@ -90,6 +128,7 @@ export function LayoutModel({ layout, view, peeled, spacing, labels = true, ligh
       <meshStandardMaterial ref={substrate} color={PALETTE.substrate} roughness={.55} metalness={.35} transparent opacity={1} />
     </mesh>
     {MASKS.map(mask => <MaskLayer key={`${view}-${mask}`} mask={mask} polygons={dataset.layers[mask]} bounds={dataset.bounds} peeled={peeled} spacing={spacing} light={light} contacts={contacts} tiltMix={tiltMix} sheet={view === 'layers' && !!TILT_ALPHA[mask]} grain={grain} />)}
+    {view === 'cell' && <CellRouting bounds={dataset.bounds} rails={dataset.layers.m1} spacing={spacing} light={light} />}
     {labels && view === 'cell' && peeled === 5 && light > .9 && <>
       <Html zIndexRange={[4,0]} position={[-3.5, .7, -5.5]} center className="cz-part-label cz-cell-label"><b>{tx('NMOS 栅指')}</b></Html>
       <Html zIndexRange={[4,0]} position={[-3.5, .7, 3.6]} center className="cz-part-label cz-cell-label"><b>{tx('PMOS 栅指')}</b></Html>

@@ -139,6 +139,11 @@ contains only M1–M4. The renderer uses silvery reflective material with subtle
 false-color tint. A procedural Three.js RoomEnvironment supplies reflections;
 no environment image is downloaded. Via geometry remains from the source GDS.
 
+Around the standard cell, the M1 (horizontal) and M2 (vertical) wiring with V1
+plugs is generated in `routing.ts`; it is illustrative, not from the GDS. Only
+its track pitches (0.34 / 0.46 μm), wire width (0.14 μm) and the continuing
+power-rail positions follow SKY130 conventions. It stops short of the real cell.
+
 [imec: A view on the logic technology roadmap](https://www.imec-int.com/en/articles/view-logic-technology-roadmap)
 describes three-sided electrostatic control in FinFETs and gate-all-around control
 of suspended sheets. Our planar, fin and nanosheet models are independent,
