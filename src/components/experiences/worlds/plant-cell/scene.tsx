@@ -59,15 +59,19 @@ function ScaleLayer({ layer, controller, children }: { layer: PlantLayer; contro
     })
   }, [children])
   useFrame(() => {
-    const weight = getLayerWeights(controller.current.current)[layer]
+    const scale = controller.current.current, weight = getLayerWeights(scale)[layer]
     // On the dark ground a few percent of a pale outgoing layer reads as haze;
     // let the last 4% of each cross-fade drop out instead of lingering.
-    const alpha = Math.max(0, (weight - 0.04) / 0.96)
+    let alpha = Math.max(0, (weight - 0.04) / 0.96)
+    // Cell -> chloroplast: a half-faded cytoplasm spreads a violet veil over the
+    // whole frame. Bring the lens in first, then let the cell leave quickly.
+    if (layer === 'cell' && scale < -4.6) alpha = smoothstep(0.45, 1, weight)
+    else if (layer === 'chloroplast' && scale > -5.6) alpha = smoothstep(0, 0.55, weight)
     if (root.current) root.current.visible = alpha > 0.0001
     for (const { material, base, uniform, depth } of materials.current) {
       if (uniform) uniform.value = base * alpha
       else material.opacity = base * alpha
-      material.depthWrite = depth && weight > 0.08
+      material.depthWrite = depth && alpha > 0.05
     }
   }, -1)
   return <group ref={root}>{children}</group>
@@ -188,7 +192,15 @@ function CameraAndScale({ controller, physiology, reducedMotion, onScale, onInte
     // Interpolate the basis over the existing granum handoff, never reset orbit.
     if (camera instanceof T.PerspectiveCamera) {
       const far = 2200 + (cameraDistance + 210 - 2200) * smoothstep(-6.15,-6.5,c.current)
-      if (Math.abs(camera.far-far)>.01) { camera.far=far; camera.updateProjectionMatrix() }
+      // Phone: the heading fills the top quarter, so leaf, section and cell sit
+      // a little lower; the full-bleed chloroplast and molecules stay centred.
+      const lower = size.width < 720 && !capture ? -size.height * .06 * (1 - smoothstep(-4.6, -5.1, c.current)) : 0
+      const view = camera.view
+      if (Math.abs(camera.far-far)>.01 || (view && Math.abs(view.offsetY-lower)>.5)) {
+        camera.far=far
+        if (view) view.offsetY=lower
+        camera.updateProjectionMatrix()
+      }
     }
     const orbitReference = getOrbitReference(c.current)
     const molecularBlend = orbitReference.blend

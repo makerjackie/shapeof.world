@@ -46,6 +46,13 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
       ` : ''}
     `)
     shader.fragmentShader = 'varying vec3 leafLocalNormal; varying vec3 vLeafPosition; uniform float guardOpen;\n' + shader.fragmentShader
+    // The map's painted veins follow its own outline; fitted row by row to this
+    // blade they smear sideways and cross the modelled veins. Keep only its
+    // broad tonal mottling (a coarse mip, un-premultiplied at the margin).
+    if (kind === 'blade') shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `
+      vec4 pigmentTone = textureLod(map, vMapUv, 4.5);
+      diffuseColor.rgb *= pigmentTone.rgb / max(pigmentTone.a, .05);
+    `)
     shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
       vec2 poreOffset = vLeafPosition.xz - vec2(${LEAF_ENTRY[0]}, ${LEAF_ENTRY[2]});
       float radial = length(poreOffset);
@@ -87,7 +94,7 @@ function surfaceMaterial(kind: SurfaceKind, detailRadius: number) {
       diffuseColor.rgb += vec3(.19, .17, .10) * boundary;
     `)
   }
-  material.customProgramCacheKey = () => `plant-cell-leaf-surface-${kind}-${detailRadius}-4`
+  material.customProgramCacheKey = () => `plant-cell-leaf-surface-${kind}-${detailRadius}-5`
   return preparePaintMaterial(material)
 }
 
