@@ -1314,7 +1314,7 @@
 		right: var(--ct-edge);
 		bottom: calc(var(--ct-edge) + var(--ct-bar) + 8px);
 		width: auto;
-		max-height: min(34vh, 300px);
+		max-height: min(30vh, 260px);
 		padding: 12px 14px;
 	}
 	.ct-instruments:not(.is-open) {

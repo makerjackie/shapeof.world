@@ -10,6 +10,7 @@ import {
 import { TeardownPart, useTeardown } from './TeardownPart'
 import { Box } from './Systems'
 import type { Point3 } from './parts'
+import { HARNESS, harnessMaterial } from './harness-style'
 const E = A.electrical,
 	M = S.engine.geometry
 function Pipe({
@@ -17,11 +18,13 @@ function Pipe({
 	radius,
 	color,
 	id,
+	wire,
 }: {
 	points: Point3[]
 	radius: number
 	color: string
 	id?: string
+	wire?: boolean
 }) {
 	const geometry = useMemo(
 		() =>
@@ -42,7 +45,7 @@ function Pipe({
 	useEffect(() => () => geometry.dispose(), [geometry])
 	return (
 		<mesh geometry={geometry} userData={{ partId: id }}>
-			<meshStandardMaterial color={color} metalness={0.35} roughness={0.55} />
+			<meshStandardMaterial {...(wire ? harnessMaterial(color) : {color, metalness: 0.35, roughness: 0.55})} />
 		</mesh>
 	)
 }
@@ -130,7 +133,8 @@ export function Electrical({
 										[r, y, side * z],
 									]}
 									radius={G.wireRadius}
-									color="#32383c"
+									color={HARNESS.trunk}
+							wire
 								/>
 								{[-1, 0, 1].map((strand) => (
 									<Pipe
@@ -143,7 +147,8 @@ export function Electrical({
 											[r, y + strand * G.branchRadius, side * z + G.wireRadius],
 										]}
 										radius={G.branchRadius * 0.42}
-										color={strand === 0 ? '#8a7452' : '#4b5964'}
+										color={strand === 0 ? HARNESS.feed : HARNESS.signal}
+								wire
 									/>
 								))}
 								{[
@@ -162,7 +167,8 @@ export function Electrical({
 												[x - G.ecuSize[0], y * 0.9, side * z * 0.3],
 											]}
 											radius={G.branchRadius * (i % 2 ? 1.3 : 1.9)}
-											color="#41494f"
+											color={HARNESS.branch}
+									wire
 										/>
 										<Box
 											position={[x - G.ecuSize[0], y * 0.9, side * z * 0.3]}
@@ -176,7 +182,7 @@ export function Electrical({
 											<cylinderGeometry
 												args={[G.wireRadius * 1.2, G.wireRadius * 1.2, G.harnessClipWidth, 12]}
 											/>
-											<meshStandardMaterial color="#74716b" roughness={0.65} />
+											<meshStandardMaterial {...harnessMaterial(HARNESS.clip)} />
 										</mesh>
 									</group>
 								))}
@@ -189,7 +195,8 @@ export function Electrical({
 								[f * 0.6, y, z],
 							]}
 							radius={G.wireRadius}
-							color="#32383c"
+							color={HARNESS.trunk}
+							wire
 						/>
 					</group>
 				</RigidBatch>
