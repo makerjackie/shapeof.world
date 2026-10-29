@@ -63,6 +63,8 @@ export const ChipScene=memo(function ChipScene(props:SceneProps){
  const layoutLight=(i:number)=>i===3?smooth(SCALES[2],SCALES[3],props.scale)*(1-.58*smooth(.03,.35,u))*(1-smooth(.62,.84,u)):smooth(.8,.97,u)*(1-smooth(SCALES[4],SCALES[5],props.scale))
  // Tilted, the stack keeps its on-screen height while the plan view grows: vias stay short pillars instead of a wall.
  const zoomed=Math.max(1,10**(SCALES[3]-props.scale))
+ // Zooming back out after layers are put back: the cell's ghost wiring rises to full strength before the cell fades.
+ const restore=smooth(SCALES[4],SCALES[4]+.15*(SCALES[3]-SCALES[4]),props.scale)
  return <Canvas orthographic dpr={[1,1.5]} camera={{position:[0,38,.01],zoom:1,near:.01,far:600}} gl={{antialias:true,alpha:false,powerPreference:'low-power'}}>
   <color attach="background" args={[PALETTE.background]}/><ambientLight intensity={.1}/><hemisphereLight args={['#c9d6e2','#0b0f13',.3]}/><directionalLight position={[-10,22,14]} intensity={1.4} color="#fff4e6"/><directionalLight position={[12,9,-22]} intensity={1.8} color="#9cc6ff"/><ReflectionStudio/>
   {STAGES.map((stage,i)=>{
@@ -70,7 +72,7 @@ export const ChipScene=memo(function ChipScene(props:SceneProps){
    if(weight<.008)return null
    const labels=index===i&&weight>.9
    return <Specimen key={stage.id} index={i} scale={props.scale} fieldScale={props.fieldScale} layout={props.layout} fadeMaterials={i!==3&&i!==4} phoneOpen={props.phoneOpen}>
-    {i===0?<Phone open={props.phoneOpen} onChip={props.onNext} labels={labels}/>:i===1?<Package open={props.packageOpen} labels={labels}/>:i===2?<Die labels={labels} selected={props.region} onRegion={props.onRegion}/>:i===3||i===4?<LayoutModel layout={props.layout} view={i===3?'layers':'cell'} peeled={i===4?5:props.peeled} spacing={i===3&&props.tilt>0?props.spacing/zoomed:props.spacing} labels={labels} light={layoutLight(i)} field={10**props.fieldScale} tilt={props.tilt}/>:i===5?<Transistor {...props} labels={labels}/>:<Atoms labels={labels}/>}
+    {i===0?<Phone open={props.phoneOpen} onChip={props.onNext} labels={labels}/>:i===1?<Package open={props.packageOpen} labels={labels}/>:i===2?<Die labels={labels} selected={props.region} onRegion={props.onRegion}/>:i===3||i===4?<LayoutModel layout={props.layout} view={i===3?'layers':'cell'} peeled={i===4?5:props.peeled} spacing={i===3&&props.tilt>0?props.spacing/zoomed:props.spacing} labels={labels} livePeeled={props.peeled} restore={restore} light={layoutLight(i)} field={10**props.fieldScale} tilt={props.tilt}/>:i===5?<Transistor {...props} labels={labels}/>:<Atoms labels={labels}/>}
    </Specimen>
   })}
   <Camera index={index} {...props}/><Ready onReady={props.onReady}/>

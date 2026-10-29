@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, type MutableRefObject } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Html } from '@react-three/drei'
-import { BufferGeometry, Color, DoubleSide, Group, LineBasicMaterial, MeshBasicMaterial, MeshPhysicalMaterial, MeshStandardMaterial, Vector3, type Texture } from 'three'
+import { BufferGeometry, Color, Group, LineBasicMaterial, MeshBasicMaterial, MeshPhysicalMaterial, MeshStandardMaterial, Vector3, type Texture } from 'three'
 import { useExperienceI18n } from '~/i18n/experience'
 import { maskGeometry } from './geometry'
 import { grainTexture } from './textures'
@@ -12,7 +12,7 @@ const HEIGHTS: Record<Mask, number> = { nwell: .006, diff: .035, poly: .12, lico
 const UPPER: Partial<Record<Mask, Mask>> = { licon: 'li', mcon: 'm1', v1: 'm2', v2: 'm3', v3: 'm4' }
 /** In the tilted view each wiring level turns see-through, so the levels below show and the stack reads as stacked sheets. */
 const TILT_ALPHA: Partial<Record<Mask, number>> = { li: .72, m1: .6, m2: .6, m3: .6, m4: .58 }
-type LayoutProps = { layout: Layout; view: 'layers' | 'cell'; peeled: number; spacing: number; labels?: boolean; light?: number; field?: number; tilt?: number }
+type LayoutProps = { layout: Layout; view: 'layers' | 'cell'; peeled: number; spacing: number; labels?: boolean; light?: number; field?: number; tilt?: number; livePeeled?: number; restore?: number }
 const ease = (a: number, b: number, x: number) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t) }
 
 function MaskLayer({ mask, polygons, bounds, peeled, spacing, light, contacts, tiltMix, sheet, grain }: {
@@ -69,43 +69,50 @@ function MaskLayer({ mask, polygons, bounds, peeled, spacing, light, contacts, t
 }
 
 const ROUTING_LAYERS = [
-  { key: 'm1', y: HEIGHTS.m1, color: PALETTE.m1, metal: true },
-  { key: 'm2', y: HEIGHTS.m2, color: PALETTE.m2, metal: true },
-  { key: 'v1', y: HEIGHTS.m1, color: PALETTE.via, metal: false },
+  { key: 'cells', y: 0, color: PALETTE.substrate, owner: null },
+  { key: 'm1', y: HEIGHTS.m1, color: PALETTE.m1, owner: 'm1' },
+  { key: 'm2', y: HEIGHTS.m2, color: PALETTE.m2, owner: 'm2' },
+  { key: 'v1', y: HEIGHTS.m2, color: PALETTE.via, owner: 'm2' },
 ] as const
-/** The cell is shown at the transistor level, so its own metal is peeled away. Around it, illustrative M1 (across)
- * and M2 (up) wiring with V1 plugs shows what sits on top in a real block; the wiring stops short of the cell. */
-function CellRouting({ bounds, rails, spacing, light }: { bounds: number[]; rails: number[][]; spacing: number; light: number }) {
+/** Removed layers still drawn as faint ghosts; the neighbouring cells as dim tiles. */
+const GHOST = .3, NEIGHBOURS = .55
+/** The cell is shown at the transistor level, so its own metal is peeled away (the panel says 5 / 5). Around it sit
+ * neighbouring cells in the same row, and ghosts of the removed M1 and M2: illustrative routing on the real track grid,
+ * with the power rails running unbroken along the row. Signal wiring stops short of the cell.
+ * `restore` (0–1) brings a put-back layer to full strength as the view zooms back out to the open layout. */
+function CellRouting({ bounds, rails, spacing, light, peeled, restore }: { bounds: number[]; rails: number[][]; spacing: number; light: number; peeled: number; restore: number }) {
   const halfWidth = (bounds[2] - bounds[0]) / 2000, halfHeight = (bounds[3] - bounds[1]) / 2000
   const scale = 10 / (halfWidth * 2)
-  const routing = useMemo(() => {
-    const centre = (bounds[1] + bounds[3]) / 2000
-    return cellRouting(halfWidth, halfHeight, rails.map(p => { const ys = p.filter((_, i) => i % 2); return (Math.min(...ys) + Math.max(...ys)) / 2000 - centre }))
-  }, [bounds, rails, halfWidth, halfHeight])
-  const viaHeight = Math.max(.01, (HEIGHTS.m2 - HEIGHTS.m1) * spacing - .035)
   const geometries = useMemo(() => {
+    const centre = (bounds[1] + bounds[3]) / 2000
+    const routing = cellRouting(halfWidth, halfHeight, rails.map(p => { const ys = p.filter((_, i) => i % 2); return (Math.min(...ys) + Math.max(...ys)) / 2000 - centre }))
     const fade = (x: number, z: number) => routingFade(x, z, halfWidth, halfHeight)
-    return { m1: routingGeometry(routing.m1, scale, .035, fade), m2: routingGeometry(routing.m2, scale, .035, fade), v1: routingGeometry(routing.v1, scale, viaHeight, fade) }
-  }, [routing, scale, viaHeight, halfWidth, halfHeight])
+    return { cells: routingGeometry(routing.cells, scale, fade), m1: routingGeometry(routing.m1, scale, fade), m2: routingGeometry(routing.m2, scale, fade), v1: routingGeometry(routing.v1, scale, fade) }
+  }, [bounds, rails, halfWidth, halfHeight, scale])
   useEffect(() => () => Object.values(geometries).forEach(g => g.dispose()), [geometries])
-  const materials = useRef<(MeshStandardMaterial | null)[]>([])
+  const materials = useRef<(MeshBasicMaterial | null)[]>([])
+  const strength = useRef(ROUTING_LAYERS.map(l => l.owner ? GHOST : NEIGHBOURS))
   const bases = useMemo(() => ROUTING_LAYERS.map(l => new Color(l.color)), [])
-  useFrame(() => materials.current.forEach((m, i) => {
-    if (!m) return
-    // Same dimming as the real masks: darken by colour first, so the zoom never passes through a pale wash.
-    // Context, not subject: about half as bright as the masks, so the cell stays the brightest thing on screen.
-    m.color.copy(bases[i]).multiplyScalar(light * .55)
-    m.envMapIntensity = .6 * light
-    m.opacity = Math.min(1, light * 3)
-  }))
+  useFrame((_, dt) => {
+    const factor = 1 - Math.exp(-Math.min(dt, .1) * 6)
+    materials.current.forEach((m, i) => {
+      if (!m) return
+      const owner = ROUTING_LAYERS[i].owner
+      const target = owner ? GHOST + (1 - GHOST) * restore * (maskVisible(owner, peeled) ? 1 : 0) : NEIGHBOURS
+      strength.current[i] += (target - strength.current[i]) * factor
+      // Same dimming as the real masks: darken by colour first, so the zoom never passes through a pale wash.
+      m.color.copy(bases[i]).multiplyScalar(light)
+      m.opacity = strength.current[i] * Math.min(1, light * 3)
+    })
+  })
   return <group visible={light > .004}>
-    {ROUTING_LAYERS.map((l, i) => <mesh key={l.key} geometry={geometries[l.key]} renderOrder={l.key === 'm1' ? 1 : l.key === 'v1' ? 2 : 3} position={[0, l.y * spacing + (l.key === 'v1' ? .035 : 0), 0]}>
-      <meshStandardMaterial ref={m => { materials.current[i] = m }} vertexColors color={l.color} roughness={l.metal ? .48 : .32} metalness={l.metal ? .7 : .85} side={DoubleSide} transparent depthWrite={false} opacity={0} />
+    {ROUTING_LAYERS.map((l, i) => <mesh key={l.key} geometry={geometries[l.key]} renderOrder={i + 1} position={[0, l.key === 'cells' ? -.003 : l.y * spacing + (l.key === 'v1' ? .002 : 0), 0]}>
+      <meshBasicMaterial ref={m => { materials.current[i] = m }} vertexColors color={l.color} transparent depthWrite={false} opacity={0} />
     </mesh>)}
   </group>
 }
 
-export function LayoutModel({ layout, view, peeled, spacing, labels = true, light = 1, field = 1e-3, tilt = 0 }: LayoutProps) {
+export function LayoutModel({ layout, view, peeled, spacing, labels = true, light = 1, field = 1e-3, tilt = 0, livePeeled = 5, restore = 0 }: LayoutProps) {
   const tx = useExperienceI18n()
   const dataset = view === 'cell' ? layout.cell : layout
   const aspect = (dataset.bounds[3] - dataset.bounds[1]) / (dataset.bounds[2] - dataset.bounds[0])
@@ -128,7 +135,7 @@ export function LayoutModel({ layout, view, peeled, spacing, labels = true, ligh
       <meshStandardMaterial ref={substrate} color={PALETTE.substrate} roughness={.55} metalness={.35} transparent opacity={1} />
     </mesh>
     {MASKS.map(mask => <MaskLayer key={`${view}-${mask}`} mask={mask} polygons={dataset.layers[mask]} bounds={dataset.bounds} peeled={peeled} spacing={spacing} light={light} contacts={contacts} tiltMix={tiltMix} sheet={view === 'layers' && !!TILT_ALPHA[mask]} grain={grain} />)}
-    {view === 'cell' && <CellRouting bounds={dataset.bounds} rails={dataset.layers.m1} spacing={spacing} light={light} />}
+    {view === 'cell' && <CellRouting bounds={dataset.bounds} rails={dataset.layers.m1} spacing={spacing} light={light} peeled={livePeeled} restore={restore} />}
     {labels && view === 'cell' && peeled === 5 && light > .9 && <>
       <Html zIndexRange={[4,0]} position={[-3.5, .7, -5.5]} center className="cz-part-label cz-cell-label"><b>{tx('NMOS 栅指')}</b></Html>
       <Html zIndexRange={[4,0]} position={[-3.5, .7, 3.6]} center className="cz-part-label cz-cell-label"><b>{tx('PMOS 栅指')}</b></Html>

@@ -139,10 +139,13 @@ contains only M1–M4. The renderer uses silvery reflective material with subtle
 false-color tint. A procedural Three.js RoomEnvironment supplies reflections;
 no environment image is downloaded. Via geometry remains from the source GDS.
 
-Around the standard cell, the M1 (horizontal) and M2 (vertical) wiring with V1
-plugs is generated in `routing.ts`; it is illustrative, not from the GDS. Only
-its track pitches (0.34 / 0.46 μm), wire width (0.14 μm) and the continuing
-power-rail positions follow SKY130 conventions. It stops short of the real cell.
+Around the standard cell, the neighbouring cells in its row and the M1
+(horizontal) and M2 (vertical) wiring with V1 plugs are generated in
+`routing.ts`; they are illustrative, not from the GDS. The track pitches
+(0.34 / 0.46 μm), wire width (0.14 μm), 0.46 μm placement site and the rail
+positions follow SKY130 conventions; over the cell, the faint rails coincide
+with its own M1 rails. The wiring is drawn as faint ghosts because the panel
+shows M1–M4 removed at this scale. Signal wiring stops short of the cell.
 
 [imec: A view on the logic technology roadmap](https://www.imec-int.com/en/articles/view-logic-technology-roadmap)
 describes three-sided electrostatic control in FinFETs and gate-all-around control
