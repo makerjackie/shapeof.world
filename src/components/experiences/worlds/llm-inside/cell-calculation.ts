@@ -1,7 +1,9 @@
 import type {Model,Trace,Tensor} from './model'
-import type {MatrixKey} from './inspection'
+import {matrixFor,tensorIndex,type MatrixKey} from './inspection'
 export type Calculation={terms:{index:number;a:number;b:number;product:number}[];bias:number;scale:number;sum:number}
 export function cellCalculation(matrix:MatrixKey,trace:Trace,model:Model,layer:number,head:number,row:number,column:number):Calculation|null{
+ const shape=matrixFor(matrix,trace,model,layer,head).shape
+ row=tensorIndex(row,shape[0]);column=tensorIndex(column,shape[1])
  const block=trace.blocks[layer],prefix=`transformer.h.${layer}`,C=model.config.n_embd,A=C/model.config.n_head,w=model.weights
  let input:Tensor|undefined,weight:Tensor|undefined,bias:Tensor|undefined,out=column
  if(matrix==='query'||matrix==='key'||matrix==='value'){input=block.ln1;weight=w[`${prefix}.attn.c_attn.weight`];bias=w[`${prefix}.attn.c_attn.bias`];out=head*A+column+(matrix==='key'?C:matrix==='value'?2*C:0)}

@@ -27,6 +27,13 @@ export function phonePower(settings: PowerSettings, soc: number) {
   const currentA = batteryW / voltage, heatW = currentA ** 2 * CELL.resistanceOhm
   return {display, compute, radio, other, load, voltage, batteryW, currentA, heatW, chargerW: settings.charging ? (load - batteryW) / .9 : 0, hours: soc<=0?0:load > 0 ? CELL.energyWh * clamp(soc) / load : Infinity}
 }
+/** An exhausted, unplugged phone has no fractions to display. */
+export function powerShare(watts:number,load:number) { return Number.isFinite(watts)&&Number.isFinite(load)&&load>0?clamp(watts/load):0 }
+/** Qualitative particle phase: current controls direction/zero flow, not a calibrated speed. */
+export function advanceChargeFlow(phase:number,elapsed:number,currentA:number) {
+  if(!Number.isFinite(elapsed)||elapsed<=0||!Number.isFinite(currentA)||Math.abs(currentA)<=1e-6)return phase
+  return ((phase+elapsed*.13*Math.sign(currentA))%1+1)%1
+}
 export type CellState = {soc: number; temperature: number; seconds: number}
 export function advanceCell(state: CellState, dt: number, settings: PowerSettings): CellState {
   if (!Number.isFinite(dt) || dt <= 0) return state

@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto'
 import {decodeModel,decodeTensor,forward,gelu,greedySort,lastLogits,seededRandom,sample,softmax,WEIGHT_SHA256,type RawModel,type Tensor} from './model'
 import reference from './__fixtures__/reference-partials.json'
 import {cellCalculation} from './cell-calculation'
-import {matrixFor,type MatrixKey} from './inspection'
+import {matrixFor,tensorIndex,type MatrixKey} from './inspection'
 const bytes=readFileSync('public/assets/llm-inside/gpt-nano-sort-model.json'),model=decodeModel(JSON.parse(bytes.toString()) as RawModel)
 const fixture=reference as unknown as Record<string,Parameters<typeof decodeTensor>[0]>
 describe('published trained GPT inference',()=>{
@@ -51,5 +51,23 @@ describe('published trained GPT inference',()=>{
   expect(softmax([1,3,2],1,1)).toEqual([0,1,0]);expect(softmax([1,3,2],2)[1]).toBeLessThan(softmax([1,3,2],.5)[1])
   const a=seededRandom(42),b=seededRandom(42);for(let i=0;i<10;i++)expect(sample([.2,.3,.5],a())).toBe(sample([.2,.3,.5],b()))
   expect(gelu(0)).toBe(0)
+ })
+})
+
+
+describe('tensor inspection input boundaries',()=>{
+ it('maps editable numeric input to a bounded integer, including decimals and non-finite values',()=>{
+  const cases:[unknown,number][]=[[.1,0],[2.9,2],[-1.5,0],[1e300,5],[Infinity,5],[-Infinity,0],[NaN,0],['',0],['  ',0],[null,0],[undefined,0],['0.1',0],['4.9',4],['1e309',5],['NaN',0]]
+  for(const [input,expected]of cases){const index=tensorIndex(input,6);expect(index).toBe(expected);expect(Number.isInteger(index)).toBe(true);expect(index).toBeGreaterThanOrEqual(0);expect(index).toBeLessThan(6)}
+  expect(tensorIndex(Infinity,1)).toBe(0);expect(tensorIndex(10,0)).toBe(0)
+ })
+ it('expands valid finite dot products even when callers supply malformed coordinates',()=>{
+  const trace=forward(model,[2,1,0,1,0,2]),keys:MatrixKey[]=['query','key','value','scores','projection','up','down','logits']
+  for(const key of keys)for(const [row,column]of [[.1,.3],[NaN,Infinity],[-Infinity,-1],[1e200,1e200]]){
+   const value=matrixFor(key,trace,model,0,0),r=tensorIndex(row,value.shape[0]),c=tensorIndex(column,value.shape[1]),calc=cellCalculation(key,trace,model,0,0,row,column)!
+   expect(Number.isFinite(calc.sum)).toBe(true);expect(calc.terms.every(t=>Number.isFinite(t.a)&&Number.isFinite(t.b)&&Number.isFinite(t.product))).toBe(true)
+   const exact=cellCalculation(key,trace,model,0,0,r,c)!;expect(calc.sum).toBe(exact.sum)
+   if(key!=='scores'||c<=r)expect(calc.sum).toBeCloseTo(value.data[r*value.shape[1]+c],4)
+  }
  })
 })

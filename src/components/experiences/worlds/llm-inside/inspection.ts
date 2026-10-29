@@ -1,4 +1,12 @@
 import {headTensor,type Model,type Tensor,type Trace} from './model'
+/** Number inputs can emit decimals and non-finite values before HTML validation. */
+export function tensorIndex(value:unknown,length:number):number {
+ const last=Number.isFinite(length)?Math.max(0,Math.trunc(length)-1):0
+ const number=typeof value==='number'?value:typeof value==='string'?Number(value):0
+ if(Number.isNaN(number)||number===-Infinity)return 0
+ if(number===Infinity)return last
+ return Math.max(0,Math.min(last,Math.trunc(number)))
+}
 export const BLOCK_NAMES=['第一层','第二层','第三层'] as const
 export type MatrixKey='embedding'|'input'|'normalise'|'query'|'key'|'value'|'scores'|'attention'|'context'|'projection'|'attentionResidual'|'ffnNorm'|'up'|'gelu'|'down'|'output'|'finalNorm'|'logits'|'probabilities'|'wte'|'wqkv'|'wup'|'wdown'|'wout'
 export type MatrixInfo={id:MatrixKey;label:string;en:string;formula:string;description:string;descriptionEn:string;kind:'activation'|'probability'|'weight';phase:number}

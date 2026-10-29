@@ -7,7 +7,7 @@ import type {ExperienceControls} from '~/components/ExperienceShell'
 import {GuideTour} from '~/components/experiences/GuideTour'
 import {useExperienceI18n} from '~/i18n/experience'
 import {isWorldPaused} from '~/lib/world-playback'
-import {addByte, advanceCell, cameraOptics, displayLight, hapticMotion, phonePower, radioLink, type CellState, type Lab, type SystemId} from './model'
+import {addByte, advanceCell, cameraOptics, displayLight, hapticMotion, phonePower, powerShare, radioLink, type CellState, type Lab, type SystemId} from './model'
 import {PARTS, SYSTEMS} from './parts'
 import {partPosition, PhoneAssembly} from './PhoneAssembly'
 import {CameraLab, ComputeLab, DisplayLab, HapticsLab, PowerLab, RadioLab, type LabSettings} from './Labs'
@@ -122,7 +122,7 @@ export function IPhoneTeardown({controls}:{controls:ExperienceControls}) {
     <Slider label={tx('屏幕亮度')} value={settings.power.brightness} onChange={v=>powerChange('brightness',v)} unit={`${Math.round(settings.power.brightness*100)}%`}/><Slider label={tx('计算负载')} value={settings.power.workload} onChange={v=>powerChange('workload',v)} unit={`${Math.round(settings.power.workload*100)}%`}/><Slider label={tx('无线负载')} value={settings.power.radio} onChange={v=>powerChange('radio',v)} unit={`${Math.round(settings.power.radio*100)}%`}/>
     <button className="ip-inline-action" aria-pressed={settings.power.charging} onClick={()=>powerChange('charging',!settings.power.charging)}>{settings.power.charging?tx('拔下充电器'):tx('接上 20 W 充电器')}<ArrowRight size={14}/></button>
     <div className="ip-readout-pair"><Readout label={tx('电池电量')} value={(cell.soc*100).toFixed(1)} unit="%"/><Readout label={tx('系统负载')} value={p.load.toFixed(2)} unit="W"/><Readout label={tx('电池电流')} value={Math.abs(p.currentA).toFixed(2)} unit="A"/><Readout label={tx('估算剩余使用')} value={p.hours.toFixed(1)} unit="h"/></div>
-    <div className="ip-energy-meter">{(['display','compute','radio','other'] as const).map((key,i)=><i key={key} style={{width:`${p[key]/p.load*100}%`,background:['#8faf9c','#ac98bf','#93a7c6','#677880'][i]}}/>)}</div>
+    <div className="ip-energy-meter">{(['display','compute','radio','other'] as const).map((key,i)=><i key={key} style={{width:`${powerShare(p[key],p.load)*100}%`,background:['#8faf9c','#ac98bf','#93a7c6','#677880'][i]}}/>)}</div>
     <p className="ip-explanation">{tx('绿色粒子表示电解质里的锂离子，金色粒子表示外电路电子。充电时两者方向反转。粒子数量、速度和电池层厚度都是示意。')}</p>
     <Slider label={tx('设置初始电量')} value={cell.soc} min={.01} max={1} onChange={v=>{interact();setCell(c=>({...c,soc:v}))}} unit={`${Math.round(cell.soc*100)}%`}/>
     <small className="ip-model-note">{tx('参考电池 12 Wh；各系统功率与充电曲线为教学参数，不预测真实 iPhone 续航。')}</small>

@@ -1,5 +1,5 @@
 import {describe,expect,it} from 'vitest'
-import {ACTUATOR,addByte,advanceCell,bpsk,cameraOptics,CELL,displayLight,hapticMotion,phonePower,radioLink,srgbToLinear} from './model'
+import {ACTUATOR,addByte,advanceCell,bpsk,cameraOptics,CELL,displayLight,hapticMotion,phonePower,powerShare,advanceChargeFlow,radioLink,srgbToLinear} from './model'
 
 describe('phone subsystem calculations',()=>{
  it('adds every possible pair of unsigned bytes, including the ninth carry bit',()=>{
@@ -51,5 +51,33 @@ describe('phone subsystem calculations',()=>{
   expect(peak.amplitudeMm).toBeGreaterThan(hapticMotion(100,.02,0).amplitudeMm)
   expect(hapticMotion(175,.04,0).amplitudeMm).toBeCloseTo(peak.amplitudeMm*2)
   expect(hapticMotion(175,0,1).displacementMm).toBeCloseTo(0)
+ })
+})
+
+
+describe('battery display at zero current and power',()=>{
+ const settings={brightness:.55,workload:.25,radio:.3,charging:false}
+ it('shows zero fractions when exhausted and preserves the powered device ledger on external power',()=>{
+  const channels=['display','compute','radio','other']as const,empty=phonePower(settings,0),fullPlugged=phonePower({...settings,charging:true},1)
+  expect(channels.map(k=>powerShare(empty[k],empty.load))).toEqual([0,0,0,0])
+  for(const p of[phonePower(settings,.67),fullPlugged])expect(channels.reduce((sum,k)=>sum+powerShare(p[k],p.load),0)).toBeCloseTo(1,12)
+  expect(fullPlugged.currentA===0).toBe(true);expect(fullPlugged.load).toBeGreaterThan(0);expect(fullPlugged.chargerW).toBeGreaterThan(0)
+  expect(powerShare(0,0)).toBe(0);expect(powerShare(NaN,1)).toBe(0)
+ })
+ it('moves continuously in the measured current direction and stops at empty or full charge',()=>{
+  const initial=.4,discharge=phonePower(settings,.67),charge=phonePower({...settings,charging:true},.67)
+  const forward=advanceChargeFlow(initial,1,discharge.currentA),reverse=advanceChargeFlow(forward,1,charge.currentA)
+  expect(forward).toBeGreaterThan(initial);expect(reverse).toBeCloseTo(initial,12)
+  for(const p of[phonePower(settings,0),phonePower({...settings,charging:true},1)])expect(advanceChargeFlow(initial,100,p.currentA)).toBe(initial)
+  expect(advanceChargeFlow(initial,0,discharge.currentA)).toBe(initial)
+  expect(advanceChargeFlow(initial,1,1e-12)).toBe(initial)
+  expect(advanceChargeFlow(initial,1,NaN)).toBe(initial)
+ })
+ it('does not catch up idle intervals or jump on direction changes and wraps both endpoints',()=>{
+  let phase=advanceChargeFlow(.2,.1,1);phase=advanceChargeFlow(phase,1000,0)
+  expect(advanceChargeFlow(phase,.1,1)).toBeCloseTo(.226,12)
+  expect(advanceChargeFlow(phase,.1,-1)).toBeCloseTo(.2,12)
+  expect(advanceChargeFlow(.99,1,1)).toBeCloseTo(.12,12)
+  expect(advanceChargeFlow(.01,1,-1)).toBeCloseTo(.88,12)
  })
 })

@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useRef, type RefObject} from 'react'
 import {useFrame} from '@react-three/fiber'
 import * as T from 'three'
-import {ACTUATOR, addByte, bpsk, cameraOptics, displayLight, hapticMotion, phonePower, radioLink, type CellState, type PowerSettings} from './model'
+import {ACTUATOR, addByte, bpsk, cameraOptics, displayLight, hapticMotion, phonePower,advanceChargeFlow, radioLink, type CellState, type PowerSettings} from './model'
 import {Cylinder, DiagramLine, Mark, Plate, Wire} from './render-kit'
 
 export type LabSettings = {rgb:[number,number,number];touch:[number,number]|null;a:number;b:number;objectM:number;focusM:number;frequencyGHz:number;distanceKm:number;bits:number[];hapticHz:number;forceN:number;power:PowerSettings}
@@ -64,20 +64,20 @@ export function CameraLab({settings}:LabProps){
  {Array.from({length:6},(_,i)=><Cylinder key={i} position={[(i-2.5)*.13,0,0]} rotation={[0,0,Math.PI/2]} radius={1.27} depth={.03} color="#59646a" open/>)}
  </group>
 }
-function ElectronPath({clock,reverse}:{clock:RefObject<number>;reverse:boolean}) {
- const dots=useRef<T.Group>(null),path=useMemo(()=>new T.CatmullRomCurve3([new T.Vector3(-4,0,.1),new T.Vector3(-4,-3.2,.1),new T.Vector3(0,-4.2,.1),new T.Vector3(4,-3.2,.1),new T.Vector3(4,0,.1)]),[])
- useFrame(()=>dots.current?.children.forEach((dot,i)=>{const v=((clock.current*.13*(reverse?-1:1)+i/12)%1+1)%1;dot.position.copy(path.getPoint(v))}))
- return <group><Wire points={[[-4,0,.1],[-4,-3.2,.1],[0,-4.2,.1],[4,-3.2,.1],[4,0,.1]]} color="#a78a5c" radius={.045}/><group ref={dots}>{Array.from({length:12},(_,i)=><mesh key={i}><sphereGeometry args={[.085,12,12]}/><meshBasicMaterial color="#d1bd8b"/></mesh>)}</group></group>
+const ELECTRON_ROUTE:[number,number,number][]=[[-4,0,.1],[-4,-3.2,.1],[0,-4.2,.1],[4,-3.2,.1],[4,0,.1]]
+function ElectronPath({dots}:{dots:RefObject<T.Group|null>}) {
+ return <group><Wire points={ELECTRON_ROUTE} color="#a78a5c" radius={.045}/><group ref={dots}>{Array.from({length:12},(_,i)=><mesh key={i}><sphereGeometry args={[.085,12,12]}/><meshBasicMaterial color="#d1bd8b"/></mesh>)}</group></group>
 }
 export function PowerLab({settings,clock,cell}:LabProps){
- const ions=useRef<T.Group>(null),p=phonePower(settings.power,cell.soc)
- useFrame(()=>ions.current?.children.forEach((dot,i)=>{const v=((clock.current*.13*(settings.power.charging?-1:1)+i/24)%1+1)%1;dot.position.set(-3.4+v*6.8,((i*7)%11-5)*.35,.2+(i%3)*.23)}))
+ const ions=useRef<T.Group>(null),electrons=useRef<T.Group>(null),phase=useRef(0),lastClock=useRef(clock.current),p=phonePower(settings.power,cell.soc)
+ const path=useMemo(()=>new T.CatmullRomCurve3(ELECTRON_ROUTE.map(p=>new T.Vector3(...p))),[])
+ useFrame(()=>{const now=clock.current;phase.current=advanceChargeFlow(phase.current,now-lastClock.current,p.currentA);lastClock.current=now;ions.current?.children.forEach((dot,i)=>{const v=((phase.current+i/24)%1+1)%1;dot.position.set(-3.4+v*6.8,((i*7)%11-5)*.35,.2+(i%3)*.23)});electrons.current?.children.forEach((dot,i)=>dot.position.copy(path.getPoint(((phase.current+i/12)%1+1)%1)))})
  return <group><Plate size={[10,5.7,.3]} position={[0,.6,-.7]} color="#283138" radius={.18}/>
  <Plate size={[2.1,4.7,.5]} position={[-3.2,.6,0]} color="#506874"/><Plate size={[2.1,4.7,.5]} position={[3.2,.6,0]} color="#7e604e"/>
  {Array.from({length:15},(_,i)=><Plate key={i} size={[.08,4.5,.82]} position={[-2.1+i*.3,.6,-.1]} color={i%2?'#a79e85':'#6a8a83'} opacity={i%2?.28:.6} radius={.01}/>)}
  <Mark text="GRAPHITE / −" position={[-3.2,3.4,.3]} width={3.4} height={.32}/><Mark text="OXIDE / +" position={[3.2,3.4,.3]} width={3.2} height={.32}/><Mark text="Li+ / ELECTROLYTE" position={[0,-2.25,.35]} width={4.3} height={.3} color="#a9c9c4"/>
  <group ref={ions}>{Array.from({length:24},(_,i)=><mesh key={i}><sphereGeometry args={[.09,12,12]}/><meshStandardMaterial color="#90b8ad" emissive="#527d70" emissiveIntensity={.5}/></mesh>)}</group>
- <ElectronPath clock={clock} reverse={settings.power.charging}/>
+ <ElectronPath dots={electrons}/>
  {[{x:-2.7,t:'DISPLAY',w:p.display,c:'#638675'},{x:0,t:'SILICON',w:p.compute,c:'#88779c'},{x:2.7,t:'RADIO',w:p.radio,c:'#7388a6'}].map(load=><group key={load.t} position={[load.x,-4,.1]}><Plate size={[2.3,1.1,.25]} color={load.c}/><Mark text={load.t} width={1.9} height={.24} position={[0,.2,.15]}/><Mark text={`${load.w.toFixed(2)} W`} width={1.7} height={.25} position={[0,-.2,.15]}/></group>)}
  </group>
 }
