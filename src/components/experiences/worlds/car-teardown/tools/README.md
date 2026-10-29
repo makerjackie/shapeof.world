@@ -23,4 +23,4 @@ The default public asset directory is intentionally unpopulated at this checkpoi
 VITE_CAR_ASSET_BASE=/@fs/ABSOLUTE/WORKTREE/.local/car-assets/v2 pnpm dev --port 3221
 ```
 
-For a release, upload `car.glb`, `engine.glb`, `studio.hdr`, Draco/Basis decoder JS/WASM and their Apache-2.0 notices into one versioned asset directory; configure `VITE_CAR_ASSET_BASE` to that directory. Keep Khronos/DGG/Unity Fan attribution from `SOURCES.md`. Do not upload raw STEP, `engine-beveled.glb`, the encoder or reference screenshots. Publication requires its own approval.
+For a release, upload `car.glb`, `engine.glb`, `studio.hdr`, Draco/Basis decoder JS/WASM and their Apache-2.0 notices into one versioned asset directory; v2 lives in R2 bucket `shapeof-world-assets` under `car-teardown/v2/`, served at `/assets/car-teardown/v2/` by the site Worker; a new version goes in a new `v<n>/` prefix, added to `PREFIXES` in `src/worker/world-assets.ts`. Keep Khronos/DGG/Unity Fan attribution from `SOURCES.md`. Do not upload raw STEP, `engine-beveled.glb`, the encoder or reference screenshots. Publication requires its own approval.
