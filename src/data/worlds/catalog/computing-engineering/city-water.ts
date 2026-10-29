@@ -1,0 +1,41 @@
+import type {WorldExperience} from '../../types'
+
+export default {
+  id: 'city-water',
+  publication: 'making',
+  title: '一座城市的水',
+  poster: '/assets/posters/city-water.webp',
+  posterMobile: '/assets/posters/mobile/city-water.webp',
+  posterDesktop: '/assets/posters/desktop/city-water.webp',
+  posterTitle: '一座城市的水',
+  posterHook: '从水库到水厂，再到地下的环网。停一台泵，整座城市一起回应。',
+  posterSource: '非线性管网水力 · 储水守恒 · 水质输运',
+  question: '水库里的水，怎样一直流到你的水龙头？',
+  hook: '探索水库、混凝、沉淀、过滤、消毒、供水泵、高位水塔和十五个街区节点。调整取水、泵速、需求和阀门，看流向、水压、储水与水龄一起变化。',
+  payoff: '供水是一整张网的平衡。泵提供水头，高位储水接住短时差额，环状管道允许流向重分配；储水耗尽时，压力相关供水会逐渐下降。这里是一座原创参考城市，工艺效率与参数是教学假设。',
+  topicLabel: '城市供水',
+  translations: {en: {
+    title: 'A city of water',posterTitle: 'A city of water',
+    posterHook: 'From reservoir to treatment works to the buried network. Stop one pump; the entire city responds.',
+    posterSource: 'Nonlinear network hydraulics · Storage balance · Quality transport',
+    question: 'How does reservoir water keep reaching your tap?',
+    hook: 'Explore a reservoir, coagulation, settling, filters, disinfection, pumps, an elevated tank and fifteen district nodes. Change intake, speed, demand and valves; watch flow, pressure, storage and water age respond.',
+    payoff: 'Water supply balances an entire network. Pumps add head, elevated storage buffers short-term differences, and looped pipes redistribute flow. When storage runs out, pressure-dependent delivery falls. This is an original reference town with illustrative treatment responses and parameters.',
+    topicLabel: 'Urban water supply',
+  }},
+  primaryCategoryId: 'computing-engineering',runtime: 'scene-3d',difficulty: 'advanced',lane: 'flow',renderer: 'city-water',
+  experiencePolicy: {entryMode: 'direct',shellMode: 'minimal'},
+  duration: 1200,evidence: 'modeled',accent: '#78bbc5',related: [],
+  sources: [
+    {label: '美国环保署 · EPANET',labelEn: 'U.S. EPA · EPANET',url: 'https://www.epa.gov/water-research/epanet',note: '管网系统组成、水头、储水、水龄与水质的建模框架参考；本作没有调用或改编 EPANET 引擎。',noteEn: 'Reference framework for network components, heads, storage, water age and quality. This work does not call or adapt the EPANET engine.'},
+    {label: 'EPANET 2.2 · 管网模型',labelEn: 'EPANET 2.2 · The Network Model',url: 'https://usepa.github.io/EPANET2.2/3_network_model.html',note: '管道、泵、储水池、压力相关供水和一阶反应的原理参考。',noteEn: 'Principles of pipes, pumps, tanks, pressure-dependent delivery and first-order reactions.'},
+    {label: 'EPANET 2.2 · 分析算法',labelEn: 'EPANET 2.2 · Analysis Algorithms',url: 'https://usepa.github.io/EPANET2.2/12_analysis_algorithms.html',note: '节点守恒、管道水头损失、泵速关系和压力相关供水。求解器为原创的节点水头牛顿迭代。',noteEn: 'Nodal conservation, pipe head loss, pump speed relations and pressure-dependent delivery. The solver is an original nodal-head Newton implementation.'},
+    {label: '美国疾控中心 · 水处理怎样运行',labelEn: 'CDC · How Water Treatment Works',url: 'https://www.cdc.gov/drinking-water/about/how-water-treatment-works.html',note: '混凝、絮凝、沉淀、过滤与消毒的流程参考，不复用图像。',noteEn: 'Process reference for coagulation, flocculation, sedimentation, filtration and disinfection. No images are reused.'},
+  ],
+  fieldNotes: [
+    {label: '一座原创参考城市',labelEn: 'An original reference town',body: '十七个水力节点、二十五条管道，包括清水池边界、十五个用水节点和高位水塔。水库十八万立方米、清水池一千八百立方米、水塔七百二十立方米；所有街区、地形和建筑均为程序化原创，不代表实际城市或供水能力。',bodyEn: 'Seventeen hydraulic nodes and twenty-five links: a clearwell boundary, fifteen demand nodes and an elevated tank. Reservoir capacity is 180,000 m³, clearwell 1,800 m³ and elevated tank 720 m³. All districts, terrain and buildings are original procedural geometry, not a real town or a certified supply capacity.'},
+    {label: '真正共同求解的流量与水压',labelEn: 'Jointly solved flow and pressure',body: '定摩阻 Darcy–Weisbach 管损采用 f=0.022；节点供水在零压力时为零、20 米水头时达到需求，中间按平方根变化。泵曲线、漏口、单向阀与逐段关阀共同参加非线性求解。连续方程残差可在调度台检查。',bodyEn: 'Darcy–Weisbach losses use a fixed reference friction factor f=0.022. Delivery is zero at zero pressure and reaches demand at 20 m, following a square-root relation between them. Pump curves, a leak orifice, check valves and individual closures take part in the nonlinear solve. Continuity residuals are shown on the console.'},
+    {label: '水质与显示边界',labelEn: 'Quality and display limits',body: '每条管道分四个迎风有限体积单元，以满足 CFL 的步长输运水龄和代表余氯。池体完全混合，余氯体相一阶衰减率为每小时 0.055。初始水龄、水质、处理响应和所有参数为教学假设；不计算病原体、管壁反应、楼内管路或水锤，也不判定饮水安全。地形、水塔与管线分别夸张显示；流点加速指示方向，路线导览按代表与平均停留时间播放。',bodyEn: 'Each pipe has four upwind finite-volume cells with a CFL-limited transport step for water age and a representative chlorine residual. Tanks are completely mixed; bulk chlorine decays at 0.055 per hour. Initial quality, age, treatment responses and parameters are illustrative. Pathogens, wall reactions, building plumbing and water hammer are omitted; no drinking-safety judgement is made. Terrain, tower height and pipe width are exaggerated separately. Accelerated markers indicate direction; the route tour uses representative and mean residence times.'},
+  ],
+  provenance: {origin: 'ai-prototype',initialModel: 'gpt-6'},presentation: 'full-bleed',transferBudgetMb: 3,fallback: 'text',
+} satisfies WorldExperience
