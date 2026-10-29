@@ -1,0 +1,42 @@
+import type {WorldExperience} from '../../types'
+
+export default {
+  id: 'wind-ocean',
+  publication: 'making',
+  title: '风，与洋流',
+  poster: '/assets/posters/wind-ocean.webp',
+  posterMobile: '/assets/posters/mobile/wind-ocean.webp',
+  posterDesktop: '/assets/posters/desktop/wind-ocean.webp',
+  posterTitle: '风，与洋流',
+  posterHook: '转动一颗装着真实历史格点的地球。把空气和海水放在同一处，看两条路线慢慢分开。',
+  posterSource: 'NOAA GFS · ESR / NASA OSCAR · 球面积分',
+  question: '同一片海上，风和水会往同一个方向走吗？',
+  hook: '自由探索八片海域，叠加近地风和近表层洋流，测量速度、方向与夹角。放出漂流标记，跟随、比较并回看在冻结历史场中算出的路线。',
+  payoff: '风和水有各自的速度与时间尺度。这里用两份 2014 年历史格点，保留原网格和缺测，以球面 RK4 计算教学轨迹；它不是实时地球，也不是未来漂流预测。',
+  topicLabel: '风与海洋',
+  translations: {en: {
+    title: 'Wind, and the ocean',posterTitle: 'Wind, and the ocean',
+    posterHook: 'Turn a globe of real historical fields. Release air and water at one location, then watch their routes separate.',
+    posterSource: 'NOAA GFS · ESR / NASA OSCAR · Spherical integration',
+    question: 'Over the same ocean, do wind and water travel in the same direction?',
+    hook: 'Explore eight regions, overlay near-ground winds and upper-ocean currents, and measure speed, direction and angle. Release drifters, follow them, compare and replay their paths through frozen historical fields.',
+    payoff: 'Wind and water have different velocities and time scales. Two historical 2014 fields retain their native grids and missing values; spherical RK4 computes educational tracks. This is neither a live globe nor a forecast of future drift.',
+    topicLabel: 'Winds and ocean currents',
+  }},
+  primaryCategoryId: 'earth-climate',
+  runtime: 'globe-3d',difficulty: 'advanced',lane: 'flow',renderer: 'wind-ocean',duration: 1200,evidence: 'compiled',accent: '#8bcfcf',related: [],
+  experiencePolicy: {entryMode: 'direct',shellMode: 'minimal'},
+  sources: [
+    {label: 'NOAA / NCEP · 全球预报系统',labelEn: 'NOAA / NCEP · Global Forecast System',url: 'https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast',note: 'GFS 2014-01-31 00:00 UTC 起报、三小时预报的十米风，1° 网格，u/v 单位 m/s。',noteEn: 'GFS 10-m winds from the 2014-01-31 00:00 UTC cycle at +3 h, on a 1° grid; u/v in m/s.'},
+    {label: 'ESR · OSCAR ⅓°，版本 1',labelEn: 'ESR · OSCAR third degree, version 1',url: 'https://doi.org/10.5067/OSCAR-03D01',note: '标称 2014-01-31 的历史五日近表层海流。该旧产品已退役，本作离线保留历史切片，不提供实时数据。',noteEn: 'Historical five-day upper-ocean currents labelled 2014-01-31. This retired product is preserved here as an offline historical slice, not live data.'},
+    {label: 'Earth & Space Research · OSCAR 方法',labelEn: 'Earth & Space Research · OSCAR method',url: 'https://www.esr.org/data-products/oscar/oscar-surface-currents/',note: '由海面高度、风和温度等资料推算上层 30 米平均流；不是直接测到的单个漂浮物轨迹。',noteEn: 'Upper-30-m mean currents estimated from sea-surface height, winds and temperature, not direct tracks of individual floating objects.'},
+    {label: 'Cameron Beccario · earth 开源历史数据',labelEn: 'Cameron Beccario · earth historical data',url: 'https://github.com/cambecc/earth',note: '保留 MIT 许可，固定上游提交，保留两个分量与各自缺测；用无损百分之一米每秒整数打包。',noteEn: 'MIT notice retained. The upstream commit is pinned; both components and their missing values are preserved in a lossless 0.01-m/s integer packing.'},
+    {label: 'NASA · Blue Marble 陆地、浅水与地形',labelEn: 'NASA · Blue Marble land, shallow water and topography',url: 'https://visibleearth.nasa.gov/images/57752/blue-marble-land-surface-shallow-water-and-shaded-topography',note: 'Reto Stöckli / NASA Goddard，复用仓库 4K 制图底图。不是 2014 年的同步卫星照片。',noteEn: 'Reto Stöckli / NASA Goddard; the repository’s existing 4K cartographic base. It is not satellite imagery synchronous with the 2014 fields.'},
+  ],
+  fieldNotes: [
+    {label: '数据的日期和含义',labelEn: 'Dates and meaning of the fields',body: '风场有效时刻为 2014-01-31 03:00 UTC，1° × 1°、360 × 181。洋流标称 2014-01-31，⅓° × ⅓°、1080 × 481、80°N–80°S，是五日产品；它代表上层 30 米平均流，转换文件中的深度标签为 15 米。两者并非相同时刻、相同时间分辨率的观测。',bodyEn: 'Wind validity is 2014-01-31 03:00 UTC on a 1° grid of 360 × 181. Ocean currents are labelled 2014-01-31 on a ⅓° grid of 1080 × 481, 80°N–80°S, from a five-day product. They represent an upper-30-m mean; the converted file carries a 15-m depth label. The products do not have identical observation times or temporal resolution.'},
+    {label: '数值与缺测',labelEn: 'Numerics and missing values',body: '双线性插值保留 u/v 向量；四个角点中任一分量缺测就拒绝插值，不把缺测补成静止。球面 RK4 在每个阶段重归一化，以产品参考半径计算位移，步长随当地格距和速度限制。标记进入缺测边界时停在最后有效点；它不表示真实搁浅。',bodyEn: 'Bilinear interpolation retains u/v vectors and rejects any cell with a missing corner component. Missing data are not zero velocity. Spherical RK4 normalizes every stage and uses product-specific reference radii; local grid spacing and speed constrain steps. At a missing-data boundary a marker stops at its last valid point, not a simulated beaching.'},
+    {label: '冻结场与显示',labelEn: 'Frozen fields and display',body: '每个产品只有一帧；漂流最多计算三十天，始终把速度场冻结。未包含天气演变、潮汐、波浪、垂向运动、湍流扩散或漂浮物受风。背景流线循环只指示去向，用户标记才使用漂流时钟；图层高度、局部箭头长度和观察照明分别作显示处理。',bodyEn: 'Each product has one frame. Drift is capped at 30 days with the velocity field frozen throughout. Weather evolution, tides, waves, vertical movement, turbulent diffusion and object windage are omitted. Background streamline loops show direction; user markers use the drift clock. Layer heights, local arrow lengths and observation lighting are independently designed for legibility.'},
+  ],
+  provenance: {origin: 'ai-prototype',initialModel: 'gpt-6'},presentation: 'full-bleed',transferBudgetMb: 3,fallback: 'text',
+} satisfies WorldExperience
