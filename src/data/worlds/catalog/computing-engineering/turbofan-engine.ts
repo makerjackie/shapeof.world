@@ -1,7 +1,8 @@
 import type { WorldExperience } from '../../types'
 
 export default {
-  id: 'turbofan-engine', publication: 'making',
+  id: 'turbofan-engine',
+  publication: 'making',
   title: '一台涡扇，打开来看',
   poster: '/assets/posters/turbofan-engine.webp',
   posterMobile: '/assets/posters/mobile/turbofan-engine.webp',
