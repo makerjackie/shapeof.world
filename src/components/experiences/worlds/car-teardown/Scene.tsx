@@ -80,11 +80,13 @@ function ViewCamera(p: SceneProps) {
 			}
 		} else if (p.selected === 'drivetrain') {
 			if (p.transmissionView === 'gearbox') {
-				eye = [1.7, 1.0, 1.1]
-				target = [0.88, 0.34, 0]
+				// Near side-on: the gear row reads left to right and the propshaft leaves the frame
+				// horizontally instead of cutting diagonally across the panels.
+				eye = [1.24, 0.78, 1.12]
+				target = [0.86, 0.34, 0]
 			} else {
-				eye = [4.8, 3.4, 4.8]
-				target = [0, 0.32, 0]
+				eye = [2.75, 2.15, 3.05]
+				target = [-0.1, 0.3, 0]
 			}
 		} else if (p.selected === 'steering') {
 			if (p.mechanisms.steeringView === 'top') {
@@ -102,8 +104,8 @@ function ViewCamera(p: SceneProps) {
 				eye = [S.dimensions.frontAxleX - 0.6, 0.72, S.wheels.frontTrack / 2 + 0.45]
 				target = [S.dimensions.frontAxleX - 0.08, 0.4, S.wheels.frontTrack / 2]
 			} else {
-				eye = [4.5, 3.3, 4.7]
-				target = [0, 0.32, 0]
+				eye = [2.85, 2.25, 3.05]
+				target = [0, 0.3, 0]
 			}
 		} else if (p.selected === 'chassis') {
 			eye = [S.dimensions.frontAxleX + 0.9, 1.04, 1.9]
@@ -151,22 +153,82 @@ function ViewCamera(p: SceneProps) {
 	)
 }
 /** The canvas fills the viewport under glass overlays. Shift the projection centre into the
- * free area between them, in pixels, so the subject is not framed behind a panel. */
+ * free area between them, in pixels, so the subject is not framed behind a panel. On phones the
+ * selected system sits between the top card and the bottom drawer: the free band is measured
+ * from the DOM, the subject is centred in it and scaled to its height, and both ease back when
+ * the drawer is collapsed. A view offset larger than the full frame zooms the projection out. */
 function StageFraming({selected}: {selected: boolean}) {
 	const camera = useThree((state) => state.camera) as T.PerspectiveCamera
+	const canvas = useThree((state) => state.gl.domElement)
 	const width = useThree((state) => state.size.width),
 		height = useThree((state) => state.size.height)
-	useLayoutEffect(() => {
-		const mobile = width < 700
-		const dx = mobile ? 0 : selected ? Math.min(170, width * 0.1) : Math.min(60, width * 0.04)
-		const dy = mobile ? (selected ? 50 : -40) : selected ? -10 : -20
-		camera.setViewOffset(width, height, dx, dy, width, height)
+	const band = useRef<{top: number; bottom: number} | null>(null),
+		lastMeasure = useRef(0),
+		current = useRef<{cx: number; cy: number; scale: number} | null>(null)
+	const mobile = width < 700
+	const measure = () => {
+		const root = canvas.closest('.ct-world')
+		if (!root) return null
+		const frame = canvas.getBoundingClientRect()
+		const hud = root.querySelector('.ct-hud')?.getBoundingClientRect()
+		let top = hud && hud.height > 0 ? hud.bottom - frame.top : 0,
+			bottom = frame.height
+		root.querySelectorAll('.ct-instruments, .ct-system-detail, .ct-steel-legend, .ct-bottom').forEach((el) => {
+			const r = el.getBoundingClientRect()
+			if (r.height > 0 && r.top - frame.top > top + 40) bottom = Math.min(bottom, r.top - frame.top)
+		})
+		return {top, bottom}
+	}
+	const goal = () => {
+		if (!mobile)
+			return {
+				cx: width / 2 - (selected ? Math.min(170, width * 0.1) : Math.min(60, width * 0.04)),
+				cy: height / 2 - (selected ? -10 : -20),
+				scale: 1,
+			}
+		const b = band.current
+		if (!selected || !b) return {cx: width / 2, cy: height / 2 - (selected ? 50 : -40), scale: 1}
+		const free = b.bottom - b.top
+		// The phone views were framed (ViewCamera) to fill about 40% of the screen height.
+		return {cx: width / 2, cy: (b.top + b.bottom) / 2, scale: T.MathUtils.clamp(free / (height * 0.4), 0.5, 1.15)}
+	}
+	const apply = (v: {cx: number; cy: number; scale: number}) => {
+		const fw = width * v.scale,
+			fh = height * v.scale
+		camera.setViewOffset(fw, fh, fw / 2 - v.cx, fh / 2 - v.cy, width, height)
 		camera.updateProjectionMatrix()
+	}
+	useLayoutEffect(() => {
+		band.current = mobile && selected ? measure() : null
+		lastMeasure.current = performance.now()
+		current.current = goal()
+		apply(current.current)
 		return () => {
+			current.current = null
 			camera.clearViewOffset()
 			camera.updateProjectionMatrix()
 		}
 	}, [camera, width, height, selected])
+	useFrame((_, delta) => {
+		const now = performance.now()
+		if (mobile && selected && now - lastMeasure.current > 200) {
+			lastMeasure.current = now
+			band.current = measure()
+		}
+		const c = current.current
+		if (!c) return
+		const g = goal()
+		if (Math.abs(g.cx - c.cx) < 0.5 && Math.abs(g.cy - c.cy) < 0.5 && Math.abs(g.scale - c.scale) < 0.002) {
+			if (g.cx === c.cx && g.cy === c.cy && g.scale === c.scale) return
+			Object.assign(c, g)
+		} else {
+			const dt = Math.min(delta, 0.06)
+			c.cx = T.MathUtils.damp(c.cx, g.cx, 8, dt)
+			c.cy = T.MathUtils.damp(c.cy, g.cy, 8, dt)
+			c.scale = T.MathUtils.damp(c.scale, g.scale, 8, dt)
+		}
+		apply(c)
+	})
 	return null
 }
 function Contents(p: SceneProps) {
