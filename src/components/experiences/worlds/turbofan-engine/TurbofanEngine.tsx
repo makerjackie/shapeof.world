@@ -106,7 +106,7 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
             <dl><div><dt>{tx('出口总温')}</dt><dd>{stages[compressorStage].temperature.toFixed(0)} K</dd></div><div><dt>{tx('出口总压')}</dt><dd>{(stages[compressorStage].pressure / 1000).toFixed(0)} kPa</dd></div><div><dt>{tx('本级轴功')}</dt><dd>{(stages[compressorStage].power / 1e6).toFixed(2)} MW</dd></div></dl>
             <small>{tx('按相等逐级压比分配总温升，非叶片流场求解。')}</small>
           </div>}
-          <Slider label="拆开外壳与总成" value={explode * 100} min={0} max={100} unit="%" onChange={n => { setExplode(n / 100); interact() }} />
+          <Slider label={tx('拆开外壳与总成')} value={explode * 100} min={0} max={100} unit="%" onChange={n => { setExplode(n / 100); interact() }} />
           <div className="tf-checks"><label><input type="checkbox" checked={streams} onChange={e => { setStreams(e.target.checked); interact() }} />{tx('气流示踪')}</label><label><input type="checkbox" checked={thermal} onChange={e => { setThermal(e.target.checked); interact() }} />{tx('温度着色')}</label></div>
         </>}
         {panel === 'cycle' && <>
@@ -116,11 +116,11 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
         {panel === 'design' && <>
           <div className="tf-section-label">{tx('选择一个工况')}</div>
           <div className="tf-presets">{PRESETS.map((p, i) => <button key={p.name} onClick={() => applyPreset(i)}>{tx(p.name)}<span>↗</span></button>)}</div>
-          <Slider label="飞行高度" value={settings.altitude} min={0} max={12000} step={250} unit="m" onChange={n => change('altitude', n)} />
-          <Slider label="飞行马赫数" value={settings.mach} min={0} max={.85} step={.01} unit="M" onChange={n => change('mach', n)} />
-          <Slider label="涵道比" value={settings.bypass} min={0} max={12} step={.5} unit=":1" onChange={n => change('bypass', n)} />
-          <Slider label="设计压比" value={settings.compressorRatio} min={8} max={35} unit=":1" onChange={n => change('compressorRatio', n)} />
-          <Slider label="压气机效率" value={settings.compressorEfficiency * 100} min={76} max={94} unit="%" onChange={n => change('compressorEfficiency', n / 100)} />
+          <Slider label={tx('飞行高度')} value={settings.altitude} min={0} max={12000} step={250} unit="m" onChange={n => change('altitude', n)} />
+          <Slider label={tx('飞行马赫数')} value={settings.mach} min={0} max={.85} step={.01} unit="M" onChange={n => change('mach', n)} />
+          <Slider label={tx('涵道比')} value={settings.bypass} min={0} max={12} step={.5} unit=":1" onChange={n => change('bypass', n)} />
+          <Slider label={tx('设计压比')} value={settings.compressorRatio} min={8} max={35} unit=":1" onChange={n => change('compressorRatio', n)} />
+          <Slider label={tx('压气机效率')} value={settings.compressorEfficiency * 100} min={76} max={94} unit="%" onChange={n => change('compressorEfficiency', n / 100)} />
         </>}
         {!cycle.feasible && <p className="tf-limit" role="status">{tx('这个组合没有足够的核心喷管压差。它超出了本参照循环的可行工况。')}</p>}
         <details className="tf-limits"><summary>{tx('模型与显示边界')}</summary><p>{tx('虚构的双轴分流涡扇；零维稳态循环，非任何型号的工程模型。未求解叶片流场、冷却引气、喘振、固定喷口匹配或瞬态启停。质量流量与轴速采用说明中的参照规律。')}</p><p>{tx('叶片和短舱为原创教学几何，拆解位移为展示排布。流点与伪彩色表示路径和温度，不表示实测粒子轨迹、火焰形状或真实流速。')}</p><a href="https://www.grc.nasa.gov/www/k-12/airplane/aturbf.html" target="_blank" rel="noreferrer">NASA Glenn · {tx('原理来源')} ↗</a></details>
@@ -130,7 +130,7 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
       <div className="tf-transport"><button onClick={() => { setPlaying(p => !p); interact() }} aria-label={tx(playing ? '暂停转子与气流' : '继续转子与气流')}>{playing ? 'Ⅱ' : '▷'}<span>{tx(playing ? '暂停' : '继续')}</span></button>
         <label>{tx('转子慢放')}<select value={slowdown} onChange={e => { setSlowdown(Number(e.target.value)); interact() }}>{[60, 300, 1200, 6000].map(n => <option key={n} value={n}>1/{n}×</option>)}</select></label>
       </div>
-      <Slider label="油门" value={Math.round(settings.throttle * 100)} min={10} max={100} unit="%" onChange={n => change('throttle', n / 100)} />
+      <Slider label={tx('油门')} value={Math.round(settings.throttle * 100)} min={10} max={100} unit="%" onChange={n => change('throttle', n / 100)} />
       <div className="tf-rpm"><span>LP <b>{Math.round(cycle.lowRpm).toLocaleString('en-US')}</b></span><span>HP <b>{Math.round(cycle.highRpm).toLocaleString('en-US')}</b></span><small>rpm · {tx('物理转速')}</small></div>
       <div className="tf-actions"><button onClick={() => { setSelected(null); setReset(r => r + 1); interact() }}>{tx('全景')}</button><button onClick={restart}>{tx('复位')}</button><button onClick={() => { window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT, { detail: { worldId: 'turbofan-engine' } })); interact() }}>{tx('带我看')}</button></div>
     </div>
