@@ -1,5 +1,6 @@
 import { webBuild } from './lib/web-build'
 import { handleMusic } from './worker/music'
+import { handleWorldAsset } from './worker/world-assets'
 import { paraglideMiddleware } from './paraglide/server.js'
 import handler from '@tanstack/react-start/server-entry'
 
@@ -22,7 +23,7 @@ const CANONICAL_ORIGIN = 'https://shapeof.world'
 /** Former and temporary hosts that now forward to the canonical site. */
 const FORWARDED_HOSTS = new Set(['new.shapeof.world', 'open.shapeof.world'])
 
-type LegacyEnv = { LEGACY?: { fetch(request: Request): Promise<Response> } }
+type LegacyEnv = { LEGACY?: { fetch(request: Request): Promise<Response> }; WORLD_ASSETS?: R2Bucket }
 
 /**
  * The archived earlier site (Worker `oneworld`) is served through a service
@@ -47,6 +48,8 @@ async function routeRequest(req: Request, env: LegacyEnv, ctx?: ExecutionContext
   if (url.hostname === LEGACY_SITE_HOST) return legacySite(req, env)
   const pathname = url.pathname
   if (pathname.startsWith('/media/music/')) return handleMusic(req)
+  // Static files are served before the Worker runs, so only R2-backed world assets reach here.
+  if (pathname.startsWith('/assets/')) return handleWorldAsset(req, env.WORLD_ASSETS)
   return paraglideMiddleware(req, () => cachedAnonymousHtmlFetch(
     req,
     (request) => Promise.resolve(handler.fetch(request)),

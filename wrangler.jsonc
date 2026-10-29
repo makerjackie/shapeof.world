@@ -21,6 +21,10 @@
     { "pattern": "v2.shapeof.world", "custom_domain": true }
   ],
   // The archived earlier site, served at v2.shapeof.world (see src/server.ts).
+  // Large world files (car models, HDRs, decoders) under /assets/<world>/v<n>/, see src/worker/world-assets.ts.
+  "r2_buckets": [
+    { "binding": "WORLD_ASSETS", "bucket_name": "shapeof-world-assets" }
+  ],
   "services": [
     { "binding": "LEGACY", "service": "oneworld" }
   ],
