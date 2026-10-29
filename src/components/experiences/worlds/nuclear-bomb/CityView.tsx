@@ -172,13 +172,38 @@ export function CityView({ controls, active = true }: { controls: ExperienceCont
 						[132.455, 34.375, '元安川', 'Motoyasu River'],
 						[132.464, 34.414, '太田川', 'Ōta River'],
 					] as const;
+					// Each name sits in a zero-size pin so it can flip to the left of its point near the right edge.
+					// Aioi Bridge always reads to the left, clear of the hypocentre tag.
+					const pins: Array<HTMLElement> = [];
+					const flippable: Array<{ pin: HTMLElement; label: HTMLElement; lngLat: [number, number] }> = [];
 					for (const [lng, lat, zh, en] of landmarks) {
-						const el = document.createElement('span');
-						el.className = 'na-map-label';
-						el.textContent = locale === 'en' ? en : zh;
-						if (zh === '爆心地') el.classList.add('is-hypocentre');
-						markers.push(new lib.Marker({ element: el, anchor: 'left' }).setLngLat([lng, lat]).addTo(instance));
+						const label = document.createElement('span');
+						label.className = 'na-map-label';
+						label.textContent = locale === 'en' ? en : zh;
+						const pin: HTMLElement = document.createElement('span');
+						if (zh === '爆心地') label.classList.add('is-hypocentre');
+						else {
+							pin.className = 'na-map-pin';
+							pin.appendChild(label);
+							pins.push(pin);
+							if (zh === '相生桥') pin.classList.add('is-flipped');
+							else flippable.push({ pin, label, lngLat: [lng, lat] });
+						}
+						const element = zh === '爆心地' ? label : pin;
+						markers.push(new lib.Marker({ element, anchor: 'left' }).setLngLat([lng, lat]).addTo(instance));
 					}
+					const placeLabels = () => {
+						if (!instance) return;
+						const width = instance.getContainer().clientWidth;
+						// Zoomed far out the names pile onto the hypocentre; keep only its tag.
+						const crowded = instance.getZoom() < 10.8;
+						for (const pin of pins) pin.classList.toggle('is-hidden', crowded);
+						for (const { pin, label, lngLat } of flippable)
+							pin.classList.toggle('is-flipped', instance.project(lngLat).x + label.offsetWidth + 8 > width);
+					};
+					placeLabels();
+					instance.on('move', placeLabels);
+					instance.on('resize', placeLabels);
 					setReady(true);
 				});
 			})

@@ -362,6 +362,23 @@
 	pointer-events: none;
 	white-space: nowrap;
 }
+.na-map-pin {
+	width: 0;
+	height: 0;
+}
+.na-map-pin .na-map-label {
+	position: absolute;
+	left: 0;
+	top: 0;
+	transform: translateY(-50%);
+}
+.na-map-pin.is-flipped .na-map-label {
+	left: auto;
+	right: 0;
+}
+.na-map-pin.is-hidden {
+	visibility: hidden;
+}
 .na-map-label.is-hypocentre {
 	color: var(--na-fire-soft);
 	font-weight: 650;
@@ -1448,6 +1465,9 @@
 	background: var(--na-accent);
 	border-color: var(--na-accent);
 }
+.na-schem-current {
+	display: none;
+}
 .na-schem-controls {
 	display: flex;
 	gap: 6px;
@@ -1602,23 +1622,118 @@
 	.na-device-switch button {
 		padding: 6px 10px;
 	}
+	/* Phones: the panel takes the height its content needs, the figure shrinks into what is left. */
 	.na-schematic {
 		grid-template-columns: 1fr;
-		grid-template-rows: auto minmax(180px, 34vh) minmax(0, 1fr);
+		grid-template-rows: auto minmax(120px, 1fr) auto;
 		gap: 6px;
-		padding: 112px 16px 76px;
+		padding: 108px 16px 68px;
+	}
+	.na-schem-heading p {
+		margin-bottom: 8px;
 	}
 	.na-schem-heading h1 {
+		margin-bottom: 6px;
 		font-size: 26px;
+	}
+	.na-schem-heading span {
+		font-size: 12px;
 	}
 	.na-schem-stage {
 		grid-row: 2;
 	}
+	.na-schem-figure {
+		max-height: 100%;
+	}
 	.na-schem-panel {
 		grid-column: 1;
 		grid-row: 3;
-		padding: 14px;
-		gap: 10px;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		align-self: end;
+		padding: 12px 14px 14px;
+		gap: 10px 8px;
+	}
+	.na-schem-panel > :not(.na-schem-steps, .na-schem-controls) {
+		grid-column: 1 / -1;
+	}
+	.na-schem-steps,
+	.na-schem-controls {
+		grid-row: 1;
+	}
+	.na-schem-controls {
+		grid-column: 2;
+	}
+	/* Steps become a row of numbered dots; titles stay for screen readers. */
+	.na-schem-steps {
+		grid-column: 1;
+		flex-direction: row;
+		gap: 2px;
+	}
+	.na-schem-steps button {
+		display: block;
+		width: auto;
+		padding: 5px;
+		border: 0;
+		border-radius: 50%;
+	}
+	.na-schem-steps button > strong,
+	.na-schem-steps button > span:last-child,
+	.na-schem-steps li:not(.is-current) button > span:last-child {
+		display: block;
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	.na-schem-steps .is-current button {
+		background: transparent;
+	}
+	.na-schem-index {
+		display: block;
+		width: 26px;
+		height: 26px;
+		font-size: 12px;
+		line-height: 24px;
+	}
+	.na-schem-steps .is-done .na-schem-index {
+		color: var(--na-muted);
+		border-color: var(--na-line-strong);
+	}
+	.na-schem-current {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		padding: 9px 12px;
+		background: var(--na-accent-fill);
+		border-left: 2px solid var(--na-accent);
+		border-radius: 0 6px 6px 0;
+	}
+	.na-schem-current strong {
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--na-accent-soft);
+	}
+	.na-schem-current span {
+		font-size: 12px;
+		line-height: 1.6;
+		color: var(--na-muted);
+	}
+	.na-schem-note {
+		font-size: 12px;
+		line-height: 1.6;
+	}
+	.na-schem-disclaimer {
+		margin-top: -4px;
+		font-size: 10.5px;
+		line-height: 1.5;
+	}
+	.na-schematic .na-schem-return {
+		padding: 8px 12px;
+		font-size: 12px !important;
 	}
 	.na-schem-label text {
 		font-size: 30px;
