@@ -1,0 +1,3 @@
+# Preserve official CIE originals byte-for-byte, including their published CRLF.
+CIE_xyz_1931_2deg.csv -text whitespace=cr-at-eol
+CIE_xyz_1931_2deg.csv_metadata.json -text whitespace=cr-at-eol

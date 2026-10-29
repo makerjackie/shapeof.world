@@ -1,0 +1,38 @@
+import type { WorldExperience } from '../../types'
+export default {
+  id: 'stellar-life',
+  publication: 'making',
+  title: '恒星的一生',
+  poster: '/assets/posters/stellar-life.webp',
+  posterMobile: '/assets/posters/mobile/stellar-life.webp',
+  posterDesktop: '/assets/posters/desktop/stellar-life.webp',
+  posterTitle: '恒星的一生',
+  posterHook: '沿四颗真实模型恒星的生命轨迹，打开光球，检查核心与外层如何改变。',
+  posterSource: 'MESA · Farag et al. 2020 · CIE 1931',
+  question: '为什么有的恒星活得漫长，有的很快走到尽头？',
+  hook: '自由转动、剖开和比较 1、3、15、25 倍太阳质量的恒星。把时间放在 HR 图上，读出真实温度、半径、光度、质量流失与中心成分，沿原恒星、主序、巨星到计算终点逐条探索。',
+  payoff: '大质量模型消耗燃料更快。两条低质量轨迹到仍然很热的白矮星，两条高质量轨迹只到铁核内落；中子星或黑洞的条件示意不冒充轨迹结论。剖面采用质量坐标，原始尺度、时间映射和数值近似均可检查。',
+  topicLabel: '恒星演化',
+  translations: { en: {
+    title: 'A star’s life',posterTitle: 'A star’s life',posterHook: 'Follow four real model stars through their lives. Open the photosphere and inspect changing cores and envelopes.',posterSource: 'MESA · Farag et al. 2020 · CIE 1931',
+    question: 'Why do some stars live so long while others quickly reach their end?',
+    hook: 'Turn, open and compare stars of 1, 3, 15 and 25 solar masses. Scrub real tracks on an HR diagram and inspect temperature, radius, luminosity, mass loss and central composition, from protostars through the main sequence and giants to each calculation’s endpoint.',
+    payoff: 'Massive model stars use their fuel faster. Two low-mass tracks reach hot white dwarfs; two high-mass tracks stop at iron-core infall. Conditional neutron-star and black-hole illustrations are not track predictions. Cutaways use mass coordinates; physical scales, time mappings and numerical approximations are inspectable.',topicLabel: 'Stellar evolution',
+  } },
+  primaryCategoryId: 'cosmos',
+  runtime: 'scene-3d',difficulty: 'advanced',lane: 'time',renderer: 'stellar-life',duration: 1200,evidence: 'compiled',accent: '#dfb979',related: ['solar-system','black-hole-flyby'],
+  experiencePolicy: { entryMode: 'direct',shellMode: 'minimal' },
+  sources: [
+    {label:'Farag 等 · MESA 恒星轨迹',labelEn:'Farag et al. · MESA stellar tracks',url:'https://doi.org/10.5281/zenodo.3707670',note:'2020 年版本 1，CC BY 4.0。本作选取四条轨迹的 23 列，移除重启后的过期行，并按误差界限简化。',noteEn:'Version 1, 2020, CC BY 4.0. This work selects 23 columns from four tracks, removes obsolete restarted rows, and simplifies with bounded errors.'},
+    {label:'Farag 等 2020 · 恒星演化研究',labelEn:'Farag et al. 2020 · Stellar evolution study',url:'https://doi.org/10.3847/1538-4357/ab7f2c',note:'单星、无自转、太阳金属丰度，MESA r12115。低质量到热白矮星；大质量到铁核内落。2024 勘误修正人工读取的中微子峰值，本作不展示中微子定量。',noteEn:'Single, nonrotating, solar-metallicity models, MESA r12115. Low masses reach hot white dwarfs; massive stars reach iron-core infall. The 2024 erratum corrects manually read neutrino peaks; neutrino measurements are not shown here.'},
+    {label:'MESA · 输出与物理量定义',labelEn:'MESA · Output and column definitions',url:'https://docs.mesastar.org/en/26.4.1/using_mesa/output.html',note:'恒星年龄、当前质量、对数光度、有效温度、半径与中心丰度直接来自 history 记录。',noteEn:'Age, current mass, log luminosity, effective temperature, radius and central abundances are taken directly from history records.'},
+    {label:'CIE · 1931 两度色匹配函数',labelEn:'CIE · 1931 two-degree colour-matching functions',url:'https://doi.org/10.25039/CIE.DS.xvudnb9b',note:'CIE 2019，CC BY-SA 4.0。原表 360–830 nm、1 nm 间隔；积分普朗克谱并归一化曝光，不将画面亮度冒充天体光度。',noteEn:'CIE 2019, CC BY-SA 4.0. Original 360–830 nm table at 1-nm spacing. Planck spectra are integrated with exposure normalized independently; screen brightness is not stellar luminosity.'},
+    {label:'NASA · 坍缩可能没有明亮超新星',labelEn:'NASA · Collapse can occur without a bright supernova',url:'https://science.nasa.gov/blogs/science-news/2026/02/12/archival-data-from-nasas-neowise-tracks-star-turning-into-black-hole/',note:'遗迹与爆炸依赖结构和环境；本作条件结局不依据单一初始质量阈值硬判。',noteEn:'Explosion and remnant depend on structure and environment; conditional endings are not assigned by one initial-mass threshold.'},
+  ],
+  fieldNotes: [
+    {label:'真实轨迹，不是现场解方程',labelEn:'Real tracks, not a live stellar-structure solver',body:'四条源记录共 147,054 行，简化后 12,853 行。插值采用真实年龄；温度、光度、半径保留源对数列。初始质量没有连续插值，自转、双星和金属丰度不能调节。',bodyEn:'Four source tracks contain 147,054 valid rows, simplified to 12,853. Interpolation uses physical age and retains logarithmic temperature, luminosity and radius. Initial masses are discrete; rotation, binaries and metallicity are not adjustable.'},
+    {label:'剖面与尺度',labelEn:'Cutaways and scale',body:'核心质量来自源列，球壳显示半径与包围质量分数的立方根成正比，不能据此读取真实密度或核心半径。外观半径默认对数压缩；可切换同屏线性比例。星云、纹理、气体点云与致密遗迹环境都是明确标注的原创示意。',bodyEn:'Core masses come from the source columns. Displayed shell radii scale with the cube root of enclosed mass fraction and do not show physical density or core radius. Appearance radii are logarithmically compressed by default; linear on-screen ratios are available. Nebulae, texture, gas clouds and compact-remnant environments are labelled original illustrations.'},
+    {label:'时间与终点',labelEn:'Time and endpoints',body:'阶段等长只是浏览映射；真实年龄等长可看到短暂阶段被压缩。低质量轨迹止于约 0.1 太阳光度的热白矮星，大质量轨迹止于铁核快速内落；未延长出虚构的爆炸或冷却数值。',bodyEn:'Equal stage lengths are a browsing map; equal physical ages reveal the compression of brief phases. Low-mass tracks end at hot white dwarfs near 0.1 solar luminosities; high masses end at rapid iron-core infall. No invented explosion or extended cooling values are appended.'},
+  ],
+  provenance: {origin:'ai-prototype',initialModel:'gpt-6'},presentation:'full-bleed',transferBudgetMb:3,fallback:'text',
+} satisfies WorldExperience
