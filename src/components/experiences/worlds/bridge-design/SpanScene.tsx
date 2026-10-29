@@ -16,22 +16,41 @@ function Bar({ a, b, r, color, glow = 0 }: { a: Point; b: Point; r: number; colo
 function Box({ at, size, color = PALETTE.plaster }: { at: Point; size: Point; color?: string }) {
   return <mesh position={at} receiveShadow castShadow><boxGeometry args={size} /><meshStandardMaterial color={color} roughness={.92} /></mesh>
 }
-function SpanCamera({ span, height, reset, front }: { span: number; height: number; reset: number; front: boolean }) {
+// What the camera must show: the span, a strip of each bank (the whole anchorage for suspension), the tower or arch top and the span label below.
+function frameBounds(kind: BridgeKind, span: number, height: number, verticalScale: number) {
+  const half = span / 2, deck = 40, reach = span * .25 + 50
+  const side = kind === 'suspension' ? reach * .85 + 9 : Math.max(16, span * .08)
+  const top = deck + (kind === 'beam' ? 7 : height + 4)
+  return new T.Box3(new T.Vector3(-half - side, -15 * verticalScale, -12), new T.Vector3(half + side, top * verticalScale, 24))
+}
+// Auto-frame by span: fit the bounds in view space, so a 50 m footbridge fills the stage as well as a 1,500 m suspension bridge.
+function SpanCamera({ kind, span, height, reset, front }: { kind: BridgeKind; span: number; height: number; reset: number; front: boolean }) {
   const { camera, size } = useThree()
   const controls = useRef<React.ComponentRef<typeof OrbitControls>>(null)
   useEffect(() => {
-    const verticalScale = size.width < 700 ? 2 : 1
-    const target = new T.Vector3(0, (30 + height / 2) * verticalScale, 0)
-    camera.position.copy(target).add(new T.Vector3(front ? 0 : 160, front ? 0 : 170, 700))
-    camera.lookAt(target)
+    const mobile = size.width < 700
+    const box = frameBounds(kind, span, height, mobile ? 2 : 1)
+    const center = box.getCenter(new T.Vector3())
+    const direction = (front ? new T.Vector3(0, 0, 1) : new T.Vector3(160, 170, 700)).normalize()
+    camera.position.copy(center).addScaledVector(direction, 1500)
+    camera.lookAt(center)
+    camera.updateMatrixWorld()
+    const view = new T.Box3()
+    for (let i = 0; i < 8; i++) view.expandByPoint(new T.Vector3(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).applyMatrix4(camera.matrixWorldInverse))
+    const viewCenter = view.getCenter(new T.Vector3()), extent = view.getSize(new T.Vector3())
+    const shift = new T.Vector3().setFromMatrixColumn(camera.matrixWorld, 0).multiplyScalar(viewCenter.x)
+      .add(new T.Vector3().setFromMatrixColumn(camera.matrixWorld, 1).multiplyScalar(viewCenter.y))
+    const target = center.add(shift)
+    camera.position.add(shift)
     if (camera instanceof T.OrthographicCamera) {
-      camera.zoom = Math.min(size.width / Math.max(250, span * 1.5 + 160), size.height / (Math.max(160, height + 125) * verticalScale))
+      const padX = mobile ? 20 : 48, padY = mobile ? 14 : 36
+      camera.zoom = Math.max(.05, Math.min((size.width - 2 * padX) / extent.x, (size.height - 2 * padY) / extent.y))
       camera.updateProjectionMatrix()
     }
     controls.current?.target.copy(target)
     controls.current?.update()
-  }, [camera, size.width, size.height, span, height, reset, front])
-  return <OrbitControls ref={controls} enablePan={false} enableDamping={false} minZoom={.08} maxZoom={30} minPolarAngle={.05} maxPolarAngle={Math.PI * .49} />
+  }, [camera, size.width, size.height, kind, span, height, reset, front])
+  return <OrbitControls ref={controls} enablePan={false} enableDamping={false} minZoom={.05} maxZoom={30} minPolarAngle={.05} maxPolarAngle={Math.PI * .49} />
 }
 function Bridge({ kind, span }: { kind: BridgeKind; span: number }) {
   const tx = useExperienceI18n()
@@ -103,7 +122,7 @@ export function SpanScene({ kind, span, reset, front }: { kind: BridgeKind; span
     <ambientLight intensity={.16} /><hemisphereLight args={['#c9d6e4', '#06080a', .85]} />
     <directionalLight position={[-300, 600, 350]} intensity={2.5} castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-1800} shadow-camera-right={1800} shadow-camera-top={1600} shadow-camera-bottom={-700} shadow-bias={-.001} />
     <directionalLight position={[600, 220, -480]} intensity={1.15} color="#9cc2ff" />
-    <SpanCamera span={span} height={height} reset={reset} front={front} />
+    <SpanCamera kind={kind} span={span} height={height} reset={reset} front={front} />
     <ScaledBridge kind={kind} span={span} />
   </Canvas>
 }
