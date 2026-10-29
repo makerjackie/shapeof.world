@@ -5,6 +5,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import type { WorkerTrafficRuntime } from './worker-runtime'
 import { CAR_STRIDE } from './frame-packet'
 import { mergeGeometry } from './mesh-kit'
+import { CONTACT_SHADE, contactShadowGeometry } from './contact-shadow'
 
 const CAPACITY=6000
 const PAINT=['#a7aaa8','#252c32','#4e5960','#48555e','#5c3331','#c4bfb1','#1a242e'].map(hex=>new T.Color(hex))
@@ -66,11 +67,28 @@ export function Vehicles({runtime,dim=false}:{runtime:WorkerTrafficRuntime;dim?:
       material.customProgramCacheKey=()=>`road-vehicle-pose-${kind}-v2`
       return {kind,geometry:g,material}
     })
-    return {buffer,uniforms,rows,revision:-1,runtime}
+    // Contact shadow: a soft dark footprint a little wider and longer than
+    // each car, posed like the body so it follows ramps and banking.
+    const shadow={geometry:geometry(contactShadowGeometry()),material:new T.ShaderMaterial({
+      transparent:true,depthWrite:false,toneMapped:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-6,
+      uniforms:{strength:{value:.8}},
+      vertexShader:`attribute vec3 carPosition;attribute vec3 carTangent;attribute vec4 carShape;varying vec2 vUv;varying vec2 vInner;
+        void main(){
+          float horizontal=max(0.00001,length(carTangent.xz));float sy=carTangent.x/horizontal,cy=carTangent.z/horizontal;
+          float norm=max(0.00001,length(carTangent));float sp=-carTangent.y/norm,cp=horizontal/norm;
+          mat3 r=mat3(cy,sp*sy,-cp*sy,0.0,cp,sp,sy,-sp*cy,cp*cy);
+          vec2 car=vec2(carShape.y,carShape.x),quad=car*vec2(1.7,1.3)+vec2(.6,.6);
+          vUv=uv;vInner=car/quad;
+          gl_Position=projectionMatrix*modelViewMatrix*vec4(r*(position*vec3(quad.x,1.0,quad.y))+carPosition+vec3(0.0,.08,0.0),1.0);
+        }`,
+      fragmentShader:`uniform float strength;varying vec2 vUv;varying vec2 vInner;${CONTACT_SHADE}
+        void main(){gl_FragColor=vec4(0.0,0.0,0.0,strength*contactShade(vUv,vInner));}`,
+    })}
+    return {buffer,uniforms,rows,shadow,revision:-1,runtime}
   },[])
   useFrame(()=>{
     // Beside a chosen route, other cars recede but keep their lamps.
-    assets.uniforms.brightness.value=dim?.18:1;assets.uniforms.lampBrightness.value=dim?.6:1
+    assets.uniforms.brightness.value=dim?.18:1;assets.shadow.material.uniforms.strength.value=dim?.3:.8;assets.uniforms.lampBrightness.value=dim?.6:1
     assets.uniforms.simTime.value=runtime.simulation.time
     if(assets.revision===runtime.revision&&assets.runtime===runtime)return
     assets.runtime=runtime;assets.revision=runtime.revision
@@ -78,7 +96,8 @@ export function Vehicles({runtime,dim=false}:{runtime:WorkerTrafficRuntime;dim?:
     assets.buffer.array.set(runtime.frame.cars.subarray(0,count*CAR_STRIDE))
     assets.buffer.clearUpdateRanges();assets.buffer.addUpdateRange(0,count*CAR_STRIDE);assets.buffer.needsUpdate=true
     for(const row of assets.rows)row.geometry.instanceCount=count
+    assets.shadow.geometry.instanceCount=count
   })
-  useEffect(()=>()=>{for(const row of assets.rows){row.geometry.dispose();row.material.dispose()}},[assets])
-  return <>{assets.rows.map(row=><mesh key={row.kind} geometry={row.geometry} material={row.material} frustumCulled={false} />)}</>
+  useEffect(()=>()=>{for(const row of [...assets.rows,assets.shadow]){row.geometry.dispose();row.material.dispose()}},[assets])
+  return <><mesh geometry={assets.shadow.geometry} material={assets.shadow.material} frustumCulled={false} renderOrder={1} />{assets.rows.map(row=><mesh key={row.kind} geometry={row.geometry} material={row.material} frustumCulled={false} />)}</>
 }

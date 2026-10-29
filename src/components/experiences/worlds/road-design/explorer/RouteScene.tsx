@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, type MutableRefObject } from 'react'
+import { useEffect, useMemo, useRef, type MutableRefObject, type ReactNode } from 'react'
 import { Html, Line } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as T from 'three'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { useExperienceI18n } from '~/i18n/experience'
 import { strip } from '../scene/mesh-kit'
+import { contactShadowGeometry, contactShadowMaterial } from '../scene/contact-shadow'
 import { terrainHeight } from '../sim/terrain'
 import type { Network } from '../sim/types'
 import type { Journey } from './journey'
@@ -39,6 +40,35 @@ function lampPoints(capacity:number){
   return {geometry,material}
 }
 export const INITIAL_DEMO:DemoState={at:0,time:0,position:{x:0,y:0,z:0},tangent:{x:0,y:0,z:1},status:'loading',laneId:'',speed:0,progress:0}
+/** Entry cards stay whole and clear of the panels: on a phone an approach can
+ * sit past the screen edge, so its card slides into the free area with a
+ * 16 px gutter. The road arrows stay at the real approach. */
+const ENTRY_GUTTER=16,entryAnchor=new T.Vector3()
+type EntryData={entryCard?:HTMLElement|null;root?:HTMLElement|null}
+function safeEntryPosition(el:T.Object3D,camera:T.Camera,size:{width:number;height:number}){
+  entryAnchor.setFromMatrixPosition(el.matrixWorld).project(camera)
+  const x=(entryAnchor.x+1)*size.width/2,y=(1-entryAnchor.y)*size.height/2
+  const data=el.userData as EntryData,card=data.entryCard
+  if(!card)return [x,y]
+  if(!data.root?.isConnected)data.root=card.closest<HTMLElement>('.road-design-experience')
+  const canvas=data.root?.querySelector('canvas')?.getBoundingClientRect()
+  const rect=(selector:string)=>{const r=data.root?.querySelector(selector)?.getBoundingClientRect();return r&&r.height&&canvas?{left:r.left-canvas.left,top:r.top-canvas.top,bottom:r.bottom-canvas.top}:undefined}
+  const mobile=size.width<720,heading=rect('.rd-top-left'),panel=rect('.rd-explorer')
+  // Phones: below the design card, layers and compass; above the route panel.
+  // Desktop: left of the route panel and above the design catalogue.
+  const top=Math.max(ENTRY_GUTTER,(heading?.bottom??0)+(mobile?52:ENTRY_GUTTER))
+  const bottom=mobile?(panel?panel.top:size.height)-ENTRY_GUTTER:size.height-190
+  const right=!mobile&&panel?panel.left-ENTRY_GUTTER:size.width-ENTRY_GUTTER
+  const halfW=card.offsetWidth/2,halfH=card.offsetHeight/2
+  const clamp=(v:number,lo:number,hi:number)=>lo>hi?(lo+hi)/2:Math.max(lo,Math.min(hi,v))
+  return [clamp(x,ENTRY_GUTTER+halfW,right-halfW),clamp(y,top+halfH,bottom-halfH)]
+}
+function EntryCard({position,children}:{position:[number,number,number];children:ReactNode}){
+  const data=useMemo<EntryData>(()=>({}),[])
+  return <Html position={position} center zIndexRange={[5,1]} style={{pointerEvents:'auto'}} userData={data} calculatePosition={safeEntryPosition}>
+    <div ref={el=>{data.entryCard=el}} className="rd-entry">{children}</div>
+  </Html>
+}
 export function EntryArrows({routes,selected,onSelect}:{routes:ExploreRoute[];selected?:string;onSelect:(id:string)=>void}) {
   const tx=useExperienceI18n()
   const groups=useMemo(()=>[...new Set(routes.map(r=>r.movement.from))].map(from=>({from,routes:routes.filter(r=>r.movement.from===from)})),[routes])
@@ -51,18 +81,20 @@ export function EntryArrows({routes,selected,onSelect}:{routes:ExploreRoute[];se
         const points=local.map(([x,z])=>{const lateral=x+(index-1)*5;return new T.Vector3(p.x+t.x*z-t.z*lateral,p.y+.8,p.z+t.z*z+t.x*lateral)})
         return <Line key={r.movement.id} points={points} color={ROUTE_INK} lineWidth={2} onClick={e=>{e.stopPropagation();onSelect(r.movement.id)}}/>
       })}
-      <Html position={[p.x,p.y+2,p.z]} center zIndexRange={[5,1]} style={{pointerEvents:'auto'}}>
-        <div className="rd-entry"><span>{tx(approachName(group.from))}</span><div>{group.routes.map(r=>{
+      <EntryCard position={[p.x,p.y+2,p.z]}>
+        <span>{tx(approachName(group.from))}</span><div>{group.routes.map(r=>{
           const turn=turnKey(r.movement)
           return <button key={r.movement.id} type="button" aria-label={`${tx(approachName(group.from))} · ${tx(TURN_NAMES[turn])}${group.routes.length>3?` → ${tx(approachName(r.movement.to))}`:''}`} title={tx(exitName(r.movement.to))} aria-pressed={selected===r.movement.id} onClick={()=>onSelect(r.movement.id)}>{TURN_SYMBOLS[turn]}</button>
-        })}</div></div>
-      </Html>
+        })}</div>
+      </EntryCard>
     </group>
   })}</>
 }
 
 export function RouteScene({route,replay,revision,playing,demo,pins,activePin,onPin,explaining,traffic,follow,showPins,journey,network,seek}:{route:ExploreRoute;replay:DemoReplay|null;revision:number;playing:boolean;demo:MutableRefObject<DemoState>;pins:WhyPin[];activePin:string|null;onPin:(id:string)=>void;explaining:boolean;traffic:boolean;follow:boolean;showPins:boolean;journey:Journey;network:Network;seek:{at:number;revision:number}|null}) {
-  const tx=useExperienceI18n(),car=useRef<T.Group>(null),arrows=useRef<T.InstancedMesh>(null),background=useRef<T.InstancedMesh>(null),lamps=useMemo(()=>lampPoints(600),[])
+  const tx=useExperienceI18n(),car=useRef<T.Group>(null),arrows=useRef<T.InstancedMesh>(null),background=useRef<T.InstancedMesh>(null),backgroundShadow=useRef<T.InstancedMesh>(null),lamps=useMemo(()=>lampPoints(600),[])
+  const shadowQuad=useMemo(contactShadowGeometry,[]),backgroundShade=useMemo(()=>contactShadowMaterial(.8,[1/1.8,1/1.35]),[])
+  useEffect(()=>()=>{shadowQuad.dispose();backgroundShade.dispose()},[shadowQuad,backgroundShade])
   const {gl}=useThree(),label=useRef<HTMLSpanElement>(null),labelCheck=useRef(0),overlays=useRef<HTMLElement[]>([])
   const elapsed=useRef(0)
   const ribbon=useMemo(()=>strip(route.path.points,route.path.width,0,.16),[route]),glow=useMemo(routeGlowMaterial,[])
@@ -96,6 +128,7 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
       const others=demo.current.others??[],count=Math.min(300,others.length/7)
       for(let i=0;i<count;i++){
         const k=i*7;scratch.position.set(others[k+1],others[k+2]+.7,others[k+3]);scratch.rotation.set(0,others[k+4],0);scratch.scale.set(others[k+6],1.2,others[k+5]);scratch.updateMatrix();background.current.setMatrixAt(i,scratch.matrix)
+        if(backgroundShadow.current){scratch.position.y=others[k+2]+.08;scratch.scale.set(others[k+6]*1.8,1,others[k+5]*1.35);scratch.updateMatrix();backgroundShadow.current.setMatrixAt(i,scratch.matrix)}
         for(const end of[1,-1]){
           const forward=end*(others[k+5]/2+.06),j=(i*2+(end>0?0:1))*3,color=end>0?HEAD_LAMP:TAIL_LAMP
           lampPosition.array[j]=others[k+1]+Math.sin(others[k+4])*forward;lampPosition.array[j+1]=others[k+2]+.78;lampPosition.array[j+2]=others[k+3]+Math.cos(others[k+4])*forward
@@ -103,6 +136,7 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
         }
       }
       background.current.count=count;background.current.instanceMatrix.needsUpdate=true
+      if(backgroundShadow.current){backgroundShadow.current.count=count;backgroundShadow.current.instanceMatrix.needsUpdate=true}
       lamps.geometry.setDrawRange(0,count*2);lampPosition.needsUpdate=true;lampColor.needsUpdate=true;lamps.material.uniforms.pixelRatio.value=state.gl.getPixelRatio()
     }
     if(arrows.current){
@@ -119,6 +153,7 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
   },-1)
   return <>
     {traffic&&<><instancedMesh ref={background} args={[undefined,undefined,300]} frustumCulled={false}><boxGeometry/><meshStandardMaterial color="#2a3139" roughness={.5}/></instancedMesh>
+      <instancedMesh ref={backgroundShadow} args={[shadowQuad,backgroundShade,300]} frustumCulled={false} renderOrder={1}/>
       <points geometry={lamps.geometry} material={lamps.material} frustumCulled={false} renderOrder={3}/></>}
     <mesh geometry={shadow}><meshBasicMaterial color="#000000" transparent opacity={.3} depthWrite={false} side={T.DoubleSide}/></mesh>
     <mesh geometry={ribbon} material={glow} renderOrder={2}/>
@@ -135,9 +170,12 @@ export function RouteScene({route,replay,revision,playing,demo,pins,activePin,on
 
 function DemonstrationCar(){
  const shell=useMemo(()=>new RoundedBoxGeometry(1,1,1,1,.08),[])
- useEffect(()=>()=>shell.dispose(),[shell])
+ const shade=useMemo(()=>({quad:contactShadowGeometry(),material:contactShadowMaterial(.95,[1/2.1,1/1.5])}),[])
+ useEffect(()=>()=>{shell.dispose();shade.quad.dispose();shade.material.dispose()},[shell,shade])
  // Same proportions, rounded shell, cabin and lamps as Vehicles' passenger car.
  return <>
+  {/* Sits above the route ribbon (lifted .16 m), drawn after its glow. */}
+  <mesh geometry={shade.quad} material={shade.material} position={[0,.22,0]} scale={[1.8*2.1,1,4.5*1.5]} renderOrder={3}/>
   <mesh geometry={shell} position={[0,.58,0]} scale={[1.8,.65,4.5]}><meshStandardMaterial color="#a7aaa8" emissive="#6c777a" emissiveIntensity={.12} roughness={.35} metalness={.35}/></mesh>
   <mesh geometry={shell} position={[0,1.14,-.15]} scale={[1.512,.6,2.34]}><meshStandardMaterial color="#1c2b35" roughness={.18} metalness={.6}/></mesh>
   {[-1,1].flatMap(end=>[-1,1].map(side=><mesh key={`${end}:${side}`} position={[side*.648,.7,end*2.25]}><boxGeometry args={[.3,.16,.14]}/><meshBasicMaterial color={end>0?'#ffe6bb':'#cf3026'} toneMapped={false}/></mesh>))}
