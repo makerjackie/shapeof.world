@@ -6,10 +6,13 @@
     "aurora": "bent-light",
     "black-hole-flyby": "invisible-halo",
     "boids-flocking": "flock-rule",
+    "bridge-design": "hall-clock",
     "butterfly-effect": "chaos-onset",
     "cafe-terrace": "credit-spark",
     "campfire": "orbital-cloud",
     "car-teardown": "cellular-night",
+    "chip-zoom": "tick-escape",
+    "city-water": "flock-rule",
     "cnn-vision": "downhill-loss",
     "complex-mapping": "complex-bloom",
     "cow-anatomy": "folded-life",
@@ -27,6 +30,7 @@
     "global-flight-network": "living-blue",
     "human-atlas": "folded-life",
     "ink-landscape": "credit-spark",
+    "iphone-teardown": "tick-escape",
     "kakeya-needle": "needle-set",
     "light-speed": "standing-room",
     "mandelbrot-zoom": "complex-bloom",
@@ -38,6 +42,7 @@
     "phone-elements": "lattice-grow",
     "photon": "double-swing",
     "plant-cell": "deep-tree",
+    "power-grid": "tick-escape",
     "radio-spectrum": "field-lines",
     "rainbow": "spectrum-arc",
     "road-design": "cellular-night",
@@ -48,7 +53,9 @@
     "three-body": "three-bodies",
     "trade-chokepoints": "charge-split",
     "tshirt-world": "quiet-ledger",
+    "turbofan-engine": "hall-clock",
     "ukulele": "prime-spiral",
-    "vegetation-atlas": "charge-split"
+    "vegetation-atlas": "charge-split",
+    "watch-movement": "cellular-night"
   }
 }

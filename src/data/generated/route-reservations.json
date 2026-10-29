@@ -2,6 +2,7 @@
   "topLevelRoutes": [
     "about",
     "api",
+    "assets",
     "category",
     "changelog",
     "collaborate",
@@ -22,6 +23,7 @@
   "exactPagePaths": [
     "/",
     "/about",
+    "/assets",
     "/changelog",
     "/collaborate",
     "/failures",
