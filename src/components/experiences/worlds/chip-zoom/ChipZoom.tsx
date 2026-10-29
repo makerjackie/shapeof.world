@@ -50,7 +50,7 @@ export function ChipZoom({controls}:{controls:ExperienceControls}) {
  const layerNames=[tx('第四层金属'),tx('第三层金属'),tx('第二层金属'),tx('第一层金属'),tx('局部互连')]
  const titles=[tx('从手里，走进硅里。'),tx('拆开封装，找到硅片。'),tx('一小片硅，各有分工。'),tx('先看花纹，再剥开。'),tx('看清一个逻辑单元。'),tx('电压，让硅成为开关。'),tx('最后，是排列整齐的原子。')]
  const subtitles=[tx('这是一台自制示意手机。处理器藏在电路板上。'),tx('焊球连到电路板，封装保护里面的裸片。'),tx('点一个功能区。位置和面积为示意，不对应真实型号。'),tx('换到 Tiny Tapeout 02 真实开放电路，平面来自 GDS。'),tx('粉色栅跨过绿色有源区，交叉处形成晶体管。'),tx('栅极用电场改变沟道；源漏之间的电压推动电流。'),tx('硅是金刚石型晶格，每个内部原子连着四个邻居。')]
- const stageNotes=[tx('自制手机 · 无品牌 · 尺寸示意'),tx('自制封装 · 结构与尺寸示意'),tx('自制功能区 · 不表示面积比例'),tx('TT02 ALU · 150 × 170 μm · 真实平面，Z 轴夸张'),tx('真实反相器 · 掩膜范围含外延'),tx('三种结构为独立示意，不是同一芯片的放大照片'),tx('球与棒表示位置和近邻关系，不是原子外观')]
+ const stageNotes=[tx('自制手机 · 无品牌 · 尺寸示意'),tx('自制封装 · 结构与尺寸示意'),tx('自制功能区 · 不表示面积比例'),tx('TT02 ALU · 150 × 170 μm · 真实平面，Z 轴夸张'),tx('真实反相器 · 四周 M1/M2 走线为示意'),tx('三种结构为独立示意，不是同一芯片的放大照片'),tx('球与棒表示位置和近邻关系，不是原子外观')]
  const regionDescriptions:Record<string,string>={cpu:tx('CPU 按指令处理通用任务。'),gpu:tx('GPU 把许多相似运算同时展开。'),cache:tx('缓存把常用数据留在处理器附近。'),npu:tx('NPU 为神经网络中的重复计算安排专用通路。')}
  const fieldScale=fittedFieldScale(scale,canvasSize.width/Math.max(1,canvasSize.height)),scaleBar=ruler(fieldScale,canvasSize.width)
  const guideSteps=[
