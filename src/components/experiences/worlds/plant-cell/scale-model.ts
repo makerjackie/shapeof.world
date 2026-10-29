@@ -7,7 +7,7 @@ export const SCALE_MIN = -7.7
 export const SCALE_MAX = -0.5
 // A 70 µm-tall cell occupies ~78% of a 1600 × 1000 perspective viewport.
 export const HERO_SCALE = -3.86
-export const MOBILE_HERO_SCALE = -4.22
+export const MOBILE_HERO_SCALE = -4.08
 export const SCALE_DEFAULT = -3.84
 export const ENTRY_SCALE = -0.54
 export const TRANSITION_WIDTH = 0.3
