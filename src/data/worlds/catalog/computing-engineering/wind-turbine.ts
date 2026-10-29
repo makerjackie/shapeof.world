@@ -24,7 +24,7 @@ export default {
   topicLabel: 'Wind energy',
  }},
  primaryCategoryId: 'machines-mechanisms', runtime: 'scene-3d', difficulty: 'advanced', lane: 'structure', renderer: 'wind-turbine',
- experiencePolicy: {entryMode:'direct',shellMode:'minimal'}, duration:900, evidence:'modeled', accent:'#8faeaf', related:['power-grid','car-teardown'],
+ experiencePolicy: {entryMode: 'direct',shellMode: 'minimal'}, duration:900, evidence:'modeled', accent:'#8faeaf', related:['power-grid','car-teardown'],
  sources:[
   {label:'NREL：5 MW 参照风机',labelEn:'NREL: 5 MW reference wind turbine',url:'https://www.nrel.gov/docs/fy09osti/38060.pdf',note:'126 m 叶轮、90 m 轮毂高、12.1 rpm、97:1 速比和 94.4% 发电效率。',noteEn:'126 m rotor, 90 m hub height, 12.1 rpm, 97:1 gearbox and 94.4% generator efficiency.'},
   {label:'OpenFAST：叶片、翼型与极曲线',labelEn:'OpenFAST: blade, airfoil shapes and polars',url:'https://github.com/OpenFAST/r-test/tree/dd5feaaaa500ba7283140107806300d551cff0a7/glue-codes/openfast/5MW_Baseline',note:'Apache-2.0。提取19站位，升阻力极曲线保留，截面按周长重采样。许可在源码旁。',noteEn:'Apache-2.0. Nineteen stations and the lift/drag polars are retained; perimeters are resampled. License is beside the source.'},
