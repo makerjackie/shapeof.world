@@ -79,11 +79,37 @@
 @media(max-height:740px) and (min-width:701px){.bd-types{top:147px}.bd-legend{top:236px}.bd-explanation{top:160px}.bd-explanation h2{font-size:19px;margin:8px 0}.bd-path{margin-bottom:10px}.bd-trade p{margin:8px 0}.bd-viewport{top:180px}}
 
 .bd-explanation{max-height:calc(100% - 420px);overflow-y:auto;scrollbar-width:thin;padding-bottom:8px}
+/* Side panel fits without scrolling: it starts under the view tabs, stops above the truck controls,
+   and the open detail has no scroller of its own; readings sit in one row. */
+@media(min-width:701px){
+ .bd-explanation{top:150px;max-height:calc(100% - 306px)}
+ .bd-explanation h2{line-height:1.4;margin:6px 0 18px}
+ .bd-path{margin-bottom:14px}
+ .bd-trade p{margin:10px 0}
+ .bd-detail{max-height:none;overflow:visible;padding:10px 12px}
+ .bd-detail p{line-height:1.65;margin-bottom:4px}
+ .bd-detail dl{display:flex;flex-wrap:wrap;gap:0 20px}
+ .bd-detail dl div{margin-top:6px}
+ .bd-detail dd{font-size:18px;margin-top:2px}
+ /* The open detail takes the place of the solves / trade-off notes. */
+ .bd-explanation:has(.bd-detail) .bd-trade{display:none}
+}
+@media(min-width:701px) and (max-height:940px){
+ .bd-chapter{padding:10px 0}
+ .bd-explanation h2{font-size:20px;margin:4px 0 12px}
+ .bd-path{margin-bottom:8px}.bd-path li{padding-bottom:2px}.bridge-design .bd-path button{padding:3px 0}
+ .bd-trade p{margin:8px 0;line-height:1.65}
+}
+@media(min-width:701px) and (max-height:820px){
+ .bd-explanation:has(.bd-detail) .bd-path{display:none}
+}
 .bd-mobile-trade{display:none}
 @media(max-width:700px){
  .bd-explanation{overflow:visible;max-height:none;padding-bottom:0}
  .bd-mobile-trade{display:block}
- .bd-detail{max-height:205px}
+ /* The detail card may grow up to the legend instead of scrolling inside. */
+ .bd-detail{max-height:max(205px,calc(100vh - 464px))}
+ .bd-detail p{line-height:1.6;margin-bottom:7px}
  .bd-detail dl{flex-wrap:wrap;gap:8px 22px}
  .bridge-design .bd-pin{font-size:10px;min-height:38px;padding:4px 5px}
  .bd-camera span{display:none}
@@ -92,6 +118,8 @@
  .bridge-design .bd-path button{min-height:42px}
  .bd-model-note{font-size:9px}
 }
+/* Short phones: the open detail may cover the type picker rather than scroll inside. */
+@media(max-width:700px) and (max-height:720px){.bd-detail{max-height:calc(100vh - 330px)}}
 
 .bridge-design:has(.guide-tour) .bd-explanation{visibility:hidden}
 .bridge-design .guide-stage-copy{--guide-stage-top:240px;--guide-stage-bottom:auto;--guide-stage-left:auto;--guide-stage-right:32px;--guide-stage-width:270px;--guide-stage-translate:none;--guide-stage-kicker:var(--bd-blue-text);text-align:left}
