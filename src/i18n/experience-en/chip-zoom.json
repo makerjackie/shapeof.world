@@ -185,7 +185,7 @@
   "自制封装 · 结构与尺寸示意": "Original package · schematic structure and dimensions",
   "自制功能区 · 不表示面积比例": "Original floorplan · areas are not measured proportions",
   "TT02 ALU · 150 × 170 μm · 真实平面，Z 轴夸张": "TT02 ALU · 150 × 170 μm · real XY, exaggerated Z",
-  "真实反相器 · 四周 M1/M2 走线为示意": "Real inverter · surrounding M1/M2 wiring is illustrative",
+  "真实反相器 · 相邻单元与 M1/M2 走线为示意": "Real inverter · neighbouring cells and M1/M2 wiring are illustrative",
   "三种结构为独立示意，不是同一芯片的放大照片": "Three separate schematics, not magnifications of one chip",
   "球与棒表示位置和近邻关系，不是原子外观": "Balls and sticks mark positions and neighbours",
   "CPU 按指令处理通用任务。": "A CPU follows instructions for general-purpose tasks.",
