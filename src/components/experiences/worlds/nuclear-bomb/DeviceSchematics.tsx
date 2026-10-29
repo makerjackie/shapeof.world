@@ -244,6 +244,11 @@ export function DeviceSchematic({ kind, active, onReturnCity }: { kind: Exclude<
 						</li>
 					))}
 				</ol>
+				{/* Phones: the list collapses to a row of numbers and the current step reads here instead. */}
+				<div className="na-schem-current" aria-hidden="true">
+					<strong>{tx(device.steps[step].title)}</strong>
+					<span>{tx(device.steps[step].body)}</span>
+				</div>
 				<div className="na-schem-controls">
 					<button type="button" onClick={() => go(step - 1)} disabled={step === 0} aria-label={tx('上一步')}>
 						<ArrowLeft size={16} />
