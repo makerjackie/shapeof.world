@@ -80,3 +80,7 @@ content license. Existing dependencies Three.js, React, Fiber, Drei and Phosphor
 Icons are MIT. No external HDRI, downloaded model, vendor texture, font or
 restricted reference image is required. References supply facts and equations,
 not copied artwork. Full source parameters live in model.ts and parts.ts.
+
+## Selectable ripple-carry inspection (2026-10-30)
+
+The eight buttons and 3D tiles address the exact same `addByte` stages, LSB first. The inspector expands `A+B+Cin = S+2Cout` and the equivalent XOR/majority Boolean identities. Clicking a stage is a user inspection operation; it is not a CPU clock, propagation-delay simulation or A15 timing claim. No additional source assets.

@@ -180,5 +180,11 @@
   "一次清脆的触感，来自一块往复运动的质量。": "A crisp tap starts with a moving mass.",
   "计算弥散圈后的测试图": "Test pattern with calculated defocus blur",
   "传感器测试图": "SENSOR TEST PATTERN",
-  "最后，探索数字与触感": "Finish with radio and touch"
+  "最后，探索数字与触感": "Finish with radio and touch",
+  "逐位检查进位": "INSPECT THE CARRY",
+  "检查位": "Inspect bit",
+  "输入进位": "Carry in",
+  "本位的和": "Sum bit",
+  "输出进位": "Carry out",
+  "检查下一位": "Inspect next bit"
 }

@@ -196,3 +196,11 @@ brake/cut-out/restart states. Browser QA covers the farm, cutaway, blade/section
 and electrical paths, wind/pitch/load changes, pause/time controls, orbit, mobile
 layout, guide operation, English coverage and resource errors. Posters are
 actual renders of this world, with no unrelated imagery.
+
+## Inspectable blade stations and polars (2026-10-30)
+
+The 19 cross-section ribs use the same OpenFAST `reference-data.json` perimeter, chord, reference axis and twist transformation as the blade loft; 0.6% radial expansion prevents z-fighting and does not change aerodynamic inputs. The selectable station map follows the same indices as the existing radius slider.
+
+The polar plot samples the exact `polar()` linear interpolation already used by the BEM calculation, with 241 samples across ±30° or ±180°. Cl and Cd have **separate, labelled vertical axes** and both are dimensionless; axes expand to the actual table range. The live dots are the selected nodal section's existing `sectionSample()` alpha and coefficients, with the same nearby annular induction approximation. An angle outside the current horizontal range hides both dots and explicitly offers full-range viewing. It is reference-table visualization, not measured live data or a newly computed CFD field. No third-party plot or image is copied.
+
+The optional transparent skin reveals the same airfoil-outline loft, not internal spars, laminate lay-up or a structural cutaway. No fabricated internal blade structure is shown.

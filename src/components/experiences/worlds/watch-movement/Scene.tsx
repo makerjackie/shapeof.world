@@ -1,10 +1,11 @@
 import { memo, useEffect, useMemo, useRef, type ComponentRef, type MutableRefObject } from 'react'
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, Lightformer, OrbitControls } from '@react-three/drei'
+import { Environment, Html, Lightformer, OrbitControls } from '@react-three/drei'
 import * as T from 'three'
 import { isWorldPaused } from '~/lib/world-playback'
 import { advance, BALANCE, balanceAngle, FORK, forkAngle, indicationSeconds, TAU, WHEELS, wheelAngle, wind, type PartId, type Settings, type ViewId, type WatchState, type Wheel } from './model'
-import { bridgeGeometry, escapeGeometry, gearGeometry, spiralGeometry, updateMainspring, updateSpiral } from './geometry'
+import { fitWatchDistance } from './framing'
+import { bridgeGeometry, mainplateGeometry, PLATE_POCKETS, escapeGeometry, gearGeometry, spiralGeometry, updateMainspring, updateSpiral } from './geometry'
 
 type SceneProps = {
   state: MutableRefObject<WatchState>; settings: Settings; paused: boolean; speed: number; explode: number;
@@ -15,7 +16,7 @@ type SceneProps = {
 const GOLD = '#bca16a', STEEL = '#a0b1c2', RUBY = '#ad315b'
 const CYL_ROT: [number, number, number] = [Math.PI / 2, 0, 0]
 function Metal({ color = GOLD, roughness = .32, glow = 0, transparent = false, opacity = 1 }: { color?: string; roughness?: number; glow?: number; transparent?: boolean; opacity?: number }) {
-  return <meshStandardMaterial color={color} metalness={.82} roughness={roughness} emissive={color} emissiveIntensity={glow} transparent={transparent} opacity={opacity} />
+  return <meshPhysicalMaterial color={color} metalness={.86} roughness={roughness} clearcoat={.16} clearcoatRoughness={.34} emissive={color} emissiveIntensity={glow} transparent={transparent} opacity={opacity} />
 }
 function Cylinder({ r, h, z = 0, color = STEEL, sides = 48 }: { r: number; h: number; z?: number; color?: string; sides?: number }) {
   return <mesh position={[0, 0, z]} rotation={CYL_ROT} castShadow receiveShadow><cylinderGeometry args={[r, r, h, sides]} /><Metal color={color} /></mesh>
@@ -68,6 +69,7 @@ const TrainWheel = memo(function TrainWheel({ wheel, state, explode, selected, o
   return <group position={[wheel.x, wheel.y, z]}>
     <group ref={ref}>
       <mesh geometry={geometry} castShadow receiveShadow onPointerOver={e => { e.stopPropagation(); (e.nativeEvent.target as HTMLElement).style.cursor = 'pointer' }} onPointerOut={e => { (e.nativeEvent.target as HTMLElement).style.cursor = 'grab' }} onClick={e => { e.stopPropagation(); onSelect() }}><Metal color={color} glow={path ? .08 : 0} /></mesh>
+      {wheel.id !== 'escape' && <><Ring r={wheel.teeth * wheel.module * .43} width={.022} z={.275} color={isSelected ? '#ead097' : '#d1b77c'} /><Ring r={wheel.teeth * wheel.module * .155} width={.035} z={.265} color="#8f784b" /></>}
       {pinion && <mesh geometry={pinion} position={[0, 0, -.75]} castShadow><Metal color="#99abbc" /></mesh>}
       {wheel.id === 'barrel' && <>
         <Cylinder r={4.32} h={.52} z={-.28} color="#7d6949" />
@@ -124,21 +126,28 @@ function Fork({ state, explode, select }: Pick<SceneProps, 'state' | 'explode' |
   </group>
 }
 function Plate({ explode, bridges, selected, select }: Pick<SceneProps, 'explode' | 'bridges' | 'selected' | 'select'>) {
+  const plate = useMemo(() => mainplateGeometry(), [])
+  useEffect(() => () => plate.dispose(), [plate])
+  const finish = useMemo(() => {
+    const canvas = document.createElement('canvas'); canvas.width = canvas.height = 512
+    const ctx = canvas.getContext('2d')!; ctx.fillStyle = '#747474'; ctx.fillRect(0, 0, 512, 512)
+    for (let row = -1; row < 18; row++) for (let col = -1; col < 18; col++) {
+      const x = col * 32 + row % 2 * 16, y = row * 32
+      for (let r = 3; r < 22; r += 1.7) { ctx.strokeStyle = `rgba(192,192,192,${.08 + (r % 3) * .02})`; ctx.lineWidth = .6; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.stroke() }
+    }
+    const texture = new T.CanvasTexture(canvas); texture.anisotropy = 4; return texture
+  }, [])
+  useEffect(() => () => finish.dispose(), [finish])
   const trainBridge = useMemo(() => bridgeGeometry([[-3, 4.4], [-1.7, 4.8], [1.8, 4.35], [5.3, 1.8], [5.2, -.1], [3.3, -.6], [2.8, 1.1], [.8, 2.7], [-1.4, 3.25], [-2.7, 2.9]], [[-1.4, 2.2, .57]]), [])
   const barrelBridge = useMemo(() => bridgeGeometry([[-9, 8.5], [-6.2, 10], [-2.9, 8.2], [-2.1, 6], [-3.6, 4.7], [-5.8, 4.8], [-8.2, 6.1]], [[WHEELS[0].x, WHEELS[0].y, .6]]), [])
   const balanceBridge = useMemo(() => bridgeGeometry([[-7, -5.5], [-6.1, -4.7], [-1.7, -4.45], [-1.15, -5.2], [-1.8, -5.9], [-5.9, -5.85]], [[BALANCE[0], BALANCE[1], .47]]), [])
   useEffect(() => () => { trainBridge.dispose(); barrelBridge.dispose(); balanceBridge.dispose() }, [trainBridge, barrelBridge, balanceBridge])
   return <>
     <group onClick={e => { e.stopPropagation(); select('bridge') }}>
-      <Cylinder r={12.9} h={.65} z={-.45} color="#2b323a" sides={128} />
+      <mesh geometry={plate} receiveShadow castShadow><meshStandardMaterial color="#64717b" metalness={.8} roughness={.4} bumpMap={finish} bumpScale={.012} /></mesh>
+      {PLATE_POCKETS.map(([x,y,r])=><group key={x} position={[x,y,-.07]}><Ring r={r+.1} width={.025} color="#8b969c" /></group>)}
       <Ring r={12.75} width={.1} z={-.04} color="#697784" />
       <Ring r={12.25} width={.035} z={-.02} color="#596774" />
-      {/* Recesses and overlapping circles evoke perlage without textures or external assets. */}
-      {Array.from({ length: 11 }, (_, row) => Array.from({ length: 13 }, (_, col) => {
-        const x = -11 + col * 1.8 + row % 2 * .9, y = -10 + row * 1.8
-        if (x * x + y * y > 140) return null
-        return <mesh key={`${row}:${col}`} position={[x, y, -.105]}><ringGeometry args={[.67, .7, 24]} /><meshStandardMaterial color="#3d4750" metalness={.7} roughness={.42} /></mesh>
-      }))}
       {Array.from({ length: 7 }, (_, i) => { const a = i * TAU / 7 + .2; return <Screw key={i} at={[Math.cos(a) * 11.5, Math.sin(a) * 11.5, .02]} r={.39} /> })}
     </group>
     {WHEELS.map(w => <Jewel key={w.id} at={[w.x, w.y, .05]} select={() => select('jewel')} />)}
@@ -245,29 +254,22 @@ function PowerPath({ state, explode, visible }: Pick<SceneProps, 'state' | 'expl
   return <group ref={ref}>{WHEELS.map((w, i) => <mesh key={w.id} position={[w.x, w.y, w.z + explode * (1.3 + i * 2.1) + .55]}><ringGeometry args={[w.teeth * w.module / 2 + .2, w.teeth * w.module / 2 + .24, 96]} /><meshBasicMaterial color={i === 4 ? '#7fb9dd' : '#a8996e'} transparent opacity={.65} side={T.DoubleSide} depthWrite={false} /></mesh>)}</group>
 }
 function CameraRig({ view, reset, explode, onInteract }: Pick<SceneProps, 'view' | 'reset' | 'explode' | 'onInteract'>) {
-  const { camera, size } = useThree(), orbit = useRef<ComponentRef<typeof OrbitControls>>(null)
+  const { camera, size } = useThree(), orbit = useRef<ComponentRef<typeof OrbitControls>>(null), lastFrame = useRef('')
   useEffect(() => {
-    const narrow = size.width < 600
-    let target = new T.Vector3(0, .2, 2), position = new T.Vector3(0, -20, 38)
-    if (view === 'escapement') { target.set(.2, -3.2, 3.8); position.set(0, -13, 20) }
-    if (view === 'spring') { target.set(-3, 4.2, 2); position.set(-6, -6, 27) }
-    if (view === 'dial') { target.set(0, .7, 3); position.set(0, -2, 50) }
-    if (camera instanceof T.PerspectiveCamera) {
-      camera.fov = narrow ? 48 : 43; camera.updateProjectionMatrix()
-      if (narrow && view === 'movement') position.multiplyScalar(1.2)
-    }
-    camera.position.copy(position)
+    const fov = 43, aspect = size.width / Math.max(1, size.height)
+    const target = new T.Vector3(0, 1.1, 2 + explode * 7)
+    let radius = 14.2 + explode * 5, direction = new T.Vector3(0, -.38, .925)
+    if (view === 'escapement') { target.set(.3, -3, 3.8); radius = 6.4; direction.set(0, -.25, .968) }
+    if (view === 'spring') { target.set(-3, 4.2, 2 + explode * 5); radius = 10.8 + explode * 4; direction.set(-.1, -.32, .942) }
+    if (view === 'dial') { target.set(-1.4, 2.2, 3); radius = 13.3 + explode * 4; direction.set(0, -.04, 1) }
+    const frame = [view, reset, size.width, size.height].join(':')
+    if (frame === lastFrame.current && orbit.current) direction.copy(camera.position).sub(orbit.current.target)
+    lastFrame.current = frame
+    if (camera instanceof T.PerspectiveCamera) { camera.fov = fov; camera.updateProjectionMatrix() }
+    camera.position.copy(target).addScaledVector(direction.normalize(), fitWatchDistance(radius, aspect, fov))
     camera.lookAt(target)
     if (orbit.current) { orbit.current.target.copy(target); orbit.current.update() }
-  }, [view, reset, size.width, size.height, camera])
-  useEffect(() => {
-    if (view === 'movement' && orbit.current) {
-      const offset = camera.position.clone().sub(orbit.current.target).normalize()
-      orbit.current.target.z = 2 + explode * 6
-      camera.position.copy(orbit.current.target).addScaledVector(offset, 45 * (1 + explode * .4) * (size.width < 600 ? 1.2 : 1))
-      orbit.current.update()
-    }
-  }, [explode, view, reset, size.width, camera])
+  }, [view, reset, explode, size.width, size.height, camera])
   return <OrbitControls ref={orbit} makeDefault enableDamping dampingFactor={.08} minDistance={7} maxDistance={95} minPolarAngle={.1} maxPolarAngle={Math.PI * .92} onStart={onInteract} />
 }
 function Labels({ names, select, explode, view }: Pick<SceneProps, 'names' | 'select' | 'explode' | 'view'>) {
@@ -286,10 +288,10 @@ function Labels({ names, select, explode, view }: Pick<SceneProps, 'names' | 'se
 export const WatchScene = memo(function WatchScene(props: SceneProps) {
   return <Canvas shadows dpr={[1, 1.6]} camera={{ position: [0, -20, 38], fov: 43, near: .05, far: 250 }} gl={{ antialias: true, alpha: false }} onPointerMissed={() => {}}>
     <color attach="background" args={['#080d13']} />
-    <ambientLight intensity={.3} />
+    <ambientLight intensity={.4} />
     <hemisphereLight args={['#c2d2e8', '#15110c', .7]} />
-    <directionalLight position={[-14, 15, 28]} intensity={3.3} color="#e7e8e5" castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-20} shadow-camera-right={20} shadow-camera-top={20} shadow-camera-bottom={-20} shadow-bias={-.0005} />
-    <directionalLight position={[15, -8, 12]} intensity={2.2} color="#94b6d1" />
+    <directionalLight position={[-14, 15, 28]} intensity={2.6} color="#e7e8e5" castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-20} shadow-camera-right={20} shadow-camera-top={20} shadow-camera-bottom={-20} shadow-bias={-.0005} />
+    <directionalLight position={[15, -8, 12]} intensity={2.7} color="#b6cee0" />
     <Environment resolution={128} frames={1}>
       <Lightformer form="rect" intensity={3} position={[-12, 8, 15]} scale={[18, 10, 1]} target={[0, 0, 0]} />
       <Lightformer form="rect" intensity={1.8} position={[8, -8, 8]} scale={[4, 18, 1]} target={[0, 0, 0]} color="#b6cee4" />
@@ -306,7 +308,5 @@ export const WatchScene = memo(function WatchScene(props: SceneProps) {
     <MotionWorks state={props.state} visible={props.view === 'dial'} />
     <Hands state={props.state} select={props.select} visible={props.view === 'dial'} />
     {props.labels && props.view !== 'dial' && <Labels {...props} />}
-    <mesh position={[0, 0, -1.45]} rotation={CYL_ROT} receiveShadow><cylinderGeometry args={[17, 17, .3, 128]} /><meshStandardMaterial color="#0c131c" roughness={.8} /></mesh>
-    <ContactShadows position={[0, 0, -1.1]} rotation={[Math.PI / 2, 0, 0]} opacity={.35} scale={60} blur={2.5} far={25} resolution={256} frames={1} />
   </Canvas>
 })

@@ -5,7 +5,7 @@ import {ACTUATOR, addByte, bpsk, cameraOptics, displayLight, hapticMotion, phone
 import {Cylinder, DiagramLine, Mark, Plate, Wire} from './render-kit'
 
 export type LabSettings = {rgb:[number,number,number];touch:[number,number]|null;a:number;b:number;objectM:number;focusM:number;frequencyGHz:number;distanceKm:number;bits:number[];hapticHz:number;forceN:number;power:PowerSettings}
-export type LabProps={settings:LabSettings;clock:RefObject<number>;cell:CellState;onTouch:(p:[number,number])=>void}
+export type LabProps={settings:LabSettings;clock:RefObject<number>;cell:CellState;onTouch:(p:[number,number])=>void;computeBit?:number;onBit?:(bit:number)=>void}
 function PixelArray({rgb,touch,clock}:{rgb:number[];touch:LabSettings['touch'];clock:RefObject<number>}) {
  const mesh=useRef<T.InstancedMesh>(null),scan=useRef<T.Mesh>(null),n=18,cols=16
  useEffect(()=>{
@@ -31,16 +31,15 @@ export function DisplayLab({settings,clock,onTouch}:LabProps){
  <group position={[0,-6,0]}><Plate size={[7.4,1.1,.2]} color="#1a252c"/><mesh position={[0,0,.12]}><planeGeometry args={[6.95,.7]}/><meshBasicMaterial color={linear.rgb} toneMapped={false}/></mesh></group>
  </group>
 }
-export function ComputeLab({settings,clock}:LabProps) {
- const sum=addByte(settings.a,settings.b),active=useRef<T.Mesh>(null)
- useFrame(()=>{if(active.current)active.current.position.x=-4.2+(Math.floor(clock.current*1.8)%8)*1.2})
+export function ComputeLab({settings,computeBit=0,onBit}:LabProps) {
+ const sum=addByte(settings.a,settings.b)
  return <group><Plate size={[12.3,7.5,.35]} color="#1a302c" radius={.25}/><Plate size={[10.5,5.8,.18]} position={[0,.45,.32]} color="#4e535c" radius={.12}/><Plate size={[9.8,5.1,.05]} position={[0,.45,.45]} color="#222b36" radius={.08}/>
  {Array.from({length:48},(_,i)=>{const a=i/48*Math.PI*2;return <Cylinder key={i} position={[Math.cos(a)*5.65,Math.sin(a)*3.2,-.26]} radius={.09} depth={.12} color="#b7a276"/>})}
  <Mark text="A15 / FUNCTIONAL SCHEMATIC" width={8.1} height={.31} position={[0,3.55,.3]}/>
  {[{x:-3.65,y:1.95,w:2.7,h:1.2,t:'CPU',c:'#687a91'},{x:-3.65,y:.2,w:2.7,h:1.6,t:'GPU',c:'#77758e'},{x:-.4,y:1.95,w:2.5,h:1.2,t:'NEURAL',c:'#697f74'},{x:3,y:1.95,w:3,h:1.2,t:'MEMORY',c:'#8b7b68'},{x:3,y:.2,w:3,h:1.6,t:'ISP / VIDEO',c:'#8e8367'},{x:-.4,y:.2,w:2.5,h:1.6,t:'CACHE',c:'#67727c'}].map(block=><group key={block.t} position={[block.x,block.y,.56]}><Plate size={[block.w,block.h,.07]} color={block.c} radius={.04}/><Mark text={block.t} width={block.w*.8} height={.26} position={[0,0,.06]}/>{Array.from({length:8},(_,i)=><DiagramLine key={i} points={[[-block.w*.42,(i/7-.5)*block.h*.8,.07],[block.w*.42,(i/7-.5)*block.h*.8,.07]]} color="#b0b5bd" opacity={.18}/>)}</group>)}
  <Mark text="INDEPENDENT 8-BIT RIPPLE ADDER" width={8.9} height={.27} position={[0,-1.15,.56]} color="#bdb3c8"/>
- <group position={[0,-2.2,.65]}>{sum.stages.map((stage,i)=><group key={i} position={[-4.2+i*1.2,0,0]}><Plate size={[1.02,1.5,.09]} color={stage.sum?'#53796c':'#333e46'} radius={.04}/><Mark text={`${stage.sum}`} width={.55} height={.5} position={[0,.07,.065]}/><Mark text={`${stage.a} + ${stage.b}`} width={.81} height={.2} position={[0,.54,.065]} color="#c1c1c0"/><Mark text={`C${stage.carry}`} width={.65} height={.21} position={[0,-.48,.065]} color={stage.carry?'#e6bd81':'#78888f'}/>{i<7&&<DiagramLine points={[[.52,-.37,.08],[.72,-.37,.08],[.72,.37,.08],[.75,.37,.08]]} color={stage.carry?'#d6b587':'#5a646b'}/>}</group>)}
- <mesh ref={active} position={[-4.2,0,.06]}><boxGeometry args={[1.12,1.62,.05]}/><meshBasicMaterial color="#c5a6d4" wireframe/></mesh></group>
+ <group position={[0,-2.2,.65]}>{sum.stages.map((stage,i)=><group key={i} position={[-4.2+i*1.2,0,0]} onClick={e=>{e.stopPropagation();onBit?.(i)}} onPointerOver={e=>{e.stopPropagation();(e.nativeEvent.target as HTMLElement).style.cursor='pointer'}} onPointerOut={e=>{(e.nativeEvent.target as HTMLElement).style.cursor='grab'}}><Plate size={[1.02,1.5,.09]} color={computeBit===i?'#748a92':stage.sum?'#53796c':'#333e46'} radius={.04}/><Mark text={`${stage.sum}`} width={.55} height={.5} position={[0,.07,.065]}/><Mark text={`${stage.a} + ${stage.b}`} width={.81} height={.2} position={[0,.54,.065]} color="#c1c1c0"/><Mark text={`C${stage.carry}`} width={.65} height={.21} position={[0,-.48,.065]} color={stage.carry?'#e6bd81':'#78888f'}/>{i<7&&<DiagramLine points={[[.52,-.37,.08],[.72,-.37,.08],[.72,.37,.08],[.75,.37,.08]]} color={stage.carry?'#d6b587':'#5a646b'}/>}</group>)}
+ <mesh position={[-4.2+computeBit*1.2,0,.06]}><boxGeometry args={[1.12,1.62,.05]}/><meshBasicMaterial color="#c5a6d4" wireframe/></mesh></group>
  <Mark text="LSB → MSB" width={2.3} height={.25} position={[-3.75,-4.28,0]}/>
  </group>
 }

@@ -59,3 +59,12 @@ export function landscapeGeometry(): T.PlaneGeometry {
   }
   geometry.setAttribute('color', new T.BufferAttribute(colors, 3)); geometry.computeVertexNormals(); return geometry
 }
+
+/** Cross-section ribs use the exact loft coordinates, expanded 0.6% to avoid z fighting. */
+export function stationOutline(index: number, expand = 1.006): [number, number, number][] {
+  const section = SECTIONS[index], foil = FOILS[section.foil], a = section.twist * RAD
+  return [...foil.profile, foil.profile[0]].map(p => {
+    const tangent = (p[0] - foil.reference[0]) * section.chord * expand, axial = p[1] * section.chord * expand
+    return [axial * Math.cos(a) + tangent * Math.sin(a), section.span + SPEC.hubRadius, -axial * Math.sin(a) + tangent * Math.cos(a)]
+  })
+}

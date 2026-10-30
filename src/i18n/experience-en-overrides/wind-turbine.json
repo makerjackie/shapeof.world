@@ -134,5 +134,13 @@
   "已松开": "Released",
   "瞬时功率": "Instantaneous power",
   "叶轮直径": "Rotor diameter",
-  "播放与拆解控制": "Playback and disassembly controls"
+  "播放与拆解控制": "Playback and disassembly controls",
+  "截面地图": "SECTION MAP",
+  "选择真实叶片站位": "Select a reference blade station",
+  "站位": "Station",
+  "翼型升阻力极曲线": "AIRFOIL POLARS",
+  "真实翼型极曲线与当前迎角": "Reference airfoil polars and the current angle of attack",
+  "当前迎角在图外；切换到全角度查看。": "The current angle is outside this view. Switch to the full angular range.",
+  "圆点是当前工作点。左右纵轴分别表示无量纲升力和阻力系数。": "Dots mark the current operating point. Separate left and right axes show dimensionless lift and drag coefficients.",
+  "透视叶片外形": "See through the blade skin"
 }

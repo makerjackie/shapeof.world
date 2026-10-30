@@ -30,3 +30,14 @@
 .watch-movement:has(>.guide-tour) .wm-escape-state{left:410px}
 @media(max-width:1050px) and (min-width:761px){.watch-movement:has(>.guide-tour) .wm-status,.watch-movement:has(>.guide-tour) .wm-escape-state{display:none}}
 @media(max-width:760px){.watch-movement:has(>.guide-tour) .wm-status,.watch-movement:has(>.guide-tour) .wm-escape-state{display:none}}
+
+/* The instrument has its own viewfinder: keep every millimetre clear of the transport bar. */
+@media(min-width:761px){.wm-stage{top:90px;bottom:118px;left:50px}.wm-status{bottom:128px}.wm-detail p{font-size:12px;line-height:1.85}.wm-part-list button{font-size:11px;min-height:33px}.wm-part-data{font-size:10px}.wm-detail h3{font-size:12px}}
+
+.wm-part-list button{white-space:normal;min-width:0;line-height:1.45}.wm-part-list button>i,.wm-part-list button>span{flex-shrink:0}
+
+/* Follow the shell's shared immersion toggle while keeping its exit control available. */
+.experience-page[data-overlays-hidden=true] .watch-movement{min-height:0}
+.experience-page[data-overlays-hidden=true] .watch-movement>:not(.wm-stage):not(.guide-tour){display:none!important}
+.experience-page[data-overlays-hidden=true] .watch-movement .wm-stage{inset:0!important}
+.experience-page[data-overlays-hidden=true] .watch-movement .wm-pin{display:none!important}

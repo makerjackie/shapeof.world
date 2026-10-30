@@ -29,3 +29,11 @@
 .wind-turbine:has(>.guide-tour) .wt-scale{left:410px}
 @media(max-width:1050px) and (min-width:761px){.wind-turbine:has(>.guide-tour) .wt-scale{display:none}}
 @media(max-width:760px){.wind-turbine:has(>.guide-tour) .wt-scale{left:17px}.wind-turbine:has(>.guide-tour):lang(en)>.guide-tour{top:175px;max-height:calc(100svh - 520px)}}
+
+.wt-blade-data{margin:22px 0;padding:16px 0;border-block:1px solid #ffffff18}.wt-station-map{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin:14px 0 21px}.wt-station-map button{display:flex;align-items:center;justify-content:center;gap:5px;min-height:31px;padding:4px 2px;border:1px solid #ffffff14;background:#10232d}.wt-station-map button[aria-pressed=true]{border-color:#d5b67c;background:#3c4035}.wt-station-map small{font:9px ui-monospace,monospace;color:#a8bbc4}.wt-station-map i{width:3px;background:#91acb6;border-radius:2px;max-height:22px}.wt-station-map button[aria-pressed=true] i{background:#e1c182}.wt-polar-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;color:#b7c9ce}.wt-polar-heading button{border:1px solid #9cb6c333;padding:6px 9px;color:#c6d7df;min-height:30px;font:10px ui-monospace,monospace}.wt-polar{display:block;width:100%;height:auto;margin:12px 0}.wt-polar-values{display:flex;gap:25px;font:10px ui-monospace,monospace;color:#9bb2ba}.wt-polar-values b{font-size:14px;font-weight:400;color:#dbe7e8;margin-left:8px}.wt-blade-data .wt-caption{font-size:10px;line-height:1.7;color:#8ca5b1}@media(max-width:760px){.wt-station-map{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}.wt-station-map button{min-height:31px}.wt-polar-heading{flex-wrap:wrap}.wt-polar-values{gap:14px;flex-wrap:wrap}.wt-polar-values b{font-size:12px}.wt-blade-data .wt-caption{font-size:9px}}
+
+/* Keep the shell exit button and the actual 3D scene, including orbit interaction. */
+.experience-page[data-overlays-hidden=true] .wind-turbine{min-height:0}
+.experience-page[data-overlays-hidden=true] .wind-turbine>:not(.wt-stage):not(.guide-tour){display:none!important}
+.experience-page[data-overlays-hidden=true] .wind-turbine .wt-stage{inset:0!important}
+.experience-page[data-overlays-hidden=true] .wind-turbine .wt-pin{display:none!important}

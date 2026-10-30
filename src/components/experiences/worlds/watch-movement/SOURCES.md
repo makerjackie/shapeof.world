@@ -107,3 +107,9 @@ reserve exhaustion, load behavior and frame-subdivision invariance. Browser QA
 checks freely orbiting/zooming, all four observation views, paused single-beat
 stepping, winding/restart, exploded layers, lab controls and both languages on
 desktop and phone. Screenshots used for posters are renders of this scene.
+
+## Instrument presentation (2026-10-30)
+
+The fine overlapping brushing in the plate bump map is generated locally with Canvas; it is a surface finish illustration, not metrology or material simulation. Added rim/hub turning marks do not change gear pitch circles, tooth counts or physical timing. Camera fitting uses a bounding sphere and actual viewport field of view so the mechanism clears the transport bar. No external textures or environment images.
+
+The open-work mainplate's four clearance pockets are an original display-calibre design, not a historical calibre reconstruction. Tests require a supported margin around every wheel/balance pivot and the plate perimeter. They do not calculate plate stiffness or production tolerances.

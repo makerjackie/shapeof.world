@@ -4,9 +4,9 @@ import { Environment, Html, Lightformer, Line, OrbitControls, RoundedBox } from 
 import * as T from 'three'
 import { isWorldPaused } from '~/lib/world-playback'
 import { advance, FINAL_MESH, FOILS, PLANETARY, RAD, readings, sectionSample, SECTIONS, SPEC, TAU, type Inputs, type PartId, type State, type ViewId } from './model'
-import { bladeGeometry, foilGeometry, gearGeometry, groundHeight, landscapeGeometry } from './geometry'
+import { bladeGeometry, foilGeometry, gearGeometry, groundHeight, landscapeGeometry, stationOutline } from './geometry'
 
-type Props = { state: MutableRefObject<State>; telemetry: MutableRefObject<ReturnType<typeof readings>>; input: Inputs; paused: boolean; speed: number; view: ViewId; part: PartId; explode: number; cover: boolean; flow: boolean; labels: boolean; station: number; sectionMode: boolean; reset: number; names: Record<string,string>; select: (p:PartId)=>void; sample:(s:State)=>void; interact:()=>void }
+type Props = { state: MutableRefObject<State>; telemetry: MutableRefObject<ReturnType<typeof readings>>; input: Inputs; paused: boolean; speed: number; view: ViewId; part: PartId; explode: number; cover: boolean; flow: boolean; labels: boolean; station: number; sectionMode: boolean; bladeSkin:boolean; chooseStation:(index:number)=>void; reset: number; names: Record<string,string>; select: (p:PartId)=>void; sample:(s:State)=>void; interact:()=>void }
 const AXIS_X:[number,number,number]=[0,0,Math.PI/2]
 const BASE=groundHeight(0,0),HEAD=SPEC.hubHeight-5*Math.sin(5*RAD)
 function Metal({color='#83939b',roughness=.32}:{color?:string;roughness?:number}){return <meshStandardMaterial color={color} roughness={roughness} metalness={.78}/>}
@@ -119,6 +119,7 @@ function Farm({p,geometry,shortGeometry}:{p:Props;geometry:T.BufferGeometry;shor
  </>
 }
 function BladeStudy(p:Props){
+ const outlines=useMemo(()=>SECTIONS.map((_,i)=>stationOutline(i)),[])
  const geometry=useMemo(()=>bladeGeometry(),[]),foil=useMemo(()=>foilGeometry(p.station),[p.station]),airflow=useRef<T.Group>(null),liftRef=useRef<T.Group>(null),dragRef=useRef<T.Group>(null),pitch=useRef<T.Group>(null)
  const section=SECTIONS[p.station],points=useMemo(()=>{const f=FOILS[section.foil];return [...f.profile,f.profile[0]].map(v=>new T.Vector3((v[0]-f.reference[0])*section.chord,v[1]*section.chord,.38))},[section])
  useEffect(()=>()=>{geometry.dispose()},[geometry]);useEffect(()=>()=>foil.dispose(),[foil])
@@ -132,7 +133,7 @@ function BladeStudy(p:Props){
    <group ref={dragRef}><Line points={[[0,0,0],[.9,0,0]]} color="#ae7766" lineWidth={2}/><mesh position={[.94,0,0]} rotation={[0,0,-Math.PI/2]}><coneGeometry args={[.07,.22,10]}/><meshBasicMaterial color="#ae7766"/></mesh></group>
   </group>
  </>
- return <group rotation={[0,0,-Math.PI/2]} position={[-31,0,0]}><group ref={pitch}><mesh geometry={geometry} castShadow><meshStandardMaterial color="#cbd6ce" roughness={.4} metalness={.14} side={T.DoubleSide}/></mesh><Line points={[...FOILS[section.foil].profile,FOILS[section.foil].profile[0]].map(v=>{const tangent=(v[0]-FOILS[section.foil].reference[0])*section.chord,axial=v[1]*section.chord,a=section.twist*RAD;return new T.Vector3(axial*Math.cos(a)+tangent*Math.sin(a),section.span+SPEC.hubRadius,-axial*Math.sin(a)+tangent*Math.cos(a))})} color="#d1ad6e" lineWidth={2}/></group></group>
+ return <group rotation={[0,0,-Math.PI/2]} position={[-31,0,0]}><group ref={pitch}><mesh geometry={geometry} castShadow><meshStandardMaterial color={p.bladeSkin?'#cbd6ce':'#86aaba'} roughness={.4} metalness={.14} side={T.DoubleSide} transparent={!p.bladeSkin} opacity={p.bladeSkin?1:.12} depthWrite={p.bladeSkin}/></mesh>{outlines.map((points,i)=><Line key={i} points={points} color={i===p.station?'#edc982':'#758f99'} lineWidth={i===p.station?2.5:1} transparent opacity={i===p.station?1:p.bladeSkin?.6:.9} onClick={e=>{e.stopPropagation();p.chooseStation(i)}}/>)}</group></group>
 }
 function ElectricStudy(p:Props){const phase=useRef<T.Group>(null);useFrame(()=>{if(phase.current)phase.current.rotation.x=-p.state.current.theta*97});return <>
  <Generator state={p.state} explode={p.explode} select={p.select} large/>

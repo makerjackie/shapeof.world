@@ -7,7 +7,7 @@ import type {ExperienceControls} from '~/components/ExperienceShell'
 import {GuideTour} from '~/components/experiences/GuideTour'
 import {useExperienceI18n} from '~/i18n/experience'
 import {isWorldPaused} from '~/lib/world-playback'
-import {addByte, advanceCell, cameraOptics, displayLight, hapticMotion, phonePower, powerShare, radioLink, type CellState, type Lab, type SystemId} from './model'
+import {addByte, advanceCell, cameraOptics, displayLight, hapticMotion, inspectByteStage, phonePower, powerShare, radioLink, type CellState, type Lab, type SystemId} from './model'
 import {PARTS, SYSTEMS} from './parts'
 import {partPosition, PhoneAssembly} from './PhoneAssembly'
 import {CameraLab, ComputeLab, DisplayLab, HapticsLab, PowerLab, RadioLab, type LabSettings} from './Labs'
@@ -39,8 +39,8 @@ function RunningPhone({explode,clock,workflow}:{explode:number;clock:React.RefOb
  return <group><DiagramLine points={positions.map(p=>p.toArray() as [number,number,number])} color="#ceb58e" opacity={.4}/><group ref={group}>{Array.from({length:8},(_,i)=><mesh key={i}><sphereGeometry args={[.055,10,10]}/><meshBasicMaterial color="#e7c891" toneMapped={false}/></mesh>)}</group></group>
 }
 function Time({clock,paused,speed}:{clock:React.RefObject<number>;paused:boolean;speed:number}){useFrame((_,dt)=>{if(!paused&&!isWorldPaused())clock.current+=Math.min(dt,.05)*speed});return null}
-function Scene({view,settings,cell,paused,speed,revision,explode,selected,glass,labels,workflow,highlight,onSelect,onTouch,tx,onInteract}:{view:Lab;settings:LabSettings;cell:CellState;paused:boolean;speed:number;revision:number;explode:number;selected:string|null;glass:boolean;labels:boolean;workflow:Workflow;highlight:SystemId|null;onSelect:(id:string)=>void;onTouch:(p:[number,number])=>void;tx:(s:string)=>string;onInteract:()=>void}) {
- const clock=useRef(0),labProps={settings,cell,clock,onTouch}
+function Scene({view,settings,cell,computeBit,onBit,paused,speed,revision,explode,selected,glass,labels,workflow,highlight,onSelect,onTouch,tx,onInteract}:{view:Lab;settings:LabSettings;cell:CellState;computeBit:number;onBit:(bit:number)=>void;paused:boolean;speed:number;revision:number;explode:number;selected:string|null;glass:boolean;labels:boolean;workflow:Workflow;highlight:SystemId|null;onSelect:(id:string)=>void;onTouch:(p:[number,number])=>void;tx:(s:string)=>string;onInteract:()=>void}) {
+ const clock=useRef(0),labProps={settings,cell,clock,onTouch,computeBit,onBit}
  return <Canvas shadows={SHADOWS} dpr={[1,1.65]} camera={{position:[19,12,29],fov:34,near:.05,far:180}} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}} onPointerDown={onInteract} onWheel={onInteract}>
   <Time {...{clock,paused,speed}}/><CameraRig view={view} revision={revision} explode={explode}/><Studio/>
   {view==='assembly'?<><PhoneAssembly {...{explode,selected,glass,labels,onSelect,tx,highlight}}/><RunningPhone explode={explode} clock={clock} workflow={workflow}/><ContactShadows position={[0,-8.5,0]} scale={50} opacity={.25} blur={2.8} far={24} resolution={256} frames={1}/></>:view==='display'?<DisplayLab {...labProps}/>:view==='compute'?<ComputeLab {...labProps}/>:view==='camera'?<CameraLab {...labProps}/>:view==='power'?<PowerLab {...labProps}/>:view==='radio'?<RadioLab {...labProps}/>:<HapticsLab {...labProps}/>}
@@ -53,18 +53,20 @@ function Readout({label,value,unit}:{label:string;value:string;unit?:string}){re
 export function IPhoneTeardown({controls}:{controls:ExperienceControls}) {
  const tx=useExperienceI18n(),[view,setView]=useState<Lab>('assembly'),[settings,setSettings]=useState<LabSettings>(DEFAULT),[cell,setCell]=useState<CellState>({soc:.67,temperature:23,seconds:0})
  const [explode,setExplode]=useState(.58),[selected,setSelected]=useState<string|null>('soc'),[glass,setGlass]=useState(false),[labels,setLabels]=useState(false),[paused,setPaused]=useState(false),[speed,setSpeed]=useState(1),[revision,setRevision]=useState(0),[guide,setGuide]=useState(false),[details,setDetails]=useState(false),[workflow,setWorkflow]=useState<Workflow>('photo'),[highlight,setHighlight]=useState<SystemId|null>(null),[mobilePanel,setMobilePanel]=useState(true),[visited,setVisited]=useState<Lab[]>(['assembly'])
+ const [computeBit,setComputeBit]=useState(0)
  const finished=useRef(false),modalRef=useRef<HTMLElement>(null)
  const interact=useCallback(()=>controls.registerInteraction(),[controls.registerInteraction])
  const change=useCallback(<K extends keyof LabSettings>(key:K,value:LabSettings[K])=>{interact();setSettings(p=>({...p,[key]:value}))},[interact])
  const powerChange=(key:keyof LabSettings['power'],value:number|boolean)=>{interact();setSettings(p=>({...p,power:{...p.power,[key]:value}}))}
  const choose=useCallback((v:Lab)=>{interact();setView(v);setHighlight(null);setMobilePanel(true);setVisited(p=>p.includes(v)?p:[...p,v])},[interact])
- const reset=useCallback(()=>{interact();setSettings({...DEFAULT,rgb:[...DEFAULT.rgb],bits:[...DEFAULT.bits],power:{...DEFAULT.power}});setCell({soc:.67,temperature:23,seconds:0});setExplode(.58);setSelected('soc');setGlass(false);setLabels(false);setPaused(false);setSpeed(1);setWorkflow('photo');setHighlight(null);setRevision(n=>n+1)},[interact])
+ const reset=useCallback(()=>{interact();setSettings({...DEFAULT,rgb:[...DEFAULT.rgb],bits:[...DEFAULT.bits],power:{...DEFAULT.power}});setCell({soc:.67,temperature:23,seconds:0});setExplode(.58);setSelected('soc');setGlass(false);setLabels(false);setPaused(false);setSpeed(1);setWorkflow('photo');setHighlight(null);setComputeBit(0);setRevision(n=>n+1)},[interact])
  useEffect(()=>{const mq=matchMedia('(prefers-reduced-motion: reduce)');if(mq.matches)setPaused(true);const listener=()=>{if(mq.matches)setPaused(true)};mq.addEventListener('change',listener);return()=>mq.removeEventListener('change',listener)},[])
  useEffect(()=>{if(view!=='power')return;let last=performance.now();const timer=setInterval(()=>{const now=performance.now(),delta=Math.min(.5,(now-last)/1000);last=now;if(paused||isWorldPaused())return;setCell(previous=>{let state=previous,remaining=delta*speed*60;while(remaining>0){const dt=Math.min(5,remaining);state=advanceCell(state,dt,settings.power);remaining-=dt}return state})},200);return()=>clearInterval(timer)},[view,paused,speed,settings.power])
  useEffect(()=>{if(visited.length===SYSTEMS.length&&!finished.current){finished.current=true;controls.finish()}},[visited,controls.finish])
  useEffect(()=>{const key=(e:KeyboardEvent)=>{if(e.key==='Escape'){if(details)setDetails(false);else setView('assembly');return}if(e.target instanceof HTMLElement&&(e.target.matches('input,textarea,select,button')||e.target.isContentEditable))return;if(e.code==='Space'){e.preventDefault();interact();setPaused(p=>!p)}if(e.key.toLowerCase()==='r')reset()};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[reset,interact,details])
  useEffect(()=>{if(!details)return;const previous=document.activeElement as HTMLElement|null;modalRef.current?.querySelector('button')?.focus();return()=>{if(previous?.isConnected)previous.focus()}},[details])
  const system=SYSTEMS.find(s=>s.id===view)!,part=PARTS.find(p=>p.id===selected),p=phonePower(settings.power,cell.soc),display=displayLight(settings.rgb),optics=cameraOptics(settings.objectM,settings.focusM),sum=addByte(settings.a,settings.b),link=radioLink(settings.frequencyGHz,settings.distanceKm),haptic=hapticMotion(settings.hapticHz,settings.forceN,0)
+ const inspected=inspectByteStage(settings.a,settings.b,computeBit)
  const guideSteps=[
   {title:tx('先把手机拆开'),body:tx('拖动拆解程度，旋转到背面。点选电池、芯片或镜头，沿着拍照、游戏、通话的路径追踪数据。'),action:()=>{choose('assembly');setExplode(.7)}},
   {title:tx('走进一块发光的屏幕'),body:tx('单独关闭红、绿或蓝，观察微观子像素和下方混合色。再点一下屏幕，留下触控位置。'),action:()=>choose('display')},
@@ -74,7 +76,7 @@ export function IPhoneTeardown({controls}:{controls:ExperienceControls}) {
   {title:tx('最后，探索数字与触感'),body:tx('在无线实验里翻转几个比特，再去触觉实验寻找共振峰。所有这些系统都在同一部手机里协作。'),action:()=>choose('radio')},
  ]
  return <div className="ip-world" data-view={view} data-panel={mobilePanel} data-paused={paused} data-explored={visited.length}>
-  <div className="ip-stage" aria-label={tx('可旋转、缩放的手机拆解与实验场景')}><SceneBoundary message={tx('三维场景未能启动，请刷新后重试。')}><Scene {...{view,settings,cell,paused,speed,revision,explode,selected,glass,labels,workflow,highlight,tx}} onSelect={id=>{interact();setSelected(id);setMobilePanel(true)}} onTouch={point=>change('touch',point)} onInteract={interact}/></SceneBoundary></div>
+  <div className="ip-stage" aria-label={tx('可旋转、缩放的手机拆解与实验场景')}><SceneBoundary message={tx('三维场景未能启动，请刷新后重试。')}><Scene {...{view,settings,cell,computeBit,paused,speed,revision,explode,selected,glass,labels,workflow,highlight,tx}} onBit={bit=>{interact();setComputeBit(bit)}} onSelect={id=>{interact();setSelected(id);setMobilePanel(true)}} onTouch={point=>change('touch',point)} onInteract={interact}/></SceneBoundary></div>
   <div className="ip-heading"><span className="ip-eyebrow">{tx('内部世界')} <i/> IPHONE 13</span><h1>{system.id==='assembly'?tx('一部手机，拆到底。'):tx(system.label)}</h1><p>{tx(system.caption)}</p></div>
   <nav className="ip-systems" aria-label={tx('手机系统')}>
    {SYSTEMS.map((s,i)=><button key={s.id} aria-pressed={view===s.id} onClick={()=>choose(s.id)}><small>{String(i+1).padStart(2,'0')}</small><span>{tx(s.label)}</span><i style={{background:visited.includes(s.id)?s.color:'transparent'}}/></button>)}
@@ -106,8 +108,15 @@ export function IPhoneTeardown({controls}:{controls:ExperienceControls}) {
     <div className="ip-section-label">{tx('进入一个八位加法器')}</div>
     <Slider label={tx('输入 A')} value={settings.a} min={0} max={255} step={1} onChange={v=>change('a',v)} unit={`${settings.a}`}/><Slider label={tx('输入 B')} value={settings.b} min={0} max={255} step={1} onChange={v=>change('b',v)} unit={`${settings.b}`}/>
     <div className="ip-binary"><span>A <b>{settings.a.toString(2).padStart(8,'0')}</b></span><span>B <b>{settings.b.toString(2).padStart(8,'0')}</b></span><span>Σ <b>{sum.total.toString(2).padStart(9,'0')}</b></span></div>
+    <section className="ip-carry-inspector" aria-label={tx('逐位检查进位')}>
+     <div className="ip-section-label">{tx('逐位检查进位')}<span>LSB → MSB</span></div>
+     <div className="ip-bit-stages">{sum.stages.map((stage,i)=><button key={i} aria-label={`${tx('检查位')} ${i}`} aria-pressed={computeBit===i} onClick={()=>{interact();setComputeBit(i)}}><small>{i}</small><b>{stage.sum}</b><i data-carry={stage.carry}/></button>)}</div>
+     <div className="ip-carry-equation"><span>{tx('输入 A')} + {tx('输入 B')} + {tx('输入进位')}</span><output>{inspected.a} + {inspected.b} + <em>{inspected.incoming}</em> = {inspected.total}</output><span>{tx('本位的和')} <b>{inspected.sum}</b><i>·</i>{tx('输出进位')} <b>{inspected.carry}</b></span></div>
+     <div className="ip-carry-gates"><span>S = A ⊕ B ⊕ Cᵢₙ</span><span>Cₒᵤₜ = AB ∨ Cᵢₙ(A ⊕ B)</span></div>
+     <button className="ip-inline-action" onClick={()=>{interact();setComputeBit((computeBit+1)%8)}}>{tx('检查下一位')}<ArrowRight size={14}/></button>
+    </section>
     <Readout label={tx('完整结果')} value={`${sum.total}`} unit={sum.carry?tx('含进位'):tx('无溢出')}/><p className="ip-explanation">{tx('每一级把 A、B 和上一级进位相加。画面从左边最低位开始；这是独立的真实逻辑计算，不是 A15 电路复刻。')}</p>
-    <button className="ip-inline-action" onClick={()=>{change('a',255);change('b',1)}}>{tx('试试 255 + 1')}<ArrowRight size={14}/></button>
+    <button className="ip-inline-action" onClick={()=>{change('a',255);change('b',1);setComputeBit(0)}}>{tx('试试 255 + 1')}<ArrowRight size={14}/></button>
    </>:view==='camera'?<>
     <div className="ip-section-label">{tx('光学实验台')}<span>1/f = 1/u + 1/v</span></div>
     <Slider label={tx('物体距离')} value={settings.objectM} min={.2} max={3} step={.01} onChange={v=>change('objectM',v)} unit={`${settings.objectM.toFixed(2)} m`}/><Slider label={tx('对焦距离')} value={settings.focusM} min={.2} max={3} step={.01} onChange={v=>change('focusM',v)} unit={`${settings.focusM.toFixed(2)} m`}/>

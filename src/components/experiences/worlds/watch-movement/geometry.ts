@@ -108,3 +108,15 @@ export function updateMainspring(geometry: T.BufferGeometry, reserve: number) {
   position.needsUpdate = true
 }
 const TAU_VALUE = Math.PI * 2
+
+/** Original open-work plate; clearance pockets avoid every train and balance pivot. */
+export const PLATE_POCKETS = [[5.1, -5.7, 2.9], [8.2, 3.1, 2.15], [-7, -4.8, 2], [-.1, -9.6, .9]] as const
+export function mainplateGeometry() {
+  const shape = new T.Shape(); shape.absarc(0, 0, 12.9, 0, Math.PI * 2, false)
+  for (const [x, y, r] of PLATE_POCKETS) { const hole = new T.Path(); hole.absarc(x, y, r, 0, Math.PI * 2, true); shape.holes.push(hole) }
+  const geometry = new T.ExtrudeGeometry(shape, {depth:.65, bevelEnabled:true, bevelSize:.11, bevelThickness:.08, bevelSegments:3, curveSegments:96})
+  geometry.translate(0, 0, -.775)
+  const uv = geometry.attributes.uv
+  for (let i = 0; i < uv.count; i++) uv.setXY(i, (uv.getX(i) + 13) / 26, (uv.getY(i) + 13) / 26)
+  return geometry
+}

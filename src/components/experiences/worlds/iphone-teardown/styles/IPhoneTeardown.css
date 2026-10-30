@@ -37,3 +37,11 @@
 }
 .ip-world:has(.guide-tour.is-stage) .ip-stage{isolation:isolate}
 .ip-world:has(.ip-modal-shade) .guide-tour.is-stage{visibility:hidden}
+
+.ip-carry-inspector{margin:22px 0;padding:16px 0;border-block:1px solid #ffffff18}.ip-carry-inspector .ip-section-label{margin-top:0}.ip-bit-stages{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;margin:14px 0}.ip-bit-stages button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:7px 0;border:1px solid #ffffff18;background:#09161d;min-height:58px;color:#b9c8cf}.ip-bit-stages button[aria-pressed=true]{border-color:#dec194;background:#25404a;color:#fff}.ip-bit-stages small{font:9px ui-monospace,monospace;color:#7f99a4}.ip-bit-stages b{font:18px ui-monospace,monospace}.ip-bit-stages i{width:12px;height:2px;background:#526570}.ip-bit-stages i[data-carry="1"]{background:#ddbb80}.ip-carry-equation{display:flex;flex-direction:column;gap:10px;font-size:11px;color:#98adb7}.ip-carry-equation output{font:22px ui-monospace,monospace;color:#f0e0c3}.ip-carry-equation em{font-style:normal;color:#dfb87e}.ip-carry-equation b{font:16px ui-monospace,monospace;color:#d9e7eb;margin-left:5px}.ip-carry-equation i{font-style:normal;margin:0 13px}.ip-carry-gates{display:flex;flex-direction:column;gap:6px;font:11px ui-monospace,monospace;color:#a4bbc3;margin:18px 0}.ip-carry-inspector .ip-inline-action{margin-top:4px}@media(max-width:760px){.ip-bit-stages button{min-height:48px}.ip-bit-stages b{font-size:15px}.ip-carry-equation output{font-size:19px}}
+
+/* Only this world's HUD yields to the shared shell's immersion state. */
+.experience-page[data-overlays-hidden=true] .ip-world{min-height:0}
+.experience-page[data-overlays-hidden=true] .ip-world>:not(.ip-stage):not(.guide-tour){display:none!important}
+.experience-page[data-overlays-hidden=true] .ip-world .ip-stage{inset:0!important}
+.experience-page[data-overlays-hidden=true] .ip-world .ip-part-tag{display:none!important}

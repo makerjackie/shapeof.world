@@ -50,6 +50,12 @@ export function addByte(a: number, b: number) {
   })
   return {stages, sum: (aa + bb) & 255, carry, total: aa + bb}
 }
+/** One selectable stage of the same ripple chain, LSB first; no separate animation arithmetic. */
+export function inspectByteStage(a: number, b: number, index: number) {
+  const bit = Number.isFinite(index) ? Math.min(7, Math.max(0, Math.floor(index))) : 0
+  const stage = addByte(a, b).stages[bit]
+  return {...stage, bit, total: stage.a + stage.b + stage.incoming}
+}
 export function radioLink(frequencyGHz: number, distanceKm: number, bandwidthMHz = 20) {
   const loss = 32.44 + 20 * Math.log10(Math.max(.001, frequencyGHz) * 1000) + 20 * Math.log10(Math.max(.001, distanceKm))
   const receivedDbm = 23 + 15 - loss, noiseDbm = -174 + 10 * Math.log10(bandwidthMHz * 1e6) + 7
