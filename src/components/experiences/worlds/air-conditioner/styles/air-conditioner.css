@@ -32,3 +32,7 @@
 .ac-room-actions{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.air-conditioner button.ac-room-action[aria-pressed]{background:#142a34f5;color:#e5e7d4}.air-conditioner button.ac-room-action[aria-pressed=true]{background:#334b4c;border-color:#b6aa7b}.air-conditioner button.ac-room-action[aria-pressed]:hover{background:#3c5960}
 .experience-page[data-overlays-hidden='true'] .air-conditioner :is(.ac-heading,.ac-views,.ac-sidebar,.ac-toolbar,.ac-clock,.ac-note){visibility:hidden;pointer-events:none}
 .experience-page[data-overlays-hidden='true'] .air-conditioner .ac-stage{inset:0}
+@media(max-width:700px){
+ .ac-views{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .ac-views button{min-width:0;min-height:38px;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+}
