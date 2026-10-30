@@ -24,3 +24,9 @@
 @media(max-width:700px){.air-conditioner:has(>.guide-tour) .ac-clock{left:16px;max-width:100%}}
 
 .ac-stage{isolation:isolate}
+
+.air-conditioner .ac-room-action{font-size:10px;padding:7px 10px;min-height:30px;white-space:nowrap;background:#142a34ed;border-left:2px solid #bbad82;box-shadow:0 3px 10px #0b172a33;color:#dce2d3}.air-conditioner .ac-room-action:hover{background:#2d4650;border-color:#d5c59b}
+
+.air-conditioner:has(>.guide-tour) .ac-room-action{visibility:hidden}
+
+.ac-room-actions{display:flex;flex-direction:column;gap:4px;align-items:flex-start}.air-conditioner button.ac-room-action[aria-pressed]{background:#142a34f5;color:#e5e7d4}.air-conditioner button.ac-room-action[aria-pressed=true]{background:#334b4c;border-color:#b6aa7b}.air-conditioner button.ac-room-action[aria-pressed]:hover{background:#3c5960}

@@ -271,3 +271,15 @@ isenthalpic expansion, both exchanger balances, fan-inclusive energy accounting,
 phase/quality sampling, ambient-temperature COP response, room and thermal-mass
 dynamics, cancellation of internal heat transfer, standby and exact pause.
 The world remains `making` pending the repository's separate publication process.
+
+## Visible room controls
+
+The original room now has a real opening in its left wall. The left glazed sash
+slides by 0.70 display metres over the fixed right sash, so 100% opening denotes
+the sash's complete travel and exposes approximately half of the full window.
+This display length does not recalibrate the chosen 160 W/K added conductance.
+Clicking the window toggles the same 0/1 input as the continuous slider. Clicking
+the pleated curtains toggles the same prescribed solar shade gain as the panel;
+cloth folds are original geometry, not a fabric or solar-optics simulation.
+Room air tracers are enlarged and slowed for reading; they still illustrate flow
+and heat sign only, without depicting solved air speed or temperature fields.

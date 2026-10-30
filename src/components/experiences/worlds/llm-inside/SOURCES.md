@@ -109,3 +109,21 @@ The MAC readout counts mathematical multiply-accumulate terms in affine
 projections and the causal QK/AV products. It excludes normalisation, softmax,
 GELU, embedding lookup, bias addition and scalar scaling. It is not a count of
 CPU machine instructions or a hardware-throughput estimate.
+
+## Exhibition layout refinements
+
+The display marker now uses the same 22-step index as the numerical inspector,
+including manual stepping; it no longer runs on a separate decorative clock.
+Amber frame edges indicate the currently narrated block or operation, not real
+hardware activity or elapsed inference time. Attention links begin at the
+selected query row; outlined key/value rows refer to the selected source token.
+Axis labels use actual context token indices, with letters in the selected-row labels.
+Sparse tick labels avoid overprinting in longer contexts. Links below 0.002
+weight are omitted for legibility; the matrix retains every computed value. The fixed screen-size
+labels and camera fit bounds are reading aids. The false-colour exponent is 0.52;
+raw values and per-tensor scales remain unchanged.
+
+Each head's displayed output uses its own 16 feature columns from the actual
+concatenated A·V tensor. Muting a head therefore visibly flattens that output
+while retaining its unchanged Q/K/V vectors and attention map, rather than
+falsely suggesting that those upstream values were zeroed.
