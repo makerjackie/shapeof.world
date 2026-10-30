@@ -320,7 +320,7 @@ class Engine {
       this.bulbMat = new THREE.ShaderMaterial({
         vertexShader: GLOW_VERT,
         fragmentShader: GLOW_FRAG,
-        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.2 }, uMaxPx: { value: 38 }, uGain: { value: 1 } },
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.6 }, uMaxPx: { value: 38 }, uGain: { value: 1 } },
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,

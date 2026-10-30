@@ -208,7 +208,7 @@ void main() {
   gl_Position = projectionMatrix * mv;
   vUv = position.xy;
   vK = aK;
-  vK.w *= clamp(energy, 0.45, 1.0);
+  vK.w *= clamp(energy, 0.6, 1.0);
   vFog = 1.0 - exp(-uFogD * dist);
 }
 `;

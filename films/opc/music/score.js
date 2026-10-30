@@ -1,5 +1,5 @@
 // Original score for "独立开发者的形状", re-arranged for "一人公司（OPC）的形状" (2026-10-30): the same instruments,
-// harmony and hooks; only the section table (91 bars instead of 65) and the sound-effect cues are new, and the
+// harmony and hooks; only the section table (92 bars instead of 65) and the sound-effect cues are new, and the
 // audio logo is gone (the end card has none). Synthesized with Web Audio in an OfflineAudioContext; no samples.
 // The engine (drums, piano, organ bass, pad, effects, the series' audio logo) is the one from
 // films/tower/music/score.js and films/house/music/score.js, so the series keeps one set of sounds.
@@ -10,7 +10,7 @@
 const BEAT = 0.5
 const BAR = 2
 const T0 = 0.5
-const BARS = 91
+const BARS = 92
 const DURATION = T0 + BARS * BAR + 1.0
 const bt = (bar, beat = 0) => T0 + bar * BAR + beat * BEAT
 
@@ -18,19 +18,19 @@ const bt = (bar, beat = 0) => T0 + bar * BAR + beat * BEAT
 const SECTIONS = [
   { from: 0, to: 5, kind: 'hook' }, // the dashboard, the market, the question
   { from: 6, to: 7, kind: 'title' }, // the licence
-  { from: 8, to: 25, kind: 'groove' }, // the 煎饼 cart; hands; more makers
-  { from: 26, to: 31, kind: 'drop' }, // no street on the internet; the cities' offers
-  { from: 32, to: 37, kind: 'groove2' }, // carrying it all alone
-  { from: 38, to: 41, kind: 'breakdown' }, // the street is gone
-  { from: 42, to: 42, kind: 'build', anchor: 39 },
-  { from: 43, to: 46, kind: 'drop2' }, // 34 -> 61
-  { from: 47, to: 56, kind: 'groove2' }, // why; television (muffled)
-  { from: 57, to: 59, kind: 'reflect' }, // what did the bright ones do
-  { from: 60, to: 73, kind: 'travel' }, // being found; coming back
-  { from: 74, to: 74, kind: 'build', anchor: 71 },
-  { from: 75, to: 84, kind: 'anthem' }, // morning
-  { from: 85, to: 88, kind: 'outro' }, // sources, end card
-  { from: 89, to: 90, kind: 'tail' },
+  { from: 8, to: 22, kind: 'groove' }, // the 煎饼 cart; hands
+  { from: 23, to: 29, kind: 'groove2' }, // the burden stays; more makers
+  { from: 30, to: 35, kind: 'drop' }, // one person can sell to the world; the cities' offers
+  { from: 36, to: 39, kind: 'breakdown' }, // but there is no street online
+  { from: 40, to: 40, kind: 'build', anchor: 37 },
+  { from: 41, to: 44, kind: 'drop2' }, // 34 -> 61
+  { from: 45, to: 57, kind: 'groove2' }, // why; television (muffled); AI
+  { from: 58, to: 60, kind: 'reflect' }, // what the street used to do
+  { from: 61, to: 74, kind: 'travel' }, // being found; coming back
+  { from: 75, to: 75, kind: 'build', anchor: 72 },
+  { from: 76, to: 85, kind: 'anthem' }, // morning
+  { from: 86, to: 89, kind: 'outro' }, // sources, end card
+  { from: 90, to: 91, kind: 'tail' },
 ]
 
 // Sound effects on the picture: [bar, beat, type, ...args]. Scene-local beat b of a scene that starts on bar B
@@ -48,23 +48,23 @@ const CUES = [
   [16, 1, 'whoosh'],
   [17, 1, 'pop', 0.4], [17, 1.56, 'pop', 0.4], [17, 2.12, 'pop', 0.4], [17, 2.68, 'pop', 0.4], [17, 3.24, 'pop', 0.4], [17, 3.8, 'pop', 0.4],
   [19, 3, 'pour', 1.4, 8, 0.4], [20, 0, 'powerdown', 0.5], [21, 2.4, 'thud'], [22, 0, 'impact', 0.6], [22, 1, 'pop'],
+  // the burden
+  [23, 0, 'swish', 0.6], [24, 2.4, 'pop', 0.5], [25, 3.2, 'swish', 0.5], [26, 3.6, 'thud'],
   // more makers: stalls popping up
-  [24, 0, 'pour', 2, 40, 0.5], [25, 0, 'pour', 2, 40, 0.5],
-  // the street opens; policy cards
-  [26, 0, 'boom'], [27, 0, 'shimmer'], [28, 0, 'whoosh'], [29, 0, 'swish', 0.7], [29, 3.6, 'swish', 0.7], [30, 3.2, 'swish', 0.7],
-  // carrying it all
-  [32, 2, 'whoosh'], [33, 0, 'pop'], [33, 1, 'pop'], [33, 2, 'pop'], [33, 3, 'pop'], [36, 3, 'thud'],
+  [28, 0, 'pour', 2, 40, 0.5], [29, 0, 'pour', 2, 40, 0.5],
+  // the world opens; policy cards
+  [30, 0, 'boom'], [31, 0, 'shimmer'], [32, 1.4, 'whoosh'], [33, 0, 'swish', 0.7], [33, 3.6, 'swish', 0.7], [34, 3.2, 'swish', 0.7],
   // the turn; the count to 61
-  [38, 0, 'powerdown'], [39, 0, 'shimmer'], [43, 0, 'boom'], [43, 0, 'pour', 2.6, 34, 0.5], [44, 2.4, 'pour', 2.4, 27, 0.5], [46, 0, 'ding'],
-  // why; television
-  [47, 0, 'whoosh'], [52, 0, 'swish'], [54, 2.8, 'shimmer'],
-  // what the bright ones did
-  [57, 0, 'swish', 0.6], [60, 0, 'whoosh'],
-  [62, 0, 'coin'], [62, 2, 'coin'], [63, 0, 'coin'], [63, 1, 'coin'], [63, 2, 'coin'], [63, 3, 'coin'], [64, 0, 'pour', 2, 24, 0.4],
-  [66, 0, 'whoosh'], [67, 2.2, 'ding', 0.6], [68, 2.8, 'ding', 0.4], [72, 0, 'swish'],
+  [36, 0, 'powerdown'], [37, 0, 'shimmer'], [41, 0, 'boom'], [41, 0, 'pour', 2.6, 34, 0.5], [42, 2.4, 'pour', 2.4, 27, 0.5], [44, 0, 'ding'],
+  // why; television; AI
+  [45, 0, 'whoosh'], [50, 0, 'swish'], [52, 2.8, 'shimmer'], [55, 0, 'whoosh'],
+  // what the street did; found; coming back
+  [58, 0, 'swish', 0.6], [61, 0, 'whoosh'],
+  [63, 0, 'coin'], [63, 2, 'coin'], [64, 0, 'coin'], [64, 1, 'coin'], [64, 2, 'coin'], [64, 3, 'coin'], [65, 0, 'pour', 2, 24, 0.4],
+  [67, 0, 'whoosh'], [68, 2.2, 'ding', 0.6], [69, 2.8, 'ding', 0.4], [73, 0, 'swish'],
   // morning
-  [75, 0, 'shimmer'], [78, 1.3, 'ding'], [81, 3, 'swish', 0.5],
-  [85, 0, 'swish', 0.6], [88, 0, 'swish', 0.5],
+  [76, 0, 'shimmer'], [79, 1.3, 'ding'], [82, 3, 'swish', 0.5],
+  [86, 0, 'swish', 0.6], [89, 0, 'swish', 0.5],
 ]
 
 const SR = 48000
@@ -84,7 +84,7 @@ const PEAK = [
   { root: 33, notes: [60, 64, 67, 71] }, // Am9
 ]
 const CODA = ['anthem', 'outro', 'tail']
-const CODA_FROM = 75
+const CODA_FROM = 76
 const mod4 = (n) => ((n % 4) + 4) % 4
 const chordAt = (bar, sec) => (CODA.includes(sec.kind) ? PEAK[mod4(bar - CODA_FROM)] : MAIN[mod4(bar - (sec.anchor ?? sec.from))])
 
@@ -552,11 +552,11 @@ async function renderScore() {
 
   for (const [bar, beat, type, ...a] of CUES) SFX[type](bt(bar, beat), ...a)
 
-  // Muffle the music under the television flashback (bars 52-56), like an old room next door; open it again after.
-  tone.frequency.setValueAtTime(18000, bt(52))
-  tone.frequency.exponentialRampToValueAtTime(900, bt(52, 2))
-  tone.frequency.setValueAtTime(900, bt(56, 2))
-  tone.frequency.exponentialRampToValueAtTime(18000, bt(57))
+  // Muffle the music under the television flashback (bars 50-54), like an old room next door; open it again after.
+  tone.frequency.setValueAtTime(18000, bt(50))
+  tone.frequency.exponentialRampToValueAtTime(900, bt(50, 2))
+  tone.frequency.setValueAtTime(900, bt(54, 2))
+  tone.frequency.exponentialRampToValueAtTime(18000, bt(55))
 
   // Sidechain: dip the music bus under every kick.
   duck.gain.setValueAtTime(1, 0)

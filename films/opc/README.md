@@ -1,0 +1,36 @@
+# 一人公司（OPC）的形状
+
+3:02、1920×1080、30 fps 的中文短片，无旁白。重做自《独立开发者的形状》（`films/indie-dev`），旧片对照最新规范的问题清单见 `AUDIT.md`。
+
+- 故事：`STORY.md`；剧本：`SCRIPT.md`（v2，含冷读后的改动）；调研：`research/RESEARCH.md`（核过的数字）、`research/ZHIHU-NOTES.md`（知乎 37 个问题、505 个回答，只作观点参考）、`research/coldread/`。
+- 发布文案和来源：`DESCRIPTION.md`。
+
+## 画面
+
+一座夜里的集市（three.js，在 Remotion 里逐帧同步渲染）：每个摊位是一家一人公司，招牌写着它卖什么（`src/world/market.ts` 的 `SIGNS`）。近处三条街是摊位实体（桌子、笔记本、灯、招牌；煎饼车），远处 10 万多个摊位只画灯；街区之间是低矮的楼。灯的亮度跟着每个摊位的"生意"（幂律分布）：`equal` = 1 时盏盏一样亮，= 0 时是长尾。客人是街上移动的光点（`src/film/crowd.ts`），不画人。屏幕、营业执照、政策卡等平面物件用 CSS `matrix3d` 贴在 3D 世界里（`quadMatrix`）。
+
+- `src/world/`：`market.ts`（布局，种子固定）、`engine.ts`（场景和后期：泛光、移轴、调色）、`shaders.ts`、`camera.ts`。
+- `src/film/`：`state.ts`（每一帧的镜头和世界）、`Film.tsx`（字和物件）、`props.tsx`、`ui.tsx`、`Cover.tsx`。
+- 时间都按配乐小节写：`S(bar)` = 0.5 + 2 × bar 秒（`src/timing.ts`）。
+
+## 配乐
+
+沿用《独立开发者的形状》的原创曲，代码合成：`music/score.js`（同一套音色、和声、旋律，段落表重排成 91 小节），`node tools/render-music.mjs` → `public/score.wav`（不进 Git）。
+
+## 生成
+
+```bash
+npm ci                                   # 或从别的片子克隆 node_modules
+tools/fonts.sh                           # 字体子集 → public/fonts/
+node tools/render-music.mjs              # 配乐 → public/score.wav
+COMP=Lab node tools/stills.mjs out/lab 0 1 2   # 看景
+node tools/stills-safe.mjs out/s 300 900 # 审片截图（半分辨率，坏帧只报告不中断）
+tools/render_master.sh opc               # 成片 + 母带 → out/opc.mp4（−12 LUFS，≤ −1 dBTP）
+node tools/covers.mjs                    # 封面 → out/covers/
+```
+
+## 技术坑
+
+- **泛光把 NaN/无穷大抹成大白团**：楼房着色器偶发出无穷大值，`UnrealBloomPass` 把它们抹成屏幕上 100 多像素的白团，而且只在某些机位出现。排查办法：关泛光（白团消失）→ 逐个隐藏物体（隐藏楼房后消失）。修法：着色器输出前 `if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);` 再 `clamp`；不要对可能为负的数用 `pow()`。
+- **RoundedBoxGeometry 没有索引**：和 BoxGeometry 合并前先 `toNonIndexed()`。
+- **zsh 里 `$F` 不分词**：传一串帧号要写 `${=F}`。

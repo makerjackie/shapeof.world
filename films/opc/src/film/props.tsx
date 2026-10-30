@@ -5,15 +5,15 @@ import { interpolate } from "remotion";
 import { FONT, K, SERIF } from "../theme";
 import { clamp01, EIO, EO, ESO } from "../timing";
 import { Cam, quadMatrix, rectCorners, toScreen } from "../world/camera";
-import { SCREEN } from "./state";
+import { SCREEN, Screen } from "./state";
 import { fmt, SHADOW, useT } from "./ui";
 
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 // ---------- the laptop screen (1500 x 1000 px, mapped onto the 0.36 x 0.24 m screen) ----------
-export const OnScreen: React.FC<{ cam: Cam; o: number; children: React.ReactNode }> = ({ cam, o, children }) => {
+export const OnScreen: React.FC<{ cam: Cam; o: number; scr?: Screen; children: React.ReactNode }> = ({ cam, o, scr = SCREEN, children }) => {
   if (o <= 0.001) return null;
-  const q = rectCorners(cam, SCREEN.p, SCREEN.u, SCREEN.v);
+  const q = rectCorners(cam, scr.p, scr.u, scr.v);
   if (!q) return null;
   return (
     <div style={{ position: "absolute", left: 0, top: 0, width: 1500, height: 1000, transformOrigin: "0 0", transform: quadMatrix(1500, 1000, q), opacity: o, overflow: "hidden", borderRadius: 10 }}>
