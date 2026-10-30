@@ -9,3 +9,24 @@
 .wm-reference{display:flex;align-items:center;justify-content:space-between;font:8px ui-monospace,monospace;color:#526f83;margin:-5px 0 13px}.wm-reference b{font-weight:400;color:#9a8b70}.wm-stage canvas{cursor:grab}.wm-stage canvas:active{cursor:grabbing}.wm-part-list button:hover{color:#dde6eb;background:#ffffff06}@media(max-width:760px){.wm-reference{font-size:6px;margin:-3px 0 7px}}
 
 @media(max-width:760px){.wm-sidebar{height:188px}.wm-stage{bottom:295px}.wm-switches{bottom:270px}.wm-status{display:none}.wm-scope{height:32px}.wm-scope svg{height:31px}.wm-time{margin-top:7px}.wm-energy>div:first-child{margin-bottom:4px}.wm-readings{margin:6px 0}.wm-reference{margin-bottom:5px}}
+
+/* During the optional tour, narration and navigation share one bounded stage area. */
+.watch-movement:has(>.guide-tour)>.guide-tour{inset:auto;left:30px;bottom:146px;display:flex;flex-direction:column;gap:10px;width:350px;max-width:calc(100vw - 60px);max-height:min(440px,calc(100svh - 410px))}
+.watch-movement:has(>.guide-tour) .guide-stage-copy{position:static;inset:auto;translate:none;transform:none;width:100%;max-width:none;min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto;padding:14px 16px;box-sizing:border-box;background:#09131cf0;border:1px solid #9bb1c333;border-radius:3px;backdrop-filter:blur(8px);text-align:left;animation:none;scrollbar-width:thin}
+.watch-movement:has(>.guide-tour) .guide-stage-kicker{font-size:10px;margin-bottom:7px}
+.watch-movement:has(>.guide-tour) .guide-stage-title{max-width:none;font-size:22px;line-height:1.16}
+.watch-movement:has(>.guide-tour) .guide-stage-body{font-size:12px;line-height:1.65;margin:10px 0 0;max-width:none}
+.watch-movement:has(>.guide-tour) .guide-stage-nav,.watch-movement:has(>.guide-tour) .guide-card{position:static;inset:auto;translate:none;transform:none!important;flex:0 0 auto;width:100%;max-width:none;margin:0;box-sizing:border-box;animation:none}
+.watch-movement:has(>.guide-tour) .guide-stage-nav{min-height:48px;gap:8px;flex-wrap:nowrap}
+.watch-movement:has(>.guide-tour) .guide-stage-continue{flex:1 1 auto;min-width:0;padding:0 8px;font-size:12px;letter-spacing:0;white-space:normal;justify-content:center;text-align:center}
+@media(max-width:760px){
+ .watch-movement:has(>.guide-tour)>.guide-tour{top:150px;right:14px;bottom:auto;left:14px;width:auto;max-width:none;max-height:calc(100svh - 495px);gap:8px}
+ .watch-movement:has(>.guide-tour) .guide-stage-copy{padding:11px 13px}
+ .watch-movement:has(>.guide-tour) .guide-stage-title{font-size:19px;line-height:1.2}
+ .watch-movement:has(>.guide-tour) .guide-stage-nav{min-height:46px;gap:5px;padding:1px 4px}
+ .watch-movement:has(>.guide-tour) .guide-stage-continue{padding:0 6px;font-size:11px;gap:5px}
+}
+.watch-movement:has(>.guide-tour) .wm-status{bottom:120px}
+.watch-movement:has(>.guide-tour) .wm-escape-state{left:410px}
+@media(max-width:1050px) and (min-width:761px){.watch-movement:has(>.guide-tour) .wm-status,.watch-movement:has(>.guide-tour) .wm-escape-state{display:none}}
+@media(max-width:760px){.watch-movement:has(>.guide-tour) .wm-status,.watch-movement:has(>.guide-tour) .wm-escape-state{display:none}}

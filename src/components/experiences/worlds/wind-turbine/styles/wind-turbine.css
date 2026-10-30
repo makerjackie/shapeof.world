@@ -9,3 +9,23 @@
 
 .wt-trace-caption{font-size:8px;color:#537c90;margin:-9px 0 14px}@media(max-width:760px){.wt-trace-caption{font-size:6px;margin-top:-5px}}
 @media(max-width:760px){.wind-turbine:lang(en) .wt-views{top:120px;left:12px;right:12px;max-width:none;justify-content:space-between}.wind-turbine:lang(en) .wt-views button{font-size:8px;padding:7px 9px}.wind-turbine:lang(en) .wt-stage{top:163px}.wind-turbine:lang(en) .wt-heading h1{font-size:23px}}
+
+/* During the optional tour, narration and navigation share one bounded stage area. */
+.wind-turbine:has(>.guide-tour)>.guide-tour{inset:auto;left:30px;bottom:146px;display:flex;flex-direction:column;gap:10px;width:350px;max-width:calc(100vw - 60px);max-height:min(440px,calc(100svh - 410px))}
+.wind-turbine:has(>.guide-tour) .guide-stage-copy{position:static;inset:auto;translate:none;transform:none;width:100%;max-width:none;min-height:0;flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto;padding:14px 16px;box-sizing:border-box;background:#09131cf0;border:1px solid #9bb1c333;border-radius:3px;backdrop-filter:blur(8px);text-align:left;animation:none;scrollbar-width:thin}
+.wind-turbine:has(>.guide-tour) .guide-stage-kicker{font-size:10px;margin-bottom:7px}
+.wind-turbine:has(>.guide-tour) .guide-stage-title{max-width:none;font-size:22px;line-height:1.16}
+.wind-turbine:has(>.guide-tour) .guide-stage-body{font-size:12px;line-height:1.65;margin:10px 0 0;max-width:none}
+.wind-turbine:has(>.guide-tour) .guide-stage-nav,.wind-turbine:has(>.guide-tour) .guide-card{position:static;inset:auto;translate:none;transform:none!important;flex:0 0 auto;width:100%;max-width:none;margin:0;box-sizing:border-box;animation:none}
+.wind-turbine:has(>.guide-tour) .guide-stage-nav{min-height:48px;gap:8px;flex-wrap:nowrap}
+.wind-turbine:has(>.guide-tour) .guide-stage-continue{flex:1 1 auto;min-width:0;padding:0 8px;font-size:12px;letter-spacing:0;white-space:normal;justify-content:center;text-align:center}
+@media(max-width:760px){
+ .wind-turbine:has(>.guide-tour)>.guide-tour{top:150px;right:14px;bottom:auto;left:14px;width:auto;max-width:none;max-height:calc(100svh - 495px);gap:8px}
+ .wind-turbine:has(>.guide-tour) .guide-stage-copy{padding:11px 13px}
+ .wind-turbine:has(>.guide-tour) .guide-stage-title{font-size:19px;line-height:1.2}
+ .wind-turbine:has(>.guide-tour) .guide-stage-nav{min-height:46px;gap:5px;padding:1px 4px}
+ .wind-turbine:has(>.guide-tour) .guide-stage-continue{padding:0 6px;font-size:11px;gap:5px}
+}
+.wind-turbine:has(>.guide-tour) .wt-scale{left:410px}
+@media(max-width:1050px) and (min-width:761px){.wind-turbine:has(>.guide-tour) .wt-scale{display:none}}
+@media(max-width:760px){.wind-turbine:has(>.guide-tour) .wt-scale{left:17px}.wind-turbine:has(>.guide-tour):lang(en)>.guide-tour{top:175px;max-height:calc(100svh - 520px)}}
