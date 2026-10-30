@@ -17,3 +17,7 @@
  .sl-world:has(>.guide-tour) .sl-panel{bottom:143px;max-height:calc(100% - 470px)}
  .sl-world:has(>.guide-tour) .sl-chart{bottom:149px}
 }
+
+.sl-world:has(>.guide-tour) .sl-time{visibility:hidden}
+
+.sl-canvas{isolation:isolate}

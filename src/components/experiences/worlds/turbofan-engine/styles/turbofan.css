@@ -24,3 +24,5 @@
  .tf-world .guide-stage-copy{padding:10px 12px}
  .tf-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:22px}
 }
+
+.tf-world>.guide-tour.is-stage .guide-card{position:static;inset:auto;translate:none;transform:none!important;flex:0 0 auto;width:100%;max-width:none;margin:0;box-sizing:border-box;animation:none}

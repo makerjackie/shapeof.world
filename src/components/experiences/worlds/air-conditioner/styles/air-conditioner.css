@@ -22,3 +22,5 @@
 .air-conditioner:has(>.guide-tour) .ac-clock{left:410px;max-width:min(530px,calc(100% - 740px))}
 @media(max-width:1000px) and (min-width:701px){.air-conditioner:has(>.guide-tour) .ac-clock{top:210px;bottom:auto;left:20px;max-width:calc(100% - 300px)}.air-conditioner:has(>.guide-tour) .ac-clock small{display:none}}
 @media(max-width:700px){.air-conditioner:has(>.guide-tour) .ac-clock{left:16px;max-width:100%}}
+
+.ac-stage{isolation:isolate}
