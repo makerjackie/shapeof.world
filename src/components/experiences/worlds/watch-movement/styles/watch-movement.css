@@ -41,3 +41,11 @@
 .experience-page[data-overlays-hidden=true] .watch-movement>:not(.wm-stage):not(.guide-tour){display:none!important}
 .experience-page[data-overlays-hidden=true] .watch-movement .wm-stage{inset:0!important}
 .experience-page[data-overlays-hidden=true] .watch-movement .wm-pin{display:none!important}
+
+/* English view names get a complete row below the mobile title. */
+@media(max-width:760px){
+ .watch-movement:lang(en) .wm-views{top:118px;left:12px;right:12px;max-width:none;overflow-x:auto;overscroll-behavior-inline:contain;touch-action:pan-x;scrollbar-width:thin}
+ .watch-movement:lang(en) .wm-views button{flex:1 0 auto;padding:7px 6px;font-size:9px}
+ .watch-movement:lang(en) .wm-stage{top:145px}
+ .watch-movement:lang(en):has(>.guide-tour)>.guide-tour{top:165px;max-height:calc(100svh - 510px)}
+}

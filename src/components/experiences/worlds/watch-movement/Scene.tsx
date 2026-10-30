@@ -4,7 +4,7 @@ import { Environment, Html, Lightformer, OrbitControls } from '@react-three/drei
 import * as T from 'three'
 import { isWorldPaused } from '~/lib/world-playback'
 import { advance, BALANCE, balanceAngle, FORK, forkAngle, indicationSeconds, TAU, WHEELS, wheelAngle, wind, type PartId, type Settings, type ViewId, type WatchState, type Wheel } from './model'
-import { fitWatchDistance } from './framing'
+import { escapementFraming, fitWatchDistance } from './framing'
 import { bridgeGeometry, mainplateGeometry, PLATE_POCKETS, escapeGeometry, gearGeometry, spiralGeometry, updateMainspring, updateSpiral } from './geometry'
 
 type SceneProps = {
@@ -259,7 +259,7 @@ function CameraRig({ view, reset, explode, onInteract }: Pick<SceneProps, 'view'
     const fov = 43, aspect = size.width / Math.max(1, size.height)
     const target = new T.Vector3(0, 1.1, 2 + explode * 7)
     let radius = 14.2 + explode * 5, direction = new T.Vector3(0, -.38, .925)
-    if (view === 'escapement') { target.set(.3, -3, 3.8); radius = 6.4; direction.set(0, -.25, .968) }
+    if (view === 'escapement') { const frame = escapementFraming(explode); target.set(.3, -3, frame.z); radius = frame.radius; direction.set(0, -.25, .968) }
     if (view === 'spring') { target.set(-3, 4.2, 2 + explode * 5); radius = 10.8 + explode * 4; direction.set(-.1, -.32, .942) }
     if (view === 'dial') { target.set(-1.4, 2.2, 3); radius = 13.3 + explode * 4; direction.set(0, -.04, 1) }
     const frame = [view, reset, size.width, size.height].join(':')
