@@ -3,26 +3,34 @@ import {Canvas,useFrame,useThree} from '@react-three/fiber'
 import {OrbitControls,PerspectiveCamera} from '@react-three/drei'
 import * as T from 'three'
 import {isWorldPaused} from '~/lib/world-playback'
-import {makeSpeedTexture,makeStreamlines,streamRadius} from './streamlines'
+import {makeSpeedTexture,makeStreamlines,makeStreamHeads,streamRadius} from './streamlines'
 import {sample,toLocation,toVector,trackAt,type Drifter,type FieldKind,type Location} from './model'
 import type {Fields} from './load'
 export type FieldMode='ocean'|'wind'|'both'
 export interface View {at:Location;distance:number;revision:number}
 export interface SceneState {mode:FieldMode;playing:boolean;grid:boolean;heat:boolean;arrows:boolean;time:number;drifters:Drifter[];probe:Location;selected:number|null;spin:boolean;follow:boolean;reduced:boolean}
 function Streams({grid,kind,count,state}:{grid:Fields['wind'];kind:FieldKind;count:number;state:RefObject<SceneState>}) {
-  const geometry=useMemo(()=>makeStreamlines(grid,count),[grid,count]),material=useRef<T.ShaderMaterial>(null),group=useRef<T.Group>(null),time=useRef(0)
+  const geometry=useMemo(()=>makeStreamlines(grid,count),[grid,count]),material=useRef<T.ShaderMaterial>(null),heads=useRef<T.ShaderMaterial>(null),group=useRef<T.Group>(null),time=useRef(0)
+  const headGeometry=useMemo(()=>makeStreamHeads(geometry),[geometry])
   const uniforms=useMemo(()=>({uTime:{value:0},uIntensity:{value:kind==='wind'?.78:.95},uCycle:{value:kind==='wind'?.1:.055}}),[kind])
-  useEffect(()=>()=>geometry.dispose(),[geometry])
+  useEffect(()=>()=>{headGeometry.dispose();geometry.dispose()},[headGeometry,geometry])
   useFrame((_,dt)=>{
     const s=state.current;if(group.current)group.current.visible=s.mode==='both'||s.mode===kind
     if(s.playing&&!s.reduced&&!isWorldPaused())time.current+=Math.min(.1,dt)
-    if(material.current){material.current.uniforms.uTime.value=time.current;material.current.uniforms.uIntensity.value=s.mode==='both'&&kind==='wind'?.42:kind==='wind'?.85:1}
+    for(const shader of [material.current,heads.current])if(shader){shader.uniforms.uTime.value=time.current;shader.uniforms.uIntensity.value=s.mode==='both'&&kind==='wind'?.58:kind==='wind'?.92:1}
   })
   return <group ref={group}><lineSegments geometry={geometry} frustumCulled={false}>
     <shaderMaterial ref={material} uniforms={uniforms} vertexColors transparent depthWrite={false} blending={T.AdditiveBlending}
       vertexShader={'attribute float aAge;attribute float aSeed;varying vec3 vColor;varying float vAge;varying float vSeed;void main(){vColor=color;vAge=aAge;vSeed=aSeed;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}'}
-      fragmentShader={'uniform float uTime;uniform float uIntensity;uniform float uCycle;varying vec3 vColor;varying float vAge;varying float vSeed;void main(){float phase=fract(vAge-uTime*uCycle+vSeed);float head=pow(phase,2.3);float envelope=smoothstep(0.,.09,vAge)*(1.-smoothstep(.88,1.,vAge));gl_FragColor=vec4(vColor,(.24+.76*head)*envelope*uIntensity);\n#include <colorspace_fragment>\n}'}/>
-  </lineSegments></group>
+      fragmentShader={'uniform float uTime;uniform float uIntensity;uniform float uCycle;varying vec3 vColor;varying float vAge;varying float vSeed;void main(){float phase=fract(vAge-uTime*uCycle+vSeed);float head=pow(phase,5.);float envelope=smoothstep(0.,.09,vAge)*(1.-smoothstep(.88,1.,vAge));gl_FragColor=vec4(vColor,(.075+.925*head)*envelope*uIntensity);\n#include <colorspace_fragment>\n}'}/>
+  </lineSegments>
+  {/* The leading sparkle is a display direction cue on the same RK4 curve,
+      not a particle travelling at the physical drift-clock speed. */}
+  <points geometry={headGeometry} frustumCulled={false}>
+    <shaderMaterial ref={heads} uniforms={uniforms} vertexColors transparent depthWrite={false} blending={T.AdditiveBlending}
+      vertexShader={'attribute float aAge;attribute float aSeed;varying vec3 vColor;varying float vAge;varying float vSeed;void main(){vColor=color;vAge=aAge;vSeed=aSeed;vec4 mv=modelViewMatrix*vec4(position,1.);gl_Position=projectionMatrix*mv;gl_PointSize=clamp(8./(-mv.z),1.5,4.);}' }
+      fragmentShader={'uniform float uTime;uniform float uIntensity;uniform float uCycle;varying vec3 vColor;varying float vAge;varying float vSeed;void main(){float phase=fract(vAge-uTime*uCycle+vSeed);float pulse=smoothstep(.965,.995,phase);float disc=length(gl_PointCoord-.5)*2.;if(disc>1.||pulse<.01||vAge<.06||vAge>.94)discard;gl_FragColor=vec4(mix(vColor,vec3(1.),.28),pulse*(1.-disc)*uIntensity*1.15);\n#include <colorspace_fragment>\n}'}/>
+  </points></group>
 }
 function Graticule({state}:{state:RefObject<SceneState>}) {
   const node=useRef<T.LineSegments>(null)
@@ -40,7 +48,7 @@ function Graticule({state}:{state:RefObject<SceneState>}) {
 function Atmosphere() {
   return <mesh><sphereGeometry args={[1.035,80,48]}/><shaderMaterial side={T.BackSide} transparent depthWrite={false} blending={T.AdditiveBlending}
     vertexShader={'varying vec3 vNormal;varying vec3 vWorld;void main(){vNormal=normalize(mat3(modelMatrix)*normal);vWorld=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*viewMatrix*vec4(vWorld,1.);}'}
-    fragmentShader={'varying vec3 vNormal;varying vec3 vWorld;void main(){float limb=pow(1.-abs(dot(normalize(vNormal),normalize(cameraPosition-vWorld))),3.5);gl_FragColor=vec4(vec3(.16,.4,.58),limb*.36);\n#include <colorspace_fragment>\n}'}/></mesh>
+    fragmentShader={'varying vec3 vNormal;varying vec3 vWorld;void main(){float limb=pow(1.-abs(dot(normalize(vNormal),normalize(cameraPosition-vWorld))),3.5);gl_FragColor=vec4(vec3(.16,.4,.58),limb*.48);\n#include <colorspace_fragment>\n}'}/></mesh>
 }
 function Headlight() {
   const light=useRef<T.DirectionalLight>(null),{camera}=useThree()
@@ -54,7 +62,7 @@ function Globe({fields,state,onPoint}:{fields:Fields|null;state:RefObject<SceneS
   useFrame(()=>{const s=state.current;if(speedMesh.current)speedMesh.current.visible=s.heat;if(textures&&speedMaterial.current){speedMaterial.current.map=s.mode==='wind'?textures.wind:textures.ocean;speedMaterial.current.opacity=.55}})
   return <>
     <mesh onClick={e=>{if(e.delta>4)return;e.stopPropagation();onPoint(toLocation(e.point))}}>
-      <sphereGeometry args={[1,128,96]}/><meshStandardMaterial map={fields?.texture??null} color={fields?'#8e9fa3':'#263943'} roughness={.94} metalness={.03}/>
+      <sphereGeometry args={[1,128,96]}/><meshStandardMaterial map={fields?.texture??null} color={fields?'#b5c2c1':'#263943'} roughness={.86} metalness={.02}/>
     </mesh>
     <mesh ref={speedMesh}><sphereGeometry args={[1.0015,96,64]}/><meshBasicMaterial ref={speedMaterial} map={textures?.ocean??null} transparent opacity={.55} depthWrite={false}/></mesh>
     <Graticule state={state}/><Atmosphere/>
@@ -116,15 +124,15 @@ function DriftTracks({state,onPick}:{state:RefObject<SceneState>;onPick:(id:numb
   })
   return <>
     <lineSegments geometry={segments} frustumCulled={false}><lineBasicMaterial vertexColors transparent opacity={.9} depthWrite={false}/></lineSegments>
-    <instancedMesh ref={marker} args={[undefined,undefined,12]} frustumCulled={false} onClick={e=>{e.stopPropagation();const d=state.current.drifters[e.instanceId??0];if(d)onPick(d.id)}}><sphereGeometry args={[.009,12,8]}/><meshBasicMaterial color="#ffffff" toneMapped={false}/></instancedMesh>
-    <mesh ref={selected}><ringGeometry args={[.017,.019,40]}/><meshBasicMaterial color="#f0d9b0" side={T.DoubleSide} transparent opacity={.9} depthWrite={false}/></mesh>
+    <instancedMesh ref={marker} args={[undefined,undefined,12]} frustumCulled={false} onClick={e=>{e.stopPropagation();const d=state.current.drifters[e.instanceId??0];if(d)onPick(d.id)}}><sphereGeometry args={[.011,16,10]}/><meshBasicMaterial color="#ffffff" toneMapped={false}/></instancedMesh>
+    <mesh ref={selected}><ringGeometry args={[.022,.025,48]}/><meshBasicMaterial color="#f0d9b0" side={T.DoubleSide} transparent opacity={.9} depthWrite={false}/></mesh>
   </>
 }
 function CameraRig({view,state,onInteract}:{view:View;state:RefObject<SceneState>;onInteract:()=>void}) {
   const orbit=useRef<ComponentRef<typeof OrbitControls>>(null),{camera,size}=useThree(),moving=useRef(false)
-  const target=useMemo(()=>{const aspect=size.width/size.height,half=(aspect<.9?42:38)*Math.PI/360,angle=Math.min(half,Math.atan(Math.tan(half)*aspect)),fit=1.035/Math.sin(angle),distance=view.distance>=3.5?Math.max(view.distance,Math.min(5.95,fit)):view.distance;const p=toVector(view.at,distance);return new T.Vector3(p.x,p.y,p.z)},[view.at.lon,view.at.lat,view.distance,size.width,size.height])
+  const target=useMemo(()=>{const aspect=size.width/size.height,half=(aspect<.9?42:38)*Math.PI/360,angle=Math.min(half,Math.atan(Math.tan(half)*aspect)),fit=1.035/Math.sin(angle),distance=view.distance>=3.5?Math.max(view.distance*1.10,Math.min(5.95,fit*1.10)):view.distance;const p=toVector(view.at,distance);return new T.Vector3(p.x,p.y,p.z)},[view.at.lon,view.at.lat,view.distance,size.width,size.height])
   useEffect(()=>{moving.current=true},[view.revision,target])
-  useEffect(()=>{if(camera instanceof T.PerspectiveCamera){camera.fov=size.width/size.height<.9?42:38;camera.updateProjectionMatrix()}},[camera,size.width,size.height])
+  useEffect(()=>{if(camera instanceof T.PerspectiveCamera){camera.fov=size.width/size.height<.9?42:38;camera.setViewOffset(size.width,size.height,0,size.height*.035,size.width,size.height);camera.updateProjectionMatrix()}},[camera,size.width,size.height])
   useFrame((_,dt)=>{
     const controls=orbit.current,s=state.current;if(!controls)return
     controls.autoRotate=s.spin&&s.playing&&!s.reduced&&!isWorldPaused();controls.autoRotateSpeed=.35

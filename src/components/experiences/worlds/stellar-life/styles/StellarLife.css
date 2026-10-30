@@ -22,8 +22,30 @@
 
 .sl-canvas{isolation:isolate}
 
-@media(min-width:720px) and (max-width:1100px){
+@media(min-width:720px) and (max-width:1199px){
  .sl-world:has(>.guide-tour) :is(.sl-title,.sl-mass,.sl-caption){visibility:hidden}
  .sl-world .guide-stage-copy{max-height:calc(100svh - 220px);overflow-y:auto;pointer-events:auto;padding:12px 14px;background:#050912ed}
  .sl-world .guide-stage-copy[data-stage-position^=bottom]{--guide-stage-top:80px;--guide-stage-bottom:auto;--guide-stage-left:22px;--guide-stage-right:auto;--guide-stage-width:min(340px,calc(100vw - 380px));--guide-stage-align:left;--guide-stage-translate:none}
+}
+
+/* A selected mass interval remains readable while the sphere is inspected. */
+.sl-shell-tag{display:grid;gap:4px;min-width:112px;padding:9px 12px;background:#111722e8;border-left:2px solid #efd7a8;color:#f1dfbd;box-shadow:0 6px 24px #0005;white-space:nowrap;font-size:11px;text-align:left}.sl-shell-tag b{font-weight:400;font-size:16px;font-variant-numeric:tabular-nums}.sl-shell-tag small{color:#a7b8c1;font-size:9px}.sl-canvas{isolation:isolate}
+@media(max-width:719px){.sl-shell-tag{min-width:91px;padding:7px 9px;font-size:10px}.sl-shell-tag b{font-size:13px}}
+
+@media(min-width:720px){.sl-panel p{font-size:11px;line-height:1.9}.sl-panel p.sl-note,.sl-mini,.sl-numbers>div>span{font-size:10px}.sl-panel h3{font-size:12px}}
+
+.experience-page[data-overlays-hidden='true'] .sl-world>:not(.sl-canvas){display:none}
+.experience-page[data-overlays-hidden='true'] .sl-canvas{inset:0}
+
+.sl-world[data-compare=true] .sl-caption{display:none}
+
+/* English mode names stay on one row above the clock; the HR frame starts
+   below the phase caption instead of painting over it. */
+@media(min-width:720px){.sl-view{flex-wrap:nowrap;max-width:calc(100% - 370px);overflow-x:auto;scrollbar-width:none;white-space:nowrap}.sl-view button{flex-shrink:0}.sl-chart{bottom:180px}}
+
+/* The single-star camera leaves a real caption column beside the cutaway. */
+@media(min-width:1200px){
+ .sl-world .guide-stage-copy[data-stage-position=bottom-left]{--guide-stage-left:28px;--guide-stage-width:min(300px,calc((100vw - 335px)*.605 - 280px));--guide-stage-align:left}
+ .sl-world .guide-stage-copy[data-stage-position=bottom-left] .guide-stage-title{font-size:28px;line-height:1.15}
+ .sl-world .guide-stage-copy[data-stage-position=bottom-left] .guide-stage-body{font-size:13px;line-height:1.6}
 }

@@ -2,9 +2,9 @@ import {memo, useEffect, useMemo, useRef, type RefObject, type ComponentRef} fro
 import {Canvas, useFrame, useThree} from '@react-three/fiber'
 import {Edges, OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import * as T from 'three'
-import {isWorldPaused} from '~/lib/world-playback'
+import {advanceDrive} from './mechanisms'
 import {NODES, PIPES, SITES, TOWER_CAPACITY, type Vec3} from './network'
-import {pressureColor, type Settings, type Simulation} from './model'
+import {pressureColor,treatment, type Settings, type Simulation} from './model'
 
 export type Layer = 'water' | 'pressure' | 'age' | 'surface'
 export interface SceneState {simulation: Simulation; settings: Settings; playing: boolean; layer: Layer; selected: string; trace: number | null; reduced: boolean}
@@ -38,28 +38,28 @@ function Box({position,size,color=C.concrete,metal=0,opacity=1,edge=false}:{posi
 }
 function WaterSurface({position,size,level=0,raw=false,state}:{position:Vec3;size:[number,number];level?:number;raw?:boolean;state:RefObject<SceneState>}) {
   const shader=useRef<T.ShaderMaterial>(null)
-  const uniforms=useMemo(()=>({uTime:{value:0},uRaw:{value:raw?1:0},uColor:{value:new T.Color(raw?'#627f75':'#477e90')}}),[raw])
-  useFrame(()=>{if(shader.current)shader.current.uniforms.uTime.value=state.current.reduced?0:state.current.simulation.time/90})
+  const uniforms=useMemo(()=>({uTime:{value:0},uRaw:{value:raw?1:0},uOpacity:{value:.86},uColor:{value:new T.Color(raw?'#627f75':'#477e90')}}),[raw])
+  useFrame(()=>{if(shader.current){shader.current.uniforms.uTime.value=state.current.reduced?0:state.current.simulation.time/90;shader.current.uniforms.uOpacity.value=!raw&&['mixing','filters','disinfection'].includes(state.current.selected)?.46:.86}})
   return <mesh position={[position[0],position[1]+level,position[2]]} rotation={[-Math.PI/2,0,0]}>
     <planeGeometry args={[size[0],size[1],1,1]}/><shaderMaterial ref={shader} uniforms={uniforms} transparent depthWrite={false} side={T.DoubleSide}
       vertexShader={'varying vec2 vUv; void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}'}
-      fragmentShader={'varying vec2 vUv;uniform float uTime;uniform float uRaw;uniform vec3 uColor;void main(){vec2 p=vUv*18.;float w=sin(p.x*1.8+p.y*.8+uTime*.25)*sin(p.y*2.-uTime*.18);float fine=pow(max(0.,sin(p.x*5.+p.y*3.+w*.6+uTime*.14)),18.);float edge=smoothstep(.01,.09,min(min(vUv.x,1.-vUv.x),min(vUv.y,1.-vUv.y)));vec3 col=uColor*(.9+w*.06)+vec3(.32,.48,.48)*fine*.22;gl_FragColor=vec4(col,.72+.19*edge);}'} />
+      fragmentShader={'varying vec2 vUv;uniform float uTime;uniform float uRaw;uniform float uOpacity;uniform vec3 uColor;void main(){vec2 p=vUv*18.;float w=sin(p.x*1.8+p.y*.8+uTime*.25)*sin(p.y*2.-uTime*.18);float fine=pow(max(0.,sin(p.x*5.+p.y*3.+w*.6+uTime*.14)),18.);float edge=smoothstep(.01,.09,min(min(vUv.x,1.-vUv.x),min(vUv.y,1.-vUv.y)));vec3 col=uColor*(.9+w*.06)+vec3(.32,.48,.48)*fine*.22;gl_FragColor=vec4(col,uOpacity*(.82+.18*edge));}'} />
   </mesh>
 }
 function SlabGrid() {
-  const geometry=useMemo(()=>{const v:number[]=[];for(let x=-16;x<=16;x+=.5)v.push(x,-.015,-11.5,x,-.015,11.5);for(let z=-11.5;z<=11.5;z+=.5)v.push(-16,-.015,z,16,-.015,z);const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));return g},[])
+  const geometry=useMemo(()=>{const v:number[]=[];for(let x=-16;x<=12;x+=.5)v.push(x,-.015,-11.5,x,-.015,8.5);for(let z=-11.5;z<=8.5;z+=.5)v.push(-16,-.015,z,12,-.015,z);const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));return g},[])
   useEffect(()=>()=>geometry.dispose(),[geometry])
   return <lineSegments geometry={geometry}><lineBasicMaterial color="#344a4f" transparent opacity={.45}/></lineSegments>
 }
 function TerrainSkirt() {
-  const geometry=useMemo(()=>{const points:Vec3[]=[];for(let x=-16;x<=16;x+=.5)points.push([x,landHeight(x,-11.5),-11.5]);for(let z=-11;z<=11.5;z+=.5)points.push([16,landHeight(16,z),z]);for(let x=15.5;x>=-16;x-=.5)points.push([x,landHeight(x,11.5),11.5]);for(let z=11;z>=-11.5;z-=.5)points.push([-16,landHeight(-16,z),z]);const v:number[]=[];points.forEach((a,i)=>{const b=points[(i+1)%points.length];v.push(...a,...b,a[0],-.03,a[2],...b,b[0],-.03,b[2],a[0],-.03,a[2])});const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.computeVertexNormals();return g},[])
+  const geometry=useMemo(()=>{const points:Vec3[]=[];for(let x=-16;x<=12;x+=.5)points.push([x,landHeight(x,-11.5),-11.5]);for(let z=-11;z<=8.5;z+=.5)points.push([12,landHeight(12,z),z]);for(let x=11.5;x>=-16;x-=.5)points.push([x,landHeight(x,8.5),8.5]);for(let z=8;z>=-11.5;z-=.5)points.push([-16,landHeight(-16,z),z]);const v:number[]=[];points.forEach((a,i)=>{const b=points[(i+1)%points.length];v.push(...a,...b,a[0],-.03,a[2],...b,b[0],-.03,b[2],a[0],-.03,a[2])});const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.computeVertexNormals();return g},[])
   useEffect(()=>()=>geometry.dispose(),[geometry])
   return <mesh geometry={geometry} receiveShadow><meshStandardMaterial color="#3e4c40" roughness={1} side={T.DoubleSide}/></mesh>
 }
 function Terrain({state}:{state:RefObject<SceneState>}) {
   const mat=useRef<T.MeshStandardMaterial>(null)
   const geometry=useMemo(()=>{
-    const g=new T.PlaneGeometry(32,23,90,65);g.rotateX(-Math.PI/2)
+    const g=new T.PlaneGeometry(28,20,84,60);g.rotateX(-Math.PI/2);g.translate(-2,0,-1.5)
     const p=g.attributes.position,colors:number[]=[]
     const a=new T.Color(C.land),b=new T.Color(C.hill)
     for(let i=0;i<p.count;i++){
@@ -71,11 +71,11 @@ function Terrain({state}:{state:RefObject<SceneState>}) {
   useEffect(()=>()=>geometry.dispose(),[geometry])
   useFrame(()=>{if(mat.current){mat.current.opacity=state.current.layer==='surface'?1:.72;mat.current.depthWrite=state.current.layer==='surface'}})
   return <group>
-    <Box position={[0,-.78,0]} size={[32,1.5,23]} color="#19272c"/>
-    <Box position={[0,-1.57,0]} size={[32.15,.09,23.15]} color="#475553" metal={.45}/>
+    <Box position={[-2,-.78,-1.5]} size={[28,1.5,20]} color="#19272c"/>
+    <Box position={[-2,-1.57,-1.5]} size={[28.15,.09,20.15]} color="#475553" metal={.45}/>
     <mesh geometry={geometry} receiveShadow><meshStandardMaterial ref={mat} vertexColors roughness={.96} transparent opacity={.72} depthWrite={false}/></mesh>
     <SlabGrid/><TerrainSkirt/>
-    {[-15,-10,-5,0,5,10,15].map(x=><group key={x}><Box position={[x,-.16,11.53]} size={[.025,.24,.025]} color="#8e9a98"/><Box position={[x,-.16,-11.53]} size={[.025,.24,.025]} color="#8e9a98"/></group>)}
+    {[-15,-10,-5,0,5,10].map(x=><group key={x}><Box position={[x,-.16,8.53]} size={[.025,.24,.025]} color="#8e9a98"/><Box position={[x,-.16,-11.53]} size={[.025,.24,.025]} color="#8e9a98"/></group>)}
   </group>
 }
 function Reservoir({state,onSelect}:{state:RefObject<SceneState>;onSelect:(id:string)=>void}) {
@@ -115,20 +115,20 @@ function Rail({x,z,width,depth,y=.7}:{x:number;z:number;width:number;depth:numbe
     {[-1,1].map(sign=><Beam key={sign} a={[x-width/2,y+.25,z+sign*depth/2]} b={[x+width/2,y+.25,z+sign*depth/2]} r={.014} color="#bbc5b9"/>)}
   </group>
 }
-function OpenTank({position,size,water=.48,state,children,onSelect}:{position:Vec3;size:[number,number];water?:number;state:RefObject<SceneState>;children?:React.ReactNode;onSelect:()=>void}) {
+function OpenTank({position,size,water=.48,state,children,onSelect,section=false}:{position:Vec3;size:[number,number];water?:number;section?:boolean;state:RefObject<SceneState>;children?:React.ReactNode;onSelect:()=>void}) {
   const [w,d]=size
   return <group position={position} onClick={e=>{e.stopPropagation();onSelect()}}>
-    <Box position={[0,.1,0]} size={[w+.17,.2,d+.17]} color="#525f60"/>
+    <Box position={[0,section?.025:.1,0]} size={[w+.17,section?.05:.2,d+.17]} color="#525f60"/>
     <Box position={[-w/2,.38,0]} size={[.09,.62,d]} color={C.concrete}/>
     <Box position={[w/2,.38,0]} size={[.09,.62,d]} color={C.concrete}/>
     <Box position={[0,.38,-d/2]} size={[w,.62,.09]} color={C.concrete}/>
-    <Box position={[0,.38,d/2]} size={[w,.62,.07]} color={C.concrete} opacity={.6}/>
+    <Box position={[0,.38,d/2]} size={[w,.62,.07]} color={C.concrete} opacity={section?.18:.6}/>
     <WaterSurface position={[0,water,0]} size={[w-.09,d-.09]} state={state}/>{children}
   </group>
 }
 function Mixer({position,state,index}:{position:Vec3;state:RefObject<SceneState>;index:number}) {
-  const rot=useRef<T.Group>(null)
-  useFrame(()=>{if(rot.current)rot.current.rotation.y=state.current.simulation.time*(index===0?.045:.008)})
+  const rot=useRef<T.Group>(null),drive=useRef({time:0,angle:0})
+  useFrame(()=>{const s=state.current;drive.current=advanceDrive(drive.current,s.simulation.time,s.settings.power,s.reduced,index===0?.045:.008);if(rot.current)rot.current.rotation.y=drive.current.angle})
   return <group position={position}>
     <Beam a={[-.55,.8,0]} b={[.55,.8,0]} r={.045}/>
     <Box position={[0,.93,0]} size={[.24,.24,.25]} color="#607b76" metal={.3}/>
@@ -138,9 +138,36 @@ function Mixer({position,state,index}:{position:Vec3;state:RefObject<SceneState>
     </group>
   </group>
 }
+/** Original enlarged process glyphs, not a particle concentration solver. */
+function ProcessMatter({state}:{state:RefObject<SceneState>}) {
+  const mesh=useRef<T.InstancedMesh>(null),item=useMemo(()=>new T.Object3D(),[]),drive=useRef({time:0,angle:0})
+  const color=useMemo(()=>new T.Color(),[])
+  useFrame(()=>{
+    if(!mesh.current)return
+    const s=state.current,plant=treatment(s.simulation,s.settings)
+    drive.current=advanceDrive(drive.current,s.simulation.time,plant.flow>0,s.reduced,.012)
+    const t=drive.current.angle
+    for(let i=0;i<120;i++){
+      const f=(i%30)/30,group=Math.floor(i/30),a=i*2.399+t*(group===0?2.8:group===1?.45:.12)
+      let x:number,y:number,z:number,size:number
+      if(group<2){const r=.15+.32*((i*17%29)/29);x=-8.2+Math.cos(a)*r;z=(group===0?-3:-1.15)+Math.sin(a)*r*(group===1?1.6:1);y=.55+.12*Math.sin(a*1.7+i);size=group===0?.016:.018+.025*s.settings.coagulant;color.set(group===0?'#c0b890':'#d8c38b')}
+      else if(group===2){const r=.22+1.02*Math.sqrt(f);x=-5.7+Math.cos(a)*r;z=-1.95+Math.sin(a)*r;y=.48+.24*(1-((f+t*.14)%1));size=.022+.015*s.settings.coagulant;color.set('#c0ad7f')}
+      else {const lane=i%2;x=-5.7+(lane?-.63:.63)+Math.sin(i*8.2)*.36;z=1.3+Math.cos(i*4.7)*.88;y=.48+.26*(1-((f+t*.35)%1));size=.014;color.set('#b4e0d7')}
+      item.position.set(x,y,z);item.scale.setScalar(size);item.updateMatrix();mesh.current.setMatrixAt(i,item.matrix);mesh.current.setColorAt(i,color)
+    }
+    mesh.current.instanceMatrix.needsUpdate=true;if(mesh.current.instanceColor)mesh.current.instanceColor.needsUpdate=true
+  })
+  return <instancedMesh ref={mesh} args={[undefined,undefined,120]} frustumCulled={false}><icosahedronGeometry args={[1,1]}/><meshStandardMaterial color="#fff" roughness={.85}/></instancedMesh>
+}
+function FilterGrains({state}:{state:RefObject<SceneState>}) {
+  const mesh=useRef<T.InstancedMesh>(null)
+  useEffect(()=>{if(!mesh.current)return;const item=new T.Object3D();for(let i=0;i<160;i++){const lane=i%2,j=Math.floor(i/2),x=-5.7+(lane?-.63:.63)+((j%8)-3.5)*.119,z=1.3+(Math.floor(j/8)-4.5)*.205;item.position.set(x,.575,z);item.scale.set(.043,.021,.052);item.rotation.set(i*.62,i*2.399,i*.37);item.updateMatrix();mesh.current.setMatrixAt(i,item.matrix)}mesh.current.instanceMatrix.needsUpdate=true;mesh.current.computeBoundingSphere()},[])
+  useFrame(()=>{if(mesh.current)mesh.current.visible=state.current.selected==='filters'})
+  return <instancedMesh ref={mesh} args={[undefined,undefined,160]}><icosahedronGeometry args={[1,0]}/><meshStandardMaterial color="#c0aa79" roughness={1}/></instancedMesh>
+}
 function TreatmentPlant({state,onSelect}:{state:RefObject<SceneState>;onSelect:(id:string)=>void}) {
-  const rake=useRef<T.Group>(null),cwLevel=useRef<T.Mesh>(null)
-  useFrame(()=>{if(rake.current)rake.current.rotation.y=state.current.simulation.time/600;if(cwLevel.current)cwLevel.current.scale.y=.08+state.current.simulation.clearwell/1800*.7})
+  const rake=useRef<T.Group>(null),cwLevel=useRef<T.Mesh>(null),settlingWater=useRef<T.MeshPhysicalMaterial>(null),drive=useRef({time:0,angle:0})
+  useFrame(()=>{const s=state.current;drive.current=advanceDrive(drive.current,s.simulation.time,s.settings.power,s.reduced,1/600);if(rake.current)rake.current.rotation.y=drive.current.angle;if(settlingWater.current)settlingWater.current.opacity=s.selected==='settling'?.48:.82;if(cwLevel.current)cwLevel.current.scale.y=.08+state.current.simulation.clearwell/1800*.7})
   return <group>
     <Box position={[-6.95,.12,-.8]} size={[6.2,.18,8.5]} color="#3c4b49"/>
     <Rail x={-6.95} z={-.8} width={6.2} depth={8.5} y={.24}/>
@@ -152,7 +179,7 @@ function TreatmentPlant({state,onSelect}:{state:RefObject<SceneState>;onSelect:(
     <group position={[-5.7,.25,-1.95]} onClick={e=>{e.stopPropagation();onSelect('settling')}}>
       <mesh position={[0,.12,0]}><cylinderGeometry args={[1.42,1.5,.22,64]}/><meshStandardMaterial color="#697875" roughness={.85}/></mesh>
       <mesh position={[0,.43,0]}><cylinderGeometry args={[1.42,1.42,.5,64,1,true]}/><meshStandardMaterial color="#a0a59a" side={T.DoubleSide} roughness={.75}/></mesh>
-      <mesh rotation={[-Math.PI/2,0,0]} position={[0,.51,0]}><circleGeometry args={[1.36,64]}/><meshPhysicalMaterial color="#537e7e" roughness={.27} transparent opacity={.88}/></mesh>
+      <mesh rotation={[-Math.PI/2,0,0]} position={[0,.51,0]}><circleGeometry args={[1.36,64]}/><meshPhysicalMaterial ref={settlingWater} color="#537e7e" roughness={.27} transparent opacity={.88}/></mesh>
       <group ref={rake}>
         <Beam a={[-1.4,.73,0]} b={[1.4,.73,0]} r={.04}/>
         <Beam a={[0,.1,0]} b={[0,.92,0]} r={.04}/>
@@ -163,9 +190,11 @@ function TreatmentPlant({state,onSelect}:{state:RefObject<SceneState>;onSelect:(
       {Array.from({length:28},(_,i)=>{const a=i/28*Math.PI*2;return <Box key={i} position={[Math.cos(a)*1.38,.7,Math.sin(a)*1.38]} size={[.025,.3,.025]} color="#a9b5aa"/>})}
       <mesh position={[0,.86,0]} rotation={[-Math.PI/2,0,0]}><torusGeometry args={[1.38,.016,6,64]}/><meshStandardMaterial color="#a9b5aa" metalness={.6} roughness={.5}/></mesh>
     </group>
-    {[-.63,.63].map((dx,i)=><OpenTank key={dx} position={[-5.7+dx,.25,1.3]} size={[1.1,2.25]} state={state} onSelect={()=>onSelect('filters')}>
+    {[-.63,.63].map((dx,i)=><OpenTank key={dx} position={[-5.7+dx,.25,1.3]} size={[1.1,2.25]} section state={state} onSelect={()=>onSelect('filters')}>
       <Box position={[0,.26,0]} size={[.98,.08,2.1]} color="#a99779"/>
-      <Box position={[0,.17,0]} size={[.98,.08,2.1]} color="#5a5b51"/>
+      <Box position={[0,.17,0]} size={[.98,.08,2.1]} color="#716c60"/>
+      {[-.7,-.35,0,.35,.7].map(z=><Beam key={z} a={[-.43,.105,z]} b={[.43,.105,z]} r={.035} color="#a8bfc0"/>)}
+      <Beam a={[0,.105,-1]} b={[0,.105,1]} r={.05} color="#8cabae"/>
       <Beam a={[-.45,.8,-1.15]} b={[-.45,.8,1.15]} r={.025}/>
       {[-.8,0,.8].map(z=><Beam key={z} a={[-.45,.77,z]} b={[.45,.77,z]} r={.018}/>)}
       {i===1&&<Box position={[.55,.5,0]} size={[.03,.46,2.1]} color="#b6d0d2" opacity={.25}/>}
@@ -192,6 +221,7 @@ function TreatmentPlant({state,onSelect}:{state:RefObject<SceneState>;onSelect:(
       <Box position={[.8,.55,0]} size={[.22,.9,.62]} color="#919f92"/>
       <Box position={[.68,.7,-.12]} size={[.012,.15,.22]} color="#5aa6aa"/>
     </group>
+    <ProcessMatter state={state}/><FilterGrains state={state}/>
     <Box position={[-9.2,.65,.3]} size={[.5,1.1,1.15]} color="#9eaa9a"/>
     <Box position={[-9.46,.77,.3]} size={[.015,.27,.75]} color="#486d72"/>
     {[[[-8.2,.6,-3.8],[-8.2,.6,-4.3],[-5.8,.6,-4.3],[-5.8,.6,-5.3]],
@@ -252,12 +282,12 @@ function Buildings({state,onSelect}:{state:RefObject<SceneState>;onSelect:(id:st
     const s=state.current;if(!bodies.current||!material.current)return
     if(lastLayer.current===s.layer&&lastTime.current===s.simulation.time)return
     lastLayer.current=s.layer;lastTime.current=s.simulation.time
-    material.current.opacity=s.layer==='surface'?1:.76;material.current.depthWrite=s.layer==='surface'
+    material.current.opacity=s.layer==='surface'?1:.9;material.current.depthWrite=s.layer==='surface'
     buildings.forEach((b,i)=>{const pressure=s.simulation.hydraulic.heads[b.j]-NODES[b.j].elevation;color.set(s.layer==='pressure'?pressureColor(pressure):b.j===9?'#899590':b.j===14?'#738b84':C.building);bodies.current!.setColorAt(i,color)})
     if(bodies.current.instanceColor)bodies.current.instanceColor.needsUpdate=true
   })
   return <group>
-    <instancedMesh ref={bodies} args={[undefined,undefined,buildings.length]} castShadow receiveShadow onClick={e=>{e.stopPropagation();const b=buildings[e.instanceId??0];onSelect(b.j===9?'hospital':b.j===14?'industry':`node:${b.j}`)}}><boxGeometry args={[1,1,1]}/><meshStandardMaterial ref={material} color="#ffffff" transparent opacity={.76} depthWrite={false} roughness={.82}/></instancedMesh>
+    <instancedMesh ref={bodies} args={[undefined,undefined,buildings.length]} castShadow receiveShadow onClick={e=>{e.stopPropagation();const b=buildings[e.instanceId??0];onSelect(b.j===9?'hospital':b.j===14?'industry':`node:${b.j}`)}}><boxGeometry args={[1,1,1]}/><meshStandardMaterial ref={material} color="#ffffff" transparent opacity={.9} depthWrite={false} roughness={.82}/></instancedMesh>
     <StaticBoxes boxes={details}/><StaticBoxes boxes={trunks}/>
     <instancedMesh ref={crowns} args={[undefined,undefined,trees.length]} castShadow><icosahedronGeometry args={[1,1]}/><meshStandardMaterial color="#ffffff" roughness={1}/></instancedMesh>
   </group>
@@ -355,13 +385,13 @@ function Leak({state}:{state:RefObject<SceneState>}) {
   return <points ref={points} geometry={geometry} position={[2.6,.25,-1.2]}><pointsMaterial color="#b4decb" size={.045} transparent opacity={.75} depthWrite={false}/></points>
 }
 function Selection({state}:{state:RefObject<SceneState>}) {
-  const ring=useRef<T.Group>(null)
+  const ring=useRef<T.Group>(null),footprint=useRef<T.Mesh>(null)
   useFrame(()=>{
     const s=state.current,site=SITES.find(v=>v.id===s.selected)
-    if(ring.current){ring.current.visible=!!site;if(site)ring.current.position.set(site.position[0],site.position[1]+.12,site.position[2])}
+    if(ring.current){ring.current.visible=!!site;if(site){ring.current.position.set(site.position[0],site.position[1]+.12,site.position[2]);const radius=s.selected==='settling'?1.45:s.selected==='filters'?1.4:s.selected==='mixing'?1.05:s.selected==='tower'?1:.52;footprint.current?.scale.set(radius/.45,radius/.45,1)}}
   })
   return <group ref={ring}>
-    <mesh rotation={[-Math.PI/2,0,0]}><ringGeometry args={[.45,.475,56]}/><meshBasicMaterial color={C.amber} side={T.DoubleSide} transparent opacity={.95}/></mesh>
+    <mesh ref={footprint} rotation={[-Math.PI/2,0,0]}><ringGeometry args={[.45,.465,72]}/><meshBasicMaterial color={C.amber} side={T.DoubleSide} transparent opacity={.95}/></mesh>
     <mesh position={[0,.16,0]}><cylinderGeometry args={[.014,.014,.3,6]}/><meshBasicMaterial color={C.amber}/></mesh>
   </group>
 }
@@ -384,7 +414,7 @@ function World({state,onSelect,view,onInteract}:{state:RefObject<SceneState>;onS
     <color attach="background" args={[C.bg]}/>
     <fog attach="fog" args={[C.bg,48,100]}/>
     <PerspectiveCamera makeDefault position={[25,24,30]} fov={43} near={.1} far={180}/>
-    <ambientLight intensity={.48}/>
+    <ambientLight intensity={.62}/>
     <hemisphereLight args={['#d8e6df','#142d32',1.4]}/>
     <directionalLight position={[-13,25,6]} intensity={3.1} color="#f9e6c4" castShadow shadow-mapSize={[2048,2048]} shadow-camera-left={-25} shadow-camera-right={25} shadow-camera-top={22} shadow-camera-bottom={-22} shadow-camera-far={70} shadow-bias={-.0006}/>
     <directionalLight position={[15,9,-13]} intensity={2.7} color="#7caab9"/>

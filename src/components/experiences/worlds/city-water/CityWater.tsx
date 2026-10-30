@@ -9,7 +9,7 @@ import {CLEARWELL_CAPACITY, ISOLATION_PIPE, NODES, PIPES, RESERVOIR_CAPACITY, SI
 import './styles/CityWater.css'
 
 type Mission = {id:'blackout'|'morning'|'leak';start:number;passed:boolean|null}
-const OVERVIEW={position:[25,24,30],target:[-1,0,-1]} as const
+const OVERVIEW={position:[22,21,27],target:[-2,.5,-1.5]} as const
 function Slider({label,value,min,max,step=1,unit='',digits=0,onChange}:{label:string;value:number;min:number;max:number;step?:number;unit?:string;digits?:number;onChange:(v:number)=>void}) {
   const tx=useExperienceI18n()
   return <label className="cw-slider"><span>{tx(label)}<output>{value.toFixed(digits)} <small>{unit}</small></output></span><input type="range" min={min} max={max} step={step} value={value} aria-label={tx(label)} style={{'--cw-fill':`${(value-min)/(max-min)*100}%`} as CSSProperties} onChange={e=>onChange(Number(e.target.value))}/></label>

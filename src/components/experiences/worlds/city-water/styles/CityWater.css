@@ -68,3 +68,11 @@
   .cw-world .guide-tour.is-stage .guide-stage-title{font-size:18px}
   .cw-world .guide-tour.is-stage .guide-stage-body{font-size:10px;line-height:1.5}
 }
+
+/* Respect the shell's existing immersive/capture state without losing the
+   interactive canvas. The shell retains the control that restores overlays. */
+.experience-page[data-overlays-hidden='true'] .cw-world{grid-template-columns:1fr;grid-template-rows:1fr}
+.experience-page[data-overlays-hidden='true'] .cw-stage>:not(:first-child),
+.experience-page[data-overlays-hidden='true'] .cw-panel{display:none}
+
+.cw-title,.cw-clock,.cw-facility-nav,.cw-camera{text-shadow:0 1px 4px #000,0 0 12px #0a1117}

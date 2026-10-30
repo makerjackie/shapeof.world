@@ -4,7 +4,7 @@ import {gunzipSync} from 'node:zlib'
 import {createHash} from 'node:crypto'
 import meta from './data-meta.json'
 import {unpackField} from './load'
-import {makeStreamlines,makeSpeedTexture} from './streamlines'
+import {makeStreamlines,makeSpeedTexture,makeStreamHeads} from './streamlines'
 import {advanceDrifter,createDrifter,decodeGrid,distance,maximumStep,sample,sphericalStep,toLocation,toVector,trackAt,vectorAngle,wrapLongitude,type Grid} from './model'
 const grids=Object.fromEntries(meta.fields.map(f=>{const bytes=gunzipSync(readFileSync(`public${f.path}`));return [f.id,decodeGrid(f.id as 'wind'|'ocean',bytes)]})) as Record<'wind'|'ocean',Grid>
 function constant(u=10,v=0):Grid {return {kind:'wind',nx:4,ny:3,lon0:-180,lat0:90,dx:90,dy:90,radius:6371000,u:new Int16Array(12).fill(u*100),v:new Int16Array(12).fill(v*100),scale:.01,missing:32767}}
@@ -77,7 +77,12 @@ describe('wind-ocean scientific field and spherical tracks',()=>{
       expect(Math.hypot(a.x,a.y,a.z)).toBeCloseTo(1.009,6)
       expect(Math.hypot(a.x-b.x,a.y-b.y,a.z-b.z)).toBeLessThan(.004)
     }
-    geometry.dispose()
+    const heads=makeStreamHeads(geometry)
+    expect(heads.getAttribute('aAge')).toBe(geometry.getAttribute('aAge'))
+    expect(heads.getAttribute('position')).toBe(position)
+    expect(heads.getIndex()!.count).toBe(position.count/2)
+    for(let i=0;i<heads.getIndex()!.count;i++)expect(heads.getIndex()!.getX(i)%2).toBe(0)
+    heads.dispose();geometry.dispose()
     const texture=makeSpeedTexture(grids.ocean)
     expect(texture.flipY).toBe(false)
     const data=texture.image.data as Uint8Array

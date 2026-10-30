@@ -63,3 +63,7 @@
   .wo-world .guide-tour.is-stage .guide-stage-title{font-size:18px}
   .wo-world .guide-tour.is-stage .guide-stage-body{font-size:10px;line-height:1.5}
 }
+
+.experience-page[data-overlays-hidden='true'] .wo-world{grid-template-columns:1fr;grid-template-rows:1fr}
+.experience-page[data-overlays-hidden='true'] .wo-stage>:not(:first-child),
+.experience-page[data-overlays-hidden='true'] .wo-panel{display:none}

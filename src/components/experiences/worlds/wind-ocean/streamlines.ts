@@ -38,6 +38,15 @@ export function makeStreamlines(grid:Grid,count:number):T.BufferGeometry {
   geometry.computeBoundingSphere()
   return geometry
 }
+/** One cue sample per segment, with shared curve attributes. Avoid drawing the
+ * duplicated segment endpoint twice without inventing a second trajectory. */
+export function makeStreamHeads(curves:T.BufferGeometry):T.BufferGeometry {
+  const geometry=new T.BufferGeometry()
+  for(const name of ['position','color','aAge','aSeed'])geometry.setAttribute(name,curves.getAttribute(name))
+  geometry.setIndex(Array.from({length:Math.floor(curves.getAttribute('position').count/2)},(_,i)=>i*2))
+  geometry.boundingSphere=curves.boundingSphere?.clone()??null
+  return geometry
+}
 export function makeSpeedTexture(grid:Grid) {
   const w=720,h=360,data=new Uint8Array(w*h*4)
   for(let j=0;j<h;j++)for(let i=0;i<w;i++){
