@@ -152,6 +152,6 @@ export function WatchMovement({ controls }: Props) {
       <button className="wm-reset" onClick={reinitialize}>{tx(UI.reset.zh)}</button>
     </section>
     <p className="wm-note">{tx(UI.note.zh)}</p>
-    <GuideTour worldId="watch-movement" steps={stages} placement="stage" kicker={tx(UI.tourKicker.zh)} exitLabel={tx(UI.tourExit.zh)} stagePlan={stages.map(() => ({ position: 'bottom-left', mobilePosition: 'bottom-center', tone: 'dark', treatment: 'caption', width: 'narrow' }))} />
+    <GuideTour worldId="watch-movement" steps={stages} placement="stage" kicker={tx(UI.tourKicker.zh)} exitLabel={tx(UI.tourExit.zh)} stagePlan={stages.map(() => ({ position: 'bottom-left', mobilePosition: 'bottom-center', tone: 'light', treatment: 'caption', width: 'narrow' }))} />
   </div>
 }

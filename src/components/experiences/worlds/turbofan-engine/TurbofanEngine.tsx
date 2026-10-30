@@ -135,6 +135,6 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
       <div className="tf-actions"><button onClick={() => { setSelected(null); setReset(r => r + 1); interact() }}>{tx('全景')}</button><button onClick={restart}>{tx('复位')}</button><button onClick={() => { window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT, { detail: { worldId: 'turbofan-engine' } })); interact() }}>{tx('带我看')}</button></div>
     </div>
     <p className="tf-hint">{tx('拖动旋转 · 滚轮缩放 · 点击部件深入')}<span>{tx('参考循环，非实机性能')}</span></p>
-    <GuideTour worldId="turbofan-engine" steps={guideSteps} placement="stage" kicker={tx('沿着能量走一圈')} exitLabel={tx('结束导览')} stagePlan={[{ position: 'bottom-left', mobilePosition: 'top-center', tone: 'dark', width: 'narrow', treatment: 'caption' }]} />
+    <GuideTour worldId="turbofan-engine" steps={guideSteps} placement="stage" kicker={tx('沿着能量走一圈')} exitLabel={tx('结束导览')} stagePlan={[{ position: 'bottom-left', mobilePosition: 'top-left', tone: 'light', width: 'narrow', treatment: 'caption' }]} />
   </div>
 }

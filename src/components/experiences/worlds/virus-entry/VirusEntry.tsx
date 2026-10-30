@@ -73,6 +73,6 @@ export function VirusEntry({ controls }: { controls: ExperienceControls }) {
       <nav className="ve-chapters" aria-label={tx('跳到一个阶段')}>{STAGES.map((s, i) => <button key={s.at} aria-pressed={f.stage === i} onClick={() => jump(i)}><small>0{i + 1}</small>{tx(s.title)}</button>)}</nav>
     </div>
     <p className="ve-hint">{tx('拖动旋转 · 滚轮缩放 · 点击结构 · 拖动进度回看')}<span>{tx('通用科普示意 · 原创三维结构')}</span></p>
-    <GuideTour worldId="virus-entry" steps={STAGES.map((s, i) => ({ title: tx(s.title), body: tx(s.body), durationMs: 12000, action: () => { jump(i); setPlaying(false) } }))} placement="stage" kicker={tx('看懂一道膜')} exitLabel={tx('结束导览')} stagePlan={[{ position: 'bottom-left', mobilePosition: 'top-center', tone: 'dark', treatment: 'caption', width: 'narrow' }]} />
+    <GuideTour worldId="virus-entry" steps={STAGES.map((s, i) => ({ title: tx(s.title), body: tx(s.body), durationMs: 12000, action: () => { jump(i); setPlaying(false) } }))} placement="stage" kicker={tx('看懂一道膜')} exitLabel={tx('结束导览')} stagePlan={[{ position: 'bottom-left', mobilePosition: 'top-left', tone: 'light', treatment: 'caption', width: 'narrow' }]} />
   </div>
 }

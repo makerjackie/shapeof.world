@@ -9,3 +9,11 @@
 .sl-time-foot>div{display:flex;gap:18px;flex-shrink:0}@media(max-width:719px){.sl-time-foot>div{gap:10px}.sl-time-foot>span{max-width:65%}.sl-time-foot button{font-size:8px}}
 @media(max-width:719px){.sl-view{bottom:151px;z-index:5}.sl-panel{bottom:190px;max-height:45%}}
 .sl-title p.sl-orbit-hint{font-size:8px;color:#698391;margin-top:10px;letter-spacing:.03em}@media(max-width:719px){.sl-title p.sl-orbit-hint{font-size:8px;margin-top:6px}}
+
+.sl-world .guide-stage-copy[data-stage-position^=bottom]{--guide-stage-bottom:195px}
+@media(max-width:719px){
+ .sl-world:has(>.guide-tour) :is(.sl-title,.sl-mass,.sl-caption,.sl-view,.sl-panel-toggle,.sl-time){visibility:hidden}
+ .sl-world .guide-stage-copy{--guide-stage-mobile-top:70px;--guide-stage-mobile-bottom:auto;--guide-stage-mobile-left:18px;--guide-stage-mobile-right:auto;--guide-stage-mobile-width:calc(100vw - 36px);--guide-stage-mobile-align:left;--guide-stage-mobile-translate:none;padding-bottom:18px;background:linear-gradient(#050912f5 72%,#05091200)}
+ .sl-world:has(>.guide-tour) .sl-panel{bottom:143px;max-height:calc(100% - 470px)}
+ .sl-world:has(>.guide-tour) .sl-chart{bottom:149px}
+}

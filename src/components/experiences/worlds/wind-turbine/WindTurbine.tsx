@@ -67,6 +67,6 @@ export function WindTurbine({controls}:{controls:ExperienceControls}){
    {view!=='farm'&&view!=='blade'&&<Slider label={tx(UI.explode.zh)} value={explode} min={0} max={1} step={.01} display={`${Math.round(explode*100)}%`} onChange={v=>{setExplode(v);interact()}}/>}
    <div className="wt-switches">{view==='nacelle'&&<button aria-pressed={cover} onClick={()=>{setCover(v=>!v);interact()}}>{tx(UI.cover.zh)}</button>}{view==='farm'&&<button aria-pressed={flow} onClick={()=>{setFlow(v=>!v);interact()}}>{tx(UI.flow.zh)}</button>}<button aria-pressed={labels} onClick={()=>{setLabels(v=>!v);interact()}}>{tx(UI.labels.zh)}</button><button onClick={()=>{setCameraReset(n=>n+1);interact()}}>{tx(UI.camera.zh)}</button></div><button className="wt-tour" onClick={()=>window.dispatchEvent(new CustomEvent(GUIDE_REPLAY_EVENT,{detail:{worldId:'wind-turbine'}}))}>{tx(UI.tour.zh)} ↗</button><button className="wt-reset" onClick={reset}>{tx(UI.reset.zh)}</button></section>
   <p className="wt-note">{tx(UI.footnote.zh)}</p>
-  <GuideTour worldId="wind-turbine" steps={guide} placement="stage" kicker={tx(UI.tourKicker.zh)} exitLabel={tx(UI.tourExit.zh)} stagePlan={guide.map(()=>({position:'bottom-left',mobilePosition:'bottom-center',tone:'dark',treatment:'caption',width:'narrow'}))}/>
+  <GuideTour worldId="wind-turbine" steps={guide} placement="stage" kicker={tx(UI.tourKicker.zh)} exitLabel={tx(UI.tourExit.zh)} stagePlan={guide.map(()=>({position:'bottom-left',mobilePosition:'bottom-center',tone:'light',treatment:'caption',width:'narrow'}))}/>
  </div>
 }

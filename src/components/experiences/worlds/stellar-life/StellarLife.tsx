@@ -38,10 +38,10 @@ export function StellarLife({controls}:{controls:ExperienceControls}){
  useEffect(()=>{let last=0;const tick=(time:number)=>{const dt=last?Math.min((time-last)/1000,.1):0;last=time;if(playing&&!paused&&!isWorldPaused())setProgress(p=>{return Math.min(1,p+dt*speed/70)});animation.current=requestAnimationFrame(tick)};animation.current=requestAnimationFrame(tick);return()=>cancelAnimationFrame(animation.current)},[playing,paused,speed])
  useEffect(()=>{if(progress>=1&&playing)setPlaying(false)},[progress,playing])
  const steps=useMemo(()=>[
- {title:tx('四颗星，四种寿命'),body:tx('先比较初始质量。所有读数来自同一研究中的真实 MESA 记录，单星、无自转、太阳金属丰度。'),action:()=>{setMass(15);setCompare(true);setRemnant('none');setProgress(.3)}},
- {title:tx('把时间放在图上'),body:tx('赫罗图左热右冷。点击轨迹可以精确选择记录；相邻阶段可能相差几百万年，也可能只差很短一瞬。'),action:()=>{setCompare(false);setHr(true);setPanel(false)}},
- {title:tx('打开恒星的质量账本'),body:tx('剖面按质量坐标展开，不是实际半径剖面。点击球壳，读出核心质量，再看中心氢、氦、碳和氧如何变化。'),action:()=>{setCut(true);setPanel(true);setProgress(.72)}},
- {title:tx('计算能到哪里'),body:tx('低质量轨迹到热白矮星，高质量轨迹止于坍缩前。结局视图是可比较的条件示意，不是给每颗星强行指定遗迹。'),action:()=>{setProgress(1);setPanel(true);setPlaying(false)}},
+ {title:tx('四颗星，四种寿命'),body:tx('先比较初始质量。所有读数来自同一研究中的真实 MESA 记录，单星、无自转、太阳金属丰度。'),action:()=>{setMass(15);setMode('stages');setCompare(true);setCut(false);setHr(false);setPanel(false);setRemnant('none');setPlaying(false);setProgress(.3)}},
+ {title:tx('把时间放在图上'),body:tx('赫罗图左热右冷。点击轨迹可以精确选择记录；相邻阶段可能相差几百万年，也可能只差很短一瞬。'),action:()=>{setCompare(false);setCut(false);setHr(true);setPanel(false);setRemnant('none');setPlaying(false)}},
+ {title:tx('打开恒星的质量账本'),body:tx('剖面按质量坐标展开，不是实际半径剖面。点击球壳，读出核心质量，再看中心氢、氦、碳和氧如何变化。'),action:()=>{setCompare(false);setCut(true);setHr(false);setPanel(true);setRemnant('none');setPlaying(false);setProgress(.72)}},
+ {title:tx('计算能到哪里'),body:tx('低质量轨迹到热白矮星，高质量轨迹止于坍缩前。结局视图是可比较的条件示意，不是给每颗星强行指定遗迹。'),action:()=>{setCompare(false);setHr(false);setRemnant('none');setProgress(1);setPanel(true);setPlaying(false)}},
  ],[tx])
  const samples=lib?.tracks.map(t=>atAge(t,sample?.age??0,mode))??[]
  if(!lib||!track||!sample)return <div className="sl-world sl-loading"><span>STELLAR ARCHIVE / MESA</span><h1>{tx('恒星的一生')}</h1>{error?<><p>{tx('历史轨迹未能载入。可以重试。')}</p><button onClick={()=>setAttempt(n=>n+1)}>{tx('重试')}</button></>:<p>{tx('载入真实恒星演化记录')} · {(loading/1024).toFixed(0)} KiB</p>}</div>
@@ -71,9 +71,9 @@ export function StellarLife({controls}:{controls:ExperienceControls}){
  </aside>}
  <footer className="sl-time"><div className="sl-time-head"><button data-testid="sl-play" onClick={()=>{if(!playing)setPaused(false);setPlaying(v=>!v);setRemnant('none');interact()}}>{playing?tx('停止演化'):tx('播放演化')}</button><button onClick={()=>{setPaused(v=>!v);interact()}} aria-pressed={paused}>{paused?tx('恢复动态'):tx('暂停动态')}</button><span>{ageText(sample.age)}</span><select aria-label={tx('时间映射')} value={mode} onChange={e=>changeClock(e.target.value as ClockMode)}><option value="stages">{tx('每个阶段等长')}</option><option value="years">{tx('真实年龄等长')}</option></select><select aria-label={tx('轨迹播放速度')} value={speed} onChange={e=>setSpeed(Number(e.target.value))}><option value=".25">0.25×</option><option value="1">1×</option><option value="4">4×</option></select></div><input aria-label={tx('演化时间轴')} type="range" min="0" max="1" step=".00001" value={progress} onChange={e=>jump(Number(e.target.value))}/><div className="sl-phase-links">{track.phases.map(p=><button key={p.id} aria-pressed={sample.phase===p.id} onClick={()=>jump(progressAtAge(track,track.rows[p.index][C.age],mode))}>{tx(PHASE_NAMES[p.id])}</button>)}</div><div className="sl-time-foot"><span>{tx('阶段播放不是恒定真实时间速率；拖动或点图可自由检查。')}</span><div><button onClick={()=>{setMass(15);setMode('stages');setProgress(.67);setPlaying(false);setPaused(reduced);setSpeed(1);setCut(false);setCompare(false);setRemnant('none');setShell('surface');setReset(n=>n+1);interact()}}>{tx('回到开场')}</button><button onClick={()=>{setGuide(true);interact()}}>{tx('带我探索')}</button></div></div></footer>
  {guide&&<GuideTour worldId="stellar-life" steps={steps} defaultOpen placement="stage" stagePlan={[
-   {position:'bottom-left',mobilePosition:'top-center',tone:'dark',treatment:'caption',width:'narrow'},
-   {position:'top-right',mobilePosition:'top-center',tone:'dark',treatment:'caption',width:'narrow'},
-   {position:'bottom-left',mobilePosition:'top-center',tone:'dark',treatment:'caption',width:'narrow'},
-   {position:'top-center',mobilePosition:'top-center',tone:'dark',treatment:'caption',width:'narrow'},
- ]} onExit={()=>setGuide(false)}/>}</div>
+   {position:'top-right',mobilePosition:'top-left',tone:'light',treatment:'caption',width:'narrow'},
+   {position:'top-right',mobilePosition:'top-left',tone:'light',treatment:'caption',width:'narrow'},
+   {position:'bottom-center',mobilePosition:'top-left',tone:'light',treatment:'caption',width:'normal'},
+   {position:'bottom-center',mobilePosition:'top-left',tone:'light',treatment:'caption',width:'narrow'},
+ ]} onExit={()=>{setGuide(false);if(innerWidth<720){setPanel(false);setHr(false)}}}/>}</div>
 }

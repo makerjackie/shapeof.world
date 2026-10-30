@@ -3,3 +3,18 @@
 @media(max-width:700px){.ve-world{min-height:560px}.ve-title{left:18px;top:65px}.ve-title>p{font-size:7px;margin-bottom:8px}.ve-title h1{font-size:23px;margin-bottom:6px}.ve-title>span{font-size:9px;max-width:285px;display:block}.ve-scene{inset:133px 0 213px}.ve-views{left:18px;top:166px;gap:1px}.ve-views button{font-size:8px;padding:6px 0}.ve-views small{font-size:7px;width:22px}.ve-panel{top:auto;left:18px;right:18px;bottom:153px;width:auto;border:0;padding:0;background:#13212cef;max-height:calc(100% - 170px);z-index:7}.ve-panel-toggle{display:flex!important;align-items:center;justify-content:space-between;width:100%;padding:10px 12px!important;border-top:1px solid #455b6c!important;font-size:10px!important}.ve-panel-body{display:none;padding:14px 15px;max-height:calc(100dvh - 300px)}.ve-panel-open .ve-panel-body{display:block}.ve-panel-open .ve-panel-toggle{border-bottom:1px solid #354c5b!important}.ve-locations{left:18px;bottom:197px;font-size:8px}.ve-timeline{left:18px;right:18px;bottom:26px;display:block;padding-top:7px}.ve-play{gap:16px;justify-content:space-between}.ve-play>button,.ve-play>button>span{font-size:8px}.ve-play select{font-size:9px}.ve-progress{display:block;font-size:8px;margin-top:4px}.ve-world .ve-progress input{margin-top:1px}.ve-chapters{gap:6px}.ve-chapters button{font-size:0;flex:1;padding:4px 0;border-top:1px solid #3a5264}.ve-chapters button small{font-size:8px;margin:0}.ve-chapters button[aria-pressed=true]{border-color:#d2b88d}.ve-hint{left:18px;bottom:9px;font-size:7px}.ve-hint>span{display:none}}
 /* A wrapped English title must leave the subtitle and first view unobstructed. */
 @media(max-width:700px){.ve-title h1{line-height:1.25}}
+.ve-world>.guide-tour{inset:auto;left:30px;bottom:220px;width:340px;max-height:calc(100svh - 410px);display:flex;flex-direction:column;gap:8px}
+.ve-world .guide-stage-copy{position:static;inset:auto;width:100%;translate:none;transform:none;animation:none;flex:1 1 auto;min-height:0;overflow-y:auto;pointer-events:auto;padding:12px 14px;background:#101820f5;border-left:1px solid #a4b8bf55;text-align:left}
+.ve-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:24px;max-width:none;margin:0}
+.ve-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-body{font-size:12px;margin-top:10px}
+.ve-world .guide-stage-nav{position:static;inset:auto;width:100%;transform:none;flex:0 0 auto;gap:4px;padding:2px 4px;min-height:44px;flex-wrap:nowrap}
+.ve-world .guide-stage-dot{width:17px;height:40px;min-width:0}
+.ve-world .guide-stage-continue{flex:1;min-width:0;padding:0 8px;font-size:11px;white-space:normal;line-height:1.4}
+.ve-world .guide-stage-exit{flex:0 0 32px;width:32px}
+@media(min-width:701px) and (max-height:760px){.ve-world>.guide-tour{left:180px;width:min(340px,calc(100vw - 510px))}}
+@media(max-width:700px){
+ .ve-world:has(>.guide-tour) :is(.ve-title,.ve-views){visibility:hidden}
+ .ve-world>.guide-tour{left:18px;right:18px;top:70px;bottom:auto;width:auto;max-height:calc(100svh - 410px)}
+ .ve-world .guide-stage-copy{padding:10px 12px}
+ .ve-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:22px}
+}

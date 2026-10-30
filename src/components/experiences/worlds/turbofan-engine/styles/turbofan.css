@@ -9,4 +9,18 @@
 @media(min-width:1600px){.tf-title{top:84px}.tf-panel{top:84px}.tf-views{top:210px}}
 @media(max-width:700px){.tf-title{top:66px}.tf-views{top:164px}.tf-viewport{top:137px}.tf-panel{top:auto}}
 @media(max-height:650px) and (min-width:701px){.tf-title{top:65px}.tf-title>span{display:none}.tf-panel{top:65px}.tf-views{top:153px}.tf-viewport{top:114px}}
-.tf-stage-inspector{border-top:1px solid #34414c;margin:18px 0;padding-top:14px}.tf-stage-buttons{display:flex;margin:13px 0;gap:3px}.tf-stage-buttons button{flex:1;padding:6px 0;border:1px solid #35434e;color:#8fa6b7;font:10px monospace}.tf-stage-buttons button[aria-pressed=true]{background:#e0c79e;color:#15202a;border-color:#e0c79e}.tf-stage-inspector dl{display:flex;justify-content:space-between;gap:8px;margin:12px 0}.tf-stage-inspector dt{font-size:8px;color:#8b9ead}.tf-stage-inspector dd{margin:5px 0 0;font:12px monospace;color:#d7c8ae}.tf-stage-inspector>small{font-size:9px;line-height:1.8;color:#7e94a4}
+.tf-world>.guide-tour{inset:auto;left:30px;bottom:230px;width:340px;max-height:calc(100svh - 410px);display:flex;flex-direction:column;gap:8px}
+.tf-world .guide-stage-copy{position:static;inset:auto;width:100%;translate:none;transform:none;animation:none;flex:1 1 auto;min-height:0;overflow-y:auto;pointer-events:auto;padding:12px 14px;background:#10161df5;border-left:1px solid #a4b8bf55;text-align:left}
+.tf-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:24px;max-width:none;margin:0}
+.tf-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-body{font-size:12px;margin-top:10px}
+.tf-world .guide-stage-nav{position:static;inset:auto;width:100%;transform:none;flex:0 0 auto;gap:4px;padding:2px 4px;min-height:44px;flex-wrap:nowrap}
+.tf-world .guide-stage-dot{width:17px;height:40px;min-width:0}
+.tf-world .guide-stage-continue{flex:1;min-width:0;padding:0 8px;font-size:11px;white-space:normal;line-height:1.4}
+.tf-world .guide-stage-exit{flex:0 0 32px;width:32px}
+@media(min-width:701px) and (max-height:760px){.tf-world>.guide-tour{left:180px;width:min(340px,calc(100vw - 510px))}}
+@media(max-width:700px){
+ .tf-world:has(>.guide-tour) :is(.tf-title,.tf-views){visibility:hidden}
+ .tf-world>.guide-tour{left:18px;right:18px;top:70px;bottom:auto;width:auto;max-height:calc(100svh - 410px)}
+ .tf-world .guide-stage-copy{padding:10px 12px}
+ .tf-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:22px}
+}
