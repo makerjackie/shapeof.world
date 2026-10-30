@@ -28,7 +28,7 @@ export const ROW = STALLS.filter((s) => s.k === 0 && s.z > 0 && s.x > STARS0.x +
 // Stalls that open while the supply counter runs (hidden from the cart until then): some of the near stalls of the
 // hero street and its neighbours, each popping up at its own moment.
 const LATE = NEAR.filter((s) => s.id !== HERO_IDS.laptop && s.id !== HERO_IDS.cart && s.id !== STAR && s.id !== HERO_IDS.folded && Math.abs(s.k) <= 2 && (s.id * 7) % 5 < 2);
-const lateAt = (s: (typeof LATE)[number]) => S(28) + ((s.id * 0.6180339) % 1) * (S(30) - S(28));
+const lateAt = (s: (typeof LATE)[number]) => S(23.3) + ((s.id * 0.6180339) % 1) * (S(25.0) - S(23.3));
 
 export const KEYS: [number, Cam][] = [
   // 1 the opening: the screen, then back to a stall, a street, the whole market
@@ -49,11 +49,12 @@ export const KEYS: [number, Cam][] = [
   [S(16.9), cam(HERO.company.x, 6.5, HERO.company.z + 3, 40, 8, 11)],
   [S(21.4), cam(HERO.company.x, 6.0, HERO.company.z + 3, 34, 4, 10)],
   [S(22.9), cam(FOLD.x, 1.0, FOLD.z, 12, 2, 24)],
+  // supply: along the street from the desk, as new stalls open on both sides
+  [S(23.9), cam(FOLD.x + 8, 0.8, -0.5, 30, 64, 20)],
+  [S(25.0), cam(FOLD.x + 10, 0.8, -0.5, 32, 70, 21)],
   // the burden: the one desk left
-  [S(23.7), cam(FOLD.x, 1.05, FOLD.z, 5.4, -14, 17)],
-  [S(27.7), cam(FOLD.x, 1.05, FOLD.z, 5.0, 8, 18)],
-  // supply: up over the hero street as new stalls open
-  [S(29.7), cam(30, 0, 0, 95, 72, 40)],
+  [S(25.8), cam(FOLD.x, 1.05, FOLD.z, 5.4, -14, 17)],
+  [S(29.8), cam(FOLD.x, 1.05, FOLD.z, 5.0, 8, 18)],
   // 5 one person can sell to the whole world
   [S(31.8), cam(80, 0, 0, 560, 58, 36)],
   // policy: low along the banners (stopping short of the first one at x = 58)
@@ -116,7 +117,7 @@ export const worldAt = (t: number): WorldState => {
   // stalls that open during the supply counter (the opening's street shows them all: it is a flash-forward)
   for (const s of LATE) {
     const at = lateAt(s);
-    const v = t < S(27.5) ? 0 : clamp01((t - at) / 0.35);
+    const v = t < S(23.2) ? 0 : clamp01((t - at) / 0.35);
     if (t < S(32)) over[s.id] = { vis: t < S(8) ? 1 : v };
   }
   // the folded company's stall, from the fold on
@@ -141,7 +142,7 @@ export const worldAt = (t: number): WorldState => {
     else glows.push(g);
   };
   const win = (a: number, z: number, f = 0.6) => clamp01(Math.min((t - a) / f, (z - t) / f));
-  add(strollers(t, 700, win(S(1.8), S(3.6)) + win(S(27.6), S(36.2))));
+  add(strollers(t, 700, win(S(1.8), S(3.6)) + win(S(23.2), S(25.4)) + win(S(30.0), S(36.2))));
   add(flows(t, 3600, win(S(2.8), S(7.9)) + win(S(36.4), S(50.0)) + win(S(54.9), S(58.2)), Math.min(1, tail * 1.15)));
   add(cartStreet(t, win(S(7.8), S(16.2)), S(10.0), [S(15.2)]));
   add(regulars(t, S(58.4), win(S(58.4), S(61.4)) + win(S(67.2), S(73.2))));
@@ -181,6 +182,6 @@ export const worldAt = (t: number): WorldState => {
 // Miniature look on the close shots: blur away from a band around the subject.
 const tiltAt = (t: number) => {
   const near = (a: number, z: number) => clamp01(Math.min((t - a) / 0.5, (z - t) / 0.5));
-  const k = Math.max(near(S(8.05), S(16.4)), near(S(23.6), S(28.2)), near(S(58.6), S(61.4)), near(S(67.4), S(73.2)), near(S(76.2), S(82.8)), near(S(40.9), S(45)) * 0.7);
+  const k = Math.max(near(S(8.05), S(16.4)), near(S(25.7), S(30.0)), near(S(58.6), S(61.4)), near(S(67.4), S(73.2)), near(S(76.2), S(82.8)), near(S(40.9), S(45)) * 0.7);
   return { focus: 0.54, band: 0.1, amt: 8 * k };
 };

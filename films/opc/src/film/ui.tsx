@@ -204,7 +204,7 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
     "每月新上线的订阅收费 App：RevenueCat《State of Subscription Apps 2026》（数据来自 Appfigures）",
     "工信部《人工智能中小企业创业支持计划（2026—2028 年）》2026-09 · 《广东省支持人工智能 OPC 创新发展行动方案》2026-03",
     "《成都市支持人工智能 OPC 创新发展若干措施（征求意见稿）》2026-03 · 《公司法》（2023 修订）第二十三条",
-    "34 倍、61 倍，回头客 30% 与 8%，第二年多花 47%：Stripe《Solo founding is at an all-time high》2026-05-28",
+    "34 倍、61 倍，收入 −23% 与 +19%，回头客 30% 与 8%，第二年多花 47%：Stripe《Solo founding is at an all-time high》2026-05-28",
     "电视与明星效应：Felix Koenig，American Economic Review: Insights，2023",
     "知乎 37 个问题、505 个回答，作为观点参考 · 人民币按 1 美元约 6.72 元换算",
     "集市、摊位与光点由代码逐帧生成，是示意 · 配乐：《独立开发者的形状》原创曲",

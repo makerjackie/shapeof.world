@@ -61,7 +61,7 @@ export const Film: React.FC = () => {
         <Line at={S(3.25)} out={S(4.65)} size={52} weight={700} parts={["可在网上晒出真实收入的 5,079 个小生意里，"]} />
         <Line at={S(3.6)} out={S(4.65)} size={88} parts={["一半，每月赚不到 ", { t: "1,100 块", c: G }]} />
       </At>
-      <Note at={S(3.4)} out={S(4.65)}>Indie Hackers 分析 TrustMRR 上 5,079 个经 Stripe 核验收入的项目，月收入中位数 $169，2026 年 3 月</Note>
+      <Note at={S(3.4)} out={S(4.65)}>Indie Hackers 分析 TrustMRR 上 5,079 个经 Stripe 核验收入的项目，月收入中位数 $169（按 1 美元约 6.72 元），2026 年 3 月</Note>
 
       <At x={960} y={420} align="center">
         <Line at={S(4.75)} out={S(6.0)} size={70} weight={700} parts={["都是一个人做的生意，"]} />
@@ -105,6 +105,9 @@ export const Film: React.FC = () => {
 
       {/* ---------- 4. the first ceiling: hands ---------- */}
       <Scrim at={S(16.6)} out={S(23.1)} kind="tl" k={0.6} />
+      <At x={120} y={70}>
+        <Line at={S(16.4)} out={S(23.1)} size={34} weight={700} color={G} parts={["第一道天花板：手"]} />
+      </At>
       <At x={120} y={140}>
         <Line at={S(16.65)} out={S(18.35)} size={66} weight={700} parts={["一家公司要很多人，"]} />
         <Line at={S(17.0)} out={S(18.35)} size={88} parts={["是因为活多"]} />
@@ -131,29 +134,30 @@ export const Film: React.FC = () => {
         <Line at={S(21.65)} out={S(23.1)} size={80} parts={["一家公司要的人，越来越少"]} />
       </At>
 
-      {/* the burden stays with the one person */}
-      <Scrim at={S(23.15)} out={S(28.0)} kind="tl" k={0.6} />
-      <At x={110} y={140} gap={8}>
-        <Line at={S(23.15)} out={S(24.6)} size={66} weight={700} parts={["活，可以交给 AI；"]} />
-        <Line at={S(23.5)} out={S(24.6)} size={88} parts={["担子，", { t: "交不出去", c: G }]} />
-        <Line at={S(24.6)} out={S(25.8)} size={62} weight={700} parts={["社保：公司那份、个人那份，都是你出"]} />
-        <Line at={S(25.8)} out={S(27.95)} size={56} weight={700} parts={["开的要是一人有限公司，公司欠了债，"]} />
-        <Line at={S(26.15)} out={S(27.95)} size={56} weight={700} parts={["你得自己证明：公司的钱和家里的钱，是分开的"]} />
-        <Line at={S(26.9)} out={S(27.95)} size={72} parts={["证明不了，就要", { t: "一起还", c: K.red }]} />
-      </At>
-      <Note at={S(25.9)} out={S(27.95)}>《公司法》（2023 修订）第二十三条第三款：只有一个股东的公司，股东不能证明公司财产独立于自己的财产的，对公司债务承担连带责任</Note>
-
       {/* more makers */}
       <At x={120} y={140}>
-        <Line at={S(28.05)} out={S(30.05)} size={66} weight={700} parts={["于是，摆摊的人一下子多了"]} />
+        <Line at={S(23.15)} out={S(25.1)} size={66} weight={700} parts={["于是，摆摊的人一下子多了"]} />
       </At>
-      <Counter at={S(28.5)} out={S(30.05)} />
-      <Note at={S(28.6)} out={S(30.05)}>RevenueCat：每月新上线的订阅收费 App，2022 年 1 月约 2,000 个，2026 年 1 月 14,700 多个（数据来自 Appfigures）</Note>
+      <Counter at={S(23.5)} out={S(25.1)} />
+      <Note at={S(23.6)} out={S(25.1)}>RevenueCat：每月新上线的订阅收费 App，2022 年 1 月约 2,000 个，2026 年 1 月 14,700 多个（数据来自 Appfigures）</Note>
+
+      {/* the burden stays with the one person */}
+      <Scrim at={S(25.2)} out={S(30.0)} kind="tl" k={0.6} />
+      <At x={110} y={140} gap={8}>
+        <Line at={S(25.25)} out={S(26.6)} size={66} weight={700} parts={["活，可以交给 AI；"]} />
+        <Line at={S(25.6)} out={S(26.6)} size={88} parts={["担子，", { t: "交不出去", c: G }]} />
+        <Line at={S(26.6)} out={S(27.8)} size={62} weight={700} parts={["社保：公司那份、个人那份，都是你出"]} />
+        <Line at={S(27.8)} out={S(29.95)} size={56} weight={700} parts={["开的要是一人有限公司，公司欠了债，"]} />
+        <Line at={S(28.15)} out={S(29.95)} size={56} weight={700} parts={["你得自己证明：公司的钱和家里的钱，是分开的"]} />
+        <Line at={S(28.9)} out={S(29.95)} size={72} parts={["证明不了，就要", { t: "一起还", c: K.red }]} />
+      </At>
+      <Note at={S(27.9)} out={S(29.95)}>《公司法》（2023 修订）第二十三条第三款：只有一个股东的公司，股东不能证明公司财产独立于自己的财产的，对公司债务承担连带责任</Note>
 
       {/* ---------- 5. the second ceiling: the street ---------- */}
       <At x={960} y={400} align="center">
-        <Line at={S(30.1)} out={S(32.2)} size={70} weight={700} parts={["网上，一个人"]} />
-        <Line at={S(30.5)} out={S(32.2)} size={104} parts={["也能卖给全世界的人"]} />
+        <Line at={S(30.05)} out={S(32.2)} size={36} weight={700} color={G} parts={["第二道天花板：街"]} />
+        <Line at={S(30.25)} out={S(32.2)} size={70} weight={700} parts={["网上，一个人"]} />
+        <Line at={S(30.6)} out={S(32.2)} size={104} parts={["也能卖给全世界的人"]} />
       </At>
       <Scrim at={S(32.35)} out={S(36.3)} kind="tl" k={0.55} />
       <At x={110} y={140}>
@@ -199,7 +203,7 @@ export const Film: React.FC = () => {
       })()}
       <Pin cam={cam} at={S(40.9)} out={S(44.8)} p={sw(STAR0, 0, 1.9, 0.12)} lift={110} text="前 10%" color={G} size={40} />
       <Big at={S(41.0)} out={S(44.85)} label={t < S(42.5) ? "四年前" : "去年"} value={count} />
-      <Note at={S(41.0)} out={S(44.85)}>Stripe：Stripe Atlas 上的单人创始公司，开张头 6 个月的收入，前 10% 是中位数的 34 倍（四年前）、61 倍（2025 年）</Note>
+      <Note at={S(41.0)} out={S(44.85)}>Stripe：Stripe Atlas 上的单人创始公司，开张头 6 个月的收入，前 10% 是中位数（排在正中间那家）的 34 倍（四年前）、61 倍（2025 年）</Note>
 
       {/* ---------- 7. why ---------- */}
       <Scrim at={S(45.0)} out={S(50.0)} kind="tl" k={0.55} />
@@ -214,16 +218,17 @@ export const Film: React.FC = () => {
         <Line at={S(50.1)} out={S(51.3)} size={70} parts={["这事，七十年前就发生过一次"]} />
         <Line at={S(51.25)} out={S(52.75)} size={54} weight={700} parts={["电视台开起来以前，演员的观众，就是剧场里那几百个座位"]} />
         <Line at={S(52.8)} out={S(54.95)} size={54} weight={700} parts={["电视台开起来以后："]} />
-        <Line at={S(53.1)} out={S(54.95)} size={54} weight={700} parts={["演员里，收入排进全美前 1% 的人，占比", { t: "翻了一倍", c: G }]} />
-        <Line at={S(53.85)} out={S(54.95)} size={54} weight={700} parts={["娱乐业的工作少了约 13%，", { t: "中间那批掉得最多", c: K.red }]} />
+        <Line at={S(53.1)} out={S(54.95)} size={54} weight={700} parts={["最红的那批演员，", { t: "挣得更多了", c: G }]} />
+        <Line at={S(53.85)} out={S(54.95)} size={54} weight={700} parts={["娱乐业的工作却少了约 13%，", { t: "中间那批掉得最多", c: K.red }]} />
       </At>
-      <Note at={S(53.1)} out={S(54.95)}>Felix Koenig，《Technical Change and Superstar Effects: Evidence from the Rollout of Television》，American Economic Review: Insights，2023</Note>
+      <Note at={S(53.1)} out={S(54.95)}>Felix Koenig，American Economic Review: Insights，2023：电视台开播后，演员里收入进入全美前 1% 的比例翻倍，娱乐业工作减少约 13%</Note>
       <Scrim at={S(55.05)} out={S(58.0)} kind="tl" k={0.6} />
       <At x={120} y={150} gap={10}>
         <Line at={S(55.1)} out={S(57.95)} size={70} parts={["这几年，", { t: "AI", c: K.screen }, " 又加了一把火："]} />
-        <Line at={S(55.6)} out={S(57.95)} size={58} weight={700} parts={["摊位多了好几倍，客人可没多那么多"]} />
-        <Line at={S(56.6)} out={S(57.95)} size={58} weight={700} parts={["东西都差不多，客人就只挑", { t: "听说过的那几家", c: G }]} />
+        <Line at={S(55.6)} out={S(57.95)} size={58} weight={700} parts={["摊位多了好几倍，普通那家头半年的收入，", { t: "一年少了 23%", c: K.red }]} />
+        <Line at={S(56.6)} out={S(57.95)} size={58} weight={700} parts={["前 10% 的，", { t: "反而多了 19%", c: G }]} />
       </At>
+      <Note at={S(55.7)} out={S(57.95)}>Stripe 2026：Stripe Atlas 上的单人创始公司，2025 年开张头 6 个月的收入，中位数比上一年少 23%，前 10% 多 19%</Note>
 
       {/* ---------- 8. what the bright ones did ---------- */}
       <At x={960} y={150} align="center" gap={8}>
@@ -234,7 +239,7 @@ export const Film: React.FC = () => {
       <At x={110} y={130} gap={12}>
         <Line at={S(61.0)} out={S(66.95)} size={80} color={G} parts={["第一，让人找到你"]} />
         <Line at={S(61.8)} out={S(66.95)} size={52} weight={700} parts={["开头那家：创始人之前就在创业圈做了好几年"]} />
-        <Line at={S(63.2)} out={S(66.95)} size={52} weight={700} parts={["Base44 是他边做边在网上公开记录，"]} />
+        <Line at={S(63.2)} out={S(66.95)} size={52} weight={700} parts={["那个建站工具，是他边做边在网上公开记录，"]} />
         <Line at={S(63.6)} out={S(66.95)} size={52} weight={700} parts={["靠", { t: "口口相传", c: G }, "传开的"]} />
       </At>
       <Note at={S(61.9)} out={S(66.95)}>TechCrunch 2025-06-18：Base44 主要靠创始人在 LinkedIn 和 X 上分享制作过程、口口相传扩散；他此前因创办 Explorium 在以色列创业圈已有名气</Note>

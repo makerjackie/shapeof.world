@@ -24,14 +24,14 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
 
 const shot = (tall: boolean): WorldState => ({
   cam: tall
-    ? { x: LAP.x + 6, y: 0.6, z: LAP.z, dist: 26, yaw: 64, pitch: 18, fov: 44, ox: 960, oy: 640 }
-    : { x: LAP.x + 8, y: 0.6, z: LAP.z, dist: 30, yaw: 66, pitch: 17, fov: 40, ox: 1300, oy: 560 },
+    ? { x: LAP.x, y: 1.1, z: LAP.z, dist: 6.2, yaw: 48, pitch: 13, fov: 44, ox: 980, oy: 760 }
+    : { x: LAP.x, y: 1.1, z: LAP.z, dist: 6.8, yaw: 56, pitch: 12, fov: 40, ox: 1420, oy: 600 },
   time: 30,
   equal: 0.25,
   over: { [HERO_IDS.laptop]: { keep: true, lit: 1, s: 0.6 }, [STAR]: { keep: true, s: 1 } },
   glows: flows(30, 2400, 1, 0.7),
   bloom: 0.55,
-  tilt: { focus: 0.6, band: 0.12, amt: 6 },
+  tilt: { focus: 0.56, band: 0.14, amt: 7 },
   windows: 0.14,
   fogD: 0.0012,
   grade: { vig: 0.55, grain: 0.015, fade: 0 },

@@ -48,10 +48,10 @@ const CUES = [
   [16, 1, 'whoosh'],
   [17, 1, 'pop', 0.4], [17, 1.56, 'pop', 0.4], [17, 2.12, 'pop', 0.4], [17, 2.68, 'pop', 0.4], [17, 3.24, 'pop', 0.4], [17, 3.8, 'pop', 0.4],
   [19, 3, 'pour', 1.4, 8, 0.4], [20, 0, 'powerdown', 0.5], [21, 2.4, 'thud'], [22, 0, 'impact', 0.6], [22, 1, 'pop'],
+  // more makers: stalls popping up along the street
+  [23, 1, 'pour', 1.6, 34, 0.5], [24, 0, 'pour', 2, 40, 0.5],
   // the burden
-  [23, 0, 'swish', 0.6], [24, 2.4, 'pop', 0.5], [25, 3.2, 'swish', 0.5], [26, 3.6, 'thud'],
-  // more makers: stalls popping up
-  [28, 0, 'pour', 2, 40, 0.5], [29, 0, 'pour', 2, 40, 0.5],
+  [25, 1, 'swish', 0.6], [26, 2.4, 'pop', 0.5], [27, 3.2, 'swish', 0.5], [28, 3.6, 'thud'],
   // the world opens; policy cards
   [30, 0, 'boom'], [31, 0, 'shimmer'], [32, 1.4, 'whoosh'], [33, 0, 'swish', 0.7], [33, 3.6, 'swish', 0.7], [34, 3.2, 'swish', 0.7],
   // the turn; the count to 61
