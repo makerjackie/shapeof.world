@@ -1,3 +1,4 @@
+import * as T from 'three'
 import { describe, expect, it } from 'vitest'
 import { engineFrame } from './framing'
 import type { PartId } from './content'
@@ -23,4 +24,13 @@ describe('exhibit camera framing', () => {
   }
   expect(engineFrame('cutaway',1,'fan',4,1).target.x).toBeLessThan(engineFrame('cutaway',0,'fan',4,1).target.x)
  })
+ it('keeps the front fan outside the chosen compressor row in screen space',()=>{
+  for(const stage of [0,8])for(const e of [0,1]){
+   const f=engineFrame('cutaway',e,'compressor',stage,1.5)
+   const stageLeft=Math.min(...f.points.map(p=>p.clone().sub(f.target).dot(f.right)))
+   const fanRight=Math.max(...Array.from({length:64},(_,i)=>new T.Vector3(-4.24-e*2,Math.cos(i*Math.PI/32)*2.1,Math.sin(i*Math.PI/32)*2.1).sub(f.target).dot(f.right)))
+   expect(fanRight).toBeLessThan(stageLeft-.15)
+  }
+ })
+
 })

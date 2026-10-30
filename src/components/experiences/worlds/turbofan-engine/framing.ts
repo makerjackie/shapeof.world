@@ -24,7 +24,7 @@ export function engineFrame(view: EngineView, explode: number, selected: PartId 
     ring(1.15 + e * 1.2, .95); ring(3.6 + e * 1.2, .95)
   } else { ring(3.3 + e * 2.2, .7); ring(4.95 + e * 2.2, .7) }
   const target = new T.Box3().setFromPoints(points).getCenter(new T.Vector3())
-  const direction = view === 'front' ? new T.Vector3(-1, .001, .001).normalize() : new T.Vector3(-.38, .28, .72).normalize()
+  const direction = view === 'front' ? new T.Vector3(-1, .001, .001).normalize() : focus === 'compressor' ? new T.Vector3(.12,.22,1).normalize() : new T.Vector3(-.38, .28, .72).normalize()
   const right = new T.Vector3().crossVectors(new T.Vector3(0, 1, 0), direction).normalize(), up = new T.Vector3().crossVectors(direction, right).normalize()
   const tangent = Math.tan(T.MathUtils.degToRad(fov / 2)) * .86
   let distance = focus === 'compressor' ? 3.3 : 2.8

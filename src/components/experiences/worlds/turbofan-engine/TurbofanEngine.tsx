@@ -64,7 +64,7 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
   const part = PARTS.find(p => p.id === selected)
   const interact = useCallback(() => controls.registerInteraction(), [controls.registerInteraction])
   const change = (field: keyof EngineSettings, value: number) => { setSettings(s => ({ ...s, [field]: value })); interact() }
-  const select = useCallback((id: PartId) => { setSelected(id); setPanel('anatomy'); interact() }, [interact])
+  const select = useCallback((id: PartId) => { setSelected(id); setView(v=>v==='shafts'?'shafts':'cutaway'); setPanel('anatomy'); interact() }, [interact])
   const restart = () => { setSettings(DEFAULT_SETTINGS); setSelected(null); setView('cutaway'); setExplode(0); setStreams(true); setThermal(true); setSlowdown(1200); setPlaying(!matchMedia('(prefers-reduced-motion: reduce)').matches); setPanel('anatomy'); setStation(null); setCompressorStage(4); setMobilePanel(false); setReset(r => r + 1); interact() }
   const applyPreset = (index: number) => { setSettings({ ...PRESETS[index].settings }); setPanel('cycle'); interact() }
   const guideSteps = PARTS.map((p, i) => ({
@@ -82,7 +82,7 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
     <div className="tf-viewport" role="region" aria-label={tx('可以旋转缩放的发动机模型')}>
       <EngineScene cycle={cycle} playing={playing} slowdown={slowdown} view={view} explode={explode} selected={selected} streams={streams} thermal={thermal} reset={reset} compressorStage={compressorStage} onCompressorStage={i => { setCompressorStage(i); select('compressor') }} onSelect={select} onInteraction={interact} />
     </div>
-    <nav className="tf-views" aria-label={tx('观察角度')}>{VIEWS.map(v => <button key={v.id} aria-pressed={view === v.id} onClick={() => { setView(v.id); setReset(r => r + 1); interact() }}>{tx(v.name)}</button>)}</nav>
+    <nav className="tf-views" aria-label={tx('观察角度')}>{VIEWS.map(v => <button key={v.id} aria-pressed={view === v.id} onClick={() => { setView(v.id); if(v.id==='assembled'||v.id==='front')setSelected(null); setReset(r => r + 1); interact() }}>{tx(v.name)}</button>)}</nav>
     <div className="tf-measurements" aria-live="off">
       <div><span>{tx('净推力')}</span><strong>{(cycle.thrust / 1000).toFixed(1)}<small>kN</small></strong><div className="tf-thrust-bar"><i style={{ width: `${Math.max(0, Math.min(100, cycle.fanThrust / Math.max(1, cycle.thrust) * 100))}%` }} /></div><p><i />{tx('外涵道')} {(cycle.fanThrust / 1000).toFixed(1)} <em>/</em> {tx('核心机')} {(cycle.coreThrust / 1000).toFixed(1)}</p></div>
       <div><span>{tx('燃油流量')}</span><strong>{cycle.fuelFlow.toFixed(2)}<small>kg/s</small></strong><p>TSFC {cycle.tsfc?.toFixed(1) ?? '—'} g/(kN·s)</p></div>
