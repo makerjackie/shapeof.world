@@ -11,3 +11,60 @@
 @media(max-height:650px) and (min-width:701px){.cw-title{top:47px}.cw-title h1{font-size:25px}.cw-clock{top:48px}.cw-facility-nav,.cw-camera{top:155px}.cw-panel-heading{margin-top:49px}}
 
 .cw-network-list{margin:23px 0 13px;border-top:1px solid #314953;padding-top:14px}.cw-network-list summary{font-size:9px;color:#a4b8b7;cursor:pointer}.cw-network-list label{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:9px;margin-top:13px;color:#90aaaf}.cw-network-list select{background:#192d37;border:1px solid #3c5660;color:#bcd1cf;max-width:170px;padding:6px;font-size:9px;color-scheme:dark}.cw-slider input[type=range]{height:19px;background-size:100% 3px;background-position:center;background-repeat:no-repeat;margin-top:5px}.cw-slider input[type=range]::-webkit-slider-thumb{width:12px;height:12px}@media(max-width:700px){.cw-layers button,.cw-time button{min-height:29px}.cw-network-list select{max-width:130px;padding:7px 4px}}
+
+/* Keep captions and their controls in the model's safe area, above its dock. */
+.cw-world .guide-tour.is-stage{
+  position:absolute;grid-area:1/1/2/2;inset:174px 115px 100px 210px;max-width:500px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:12px;min-width:0;
+}
+.cw-world .guide-tour.is-stage>.guide-stage-copy{
+  position:static;inset:auto;width:100%;min-height:0;flex:0 1 auto;
+  overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  pointer-events:auto;text-align:left;translate:none;transform:none;animation:none;
+  padding:2px 4px 4px;background:#0a1117f2;
+}
+.cw-world .guide-tour.is-stage>.guide-stage-nav,
+.cw-world .guide-tour.is-stage>.guide-card{
+  position:static;inset:auto;width:100%;min-width:0;max-height:none;flex:0 0 auto;
+  translate:none;transform:none!important;animation:none;
+}
+.cw-world .guide-tour.is-stage>.guide-stage-nav{gap:6px;flex-wrap:nowrap;justify-content:space-between;padding:2px 4px}
+.cw-world .guide-tour.is-stage .guide-stage-dots{min-width:0}
+.cw-world .guide-tour.is-stage .guide-stage-dot{width:20px}
+.cw-world .guide-tour.is-stage .guide-stage-continue{font-size:12px;padding:0 10px;gap:5px}
+.cw-world .guide-tour.is-stage .guide-stage-title{max-width:none}
+@media(min-width:701px) and (max-width:1050px){
+  .cw-world .guide-tour.is-stage{top:282px;left:150px;right:20px}
+  .cw-world:has(.guide-tour.is-stage) .cw-facility-nav{width:116px}
+  .cw-world:has(.guide-tour.is-stage) .cw-facility-nav button{max-width:100%;font-size:9px;text-align:left}
+  .cw-world .guide-tour.is-stage .guide-stage-dot{width:14px}
+  .cw-world .guide-tour.is-stage .guide-stage-continue{height:40px;font-size:10px;padding:0 7px;gap:4px;letter-spacing:0}
+  .cw-world .guide-tour.is-stage .guide-stage-exit{width:32px;height:40px}
+}
+@media(max-width:700px){
+  .cw-world:has(.guide-tour.is-stage){grid-template-rows:minmax(330px,68%) minmax(0,32%)}
+  .cw-world .guide-tour.is-stage{inset:196px 12px 75px;max-width:none;gap:8px}
+  .cw-world:lang(en):has(.guide-tour.is-stage) .cw-dock{flex-wrap:wrap;justify-content:center;row-gap:4px}
+  .cw-world:lang(en) .guide-tour.is-stage{bottom:114px}
+  .cw-world:has(.guide-tour.is-stage) .cw-title{max-width:calc(100% - 130px)}
+  .cw-world:has(.guide-tour.is-stage) .cw-title h1{font-size:20px;line-height:1.2;margin:4px 0}
+  .cw-world:has(.guide-tour.is-stage) .cw-title p{font-size:8px;line-height:1.4}
+  .cw-world:has(.guide-tour.is-stage) .cw-facility-nav{top:137px;left:12px;right:12px;flex-direction:row;justify-content:space-between;gap:4px}
+  .cw-world:has(.guide-tour.is-stage) .cw-facility-nav button{font-size:8px;gap:4px}
+  .cw-world:has(.guide-tour.is-stage) .cw-facility-nav button span{font-size:6px;padding-right:4px}
+  .cw-world:has(.guide-tour.is-stage) .cw-camera{top:166px;right:12px;flex-direction:row;gap:12px}
+  .cw-world .guide-tour.is-stage .guide-stage-kicker{font-size:9px;line-height:1.4;margin-bottom:5px;letter-spacing:.08em}
+  .cw-world .guide-tour.is-stage .guide-stage-title{font-size:20px;line-height:1.15;letter-spacing:-.02em}
+  .cw-world .guide-tour.is-stage .guide-stage-body{font-size:11px;line-height:1.55;margin:8px 0 0;max-width:none}
+  .cw-world .guide-tour.is-stage .guide-stage-dot{width:16px;height:38px}
+  .cw-world .guide-tour.is-stage .guide-stage-dot.is-current::before{width:14px}
+  .cw-world .guide-tour.is-stage .guide-stage-continue{height:38px;font-size:10px;padding:0 7px;gap:4px;letter-spacing:0}
+  .cw-world .guide-tour.is-stage .guide-stage-exit{width:32px;height:38px}
+  .cw-world .guide-tour.is-stage>.guide-stage-nav{min-height:44px;gap:4px}
+}
+@media(max-width:700px) and (max-height:700px){
+  .cw-world:has(.guide-tour.is-stage){grid-template-rows:minmax(330px,72%) minmax(0,28%)}
+  .cw-world:lang(en):has(.guide-tour.is-stage){grid-template-rows:minmax(330px,78%) minmax(0,22%)}
+  .cw-world .guide-tour.is-stage .guide-stage-title{font-size:18px}
+  .cw-world .guide-tour.is-stage .guide-stage-body{font-size:10px;line-height:1.5}
+}

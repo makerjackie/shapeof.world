@@ -4,3 +4,62 @@
 @media(max-width:700px){.wo-world{grid-template-columns:1fr;grid-template-rows:minmax(290px,57%) minmax(0,43%);min-height:500px}.wo-world[data-panel=false]{grid-template-rows:1fr}.wo-panel{border-left:0;border-top:1px solid #304a58;display:grid;grid-template-columns:106px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}.wo-panel-heading{display:none}.wo-location{grid-column:1;grid-row:1;padding:10px 12px 5px}.wo-location>span{font-size:7px}.wo-location>strong{font-size:11px;line-height:1.9;display:flex;flex-direction:column;margin-top:5px}.wo-location>strong small{display:none}.wo-speed-pair{grid-column:1;grid-row:2;display:flex;flex-direction:column;margin:0 12px 13px;gap:13px;overflow-y:auto}.wo-speed{padding-top:8px}.wo-speed>div>span{font-size:8px}.wo-speed>div small{font-size:6px;line-height:1.7}.wo-speed strong{font-size:23px}.wo-speed strong small{font-size:7px;margin-left:3px}.wo-speed p{display:flex;flex-direction:column;gap:5px;font-size:7px;line-height:1.4}.wo-tabs{grid-column:2;grid-row:1;border-top:0;border-left:1px solid #294452;align-self:start}.wo-tabs button{padding:13px 5px;font-size:10px}.wo-scroll{grid-column:2;grid-row:2;min-height:0;border-left:1px solid #294452;padding:12px 14px 28px}.wo-title{left:16px;top:48px}.wo-title>span{font-size:6px;letter-spacing:.13em}.wo-title h1{font-size:25px;margin:6px 0 8px}.wo-title p{font-size:8px;max-width:225px;line-height:1.7}.wo-snapshot{right:15px;top:50px}.wo-snapshot>span{font-size:7px}.wo-snapshot strong{font-size:13px;line-height:1.8}.wo-snapshot small{display:none}.wo-view-tools{right:16px;top:113px;gap:6px}.wo-view-tools button{font-size:8px}.wo-field-nav{top:157px;left:16px;gap:0}.wo-field-nav button{gap:7px;padding:7px 0}.wo-field-nav button>i{height:14px;width:2px}.wo-field-nav button>span{font-size:10px}.wo-field-nav button>small{font-size:6px}.wo-legend{left:17px;bottom:123px;width:123px}.wo-legend>span{font-size:7px}.wo-legend>i{height:2px;margin:7px 0 5px}.wo-legend>div{font-size:6px}.wo-legend p{display:none}.wo-stage-actions{left:auto;right:13px;bottom:120px;padding:2px}.wo-stage-actions button{font-size:8px;padding:7px 7px}.wo-time-bar{left:13px;right:13px;bottom:31px;padding:10px 7px 19px;gap:12px}.wo-time-bar button{font-size:9px}.wo-play span{font-size:11px;margin-right:5px}.wo-time-bar>div>span,.wo-time-bar>label>span{font-size:6px}.wo-time-bar>div>strong{font-size:12px}.wo-time-bar select{font-size:10px;padding:4px 0 0}.wo-time-bar .wo-clear{font-size:8px;padding-left:9px}.wo-stage-note{left:16px;right:16px;bottom:11px;font-size:6px}.wo-stage-note span{display:none}.wo-compass{height:89px;width:89px}.wo-direction{gap:5px;margin:0 0 8px}.wo-direction>div>span{font-size:7px}.wo-direction>div>strong{font-size:25px}.wo-direction p{font-size:6px}.wo-explanation{font-size:9px;line-height:1.9}.wo-coordinate-form{gap:6px;margin:14px 0}.wo-coordinate-form input{font-size:10px;padding:8px 3px}.wo-coordinate-form button{font-size:8px;padding:9px 2px}.wo-primary{font-size:9px;padding:10px!important}.wo-primary>span{font-size:11px}.wo-secondary{font-size:8px;padding:10px!important}.wo-section-title{font-size:8px;margin-top:21px}.wo-check{font-size:9px;margin:16px 0}.wo-scroll h2{font-size:18px;line-height:1.6}.wo-fine{font-size:7px}.wo-regions{gap:7px}.wo-regions button{padding:10px 8px!important}.wo-regions strong{font-size:11px}.wo-regions p{font-size:7px}.wo-regions span small{font-size:5px}.wo-region-note{font-size:9px}.wo-picked dl>div{font-size:8px}.wo-track-select{padding:10px 7px!important}.wo-track-select>span{font-size:8px}.wo-track-select strong{font-size:11px}.wo-remove{padding:9px 7px!important}.wo-track-heading{font-size:8px}.wo-tracks{gap:6px}.wo-separation>span{font-size:7px}.wo-separation strong{font-size:14px}.wo-data-note summary{font-size:8px}.wo-density{font-size:9px}.wo-density select{font-size:8px}}
 @media(max-height:680px) and (min-width:701px){.wo-panel-heading{margin-top:48px;margin-bottom:11px}.wo-location{padding-bottom:11px}.wo-location>strong{font-size:16px}.wo-speed strong{font-size:24px}.wo-speed-pair{margin-bottom:12px}.wo-title{top:49px}.wo-title h1{font-size:30px}.wo-snapshot{top:49px}.wo-field-nav{top:172px}.wo-legend{bottom:175px}.wo-view-tools{top:150px}}
 @media(prefers-reduced-motion:reduce){.wo-world *{transition:none!important}}
+
+/* Bound the complete guide to the globe, between the header and live tools. */
+.wo-world .guide-tour.is-stage{
+  position:absolute;grid-area:1/1/2/2;inset:218px 115px 184px 205px;max-width:480px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:12px;min-width:0;
+}
+.wo-world .guide-tour.is-stage>.guide-stage-copy{
+  position:static;inset:auto;width:100%;min-height:0;flex:0 1 auto;
+  overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  pointer-events:auto;text-align:left;translate:none;transform:none;animation:none;
+  padding:2px 4px 4px;background:#060d14f2;
+}
+.wo-world .guide-tour.is-stage>.guide-stage-nav,
+.wo-world .guide-tour.is-stage>.guide-card{
+  position:static;inset:auto;width:100%;min-width:0;max-height:none;flex:0 0 auto;
+  translate:none;transform:none!important;animation:none;
+}
+.wo-world .guide-tour.is-stage>.guide-stage-nav{gap:6px;flex-wrap:nowrap;justify-content:space-between;padding:2px 4px}
+.wo-world .guide-tour.is-stage .guide-stage-dots{min-width:0}
+.wo-world .guide-tour.is-stage .guide-stage-dot{width:20px}
+.wo-world .guide-tour.is-stage .guide-stage-continue{font-size:12px;padding:0 10px;gap:5px}
+.wo-world .guide-tour.is-stage .guide-stage-title{max-width:none}
+@media(min-width:701px) and (max-width:1050px){
+  .wo-world .guide-tour.is-stage{left:150px;right:20px}
+  .wo-world:has(.guide-tour.is-stage) .wo-legend{width:115px}
+  .wo-world:has(.guide-tour.is-stage) .wo-view-tools{top:140px;gap:6px}
+  .wo-world .guide-tour.is-stage .guide-stage-dot{width:14px}
+  .wo-world .guide-tour.is-stage .guide-stage-continue{height:40px;font-size:10px;padding:0 7px;gap:4px;letter-spacing:0}
+  .wo-world .guide-tour.is-stage .guide-stage-exit{width:32px;height:40px}
+}
+@media(max-width:700px){
+  .wo-world:has(.guide-tour.is-stage){grid-template-rows:minmax(360px,68%) minmax(0,32%)}
+  .wo-world .guide-tour.is-stage{inset:180px 12px 137px;max-width:none;gap:8px}
+  .wo-world[data-panel=false]:has(.guide-tour.is-stage){grid-template-rows:1fr}
+  .wo-world:has(.guide-tour.is-stage) .wo-title{max-width:calc(100% - 130px)}
+  .wo-world:has(.guide-tour.is-stage) .wo-title>span{display:block;line-height:1.3}
+  .wo-world:has(.guide-tour.is-stage) .wo-title h1{font-size:20px;line-height:1.15;margin:4px 0}
+  .wo-world:has(.guide-tour.is-stage) .wo-title p{font-size:7px;line-height:1.2}
+  .wo-world:has(.guide-tour.is-stage) .wo-view-tools{top:123px;right:12px;flex-direction:row;gap:10px}
+  .wo-world:has(.guide-tour.is-stage) .wo-field-nav{top:147px;left:16px;right:16px;display:flex;justify-content:space-between;gap:8px}
+  .wo-world:has(.guide-tour.is-stage) .wo-field-nav button{padding:6px 0;gap:5px}
+  .wo-world:has(.guide-tour.is-stage) .wo-legend{bottom:96px}
+  .wo-world:lang(en):has(.guide-tour.is-stage) .wo-legend{width:105px}
+  .wo-world:has(.guide-tour.is-stage) .wo-stage-actions{bottom:96px}
+  .wo-world:has(.guide-tour.is-stage) .wo-time-bar{bottom:24px}
+  .wo-world .guide-tour.is-stage .guide-stage-kicker{font-size:9px;line-height:1.4;margin-bottom:5px;letter-spacing:.08em}
+  .wo-world .guide-tour.is-stage .guide-stage-title{font-size:20px;line-height:1.15;letter-spacing:-.02em}
+  .wo-world .guide-tour.is-stage .guide-stage-body{font-size:11px;line-height:1.55;margin:8px 0 0;max-width:none}
+  .wo-world .guide-tour.is-stage .guide-stage-dot{width:16px;height:38px}
+  .wo-world .guide-tour.is-stage .guide-stage-dot.is-current::before{width:14px}
+  .wo-world .guide-tour.is-stage .guide-stage-continue{height:38px;font-size:10px;padding:0 7px;gap:4px;letter-spacing:0}
+  .wo-world .guide-tour.is-stage .guide-stage-exit{width:32px;height:38px}
+  .wo-world .guide-tour.is-stage>.guide-stage-nav{min-height:44px;gap:4px}
+}
+@media(max-width:700px) and (max-height:700px){
+  .wo-world:has(.guide-tour.is-stage){grid-template-rows:minmax(360px,78%) minmax(0,22%)}
+  .wo-world .guide-tour.is-stage .guide-stage-title{font-size:18px}
+  .wo-world .guide-tour.is-stage .guide-stage-body{font-size:10px;line-height:1.5}
+}
