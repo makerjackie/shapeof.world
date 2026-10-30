@@ -76,3 +76,9 @@
 .experience-page[data-overlays-hidden='true'] .cw-panel{display:none}
 
 .cw-title,.cw-clock,.cw-facility-nav,.cw-camera{text-shadow:0 1px 4px #000,0 0 12px #0a1117}
+
+/* Keep every playback control reachable when English labels need two rows. */
+@media(max-width:360px){
+ .cw-world:lang(en) .cw-dock{flex-wrap:wrap;justify-content:center;row-gap:4px}
+ .cw-world:lang(en) .cw-trace{bottom:108px}
+}
