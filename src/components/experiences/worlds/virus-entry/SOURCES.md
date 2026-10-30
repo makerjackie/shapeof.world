@@ -54,3 +54,25 @@ subsequent events and routes differ substantially between viruses.
 scrubbing, the separation between uptake and cytoplasmic access, cargo-release
 ordering, elapsed-step limits and the position of structural instances. These
 are choreography and geometry checks, not biological validation experiments.
+
+## Readability and navigation
+
+The membrane closeup uses a smaller, flat 22 by 16 display patch, rather than
+enlarging the full journey's 64 by 40 grid. Two head layers and inward-pointing
+paired stalks have deliberately enlarged separation for classroom visibility.
+All dimensions, stalk counts, colour differences and roughness are original
+display choices, not molecular measurements or resolved chemical structures.
+The on-screen closeup explicitly labels this departure from molecular scale.
+Journey bending and the surface opening still follow the existing choreography;
+the closeup is a static structural illustration, not a magnified simulation.
+
+The locate action is an exhibition bookmark. Membrane selection opens the
+structural closeup; particle components open the cutaway. Vesicle location and
+the inside view select the existing endosomal illustration at progress 0.5,
+where the enclosure is visible and cargo has not reached the cytoplasm. The
+interface states that this changes the displayed route/frame. These bookmarks
+do not add biological conditions or change the underlying entry model.
+
+Membrane instance matrices are updated when display progress or route changes,
+instead of rewriting unchanged instances on every rendered frame while paused.
+The new tests check display geometry and visibility of navigation destinations.

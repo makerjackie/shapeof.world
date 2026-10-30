@@ -20,3 +20,11 @@
 }
 
 .ve-world>.guide-tour.is-stage .guide-card{position:static;inset:auto;translate:none;transform:none!important;flex:0 0 auto;width:100%;max-width:none;margin:0;box-sizing:border-box;animation:none}
+.ve-world .ve-locate{display:flex;justify-content:space-between;gap:16px;width:100%;padding:10px 0;margin-top:13px;border-top:1px solid #405563;border-bottom:1px solid #405563;color:#d4c29f;font-size:10px;text-align:left}
+.ve-part>small{display:block;margin-top:9px;font-size:9px;line-height:1.7;color:#879eab}
+.ve-scale-note{position:absolute;left:30px;bottom:195px;margin:0;z-index:2;font-size:9px;color:#879faa;pointer-events:none}
+.ve-locations .ve-key-head{color:#b1c6b4}.ve-locations .ve-key-tail{color:#c2af8d}
+.ve-world[data-view=inside] .ve-scene{top:185px}
+.ve-world[data-view=inside] .ve-views{background:linear-gradient(90deg,#101820ed,#10182000);padding:4px 18px 4px 0}
+@media(max-width:700px){.ve-scale-note{left:18px;right:18px;bottom:219px;font-size:8px;max-width:290px}.ve-world .ve-locate{min-height:40px}}
+@media(max-width:700px){.ve-world[data-view=inside] .ve-scene{top:200px}}

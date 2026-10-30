@@ -67,5 +67,10 @@
   "拖动旋转 · 滚轮缩放 · 点击结构 · 拖动进度回看": "Drag to orbit · Scroll to zoom · Select structures · Scrub to revisit",
   "通用科普示意 · 原创三维结构": "Generic science illustration · Original 3D structures",
   "看懂一道膜": "Understand a membrane",
-  "结束导览": "End tour"
+  "结束导览": "End tour",
+  "亲水头部": "Water-facing heads",
+  "疏水部分": "Hydrophobic interior",
+  "膜片近景 · 层间距为辨认而放大，不代表分子尺度": "Bilayer closeup · Layer spacing enlarged for reading, not molecular scale",
+  "定位所选结构": "Locate selected structure",
+  "定位囊泡会打开内吞路径中已有的示意画面。": "Locating the vesicle opens an existing frame of the uptake illustration."
 }

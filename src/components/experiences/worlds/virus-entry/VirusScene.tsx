@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
 import * as T from 'three'
 import { fibonacciSphere, frameAt, type Part, type Route, type View } from './model'
+import { BILAYER_DISPLAY, membranePatch } from './exhibition'
 
 type SceneProps = { progress: number; route: Route; view: View; section: boolean; explode: number; selected: Part; reset: number; onSelect: (id: Part) => void; onInteraction: () => void }
 const Y = new T.Vector3(0, 1, 0)
@@ -15,7 +16,7 @@ function Instances({ points, color, radius, selected = false }: { points: [numbe
     if (ref.current) ref.current.instanceMatrix.needsUpdate = true
   }, [points])
   return <instancedMesh ref={ref} args={[undefined, undefined, points.length]} frustumCulled={false}>
-    <sphereGeometry args={[radius, 8, 6]} /><meshStandardMaterial color={selected ? '#efd4a5' : color} metalness={.22} roughness={.38} />
+    <sphereGeometry args={[radius, 10, 8]} /><meshStandardMaterial color={selected ? '#efd4a5' : color} metalness={.025} roughness={.68} />
   </instancedMesh>
 }
 
@@ -63,33 +64,41 @@ function Particle({ progress, route, section, explode, selected, onSelect, anato
 
 function Membrane({ progress, route, selected, onSelect, closeup = false }: { progress: number; route: Route; selected: Part; onSelect: (id: Part) => void; closeup?: boolean }) {
   const heads = useRef<T.InstancedMesh>(null), tails = useRef<T.InstancedMesh>(null)
-  const points = useMemo(() => Array.from({ length: 64 * 40 }, (_, i) => [-6.3 + i % 64 * .2, 0, -3.9 + Math.floor(i / 64) * .2] as [number, number, number]), [])
+  const points = useMemo(() => membranePatch(closeup), [closeup])
   const dummy = useMemo(() => new T.Object3D(), [])
-  useFrame(() => {
+  useLayoutEffect(() => {
     if (!heads.current || !tails.current) return
     const f = frameAt(progress, route)
-    const depression = route === 'endosome' && f.uptake < .95 ? Math.sin(f.uptake * Math.PI) * 1.7 : 0
+    const depression = !closeup && route === 'endosome' && f.uptake < .95 ? Math.sin(f.uptake * Math.PI) * 1.7 : 0
     let headIndex = 0, tailIndex = 0
     for (const [x, , z] of points) {
       const r = Math.hypot(x, z)
-      const gap = route === 'surface' && f.fusion > .05 && r < f.pore
+      const gap = !closeup && route === 'surface' && f.fusion > .05 && r < f.pore
       const y = -depression * Math.exp(-(r * r) / 1.9)
       for (const side of [-1, 1]) {
-        dummy.position.set(x, y + side * .065, z)
+        dummy.position.set(x, y + side * BILAYER_DISPLAY.headY, z)
         dummy.scale.setScalar(gap ? 0 : 1); dummy.rotation.set(0, 0, 0); dummy.updateMatrix()
         heads.current.setMatrixAt(headIndex++, dummy.matrix)
-        dummy.position.y = y + side * .025
-        dummy.scale.set(gap ? 0 : .013, gap ? 0 : .045, gap ? 0 : .013); dummy.updateMatrix()
-        tails.current.setMatrixAt(tailIndex++, dummy.matrix)
+        for (const twin of [-1, 1]) {
+          dummy.position.set(x + twin * BILAYER_DISPLAY.tailOffset, y + side * BILAYER_DISPLAY.tailY, z)
+          dummy.scale.set(gap ? 0 : .012, gap ? 0 : BILAYER_DISPLAY.tailLength, gap ? 0 : .012); dummy.updateMatrix()
+          tails.current.setMatrixAt(tailIndex++, dummy.matrix)
+        }
       }
     }
     heads.current.instanceMatrix.needsUpdate = true; tails.current.instanceMatrix.needsUpdate = true
-  })
-  return <group scale={closeup ? 1.3 : 1} onClick={e => { e.stopPropagation(); onSelect('cell') }}>
-    <instancedMesh ref={heads} args={[undefined, undefined, points.length * 2]} frustumCulled={false}><sphereGeometry args={[.054, 8, 6]} /><meshStandardMaterial color={selected === 'cell' ? '#c6d4c7' : '#6b95ab'} roughness={.42} metalness={.18} /></instancedMesh>
-    <instancedMesh ref={tails} args={[undefined, undefined, points.length * 2]} frustumCulled={false}><cylinderGeometry args={[1, 1, 1, 5]} /><meshStandardMaterial color="#a8aca0" roughness={.7} /></instancedMesh>
-    {Array.from({ length: 22 }, (_, i) => {
-      const x = (i % 6 - 2.5) * 1.75, z = (Math.floor(i / 6) - 1.5) * 1.8
+  }, [progress, route, closeup, points, dummy])
+  useLayoutEffect(() => {
+    if (!heads.current) return
+    const upper = new T.Color(selected === 'cell' ? '#b1c6b4' : '#7d9c9d'), lower = new T.Color(selected === 'cell' ? '#849faa' : '#526f83')
+    for (let i = 0; i < points.length; i++) { heads.current.setColorAt(i * 2, lower); heads.current.setColorAt(i * 2 + 1, upper) }
+    if (heads.current.instanceColor) heads.current.instanceColor.needsUpdate = true
+  }, [points, selected])
+  return <group onClick={e => { e.stopPropagation(); onSelect('cell') }}>
+    <instancedMesh ref={heads} args={[undefined, undefined, points.length * 2]} frustumCulled={false}><sphereGeometry args={[BILAYER_DISPLAY.headRadius, 12, 8]} /><meshStandardMaterial color="#ffffff" roughness={.72} metalness={.025} /></instancedMesh>
+    <instancedMesh ref={tails} args={[undefined, undefined, points.length * 4]} frustumCulled={false}><cylinderGeometry args={[1, 1, 1, 6]} /><meshStandardMaterial color="#b3a487" roughness={.82} /></instancedMesh>
+    {Array.from({ length: closeup ? 4 : 22 }, (_, i) => {
+      const x = closeup ? (i % 2 - .5) * 2.3 : (i % 6 - 2.5) * 1.75, z = closeup ? (Math.floor(i / 2) - .5) * 1.8 : (Math.floor(i / 6) - 1.5) * 1.8
       return <group key={i} position={[x, 0, z]} rotation={[0, i * 2.4, .1 * Math.sin(i)]}>
         <mesh position={[0, .1, 0]}><cylinderGeometry args={[.025, .025, .6, 8]} /><meshStandardMaterial color="#b4b39e" /></mesh>
         <mesh position={[0, .4, 0]} rotation={[0, 0, .3]} scale={[.15, .12, .08]}><icosahedronGeometry args={[1, 1]} /><meshStandardMaterial color="#d0bf9b" roughness={.45} /></mesh>
@@ -98,13 +107,13 @@ function Membrane({ progress, route, selected, onSelect, closeup = false }: { pr
   </group>
 }
 
-function Vesicle({ progress, route, onSelect }: { progress: number; route: Route; onSelect: (id: Part) => void }) {
+function Vesicle({ progress, route, selected, onSelect }: { progress: number; route: Route; selected: Part; onSelect: (id: Part) => void }) {
   const f = frameAt(progress, route)
   if (!f.vesicleVisible) return null
   const opening = .6 + f.uptake * 4.1
   return <group position={[0, f.virusY, 0]} onClick={e => { e.stopPropagation(); onSelect('vesicle') }}>
-    <mesh rotation={[0, 0, Math.PI]}><sphereGeometry args={[1.43, 64, 48, 0, Math.PI * 1.55, 0, Math.min(Math.PI, opening)]} /><meshPhysicalMaterial color="#86ada2" transparent opacity={.25} depthWrite={false} side={T.DoubleSide} roughness={.3} /></mesh>
-    <mesh rotation={[0, 0, Math.PI]}><sphereGeometry args={[1.41, 32, 24, 0, Math.PI * 1.55, 0, Math.min(Math.PI, opening)]} /><meshBasicMaterial color="#7cae9f" wireframe transparent opacity={.07} /></mesh>
+    <mesh rotation={[0, -Math.PI / 2, Math.PI]}><sphereGeometry args={[1.43, 64, 48, 0, Math.PI * 1.55, 0, Math.min(Math.PI, opening)]} /><meshPhysicalMaterial color={selected === 'vesicle' ? '#b6c8a6' : '#86ada2'} transparent opacity={selected === 'vesicle' ? .4 : .28} depthWrite={false} side={T.DoubleSide} roughness={.6} /></mesh>
+    <mesh rotation={[0, -Math.PI / 2, Math.PI]}><sphereGeometry args={[1.41, 32, 24, 0, Math.PI * 1.55, 0, Math.min(Math.PI, opening)]} /><meshBasicMaterial color="#7cae9f" wireframe transparent opacity={.07} /></mesh>
   </group>
 }
 
@@ -120,10 +129,11 @@ function Camera({ view, reset, onInteraction }: { view: View; reset: number; onI
   const orbit = useRef<React.ComponentRef<typeof OrbitControls>>(null)
   useEffect(() => {
     const mobile = size.width / size.height < 1
-    const d = view === 'particle' ? (mobile ? 10.5 : 8) : view === 'membrane' ? 6 : mobile ? 18 : 13
+    const d = view === 'particle' ? (mobile ? 10.5 : 8) : view === 'membrane' ? (mobile ? 8.5 : 7.2) : mobile ? 18 : 13
     const target = view === 'particle' ? .5 : view === 'inside' ? -1.7 : .4
-    camera.position.set(d * .42, view === 'membrane' ? 1.7 : d * .28 + target, d * .78)
-    orbit.current?.target.set(0, target, 0); orbit.current?.update()
+    if (view === 'inside') { camera.position.set(mobile ? 6 : 4, -1.1, mobile ? 9 : 6.4); orbit.current?.target.set(0, -1.9, 0) }
+    else { camera.position.set(d * .42, view === 'membrane' ? 1.5 : d * .28 + target, d * .78); orbit.current?.target.set(0, view === 'membrane' ? .05 : target, 0) }
+    orbit.current?.update()
   }, [camera, view, reset, size.width, size.height])
   return <OrbitControls ref={orbit} minDistance={1.2} maxDistance={30} enableDamping dampingFactor={.08} onStart={onInteraction} />
 }
@@ -133,11 +143,11 @@ export function VirusScene(props: SceneProps) {
   return <Canvas dpr={[1, 1.5]} camera={{ position: [5, 4, 10], fov: 40, near: .03, far: 80 }} gl={{ antialias: true }}>
     <color attach="background" args={['#101820']} /><fog attach="fog" args={['#101820', 17, 40]} />
     <Camera view={props.view} reset={props.reset} onInteraction={props.onInteraction} />
-    <ambientLight intensity={.5} /><directionalLight position={[-4, 7, 5]} intensity={3} /><directionalLight position={[4, 2, -5]} intensity={2} color="#8bc2d2" />
+    <ambientLight intensity={.65} /><directionalLight position={[-4, 7, 5]} intensity={2.5} /><directionalLight position={[4, 2, -5]} intensity={1.8} color="#8bc2d2" /><directionalLight position={[2, -3, 5]} intensity={1.25} color="#d4bc98" />
     <Environment resolution={64} frames={1}><Lightformer form="rect" intensity={2.5} position={[0, 7, 2]} rotation={[Math.PI / 2, 0, 0]} scale={[12, 6, 1]} /></Environment>
     {props.view === 'particle' ? <Particle {...props} anatomy /> : <>
       <Membrane progress={props.progress} route={props.route} selected={props.selected} onSelect={props.onSelect} closeup={props.view === 'membrane'} />
-      {props.view !== 'membrane' && <><Particle {...props} /><Vesicle progress={props.progress} route={props.route} onSelect={props.onSelect} /><Interior /></>}
+      {props.view !== 'membrane' && <><Particle {...props} /><Vesicle progress={props.progress} route={props.route} selected={props.selected} onSelect={props.onSelect} /><Interior /></>}
       {f.fusion > .1 && props.route === 'surface' && <mesh position={[0, -.01, 0]} rotation={[-Math.PI / 2, 0, 0]}><torusGeometry args={[f.pore, .045, 12, 64]} /><meshStandardMaterial color="#c6b08e" roughness={.42} /></mesh>}
     </>}
   </Canvas>
