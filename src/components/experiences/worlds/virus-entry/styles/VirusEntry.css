@@ -7,7 +7,7 @@
 .ve-world .guide-stage-copy{position:static;inset:auto;width:100%;translate:none;transform:none;animation:none;flex:1 1 auto;min-height:0;overflow-y:auto;pointer-events:auto;padding:12px 14px;background:#101820f5;border-left:1px solid #a4b8bf55;text-align:left}
 .ve-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-title{font-size:24px;max-width:none;margin:0}
 .ve-world .guide-tour .guide-stage-copy[data-stage-treatment] .guide-stage-body{font-size:12px;margin-top:10px}
-.ve-world .guide-stage-nav{position:static;inset:auto;width:100%;transform:none;flex:0 0 auto;gap:4px;padding:2px 4px;min-height:44px;flex-wrap:nowrap}
+.ve-world .guide-stage-nav{animation:none;position:static;inset:auto;width:100%;transform:none;flex:0 0 auto;gap:4px;padding:2px 4px;min-height:44px;flex-wrap:nowrap}
 .ve-world .guide-stage-dot{width:17px;height:40px;min-width:0}
 .ve-world .guide-stage-continue{flex:1;min-width:0;padding:0 8px;font-size:11px;white-space:normal;line-height:1.4}
 .ve-world .guide-stage-exit{flex:0 0 32px;width:32px}
