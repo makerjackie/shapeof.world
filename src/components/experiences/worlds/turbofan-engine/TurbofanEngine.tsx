@@ -65,14 +65,14 @@ export function TurbofanEngine({ controls }: { controls: ExperienceControls }) {
   const interact = useCallback(() => controls.registerInteraction(), [controls.registerInteraction])
   const change = (field: keyof EngineSettings, value: number) => { setSettings(s => ({ ...s, [field]: value })); interact() }
   const select = useCallback((id: PartId) => { setSelected(id); setPanel('anatomy'); interact() }, [interact])
-  const restart = () => { setSettings(DEFAULT_SETTINGS); setSelected(null); setView('cutaway'); setExplode(0); setStreams(true); setReset(r => r + 1); interact() }
+  const restart = () => { setSettings(DEFAULT_SETTINGS); setSelected(null); setView('cutaway'); setExplode(0); setStreams(true); setThermal(true); setSlowdown(1200); setPlaying(!matchMedia('(prefers-reduced-motion: reduce)').matches); setPanel('anatomy'); setStation(null); setCompressorStage(4); setMobilePanel(false); setReset(r => r + 1); interact() }
   const applyPreset = (index: number) => { setSettings({ ...PRESETS[index].settings }); setPanel('cycle'); interact() }
   const guideSteps = PARTS.map((p, i) => ({
     title: tx(p.name), body: tx(p.body), durationMs: 14000,
     action: () => { setSelected(p.id); setView(i === 3 ? 'shafts' : 'cutaway'); setExplode(0); setPanel('anatomy'); setPlaying(true) },
   }))
   return <div className="tf-world" data-view={view} data-selected={selected ?? 'all'} data-playing={playing} data-panel={panel} tabIndex={0} onKeyDown={e => {
-    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement) return
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLButtonElement || e.target instanceof HTMLSelectElement || (e.target instanceof HTMLElement && e.target.isContentEditable)) return
     if (e.code === 'Space') { e.preventDefault(); setPlaying(p => !p); interact() }
     if (e.key.toLowerCase() === 'r') restart()
     const n = Number(e.key)

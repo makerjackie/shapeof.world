@@ -1,10 +1,11 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, type RefObject } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, Lightformer, OrbitControls } from '@react-three/drei'
+import { Environment, Lightformer, Line, OrbitControls } from '@react-three/drei'
 import * as T from 'three'
 import { isWorldPaused } from '~/lib/world-playback'
 import { bladeGeometry, CORE_PROFILE, NACELLE_PROFILE, shellGeometry } from './geometry'
-import { PARTS, type EngineView, type PartId } from './content'
+import { type EngineView, type PartId } from './content'
+import { engineFrame } from './framing'
 import type { engineCycle } from './model'
 
 type Cycle = ReturnType<typeof engineCycle>
@@ -70,16 +71,21 @@ function Burner({ selected }: { selected: boolean }) {
   </group>
 }
 
+function CutEdges({ profile }: { profile: readonly (readonly [number, number])[] }) {
+ return <>{[-.29,.29].map(side => { const a=side*Math.PI; return <Line key={side} points={profile.map(([x,r])=>[x,-r*Math.sin(a),r*Math.cos(a)] as [number,number,number])} color="#cabba0" lineWidth={1.1} transparent opacity={.72} /> })}</>
+}
+
 function Assembly({ cycle, clock, slowdown, view, explode, selected, onSelect, compressorStage, onCompressorStage }: { cycle: Cycle; clock: Clock; slowdown: number; view: EngineView; explode: number; selected: PartId | null; onSelect: (id: PartId) => void; compressorStage: number; onCompressorStage: (i: number) => void }) {
   const cutaway = view !== 'assembled' && view !== 'front'
   const nacelle = useMemo(() => shellGeometry(NACELLE_PROFILE, cutaway), [cutaway])
   const core = useMemo(() => shellGeometry(CORE_PROFILE, cutaway), [cutaway])
   useEffect(() => () => { nacelle.dispose(); core.dispose() }, [nacelle, core])
   const shaftMode = view === 'shafts'
-  const coreOpacity = shaftMode ? .08 : .88
+  const coreOpacity = shaftMode ? .08 : 1
   return <>
     <group position={[0, explode * 2.4, -explode * .6]}>
-      <mesh geometry={nacelle} rotation={[0, 0, -Math.PI / 2]} castShadow receiveShadow><meshPhysicalMaterial color="#b6c3ce" metalness={.7} roughness={.3} transparent opacity={shaftMode ? .04 : .45} side={T.DoubleSide} depthWrite={false} /></mesh>
+      <mesh geometry={nacelle} rotation={[0, 0, -Math.PI / 2]} castShadow receiveShadow><meshPhysicalMaterial color="#9aadb8" metalness={.45} roughness={.4} envMapIntensity={1.6} emissive="#17242c" emissiveIntensity={.12} transparent={shaftMode} opacity={shaftMode ? .04 : 1} side={T.DoubleSide} depthWrite={false} /></mesh>
+      {cutaway && !shaftMode && <CutEdges profile={NACELLE_PROFILE} />}
       {!shaftMode && <>
         <Ring x={-5.12} radius={2.12} width={.045} color="#dce0dd" />
         <Ring x={-3.7} radius={2.35} width={.025} color="#8495a3" arc={cutaway ? Math.PI * 1.4 : Math.PI * 2} />
@@ -87,7 +93,8 @@ function Assembly({ cycle, clock, slowdown, view, explode, selected, onSelect, c
       </>}
     </group>
     <group position={[0, -explode * 1.7, 0]}>
-      <mesh geometry={core} rotation={[0, 0, -Math.PI / 2]} castShadow><meshStandardMaterial color="#6e7a86" metalness={.7} roughness={.3} transparent opacity={coreOpacity} side={T.DoubleSide} depthWrite={!shaftMode} /></mesh>
+      <mesh geometry={core} rotation={[0, 0, -Math.PI / 2]} castShadow><meshStandardMaterial color="#7c919f" metalness={.5} roughness={.42} envMapIntensity={1.5} emissive="#15222b" emissiveIntensity={.1} transparent={shaftMode} opacity={coreOpacity} side={T.DoubleSide} depthWrite={!shaftMode} /></mesh>
+      {cutaway && !shaftMode && <CutEdges profile={CORE_PROFILE} />}
       {[-3.3, -.5, 1.45, 3.65].map(x => <group key={x}><Ring x={x} radius={x === 3.65 ? .9 : .9} width={.045} arc={cutaway ? Math.PI * 1.4 : Math.PI * 2} /><Bolts x={x} radius={.91} /></group>)}
     </group>
     <Shaft x={-.05} length={8.15 + explode * 3} radius={.115} color="#79bcc6" />
@@ -158,26 +165,35 @@ function Airflow({ clock, cycle, enabled, thermal }: { clock: Clock; cycle: Cycl
   return enabled ? <instancedMesh ref={ref} args={[undefined, undefined, 420]} frustumCulled={false}><sphereGeometry args={[1, 5, 4]} /><meshBasicMaterial transparent opacity={.8} toneMapped={false} /></instancedMesh> : null
 }
 
-function CameraRig({ view, selected, reset, onInteraction }: { view: EngineView; selected: PartId | null; reset: number; onInteraction: () => void }) {
-  const { camera, size } = useThree()
-  const orbit = useRef<React.ComponentRef<typeof OrbitControls>>(null)
-  useEffect(() => {
-    const narrow = size.width < 650
-    const x = selected ? PARTS.find(p => p.id === selected)!.x : -.2
-    const distance = view === 'front' ? (narrow ? 11 : 8) : selected ? (selected === 'fan' ? (narrow ? 11 : 8) : narrow ? 8 : 6) : narrow ? 26.5 : 17.5
-    camera.position.set(view === 'front' ? -distance : x - distance * .38, view === 'front' ? .01 : distance * .28, view === 'front' ? .01 : distance * .72)
-    orbit.current?.target.set(x, 0, 0)
-    orbit.current?.update()
-  }, [camera, view, selected, reset, size.width, size.height])
-  return <OrbitControls ref={orbit} minDistance={1.3} maxDistance={35} enableDamping dampingFactor={.08} onStart={onInteraction} maxPolarAngle={Math.PI * .85} />
+function CameraRig({ view, selected, explode, compressorStage, reset, onInteraction }: { view: EngineView; selected: PartId | null; explode: number; compressorStage: number; reset: number; onInteraction: () => void }) {
+ const { camera, size } = useThree()
+ const orbit = useRef<React.ComponentRef<typeof OrbitControls>>(null)
+ const pose = useRef<ReturnType<typeof engineFrame> | null>(null)
+ const transitioning=useRef(false), initialized=useRef(false)
+ useLayoutEffect(() => {
+  const next=engineFrame(view,explode,selected,compressorStage,size.width/Math.max(1,size.height))
+  pose.current=next
+  if(!initialized.current||matchMedia('(prefers-reduced-motion: reduce)').matches){camera.position.copy(next.position);orbit.current?.target.copy(next.target);orbit.current?.update();initialized.current=true;transitioning.current=false}
+  else transitioning.current=true
+ },[camera,view,selected,explode,compressorStage,reset,size.width,size.height])
+ useFrame((_,dt)=>{
+  const next=pose.current, controls=orbit.current
+  if(!transitioning.current||!next||!controls)return
+  const mix=1-Math.exp(-Math.min(dt,.05)*9)
+  camera.position.lerp(next.position,mix);controls.target.lerp(next.target,mix)
+  if(camera.position.distanceToSquared(next.position)<.00001&&controls.target.distanceToSquared(next.target)<.00001)transitioning.current=false
+  controls.update()
+ },-2)
+ return <OrbitControls ref={orbit} minDistance={1.3} maxDistance={80} enableDamping dampingFactor={.08} onStart={()=>{transitioning.current=false;onInteraction()}} maxPolarAngle={Math.PI*.85}/>
 }
 
 function World({ cycle, playing, slowdown, view, explode, selected, streams, thermal, reset, onSelect, onInteraction, compressorStage, onCompressorStage }: SceneProps) {
   const clock = useRef(0)
   useFrame((_, dt) => { if (playing && !document.hidden && !isWorldPaused()) clock.current += Math.min(dt, .05) })
   return <>
-    <CameraRig view={view} selected={selected} reset={reset} onInteraction={onInteraction} />
-    <ambientLight intensity={.4} />
+    <CameraRig view={view} selected={selected} explode={explode} compressorStage={compressorStage} reset={reset} onInteraction={onInteraction} />
+    <ambientLight intensity={.5} />
+    <pointLight position={[0,1,6]} intensity={22} distance={25} decay={2} color="#e2e8e8" />
     <directionalLight position={[-3, 8, 5]} intensity={3.8} castShadow shadow-mapSize={[1024, 1024]} shadow-camera-left={-10} shadow-camera-right={10} shadow-camera-top={8} shadow-camera-bottom={-8} shadow-bias={-.0006} />
     <directionalLight position={[6, 2, -6]} intensity={3} color="#b4d3ef" />
     <Environment resolution={128} frames={1}>
@@ -187,9 +203,9 @@ function World({ cycle, playing, slowdown, view, explode, selected, streams, the
     </Environment>
     <Assembly cycle={cycle} clock={clock} slowdown={slowdown} view={view} explode={explode} selected={selected} onSelect={onSelect} compressorStage={compressorStage} onCompressorStage={onCompressorStage} />
     <Airflow clock={clock} cycle={cycle} enabled={streams && explode < .1 && view !== 'shafts'} thermal={thermal} />
-    <mesh position={[0, -2.65 - explode * 1.3, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[80, 80]} /><meshBasicMaterial color="#10161d" /></mesh>
+    <mesh position={[0, -2.65 - explode * 1.3, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[80, 80]} /><meshBasicMaterial color="#10161d" toneMapped={false} /></mesh>
     <mesh position={[0, -2.645 - explode * 1.3, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow><planeGeometry args={[80, 80]} /><shadowMaterial opacity={.25} /></mesh>
-    <gridHelper args={[30, 60, '#34434f', '#25343f']} position={[0, -2.64 - explode * 1.3, 0]} material-transparent material-opacity={.19} />
+    <gridHelper args={[30, 60, '#34434f', '#25343f']} position={[0, -2.64 - explode * 1.3, 0]} material-transparent material-opacity={.1} />
   </>
 }
 

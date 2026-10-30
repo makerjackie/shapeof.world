@@ -26,3 +26,16 @@
 }
 
 .tf-world>.guide-tour.is-stage .guide-card{position:static;inset:auto;translate:none;transform:none!important;flex:0 0 auto;width:100%;max-width:none;margin:0;box-sizing:border-box;animation:none}
+
+.tf-stage-inspector{margin-top:22px;padding-top:16px;border-top:1px solid var(--tf-line)}
+.tf-stage-buttons{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:3px;margin:14px 0 16px}
+.tf-stage-buttons button{min-height:32px;border:1px solid #3b4c59;background:#16232c;color:#92a9b7;font:11px ui-monospace,monospace}
+.tf-stage-buttons button[aria-pressed=true]{border-color:#c9ac79;color:#f0dbb8;background:#38352b}
+.tf-stage-inspector dl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 12px}
+.tf-stage-inspector dt{font-size:9px;color:#829cab;margin-bottom:7px}.tf-stage-inspector dd{margin:0;font:13px ui-monospace,monospace;color:#d1dce0;white-space:nowrap}
+.tf-stage-inspector>small{font-size:9px;line-height:1.7;color:#7e94a3;display:block}
+.experience-page[data-overlays-hidden='true'] .tf-world :is(.tf-title,.tf-views,.tf-measurements,.tf-panel,.tf-bottom,.tf-hint){visibility:hidden;pointer-events:none}
+.experience-page[data-overlays-hidden='true'] .tf-world .tf-viewport{inset:0}
+.tf-title{padding-right:35px;background:linear-gradient(90deg,#10161df0,#10161d00)}
+.tf-title>span,.tf-views button{text-shadow:0 1px 5px #10161d}
+.tf-measurements{padding-top:14px;background:linear-gradient(0deg,#10161d 76%,#10161d00)}

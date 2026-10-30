@@ -81,3 +81,12 @@ balances, bypass mass balance, combined momentum thrust, component state
 ordering, convergent nozzle choking and pressure thrust, intervention trends
 and finite output across the control envelope. Rendering uses blade-row
 instancing; no geometry or tracer allocations occur inside the frame loop.
+
+### Exhibit finish and framing
+
+The opaque assembled casing, warm contours at the actual cut edges, and
+view-dependent camera fit are display choices. Fitting uses the shown profiles
+and assembly offsets, including the selected compressor row; it does not change
+the cycle calculation. Cut-edge colour is a diagram convention, not a material
+measurement. Reset restores display controls and the reference cycle, respecting
+the visitor's reduced-motion preference.
