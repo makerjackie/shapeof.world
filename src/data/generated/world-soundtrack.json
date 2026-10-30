@@ -3,6 +3,7 @@
   "cdnOrigin": "https://music-cdn.shapeof.world",
   "pageOrigin": "https://music.shapeof.world",
   "worlds": {
+    "air-conditioner": "fold-memory",
     "aurora": "bent-light",
     "black-hole-flyby": "invisible-halo",
     "boids-flocking": "flock-rule",
@@ -33,6 +34,7 @@
     "iphone-teardown": "tick-escape",
     "kakeya-needle": "needle-set",
     "light-speed": "standing-room",
+    "llm-inside": "noise-to-form",
     "mandelbrot-zoom": "complex-bloom",
     "moon-pixel": "bent-light",
     "moon-voyage": "spacetime-ripple",
@@ -49,6 +51,7 @@
     "solar-system": "orbital-garden",
     "standard-model": "three-bodies",
     "starry-night": "credit-spark",
+    "stellar-life": "two-galaxies",
     "strange-attractors": "chaos-onset",
     "three-body": "three-bodies",
     "trade-chokepoints": "charge-split",
@@ -56,6 +59,9 @@
     "turbofan-engine": "hall-clock",
     "ukulele": "prime-spiral",
     "vegetation-atlas": "charge-split",
-    "watch-movement": "cellular-night"
+    "virus-entry": "sync-flash",
+    "watch-movement": "cellular-night",
+    "wind-ocean": "living-blue",
+    "wind-turbine": "jam-wave"
   }
 }
