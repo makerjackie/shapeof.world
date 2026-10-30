@@ -113,7 +113,8 @@ export const Chart: React.FC<{
   pitch?: number;
   stagger?: number;
   first?: number; // when the first row prints, if earlier than the rest
-}> = ({ t, at, x, y, rows, max, len = 1300, pitch = 130, stagger = 0.12, first }) => (
+  nameDy?: number; // moves the names and model lines up or down against their bars (v22)
+}> = ({ t, at, x, y, rows, max, len = 1300, pitch = 130, stagger = 0.12, first, nameDy = 0 }) => (
   <>
     {rows.map((r, i) => {
       const a = first !== undefined && i === 0 ? first : at + (first !== undefined ? i - 1 : i) * stagger;
@@ -123,11 +124,11 @@ export const Chart: React.FC<{
       const gold = r.hi === "gold";
       return (
         <React.Fragment key={r.key}>
-          <P t={t} at={a} x={x} y={ry - 4} dur={0.3} style={{ fontFamily: /[一-鿿]/.test(r.name) ? FONT : MONO, fontWeight: 900, fontSize: 38, opacity: r.hi === "dim" ? 0.55 : 1 }}>
+          <P t={t} at={a} x={x} y={ry - 4 + nameDy} dur={0.3} style={{ fontFamily: /[一-鿿]/.test(r.name) ? FONT : MONO, fontWeight: 900, fontSize: 38, opacity: r.hi === "dim" ? 0.55 : 1 }}>
             {r.name}
           </P>
           {r.model && (
-            <P t={t} at={a + 0.1} x={x} y={ry + 44} dur={0.3} style={{ fontFamily: MONO, fontWeight: 700, fontSize: 20, color: FAINT }}>
+            <P t={t} at={a + 0.1} x={x} y={ry + 44 + nameDy} dur={0.3} style={{ fontFamily: MONO, fontWeight: 700, fontSize: 20, color: FAINT }}>
               {r.model}
             </P>
           )}

@@ -20,9 +20,15 @@ import { Hook17, HOOK17_FRAMES } from "./v17/Hook17";
 import { Frames18, FRAMES18 } from "./v18/Frames";
 import { Sheet19, SHEET19_FRAMES } from "./v19/Sheet19";
 import { Film20, FILM20_FRAMES } from "./v20/Film20";
+import { Film22, FILM22_FRAMES } from "./v22/Film22";
+import { Cover22 } from "./v22/Cover22";
 
 export const Root: React.FC = () => (
   <>
+    <Still id="cover22-3x4" component={Cover22} width={1200} height={1600} />
+    <Still id="cover22-4x3" component={Cover22} width={1600} height={1200} />
+    <Still id="cover22-16x9" component={Cover22} width={1920} height={1080} />
+    <Composition id="Ep1v22" component={Film22} durationInFrames={FILM22_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Ep1v20" component={Film20} durationInFrames={FILM20_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Sheet19" component={Sheet19} durationInFrames={SHEET19_FRAMES} fps={30} width={1920} height={1080} />
     <Composition id="Frames18" component={Frames18} durationInFrames={FRAMES18} fps={30} width={1920} height={1080} />

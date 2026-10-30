@@ -1,61 +1,55 @@
-# 发布文案：AI 的真实价格（v6，约 2 分钟）
+# 发布文案：AI 的真实价格 · 第 1 集（v22，约 3 分 15 秒）
+
+数据截至 2026 年 10 月 30 日。成片 `out/ep1-v22.mp4`，封面 `out/covers22/`（3:4 主封面、4:3 横版、16:9 网站）。
 
 ## 标题
 
-推荐（抖音、B站、视频号）：全球最聪明的 AI，比 DeepSeek 还便宜？
+- 抖音（≤30 字）：AI智力榜刚换考卷：贵17倍的AI，为什么反而最便宜？
+- B站：【世界的形状】AI 智力榜刚换了新考卷：贵 17 倍的 AI，为什么反而最便宜？｜AI 的真实价格 第 1 集
+- 视频号：AI 智力榜刚换了新考卷：贵 17 倍的 AI，为什么反而最便宜？
 
-备选：
-- 单价贵 17 倍的 AI，为什么反而最便宜
-- 付 $200，用掉 $7,121：AI 订阅的真实价格
-- 最贵的 token，是你的时间（偏情绪，用片尾金句）
-- YouTube：The smartest AI is the cheapest — the real price of AI tokens
+片内标题：AI 的~~标价~~真实价格 · 第 1 集 · 文字 AI。
 
-片内标题：AI 的真实价格。
+## 简介（抖音、视频号）
 
-## 简介
+10 月 27 日，AI 智力榜 Artificial Analysis 换了新考卷：六成考题从没公开过。按新考卷做一道难题，Claude 要花 67 块，DeepSeek 只要 4 块，差 17 倍；可 Claude 58 分，DeepSeek 32 分。有人每个月花 200 美元用 Claude，还说这是最便宜的 AI。他算错了吗？一项一项把账算完，账单上最贵的那一行，是你的时间。
 
-按 API 单价，全球智能指数第一的 Claude Opus 5.5 是 DeepSeek 的 17 倍。可大多数人不是按 token 付钱，而是包月；而且聪明的模型做同一道题，用的 token 更少。
+#vibe知识大赏 #vibe热点新知计划 #AI #人工智能 #DeepSeek #Claude #ChatGPT @抖音科技
 
-这支片子把账拆开：
-- 包月：$200 的 Claude Max 20x，用满能用掉约 $7,121 的 API 额度（实测中位数），同价比 ChatGPT Pro 多 3–5 倍。
-- 中转站：「¥1 = $1 · 1.5 倍率」的中转站，反而比自己包月用满贵 7.5 倍。
-- 省 token：同一套考试，Opus 打出 4 行小票，DeepSeek V4 Pro 打出 33 行。
-- 说句公道话：只按 API 算，最新的 DeepSeek V4.1 Flash 是真便宜。
-- 两个原因叠在一起，最聪明的反而最便宜。
-- 最后：公式里还漏了最贵的一项——你的时间。
+## 简介（B站）
 
-结论有前提：订阅只对用得多的人划算；偶尔用、或者跑大批量 API 任务，按量付费的 DeepSeek 仍然更省。画面由代码逐帧生成。数据截至 2026 年 10 月 21 日。不构成购买建议。
+10 月 27 日，AI 智力榜 Artificial Analysis 换了新考卷（智能指数 v5），六成考题从没公开过。这一集用同一张考卷算账：做一道难题实际花多少、各家到底多聪明、包月用满又是多少钱，最后算上你检查和返工的时间。
 
-## 数据来源
+章节
+00:00 开场：他算错了吗？
+00:24 公式：真实价格 ＝ 单价 × 用量 ÷ 包月倍数 ＋ 你的时间
+00:30 用量：做一道难题实际花多少
+00:47 真实智力排行：新考卷上谁更聪明
+01:05 包月：用满能用掉几倍
+01:45 前提：你用得满吗？
+01:53 体验卡和中转站
+02:04 你的时间
+02:19 怎么选
+02:30 三年后看：每年便宜 13 倍
+02:49 结尾
 
-价格
-- Claude API 定价（Opus 5.5 $4 / $20，Sonnet 5.5 $2 / $10，每百万 token）：https://platform.claude.com/docs/en/about-claude/pricing
-- DeepSeek API 定价与更新日志（V4.1 Flash 高峰 $0.30 / $1.20，闲时五折；V4 Pro $1.32 / $3.96）：https://api-docs.deepseek.com/zh-cn/quick_start/pricing 、https://api-docs.deepseek.com/zh-cn/updates
-- 其余模型：各家官方定价页，2026-10-21。
-- Claude Opus 5.5（max）为 Artificial Analysis 智能指数 v4.3 第 1 名（57.6）：https://artificialanalysis.ai/leaderboards/models
+结论有前提：包月只对天天用的人划算；偶尔问问，免费的就够。价格和排名每个月都在变，这是 2026 年 10 月 30 日的答案。画面由代码逐帧生成，不构成购买建议。
 
-01 包月
-- Max 计划说明（5x / 20x 指每 5 小时的额度，另有每周上限）：https://support.claude.com/en/articles/11049741-what-is-the-max-plan
-- 实测：Max 20x 用满一周 $1,643 API 等值，17 个账号中位数，×4.33 周 ≈ $7,121 / 月：wokey.ai，2026-10-12～19 周。https://wokey.ai/claude-usage-limits
-- 理论上限：Max 20x $11,726 / 月；ChatGPT Pro $200 $2,084（GPT-6.1 Sol）～ $2,897（GPT-6 Astra）：SemiAnalysis 2026-10-05，转引自 https://explainx.ai/blog/semianalysis-claude-vs-chatgpt-subscription-api-value-limit-testing-2026
-- ChatGPT Pro $200 自 2026-09-29 起为 10× Plus（此前 20×）：OpenAI Codex 负责人公开说明，见 https://winbuzzer.com/2026/09/30/openai-adds-500-chatgpt-pro-cuts-allowance-new-200-subscribers-a005-xcxwbn/
-- 顶配模型（Fable 5.1 vs GPT-6 Astra）两家额度相当；2026 年 6 月时 ChatGPT Pro 曾多于 Claude Max：SemiAnalysis，转引自 GIGAZINE 2026-06-12。
-- 中转站计费公式（官方价 × 分组倍率 × 充值汇率 ÷ 市场汇率）：开源项目 new-api 文档；汇率按 1 USD ≈ 7.2 CNY。偷换模型的研究：arXiv 2504.04715。
+数据来源
+- 智力分、做一道难题的花费：Artificial Analysis 智能指数 v5（2026-10-27 发布，数据取 2026-10-30）；开源差距 3 分 → 12 分出自 v5 发布文章
+- 价格：OpenAI、Anthropic、Moonshot、智谱、DeepSeek 官网（2026 年 10 月）
+- 包月额度：SemiAnalysis（2026-10-05）；Kimi 为科技博主实测（2026-10-24）；智谱为官方档位折算
+- 每周上限：Anthropic（2025-07-28）
+- 价格趋势：Epoch AI《The plunging price of thought》（2026-09-22）
+- token 用量：国家数据局（2026-03-24 国新办发布会）
+- 时薪：国家统计局 2025 年城镇非私营单位平均工资
+- 人民币按 6.72 折算
 
-02 省 token
-- 跑完整套智能指数：Opus 5.5（low）输出 2,000 万 token、花费 $860、42 分；DeepSeek V4 Pro（max）1.63 亿 token、$1,122、36 分（按今日官方价）：Artificial Analysis 智能指数 v4.3，2026-10-21。
-- 平均每道题花费：DeepSeek V4.1 Flash $0.26（45 分），Claude Opus 5.5 默认档 $1.34（51 分）：同上。
-
-叠在一起
-- Opus 每题 $1.34 ÷ 36 ≈ $0.04；36 = Max 20x 用满时的实测倍数（wokey.ai）。
-
-你的时间
-- 写代码 Agent 解决一道题：Claude Code + Sonnet 5.5（high）每次 $1.24、通过率 55%，平均试 1.8 次：Artificial Analysis Coding Agent Index v1.5，2026-10-21。https://artificialanalysis.ai/agents/coding-agents
-- 每次人工检查按 5 分钟、时薪 $100 估算（本片假设），得出 token $2.25、你的时间 $15.15。
+标签（≤10）：AI、人工智能、DeepSeek、Claude、ChatGPT、大模型、AI订阅、知识、科普、vibe知识大赏
 
 ## 配乐
 
-《千年之后（氛围版）》，和乐府。来源：https://music.01mvp.com/ （标注"抖音授权：收藏者声明"）。授权以收藏者声明为准，未单独核实是否允许商用；音频不进 Git。
+《千年之后（氛围版）》，和乐府。来源 music.01mvp.com（标注"抖音授权：收藏者声明"），授权以收藏者声明为准，未单独核实商用。发布后查 B站和视频号有没有被卡版权；万一被卡，只换音轨。
 
 ## 授权
 
