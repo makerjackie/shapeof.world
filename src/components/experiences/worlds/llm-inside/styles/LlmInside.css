@@ -49,3 +49,5 @@
 .li-scene-section-left{transform:translateX(-65%)}
 
 @media(max-width:700px){.li-world .li-label-toggle{display:inline-flex;align-items:center;justify-content:center;max-width:56px;min-height:30px;white-space:normal;text-align:center;line-height:1.35;font-size:8px!important;flex:0 0 auto}}
+.experience-page[data-overlays-hidden='true'] .li-world :is(.li-heading,.li-views,.li-phase,.li-panel,.li-token-strip,.li-bottom,.li-corner){visibility:hidden;pointer-events:none}
+.experience-page[data-overlays-hidden='true'] .li-world .li-stage{inset:0}
