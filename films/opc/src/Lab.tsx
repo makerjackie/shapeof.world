@@ -32,14 +32,14 @@ const crowd = (t: number, n: number, toStars: boolean): Glow[] => {
 const base = (c: Cam, extra: Partial<WorldState> = {}): WorldState => ({ cam: c, time: 3, equal: 1, ...extra });
 
 export const SHOTS: WorldState[] = [
-  base(cam(18, 1.6, 0, 22, 90, 4, 46), { glows: crowd(3, 900, false) }), // 0 street level, looking along the hero street
-  base(cam(HERO.laptop.x, 1.0, -4.6, 3.2, 0, 12, 40)), // 1 the opening stall, close
-  base(cam(10, 0, 0, 70, 70, 28, 42), { glows: crowd(3, 1400, false), banners: 1 }), // 2 above the hero street
+  base(cam(22, 1.7, 0, 24, 90, 4, 46), { glows: crowd(3, 900, false) }), // 0 street level, looking along the hero street
+  base(cam(HERO.laptop.x, 1.1, -5, 5.5, 8, 20, 40), { tilt: { focus: 0.52, band: 0.1, amt: 7 } }), // 1 the opening stall
+  base(cam(10, 0, 0, 60, 70, 34, 42), { glows: crowd(3, 1400, false), banners: 1, tilt: { focus: 0.55, band: 0.08, amt: 9 } }), // 2 miniature street
   base(cam(60, 0, 0, 420, 75, 30, 40), { glows: crowd(3, 1800, false) }), // 3 the market to the horizon
   base(cam(80, 0, 0, 1300, 60, 52, 40), { equal: 0, glows: crowd(3, 3000, true) }), // 4 the long tail from high above
-  base(cam(HERO.cart.x, 1.1, -4.4, 4.2, -20, 10, 40)), // 5 the 煎饼 cart
+  base(cam(HERO.cart.x, 1.0, -5, 7.5, -16, 22, 40), { tilt: { focus: 0.55, band: 0.1, amt: 8 } }), // 5 the cart
   base(cam(HERO.company.x, 6, -6, 46, 10, 14, 44), { company: { vis: 1, off: 0.05, sink: 0 } }), // 6 the company building
-  base(cam(-60, 1.7, 0, 30, 270, 3, 46), { day: 1 }), // 7 morning on the street
+  base(cam(-40, 1.7, 0, 30, 270, 3, 46), { day: 1 }), // 7 morning on the street
   base(cam(30, 0, 0, 140, 80, 34, 42), { equal: 0, dim: 0, glows: crowd(3, 1800, true) }), // 8 after the turn, mid height
 ];
 

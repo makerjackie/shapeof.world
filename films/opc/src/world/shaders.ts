@@ -49,7 +49,7 @@ vec3 fogged(vec3 col, vec3 w) {
 export const STALL_VERT = /* glsl */ `
 attribute float part;
 attribute vec4 aP; // x, z, rot, seed
-attribute vec4 aS; // lit, success, hue, laptop-glow
+attribute vec4 aS; // lit, success, hue, sign index
 attribute vec4 aE; // screen, sign, keep (not dimmed), visible (y scale)
 uniform vec3 uBulb;
 varying vec3 vW;
@@ -61,8 +61,10 @@ varying vec4 vE;
 varying vec3 vLocal;
 varying float vSeed;
 varying vec2 vUv;
+varying vec3 vNl;
 void main() {
   float c = cos(aP.z), s = sin(aP.z);
+  vNl = normal;
   vec3 p = position;
   p.y *= aE.w;
   vec3 w = vec3(aP.x + p.x * c + p.z * s, p.y, aP.y - p.x * s + p.z * c);
@@ -87,6 +89,8 @@ uniform vec3 uLamp;
 uniform float uDim;
 uniform float uTime;
 uniform float uDay;
+uniform sampler2D uSigns;
+varying vec3 vNl;
 varying vec3 vW;
 varying vec3 vN;
 varying vec3 vL;
@@ -112,11 +116,8 @@ void main() {
     albedo = vec3(0.12, 0.13, 0.15);
   } else if (pt == 1) {
     // the cloth hung on the front of the table, printed with the shop's name
-    albedo = mix(vec3(0.78, 0.74, 0.66), paint, 0.55);
-    if (abs(n.z) > 0.5) {
-      float ink = glyphs(vec2(vUv.x * 0.8 + 0.1, (vUv.y - 0.35) * 2.2), vSeed, 4.0);
-      albedo = mix(albedo, vec3(0.07, 0.06, 0.06), ink * 0.9);
-    }
+    albedo = mix(vec3(0.78, 0.74, 0.66), paint, 0.62);
+    albedo *= 0.94 + 0.06 * sin(vUv.x * 22.0 + vSeed * 9.0);
   } else if (pt == 2) {
     albedo = vec3(0.5, 0.52, 0.56);
   } else if (pt == 3) {
@@ -129,10 +130,17 @@ void main() {
   } else if (pt == 4) {
     emis = uLamp * (0.35 + 3.0 * lit * (0.35 + succ));
   } else if (pt == 5) {
-    vec3 sc = hsv2rgb(vec3(hue, 0.45, 1.0));
-    float ink = abs(n.z) > 0.5 ? glyphs(vec2(vUv.x, vUv.y), vSeed + 3.0, 3.0) : 0.0;
-    emis = mix(sc * 0.18, sc * 1.1, ink) * vE.y * (0.25 + 0.75 * lit);
-    albedo = vec3(0.05);
+    vec3 sc = mix(vec3(1.0, 0.93, 0.82), hsv2rgb(vec3(hue, 0.55, 1.0)), 0.45);
+    float ink = 0.0;
+    if (vNl.z > 0.5) {
+      float idx = vS.w;
+      float cc = mod(idx, 8.0);
+      float row = floor(idx / 8.0);
+      vec2 uvA = vec2((cc + vUv.x) / 8.0, 1.0 - (row + 1.0 - vUv.y) / 8.0);
+      ink = texture2D(uSigns, uvA).a;
+    }
+    emis = mix(sc * 0.05, sc * 1.35, ink) * vE.y * (0.3 + 0.7 * lit);
+    albedo = vec3(0.04);
   } else if (pt == 6) {
     albedo = paint * 0.85;
   } else if (pt == 7) {
@@ -169,11 +177,13 @@ void main() {
   float ndl = max(dot(n, L), 0.0);
   float bulb = lit * (0.35 + 1.4 * succ);
   vec3 light = uAmb * (0.6 + 0.4 * n.y) + uLamp * bulb * (0.15 + ndl) * 2.6 / (1.0 + d * d * 1.4);
-  light += vec3(0.55, 0.62, 0.75) * uDay * (0.45 + 0.55 * max(n.y, 0.0));
+  light += vec3(0.62, 0.6, 0.62) * uDay * (0.28 + 0.4 * max(n.y, 0.0));
   vec3 col = albedo * light + emis;
   float keep = vE.z;
   col *= mix(1.0, 0.22, uDim * (1.0 - keep));
-  gl_FragColor = vec4(fogged(col, vW), 1.0);
+  col = fogged(col, vW);
+  if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+  gl_FragColor = vec4(clamp(col, 0.0, 8.0), 1.0);
 }
 `;
 
@@ -183,6 +193,7 @@ attribute vec4 aC; // x, y, z, world size
 attribute vec4 aK; // r, g, b, intensity
 uniform float uPx; // world units per pixel at 1 m
 uniform float uMinPx;
+uniform float uMaxPx;
 uniform float uFogD;
 varying vec2 vUv;
 varying vec4 vK;
@@ -191,13 +202,13 @@ void main() {
   vec4 mv = viewMatrix * vec4(aC.xyz, 1.0);
   float dist = max(-mv.z, 0.01);
   float minS = uMinPx * uPx * dist;
-  float s = max(aC.w, minS);
+  float s = min(max(aC.w, minS), uMaxPx * uPx * dist);
   float energy = (aC.w * aC.w) / (s * s);
   mv.xy += position.xy * s;
   gl_Position = projectionMatrix * mv;
   vUv = position.xy;
   vK = aK;
-  vK.w *= clamp(energy, 0.16, 1.0);
+  vK.w *= clamp(energy, 0.45, 1.0);
   vFog = 1.0 - exp(-uFogD * dist);
 }
 `;
@@ -210,7 +221,7 @@ varying float vFog;
 void main() {
   float r2 = dot(vUv, vUv);
   if (r2 > 1.0) discard;
-  float a = exp(-r2 * 5.0) * 0.7 + exp(-r2 * 38.0) * 1.1;
+  float a = exp(-r2 * 6.0) * 0.42 + exp(-r2 * 40.0) * 1.25;
   a *= 1.0 - r2;
   gl_FragColor = vec4(vK.rgb * vK.w * a * uGain * (1.0 - 0.88 * vFog), 1.0);
 }
@@ -248,8 +259,10 @@ void main() {
   col *= 0.8 + 0.4 * vnoise(p * 0.9) * (0.7 + 0.3 * vnoise(p * 7.0));
   // a faint wet sheen in the road: brighter toward the light-pool layer
   col += uAmb * 0.25;
-  col += vec3(0.42, 0.45, 0.5) * uDay * (0.18 + 0.1 * pave);
-  gl_FragColor = vec4(fogged(col, vW), 1.0);
+  col += vec3(0.4, 0.38, 0.4) * uDay * (0.11 + 0.06 * pave);
+  col = fogged(col, vW);
+  if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+  gl_FragColor = vec4(clamp(col, 0.0, 2.0), 1.0);
 }
 `;
 
@@ -434,5 +447,105 @@ void main() {
   col += g * uGrain * (0.6 + 0.4 * (1.0 - l));
   col *= 1.0 - uFade;
   gl_FragColor = vec4(max(col, vec3(0.0)), 1.0);
+}
+`;
+
+// ---------- Low buildings in the blocks (instanced unit boxes, windows on every side) ----------
+export const BLOCK_VERT = /* glsl */ `
+attribute vec4 aB; // x, z, w, d
+attribute vec2 aH; // h, seed
+varying vec3 vW;
+varying vec3 vN;
+varying vec3 vL; // metres within the building: x across, y up, z across
+varying vec3 vSize;
+varying float vSeed;
+void main() {
+  vec3 p = position; // unit box, y 0..1
+  vec3 size = vec3(aB.z, aH.x, aB.w);
+  vL = vec3((p.x + 0.5) * size.x, p.y * size.y, (p.z + 0.5) * size.z);
+  vec3 w = vec3(aB.x + p.x * size.x, p.y * size.y, aB.y + p.z * size.z);
+  vW = w;
+  vN = normal;
+  vSize = size;
+  vSeed = aH.y;
+  gl_Position = projectionMatrix * viewMatrix * vec4(w, 1.0);
+}
+`;
+
+export const BLOCK_FRAG = /* glsl */ `
+uniform vec3 uAmb;
+uniform float uDay;
+uniform float uDim;
+uniform float uWin;
+varying vec3 vW;
+varying vec3 vN;
+varying vec3 vL;
+varying vec3 vSize;
+varying float vSeed;
+${COMMON}
+${FOG}
+void main() {
+  vec3 n = normalize(vN);
+  vec3 wall = mix(vec3(0.035, 0.038, 0.045), vec3(0.055, 0.05, 0.047), vSeed);
+  vec3 col = wall * (uAmb * 6.0 + 0.025);
+  // light from the stall lamps below, fading up the wall
+  col += vec3(1.0, 0.6, 0.3) * 0.05 * exp(-vL.y / 2.5) * step(n.y, 0.5);
+  if (n.y < 0.5) {
+    float along = abs(n.z) > 0.5 ? vL.x : vL.z;
+    float span = abs(n.z) > 0.5 ? vSize.x : vSize.z;
+    float cols = max(1.0, floor(span / 1.55));
+    vec2 f = vec2(along / span * cols, (vL.y - 0.6) / 2.9);
+    vec2 c = floor(f);
+    vec2 q = fract(f);
+    float win = step(0.26, q.x) * step(q.x, 0.74) * step(0.32, q.y) * step(q.y, 0.82) * step(0.0, f.y) * step(vL.y, vSize.y - 0.9);
+    float id = hash(c + vec2(vSeed * 37.0, n.x * 5.0 + n.z * 11.0));
+    float on = step(1.0 - uWin, id);
+    vec3 room = mix(vec3(1.0, 0.62, 0.3), vec3(0.62, 0.78, 1.0), step(0.88, hash(c * 3.1 + vSeed)));
+    float wx = (q.x - 0.26) / 0.48;
+    float wy = (q.y - 0.32) / 0.5;
+    room *= (0.16 + 0.42 * hash(c + 0.3)) * (0.35 + 0.9 * wy);
+    // half the rooms have blinds drawn; the others a lamp somewhere in the room
+    float blinds = step(0.5, hash(c * 7.7 + vSeed));
+    room *= mix(1.0 - 0.35 * smoothstep(0.42, 0.5, abs(fract(wy * 7.0) - 0.5)), 1.0, 1.0 - blinds);
+    room *= mix(1.0, 0.45 + 0.9 * exp(-((wx - hash(c + 1.3)) * 3.0) * ((wx - hash(c + 1.3)) * 3.0)), 1.0 - blinds);
+    // mullion
+    room *= 1.0 - 0.8 * step(abs(wx - 0.5), 0.03);
+    vec3 glass = vec3(0.008, 0.011, 0.018) + uAmb * 0.25 + vec3(0.02, 0.025, 0.035) * smoothstep(0.3, 0.9, q.y);
+    col = mix(col, mix(glass, room, on), win);
+  }
+  col += vec3(0.42, 0.4, 0.44) * uDay * (0.07 + 0.04 * n.y);
+  col *= mix(1.0, 0.45, uDim);
+  col = fogged(col, vW);
+  // guard: a NaN or runaway value here gets smeared by the bloom into big white blobs
+  if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+  gl_FragColor = vec4(clamp(col, 0.0, 2.0), 1.0);
+}
+`;
+
+// ---------- Tilt-shift: blur grows away from a horizontal band, so the market reads as a miniature ----------
+export const TILT_FRAG = /* glsl */ `
+uniform sampler2D tDiffuse;
+uniform float uFocus;
+uniform float uBand;
+uniform float uAmt; // px at the frame edge
+uniform vec2 uRes;
+varying vec2 vUv;
+void main() {
+  float d = max(0.0, abs(vUv.y - uFocus) - uBand);
+  float r = uAmt * smoothstep(0.0, 0.4, d);
+  vec4 c0 = texture2D(tDiffuse, vUv);
+  if (r < 0.6) { gl_FragColor = c0; return; }
+  vec3 acc = vec3(0.0);
+  float ws = 0.0;
+  for (int i = 0; i < 28; i++) {
+    float fi = float(i);
+    float a = fi * 2.39996;
+    float rr = sqrt((fi + 0.5) / 28.0) * r;
+    vec3 c = texture2D(tDiffuse, vUv + vec2(cos(a), sin(a)) * rr / uRes).rgb;
+    float w = 1.0 + 0.6 * dot(c, vec3(0.33));
+    acc += c * w;
+    ws += w;
+  }
+  gl_FragColor = vec4(acc / ws, c0.a);
 }
 `;

@@ -1,4 +1,6 @@
-// Original score for "独立开发者的形状". Synthesized with Web Audio in an OfflineAudioContext; no samples.
+// Original score for "独立开发者的形状", re-arranged for "一人公司（OPC）的形状" (2026-10-30): the same instruments,
+// harmony and hooks; only the section table (91 bars instead of 65) and the sound-effect cues are new, and the
+// audio logo is gone (the end card has none). Synthesized with Web Audio in an OfflineAudioContext; no samples.
 // The engine (drums, piano, organ bass, pad, effects, the series' audio logo) is the one from
 // films/tower/music/score.js and films/house/music/score.js, so the series keeps one set of sounds.
 // A minor, 120 BPM. Main sections: Am9 – Fmaj9 – Cadd9 – G6, one chord per bar, each section starting on Am.
@@ -8,50 +10,61 @@
 const BEAT = 0.5
 const BAR = 2
 const T0 = 0.5
-const BARS = 65
+const BARS = 91
 const DURATION = T0 + BARS * BAR + 1.0
 const bt = (bar, beat = 0) => T0 + bar * BAR + beat * BEAT
 
 // [from, to] inclusive film bars. `anchor` is the bar the chord cycle counts from (defaults to `from`).
 const SECTIONS = [
-  { from: 0, to: 7, kind: 'hook' },
-  { from: 8, to: 9, kind: 'title' },
-  { from: 10, to: 20, kind: 'groove' },
-  { from: 21, to: 23, kind: 'breakdown' },
-  { from: 24, to: 24, kind: 'build', anchor: 21 },
-  { from: 25, to: 28, kind: 'drop2' },
-  { from: 29, to: 42, kind: 'groove2' },
-  { from: 43, to: 45, kind: 'reflect' },
-  { from: 46, to: 47, kind: 'travel' },
-  { from: 48, to: 48, kind: 'build', anchor: 45 },
-  { from: 49, to: 58, kind: 'anthem' },
-  { from: 59, to: 62, kind: 'outro' },
-  { from: 63, to: 64, kind: 'tail' },
+  { from: 0, to: 5, kind: 'hook' }, // the dashboard, the market, the question
+  { from: 6, to: 7, kind: 'title' }, // the licence
+  { from: 8, to: 25, kind: 'groove' }, // the 煎饼 cart; hands; more makers
+  { from: 26, to: 31, kind: 'drop' }, // no street on the internet; the cities' offers
+  { from: 32, to: 37, kind: 'groove2' }, // carrying it all alone
+  { from: 38, to: 41, kind: 'breakdown' }, // the street is gone
+  { from: 42, to: 42, kind: 'build', anchor: 39 },
+  { from: 43, to: 46, kind: 'drop2' }, // 34 -> 61
+  { from: 47, to: 56, kind: 'groove2' }, // why; television (muffled)
+  { from: 57, to: 59, kind: 'reflect' }, // what did the bright ones do
+  { from: 60, to: 73, kind: 'travel' }, // being found; coming back
+  { from: 74, to: 74, kind: 'build', anchor: 71 },
+  { from: 75, to: 84, kind: 'anthem' }, // morning
+  { from: 85, to: 88, kind: 'outro' }, // sources, end card
+  { from: 89, to: 90, kind: 'tail' },
 ]
 
 // Sound effects on the picture: [bar, beat, type, ...args]. Scene-local beat b of a scene that starts on bar B
 // lands on bar B + b / 4.
 const CUES = [
-  [0, 0, 'boom'], [0, 2, 'pop', 0.5], [1, 0, 'pop', 0.5], [1, 2, 'pop', 0.5], [2, 0, 'pop', 0.5], [2, 2, 'pop', 0.5],
-  [3, 0, 'swish'], [3, 0.3, 'pour', 1.6, 25, 0.6], [4, 0, 'powerdown'],
-  [5, 1, 'coin'], [5, 1.25, 'coin'], [5, 1.5, 'coin'], [5, 1.75, 'coin'], [5, 2, 'coin'], [6, 2.8, "swish"],
-  [8, 0, 'boom'], [8, 0.2, 'pour', 1.4, 30, 0.5],
-  [10, 0, 'whoosh'], [10, 1, 'pour', 1.5, 8, 0.4], [11, 0, 'pour', 2, 20, 0.5], [12, 0, 'pour', 2, 40, 0.55], [12, 1.4, 'thud'],
-  [14, 0, 'swish'], [14, 2, 'shimmer'], [16, 0, 'powerdown'],
-  [18, 0, 'swish'], [18, 1.2, 'pour', 0.9, 15, 0.5], [18, 2.6, 'pop'], [19, 0, 'pour', 0.5, 8, 0.5], [19, 1.2, 'pop'],
-  [21, 0, 'swish'], [21, 3, 'powerdown'], [22, 2.5, 'shimmer'],
-  [24, 0.6, 'pour', 0.8, 34, 0.6], [25, 0, 'boom'], [25, 0, 'pour', 0.8, 27, 0.7], [27, 0, 'ding'],
-  [29, 0, 'whoosh'], [29, 1, 'pour', 1.5, 30, 0.5],
-  [30, 0, 'coin'], [30, 0.25, 'coin'], [30, 0.5, 'coin'], [30, 0.75, 'coin'], [30, 1, 'coin'], [30, 1.25, 'coin'], [30, 1.5, 'coin'], [30, 1.75, 'coin'], [30, 2, 'coin'],
-  [32, 0, 'swish'], [32, 1, 'pour', 0.75, 10, 0.5], [33, 1, 'powerdown', 0.6], [34, 0, 'shimmer'],
-  [34, 1.6, 'coin'], [34, 2.2, 'coin'], [34, 2.8, 'coin'], [34, 3.4, 'coin'],
-  [36, 0, 'whoosh'], [36, 1, 'pour', 2, 40, 0.4], [37, 2.6, 'thud', 0.6],
-  [39, 0, 'swish'], [39, 3, 'coin'], [40, 1, 'pop'], [40, 1.25, 'pop'], [41, 1, 'thud'],
-  [43, 0, 'swish'], [44, 0.6, 'powerdown', 1.2], [44, 2, 'thud'],
-  [46, 0, 'swish'], [46, 0.6, 'pour', 0.75, 16, 0.5], [47, 2, 'ding'],
-  [49, 0.4, 'pour', 1, 40, 0.5], [49, 3, 'swish'], [51, 0, 'shimmer'], [53, 0, 'pour', 2, 60, 0.5], [54, 0, 'shimmer'], [57, 0, 'impact'],
-  [59, 0, 'swish', 0.6], [61, 0, 'swish', 0.5],
-  [63, 0, 'logo'],
+  // the dashboard: sign-ups popping in, the stamp
+  [0, 0, 'boom'], [0, 1, 'pop', 0.35], [0, 2, 'pop', 0.35], [0, 3, 'pop', 0.35], [1, 0, 'pop', 0.35], [1, 1, 'pop', 0.35], [1, 2, 'pop', 0.35],
+  [0, 1.5, 'thud'], [0, 1.5, 'impact', 0.5],
+  [1, 3, 'whoosh'], [2, 2, 'swish'], [3, 0, 'shimmer'], [4, 3, 'thud', 0.6],
+  // title: the seal
+  [6, 0, 'boom'], [6, 1, 'thud'],
+  // the cart
+  [8, 0, 'whoosh'], [9, 0, 'pop'], [9, 1.2, 'pop'], [9, 2.4, 'pop'], [10, 0.2, 'coin'], [12, 0, 'swish'], [13, 3, 'swish'], [15, 1, 'ding'],
+  // the company: jobs, flips, lights out, the building goes down
+  [16, 1, 'whoosh'],
+  [17, 1, 'pop', 0.4], [17, 1.56, 'pop', 0.4], [17, 2.12, 'pop', 0.4], [17, 2.68, 'pop', 0.4], [17, 3.24, 'pop', 0.4], [17, 3.8, 'pop', 0.4],
+  [19, 3, 'pour', 1.4, 8, 0.4], [20, 0, 'powerdown', 0.5], [21, 2.4, 'thud'], [22, 0, 'impact', 0.6], [22, 1, 'pop'],
+  // more makers: stalls popping up
+  [24, 0, 'pour', 2, 40, 0.5], [25, 0, 'pour', 2, 40, 0.5],
+  // the street opens; policy cards
+  [26, 0, 'boom'], [27, 0, 'shimmer'], [28, 0, 'whoosh'], [29, 0, 'swish', 0.7], [29, 3.6, 'swish', 0.7], [30, 3.2, 'swish', 0.7],
+  // carrying it all
+  [32, 2, 'whoosh'], [33, 0, 'pop'], [33, 1, 'pop'], [33, 2, 'pop'], [33, 3, 'pop'], [36, 3, 'thud'],
+  // the turn; the count to 61
+  [38, 0, 'powerdown'], [39, 0, 'shimmer'], [43, 0, 'boom'], [43, 0, 'pour', 2.6, 34, 0.5], [44, 2.4, 'pour', 2.4, 27, 0.5], [46, 0, 'ding'],
+  // why; television
+  [47, 0, 'whoosh'], [52, 0, 'swish'], [54, 2.8, 'shimmer'],
+  // what the bright ones did
+  [57, 0, 'swish', 0.6], [60, 0, 'whoosh'],
+  [62, 0, 'coin'], [62, 2, 'coin'], [63, 0, 'coin'], [63, 1, 'coin'], [63, 2, 'coin'], [63, 3, 'coin'], [64, 0, 'pour', 2, 24, 0.4],
+  [66, 0, 'whoosh'], [67, 2.2, 'ding', 0.6], [68, 2.8, 'ding', 0.4], [72, 0, 'swish'],
+  // morning
+  [75, 0, 'shimmer'], [78, 1.3, 'ding'], [81, 3, 'swish', 0.5],
+  [85, 0, 'swish', 0.6], [88, 0, 'swish', 0.5],
 ]
 
 const SR = 48000
@@ -71,7 +84,7 @@ const PEAK = [
   { root: 33, notes: [60, 64, 67, 71] }, // Am9
 ]
 const CODA = ['anthem', 'outro', 'tail']
-const CODA_FROM = 49
+const CODA_FROM = 75
 const mod4 = (n) => ((n % 4) + 4) % 4
 const chordAt = (bar, sec) => (CODA.includes(sec.kind) ? PEAK[mod4(bar - CODA_FROM)] : MAIN[mod4(bar - (sec.anchor ?? sec.from))])
 
@@ -506,8 +519,9 @@ async function renderScore() {
       fill16(t, 16, (tt, i) => i % 2 === 1 && shaker(tt, 0.8))
       clap(t + BEAT * 3, 0.45)
       const arp = [...ch.notes, ...ch.notes.map((m) => m + 12)]
-      fill16(t, 8, (tt, i) => piano(t + i * BEAT / 2, arp[(i + pos * 2) % arp.length] + 12, 0.55 + 0.1 * pos, 0.5, 0.4 + 0.2 * pos))
-      pad(t, ch.notes, BAR, 1, 1400 + 400 * pos)
+      const pp = len > 1 ? pos / (len - 1) : 0 // 0 -> 1 across the section
+      fill16(t, 8, (tt, i) => piano(t + i * BEAT / 2, arp[(i + pos * 2) % arp.length] + 12, 0.55 + 0.15 * pp, 0.5, 0.4 + 0.3 * pp))
+      pad(t, ch.notes, BAR, 1, 1400 + 800 * pp)
       organ(t, ch.root, BEAT * 1.8, 0.6); organ(t + BEAT * 2, ch.root, BEAT * 1.8, 0.6)
       if (last) fill16(bt(bar, 3), 4, (tt, i) => snare(tt, 0.25 + i * 0.1))
     }
@@ -538,11 +552,11 @@ async function renderScore() {
 
   for (const [bar, beat, type, ...a] of CUES) SFX[type](bt(bar, beat), ...a)
 
-  // Muffle the music while the ShipFast elevator falls (bar 44, beat 0.6) and open it again on the exception.
-  tone.frequency.setValueAtTime(18000, bt(44, 0.6))
-  tone.frequency.exponentialRampToValueAtTime(650, bt(44, 2))
-  tone.frequency.setValueAtTime(650, bt(45, 2))
-  tone.frequency.exponentialRampToValueAtTime(18000, bt(46))
+  // Muffle the music under the television flashback (bars 52-56), like an old room next door; open it again after.
+  tone.frequency.setValueAtTime(18000, bt(52))
+  tone.frequency.exponentialRampToValueAtTime(900, bt(52, 2))
+  tone.frequency.setValueAtTime(900, bt(56, 2))
+  tone.frequency.exponentialRampToValueAtTime(18000, bt(57))
 
   // Sidechain: dip the music bus under every kick.
   duck.gain.setValueAtTime(1, 0)

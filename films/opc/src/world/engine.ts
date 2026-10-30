@@ -7,10 +7,14 @@ import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { Cam, H, W, setCamera } from "./camera";
-import { BULB, HERO, HERO_IDS, NEAR, STALLS, STREET_GAP, Stall, stallWorld } from "./market";
+import { BLOCKS, BULB, HERO, HERO_IDS, NEAR, SIGNS, STALLS, STREET_GAP, Stall, stallWorld } from "./market";
 import {
+  BLOCK_FRAG,
+  BLOCK_VERT,
+  TILT_FRAG,
   BLDG_FRAG,
   BLDG_VERT,
   GLOW_FRAG,
@@ -49,15 +53,18 @@ export type WorldState = {
   banners?: number;
   glows?: Glow[]; // customers, sparks, hero lights: rebuilt each frame
   stringLights?: number;
+  tilt?: { focus: number; band: number; amt: number };
+  windows?: number; // share of lit windows in the blocks
+  reveal?: number; // lamps switch on out to this distance (m) from the hero street's centre
 };
 
 const C = (hex: string) => new THREE.Color(hex);
 
 // ---------- stall geometry ----------
-type Part = [number, [number, number, number], [number, number, number], number?]; // part, centre, size, tilt (rad, about x)
+type Part = [number, [number, number, number], [number, number, number], number?, number?]; // part, centre, size, tilt (rad, about x), rounded radius (<0: a wheel)
 
 const DESK: Part[] = [
-  [12, [0, 0.76, 0], [1.5, 0.05, 0.75]], // table top
+  [12, [0, 0.76, 0], [1.5, 0.05, 0.75], 0, 0.02], // table top
   [1, [0, 0.42, 0.37], [1.5, 0.66, 0.02]], // the printed cloth on the front
   [0, [-0.7, 0.38, -0.33], [0.04, 0.76, 0.04]],
   [0, [0.7, 0.38, -0.33], [0.04, 0.76, 0.04]],
@@ -71,14 +78,14 @@ const DESK: Part[] = [
 ];
 
 const CART: Part[] = [
-  [6, [0, 0.64, 0], [1.7, 0.74, 0.86]], // body
-  [7, [0.36, 1.2, 0.04], [0.9, 0.38, 0.6]], // glass box
+  [6, [0, 0.64, 0], [1.7, 0.74, 0.86], 0, 0.06], // body
+  [7, [0.36, 1.2, 0.04], [0.9, 0.38, 0.6], 0, 0.03], // glass box
   [8, [-0.46, 1.03, 0.04], [0.62, 0.04, 0.62]], // griddle
-  [9, [-0.62, 0.2, 0.4], [0.38, 0.38, 0.06]],
-  [9, [0.62, 0.2, 0.4], [0.38, 0.38, 0.06]],
-  [9, [-0.62, 0.2, -0.4], [0.38, 0.38, 0.06]],
-  [9, [0.62, 0.2, -0.4], [0.38, 0.38, 0.06]],
-  [10, [0, 2.02, 0.06], [1.95, 0.05, 1.25], 0.12], // canopy
+  [9, [-0.62, 0.2, 0.44], [0.38, 0.38, 0.07], 0, -1],
+  [9, [0.62, 0.2, 0.44], [0.38, 0.38, 0.07], 0, -1],
+  [9, [-0.62, 0.2, -0.44], [0.38, 0.38, 0.07], 0, -1],
+  [9, [0.62, 0.2, -0.44], [0.38, 0.38, 0.07], 0, -1],
+  [10, [0, 2.02, 0.06], [1.95, 0.05, 1.25], 0.12, 0.02], // canopy
   [0, [-0.88, 1.52, -0.4], [0.035, 1.0, 0.035]],
   [0, [0.88, 1.52, -0.4], [0.035, 1.0, 0.035]],
   [0, [-0.88, 1.52, 0.5], [0.035, 1.0, 0.035]],
@@ -89,8 +96,14 @@ const CART: Part[] = [
 ];
 
 const buildStall = (parts: Part[]) => {
-  const geos = parts.map(([part, c, s, tilt]) => {
-    const g = new THREE.BoxGeometry(s[0], s[1], s[2]);
+  const geos = parts.map(([part, c, s, tilt, round]) => {
+    let g: THREE.BufferGeometry;
+    if (round !== undefined && round < 0) {
+      g = new THREE.CylinderGeometry(s[1] / 2, s[1] / 2, s[2], 20);
+      g.rotateX(Math.PI / 2);
+    } else if (round) g = new RoundedBoxGeometry(s[0], s[1], s[2], 3, round);
+    else g = new THREE.BoxGeometry(s[0], s[1], s[2]);
+    if (g.index) g = g.toNonIndexed(); // RoundedBoxGeometry has no index; merge everything non-indexed
     if (tilt) g.rotateX(tilt);
     g.translate(c[0], c[1], c[2]);
     const n = g.getAttribute("position").count;
@@ -145,6 +158,10 @@ class Engine {
   bldg: THREE.Mesh;
   bldgMat: THREE.ShaderMaterial;
   banners: { mesh: THREE.Mesh; mat: THREE.ShaderMaterial }[] = [];
+  blocks: THREE.Mesh;
+  blockMat: THREE.ShaderMaterial;
+  tilt: ShaderPass;
+  signs: THREE.CanvasTexture;
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -163,7 +180,7 @@ class Engine {
       uFog: { value: C("#0b1322") },
       uFogD: { value: 0.0016 },
       uAmb: { value: C("#0b1220") },
-      uLamp: { value: C("#ffb469") },
+      uLamp: { value: C("#ffb86e") },
       uTime: { value: 0 },
       uDim: { value: 0 },
       uDay: { value: 0 },
@@ -182,6 +199,58 @@ class Engine {
     this.ground = new THREE.Mesh(new THREE.PlaneGeometry(9000, 9000), this.groundMat);
     this.ground.rotation.x = -Math.PI / 2;
     this.scene.add(this.ground);
+
+    // the sign atlas: 8 x 8 cells, white lettering on transparent
+    {
+      const cw = 512;
+      const ch = 160;
+      const cv = document.createElement("canvas");
+      cv.width = cw * 8;
+      cv.height = ch * 8;
+      const g2 = cv.getContext("2d")!;
+      g2.fillStyle = "#fff";
+      g2.textAlign = "center";
+      g2.textBaseline = "middle";
+      SIGNS.forEach((t, i) => {
+        const x = (i % 8) * cw;
+        const y = Math.floor(i / 8) * ch;
+        let size = 96;
+        g2.font = `800 ${size}px "OPC Sans", "PingFang SC", sans-serif`;
+        while (g2.measureText(t).width > cw * 0.84 && size > 40) {
+          size -= 4;
+          g2.font = `800 ${size}px "OPC Sans", "PingFang SC", sans-serif`;
+        }
+        g2.fillText(t, x + cw / 2, y + ch / 2 + size * 0.04);
+      });
+      this.signs = new THREE.CanvasTexture(cv);
+      this.signs.anisotropy = 8;
+      this.signs.generateMipmaps = true;
+      this.signs.minFilter = THREE.LinearMipmapLinearFilter;
+    }
+
+    // low buildings between the streets
+    {
+      const base = new THREE.BoxGeometry(1, 1, 1);
+      base.translate(0, 0.5, 0);
+      const geo = new THREE.InstancedBufferGeometry();
+      geo.index = base.index;
+      geo.setAttribute("position", base.getAttribute("position"));
+      geo.setAttribute("normal", base.getAttribute("normal"));
+      const n = BLOCKS.length;
+      const A = new Float32Array(n * 4);
+      const Hh = new Float32Array(n * 2);
+      BLOCKS.forEach((b, i) => {
+        A.set([b.x, b.z, b.w, b.d], i * 4);
+        Hh.set([b.h, b.seed], i * 2);
+      });
+      geo.setAttribute("aB", new THREE.InstancedBufferAttribute(A, 4));
+      geo.setAttribute("aH", new THREE.InstancedBufferAttribute(Hh, 2));
+      geo.instanceCount = n;
+      this.blockMat = new THREE.ShaderMaterial({ vertexShader: BLOCK_VERT, fragmentShader: BLOCK_FRAG, uniforms: { ...cu, uWin: { value: 0.32 } } });
+      this.blocks = new THREE.Mesh(geo, this.blockMat);
+      this.blocks.frustumCulled = false;
+      this.scene.add(this.blocks);
+    }
 
     // near stalls
     for (const [kind, parts] of [
@@ -203,7 +272,7 @@ class Engine {
       geo.setAttribute("aE", aE);
       geo.instanceCount = n;
       const b = BULB[kind];
-      const mat = new THREE.ShaderMaterial({ vertexShader: STALL_VERT, fragmentShader: STALL_FRAG, uniforms: { ...cu, uBulb: { value: new THREE.Vector3(b[0], b[1], b[2]) } } });
+      const mat = new THREE.ShaderMaterial({ vertexShader: STALL_VERT, fragmentShader: STALL_FRAG, uniforms: { ...cu, uBulb: { value: new THREE.Vector3(b[0], b[1], b[2]) }, uSigns: { value: this.signs } } });
       const mesh = new THREE.Mesh(geo, mat);
       mesh.frustumCulled = false;
       this.scene.add(mesh);
@@ -251,7 +320,7 @@ class Engine {
       this.bulbMat = new THREE.ShaderMaterial({
         vertexShader: GLOW_VERT,
         fragmentShader: GLOW_FRAG,
-        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.2 }, uGain: { value: 1 } },
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.2 }, uMaxPx: { value: 38 }, uGain: { value: 1 } },
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
@@ -294,7 +363,7 @@ class Engine {
       this.stringMat = new THREE.ShaderMaterial({
         vertexShader: GLOW_VERT,
         fragmentShader: GLOW_FRAG,
-        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 1.6 }, uGain: { value: 1 } },
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 1.6 }, uMaxPx: { value: 16 }, uGain: { value: 1 } },
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
@@ -321,7 +390,7 @@ class Engine {
       this.glowMat = new THREE.ShaderMaterial({
         vertexShader: GLOW_VERT,
         fragmentShader: GLOW_FRAG,
-        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.4 }, uGain: { value: 1 } },
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.0 }, uMaxPx: { value: 11 }, uGain: { value: 1 } },
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
@@ -371,7 +440,7 @@ class Engine {
       const mat = new THREE.ShaderMaterial({ vertexShader: PLANE_VERT, fragmentShader: PLANE_FRAG, uniforms: { ...cu, map: { value: tex }, uOpacity: { value: 1 }, uEmis: { value: 0.55 } }, transparent: true, side: THREE.DoubleSide });
       const mesh = new THREE.Mesh(new THREE.PlaneGeometry(8.8, 1.1), mat);
       mesh.position.set(x, 4.3, 0);
-      mesh.rotation.y = Math.PI / 2;
+      mesh.rotation.y = -Math.PI / 2; // lettering reads for a camera coming from -x
       mesh.visible = false;
       this.scene.add(mesh);
       this.banners.push({ mesh, mat });
@@ -385,6 +454,10 @@ class Engine {
     this.composer.addPass(new RenderPass(this.scene, this.camera));
     this.bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.6, 0.55, 0.8);
     this.composer.addPass(this.bloom);
+    this.tilt = new ShaderPass(
+      new THREE.ShaderMaterial({ vertexShader: GRADE_VERT, fragmentShader: TILT_FRAG, uniforms: { tDiffuse: { value: null }, uFocus: { value: 0.5 }, uBand: { value: 0.12 }, uAmt: { value: 0 }, uRes: { value: new THREE.Vector2(W, H) } } }),
+    );
+    this.composer.addPass(this.tilt);
     this.composer.addPass(new OutputPass());
     this.grade = new ShaderPass(
       new THREE.ShaderMaterial({ vertexShader: GRADE_VERT, fragmentShader: GRADE_FRAG, uniforms: { tDiffuse: { value: null }, uTime: { value: 0 }, uVig: { value: 0.5 }, uGrain: { value: 0.024 }, uFade: { value: 0 } } }),
@@ -402,8 +475,8 @@ class Engine {
     cu.uFogD.value = s.fogD ?? 0.0016;
     // night -> morning: sky, fog, ambient
     const mixC = (a: string, b: string, t: number) => C(a).lerp(C(b), t);
-    (cu.uFog.value as THREE.Color).copy(mixC("#0b1322", "#7d8fa6", day));
-    (cu.uAmb.value as THREE.Color).copy(mixC("#0b1220", "#3a4658", day));
+    (cu.uFog.value as THREE.Color).copy(mixC("#0b1322", "#8e8f99", day));
+    (cu.uAmb.value as THREE.Color).copy(mixC("#0b1220", "#2c3240", day));
     (this.skyU.uTop.value as THREE.Color).copy(mixC("#03060d", "#2d4f7c", day));
     (this.skyU.uHor.value as THREE.Color).copy(mixC("#0e1828", "#a9b6c6", day));
     (this.skyU.uGlow.value as THREE.Color).copy(mixC("#2a2236", "#ffb27a", day));
@@ -424,7 +497,7 @@ class Engine {
         aS[i * 4] = lit;
         aS[i * 4 + 1] = sv;
         aS[i * 4 + 2] = st.hue;
-        aS[i * 4 + 3] = 0;
+        aS[i * 4 + 3] = st.sign;
         aE[i * 4] = (o?.screen ?? 0.35 + 0.65 * lit) * (st.kind === 0 ? 1 : 0);
         aE[i * 4 + 1] = o?.sign ?? 0.9;
         aE[i * 4 + 2] = o?.keep ? 1 : 0;
@@ -464,14 +537,18 @@ class Engine {
         let vis = o?.vis ?? 1;
         if (st.id === HERO_IDS.folded && o?.vis === undefined) vis = 0;
         const keep = o?.keep ? 1 : 0;
-        const g = (st.near ? 1 : far) * (1 - dim * 0.8 * (1 - keep));
+        const rv = s.reveal ?? 1e9;
+        const dd = Math.hypot(st.x * 0.6, st.z);
+        const on = Math.min(1, Math.max(0, (rv - dd) / 40));
+        const g = (st.near ? 1 : far) * (1 - dim * 0.8 * (1 - keep)) * on;
         // brighter stalls glow larger and whiter-gold
         const warm = Math.min(1, sv * 1.4);
-        Cc[i * 4 + 3] = 0.22 + 0.75 * sv;
-        K[i * 4] = 1.0;
-        K[i * 4 + 1] = 0.6 + 0.25 * warm;
-        K[i * 4 + 2] = 0.3 + 0.25 * warm;
-        K[i * 4 + 3] = lit * vis * g * (0.5 + 3.5 * sv);
+        const cool = st.tint;
+        Cc[i * 4 + 3] = 0.22 + 0.75 * sv + 5.5 * sv * sv * sv * sv * (1 - equal);
+        K[i * 4] = 1.0 - 0.25 * cool;
+        K[i * 4 + 1] = 0.6 + 0.25 * warm + 0.25 * cool;
+        K[i * 4 + 2] = 0.3 + 0.25 * warm + 0.62 * cool;
+        K[i * 4 + 3] = Math.min(1.7, lit * vis * g * (0.5 + 3.5 * sv) * (equal * st.jit + (1 - equal)));
       });
       this.bulbK.needsUpdate = true;
       this.bulbC.needsUpdate = true;
@@ -499,6 +576,11 @@ class Engine {
       this.glowK.needsUpdate = true;
     }
 
+    this.blockMat.uniforms.uWin.value = (s.windows ?? 0.32) * (1 - 0.6 * day);
+    const tl = s.tilt ?? { focus: 0.5, band: 0.2, amt: 0 };
+    this.tilt.uniforms.uFocus.value = tl.focus;
+    this.tilt.uniforms.uBand.value = tl.band;
+    this.tilt.uniforms.uAmt.value = tl.amt;
     this.stringMat.uniforms.uGain.value = (s.stringLights ?? 1) * lampDay * (1 - (s.dim ?? 0) * 0.7);
 
     // company building
