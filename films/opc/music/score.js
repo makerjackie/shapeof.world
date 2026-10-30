@@ -19,8 +19,8 @@ const SECTIONS = [
   { from: 0, to: 5, kind: 'hook' }, // the dashboard, the market, the question
   { from: 6, to: 7, kind: 'title' }, // the licence
   { from: 8, to: 22, kind: 'groove' }, // the 煎饼 cart; hands
-  { from: 23, to: 29, kind: 'groove2' }, // the burden stays; more makers
-  { from: 30, to: 35, kind: 'drop' }, // one person can sell to the world; the cities' offers
+  { from: 23, to: 31, kind: 'groove2' }, // more makers; the cities help them set up; the burden stays
+  { from: 32, to: 35, kind: 'drop' }, // the second ceiling: one person can sell to the world
   { from: 36, to: 39, kind: 'breakdown' }, // but there is no street online
   { from: 40, to: 40, kind: 'build', anchor: 37 },
   { from: 41, to: 44, kind: 'drop2' }, // 34 -> 61
@@ -50,10 +50,12 @@ const CUES = [
   [19, 3, 'pour', 1.4, 8, 0.4], [20, 0, 'powerdown', 0.5], [21, 2.4, 'thud'], [22, 0, 'impact', 0.6], [22, 1, 'pop'],
   // more makers: stalls popping up along the street
   [23, 1, 'pour', 1.6, 34, 0.5], [24, 0, 'pour', 2, 40, 0.5],
+  // the cities' offers: policy cards
+  [25, 0, 'whoosh'], [25, 2.2, 'swish', 0.7], [26, 0.6, 'swish', 0.7], [26, 3.0, 'swish', 0.7],
   // the burden
-  [25, 1, 'swish', 0.6], [26, 2.4, 'pop', 0.5], [27, 3.2, 'swish', 0.5], [28, 3.6, 'thud'],
-  // the world opens; policy cards
-  [30, 0, 'boom'], [31, 0, 'shimmer'], [32, 1.4, 'whoosh'], [33, 0, 'swish', 0.7], [33, 3.6, 'swish', 0.7], [34, 3.2, 'swish', 0.7],
+  [28, 0, 'swish', 0.6], [29, 0.8, 'pop', 0.5], [30, 0.8, 'swish', 0.5], [31, 0.2, 'thud'],
+  // the second ceiling: the world opens
+  [32, 0, 'boom'], [33, 0, 'shimmer'],
   // the turn; the count to 61
   [36, 0, 'powerdown'], [37, 0, 'shimmer'], [41, 0, 'boom'], [41, 0, 'pour', 2.6, 34, 0.5], [42, 2.4, 'pour', 2.4, 27, 0.5], [44, 0, 'ding'],
   // why; television; AI

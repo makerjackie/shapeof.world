@@ -1,8 +1,14 @@
 // GLSL for the night market. Everything fogs toward the horizon colour with the same exponential haze.
 
 const COMMON = /* glsl */ `
-float hash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
-float hash1(float n) { return fract(sin(n * 91.3458) * 47453.5453); }
+// Hash without sine (Dave Hoskins): the sin() hash lost precision on large inputs and gave different patterns
+// from one render to the next (a QR sign that changed every frame, windows that blinked).
+float hash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+float hash1(float n) { return hash(vec2(n, n * 1.618)); }
 float vnoise(vec2 p) {
   vec2 i = floor(p), f = fract(p);
   vec2 u = f * f * (3.0 - 2.0 * f);
@@ -104,6 +110,8 @@ ${COMMON}
 ${FOG}
 void main() {
   if (vE.w < 0.01) discard;
+  // the per-stall seed, snapped: interpolation noise in a varying would flip the hash from frame to frame
+  float sd = floor(vSeed * 1000.0 + 0.5) / 1000.0;
   int pt = int(vPart + 0.5);
   float lit = vS.x;
   float succ = vS.y;
@@ -117,14 +125,14 @@ void main() {
   } else if (pt == 1) {
     // the cloth hung on the front of the table, printed with the shop's name
     albedo = mix(vec3(0.78, 0.74, 0.66), paint, 0.62);
-    albedo *= 0.94 + 0.06 * sin(vUv.x * 22.0 + vSeed * 9.0);
+    albedo *= 0.94 + 0.06 * sin(vUv.x * 22.0 + sd * 9.0);
   } else if (pt == 2) {
     albedo = vec3(0.5, 0.52, 0.56);
   } else if (pt == 3) {
     albedo = vec3(0.03);
     if (abs(n.z) > 0.5) {
       // a working screen: a bright column of rows
-      float row = step(0.45, fract(vUv.y * 9.0)) * step(0.12, vUv.x) * step(vUv.x, 0.12 + 0.76 * hash(vec2(floor(vUv.y * 9.0), vSeed)));
+      float row = step(0.45, fract(vUv.y * 9.0)) * step(0.12, vUv.x) * step(vUv.x, 0.12 + 0.76 * hash(vec2(floor(vUv.y * 9.0), sd)));
       emis = vec3(0.55, 0.72, 1.0) * vE.x * (0.45 + 0.4 * row);
     }
   } else if (pt == 4) {
@@ -148,7 +156,7 @@ void main() {
     emis = vec3(1.0, 0.72, 0.42) * 0.55 * lit;
   } else if (pt == 8) {
     albedo = vec3(0.04);
-    emis = vec3(1.0, 0.32, 0.06) * 0.35 * lit * (0.8 + 0.2 * sin(uTime * 3.0 + vSeed * 10.0));
+    emis = vec3(1.0, 0.32, 0.06) * 0.35 * lit * (0.8 + 0.2 * sin(uTime * 3.0 + sd * 10.0));
   } else if (pt == 9) {
     albedo = vec3(0.025);
   } else if (pt == 10) {
@@ -157,7 +165,7 @@ void main() {
   } else if (pt == 11) {
     // the payment QR sign
     vec2 g = floor(vUv * 21.0);
-    float m = step(0.5, hash(g + vSeed));
+    float m = step(0.5, hash(g + sd));
     vec2 c3 = min(g, 20.0 - g);
     float finder = step(c3.x, 6.0) * step(c3.y, 6.0);
     if (finder > 0.5) {
@@ -375,7 +383,7 @@ void main() {
     vec2 c = floor(f);
     vec2 q = fract(f);
     float win = step(0.12, q.x) * step(q.x, 0.88) * step(0.22, q.y) * step(q.y, 0.86);
-    float id = hash(c + n.xz * 13.0);
+    float id = hash(c + floor(n.xz * 1.5 + 0.5) * 13.0);
     float on = step(uOff, id * 0.999);
     // inside: warm ceiling light, a desk band, a monitor
     vec3 room = vec3(1.0, 0.84, 0.6) * (0.55 + 0.25 * hash(c * 1.7));
@@ -486,7 +494,9 @@ ${COMMON}
 ${FOG}
 void main() {
   vec3 n = normalize(vN);
-  vec3 wall = mix(vec3(0.035, 0.038, 0.045), vec3(0.055, 0.05, 0.047), vSeed);
+  float sd = floor(vSeed * 1000.0 + 0.5) / 1000.0;
+  vec2 fn = floor(n.xz * 1.5 + 0.5); // -1, 0, 1 exactly
+  vec3 wall = mix(vec3(0.035, 0.038, 0.045), vec3(0.055, 0.05, 0.047), sd);
   vec3 col = wall * (uAmb * 6.0 + 0.025);
   // light from the stall lamps below, fading up the wall
   col += vec3(1.0, 0.6, 0.3) * 0.05 * exp(-vL.y / 2.5) * step(n.y, 0.5);
@@ -498,14 +508,14 @@ void main() {
     vec2 c = floor(f);
     vec2 q = fract(f);
     float win = step(0.26, q.x) * step(q.x, 0.74) * step(0.32, q.y) * step(q.y, 0.82) * step(0.0, f.y) * step(vL.y, vSize.y - 0.9);
-    float id = hash(c + vec2(vSeed * 37.0, n.x * 5.0 + n.z * 11.0));
+    float id = hash(c + vec2(sd * 37.0, fn.x * 5.0 + fn.y * 11.0));
     float on = step(1.0 - uWin, id);
-    vec3 room = mix(vec3(1.0, 0.62, 0.3), vec3(0.62, 0.78, 1.0), step(0.88, hash(c * 3.1 + vSeed)));
+    vec3 room = mix(vec3(1.0, 0.62, 0.3), vec3(0.62, 0.78, 1.0), step(0.88, hash(c * 3.1 + sd)));
     float wx = (q.x - 0.26) / 0.48;
     float wy = (q.y - 0.32) / 0.5;
     room *= (0.16 + 0.42 * hash(c + 0.3)) * (0.35 + 0.9 * wy);
     // half the rooms have blinds drawn; the others a lamp somewhere in the room
-    float blinds = step(0.5, hash(c * 7.7 + vSeed));
+    float blinds = step(0.5, hash(c * 7.7 + sd));
     room *= mix(1.0 - 0.35 * smoothstep(0.42, 0.5, abs(fract(wy * 7.0) - 0.5)), 1.0, 1.0 - blinds);
     room *= mix(1.0, 0.45 + 0.9 * exp(-((wx - hash(c + 1.3)) * 3.0) * ((wx - hash(c + 1.3)) * 3.0)), 1.0 - blinds);
     // mullion

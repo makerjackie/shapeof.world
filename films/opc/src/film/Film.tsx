@@ -59,7 +59,7 @@ export const Film: React.FC = () => {
       <Scrim at={S(3.2)} out={S(4.65)} kind="tl" k={0.7} />
       <At x={120} y={170}>
         <Line at={S(3.25)} out={S(4.65)} size={52} weight={700} parts={["可在网上晒出真实收入的 5,079 个小生意里，"]} />
-        <Line at={S(3.6)} out={S(4.65)} size={88} parts={["一半，每月赚不到 ", { t: "1,100 块", c: G }]} />
+        <Line at={S(3.6)} out={S(4.65)} size={88} parts={["一半，每月收入不到 ", { t: "1,100 块", c: G }]} />
       </At>
       <Note at={S(3.4)} out={S(4.65)}>Indie Hackers 分析 TrustMRR 上 5,079 个经 Stripe 核验收入的项目，月收入中位数 $169（按 1 美元约 6.72 元），2026 年 3 月</Note>
 
@@ -130,7 +130,7 @@ export const Film: React.FC = () => {
       })}
       <At x={120} y={140}>
         <Line at={S(18.4)} out={S(19.7)} size={66} weight={700} parts={["以前，每样活都得雇人干"]} />
-        <Line at={S(19.7)} out={S(21.4)} size={66} weight={700} parts={["现在，", { t: "按月租、按次买", c: K.screen }, "就行"]} />
+        <Line at={S(19.7)} out={S(21.4)} size={62} weight={700} parts={["现在，", { t: "按月租个 AI、按次买个服务", c: K.screen }, "就行"]} />
         <Line at={S(21.65)} out={S(23.1)} size={80} parts={["一家公司要的人，越来越少"]} />
       </At>
 
@@ -141,31 +141,33 @@ export const Film: React.FC = () => {
       <Counter at={S(23.5)} out={S(25.1)} />
       <Note at={S(23.6)} out={S(25.1)}>RevenueCat：每月新上线的订阅收费 App，2022 年 1 月约 2,000 个，2026 年 1 月 14,700 多个（数据来自 Appfigures）</Note>
 
-      {/* the burden stays with the one person */}
-      <Scrim at={S(25.2)} out={S(30.0)} kind="tl" k={0.6} />
-      <At x={110} y={140} gap={8}>
-        <Line at={S(25.25)} out={S(26.6)} size={66} weight={700} parts={["活，可以交给 AI；"]} />
-        <Line at={S(25.6)} out={S(26.6)} size={88} parts={["担子，", { t: "交不出去", c: G }]} />
-        <Line at={S(26.6)} out={S(27.8)} size={62} weight={700} parts={["社保：公司那份、个人那份，都是你出"]} />
-        <Line at={S(27.8)} out={S(29.95)} size={56} weight={700} parts={["开的要是一人有限公司，公司欠了债，"]} />
-        <Line at={S(28.15)} out={S(29.95)} size={56} weight={700} parts={["你得自己证明：公司的钱和家里的钱，是分开的"]} />
-        <Line at={S(28.9)} out={S(29.95)} size={72} parts={["证明不了，就要", { t: "一起还", c: K.red }]} />
+      {/* the cities help people set up (the hands side) */}
+      <Scrim at={S(25.05)} out={S(28.0)} kind="tl" k={0.55} />
+      <At x={110} y={140}>
+        <Line at={S(25.05)} out={S(27.95)} size={64} weight={700} parts={["不少地方还在帮人摆摊：", { t: "送工位、送算力", c: G }]} />
       </At>
-      <Note at={S(27.9)} out={S(29.95)}>《公司法》（2023 修订）第二十三条第三款：只有一个股东的公司，股东不能证明公司财产独立于自己的财产的，对公司债务承担连带责任</Note>
+      <DocCard at={S(25.55)} out={S(27.95)} x={100} y={560} org="工信部" date="2026 年 9 月" quote={<>“鼓励各地对……‘一人公司’、超级个体等微型主体给予包容支持”</>} />
+      <DocCard at={S(26.15)} out={S(27.95)} x={1060} y={300} org="广东省发改委" date="2026 年 3 月" quote="到 2028 年，建成 100 个人工智能 OPC 社区" />
+      <DocCard at={S(26.75)} out={S(27.95)} x={1060} y={590} org="成都（征求意见稿）" date="2026 年 3 月" quote="工位免租 3 个月；算力券每年最高 500 万元" note="算力券：政府发券，帮你付 AI 的钱" />
+
+      {/* the burden stays with the one person */}
+      <Scrim at={S(28.05)} out={S(32.0)} kind="tl" k={0.6} />
+      <At x={110} y={140} gap={8}>
+        <Line at={S(28.05)} out={S(29.2)} size={66} weight={700} parts={["活，可以交给 AI；"]} />
+        <Line at={S(28.35)} out={S(29.2)} size={88} parts={["担子，", { t: "交不出去", c: G }]} />
+        <Line at={S(29.2)} out={S(30.2)} size={62} weight={700} parts={["社保：公司那份、个人那份，都是你出"]} />
+        <Line at={S(30.2)} out={S(31.95)} size={56} weight={700} parts={["开的要是一人有限公司，公司欠了债，"]} />
+        <Line at={S(30.5)} out={S(31.95)} size={56} weight={700} parts={["你得自己证明：公司的钱和家里的钱，是分开的"]} />
+        <Line at={S(31.05)} out={S(31.95)} size={72} parts={["证明不了，就要", { t: "一起还", c: K.red }]} />
+      </At>
+      <Note at={S(30.3)} out={S(31.95)}>《公司法》（2023 修订）第二十三条第三款：只有一个股东的公司，股东不能证明公司财产独立于自己的财产的，对公司债务承担连带责任</Note>
 
       {/* ---------- 5. the second ceiling: the street ---------- */}
       <At x={960} y={400} align="center">
-        <Line at={S(30.05)} out={S(32.2)} size={36} weight={700} color={G} parts={["第二道天花板：街"]} />
-        <Line at={S(30.25)} out={S(32.2)} size={70} weight={700} parts={["网上，一个人"]} />
-        <Line at={S(30.6)} out={S(32.2)} size={104} parts={["也能卖给全世界的人"]} />
+        <Line at={S(32.05)} out={S(35.9)} size={36} weight={700} color={G} parts={["第二道天花板：街"]} />
+        <Line at={S(32.3)} out={S(35.9)} size={70} weight={700} parts={["网上，一个人"]} />
+        <Line at={S(32.7)} out={S(35.9)} size={104} parts={["也能卖给全世界的人"]} />
       </At>
-      <Scrim at={S(32.35)} out={S(36.3)} kind="tl" k={0.55} />
-      <At x={110} y={140}>
-        <Line at={S(32.4)} out={S(36.25)} size={64} weight={700} parts={["各地开始给一人公司", { t: "送工位、送算力", c: G }]} />
-      </At>
-      <DocCard at={S(33.0)} out={S(36.25)} x={100} y={560} org="工信部" date="2026 年 9 月" quote={<>“鼓励各地对……‘一人公司’、超级个体等微型主体给予包容支持”</>} />
-      <DocCard at={S(33.9)} out={S(36.25)} x={1060} y={300} org="广东省发改委" date="2026 年 3 月" quote="到 2028 年，建成 100 个人工智能 OPC 社区" />
-      <DocCard at={S(34.8)} out={S(36.25)} x={1060} y={590} org="成都（征求意见稿）" date="2026 年 3 月" quote="工位免租 3 个月；算力券每年最高 500 万元" note="算力券：政府发券，帮你付 AI 的钱" />
 
       {/* ---------- 6. the turn ---------- */}
       <At x={120} y={160} gap={10}>
@@ -177,7 +179,7 @@ export const Film: React.FC = () => {
       <Scrim at={S(40.0)} out={S(44.9)} kind="tl" k={0.6} />
       <At x={110} y={130} gap={4}>
         <Line at={S(40.05)} out={S(44.9)} size={58} weight={700} parts={["做得最好的那 10%，"]} />
-        <Line at={S(40.35)} out={S(44.9)} size={58} weight={700} parts={["赚的是普通那家的几倍？"]} />
+        <Line at={S(40.35)} out={S(44.9)} size={58} weight={700} parts={["收入是普通那家的几倍？"]} />
       </At>
       {(() => {
         // number the counted lamps, skipping labels that would crowd the one before (far down the row)
@@ -238,9 +240,9 @@ export const Film: React.FC = () => {
       <Scrim at={S(61.0)} out={S(73.1)} kind="tl" k={0.62} />
       <At x={110} y={130} gap={12}>
         <Line at={S(61.0)} out={S(66.95)} size={80} color={G} parts={["第一，让人找到你"]} />
-        <Line at={S(61.8)} out={S(66.95)} size={52} weight={700} parts={["开头那家：创始人之前就在创业圈做了好几年"]} />
-        <Line at={S(63.2)} out={S(66.95)} size={52} weight={700} parts={["那个建站工具，是他边做边在网上公开记录，"]} />
-        <Line at={S(63.6)} out={S(66.95)} size={52} weight={700} parts={["靠", { t: "口口相传", c: G }, "传开的"]} />
+        <Line at={S(61.8)} out={S(66.95)} size={52} weight={700} parts={["开头那家：创始人边做边在网上公开记录每一步，"]} />
+        <Line at={S(62.4)} out={S(66.95)} size={52} weight={700} parts={["他本来就在创业圈做了好几年"]} />
+        <Line at={S(63.6)} out={S(66.95)} size={52} weight={700} parts={["那个建站工具，是靠", { t: "口口相传", c: G }, "传开的"]} />
       </At>
       <Note at={S(61.9)} out={S(66.95)}>TechCrunch 2025-06-18：Base44 主要靠创始人在 LinkedIn 和 X 上分享制作过程、口口相传扩散；他此前因创办 Explorium 在以色列创业圈已有名气</Note>
       <At x={110} y={130}>
@@ -258,8 +260,8 @@ export const Film: React.FC = () => {
       </At>
 
       {/* ---------- 9. morning ---------- */}
-      <Scrim at={S(76.3)} out={S(82.8)} kind="tl" k={0.45} />
-      <At x={120} y={150} gap={10}>
+      <Scrim at={S(76.3)} out={S(82.8)} kind="bl" k={0.62} />
+      <At x={120} y={700} gap={10}>
         <Line at={S(76.4)} out={S(78.6)} size={62} weight={700} parts={["这辆煎饼车最值钱的，"]} />
         <Line at={S(76.8)} out={S(78.6)} size={74} parts={["是每天早上都会来的那些人"]} />
         <Line at={S(78.65)} out={S(80.0)} size={74} parts={["网上，没有现成的街护着你"]} />

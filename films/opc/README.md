@@ -1,8 +1,8 @@
 # 一人公司（OPC）的形状
 
-3:02、1920×1080、30 fps 的中文短片，无旁白。重做自《独立开发者的形状》（`films/indie-dev`），旧片对照最新规范的问题清单见 `AUDIT.md`。
+3:05、1920×1080、30 fps 的中文短片，无旁白。重做自《独立开发者的形状》（`films/indie-dev`），旧片对照最新规范的问题清单见 `AUDIT.md`。
 
-- 故事：`STORY.md`；剧本：`SCRIPT.md`（v2，含冷读后的改动）；调研：`research/RESEARCH.md`（核过的数字）、`research/ZHIHU-NOTES.md`（知乎 37 个问题、505 个回答，只作观点参考）、`research/coldread/`。
+- 故事：`STORY.md`；剧本：`SCRIPT.md`（v6，含四轮冷读和逐帧比对后的改动）；调研：`research/RESEARCH.md`（核过的数字）、`research/ZHIHU-NOTES.md`（知乎 37 个问题、505 个回答，只作观点参考）、`research/coldread/`。
 - 发布文案和来源：`DESCRIPTION.md`。
 
 ## 画面
@@ -34,3 +34,4 @@ node tools/covers.mjs                    # 封面 → out/covers/
 - **泛光把 NaN/无穷大抹成大白团**：楼房着色器偶发出无穷大值，`UnrealBloomPass` 把它们抹成屏幕上 100 多像素的白团，而且只在某些机位出现。排查办法：关泛光（白团消失）→ 逐个隐藏物体（隐藏楼房后消失）。修法：着色器输出前 `if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);` 再 `clamp`；不要对可能为负的数用 `pow()`。
 - **RoundedBoxGeometry 没有索引**：和 BoxGeometry 合并前先 `toNonIndexed()`。
 - **zsh 里 `$F` 不分词**：传一串帧号要写 `${=F}`。
+- **sin() 哈希会闪**：`fract(sin(dot(p, …)) * 43758.5)` 对大输入精度不稳，插值来的 varying（法线、每个摊位的种子）又带 1e-7 的误差，结果在相邻帧、两次渲染之间翻转：一扇窗隔帧亮灭，收款码图案逐帧变。改用不带 sin 的哈希（Dave Hoskins），输入先取整（`floor(vSeed * 1000.0 + 0.5)`、法线四舍五入成 -1/0/1）。是靠"整片渲两遍、逐帧算 PSNR"抓到的：内容没变的段落出现 27 dB 的帧就要查，修好后最差 46 dB（只剩光晕和颗粒的噪声）。

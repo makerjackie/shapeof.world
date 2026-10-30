@@ -52,16 +52,17 @@ export const KEYS: [number, Cam][] = [
   // supply: along the street from the desk, as new stalls open on both sides
   [S(23.9), cam(FOLD.x + 8, 0.8, -0.5, 30, 64, 20)],
   [S(25.0), cam(FOLD.x + 10, 0.8, -0.5, 32, 70, 21)],
+  // the cities help people set up: low along the banners (stopping short of the first one at x = 58)
+  [S(25.7), cam(66, 3.6, 0, 32, 96, 5, 42)],
+  [S(27.8), cam(68, 3.8, 0, 27, 92, 4, 42)],
   // the burden: the one desk left
-  [S(25.8), cam(FOLD.x, 1.05, FOLD.z, 5.4, -14, 17)],
-  [S(29.8), cam(FOLD.x, 1.05, FOLD.z, 5.0, 8, 18)],
-  // 5 one person can sell to the whole world
-  [S(31.8), cam(80, 0, 0, 560, 58, 36)],
-  // policy: low along the banners (stopping short of the first one at x = 58)
-  [S(32.4), cam(66, 3.6, 0, 32, 96, 5, 42)],
-  [S(35.8), cam(68, 3.8, 0, 27, 92, 4, 42)],
-  // 6 the turn: up over the street (no walls in the way), then out to the whole market
-  [S(36.9), cam(70, 0, 0, 140, 84, 74)],
+  [S(28.7), cam(FOLD.x, 1.05, FOLD.z, 5.4, -14, 17)],
+  [S(31.6), cam(FOLD.x, 1.05, FOLD.z, 5.0, 8, 18)],
+  // 5 the second ceiling: straight up from the desk, then the whole world
+  [S(32.5), cam(FOLD.x, 0, FOLD.z + 2, 90, 10, 76)],
+  [S(33.9), cam(80, 0, 0, 560, 58, 36)],
+  [S(35.9), cam(84, 0, 0, 640, 58, 40)],
+  // 6 the turn: out to the whole market
   [S(39.2), cam(100, 0, 0, 1500, 52, 55)],
   [S(40.0), cam(100, 0, 0, 1550, 54, 56)],
   // the 61 stalls beside the star
@@ -142,7 +143,7 @@ export const worldAt = (t: number): WorldState => {
     else glows.push(g);
   };
   const win = (a: number, z: number, f = 0.6) => clamp01(Math.min((t - a) / f, (z - t) / f));
-  add(strollers(t, 700, win(S(1.8), S(3.6)) + win(S(23.2), S(25.4)) + win(S(30.0), S(36.2))));
+  add(strollers(t, 700, win(S(1.8), S(3.6)) + win(S(23.2), S(28.4)) + win(S(32.4), S(36.2))));
   add(flows(t, 3600, win(S(2.8), S(7.9)) + win(S(36.4), S(50.0)) + win(S(54.9), S(58.2)), Math.min(1, tail * 1.15)));
   add(cartStreet(t, win(S(7.8), S(16.2)), S(10.0), [S(15.2)]));
   add(regulars(t, S(58.4), win(S(58.4), S(61.4)) + win(S(67.2), S(73.2))));
@@ -167,9 +168,9 @@ export const worldAt = (t: number): WorldState => {
     dim,
     over,
     company,
-    banners: ramp(t, S(31.6), S(32.3)) * (1 - ramp(t, S(36.4), S(36.9))) + ramp(t, S(73.3), S(73.7)) * (1 - ramp(t, S(74.9), S(75.3))),
+    banners: ramp(t, S(25.0), S(25.6)) * (1 - ramp(t, S(28.3), S(28.6))) + ramp(t, S(73.3), S(73.7)) * (1 - ramp(t, S(74.9), S(75.3))),
     glows,
-    reveal: t < S(30) ? 1e9 : t < S(32) ? tween(t, S(30), S(31.8), 160, 3000, ESO) : 1e9,
+    reveal: t < S(32.4) ? 1e9 : t < S(34) ? tween(t, S(32.4), S(33.9), 160, 3000, ESO) : 1e9,
     farGain: c.dist > 250 ? 1 + 1.0 * clamp01(Math.log(c.dist / 250) / Math.log(6)) : 1,
     bloom: c.dist > 200 ? 0.45 : 0.6,
     exposure: 1 - 0.12 * day,
@@ -182,6 +183,6 @@ export const worldAt = (t: number): WorldState => {
 // Miniature look on the close shots: blur away from a band around the subject.
 const tiltAt = (t: number) => {
   const near = (a: number, z: number) => clamp01(Math.min((t - a) / 0.5, (z - t) / 0.5));
-  const k = Math.max(near(S(8.05), S(16.4)), near(S(25.7), S(30.0)), near(S(58.6), S(61.4)), near(S(67.4), S(73.2)), near(S(76.2), S(82.8)), near(S(40.9), S(45)) * 0.7);
+  const k = Math.max(near(S(8.05), S(16.4)), near(S(28.6), S(32.0)), near(S(58.6), S(61.4)), near(S(67.4), S(73.2)), near(S(76.2), S(82.8)), near(S(40.9), S(45)) * 0.7);
   return { focus: 0.54, band: 0.1, amt: 8 * k };
 };
