@@ -28,3 +28,6 @@
 .ve-world[data-view=inside] .ve-views{background:linear-gradient(90deg,#101820ed,#10182000);padding:4px 18px 4px 0}
 @media(max-width:700px){.ve-scale-note{left:18px;right:18px;bottom:219px;font-size:8px;max-width:290px}.ve-world .ve-locate{min-height:40px}}
 @media(max-width:700px){.ve-world[data-view=inside] .ve-scene{top:200px}}
+.experience-page[data-overlays-hidden=true] .ve-world{min-height:0}
+.experience-page[data-overlays-hidden=true] .ve-world>:not(.ve-scene){display:none!important}
+.experience-page[data-overlays-hidden=true] .ve-world .ve-scene{inset:0!important}
