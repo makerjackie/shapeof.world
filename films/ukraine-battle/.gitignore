@@ -3,3 +3,8 @@ public/*.jpg
 public/*.wav
 public/*.f32
 __pycache__/
+assets/
+blender/out/
+*.blend1
+public/trench/
+public/sample-*.wav
