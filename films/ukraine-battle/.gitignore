@@ -8,3 +8,4 @@ blender/out/
 *.blend1
 public/trench/
 public/sample-*.wav
+public/field/

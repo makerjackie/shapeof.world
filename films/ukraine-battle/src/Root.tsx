@@ -7,6 +7,7 @@ import { Cover } from "./film/Cover";
 import { SampleA, SampleB, SampleC } from "./samples/Samples";
 import { Still } from "remotion";
 import { SampleD, D_FPS, D_FRAMES } from "./samples/Trench";
+import { SampleE, E_FPS, E_FRAMES } from "./samples/Field";
 
 export const Root: React.FC = () => (
   <>
@@ -18,5 +19,6 @@ export const Root: React.FC = () => (
     <Composition id="SampleB" component={SampleB} durationInFrames={300} fps={30} width={1920} height={1080} />
     <Composition id="SampleC" component={SampleC} durationInFrames={300} fps={30} width={1920} height={1080} />
     <Composition id="SampleD" component={SampleD} durationInFrames={D_FRAMES} fps={D_FPS} width={1920} height={1080} />
+    <Composition id="SampleE" component={SampleE} durationInFrames={E_FRAMES} fps={E_FPS} width={1920} height={1080} />
   </>
 );
