@@ -20,7 +20,7 @@ const B2C: [number, number] = [B2.x + B2.w / 2, B2.y + B2.h / 2];
 // Gene symbols that Excel turns into dates, and some it leaves alone (Ziemann et al. 2016).
 const GENES: [string, string | null][] = [
   ["MARCH1", "1-Mar"],
-  ["SEPT2", "2-Sep"],
+  ["SEPT1", "1-Sep"],
   ["TP53", null],
   ["DEC1", "1-Dec"],
   ["MARCH5", "5-Mar"],
@@ -39,7 +39,7 @@ const GENES: [string, string | null][] = [
   ["PTEN", null],
 ];
 const VALS = ["2.31", "0.87", "1.42", "3.05", "0.66", "1.98", "2.74", "0.51", "1.13", "4.20", "0.92", "1.67", "2.08", "0.73", "1.35", "3.61", "0.48", "1.21"];
-export const FLIP_AT = (i: number) => (i === 0 ? ENTER : S(2.9) + (i - 1) * (BEAT / 2));
+export const FLIP_AT = (i: number) => (i === 0 ? ENTER : S(2.5) + (i - 1) * (BEAT / 2));
 
 // The wall of supplementary tables: 16 × 8 papers; ours is (7, 4). One in five turns red (deterministic pick).
 const PX = PS.w + 220;
@@ -62,19 +62,19 @@ const cam = (t: number) => {
   const k: CamKey[] = [
     [0, { ...CLOSE, z: 2.95 }],
     [ENTER + 0.3, CLOSE, EO],
-    [S(2.6), { ...CLOSE, z: 2.8 }],
-    [S(3.35), COLV, ESO],
+    [S(2.2), { ...CLOSE, z: 2.8 }],
+    [S(2.95), COLV, ESO],
     [S(4.05), COLV],
     [S(4.9), WALLV, ESO],
     [S(5.25), { ...WALLV, z: 0.06 }],
     [S(5.95), RENAME, ESO],
     [S(7.5), { ...RENAME, z: 2.15 }],
-    [S(9.5), { ...RENAME, z: 1.2 }, EIO],
+    [S(8.9), { ...RENAME, z: 1.3 }, EIO],
   ];
   return camAt(t, k, ESO);
 };
 
-export const OPEN_END = S(9.5);
+export const OPEN_END = S(8.9);
 export const RENAME_AT = S(6.05);
 const RENAME2_AT = S(6.75);
 
@@ -92,7 +92,7 @@ export const Open: React.FC = () => {
     if (t < RENAME_AT) return { s: "1-Mar", caret: false, date: true, k: ramp(t, ENTER, ENTER + 0.5, EO) };
     return { s: typed("MARCHF1", t, RENAME_AT + 0.08, 16), caret: t < RENAME_AT + 0.6, date: false, k: 0, fixed: ramp(t, RENAME_AT + 0.55, RENAME_AT + 0.9, EO) };
   })();
-  const formula = t < ENTER ? b2.s : t < RENAME_AT ? "2026/3/1" : t < RENAME2_AT ? b2.s : typed("SEPTIN2", t, RENAME2_AT + 0.05, 16);
+  const formula = t < ENTER ? b2.s : t < RENAME_AT ? "2026/3/1" : t < RENAME2_AT ? b2.s : typed("SEPTIN1", t, RENAME2_AT + 0.05, 16);
   const nameBox = t < RENAME2_AT ? "B2" : "B3";
   const flash = (at: number) => Math.exp(-Math.max(0, t - at) / 0.35) * (t >= at ? 1 : 0);
   return (
@@ -130,7 +130,7 @@ export const Open: React.FC = () => {
               red = b2.date;
             }
             if (isB3 && t >= RENAME2_AT) {
-              text = typed("SEPTIN2", t, RENAME2_AT + 0.05, 16);
+              text = typed("SEPTIN1", t, RENAME2_AT + 0.05, 16);
               right = false;
               red = false;
             }
@@ -151,18 +151,18 @@ export const Open: React.FC = () => {
               </React.Fragment>
             );
           })}
-          <Sel x={B2.x} y={t < RENAME2_AT ? B2.y : B2.y + RH_} w={B2.w} h={B2.h} o={1 - ramp(t, S(2.7), S(3.0)) + ramp(t, RENAME_AT - 0.3, RENAME_AT)} />
+          <Sel x={B2.x} y={t < RENAME2_AT ? B2.y : B2.y + RH_} w={B2.w} h={B2.h} o={1 - ramp(t, S(2.3), S(2.6)) + ramp(t, RENAME_AT - 0.3, RENAME_AT)} />
         </Paper>
       </World>
       <Chrome o={clamp01(chrome)} name={nameBox} formula={<span style={{ fontFamily: NUM }}>{formula}</span>} />
       {/* type: on the paper in the close-ups, on the dark beside the column, on a band over the wall */}
-      <Note x={150} y={640} at={S(0.5)} out={S(2.75)} tail={[600, 420]}>
+      <Note x={150} y={640} at={S(0.5)} out={S(2.3)} tail={[600, 420]}>
         <Say at={S(0.5)} parts={[{ t: "MARCH1", num: true }, "，人类的一个基因。"]} size={56} color={K.ink} shadow="none" />
         <Say at={S(1.25)} parts={["在 Excel 里一回车，它变成了", { t: "日期", c: "#d22b2b" }, "。"]} size={56} color={K.ink} shadow="none" />
       </Note>
       {win(t, S(4.05), S(5.45), 0.3, 0.3) > 0 ? <div style={{ position: "absolute", left: 0, top: 560, width: 1920, height: 440, background: "linear-gradient(180deg, transparent, rgba(7,8,10,0.88) 30%, rgba(7,8,10,0.88) 75%, transparent)", opacity: win(t, S(4.05), S(5.45), 0.3, 0.3) }} /> : null}
       <Box x={90} y={650}>
-        <Say at={S(4.1)} out={S(5.45)} parts={["十年里，论文附带的基因表格，"]} size={60} />
+        <Say at={S(2.6)} out={S(5.45)} parts={["十年里，论文附带的基因表格，"]} size={52} />
         <Say at={S(4.55)} out={S(5.45)} parts={["约", { t: "五分之一", c: "#ff6b6b" }, "被改错了。"]} size={76} />
       </Box>
       <Note2 at={S(4.55)} out={S(5.45)}>Ziemann 等, Genome Biology 2016：18 种期刊 2005–2015 年，带 Excel 基因表的 3,597 篇论文里 704 篇（19.6%）</Note2>
@@ -179,7 +179,7 @@ export const Open: React.FC = () => {
 };
 
 const Question: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, S(7.55), S(9.45), 0.2, 0.3);
+  const o = win(t, S(7.55), S(8.8), 0.2, 0.25);
   if (o <= 0) return null;
   const k = ramp(t, S(7.55), S(8.0), EO);
   return (

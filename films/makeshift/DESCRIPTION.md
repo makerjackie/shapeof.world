@@ -30,7 +30,6 @@
 - 基因改名：Bruford 等《Guidelines for human gene nomenclature》，Nature Genetics 52，2020
 - 英国漏报病例：英国公共卫生署声明，2020-10-05（9 月 25 日至 10 月 2 日 15,841 例）；Fetzer & Graeber《Measuring the scientific effectiveness of contact tracing: Evidence from a natural experiment》，PNAS 118(33)，2021（约 4.8 万名密接未被及时追踪，为该研究估计）
 - 表格审计：Panko《What We Don't Know About Spreadsheet Errors Today》，EuSpRIG 2015（85 张实地审计的表格，94% 有错）
-- 画自行车：Lawson《The science of cycology》，Memory & Cognition 34(8)，2006
 - xz 后门：CVE-2024-3094；Lasse Collin，xz-devel 邮件列表 2022-06-08；Andres Freund，oss-security 邮件列表 2024-03-29
 - 护士：Tucker & Edmondson《Why hospitals don't learn from failures》，California Management Review 45(2)，2003
 - 航空报告：NASA Aviation Safety Reporting System 简报，2025 年数据

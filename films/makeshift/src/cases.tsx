@@ -8,7 +8,7 @@ import { Chrome, Note, Tile } from "./sheet";
 import { FONT, K, NUM } from "./theme";
 import { S } from "./time";
 
-export const CASES_IN = S(9.5);
+export const CASES_IN = S(8.75);
 export const CASES_OUT = S(18);
 const LAST = 65536;
 const RHT = 58;
@@ -185,8 +185,8 @@ export const Cases: React.FC = () => {
       <Box x={130} y={800}>
         <Say at={S(16.1)} out={S(17.9)} parts={["研究者审计过 ", { t: "85", num: true }, " 张真实的表格："]} size={52} />
       </Box>
-      <Box x={1000} y={770}>
-        <Say at={S(16.9)} out={S(17.9)} parts={[{ t: "94%", num: true, c: "#ff6b6b" }, " 有错。"]} size={110} />
+      <Box x={930} y={780}>
+        <Say at={S(16.9)} out={S(17.9)} parts={[{ t: "94%", num: true, c: "#ff6b6b" }, " 至少有一处错。"]} size={96} />
       </Box>
       <Note2 at={S(16.9)} out={S(17.9)}>Panko 2015（EuSpRIG 会议）汇总的实地审计，共 85 张表格。</Note2>
     </div>

@@ -84,7 +84,7 @@ const Field: React.FC<{ t: number; o: number; fade: number }> = ({ t, o, fade })
       const gone = i === SURVIVOR ? 0 : ramp(t, S(66.6) + (i / REDS.length) * 1.4, S(66.6) + (i / REDS.length) * 1.4 + 0.25);
       const a = 1 - gone;
       if (a <= 0) return;
-      const r = Math.max(z / 2, 6);
+      const r = Math.max(z / 2, 8);
       const px = sx(x + 0.5);
       const py = sy(y + 0.5);
       if (px < -50 || px > 1970 || py < -50 || py > 1130) return;
@@ -112,7 +112,7 @@ const Field: React.FC<{ t: number; o: number; fade: number }> = ({ t, o, fade })
       g.stroke();
     }
   });
-  return <canvas ref={ref} width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, opacity: o * (1 - 0.9 * fade) }} />;
+  return <canvas ref={ref} width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, opacity: o * (1 - fade) }} />;
 };
 
 // the hospital checklist for the "but"
@@ -144,6 +144,17 @@ export const Climax: React.FC = () => {
       {fieldO > 0 ? <Field t={t} o={fieldO} fade={gold} /> : null}
       {/* labels for the field */}
       <div style={{ position: "absolute", left: 960 + 90, top: 560 - 30, fontFamily: HAN, fontWeight: 800, fontSize: 40, color: K.ink, opacity: win(t, S(64.1), S(64.7), 0.2, 0.25) }}>一格 = 一人次登机</div>
+      {fieldO > 0 ? (() => {
+        const z = gridCam(t).z;
+        const L = [1, 10, 100, 1000].find((l) => z * l >= 12) ?? 1000;
+        const n = L * L;
+        const label = n >= 10000 ? `${n / 10000} 万人次` : `${n} 人次`;
+        return (
+          <div style={{ position: "absolute", left: 1480, top: 470, padding: "10px 20px", background: "rgba(7,8,10,0.82)", fontFamily: HAN, fontWeight: 700, fontSize: 28, color: K.fg, opacity: ramp(t, S(64.7), S(65.0)) * (1 - gold) }}>
+            每个小格 = <span style={{ fontFamily: NUM }}>{label}</span>
+          </div>
+        );
+      })() : null}
       {fieldO > 0 ? (
         <div style={{ position: "absolute", left: 1480, top: 150, width: 420, padding: "18px 24px", background: "rgba(7,8,10,0.82)", opacity: ramp(t, S(65.2), S(65.6)) * (1 - gold), fontFamily: NUM }}>
           <div style={{ fontSize: 26, color: K.sub, fontFamily: HAN, fontWeight: 600 }}>{risk < 0.5 ? "按 1968–77 年的风险" : "按 2018–22 年的风险"}</div>
@@ -153,14 +164,14 @@ export const Climax: React.FC = () => {
           </div>
         </div>
       ) : null}
-      {fieldO > 0 && gold <= 0.01 ? <div style={{ position: "absolute", left: 0, top: 780, width: 1920, height: 260, background: "linear-gradient(180deg, transparent, rgba(7,8,10,0.88) 35%)", opacity: ramp(t, S(65), S(65.4)) }} /> : null}
+      {fieldO > 0 && gold <= 0.01 ? <div style={{ position: "absolute", left: 0, top: 780, width: 1920, height: 260, background: "linear-gradient(180deg, transparent, rgba(7,8,10,0.88) 35%)", opacity: ramp(t, S(64.5), S(64.9)) }} /> : null}
       <Box x={110} y={850}>
-        <Say at={S(65.1)} out={S(66.5)} parts={[{ t: "50", num: true }, " 年前，每 ", { t: "35 万", num: true, c: "#ff6b6b" }, "人次坐飞机，就有 1 人遇难。"]} size={50} />
+        <Say at={S(64.6)} out={S(66.5)} parts={[{ t: "50", num: true }, " 年前，每 ", { t: "35 万", num: true, c: "#ff6b6b" }, "人次坐飞机，就有 1 人遇难。"]} size={50} />
       </Box>
       <Box x={110} y={850}>
         <Say at={S(66.6)} out={S(67.5)} parts={["现在，", { t: "1,370 万", num: true, c: K.ok }, "人次，才有 1 人。"]} size={56} />
       </Box>
-      <Note2 at={S(65.1)} out={S(67.5)}>Barnett, MIT, 2024：每次登机的遇难风险，1968–77 年约 35 万分之一，2018–22 年约 1,370 万分之一。红点位置为示意。</Note2>
+      <Note2 at={S(64.6)} out={S(67.5)}>Barnett, MIT, 2024：每次登机的遇难风险，1968–77 年约 35 万分之一，2018–22 年约 1,370 万分之一。红点位置为示意。</Note2>
       {/* the discovery */}
       {gold > 0 ? (
         <div style={{ position: "absolute", inset: 0, opacity: gold }}>
@@ -172,7 +183,7 @@ export const Climax: React.FC = () => {
         </div>
       ) : null}
       {/* the but */}
-      <Checklist x={1150} y={190} t={t} ticks={HOSP.map((_, i) => HTICK(i))} title="手术安全核对单" items={HOSP} o={listO} extra={{ label: "护士可以当场叫停", at: S(71.9) }} />
+      <Checklist x={1150} y={190} t={t} ticks={HOSP.map((_, i) => HTICK(i))} title="手术安全核对单" items={HOSP} o={listO} extra={{ label: "护士有权当场叫停", at: S(71.9) }} />
       <Box x={110} y={250}>
         <Say at={S(69.75)} out={S(73.4)} parts={[{ t: "但是", c: K.tape }, "，光抄清单没用。"]} size={60} />
       </Box>
@@ -181,7 +192,7 @@ export const Climax: React.FC = () => {
         <Say at={S(70.75)} out={S(73.4)} parts={["死亡率没明显变化。"]} size={42} />
       </Box>
       <Box x={110} y={600}>
-        <Say at={S(71.9)} out={S(73.4)} parts={["管用的医院，", { t: "护士能当场叫停医生", c: K.ok }, "。"]} size={42} />
+        <Say at={S(71.9)} out={S(73.4)} parts={["管用的医院，", { t: "护士有权当场叫停", c: K.ok }, "。"]} size={42} />
         <Say at={S(72.5)} out={S(73.4)} parts={["差别在于：问题能不能", { t: "说出来", c: K.tape }, "。"]} size={50} />
       </Box>
       <Note2 at={S(70.3)} out={S(73.4)}>Urbach 等, NEJM 2014：安大略省 101 家医院强制推行手术清单，死亡率 0.71% → 0.65%，差别不显著。Pronovost 等, NEJM 2006；Dixon-Woods 等, Milbank Q 2011：密歇根授权护士在步骤遗漏时叫停操作。</Note2>
@@ -195,7 +206,7 @@ export const Climax: React.FC = () => {
                   {h}
                 </div>
               ))}
-              {["MARCHF1", "SEPTIN2", "TP53", "DEC1", "MARCHF5"].map((g, i) => {
+              {["MARCHF1", "SEPTIN1", "TP53", "DEC1", "MARCHF5"].map((g, i) => {
                 const b = cellXY(1, i + 1, CW, RH_, W);
                 return (
                   <div key={i} style={{ position: "absolute", left: b.x, top: b.y, width: b.w - 1, height: b.h - 1, display: "flex", alignItems: "center", padding: "0 14px", boxSizing: "border-box", fontFamily: NUM, fontWeight: 600, fontSize: 30, color: K.ink, background: i < 2 ? "rgba(61,220,132,0.22)" : undefined }}>
@@ -210,12 +221,12 @@ export const Climax: React.FC = () => {
           </div>
           <Chrome o={1} name="B2" formula={<span style={{ fontFamily: NUM }}>MARCHF1</span>} />
           {/* the note */}
-          <div style={{ position: "absolute", left: 700, top: 500, width: 1100, padding: "34px 44px 40px", background: "#fff7c2", border: "2px solid #c9b55a", boxShadow: "8px 14px 36px rgba(0,0,0,0.4)", opacity: ramp(t, S(73.9), S(74.2)), display: "flex", flexDirection: "column", gap: 18 }}>
+          <div style={{ position: "absolute", left: 560, top: 470, width: 1240, padding: "38px 50px 44px", background: "#fff7c2", border: "2px solid #c9b55a", boxShadow: "8px 14px 36px rgba(0,0,0,0.4)", opacity: ramp(t, S(73.9), S(74.2)), display: "flex", flexDirection: "column", gap: 18 }}>
             <div style={{ fontFamily: HAN, fontWeight: 700, fontSize: 24, color: "#8a7a2a" }}>批注：</div>
-            <Say at={S(74.1)} parts={["每个草台班子背后，都有人在悄悄补洞。"]} size={48} color={K.ink} shadow="none" />
-            <Say at={S(74.9)} parts={["很可能，就是你。"]} size={48} color={K.ink} shadow="none" />
+            <Say at={S(74.1)} parts={["每个草台班子背后，都有人在悄悄补洞。"]} size={54} color={K.ink} shadow="none" />
+            <Say at={S(74.9)} parts={["很可能，就是你。"]} size={54} color={K.ink} shadow="none" />
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Say at={S(75.5)} parts={["下次补上的时候，", { t: "留个批注", mark: true }, "。"]} size={60} color={K.ink} shadow="none" weight={900} />
+              <Say at={S(75.5)} parts={["下次补上的时候，", { t: "留个批注", c: "#c0392b" }, "。"]} size={70} color={K.ink} shadow="none" weight={900} />
               {t > S(75.5) + 0.7 ? <Caret t={t} h={80} /> : null}
             </div>
           </div>
@@ -232,7 +243,7 @@ const SourcesCard: React.FC<{ t: number }> = ({ t }) => {
   const rows = [
     "基因名被改成日期：Ziemann 等, Genome Biology 2016；改名：Bruford 等, Nature Genetics 2020",
     "英国漏报病例：英国公共卫生署 2020；Fetzer & Graeber, PNAS 2021（密接为估计）",
-    "表格审计：Panko 2015；画自行车：Lawson, Memory & Cognition 2006",
+    "表格审计：Panko 2015（EuSpRIG）",
     "xz 后门：CVE-2024-3094；Lasse Collin 2022；Andres Freund 2024",
     "护士：Tucker & Edmondson, California Management Review 2003",
     "航空报告：NASA ASRS 简报 2025；坐飞机的风险：Barnett, MIT 2024",

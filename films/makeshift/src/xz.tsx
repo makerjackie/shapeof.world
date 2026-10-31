@@ -24,13 +24,13 @@ const BLOCKS: Block[] = [
   { x: 340, y: -1020, w: 310, h: 110, label: "App 后台", tone: 1 },
   { x: -400, y: -900, w: 1020, h: 120, label: "云服务器", tone: 2 },
   { x: -300, y: -770, w: 820, h: 130, label: "Linux 系统", tone: 3 },
-  { x: -120, y: -630, w: 470, h: 120, label: "远程登录 SSH", tone: 4 },
-  { x: -30, y: -500, w: 300, h: 110, label: "系统组件", tone: 4 },
+  { x: -120, y: -630, w: 470, h: 120, label: "远程登录", tone: 4 },
+  { x: -30, y: -500, w: 300, h: 110, label: "系统零件", tone: 4 },
   { x: 60, y: -380, w: 120, h: 70, label: "xz", tone: 5 },
 ];
 const XZ = BLOCKS[BLOCKS.length - 1];
 const TONES = ["#fbfbf7", "#eef4f0", "#e3ede7", "#d8e6dd", "#cfdfd5", "#fff7c2"];
-const DROP = (i: number) => XZ_IN + 0.05 + i * (BEAT / 2);
+const DROP = (i: number) => XZ_IN + 0.05 + i * (BEAT / 3);
 
 const WIDE: Cam = { cx: -185, cy: -820, z: 1.0 };
 const NEAR: Cam = { cx: 340, cy: -300, z: 2.6 };
@@ -47,12 +47,13 @@ const cam = (t: number) => {
   return camAt(t, k, ESO);
 };
 
+// A hidden door, ajar: the backdoor only its maker can walk through.
 const Lock: React.FC<{ x: number; y: number; s: number; color: string; o: number }> = ({ x, y, s, color, o }) =>
   o <= 0 ? null : (
     <svg style={{ position: "absolute", left: x - s / 2, top: y - s / 2, opacity: o, overflow: "visible" }} width={s} height={s} viewBox="0 0 40 40">
-      <path d="M12 18 v-5 a8 8 0 0 1 16 0 v5" fill="none" stroke={color} strokeWidth={4} />
-      <rect x={8} y={18} width={24} height={18} rx={3} fill={color} />
-      <circle cx={20} cy={26} r={3} fill="#fff" />
+      <rect x={9} y={3} width={22} height={34} fill="#2a0c0c" stroke={color} strokeWidth={2.5} />
+      <path d="M9 3 L 25 7 L 25 39 L 9 37 Z" fill={color} />
+      <circle cx={21} cy={22} r={1.8} fill="#fff" />
     </svg>
   );
 
@@ -125,6 +126,7 @@ export const Xz: React.FC = () => {
             </>
           );
         })()}
+        <div style={{ position: "absolute", left: XZ.x - 40, top: XZ.y + XZ.h + 10, width: XZ.w + 80, textAlign: "center", fontFamily: HAN, fontWeight: 700, fontSize: 15, color: K.sub, opacity: ramp(t, S(29.9), S(30.3)) }}>压缩小工具</div>
         {/* who maintains it */}
         <div style={{ position: "absolute", left: XZ.x + XZ.w + 30, top: XZ.y - 20, display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, whiteSpace: "nowrap", opacity: ramp(t, S(31), S(31.4), EO) }}>
           <div style={{ padding: "4px 10px", background: "#fbfbf7", fontFamily: HAN, fontWeight: 700, fontSize: 14, color: K.ink, border: "1px solid #b9c2bb" }}>
@@ -141,8 +143,8 @@ export const Xz: React.FC = () => {
         <Say at={S(27.3)} out={S(28.9)} parts={["那，“总有人懂”的东西，底下是什么？"]} size={54} />
       </Box>
       <Box x={110} y={720}>
-        <Say at={S(29.6)} out={S(30.9)} parts={["你用的网站和 App 背后，几乎每台 Linux 电脑，"]} size={48} />
-        <Say at={S(30.1)} out={S(30.9)} parts={["都装着一个压缩小工具：", { t: "xz", num: true, c: K.greenHi }, "。"]} size={48} />
+        <Say at={S(29.6)} out={S(30.9)} parts={["几乎所有网站和 App 的后台，都跑在 Linux 上；"]} size={48} />
+        <Say at={S(30.1)} out={S(30.9)} parts={["每台 Linux 里，几乎都装着一个压缩小工具：", { t: "xz", num: true, c: K.greenHi }, "。"]} size={48} />
       </Box>
       <Box x={110} y={720}>
         <Say at={S(31.1)} out={S(32.9)} parts={["维护它的，主要是", { t: "一个没有工资的志愿者", c: K.tape }, "。"]} size={50} />
@@ -150,7 +152,7 @@ export const Xz: React.FC = () => {
       <Note2 at={S(31.4)} out={S(32.9)}>「这是一个没有报酬的业余项目。」 xz 维护者 Lasse Collin，邮件列表，2022-06-08</Note2>
       <Box x={110} y={720}>
         <Say at={S(33.05)} out={S(35.4)} parts={["有人陪他干了两年多，成了第二个维护者，"]} size={48} />
-        <Say at={S(34.6)} out={S(35.4)} parts={["然后，在里面藏了一把", { t: "只有自己能开的锁", c: "#ff6b6b" }, "。"]} size={48} />
+        <Say at={S(34.6)} out={S(35.4)} parts={["然后，在里面留了一道", { t: "只有自己能进的暗门", c: "#ff6b6b" }, "。"]} size={48} />
       </Box>
       {/* the half second */}
       {win(t, S(35.6), S(37.5), 0.25, 0.3) > 0 ? (

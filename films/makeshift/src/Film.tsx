@@ -22,7 +22,7 @@ const Room: React.FC = () => <AbsoluteFill style={{ background: "radial-gradient
 
 export const TAB_KEYS: [number, number][] = [
   [0, 0],
-  [S(9.6), 1],
+  [S(8.8), 1],
   [S(18), 2],
   [S(27), 3],
   [S(40), 4],

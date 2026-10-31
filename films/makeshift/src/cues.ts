@@ -18,7 +18,7 @@ export const CUES: Cue[] = [
   { t: RENAME_AT + 0.55, id: "sfx-notification-01", v: 0.3 },
   { t: S(7.5), id: "sfx-impact-16", v: 0.5 },
   // cases: tab, rows pouring in, the bottom, the fall, the audit
-  { t: S(9.5), id: "sfx-ui-09", v: 0.4 },
+  { t: S(8.75), id: "sfx-ui-09", v: 0.4 },
   ...Array.from({ length: 6 }, (_, i) => ({ t: S(9.7) + i * (BEAT / 2), id: "sfx-ui-01", v: 0.22 })),
   { t: S(10.2), id: "sfx-transition-10", v: 0.35 },
   { t: S(12.3), id: "sfx-impact-08", v: 0.55 },
@@ -31,11 +31,8 @@ export const CUES: Cue[] = [
   { t: S(18), id: "sfx-ui-09", v: 0.35 },
   { t: S(18.9), id: "sfx-transition-03", v: 0.45 },
   { t: S(20.4), id: "sfx-transition-03", v: 0.35 },
-  ...Array.from({ length: 4 }, (_, i) => ({ t: S(21.5) + i * (BEAT / 2), id: "sfx-ui-01", v: 0.2 })),
-  { t: S(22.55), id: "sfx-foley-07", v: 0.45 },
-  { t: S(23.6), id: "sfx-notification-01", v: 0.3 },
-  { t: S(24.3), id: "sfx-impact-12", v: 0.35 },
-  { t: S(25.5), id: "sfx-impact-20", v: 0.45 },
+  { t: S(26.05), id: "sfx-impact-20", v: 0.45 },
+  { t: S(26.6), id: "sfx-transition-19", v: 0.35 },
   // xz: the tower drops in, the push, the second name, the lock, the half second, the catch
   { t: S(27), id: "sfx-ui-09", v: 0.35 },
   ...Array.from({ length: 12 }, (_, i) => ({ t: S(27) + 0.05 + i * (BEAT / 2) + 0.2, id: "sfx-impact-01", v: 0.22 })),
