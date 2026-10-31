@@ -19,6 +19,7 @@ import ukraineJson from "../data/ukraine.json";
 import { FIELD, MAIN_LINE, MINE_BELT, THIRD_LINE, TRENCH_1 } from "../geo";
 import { Cam, H, W, camPos, setCamera } from "./camera";
 import { COMMON, DRAPE, FRONT } from "./glsl";
+import { buildWorks, DITCH_D, DITCH_W, TRENCH_D, TRENCH_W, Works, Zone } from "./works";
 
 type Field = { treeRows: number[][]; woods: number[][]; roads: { c: string; p: number[] }[]; rail: number[][]; rivers: { c: string; p: number[] }[]; water: number[][]; towns: number[][] };
 type Ukr = {
@@ -80,6 +81,11 @@ export type WorldState = {
   grain?: number;
   night?: number;
   craters?: number;
+  works?: number;
+  fpv?: number;
+  staticNoise?: number;
+  cine?: number;
+  sunScreen?: [number, number];
 };
 
 // ---------------- Helpers ----------------
@@ -268,6 +274,151 @@ const MODELS: Record<Unit["kind"], THREE.BufferGeometry> = {
   gun: mergeGeometries([boxG(2.6, 4.0, 1.0, 0, 0, 0.6, 0.6), boxG(0.3, 6.0, 0.3, 0, 3.0, 1.4, 0.4), boxG(1.6, 1.6, 0.9, 0, -0.4, 1.4, 0.45)])!,
 };
 
+// ---------------- Dug works (trenches, pits, ditches) ----------------
+
+export const ZONES: Zone[] = [
+  { x0: -1200, y0: 3900, size: 4096 },
+  { x0: -5800, y0: -5200, size: 4096 },
+];
+
+// A cut along a polyline: two walls and a floor; aDown = metres below ground.
+const cutGeom = (lines: [number, number][][], wTop: number, wBot: number, depth: number) => {
+  const pos: number[] = [];
+  const down: number[] = [];
+  const part: number[] = [];
+  const idx: number[] = [];
+  for (const l0 of lines) {
+    if (l0.length < 2) continue;
+    const l = densify(l0, 2);
+    const base = pos.length / 3;
+    for (let i = 0; i < l.length; i++) {
+      const a = l[Math.max(0, i - 1)];
+      const b = l[Math.min(l.length - 1, i + 1)];
+      let nx = -(b[1] - a[1]);
+      let ny = b[0] - a[0];
+      const L = Math.hypot(nx, ny) || 1;
+      nx /= L;
+      ny /= L;
+      const [x, y] = l[i];
+      const cols: [number, number, number][] = [
+        [-wTop / 2, 0, 0],
+        [-wBot / 2, depth, 0],
+        [-wBot / 2, depth, 1],
+        [wBot / 2, depth, 1],
+        [wBot / 2, depth, 0],
+        [wTop / 2, 0, 0],
+      ];
+      for (const [o, d, pt] of cols) {
+        pos.push(x + nx * o, y + ny * o, 0);
+        down.push(d);
+        part.push(pt);
+      }
+      if (i > 0) {
+        const r0 = base + (i - 1) * 6;
+        const r1 = base + i * 6;
+        for (const [c0, c1] of [[0, 1], [2, 3], [4, 5]]) idx.push(r0 + c0, r0 + c1, r1 + c0, r0 + c1, r1 + c1, r1 + c0);
+      }
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute("aDown", new THREE.Float32BufferAttribute(down, 1));
+  g.setAttribute("aPart", new THREE.Float32BufferAttribute(part, 1));
+  g.setIndex(idx);
+  return g;
+};
+// Round pits: wall + floor.
+const pitGeom = (pits: [number, number, number][], depth: number) => {
+  const pos: number[] = [];
+  const down: number[] = [];
+  const part: number[] = [];
+  const idx: number[] = [];
+  const N = 14;
+  for (const [cx, cy, r] of pits) {
+    const base = pos.length / 3;
+    for (let k = 0; k < N; k++) {
+      const a = (k / N) * Math.PI * 2;
+      pos.push(cx + Math.cos(a) * r, cy + Math.sin(a) * r, 0, cx + Math.cos(a) * r * 0.85, cy + Math.sin(a) * r * 0.85, 0);
+      down.push(0, depth);
+      part.push(0, 0);
+    }
+    pos.push(cx, cy, 0);
+    down.push(depth);
+    part.push(1);
+    for (let k = 0; k < N; k++) {
+      const a0 = base + k * 2;
+      const a1 = base + ((k + 1) % N) * 2;
+      idx.push(a0, a0 + 1, a1, a0 + 1, a1 + 1, a1, a0 + 1, base + N * 2, a1 + 1);
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute("aDown", new THREE.Float32BufferAttribute(down, 1));
+  g.setAttribute("aPart", new THREE.Float32BufferAttribute(part, 1));
+  g.setIndex(idx);
+  return g;
+};
+// Spoil ridges: a low triangle profile (aDown negative = above ground).
+const ridgeGeom = (lines: [number, number][][], w: number, h: number) => cutGeom(lines, w, 0.01, -h);
+
+const maskTexture = (W: Works) => {
+  const S = 4096;
+  const c = document.createElement("canvas");
+  c.width = c.height = S;
+  const g = c.getContext("2d")!;
+  g.fillStyle = "#000";
+  g.fillRect(0, 0, S, S);
+  const k = S / W.zone.size;
+  const X = (x: number) => (x - W.zone.x0) * k;
+  const Y = (y: number) => S - (y - W.zone.y0) * k;
+  g.lineCap = "round";
+  g.lineJoin = "round";
+  // green channel: disturbed soil around the works (what makes trenches visible from the air)
+  g.strokeStyle = "rgb(0,255,0)";
+  g.globalCompositeOperation = "lighter";
+  const halo = (lines: [number, number][][], w: number) => {
+    g.lineWidth = w * k;
+    for (const l of lines) {
+      g.beginPath();
+      l.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y))));
+      g.stroke();
+    }
+  };
+  halo(W.trenches, 7);
+  halo(W.ditches, 18);
+  halo(W.parapets, 6);
+  g.fillStyle = "rgb(0,255,0)";
+  for (const [x, y, r] of W.pits) {
+    g.beginPath();
+    g.arc(X(x), Y(y), (r + 3) * k, 0, Math.PI * 2);
+    g.fill();
+  }
+  g.globalCompositeOperation = "source-over";
+  g.strokeStyle = "rgb(255,255,0)";
+  g.lineJoin = "round";
+  const stroke = (lines: [number, number][][], w: number) => {
+    g.lineWidth = w * k;
+    for (const l of lines) {
+      g.beginPath();
+      l.forEach(([x, y], i) => (i ? g.lineTo(X(x), Y(y)) : g.moveTo(X(x), Y(y))));
+      g.stroke();
+    }
+  };
+  stroke(W.trenches, TRENCH_W - 0.15);
+  stroke(W.ditches, DITCH_W - 0.3);
+  g.fillStyle = "rgb(255,255,0)";
+  for (const [x, y, r] of W.pits) {
+    g.beginPath();
+    g.arc(X(x), Y(y), (r - 0.1) * k, 0, Math.PI * 2);
+    g.fill();
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.minFilter = THREE.LinearFilter;
+  t.magFilter = THREE.LinearFilter;
+  t.generateMipmaps = false;
+  return t;
+};
+
 // ---------------- Engine ----------------
 
 class Engine {
@@ -287,6 +438,8 @@ class Engine {
   fieldMat!: THREE.ShaderMaterial;
   woodsMat!: THREE.ShaderMaterial;
   crownMat!: THREE.ShaderMaterial;
+  worksMat!: THREE.ShaderMaterial;
+  works: Works[] = [];
   sky!: THREE.Mesh;
   houseMat!: THREE.ShaderMaterial;
   ribbonMats: Record<string, THREE.ShaderMaterial> = {};
@@ -333,13 +486,36 @@ class Engine {
     this.bloom = new UnrealBloomPass(new THREE.Vector2(W, H), 0.6, 0.5, 0.82);
     this.composer.addPass(this.bloom);
     this.grade = new ShaderPass({
-      uniforms: { tDiffuse: { value: null }, uThermal: { value: 0 }, uTime: { value: 0 }, uFade: { value: 0 }, uGrain: { value: 0.04 }, uExposure: { value: 1 }, uNight: { value: 0 } },
+      uniforms: { tDiffuse: { value: null }, uThermal: { value: 0 }, uTime: { value: 0 }, uFade: { value: 0 }, uGrain: { value: 0.04 }, uExposure: { value: 1 }, uNight: { value: 0 }, uFpv: { value: 0 }, uStatic: { value: 0 }, uCine: { value: 0 }, uSun: { value: new THREE.Vector2(0.8, 0.35) } },
       vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }`,
       fragmentShader: /* glsl */ `
-        uniform sampler2D tDiffuse; uniform float uThermal, uTime, uFade, uGrain, uExposure, uNight; varying vec2 vUv;
+        uniform sampler2D tDiffuse; uniform float uThermal, uTime, uFade, uGrain, uExposure, uNight, uFpv, uStatic, uCine; uniform vec2 uSun; varying vec2 vUv;
         float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }
         void main(){
-          vec3 c = texture2D(tDiffuse, vUv).rgb * uExposure;
+          vec2 uv = vUv;
+          if (uFpv > 0.) {
+            // wide FPV lens: barrel distortion, a little horizontal jitter
+            vec2 q = uv - 0.5; float r2 = dot(q, q);
+            uv = 0.5 + q * (1. - 0.28 * uFpv * r2 * 2.2);
+            uv.x += (h(vec2(floor(uv.y * 160.), floor(uTime * 30.))) - 0.5) * 0.004 * uFpv;
+          }
+          vec3 c = texture2D(tDiffuse, uv).rgb * uExposure;
+          if (uFpv > 0.) {
+            float cr = texture2D(tDiffuse, uv + vec2(0.003, 0.) * uFpv).r; c.r = mix(c.r, cr * uExposure, uFpv);
+            float lum0 = dot(c, vec3(0.3, 0.55, 0.15));
+            c = mix(c, mix(vec3(lum0), c, 0.55) * vec3(1.05, 1.0, 0.92) * 1.15, uFpv);
+            c += (h(vUv * vec2(640., 360.) + fract(uTime * 13.) * 77.) - 0.5) * 0.12 * uFpv;
+            c *= 1. - 0.25 * uFpv * step(0.985, h(vec2(floor(vUv.y * 90.), floor(uTime * 24.))));
+          }
+          if (uCine > 0.) {
+            // dawn grade: warm highlights, teal shadows, haze toward the horizon, a soft sun bloom
+            float l = dot(c, vec3(0.3, 0.55, 0.15));
+            vec3 g = mix(c * vec3(0.86, 0.98, 1.08), c * vec3(1.18, 1.0, 0.82), smoothstep(0.05, 0.35, l));
+            g += vec3(1.0, 0.62, 0.32) * 0.10 * smoothstep(0.55, 1.0, vUv.y);
+            float sd = length((vUv - uSun) * vec2(1.78, 1.));
+            g += vec3(1.0, 0.7, 0.4) * (0.45 * exp(-sd * 9.) + 0.12 * exp(-sd * 2.5));
+            c = mix(c, g, uCine);
+          }
           float ln = dot(c, vec3(0.3,0.5,0.2)); c = mix(c, vec3(ln) * vec3(0.30,0.42,0.78) * 0.9 + c * 0.12, uNight * (1. - uThermal));
           // thermal: grey, a little contrast, sensor noise and soft scan lines
           float l = dot(c, vec3(0.299,0.587,0.114));
@@ -351,6 +527,7 @@ class Engine {
           c += (h(vUv*vec2(1920.,1080.)*1.3 + fract(uTime*3.1)*17.) - 0.5) * uGrain;
           vec2 d = vUv - 0.5; c *= 1. - dot(d,d) * mix(0.55, 1.1, uThermal);
           c *= 1. - uFade;
+          if (uStatic > 0.) { float st = h(vUv * vec2(480., 270.) + fract(uTime * 37.) * 133.); c = mix(c, vec3(st * 0.85) * vec3(0.95, 1., 1.), uStatic); }
           gl_FragColor = vec4(max(c, 0.), 1.);
         }`,
     });
@@ -545,6 +722,11 @@ class Engine {
         uBelt: { value: (MINE_BELT as [number, number][]).map(([x, y]) => new THREE.Vector2(x, y)) },
         uMines: { value: new THREE.Vector4(0, 500, 0, 1000) },
         uCrater: { value: 0 },
+        uMask0: { value: null },
+        uMask1: { value: null },
+        uZ0: { value: new THREE.Vector3(ZONES[0].x0, ZONES[0].y0, ZONES[0].size) },
+        uZ1: { value: new THREE.Vector3(ZONES[1].x0, ZONES[1].y0, ZONES[1].size) },
+        uDig: { value: 0 },
         uUA: { value: C("#45d6c8") },
         uRU: { value: C("#f2a33a") },
       },
@@ -566,9 +748,15 @@ class Engine {
         ${COMMON}
         ${FRONT}
         uniform sampler2D uS0, uS1, uS2; uniform vec3 uSat; uniform float uO, uGlow, uTint, uScan; uniform vec2 uKill;
-        uniform vec3 uUA, uRU; uniform vec4 uDemBox; uniform vec2 uBelt[13]; uniform vec4 uMines; uniform float uCrater;
+        uniform vec3 uUA, uRU; uniform vec4 uDemBox; uniform vec2 uBelt[13]; uniform vec4 uMines; uniform float uCrater; uniform sampler2D uMask0, uMask1; uniform vec3 uZ0, uZ1; uniform float uDig;
         varying vec2 vMap; varying vec3 vW; varying vec3 vN;
         void main(){
+          float soilHalo = 0.;
+          if (uDig > 0.5) {
+            vec2 m0 = (vMap - uZ0.xy) / uZ0.z; vec2 m1 = (vMap - uZ1.xy) / uZ1.z;
+            if (all(greaterThan(m0, vec2(0.))) && all(lessThan(m0, vec2(1.)))) { vec4 k0 = texture2D(uMask0, m0); if (k0.r > 0.5) discard; soilHalo = k0.g; }
+            if (all(greaterThan(m1, vec2(0.))) && all(lessThan(m1, vec2(1.)))) { vec4 k1 = texture2D(uMask1, m1); if (k1.r > 0.5) discard; soilHalo = max(soilHalo, k1.g); }
+          }
           vec2 uv = vec2((vMap.x-uDemBox.x)/(uDemBox.y-uDemBox.x), (vMap.y-uDemBox.z)/(uDemBox.w-uDemBox.z));
           vec3 c0 = texture2D(uS0, vec2(uv.x, uv.y)).rgb, c1 = texture2D(uS1, uv).rgb, c2 = texture2D(uS2, uv).rgb;
           vec3 sat = (c0*uSat.x + c1*uSat.y + c2*uSat.z) / max(uSat.x+uSat.y+uSat.z, 1e-3);
@@ -579,7 +767,16 @@ class Engine {
           float fur = noise2(vMap * 0.35) * 0.5 + noise2(vMap * 1.7) * 0.5;
           float grain = noise2(vMap * 0.9) * 0.6 + noise2(vMap * 0.23) * 0.4;
           float patchy = noise2(vMap / 23.);
-          vec3 detail = vec3(1.) + near * ((fur - 0.5) * 0.10 + (grain - 0.5) * 0.22 + (patchy - 0.5) * 0.16);
+          // crop rows and tractor tramlines (fields here run roughly along the tree belts, ~-28°)
+          vec2 rd = vec2(cos(-0.49), sin(-0.49));
+          float along = dot(vMap, vec2(-rd.y, rd.x));
+          float rows = 0.5 + 0.5 * sin(along * 10.5);
+          float tl = abs(fract(along / 21.) - 0.5) * 21.;
+          float tram = 1. - smoothstep(0.25, 0.55, abs(tl - 0.95));
+          float farm = 1. - smoothstep(0.35, 0.6, lum);
+          float nearR = 1. - smoothstep(0.6, 2.4, px0);
+          vec3 detail = vec3(1.) + near * ((fur - 0.5) * 0.10 + (grain - 0.5) * 0.22 + (patchy - 0.5) * 0.16)
+                      + nearR * farm * ((rows - 0.5) * 0.10 - tram * 0.32);
           // dark, slightly warm-cool grade; low sun lifts the relief
           vec3 sun = normalize(vec3(-0.55, 0.62, 0.48));
           float sh = clamp(dot(vN, sun), 0., 1.);
@@ -587,7 +784,14 @@ class Engine {
           g = pow(g, vec3(1.12)) * vec3(0.92, 0.98, 1.04);
           vec3 col = g * 0.78 * (0.55 + 0.8 * sh) * detail;
           col = mix(col, col * vec3(1.06, 1.0, 0.9), smoothstep(0.25, 0.5, lum));
-          float heat = 0.13 + lum * 0.85 + (grain - 0.5) * 0.10 * (0.4 + near) + (fur - 0.5) * 0.05 * near;
+          float heat = 0.13 + lum * 0.85 + (grain - 0.5) * 0.10 * (0.4 + near) + (fur - 0.5) * 0.05 * near + nearR * farm * ((rows - 0.5) * 0.03 + tram * 0.025);
+          if (soilHalo > 0.) {
+            float sn = noise2(vMap * 0.9) * 0.6 + noise2(vMap * 3.1) * 0.4;
+            vec3 soilC = mix(vec3(0.34,0.27,0.19), vec3(0.22,0.17,0.12), sn) * (0.6 + 0.6 * sh);
+            float edgeN = smoothstep(0.25, 0.75, soilHalo + (sn - 0.5) * 0.9);
+            col = mix(col, soilC * 0.85, edgeN * (0.45 + 0.4 * sn));
+            heat = mix(heat, heat * 1.15 + 0.05, soilHalo);
+          }
           col = thermalMix(col, heat * (0.78 + 0.32 * sh));
           // front: side tint, the line itself, the drone kill zone, and the "everything is seen" scan
           if (uFrontN > 1) {
@@ -618,14 +822,14 @@ class Engine {
               float hp = hash12(cell + 3.1 + float(k) * 9.);
               if (hp < dens) {
                 vec2 cc = (cell + 0.5 + (vec2(hash12(cell + 5.), hash12(cell + 11.)) - 0.5) * 0.6) * sc - float(k) * 0.37 * sc;
-                float rad = (k == 0 ? 1.4 : 3.5) + hash12(cell + 23.) * (k == 0 ? 3.0 : 5.0);
+                float rad = (k == 0 ? 1.0 : 2.2) + hash12(cell + 23.) * (k == 0 ? 2.0 : 3.0);
                 float d = length(vMap - cc) / rad;
                 float inside = 1. - smoothstep(0.85, 1.0, d);
                 float rim = smoothstep(0.75, 1.0, d) * (1. - smoothstep(1.0, 1.45, d));
                 float fade = 1. - smoothstep(1.5, 4., px0);
                 col = mix(col, col * 0.45, inside * fade * (1. - uThermal));
                 col = mix(col, col * 1.35 + 0.03, rim * fade * (1. - uThermal));
-                col = mix(col, col * 0.62, inside * fade * uThermal);
+                col = mix(col, col * 0.8, inside * fade * uThermal);
                 col = mix(col, col * 1.25, rim * fade * uThermal);
               }
             }
@@ -757,7 +961,8 @@ class Engine {
           float n = noise2(vW.xz * 0.9 + vJ * 10.);
           vec3 leaf = mix(vec3(0.020,0.040,0.022), vec3(0.075,0.10,0.045), vJ * 0.6 + n * 0.4);
           vec3 col = leaf * (0.35 + 1.1 * d) * (0.75 + 0.35 * vUp);
-          col = thermalMix(col, 0.15 + 0.12 * d + 0.06 * n);
+          float tn = noise2(vW.xz * 2.7) * 0.6 + noise2(vW.xz * 0.6 + vJ * 3.) * 0.4;
+          col = thermalMix(col, 0.14 + 0.05 * d + 0.12 * tn + 0.04 * vJ);
           gl_FragColor = vec4(fogIt(col, vW), uO);
         }`,
     });
@@ -834,6 +1039,62 @@ class Engine {
     houseMesh.frustumCulled = false;
     houseMesh.renderOrder = 2;
     this.scene.add(houseMesh);
+
+    // Dug works in the two detail zones.
+    this.worksMat = new THREE.ShaderMaterial({
+      uniforms: { ...this.common, ...this.drape, uO: { value: 0 } },
+      transparent: true,
+      vertexShader: /* glsl */ `
+        ${DRAPE}
+        attribute float aDown; attribute float aPart;
+        varying vec3 vW; varying float vDown; varying float vPart; varying vec2 vMap;
+        void main(){ vDown = aDown; vPart = aPart; vMap = position.xy; vW = mapToWorld(position.xy, -aDown); gl_Position = projectionMatrix * viewMatrix * vec4(vW, 1.); }`,
+      fragmentShader: /* glsl */ `
+        ${COMMON}
+        uniform float uO; varying vec3 vW; varying float vDown; varying float vPart; varying vec2 vMap;
+        void main(){
+          float n = noise2(vMap * 2.3 + vDown * 3.) * 0.6 + noise2(vMap * 0.4) * 0.4;
+          float d = clamp(vDown / 3.5, -0.5, 1.);
+          vec3 soil = mix(vec3(0.24,0.18,0.12), vec3(0.11,0.08,0.06), n);
+          vec3 col = soil * (1.0 - 0.72 * max(d, 0.)) * (vPart > 0.5 ? 0.55 : 1.0);
+          col = mix(col, col * 1.05, step(d, -0.05));
+          col = thermalMix(col, 0.24 - 0.10 * max(d, 0.) + n * 0.06);
+          gl_FragColor = vec4(fogIt(col, vW), uO);
+        }`,
+    });
+    const masks: THREE.Texture[] = [];
+    ZONES.forEach((z, i) => {
+      const W = buildWorks(z, i === 0 ? "forward" : "main", 31 + i);
+      this.works.push(W);
+      masks.push(maskTexture(W));
+      const parts = [
+        cutGeom(W.trenches, TRENCH_W, TRENCH_W * 0.8, TRENCH_D),
+        cutGeom(W.ditches, DITCH_W, 2.2, DITCH_D),
+        pitGeom(W.pits, 1.6),
+        ridgeGeom(W.parapets, 3.2, 0.55),
+      ].filter((g) => (g.getIndex()?.count ?? 0) > 0);
+      for (const g of parts) {
+        const m = new THREE.Mesh(g, this.worksMat);
+        m.frustumCulled = false;
+        m.renderOrder = 1;
+        this.scene.add(m);
+      }
+      // dugouts: low log roofs
+      if (W.dugouts.length) {
+        const dg = new THREE.InstancedBufferGeometry();
+        const src = mergeGeometries([boxG(4.2, 6.2, 0.7, 0, 0, 0.2, 0.3), boxG(1.2, 1.4, 0.2, 0, 3.6, -0.3, 0.6)])!;
+        dg.setAttribute("position", src.getAttribute("position"));
+        dg.setAttribute("normal", src.getAttribute("normal"));
+        dg.setAttribute("aInst", new THREE.InstancedBufferAttribute(new Float32Array(W.dugouts.flatMap(([x, y, a]) => [x, y, a, 1])), 4));
+        dg.instanceCount = W.dugouts.length;
+        const dm = new THREE.Mesh(dg, this.houseMat);
+        dm.frustumCulled = false;
+        dm.renderOrder = 2;
+        this.scene.add(dm);
+      }
+    });
+    this.fieldMat.uniforms.uMask0.value = masks[0];
+    this.fieldMat.uniforms.uMask1.value = masks[1];
 
     // Ribbons: roads, trenches, ditches, minefield belt, fronts.
     const roads = FIELD_DATA.roads.filter((r) => r.c !== "t").map((r) => pairs(r.p));
@@ -1131,6 +1392,8 @@ class Engine {
     fu.uKill.value.set(s.kill?.w ?? 0, s.kill?.o ?? 0);
     fu.uScan.value = s.scan ?? 0;
     fu.uCrater.value = s.craters ?? 0;
+    fu.uDig.value = (s.works ?? 0) > 0.01 ? 1 : 0;
+    this.worksMat.uniforms.uO.value = fo * (s.works ?? 0);
     this.woodsMat.uniforms.uO.value = fo * (s.woods ?? 1);
     this.crownMat.uniforms.uO.value = fo * (s.woods ?? 1);
     this.houseMat.uniforms.uO.value = fo * (s.houses ?? 1);
@@ -1256,6 +1519,10 @@ class Engine {
     this.grade.uniforms.uGrain.value = s.grain ?? 0.035;
     this.grade.uniforms.uExposure.value = s.exposure ?? 1;
     this.grade.uniforms.uNight.value = s.night ?? 0;
+    this.grade.uniforms.uFpv.value = s.fpv ?? 0;
+    this.grade.uniforms.uStatic.value = s.staticNoise ?? 0;
+    this.grade.uniforms.uCine.value = s.cine ?? 0;
+    if (s.sunScreen) this.grade.uniforms.uSun.value.set(s.sunScreen[0], s.sunScreen[1]);
     this.composer.render();
     const gl = this.renderer.getContext();
     gl.finish();
