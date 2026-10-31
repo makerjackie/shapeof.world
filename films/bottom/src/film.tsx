@@ -1,41 +1,43 @@
-// 房价到底了吗: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–11), story.tsx (11–69).
+// 房价到底了吗: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–9.8), story.tsx (9.5–76).
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BrandMark, EndCard, keys, ramp, useT } from "./kit";
 import { Hook, QUOTES, RUN0, RUN1 } from "./hook";
-import { SINK, Story } from "./story";
+import { BAR_AT, RENT_AT, Story } from "./story";
 import { BEAT, FILM_FRAMES, fr, S } from "./time";
 import { Sky } from "./world";
 
-const END_AT = S(68.2);
+const END_AT = S(74.3);
 
 type Cue = { t: number; id: string; v: number };
 const CUES: Cue[] = [
-  // the fall: a tick per half beat while the towers sink, a hit on the 35 cities and the question
+  // the fall: a tick per half beat while the towers sink, hits on the 35 cities and the question
   ...Array.from({ length: Math.floor((RUN1 - RUN0) / (BEAT / 2)) }, (_, i) => ({ t: RUN0 + (i * BEAT) / 2, id: "sfx-ui-01", v: 0.16 + 0.1 * (i / 12) })),
-  { t: S(4.4), id: "sfx-impact-08", v: 0.45 },
-  { t: S(5.1), id: "sfx-impact-16", v: 0.5 },
+  { t: S(3.6), id: "sfx-impact-08", v: 0.45 },
+  { t: S(4.6), id: "sfx-impact-16", v: 0.5 },
   ...QUOTES.map((q) => ({ t: q.at, id: "sfx-impact-12", v: 0.42 })),
-  { t: S(10.4), id: "sfx-transition-12", v: 0.35 },
-  // history: one thud per place
-  ...[0, 1, 2, 3, 4].map((i) => ({ t: SINK(i), id: "sfx-impact-12", v: 0.32 })),
-  { t: S(17.1), id: "sfx-ui-06", v: 0.38 },
-  { t: S(18.45), id: "sfx-impact-08", v: 0.42 },
-  // the order
-  { t: S(20.2), id: "sfx-transition-08", v: 0.38 },
-  ...[21.7, 24.1, 26.5, 28.9].map((sb) => ({ t: S(sb), id: "sfx-ui-07", v: 0.38 })),
-  // China on the steps
-  { t: S(32.05), id: "sfx-transition-05", v: 0.32 },
-  ...[33.4, 35.1, 36.8, 38.4].map((sb) => ({ t: S(sb), id: "sfx-ui-10", v: 0.34 })),
-  // silence, borrowing, rent vs interest
-  { t: S(41.02), id: "sfx-impact-05", v: 0.55 },
-  { t: S(43.6), id: "sfx-ui-04", v: 0.3 },
-  { t: S(46.2), id: "sfx-ui-06", v: 0.35 },
-  { t: S(46.8), id: "sfx-ui-06", v: 0.35 },
-  { t: S(49.05), id: "sfx-impact-16", v: 0.45 },
-  { t: S(53.1), id: "sfx-impact-05", v: 0.5 },
-  { t: S(56.3), id: "sfx-transition-08", v: 0.35 },
-  { t: S(63.1), id: "sfx-transition-12", v: 0.3 },
+  // history: one per bar
+  { t: S(9.75), id: "sfx-transition-12", v: 0.32 },
+  ...[0, 1, 2, 3, 4, 5].map((i) => ({ t: BAR_AT(i), id: "sfx-ui-07", v: 0.3 })),
+  { t: S(14.2), id: "sfx-ui-06", v: 0.38 },
+  { t: S(15.55), id: "sfx-impact-08", v: 0.42 },
+  // the four signs
+  { t: S(17.2), id: "sfx-transition-08", v: 0.38 },
+  ...[18.8, 21.6, 24.4, 27.2].map((sb) => ({ t: S(sb), id: "sfx-ui-07", v: 0.38 })),
+  { t: S(30), id: "sfx-impact-16", v: 0.38 },
+  ...[32.6, 34.1, 36.1, 38.1].map((sb) => ({ t: S(sb), id: "sfx-ui-10", v: 0.34 })),
+  // why buyers stay away
+  { t: S(40.05), id: "sfx-impact-05", v: 0.5 },
+  { t: S(42.4), id: "sfx-ui-06", v: 0.35 },
+  { t: S(43.6), id: "sfx-ui-06", v: 0.35 },
+  { t: S(44.4), id: "sfx-impact-08", v: 0.45 },
+  ...[0, 1, 2, 3, 4, 5, 6].map((i) => ({ t: RENT_AT(i), id: "sfx-ui-01", v: 0.22 })),
+  { t: S(48.6), id: "sfx-impact-12", v: 0.4 },
+  { t: S(50.6), id: "sfx-ui-04", v: 0.3 },
+  { t: S(56.05), id: "sfx-impact-16", v: 0.45 },
+  { t: S(61.1), id: "sfx-impact-05", v: 0.5 },
+  { t: S(64.3), id: "sfx-transition-08", v: 0.35 },
+  { t: S(70.1), id: "sfx-transition-12", v: 0.3 },
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
 
