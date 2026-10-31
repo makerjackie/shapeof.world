@@ -11,6 +11,7 @@
 | `ai-users/` | 最会用 AI 的人，在用 AI 干什么 | 16:9 · 3:02 · 无旁白 · Remotion · 《千年之后》整首不剪 | 2026-10-23 v1 定稿 |
 | `ai-impact/` | AI 到底改变了什么 | 16:9 · 3:18 · 无旁白 · Remotion · 《千年之后》 | 2026-10-23 v1 定稿 |
 | `one-more/` | 再来一局（打游戏明知道该停，为什么停不下来？） | 16:9 · 2:16 · 无旁白 · Remotion · 《千年之后（氛围版）》 | 2026-10-27 定稿 v10，待作者看 |
+| `runaway/` | 一句普通的话（一句普通的话，AI 能闯多大的祸？） | 16:9 · 3:32 · 无旁白 · Remotion · 曲库 three-bodies | 2026-10-31 v1 全片，待作者看 |
 
 - 成片、配乐音频和审片截图不进 Git。上传用的成片放 R2 桶 `shapeof-press`，见 [`infra/press`](../infra/press/README.md)。
 - Playwright 用仓库根目录装好的那份，先在根目录运行 `pnpm install`。`ai-shape/` 另有自己的依赖，在它的目录里运行 `npm install`。
