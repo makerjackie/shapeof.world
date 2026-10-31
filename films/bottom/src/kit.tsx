@@ -226,15 +226,16 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const o = win(t, at, out, 0.4, 0.3);
   if (o <= 0) return null;
   const rows = [
-    "中国房价：国家统计局 70 个大中城市二手住宅价格指数（环比连乘，约数）；成交、库存：统计局 2026 年 1–9 月，克而瑞",
-    "各国房价：S&P CoreLogic Case-Shiller（美国）、BIS（西班牙、爱尔兰）、香港差饷物业估价署、日本国土交通省公示地价",
-    "21 次房价大跌：高盛《How Will It End? Benchmarking China's Property Downturn》，2025 年 6 月",
-    "房贷：中国人民银行（个人住房贷款余额、新发放房贷利率约 3.1%）；租金回报率：中指研究院",
-    "预测：高盛、标普（2026 年 10 月）、摩根大通（2026 年 4 月），据阿思达克、格隆汇、CNBC、Mingtiandi 等转述",
+    "房价：国家统计局 70 个大中城市二手住宅价格指数（环比连乘，约数）；成交、库存、人口：统计局；去化周期：克而瑞",
+    "几年房租：中指研究院 2026 年三季度住房租赁市场总结；国外：Global Property Guide（挂牌毛回报）",
+    "卖地：财政部；房企资金：统计局；居民债务：BIS；家庭资产：人民银行 2019 年城镇家庭调查；房贷与存款：人民银行",
+    "恒大：2021 年年报；住房存量：任泽平团队测算；空置：西南财大中国家庭金融调查 2017",
+    "各国房价：Case-Shiller、BIS、香港差饷物业估价署、日本国土交通省；21 次大跌：高盛 2025 年 6 月；Rogoff & Yang 2026",
+    "预测：高盛、标普（2026 年 10 月）、摩根大通（2026 年 4 月），据媒体转述，仅供参考",
   ];
   return (
     <div style={{ position: "absolute", inset: 0, background: `rgba(4,6,11,${0.92 * o})`, opacity: o }}>
-      <div style={{ position: "absolute", left: 140, top: 170, fontFamily: FONT, color: K.fg }}>
+      <div style={{ position: "absolute", left: 120, top: 150, fontFamily: FONT, color: K.fg }}>
         <div style={{ fontSize: 44, fontWeight: 800, marginBottom: 34, letterSpacing: 2 }}>信息来源</div>
         {rows.map((r, i) => (
           <div key={i} style={{ fontSize: 28, fontWeight: 500, color: "rgba(244,240,232,0.8)", lineHeight: 1.9 }}>

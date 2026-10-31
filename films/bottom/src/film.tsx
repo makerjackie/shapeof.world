@@ -1,45 +1,72 @@
-// 房价到底了吗: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–9.8), story.tsx (9.5–76).
+// 房价到底了吗: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–9.3), ch1.tsx (9.3–32), ch23.tsx (32–56), ch45.tsx (56–108).
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BrandMark, EndCard, keys, ramp, useT } from "./kit";
 import { Hook, QUOTES, RUN0, RUN1 } from "./hook";
-import { BAR_AT, RENT_AT, Story } from "./story";
+import { Ch1 } from "./ch1";
+import { Ch23 } from "./ch23";
+import { BAR_AT, Ch45 } from "./ch45";
 import { BEAT, FILM_FRAMES, fr, S } from "./time";
 import { Sky } from "./world";
 
-const END_AT = S(74.3);
+const END_AT = S(104.6);
+
+const CHAPTERS = [
+  { from: S(9.3), to: S(32), n: "1", t: "贵不贵" },
+  { from: S(32), to: S(44), n: "2", t: "为什么涨" },
+  { from: S(44), to: S(56), n: "3", t: "为什么跌" },
+  { from: S(56), to: S(68), n: "4", t: "房子够不够" },
+  { from: S(68), to: S(88), n: "5", t: "到底了吗" },
+];
 
 type Cue = { t: number; id: string; v: number };
 const CUES: Cue[] = [
-  // the fall: a tick per half beat while the towers sink, hits on the 35 cities and the question
+  // the fall
   ...Array.from({ length: Math.floor((RUN1 - RUN0) / (BEAT / 2)) }, (_, i) => ({ t: RUN0 + (i * BEAT) / 2, id: "sfx-ui-01", v: 0.16 + 0.1 * (i / 12) })),
   { t: S(3.6), id: "sfx-impact-08", v: 0.45 },
   { t: S(4.6), id: "sfx-impact-16", v: 0.5 },
   ...QUOTES.map((q) => ({ t: q.at, id: "sfx-impact-12", v: 0.42 })),
-  // history: one per bar
-  { t: S(9.75), id: "sfx-transition-12", v: 0.32 },
-  ...[0, 1, 2, 3, 4, 5].map((i) => ({ t: BAR_AT(i), id: "sfx-ui-07", v: 0.3 })),
-  { t: S(14.2), id: "sfx-ui-06", v: 0.38 },
-  { t: S(15.55), id: "sfx-impact-08", v: 0.42 },
-  // the four signs
-  { t: S(17.2), id: "sfx-transition-08", v: 0.38 },
-  ...[18.8, 21.6, 24.4, 27.2].map((sb) => ({ t: S(sb), id: "sfx-ui-07", v: 0.38 })),
-  { t: S(30), id: "sfx-impact-16", v: 0.38 },
-  ...[32.6, 34.1, 36.1, 38.1].map((sb) => ({ t: S(sb), id: "sfx-ui-10", v: 0.34 })),
-  // why buyers stay away
-  { t: S(40.05), id: "sfx-impact-05", v: 0.5 },
-  { t: S(42.4), id: "sfx-ui-06", v: 0.35 },
-  { t: S(43.6), id: "sfx-ui-06", v: 0.35 },
-  { t: S(44.4), id: "sfx-impact-08", v: 0.45 },
-  ...[0, 1, 2, 3, 4, 5, 6].map((i) => ({ t: RENT_AT(i), id: "sfx-ui-01", v: 0.22 })),
-  { t: S(48.6), id: "sfx-impact-12", v: 0.4 },
-  { t: S(50.6), id: "sfx-ui-04", v: 0.3 },
-  { t: S(56.05), id: "sfx-impact-16", v: 0.45 },
-  { t: S(61.1), id: "sfx-impact-05", v: 0.5 },
-  { t: S(64.3), id: "sfx-transition-08", v: 0.35 },
-  { t: S(70.1), id: "sfx-transition-12", v: 0.3 },
+  // 1: years of rent
+  { t: S(9.4), id: "sfx-transition-12", v: 0.35 },
+  ...Array.from({ length: 20 }, (_, i) => ({ t: S(10.9) + i * ((S(12.7) - S(10.9)) / 20), id: "sfx-ui-01", v: 0.16 })),
+  { t: S(12.7), id: "sfx-ui-06", v: 0.4 },
+  { t: S(18.4), id: "sfx-scifi-09", v: 0.38 },
+  { t: S(20.3), id: "sfx-transition-08", v: 0.38 },
+  { t: S(24.5), id: "sfx-transition-05", v: 0.35 },
+  { t: S(27.9), id: "sfx-scifi-03", v: 0.3 },
+  { t: S(29.9), id: "sfx-ui-06", v: 0.35 },
+  { t: S(31.4), id: "sfx-ui-06", v: 0.35 },
+  // 2 and 3: the three towers
+  { t: S(32.3), id: "sfx-impact-08", v: 0.45 },
+  ...[33.5, 35.4, 37.4].map((sb) => ({ t: S(sb), id: "sfx-ui-07", v: 0.38 })),
+  { t: S(39.4), id: "sfx-ui-10", v: 0.38 },
+  { t: S(41.7), id: "sfx-impact-16", v: 0.42 },
+  { t: S(44.1), id: "sfx-impact-05", v: 0.5 },
+  ...[45.6, 47.4, 49.2].map((sb) => ({ t: S(sb), id: "sfx-impact-12", v: 0.38 })),
+  ...[51.0, 51.6, 52.2].map((sb) => ({ t: S(sb), id: "sfx-ui-04", v: 0.3 })),
+  // 4: enough homes?
+  { t: S(56.3), id: "sfx-transition-12", v: 0.3 },
+  ...[57.5, 59.9, 61.7, 64.1].map((sb) => ({ t: S(sb), id: "sfx-ui-06", v: 0.32 })),
+  { t: S(66.1), id: "sfx-impact-16", v: 0.4 },
+  // 5: has it bottomed?
+  { t: S(68.05), id: "sfx-transition-08", v: 0.35 },
+  ...[0, 1, 2, 3, 4, 5].map((i) => ({ t: BAR_AT(i), id: "sfx-ui-07", v: 0.28 })),
+  { t: S(72.15), id: "sfx-transition-05", v: 0.32 },
+  ...[74.1, 75.6, 77.1, 78.6].map((sb) => ({ t: S(sb), id: "sfx-ui-10", v: 0.34 })),
+  { t: S(80.15), id: "sfx-transition-08", v: 0.32 },
+  // the end
+  { t: S(88.6), id: "sfx-impact-05", v: 0.5 },
+  { t: S(95.5), id: "sfx-impact-16", v: 0.42 },
+  { t: S(99.6), id: "sfx-impact-05", v: 0.4 },
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
+
+const Hud: React.FC<{ endAt: number }> = ({ endAt }) => {
+  const t = useT();
+  const ch = CHAPTERS.find((c) => t >= c.from - 0.1 && t < c.to);
+  const k = ch ? Math.min(ramp(t, ch.from, ch.from + 0.5), 1 - ramp(t, ch.to - 0.4, ch.to)) : 0;
+  return <BrandMark o={1 - ramp(t, endAt - 0.2, endAt)} chapter={ch ? { n: ch.n, t: ch.t, k } : undefined} />;
+};
 
 const Grain: React.FC = () => {
   const f = useCurrentFrame();
@@ -61,8 +88,10 @@ export const Film: React.FC = () => {
       ))}
       <Sky t={t} dim={dim} horizon={930} />
       <Hook />
-      <Story />
-      <BrandMark o={1 - ramp(t, END_AT - 0.2, END_AT)} />
+      <Ch1 />
+      <Ch23 />
+      <Ch45 />
+      <Hud endAt={END_AT} />
       <EndCard at={END_AT} />
       <Vignette />
       <Grain />
