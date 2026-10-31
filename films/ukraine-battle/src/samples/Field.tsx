@@ -1,11 +1,13 @@
 // 样片E: 8 June 2023, the column in the wheat south of Mala Tokmachka. Four Blender shots (blender/battlefield.py,
 // frames copied to public/field/), labels that follow the 3D defence lines (public/field/anchorsB.json), the drone's
-// display in shot C, captions. 24 fps.
+// display in shot C, captions. The defence lines are drawn here from their projected screen positions
+// (public/field/linesB.json), so their colours stay crisp and match the labels. 24 fps.
 import React from "react";
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { SHADOW } from "../kit";
 import { HAN, MONO } from "../theme";
 import anchors from "../../public/field/anchorsB.json";
+import lines from "../../public/field/linesB.json";
 
 export const E_FPS = 24;
 const SH = { A: [1, 84], B: [85, 204], C: [205, 276], D: [277, 348] } as const;
@@ -47,11 +49,11 @@ const Place: React.FC<{ f: number }> = ({ f }) => (
 );
 
 // a label pinned to a 3D point: a short leader line up from the point, then the text
-const Pin: React.FC<{ p?: number[]; o: number; color: string; title: string; sub?: string; side?: 1 | -1 }> = ({ p, o, color, title, sub, side = 1 }) => {
+const Pin: React.FC<{ p?: number[]; o: number; color: string; title: string; sub?: string; side?: 1 | -1; ly?: number }> = ({ p, o, color, title, sub, side = 1, ly: lyIn }) => {
   if (!p || !p[2] || o <= 0) return null;
   const [x, y] = p;
   const lx = x + side * 40;
-  const ly = y - 120;
+  const ly = lyIn ?? y - 120;
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o }}>
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
@@ -74,6 +76,77 @@ const Pin: React.FC<{ p?: number[]; o: number; color: string; title: string; sub
         {sub ? <div style={{ fontSize: 30, marginTop: 6 }}>{sub}</div> : null}
       </div>
     </div>
+  );
+};
+
+type Pt = [number, number] | null;
+const LN = lines as unknown as Record<string, Record<string, Pt[]>>;
+
+// split a projected polyline at the points behind the camera
+const runs = (seq: Pt[] = []) => {
+  const out: [number, number][][] = [];
+  let cur: [number, number][] = [];
+  for (const p of seq) {
+    if (p) cur.push(p);
+    else if (cur.length) {
+      out.push(cur);
+      cur = [];
+    }
+  }
+  if (cur.length) out.push(cur);
+  return out.filter((r) => r.length > 1);
+};
+
+// a line on the ground that draws itself on (t: 0 → 1), with a soft glow
+const GroundLine: React.FC<{ seq?: Pt[]; t: number; color: string; w: number; dash?: string }> = ({ seq, t, color, w, dash }) => {
+  if (t <= 0) return null;
+  return (
+    <g style={{ filter: `drop-shadow(0 0 6px ${color})` }}>
+      {runs(seq).map((r, i) => (
+        <path
+          key={i}
+          d={"M" + r.map(([x, y]) => `${x} ${y}`).join(" L")}
+          pathLength={dash ? undefined : 1}
+          stroke={color}
+          strokeWidth={w}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          strokeDasharray={dash ? undefined : `${t} 1`}
+          style={dash ? { strokeDasharray: dash, opacity: t } : undefined}
+        />
+      ))}
+    </g>
+  );
+};
+
+// a projected line's screen y at screen x (for placing a label between two lines)
+const yAt = (seq: Pt[] = [], x: number) => {
+  for (const r of runs(seq)) {
+    for (let i = 1; i < r.length; i++) {
+      const [x0, y0] = r[i - 1];
+      const [x1, y1] = r[i];
+      if ((x0 - x) * (x1 - x) <= 0 && x0 !== x1) return y0 + ((x - x0) / (x1 - x0)) * (y1 - y0);
+    }
+  }
+  return undefined;
+};
+
+// the minefield: hatched from its far edge down to the bottom of the frame (its near edge is behind the camera)
+const Minefield: React.FC<{ seq?: Pt[]; o: number }> = ({ seq, o }) => {
+  const r = runs(seq)[0];
+  if (!r || o <= 0) return null;
+  const pts = [...r, [r[r.length - 1][0], 1200], [r[0][0], 1200]].map(([x, y]) => `${x},${y}`).join(" ");
+  return (
+    <g opacity={o}>
+      <defs>
+        <pattern id="hatch" width={18} height={18} patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+          <line x1={0} y1={0} x2={0} y2={18} stroke={RED} strokeWidth={2.5} strokeOpacity={0.4} />
+        </pattern>
+      </defs>
+      <polygon points={pts} fill={RED} fillOpacity={0.08} />
+      <polygon points={pts} fill="url(#hatch)" />
+    </g>
   );
 };
 
@@ -124,16 +197,28 @@ export const SampleE: React.FC = () => {
   } else if (f <= SH.B[1]) {
     const g = f - SH.B[0];
     const an = (anchors as Record<string, Record<string, number[]>>)[String(g)] || {};
+    const ln = LN[String(g)] || {};
+    // the minefield label sits just above the minefield's far edge; it gives way when the trench line comes in
+    const lx_ = an.mines ? an.mines[0] - 190 : 0;
+    const yM = yAt(ln.minesS, lx_);
+    const minesLy = yM !== undefined ? yM - 71 : undefined; // just above the minefield's far edge
+    const draw = (a: number) => interpolate(g, [a, a + 16], [0, 1], { ...CL, easing: (x) => 1 - (1 - x) ** 3 });
     body = (
       <>
-        <Img src={src("B", g + 1)} style={{ width: 1920, height: 1080, filter: "contrast(1.1) saturate(0.9) brightness(1.05)" }} />
+        <Img src={src("B", f)} style={{ width: 1920, height: 1080, filter: "contrast(1.1) saturate(0.9) brightness(1.05)" }} />
         <Vignette k={0.4} />
+        <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+          <Minefield seq={ln.minesS} o={draw(24) * 0.9} />
+          <GroundLine seq={ln.minesS} t={draw(24)} color={RED} w={4} />
+          <GroundLine seq={ln.trench} t={draw(52)} color={AMBER} w={5} />
+          <GroundLine seq={ln.main} t={draw(70)} color={AMBER} w={4} dash="14 10" />
+        </svg>
         <Grain o={0.12} seed={f} />
-        <Pin p={an.mines} o={fade(g, 34, 140, 10)} color={RED} title="雷场" sub="纵深可达 500 米" side={-1} />
-        <Pin p={an.trench} o={fade(g, 62, 140, 10)} color={AMBER} title="第一道防线" sub="林带里的战壕" side={1} />
-        <Pin p={an.main} o={fade(g, 86, 140, 10)} color={AMBER} title="主防线" sub="反坦克壕 + 龙牙 · 约 10 公里外" side={-1} />
-        <Caption f={g} a={92} b={128} y={900} size={56}>
-          三道防线，合起来约 30 公里纵深。
+        <Pin p={an.mines} o={fade(g, 28, 64, 8)} color={RED} title="雷场" sub="纵深可达 500 米" side={-1} ly={minesLy} />
+        <Pin p={an.trench} o={fade(g, 56, 140, 10)} color={AMBER} title="第一道防线" sub="林带里的战壕" side={1} />
+        <Pin p={an.main} o={fade(g, 74, 140, 10)} color={AMBER} title="第二道防线" sub="主防线 · 反坦克壕和龙牙 · 约 10 公里外" side={-1} />
+        <Caption f={g} a={86} b={128} y={930} size={60}>
+          一共三道防线，纵深约 30 公里。
         </Caption>
       </>
     );
@@ -145,7 +230,7 @@ export const SampleE: React.FC = () => {
     const sy = Math.cos(f * 3.3) * shake;
     body = (
       <>
-        <Img src={src("C", g + 1)} style={{ width: 1920, height: 1080, transform: `translate(${sx}px, ${sy}px) scale(1.03)`, filter: "contrast(1.15) saturate(0.85) brightness(1.03)" }} />
+        <Img src={src("C", f)} style={{ width: 1920, height: 1080, transform: `translate(${sx}px, ${sy}px) scale(1.03)`, filter: "contrast(1.15) saturate(0.85) brightness(1.03)" }} />
         <Grain o={0.2} seed={f} />
         <Vignette k={0.35} />
         <DroneOSD g={g} />
@@ -156,7 +241,7 @@ export const SampleE: React.FC = () => {
     const g = f - SH.D[0];
     body = (
       <>
-        <Img src={src("D", g + 1)} style={{ width: 1920, height: 1080, filter: "contrast(1.12) saturate(0.82) brightness(1.02)" }} />
+        <Img src={src("D", f)} style={{ width: 1920, height: 1080, filter: "contrast(1.12) saturate(0.82) brightness(1.02)" }} />
         <Vignette k={0.55} />
         <Grain o={0.15} seed={f} />
         <Caption f={g} a={10} b={80}>

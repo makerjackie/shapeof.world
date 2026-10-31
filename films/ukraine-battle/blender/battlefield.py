@@ -561,7 +561,7 @@ LEAD = col[0][0]
 
 
 # ---------------------------------------------------------------- volumes: dust behind the tanks, the blast, smoke
-def vol_mat(name, colr, base_density, scale=1.2, emis=None, plume=False):
+def vol_mat(name, colr, base_density, scale=1.2, emis=None, plume=False, ellip=False):
     m, nt, bsdf, out = lib.new_mat(name)
     nt.nodes.remove(bsdf)
     v = N(nt, "ShaderNodeVolumePrincipled")
@@ -577,11 +577,15 @@ def vol_mat(name, colr, base_density, scale=1.2, emis=None, plume=False):
     L(nt, tc.outputs["Object"], sep.inputs[0])  # unit cube: -0.5..0.5
     if plume:  # narrow at the base, widening and leaning downwind with height, thinning at the top
         zz = lib.math_(nt, "ADD", sep.outputs[2], 0.5)
-        xs_ = lib.math_(nt, "SUBTRACT", sep.outputs[0], lib.math_(nt, "MULTIPLY", zz, 0.22))
+        xs_ = lib.math_(nt, "SUBTRACT", sep.outputs[0], lib.math_(nt, "MULTIPLY", zz, 0.12))
         rr = lib.math_(nt, "SQRT", lib.math_(nt, "ADD", lib.math_(nt, "POWER", xs_, 2.0), lib.math_(nt, "POWER", sep.outputs[1], 2.0)))
-        rad = lib.math_(nt, "ADD", 0.075, lib.math_(nt, "MULTIPLY", zz, 0.22))
+        rad = lib.math_(nt, "ADD", 0.075, lib.math_(nt, "MULTIPLY", zz, 0.2))
         shape = lib.maprange(nt, lib.math_(nt, "DIVIDE", rr, rad), 1.0, 0.25)
         shape = lib.math_(nt, "MULTIPLY", shape, lib.maprange(nt, zz, 1.0, 0.45))
+    elif ellip:  # a soft ellipsoid, fuller at the bottom
+        zq = lib.math_(nt, "MULTIPLY", lib.math_(nt, "ADD", sep.outputs[2], 0.1), 0.85)
+        rr = lib.math_(nt, "SQRT", lib.math_(nt, "ADD", lib.math_(nt, "ADD", lib.math_(nt, "POWER", sep.outputs[0], 2.0), lib.math_(nt, "POWER", sep.outputs[1], 2.0)), lib.math_(nt, "POWER", zq, 2.0)))
+        shape = lib.maprange(nt, rr, 0.48, 0.08)
     else:
         rr = lib.math_(nt, "SQRT", lib.math_(nt, "ADD", lib.math_(nt, "POWER", sep.outputs[0], 2.0), lib.math_(nt, "POWER", sep.outputs[1], 2.0)))
         shape = lib.maprange(nt, rr, 0.5, 0.15)
@@ -655,12 +659,17 @@ fb.scale = (0.3, 0.3, 0.3)
 fb.keyframe_insert("scale", frame=EXP)
 fb.scale = (1.4, 1.4, 1.6)
 fb.keyframe_insert("scale", frame=EXP + 8)
-m, mp, kd = vol_mat("earth", (0.07, 0.055, 0.04), 1.6, 0.8)
+m, mp, kd = vol_mat("earth", (0.07, 0.055, 0.04), 1.6, 0.8, ellip=ARGS.get("shot") == "D")
 ea = vol_box("earth", (16, 16, 34), (bx, by, bz + 17), m)
 key_val(kd, 0, EXP - 1)
 key_val(kd, 1.6, EXP + 2)
-key_val(kd, 0.9, EXP + 30)
-key_val(kd, 0.25, EXP + 100)
+if ARGS.get("shot") == "D":
+    key_val(kd, 0.55, EXP + 30)
+    key_val(kd, 0.12, EXP + 70)
+    key_val(kd, 0.04, EXP + 100)
+else:
+    key_val(kd, 0.9, EXP + 30)
+    key_val(kd, 0.25, EXP + 100)
 ea.scale = (3, 3, 2)
 ea.location = (bx, by, bz + 1)
 ea.keyframe_insert("scale", frame=EXP)
@@ -704,11 +713,12 @@ def overlay_fade(name, f0, f1, k_on):
 
 
 B0 = SHOTS["B"][0]
-overlay_fade("mines", B0 + 30, B0 + 48, 0.5)
-overlay_fade("minesS", B0 + 30, B0 + 48, 3)
-overlay_fade("minesN", B0 + 30, B0 + 48, 3)
-overlay_fade("trench1", B0 + 58, B0 + 76, 3)
-overlay_fade("main", B0 + 82, B0 + 100, 3)
+OVL_ON = ARGS.get("shot", "A") == "B" and ARGS.get("ovl3d", "0") == "1"  # lines are drawn in Remotion now (linesB.json)
+OVL_ON and overlay_fade("mines", B0 + 30, B0 + 48, 0.5)
+OVL_ON and overlay_fade("minesS", B0 + 30, B0 + 48, 3)
+OVL_ON and overlay_fade("minesN", B0 + 30, B0 + 48, 3)
+OVL_ON and overlay_fade("trench1", B0 + 58, B0 + 76, 3)
+OVL_ON and overlay_fade("main", B0 + 82, B0 + 100, 3)
 for nm in ("third",):
     if bpy.data.objects.get("ovl_" + nm):
         bpy.data.objects["ovl_" + nm].hide_render = True
@@ -780,7 +790,7 @@ if shot == "B":
     from mathutils import Vector as _V
 
     anchors = {
-        "mines": (CX - 120, line_y(MINE_BELT, CX - 120) + 300),
+        "mines": (CX - 120, line_y(MINE_BELT, CX - 120) + 90),
         "trench": (CX - 420, line_y(TRENCH_1, CX - 420)),
         "main": (CX - 1800, line_y(MAIN_LINE, CX - 1800)),
     }
@@ -794,6 +804,40 @@ if shot == "B":
         out[f - f0] = row
     os.makedirs(os.path.join(ROOT, "public", "field"), exist_ok=True)
     json.dump(out, open(os.path.join(ROOT, "public", "field", "anchorsB.json"), "w"))
+
+    # the defence lines as screen polylines per frame, drawn by Remotion (crisp colours, no re-render to restyle)
+    def dense(P, step, x0, x1):
+        P = np.asarray(P, float)
+        pts = []
+        for i in range(len(P) - 1):
+            a_, b_ = P[i], P[i + 1]
+            n = max(1, int(np.linalg.norm(b_ - a_) / step))
+            for k in range(n):
+                pts.append(a_ + (b_ - a_) * k / n)
+        pts.append(P[-1])
+        return [q for q in pts if x0 <= q[0] <= x1]
+
+    LINES = {
+        "trench": dense(TRENCH_1, 25, CX - 4000, CX + 4000),
+        "minesS": dense(MINE_BELT, 25, CX - 4000, CX + 4000),
+        "minesN": dense(np.asarray(MINE_BELT) + np.array([0, 520]), 25, CX - 4000, CX + 4000),
+        "main": dense(MAIN_LINE, 80, CX - 16000, CX + 16000),
+    }
+    lo = {}
+    for f in range(f0, f1 + 1):
+        sc.frame_set(f)
+        row = {}
+        for k_, pts in LINES.items():
+            seq = []
+            for q in pts:
+                p = world_to_camera_view(sc, cam, _V((q[0], q[1], float(H(q[0], q[1])) + 2)))
+                if p.z <= 1.0:
+                    seq.append(None)
+                else:
+                    seq.append([int(np.clip(p.x * 1920, -9999, 9999)), int(np.clip((1 - p.y) * 1080, -9999, 9999))])
+            row[k_] = seq
+        lo[f - f0] = row
+    json.dump(lo, open(os.path.join(ROOT, "public", "field", "linesB.json"), "w"), separators=(",", ":"))
 
 outp = ARGS.get("out", os.path.join(ROOT, "blender", "out", f"e_{shot}.jpg"))
 os.makedirs(os.path.dirname(outp), exist_ok=True)

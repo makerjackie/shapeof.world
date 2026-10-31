@@ -84,6 +84,10 @@ w_ = L.wind(DUR, 1.0)
 P.put(0, w_, 0.18)
 P.put(1.4, L.lp(L.boom(7.0, 2.5), 160), 0.9, -0.6)
 P.put(5.6, L.lp(L.boom(8.0, 2.5), 150), 0.8, 0.5)
+# shot B: a soft tick as each defence line draws itself on (Field.tsx: minefield g=24, first line 52, second 70)
+for g_ in (24, 52, 70):
+    P.put(T_B + g_ / 24 - 0.06, L.whoosh(0.45, 900, 2600, 1.0), 0.05, 0.2)
+    P.put(T_B + g_ / 24, L.tick(1800), 0.14, 0.2)
 # the drone overhead in C
 P.put(T_C, L.buzz(T_D - T_C, f=205, wob=8, gain=1.0, fade=0.3), 0.05, 0.0)
 # the mine
