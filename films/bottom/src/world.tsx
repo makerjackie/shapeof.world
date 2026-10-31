@@ -206,3 +206,67 @@ export const ListingCard: React.FC<{
     </div>
   );
 };
+
+// A tower counted in floors: one floor = one year of rent. Floors above `line` are drawn as a glowing hollow shell
+// (期待) when glass > 0. `floors` may be fractional (the top floor grows in).
+export const FloorTower: React.FC<{
+  x: number;
+  base: number;
+  w: number;
+  floors: number;
+  fh: number; // px per floor
+  seed: number;
+  line?: number;
+  glass?: number; // 0–1 how much the floors above the line turn into a shell
+  roof?: number;
+  o?: number;
+  lit?: number;
+  tone?: string;
+  cool?: number; // 0–1 tint towards slate (prices back below 2010)
+}> = ({ x, base, w, floors, fh, seed, line = 1e9, glass = 0, roof = 0, o = 1, lit = 0.7, tone = K.tower, cool = 0 }) => {
+  if (floors <= 0 || o <= 0) return null;
+  const h = floors * fh;
+  const top = base - h;
+  const solidF = glass > 0 ? Math.min(floors, line) : floors;
+  const cols = Math.max(1, Math.floor((w - 4) / 8));
+  const cw = (w - 4) / cols;
+  const els: React.ReactNode[] = [];
+  const nF = Math.ceil(floors);
+  for (let f = 0; f < nF; f++) {
+    const y0 = base - (f + 1) * fh;
+    const part = Math.min(1, floors - f);
+    if (part <= 0) break;
+    const inGlass = f >= solidF - 1e-6;
+    if (inGlass) continue;
+    if (fh >= 7)
+      for (let c = 0; c < cols; c++) {
+        const v = rnd(seed * 131 + f, c);
+        if (v > lit) continue;
+        els.push(<rect key={`${f}-${c}`} x={x - w / 2 + 2 + c * cw + cw * 0.22} y={y0 + fh * 0.28 + (1 - part) * fh} width={cw * 0.56} height={Math.max(1.5, fh * 0.42 * part)} fill={cool > 0.5 ? "#9fb6dc" : v < lit * 0.25 ? K.winHi : K.win} opacity={0.5 + 0.5 * rnd(seed + f, c * 7)} />);
+      }
+  }
+  const solidTop = base - solidF * fh;
+  const tint = cool > 0 ? `rgba(60,80,120,${0.5 * cool})` : null;
+  return (
+    <g opacity={o}>
+      <rect x={x - w / 2} y={solidTop} width={w} height={base - solidTop} fill={tone} />
+      {tint ? <rect x={x - w / 2} y={solidTop} width={w} height={base - solidTop} fill={tint} /> : null}
+      {fh >= 7 ? Array.from({ length: Math.floor(solidF) }, (_, f) => <rect key={f} x={x - w / 2} y={base - (f + 1) * fh} width={w} height={1} fill="#000" opacity={0.35} />) : null}
+      <rect x={x - w / 2} y={solidTop} width={Math.max(2, w * 0.16)} height={base - solidTop} fill="#ffffff" opacity={0.04} />
+      {els}
+      {glass > 0 && floors > line ? (
+        <g opacity={glass}>
+          <rect x={x - w / 2} y={top} width={w} height={(floors - line) * fh} fill={K.hope} opacity={0.2} />
+          {fh >= 7 ? Array.from({ length: Math.floor(floors - line) }, (_, f) => <rect key={f} x={x - w / 2} y={base - (line + f + 1) * fh} width={w} height={1} fill={K.hopeHi} opacity={0.35} />) : null}
+          <rect x={x - w / 2} y={top} width={w} height={(floors - line) * fh} fill="none" stroke={K.hopeHi} strokeWidth={Math.max(1.5, w / 80)} />
+        </g>
+      ) : null}
+      {roof > 0 ? (
+        <g opacity={roof}>
+          <rect x={x - w / 2 - 2} y={top - 3} width={w + 4} height={5} fill={K.gold} />
+          <ellipse cx={x} cy={top} rx={w * 0.9 + 10} ry={12 + w * 0.08} fill={K.gold} opacity={0.2} />
+        </g>
+      ) : null}
+    </g>
+  );
+};

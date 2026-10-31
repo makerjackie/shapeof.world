@@ -3,7 +3,7 @@
 usage: ~/.venvs/shapeof-films/bin/python tools/music.py
 
 Layout (must match src/time.ts), 千年之后（氛围版）at 111.62 BPM, first beat 0.487 s, no change of tempo:
-  track bars 8–40, 16–32, 40–48, 48–84 (to the end). Seams: bar 39 ≈ bar 15 (chroma 0.999), bar 31 ≈ bar 39 (0.999).
+  track bars 8–40, one bar of silence, then track bars 56–84 (to the end); the silence hides the jump.
 Every seam is on a downbeat; a 10 ms fade either side keeps it click-free.
 """
 import glob, os, re, subprocess, sys
@@ -22,10 +22,15 @@ for f in glob.glob(os.path.join(ROOT, "src", "*.tsx")):
 for sid in sorted(ids):
     fetch(sid, "sfx")
 gain = LEVEL - lufs(src)
-segs = [(D(8), D(40)), (D(16), D(32)), (D(40), D(48)), (D(48), None)]
+segs = [(D(8), D(40)), "sil", (D(56), None)]
 fmt = "aformat=sample_rates=48000:channel_layouts=stereo"
 parts, labels = [], []
-for i, (a, b) in enumerate(segs):
+for i, sg in enumerate(segs):
+    if sg == "sil":
+        parts.append(f"aevalsrc=0|0:d={BAR:.5f}:s=48000,{fmt}[p{i}]")
+        labels.append(f"[p{i}]")
+        continue
+    a, b = sg
     end = f":{b:.5f}" if b else ""
     fo = f",afade=t=out:st={b - a - 0.01:.5f}:d=0.01" if b else ""
     parts.append(f"[0:a]atrim={a:.5f}{end},asetpts=PTS-STARTPTS,{fmt},afade=t=in:d=0.01{fo}[p{i}]")

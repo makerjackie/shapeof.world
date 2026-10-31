@@ -1,53 +1,42 @@
-// 房价的底: the whole film. Timing in story bars (time.ts); scenes: open.tsx (sb 0–17), skyline.tsx (18–59.6),
-// insight.tsx (59–92).
+// 房价的底: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–10), city.tsx (10–61).
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
-import { BrandMark, EndCard, EO, keys, lerp, ramp, useT } from "./kit";
-import { Insight } from "./insight";
-import { Open, QUOTE_AT, TAGS } from "./open";
-import { Skyline } from "./skyline";
+import { BrandMark, EndCard, keys, ramp, useT } from "./kit";
+import { City } from "./city";
+import { Hook, QUOTES, RUN0, RUN1 } from "./hook";
 import { BEAT, FILM_FRAMES, fr, S } from "./time";
 import { Sky } from "./world";
 
-const END_AT = S(91.2);
+const END_AT = S(60.3);
 
 type Cue = { t: number; id: string; v: number };
 const CUES: Cue[] = [
-  ...TAGS.map((g, i) => ({ t: g.at, id: i % 2 ? "sfx-ui-03" : "sfx-ui-02", v: 0.4 })),
-  { t: 0.85, id: "sfx-impact-16", v: 0.4 },
-  { t: S(3.05), id: "sfx-transition-08", v: 0.4 },
-  ...Array.from({ length: 8 }, (_, i) => ({ t: S(3.1) + i * BEAT * 0.25, id: "sfx-ui-01", v: 0.18 })),
-  { t: S(4.8), id: "sfx-impact-08", v: 0.45 },
-  { t: S(5.6), id: "sfx-impact-16", v: 0.45 },
-  { t: S(8.3), id: "sfx-ui-06", v: 0.4 },
-  { t: S(10.6), id: "sfx-ui-10", v: 0.4 },
-  ...[0, 1, 2, 3].map((i) => ({ t: QUOTE_AT(i), id: "sfx-notification-14", v: 0.3 })),
-  { t: S(15.15), id: "sfx-impact-08", v: 0.45 },
-  { t: S(16.5), id: "sfx-transition-12", v: 0.35 },
-  { t: S(18.9), id: "sfx-transition-05", v: 0.35 },
-  { t: S(20.7), id: "sfx-ui-07", v: 0.4 },
-  { t: S(22.6), id: "sfx-ui-07", v: 0.4 },
-  { t: S(24.7), id: "sfx-scifi-09", v: 0.35 },
-  { t: S(28.6), id: "sfx-ui-06", v: 0.38 },
-  { t: S(29.3), id: "sfx-ui-06", v: 0.38 },
-  { t: S(31), id: "sfx-transition-08", v: 0.4 },
-  ...Array.from({ length: 12 }, (_, i) => ({ t: S(31.4) + i * 0.12, id: "sfx-ui-01", v: 0.15 })),
-  { t: S(33.2), id: "sfx-impact-12", v: 0.35 },
-  { t: S(38), id: "sfx-transition-12", v: 0.3 },
-  { t: S(42.2), id: "sfx-scifi-03", v: 0.35 },
-  { t: S(45.1), id: "sfx-ui-07", v: 0.35 },
-  { t: S(46.6), id: "sfx-ui-10", v: 0.35 },
-  { t: S(51.2), id: "sfx-ui-04", v: 0.28 },
-  { t: S(56), id: "sfx-impact-05", v: 0.6 }, // the one discovery
-  { t: S(59.3), id: "sfx-transition-08", v: 0.35 },
-  { t: S(65.6), id: "sfx-transition-05", v: 0.35 },
-  { t: S(67.2), id: "sfx-ui-06", v: 0.35 },
-  { t: S(68.4), id: "sfx-ui-06", v: 0.35 },
-  { t: S(72), id: "sfx-impact-05", v: 0.5 },
-  { t: S(81.2), id: "sfx-transition-08", v: 0.3 },
-  { t: S(84), id: "sfx-impact-16", v: 0.4 },
-  { t: S(85.5), id: "sfx-transition-12", v: 0.3 },
-  { t: S(87.3), id: "sfx-impact-05", v: 0.35 },
+  // the fall: a tick per beat while the towers sink, a hit when half the cities are back in 2010
+  ...Array.from({ length: Math.floor((RUN1 - RUN0) / (BEAT / 2)) }, (_, i) => ({ t: RUN0 + (i * BEAT) / 2, id: "sfx-ui-01", v: 0.16 + 0.1 * (i / 12) })),
+  { t: S(3.05), id: "sfx-impact-08", v: 0.45 },
+  { t: S(4.9), id: "sfx-impact-16", v: 0.5 },
+  ...QUOTES.map((q) => ({ t: q.at, id: "sfx-impact-12", v: 0.42 })),
+  { t: S(9.15), id: "sfx-transition-12", v: 0.35 },
+  // the home, floor by floor
+  ...Array.from({ length: 22 }, (_, i) => ({ t: S(10.7) + i * ((S(12.5) - S(10.7)) / 22), id: "sfx-ui-01", v: 0.18 })),
+  { t: S(12.5), id: "sfx-ui-06", v: 0.4 },
+  { t: S(14.5), id: "sfx-scifi-09", v: 0.38 },
+  { t: S(18.4), id: "sfx-scifi-03", v: 0.3 },
+  { t: S(19.9), id: "sfx-transition-08", v: 0.4 },
+  ...Array.from({ length: 12 }, (_, i) => ({ t: S(19.95) + i * 0.1, id: "sfx-ui-01", v: 0.14 })),
+  { t: S(22.1), id: "sfx-ui-07", v: 0.4 },
+  { t: S(24), id: "sfx-ui-10", v: 0.38 },
+  { t: S(27.6), id: "sfx-impact-05", v: 0.55 }, // the verdict
+  { t: S(31.55), id: "sfx-ui-04", v: 0.3 },
+  { t: S(33.05), id: "sfx-impact-05", v: 0.55 }, // the far cities rose first
+  { t: S(35.5), id: "sfx-transition-05", v: 0.35 },
+  { t: S(41.05), id: "sfx-impact-16", v: 0.45 },
+  { t: S(45.2), id: "sfx-transition-08", v: 0.35 },
+  { t: S(46.2), id: "sfx-ui-06", v: 0.35 },
+  { t: S(47.3), id: "sfx-ui-06", v: 0.35 },
+  { t: S(48.45), id: "sfx-impact-08", v: 0.45 },
+  { t: S(50.5), id: "sfx-impact-05", v: 0.45 },
+  { t: S(55.3), id: "sfx-transition-12", v: 0.3 },
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
 
@@ -59,8 +48,7 @@ const Vignette: React.FC = () => <AbsoluteFill style={{ background: "radial-grad
 
 export const Film: React.FC = () => {
   const t = useT();
-  const horizon = t > S(18) && t < S(33.5) ? lerp(860, 930, ramp(t, S(31), S(33), EO)) : 930;
-  const dim = keys(t, [[S(0), 0.45], [S(17), 0.45], [S(18.5), 0.1], [S(59), 0.1], [S(59.6), 0.4], [S(65), 0.4], [S(66), 0.1], [S(85.4), 0.1], [S(86.2), 0.3]]);
+  const dim = keys(t, [[0, 0.15], [S(10), 0.15], [S(10.5), 0.1]]);
   const fadeOut = ramp(t, (FILM_FRAMES - 12) / 30, (FILM_FRAMES - 1) / 30);
   return (
     <AbsoluteFill style={{ background: "#04060b", overflow: "hidden" }}>
@@ -70,10 +58,9 @@ export const Film: React.FC = () => {
           <Audio src={staticFile(`sfx/${c.id}.wav`)} volume={c.v} />
         </Sequence>
       ))}
-      <Sky t={t} dim={dim} horizon={horizon} />
-      <Open />
-      <Skyline />
-      <Insight />
+      <Sky t={t} dim={dim} horizon={930} />
+      <Hook />
+      <City />
       <BrandMark o={1 - ramp(t, END_AT - 0.2, END_AT)} />
       <EndCard at={END_AT} />
       <Vignette />
