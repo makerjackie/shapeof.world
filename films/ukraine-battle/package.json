@@ -1,0 +1,32 @@
+{
+  "name": "ukraine-battle",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Film out/ukraine-battle.mp4 --crf=20 --audio-bitrate=192k",
+    "stills": "node tools/stills.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.1.2",
+    "@react-three/postprocessing": "^3.0.4",
+    "@remotion/cli": "4.0.380",
+    "@remotion/google-fonts": "4.0.380",
+    "@remotion/noise": "4.0.380",
+    "@remotion/three": "^4.0.380",
+    "@types/three": "^0.170.0",
+    "postprocessing": "^6.37.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "remotion": "4.0.380",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@remotion/bundler": "4.0.380",
+    "@remotion/renderer": "4.0.380",
+    "@types/react": "19.1.0",
+    "typescript": "5.9.3"
+  },
+  "allowScripts": {
+    "esbuild@0.25.0": true
+  }
+}

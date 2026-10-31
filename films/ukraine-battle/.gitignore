@@ -1,0 +1,4 @@
+out/
+public/*.jpg
+public/*.wav
+public/*.f32
