@@ -199,16 +199,15 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
   const o = Math.min(interpolate(t, [at, at + 0.4], [0, 1], CL), interpolate(t, [out - 0.35, out], [1, 0], CL));
   if (o <= 0) return null;
   const rows = [
-    "Base44：TechCrunch 2025-06-18 · 公开收入的小生意：Indie Hackers 分析 TrustMRR 5,079 个经 Stripe 核验的项目，2026-03",
-    "个体工商户 1.25 亿户：市场监管总局，2024 年 6 月底（央视网、求是网）",
-    "每月新上线的订阅收费 App：RevenueCat《State of Subscription Apps 2026》（数据来自 Appfigures）",
-    "工信部《人工智能中小企业创业支持计划（2026—2028 年）》2026-09 · 《广东省支持人工智能 OPC 创新发展行动方案》2026-03",
-    "《成都市支持人工智能 OPC 创新发展若干措施（征求意见稿）》2026-03 · 《公司法》（2023 修订）第二十三条",
-    "34 倍、61 倍，收入 −23% 与 +19%，回头客 30% 与 8%，第二年多花 47%：Stripe《Solo founding is at an all-time high》2026-05-28",
-    "电视与明星效应：Felix Koenig，American Economic Review: Insights，2023",
-    "知乎 37 个问题、505 个回答，作为观点参考 · 人民币按 1 美元约 6.72 元换算",
-    "集市、摊位与光点由代码逐帧生成，是示意 · 配乐：《独立开发者的形状》原创曲",
+    "一人公司 731.5 万户：经济日报 2026-10-29 · 个体工商户 1.25 亿户：市场监管总局，2024 年 6 月",
+    "美国：人口普查局（无雇员企业、商业设立统计）· 国税局 SOI 个人独资经营 2005、2020、2023 纳税年度 · 英国商业贸易部 2025",
+    "Stripe《Solo founding is at an all-time high》2026-05-28（Stripe Atlas：63%、−23%、+19%、34 倍、61 倍、51% 对 2%、30% 对 8%）",
+    "RevenueCat《State of Subscription Apps 2026》（数据来自 Appfigures）· 北京大学光华管理学院等《中国小微经营者调查》2024 年三季度",
+    "科斯《企业的性质》1937 · Felix Koenig，American Economic Review: Insights，2023 · Dario Amodei 的预测：Inc. 2025-05",
+    "人民币按 1 美元约 6.72 元换算 · 知乎 37 个问题、505 个回答，作为观点参考 · 国内数据另用 grok 交叉检索",
+    "集市、摊位、光柱与光点由代码逐帧生成，是示意；光柱按 1 米 = 5,000 美元画 · 配乐：《独立开发者的形状》原创曲",
   ];
+
   return (
     <div style={{ position: "absolute", inset: 0, background: `rgba(5,6,8,${0.88 * o})`, opacity: o }}>
       <div style={{ position: "absolute", left: 130, top: 120, fontFamily: FONT, color: K.fg }}>
@@ -218,7 +217,7 @@ export const Sources: React.FC<{ at: number; out: number }> = ({ at, out }) => {
             {r}
           </div>
         ))}
-        <div style={{ fontSize: 22, color: "rgba(244,240,232,0.5)", marginTop: 24 }}>数据截至 2026 年 10 月 · 个人案例多为本人或媒体所述 · 不构成创业建议</div>
+        <div style={{ fontSize: 22, color: "rgba(244,240,232,0.5)", marginTop: 24 }}>数据截至 2026 年 10 月 · 收入不等于利润 · 不构成创业建议</div>
       </div>
     </div>
   );

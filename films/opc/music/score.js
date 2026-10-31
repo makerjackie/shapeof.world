@@ -1,5 +1,5 @@
-// Original score for "独立开发者的形状", re-arranged for "一人公司（OPC）的形状" (2026-10-30): the same instruments,
-// harmony and hooks; only the section table (92 bars instead of 65) and the sound-effect cues are new, and the
+// Original score for "独立开发者的形状", re-arranged for "一人公司（OPC）的形状" (v7, 2026-10-31): the same instruments,
+// harmony and hooks; only the section table (118 bars instead of 65) and the sound-effect cues are new, and the
 // audio logo is gone (the end card has none). Synthesized with Web Audio in an OfflineAudioContext; no samples.
 // The engine (drums, piano, organ bass, pad, effects, the series' audio logo) is the one from
 // films/tower/music/score.js and films/house/music/score.js, so the series keeps one set of sounds.
@@ -10,63 +10,79 @@
 const BEAT = 0.5
 const BAR = 2
 const T0 = 0.5
-const BARS = 92
+const BARS = 118
 const DURATION = T0 + BARS * BAR + 1.0
 const bt = (bar, beat = 0) => T0 + bar * BAR + beat * BEAT
 
 // [from, to] inclusive film bars. `anchor` is the bar the chord cycle counts from (defaults to `from`).
 const SECTIONS = [
-  { from: 0, to: 5, kind: 'hook' }, // the dashboard, the market, the question
-  { from: 6, to: 7, kind: 'title' }, // the licence
-  { from: 8, to: 22, kind: 'groove' }, // the 煎饼 cart; hands
-  { from: 23, to: 31, kind: 'groove2' }, // more makers; the cities help them set up; the burden stays
-  { from: 32, to: 35, kind: 'drop' }, // the second ceiling: one person can sell to the world
-  { from: 36, to: 39, kind: 'breakdown' }, // but there is no street online
-  { from: 40, to: 40, kind: 'build', anchor: 37 },
-  { from: 41, to: 44, kind: 'drop2' }, // 34 -> 61
-  { from: 45, to: 57, kind: 'groove2' }, // why; television (muffled); AI
-  { from: 58, to: 60, kind: 'reflect' }, // what the street used to do
-  { from: 61, to: 74, kind: 'travel' }, // being found; coming back
-  { from: 75, to: 75, kind: 'build', anchor: 72 },
-  { from: 76, to: 85, kind: 'anthem' }, // morning
-  { from: 86, to: 89, kind: 'outro' }, // sources, end card
-  { from: 90, to: 91, kind: 'tail' },
+  { from: 0, to: 5, kind: 'hook' }, // a registration; the market lights up; the question
+  { from: 6, to: 7, kind: 'title' },
+  { from: 8, to: 21, kind: 'groove' }, // the 煎饼 cart; the old shape: a ceiling and a floor
+  { from: 22, to: 29, kind: 'groove2' }, // the first ceiling: hands (the company folds into a desk)
+  { from: 30, to: 31, kind: 'build', anchor: 28 }, // the second: the street (straight up from the desk)
+  { from: 32, to: 37, kind: 'drop' }, // more one-person companies than ever
+  { from: 38, to: 39, kind: 'stop' }, // the ceiling and the floor break
+  { from: 40, to: 48, kind: 'breakdown' }, // the IRS levels, measured
+  { from: 49, to: 60, kind: 'groove2' }, // no profit; thinner slices; China's shops; online
+  { from: 61, to: 63, kind: 'reflect' }, // so, can it make money?
+  { from: 64, to: 76, kind: 'groove2' }, // why: the street went (television, muffled); hands are cheap
+  { from: 77, to: 77, kind: 'build', anchor: 74 },
+  { from: 78, to: 80, kind: 'drop2' }, // 34 -> 61
+  { from: 81, to: 83, kind: 'reflect' }, // the ceiling higher, the floor lower
+  { from: 84, to: 98, kind: 'travel' }, // the future; what the ones on top did
+  { from: 99, to: 99, kind: 'build', anchor: 96 },
+  { from: 100, to: 111, kind: 'anthem' }, // morning
+  { from: 112, to: 115, kind: 'outro' }, // sources, end card
+  { from: 116, to: 117, kind: 'tail' },
 ]
 
 // Sound effects on the picture: [bar, beat, type, ...args]. Scene-local beat b of a scene that starts on bar B
 // lands on bar B + b / 4.
 const CUES = [
-  // the dashboard: sign-ups popping in, the stamp
-  [0, 0, 'boom'], [0, 1, 'pop', 0.35], [0, 2, 'pop', 0.35], [0, 3, 'pop', 0.35], [1, 0, 'pop', 0.35], [1, 1, 'pop', 0.35], [1, 2, 'pop', 0.35],
-  [0, 1.5, 'thud'], [0, 1.5, 'impact', 0.5],
-  [1, 3, 'whoosh'], [2, 2, 'swish'], [3, 0, 'shimmer'], [4, 3, 'thud', 0.6],
-  // title: the seal
-  [6, 0, 'boom'], [6, 1, 'thud'],
+  // the registration: the tick, the market's lamps coming on
+  [0, 0, 'boom'], [0, 1.6, 'ding', 0.6], [0, 1.7, 'impact', 0.45],
+  [1, 3, 'whoosh'], [2, 0, 'pour', 3.0, 40, 0.35], [2, 2, 'swish'], [3, 0, 'shimmer'], [3, 2, 'thud', 0.6],
+  // title
+  [6, 0, 'boom'], [6, 1, 'thud', 0.6],
   // the cart
-  [8, 0, 'whoosh'], [9, 0, 'pop'], [9, 1.2, 'pop'], [9, 2.4, 'pop'], [10, 0.2, 'coin'], [12, 0, 'swish'], [13, 3, 'swish'], [15, 1, 'ding'],
+  [8, 0, 'whoosh'], [9, 0, 'pop'], [9, 1.2, 'pop'], [9, 2.4, 'pop'], [10, 0.2, 'coin'],
+  [11, 0, 'swish', 0.7], [13, 2.4, 'swish', 0.6],
+  // its pillar rises into the ceiling; the floor; the regular
+  [14, 2, 'whoosh', 0.5], [15, 0.6, 'thud'], [15, 0.7, 'ding', 0.5], [17, 0, 'shimmer'], [17, 2.8, 'ding'],
+  [19, 1.4, 'swish', 0.6],
   // the company: jobs, flips, lights out, the building goes down
-  [16, 1, 'whoosh'],
-  [17, 1, 'pop', 0.4], [17, 1.56, 'pop', 0.4], [17, 2.12, 'pop', 0.4], [17, 2.68, 'pop', 0.4], [17, 3.24, 'pop', 0.4], [17, 3.8, 'pop', 0.4],
-  [19, 3, 'pour', 1.4, 8, 0.4], [20, 0, 'powerdown', 0.5], [21, 2.4, 'thud'], [22, 0, 'impact', 0.6], [22, 1, 'pop'],
-  // more makers: stalls popping up along the street
-  [23, 1, 'pour', 1.6, 34, 0.5], [24, 0, 'pour', 2, 40, 0.5],
-  // the cities' offers: policy cards
-  [25, 0, 'whoosh'], [25, 2.2, 'swish', 0.7], [26, 0.6, 'swish', 0.7], [26, 3.0, 'swish', 0.7],
-  // the burden
-  [28, 0, 'swish', 0.6], [29, 0.8, 'pop', 0.5], [30, 0.8, 'swish', 0.5], [31, 0.2, 'thud'],
-  // the second ceiling: the world opens
-  [32, 0, 'boom'], [33, 0, 'shimmer'],
-  // the turn; the count to 61
-  [36, 0, 'powerdown'], [37, 0, 'shimmer'], [41, 0, 'boom'], [41, 0, 'pour', 2.6, 34, 0.5], [42, 2.4, 'pour', 2.4, 27, 0.5], [44, 0, 'ding'],
-  // why; television; AI
-  [45, 0, 'whoosh'], [50, 0, 'swish'], [52, 2.8, 'shimmer'], [55, 0, 'whoosh'],
-  // what the street did; found; coming back
-  [58, 0, 'swish', 0.6], [61, 0, 'whoosh'],
-  [63, 0, 'coin'], [63, 2, 'coin'], [64, 0, 'coin'], [64, 1, 'coin'], [64, 2, 'coin'], [64, 3, 'coin'], [65, 0, 'pour', 2, 24, 0.4],
-  [67, 0, 'whoosh'], [68, 2.2, 'ding', 0.6], [69, 2.8, 'ding', 0.4], [73, 0, 'swish'],
-  // morning
-  [76, 0, 'shimmer'], [79, 1.3, 'ding'], [82, 3, 'swish', 0.5],
-  [86, 0, 'swish', 0.6], [89, 0, 'swish', 0.5],
+  [22, 0, 'whoosh'],
+  [23, 1.6, 'pop', 0.4], [23, 2.16, 'pop', 0.4], [23, 2.72, 'pop', 0.4], [23, 3.28, 'pop', 0.4], [24, 0.0, 'pop', 0.4], [24, 0.4, 'pop', 0.4],
+  [26, 0, 'pour', 1.4, 8, 0.4], [26, 2, 'powerdown', 0.5], [27, 2.4, 'thud'], [28, 2.4, 'impact', 0.5], [28, 3.2, 'pop'],
+  // the street: up and out
+  [30, 0, 'whoosh'],
+  // more one-person companies than ever
+  [32, 0, 'boom'], [32, 0.2, 'pour', 3.2, 60, 0.4], [33, 0.8, 'swish', 0.7], [34, 1.2, 'swish', 0.7], [35, 1.6, 'swish', 0.7],
+  // the ceiling and the floor break (the music stops under it)
+  [38, 0, 'impact', 0.9], [38, 0.8, 'shimmer', 1.2], [38, 2.8, 'impact', 0.6], [39, 0, 'pour', 2.4, 50, 0.35],
+  // the levels
+  [41, 1.8, 'swish', 0.6], [43, 1.4, 'ding', 0.5], [47, 0, 'whoosh', 0.7], [47, 3.6, 'ding', 0.5], [50, 0, 'whoosh', 0.8], [51, 1.6, 'ding', 0.6],
+  // no profit: three in ten fall; thinner slices; China's shops
+  [52, 2, 'powerdown', 0.6], [52, 2.4, 'pour', 1.8, 28, 0.35], [54, 2.6, 'swish', 0.6], [55, 0.8, 'powerdown', 0.35], [56, 2.6, 'swish', 0.6],
+  // online
+  [58, 3.2, 'whoosh'], [59, 2, 'shimmer', 0.6], [61, 0, 'swish', 0.5],
+  // why
+  [64, 0, 'swish', 0.6], [65, 0, 'whoosh', 0.6], [68, 1.6, 'swish'], [70, 2.4, 'shimmer'],
+  [73, 0.4, 'whoosh'], [73, 2.4, 'pour', 1.6, 34, 0.5], [74, 1.6, 'pour', 2, 40, 0.5], [75, 1.6, 'swish', 0.6],
+  // the count to 61
+  [78, 0, 'boom'], [78, 0, 'pour', 2.4, 34, 0.5], [79, 2.0, 'pour', 2.0, 27, 0.5], [80, 2.0, 'ding'],
+  // the ceiling higher, the floor lower
+  [81, 0, 'swish', 0.6], [81, 2.4, 'shimmer', 0.6],
+  // the future: the cities' banners; a wider gap
+  [84, 0, 'swish', 0.6], [85, 1.6, 'whoosh', 0.6], [86, 0.8, 'swish', 0.6], [88, 0.4, 'whoosh', 0.5], [89, 2.4, 'swish', 0.6],
+  [92, 0, 'whoosh', 0.6], [94, 2, 'whoosh'],
+  [95, 0, 'coin'], [95, 2, 'coin'], [96, 0, 'coin'], [96, 1, 'coin'], [96, 2, 'pour', 2, 24, 0.4],
+  [96, 2.2, 'swish', 0.6], [97, 3.4, 'ding', 0.6], [98, 1.0, 'ding', 0.4],
+  // morning: the regulars, each laying a tile of the floor
+  [100, 0, 'shimmer'], [101, 1.8, 'ding'], [101, 1.6, 'pop', 0.4], [102, 0.8, 'pop', 0.4], [103, 0.6, 'pop', 0.4], [103, 3.4, 'swish', 0.6], [104, 1.6, 'pop', 0.4], [105, 0.6, 'pop', 0.4],
+  [106, 2.6, 'swish', 0.5],
+  [112, 0, 'swish', 0.6], [115, 0, 'swish', 0.5],
 ]
 
 const SR = 48000
@@ -86,7 +102,7 @@ const PEAK = [
   { root: 33, notes: [60, 64, 67, 71] }, // Am9
 ]
 const CODA = ['anthem', 'outro', 'tail']
-const CODA_FROM = 76
+const CODA_FROM = 100
 const mod4 = (n) => ((n % 4) + 4) % 4
 const chordAt = (bar, sec) => (CODA.includes(sec.kind) ? PEAK[mod4(bar - CODA_FROM)] : MAIN[mod4(bar - (sec.anchor ?? sec.from))])
 
@@ -554,11 +570,11 @@ async function renderScore() {
 
   for (const [bar, beat, type, ...a] of CUES) SFX[type](bt(bar, beat), ...a)
 
-  // Muffle the music under the television flashback (bars 50-54), like an old room next door; open it again after.
-  tone.frequency.setValueAtTime(18000, bt(50))
-  tone.frequency.exponentialRampToValueAtTime(900, bt(50, 2))
-  tone.frequency.setValueAtTime(900, bt(54, 2))
-  tone.frequency.exponentialRampToValueAtTime(18000, bt(55))
+  // Muffle the music under the television flashback (bars 68.4-72.9), like an old room next door; open it again after.
+  tone.frequency.setValueAtTime(18000, bt(68, 1.6))
+  tone.frequency.exponentialRampToValueAtTime(900, bt(68, 3.4))
+  tone.frequency.setValueAtTime(900, bt(72, 2))
+  tone.frequency.exponentialRampToValueAtTime(18000, bt(73))
 
   // Sidechain: dip the music bus under every kick.
   duck.gain.setValueAtTime(1, 0)

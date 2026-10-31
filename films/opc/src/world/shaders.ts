@@ -163,20 +163,20 @@ void main() {
     float stripe = step(0.5, fract(vLocal.x * 2.2));
     albedo = mix(paint, vec3(0.86, 0.82, 0.76), stripe * 0.75);
   } else if (pt == 11) {
-    // the payment QR sign
-    vec2 g = floor(vUv * 21.0);
-    float m = step(0.5, hash(g + sd));
-    vec2 c3 = min(g, 20.0 - g);
-    float finder = step(c3.x, 6.0) * step(c3.y, 6.0);
-    if (finder > 0.5) {
-      vec2 fc = (g.x < 10.0 ? g : vec2(20.0 - g.x, g.y));
-      fc = vec2(min(fc.x, 6.0 - fc.x + 0.0), fc.y);
-      m = 1.0;
+    // the price board: a few rows of hand-written items and prices
+    float rowsN = 5.0;
+    float r = floor((1.0 - vUv.y) * rowsN);
+    vec2 q = vec2(vUv.x, fract((1.0 - vUv.y) * rowsN));
+    float ink = 0.0;
+    if (r >= 0.5 && r < rowsN - 0.5 && q.y > 0.18 && q.y < 0.82) {
+      if (vUv.x < 0.62) ink = glyphs(vec2((vUv.x - 0.1) / 0.52, q.y), r + 3.0, 3.0) * step(0.1, vUv.x);
+      else ink = glyphs(vec2((vUv.x - 0.68) / 0.24, q.y), r + 9.0, 1.4) * step(0.68, vUv.x) * step(vUv.x, 0.92);
     }
+    float head = step(0.82, vUv.y) * step(0.2, vUv.x) * step(vUv.x, 0.8) * step(abs(fract(vUv.y * 2.0 * rowsN) - 0.5), 0.3);
     vec2 e = abs(vUv - 0.5);
-    float pad = step(max(e.x, e.y), 0.44);
-    albedo = mix(vec3(0.95), vec3(0.03), m * pad);
-    emis = albedo * 0.35 * lit;
+    float pad = step(max(e.x, e.y), 0.46);
+    albedo = mix(vec3(0.12, 0.09, 0.06), mix(vec3(0.93, 0.88, 0.76), vec3(0.62, 0.12, 0.08), max(ink, head * 0.9)), pad);
+    emis = albedo * 0.32 * lit;
   }
   // light from the stall's own bulb, plus a little moonlight and (at dawn) daylight
   vec3 L = vL - vW;
@@ -259,14 +259,14 @@ void main() {
   float road = 1.0 - smoothstep(3.3, 3.5, az);
   float pave = smoothstep(3.3, 3.5, az) * (1.0 - smoothstep(7.6, 7.9, az));
   vec3 col = vec3(0.016, 0.019, 0.026);
-  vec3 pv = vec3(0.03, 0.031, 0.036);
+  vec3 pv = vec3(0.024, 0.025, 0.03);
   // paving joints
   vec2 tile = abs(fract(p * vec2(1.6, 1.6)) - 0.5);
   pv *= 0.88 + 0.12 * smoothstep(0.44, 0.47, max(tile.x, tile.y)) * -1.0 + 0.12;
   col = mix(col, pv, pave);
   col *= 0.8 + 0.4 * vnoise(p * 0.9) * (0.7 + 0.3 * vnoise(p * 7.0));
   // a faint wet sheen in the road: brighter toward the light-pool layer
-  col += uAmb * 0.25;
+  col += uAmb * 0.16;
   col += vec3(0.4, 0.38, 0.4) * uDay * (0.11 + 0.06 * pave);
   col = fogged(col, vW);
   if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
@@ -331,6 +331,7 @@ void main() {
   float y = vDir.y;
   vec3 col = mix(uHor, uTop, smoothstep(-0.02, 0.45, y));
   col += uGlow * exp(-max(y, 0.0) * 9.0) * 0.9;
+  col += vec3(0.07, 0.045, 0.03) * exp(-abs(y) * 30.0) * uStars;
   col = mix(col, uHor * 0.6, smoothstep(0.0, -0.2, y));
   vec2 sp = vec2(atan(vDir.z, vDir.x) * 180.0, y * 320.0);
   float st = step(0.996, hash(floor(sp))) * smoothstep(0.08, 0.5, y);
@@ -523,6 +524,7 @@ void main() {
     vec3 glass = vec3(0.008, 0.011, 0.018) + uAmb * 0.25 + vec3(0.02, 0.025, 0.035) * smoothstep(0.3, 0.9, q.y);
     col = mix(col, mix(glass, room, on), win);
   }
+  col *= mix(1.0, 0.45, step(0.5, n.y)); // roofs
   col += vec3(0.42, 0.4, 0.44) * uDay * (0.07 + 0.04 * n.y);
   col *= mix(1.0, 0.45, uDim);
   col = fogged(col, vW);
@@ -557,5 +559,125 @@ void main() {
     ws += w;
   }
   gl_FragColor = vec4(acc / ws, c0.a);
+}
+`;
+
+// ---------- Income pillars: a beam of light over each near stall, its height one year's revenue ----------
+// Cylindrical billboards (they turn about the vertical to face the camera), never thinner than uMinPx pixels.
+export const PILLAR_VERT = /* glsl */ `
+attribute vec4 aP; // x, z, base y, height
+attribute vec4 aK; // r, g, b, intensity
+uniform float uPx;
+uniform float uMinPx;
+uniform float uWidth;
+uniform float uFogD;
+varying vec2 vUv;
+varying vec4 vK;
+varying float vFog;
+varying float vH;
+void main() {
+  vec3 base = vec3(aP.x, aP.z, aP.y);
+  vec3 w = base + vec3(0.0, position.y * aP.w, 0.0);
+  vec3 toCam = cameraPosition - w;
+  vec2 side = normalize(vec2(-toCam.z, toCam.x) + vec2(1e-5, 0.0));
+  float dist = length(toCam);
+  float hw = max(uWidth, uMinPx * uPx * dist) * 0.5;
+  w.xz += side * position.x * hw * 3.0; // the quad is 3x the core: room for the halo
+  vUv = vec2(position.x, position.y);
+  vK = aK;
+  vK.w *= clamp(uWidth / (2.0 * hw), 0.35, 1.0); // thin far beams get dimmer, not wider and brighter
+  vH = aP.w;
+  vFog = 1.0 - exp(-uFogD * dist);
+  gl_Position = projectionMatrix * viewMatrix * vec4(w, 1.0);
+}
+`;
+
+export const PILLAR_FRAG = /* glsl */ `
+uniform float uGain;
+varying vec2 vUv;
+varying vec4 vK;
+varying float vFog;
+varying float vH;
+void main() {
+  float u = vUv.x * 3.0;
+  float core = exp(-u * u * 7.0);
+  float halo = exp(-u * u * 0.9) * 0.22;
+  float v = vUv.y;
+  float rise = 0.4 + 0.6 * smoothstep(0.0, 1.0, v);
+  float tip = smoothstep(1.0, 1.0 - min(0.5, 1.2 / max(vH, 0.01)), v); // soft top over the last metre
+  float foot = smoothstep(0.0, min(0.3, 0.6 / max(vH, 0.01)), v);
+  vec3 col = vK.rgb * vK.w * (core * 1.4 + halo) * rise * tip * foot * uGain * (1.0 - 0.85 * vFog);
+  if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+  gl_FragColor = vec4(clamp(col, 0.0, 6.0), 1.0);
+}
+`;
+
+// ---------- Glass levels: horizontal sheets (a ceiling, a floor, the revenue levels), made of tiles that can break ----------
+export const GLASS_VERT = /* glsl */ `
+attribute vec3 aT; // tile ix, iz, seed
+uniform vec3 uC; // centre x, y, z
+uniform vec2 uSize; // w, d
+uniform vec2 uN; // tiles across, deep
+uniform float uBreak; // 0 whole .. 1 gone
+uniform float uFall; // +1 tiles fall down, -1 they fly up
+varying vec3 vW;
+varying float vK;
+varying float vCtr;
+mat3 rotAxis(vec3 a, float t) {
+  float c = cos(t), s = sin(t), ic = 1.0 - c;
+  return mat3(c + a.x * a.x * ic, a.y * a.x * ic + a.z * s, a.z * a.x * ic - a.y * s,
+              a.x * a.y * ic - a.z * s, c + a.y * a.y * ic, a.z * a.y * ic + a.x * s,
+              a.x * a.z * ic + a.y * s, a.y * a.z * ic - a.x * s, c + a.z * a.z * ic);
+}
+void main() {
+  vec2 cell = uSize / uN;
+  vec3 ctr = vec3(uC.x - uSize.x * 0.5 + (aT.x + 0.5) * cell.x, uC.y, uC.z - uSize.y * 0.5 + (aT.y + 0.5) * cell.y);
+  vec3 p = vec3(position.x * cell.x * 0.5 * 1.002, 0.0, position.y * cell.y * 0.5 * 1.002);
+  float dly = aT.z * 0.55 + 0.25 * fract(aT.z * 7.31);
+  float k = clamp((uBreak - dly) / 0.45, 0.0, 1.0);
+  vec3 ax = normalize(vec3(fract(aT.z * 3.7) - 0.5, 0.3, fract(aT.z * 5.3) - 0.5));
+  p = rotAxis(ax, k * (2.0 + 4.0 * fract(aT.z * 11.1))) * (p * (1.0 - 0.35 * k));
+  vec3 w = ctr + p;
+  w.y -= uFall * (k * k) * (cell.x * 6.0 + 4.0);
+  w.xz += (vec2(fract(aT.z * 13.7), fract(aT.z * 17.3)) - 0.5) * k * cell.x * 1.6;
+  vW = w;
+  vK = k;
+  vCtr = length((ctr.xz - uC.xz) / (uSize * 0.5));
+  gl_Position = projectionMatrix * viewMatrix * vec4(w, 1.0);
+}
+`;
+
+export const GLASS_FRAG = /* glsl */ `
+uniform vec3 uC;
+uniform vec2 uSize;
+uniform vec3 uColor;
+uniform float uOpacity;
+uniform float uGrid;
+uniform float uFogD;
+uniform float uLit; // tiles whose centre lies within this (0..1.5, in half-sizes) glow warm
+uniform float uBase; // how much of the plain sheet shows (the dawn floor shows only its laid tiles)
+varying vec3 vW;
+varying float vK;
+varying float vCtr;
+void main() {
+  // soft edges: the sheet fades out toward its border instead of ending in a hard rectangle
+  vec2 d = abs(vW.xz - uC.xz) / (uSize * 0.5);
+  float edge = (1.0 - smoothstep(0.55, 1.0, d.x)) * (1.0 - smoothstep(0.55, 1.0, d.y));
+  vec2 g = abs(fract(vW.xz / uGrid) - 0.5);
+  vec2 fw = fwidth(vW.xz / uGrid);
+  float line = max(1.0 - smoothstep(0.0, fw.x * 1.5, 0.5 - g.x), 1.0 - smoothstep(0.0, fw.y * 1.5, 0.5 - g.y));
+  line *= 1.0 - smoothstep(0.08, 0.3, max(fw.x, fw.y)); // no moire where the cells shrink to a few pixels
+  vec3 V = normalize(cameraPosition - vW);
+  float graze = 1.0 - abs(V.y);
+  float a = 0.012 + 0.035 * graze * graze + 0.16 * line;
+  // breaking tiles flash as they go
+  a += vK * (1.0 - vK) * 1.4;
+  float dist = length(cameraPosition - vW);
+  float fog = 1.0 - exp(-uFogD * dist);
+  vec3 col = uColor * a * edge * uOpacity * uBase * (1.0 - vK) * (1.0 - 0.85 * fog);
+  float lit = step(vCtr, uLit);
+  col += vec3(1.0, 0.72, 0.38) * lit * (0.22 + 0.5 * line) * uOpacity;
+  if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
+  gl_FragColor = vec4(clamp(col, 0.0, 4.0), 1.0);
 }
 `;

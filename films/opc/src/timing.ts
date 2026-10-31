@@ -19,6 +19,6 @@ export const ramp = (t: number, t0: number, t1: number, ease: (x: number) => num
 export const tween = (t: number, t0: number, t1: number, v0: number, v1: number, ease: (x: number) => number = EIO) => lerp(v0, v1, ramp(t, t0, t1, ease));
 export const fade = (t: number, a: number, z: number, f = 0.35) => Math.min(clamp01((t - a) / f), clamp01((z - t) / f));
 
-// The film: 92 bars (the score's tail fades under the end card).
-export const FILM_BARS = 92;
+// The film: 118 bars (the score's tail fades under the end card).
+export const FILM_BARS = 118;
 export const FILM_FRAMES = Math.round(b(FILM_BARS) * FPS);

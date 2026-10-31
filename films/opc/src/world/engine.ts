@@ -17,12 +17,16 @@ import {
   TILT_FRAG,
   BLDG_FRAG,
   BLDG_VERT,
+  GLASS_FRAG,
+  GLASS_VERT,
   GLOW_FRAG,
   GLOW_VERT,
   GRADE_FRAG,
   GRADE_VERT,
   GROUND_FRAG,
   GROUND_VERT,
+  PILLAR_FRAG,
+  PILLAR_VERT,
   PLANE_FRAG,
   PLANE_VERT,
   POOL_FRAG,
@@ -36,6 +40,13 @@ import {
 export type StallOverride = { lit?: number; screen?: number; sign?: number; vis?: number; s?: number; keep?: boolean };
 
 export type Glow = { x: number; y: number; z: number; size: number; r: number; g: number; b: number; i: number };
+
+// Income pillars over the near stalls (NEAR order): top height above the base (m), and a colour per pillar
+// (0 gold, 1 a loss: dull red, 2 break-even: pale grey).
+export type Pillars = { h: ArrayLike<number>; tint?: ArrayLike<number>; gain: number };
+
+// A horizontal glass sheet (a ceiling, a floor, a revenue level). brk 0 whole .. 1 broken and gone.
+export type Glass = { y: number; o: number; x?: number; z?: number; w?: number; d?: number; brk?: number; fall?: number; color?: [number, number, number]; grid?: number; lit?: number; base?: number };
 
 export type WorldState = {
   cam: Cam;
@@ -56,7 +67,14 @@ export type WorldState = {
   tilt?: { focus: number; band: number; amt: number };
   windows?: number; // share of lit windows in the blocks
   reveal?: number; // lamps switch on out to this distance (m) from the hero street's centre
+  pillars?: Pillars;
+  glass?: (Glass | null)[]; // up to GLASS_SLOTS sheets
 };
+
+// Where a near stall's pillar stands: over its lamp pole, starting above the sign.
+export const PILLAR_BASE = 2.5;
+export const pillarAt = (st: Stall): [number, number, number] => stallWorld(st, 0, PILLAR_BASE, st.kind === 0 ? -0.36 : -0.4);
+const GLASS_SLOTS = 5;
 
 const C = (hex: string) => new THREE.Color(hex);
 
@@ -92,7 +110,7 @@ const CART: Part[] = [
   [0, [0.88, 1.52, 0.5], [0.035, 1.0, 0.035]],
   [4, [0, 1.86, 0.1], [0.08, 0.1, 0.08]], // bulb
   [5, [0, 2.2, 0.66], [1.6, 0.3, 0.035]], // sign on the canopy front
-  [11, [0.84, 1.28, 0.44], [0.24, 0.3, 0.012]], // payment QR sign
+  [11, [0.84, 1.28, 0.44], [0.24, 0.3, 0.012]], // price board
 ];
 
 const buildStall = (parts: Part[]) => {
@@ -162,6 +180,15 @@ class Engine {
   blockMat: THREE.ShaderMaterial;
   tilt: ShaderPass;
   signs: THREE.CanvasTexture;
+  pillars: THREE.Mesh;
+  pillarP: THREE.InstancedBufferAttribute;
+  pillarK: THREE.InstancedBufferAttribute;
+  pillarMat: THREE.ShaderMaterial;
+  caps: THREE.Mesh;
+  capC: THREE.InstancedBufferAttribute;
+  capK: THREE.InstancedBufferAttribute;
+  capMat: THREE.ShaderMaterial;
+  glass: { mesh: THREE.Mesh; mat: THREE.ShaderMaterial }[] = [];
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -177,7 +204,7 @@ class Engine {
 
     // shared fog/light uniforms (one object, so every material sees the same values)
     this.common = {
-      uFog: { value: C("#0b1322") },
+      uFog: { value: C("#060b14") },
       uFogD: { value: 0.0016 },
       uAmb: { value: C("#0b1220") },
       uLamp: { value: C("#ffb86e") },
@@ -188,7 +215,7 @@ class Engine {
     const cu = this.common;
 
     // sky
-    this.skyU = { uTop: { value: C("#03060d") }, uHor: { value: C("#0e1828") }, uGlow: { value: C("#2a2236") }, uStars: { value: 1 } };
+    this.skyU = { uTop: { value: C("#03060d") }, uHor: { value: C("#0b1322") }, uGlow: { value: C("#2a2236") }, uStars: { value: 1 } };
     this.sky = new THREE.Mesh(new THREE.SphereGeometry(4000, 48, 24), new THREE.ShaderMaterial({ vertexShader: SKY_VERT, fragmentShader: SKY_FRAG, uniforms: this.skyU, side: THREE.BackSide, depthWrite: false, depthTest: false }));
     this.sky.frustumCulled = false;
     this.sky.renderOrder = -10;
@@ -320,7 +347,7 @@ class Engine {
       this.bulbMat = new THREE.ShaderMaterial({
         vertexShader: GLOW_VERT,
         fragmentShader: GLOW_FRAG,
-        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 2.6 }, uMaxPx: { value: 38 }, uGain: { value: 1 } },
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 3.0 }, uMaxPx: { value: 38 }, uGain: { value: 1 } },
         transparent: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
@@ -401,6 +428,109 @@ class Engine {
       this.scene.add(this.glows);
     }
 
+    // income pillars over the near stalls, and a glow at each top
+    {
+      const g = quad();
+      // a vertical strip: x -1..1, y 0..1
+      g.setAttribute("position", new THREE.BufferAttribute(new Float32Array([-1, 0, 0, 1, 0, 0, 1, 1, 0, -1, 1, 0]), 3));
+      const geo = new THREE.InstancedBufferGeometry();
+      geo.index = g.index;
+      geo.setAttribute("position", g.getAttribute("position"));
+      const n = NEAR.length;
+      this.pillarP = new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4);
+      this.pillarK = new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4);
+      NEAR.forEach((st, i) => {
+        const [x, y, z] = pillarAt(st);
+        this.pillarP.array.set([x, z, y, 0], i * 4);
+      });
+      geo.setAttribute("aP", this.pillarP);
+      geo.setAttribute("aK", this.pillarK);
+      geo.instanceCount = n;
+      this.pillarMat = new THREE.ShaderMaterial({
+        vertexShader: PILLAR_VERT,
+        fragmentShader: PILLAR_FRAG,
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 1.8 }, uWidth: { value: 0.14 }, uGain: { value: 1 } },
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
+      this.pillars = new THREE.Mesh(geo, this.pillarMat);
+      this.pillars.frustumCulled = false;
+      this.pillars.renderOrder = 5;
+      this.pillars.visible = false;
+      this.scene.add(this.pillars);
+
+      const q = quad();
+      const cg = new THREE.InstancedBufferGeometry();
+      cg.index = q.index;
+      cg.setAttribute("position", q.getAttribute("position"));
+      this.capC = new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4);
+      this.capK = new THREE.InstancedBufferAttribute(new Float32Array(n * 4), 4);
+      cg.setAttribute("aC", this.capC);
+      cg.setAttribute("aK", this.capK);
+      cg.instanceCount = n;
+      this.capMat = new THREE.ShaderMaterial({
+        vertexShader: GLOW_VERT,
+        fragmentShader: GLOW_FRAG,
+        uniforms: { ...cu, uPx: { value: 0.001 }, uMinPx: { value: 3.0 }, uMaxPx: { value: 26 }, uGain: { value: 1 } },
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      this.caps = new THREE.Mesh(cg, this.capMat);
+      this.caps.frustumCulled = false;
+      this.caps.renderOrder = 6;
+      this.caps.visible = false;
+      this.scene.add(this.caps);
+    }
+
+    // glass sheets: tiles of one big horizontal plane
+    for (let k = 0; k < GLASS_SLOTS; k++) {
+      const NX = 28;
+      const NZ = 14;
+      const q = quad();
+      const geo = new THREE.InstancedBufferGeometry();
+      geo.index = q.index;
+      geo.setAttribute("position", q.getAttribute("position"));
+      const T = new Float32Array(NX * NZ * 3);
+      for (let ix = 0; ix < NX; ix++)
+        for (let iz = 0; iz < NZ; iz++) {
+          const i = ix * NZ + iz;
+          const h = Math.abs(Math.sin((ix * 12.9898 + iz * 78.233 + k * 37.719) * 1.0) * 43758.5453) % 1;
+          T.set([ix, iz, h], i * 3);
+        }
+      geo.setAttribute("aT", new THREE.InstancedBufferAttribute(T, 3));
+      geo.instanceCount = NX * NZ;
+      const mat = new THREE.ShaderMaterial({
+        vertexShader: GLASS_VERT,
+        fragmentShader: GLASS_FRAG,
+        uniforms: {
+          uFogD: cu.uFogD,
+          uC: { value: new THREE.Vector3() },
+          uSize: { value: new THREE.Vector2(400, 160) },
+          uN: { value: new THREE.Vector2(NX, NZ) },
+          uBreak: { value: 0 },
+          uFall: { value: 1 },
+          uColor: { value: new THREE.Color(0.62, 0.8, 1.0) },
+          uOpacity: { value: 0 },
+          uGrid: { value: 4 },
+          uLit: { value: -1 },
+          uBase: { value: 1 },
+        },
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.frustumCulled = false;
+      mesh.renderOrder = 7;
+      mesh.visible = false;
+      this.scene.add(mesh);
+      this.glass.push({ mesh, mat });
+    }
+
     // the company building
     {
       const c = HERO.company;
@@ -475,10 +605,10 @@ class Engine {
     cu.uFogD.value = s.fogD ?? 0.0016;
     // night -> morning: sky, fog, ambient
     const mixC = (a: string, b: string, t: number) => C(a).lerp(C(b), t);
-    (cu.uFog.value as THREE.Color).copy(mixC("#0b1322", "#8e8f99", day));
+    (cu.uFog.value as THREE.Color).copy(mixC("#060b14", "#8e8f99", day));
     (cu.uAmb.value as THREE.Color).copy(mixC("#0b1220", "#2c3240", day));
     (this.skyU.uTop.value as THREE.Color).copy(mixC("#03060d", "#2d4f7c", day));
-    (this.skyU.uHor.value as THREE.Color).copy(mixC("#0e1828", "#a9b6c6", day));
+    (this.skyU.uHor.value as THREE.Color).copy(mixC("#0b1322", "#a9b6c6", day));
     (this.skyU.uGlow.value as THREE.Color).copy(mixC("#2a2236", "#ffb27a", day));
     this.skyU.uStars.value = 1 - day;
     const lampDay = 1 - 0.85 * day;
@@ -576,6 +706,60 @@ class Engine {
       this.glowK.needsUpdate = true;
     }
 
+    // income pillars
+    {
+      const pl = s.pillars;
+      const on = !!pl && pl.gain > 0.001;
+      this.pillars.visible = on;
+      this.caps.visible = on;
+      if (pl && on) {
+        const P = this.pillarP.array as Float32Array;
+        const Kk = this.pillarK.array as Float32Array;
+        const Cc = this.capC.array as Float32Array;
+        const Kc = this.capK.array as Float32Array;
+        const n = NEAR.length;
+        for (let i = 0; i < n; i++) {
+          const h = Math.max(0, pl.h[i] ?? 0);
+          const tint = pl.tint ? pl.tint[i] ?? 0 : 0;
+          P[i * 4 + 3] = h;
+          // gold, brighter and whiter the taller it stands; losses dull red; break-even pale grey
+          const tall = Math.min(1, Math.log10(1 + h) / 2.6);
+          let r = 1.0, g = 0.62 + 0.25 * tall, b = 0.26 + 0.4 * tall;
+          if (tint > 0.5 && tint < 1.5) { r = 0.85; g = 0.2; b = 0.16; }
+          else if (tint >= 1.5) { r = 0.62; g = 0.66; b = 0.72; }
+          const vis = h > 0.03 ? 1 : 0;
+          const k = pl.gain * vis * (0.55 + 0.45 * tall);
+          Kk.set([r, g, b, k], i * 4);
+          Cc.set([P[i * 4], P[i * 4 + 2] + h, P[i * 4 + 1], 0.32 + 0.25 * tall], i * 4);
+          Kc.set([r, g, b, k * (0.9 + 0.8 * tall)], i * 4);
+        }
+        this.pillarP.needsUpdate = true;
+        this.pillarK.needsUpdate = true;
+        this.capC.needsUpdate = true;
+        this.capK.needsUpdate = true;
+      }
+    }
+
+    // glass sheets
+    for (let k = 0; k < GLASS_SLOTS; k++) {
+      const gs = s.glass?.[k];
+      const { mesh, mat } = this.glass[k];
+      const show = !!gs && gs.o > 0.002 && (gs.brk ?? 0) < 0.999;
+      mesh.visible = show;
+      if (!gs || !show) continue;
+      const u = mat.uniforms;
+      (u.uC.value as THREE.Vector3).set(gs.x ?? 0, gs.y, gs.z ?? 0);
+      (u.uSize.value as THREE.Vector2).set(gs.w ?? 420, gs.d ?? 170);
+      u.uBreak.value = gs.brk ?? 0;
+      u.uFall.value = gs.fall ?? 1;
+      u.uOpacity.value = gs.o;
+      u.uGrid.value = gs.grid ?? 4;
+      u.uLit.value = gs.lit ?? -1;
+      u.uBase.value = gs.base ?? 1;
+      const c = gs.color ?? [0.62, 0.8, 1.0];
+      (u.uColor.value as THREE.Color).setRGB(c[0], c[1], c[2]);
+    }
+
     this.blockMat.uniforms.uWin.value = (s.windows ?? 0.32) * (1 - 0.6 * day);
     const tl = s.tilt ?? { focus: 0.5, band: 0.2, amt: 0 };
     this.tilt.uniforms.uFocus.value = tl.focus;
@@ -599,6 +783,8 @@ class Engine {
     this.bulbMat.uniforms.uPx.value = px;
     this.stringMat.uniforms.uPx.value = px;
     this.glowMat.uniforms.uPx.value = px;
+    this.pillarMat.uniforms.uPx.value = px;
+    this.capMat.uniforms.uPx.value = px;
     this.sky.position.copy(this.camera.position);
     this.renderer.toneMappingExposure = s.exposure ?? 1.0;
     this.bloom.strength = s.bloom ?? 0.6;

@@ -4,6 +4,8 @@ import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { Cam } from "./world/camera";
 import { Glow, WorldState } from "./world/engine";
 import { HERO, STALLS, STARS, stallWorld } from "./world/market";
+import { PILLAR_BASE } from "./world/engine";
+import { CEIL, FLOOR, H_NOW, H_OLD, LEVEL_10K, LEVEL_100K, LEVEL_1M, LOSS } from "./film/shape";
 import { World } from "./world/World";
 
 const cam = (x: number, y: number, z: number, dist: number, yaw: number, pitch: number, fov = 40): Cam => ({ x, y, z, dist, yaw, pitch, fov });
@@ -41,6 +43,31 @@ export const SHOTS: WorldState[] = [
   base(cam(HERO.company.x, 6, -6, 46, 10, 14, 44), { company: { vis: 1, off: 0.05, sink: 0 } }), // 6 the company building
   base(cam(-40, 1.7, 0, 30, 270, 3, 46), { day: 1 }), // 7 morning on the street
   base(cam(30, 0, 0, 140, 80, 34, 42), { equal: 0, dim: 0, glows: crowd(3, 1800, true) }), // 8 after the turn, mid height
+  // 9 the old shape: every top between a floor and a ceiling
+  base(cam(HERO.cart.x + 10, 4.0, -1, 30, -70, 4, 46), {
+    pillars: { h: H_OLD, gain: 1 },
+    glass: [
+      { y: PILLAR_BASE + CEIL, o: 1, x: HERO.cart.x + 40, color: [1.0, 0.72, 0.55] },
+      { y: PILLAR_BASE + FLOOR, o: 0.8, x: HERO.cart.x + 40, color: [0.55, 0.85, 1.0] },
+    ],
+  }),
+  // 10 the new shape, at the US$10,000 level
+  base(cam(20, PILLAR_BASE + LEVEL_10K, 0, 70, 70, 16, 44), { pillars: { h: H_NOW, gain: 1 }, glass: [{ y: PILLAR_BASE + LEVEL_10K, o: 1 }] }),
+  // 11 high up: the US$1 million level, US$100,000 below
+  base(cam(10, PILLAR_BASE + LEVEL_1M, 0, 190, 64, 22, 44), {
+    pillars: { h: H_NOW, gain: 1 },
+    glass: [
+      { y: PILLAR_BASE + LEVEL_1M, o: 1, grid: 8 },
+      { y: PILLAR_BASE + LEVEL_100K, o: 0.6 },
+    ],
+  }),
+  // 12 no profit: three in ten collapse
+  base(cam(30, 0, 0, 120, 74, 30, 42), { pillars: { h: Array.from(H_NOW, (h, i) => (LOSS[i] ? 0.15 : h)), tint: LOSS, gain: 1 } }),
+  // 13 the ceiling breaking
+  base(cam(HERO.cart.x + 10, 4.0, -1, 30, -70, 4, 46), {
+    pillars: { h: H_OLD, gain: 1 },
+    glass: [{ y: PILLAR_BASE + CEIL, o: 1, x: HERO.cart.x + 40, color: [1.0, 0.72, 0.55], brk: 0.45 }],
+  }),
 ];
 
 export const Lab: React.FC = () => {

@@ -92,18 +92,18 @@ export const regulars = (t: number, t0: number, gain: number): Glow[] => {
   return out;
 };
 
-// Word of mouth: customers reach the opening stall in a growing chain (one brings two).
-export const wordOfMouth = (t: number, t0: number, gain: number): Glow[] => {
+// Word of mouth: customers reach a stall in a growing chain (one brings two), from up to `farK` times farther.
+export const wordOfMouth = (t: number, t0: number, gain: number, id = HERO_IDS.laptop, farK = 1): Glow[] => {
   const out: Glow[] = [];
   if (gain <= 0.01) return out;
-  const st = STALLS[HERO_IDS.laptop];
+  const st = STALLS[id];
   const dt = t - t0;
   const n = Math.min(240, Math.floor(Math.pow(2, dt * 0.75)));
   for (let i = 0; i < n; i++) {
     const born = Math.log2(i + 1) / 0.75;
-    const far = 20 + 260 * h(i, 3);
+    const far = (20 + 260 * h(i, 3)) * farK;
     const from = st.x + (h(i, 4) < 0.5 ? -1 : 1) * far;
-    const dur = 1.6 + far / 70;
+    const dur = 1.6 + far / (70 * Math.sqrt(farK));
     const loop = (dt - born) % (dur + 0.6);
     const g = arrival(st, t, t - loop + dur, dur, from, i % 2 === 0, gain);
     if (g) out.push({ ...g, size: g.size * 1.6 });

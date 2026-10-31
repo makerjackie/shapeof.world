@@ -1,12 +1,13 @@
-// The flat objects of the film: the revenue dashboard and the payment QR on the opening stall's laptop (mapped
-// onto its screen in 3D), the business licence, policy cards, payment notifications, the TV insert, the dot rows.
+// The flat objects of the film: the registration on the opening stall's laptop and the shop page on the last desk
+// (mapped onto their screens in 3D), number cards, notifications over a stall, the TV insert, the dot rows.
+// No QR codes anywhere, not even fake ones (the short-video platforms do not allow them).
 import React from "react";
 import { interpolate } from "remotion";
-import { FONT, K, SERIF } from "../theme";
-import { clamp01, EIO, EO, ESO } from "../timing";
+import { FONT, K } from "../theme";
+import { clamp01, EO, ESO } from "../timing";
 import { Cam, quadMatrix, rectCorners, toScreen } from "../world/camera";
 import { SCREEN, Screen } from "./state";
-import { fmt, SHADOW, useT } from "./ui";
+import { SHADOW, useT } from "./ui";
 
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
@@ -22,202 +23,88 @@ export const OnScreen: React.FC<{ cam: Cam; o: number; scr?: Screen; children: R
   );
 };
 
-const NOTES = ["新用户注册", "新订阅", "新用户注册", "新用户注册", "新订阅", "新用户注册", "新订阅", "新用户注册", "新用户注册", "新订阅", "新用户注册", "新订阅", "新用户注册", "新用户注册"];
-
-export const Dashboard: React.FC<{ t0: number }> = ({ t0 }) => {
+// The registration that opens the film (on the opening stall's laptop).
+export const RegScreen: React.FC<{ t0: number }> = ({ t0 }) => {
   const t = useT() - t0;
-  const users = Math.round(250000 * interpolate(t, [0.1, 2.7], [0.02, 1], { ...CL, easing: ESO }));
-  const grow = interpolate(t, [0, 2.8], [0.08, 1], { ...CL, easing: ESO });
-  // the user curve: slow, then steep
-  const pts: [number, number][] = [];
-  for (let i = 0; i <= 60; i++) {
-    const x = i / 60;
-    if (x > grow) break;
-    const y = Math.pow(x, 2.6) * 0.92 + 0.02 * Math.sin(x * 40);
-    pts.push([60 + x * 780, 760 - y * 470]);
-  }
-  const path = pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
-  const area = pts.length ? `${path} L${pts[pts.length - 1][0].toFixed(1)},760 L60,760 Z` : "";
-  const stamp = interpolate(t, [1.25, 1.45], [0, 1], { ...CL, easing: EO });
-  const n = Math.floor(clamp01(t / 2.9) * NOTES.length * 1.0) + 2;
+  const rows: [string, string][] = [
+    ["企业类型", "一人有限责任公司"],
+    ["股东", "1 人"],
+    ["经营范围", "网站设计、软件开发"],
+  ];
+  const ok = interpolate(t, [0.75, 0.95], [0, 1], { ...CL, easing: EO });
   return (
-    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#0e131c,#090c12)", fontFamily: FONT, color: K.fg }}>
-      <div style={{ position: "absolute", left: 50, top: 36, display: "flex", alignItems: "center", gap: 16 }}>
-        <div style={{ width: 46, height: 46, borderRadius: 12, background: "linear-gradient(135deg,#ff8a3d,#ff4f7b)" }} />
-        <span style={{ fontSize: 40, fontWeight: 800 }}>Base44</span>
-        <span style={{ fontSize: 24, fontWeight: 600, padding: "4px 14px", borderRadius: 16, background: "rgba(255,255,255,0.08)", color: "rgba(244,240,232,0.75)" }}>AI 建站工具</span>
+    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#f3f5f8,#e6eaf0)", fontFamily: FONT, color: "#1a1f27" }}>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 120, background: "#1f4fa3", display: "flex", alignItems: "center", paddingLeft: 60, gap: 22 }}>
+        <div style={{ width: 54, height: 54, borderRadius: 27, border: "5px solid #ffd66b" }} />
+        <span style={{ fontSize: 46, fontWeight: 800, color: "#fff", letterSpacing: 4 }}>企业设立登记</span>
       </div>
-      <div style={{ position: "absolute", right: 50, top: 44, fontSize: 24, fontWeight: 700, color: K.green }}>● 实时</div>
-      <div style={{ position: "absolute", left: 50, top: 128, width: 860, height: 820, borderRadius: 22, background: "rgba(255,255,255,0.035)", border: "1px solid rgba(255,255,255,0.07)" }}>
-        <div style={{ position: "absolute", left: 40, top: 30, fontSize: 28, color: "rgba(244,240,232,0.6)", fontWeight: 600 }}>用户</div>
-        <div style={{ position: "absolute", left: 40, top: 70, fontSize: 104, fontWeight: 800, fontVariantNumeric: "tabular-nums", letterSpacing: -1 }}>{fmt(users)}</div>
-        <svg width={860} height={820} style={{ position: "absolute", left: 0, top: 0 }}>
-          <defs>
-            <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#ff8a3d" stopOpacity="0.45" />
-              <stop offset="1" stopColor="#ff8a3d" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          {[0, 1, 2, 3].map((i) => (
-            <line key={i} x1={60} x2={840} y1={760 - i * 150} y2={760 - i * 150} stroke="rgba(255,255,255,0.06)" strokeWidth={2} />
-          ))}
-          {area ? <path d={area} fill="url(#ga)" /> : null}
-          {path ? <path d={path} fill="none" stroke="#ff9a52" strokeWidth={6} strokeLinejoin="round" /> : null}
-        </svg>
-      </div>
-      <div style={{ position: "absolute", left: 950, top: 128, width: 500, height: 820, overflow: "hidden" }}>
-        {Array.from({ length: n }).map((_, i) => {
-          const k = n - 1 - i; // newest on top
-          const age = t - (k / NOTES.length) * 2.9;
-          const e = interpolate(age, [0, 0.25], [0, 1], { ...CL, easing: EO });
+      <div style={{ position: "absolute", left: 90, top: 200, width: 1320 }}>
+        {rows.map(([a, b], i) => {
+          const k = interpolate(t, [0.05 + i * 0.12, 0.3 + i * 0.12], [0, 1], { ...CL, easing: EO });
           return (
-            <div
-              key={k}
-              style={{
-                position: "absolute",
-                left: 0,
-                top: i * 112 + (1 - e) * -60,
-                width: 500,
-                height: 96,
-                borderRadius: 18,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                display: "flex",
-                alignItems: "center",
-                gap: 18,
-                paddingLeft: 24,
-                opacity: e * (1 - i * 0.09),
-                boxSizing: "border-box",
-              }}
-            >
-              <div style={{ width: 44, height: 44, borderRadius: 22, background: NOTES[k % NOTES.length] === "新订阅" ? K.green : "#5aa0ff" }} />
-              <div>
-                <div style={{ fontSize: 30, fontWeight: 700 }}>{NOTES[k % NOTES.length]}</div>
-                <div style={{ fontSize: 22, color: "rgba(244,240,232,0.5)" }}>刚刚</div>
-              </div>
+            <div key={i} style={{ display: "flex", alignItems: "center", height: 130, borderBottom: "2px solid rgba(26,31,39,0.1)", opacity: k }}>
+              <span style={{ width: 300, fontSize: 44, color: "rgba(26,31,39,0.55)", fontWeight: 600 }}>{a}</span>
+              <span style={{ fontSize: 56, fontWeight: 800 }}>{b}</span>
             </div>
           );
         })}
       </div>
-      {stamp > 0 ? (
+      {ok > 0 ? (
         <div
           style={{
             position: "absolute",
-            left: 520,
-            top: 330,
-            transform: `rotate(-9deg) scale(${1.6 - 0.6 * stamp})`,
-            opacity: stamp,
-            border: "10px solid #e8333a",
-            borderRadius: 18,
-            padding: "14px 46px",
-            color: "#ff474e",
-            fontSize: 110,
-            fontWeight: 900,
-            letterSpacing: 10,
-            background: "rgba(20,4,6,0.35)",
-            boxShadow: "0 0 40px rgba(232,51,58,0.35)",
+            left: 90,
+            top: 660,
+            width: 1320,
+            height: 220,
+            borderRadius: 26,
+            background: "#e3f6ec",
+            border: "4px solid #2fb36b",
+            display: "flex",
+            alignItems: "center",
+            gap: 40,
+            paddingLeft: 60,
+            boxSizing: "border-box",
+            opacity: ok,
+            transform: `scale(${1.08 - 0.08 * ok})`,
           }}
         >
-          已被收购
+          <div style={{ width: 120, height: 120, borderRadius: 60, background: "#2fb36b", color: "#fff", fontSize: 84, fontWeight: 900, display: "flex", alignItems: "center", justifyContent: "center" }}>✓</div>
+          <div>
+            <div style={{ fontSize: 76, fontWeight: 900, color: "#17824a" }}>登记成功</div>
+            <div style={{ fontSize: 38, fontWeight: 600, color: "rgba(23,130,74,0.8)" }}>营业执照已发放</div>
+          </div>
         </div>
       ) : null}
     </div>
   );
 };
 
-// The payment page waiting for the first customer (the last shot).
-export const PayScreen: React.FC = () => {
+// The last shot: the new desk's shop page, its regulars still none.
+export const RegularsScreen: React.FC = () => {
   const t = useT();
-  const cells: React.ReactNode[] = [];
-  const N = 25;
-  const hsh = (x: number, y: number) => {
-    const v = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-    return v - Math.floor(v);
-  };
-  for (let y = 0; y < N; y++)
-    for (let x = 0; x < N; x++) {
-      const fx = Math.min(x, N - 1 - x);
-      const fy = Math.min(y, N - 1 - y);
-      const finder = (x < 7 && y < 7) || (x > N - 8 && y < 7) || (x < 7 && y > N - 8);
-      let on = hsh(x, y) > 0.52;
-      if (finder) {
-        const lx = x < 7 ? x : x - (N - 7);
-        const ly = y < 7 ? y : y - (N - 7);
-        const r = Math.max(Math.abs(lx - 3), Math.abs(ly - 3));
-        on = r === 3 || r <= 1;
-      }
-      void fx;
-      void fy;
-      if (on) cells.push(<rect key={`${x}-${y}`} x={x * 16} y={y * 16} width={16} height={16} fill="#111" />);
-    }
-  const dots = ".".repeat(1 + (Math.floor(t * 2) % 3));
+  const blink = Math.floor(t * 1.6) % 2 === 0 ? 1 : 0.35;
   return (
-    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#f4f1ea,#e9e4da)", fontFamily: FONT, color: "#16181c", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ marginTop: 70, fontSize: 52, fontWeight: 800 }}>扫码付款</div>
-      <div style={{ marginTop: 40, padding: 34, background: "#fff", borderRadius: 26, boxShadow: "0 10px 40px rgba(0,0,0,0.12)" }}>
-        <svg width={400} height={400}>{cells}</svg>
+    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg,#f4f1ea,#e9e4da)", fontFamily: FONT, color: "#16181c" }}>
+      <div style={{ position: "absolute", left: 70, top: 56, fontSize: 56, fontWeight: 900 }}>我的店</div>
+      <div style={{ position: "absolute", right: 70, top: 70, fontSize: 34, fontWeight: 600, color: "rgba(22,24,28,0.5)" }}>今天</div>
+      <div style={{ position: "absolute", left: 70, top: 190, width: 1360, height: 690, borderRadius: 30, background: "#fff", boxShadow: "0 10px 40px rgba(0,0,0,0.1)" }}>
+        <div style={{ position: "absolute", left: 70, top: 60, fontSize: 48, fontWeight: 700, color: "rgba(22,24,28,0.6)" }}>回头客</div>
+        <div style={{ position: "absolute", left: 66, top: 120, fontSize: 300, fontWeight: 900, lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>0</div>
+        <div style={{ position: "absolute", left: 70, top: 470, right: 70, height: 2, background: "rgba(22,24,28,0.1)" }} />
+        <div style={{ position: "absolute", left: 70, top: 520, fontSize: 40, fontWeight: 600, color: "rgba(22,24,28,0.42)", display: "flex", alignItems: "center", gap: 18 }}>
+          <div style={{ width: 22, height: 22, borderRadius: 11, background: "#d9a33a", opacity: blink }} />
+          还没有人回来
+        </div>
       </div>
-      <div style={{ marginTop: 44, fontSize: 40, fontWeight: 600, color: "rgba(22,24,28,0.55)" }}>等待付款{dots}</div>
     </div>
   );
 };
 
-// ---------- the business licence (title) ----------
-export const Licence: React.FC<{ at: number; out: number }> = ({ at, out }) => {
+// A number card for the count of new one-person companies, sliding in.
+export const StatCard: React.FC<{ at: number; out: number; x: number; y: number; tag: string; main: React.ReactNode; sub: string; w?: number }> = ({ at, out, x, y, tag, main, sub, w = 560 }) => {
   const t = useT();
-  const k = interpolate(t, [at, at + 0.55], [0, 1], { ...CL, easing: EO });
-  const x = interpolate(t, [out - 0.4, out], [0, 1], { ...CL, easing: EIO });
-  if (k <= 0 || x >= 1) return null;
-  const seal = interpolate(t, [at + 0.5, at + 0.62], [0, 1], { ...CL, easing: EO });
-  const row = (a: string, b: string, i: number) => (
-    <div key={i} style={{ display: "flex", gap: 34, fontSize: 34, lineHeight: 2.0 }}>
-      <span style={{ width: 170, color: "#5a4632", letterSpacing: 8 }}>{a}</span>
-      <span style={{ color: "#2a2018" }}>{b}</span>
-    </div>
-  );
-  return (
-    <div style={{ position: "absolute", left: 960 - 560, top: 330 + (1 - k) * 160 + x * 120, width: 1120, height: 640, opacity: k * (1 - x), transform: `rotate(${(1 - k) * 4 - 1.5}deg)` }}>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(ellipse at 40% 30%, #f6eedd, #e8dcc3 70%, #ddcfb2)",
-          borderRadius: 6,
-          boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
-        }}
-      />
-      <div style={{ position: "absolute", inset: 22, border: "3px solid #9c3b2a", borderRadius: 4 }} />
-      <div style={{ position: "absolute", inset: 32, border: "1px solid rgba(156,59,42,0.6)", borderRadius: 2, background: "repeating-linear-gradient(45deg, rgba(156,59,42,0.035) 0 6px, transparent 6px 12px)" }} />
-      <div style={{ position: "absolute", left: 0, right: 0, top: 64, textAlign: "center", fontFamily: SERIF, fontWeight: 800, fontSize: 64, letterSpacing: 26, color: "#8f2f22" }}>营业执照</div>
-      <div style={{ position: "absolute", left: 120, top: 200, fontFamily: SERIF, fontWeight: 600 }}>
-        {[
-          ["名称", "＿＿＿＿＿＿＿＿"],
-          ["类型", "有限责任公司（自然人独资）"],
-          ["股东", "1 人"],
-        ].map(([a, c], i) => row(a, c, i))}
-      </div>
-      {seal > 0 ? (
-        <svg width={220} height={220} style={{ position: "absolute", right: 90, bottom: 60, opacity: 0.85 * seal, transform: `scale(${1.5 - 0.5 * seal}) rotate(-12deg)` }}>
-          <circle cx={110} cy={110} r={96} fill="none" stroke="#d8262c" strokeWidth={8} />
-          <path id="sealArc" d="M 30 110 A 80 80 0 0 1 190 110" fill="none" />
-          <text fontFamily={SERIF} fontWeight={800} fontSize={30} fill="#d8262c" letterSpacing={6}>
-            <textPath href="#sealArc" startOffset="50%" textAnchor="middle">
-              一人公司的形状
-            </textPath>
-          </text>
-          <text x={110} y={140} textAnchor="middle" fontSize={64} fill="#d8262c">
-            ★
-          </text>
-        </svg>
-      ) : null}
-    </div>
-  );
-};
-
-// ---------- policy cards ----------
-export const DocCard: React.FC<{ at: number; out: number; x: number; y: number; org: string; date: string; quote: React.ReactNode; note?: string }> = ({ at, out, x, y, org, date, quote, note }) => {
-  const t = useT();
-  const k = interpolate(t, [at, at + 0.35], [0, 1], { ...CL, easing: EO });
+  const k = interpolate(t, [at, at + 0.4], [0, 1], { ...CL, easing: EO });
   const o = Math.min(k, interpolate(t, [out - 0.3, out], [1, 0], CL));
   if (o <= 0) return null;
   return (
@@ -225,25 +112,22 @@ export const DocCard: React.FC<{ at: number; out: number; x: number; y: number; 
       style={{
         position: "absolute",
         left: x,
-        top: y + (1 - k) * 40,
-        width: 760,
-        padding: "26px 34px 28px 40px",
+        top: y + (1 - k) * 36,
+        width: w,
+        padding: "26px 32px 28px",
         boxSizing: "border-box",
-        background: "rgba(10,13,20,0.84)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderLeft: "8px solid #d8262c",
-        borderRadius: 14,
+        background: "rgba(6,9,15,0.72)",
+        border: "1px solid rgba(255,255,255,0.12)",
+        borderTop: `6px solid ${K.gold}`,
+        borderRadius: 16,
         boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
         opacity: o,
         fontFamily: FONT,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, fontWeight: 700, color: K.gold }}>
-        <span>{org}</span>
-        <span style={{ color: "rgba(244,240,232,0.55)", fontWeight: 600 }}>{date}</span>
-      </div>
-      <div style={{ marginTop: 14, fontSize: 38, fontWeight: 700, color: K.fg, lineHeight: 1.42 }}>{quote}</div>
-      {note ? <div style={{ marginTop: 10, fontSize: 24, color: "rgba(244,240,232,0.6)" }}>{note}</div> : null}
+      <div style={{ fontSize: 30, fontWeight: 800, color: K.gold, letterSpacing: 2 }}>{tag}</div>
+      <div style={{ marginTop: 10, fontSize: 46, fontWeight: 800, color: K.fg, lineHeight: 1.25 }}>{main}</div>
+      <div style={{ marginTop: 10, fontSize: 26, fontWeight: 600, color: "rgba(244,240,232,0.62)", lineHeight: 1.4 }}>{sub}</div>
     </div>
   );
 };

@@ -1,13 +1,15 @@
 # 一人公司（OPC）的形状
 
-3:05、1920×1080、30 fps 的中文短片，无旁白。重做自《独立开发者的形状》（`films/indie-dev`），旧片对照最新规范的问题清单见 `AUDIT.md`。
+3:57、1920×1080、30 fps 的中文短片，无旁白。重做自《独立开发者的形状》（`films/indie-dev`），旧片对照最新规范的问题清单见 `AUDIT.md`。v7 按作者看完 v6 的意见重搭：讲清楚一个人开公司能不能赚钱、数量涨了多少、多少人赚到、以后可不可行。
 
-- 故事：`STORY.md`；剧本：`SCRIPT.md`（v6，含四轮冷读和逐帧比对后的改动）；调研：`research/RESEARCH.md`（核过的数字）、`research/ZHIHU-NOTES.md`（知乎 37 个问题、505 个回答，只作观点参考）、`research/coldread/`。
+- 故事：`STORY.md`（v2）；剧本：`SCRIPT.md`（v7，含冷读后的改动）；调研：`research/RESEARCH.md`（核过的数字，v7 和 v6 两轮）、`research/grok/`（grok 四路深度检索的原始输出）、`research/ZHIHU-NOTES.md`（知乎 37 个问题、505 个回答，只作观点参考）、`research/coldread/`。
 - 发布文案和来源：`DESCRIPTION.md`。
 
 ## 画面
 
-一座夜里的集市（three.js，在 Remotion 里逐帧同步渲染）：每个摊位是一家一人公司，招牌写着它卖什么（`src/world/market.ts` 的 `SIGNS`）。近处三条街是摊位实体（桌子、笔记本、灯、招牌；煎饼车），远处 10 万多个摊位只画灯；街区之间是低矮的楼。灯的亮度跟着每个摊位的"生意"（幂律分布）：`equal` = 1 时盏盏一样亮，= 0 时是长尾。客人是街上移动的光点（`src/film/crowd.ts`），不画人。屏幕、营业执照、政策卡等平面物件用 CSS `matrix3d` 贴在 3D 世界里（`quadMatrix`）。
+一座夜里的集市（three.js，在 Remotion 里逐帧同步渲染）：每个摊位是一家一人公司，招牌写着它卖什么（`src/world/market.ts` 的 `SIGNS`）。近处三条街是摊位实体（桌子、笔记本、灯、招牌；煎饼车），远处 10 万多个摊位只画灯；街区之间是低矮的楼。灯的亮度跟着每个摊位的"生意"（幂律分布）：`equal` = 1 时盏盏一样亮，= 0 时是长尾。客人是街上移动的光点（`src/film/crowd.ts`），不画人。屏幕等平面物件用 CSS `matrix3d` 贴在 3D 世界里（`quadMatrix`）。
+
+**光柱和玻璃**（v7 的主视觉，`src/film/shape.ts`）：每个近处摊位头顶一根光柱，高度是一年的收入（1 米 = 5,000 美元），分布按美国国税局 2020 纳税年度个人独资经营的营业收入分组表画（组内对数插值，亮的摊位排得高）；"以前的形状"是示意：所有柱顶都在地板和天花板两块玻璃之间。玻璃是一块块瓦片拼成的水平面（`GLASS_VERT/FRAG`），能碎（瓦片翻转飞走）、能一块块亮起来（结尾煎饼车下的地板）。光柱是绕竖轴转向镜头的细条（`PILLAR_VERT/FRAG`），远了不细于 1.8 像素、只变暗不变粗。全片不出现二维码（短视频平台不允许，假的也不行）。
 
 - `src/world/`：`market.ts`（布局，种子固定）、`engine.ts`（场景和后期：泛光、移轴、调色）、`shaders.ts`、`camera.ts`。
 - `src/film/`：`state.ts`（每一帧的镜头和世界）、`Film.tsx`（字和物件）、`props.tsx`、`ui.tsx`、`Cover.tsx`。
