@@ -2,19 +2,15 @@
 // (Vanderbilt, Fifth Avenue mansions demolished by 1947), the two trees side by side, the question.
 // One focal point at a time on the centre axis; captions sit in one band at the bottom.
 import React from "react";
-import { AbsoluteFill, Audio, Img, Sequence, staticFile } from "remotion";
-import { BrandMark, CL, EIO, EO, EIN, Say, SHADOW, clamp01, keys, lerp, ramp, tween, useT, win } from "./kit";
+import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
+import { BrandMark, EIO, EO, EIN, Say, SHADOW, clamp01, keys, lerp, ramp, useT, win } from "./kit";
+import { Paper, Portrait, Tree, buildTree, rnd } from "./world";
+import type { Node } from "./world";
 import { FONT, K, NUM, SERIF } from "./theme";
 import { BEAT, FPS, MUSIC_FROM, S, SAMPLE_S, fr } from "./timing";
 
-// ---------- deterministic noise ----------
-const rnd = (i: number, s = 1) => {
-  const x = Math.sin(i * 127.1 + s * 311.7) * 43758.5453;
-  return x - Math.floor(x);
-};
-
 // ---------- timeline (story bars) ----------
-const T = {
+export const T = {
   stamp: S(0),
   rock: S(0.5),
   vand: S(2),
@@ -23,119 +19,6 @@ const T = {
   q: S(6),
   end: SAMPLE_S,
 };
-
-// ---------- background ----------
-const Paper: React.FC = () => (
-  <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 42%, #2a2116 0%, ${K.deep} 45%, ${K.bg} 100%)` }}>
-    <AbsoluteFill style={{ backgroundImage: `url(${staticFile("grain.svg")})`, backgroundSize: "512px 512px", opacity: 0.22, mixBlendMode: "overlay" }} />
-    <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,0.65) 100%)" }} />
-  </AbsoluteFill>
-);
-
-// ---------- family tree ----------
-type Node = { x: number; y: number; row: number; i: number; parent: number };
-
-const buildTree = (cx: number, y0: number, dy: number, counts: number[], spread: number[]): Node[] => {
-  const nodes: Node[] = [];
-  let prevStart = -1;
-  let prevCount = 0;
-  counts.forEach((n, row) => {
-    const start = nodes.length;
-    for (let i = 0; i < n; i++) {
-      const w = spread[row];
-      const x = n === 1 ? cx : cx - w / 2 + (w * i) / (n - 1);
-      const parent = row === 0 ? -1 : prevStart + Math.min(prevCount - 1, Math.floor(((i + 0.5) * prevCount) / n));
-      nodes.push({ x, y: y0 + row * dy, row, i, parent });
-    }
-    prevStart = start;
-    prevCount = n;
-  });
-  return nodes;
-};
-
-// gold(node) in 0..1: 1 = gold leaf, 0 = ash. grow(node): 0..1 appearance.
-const Tree: React.FC<{
-  nodes: Node[];
-  grow: (n: Node) => number;
-  gold: (n: Node) => number;
-  r?: number;
-  flakeAt?: (n: Node) => number | null; // time the gold starts to fall
-  t: number;
-  id: string;
-}> = ({ nodes, grow, gold, r = 13, flakeAt, t, id }) => (
-  <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, overflow: "visible" }}>
-    <defs>
-      <radialGradient id={`${id}-g`} cx="38%" cy="35%">
-        <stop offset="0%" stopColor={K.goldHi} />
-        <stop offset="55%" stopColor={K.gold} />
-        <stop offset="100%" stopColor={K.goldLo} />
-      </radialGradient>
-      <radialGradient id={`${id}-halo`}>
-        <stop offset="0%" stopColor={K.gold} stopOpacity={0.55} />
-        <stop offset="100%" stopColor={K.gold} stopOpacity={0} />
-      </radialGradient>
-    </defs>
-    {nodes.map((n, k) => {
-      if (n.parent < 0) return null;
-      const p = nodes[n.parent];
-      const g = grow(n);
-      if (g <= 0) return null;
-      const gl = gold(n);
-      const my = (p.y + n.y) / 2;
-      const d = `M ${p.x} ${p.y} C ${p.x} ${my}, ${n.x} ${my}, ${n.x} ${n.y}`;
-      const len = Math.hypot(n.x - p.x, n.y - p.y) * 1.25;
-      return (
-        <path key={`l${k}`} d={d} fill="none" stroke={gl > 0.5 ? K.gold : K.ash} strokeOpacity={0.35 + 0.35 * gl} strokeWidth={2.2}
-          strokeDasharray={len} strokeDashoffset={len * (1 - clamp01(g * 1.6))} />
-      );
-    })}
-    {nodes.map((n, k) => {
-      const g = grow(n);
-      if (g <= 0) return null;
-      const gl = gold(n);
-      const s = EO(clamp01(g));
-      const rr = r * s;
-      return (
-        <g key={`n${k}`}>
-          {gl > 0.02 ? <circle cx={n.x} cy={n.y} r={rr * 3.4} fill={`url(#${id}-halo)`} opacity={gl * 0.8} /> : null}
-          <circle cx={n.x} cy={n.y} r={rr} fill={K.ash} />
-          <circle cx={n.x} cy={n.y} r={rr} fill={`url(#${id}-g)`} opacity={gl} />
-          <circle cx={n.x} cy={n.y} r={rr + 3} fill="none" stroke={gl > 0.5 ? K.goldHi : K.ashHi} strokeOpacity={0.35 + 0.4 * gl} strokeWidth={1.5} />
-        </g>
-      );
-    })}
-    {flakeAt
-      ? nodes.map((n, k) => {
-          const at = flakeAt(n);
-          if (at === null || t < at) return null;
-          return [0, 1, 2, 3, 4].map((j) => {
-            const d = t - at - rnd(k * 7 + j, 3) * 0.25;
-            if (d < 0 || d > 1.6) return null;
-            const x = n.x + (rnd(k * 7 + j, 1) - 0.5) * 30 + (rnd(k * 7 + j, 5) - 0.5) * 40 * d;
-            const y = n.y + 120 * d * d + 30 * d;
-            const a = (rnd(k * 7 + j, 2) - 0.5) * 720 * d;
-            const sz = 4 + rnd(k * 7 + j, 4) * 5;
-            return (
-              <rect key={`f${k}-${j}`} x={x - sz / 2} y={y - sz / 2} width={sz} height={sz * 0.6} fill={K.gold}
-                opacity={clamp01(1.3 - d)} transform={`rotate(${a} ${x} ${y})`} />
-            );
-          });
-        })
-      : null}
-  </svg>
-);
-
-// A portrait in a round gold frame, at the root of a tree.
-const Portrait: React.FC<{ src: string; x: number; y: number; r: number; o: number; ash?: number }> = ({ src, x, y, r, o, ash = 0 }) =>
-  o <= 0 ? null : (
-    <div style={{ position: "absolute", left: x - r, top: y - r, width: r * 2, height: r * 2, opacity: o }}>
-      <div style={{ position: "absolute", inset: -r * 0.5, borderRadius: "50%", background: `radial-gradient(circle, rgba(240,192,98,${0.35 * (1 - ash)}) 0%, transparent 70%)` }} />
-      <div style={{ position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden", border: `4px solid ${ash > 0.5 ? K.ashHi : K.gold}`, boxShadow: "0 10px 40px rgba(0,0,0,0.6)" }}>
-        <Img src={staticFile(src)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 18%" }} />
-        <div style={{ position: "absolute", inset: 0, background: "#2a2622", opacity: ash * 0.55, mixBlendMode: "saturation" }} />
-      </div>
-    </div>
-  );
 
 // ---------- the saying, stamped ----------
 const Stamp: React.FC<{ t: number }> = ({ t }) => {
@@ -206,7 +89,7 @@ const Mansion: React.FC<{ t: number; x: number; y: number; w: number; o: number 
 };
 
 // ---------- the composition ----------
-export const Open: React.FC = () => {
+export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = true, brand = true }) => {
   const t = useT();
 
   // Rockefeller tree: 7 generations
@@ -323,10 +206,10 @@ export const Open: React.FC = () => {
       </div>
 
       <Stamp t={t} />
-      <BrandMark o={1} />
+      {brand ? <BrandMark o={1} /> : null}
 
       {/* sound */}
-      <Audio src={staticFile("music.m4a")} startFrom={fr(MUSIC_FROM)} volume={(f) => 0.85 * clamp01((SAMPLE_S - f / FPS) / 1.2)} />
+      {sound ? <Audio src={staticFile("music.m4a")} startFrom={fr(MUSIC_FROM)} volume={(f) => 0.85 * clamp01((SAMPLE_S - f / FPS) / 1.2)} /> : null}
       <Sequence from={fr(T.stamp)} durationInFrames={fr(1.5)}><Audio src={staticFile("sfx/sfx-impact-16.wav")} volume={0.9} /></Sequence>
       <Sequence from={fr(T.stamp)} durationInFrames={fr(1)}><Audio src={staticFile("sfx/sfx-impact-08.wav")} volume={0.8} /></Sequence>
       <Sequence from={fr(T.rock + 0.3)} durationInFrames={fr(2.5)}><Audio src={staticFile("sfx/sfx-magic-19.wav")} volume={0.35} /></Sequence>
