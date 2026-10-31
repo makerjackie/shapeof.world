@@ -178,7 +178,7 @@ export const Mech: React.FC<{ t: number }> = ({ t }) => {
       <Cap at={tVand + 0.1} out={tRuler - 0.05} lines={["范德比尔特家的钱早散了，", "后人里还有知名设计师、CNN 主播。"]} />
 
       <Ruler t={t} at={tRuler + 0.1} o={win(t, tRuler, end, 0.4, 0.4)} />
-      <Cap at={tRuler + 0.2} out={end - 0.05} lines={["俗话说三代，孟子说五世。", ["研究估计，要", { t: "十代上下，约 300 年", c: K.gold }, "。"]]} />
+      <Cap at={tRuler + 0.2} out={end - 0.05} lines={["一个家的位置要散完：俗话说三代，孟子说五世；", ["研究估计，要", { t: "十代上下，约 300 年", c: K.gold }, "。"]]} />
     </>
   );
 };
@@ -192,7 +192,7 @@ export const Keep: React.FC<{ t: number }> = ({ t }) => {
   const tMarry = a + S(2.8);
   const tFour = a + S(4.6);
   const paintO = win(t, a, end, 0.6, 0.4);
-  const marryK = win(t, tMarry, tFour, 0.4, 0.3);
+  const marryK = win(t, tWork, tMarry, 0.4, 0.3);
   // two family trees joined by a marriage
   const fa = buildTree(640, 340, 150, [1, 3], [0, 300]);
   const fb = buildTree(1280, 340, 150, [1, 3], [0, 300]);
@@ -203,19 +203,19 @@ export const Keep: React.FC<{ t: number }> = ({ t }) => {
         dim={0.35 + 0.35 * ramp(t, a + 0.8, a + 1.4, EIO) + 0.2 * Math.max(marryK, ramp(t, tFour - 0.2, tFour + 0.3, EIO))} />
       <Label x={960} y={60} o={paintO * (1 - ramp(t, a + S(0.8), a + S(1.2), EIO))} size={30} color={K.sub} weight={700}>徐扬画的村塾，18 世纪</Label>
       <Big at={a + 0.1} out={tWork - 0.05} y={420} size={100} lines={["拿不走的是什么？"]} />
-      <Cap at={tWork + 0.1} out={tMarry - 0.05} lines={["地主的孙辈，更相信“努力有用”，", ["每个工作日多干约 ", { t: "0.6 小时", num: true, c: K.gold }, "。"]]} />
+      <Cap at={tMarry + 0.1} out={tFour - 0.05} lines={["地主的孙辈也更相信“努力有用”，", ["每个工作日多干约 ", { t: "0.6 小时", num: true, c: K.gold }, "。"]]} />
       {marryK > 0 ? (
         <div style={{ position: "absolute", inset: 0, opacity: marryK }}>
-          <Tree id="ma" t={t} nodes={fa} grow={(n) => (t - (tMarry + n.row * 0.3)) / 0.3} gold={() => 0} light={() => 0.8} r={(n) => (n.row ? 16 : 22)} />
-          <Tree id="mb" t={t} nodes={fb} grow={(n) => (t - (tMarry + n.row * 0.3)) / 0.3} gold={() => 0} light={() => 0.8} r={(n) => (n.row ? 16 : 22)} />
+          <Tree id="ma" t={t} nodes={fa} grow={(n) => (t - (tWork + n.row * 0.3)) / 0.3} gold={() => 0} light={() => 0.8} r={(n) => (n.row ? 16 : 22)} />
+          <Tree id="mb" t={t} nodes={fb} grow={(n) => (t - (tWork + n.row * 0.3)) / 0.3} gold={() => 0} light={() => 0.8} r={(n) => (n.row ? 16 : 22)} />
           <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
             <path d={`M ${fa[3].x} 490 C ${fa[3].x + 120} 610, ${fb[1].x - 120} 610, ${fb[1].x} 490`} fill="none" stroke={K.gold} strokeWidth={4}
-              strokeDasharray={900} strokeDashoffset={900 * (1 - ramp(t, tMarry + 0.8, tMarry + 1.6, EO))} />
+              strokeDasharray={900} strokeDashoffset={900 * (1 - ramp(t, tWork + 0.8, tWork + 1.6, EO))} />
           </svg>
-          <Label x={960} y={640} o={ramp(t, tMarry + 1.4, tMarry + 1.8, EO)} size={40} color={K.gold}>门当户对</Label>
+          <Label x={960} y={640} o={ramp(t, tWork + 1.4, tWork + 1.8, EO)} size={40} color={K.gold}>门当户对</Label>
         </div>
       ) : null}
-      <Cap at={tMarry + 0.1} out={tFour - 0.05} lines={["和父母同住的，差距更大。", "美国南方那些儿子，常娶同样人家的女儿。"]} />
+      <Cap at={tWork + 0.1} out={tMarry - 0.05} lines={["地主的孙辈里，和父母同住的，差距更大；", "美国南方那些儿子，常娶同样人家的女儿。"]} />
       {/* four things, lit like the inner light of a node */}
       {t > tFour - 0.2 ? (
         <div style={{ position: "absolute", inset: 0, opacity: win(t, tFour, end, 0.3, 0.4) }}>

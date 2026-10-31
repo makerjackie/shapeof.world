@@ -190,7 +190,7 @@ export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = t
         <Say at={T.fall + 0.9} out={T.pair - 0.05} size={64} parts={[{ t: "全部拆光。", c: K.fg }]} />
       </div>
       <div style={{ position: "absolute", left: 0, right: 0, top: capY + 20, display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
-        <Say at={T.pair + 0.6} out={T.q - 0.05} size={64} parts={[{ t: "一家没过几代就散了，", c: K.sub }, { t: "一家传了七代。", c: K.gold }]} />
+        <Say at={T.pair + 0.15} out={T.q - 0.05} size={64} parts={[{ t: "一家没过几代就散了，", c: K.sub }, { t: "一家传了七代。", c: K.gold }]} />
       </div>
 
       {/* the question */}
@@ -202,7 +202,7 @@ export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = t
       {/* small note: the conversion */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 96 + 716 + 14, textAlign: "center", fontFamily: FONT, fontSize: 24, fontWeight: 500, color: "rgba(244,236,220,0.6)",
         opacity: win(t, T.vand + 1.0, T.fall - 0.05, 0.3, 0.3), textShadow: SHADOW }}>
-        1877 年遗产约 1 亿美元，约占当年美国 GDP 的 1/87，按同样比例换算
+        按 1877 年遗产占美国 GDP 的比例（约 1/87）换算
       </div>
 
       <Stamp t={t} />

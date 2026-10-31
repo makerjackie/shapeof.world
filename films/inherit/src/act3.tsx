@@ -110,7 +110,7 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
             opacity: ramp(t, tTree, tTree + 0.4, EO) }}>别的人家</div>
         </div>
       ) : null}
-      <Cap at={tTree + 0.4} out={tGrand - 0.05} lines={["到了儿子这一代，", "财产和读书都不比别人强，甚至更差。"]} />
+      <Cap at={tTree + 0.4} out={tGrand - 0.05} lines={["到了儿子这一代，因为出身，", "财产和读书都不比别人强，甚至更差。"]} />
       <Cap at={tGrand + 0.1} out={tRev + 0.1} lines={["到了孙子这一代……"]} stagger={2} />
 
       {/* the reveal */}
@@ -118,7 +118,7 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
       <Cap at={tRev + 0.15} out={tEdu - 0.05} lines={["2010 年，他们的孙辈，", ["年收入比别人高 ", { t: "16%", num: true, c: K.gold }, "。"]]} />
       <Cap at={tEdu + 0.1} out={tBig - 0.05} lines={[["多读 ", { t: "0.75 年", num: true, c: K.gold }, "书，职业也更体面。"]]} />
       <Fine t={t} at={tRev + 0.3} out={tBig} y={850 - 40}>Alesina 等（NBER 工作论文，2021）：中国家庭追踪调查 2010 年，农村县</Fine>
-      <Big at={tBig + 0.05} out={end - 0.05} y={360} size={96} lines={["土改抹平的差距，", [{ t: "隔了一代，又长了回来。", mark: true }]]} />
+      <Big at={tBig + 0.05} out={end - 0.05} y={360} size={96} lines={["地分掉了。", [{ t: "差距隔了一代，又长了回来。", mark: true }]]} />
     </>
   );
 };
@@ -233,7 +233,7 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
           ))}
         </div>
       ) : null}
-      <Cap at={tSons + 0.1} out={tLot - 0.05} lines={["可到 1900 年，他们的儿子，几乎追上了", "1860 年一样有钱、但没有奴隶的南方人家。"]} />
+      <Cap at={tSons + 0.1} out={tLot - 0.05} lines={["可到 1900 年，他们的儿子，", "几乎追上了当年一样有钱、没养奴隶的人家。"]} />
 
       <LotteryBox t={t} at={tLot} o={lotO * (1 - kidsK)} />
       <Label x={960} y={130} o={lotO * (1 - kidsK)} size={36} color={K.sub} weight={700}>1832 年，美国佐治亚州，抽签分地</Label>

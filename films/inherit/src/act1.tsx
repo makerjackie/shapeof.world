@@ -60,7 +60,7 @@ export const Sayings: React.FC<{ t: number }> = ({ t }) => {
         </div>
       </Slip>
       <Cap at={at[1] + 0.2} out={at[2] - 0.1} lines={["英国 1868 年的报纸：", "木屐到木屐，只隔三代。"]} />
-      <Cap at={at[2] + 0.2} out={fanAt - 0.05} lines={["日本江户的俗话：", "第三代卖房，招牌上的字写得很讲究。"]} />
+      <Cap at={at[2] + 0.2} out={fanAt - 0.05} lines={["日本江户的俗话：第三代把家卖了，", "“卖房”的告示却写得一手好字。"]} />
       <Cap at={fanAt + 0.3} out={S(SB.money) - 0.1} lines={["好多地方的人，都这么说。"]} />
     </>
   );

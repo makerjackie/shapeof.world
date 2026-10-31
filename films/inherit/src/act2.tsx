@@ -128,22 +128,14 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
                 <div style={{ position: "absolute", left: -16, top: 40, width: 32, height: 32, borderRadius: 16, background: K.gold, boxShadow: "0 0 26px rgba(240,192,98,0.8)" }} />
                 <div style={{ position: "absolute", left: 50, top: 0, width: 1130, height: 112, borderRadius: 6, background: "linear-gradient(90deg, rgba(233,220,192,0.14), rgba(233,220,192,0.05))", border: "1px solid rgba(240,192,98,0.3)" }} />
                 <div style={{ position: "absolute", left: 90, top: 18, fontFamily: NUM, fontWeight: 700, fontSize: 30, color: K.sub }}>{l.years}</div>
-                <div style={{ position: "absolute", left: 90, top: 52, fontFamily: SERIF, fontWeight: 900, fontSize: 46, color: K.fg, textShadow: SHADOW }}>{l.what}</div>
-                {/* a row of surnames on the list, two of them lit */}
-                <div style={{ position: "absolute", left: 560, top: 34, display: "flex", gap: 16, fontFamily: SERIF, fontWeight: 900, fontSize: 40 }}>
-                  {Array.from({ length: 8 }, (_, j) => {
-                    const lit = j === (i * 3 + 1) % 8 || j === (i * 5 + 4) % 8;
-                    const ch = lit ? ELITE[(i * 4 + j) % 13].slice(0, 1) : COMMON[(i * 11 + j * 5) % COMMON.length];
-                    return <span key={j} style={{ color: lit ? K.goldHi : "rgba(201,189,166,0.35)", textShadow: lit ? "0 0 16px rgba(240,192,98,0.8)" : undefined }}>{ch}</span>;
-                  })}
-                </div>
-                <div style={{ position: "absolute", right: 30, top: 6, fontFamily: NUM, fontWeight: 900, fontSize: 84, color: K.goldHi, textShadow: "0 0 40px rgba(240,192,98,0.4)" }}>
+                <div style={{ position: "absolute", left: 90, top: 46, fontFamily: SERIF, fontWeight: 900, fontSize: 54, color: K.fg, textShadow: SHADOW }}>{l.what}</div>
+                {/* (no surname row: one thing to read per card) */}
+                                <div style={{ position: "absolute", right: 30, top: 6, fontFamily: NUM, fontWeight: 900, fontSize: 84, color: K.goldHi, textShadow: "0 0 40px rgba(240,192,98,0.4)" }}>
                   {l.x}<span style={{ fontFamily: FONT, fontSize: 40, marginLeft: 6 }}>倍</span>
                 </div>
               </div>
             );
           })}
-          <Fine t={t} at={tCards + 0.6} out={tClose} y={836}>倍数：相对同一地区的常见姓（顾、沈、钱）</Fine>
           <Cap at={tClose + 0.05} out={end - 0.05} lines={["一百多年，换了几个时代，", [{ t: "这些姓还在前面。", c: K.gold }]]} />
         </>
       ) : null}
@@ -158,7 +150,7 @@ export const Abroad: React.FC<{ t: number }> = ({ t }) => {
   if (t < a - 0.2 || t > end + 0.4) return null;
   const tPaper = a + S(1.1);
   const tFlo = a + S(2.5);
-  const tTop = a + S(3.6);
+  const tTop = a + S(3.1);
   const samO = win(t, a, tFlo, 0.35, 0.4);
   const slide = ramp(t, tPaper - 0.2, tPaper + 0.4, EIO);
   const floO = win(t, tFlo, end, 0.45, 0.35);
@@ -204,8 +196,7 @@ export const Abroad: React.FC<{ t: number }> = ({ t }) => {
         : null}
       <Label x={960} y={290} o={topK * floO} size={40} color={K.fg}>2011 年，佛罗伦萨收入最高的 5 个姓</Label>
       <Label x={960} y={60} o={floO * (1 - topK)} size={32} color={K.sub} weight={700}>佛罗伦萨，约 1470 年</Label>
-      <Cap at={tFlo + 0.1} out={tTop - 0.05} lines={["意大利佛罗伦萨，", "把 600 年前的税册对上今天。"]} />
-      <Cap at={tTop + 0.2} out={end - 0.05} lines={["今天收入最高的 5 个姓里，", ["有 3 个在 1427 年就排", { t: "全城前 6%", c: K.gold }, "。"]]} />
+      <Cap at={tFlo + 0.3} out={end - 0.05} lines={["意大利佛罗伦萨：今天收入最高的 5 个姓里，", ["有 3 个在 600 年前就排", { t: "全城前 6%", c: K.gold }, "。"]]} />
     </>
   );
 };
