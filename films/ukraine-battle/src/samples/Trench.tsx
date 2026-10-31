@@ -27,12 +27,12 @@ const Vignette: React.FC<{ k?: number }> = ({ k = 0.55 }) => (
   <AbsoluteFill style={{ background: `radial-gradient(ellipse 75% 70% at 50% 48%, rgba(0,0,0,0) 55%, rgba(0,0,0,${k}) 100%)` }} />
 );
 
-const Caption: React.FC<{ f: number; a: number; b: number; children: React.ReactNode; y?: number; size?: number; sub?: string }> = ({ f, a, b, children, y = 905, size = 46, sub }) => {
+const Caption: React.FC<{ f: number; a: number; b: number; children: React.ReactNode; y?: number; size?: number; sub?: string }> = ({ f, a, b, children, y = 880, size = 62, sub }) => {
   const o = Math.min(interpolate(f, [a, a + 8], [0, 1], CL), interpolate(f, [b - 8, b], [1, 0], CL));
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: y, textAlign: "center", opacity: o, fontFamily: HAN, color: "#f3f1ea", textShadow: SHADOW }}>
       <div style={{ fontSize: size, fontWeight: 600, letterSpacing: 1 }}>{children}</div>
-      {sub ? <div style={{ fontSize: 24, marginTop: 14, color: "rgba(243,241,234,0.72)" }}>{sub}</div> : null}
+      {sub ? <div style={{ fontSize: 32, marginTop: 16, color: "rgba(243,241,234,0.78)" }}>{sub}</div> : null}
     </div>
   );
 };
@@ -40,9 +40,9 @@ const Caption: React.FC<{ f: number; a: number; b: number; children: React.React
 const Place: React.FC<{ f: number }> = ({ f }) => {
   const o = Math.min(interpolate(f, [8, 20], [0, 1], CL), interpolate(f, [86, 98], [1, 0], CL));
   return (
-    <div style={{ position: "absolute", left: 96, top: 84, opacity: o, fontFamily: HAN, color: "#f3f1ea", textShadow: SHADOW }}>
-      <div style={{ fontSize: 34, fontWeight: 600 }}>扎波罗热州 · 前线林带里的一段战壕</div>
-      <div style={{ fontSize: 22, marginTop: 10, color: "rgba(243,241,234,0.7)" }}>三维重建 · 示意</div>
+    <div style={{ position: "absolute", left: 96, top: 80, opacity: o, fontFamily: HAN, color: "#f3f1ea", textShadow: SHADOW }}>
+      <div style={{ fontSize: 48, fontWeight: 600 }}>扎波罗热州 · 前线林带里的一段战壕</div>
+      <div style={{ fontSize: 30, marginTop: 12, color: "rgba(243,241,234,0.75)" }}>三维重建 · 示意</div>
     </div>
   );
 };
@@ -54,7 +54,7 @@ const OSD: React.FC<{ g: number }> = ({ g }) => {
   const box = interpolate(g, [24, 31], [360, 120], CL);
   const blink = Math.floor(g / 6) % 2 === 0;
   const W = "rgba(255,255,255,0.88)";
-  const txt: React.CSSProperties = { position: "absolute", fontFamily: MONO, fontSize: 24, color: W, letterSpacing: 2 };
+  const txt: React.CSSProperties = { position: "absolute", fontFamily: MONO, fontSize: 28, color: W, letterSpacing: 2 };
   const sec = 44 + Math.floor(g / 24);
   return (
     <AbsoluteFill>
@@ -83,7 +83,7 @@ const OSD: React.FC<{ g: number }> = ({ g }) => {
       <div style={{ ...txt, right: 120, bottom: 112, textAlign: "right" }}>
         {blink ? "● " : "  "}REC 04:57:{String(sec).padStart(2, "0")}
       </div>
-      {lock ? <div style={{ ...txt, left: 960 + 80, top: 540 - 90, fontSize: 22 }}>TRACK</div> : null}
+      {lock ? <div style={{ ...txt, left: 960 + 80, top: 540 - 94, fontSize: 26 }}>TRACK</div> : null}
     </AbsoluteFill>
   );
 };
@@ -124,7 +124,7 @@ export const SampleD: React.FC = () => {
         <Vignette k={0.35} />
         <OSD g={g} />
         <AbsoluteFill style={{ background: "#fff", opacity: flash }} />
-        <Caption f={g} a={34} b={77 + 8} y={880} sub="—— 一名俄军士兵，2026 年（俄新社）">
+        <Caption f={g} a={34} b={77 + 8} y={846} sub="—— 一名俄军士兵，2026 年（俄新社）">
           “只要被一架发现，好几架就会飞过来。”
         </Caption>
       </>
