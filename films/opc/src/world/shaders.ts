@@ -671,12 +671,12 @@ void main() {
   float graze = 1.0 - abs(V.y);
   float a = 0.012 + 0.035 * graze * graze + 0.16 * line;
   // breaking tiles flash as they go
-  a += vK * (1.0 - vK) * 1.4;
+  a += vK * (1.0 - vK) * 0.8;
   float dist = length(cameraPosition - vW);
   float fog = 1.0 - exp(-uFogD * dist);
   vec3 col = uColor * a * edge * uOpacity * uBase * (1.0 - vK) * (1.0 - 0.85 * fog);
   float lit = step(vCtr, uLit);
-  col += vec3(1.0, 0.72, 0.38) * lit * (0.22 + 0.5 * line) * uOpacity;
+  col += vec3(1.0, 0.72, 0.38) * lit * (0.1 + 0.55 * line) * uOpacity * edge;
   if (any(isnan(col)) || any(isinf(col))) col = vec3(0.0);
   gl_FragColor = vec4(clamp(col, 0.0, 4.0), 1.0);
 }

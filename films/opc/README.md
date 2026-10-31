@@ -27,7 +27,8 @@ tools/fonts.sh                           # 字体子集 → public/fonts/
 node tools/render-music.mjs              # 配乐 → public/score.wav
 COMP=Lab node tools/stills.mjs out/lab 0 1 2   # 看景
 node tools/stills-safe.mjs out/s 300 900 # 审片截图（半分辨率，坏帧只报告不中断）
-tools/render_master.sh opc               # 成片 + 母带 → out/opc.mp4（−12 LUFS，≤ −1 dBTP）
+tools/render_master.sh opc-v7            # 成片 + 母带 → out/opc-v7.mp4（−12 LUFS，≤ −1 dBTP）
+tools/sheet12.sh out/s out/sheet         # 审片截图拼成 4×3 联系表
 node tools/covers.mjs                    # 封面 → out/covers/
 ```
 
@@ -37,3 +38,5 @@ node tools/covers.mjs                    # 封面 → out/covers/
 - **RoundedBoxGeometry 没有索引**：和 BoxGeometry 合并前先 `toNonIndexed()`。
 - **zsh 里 `$F` 不分词**：传一串帧号要写 `${=F}`。
 - **sin() 哈希会闪**：`fract(sin(dot(p, …)) * 43758.5)` 对大输入精度不稳，插值来的 varying（法线、每个摊位的种子）又带 1e-7 的误差，结果在相邻帧、两次渲染之间翻转：一扇窗隔帧亮灭，收款码图案逐帧变。改用不带 sin 的哈希（Dave Hoskins），输入先取整（`floor(vSeed * 1000.0 + 0.5)`、法线四舍五入成 -1/0/1）。是靠"整片渲两遍、逐帧算 PSNR"抓到的：内容没变的段落出现 27 dB 的帧就要查，修好后最差 46 dB（只剩光晕和颗粒的噪声）。
+- **v7 的逐帧比对**：整片渲两遍，最差 36.4 dB，低于 40 dB 的 464 帧全在最密的高空镜头（十几万盏灯 + 光点）；放大十倍看差异图是均匀的细噪点，没有局部亮灭的东西（v6 那种窗户、收款码闪烁的问题没有再出现）。判断标准：差异图里有没有成块、成点的亮斑，而不是只看 dB。
+- **玻璃瓦片要接近正方形**：碎裂时细长的瓦片像一根根木板飞出去。长条形的街道玻璃用 96×6 块，大面的收入刻度用 28×14 块。

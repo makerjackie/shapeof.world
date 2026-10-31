@@ -50,17 +50,17 @@ export const Film: React.FC = () => {
       <OnScreen cam={cam} o={t < S(4) ? 1 : 0}>
         <RegScreen t0={0} />
       </OnScreen>
-      <Scrim at={S(1.75)} out={S(3.4)} kind="bl" k={0.8} />
+      <Scrim at={S(1.7)} out={S(3.7)} kind="bl" k={0.8} />
       <At x={140} y={660}>
-        <Line at={S(1.8)} out={S(3.35)} size={60} weight={700} parts={["2025 年，中国新开了"]} />
-        <Line at={S(2.0)} out={S(3.35)} size={124} parts={[{ t: "731.5 万家", c: G }, "一人公司"]} />
-        <Line at={S(2.6)} out={S(3.35)} size={60} weight={700} parts={["比前一年，多了 ", { t: "42%", c: G }]} />
+        <Line at={S(1.72)} out={S(3.65)} size={60} weight={700} parts={["2025 年，中国新开了"]} />
+        <Line at={S(1.9)} out={S(3.65)} size={124} parts={[{ t: "731.5 万家", c: G }, "一人公司"]} />
+        <Line at={S(2.45)} out={S(3.65)} size={60} weight={700} parts={["比前一年，多了 ", { t: "42%", c: G }]} />
       </At>
-      <Note at={S(1.9)} out={S(3.35)}>经济日报 2026-10-29 援引的最新数据：2025 年全国新设"一人公司"（只有一个股东的公司）731.5 万户，同比增长 42.3%</Note>
-      <Scrim at={S(3.45)} out={S(6.0)} kind="c" k={0.55} />
+      <Note at={S(1.8)} out={S(3.65)}>经济日报 2026-10-29 援引的最新数据：2025 年全国新设"一人公司"（只有一个股东的公司）731.5 万户，同比增长 42.3%</Note>
+      <Scrim at={S(3.72)} out={S(6.0)} kind="c" k={0.55} />
       <At x={960} y={390} align="center" gap={6}>
-        <Line at={S(3.5)} out={S(6.0)} size={76} weight={700} parts={["一个人开公司，"]} />
-        <Line at={S(3.85)} out={S(6.0)} size={120} parts={["到底能不能", { t: "赚钱", c: G }, "？"]} />
+        <Line at={S(3.75)} out={S(6.0)} size={76} weight={700} parts={["一个人开公司，"]} />
+        <Line at={S(4.05)} out={S(6.0)} size={120} parts={["到底能不能", { t: "赚钱", c: G }, "？"]} />
       </At>
 
       {/* ---------- 1. title ---------- */}
@@ -75,10 +75,10 @@ export const Film: React.FC = () => {
         <Line at={S(8.1)} out={S(10.25)} size={64} weight={700} parts={["一个人做生意，"]} />
         <Line at={S(8.45)} out={S(10.25)} size={96} parts={["一点也不新"]} />
       </At>
-      <Pin cam={cam} at={S(9.0)} out={S(11.1)} p={sw(CART, 0.55, 0.62, 0.44)} lift={120} dx={-160} side="left" text="一辆车" />
-      <Pin cam={cam} at={S(9.3)} out={S(11.1)} p={sw(CART, -0.46, 1.05, 0.04)} lift={60} dx={-220} side="left" text="一口锅" />
-      <Pin cam={cam} at={S(9.6)} out={S(11.1)} p={sw(CART, 0.2, 0.02, 2.6)} lift={70} dx={200} side="right" text="一条街" />
-      <Notif cam={cam} at={S(10.05)} out={S(11.0)} p={sw(CART, 0.84, 1.5, 0.45)} text="收款到账" sub="7 元" lift={40} />
+      <Pin cam={cam} at={S(9.0)} out={S(10.35)} p={sw(CART, 0.55, 0.62, 0.44)} lift={120} dx={-160} side="left" text="一辆车" />
+      <Pin cam={cam} at={S(9.3)} out={S(10.35)} p={sw(CART, -0.46, 1.05, 0.04)} lift={60} dx={-220} side="left" text="一口锅" />
+      <Pin cam={cam} at={S(9.6)} out={S(10.35)} p={sw(CART, 0.2, 0.02, 2.6)} lift={70} dx={200} side="right" text="一条街" />
+      <Notif cam={cam} at={S(9.8)} out={S(10.35)} p={sw(CART, 0.84, 1.5, 0.45)} text="收款到账" sub="7 元" lift={40} />
 
       <Scrim at={S(11.0)} out={S(13.0)} kind="r" k={0.62} />
       <At x={1800} y={300} align="right" gap={18}>

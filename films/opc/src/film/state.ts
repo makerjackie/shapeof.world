@@ -228,7 +228,7 @@ const glassAt = (t: number): (Glass | null)[] => {
   // 7 morning: the floor under the cart, laid one tile at a time as the regulars come
   if (t > S(100) && t < S(107)) {
     const [cx, , cz] = [CART.x, 0, CART.z + 1.6];
-    g[0] = { x: cx, z: cz, w: 7, d: 3.5, y: 0.03, o: ramp(t, S(100.2), S(100.8)) * (1 - ramp(t, S(106.4), S(106.9))), base: 0.12, color: [1.0, 0.85, 0.6], grid: 0.25, lit: tween(t, S(100.6), S(105.6), 0.05, 1.45, (x) => x) };
+    g[2] = { x: cx, z: cz, w: 5, d: 2.5, y: 0.03, o: 0.55 * ramp(t, S(100.2), S(100.8)) * (1 - ramp(t, S(106.4), S(106.9))), base: 0.1, color: [1.0, 0.85, 0.6], grid: 0.36, lit: tween(t, S(100.6), S(105.6), 0.05, 1.0, (x) => x) };
   }
   return g;
 };
@@ -256,7 +256,7 @@ export const worldAt = (t: number): WorldState => {
 
   // dimming behind type
   let dim = 0;
-  dim = Math.max(dim, ramp(t, S(3.3), S(3.8)) * (1 - ramp(t, S(7.7), S(8.0))) * 0.75);
+  dim = Math.max(dim, ramp(t, S(3.55), S(4.0)) * (1 - ramp(t, S(7.7), S(8.0))) * 0.75);
   dim = Math.max(dim, ramp(t, S(89.4), S(89.9)) * (1 - ramp(t, S(91.4), S(91.9))) * 0.4);
 
   // customers

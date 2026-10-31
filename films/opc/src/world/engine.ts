@@ -487,8 +487,9 @@ class Engine {
 
     // glass sheets: tiles of one big horizontal plane
     for (let k = 0; k < GLASS_SLOTS; k++) {
-      const NX = 28;
-      const NZ = 14;
+      // slots 0-1 are long strips over a street (a ceiling, a floor), 2-4 broad sheets: tiles close to square in each
+      const NX = k < 2 ? 96 : 28;
+      const NZ = k < 2 ? 6 : 14;
       const q = quad();
       const geo = new THREE.InstancedBufferGeometry();
       geo.index = q.index;
