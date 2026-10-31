@@ -239,7 +239,7 @@ def low_tree(name, coll):
     for k in range(7):
         c = Vector((R.uniform(-1.5, 1.5), R.uniform(-1.5, 1.5), R.uniform(h + 0.6, h + 2.6)))
         sc_ = Vector((R.uniform(1.3, 2.3), R.uniform(1.3, 2.3), R.uniform(1.0, 1.6)))
-        ret = bmesh.ops.create_icosphere(bm, subdivisions=3, radius=1.0, matrix=Matrix.Translation(c) @ Matrix.Diagonal((*sc_, 1)))
+        ret = bmesh.ops.create_icosphere(bm, subdivisions=int(ARGS.get("crownsub", 2)), radius=1.0, matrix=Matrix.Translation(c) @ Matrix.Diagonal((*sc_, 1)))
         for v in ret["verts"]:
             d = v.co - c
             n = noise.noise(v.co * 1.4 + Vector((k * 3.1, 0, 0))) * 0.55 + noise.noise(v.co * 4.0) * 0.18
@@ -305,7 +305,7 @@ for o in lib.ph_model("tree_small_02", NEAR):
         bpy.data.objects.remove(o)
 lib.hide_collection(NEAR)
 NEAR_R = float(ARGS.get("nearr", 0))
-R_TREES = float(ARGS.get("treer", 2600))
+R_TREES = float(ARGS.get("treer", 1400))
 
 
 def pip(poly, pts):
