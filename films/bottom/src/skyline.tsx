@@ -115,7 +115,7 @@ export const Skyline: React.FC = () => {
       {/* city names under every tower (vertical) */}
       <AbsoluteFill style={{ opacity: ramp(t, S(31.6), S(32.4)) * (1 - 0.5 * quiet) }}>
         {towers.map((c) => (
-          <div key={c.c} style={{ position: "absolute", left: X(c.x) - 11, top: Yp(base) + 10, width: 22, writingMode: "vertical-rl", fontFamily: FONT, fontSize: 18 * Math.min(cam.z, 1.3), fontWeight: 700, color: c.roofK > 0.5 || c.upK > 0.5 ? K.fg : K.muted, lineHeight: 1 }}>
+          <div key={c.c} style={{ position: "absolute", left: X(c.x) - 12, top: Yp(base) + 10, width: 24, writingMode: "vertical-rl", fontFamily: FONT, fontSize: 20 * Math.min(cam.z, 1.3), fontWeight: 700, color: c.roofK > 0.5 || c.upK > 0.5 ? K.fg : K.sub, lineHeight: 1 }}>
             {c.c}
           </div>
         ))}
@@ -198,64 +198,66 @@ export const Skyline: React.FC = () => {
         <Say at={S(18.4)} out={S(19.95)} size={60} parts={["同一套房，可以", { t: "买", c: K.ice }, "，也可以", { t: "租", c: K.winHi }]} />
       </Box>
       <Box x={120} y={120}>
-        <Say at={S(20.1)} out={S(24.4)} size={56} parts={["按一套 100 万的房子算，", { t: "买下它", c: K.ice }, "，一年要花多少？"]} />
+        <Say at={S(20.1)} out={S(24.4)} size={56} parts={["按每 100 万的房价算，", { t: "买下它", c: K.ice }, "，一年要花多少？"]} />
       </Box>
       <Box x={120} y={120}>
         <Say at={S(24.6)} out={S(26.6)} size={64} parts={["买下它，一年的代价：约 ", { t: "2.6 万", c: K.iceHi, num: true }]} />
+        <Say at={S(25.3)} out={S(26.6)} size={36} weight={600} color={K.sub} parts={["本金不算：那是存进房子里的钱"]} />
       </Box>
       <Note at={S(24.6)} out={S(28.4)}>首付三成；存款按国有大行三年期大额存单 1.55%；房贷按 2026 年 9 月新发放平均利率约 3.1%（人民银行）。中指研究院估算的购房资金成本约 2.4%–2.7%。未算物业费、维修和房价涨跌</Note>
       <Box x={120} y={120} gap={10}>
-        <Say at={S(26.7)} out={S(28.4)} size={52} parts={["房租比这条线高：", { t: "买，比租划算", c: K.winHi }]} />
-        <Say at={S(27.3)} out={S(28.4)} size={52} parts={["房租比这条线低：", { t: "租，比买划算", c: K.ice }]} />
+        <Say at={S(26.6)} out={S(28.4)} size={52} parts={["房租比这条线高：", { t: "买，比租划算", c: K.winHi }]} />
+        <Say at={S(27.0)} out={S(28.4)} size={52} parts={["房租比这条线低：", { t: "租，比买划算", c: K.ice }]} />
       </Box>
       <Box x={120} y={120} gap={10}>
         <Say at={S(28.5)} out={S(31.1)} size={52} weight={700} color={K.sub} parts={["同样 100 万的房子，一年的房租"]} />
-        <Say at={S(29.9)} out={S(31.1)} size={56} parts={["长沙：", { t: "买比租划算", c: K.winHi }, "　深圳：", { t: "租一年省约 1 万", c: K.ice }]} />
+        <Say at={S(29.6)} out={S(31.2)} size={56} parts={["长沙：房租过线，", { t: "买更划算", c: K.winHi }, "　深圳：还差 1 万，", { t: "租更划算", c: K.ice }]} />
       </Box>
       <Note at={S(28.6)} out={S(31.1)}>一年房租 = 租金回报率 × 100 万；长沙约 3.1%、深圳约 1.6%（中指研究院，2026 年 9 月）</Note>
       <Box x={120} y={120} gap={8}>
-        <Say at={S(31.3)} out={S(33.6)} size={66} parts={["50 座城市，同一把尺子"]} />
-        <Say at={S(31.9)} out={S(33.6)} size={34} weight={600} color={K.sub} parts={["楼越高，同样 100 万的房子，一年的房租越多"]} />
+        <Say at={S(31.3)} out={S(33.6)} size={66} parts={["50 座城市，同一把尺子。", { t: "找找你的城市", c: K.winHi }]} />
+        <Say at={S(31.7)} out={S(33.65)} size={34} weight={600} color={K.sub} parts={["楼越高，同样 100 万的房子，一年的房租越多"]} />
       </Box>
       <Box x={120} y={120} gap={8}>
         <Say at={S(33.7)} out={S(36)} size={60} parts={["过线最多的 ", { t: "6 座城市", c: K.gold }]} />
-        <Say at={S(34.4)} out={S(36)} size={36} weight={600} color={K.sub} parts={["房租回报率都超过 3%"]} />
+        <Say at={S(34.4)} out={S(36)} size={36} weight={600} color={K.sub} parts={["100 万的房子，一年房租都超过 3 万"]} />
       </Box>
       <Box x={120} y={120}>
-        <Say at={S(36.1)} out={S(38)} size={60} parts={["碰到线的，约 ", { t: "20 座", c: K.ice }, "：重庆、南昌、大连、沈阳……"]} />
+        <Say at={S(36.1)} out={S(38)} size={60} parts={["碰到线的，约 ", { t: "20 座", c: K.ice }, "：重庆、南昌……"]} />
       </Box>
       <Note at={S(33.7)} out={S(38)}>租金房价比 = 9 月住宅平均租金 × 12 ÷ 二手住宅均价；超过 3% 和“20 个城市在 2.4% 及以上”见中指报告，其余各城高度按报告图表读取，约数</Note>
       <Box x={1800} y={150} align="right">
-        <Say at={S(38.4)} out={S(40)} size={64} parts={["离线最远的：", { t: "厦门、深圳、北京", c: K.ice }]} />
+        <Say at={S(38.3)} out={S(39.85)} size={64} parts={["离线最远的：", { t: "厦门、深圳、北京", c: K.ice }]} />
       </Box>
       <Box x={120} y={120} gap={10}>
-        <Say at={S(40.1)} out={S(42.1)} size={52} weight={700} color={K.sub} parts={["一线城市平均 ", { t: "1.70%", num: true, c: K.fg }, "。要碰到这条线："]} />
-        <Say at={S(40.6)} out={S(42.1)} size={60} parts={["房价再跌", { t: "三到四成", c: K.ice }, "，或者房租涨", { t: "四到六成", c: K.winHi }]} />
+        <Say at={S(39.9)} out={S(42.1)} size={52} weight={700} color={K.sub} parts={["一线城市，100 万的房子一年房租平均只有 ", { t: "1.7 万", num: true, c: K.fg }, "。要碰到这条线："]} />
+        <Say at={S(40.2)} out={S(42.1)} size={60} parts={["房价再跌", { t: "三到四成", c: K.ice }, "，或者房租涨", { t: "四到六成", c: K.winHi }]} />
       </Box>
-      <Note at={S(40.1)} out={S(42.1)}>按资金成本 2.4%–2.7% 算出来的差距，是算术，不是预测</Note>
+      <Note at={S(39.9)} out={S(42.1)}>按资金成本 2.4%–2.7% 算出来的差距，是算术，不是预测</Note>
       <Box x={120} y={120} gap={10}>
         <Say at={S(42.2)} out={S(44.5)} size={52} weight={700} color={K.sub} parts={["10 月 1 日起，首套房贷款每年贴息 1 个百分点"]} />
-        <Say at={S(43)} out={S(44.5)} size={60} parts={["这条线降到约 ", { t: "1.9%", c: K.iceHi, num: true }, "，一大半城市过了线"]} />
+        <Say at={S(42.8)} out={S(44.5)} size={60} parts={["这条线降到约 ", { t: "1.9 万", c: K.iceHi, num: true }, "，一大半城市过了线"]} />
       </Box>
       <Note at={S(42.2)} out={S(47.9)}>财金〔2026〕95 号：商业贷款买首套，建筑面积 ≤ 120㎡、总价 ≤ 150 万，按本金年化贴息 1 个百分点，最长 5 年；政策暂定 1 年。150 万能买的面积按中指 2026 年 9 月新房样本均价</Note>
       <SubsidyPlans t={t} />
       <Box x={120} y={120}>
-        <Say at={S(46.7)} out={S(47.9)} size={60} parts={["在北上广深，这条线几乎没动"]} />
+        <Say at={S(46.55)} out={S(48)} size={54} parts={["在北上广深，150 万买不到几平米，这条线几乎没动"]} />
       </Box>
-      <Box x={960} y={260} align="center" gap={14}>
-        <Say at={S(48.5)} out={S(51)} size={76} weight={900} stagger={2.2} parts={["过了线的城市，房价涨了吗？"]} />
+      <Box x={960} y={230} align="center" gap={18}>
+        <Say at={S(48.4)} out={S(51)} size={52} weight={700} color={K.sub} stagger={1.6} parts={["划算，不等于会涨。"]} />
+        <Say at={S(49.3)} out={S(51)} size={76} weight={900} stagger={1.6} parts={["过了线的城市，房价涨了吗？"]} />
       </Box>
       <Box x={960} y={150} align="center" gap={12}>
         <Say at={S(51.1)} out={S(53.5)} size={62} parts={["过线最多的 6 座城市，", { t: "全都还在跌", c: K.down }]} />
-        <Say at={S(51.8)} out={S(53.5)} size={40} weight={600} color={K.sub} parts={["长沙比一年前低 5.5%　哈尔滨低 4.4%"]} />
+        <Say at={S(51.6)} out={S(53.5)} size={40} weight={600} color={K.sub} parts={["长沙比一年前低 5.5%　哈尔滨低 4.4%"]} />
       </Box>
       <Box x={960} y={150} align="center" gap={12}>
         <Say at={S(53.6)} out={S(56)} size={54} parts={["房租自己也在降：三季度，50 座城市里 ", { t: "39 座", c: K.down }]} />
         <Say at={S(54.4)} out={S(56)} size={44} weight={700} color={K.sub} parts={["房租降了，过了线的楼，也会掉回线下"]} />
       </Box>
       <Box x={960} y={150} align="center" gap={12}>
-        <Say at={S(56.05)} out={S(59.2)} size={76} weight={900} parts={[{ t: "最不划算的城市，先止跌了。", mark: true }]} />
-        <Say at={S(56.9)} out={S(59.2)} size={42} weight={700} color={K.sub} parts={["北上广深的二手房，连涨 7 个月"]} />
+        <Say at={S(56.05)} out={S(59.2)} size={76} weight={900} parts={["离线最远的", { t: "北上广深，先止跌了。", mark: true }]} />
+        <Say at={S(56.9)} out={S(59.2)} size={42} weight={700} color={K.sub} parts={["二手房价格，连涨 7 个月"]} />
       </Box>
       <Note at={S(51.1)} out={S(56)}>房价：统计局 2026 年 9 月二手住宅环比与同比；房租：中指研究院三季度 50 城住宅租金</Note>
     </AbsoluteFill>

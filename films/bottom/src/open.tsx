@@ -112,10 +112,10 @@ export const Open: React.FC = () => {
         <Say at={0.85} out={S(2.85)} size={118} weight={900} parts={["到底了吗？"]} />
       </Box>
       <Grid t={t} />
-      <Box x={147} y={120} gap={6}>
+      <Box x={147} y={96} gap={2}>
         <Say at={S(3.2)} out={S(5.45)} size={40} weight={700} color={K.sub} parts={["按统计局 70 座城市的二手房价格"]} />
-        <Say at={S(3.75)} out={S(4.75)} size={66} parts={["从 2021 年的最高点，平均跌了约 ", { t: "23%", c: K.down, num: true }]} />
-        <Say at={S(4.8)} out={S(5.45)} size={66} parts={["跌回了 ", { t: "2016 年", c: K.down }]} />
+        <Say at={S(3.5)} out={S(5.45)} size={56} parts={["从 2021 年最高点算，每 100 万平均跌掉约 ", { t: "23 万", c: K.down, num: true }]} />
+        <Say at={S(4.5)} out={S(5.45)} size={56} parts={["跌回了 ", { t: "2016 年", c: K.down }]} />
       </Box>
       <Box x={147} y={150}>
         <Say at={S(5.6)} out={S(7.9)} size={66} parts={["其中 ", { t: "35 座城市", c: K.down }, "，跌回了 2010 年以前"]} />
@@ -128,18 +128,18 @@ export const Open: React.FC = () => {
       <Note at={S(8.5)} out={S(10.4)}>2026 年 3–9 月，一线城市二手住宅价格环比连续上涨；上海 9 月比一年前涨 0.8%（统计局）</Note>
       <Box x={147} y={120} gap={6}>
         <Say at={S(10.6)} out={S(12.4)} size={44} weight={700} color={K.down} parts={["有人说，还早"]} />
-        <Say at={S(10.95)} out={S(12.4)} size={60} parts={["70 座城市里，", { t: "59 座", c: K.down }, "上个月还在跌"]} />
+        <Say at={S(10.75)} out={S(12.4)} size={60} parts={["70 座城市里，", { t: "59 座", c: K.down }, "上个月还在跌"]} />
       </Box>
       <Box x={147} y={150}>
         <Say at={S(12.5)} out={S(14.9)} size={52} weight={800} parts={["各家机构，各说各的"]} />
       </Box>
       <Danmaku t={t} />
       <Box x={960} y={430} align="center">
-        <Say at={S(15.15)} out={S(16.1)} size={84} weight={900} parts={["底在哪，没人能提前看到。"]} />
+        <Say at={S(15.1)} out={S(16.35)} size={84} weight={900} parts={["底在哪，没人能提前看到。"]} />
       </Box>
       <Box x={960} y={360} align="center" gap={20}>
-        <Say at={S(16.15)} out={S(18.3)} size={52} weight={700} color={K.sub} parts={["先不猜。换个问法："]} />
-        <Say at={S(16.5)} out={S(18.3)} size={92} weight={900} parts={["什么时候，买房才", { t: "不算亏", c: K.ice }, "？"]} />
+        <Say at={S(16.4)} out={S(18.3)} size={52} weight={700} color={K.sub} parts={["先不猜。换个问法："]} />
+        <Say at={S(16.7)} out={S(18.3)} size={92} weight={900} parts={["什么时候，买房才", { t: "不算亏", c: K.ice }, "？"]} />
       </Box>
     </AbsoluteFill>
   );

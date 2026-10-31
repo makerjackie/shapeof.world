@@ -44,8 +44,10 @@ const CUES: Cue[] = [
   { t: S(67.2), id: "sfx-ui-06", v: 0.35 },
   { t: S(68.4), id: "sfx-ui-06", v: 0.35 },
   { t: S(72), id: "sfx-impact-05", v: 0.5 },
-  { t: S(83), id: "sfx-transition-12", v: 0.3 },
-  { t: S(88), id: "sfx-impact-16", v: 0.35 },
+  { t: S(81.2), id: "sfx-transition-08", v: 0.3 },
+  { t: S(84), id: "sfx-impact-16", v: 0.4 },
+  { t: S(85.5), id: "sfx-transition-12", v: 0.3 },
+  { t: S(87.3), id: "sfx-impact-05", v: 0.35 },
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
 
@@ -58,7 +60,7 @@ const Vignette: React.FC = () => <AbsoluteFill style={{ background: "radial-grad
 export const Film: React.FC = () => {
   const t = useT();
   const horizon = t > S(18) && t < S(33.5) ? lerp(860, 930, ramp(t, S(31), S(33), EO)) : 930;
-  const dim = keys(t, [[S(0), 0.45], [S(17), 0.45], [S(18.5), 0.1], [S(59), 0.1], [S(59.6), 0.4], [S(65), 0.4], [S(66), 0.1], [S(83), 0.1], [S(84), 0.3]]);
+  const dim = keys(t, [[S(0), 0.45], [S(17), 0.45], [S(18.5), 0.1], [S(59), 0.1], [S(59.6), 0.4], [S(65), 0.4], [S(66), 0.1], [S(85.4), 0.1], [S(86.2), 0.3]]);
   const fadeOut = ramp(t, (FILM_FRAMES - 12) / 30, (FILM_FRAMES - 1) / 30);
   return (
     <AbsoluteFill style={{ background: "#04060b", overflow: "hidden" }}>
