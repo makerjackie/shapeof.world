@@ -142,6 +142,11 @@ export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = t
           opacity: ramp(t, T.rock + 0.35 + 6 * BEAT * 0.9, T.rock + 0.35 + 6 * BEAT * 0.9 + 0.4, EO), textShadow: SHADOW, whiteSpace: "nowrap" }}>
           第七代
         </div>
+        {/* who he was */}
+        <div style={{ position: "absolute", left: 960 + 110, top: 360 - 150, fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: K.goldHi, whiteSpace: "nowrap",
+          opacity: ramp(t, T.rock + 0.7, T.rock + 1.1, EO), textShadow: SHADOW }}>
+          石油大王<div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 26, color: K.sub }}>约翰 · 洛克菲勒</div>
+        </div>
       </div>
 
       {/* Vanderbilt: the mansion on Fifth Avenue */}

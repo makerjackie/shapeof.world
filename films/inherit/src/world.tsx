@@ -25,7 +25,21 @@ const asParts = (l: Line): Part[] => (typeof l === "string" ? [l] : l);
 const len = (l: Line) => asParts(l).reduce((n, p) => n + Array.from(typeof p === "string" ? p : p.t).length, 0);
 
 // One or two lines in the caption band; the second line starts once the first is typed.
+// Reading time: a caption must stay up at least 0.6 s + one second per 4.5 characters (checked while rendering stills).
+const warned = new Set<string>();
+const readCheck = (at: number, out: number, lines: Line[]) => {
+  // Chinese characters and punctuation count one each; a run of digits or Latin letters counts one per three.
+  const text = lines.map((l) => asParts(l).map((p) => (typeof p === "string" ? p : p.t)).join("")).join("");
+  const n = text.replace(/[ ]/g, "").replace(/[0-9A-Za-z.%–]+/g, (m) => "x".repeat(Math.ceil(m.length / 3))).length;
+  const need = 0.6 + n / 4.5;
+  const key = `${at.toFixed(2)}`;
+  if (out - at < need && !warned.has(key)) {
+    warned.add(key);
+    console.warn(`READ ${Math.floor(at / 60)}:${(at % 60).toFixed(1)} has ${(out - at).toFixed(1)}s, needs ${need.toFixed(1)}s: ${lines.map((l) => asParts(l).map((p) => (typeof p === "string" ? p : p.t)).join("")).join(" / ")}`);
+  }
+};
 export const Cap: React.FC<{ at: number; out: number; lines: Line[]; size?: number; y?: number; stagger?: number }> = ({ at, out, lines, size = 64, y = CAP_Y, stagger = 1.0 }) => {
+  readCheck(at, out, lines);
   let t0 = at;
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: y, display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
@@ -42,6 +56,7 @@ export const Cap: React.FC<{ at: number; out: number; lines: Line[]; size?: numb
 export const Big: React.FC<{ at: number; out?: number; lines: Line[]; size?: number; y?: number; gap?: number; serif?: boolean; stagger?: number }> = ({
   at, out, lines, size = 104, y = 400, gap = 18, serif = true, stagger = 1.3,
 }) => {
+  if (out !== undefined) readCheck(at, out, lines);
   let t0 = at;
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: y, display: "flex", flexDirection: "column", alignItems: "center", gap }}>

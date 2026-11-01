@@ -1,4 +1,4 @@
-// 6 把钱全拿走, 7 揭晓 + 中美对照, 8 美国的两次"实验" (story bars in timing.ts).
+// 6 把钱全拿走, 7 揭晓 + 中美对照, 8 美国废奴 (story bars in timing.ts).
 import React from "react";
 import { EIO, EO, SHADOW, clamp01, lerp, ramp, win } from "./kit";
 import { FONT, K, NUM, SERIF } from "./theme";
@@ -69,42 +69,43 @@ const Fields: React.FC<{ t: number; cutAt: number; o: number }> = ({ t, cutAt, o
 const famNodes = (cx: number) => buildTree(cx, 0, 150, [1, 3, 7], [0, 300, 520]);
 const ROWLAB = ["祖辈", "儿子", "孙辈"];
 
-// China and the US side by side: of 100 grandchildren of top-10% grandparents, about 14 are still in the top 10%.
+// China and the US side by side. Left first: landlords' grandchildren, 14.5% back in the top 10%. Then the US: 14.1%.
 const Mirror: React.FC<{ t: number; at: number; end: number }> = ({ t, at, end }) => {
   const o = win(t, at, end, 0.4, 0.35);
   if (o <= 0) return null;
+  const at2 = at + S(2.6);
   const sides = [
-    { cx: 560, head: "中国", sub: "地全分了", v: "14.5%" },
-    { cx: 1360, head: "美国", sub: "没分过富人的地", v: "14.1%" },
+    { cx: 540, at, lines: ["他们的孙辈里，又有", "回到了收入最高的那 10%"], v: "14.5%", head: "中国 · 地主富农家" },
+    { cx: 1380, at: at2, lines: ["美国没搞过土改，", "两边几乎一样"], v: "14.1%", head: "美国" },
   ];
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o }}>
       {sides.map((sd, k) => {
+        const so = ramp(t, sd.at, sd.at + 0.4, EO);
         const lit = new Set(Array.from({ length: 14 }, (_, j) => Math.floor(rnd(j * 7 + k, 61) * 100)));
         while (lit.size < 14) lit.add((lit.size * 37 + k * 11) % 100);
         return (
-          <React.Fragment key={k}>
-            <div style={{ position: "absolute", left: sd.cx - 300, width: 600, top: 120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 54, color: K.fg, textShadow: SHADOW }}>
-              {sd.head}<span style={{ fontSize: 34, color: K.sub, marginLeft: 16 }}>{sd.sub}</span>
-            </div>
+          <div key={k} style={{ position: "absolute", inset: 0, opacity: so }}>
+            <div style={{ position: "absolute", left: sd.cx - 300, width: 600, top: 120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 48, color: K.sub, textShadow: SHADOW }}>{sd.head}</div>
             {Array.from({ length: 100 }, (_, j) => {
-              const x = sd.cx - 4.5 * 46 + (j % 10) * 46;
-              const y = 260 + Math.floor(j / 10) * 46;
-              const on = lit.has(j);
-              const g = on ? ramp(t, at + 0.6 + (j % 7) * 0.06, at + 1.0 + (j % 7) * 0.06, EO) : 0;
+              const x = sd.cx - 4.5 * 42 + (j % 10) * 42;
+              const y = 220 + Math.floor(j / 10) * 42;
+              const g = lit.has(j) ? ramp(t, sd.at + 0.5 + (j % 7) * 0.06, sd.at + 0.9 + (j % 7) * 0.06, EO) : 0;
               return (
-                <div key={j} style={{ position: "absolute", left: x - 11, top: y - 11, width: 22, height: 22, borderRadius: 11,
+                <div key={j} style={{ position: "absolute", left: x - 10, top: y - 10, width: 20, height: 20, borderRadius: 10,
                   background: g > 0 ? `rgba(255,${200 + 26 * g},${150 + 40 * g},${0.25 + 0.75 * g})` : "rgba(201,189,166,0.22)",
                   boxShadow: g > 0 ? `0 0 ${18 * g}px rgba(255,179,107,0.9)` : undefined }} />
               );
             })}
-            <div style={{ position: "absolute", left: sd.cx - 200, width: 400, top: 712, textAlign: "center", fontFamily: NUM, fontWeight: 900, fontSize: 84, color: K.goldHi,
-              textShadow: "0 0 40px rgba(240,192,98,0.4)", opacity: ramp(t, at + 1.0, at + 1.4, EO) }}>{sd.v}</div>
-          </React.Fragment>
+            <div style={{ position: "absolute", left: sd.cx - 400, width: 800, top: 660, textAlign: "center", fontFamily: FONT, fontWeight: 800, fontSize: 52, color: K.fg, textShadow: SHADOW, lineHeight: 1.35 }}>
+              {sd.lines[0]}
+              <div style={{ fontFamily: NUM, fontWeight: 900, fontSize: 120, color: K.goldHi, textShadow: "0 0 40px rgba(240,192,98,0.4)", lineHeight: 1.1, opacity: ramp(t, sd.at + 0.6, sd.at + 1.0, EO) }}>{sd.v}</div>
+              <div style={{ opacity: ramp(t, sd.at + 1.0, sd.at + 1.4, EO) }}>{sd.lines[1]}</div>
+            </div>
+          </div>
         );
       })}
-      <Cap at={at + 0.1} out={end - 0.05} lines={["祖辈在前 10% 的人家，孙辈还在前 10% 的机会：", [{ t: "把地全分了的中国，", c: K.fg }, { t: "14.5%", num: true, c: K.gold }, "；没分过的美国，", { t: "14.1%", num: true, c: K.gold }, "。"]]} />
-      <Fine t={t} at={at + 0.5} out={end} y={846 - 40}>Alesina 等 2021 表 3：中国由土改前精英孙辈的收入差距换算；美国由两代流动表推算</Fine>
+      <Fine t={t} at={at2 + 0.5} out={end} y={1010}>Alesina 等 2021 表 3：祖辈在收入前 10%，孙辈仍在前 10% 的概率。中国由土改前精英的孙辈换算；美国由两代流动数据推算</Fine>
     </div>
   );
 };
@@ -113,13 +114,12 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.reform);
   const end = S(SB.usa);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tCut = a + S(1.8);
-  const tTree = a + S(3.9);
-  const tGrand = a + S(6);
+  const tCut = a + S(2.8);
+  const tTree = a + S(4.9);
+  const tGrand = a + S(7.8);
   const tRev = S(SB.reveal);
-  const tEdu = tRev + S(1.5);
-  const tBig = tRev + S(2.7);
-  const tUS = tRev + S(4.6);
+  const tBig = tRev + S(2.1);
+  const tUS = tRev + S(4);
   const fieldO = win(t, a, tTree + 0.2, 0.5, 0.5);
   const treeO = win(t, tTree, tUS, 0.5, 0.4) * (1 - 0.75 * ramp(t, tBig, tBig + 0.5, EIO));
   const L = famNodes(600);
@@ -133,9 +133,9 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
   return (
     <>
       <Fields t={t} cutAt={tCut + S(0.6)} o={fieldO} />
-      <Label x={960} y={100} o={fieldO} size={34} color={K.sub} weight={700}>1950 年代初，中国农村（示意）</Label>
-      <Cap at={a + 0.1} out={tCut - 0.05} lines={["一项研究，追踪了 1950 年前后", "被划为地主、富农的家庭。"]} />
-      <Cap at={tCut + 0.1} out={tTree - 0.05} lines={[["土改前，他们每户的地是别人的 ", { t: "6 倍", c: K.gold }, "。"], "分完地，和贫农一样多。"]} />
+      <Label x={960} y={100} o={fieldO} size={34} color={K.sub} weight={700}>中国农村（示意）</Label>
+      <Cap at={a + 0.1} out={tCut - 0.05} lines={["1950 年代初，中国土改。", ["地主富农家的地，是别人的 ", { t: "6 倍", c: K.gold }, "。"]]} />
+      <Cap at={tCut + 0.1} out={tTree - 0.05} lines={["分完地以后，", "他们的地和贫农一样多。"]} />
 
       {treeO > 0 ? (
         <div style={{ position: "absolute", left: 0, top: 230, width: 1920, height: 700, opacity: treeO }}>
@@ -151,21 +151,20 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
             opacity: ramp(t, tTree, tTree + 0.4, EO) }}>别的人家</div>
         </div>
       ) : null}
-      <Cap at={tTree + 0.4} out={tGrand - 0.05} lines={["到了儿子这一代，因为出身，", "财产和读书都不比别人强，甚至更差。"]} />
+      <Cap at={tTree + 0.4} out={tGrand - 0.05} lines={["儿子这一代，", "过得不比别人好。"]} />
       <Cap at={tGrand + 0.1} out={tRev + 0.1} lines={["到了孙子这一代……"]} stagger={2} />
 
       {/* the reveal */}
       <Num x={150} y={600} o={win(t, tRev + 0.2, tBig, 0.35, 0.4)} size={96}>+16%</Num>
-      <Cap at={tRev + 0.15} out={tEdu - 0.05} lines={["2010 年，他们的孙辈，", ["年收入比别人高 ", { t: "16%", num: true, c: K.gold }, "。"]]} />
-      <Cap at={tEdu + 0.1} out={tBig - 0.05} lines={[["多读 ", { t: "0.75 年", num: true, c: K.gold }, "书，职业也更体面。"]]} />
+      <Cap at={tRev + 0.15} out={tBig - 0.05} lines={["2010 年，他们的孙辈，", ["收入比别人高 ", { t: "16%", num: true, c: K.gold }, "。"]]} />
       <Fine t={t} at={tRev + 0.3} out={tBig} y={850 - 40}>Alesina 等（NBER 工作论文，2021）：中国家庭追踪调查 2010 年，农村县</Fine>
-      <Big at={tBig + 0.05} out={tUS - 0.05} y={360} size={96} lines={["地分掉了。", [{ t: "差距隔了一代，又长了回来。", mark: true }]]} />
+      <Big at={tBig + 0.05} out={tUS - 0.05} y={360} size={96} lines={["田地早就分没了，", [{ t: "孙辈又追了回来。", mark: true }]]} />
       <Mirror t={t} at={tUS} end={end} />
     </>
   );
 };
 
-// ---------- 8 美国的两次"实验" ----------
+// ---------- 8 美国废奴：钱被拿走，儿子追回来 ----------
 const Ledger: React.FC<{ t: number; at: number; o: number }> = ({ t, at, o }) => {
   if (o <= 0) return null;
   const rows = 9;
@@ -195,53 +194,21 @@ const Ledger: React.FC<{ t: number; at: number; o: number }> = ({ t, at, o }) =>
   );
 };
 
-const LotteryBox: React.FC<{ t: number; at: number; o: number }> = ({ t, at, o }) => {
-  if (o <= 0) return null;
-  const spin = (t - at) * 160;
-  const fly = ramp(t, at + 0.9, at + 1.6, EO);
-  return (
-    <div style={{ position: "absolute", inset: 0, opacity: o }}>
-      {/* a wooden drum on a stand */}
-      <div style={{ position: "absolute", left: 520, top: 230, width: 360, height: 360, borderRadius: "50%",
-        background: "repeating-conic-gradient(from 0deg, #6b4524 0deg 20deg, #5a391d 20deg 40deg)", transform: `rotate(${spin}deg)`,
-        boxShadow: "0 30px 70px rgba(0,0,0,0.6), inset 0 0 40px rgba(0,0,0,0.6)", border: "10px solid #3b2612" }} />
-      <div style={{ position: "absolute", left: 680, top: 390, width: 40, height: 40, borderRadius: 20, background: "#2a1a0c", border: "4px solid #8a6424" }} />
-      <div style={{ position: "absolute", left: 600, top: 580, width: 200, height: 160, borderLeft: "10px solid #3b2612", borderRight: "10px solid #3b2612" }} />
-      {/* the winning slip flies out and becomes a plot of land */}
-      <div style={{ position: "absolute", left: lerp(700, 1200, fly), top: lerp(400, 330, fly), width: lerp(80, 420, fly), height: lerp(50, 260, fly),
-        transform: `translate(-50%, -50%) rotate(${lerp(-20, 0, fly)}deg)`, borderRadius: 8, opacity: ramp(t, at + 0.8, at + 1.0, EO),
-        background: fly > 0.6 ? "linear-gradient(135deg, rgba(160,140,70,0.9), rgba(110,96,44,0.9))" : "#efe3c4",
-        border: `4px solid ${K.gold}`, boxShadow: "0 0 40px rgba(240,192,98,0.5)" }}>
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 900, fontSize: lerp(18, 64, fly), color: fly > 0.6 ? K.goldHi : "#3b2a10", textShadow: fly > 0.6 ? SHADOW : undefined }}>
-          中签
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const USA: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.usa);
-  const end = S(SB.mech);
+  const end = S(SB.split);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tSons = a + S(1.8);
-  const tLot = a + S(3.3);
-  const tLotKids = a + S(4.3);
-  const tBig = a + S(5);
+  const tSons = a + S(2.5);
+  const tBig = a + S(4.6);
   const ledO = win(t, a, tSons, 0.4, 0.4);
   const fall = ramp(t, a + 0.8, a + 2.2, EIO);
   // 1860 vs 1870: wealth of rich Southern households (90th percentile)
   const barH = 460;
   // sons: two rows, slaveholder (left) and equally rich non-slaveholder (right)
-  const sonO = win(t, tSons, tLot, 0.4, 0.4);
+  const sonO = win(t, tSons, tBig, 0.4, 0.4);
   const famL = buildTree(560, 0, 180, [1, 3], [0, 280]);
   const famR = buildTree(1360, 0, 180, [1, 3], [0, 280]);
   const growS = (n: Node) => (t - (tSons + n.row * 0.4 + n.i * 0.05)) / 0.4;
-  const lotO = win(t, tLot, tBig, 0.4, 0.4);
-  const kidsK = ramp(t, tLotKids, tLotKids + 0.5, EIO);
-  const famW = buildTree(560, 0, 150, [1, 3, 6], [0, 280, 460]);
-  const famN = buildTree(1360, 0, 150, [1, 3, 6], [0, 280, 460]);
-  const growL = (n: Node) => (t - (tLotKids + n.row * 0.25 + n.i * 0.03)) / 0.35;
   return (
     <>
       <Ledger t={t} at={a + 0.4} o={ledO} />
@@ -261,7 +228,7 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
           <Label x={1500} y={200} o={1} size={34} color={K.sub} weight={700}>南方富裕白人家庭的财富</Label>
         </div>
       ) : null}
-      <Cap at={a + 0.1} out={tSons - 0.05} lines={["1865 年，美国废除奴隶制。", ["南方富裕人家的财富，十年跌去约", { t: "四分之三", c: K.gold }, "。"]]} />
+      <Cap at={a + 0.1} out={tSons - 0.05} lines={["1865 年，美国废奴。", ["南方富人家产没了", { t: "四分之三", c: K.gold }, "。"]]} />
       <Fine t={t} at={a + 0.6} out={tSons} y={836}>第 90 百分位的白人家庭，1860–1870 年（Ager、Boustan、Eriksson，2021）</Fine>
 
       {sonO > 0 ? (
@@ -275,21 +242,9 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
           ))}
         </div>
       ) : null}
-      <Cap at={tSons + 0.1} out={tLot - 0.05} lines={["到 1900 年，奴隶主的儿子，", "几乎追上当年同样有钱、没养奴隶的人家。"]} />
+      <Cap at={tSons + 0.1} out={tBig - 0.05} lines={["可到 1900 年，", "奴隶主的儿子几乎追了回来。"]} />
 
-      <LotteryBox t={t} at={tLot} o={lotO * (1 - kidsK)} />
-      <Label x={960} y={130} o={lotO * (1 - kidsK)} size={36} color={K.sub} weight={700}>1832 年，美国佐治亚州，抽签分地</Label>
-      {kidsK > 0 ? (
-        <div style={{ position: "absolute", left: 0, top: 300, width: 1920, height: 520, opacity: lotO * kidsK }}>
-          <Tree id="win" t={t} nodes={famW} grow={growL} gold={(n) => (n.row === 0 ? 1 : 0)} light={(n) => (n.row ? 0.45 : 0)} r={(n) => (n.row ? 14 : 24)} />
-          <Tree id="lose" t={t} nodes={famN} grow={growL} gold={() => 0} light={(n) => (n.row ? 0.45 : 0)} r={(n) => (n.row ? 14 : 24)} />
-          <div style={{ position: "absolute", left: 560 - 250, width: 500, top: -120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: K.gold, textShadow: SHADOW }}>中签的人家</div>
-          <div style={{ position: "absolute", left: 1360 - 250, width: 500, top: -120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: K.ashHi, textShadow: SHADOW }}>没中签的人家</div>
-        </div>
-      ) : null}
-      <Cap at={tLot + 0.1} out={tLotKids - 0.05} lines={["1832 年，佐治亚州抽签分地，", "中签的白得一块地，约等于中等身家。"]} />
-      <Cap at={tLotKids + 0.1} out={tBig - 0.05} lines={["可到了儿子、孙子，", "财产和读书，都不比没中签的好。"]} />
-      <Big at={tBig + 0.05} out={end - 0.05} y={380} size={100} lines={["拿走的，挡不住。", [{ t: "白给的，留不住。", c: K.gold }]]} />
+      <Big at={tBig + 0.05} out={end - 0.05} y={380} size={100} lines={["家产都没了，", [{ t: "社会地位还在。", mark: true }]]} />
     </>
   );
 };

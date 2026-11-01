@@ -63,6 +63,7 @@ const Jinbang: React.FC<{ t: number; at: number; litAt: number; x: number; y: nu
   );
 };
 
+const CLOSE_Y = 400;
 const LISTS = [
   { years: "1912–1949", what: "民国官员", x: "2.3" },
   { years: "1949–1988", what: "人大代表、政协委员", x: "1.8" },
@@ -74,17 +75,17 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.bang);
   const end = S(SB.abroad);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tList = a + S(1);
-  const tLit = a + S(1.5);
-  const tRatio = a + S(2.6);
-  const tCards = a + S(3.9);
-  const tClose = a + S(6.3);
+  const tList = a + S(0.15);
+  const tLit = a + S(0.8);
+  const tRatio = a + S(3);
+  const tCards = a + S(4.7);
+  const tTsing = tCards + S(2);
+  const tClose = a + S(9.1);
   const lift = ramp(t, tCards - 0.3, tCards + 0.4, EIO);
   const ratioO = win(t, tRatio, tCards, 0.35, 0.3);
   const out = 1 - ramp(t, end - 0.35, end + 0.1, EIO);
   return (
     <div style={{ position: "absolute", inset: 0, opacity: out }}>
-      <Big at={a + 0.05} out={tList - 0.05} y={420} size={92} lines={["钱散了，", "那家里的位置呢？"]} />
       <Label x={960} y={lerp(96, 50, lift)} o={ramp(t, tList + 0.3, tList + 0.7, EO) * (1 - lift)} size={36} color={K.sub} weight={700}>清代晚期 · 进士（1820–1905）</Label>
       <Jinbang t={t} at={tList} litAt={tLit} x={210} y={lerp(130, 40, lift)} w={1500} h={lerp(560, 560, lift)} s={lerp(1, 0.32, lift)} o={1} />
       <Cap at={tList + 0.3} out={tRatio - 0.05} lines={["清朝晚期，有 13 个罕见的姓，", "考中进士的人特别多。"]} />
@@ -107,24 +108,24 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
               </React.Fragment>
             );
           })}
-          <Cap at={tRatio + 0.1} out={tCards - 0.05} lines={["和同一地区的常见姓比，", ["是 ", { t: "3.4 倍", num: true, c: K.gold }, "。"]]} />
+          <Cap at={tRatio + 0.1} out={tCards - 0.05} lines={["是同一地区常见姓的", [{ t: "3.4 倍", num: true, c: K.gold }, "。"]]} />
         </div>
       ) : null}
 
       {/* the golden thread through a century of lists */}
       {t > tCards - 0.2 ? (
         <>
-          <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-            <path d={`M 400 220 L 400 ${220 + 560 * ramp(t, tCards, tCards + S(2.4), (x) => x)}`} stroke={K.gold} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
-            <path d={`M 400 220 L 400 ${220 + 560 * ramp(t, tCards, tCards + S(2.4), (x) => x)}`} stroke={K.gold} strokeWidth={18} opacity={0.12} />
+          <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, opacity: 1 - 0.82 * ramp(t, tClose - 0.2, tClose + 0.3, EIO) }}>
+            <path d={`M 400 220 L 400 ${220 + 560 * ramp(t, tCards, tCards + S(2.2), (x) => x)}`} stroke={K.gold} strokeWidth={4} strokeLinecap="round" opacity={0.85} />
+            <path d={`M 400 220 L 400 ${220 + 560 * ramp(t, tCards, tCards + S(2.2), (x) => x)}`} stroke={K.gold} strokeWidth={18} opacity={0.12} />
           </svg>
           {LISTS.map((l, i) => {
-            const at = tCards + 0.15 + i * S(0.6);
+            const at = i === 3 ? tTsing : tCards + 0.15 + i * S(0.6);
             const g = ramp(t, at, at + 0.45, EO);
             if (g <= 0) return null;
             const y = 270 + i * 140;
             return (
-              <div key={i} style={{ position: "absolute", left: 400, top: y, width: 1180, height: 112, opacity: g, transform: `translateX(${(1 - g) * 40}px)` }}>
+              <div key={i} style={{ position: "absolute", left: 400, top: y, width: 1180, height: 112, opacity: g * (1 - 0.82 * ramp(t, tClose - 0.2, tClose + 0.3, EIO)), transform: `translateX(${(1 - g) * 40}px)` }}>
                 <div style={{ position: "absolute", left: -16, top: 40, width: 32, height: 32, borderRadius: 16, background: K.gold, boxShadow: "0 0 26px rgba(240,192,98,0.8)" }} />
                 <div style={{ position: "absolute", left: 50, top: 0, width: 1130, height: 112, borderRadius: 6, background: "linear-gradient(90deg, rgba(233,220,192,0.14), rgba(233,220,192,0.05))", border: "1px solid rgba(240,192,98,0.3)" }} />
                 <div style={{ position: "absolute", left: 90, top: 18, fontFamily: NUM, fontWeight: 700, fontSize: 30, color: K.sub }}>{l.years}</div>
@@ -136,48 +137,36 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
               </div>
             );
           })}
-          <Cap at={tClose + 0.05} out={end - 0.05} lines={["一百多年，换了几个时代，", [{ t: "这些姓还在前面。", c: K.gold }]]} />
+          <Cap at={tCards + 0.1} out={tTsing - 0.05} lines={["之后一百多年，", "时代换了好几次。"]} />
+          <Cap at={tTsing + 0.1} out={tClose - 0.05} lines={["到 2003–2011 年的清华新生里，", ["这 13 个姓还是平均的 ", { t: "1.6 倍", num: true, c: K.gold }, "。"]]} />
+          <Big at={tClose + 0.05} out={end - 0.05} y={CLOSE_Y} size={96} lines={["一百多年过去，", [{ t: "社会地位还在。", mark: true }]]} />
         </>
       ) : null}
     </div>
   );
 };
 
-// ---------- 4 不只中国：一个镜头，左日本、右佛罗伦萨 ----------
+// ---------- 4 不只中国：一个镜头，左日本、右佛罗伦萨，只说结论 ----------
 export const Abroad: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.abroad);
   const end = S(SB.jn);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tR = a + 0.5;
+  const tR = a + 0.6;
+  const tBig = a + S(1.4);
   const o = win(t, a, end, 0.3, 0.35);
   const oR = ramp(t, tR, tR + 0.4, EO) * o;
-  const numL = ramp(t, a + 0.7, a + 1.1, EO);
-  const cardsAt = tR + 0.9;
+  const dim = 0.62 * ramp(t, tBig - 0.3, tBig + 0.3, EIO);
   return (
     <>
-      <Photo src="img/samurai.jpg" x={120} y={80} w={810} h={700} o={o} zoom={1.04 + 0.05 * ramp(t, a, end, (x) => x)} py={26} dim={0.5 * numL} />
-      <Label x={525} y={140} o={o} size={36} color={K.fg} weight={800}>日本 · 武士姓</Label>
-      <Label x={525} y={300} o={numL * o} size={34} color={K.fg} weight={700}>交刀一百多年后，论文作者里</Label>
-      <Num x={525} y={450} o={numL * o} size={150}>4 倍多</Num>
-
-      <Photo src="img/florence.jpg" x={990} y={80} w={810} h={700} o={oR} zoom={1.06 + 0.05 * ramp(t, tR, end, (x) => x)} px={55} dim={0.5 * ramp(t, cardsAt - 0.3, cardsAt + 0.2, EIO)} />
-      <Label x={1395} y={140} o={oR} size={36} color={K.fg} weight={800}>意大利 · 佛罗伦萨</Label>
-      {[0, 1, 2, 3, 4].map((i) => {
-        const old = [0, 2, 3].includes(i);
-        const g = ramp(t, cardsAt + i * 0.08, cardsAt + 0.35 + i * 0.08, EO) * o;
-        return (
-          <div key={i} style={{ position: "absolute", left: 1395 - 2 * 150 + i * 150 - 62, top: 380, width: 124, height: 150, borderRadius: 8, opacity: g,
-            background: old ? `linear-gradient(180deg, ${K.goldHi}, ${K.gold} 60%, ${K.goldLo})` : "rgba(233,220,192,0.16)", border: `2px solid ${old ? K.goldHi : "rgba(233,220,192,0.4)"}`,
-            boxShadow: old ? "0 0 36px rgba(240,192,98,0.45)" : undefined, display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: NUM, fontWeight: 900, fontSize: 40, color: old ? "#3b2a10" : K.sub }}>{i + 1}</div>
-        );
-      })}
-      <Label x={1395} y={300} o={ramp(t, cardsAt - 0.2, cardsAt + 0.2, EO) * o} size={32} color={K.fg} weight={700}>今天最富的 5 个姓，3 个在 1427 年就排前 6%</Label>
-      <Cap at={a + 0.1} out={end - 0.05} lines={[ABROAD_CAP]} />
+      <Photo src="img/samurai.jpg" x={120} y={80} w={810} h={700} o={o} zoom={1.04 + 0.05 * ramp(t, a, end, (x) => x)} py={26} dim={dim} />
+      <Label x={525} y={140} o={o} size={44} color={K.fg} weight={900}>日本 · 武士家族</Label>
+      <Photo src="img/florence.jpg" x={990} y={80} w={810} h={700} o={oR} zoom={1.06 + 0.05 * ramp(t, tR, end, (x) => x)} px={55} dim={dim} />
+      <Label x={1395} y={140} o={oR} size={44} color={K.fg} weight={900}>意大利 · 佛罗伦萨的富商</Label>
+      <Big at={tBig + 0.1} out={end - 0.05} y={360} size={92} lines={["几百年后，", [{ t: "他们的姓还在社会上层。", mark: true }]]} />
+      <Fine t={t} at={tBig + 0.6} out={end} y={820}>日本：武士姓在学术论文作者里是平均的 4 倍多（Clark 2014）；佛罗伦萨：2011 年收入最高的 5 个姓，3 个在 1427 年就排全城前 6%</Fine>
     </>
   );
 };
-const ABROAD_CAP = "换个国家看，也是一样。";
 
 // ---------- 5 江南三百年 ----------
 const COLS5 = [
@@ -191,9 +180,9 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.jn);
   const end = S(SB.reform);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tCols = a + S(2.1);
+  const tCols = a + S(1.7);
   const tRev = a + S(3.8);
-  const tQ = a + S(5.3);
+  const tQ = a + S(6.6);
   const scrollO = win(t, a, tQ + 0.2, 0.6, 0.5);
   const pan = ramp(t, a, tQ, (x) => x);
   const ashK = ramp(t, tRev, tRev + 1.2, EIO);
@@ -215,12 +204,12 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
       ) : null}
       {/* population vs juren */}
       {t < tCols + 0.4 ? (
-        <div style={{ position: "absolute", inset: 0, opacity: win(t, a + S(0.5), tCols + 0.2, 0.4, 0.4) }}>
+        <div style={{ position: "absolute", inset: 0, opacity: win(t, a + S(0.2), tCols + 0.2, 0.4, 0.4) }}>
           {[
             { lab: "人口", v: 2, c: K.ashHi },
             { lab: "举人", v: 22, c: K.gold },
           ].map((r, i) => {
-            const g = ramp(t, a + S(0.6) + i * 0.4, a + S(0.6) + 0.8 + i * 0.4, EO);
+            const g = ramp(t, a + S(0.3) + i * 0.4, a + S(0.3) + 0.8 + i * 0.4, EO);
             return (
               <React.Fragment key={i}>
                 <div style={{ position: "absolute", left: 360, top: 330 + i * 170, width: 200, textAlign: "right", fontFamily: SERIF, fontWeight: 900, fontSize: 56, color: r.c, textShadow: SHADOW }}>{r.lab}</div>
@@ -232,7 +221,7 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
           <Label x={960} y={220} o={1} size={40} color={K.fg}>清初江南几十个大族</Label>
         </div>
       ) : null}
-      <Cap at={a + S(0.55)} out={tCols - 0.05} lines={["清朝初年，江南几十个大族，", ["人口只占 ", { t: "2%", num: true, c: K.ashHi }, "，举人却占了 ", { t: "22%", num: true, c: K.gold }, "。"]]} />
+      <Cap at={a + S(0.3)} out={tCols - 0.05} lines={["清初，江南几十个大族："]} />
       {/* three hundred years of columns */}
       {t > tCols - 0.2 && t < tQ + 0.4 ? (
         <div style={{ position: "absolute", inset: 0, opacity: win(t, tCols, tQ + 0.2, 0.4, 0.4) }}>
@@ -240,7 +229,7 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ position: "absolute", left: 300, right: 300, top: base - unit, height: 0, borderTop: "2px dashed rgba(201,189,166,0.5)" }} />
           <div style={{ position: "absolute", left: 1640, top: base - unit - 22, fontFamily: FONT, fontWeight: 700, fontSize: 28, color: K.sub }}>平均</div>
           {COLS5.map((c, i) => {
-            const at = i === 0 ? tCols : i === 3 ? tRev + 0.8 : tCols + 0.4 + (i - 1) * S(0.7);
+            const at = i === 0 ? tCols : i === 3 ? tRev + 0.8 : tCols + 0.4 + (i - 1) * S(0.6);
             const g = ramp(t, at, at + 0.7, EO);
             const x = 470 + i * 330;
             const h = unit * c.v * g;
@@ -261,9 +250,9 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
           <Fine t={t} at={tCols + 0.3} out={tQ} y={base + 60}>倍数：考中举人的比例，相对这些姓在人口里的份额（苏南）</Fine>
         </div>
       ) : null}
-      <Cap at={tCols + 0.4} out={tRev - 0.05} lines={[["一百年后，还是平均的 ", { t: "4.2 倍", num: true, c: K.gold }, "。"], ["两百年后，", { t: "3.7 倍", num: true, c: K.gold }, "，几乎没动。"]]} />
-      <Cap at={tRev + 0.1} out={tQ - 0.05} lines={["又经过清朝灭亡、战乱和革命，", "到 1970–80 年代，才回到平均。"]} />
-      <Big at={tQ + 0.05} out={end - 0.05} y={380} size={92} lines={["那如果，", "把一个家的钱一下子拿光呢？"]} />
+      <Cap at={tCols + 0.4} out={tRev - 0.05} lines={[["一两百年后，还是 ", { t: "4 倍", num: true, c: K.gold }, "左右。"]]} />
+      <Cap at={tRev + 0.1} out={tQ - 0.05} lines={["经过清亡、战乱、革命，", "1970–80 年代才回到平均。"]} />
+      <Big at={tQ + 0.05} out={end - 0.05} y={380} size={92} lines={["如果把一个家的钱，", [{ t: "一下子全拿走呢？", mark: true }]]} />
     </>
   );
 };

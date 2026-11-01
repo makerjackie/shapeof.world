@@ -1,10 +1,13 @@
-// 1 俗话 (SB 7.5–11.5) and 2 钱，确实留不住 (SB 11.5–19.5).
+// 1 俗话, 2 钱，确实留不住, 2b 洛克菲勒家：钱散了，社会地位还在 (story bars in timing.ts).
 import React from "react";
 import { EIN, EIO, EO, clamp01, keys, lerp, ramp, win } from "./kit";
 import { FONT, K, NUM, SERIF } from "./theme";
 import { BEAT, S, SB } from "./timing";
-import { Big, Cap, Label, Num, Tree, buildTree, rnd } from "./world";
+import { Big, Cap, Label, Num, Photo, Portrait, Tree, buildTree, rnd } from "./world";
+import { SHADOW } from "./kit";
 import type { Node } from "./world";
+import type { Part } from "./kit";
+type Line = Part[] | string;
 
 // ---------- 1 俗话: three slips of old paper slapped onto the table, one at a time ----------
 const slipIn = (t: number, at: number) => ramp(t, at, at + 0.18, EIN);
@@ -32,8 +35,8 @@ const Slip: React.FC<{ t: number; at: number; fanAt: number; slot: number; w: nu
 export const Sayings: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.say);
   if (t < a - 0.2 || t > S(SB.money) + 0.4) return null;
-  const at = [a, a + S(0.75), a + S(2)];
-  const fanAt = a + S(3.25);
+  const at = [a, a + S(0.75), a + S(2.1)];
+  const fanAt = a + S(3.2);
   return (
     <>
       <Slip t={t} at={at[0]} fanAt={fanAt} slot={0} w={620} h={300} rot={-3}>
@@ -42,7 +45,7 @@ export const Sayings: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: 104, color: "#241a10", letterSpacing: 12, marginTop: 10 }}>富不过三代</div>
         </div>
       </Slip>
-      <Slip t={t} at={at[1]} fanAt={fanAt} slot={1} w={600} h={330} rot={2.5} bg="#e4dcc8">
+      <Slip t={t} at={at[1]} fanAt={fanAt} slot={1} w={600} h={400} rot={2.5} bg="#e4dcc8">
         <div style={{ position: "absolute", left: 30, right: 30, top: 22, borderBottom: "3px double #3a3026", paddingBottom: 8, textAlign: "center", fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 34, color: "#2b241c", letterSpacing: 3 }}>
           THE PRESTON CHRONICLE
         </div>
@@ -50,6 +53,7 @@ export const Sayings: React.FC<{ t: number }> = ({ t }) => {
         <div style={{ position: "absolute", left: 40, right: 40, top: 128, fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 44, lineHeight: 1.25, color: "#1f1912", textAlign: "center" }}>
           “There are only three generations from clogs to clogs.”
         </div>
+        <div style={{ position: "absolute", left: 30, right: 30, bottom: 18, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: "#7a2a1c" }}>木屐到木屐，只隔三代</div>
       </Slip>
       <Slip t={t} at={at[2]} fanAt={fanAt} slot={2} w={360} h={520} rot={-2} bg="#eadfc6">
         <div style={{ position: "absolute", right: 70, top: 40, writingMode: "vertical-rl", fontFamily: SERIF, fontWeight: 900, fontSize: 56, color: "#1d150d", letterSpacing: 6, lineHeight: 1.1 }}>
@@ -58,10 +62,9 @@ export const Sayings: React.FC<{ t: number }> = ({ t }) => {
         <div style={{ position: "absolute", left: 40, bottom: 44, width: 54, height: 54, border: `4px solid ${K.seal}`, borderRadius: 4, color: K.seal, fontFamily: SERIF, fontWeight: 900, fontSize: 22, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}>
           川柳
         </div>
+        <div style={{ position: "absolute", left: 22, top: 40, width: 120, writingMode: "vertical-rl", fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: "#7a2a1c", letterSpacing: 4 }}>第三代，就要卖房子</div>
       </Slip>
-      <Cap at={at[1] + 0.2} out={at[2] - 0.1} lines={["英国 1868 年的报纸：", "木屐到木屐，只隔三代。"]} />
-      <Cap at={at[2] + 0.2} out={fanAt - 0.05} lines={["日本江户的俗话：第三代把家卖了，", "“卖房”的告示却写得一手好字。"]} />
-      <Cap at={fanAt + 0.3} out={S(SB.money) - 0.1} lines={["好多地方的人，都这么说。"]} />
+      <Cap at={fanAt + 0.3} out={S(SB.money) - 0.1} lines={["好多地方，都这么说。"]} />
     </>
   );
 };
@@ -88,12 +91,12 @@ while (SURVIVE.size > 34) SURVIVE.delete([...SURVIVE].find((i) => i !== ROCK_KEE
 
 export const Money: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.money);
-  const end = S(SB.bang);
+  const end = S(SB.bridge);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tOff = a + S(1.5); // 1982 → 2014
-  const tRock = a + S(3.0);
-  const tKids = a + S(4.6);
-  const tLose = a + S(6.0);
+  const tOff = a + S(2); // 1982 → 2014
+  const tRock = a + S(3.8);
+  const tKids = a + S(6);
+  const tLose = a + S(6.4);
   const gridO = win(t, a, tKids + 0.2, 0.4, 0.5);
   const rockFocus = ramp(t, tRock, tRock + 0.4, EO);
 
@@ -133,9 +136,9 @@ export const Money: React.FC<{ t: number }> = ({ t }) => {
               </div>
             );
           })}
-          <Cap at={a + 0.15} out={tOff - 0.05} lines={[["1982 年，福布斯美国最富的 ", { t: "400", num: true, c: K.gold }, " 人。"]]} />
-          <Cap at={tOff + 0.1} out={tRock - 0.05} lines={[["到 2014 年，只剩 ", { t: "34", num: true, c: K.gold }, " 人还在榜上。"]]} />
-          <Cap at={tRock + 0.1} out={tKids - 0.05} lines={[["洛克菲勒家占过 ", { t: "13", num: true, c: K.gold }, " 席，"], ["到 2015 年只剩 ", { t: "1", num: true, c: K.gold }, " 人。"]]} />
+          <Cap at={a + 0.15} out={tOff - 0.05} lines={["1982 年福布斯榜上，", ["美国最富的那 ", { t: "400", num: true, c: K.gold }, " 人。"]]} />
+          <Cap at={tOff + 0.1} out={tRock - 0.05} lines={["到了 2014 年，", ["只剩 ", { t: "34", num: true, c: K.gold }, " 人还在榜上。"]]} />
+          <Cap at={tRock + 0.1} out={tKids - 0.05} lines={[["洛克菲勒家占过 ", { t: "13", num: true, c: K.gold }, " 席，"], ["到 2015 年，只剩 ", { t: "1", num: true, c: K.gold }, " 人。"]]} />
         </div>
       ) : null}
       {kidsO > 0 ? (
@@ -155,11 +158,61 @@ export const Money: React.FC<{ t: number }> = ({ t }) => {
           <Label x={960} y={190} o={ramp(t, tKids + 0.2, tKids + 0.6, EO)} size={40} color={K.gold}>爷爷：美国最富的 1%</Label>
           <Num x={1790} y={560} o={ramp(t, tLose + 0.6, tLose + 1.0, EO)} size={150} color={K.ashHi}>93</Num>
           <Label x={1790} y={660} o={ramp(t, tLose + 0.8, tLose + 1.2, EO)} size={34} color={K.ashHi}>/ 100</Label>
-          <Cap at={tKids + 0.2} out={tLose - 0.05} lines={["再看美国 1850 到 1940 年，", ["约 ", { t: "1500 万", num: true, c: K.gold }, "个孙辈的记录。"]]} />
-          <Cap at={tLose + 0.1} out={end - S(0.75) - 0.05} lines={["爷爷在最富的 1%，", ["100 个孙辈里，", { t: "93", num: true, c: K.gold }, " 个掉了出去。"]]} />
+          <Cap at={tKids + 0.2} out={end - S(1) - 0.05} lines={MONEY_KIDS} />
         </div>
       ) : null}
-      <Big at={end - S(0.75) + 0.05} out={end - 0.05} y={CAPBIG} size={88} lines={["钱，确实留不住。"]} />
+      <Big at={end - S(1) + 0.05} out={end - 0.05} y={CAPBIG} size={88} lines={MONEY_BIG} />
     </>
   );
 };
+
+// ---------- 2b 洛克菲勒家：钱散了，社会地位还在 ----------
+// John D. → Jr. → five sons (Nelson, Winthrop, David among them) → Jay. Gold thin; the people with offices lit.
+export const Bridge: React.FC<{ t: number }> = ({ t }) => {
+  const a = S(SB.bridge);
+  const end = S(SB.bang);
+  if (t < a - 0.2 || t > end + 0.4) return null;
+  const tBig = a + S(3.4);
+  const treeO = win(t, a, tBig + 0.3, 0.4, 0.5);
+  const rk = buildTree(1300, 260, 165, [1, 1, 5, 9], [0, 0, 840, 1000]);
+  const roles: Record<string, { name: string; role: string; dy: number }> = {
+    "2-1": { name: "纳尔逊", role: "副总统、纽约州长", dy: -86 },
+    "2-3": { name: "温斯罗普", role: "阿肯色州长", dy: -86 },
+    "2-4": { name: "戴维", role: "大通银行董事长", dy: 74 },
+    "3-2": { name: "杰伊", role: "西弗吉尼亚州长、参议员", dy: 74 },
+  };
+  return (
+    <>
+      {treeO > 0 ? (
+        <div style={{ position: "absolute", inset: 0, opacity: treeO }}>
+          <Tree id="rkb" t={t} nodes={rk} grow={(n) => (t - (a + n.row * 0.18 + n.i * 0.03)) / 0.35}
+            gold={(n) => 0.35 - n.row * 0.08} light={(n) => (roles[`${n.row}-${n.i}`] ? ramp(t, a + 1.0, a + 1.5, EO) : 0.3)} r={(n) => (n.row < 2 ? 22 : 16)} />
+          <Portrait src="img/rock.jpg" x={1300} y={170} r={62} o={1} />
+          {rk.map((n) => {
+            const r = roles[`${n.row}-${n.i}`];
+            if (!r) return null;
+            const g = ramp(t, a + 1.1 + n.row * 0.25 + n.i * 0.12, a + 1.5 + n.row * 0.25 + n.i * 0.12, EO);
+            return (
+              <div key={`${n.row}-${n.i}`} style={{ position: "absolute", left: n.x - 150, width: 300, top: n.y + r.dy - 30, textAlign: "center", opacity: g }}>
+                <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: 38, color: K.warm, textShadow: SHADOW }}>{r.name}</div>
+                <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 30, color: K.fg, textShadow: SHADOW, whiteSpace: "nowrap" }}>{r.role}</div>
+              </div>
+            );
+          })}
+          <Photo src="img/nelson.jpg" x={150} y={170} w={300} h={350} o={ramp(t, a + 1.0, a + 1.5, EO)} py={20} />
+          <Photo src="img/jay.jpg" x={490} y={290} w={260} h={300} o={ramp(t, a + 1.4, a + 1.9, EO)} py={20} />
+          <Label x={300} y={550} o={ramp(t, a + 1.0, a + 1.5, EO)} size={26} color={K.sub} weight={700}>纳尔逊，1975</Label>
+          <Label x={620} y={620} o={ramp(t, a + 1.4, a + 1.9, EO)} size={26} color={K.sub} weight={700}>杰伊，1993</Label>
+        </div>
+      ) : null}
+      <Cap at={a + 0.1} out={tBig - 0.05} lines={BRIDGE_CAP} />
+      <Big at={tBig + 0.1} out={end - 0.05} y={360} size={100} lines={BRIDGE_BIG} />
+    </>
+  );
+};
+
+// ---------- copy (Gemini, picked) ----------
+const MONEY_KIDS: Line[] = ["爷爷在美国最富的 1%，", ["100 个孙子里，", { t: "93", num: true, c: K.gold }, " 个掉了出去。"]];
+const MONEY_BIG: Line[] = ["钱，确实留不住。"];
+const BRIDGE_CAP: Line[] = ["钱散了，洛克菲勒家后来却出了", "一位副总统、三位州长、一位参议员。"];
+const BRIDGE_BIG: Line[] = ["钱散了，社会地位却还在。", [{ t: "只是这一家运气好吗？", mark: true }]];
