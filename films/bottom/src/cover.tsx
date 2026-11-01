@@ -16,14 +16,20 @@ const Bar: React.FC<{ h: number; w: number }> = ({ h, w }) => (
   </div>
 );
 
-export const Cover: React.FC<{ tall: boolean }> = ({ tall }) => {
-  const W = tall ? 1080 : 1920;
-  const H = tall ? 1440 : 1080;
-  const bar = Math.round(H * 0.06);
-  const base = H - (tall ? 90 : 70);
-  const fh = tall ? 8 : 8.5;
+// One design, one file per platform ratio (films/DIRECTOR.md): 16:9 1920×1080, 4:3 1440×1080, 3:4 1080×1440. In 4:3 and
+// 3:4 the title sits in the middle, inside both a centre 3:4 and a centre 16:9 crop, because the platforms crop covers.
+type Ratio = "16x9" | "4x3" | "3x4";
+const SPEC: Record<Ratio, { W: number; H: number; fh: number; title: number; two: boolean; mid: number }> = {
+  "16x9": { W: 1920, H: 1080, fh: 8.5, title: 200, two: false, mid: 0 },
+  "4x3": { W: 1440, H: 1080, fh: 5.5, title: 150, two: true, mid: 470 },
+  "3x4": { W: 1080, H: 1440, fh: 6, title: 160, two: true, mid: 660 },
+};
+export const Cover: React.FC<{ ratio: Ratio }> = ({ ratio }) => {
+  const { W, H, fh, title, two, mid } = SPEC[ratio];
+  const bar = Math.round(Math.min(W, H) * 0.06);
+  const base = H - 70;
   const n = d.years.length;
-  const x0 = tall ? 40 : 70;
+  const x0 = 70;
   const step = (W - 2 * x0) / (n - 1);
   const lineY = base - 38 * fh;
   return (
@@ -38,13 +44,13 @@ export const Cover: React.FC<{ tall: boolean }> = ({ tall }) => {
         <rect x={0} y={lineY - 9} width={W} height={18} fill={K.ice} opacity={0.14} />
         <rect x={0} y={lineY - 2} width={W} height={4} fill={K.iceHi} />
       </svg>
-      <div style={{ position: "absolute", left: tall ? 70 : 110, top: bar + (tall ? 90 : 80), fontFamily: FONT, color: K.fg, textShadow: "0 4px 30px rgba(0,0,0,0.9)" }}>
-        <div style={{ fontSize: tall ? 150 : 150, fontWeight: 900, lineHeight: 1.1, letterSpacing: -2 }}>
+      <div style={{ position: "absolute", left: 0, width: W, ...(two ? { top: mid, transform: "translateY(-50%)" } : { top: bar + 50 }), textAlign: "center", fontFamily: FONT, color: K.fg, textShadow: "0 4px 30px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.8)" }}>
+        <div style={{ fontSize: title, fontWeight: 900, lineHeight: 1.08, letterSpacing: -2 }}>
           房价，
-          {tall ? <br /> : null}
+          {two ? <br /> : null}
           到底了吗？
         </div>
-        <div style={{ marginTop: 26, fontSize: tall ? 64 : 64, fontWeight: 800, color: K.winHi }}>按房租算一算</div>
+        <div style={{ marginTop: 22, fontSize: 64, fontWeight: 800, color: K.winHi }}>跌了 5 年，按房租算一算</div>
       </div>
       <Bar h={bar} w={W} />
     </AbsoluteFill>

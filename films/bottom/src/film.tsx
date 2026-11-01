@@ -1,4 +1,4 @@
-// 房价到底了吗: the whole film. Timing in story bars (time.ts); scenes: hook.tsx (sb 0–9.3), ch1.tsx (9.3–32), ch23.tsx (32–56), ch45.tsx (56–108).
+// 房价到底了吗: the whole film. Hook in film bars (sb 0–5.3); then story bars (time.ts, SHIFT): ch1.tsx (9.3–32), ch23.tsx (32–56), ch45.tsx (56–103).
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BrandMark, EndCard, keys, ramp, useT } from "./kit";
@@ -6,7 +6,7 @@ import { Hook, QUOTES, RUN0, RUN1 } from "./hook";
 import { Ch1 } from "./ch1";
 import { Ch23 } from "./ch23";
 import { BAR_AT, Ch45 } from "./ch45";
-import { BEAT, FILM_FRAMES, fr, S } from "./time";
+import { BEAT, FILM_FRAMES, fr, S, SHIFT } from "./time";
 import { Sky } from "./world";
 
 const END_AT = S(100.3);
@@ -20,12 +20,14 @@ const CHAPTERS = [
 ];
 
 type Cue = { t: number; id: string; v: number };
-const CUES: Cue[] = [
+const HOOK_CUES: Cue[] = [
   // the fall
   ...Array.from({ length: Math.floor((RUN1 - RUN0) / (BEAT / 2)) }, (_, i) => ({ t: RUN0 + (i * BEAT) / 2, id: "sfx-ui-01", v: 0.16 + 0.1 * (i / 12) })),
-  { t: S(3.6), id: "sfx-impact-08", v: 0.45 },
-  { t: S(4.6), id: "sfx-impact-16", v: 0.5 },
+  { t: S(2.4), id: "sfx-impact-08", v: 0.45 },
   ...QUOTES.map((q) => ({ t: q.at, id: "sfx-impact-12", v: 0.42 })),
+];
+// story time (see time.ts): played SHIFT earlier
+const STORY_CUES: Cue[] = [
   // 1: years of rent
   { t: S(9.4), id: "sfx-transition-12", v: 0.35 },
   ...Array.from({ length: 20 }, (_, i) => ({ t: S(10.9) + i * ((S(12.7) - S(10.9)) / 20), id: "sfx-ui-01", v: 0.16 })),
@@ -61,8 +63,10 @@ const CUES: Cue[] = [
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
 
-const Hud: React.FC<{ endAt: number }> = ({ endAt }) => {
+const Hud: React.FC<{ endAt: number; chapters?: boolean }> = ({ endAt, chapters }) => {
   const t = useT();
+  if (!chapters) return t < S(5.3) ? <BrandMark o={1} /> : null; // the hook, in film time
+  if (t < S(9.3)) return null;
   const ch = CHAPTERS.find((c) => t >= c.from - 0.1 && t < c.to);
   const k = ch ? Math.min(ramp(t, ch.from, ch.from + 0.5), 1 - ramp(t, ch.to - 0.4, ch.to)) : 0;
   return <BrandMark o={1 - ramp(t, endAt - 0.2, endAt)} chapter={ch ? { n: ch.n, t: ch.t, k } : undefined} />;
@@ -76,23 +80,26 @@ const Vignette: React.FC = () => <AbsoluteFill style={{ background: "radial-grad
 
 export const Film: React.FC = () => {
   const t = useT();
-  const dim = keys(t, [[0, 0.15], [S(10), 0.15], [S(10.5), 0.1]]);
+  const dim = keys(t, [[0, 0.15], [S(6), 0.15], [S(6.5), 0.1]]);
   const fadeOut = ramp(t, (FILM_FRAMES - 12) / 30, (FILM_FRAMES - 1) / 30);
   return (
     <AbsoluteFill style={{ background: "#04060b", overflow: "hidden" }}>
       <Audio src={staticFile("score.wav")} volume={0.85} />
-      {CUES.map((c, i) => (
+      {[...HOOK_CUES, ...STORY_CUES.map((c) => ({ ...c, t: c.t - SHIFT }))].map((c, i) => (
         <Sequence key={i} from={Math.max(0, fr(c.t))} durationInFrames={fr(4)}>
           <Audio src={staticFile(`sfx/${c.id}.wav`)} volume={c.v} />
         </Sequence>
       ))}
       <Sky t={t} dim={dim} horizon={930} />
       <Hook />
-      <Ch1 />
-      <Ch23 />
-      <Ch45 />
       <Hud endAt={END_AT} />
-      <EndCard at={END_AT} />
+      <Sequence from={-fr(SHIFT)}>
+        <Ch1 />
+        <Ch23 />
+        <Ch45 />
+        <Hud endAt={END_AT} chapters />
+        <EndCard at={END_AT} />
+      </Sequence>
       <Vignette />
       <Grain />
       {fadeOut > 0 ? <AbsoluteFill style={{ background: "#000", opacity: fadeOut }} /> : null}

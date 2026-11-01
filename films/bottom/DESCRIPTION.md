@@ -1,6 +1,12 @@
 # 发布文案：房价到底了吗？
 
-成片 `out/bottom-v8.1.mp4`（3:41），封面 `out/covers/cover-16x9.jpg`、`cover-3x4.jpg`（`node tools/covers.mjs`）。
+成片 `out/bottom-v9.mp4`（3:33），1920×1080，30 fps。封面在 `out/covers/`（`node tools/covers.mjs`），同一个设计三种比例：
+
+- `cover-16x9.jpg`（1920×1080）：B站、YouTube
+- `cover-4x3.jpg`（1440×1080）：B站的 4:3 封面、抖音横屏封面
+- `cover-3x4.jpg`（1080×1440）：视频号、抖音竖封面、小红书
+
+每个平台都标注原创。上传时看平台预览，标题被裁就换对应的那张。
 
 ## 标题
 
