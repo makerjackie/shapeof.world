@@ -8,6 +8,7 @@ import { SHADOW } from "../kit";
 import { HAN, MONO } from "../theme";
 import anchors from "../../public/field/anchorsB.json";
 import lines from "../../public/field/linesB.json";
+import { E3View } from "../e3/E3View";
 
 export const E_FPS = 24;
 const SH = { A: [1, 84], B: [85, 204], C: [205, 276], D: [277, 348] } as const;
@@ -16,6 +17,12 @@ const EXP = 245;
 const CL = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 const src = (shot: string, f: number) => staticFile(`field/E${shot}/f_${String(f).padStart(4, "0")}.jpg`);
 const AMBER = "#f2a33a";
+// 样片E (Blender frames) and 样片E3 (the same scene rendered live by three.js, src/e3) share everything else
+const ThreeBg = React.createContext(false);
+const Bg: React.FC<{ shot: string; f: number; style: React.CSSProperties }> = ({ shot, f, style }) => {
+  const three = React.useContext(ThreeBg);
+  return three ? <E3View f={f} style={style} /> : <Img src={src(shot, f)} style={{ width: 1920, height: 1080, ...style }} />;
+};
 const RED = "#ff5a3c";
 
 const Grain: React.FC<{ o: number; seed: number }> = ({ o, seed }) => (
@@ -185,7 +192,7 @@ export const SampleE: React.FC = () => {
   if (f <= SH.A[1]) {
     body = (
       <>
-        <Img src={src("A", f)} style={{ width: 1920, height: 1080, filter: "contrast(1.12) saturate(0.88) brightness(1.04)" }} />
+        <Bg shot="A" f={f} style={{ filter: "contrast(1.12) saturate(0.88) brightness(1.04)" }} />
         <Vignette />
         <Grain o={0.14} seed={f} />
         <Place f={f} />
@@ -205,7 +212,7 @@ export const SampleE: React.FC = () => {
     const draw = (a: number) => interpolate(g, [a, a + 16], [0, 1], { ...CL, easing: (x) => 1 - (1 - x) ** 3 });
     body = (
       <>
-        <Img src={src("B", f)} style={{ width: 1920, height: 1080, filter: "contrast(1.1) saturate(0.9) brightness(1.05)" }} />
+        <Bg shot="B" f={f} style={{ filter: "contrast(1.1) saturate(0.9) brightness(1.05)" }} />
         <Vignette k={0.4} />
         <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
           <Minefield seq={ln.minesS} o={draw(24) * 0.9} />
@@ -230,7 +237,7 @@ export const SampleE: React.FC = () => {
     const sy = Math.cos(f * 3.3) * shake;
     body = (
       <>
-        <Img src={src("C", f)} style={{ width: 1920, height: 1080, transform: `translate(${sx}px, ${sy}px) scale(1.03)`, filter: "contrast(1.15) saturate(0.85) brightness(1.03)" }} />
+        <Bg shot="C" f={f} style={{ transform: `translate(${sx}px, ${sy}px) scale(1.03)`, filter: "contrast(1.15) saturate(0.85) brightness(1.03)" }} />
         <Grain o={0.2} seed={f} />
         <Vignette k={0.35} />
         <DroneOSD g={g} />
@@ -241,7 +248,7 @@ export const SampleE: React.FC = () => {
     const g = f - SH.D[0];
     body = (
       <>
-        <Img src={src("D", f)} style={{ width: 1920, height: 1080, filter: "contrast(1.12) saturate(0.82) brightness(1.02)" }} />
+        <Bg shot="D" f={f} style={{ filter: "contrast(1.12) saturate(0.82) brightness(1.02)" }} />
         <Vignette k={0.55} />
         <Grain o={0.15} seed={f} />
         <Caption f={g} a={10} b={80}>
@@ -252,3 +259,9 @@ export const SampleE: React.FC = () => {
   }
   return <AbsoluteFill style={{ background: "#000" }}>{body}</AbsoluteFill>;
 };
+
+export const SampleE3: React.FC = () => (
+  <ThreeBg.Provider value={true}>
+    <SampleE />
+  </ThreeBg.Provider>
+);

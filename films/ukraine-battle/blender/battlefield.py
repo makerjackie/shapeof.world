@@ -839,6 +839,12 @@ if shot == "B":
         lo[f - f0] = row
     json.dump(lo, open(os.path.join(ROOT, "public", "field", "linesB.json"), "w"), separators=(",", ":"))
 
+# hand the scene to the three.js renderer (src/e3) instead of rendering it here
+if ARGS.get("export3"):
+    import export3_scene  # noqa: E402
+
+    export3_scene.run(globals())
+
 outp = ARGS.get("out", os.path.join(ROOT, "blender", "out", f"e_{shot}.jpg"))
 os.makedirs(os.path.dirname(outp), exist_ok=True)
 if ARGS.get("save"):
