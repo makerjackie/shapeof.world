@@ -8,3 +8,4 @@
 - **WebGL**：headless Chrome 加 `--use-angle=metal`，否则慢好几倍；截图前 three.js 要同步渲染完再 `gl.finish()`，否则偶尔截到半帧（`films/tower/src/world/engine.ts`）。
 - **两台机器之间，改过的文件要确认同步了再渲。** 开渲前对一遍两边源文件的 md5。
 - **多标签页渲染时，图表上的 CSS `filter` 会逐帧漂移**，别用。
+- **three.js 按 `onBeforeCompile` 的函数源码缓存着色器。** 几个材质共用一个函数、只是闭包里的参数不同（比如麦秆和麦穗的颜色），会悄悄共用第一个编译出来的着色器。每个材质设一个 `customProgramCacheKey`（《现代战争》`src/e3/engine.ts`）。
