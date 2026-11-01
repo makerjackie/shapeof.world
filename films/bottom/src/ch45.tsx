@@ -1,6 +1,6 @@
 // Chapter 4 (sb 56–68): are there enough homes? Homes vs households, homes nobody lives in, fewer buyers, and the
 // split between cities. Chapter 5 (sb 68–88): has it bottomed? History as bars, the four signs and China on them,
-// Japan. The end (sb 88–108): the answer; from a piggy bank back to a home; your city; sources.
+// Japan. The end (sb 88–104): the answer; from a piggy bank back to a home; your city; sources.
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import d from "./data2.json";
@@ -12,7 +12,7 @@ import { Tower } from "./world";
 const BASE = 860;
 
 // ---------------------------------------------------------------- chapter 4
-const Pair: React.FC<{ t: number; at: number; out: number; a: { n: string; v: number; s: string }; b: { n: string; v: number; s: string }; unit: number; dark?: number }> = ({ t, at, out, a, b, unit, dark = 0 }) => {
+const Pair: React.FC<{ t: number; at: number; out: number; a: { n: string; v: number; u: string; s?: string }; b: { n: string; v: number; u: string; s?: string }; unit: number; dark?: number }> = ({ t, at, out, a, b, unit, dark = 0 }) => {
   const o = win(t, at, out, 0.4, 0.4);
   if (o <= 0) return null;
   const ka = ramp(t, at + 0.1, at + 0.8, EO);
@@ -33,10 +33,11 @@ const Pair: React.FC<{ t: number; at: number; out: number; a: { n: string; v: nu
         <React.Fragment key={c.n}>
           <div style={{ position: "absolute", left: c.x - 200, width: 400, top: BASE + 12, textAlign: "center", fontFamily: FONT }}>
             <div style={{ fontSize: 36, fontWeight: 900, color: K.fg }}>{c.n}</div>
-            <div style={{ fontSize: 24, fontWeight: 700, color: K.muted }}>{c.s}</div>
+            {c.s ? <div style={{ fontSize: 26, fontWeight: 700, color: K.sub }}>{c.s}</div> : null}
           </div>
           <div style={{ position: "absolute", left: c.x - 200, width: 400, top: BASE - c.v * unit * c.k - 70, textAlign: "center", fontFamily: NUM, fontSize: 52, fontWeight: 900, color: K.winHi, opacity: c.k }}>
             {c.v}
+            <span style={{ fontFamily: FONT, fontSize: 36 }}> {c.u}</span>
           </div>
         </React.Fragment>
       ))}
@@ -168,12 +169,12 @@ const Japan: React.FC<{ t: number }> = ({ t }) => {
 
 // ---------------------------------------------------------------- the end: 70 cities again; the windows light up
 const Skyline: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, S(88), S(102.1), 0.5, 0.5);
+  const o = win(t, S(88), S(98.9), 0.5, 0.5);
   if (o <= 0) return null;
   const N = d.cities.length;
   const tier1 = ["北京", "上海", "广州", "深圳"];
-  const answer = win(t, S(88.6), S(92), 0.3, 0.4);
-  const home = ramp(t, S(95.6), S(97.5), (x) => x);
+  const answer = win(t, S(88.6), S(91.6), 0.3, 0.4);
+  const home = ramp(t, S(93.4), S(95.2), (x) => x);
   return (
     <AbsoluteFill style={{ opacity: o }}>
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
@@ -194,9 +195,9 @@ export const Ch45: React.FC = () => {
   if (t < S(56)) return null;
   return (
     <AbsoluteFill>
-      <Pair t={t} at={S(57.5)} out={S(59.6)} a={{ n: "城镇住房", v: 3.77, s: "亿套" }} b={{ n: "城镇家庭", v: 3.52, s: "亿户（推算）" }} unit={110} />
-      <Pair t={t} at={S(59.7)} out={S(61.6)} a={{ n: "城镇住房", v: 3.77, s: "2017 年约 21% 没人住" }} b={{ n: "城镇家庭", v: 3.52, s: "亿户（推算）" }} unit={110} dark={ramp(t, S(59.9), S(60.4))} />
-      <Pair t={t} at={S(61.7)} out={S(64)} a={{ n: "2016 年出生", v: 1786, s: "万人" }} b={{ n: "2025 年出生", v: 792, s: "万人" }} unit={0.25} />
+      <Pair t={t} at={S(57.5)} out={S(59.6)} a={{ n: "城镇的房子", v: 3.77, u: "亿套" }} b={{ n: "城镇的家庭", v: 3.52, u: "亿户" }} unit={110} />
+      <Pair t={t} at={S(59.7)} out={S(61.6)} a={{ n: "城镇的房子", v: 3.77, u: "亿套", s: "2017 年约五分之一没人住" }} b={{ n: "城镇的家庭", v: 3.52, u: "亿户" }} unit={110} dark={ramp(t, S(59.9), S(60.4))} />
+      <Pair t={t} at={S(61.7)} out={S(64)} a={{ n: "2016 年出生", v: 1786, u: "万人" }} b={{ n: "2025 年出生", v: 792, u: "万人" }} unit={0.25} />
       <History t={t} />
       <Steps t={t} />
       <Japan t={t} />
@@ -208,8 +209,8 @@ export const Ch45: React.FC = () => {
         <Say at={S(56.3)} out={S(57.4)} size={80} weight={900} parts={["中国的房子，到底多不多？"]} />
       </Box>
       <Box x={120} y={110} gap={6}>
-        <Say at={S(57.5)} out={S(59.6)} size={56} parts={["城镇大约 3.8 亿套房：", { t: "每户略多于一套", c: K.winHi }]} />
-        <Say at={S(58.2)} out={S(59.6)} size={40} weight={700} color={K.sub} parts={["成熟国家，大约每户 1.1 套"]} />
+        <Say at={S(57.5)} out={S(59.6)} size={56} parts={["房子够住了：", { t: "每户略多于一套", c: K.winHi }]} />
+        <Say at={S(58.2)} out={S(59.6)} size={40} weight={700} color={K.sub} parts={["跟成熟国家差不多"]} />
       </Box>
       <Box x={120} y={110} gap={6}>
         <Say at={S(59.7)} out={S(61.6)} size={56} parts={["2017 年，城镇约", { t: "五分之一", c: K.down }, "的房子没人住"]} />
@@ -272,21 +273,21 @@ export const Ch45: React.FC = () => {
 
       {/* the end */}
       <Box x={960} y={150} align="center" gap={16}>
-        <Say at={S(88.1)} out={S(91.95)} size={50} weight={700} color={K.sub} parts={["所以，房价到底了吗？"]} />
-        <Say at={S(88.6)} out={S(91.95)} size={66} weight={900} parts={["北上广深：", { t: "止跌的信号出现了", c: K.gold }]} />
-        <Say at={S(89.4)} out={S(91.95)} size={66} weight={900} parts={["全国：4 个信号，", { t: "只到了一个半", c: K.down }]} />
-        <Say at={S(90.3)} out={S(91.95)} size={40} weight={700} color={K.sub} parts={["机构预测：全国大概还要两三年（仅供参考）"]} />
+        <Say at={S(88.1)} out={S(91.55)} size={50} weight={700} color={K.sub} parts={["所以，房价到底了吗？"]} />
+        <Say at={S(88.6)} out={S(91.55)} size={66} weight={900} parts={["北上广深：", { t: "止跌的信号出现了", c: K.gold }]} />
+        <Say at={S(89.3)} out={S(91.55)} size={66} weight={900} parts={["全国：4 个信号，", { t: "只到了一个半", c: K.down }]} />
+        <Say at={S(90.1)} out={S(91.55)} size={40} weight={700} color={K.sub} parts={["机构预测：全国大概还要两三年（仅供参考）"]} />
       </Box>
-      <Note at={S(88.6)} out={S(91.95)}>机构预测：标普全国新房 2028 年三季度见底，高盛全国新房 2029 年不再下跌（2026 年 10 月，据转述）。本片不构成购房建议</Note>
+      <Note at={S(88.6)} out={S(91.55)}>机构预测：标普全国新房 2028 年三季度见底，高盛全国新房 2029 年不再下跌（2026 年 10 月，据转述）。本片不构成购房建议</Note>
       <Box x={960} y={220} align="center" gap={22}>
-        <Say at={S(92.05)} out={S(98.9)} size={64} weight={800} parts={["过去二十年，房子是一家人", { t: "最大的存钱罐", c: K.iceHi }]} />
-        <Say at={S(95.5)} out={S(98.9)} size={84} weight={900} parts={["现在，它在慢慢", { t: "变回一个家", mark: true }, "。"]} />
+        <Say at={S(91.65)} out={S(95.9)} size={64} weight={800} parts={["过去二十年，房子是一家人", { t: "最大的存钱罐", c: K.iceHi }]} />
+        <Say at={S(93.3)} out={S(95.9)} size={84} weight={900} parts={["现在，它在慢慢", { t: "变回一个家", mark: true }, "。"]} />
       </Box>
       <Box x={960} y={260} align="center" gap={18}>
-        <Say at={S(99)} out={S(101.95)} size={56} weight={700} color={K.sub} parts={["一套房，值几年房租？"]} />
-        <Say at={S(99.6)} out={S(101.95)} size={80} weight={900} parts={["你的城市，", { t: "是多少年", mark: true }, "？"]} />
+        <Say at={S(96)} out={S(98.9)} size={56} weight={700} color={K.sub} parts={["一套房，值几年房租？"]} />
+        <Say at={S(96.6)} out={S(98.9)} size={80} weight={900} parts={["你的城市，", { t: "是多少年", mark: true }, "？"]} />
       </Box>
-      <Sources at={S(102.1)} out={S(104.6)} />
+      <Sources at={S(99)} out={S(101.4)} />
     </AbsoluteFill>
   );
 };

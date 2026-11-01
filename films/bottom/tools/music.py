@@ -3,8 +3,8 @@
 usage: ~/.venvs/shapeof-films/bin/python tools/music.py
 
 Layout (must match src/time.ts), 千年之后（氛围版）at 111.62 BPM, first beat 0.487 s, no change of tempo:
-  track bars 8–40, 16–40 again, 40–64, 56 to the end. Seams on downbeats only: bar 39 ≈ bar 15 (chroma 0.999),
-  bar 63 ≈ bar 55 (0.997); the same two jumps films/tower makes. No silent bars (one read as a dropout in review).
+  track bars 8–40, 16–40 again, 40–64, 56–73, 77 to the end. Seams on downbeats only: bar 39 ≈ bar 15 (chroma 0.999),
+  bar 63 ≈ bar 55 (0.997), bar 73 ≈ bar 77 (0.999, film sb 97: shortens the ending by four bars); the same two jumps films/tower makes. No silent bars (one read as a dropout in review).
 Every seam is on a downbeat; a 10 ms fade either side keeps it click-free.
 """
 import glob, os, re, subprocess, sys
@@ -23,7 +23,7 @@ for f in glob.glob(os.path.join(ROOT, "src", "*.tsx")):
 for sid in sorted(ids):
     fetch(sid, "sfx")
 gain = LEVEL - lufs(src)
-segs = [(D(8), D(40)), (D(16), D(40)), (D(40), D(64)), (D(56), None)]
+segs = [(D(8), D(40)), (D(16), D(40)), (D(40), D(64)), (D(56), D(73)), (D(77), None)]
 fmt = "aformat=sample_rates=48000:channel_layouts=stereo"
 parts, labels = [], []
 for i, sg in enumerate(segs):

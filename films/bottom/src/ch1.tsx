@@ -1,5 +1,5 @@
 // Chapter 1 (sb 9.3–32): is it dear? One floor = one year of rent. A ¥1m home renting at ¥2000 a month is built floor by
-// floor (42 years); "normal" (16–25 years) depends on interest; owning costs ≈ 2.6 % a year = 38 years, THE LINE; 50
+// floor (42 years); owning costs ≈ 2.6 % of the price a year in interest = 38 years of rent, THE LINE; 50
 // cities; the world; the floors above the line are 期待; 2023 → today.
 import React from "react";
 import { AbsoluteFill } from "remotion";
@@ -45,8 +45,7 @@ export const Ch1: React.FC = () => {
   const build = ramp(t, S(10.9), S(12.7), (x) => x);
   const homeF = t < S(25) ? 41.7 * build : keys(t, [[S(29.5), 43.5], [S(29.9), 50.5], [S(30.6), 50.5], [S(31.4), 43.5]], EO);
   const lineF = t < S(25) ? LINE : keys(t, [[S(29.5), LINE], [S(29.9), 25.6], [S(30.6), 25.6], [S(31.4), LINE]], EO);
-  const lineO = Math.max(win(t, S(18.4), S(20.3), 0.4, 0.3), win(t, S(27.5), S(32), 0.4, 0.4));
-  const band = win(t, S(13.5), S(18.2), 0.4, 0.4);
+  const lineO = Math.max(win(t, S(16.7), S(20.3), 0.4, 0.3), win(t, S(27.5), S(32), 0.4, 0.4));
   const glass = win(t, S(27.9), S(32), 0.4, 0.4);
   const homeLineY = BASE - lineF * fhHome;
 
@@ -66,7 +65,6 @@ export const Ch1: React.FC = () => {
         {/* the home */}
         {homeO > 0 ? (
           <g opacity={homeO}>
-            {band > 0 ? <rect x={700} y={BASE - 25 * fhHome} width={520} height={9 * fhHome} fill={K.iceHi} opacity={0.14 * band} /> : null}
             <FloorTower x={960} base={BASE} w={240} floors={homeF} fh={fhHome} seed={99} line={lineF} glass={glass} lit={0.7} />
             {lineO > 0 ? (
               <g opacity={lineO}>
@@ -106,9 +104,6 @@ export const Ch1: React.FC = () => {
           </div>
         );
       })()}
-      <Lbl x={1380} y={BASE - 16 * fhHome + 4} o={band} color={K.iceHi} size={30}>
-        16–25 年
-      </Lbl>
       <Lbl x={230} y={homeLineY - 12} o={lineO * (t < S(25) ? 1 : t > S(29.5) && t < S(31.4) ? 0 : 1)} color={K.iceHi} size={30}>
         38 年：买和租一样划算
       </Lbl>
@@ -156,23 +151,18 @@ export const Ch1: React.FC = () => {
         <Say at={S(9.7)} out={S(10.8)} size={84} weight={900} parts={["一套房，等于几年房租？"]} />
       </Box>
       <Box x={120} y={120} gap={8}>
-        <Say at={S(10.9)} out={S(13.4)} size={52} weight={700} color={K.sub} parts={["一套 100 万的房子，每月租 2000 元"]} />
-        <Say at={S(11.9)} out={S(13.4)} size={64} parts={["一年房租 2.4 万：要 ", { t: "42 年", c: K.winHi }, " 才攒够房价"]} />
+        <Say at={S(10.9)} out={S(13.4)} size={72} parts={["每月租 2000，要租 ", { t: "42 年", c: K.winHi }, "，才攒够房价"]} />
+        <Say at={S(11.6)} out={S(13.4)} size={40} weight={700} color={K.sub} parts={["以一套 100 万的房子为例"]} />
       </Box>
       <Box x={120} y={120} gap={8}>
-        <Say at={S(13.5)} out={S(15.3)} size={60} parts={["国际上常说：", { t: "16 到 25 年", c: K.iceHi }, "，算正常"]} />
-        <Say at={S(14.1)} out={S(15.3)} size={40} weight={700} color={K.sub} parts={["也就是“租售比 1:200 到 1:300”"]} />
+        <Say at={S(13.5)} out={S(16.6)} size={64} parts={["不买就得租；买了，每年也要付", { t: "利息", c: K.iceHi }]} />
+        <Say at={S(14.4)} out={S(16.6)} size={40} weight={700} color={K.sub} parts={["房贷利息，加上首付本来能拿的存款利息：约房价的 2.6%"]} />
       </Box>
       <Box x={120} y={120} gap={8}>
-        <Say at={S(15.4)} out={S(18.3)} size={56} parts={["可“正常”是多少年，要看", { t: "利息", c: K.iceHi }]} />
-        <Say at={S(16.2)} out={S(18.3)} size={44} weight={700} color={K.sub} parts={["房子像一头奶牛：房租是牛奶，利息是饲料钱"]} />
-        <Say at={S(17.1)} out={S(18.3)} size={44} weight={700} color={K.sub} parts={["饲料越便宜，这头牛越值钱"]} />
+        <Say at={S(16.7)} out={S(20.2)} size={76} parts={[{ t: "38 年", c: K.iceHi }, "以内，买比租划算"]} />
+        <Say at={S(17.6)} out={S(20.2)} size={40} weight={700} color={K.sub} parts={["每年 2.6% 的利息，正好约等于 38 年房租"]} />
       </Box>
-      <Box x={120} y={120} gap={8}>
-        <Say at={S(18.4)} out={S(20.2)} size={52} weight={700} color={K.sub} parts={["中国现在：买房每年光利息，约房价的 2.6%"]} />
-        <Say at={S(18.9)} out={S(20.2)} size={64} parts={["等于 ", { t: "38 年房租", c: K.iceHi }, "：低于它，买比租划算"]} />
-      </Box>
-      <Note at={S(18.4)} out={S(20.2)}>首付三成按大额存单 1.55% 算少拿的利息，贷款七成按 2026 年 9 月新发房贷平均约 3.1%（人民银行）。本金不算，那是存进房子的钱。中指研究院估算购房资金成本 2.4%–2.7%（37–42 年）</Note>
+      <Note at={S(13.5)} out={S(20.2)}>首付三成按大额存单 1.55% 算少拿的利息，贷款七成按 2026 年 9 月新发房贷平均约 3.1%（人民银行）。本金不算，那是存进房子的钱。中指研究院估算购房资金成本 2.4%–2.7%（37–42 年）</Note>
       <Box x={120} y={110} gap={6}>
         <Say at={S(20.4)} out={S(24.3)} size={56} parts={["50 座城市：全国平均 ", { t: "43 年", c: K.winHi }]} />
         <Say at={S(21.2)} out={S(24.3)} size={44} weight={700} color={K.sub} parts={["北京、深圳 62 年，厦门 83 年；长春、哈尔滨 29 年"]} />

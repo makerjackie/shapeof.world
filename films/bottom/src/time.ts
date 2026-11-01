@@ -5,8 +5,8 @@
 //   sb  56–64  track 40–48  interlude   4 房子够不够
 //   sb  64–80  track 48–64  main        4 (cont.); 5 到底了吗: history, the four signs
 //   sb  80–88  track 56–64  main again  5: Japan
-//   sb  88–102 track 64–78  climax      the answer; from a piggy bank back to a home; your city
-//   sb 102–108 track 78–84  outro       sources; end card
+//   sb  88–97  track 64–73  climax      the answer; from a piggy bank back to a home
+//   sb  97–104 track 77–84  outro       your city; sources; end card (bars 73–76 cut: 73 ≈ 77)
 export const FPS = 30;
 export const BPM = 111.62;
 export const BEAT = 60 / BPM;
@@ -14,6 +14,6 @@ export const BAR = 4 * BEAT;
 export const S = (sb: number) => sb * BAR;
 export const fr = (s: number) => Math.round(s * FPS);
 
-export const END_SB = 108;
+export const END_SB = 104;
 export const FILM_S = S(END_SB) + 0.3;
 export const FILM_FRAMES = Math.ceil(FILM_S * FPS);
