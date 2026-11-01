@@ -1,6 +1,6 @@
 # 发布文案：房价到底了吗？
 
-成片 `out/bottom-v9.mp4`（3:33），1920×1080，30 fps。封面在 `out/covers/`（`node tools/covers.mjs`），同一个设计三种比例：
+成片 `out/bottom-v9.1.mp4`（3:33），1920×1080，30 fps。封面在 `out/covers/`（`node tools/covers.mjs`），同一个设计三种比例：
 
 - `cover-16x9.jpg`（1920×1080）：B站、YouTube
 - `cover-4x3.jpg`（1440×1080）：B站的 4:3 封面、抖音横屏封面

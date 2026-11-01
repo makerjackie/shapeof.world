@@ -147,7 +147,7 @@ export const Ch1: React.FC = () => {
 
       {/* words */}
       <Box x={960} y={150} align="center" gap={10}>
-        <Say at={S(9.4)} out={S(10.8)} size={44} weight={700} color={K.ice} parts={["第一把尺子"]} />
+        <Say at={S(9.4)} out={S(10.8)} size={44} weight={700} color={K.ice} parts={["先算算：现在的房价，贵不贵？"]} />
         <Say at={S(9.7)} out={S(10.8)} size={84} weight={900} parts={["一套房，等于几年房租？"]} />
       </Box>
       <Box x={120} y={120} gap={8}>

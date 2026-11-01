@@ -13,8 +13,9 @@ const BASE = 930;
 const UNIT = 250; // px per 1.0 (the Dec 2010 price)
 const N = d.cities.length;
 const xOf = (i: number) => 60 + (i * 1800) / (N - 1);
-export const RUN0 = 0.3;
-export const RUN1 = S(2.3);
+// the fall, a year at a time, one step every two beats: Jul 2022, 2023, 2024, 2025, then Sept 2026
+export const STEPS = [12, 24, 36, 48, 62].map((m, i) => ({ m, at: S(0.25) + i * 2 * BEAT }));
+export const RUN1 = STEPS[STEPS.length - 1].at + 0.35;
 
 export const QUOTES = [
   { who: "高盛", what: "全国新房，2029 年才不再跌", at: S(3.45) },
@@ -25,8 +26,7 @@ export const QUOTES = [
 export const Hook: React.FC = () => {
   const t = useT();
   if (t > S(5.4)) return null;
-  const k = ramp(t, RUN0, RUN1, (x) => x * x * (3 - 2 * x));
-  const mi = k * (d.months.length - 1);
+  const mi = STEPS.reduce((acc, s, i) => acc + ramp(t, s.at, s.at + 0.35, EO) * (s.m - (i ? STEPS[i - 1].m : 0)), 0);
   const m0 = Math.floor(mi);
   const fm = mi - m0;
   const lvAt = (lv: number[]) => lerp(lv[m0], lv[Math.min(m0 + 1, lv.length - 1)], fm);
@@ -86,6 +86,9 @@ export const Hook: React.FC = () => {
       })}
       <Box x={120} y={130}>
         <Say at={S(3.35)} out={S(5.3)} size={56} weight={800} parts={["机构怎么预测？", { t: "（仅供参考）", c: K.muted }]} />
+      </Box>
+      <Box x={120} y={760}>
+        <Say at={S(4.3)} out={S(5.3)} size={60} weight={900} color={K.winHi} parts={["各说各的。不如，自己算一算"]} />
       </Box>
       <Note at={S(3.45)} out={S(5.3)}>高盛 2026 年 10 月行业展望、标普 2026 年 10 月报告（据阿思达克、格隆汇、CNBC 转述）；摩根大通 2026 年 4 月报告（据 Mingtiandi 转述）</Note>
     </AbsoluteFill>
