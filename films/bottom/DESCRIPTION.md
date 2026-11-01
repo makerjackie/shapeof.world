@@ -1,6 +1,6 @@
 # 发布文案：房价到底了吗？
 
-成片 `out/bottom-v8.mp4`（3:43），封面 `out/covers/cover-16x9.jpg`、`cover-3x4.jpg`（`node tools/covers.mjs`）。
+成片 `out/bottom-v8.1.mp4`（3:41），封面 `out/covers/cover-16x9.jpg`、`cover-3x4.jpg`（`node tools/covers.mjs`）。
 
 ## 标题
 

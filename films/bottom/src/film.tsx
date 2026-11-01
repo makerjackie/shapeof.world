@@ -9,7 +9,7 @@ import { BAR_AT, Ch45 } from "./ch45";
 import { BEAT, FILM_FRAMES, fr, S } from "./time";
 import { Sky } from "./world";
 
-const END_AT = S(101.4);
+const END_AT = S(100.3);
 
 const CHAPTERS = [
   { from: S(9.3), to: S(32), n: "1", t: "贵不贵" },
@@ -56,8 +56,8 @@ const CUES: Cue[] = [
   { t: S(80.15), id: "sfx-transition-08", v: 0.32 },
   // the end
   { t: S(88.6), id: "sfx-impact-05", v: 0.5 },
-  { t: S(93.3), id: "sfx-impact-16", v: 0.42 },
-  { t: S(96.6), id: "sfx-impact-05", v: 0.4 },
+  { t: S(92.5), id: "sfx-impact-16", v: 0.42 },
+  { t: S(95.3), id: "sfx-impact-05", v: 0.4 },
   { t: END_AT, id: "sfx-impact-20", v: 0.5 },
 ];
 

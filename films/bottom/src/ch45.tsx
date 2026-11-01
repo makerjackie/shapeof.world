@@ -1,6 +1,6 @@
 // Chapter 4 (sb 56–68): are there enough homes? Homes vs households, homes nobody lives in, fewer buyers, and the
 // split between cities. Chapter 5 (sb 68–88): has it bottomed? History as bars, the four signs and China on them,
-// Japan. The end (sb 88–104): the answer; from a piggy bank back to a home; your city; sources.
+// Japan. The end (sb 88–103): the answer; from a piggy bank back to a home; your city; sources.
 import React from "react";
 import { AbsoluteFill } from "remotion";
 import d from "./data2.json";
@@ -169,12 +169,12 @@ const Japan: React.FC<{ t: number }> = ({ t }) => {
 
 // ---------------------------------------------------------------- the end: 70 cities again; the windows light up
 const Skyline: React.FC<{ t: number }> = ({ t }) => {
-  const o = win(t, S(88), S(98.9), 0.5, 0.5);
+  const o = win(t, S(88), S(97.3), 0.5, 0.5);
   if (o <= 0) return null;
   const N = d.cities.length;
   const tier1 = ["北京", "上海", "广州", "深圳"];
-  const answer = win(t, S(88.6), S(91.6), 0.3, 0.4);
-  const home = ramp(t, S(93.4), S(95.2), (x) => x);
+  const answer = win(t, S(88.6), S(91.45), 0.3, 0.4);
+  const home = ramp(t, S(92.6), S(94.2), (x) => x);
   return (
     <AbsoluteFill style={{ opacity: o }}>
       <svg width={1920} height={1080} style={{ position: "absolute" }}>
@@ -273,21 +273,21 @@ export const Ch45: React.FC = () => {
 
       {/* the end */}
       <Box x={960} y={150} align="center" gap={16}>
-        <Say at={S(88.1)} out={S(91.55)} size={50} weight={700} color={K.sub} parts={["所以，房价到底了吗？"]} />
-        <Say at={S(88.6)} out={S(91.55)} size={66} weight={900} parts={["北上广深：", { t: "止跌的信号出现了", c: K.gold }]} />
-        <Say at={S(89.3)} out={S(91.55)} size={66} weight={900} parts={["全国：4 个信号，", { t: "只到了一个半", c: K.down }]} />
-        <Say at={S(90.1)} out={S(91.55)} size={40} weight={700} color={K.sub} parts={["机构预测：全国大概还要两三年（仅供参考）"]} />
+        <Say at={S(88.1)} out={S(91.4)} size={50} weight={700} color={K.sub} parts={["所以，房价到底了吗？"]} />
+        <Say at={S(88.6)} out={S(91.4)} size={66} weight={900} parts={["北上广深：", { t: "止跌的信号出现了", c: K.gold }]} />
+        <Say at={S(89.3)} out={S(91.4)} size={66} weight={900} parts={["全国：4 个信号，", { t: "只到了一个半", c: K.down }]} />
+        <Say at={S(90.05)} out={S(91.4)} size={40} weight={700} color={K.sub} parts={["机构预测：全国大概还要两三年（仅供参考）"]} />
       </Box>
-      <Note at={S(88.6)} out={S(91.55)}>机构预测：标普全国新房 2028 年三季度见底，高盛全国新房 2029 年不再下跌（2026 年 10 月，据转述）。本片不构成购房建议</Note>
+      <Note at={S(88.6)} out={S(91.4)}>机构预测：标普全国新房 2028 年三季度见底，高盛全国新房 2029 年不再下跌（2026 年 10 月，据转述）。本片不构成购房建议</Note>
       <Box x={960} y={220} align="center" gap={22}>
-        <Say at={S(91.65)} out={S(95.9)} size={64} weight={800} parts={["过去二十年，房子是一家人", { t: "最大的存钱罐", c: K.iceHi }]} />
-        <Say at={S(93.3)} out={S(95.9)} size={84} weight={900} parts={["现在，它在慢慢", { t: "变回一个家", mark: true }, "。"]} />
+        <Say at={S(91.5)} out={S(94.6)} size={64} weight={800} parts={["过去二十年，房子是一家人", { t: "最大的存钱罐", c: K.iceHi }]} />
+        <Say at={S(92.5)} out={S(94.6)} size={84} weight={900} parts={["现在，它在慢慢", { t: "变回一个家", mark: true }, "。"]} />
       </Box>
       <Box x={960} y={260} align="center" gap={18}>
-        <Say at={S(96)} out={S(98.9)} size={56} weight={700} color={K.sub} parts={["一套房，值几年房租？"]} />
-        <Say at={S(96.6)} out={S(98.9)} size={80} weight={900} parts={["你的城市，", { t: "是多少年", mark: true }, "？"]} />
+        <Say at={S(94.7)} out={S(97.3)} size={56} weight={700} color={K.sub} parts={["一套房，值几年房租？"]} />
+        <Say at={S(95.3)} out={S(97.3)} size={80} weight={900} parts={["你的城市，", { t: "是多少年", mark: true }, "？"]} />
       </Box>
-      <Sources at={S(99)} out={S(101.4)} />
+      <Sources at={S(97.4)} out={S(100.3)} />
     </AbsoluteFill>
   );
 };
