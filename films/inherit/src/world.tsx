@@ -19,7 +19,7 @@ export const Paper: React.FC<{ glow?: number }> = ({ glow = 1 }) => (
 );
 
 // ---------- captions ----------
-export const CAP_Y = 884;
+export const CAP_Y = 856;
 type Line = Part[] | string;
 const asParts = (l: Line): Part[] => (typeof l === "string" ? [l] : l);
 const len = (l: Line) => asParts(l).reduce((n, p) => n + Array.from(typeof p === "string" ? p : p.t).length, 0);

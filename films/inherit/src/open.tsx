@@ -122,7 +122,7 @@ export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = t
   const year = Math.round(lerp(1926, 1947, yearK));
   const yearO = win(t, T.fall + 0.1, T.pair, 0.25, 0.35);
 
-  const capY = 884;
+  const capY = 856;
 
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
@@ -204,11 +204,6 @@ export const Open: React.FC<{ sound?: boolean; brand?: boolean }> = ({ sound = t
         <Say at={T.q + 0.6} size={108} serif weight={900} stagger={1.4} parts={["到底是", { t: "不是真的", mark: true }, "？"]} />
       </div>
 
-      {/* small note: the conversion */}
-      <div style={{ position: "absolute", left: 0, right: 0, top: 96 + 716 + 14, textAlign: "center", fontFamily: FONT, fontSize: 24, fontWeight: 500, color: "rgba(244,236,220,0.6)",
-        opacity: win(t, T.vand + 1.0, T.fall - 0.05, 0.3, 0.3), textShadow: SHADOW }}>
-        按 1877 年遗产占美国 GDP 的比例（约 1/87）换算
-      </div>
 
       <Stamp t={t} />
       {brand ? <BrandMark o={1} /> : null}

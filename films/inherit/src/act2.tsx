@@ -138,7 +138,7 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
             );
           })}
           <Cap at={tCards + 0.1} out={tTsing - 0.05} lines={["之后一百多年，", "时代换了好几次。"]} />
-          <Cap at={tTsing + 0.1} out={tClose - 0.05} lines={["到 2003–2011 年的清华新生里，", ["这 13 个姓还是平均的 ", { t: "1.6 倍", num: true, c: K.gold }, "。"]]} />
+          <Cap at={tTsing + 0.1} out={tClose - 0.05} lines={["到 2003–2011 年的清华新生里，", ["这 13 个姓还是常见姓的 ", { t: "1.6 倍", num: true, c: K.gold }, "。"]]} />
           <Big at={tClose + 0.05} out={end - 0.05} y={CLOSE_Y} size={96} lines={["一百多年过去，", [{ t: "社会地位还在。", mark: true }]]} />
         </>
       ) : null}
@@ -160,10 +160,11 @@ export const Abroad: React.FC<{ t: number }> = ({ t }) => {
     <>
       <Photo src="img/samurai.jpg" x={120} y={80} w={810} h={700} o={o} zoom={1.04 + 0.05 * ramp(t, a, end, (x) => x)} py={26} dim={dim} />
       <Label x={525} y={140} o={o} size={44} color={K.fg} weight={900}>日本 · 武士家族</Label>
+      <Label x={525} y={196} o={o} size={30} color={K.sub} weight={700}>1871 年废除武士 → 今天</Label>
       <Photo src="img/florence.jpg" x={990} y={80} w={810} h={700} o={oR} zoom={1.06 + 0.05 * ramp(t, tR, end, (x) => x)} px={55} dim={dim} />
       <Label x={1395} y={140} o={oR} size={44} color={K.fg} weight={900}>意大利 · 佛罗伦萨的富商</Label>
-      <Big at={tBig + 0.1} out={end - 0.05} y={360} size={92} lines={["几百年后，", [{ t: "他们的姓还在社会上层。", mark: true }]]} />
-      <Fine t={t} at={tBig + 0.6} out={end} y={820}>日本：武士姓在学术论文作者里是平均的 4 倍多（Clark 2014）；佛罗伦萨：2011 年收入最高的 5 个姓，3 个在 1427 年就排全城前 6%</Fine>
+      <Label x={1395} y={196} o={oR} size={30} color={K.sub} weight={700}>1427 → 2011</Label>
+      <Big at={tBig + 0.1} out={end - 0.05} y={360} size={92} lines={["过了一百多年、六百年，", [{ t: "他们的姓还在社会上层。", mark: true }]]} />
     </>
   );
 };
@@ -247,7 +248,6 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
             const g = ramp(t, tRev + i * 0.25, tRev + 0.4 + i * 0.25, EO);
             return <div key={w} style={{ position: "absolute", left: 1185 + i * 95, top: base - 330, width: 90, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 32, color: K.fg, opacity: g, textShadow: SHADOW }}>{w}</div>;
           })}
-          <Fine t={t} at={tCols + 0.3} out={tQ} y={base + 60}>倍数：考中举人的比例，相对这些姓在人口里的份额（苏南）</Fine>
         </div>
       ) : null}
       <Cap at={tCols + 0.4} out={tRev - 0.05} lines={[["一两百年后，还是 ", { t: "4 倍", num: true, c: K.gold }, "左右。"]]} />

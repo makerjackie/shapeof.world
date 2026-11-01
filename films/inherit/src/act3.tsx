@@ -75,8 +75,8 @@ const Mirror: React.FC<{ t: number; at: number; end: number }> = ({ t, at, end }
   if (o <= 0) return null;
   const at2 = at + S(2.6);
   const sides = [
-    { cx: 540, at, lines: ["他们的孙辈里，又有", "回到了收入最高的那 10%"], v: "14.5%", head: "中国 · 地主富农家" },
-    { cx: 1380, at: at2, lines: ["美国没搞过土改，", "两边几乎一样"], v: "14.1%", head: "美国" },
+    { cx: 540, at, lines: ["他们的孙辈里，约有", "回到了收入最高的那 10%"], v: "14.5%", head: "中国 · 地主富农家" },
+    { cx: 1380, at: at2, lines: ["美国没搞过土改：约", "两边几乎一样"], v: "14.1%", head: "美国" },
   ];
   return (
     <div style={{ position: "absolute", inset: 0, opacity: o }}>
@@ -105,7 +105,6 @@ const Mirror: React.FC<{ t: number; at: number; end: number }> = ({ t, at, end }
           </div>
         );
       })}
-      <Fine t={t} at={at2 + 0.5} out={end} y={1010}>Alesina 等 2021 表 3：祖辈在收入前 10%，孙辈仍在前 10% 的概率。中国由土改前精英的孙辈换算；美国由两代流动数据推算</Fine>
     </div>
   );
 };
@@ -134,7 +133,7 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
     <>
       <Fields t={t} cutAt={tCut + S(0.6)} o={fieldO} />
       <Label x={960} y={100} o={fieldO} size={34} color={K.sub} weight={700}>中国农村（示意）</Label>
-      <Cap at={a + 0.1} out={tCut - 0.05} lines={["1950 年代初，中国土改。", ["地主富农家的地，是别人的 ", { t: "6 倍", c: K.gold }, "。"]]} />
+      <Cap at={a + 0.1} out={tCut - 0.05} lines={["1950 年代初，中国土改。", ["地主富农家人均的地，是别人的 ", { t: "6 倍", c: K.gold }, "。"]]} />
       <Cap at={tCut + 0.1} out={tTree - 0.05} lines={["分完地以后，", "他们的地和贫农一样多。"]} />
 
       {treeO > 0 ? (
@@ -157,7 +156,6 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
       {/* the reveal */}
       <Num x={150} y={600} o={win(t, tRev + 0.2, tBig, 0.35, 0.4)} size={96}>+16%</Num>
       <Cap at={tRev + 0.15} out={tBig - 0.05} lines={["2010 年，他们的孙辈，", ["收入比别人高 ", { t: "16%", num: true, c: K.gold }, "。"]]} />
-      <Fine t={t} at={tRev + 0.3} out={tBig} y={850 - 40}>Alesina 等（NBER 工作论文，2021）：中国家庭追踪调查 2010 年，农村县</Fine>
       <Big at={tBig + 0.05} out={tUS - 0.05} y={360} size={96} lines={["田地早就分没了，", [{ t: "孙辈又追了回来。", mark: true }]]} />
       <Mirror t={t} at={tUS} end={end} />
     </>
@@ -229,7 +227,6 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
         </div>
       ) : null}
       <Cap at={a + 0.1} out={tSons - 0.05} lines={["1865 年，美国废奴。", ["南方富人家产没了", { t: "四分之三", c: K.gold }, "。"]]} />
-      <Fine t={t} at={a + 0.6} out={tSons} y={836}>第 90 百分位的白人家庭，1860–1870 年（Ager、Boustan、Eriksson，2021）</Fine>
 
       {sonO > 0 ? (
         <div style={{ position: "absolute", left: 0, top: 330, width: 1920, height: 500, opacity: sonO }}>
@@ -244,7 +241,7 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
       ) : null}
       <Cap at={tSons + 0.1} out={tBig - 0.05} lines={["可到 1900 年，", "奴隶主的儿子几乎追了回来。"]} />
 
-      <Big at={tBig + 0.05} out={end - 0.05} y={380} size={100} lines={["家产都没了，", [{ t: "社会地位还在。", mark: true }]]} />
+      <Big at={tBig + 0.05} out={end - 0.05} y={380} size={100} lines={["家产大半没了，", [{ t: "社会地位还在。", mark: true }]]} />
     </>
   );
 };

@@ -174,7 +174,7 @@ export const Bridge: React.FC<{ t: number }> = ({ t }) => {
   if (t < a - 0.2 || t > end + 0.4) return null;
   const tBig = a + S(3.4);
   const treeO = win(t, a, tBig + 0.3, 0.4, 0.5);
-  const rk = buildTree(1300, 260, 165, [1, 1, 5, 9], [0, 0, 840, 1000]);
+  const rk = buildTree(1300, 200, 150, [1, 1, 5, 9], [0, 0, 840, 1000]);
   const roles: Record<string, { name: string; role: string; dy: number }> = {
     "2-1": { name: "纳尔逊", role: "副总统、纽约州长", dy: -86 },
     "2-3": { name: "温斯罗普", role: "阿肯色州长", dy: -86 },
@@ -187,7 +187,7 @@ export const Bridge: React.FC<{ t: number }> = ({ t }) => {
         <div style={{ position: "absolute", inset: 0, opacity: treeO }}>
           <Tree id="rkb" t={t} nodes={rk} grow={(n) => (t - (a + n.row * 0.18 + n.i * 0.03)) / 0.35}
             gold={(n) => 0.35 - n.row * 0.08} light={(n) => (roles[`${n.row}-${n.i}`] ? ramp(t, a + 1.0, a + 1.5, EO) : 0.3)} r={(n) => (n.row < 2 ? 22 : 16)} />
-          <Portrait src="img/rock.jpg" x={1300} y={170} r={62} o={1} />
+          <Portrait src="img/rock.jpg" x={1300} y={112} r={56} o={1} />
           {rk.map((n) => {
             const r = roles[`${n.row}-${n.i}`];
             if (!r) return null;
@@ -214,5 +214,5 @@ export const Bridge: React.FC<{ t: number }> = ({ t }) => {
 // ---------- copy (Gemini, picked) ----------
 const MONEY_KIDS: Line[] = ["爷爷在美国最富的 1%，", ["100 个孙子里，", { t: "93", num: true, c: K.gold }, " 个掉了出去。"]];
 const MONEY_BIG: Line[] = ["钱，确实留不住。"];
-const BRIDGE_CAP: Line[] = ["钱散了，洛克菲勒家后来却出了", "一位副总统、三位州长、一位参议员。"];
-const BRIDGE_BIG: Line[] = ["钱散了，社会地位却还在。", [{ t: "只是这一家运气好吗？", mark: true }]];
+const BRIDGE_CAP: Line[] = ["洛克菲勒家的钱一代代变薄，", "家里却一直有人身居高位："];
+const BRIDGE_BIG: Line[] = ["钱在变薄，社会地位还在。", [{ t: "只是这一家运气好吗？", mark: true }]];

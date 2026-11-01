@@ -111,7 +111,7 @@ const Zoom: React.FC<{ t: number; at: number; outAt: number; sumAt: number; end:
           <div style={{ position: "absolute", left: 220, right: 220, top: VY(1), height: 0, borderTop: "2px dashed rgba(201,189,166,0.5)" }} />
           <div style={{ position: "absolute", left: 1712, top: VY(1) - 16, fontFamily: FONT, fontWeight: 700, fontSize: 24, color: K.sub }}>平均</div>
           <div style={{ position: "absolute", left: 220, top: 170, fontFamily: SERIF, fontWeight: 900, fontSize: 36, color: K.gold, textShadow: SHADOW, whiteSpace: "nowrap" }}>
-            江南大族的社会地位<span style={{ fontFamily: FONT, fontWeight: 700, fontSize: 26, color: K.sub, marginLeft: 14 }}>考中举人的比例，是平均的几倍</span>
+            江南大族的社会地位<span style={{ fontFamily: FONT, fontWeight: 700, fontSize: 26, color: K.sub, marginLeft: 14 }}>在精英里的比例，是平均的几倍</span>
           </div>
           <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
             <path d={path} fill="none" stroke={K.gold} strokeWidth={5} strokeLinejoin="round" pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - draw} />
@@ -220,7 +220,6 @@ export const Keep: React.FC<{ t: number }> = ({ t }) => {
         </div>
       ) : null}
       <Cap at={tHome + 0.1} out={tKey - 0.05} lines={["跟父母住一起的，追得更多；", "父母早逝的，没追回来。"]} />
-      <Fine t={t} at={tHome + 0.5} out={tKey} y={846 - 40}>同一项土改研究（Alesina 等，2021）</Fine>
       <Big at={tKey + 0.05} out={tWork - 0.05} y={360} size={110} gap={14} lines={["钱和地能分走，", [{ t: "家教分不走。", mark: true }]]} />
 
       {marryK > 0 ? (
@@ -269,7 +268,6 @@ export const Climb: React.FC<{ t: number }> = ({ t }) => {
       <Label x={960} y={110} o={steleO} size={30} color={K.sub} weight={700}>北京孔庙的进士题名碑</Label>
       <Cap at={a + 0.1} out={tFirst - 0.05} lines={["明朝将近一半的进士，", "祖上三代都没有功名。"]} />
       <Cap at={tFirst + 0.1} out={end - 0.05} lines={[[{ t: "他们是自己家家谱的第一行。", c: K.gold }]]} />
-      <Fine t={t} at={a + 0.5} out={end} y={846}>何炳棣《明清社会史论》（1962）：明代进士 47.5% 祖上三代无功名</Fine>
     </>
   );
 };
@@ -319,8 +317,8 @@ export const Sources: React.FC = () => {
     "姓氏与地位、英格兰、日本：Clark, The Son Also Rises（2014）；Clark & Ishii（日本武士）",
     "佛罗伦萨：Barone & Mocetti, Review of Economic Studies（2021）",
     "福布斯 400：Arnott, Bernstein & Wu, Cato Journal（2015）；美国三代财富：Kalsi & Ward, NBER 33355（2025）",
-    "美国废奴后：Ager, Boustan & Eriksson, AER（2021）；明代进士：何炳棣《明清社会史论》（1962）",
-    "范德比尔特：A. T. Vanderbilt II, Fortune's Children（1989）；洛克菲勒：Chernow（1998）、Forbes（2026）；GDP：MeasuringWorth",
+    "美国废奴后：Ager, Boustan & Eriksson, AER（2021）；明代进士：何炳棣《明清社会史论》（1962），转引自沈登苗",
+    "范德比尔特：A. T. Vanderbilt II, Fortune's Children（1989）；洛克菲勒：Chernow（1998）、Forbes（2026）、洛克菲勒档案中心；GDP：MeasuringWorth",
     "图片：Wikimedia Commons 公有领域（美国国会图书馆、Felice Beato、徐扬等）；进士题名碑照片 CC0；家谱树、金榜、名单卡、田地、账本、圆点为示意",
   ];
   return (
