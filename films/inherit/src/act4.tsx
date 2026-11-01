@@ -1,4 +1,4 @@
-// 9 两样东西 (SB 61.5–72.5), 10 拿不走的是什么 (SB 72.5–79), 11 往上走也一样慢 (SB 79–84.5), 结尾 (SB 84.5–89.5), 信息来源.
+// 9 两样东西：分家 + 近看与远看, 10 拿不走的：家教, 11 往上走也一样慢, 结尾, 信息来源 (story bars in timing.ts).
 import React from "react";
 import { EIO, EO, SHADOW, clamp01, lerp, ramp, useT, win } from "./kit";
 import { FONT, K, NUM, SERIF } from "./theme";
@@ -50,41 +50,85 @@ const Split: React.FC<{ t: number; at: number; fadeAt: number; o: number }> = ({
   );
 };
 
-const Ruler: React.FC<{ t: number; at: number; o: number }> = ({ t, at, o }) => {
+// ---------- the centre shot: near, one family's money; far, a family's place ----------
+// World coordinates at scale 1. The camera starts zoomed in on the small box (Rockefeller money, 1913 → today) and
+// pulls back to the long line (江南大族, 1645–1989): two measures, two time scales, each with its own label.
+const YX = (y: number) => 220 + ((y - 1640) * (1700 - 220)) / (2030 - 1640);
+const JN = [
+  { y: 1667, v: 10.6, lab: "11 倍" },
+  { y: 1795, v: 4.2, lab: "4.2 倍" },
+  { y: 1885, v: 3.7, lab: "3.7 倍" },
+  { y: 1981, v: 1.03, lab: "约 1 倍" },
+];
+const VY = (v: number) => 700 - 38 * v;
+const BOX = { x: YX(1913), y: 760, w: YX(2026) - YX(1913), h: 150 };
+const Zoom: React.FC<{ t: number; at: number; outAt: number; sumAt: number; end: number }> = ({ t, at, outAt, sumAt, end }) => {
+  const o = win(t, at, end, 0.4, 0.4);
   if (o <= 0) return null;
-  const x0 = 220;
-  const x1 = 1700;
-  const n = 12;
-  const gx = (g: number) => x0 + ((x1 - x0) * g) / n;
-  const draw = ramp(t, at, at + 0.8, EO);
-  const marks = [
-    { g: 3, top: "俗话", lab: "三代", c: K.ashHi, at: at + 0.6 },
-    { g: 5, top: "孟子", lab: "五世", c: K.ashHi, at: at + 1.2 },
-    { g: 10, top: "研究估计", lab: "十代上下 · 约 300 年", c: K.goldHi, at: at + 2.0 },
-  ];
+  const k = ramp(t, outAt, outAt + 1.9, EIO);
+  const s0 = 3.4;
+  const sc = Math.exp(lerp(Math.log(s0), 0, k));
+  const px = lerp(BOX.x + BOX.w / 2, 960, k);
+  const py = lerp(BOX.y + BOX.h / 2 - 20, 580, k);
+  const far = ramp(t, outAt + 0.6, outAt + 1.4, EO);
+  const draw = ramp(t, outAt + 1.0, outAt + 2.6, (x) => x);
+  const rk1 = { x: BOX.x + 26, y: BOX.y + 42 };
+  const rk2 = { x: BOX.x + BOX.w - 26, y: BOX.y + BOX.h - 18 };
+  const line = ramp(t, at + 1.0, at + 2.2, EIO);
+  const pts = JN.map((p) => ({ x: YX(p.y), y: VY(p.v) }));
+  const path = pts.map((p, i) => `${i ? "L" : "M"} ${p.x} ${p.y}`).join(" ");
+  const sum = ramp(t, sumAt, sumAt + 0.5, EO);
   return (
-    <div style={{ position: "absolute", inset: 0, opacity: o }}>
-      <div style={{ position: "absolute", left: x0, top: 520, width: (x1 - x0) * draw, height: 10, borderRadius: 5, background: "linear-gradient(90deg, #6d5a3c, #b8955a)" }} />
-      {Array.from({ length: n + 1 }, (_, g) => (
-        <React.Fragment key={g}>
-          <div style={{ position: "absolute", left: gx(g) - 1.5, top: 500, width: 3, height: 50, background: "rgba(244,236,220,0.5)", opacity: draw > g / n ? 1 : 0 }} />
-          <div style={{ position: "absolute", left: gx(g) - 30, width: 60, top: 560, textAlign: "center", fontFamily: NUM, fontWeight: 700, fontSize: 26, color: K.muted, opacity: draw > g / n ? 1 : 0 }}>{g}</div>
-        </React.Fragment>
-      ))}
-      <div style={{ position: "absolute", left: x1 + 20, top: 552, fontFamily: FONT, fontWeight: 700, fontSize: 28, color: K.muted, opacity: draw }}>代</div>
-      {/* the research band: 8–12 generations */}
-      <div style={{ position: "absolute", left: gx(8), top: 470, width: gx(12) - gx(8), height: 110, borderRadius: 10, background: "rgba(240,192,98,0.16)", border: "2px solid rgba(240,192,98,0.5)",
-        opacity: ramp(t, at + 2.0, at + 2.5, EO) }} />
-      {marks.map((m) => {
-        const g = ramp(t, m.at, m.at + 0.45, EO);
-        return (
-          <div key={m.lab} style={{ position: "absolute", left: gx(m.g) - 260, width: 520, top: 300, textAlign: "center", opacity: g, transform: `translateY(${(1 - g) * 20}px)` }}>
-            <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 32, color: K.sub }}>{m.top}</div>
-            <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: m.g === 10 ? 56 : 64, color: m.c, textShadow: SHADOW, whiteSpace: "nowrap" }}>{m.lab}</div>
-            <div style={{ margin: "10px auto 0", width: 4, height: 70, background: m.c, opacity: 0.8 }} />
+    <div style={{ position: "absolute", inset: 0, opacity: o, overflow: "hidden" }}>
+      <div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, transformOrigin: "0 0", transform: `translate(${960 - px * sc}px, ${540 - py * sc}px) scale(${sc})` }}>
+        {/* the long line: 江南大族, three hundred years */}
+        <div style={{ position: "absolute", inset: 0, opacity: far }}>
+          <div style={{ position: "absolute", left: 220, top: 700, width: 1480, height: 3, background: "rgba(244,236,220,0.45)" }} />
+          {[1650, 1700, 1750, 1800, 1850, 1900, 1950, 2000].map((y) => (
+            <React.Fragment key={y}>
+              <div style={{ position: "absolute", left: YX(y) - 1, top: 692, width: 2, height: 16, background: "rgba(244,236,220,0.45)" }} />
+              <div style={{ position: "absolute", left: YX(y) - 50, width: 100, top: 712, textAlign: "center", fontFamily: NUM, fontWeight: 700, fontSize: 22, color: K.muted }}>{y}</div>
+            </React.Fragment>
+          ))}
+          <div style={{ position: "absolute", left: 220, right: 220, top: VY(1), height: 0, borderTop: "2px dashed rgba(201,189,166,0.5)" }} />
+          <div style={{ position: "absolute", left: 1712, top: VY(1) - 16, fontFamily: FONT, fontWeight: 700, fontSize: 24, color: K.sub }}>平均</div>
+          <div style={{ position: "absolute", left: 220, top: 170, fontFamily: SERIF, fontWeight: 900, fontSize: 36, color: K.gold, textShadow: SHADOW, whiteSpace: "nowrap" }}>
+            江南大族的位置<span style={{ fontFamily: FONT, fontWeight: 700, fontSize: 26, color: K.sub, marginLeft: 14 }}>考中举人的比例，是平均的几倍</span>
           </div>
-        );
-      })}
+          <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+            <path d={path} fill="none" stroke={K.gold} strokeWidth={5} strokeLinejoin="round" pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - draw} />
+            <path d={path} fill="none" stroke={K.gold} strokeWidth={22} opacity={0.12} pathLength={1} strokeDasharray="1 1" strokeDashoffset={1 - draw} />
+            {pts.map((p, i) => (
+              <circle key={i} cx={p.x} cy={p.y} r={10} fill={i === 3 ? K.ashHi : K.goldHi} opacity={ramp(draw, i / 3 - 0.05, i / 3 + 0.02, (x) => x)} />
+            ))}
+          </svg>
+          {pts.map((p, i) => (
+            <div key={i} style={{ position: "absolute", left: p.x - 100, width: 200, top: p.y - 62, textAlign: "center", fontFamily: NUM, fontWeight: 900, fontSize: 36,
+              color: i === 3 ? K.ashHi : K.goldHi, textShadow: SHADOW, opacity: ramp(draw, i / 3 - 0.02, i / 3 + 0.06, (x) => x) }}>{JN[i].lab}</div>
+          ))}
+          {/* at the summary: how long the line took */}
+          <div style={{ position: "absolute", left: 880, width: 300, top: 572, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 44, color: K.goldHi, textShadow: SHADOW, opacity: sum }}>三百多年</div>
+          {/* the box hangs from its years on the axis */}
+          <div style={{ position: "absolute", left: BOX.x, width: BOX.w, top: 703, height: BOX.y - 703, borderLeft: "2px dashed rgba(244,236,220,0.35)", borderRight: "2px dashed rgba(244,236,220,0.35)" }} />
+        </div>
+        {/* the box: one family's money */}
+        <div style={{ position: "absolute", left: BOX.x, top: BOX.y, width: BOX.w, height: BOX.h, borderRadius: 4, background: "rgba(20,16,11,0.92)", border: "1.5px solid rgba(240,192,98,0.6)" }}>
+          <div style={{ position: "absolute", left: 10, top: 6, fontFamily: SERIF, fontWeight: 900, fontSize: 13, color: K.fg, whiteSpace: "nowrap" }}>洛克菲勒家的钱<span style={{ fontFamily: FONT, fontWeight: 700, fontSize: 10, color: K.sub, marginLeft: 6 }}>占美国 GDP</span></div>
+          <div style={{ position: "absolute", right: 10, top: 6, fontFamily: SERIF, fontWeight: 900, fontSize: 13 + 17 * sum, color: sum > 0.5 ? K.goldHi : K.sub, whiteSpace: "nowrap" }}>{sum > 0.5 ? "一百年" : ""}</div>
+          <div style={{ position: "absolute", left: 10, right: 10, top: BOX.h - 18, height: 0, borderTop: "1px solid rgba(244,236,220,0.3)" }} />
+        </div>
+        <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
+          <line x1={rk1.x} y1={rk1.y} x2={lerp(rk1.x, rk2.x, line)} y2={lerp(rk1.y, rk2.y, line)} stroke={K.gold} strokeWidth={2} strokeDasharray="5 4" />
+          <circle cx={rk1.x} cy={rk1.y} r={6} fill={K.goldHi} opacity={ramp(t, at + 0.3, at + 0.6, EO)} />
+          <circle cx={rk2.x} cy={rk2.y} r={4} fill={K.goldHi} opacity={ramp(t, at + 2.1, at + 2.3, EO)} />
+        </svg>
+        <div style={{ position: "absolute", left: rk1.x + 16, top: rk1.y - 16, fontFamily: NUM, fontWeight: 900, fontSize: 26, color: K.goldHi, opacity: ramp(t, at + 0.4, at + 0.7, EO) }}>
+          2.3%<span style={{ fontSize: 11, color: K.sub, marginLeft: 6, fontWeight: 700 }}>1913 年，老洛克菲勒一人</span>
+        </div>
+        <div style={{ position: "absolute", left: rk2.x - 200, width: 190, textAlign: "right", top: rk2.y - 40, fontFamily: NUM, fontWeight: 900, fontSize: 22, color: K.goldHi, opacity: ramp(t, at + 2.1, at + 2.4, EO) }}>
+          <span style={{ fontSize: 11, color: K.sub, marginRight: 6, fontWeight: 700 }}>今天，全家族</span>0.04%
+        </div>
+      </div>
     </div>
   );
 };
@@ -93,117 +137,73 @@ export const Mech: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.mech);
   const end = S(SB.keep);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tPos = a + S(2);
-  const tRock = a + S(3.2);
-  const tNow = a + S(4.5);
-  const tNames = a + S(5.2);
-  const tVand = a + S(7);
-  const tRuler = a + S(8.5);
-  const splitO = win(t, a, tRock, 0.4, 0.4);
-  const rockO = win(t, tRock, tVand, 0.4, 0.4);
-  const shrink = ramp(t, tNow, tNow + 0.9, EIO);
-  const namesK = ramp(t, tNames, tNames + 0.5, EIO);
-  const vandO = win(t, tVand, tRuler, 0.4, 0.4);
-  // Rockefeller family: John D. → Jr. → five sons (Nelson, Winthrop, David among them) → Jay
-  const rk = buildTree(1300, 260, 165, [1, 1, 5, 9], [0, 0, 840, 1000]);
-  const roles: Record<string, { name: string; role: string; dx?: number; dy?: number }> = {
-    "2-1": { name: "纳尔逊", role: "副总统、纽约州长", dy: -86 },
-    "2-3": { name: "温斯罗普", role: "阿肯色州长", dy: -86 },
-    "2-4": { name: "戴维", role: "大通银行董事长", dy: 74 },
-    "3-2": { name: "杰伊", role: "西弗吉尼亚州长、参议员", dy: 74 },
-  };
-  // Vanderbilt: gold all gone, two nodes still lit
-  const vd = buildTree(960, 250, 110, [1, 2, 5, 8, 11], [0, 220, 520, 820, 1100]);
-  const vdLit = new Set(["3-4", "4-6"]);
+  const tPos = a + S(1.3);
+  const tZoom = a + S(2.4);
+  const tOut = a + S(4.2);
+  const tFar = a + S(4.8);
+  const tSum = a + S(6.4);
   return (
     <>
-      <Split t={t} at={a + 0.1} fadeAt={a + S(1.2)} o={splitO} />
+      <Split t={t} at={a + 0.1} fadeAt={a + S(0.9)} o={win(t, a, tZoom, 0.4, 0.4)} />
       <Cap at={a + 0.1} out={tPos - 0.05} lines={["钱每一代都要分家，三代就摊成几十份，", "再被花掉、被时代冲走。"]} />
-      <Cap at={tPos + 0.1} out={tRock - 0.05} lines={["家里的位置，", [{ t: "不会这样按人头分掉。", c: K.warm }]]} />
-
-      {rockO > 0 ? (
-        <div style={{ position: "absolute", inset: 0, opacity: rockO }}>
-          {/* 2.3% of America in 1913 vs the whole family today: circle areas to scale */}
-          <div style={{ position: "absolute", left: 520 - 230, top: 450 - 230, width: 460, height: 460, borderRadius: "50%", opacity: 1 - namesK,
-            background: `radial-gradient(circle at 38% 35%, ${K.goldHi}, ${K.gold} 55%, ${K.goldLo})`, boxShadow: "0 0 80px rgba(240,192,98,0.4)",
-            transform: `scale(${1 - 0.0 * shrink})` }} />
-          <Num x={520} y={450} o={1 - namesK} size={110} color="#3b2a10">2.3%</Num>
-          <Label x={520} y={730} o={1 - namesK} size={36} color={K.fg}>1913 年，老洛克菲勒一个人</Label>
-          <div style={{ position: "absolute", left: 1240 - 30, top: 450 - 30, width: 60, height: 60, borderRadius: "50%", opacity: shrink * (1 - namesK),
-            background: `radial-gradient(circle at 38% 35%, ${K.goldHi}, ${K.gold} 55%, ${K.goldLo})`, boxShadow: "0 0 30px rgba(240,192,98,0.5)" }} />
-          <Num x={1240} y={340} o={shrink * (1 - namesK)} size={90}>0.04%</Num>
-          <Label x={1240} y={560} o={shrink * (1 - namesK)} size={36} color={K.fg}>今天，全家族加起来</Label>
-          <Label x={960} y={150} o={1 - namesK} size={34} color={K.sub} weight={700}>占美国 GDP 的比例（面积按比例画）</Label>
-          {/* the family tree and the offices */}
-          {namesK > 0 ? (
-            <div style={{ position: "absolute", inset: 0, opacity: namesK }}>
-              <Tree id="rk2" t={t} nodes={rk} grow={(n) => (t - (tNames + n.row * 0.15 + n.i * 0.03)) / 0.35}
-                gold={(n) => 0.35 - n.row * 0.08} light={(n) => (roles[`${n.row}-${n.i}`] ? 1 : 0.35)} r={(n) => (n.row < 2 ? 22 : 16)} />
-              <Portrait src="img/rock.jpg" x={1300} y={170} r={62} o={1} />
-              {rk.map((n) => {
-                const r = roles[`${n.row}-${n.i}`];
-                if (!r) return null;
-                const g = ramp(t, tNames + 0.5 + n.row * 0.2 + n.i * 0.1, tNames + 0.9 + n.row * 0.2 + n.i * 0.1, EO);
-                return (
-                  <div key={`${n.row}-${n.i}`} style={{ position: "absolute", left: n.x - 140, width: 280, top: n.y + (r.dy ?? 0) - 30, textAlign: "center", opacity: g }}>
-                    <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: 36, color: K.warm, textShadow: SHADOW }}>{r.name}</div>
-                    <div style={{ fontFamily: FONT, fontWeight: 700, fontSize: 28, color: K.fg, textShadow: SHADOW, whiteSpace: "nowrap" }}>{r.role}</div>
-                  </div>
-                );
-              })}
-              <Photo src="img/nelson.jpg" x={160} y={180} w={300} h={350} o={ramp(t, tNames + 0.4, tNames + 0.9, EO)} py={20} />
-              <Photo src="img/jay.jpg" x={500} y={300} w={260} h={300} o={ramp(t, tNames + 0.8, tNames + 1.3, EO)} py={20} />
-              <Label x={310} y={560} o={ramp(t, tNames + 0.4, tNames + 0.9, EO)} size={26} color={K.sub} weight={700}>纳尔逊，1975</Label>
-              <Label x={630} y={630} o={ramp(t, tNames + 0.8, tNames + 1.3, EO)} size={26} color={K.sub} weight={700}>杰伊，1993</Label>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-      <Cap at={tRock + 0.1} out={tNow - 0.05} lines={["洛克菲勒的钱，也在变薄：1913 年，", ["老洛克菲勒一人约占美国 GDP 的 ", { t: "2.3%", num: true, c: K.gold }, "。"]]} />
-      <Cap at={tNow + 0.1} out={tNames - 0.05} lines={[["今天全家族加起来，约 ", { t: "0.04%", num: true, c: K.gold }, "。"]]} />
-      <Cap at={tNames + 0.1} out={tVand - 0.05} lines={["可这个姓，出了一位副总统、三位州长、", "一位参议员、一位大银行董事长。"]} />
-
-      {vandO > 0 ? (
-        <div style={{ position: "absolute", inset: 0, opacity: vandO }}>
-          <Tree id="vd2" t={t} nodes={vd} grow={(n) => (t - (tVand + n.row * 0.1 + n.i * 0.01)) / 0.3} gold={() => 0}
-            light={(n) => (vdLit.has(`${n.row}-${n.i}`) ? ramp(t, tVand + 0.7, tVand + 1.1, EO) : 0)} r={(n) => (n.row === 0 ? 24 : 14)} />
-          <Portrait src="img/vand.jpg" x={960} y={170} r={62} o={1} ash={1} />
-          {vd.filter((n) => vdLit.has(`${n.row}-${n.i}`)).map((n, k) => (
-            <div key={k} style={{ position: "absolute", left: k === 0 ? n.x - 440 : n.x + 30, width: 410, top: n.y - 24, textAlign: k === 0 ? "right" : "left", opacity: ramp(t, tVand + 0.9, tVand + 1.3, EO) }}>
-              <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 36, color: K.warm, textShadow: SHADOW }}>{k === 0 ? "格洛丽亚 · 设计师" : "安德森 · CNN 主播"}</div>
-            </div>
-          ))}
-        </div>
-      ) : null}
-      <Cap at={tVand + 0.1} out={tRuler - 0.05} lines={["范德比尔特家的钱早散了，", "后人里还有知名设计师、CNN 主播。"]} />
-
-      <Ruler t={t} at={tRuler + 0.1} o={win(t, tRuler, end, 0.4, 0.4)} />
-      <Cap at={tRuler + 0.2} out={end - 0.05} lines={["一个家的位置要散完：俗话说三代，孟子说五世；", ["研究估计，要", { t: "十代上下，约 300 年", c: K.gold }, "。"]]} />
+      <Cap at={tPos + 0.1} out={tZoom - 0.05} lines={["家里的位置，", [{ t: "不会这样按人头分掉。", c: K.warm }]]} />
+      <Zoom t={t} at={tZoom} outAt={tOut} sumAt={tSum} end={end} />
+      <Cap at={tZoom + 0.1} out={tOut + 0.3} lines={[["近看洛克菲勒家：1913 年，一人约占美国 GDP ", { t: "2.3%", num: true, c: K.gold }, "；"], ["今天全家族加起来，约 ", { t: "0.04%", num: true, c: K.gold }, "。"]]} />
+      <Cap at={tFar + 0.1} out={tSum - 0.05} lines={[["拉远看江南大族：中举的比例从清初的 ", { t: "11 倍", num: true, c: K.gold }, "，"], "花了三百多年，才回到平均。"]} />
+      <Cap at={tSum + 0.1} out={end - 0.05} lines={["俗话看的，是一家人几十年的钱；", ["一个家的位置，要", { t: "十代上下、约 300 年", c: K.gold }, "才散完。"]]} />
     </>
   );
 };
 
-// ---------- 10 拿不走的是什么 ----------
+// ---------- 10 拿不走的：家教 ----------
 export const Keep: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.keep);
   const end = S(SB.climb);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tWork = a + S(1);
-  const tMarry = a + S(2.8);
-  const tFour = a + S(4.6);
+  const tHome = a + S(1.3);
+  const tKey = a + S(3.5);
+  const tWork = a + S(5);
+  const tFour = a + S(7.2);
   const paintO = win(t, a, end, 0.6, 0.4);
-  const marryK = win(t, tWork, tMarry, 0.4, 0.3);
-  // two family trees joined by a marriage
+  const homeK = win(t, tHome, tKey, 0.4, 0.3);
+  const marryK = win(t, tWork, tFour, 0.4, 0.3);
+  const chainL = buildTree(640, 300, 150, [1, 1, 1], [0, 0, 0]);
+  const chainR = buildTree(1280, 300, 150, [1, 1, 1], [0, 0, 0]);
   const fa = buildTree(640, 340, 150, [1, 3], [0, 300]);
   const fb = buildTree(1280, 340, 150, [1, 3], [0, 300]);
   const words = ["读书的习惯", "做事的样子", "和谁结婚", "认识谁"];
+  const growH = (n: Node) => (t - (tHome + n.row * 0.3)) / 0.3;
+  const kidL = ramp(t, tHome + 1.2, tHome + 1.7, EO);
   return (
     <>
-      <Photo src="img/school.jpg" x={0} y={0} w={1920} h={1080} o={paintO} frame={false} zoom={1.08 + 0.1 * ramp(t, a, tFour, (x) => x)} px={42} py={48}
-        dim={0.35 + 0.35 * ramp(t, a + 0.8, a + 1.4, EIO) + 0.2 * Math.max(marryK, ramp(t, tFour - 0.2, tFour + 0.3, EIO))} />
+      <Photo src="img/school.jpg" x={0} y={0} w={1920} h={1080} o={paintO} frame={false} zoom={1.08 + 0.1 * ramp(t, a, end, (x) => x)} px={42} py={48}
+        dim={0.35 + 0.35 * ramp(t, a + 0.8, a + 1.4, EIO) + 0.2 * Math.max(homeK, marryK, ramp(t, tFour - 0.2, tFour + 0.3, EIO))} />
       <Label x={960} y={60} o={paintO * (1 - ramp(t, a + S(0.8), a + S(1.2), EIO))} size={30} color={K.sub} weight={700}>徐扬画的村塾，18 世纪</Label>
-      <Big at={a + 0.1} out={tWork - 0.05} y={420} size={100} lines={["拿不走的是什么？"]} />
-      <Cap at={tMarry + 0.1} out={tFour - 0.05} lines={["地主的孙辈也更相信“努力有用”，", ["每个工作日多干约 ", { t: "0.6 小时", num: true, c: K.gold }, "。"]]} />
+      <Big at={a + 0.1} out={tHome - 0.05} y={380} size={96} lines={["地都被分走了，", "孙辈靠什么翻回来？"]} />
+
+      {homeK > 0 ? (
+        <div style={{ position: "absolute", inset: 0, opacity: homeK }}>
+          <Tree id="homeL" t={t} nodes={chainL} grow={growH} gold={() => 0} light={(n) => (n.row === 2 ? 0.35 + 0.65 * kidL : 0.85)} r={(n) => (n.row === 2 ? 22 : 18)} />
+          <Tree id="homeR" t={t} nodes={chainR} grow={growH} gold={() => 0} light={(n) => (n.row === 1 ? 0 : n.row === 2 ? 0.35 : 0.85)} r={(n) => (n.row === 2 ? 22 : 18)} />
+          {/* the house around the parents and child who live together */}
+          <div style={{ position: "absolute", left: 640 - 150, top: 390, width: 300, height: 380, borderRadius: 18, border: `3px solid rgba(255,179,107,${0.7 * ramp(t, tHome + 0.7, tHome + 1.1, EO)})` }} />
+          {[
+            { x: 640, lab: "和父母同住", c: K.warm },
+            { x: 1280, lab: "父母早逝", c: K.ashHi },
+          ].map((h) => (
+            <div key={h.lab} style={{ position: "absolute", left: h.x - 250, width: 500, top: 200, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 48, color: h.c, textShadow: SHADOW,
+              opacity: ramp(t, tHome + 0.2, tHome + 0.6, EO) }}>{h.lab}</div>
+          ))}
+          {["祖辈", "父母", "孙辈"].map((l, i) => (
+            <div key={l} style={{ position: "absolute", left: 960 - 80, width: 160, top: 300 + i * 150 - 24, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 34, color: K.sub,
+              opacity: ramp(t, tHome + i * 0.3, tHome + 0.4 + i * 0.3, EO) }}>{l}</div>
+          ))}
+        </div>
+      ) : null}
+      <Cap at={tHome + 0.1} out={tKey - 0.05} lines={["跟父母同住的孙辈，差距更大；", "父母早逝的，看不出这个差距。"]} />
+      <Fine t={t} at={tHome + 0.5} out={tKey} y={846 - 40}>同一项土改研究（Alesina 等，2021）</Fine>
+      <Big at={tKey + 0.05} out={tWork - 0.05} y={360} size={110} gap={14} lines={["田地能分走，", [{ t: "家教分不走。", mark: true }]]} />
+
       {marryK > 0 ? (
         <div style={{ position: "absolute", inset: 0, opacity: marryK }}>
           <Tree id="ma" t={t} nodes={fa} grow={(n) => (t - (tWork + n.row * 0.3)) / 0.3} gold={() => 0} light={() => 0.8} r={(n) => (n.row ? 16 : 22)} />
@@ -215,7 +215,7 @@ export const Keep: React.FC<{ t: number }> = ({ t }) => {
           <Label x={960} y={640} o={ramp(t, tWork + 1.4, tWork + 1.8, EO)} size={40} color={K.gold}>门当户对</Label>
         </div>
       ) : null}
-      <Cap at={tWork + 0.1} out={tMarry - 0.05} lines={["地主的孙辈里，和父母同住的，差距更大；", "美国南方那些儿子，常娶同样人家的女儿。"]} />
+      <Cap at={tWork + 0.1} out={tFour - 0.05} lines={[["他们更信“努力有用”，每个工作日多干约 ", { t: "0.6 小时", num: true, c: K.gold }, "；"], "这些人家也更常互相结亲。"]} />
       {/* four things, lit like the inner light of a node */}
       {t > tFour - 0.2 ? (
         <div style={{ position: "absolute", inset: 0, opacity: win(t, tFour, end, 0.3, 0.4) }}>
@@ -241,8 +241,8 @@ export const Climb: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.climb);
   const end = S(SB.end);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tStep = a + S(1.8);
-  const tStele = a + S(3.4);
+  const tStep = a + S(2);
+  const tStele = a + S(3.7);
   const bandsO = win(t, a, tStep, 0.4, 0.4);
   const stepO = win(t, tStep, tStele, 0.4, 0.4);
   const steleO = win(t, tStele, end, 0.5, 0.4);

@@ -11,27 +11,26 @@ export const SAMPLE_S = S(7.5);
 export const SAMPLE_FRAMES = fr(SAMPLE_S);
 
 // Full film, in story bars (film seconds = S(bar)). tools/music.py lays the score under this:
-//   SB 0–32  track 8–40 (main) · SB 32–40 track 40–48 (interlude) · SB 40–48 track 48–56 · SB 48–48.5 silence
-//   SB 48.5–72.5 track 16–40 (main returns) · SB 72.5–80.5 track 40–48 (interlude) · SB 80.5–84.5 track 60–64 (build)
-//   SB 84.5–92.5 track 64–72 (climax) · SB 92.5–96.5 track 76–80, fading out
+//   SB 0–24 track 8–32 · SB 24–43 track 36–55 (4-bar skip in the repeating main loop; interlude from SB 28;
+//   reform on track 48; the last two beats before the reveal dip and darken) · SB 43–75 track 16–48 (main returns
+//   on the reveal) · SB 75–87 track 60–72 (build, climax on SB.end) · SB 87–91 track 76–80, fading out
 export const SB = {
   open: 0,
   say: 7.5,
   money: 11.5,
   bang: 19.5,
   abroad: 27,
-  jn: 32,
-  reform: 40,
-  silence: 48,
-  reveal: 48.5,
-  usa: 53.5,
-  mech: 61.5,
-  keep: 72.5,
-  climb: 79,
-  build: 80.5,
-  end: 84.5,
-  src: 89.5,
-  card: 92.5,
-  total: 96.5,
+  jn: 29.5,
+  reform: 36,
+  reveal: 43,
+  usa: 50,
+  mech: 56,
+  keep: 64,
+  climb: 73,
+  build: 75,
+  end: 79,
+  src: 84,
+  card: 87,
+  total: 91,
 };
 export const FILM_FRAMES = fr(S(SB.total));

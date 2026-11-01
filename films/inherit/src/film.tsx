@@ -26,16 +26,20 @@ const HITS: Hit[] = [
   // 日本: the sword
   { at: S(SB.abroad), id: "sfx-impact-13", v: 0.35 },
   // 土改: the survey cuts the holding
-  ...[0, 1, 2].map((k) => ({ at: S(SB.reform) + S(2.6) + k * BEAT * 1.6, id: "sfx-impact-09", v: 0.45 })),
-  // reveal on the downbeat after the silence
+  ...[0, 1, 2].map((k) => ({ at: S(SB.reform) + S(2.4) + k * BEAT * 1.6, id: "sfx-impact-09", v: 0.45 })),
+  // reveal on the downbeat after the dip; the big line; China and the US side by side
   { at: S(SB.reveal), id: "sfx-impact-16", v: 0.8, len: 1.5 },
-  { at: S(SB.reveal) + S(2.9), id: "sfx-impact-08", v: 0.55 },
-  // 美国: the ledger, the winning slip
+  { at: S(SB.reveal) + S(2.7), id: "sfx-impact-08", v: 0.55 },
+  { at: S(SB.reveal) + S(4.6) + 1.0, id: "sfx-impact-11", v: 0.35 },
+  // 美国: the ledger, the winning slip, the big line
   { at: S(SB.usa) + 0.4, id: "sfx-impact-01", v: 0.4 },
-  { at: S(SB.usa) + S(4.3) + 0.9, id: "sfx-game-01", v: 0.35 },
-  { at: S(SB.usa) + S(7.1), id: "sfx-impact-08", v: 0.55 },
-  // 分家: three splits
+  { at: S(SB.usa) + S(3.3) + 0.9, id: "sfx-game-01", v: 0.35 },
+  { at: S(SB.usa) + S(5), id: "sfx-impact-08", v: 0.55 },
+  // 分家: three splits; then the camera pulls back
   ...[0, 1, 2].map((k) => ({ at: S(SB.mech) + 0.1 + (k + 1) * 0.55, id: "sfx-impact-12", v: 0.35 })),
+  { at: S(SB.mech) + S(4.2), id: "sfx-magic-19", v: 0.3, len: 2.4 },
+  // 家教分不走
+  { at: S(SB.keep) + S(3.5), id: "sfx-impact-08", v: 0.55 },
   // the last line on the climax downbeat
   { at: S(SB.end), id: "sfx-impact-16", v: 0.6, len: 1.5 },
 ];

@@ -1,4 +1,4 @@
-// 6 把钱全拿走 (SB 40–48.5), 7 揭晓 (SB 48.5–53.5), 8 美国的两次"实验" (SB 53.5–61.5).
+// 6 把钱全拿走, 7 揭晓 + 中美对照, 8 美国的两次"实验" (story bars in timing.ts).
 import React from "react";
 import { EIO, EO, SHADOW, clamp01, lerp, ramp, win } from "./kit";
 import { FONT, K, NUM, SERIF } from "./theme";
@@ -69,18 +69,59 @@ const Fields: React.FC<{ t: number; cutAt: number; o: number }> = ({ t, cutAt, o
 const famNodes = (cx: number) => buildTree(cx, 0, 150, [1, 3, 7], [0, 300, 520]);
 const ROWLAB = ["祖辈", "儿子", "孙辈"];
 
+// China and the US side by side: of 100 grandchildren of top-10% grandparents, about 14 are still in the top 10%.
+const Mirror: React.FC<{ t: number; at: number; end: number }> = ({ t, at, end }) => {
+  const o = win(t, at, end, 0.4, 0.35);
+  if (o <= 0) return null;
+  const sides = [
+    { cx: 560, head: "中国", sub: "地全分了", v: "14.5%" },
+    { cx: 1360, head: "美国", sub: "没分过富人的地", v: "14.1%" },
+  ];
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o }}>
+      {sides.map((sd, k) => {
+        const lit = new Set(Array.from({ length: 14 }, (_, j) => Math.floor(rnd(j * 7 + k, 61) * 100)));
+        while (lit.size < 14) lit.add((lit.size * 37 + k * 11) % 100);
+        return (
+          <React.Fragment key={k}>
+            <div style={{ position: "absolute", left: sd.cx - 300, width: 600, top: 120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 54, color: K.fg, textShadow: SHADOW }}>
+              {sd.head}<span style={{ fontSize: 34, color: K.sub, marginLeft: 16 }}>{sd.sub}</span>
+            </div>
+            {Array.from({ length: 100 }, (_, j) => {
+              const x = sd.cx - 4.5 * 46 + (j % 10) * 46;
+              const y = 260 + Math.floor(j / 10) * 46;
+              const on = lit.has(j);
+              const g = on ? ramp(t, at + 0.6 + (j % 7) * 0.06, at + 1.0 + (j % 7) * 0.06, EO) : 0;
+              return (
+                <div key={j} style={{ position: "absolute", left: x - 11, top: y - 11, width: 22, height: 22, borderRadius: 11,
+                  background: g > 0 ? `rgba(255,${200 + 26 * g},${150 + 40 * g},${0.25 + 0.75 * g})` : "rgba(201,189,166,0.22)",
+                  boxShadow: g > 0 ? `0 0 ${18 * g}px rgba(255,179,107,0.9)` : undefined }} />
+              );
+            })}
+            <div style={{ position: "absolute", left: sd.cx - 200, width: 400, top: 712, textAlign: "center", fontFamily: NUM, fontWeight: 900, fontSize: 84, color: K.goldHi,
+              textShadow: "0 0 40px rgba(240,192,98,0.4)", opacity: ramp(t, at + 1.0, at + 1.4, EO) }}>{sd.v}</div>
+          </React.Fragment>
+        );
+      })}
+      <Cap at={at + 0.1} out={end - 0.05} lines={["祖辈在前 10% 的人家，孙辈还在前 10% 的机会：", [{ t: "把地全分了的中国，", c: K.fg }, { t: "14.5%", num: true, c: K.gold }, "；没分过的美国，", { t: "14.1%", num: true, c: K.gold }, "。"]]} />
+      <Fine t={t} at={at + 0.5} out={end} y={846 - 40}>Alesina 等 2021 表 3：中国由土改前精英孙辈的收入差距换算；美国由两代流动表推算</Fine>
+    </div>
+  );
+};
+
 export const Reform: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.reform);
   const end = S(SB.usa);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tCut = a + S(2);
-  const tTree = a + S(4.4);
-  const tGrand = a + S(7.3);
+  const tCut = a + S(1.8);
+  const tTree = a + S(3.9);
+  const tGrand = a + S(6);
   const tRev = S(SB.reveal);
-  const tEdu = tRev + S(1.6);
-  const tBig = tRev + S(2.9);
+  const tEdu = tRev + S(1.5);
+  const tBig = tRev + S(2.7);
+  const tUS = tRev + S(4.6);
   const fieldO = win(t, a, tTree + 0.2, 0.5, 0.5);
-  const treeO = win(t, tTree, end, 0.5, 0.4) * (1 - 0.75 * ramp(t, tBig, tBig + 0.5, EIO));
+  const treeO = win(t, tTree, tUS, 0.5, 0.4) * (1 - 0.75 * ramp(t, tBig, tBig + 0.5, EIO));
   const L = famNodes(600);
   const R = famNodes(1400);
   const grow = (n: Node) => (t - (tTree + n.row * 0.35 + n.i * 0.04)) / 0.4;
@@ -118,7 +159,8 @@ export const Reform: React.FC<{ t: number }> = ({ t }) => {
       <Cap at={tRev + 0.15} out={tEdu - 0.05} lines={["2010 年，他们的孙辈，", ["年收入比别人高 ", { t: "16%", num: true, c: K.gold }, "。"]]} />
       <Cap at={tEdu + 0.1} out={tBig - 0.05} lines={[["多读 ", { t: "0.75 年", num: true, c: K.gold }, "书，职业也更体面。"]]} />
       <Fine t={t} at={tRev + 0.3} out={tBig} y={850 - 40}>Alesina 等（NBER 工作论文，2021）：中国家庭追踪调查 2010 年，农村县</Fine>
-      <Big at={tBig + 0.05} out={end - 0.05} y={360} size={96} lines={["地分掉了。", [{ t: "差距隔了一代，又长了回来。", mark: true }]]} />
+      <Big at={tBig + 0.05} out={tUS - 0.05} y={360} size={96} lines={["地分掉了。", [{ t: "差距隔了一代，又长了回来。", mark: true }]]} />
+      <Mirror t={t} at={tUS} end={end} />
     </>
   );
 };
@@ -182,10 +224,10 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.usa);
   const end = S(SB.mech);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tSons = a + S(2.3);
-  const tLot = a + S(4.3);
-  const tLotKids = a + S(6.1);
-  const tBig = a + S(7.1);
+  const tSons = a + S(1.8);
+  const tLot = a + S(3.3);
+  const tLotKids = a + S(4.3);
+  const tBig = a + S(5);
   const ledO = win(t, a, tSons, 0.4, 0.4);
   const fall = ramp(t, a + 0.8, a + 2.2, EIO);
   // 1860 vs 1870: wealth of rich Southern households (90th percentile)
@@ -233,7 +275,7 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
           ))}
         </div>
       ) : null}
-      <Cap at={tSons + 0.1} out={tLot - 0.05} lines={["可到 1900 年，他们的儿子，", "几乎追上了当年一样有钱、没养奴隶的人家。"]} />
+      <Cap at={tSons + 0.1} out={tLot - 0.05} lines={["到 1900 年，奴隶主的儿子，", "几乎追上当年同样有钱、没养奴隶的人家。"]} />
 
       <LotteryBox t={t} at={tLot} o={lotO * (1 - kidsK)} />
       <Label x={960} y={130} o={lotO * (1 - kidsK)} size={36} color={K.sub} weight={700}>1832 年，美国佐治亚州，抽签分地</Label>
@@ -245,8 +287,8 @@ export const USA: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ position: "absolute", left: 1360 - 250, width: 500, top: -120, textAlign: "center", fontFamily: SERIF, fontWeight: 900, fontSize: 40, color: K.ashHi, textShadow: SHADOW }}>没中签的人家</div>
         </div>
       ) : null}
-      <Cap at={tLot + 0.1} out={tLotKids - 0.05} lines={["反过来：1832 年，佐治亚州抽签分地，", "中签的人白得一块地，约等于中等身家。"]} />
-      <Cap at={tLotKids + 0.1} out={tBig - 0.05} lines={["到了儿子、孙子，", "财产和读书，都不比没中签的好。"]} />
+      <Cap at={tLot + 0.1} out={tLotKids - 0.05} lines={["1832 年，佐治亚州抽签分地，", "中签的白得一块地，约等于中等身家。"]} />
+      <Cap at={tLotKids + 0.1} out={tBig - 0.05} lines={["可到了儿子、孙子，", "财产和读书，都不比没中签的好。"]} />
       <Big at={tBig + 0.05} out={end - 0.05} y={380} size={100} lines={["拿走的，挡不住。", [{ t: "白给的，留不住。", c: K.gold }]]} />
     </>
   );

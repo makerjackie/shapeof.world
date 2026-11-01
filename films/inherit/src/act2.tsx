@@ -1,4 +1,4 @@
-// 3 金榜上的 13 个姓 (SB 19.5–27), 4 不只中国 (SB 27–32), 5 江南三百年 (SB 32–40).
+// 3 金榜上的 13 个姓, 4 不只中国, 5 江南三百年 (story bars in timing.ts).
 import React from "react";
 import { Img, staticFile } from "remotion";
 import { EIO, EO, SHADOW, clamp01, lerp, ramp, win } from "./kit";
@@ -143,63 +143,41 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
-// ---------- 4 不只中国 ----------
+// ---------- 4 不只中国：一个镜头，左日本、右佛罗伦萨 ----------
 export const Abroad: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.abroad);
   const end = S(SB.jn);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tPaper = a + S(1.1);
-  const tFlo = a + S(2.5);
-  const tTop = a + S(3.1);
-  const samO = win(t, a, tFlo, 0.35, 0.4);
-  const slide = ramp(t, tPaper - 0.2, tPaper + 0.4, EIO);
-  const floO = win(t, tFlo, end, 0.45, 0.35);
-  const topK = ramp(t, tTop, tTop + 0.5, EO);
+  const tR = a + 0.5;
+  const o = win(t, a, end, 0.3, 0.35);
+  const oR = ramp(t, tR, tR + 0.4, EO) * o;
+  const numL = ramp(t, a + 0.7, a + 1.1, EO);
+  const cardsAt = tR + 0.9;
   return (
     <>
-      <Photo src="img/samurai.jpg" x={lerp(960 - 290, 300, slide)} y={90} w={580} h={728} o={samO} zoom={1.02 + 0.05 * ramp(t, a, tFlo, (x) => x)} py={30} />
-      <Label x={lerp(960, 590, slide)} y={70} o={samO * (1 - slide)} size={34} color={K.sub} weight={700}>日本，约 1860 年代</Label>
-      {/* academic papers with samurai surnames */}
-      {slide > 0 ? (
-        <div style={{ position: "absolute", left: 1000, top: 170, width: 640, height: 560, opacity: samO * slide }}>
-          {[0, 1, 2].map((k) => (
-            <div key={k} style={{ position: "absolute", left: k * 26, top: k * 22, width: 520, height: 470, background: "#e7ddc6", borderRadius: 3, boxShadow: "0 20px 50px rgba(0,0,0,0.55)", transform: `rotate(${(k - 1) * 2}deg)` }}>
-              {k === 2
-                ? Array.from({ length: 11 }, (_, j) => (
-                    <div key={j} style={{ position: "absolute", left: 40, right: 40, top: 60 + j * 34, height: j === 0 ? 14 : 7, background: j === 0 ? "#3b2d1e" : "rgba(60,45,30,0.35)", borderRadius: 3, width: j === 0 ? 300 : undefined }} />
-                  ))
-                : null}
-            </div>
-          ))}
-          <Num x={330} y={300} o={ramp(t, tPaper + 0.5, tPaper + 0.9, EO)} size={150}>4 倍多</Num>
-        </div>
-      ) : null}
-      <Cap at={a + 0.15} out={tPaper - 0.05} lines={["1871 年，日本武士交出佩刀。"]} />
-      <Cap at={tPaper + 0.1} out={tFlo - 0.05} lines={["一百多年后的论文作者里，", ["罕见的武士姓仍是平均的 ", { t: "4 倍多", c: K.gold }, "。"]]} />
+      <Photo src="img/samurai.jpg" x={120} y={80} w={810} h={700} o={o} zoom={1.04 + 0.05 * ramp(t, a, end, (x) => x)} py={26} dim={0.5 * numL} />
+      <Label x={525} y={140} o={o} size={36} color={K.fg} weight={800}>日本 · 武士姓</Label>
+      <Label x={525} y={300} o={numL * o} size={34} color={K.fg} weight={700}>交刀一百多年后，论文作者里</Label>
+      <Num x={525} y={450} o={numL * o} size={150}>4 倍多</Num>
 
-      {/* Florence, about 1470 */}
-      <Photo src="img/florence.jpg" x={110} y={90} w={1700} h={735} o={floO} zoom={1.04 + 0.06 * ramp(t, tFlo, end, (x) => x)} px={lerp(40, 60, ramp(t, tFlo, end, (x) => x))} dim={0.45 * topK} />
-      {topK > 0
-        ? [0, 1, 2, 3, 4].map((i) => {
-            const old = [0, 2, 3].includes(i);
-            const g = ramp(t, tTop + 0.1 + i * 0.1, tTop + 0.5 + i * 0.1, EO);
-            const x = 960 - 2 * 300 + i * 300;
-            return (
-              <div key={i} style={{ position: "absolute", left: x - 125, top: 360, width: 250, height: 170, borderRadius: 8, opacity: g * floO,
-                background: old ? `linear-gradient(180deg, ${K.goldHi}, ${K.gold} 60%, ${K.goldLo})` : "rgba(233,220,192,0.16)", border: `2px solid ${old ? K.goldHi : "rgba(233,220,192,0.4)"}`,
-                boxShadow: old ? "0 0 40px rgba(240,192,98,0.45)" : undefined, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ fontFamily: NUM, fontWeight: 900, fontSize: 30, color: old ? "#3b2a10" : K.sub }}>第 {i + 1} 名</div>
-                <div style={{ fontFamily: FONT, fontWeight: 800, fontSize: 30, marginTop: 10, color: old ? "#3b2a10" : "rgba(201,189,166,0.6)" }}>{old ? "1427 · 前 6%" : "—"}</div>
-              </div>
-            );
-          })
-        : null}
-      <Label x={960} y={290} o={topK * floO} size={40} color={K.fg}>2011 年，佛罗伦萨收入最高的 5 个姓</Label>
-      <Label x={960} y={60} o={floO * (1 - topK)} size={32} color={K.sub} weight={700}>佛罗伦萨，约 1470 年</Label>
-      <Cap at={tFlo + 0.3} out={end - 0.05} lines={["意大利佛罗伦萨：今天收入最高的 5 个姓里，", ["有 3 个在 600 年前就排", { t: "全城前 6%", c: K.gold }, "。"]]} />
+      <Photo src="img/florence.jpg" x={990} y={80} w={810} h={700} o={oR} zoom={1.06 + 0.05 * ramp(t, tR, end, (x) => x)} px={55} dim={0.5 * ramp(t, cardsAt - 0.3, cardsAt + 0.2, EIO)} />
+      <Label x={1395} y={140} o={oR} size={36} color={K.fg} weight={800}>意大利 · 佛罗伦萨</Label>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const old = [0, 2, 3].includes(i);
+        const g = ramp(t, cardsAt + i * 0.08, cardsAt + 0.35 + i * 0.08, EO) * o;
+        return (
+          <div key={i} style={{ position: "absolute", left: 1395 - 2 * 150 + i * 150 - 62, top: 380, width: 124, height: 150, borderRadius: 8, opacity: g,
+            background: old ? `linear-gradient(180deg, ${K.goldHi}, ${K.gold} 60%, ${K.goldLo})` : "rgba(233,220,192,0.16)", border: `2px solid ${old ? K.goldHi : "rgba(233,220,192,0.4)"}`,
+            boxShadow: old ? "0 0 36px rgba(240,192,98,0.45)" : undefined, display: "flex", alignItems: "center", justifyContent: "center",
+            fontFamily: NUM, fontWeight: 900, fontSize: 40, color: old ? "#3b2a10" : K.sub }}>{i + 1}</div>
+        );
+      })}
+      <Label x={1395} y={300} o={ramp(t, cardsAt - 0.2, cardsAt + 0.2, EO) * o} size={32} color={K.fg} weight={700}>今天最富的 5 个姓，3 个在 1427 年就排前 6%</Label>
+      <Cap at={a + 0.1} out={end - 0.05} lines={[ABROAD_CAP]} />
     </>
   );
 };
+const ABROAD_CAP = "换个国家看，也是一样。";
 
 // ---------- 5 江南三百年 ----------
 const COLS5 = [
@@ -213,9 +191,9 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
   const a = S(SB.jn);
   const end = S(SB.reform);
   if (t < a - 0.2 || t > end + 0.4) return null;
-  const tCols = a + S(2.3);
-  const tRev = a + S(4.6);
-  const tQ = a + S(6.9);
+  const tCols = a + S(2.1);
+  const tRev = a + S(3.8);
+  const tQ = a + S(5.3);
   const scrollO = win(t, a, tQ + 0.2, 0.6, 0.5);
   const pan = ramp(t, a, tQ, (x) => x);
   const ashK = ramp(t, tRev, tRev + 1.2, EIO);
@@ -230,19 +208,19 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
       {scrollO > 0 ? (
         <div style={{ position: "absolute", inset: 0, opacity: scrollO }}>
           <Img src={staticFile("img/suzhou.jpg")} style={{ position: "absolute", left: x0, top: 0, width: wImg, height: 1080 }} />
-          <div style={{ position: "absolute", inset: 0, background: `rgba(11,9,7,${0.2 + 0.5 * ramp(t, a + S(0.8), a + S(1.6), EIO) + 0.15 * ashK})` }} />
+          <div style={{ position: "absolute", inset: 0, background: `rgba(11,9,7,${0.2 + 0.5 * ramp(t, a + S(0.45), a + S(0.9), EIO) + 0.15 * ashK})` }} />
           <div style={{ position: "absolute", inset: 0, background: "#3a352e", opacity: 0.55 * ashK, mixBlendMode: "saturation" }} />
-          <Label x={960} y={60} o={1 - ramp(t, a + S(0.8), a + S(1.4), EIO)} size={32} color={K.sub} weight={700}>徐扬《姑苏繁华图》，1759 年</Label>
+          <Label x={960} y={60} o={1 - ramp(t, a + S(0.45), a + S(0.8), EIO)} size={32} color={K.sub} weight={700}>徐扬《姑苏繁华图》，1759 年</Label>
         </div>
       ) : null}
       {/* population vs juren */}
       {t < tCols + 0.4 ? (
-        <div style={{ position: "absolute", inset: 0, opacity: win(t, a + S(0.8), tCols + 0.2, 0.4, 0.4) }}>
+        <div style={{ position: "absolute", inset: 0, opacity: win(t, a + S(0.5), tCols + 0.2, 0.4, 0.4) }}>
           {[
             { lab: "人口", v: 2, c: K.ashHi },
             { lab: "举人", v: 22, c: K.gold },
           ].map((r, i) => {
-            const g = ramp(t, a + S(0.9) + i * 0.4, a + S(0.9) + 0.8 + i * 0.4, EO);
+            const g = ramp(t, a + S(0.6) + i * 0.4, a + S(0.6) + 0.8 + i * 0.4, EO);
             return (
               <React.Fragment key={i}>
                 <div style={{ position: "absolute", left: 360, top: 330 + i * 170, width: 200, textAlign: "right", fontFamily: SERIF, fontWeight: 900, fontSize: 56, color: r.c, textShadow: SHADOW }}>{r.lab}</div>
@@ -254,7 +232,7 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
           <Label x={960} y={220} o={1} size={40} color={K.fg}>清初江南几十个大族</Label>
         </div>
       ) : null}
-      <Cap at={a + S(0.85)} out={tCols - 0.05} lines={["清朝初年，江南几十个大族，", ["人口只占 ", { t: "2%", num: true, c: K.ashHi }, "，举人却占了 ", { t: "22%", num: true, c: K.gold }, "。"]]} />
+      <Cap at={a + S(0.55)} out={tCols - 0.05} lines={["清朝初年，江南几十个大族，", ["人口只占 ", { t: "2%", num: true, c: K.ashHi }, "，举人却占了 ", { t: "22%", num: true, c: K.gold }, "。"]]} />
       {/* three hundred years of columns */}
       {t > tCols - 0.2 && t < tQ + 0.4 ? (
         <div style={{ position: "absolute", inset: 0, opacity: win(t, tCols, tQ + 0.2, 0.4, 0.4) }}>
@@ -262,7 +240,7 @@ export const Jiangnan: React.FC<{ t: number }> = ({ t }) => {
           <div style={{ position: "absolute", left: 300, right: 300, top: base - unit, height: 0, borderTop: "2px dashed rgba(201,189,166,0.5)" }} />
           <div style={{ position: "absolute", left: 1640, top: base - unit - 22, fontFamily: FONT, fontWeight: 700, fontSize: 28, color: K.sub }}>平均</div>
           {COLS5.map((c, i) => {
-            const at = i === 0 ? tCols : i === 3 ? tRev + 0.8 : tCols + 0.5 + (i - 1) * S(0.9);
+            const at = i === 0 ? tCols : i === 3 ? tRev + 0.8 : tCols + 0.4 + (i - 1) * S(0.7);
             const g = ramp(t, at, at + 0.7, EO);
             const x = 470 + i * 330;
             const h = unit * c.v * g;
