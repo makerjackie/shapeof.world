@@ -2,7 +2,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame } from "remotion";
 import { BrandMark, EndCard, keys, ramp, useT } from "./kit";
-import { Hook, QUOTES, STEPS } from "./hook";
+import { Hook, QUOTES, RUN0, RUN1 } from "./hook";
 import { Ch1 } from "./ch1";
 import { Ch23 } from "./ch23";
 import { BAR_AT, Ch45 } from "./ch45";
@@ -22,8 +22,8 @@ const CHAPTERS = [
 type Cue = { t: number; id: string; v: number };
 const HOOK_CUES: Cue[] = [
   // the fall
-  ...STEPS.map((s, i) => ({ t: s.at, id: "sfx-ui-07", v: 0.3 + 0.04 * i })),
-  { t: S(2.4), id: "sfx-impact-08", v: 0.45 },
+  ...Array.from({ length: Math.floor((RUN1 - RUN0) / (BEAT / 4)) }, (_, i) => ({ t: RUN0 + (i * BEAT) / 4, id: "sfx-ui-01", v: 0.16 + 0.12 * (i / 8) })),
+  { t: S(1.3), id: "sfx-impact-08", v: 0.45 },
   ...QUOTES.map((q) => ({ t: q.at, id: "sfx-impact-12", v: 0.42 })),
 ];
 // story time (see time.ts): played SHIFT earlier
