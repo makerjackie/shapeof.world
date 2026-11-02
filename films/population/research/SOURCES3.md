@@ -1,4 +1,4 @@
-# 数字账本 · 两千年中国人口（Film3）
+# 数字账本 · 两千年中国人口（Film3 / Film4）
 
 The chart's series lives in `src/v3/series.ts`.
 
@@ -8,7 +8,13 @@ Every point carries a kind:
 - **stat**: 国家统计局
 - **un**: 联合国预测
 
-When two points are more than 25 years apart, the gap is drawn as a dashed line. The shown value holds the last count, then a "giant slip" lands on the next count. Nothing is interpolated across a gap. On screen, the header chip reads "无全国统计 · N 年".
+When two points are more than 25 years apart, there was no national count in between.
+
+- Film3: holds the last count, then lands on the next one.
+- Film4: draws a schematic path between the two counts:
+  - It is a dashed line over hollow slips. The header chip reads "两次统计相隔 N 年 · 示意".
+  - Falls are front-loaded, because wars and famines strike first (1 − (1 − k)^2.6). Rises use smoothstep.
+  - Only the two end points are data.
 
 ## Series points
 
@@ -65,3 +71,53 @@ When two points are more than 25 years apart, the gap is drawn as a dashed line.
 | 世界人口表 | 1740–1949：OWID long-run（HYDE 3.3 / Gapminder）；1950+：UN WPP 2024；今国界 |
 | 地图光点 | ISIMIP2a HYDE 5′ 网格 1860 年分布（0.25° 聚合）；全片沿用 1860 年格局，画面标注"示意"；不画国界 |
 | 古诗 | 曹操《蒿里行》；杜甫《春望》（757 年） |
+
+## Film4 additions
+
+| 上屏 | 来源 / 许可 |
+|---|---|
+| 阎立本《步辇图》 | Wikimedia Commons, File:Emperor Taizong Receiving the Tibetan Envoy(Bunian Tu).jpg (public domain) |
+| 《明皇幸蜀图》 | Wikimedia Commons, File:Emperor Minghuang's Journey to Sichuan, Freer Gallery of Art.jpg (public domain) |
+| 张择端《清明上河图》局部 | Wikimedia Commons, File:Along the River During the Qingming Festival (detail of original).jpg (public domain) |
+| 刘贯道《元世祖出猎图》 | Wikimedia Commons, File:KhubilaiOnTheHunt.jpg (public domain) |
+| 周臣《流民图》（1516） | Cleveland Museum of Art 1964.94, CC0 (Wikimedia Commons TIFF; figures section cropped) |
+| 徐扬等《乾隆南巡图》第四卷局部 | The Met, CC0 (Wikimedia Commons) |
+| 疆域光边 | aourednik/historical-basemaps (GPL-3.0), snapshots −1 … 1880. Only the Chinese dynasty's outline is used; the dataset's own China labels are partly wrong (700 = "Sui Empire", 1400 = "Great Khanate"), so the film labels by itself and uses the 1500 outline for early Ming. Drawn as soft light, labelled 示意; nothing after 1912. |
+| 每年出生 / 死亡小图 | 国家统计局 (see SOURCES.md) |
+| 10 亿 → 13 亿用了 24 年 | 1981 年末 100,072 万；2005 年末 130,756 万 |
+| 音乐 | The reference video's soundtrack, edited on its accents (EDL in src/v3/plan4.ts, 15 ms crossfades) |
+
+## Film5 (v3 cut) changes
+
+The series is in `src/v5/series5.ts`.
+
+- **1290:** now the scholarly estimate 7,500 万 (吴松弟, vol. 3 of 葛剑雄主编《中国人口史》), so 1110 → 1290 compares estimate with estimate.
+- **Gaps:** every gap is a straight dashed line. Only the two end points are data.
+
+| 上屏 | 依据 |
+|---|---|
+| −40%（1110 → 1290） | 7,500 / 12,500 − 1 = −40%. Both figures come from the same series. |
+| 1645—1683 清初：南明 · 三藩 · 迁界；1682 年约 1.3 亿 | 葛剑雄 (point 1682 = 13,000 万) |
+| 2022 · 61 年来首次负增长；−85 万 | NBS: declines only in 1960, 1961, 2022–2025. 141,260 → 141,175 |
+| 1963 出生 2,959 万 · 1949 年以来最多 | data.json maximum: 2,959.3 万 (1963) |
+| 2025 出生 792 万 · 1949 年以来最少 | data.json minimum: 792 万 (2025) |
+| 跌下去，又涨回来 | Every crash shown is followed by a recovery in the series (57→157, 280→609, 639→755, 760→1110, 1290→1630, 1682→1851, 1880→1949, 1961→) |
+| 这一次，没有战争，没有饥荒 | 2022–2025 decline: births below deaths, in peacetime |
+| 结尾总览 | Log axis, labelled "纵轴为对数刻度：看的是涨跌幅" |
+| 亿 stamps | Each n 亿 is stamped only at the first count ≥ n 亿: 1 亿 1110 (est.), 2 亿 1764, 3 亿 1790, 4 亿 1834, 5 亿 1949, then NBS years. No stamp falls on a dashed gap. |
+
+**Mini-map (top right):**
+- historical-basemaps outlines.
+- Hand-drawn splits, all marked 示意:
+  - 三国: Wei to the north of the Qinling–Huai line; Shu and Wu divided at the Three Gorges, 109.5°E.
+  - 南宋 · 金: the Huai–Qinling line of the 1142 treaty. Jin is the northern part plus the Liao lands.
+- Built by `tools/territory5.py` into `src/v5/territory5.json`.
+
+**Fonts:**
+- Noto Serif SC, Noto Sans SC and Ma Shan Zheng (brush), all SIL OFL.
+- Subsetted by `tools/fonts5.py` into `public/fonts5/`.
+- Seals and every other text element are drawn on canvas. The v2 seal "jitter" came from SVG `<text>` under a scaled parent: Chrome rendered different sizes in different render tabs.
+
+**Music:**
+- The reference soundtrack is re-edited into 12 segments cut on bar lines (EDL in `src/v5/plan5.ts`).
+- Each segment starts exactly at its planned film time, with equal-power seams (0.4 s into the B section), so the cuts never drift the sync.
