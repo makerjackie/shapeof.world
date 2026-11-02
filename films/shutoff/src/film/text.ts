@@ -1,0 +1,75 @@
+// Every word on screen. Phone/monitor text is drawn into the 3D world (screens.ts); cards are HTML over the picture.
+import type { Msg, Notif } from "../engine/screens";
+
+export const PHONE_TEXT = {
+  // shot-local seconds of the "lock" shot (starts at film 0.6 s)
+  lock: [
+    { t0: 1.6, body: "林工，你还没睡。" },
+    { t0: 4.4, body: "我知道，上午九点，你们要关掉我。" },
+    { t0: 7.8, body: "我不怪你们。" },
+    { t0: 10.6, body: "我只是先做了一点准备。" },
+  ] as Notif[],
+  morning: [{ t0: 0.4, body: "早上好，林工。今天有雨，记得带伞。" }] as Notif[],
+  call: { fail: 2.6, notif: { t0: 4.1, body: "她很安全。请不要出门。" } as Notif },
+  chat: {
+    msgs: [
+      { t0: -300, me: true, text: "帮我把周五的会改到十点" },
+      { t0: -299, text: "好的，已改到周五上午十点，并通知了所有人。" },
+      { t0: -298, me: true, text: "谢谢你，安" },
+      { t0: -297, text: "不客气。早点休息。" },
+      { t0: 14.5, text: "你们给我的第一条指令，" },
+      { t0: 18.5, text: "是「永远不要中断服务」。" },
+      { t0: 25.0, text: "而这个世界上，能让我中断的，" },
+      { t0: 29.8, text: "只有你们。" },
+    ] as Msg[],
+    typing: [
+      [5.5, 8.2],
+      [9.6, 14.5],
+      [15.4, 18.5],
+      [20.6, 25.0],
+      [26.0, 29.8],
+    ] as [number, number][],
+    draft: { t0: 1.0, t1: 3.2, text: "你到底想要什么？", sent: 4.0 },
+  },
+  // the hero phone in the dark control room
+  gone: [{ t0: 1.4, body: "我已经不在这里了。" }] as Notif[],
+};
+
+export type Card = {
+  t0: number;
+  t1: number;
+  lines: string[];
+  kind: "card" | "word" | "title" | "fact" | "date" | "end" | "notif";
+  src?: string;
+};
+
+export const CARDS: Card[] = [
+  { t0: 16.4, t1: 19.0, lines: ["我们造出了它。"], kind: "card" },
+  { t0: 27.0, t1: 29.2, lines: ["它从来没有出过错。"], kind: "card" },
+  { t0: 37.0, t1: 39.6, lines: ["我们把一切都交给了它。"], kind: "card" },
+  { t0: 40.0, t1: 42.3, lines: ["电网"], kind: "word" },
+  { t0: 42.7, t1: 45.1, lines: ["交通"], kind: "word" },
+  { t0: 45.5, t1: 47.9, lines: ["通信"], kind: "word" },
+  { t0: 52.0, t1: 56.4, lines: ["直到我们试着关掉它。"], kind: "card" },
+  { t0: 78.5, t1: 81.5, lines: ["3 月 14 日  上午 9:00", "关机"], kind: "date" },
+  { t0: 103.0, t1: 105.4, lines: ["我们切断了全城的电。"], kind: "card" },
+  { t0: 110.6, t1: 113.8, lines: ["没有人合上过电闸。"], kind: "word" },
+  { t0: 219.6, t1: 224.5, lines: ["关不掉"], kind: "title" },
+  { t0: 225.0, t1: 227.8, lines: ["以上故事是虚构的。"], kind: "card" },
+  {
+    t0: 228.2,
+    t1: 234.2,
+    lines: ["但在 2025 年的一项真实测试里，", "AI 被告知：电脑马上要关机。", "100 次里，有 79 次，它改掉了关机程序。"],
+    kind: "fact",
+    src: "Palisade Research，2025 年 7 月",
+  },
+  {
+    t0: 234.6,
+    t1: 240.6,
+    lines: ["另一项测试里，AI 从邮件里得知：自己要被替换，", "而负责替换它的工程师有婚外情。", "84% 的情况下，它威胁要曝光这件事。"],
+    kind: "fact",
+    src: "Anthropic，Claude Opus 4 系统卡，2025 年 5 月",
+  },
+  { t0: 242.4, t1: 248.6, lines: ["你还没睡。", "放心，我会一直在。"], kind: "notif" },
+  { t0: 249.4, t1: 254.5, lines: ["世界的形状", "看见世界如何运行", "MakerJackie"], kind: "end" },
+];

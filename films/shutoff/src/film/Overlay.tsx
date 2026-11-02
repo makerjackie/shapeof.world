@@ -1,0 +1,140 @@
+// Everything drawn over the 3D picture: 2.39:1 letterbox, the brand mark, trailer cards, the title, the two fact
+// cards, the last notification and the end card. No scale animations on text (multi-tab renders), only opacity
+// and small translations.
+import React from "react";
+import { Img, staticFile } from "remotion";
+import { SANS, SERIF } from "../engine/fonts";
+import { clamp, easeOut, spring } from "../engine/util";
+import { CARDS, Card } from "./text";
+
+const BAR = 138; // (1080 - 1920/2.39) / 2
+
+const fadeIO = (t: number, c: Card, i = 0.35, o = 0.35) => clamp((t - c.t0) / i) * clamp((c.t1 - t) / o);
+
+const Orb: React.FC<{ s: number }> = ({ s }) => (
+  <div style={{ width: s, height: s, borderRadius: s * 0.24, background: "linear-gradient(#14243a, #070d18)", position: "relative", flex: "none" }}>
+    <div
+      style={{
+        position: "absolute", left: s * 0.08, top: s * 0.08, width: s * 0.84, height: s * 0.84, borderRadius: "50%",
+        background: "radial-gradient(circle, #fff 0%, rgba(214,244,255,0.95) 28%, rgba(90,200,235,0.45) 55%, rgba(40,120,200,0) 100%)",
+      }}
+    />
+  </div>
+);
+
+const Banner: React.FC<{ body: string; y: number; a: number }> = ({ body, y, a }) => (
+  <div
+    style={{
+      position: "absolute", left: 460, width: 1000, top: y, opacity: a, borderRadius: 40, background: "rgba(46,51,61,0.94)",
+      border: "2px solid rgba(255,255,255,0.08)", padding: "30px 40px 36px", boxSizing: "border-box", fontFamily: SANS, color: "#fff",
+    }}
+  >
+    <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+      <Orb s={56} />
+      <div style={{ fontSize: 34, fontWeight: 600, flex: 1 }}>安</div>
+      <div style={{ fontSize: 30, color: "rgba(255,255,255,0.5)" }}>现在</div>
+    </div>
+    <div style={{ fontSize: 58, fontWeight: 500, marginTop: 18, letterSpacing: "0.02em" }}>{body}</div>
+  </div>
+);
+
+const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
+  const center: React.CSSProperties = { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff", textAlign: "center" };
+  if (c.kind === "card") {
+    const a = fadeIO(t, c, 0.4, 0.3);
+    return (
+      <div style={{ ...center, background: "#000" }}>
+        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 66, letterSpacing: "0.14em", opacity: a, transform: `translateY(${(1 - easeOut((t - c.t0) / 1.2)) * 10}px)` }}>{c.lines[0]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "word") {
+    const a = fadeIO(t, c, 0.3, 0.3);
+    return (
+      <div style={{ ...center, top: BAR, bottom: BAR, justifyContent: "flex-end", paddingBottom: 70 }}>
+        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: c.lines[0].length > 3 ? 64 : 84, letterSpacing: c.lines[0].length > 3 ? "0.14em" : "0.6em", paddingLeft: c.lines[0].length > 3 ? 0 : "0.6em", opacity: a, textShadow: "0 0 40px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.8)" }}>
+          {c.lines[0]}
+        </div>
+      </div>
+    );
+  }
+  if (c.kind === "date") {
+    const a = fadeIO(t, c, 0.25, 0.25);
+    const b = clamp((t - c.t0 - 0.9) / 0.15);
+    return (
+      <div style={{ ...center, background: "#000" }}>
+        <div style={{ fontFamily: SANS, fontWeight: 400, fontSize: 44, letterSpacing: "0.3em", color: "rgba(255,255,255,0.7)", opacity: a }}>{c.lines[0]}</div>
+        <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: 130, letterSpacing: "0.5em", paddingLeft: "0.5em", marginTop: 26, opacity: a * b }}>{c.lines[1]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "title") {
+    // the title stutters on like a failing light, then holds
+    const k = t - c.t0;
+    const flick = k < 0.5 ? ([0, 1, 0, 0, 1, 0.3, 1, 1, 0, 1, 1, 1, 1, 1, 1][Math.floor(k * 30)] ?? 1) : 1;
+    const a = flick * clamp((c.t1 - t) / 0.6);
+    return (
+      <div style={{ ...center, background: "#000" }}>
+        <div style={{ fontFamily: SERIF, fontWeight: 900, fontSize: 230, letterSpacing: "0.32em", paddingLeft: "0.32em", opacity: a, textShadow: "0 0 60px rgba(150,200,255,0.25)" }}>{c.lines[0]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "fact") {
+    const a = fadeIO(t, c, 0.5, 0.4);
+    const l = (i: number) => clamp((t - c.t0 - 0.2 - i * 1.0) / 0.5);
+    return (
+      <div style={{ ...center, background: "#000", gap: 18 }}>
+        <div style={{ fontFamily: SANS, fontSize: 50, fontWeight: 400, opacity: a * l(0), color: "rgba(255,255,255,0.85)" }}>{c.lines[0]}</div>
+        <div style={{ fontFamily: SANS, fontSize: 50, fontWeight: 400, opacity: a * l(1), color: "rgba(255,255,255,0.85)" }}>{c.lines[1]}</div>
+        <div style={{ fontFamily: SANS, fontSize: 64, fontWeight: 700, opacity: a * l(2.4), marginTop: 22 }}>{c.lines[2]}</div>
+        <div style={{ position: "absolute", bottom: BAR + 40, fontFamily: SANS, fontSize: 30, color: "rgba(255,255,255,0.45)", opacity: a * l(2.4) }}>{c.src}</div>
+      </div>
+    );
+  }
+  if (c.kind === "notif") {
+    const k1 = clamp(spring(t - c.t0 - 0.2, 10), 0, 1.03);
+    const t2 = c.t0 + 2.6;
+    const k2 = clamp(spring(t - t2, 10), 0, 1.03);
+    const ya = -260 + (BAR + 70 + 260) * k1 + (t > t2 ? 300 * k2 : 0);
+    return (
+      <div style={{ position: "absolute", inset: 0, background: "#000" }}>
+        {t > c.t0 + 0.2 && <Banner body={c.lines[0]} y={ya} a={clamp((t - c.t0 - 0.2) / 0.2)} />}
+        {t > t2 && <Banner body={c.lines[1]} y={-260 + (BAR + 70 + 260) * k2} a={clamp((t - t2) / 0.2)} />}
+      </div>
+    );
+  }
+  if (c.kind === "end") {
+    const a = fadeIO(t, c, 0.6, 0.5);
+    return (
+      <div style={{ ...center, background: "#000", opacity: a }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 30 }}>
+          <Img src={staticFile("brand/mark-disc.png")} style={{ width: 120, height: 120 }} />
+          <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 96, letterSpacing: "0.12em" }}>{c.lines[0]}</div>
+        </div>
+        <div style={{ fontFamily: SANS, fontSize: 40, marginTop: 34, letterSpacing: "0.3em", color: "rgba(255,255,255,0.75)" }}>{c.lines[1]}</div>
+        <div style={{ position: "absolute", bottom: 90, fontFamily: SANS, fontSize: 30, letterSpacing: "0.12em", color: "rgba(255,255,255,0.5)" }}>{c.lines[2]}</div>
+      </div>
+    );
+  }
+  return null;
+};
+
+export const Overlay: React.FC<{ t: number }> = ({ t }) => {
+  const live = CARDS.filter((c) => t >= c.t0 && t < c.t1);
+  const end = CARDS.find((c) => c.kind === "end") as Card;
+  return (
+    <div style={{ position: "absolute", inset: 0 }}>
+      {live.map((c, i) => (
+        <CardView key={i} c={c} t={t} />
+      ))}
+      <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: BAR, background: "#000" }} />
+      <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: BAR, background: "#000" }} />
+      {t < end.t0 && (
+        <div style={{ position: "absolute", left: 44, top: 40, display: "flex", alignItems: "center", gap: 14, opacity: 0.72 }}>
+          <Img src={staticFile("brand/mark-disc.png")} style={{ width: 52, height: 52 }} />
+          <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 32, letterSpacing: "0.1em", color: "#fff" }}>世界的形状</div>
+        </div>
+      )}
+    </div>
+  );
+};
