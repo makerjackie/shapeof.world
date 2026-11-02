@@ -140,7 +140,7 @@ const drawMap = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
     if (a <= 0.02) continue;
     a = Math.min(1, a);
     let col = "255,222,160";
-    let sz = 12 * d.s;
+    let sz = 11 * d.s;
     if (!han && t >= d.t0) {
       const dt = t - d.t0;
       if (dt < 0.3) {
@@ -158,11 +158,11 @@ const drawMap = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
         a = Math.min(1, a + 0.7 * (1 - ph / 0.25));
       }
     }
-    ctx.fillStyle = `rgba(${col},${Math.min(1, a * 1.1) * alpha})`;
-    ctx.fillRect(d.x - sz * 0.42, d.y - sz * 0.28, sz * 0.84, sz * 0.56);
-    if (d.b > 0.55) {
+    ctx.fillStyle = `rgba(${col},${Math.min(1, a * 0.78) * alpha})`;
+    ctx.fillRect(d.x - sz * 0.36, d.y - sz * 0.24, sz * 0.72, sz * 0.48);
+    if (d.b > 0.72) {
       // city glow
-      ctx.fillStyle = `rgba(${col},${0.12 * a * alpha})`;
+      ctx.fillStyle = `rgba(${col},${0.06 * a * alpha})`;
       ctx.fillRect(d.x - sz * 1.3, d.y - sz * 0.8, sz * 2.6, sz * 1.6);
     }
   }
