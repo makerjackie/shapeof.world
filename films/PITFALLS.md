@@ -9,3 +9,4 @@
 - **两台机器之间，改过的文件要确认同步了再渲。** 开渲前对一遍两边源文件的 md5。
 - **多标签页渲染时，图表上的 CSS `filter` 会逐帧漂移**，别用。
 - **three.js 按 `onBeforeCompile` 的函数源码缓存着色器。** 几个材质共用一个函数、只是闭包里的参数不同（比如麦秆和麦穗的颜色），会悄悄共用第一个编译出来的着色器。每个材质设一个 `customProgramCacheKey`（《现代战争》`src/e3/engine.ts`）。
+- **画面里随机出现整块黑色矩形（同一帧每次都一样）。** HDR 渲染目标里只要有一个 NaN/Inf 像素，UnrealBloomPass 的多级模糊就会把它抹成一大块，色调映射后变黑。后期第一步先清理：`isnan/isinf` 置零、`clamp` 到几百（《关不掉》`films/shutoff/src/engine/engine.ts` 的 `SAN_FRAG`）。关 MSAA、加 `gl.finish` 都没用。

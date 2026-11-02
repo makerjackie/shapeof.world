@@ -387,7 +387,11 @@ put(242.6, vibrate(0.9)); put(242.6, ping(0.95))
 put(245.0, ping(0.95))
 
 y = BUF[: int(DUR * SR)]
-# gentle glue
+# glue: set the body of the mix to a working level, then saturate the hits softly instead of letting the
+# mastering limiter squash them (it was taking up to 15 dB off the braams)
+rms = np.sqrt(np.mean(y[np.abs(y).max(1) > 1e-4] ** 2))
+y = y / max(rms, 1e-9) * 0.08
+y = np.tanh(y / 0.35) * 0.35
 peak = np.max(np.abs(y))
 y = y / max(peak, 1e-9) * 0.89
 wavfile.write(OUT, SR, y.astype(np.float32))
