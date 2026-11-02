@@ -54,24 +54,19 @@ export const Cover: React.FC<{ w: number; h: number; v: "A" | "B" }> = ({ w, h, 
   const bar = Math.round(h * 0.06);
   const tall = h > w;
   const wide = w / h > 1.5;
-  // text block and picture placement for 3:4, 4:3 and 16:9
-  const text = tall
-    ? { left: 70, top: bar + 70, size: 150, sub: 150 }
-    : wide
-      ? { left: 110, top: bar + 250, size: 150, sub: 150 }
-      : { left: 80, top: bar + 150, size: 128, sub: 128 };
-  const pic = tall ? { cx: w / 2 - 20, top: bar + 610, s: 0.8 } : wide ? { cx: 1300, top: bar + 150, s: 0.92 } : { cx: 1035, top: bar + 300, s: 0.78, labelsLeft: true };
+  // 16:9: words left, picture right. 4:3 and 3:4: words centred (platforms centre-crop these to 3:4 or 16:9),
+  // Rockefeller and the tree below them.
+  const text = tall ? { top: 470, size: 150 } : wide ? { top: bar + 250, size: 150 } : { top: 190, size: 120 };
+  const pic = tall ? { cx: w / 2, top: 939, s: 0.68 } : wide ? { cx: 1300, top: bar + 150, s: 0.92 } : { cx: w / 2, top: 567, s: 0.55 };
   return (
     <AbsoluteFill style={{ background: K.bg, overflow: "hidden" }}>
       <Paper />
       <Picture {...pic} />
-      {/* darken behind the words */}
-      <div style={{ position: "absolute", inset: 0, background: tall
-        ? "linear-gradient(180deg, rgba(11,9,7,0.85) 0%, rgba(11,9,7,0.6) 35%, rgba(11,9,7,0) 50%)"
-        : "linear-gradient(90deg, rgba(11,9,7,0.9) 0%, rgba(11,9,7,0.6) 38%, rgba(11,9,7,0) 55%)" }} />
-      <div style={{ position: "absolute", left: text.left, top: text.top, fontFamily: SERIF, fontWeight: 900, color: K.fg, lineHeight: 1.12, letterSpacing: 2, textShadow: "0 6px 34px rgba(0,0,0,0.85)" }}>
+      {wide ? <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(11,9,7,0.9) 0%, rgba(11,9,7,0.6) 38%, rgba(11,9,7,0) 55%)" }} /> : null}
+      <div style={{ position: "absolute", left: wide ? 110 : 0, right: wide ? undefined : 0, top: text.top, textAlign: wide ? "left" : "center", fontFamily: SERIF, fontWeight: 900, color: K.fg,
+        lineHeight: 1.12, letterSpacing: 2, textShadow: "0 6px 34px rgba(0,0,0,0.85)" }}>
         {TEXTS[v].map((line, i) => (
-          <div key={i} style={{ fontSize: v === "A" ? text.size * (tall ? 0.86 : 0.86) : text.size, whiteSpace: "nowrap" }}>
+          <div key={i} style={{ fontSize: v === "A" ? text.size * 0.86 : text.size, whiteSpace: "nowrap" }}>
             {line.map((sg, j) => (
               <span key={j} style={{ color: sg.gold ? K.gold : undefined }}>{sg.t}</span>
             ))}
