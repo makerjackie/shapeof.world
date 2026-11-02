@@ -78,8 +78,8 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
   const tList = a + S(0.15);
   const tLit = a + S(0.8);
   const tRatio = a + S(3);
-  const tCards = a + S(4.7);
-  const tTsing = tCards + S(2);
+  const tCards = a + S(5);
+  const tTsing = tCards + S(1.7);
   const tClose = a + S(9.1);
   const lift = ramp(t, tCards - 0.3, tCards + 0.4, EIO);
   const ratioO = win(t, tRatio, tCards, 0.35, 0.3);
@@ -94,6 +94,7 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
       {ratioO > 0 ? (
         <div style={{ position: "absolute", inset: 0, opacity: ratioO }}>
           <div style={{ position: "absolute", left: 0, right: 0, top: 130, height: 560, background: "rgba(11,9,7,0.82)" }} />
+          <Label x={960} y={210} o={1} size={36} color={K.sub} weight={700}>考中进士的人数，按人口比例算</Label>
           {[
             { lab: "顾 沈 钱", sub: "同一地区的常见姓", v: 1, c: K.ashHi },
             { lab: "这 13 个姓", sub: "", v: 3.4, c: K.gold },
@@ -108,7 +109,7 @@ export const Bang: React.FC<{ t: number }> = ({ t }) => {
               </React.Fragment>
             );
           })}
-          <Cap at={tRatio + 0.1} out={tCards - 0.05} lines={["是同一地区常见姓的", [{ t: "3.4 倍", num: true, c: K.gold }, "。"]]} />
+          <Cap at={tRatio + 0.1} out={tCards - 0.05} lines={["按人口比例算，", ["是同地区常见姓的 ", { t: "3.4 倍", num: true, c: K.gold }, "。"]]} />
         </div>
       ) : null}
 
