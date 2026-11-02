@@ -82,23 +82,21 @@ const segOf = (y: number) => {
   return lo;
 };
 export const isGap = (i: number) => SERIES[i + 1].y - SERIES[i].y > GAP_YEARS;
-// how fast the giant slip lands at the end of a gap (years)
-const landYears = (a: Pt, b: Pt) => Math.min(6, 0.035 * (b.y - a.y));
-
-// the value the film shows for year y (gaps hold the last count, then land on the next one)
+// between two counts far apart we draw a schematic path (dashed on screen, labelled 示意):
+// falls are front-loaded (wars and famines strike first), rises ease in and out
+export const SHAPE_GAPS = true;
 export const val = (y: number) => {
   const i = segOf(y);
   const a = SERIES[i];
   const b = SERIES[i + 1];
   if (y <= a.y) return a.v;
   if (y >= b.y) return b.v;
+  const k = (y - a.y) / (b.y - a.y);
   if (isGap(i)) {
-    const L = landYears(a, b);
-    if (y < b.y - L) return a.v;
-    const k = (y - (b.y - L)) / L;
-    return a.v + (b.v - a.v) * k * k * (3 - 2 * k);
+    const kk = b.v < a.v ? 1 - Math.pow(1 - k, 2.6) : k * k * (3 - 2 * k);
+    return a.v + (b.v - a.v) * kk;
   }
-  return a.v + ((b.v - a.v) * (y - a.y)) / (b.y - a.y);
+  return a.v + (b.v - a.v) * k;
 };
 export const pointAt = (y: number) => SERIES[segOf(y)];
 export const gapAt = (y: number) => {
