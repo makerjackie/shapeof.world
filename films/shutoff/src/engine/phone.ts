@@ -83,7 +83,7 @@ void main(){
   vec2 q = abs(p) - (uSize * 0.5 - 0.0062);
   float d = length(max(q, 0.0)) - 0.0062;
   if (d > 0.0) discard;
-  vec3 img = texture2D(map, vUv).rgb * uBright * 1.5;
+  vec3 img = texture2D(map, vUv).rgb * uBright * 1.15;
   // glass: a faint reflection of the rainy window
   vec3 V = normalize(vW - uCam);
   vec3 R = reflect(V, vec3(0.0, 1.0, 0.0));
@@ -273,7 +273,7 @@ export const phoneScene = (): SceneMod => {
     if (mode === "lock") {
       const k = ease(clamp((lt - 1.2) / 3.4));
       pos.set(lerp(0.03, 0.006, k), lerp(0.055, 0.135, k), lerp(0.36, 0.075, k));
-      tgt.set(0, lerp(0.02, 0.0, k), lerp(-0.06, -0.006, k));
+      tgt.set(0, lerp(0.02, 0.0, k), lerp(-0.06, -0.012, k));
       // slow push through the stack of notifications
       const push = clamp((lt - 4.6) / 9);
       pos.y -= 0.022 * push;
@@ -286,8 +286,9 @@ export const phoneScene = (): SceneMod => {
       tgt.set(0, 0, -0.01);
       fov = 30;
     } else if (mode === "call") {
-      pos.set(0.004, 0.13 - lt * 0.003, 0.078 - lt * 0.002);
-      tgt.set(0, 0, -0.012);
+      const up = ease(clamp((lt - 3.7) / 0.7));
+      pos.set(0.004, 0.13 - lt * 0.003, lerp(0.078, 0.05, up) - lt * 0.002);
+      tgt.set(0, 0, lerp(-0.012, -0.046, up));
       fov = 30;
     } else if (mode === "chat") {
       const k = clamp(lt / 37);
@@ -322,7 +323,7 @@ export const phoneScene = (): SceneMod => {
     }
     return {
       dof, focus, aperture, exposure, zoomBlur: zoom,
-      bloom: 0.5, bloomThreshold: 0.75, bloomRadius: 0.6, streak: 0.18,
+      bloom: 0.45, bloomThreshold: 1.05, bloomRadius: 0.6, streak: 0.12,
       lift: [0.004, 0.012, 0.022], gain: mode === "morning" ? [0.98, 1.0, 1.04] : [0.96, 1.0, 1.06],
       sat: 0.92, grain: 0.07, vignette: 0.6,
     };

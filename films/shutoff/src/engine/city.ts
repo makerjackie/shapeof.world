@@ -66,7 +66,7 @@ vec3 skyCol(vec3 d){
   vec3 nightTop = vec3(0.003, 0.005, 0.011), nightHor = vec3(0.075, 0.050, 0.040);
   vec3 duskTop = vec3(0.006, 0.014, 0.045), duskHor = vec3(0.40, 0.17, 0.07);
   float west = 0.5 + 0.5 * dot(normalize(d.xz + 1e-4), normalize(vec2(-1.0, 0.35)));
-  vec3 hor = mix(nightHor, mix(vec3(0.12, 0.13, 0.2), duskHor, west), uDusk);
+  vec3 hor = mix(nightHor, mix(vec3(0.035, 0.06, 0.13), duskHor, pow(west, 2.5)), uDusk);
   vec3 top = mix(nightTop, duskTop, uDusk);
   return mix(hor, top, pow(clamp(e, 0.0, 1.0), 0.32));
 }`;
@@ -133,7 +133,7 @@ void main(){
     vec3 avg = mix(wall, mix(glass, wc * 0.45 * on, litF), (wmax.x - wmin.x) * (wmax.y - wmin.y));
     col = mix(pattern, avg, aa);
     // dusk light on west faces
-    col += vec3(1.0, 0.45, 0.2) * 0.06 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
+    col += vec3(1.0, 0.45, 0.2) * 0.025 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
     col += streetGlow * up;
     // horizontal light strips on the data centre
     if (typ > 1.5) col += vec3(0.6, 0.85, 1.0) * smoothstep(0.08, 0.0, abs(fract(vW.y / 6.0) - 0.5)) * 0.25 * on;
@@ -216,7 +216,7 @@ void main(){
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   float px = aSize * uScale / max(-mv.z, 0.1);
   gl_PointSize = max(uMinPx, px);
-  float dim = clamp(px / uMinPx, 0.15, 1.0);
+  float dim = clamp(px / uMinPx, 0.0, 1.0); dim = max(dim * dim, 0.03);
   vCol = aCol * dim * exp(-length(mv.xyz) * uFogD);
   if (aSize <= 0.0) vCol = vec3(0.0);
   gl_Position = projectionMatrix * mv;
@@ -439,28 +439,52 @@ export const cityScene = (): SceneMod => {
     // LED pixel grid
     vec2 g = fract(vUv * vec2(256.0, 128.0));
     c *= 0.75 + 0.25 * step(0.2, g.x) * step(0.2, g.y);
-    c *= 2.2 * uOn;
+    c *= 1.25 * uOn;
     float dist = length(vW - uCam);
     gl_FragColor = vec4(mix(uFog, c, exp(-dist * uFogD)), 1.0);
   }`;
   const BB_VERT = /* glsl */ `varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`;
-  const boards: { mesh: THREE.Mesh; u: Record<string, THREE.IUniform>; x: number; z: number }[] = [];
-  tallest.forEach((b, i) => {
-    const faceX = i % 2 === 1;
-    const bw = (faceX ? b.d : b.w) * 0.92;
+  const boards: { mesh: THREE.Mesh; u: Record<string, THREE.IUniform>; x: number; z: number; set: "dusk" | "night" }[] = [];
+  // rooftop LED screens, each turned to face the camera of the shot it belongs to
+  const BB_CAM = new THREE.Vector3(-380, 120, 950);
+  const BB_TGT = new THREE.Vector3(-60, 90, 300);
+  const DUSK_CAM = new THREE.Vector3(-720, 175, 820);
+  const DUSK_TGT = new THREE.Vector3(-40, 140, 40);
+  const pickBoards = (cam: THREE.Vector3, tgt: THREE.Vector3, n: number, dmin: number, dmax: number, hmin: number, hmax: number) => {
+    const fwd = tgt.clone().sub(cam).setY(0).normalize();
+    const out: Bld[] = [];
+    for (const b of blds) {
+      if (b.crown || b.type > 1) continue;
+      if (b.h < hmin || b.h > hmax) continue;
+      const v = new THREE.Vector3(b.x - cam.x, 0, b.z - cam.z);
+      const d = v.length();
+      if (d < dmin || d > dmax) continue;
+      const ang = Math.acos(v.normalize().dot(fwd));
+      if (ang > 0.36) continue;
+      if (out.some((o) => Math.hypot(o.x - b.x, o.z - b.z) < 150)) continue;
+      out.push(b);
+      if (out.length >= n) break;
+    }
+    return out;
+  };
+  const addBoard = (b: Bld, cam: THREE.Vector3, set: "dusk" | "night", i: number) => {
+    const bw = set === "night" ? 70 + 30 * hash1(i * 3.1) : 46 + 24 * hash1(i * 3.1);
     const bh = bw * 0.5;
     const u = { tA: { value: adTex }, tB: { value: homeTex }, uFlip: { value: 0 }, uOn: { value: 1 }, uFogD: bldU.uFogD, uFog: bldU.uFog, uCam: bldU.uCam };
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(bw, bh), new THREE.ShaderMaterial({ vertexShader: BB_VERT, fragmentShader: BB_FRAG, uniforms: u }));
-    const y = Math.min(b.h * (0.42 + 0.1 * hash1(i)), 170);
-    if (faceX) {
-      mesh.position.set(b.x - b.w / 2 - 0.6, y, b.z);
-      mesh.rotation.y = -Math.PI / 2;
-    } else {
-      mesh.position.set(b.x, y, b.z + b.d / 2 + 0.6);
-    }
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(bw, bh), new THREE.ShaderMaterial({ vertexShader: BB_VERT, fragmentShader: BB_FRAG, uniforms: u, side: THREE.DoubleSide }));
+    mesh.position.set(b.x, b.h + bh / 2 + 5, b.z);
+    mesh.rotation.y = Math.atan2(cam.x - b.x, cam.z - b.z);
     scene.add(mesh);
-    boards.push({ mesh, u, x: b.x, z: b.z });
-  });
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(bw + 2, bh + 2, 1.2), new THREE.MeshStandardMaterial({ color: 0x0a0b0d, roughness: 0.8 }));
+    frame.position.copy(mesh.position);
+    frame.rotation.y = mesh.rotation.y;
+    frame.translateZ(-0.8);
+    scene.add(frame);
+    boards.push({ mesh, u, x: b.x, z: b.z, set });
+  };
+  pickBoards(BB_CAM, BB_TGT, 7, 170, 900, 25, 110).forEach((b, i) => addBoard(b, BB_CAM, "night", i));
+  pickBoards(DUSK_CAM, DUSK_TGT, 3, 300, 900, 40, 150).forEach((b, i) => addBoard(b, DUSK_CAM, "dusk", i + 20));
+  void tallest;
 
   // pylons on the western outskirts: a line marching into the city
   const steel = new THREE.MeshStandardMaterial({ color: 0x3a3d42, metalness: 0.7, roughness: 0.5 });
@@ -812,10 +836,10 @@ export const cityScene = (): SceneMod => {
     let fov = 40;
     if (mode === "dusk") {
       st.dusk = 1;
-      const k = lt / 8;
-      pos.set(lerp(-1500, -1050, k), lerp(330, 290, k), lerp(1700, 1250, k));
-      tgt.set(lerp(-150, -60, k), 150, lerp(150, 60, k));
-      fov = 34;
+      const k = ease(clamp(lt / 8.6));
+      pos.set(lerp(-1350, -720, k), lerp(240, 175, k), lerp(1550, 820, k));
+      tgt.set(lerp(-120, -40, k), lerp(170, 140, k), lerp(120, 40, k));
+      fov = lerp(36, 40, k);
       look = { ...look, exposure: 1.1, gain: [1.06, 1.0, 0.95], lift: [0.01, 0.008, 0.02] };
     } else if (mode === "greenwave") {
       st.dusk = 0.55;
@@ -857,8 +881,8 @@ export const cityScene = (): SceneMod => {
       look.streak = 0.45;
     } else if (mode === "freeze") {
       const a = 4.05 + lt * 0.0025;
-      const r = RING_R + 60;
-      pos.set(Math.cos(a) * r, 34, Math.sin(a) * r);
+      const r = RING_R + 32;
+      pos.set(Math.cos(a) * r, 40, Math.sin(a) * r);
       const a2 = a + 0.12;
       tgt.set(Math.cos(a2) * RING_R, RING_Y, Math.sin(a2) * RING_R);
       fov = 22;
@@ -882,12 +906,13 @@ export const cityScene = (): SceneMod => {
       st.carT = 100;
       st.hwT = 100;
       st.allRed = 1;
-      const b0 = boards[0];
-      const by = (b0.mesh.position.y as number);
-      pos.set(b0.x - 140 + lt * 5, by - 40 + lt * 3, b0.z + 420 - lt * 6);
-      tgt.set(b0.x - 20, by + 10, b0.z);
-      fov = 42;
-      st.flip = boards.map((_, i) => ease(clamp((lt - 0.9 - i * 0.18) / 0.45)));
+      pos.set(BB_CAM.x + lt * 4, BB_CAM.y + lt * 1.5, BB_CAM.z - lt * 8);
+      tgt.copy(BB_TGT);
+      fov = 44;
+      look.bloomThreshold = 1.3;
+      look.streak = 0.2;
+      let n = 0;
+      st.flip = boards.map((b) => (b.set === "night" ? ease(clamp((lt - 0.9 - n++ * 0.2) / 0.45)) : 1));
     } else if (mode === "drones") {
       st.carT = 100;
       st.hwT = 100;
@@ -899,9 +924,9 @@ export const cityScene = (): SceneMod => {
       look.streak = 0.5;
     } else if (mode === "rise") {
       const k = ease(clamp(lt / 7.6));
-      pos.set(lerp(-380, -200, k), lerp(70, 3800, easeIn(clamp(lt / 7.6)) * 0.85 + k * 0.15), lerp(900, 300, k));
-      tgt.set(lerp(-100, -150, k), 0, lerp(-200, 260, k));
-      fov = lerp(50, 60, k);
+      pos.set(lerp(-380, -300, k), lerp(70, 1500, easeIn(clamp(lt / 7.6)) * 0.7 + k * 0.3), lerp(900, 1100, k));
+      tgt.set(lerp(-100, -60, k), 0, lerp(-200, -150, k));
+      fov = lerp(50, 56, k);
       look.zoomBlur = lt < 1.0 ? (1 - lt) * 1.2 : 0;
       look.exposure = lt < 0.8 ? 1 + (0.8 - lt) * 3 : 1;
     } else if (mode === "glimpse") {
@@ -921,7 +946,7 @@ export const cityScene = (): SceneMod => {
     bldU.uBlink.value = st.blink;
     bldU.uDusk.value = st.dusk;
     bldU.uFogD.value = lerp(0.00024, 0.00018, st.dusk);
-    bldU.uFog.value.setRGB(lerp(0.013, 0.085, st.dusk), lerp(0.011, 0.062, st.dusk), lerp(0.013, 0.07, st.dusk));
+    bldU.uFog.value.setRGB(lerp(0.013, 0.045, st.dusk), lerp(0.011, 0.04, st.dusk), lerp(0.013, 0.06, st.dusk));
     skyU.uGlow.value = st.offR > 0 && st.onR < st.offR ? lerp(1, 0.35, clamp(st.offR / 3000) - clamp(st.onR / 3000)) : 1;
     hemi.intensity = lerp(0.35, 0.9, st.dusk);
     sun.intensity = st.dusk * 1.4;

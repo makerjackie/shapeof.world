@@ -11,6 +11,7 @@ import { loadFonts } from "./fonts";
 import { clamp } from "./util";
 
 export const W = 1920;
+const MSAA = 4;
 export const H = 1080;
 
 export type Look = {
@@ -100,6 +101,14 @@ void main(){
   gl_FragColor = vec4(acc / wsum, 1.0);
 }`;
 
+const SAN_FRAG = /* glsl */ `
+uniform sampler2D tColor; varying vec2 vUv;
+void main(){
+  vec3 c = texture2D(tColor, vUv).rgb;
+  if (any(isnan(c)) || any(isinf(c))) c = vec3(0.0);
+  gl_FragColor = vec4(clamp(c, 0.0, 400.0), 1.0);
+}`;
+
 const BRIGHT_FRAG = /* glsl */ `
 uniform sampler2D tColor; uniform float uThr; varying vec2 vUv;
 void main(){ vec3 c = texture2D(tColor, vUv).rgb; float l = max(c.r, max(c.g, c.b)); gl_FragColor = vec4(c * smoothstep(uThr, uThr * 2.5, l), 1.0); }`;
@@ -179,6 +188,8 @@ class Engine {
   private px = new Uint8Array(4);
   private rtScene: THREE.WebGLRenderTarget;
   private rtDof: THREE.WebGLRenderTarget;
+  private rtSan: THREE.WebGLRenderTarget;
+  private qSan: FullScreenQuad;
   private rtB1: THREE.WebGLRenderTarget;
   private rtB2: THREE.WebGLRenderTarget;
   private rtOutA: THREE.WebGLRenderTarget;
@@ -202,8 +213,10 @@ class Engine {
     this.cam = new THREE.PerspectiveCamera(40, W / H, 0.05, 20000);
 
     const hdr = { type: THREE.HalfFloatType, format: THREE.RGBAFormat, colorSpace: THREE.LinearSRGBColorSpace };
-    this.rtScene = new THREE.WebGLRenderTarget(W, H, { ...hdr, samples: 4, depthTexture: new THREE.DepthTexture(W, H, THREE.FloatType) });
+    this.rtScene = new THREE.WebGLRenderTarget(W, H, { ...hdr, samples: Number(new URLSearchParams(location.search).get("msaa") ?? MSAA), depthTexture: new THREE.DepthTexture(W, H, THREE.FloatType) });
     this.rtDof = new THREE.WebGLRenderTarget(W, H, hdr);
+    this.rtSan = new THREE.WebGLRenderTarget(W, H, hdr);
+    this.qSan = quad(SAN_FRAG, { tColor: { value: null } });
     this.rtB1 = new THREE.WebGLRenderTarget(W / 4, H / 4, hdr);
     this.rtB2 = new THREE.WebGLRenderTarget(W / 4, H / 4, hdr);
     this.rtOutA = new THREE.WebGLRenderTarget(W, H, { type: THREE.UnsignedByteType });
@@ -254,10 +267,14 @@ class Engine {
     r.clear(true, true, true);
     r.render(mod.scene, this.cam);
 
-    let hdrTex: THREE.WebGLRenderTarget = this.rtScene;
+    // sanitise: a single NaN/Inf pixel would otherwise be smeared by the bloom blur into a large black block
+    (this.qSan.material as THREE.ShaderMaterial).uniforms.tColor.value = this.rtScene.texture;
+    r.setRenderTarget(this.rtSan);
+    this.qSan.render(r);
+    let hdrTex: THREE.WebGLRenderTarget = this.rtSan;
     if (look.dof > 0.5) {
       const u = (this.qDof.material as THREE.ShaderMaterial).uniforms;
-      u.tColor.value = this.rtScene.texture;
+      u.tColor.value = this.rtSan.texture;
       u.tDepth.value = this.rtScene.depthTexture;
       u.uNear.value = this.cam.near;
       u.uFar.value = this.cam.far;

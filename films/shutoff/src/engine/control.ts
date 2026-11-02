@@ -164,7 +164,7 @@ export const controlScene = (): SceneMod => {
   const heroMon = new THREE.Group();
   const hb = new THREE.Mesh(new THREE.BoxGeometry(0.64, 0.42, 0.025), bezel);
   heroMon.add(hb);
-  const heroScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.616, 0.385), new THREE.MeshBasicMaterial({ map: log.tex, color: new THREE.Color(1.6, 1.6, 1.6) }));
+  const heroScreen = new THREE.Mesh(new THREE.PlaneGeometry(0.616, 0.385), new THREE.MeshBasicMaterial({ map: log.tex, color: new THREE.Color(1.1, 1.1, 1.1) }));
   heroScreen.position.z = 0.0131;
   heroMon.add(heroScreen);
   const stand = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.25, 0.04), bezel);
@@ -285,7 +285,7 @@ export const controlScene = (): SceneMod => {
   const update = ({ lt, gt, shot, cam }: Ctx): Partial<Look> => {
     const mode = shot.mode;
     deskU.uT.value = gt;
-    phScr.forEach((m, i) => m.color.setScalar(mode === "phones" ? 2.2 * sstep(aOn[i], aOn[i] + 0.12, lt) : 0));
+    phScr.forEach((m, i) => m.color.setScalar(mode === "phones" ? 3.4 * sstep(aOn[i], aOn[i] + 0.12, lt) : 0));
     let room = 0.55;
     let red = 0;
     let monOn = 1;
@@ -302,10 +302,13 @@ export const controlScene = (): SceneMod => {
       const sx = HERO_MON.x;
       const sy = HERO_MON.y + 0.4;
       const sz = HERO_MON.z;
-      pos.set(sx + lerp(0.12, 0.05, k), sy - 0.07, sz + lerp(0.5, 0.36, ease(k)));
-      tgt.set(sx - 0.03, sy - 0.1, sz);
+      pos.set(sx + lerp(0.04, -0.02, k), sy - 0.08, sz + lerp(0.54, 0.47, ease(k)));
+      tgt.set(sx - 0.07, sy - 0.1, sz);
       fov = 34;
-      look.dof = 14;
+      look.bloomThreshold = 1.4;
+      look.bloom = 0.35;
+      look.streak = 0.06;
+      look.dof = 12;
       look.focus = pos.distanceTo(new THREE.Vector3(sx, sy - 0.1, sz));
       look.aperture = 2.2;
     } else if (mode === "countdown") {
@@ -343,7 +346,7 @@ export const controlScene = (): SceneMod => {
     } else if (mode === "phones") {
       room = 0;
       monOn = 0;
-      red = 0.35;
+      red = 0.35 * sstep(2.0, 4.0, lt);
       drawLock(hero.ctx, lt, { time: "09:00", date: "3月14日 星期四", notifs: PHONE_TEXT.gone, wake: clamp((lt - 1.3) / 0.2), top: 600 });
       hero.tex.needsUpdate = true;
       const hp = HERO_PHONE;
@@ -364,6 +367,9 @@ export const controlScene = (): SceneMod => {
         look.dof = 6;
         look.focus = pos.distanceTo(new THREE.Vector3(0, 0.75, 1.0));
         look.aperture = 0.6;
+        look.bloom = 1.1;
+        look.bloomRadius = 0.8;
+        look.bloomThreshold = 0.8;
       }
       look.exposure = 1.0;
       look.bloomThreshold = 0.95;
@@ -379,7 +385,7 @@ export const controlScene = (): SceneMod => {
     panelMat.color.setRGB(0.9 * room * 2, 1.0 * room * 2, 1.15 * room * 2);
     hemi.intensity = room * 0.9 + 0.02;
     for (const d of dashes) d.color.setScalar(1.4 * monOn);
-    (heroScreen.material as THREE.MeshBasicMaterial).color.setScalar(1.6 * monOn);
+    (heroScreen.material as THREE.MeshBasicMaterial).color.setScalar(1.1 * monOn);
     (vwall.material as THREE.MeshBasicMaterial).color.setScalar(monOn * (mode === "countdown" ? 1.5 : 0.6));
     if (mode !== "countdown") {
       drawCountdown(wall.ctx, 2048, 640, 0, 3.0);

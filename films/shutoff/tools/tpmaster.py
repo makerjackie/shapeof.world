@@ -43,7 +43,7 @@ def limit(x, ceil_db):
     g = np.minimum(g, smooth)
     return x * g[:, None], g
 
-tmp = "/tmp/ukraine-battle-tp.wav"
+tmp = "/Volumes/DevSSD/tmp/shutoff/tp.wav"
 I0, tp0 = measure(raw)
 print(f"raw: I {I0:.1f} LUFS, TP {tp0:.1f} dBTP")
 gain_db = TARGET - I0

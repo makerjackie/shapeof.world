@@ -16,18 +16,16 @@ export const useWorldReady = () => {
   return ok;
 };
 
-// The one WebGL canvas; each frame renders synchronously in a layout effect.
+// The one WebGL canvas renders off-DOM; every frame is copied into a plain 2D canvas, which forces the GPU work to
+// complete and gives Remotion a finished picture to capture (the WebGL canvas itself was sometimes captured half-drawn).
 export const World: React.FC<{ t: number; ready: boolean }> = ({ t, ready }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLCanvasElement>(null);
   useLayoutEffect(() => {
+    if (!ready) return;
     const e = engine();
-    ref.current!.appendChild(e.canvas);
-    return () => {
-      if (e.canvas.parentElement === ref.current) ref.current?.removeChild(e.canvas);
-    };
-  }, []);
-  useLayoutEffect(() => {
-    if (ready) engine().render(t);
+    e.render(t);
+    const ctx = ref.current!.getContext("2d") as CanvasRenderingContext2D;
+    ctx.drawImage(e.canvas, 0, 0, W, H);
   });
-  return <div ref={ref} style={{ position: "absolute", left: 0, top: 0, width: W, height: H }} />;
+  return <canvas ref={ref} width={W} height={H} style={{ position: "absolute", left: 0, top: 0, width: W, height: H }} />;
 };
