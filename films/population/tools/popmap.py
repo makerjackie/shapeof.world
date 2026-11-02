@@ -1,7 +1,7 @@
 """China population-density dots for the film floor.
 
 Source: ISIMIP2a HYDE gridded population (population_histsoc_5arcmin_annual_1860_1900.nc).
-Mask: Natural Earth 10m admin-0, China point of view (ne_10m_admin_0_countries_chn), public domain.
+No country mask: every populated cell in the box is drawn (neighbours included), so no border is implied.
 Provinces: Natural Earth 10m admin-1 (used only as masks, never drawn).
 Output: src/v2/popmap.json  {cols, rows, lon0, lat0, step, dots: [[i, j, p1860, p1880, prov], ...]}
 """
@@ -84,8 +84,6 @@ for j, la_ in enumerate(clat):
         if p < 50:
             continue
         pt = (lo_, la_)
-        if not any(path.contains_point(pt) for _, path in chn):
-            continue
         name = next((tag for tag, path in prov if path.contains_point(pt)), "")
         dots.append([i, int(len(clat) - 1 - j) if clat[0] < clat[-1] else j, round(float(p)), round(float(P80[j, i])), name])
 tot60 = sum(d[2] for d in dots)

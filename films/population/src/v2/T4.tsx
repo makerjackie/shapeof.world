@@ -16,7 +16,7 @@ export const T4_FRAMES = 18 * FPS;
 // ---------------- timeline
 const HAN_T = 6.62; // scene switch
 const QCUR = mono([[0, 1776], [1.0, 1851], [2.0, 1851.35], [4.5, 1880], [5.72, 1880.3], [6.62, 1741]]);
-const HCUR = mono([[HAN_T, 2], [9.3, 2.4], [11.5, 57], [14.6, 61], [18, 157]]);
+const HCUR = mono([[HAN_T, 2], [9.3, 2.0], [11.5, 57], [14.6, 61], [18, 157]]);
 const QSPAN = mono([[0, 70], [1, 80], [2, 82], [4.5, 64], [5.72, 62], [6.62, 120]]);
 const HSPAN = mono([[HAN_T, 3.2], [9.0, 12], [11.5, 62], [14.6, 64], [18, 150]]);
 const QHX = mono([[0, 0.66], [1.9, 0.66], [3.0, 0.76], [4.5, 0.76], [5.72, 0.74], [6.62, 0.6]]);
@@ -187,7 +187,7 @@ const drawMap = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
   ctx.font = `500 22px ${FONT_CN}`;
   ctx.textAlign = "left";
   ctx.fillStyle = `rgba(160,170,190,${0.75 * alpha})`;
-  ctx.fillText(han ? "光点：人口分布（按 1860 年格局示意）" : "光点：人口分布（HYDE / ISIMIP，1860）", 60, 1850);
+  ctx.fillText(han ? "光点：人口分布（按 1860 年格局示意）" : "光点：人口分布（HYDE / ISIMIP，1860）", 60, 1470);
   ctx.restore();
 };
 
@@ -562,18 +562,18 @@ const Header: React.FC<{ t: number }> = ({ t }) => {
   return (
     <div style={{ position: "absolute", left: 58, top: 160 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-        <Img src={staticFile("mark-disc.png")} style={{ width: 44, height: 44 }} />
-        <span style={{ font: `900 28px ${FONT_CN}`, color: "#f3f4f7", letterSpacing: 2 }}>世界的形状</span>
-        <span style={{ width: 2, height: 22, background: "rgba(255,255,255,0.25)" }} />
-        <span style={{ font: `700 24px ${FONT_CN}`, color: C.gold }}>两千年 · 中国人口</span>
+        <Img src={staticFile("mark-disc.png")} style={{ width: 54, height: 54 }} />
+        <span style={{ font: `900 32px ${FONT_CN}`, color: "#f3f4f7", letterSpacing: 2 }}>世界的形状</span>
+        <span style={{ width: 2, height: 28, background: "rgba(255,255,255,0.25)" }} />
+        <span style={{ font: `900 36px ${FONT_CN}`, color: C.gold, letterSpacing: 2 }}>两千年中国人口</span>
       </div>
       <div style={{ display: "flex", alignItems: "flex-end", marginTop: 6 }}>
         <div style={{ font: `700 112px ${FONT_NUM}`, color: col, lineHeight: 0.95, textShadow: glow(col + "aa", 22), opacity: dimNum, fontVariantNumeric: "tabular-nums" }}>
-          {Math.round(v).toLocaleString("en-US")}
+          {v >= 10000 ? (v / 10000).toFixed(2) : Math.round(v).toLocaleString("en-US")}
         </div>
         <div style={{ marginLeft: 14, marginBottom: 10, opacity: dimNum }}>
           <div style={{ font: `500 21px ${FONT_CN}`, color: C.sub }}>
-            {peak ? "万人 · 清代最高" : `万人 · ${base}`}
+            {`${v >= 10000 ? "亿人" : "万人"} · ${peak ? "清代最高" : base}`}
           </div>
           <div style={{ display: "inline-block", marginTop: 4, padding: "1px 10px", borderRadius: 4, background: peak ? "rgba(255,207,92,0.95)" : pct >= 0 ? "rgba(255,59,87,0.22)" : "rgba(25,227,138,0.2)", font: `700 34px ${FONT_NUM}`, color: peak ? "#111" : pct >= 0 ? C.up : C.down }}>
             {peak ? "见顶" : `${pct >= 0 ? "▲ +" : "▼ "}${pct.toFixed(2)}%`}
@@ -690,9 +690,16 @@ const Overlays: React.FC<{ t: number }> = ({ t }) => {
           </div>
         </div>
       )}
+      {vis(t, 2.0, 4.4, 0.08, 0.15) > 0 && (
+        <div style={{ position: "absolute", left: 56, top: 610, opacity: vis(t, 2.0, 4.4, 0.08, 0.15) }}>
+          <div style={{ display: "inline-block", padding: "2px 12px", borderRadius: 4, background: "rgba(25,227,138,0.18)", border: "1px solid rgba(25,227,138,0.6)", font: `700 24px ${FONT_CN}`, color: C.down }}>1851 · 战争</div>
+          <div style={{ font: `900 58px ${FONT_CN}`, color: "#fff", marginTop: 8, textShadow: glow("rgba(25,227,138,0.5)") }}>太平天国起事</div>
+          <div style={{ font: `500 27px ${FONT_CN}`, color: C.sub, marginTop: 6 }}>此后 27 年，回民战争、丁戊奇荒接连而来</div>
+        </div>
+      )}
       <Big t={t} a={a2} text={cnt} color={C.down} x={400} y={880} size={118}>
         <div style={{ opacity: a3, font: `700 32px ${FONT_CN}`, color: "#fff", marginTop: 12 }}>死于战乱、饥荒与瘟疫</div>
-        <div style={{ opacity: a3, font: `500 24px ${FONT_CN}`, color: C.sub, marginTop: 6 }}>太平天国 · 回民战争 · 丁戊奇荒　1851—1878</div>
+        <div style={{ opacity: a3, font: `500 24px ${FONT_CN}`, color: C.sub, marginTop: 6 }}>1851—1878 · 曹树基《中国人口史》估算</div>
         <div style={{ opacity: a4, font: `800 34px ${FONT_CN}`, color: C.gold, marginTop: 14, textShadow: glow("rgba(255,190,60,0.6)") }}>接近今天整个日本的人口</div>
       </Big>
       {rw && (
@@ -750,7 +757,7 @@ const Grain: React.FC<{ f: number }> = ({ f }) => (
   </AbsoluteFill>
 );
 
-export const T4: React.FC = () => {
+export const T4: React.FC<{ audio?: string }> = ({ audio = "test_ref.wav" }) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   const h = hitAt(t);
@@ -775,7 +782,7 @@ export const T4: React.FC = () => {
       </AbsoluteFill>
       {flash > 0 && <AbsoluteFill style={{ background: `rgba(220,240,255,${0.35 * flash})`, mixBlendMode: "screen" }} />}
       <Grain f={f} />
-      <Audio src={staticFile("test_ref.wav")} />
+      <Audio src={staticFile(audio)} />
     </AbsoluteFill>
   );
 };
