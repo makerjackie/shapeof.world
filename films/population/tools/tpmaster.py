@@ -1,6 +1,6 @@
 """Deterministic master: gain to target LUFS, 4x-oversampled lookahead peak limiter, AAC, verify.
 usage: tpmaster.py raw.wav video.mp4 out.mp4"""
-import re, subprocess, sys
+import os, re, subprocess, sys
 import numpy as np
 from scipy.io import wavfile
 from scipy.signal import resample_poly
@@ -43,7 +43,7 @@ def limit(x, ceil_db):
     g = np.minimum(g, smooth)
     return x * g[:, None], g
 
-tmp = "/tmp/one-more-tp.wav"
+tmp = f"/Volumes/DevSSD/tmp/population-tp-{os.getpid()}.wav"
 I0, tp0 = measure(raw)
 print(f"raw: I {I0:.1f} LUFS, TP {tp0:.1f} dBTP")
 gain_db = TARGET - I0
