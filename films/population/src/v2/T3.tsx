@@ -595,13 +595,13 @@ const Hero: React.FC<{ t: number }> = ({ t }) => {
   const rewind = t > bar(3) && t < HAN_T;
   const census = t >= HAN_T && t < bar(5);
   let v = val(camAt(t).c);
-  if (census) v = 5959.5 * ease((t - bar(4)) / (BARL * 0.95));
+  if (census) v = 5959.4 * ease((t - bar(4)) / (BARL * 0.95));
   const k = camAt(t);
   const slope = val(k.c) - val(k.c - 0.4);
   const peak = t >= 1.1 && t < bar(0);
   const col = peak ? GOLD : slope < -0.01 ? ICE : GOLD;
   const han = sceneOf(t) === "han";
-  const base = han ? 5959.5 : 43216;
+  const base = han ? 5959.4 : 43216;
   const pct = (v / base - 1) * 100;
   const yi = Math.floor(y);
   const yStr = yi < 1000 ? String(Math.max(1, yi)) : String(yi);
