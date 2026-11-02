@@ -55,5 +55,5 @@ npm install
 node tools/lab.mjs out/s 300 3300 6000                     # 审片截图
 bash tools/review.sh                                       # 半尺寸审片 → out/review.mp4
 node tools/render.mjs out/video.mp4 3                      # 成片画面（无声）
-COMP=Film node ...                                         # 母带见 tools/master.sh
+bash tools/master.sh                                       # 成片 + 母带 → out/money-flow.mp4
 ```
