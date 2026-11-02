@@ -36,7 +36,7 @@ const WORLD: Record<string, P[]> = {
 const inRange = (s: P[], y: number) => {
   const era = (x: number) => (x < 1000 ? 0 : 1);
   const pts = s.filter((p) => era(p[0]) === era(y));
-  if (!pts.length || y < pts[0][0] || y > pts[pts.length - 1][0]) return undefined;
+  if (!pts.length || y < pts[0][0] || y > pts[pts.length - 1][0] + 1) return undefined;
   return lerpS(pts, y);
 };
 export const top5 = (y: number) => {
