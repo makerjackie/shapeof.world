@@ -63,6 +63,28 @@ w = np.clip(np.log10(cw + 0.05) / 3.0 + 0.35, 0, 1)  # ~0.35 empty land .. 1 at 
 clon = np.array(clon); clat = np.array(clat)
 pts = np.stack([clon, clat], 1)
 N = len(ci)
+
+# keep land only: HYDE stores the sea as zero people, so the coastline comes from the year-2000 outlines (all features)
+def _land():
+    feats_ = json.load(open(f"{HB}/world_2000.geojson"))["features"]
+    m = np.zeros(N, bool)
+    for ft in feats_:
+        g = ft["geometry"]
+        if not g:
+            continue
+        polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
+        for p in polys:
+            ring = np.array([q[:2] for q in p[0]], float)
+            bb = (clon >= ring[:, 0].min()) & (clon <= ring[:, 0].max()) & (clat >= ring[:, 1].min()) & (clat <= ring[:, 1].max())
+            if not bb.any():
+                continue
+            ins = Path(ring).contains_points(pts[bb])
+            m[np.where(bb)[0][ins]] = True
+    return m
+_L = _land()
+ci = list(np.array(ci)[_L]); cj = list(np.array(cj)[_L]); w = w[_L]; clon = clon[_L]; clat = clat[_L]
+pts = np.stack([clon, clat], 1)
+N = len(ci)
 print(FILM, "grid", cols, rows, "land cells", N)
 
 # ---------- polygons

@@ -397,15 +397,17 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const e = evAt(t);
       const cue = mapCueAt(t);
       const fit = (cue && FIT[cue.key]) || { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom };
-      const tg = e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : fit;
+      const follow = S.id === "world" && e?.at ? { lon: e.at[0] * 0.75 + fit.lon * 0.25, lat: e.at[1] * 0.75 + fit.lat * 0.25, z: Math.max(fit.z, 2.7) } : null;
+      const tg = e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
       if (f === 0) {
         lon = tg.lon;
         lat = tg.lat;
         z = tg.z;
       }
-      lon += (tg.lon - lon) * 0.06;
-      lat += (tg.lat - lat) * 0.06;
-      z += (tg.z - z) * 0.06;
+      const kk = S.id === "world" ? 0.075 : 0.06;
+      lon += (tg.lon - lon) * kk;
+      lat += (tg.lat - lat) * kk;
+      z += (tg.z - z) * kk;
       MAPCAM.push({ lon, lat, z });
     }
   }
@@ -487,8 +489,9 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const id = useNew ? fr.id[q] : prev.id[q];
       const parts = useNew ? fr.parts : prev.parts;
       const w = CW[q] / 255;
-      let col = "#3a4048";
-      let a = 0.16 + 0.22 * w;
+      const neutral = cue.key === "none";
+      let col = neutral ? "#6b747e" : "#3a4048";
+      let a = neutral ? 0.12 + 0.6 * w * w : 0.1 + 0.25 * w;
       let ox = 0;
       let oy = 0;
       if (id !== 255 && parts[id]) {
@@ -530,7 +533,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       }
       void dead;
       // the switch flashes as it passes
-      const fl = prev && Math.abs(t - tq) < 0.18 && (!prev || prev.id[q] !== fr.id[q]) ? 1 - Math.abs(t - tq) / 0.18 : 0;
+      const fl = prev && cue.from !== "none" && Math.abs(t - tq) < 0.18 && (!prev || prev.id[q] !== fr.id[q]) ? 1 - Math.abs(t - tq) / 0.18 : 0;
       // fx
       let fxCol: string | null = null;
       let fxA = 0;
@@ -1187,6 +1190,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const d = t - h.t;
       if (d < 0 || d > 0.25) continue;
       if (!(h.kind === "crash" || (h.big && h.kind === "war"))) continue;
+      if (!h.e && !h.big) continue;
       const a = d < 0.034 ? 0.55 : 0.55 * (1 - (d - 0.034) / 0.2);
       ctx.save();
       ctx.globalAlpha = clamp(a);
@@ -1226,7 +1230,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.save();
       ctx.translate(W / 2, 560);
       ctx.scale(s, s);
-      text(ctx, L.a, 0, 0, 92, 900, SERIF, col, { align: "center", maxW: 980, glow: "rgba(0,0,0,0.9)", glowBlur: 16 });
+      text(ctx, L.a, 0, 0, 92, 900, SERIF, col, { align: "center", maxW: 960 / s, glow: "rgba(0,0,0,0.9)", glowBlur: 16 });
       ctx.restore();
       if (L.b) {
         const tb = L.t0 + 2 * 0.4654;
@@ -1235,7 +1239,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
           ctx.save();
           ctx.translate(W / 2, 650);
           ctx.scale(s2, s2);
-          text(ctx, L.b, 0, 0, 52, 900, SERIF, WHITE, { align: "center", maxW: 980, glow: "rgba(0,0,0,0.9)", glowBlur: 12 });
+          text(ctx, L.b, 0, 0, 52, 900, SERIF, WHITE, { align: "center", maxW: 960 / s2, glow: "rgba(0,0,0,0.9)", glowBlur: 12 });
           ctx.restore();
         }
       }

@@ -268,7 +268,7 @@ for L in CUES["ending"]:
         put(swish(0.6), L["t"], 0.1)
 put(chime(), CUES["card"], 0.2)
 
-mix = music * duck[:, None] + fx * 0.6
+mix = music * duck[:, None] + fx * 0.46
 peak = np.abs(mix).max()
 lvl = maximum_filter1d(np.abs(mix).max(axis=1), size=int(0.004 * SR), origin=-int(0.002 * SR))
 g = np.minimum(1.0, 0.89 / np.maximum(lvl, 1e-9))
