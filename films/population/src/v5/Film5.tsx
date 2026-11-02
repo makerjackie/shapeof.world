@@ -1222,7 +1222,7 @@ const drawQuotes = (ctx: CanvasRenderingContext2D, t: number) => {
     });
     const by = q.by;
     const ba = clamp((t - q.t0 - 1.6) / 0.4);
-    [...by].forEach((ch, i) => text(ctx, ch, 196 - q.lines.length * 72 + 10, 470 + i * 24, 19, 500, SERIF, "#b9b2a0", { align: "center", alpha: ba }));
+    [...by].forEach((ch, i) => text(ctx, ch, 196 - q.lines.length * 72 + 8, 474 + i * 27, 22, 700, SERIF, SOFT, { align: "center", alpha: ba }));
     ctx.restore();
   }
 };
@@ -1250,12 +1250,13 @@ const drawEndingChart = (ctx: CanvasRenderingContext2D, t: number) => {
     const x = X(k, tr.y);
     const y = Yv(k, val(tr.y));
     const row = i % 2;
-    const ly = y + 46 + row * 34;
+    const dx = tr.y === 1961 ? 44 : tr.y === 1880 ? -30 : 0; // the last two troughs sit close together
+    const ly = y + 52 + row * 40;
     ctx.save();
     ctx.globalAlpha = a;
     ctx.fillStyle = "rgba(245,247,246,0.6)";
     ctx.fillRect(x - 0.5, y + 10, 1, ly - y - 30);
-    text(ctx, tr.name, x, ly, 22, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+    text(ctx, tr.name, x + dx, ly, 28, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     ctx.restore();
     // a small white dot on the trough
     ctx.fillStyle = `rgba(245,247,246,${a})`;
@@ -1359,6 +1360,18 @@ const drawEndingText = (ctx: CanvasRenderingContext2D, t: number) => {
     src.forEach((s, i) => text(ctx, s, W / 2, 1130 + i * 32, 19, 500, SERIF, "#6c6658", { align: "center" }));
     ctx.restore();
   }
+};
+
+// ---------------- the frame darkens at the edges while blood soaks in
+const drawGrief = (ctx: CanvasRenderingContext2D, t: number) => {
+  let k = 0;
+  for (const h of HITS) if (h.kind === "blood") k = Math.max(k, (h.size ?? 1) * (t < h.t ? 0 : t < h.t + 0.4 ? (t - h.t) / 0.4 : Math.max(0, 1 - (t - h.t - 0.4) / 2.6)));
+  if (k <= 0.01) return;
+  const g = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.22, W / 2, H * 0.5, H * 0.72);
+  g.addColorStop(0, "rgba(4,2,2,0)");
+  g.addColorStop(1, `rgba(4,2,2,${0.55 * Math.min(1, k)})`);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
 };
 
 // ---------------- bottom-left shade so the text always reads
@@ -1473,6 +1486,7 @@ const Stage: React.FC<{ t: number; ready: boolean }> = ({ t, ready }) => {
     ctx.restore();
     ctx.save();
     ctx.translate(sx * 0.3, sy * 0.3);
+    drawGrief(ctx, t);
     drawShade(ctx, t);
     drawTopRight(ctx, t);
     drawHeader(ctx, t);
