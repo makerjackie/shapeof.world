@@ -18,7 +18,7 @@
    ```
 
    页面通过 `/media/<key>` 播放和下载，支持拖动。换视频时用新键名，再删掉旧对象。
-3. 封面也放 R2，目录写进 `kit.json` 的 `coversKey`（如 `ai-shape/2026-10-20/covers`），文件名 `cover-<套>-4x3.jpg|webp` 和 `cover-<套>-16x9.jpg|webp`，`.jpg` 用 `--content-type image/jpeg`，`.webp` 用 `image/webp`。只做横版：4:3 给 B站、抖音、视频号，16:9 给 YouTube。
+3. 封面也放 R2，目录写进 `kit.json` 的 `coversKey`（如 `ai-shape/2026-10-20/covers`），文件名 `cover-<套>-4x3.jpg|webp` 和 `cover-<套>-16x9.jpg|webp`，`.jpg` 用 `--content-type image/jpeg`，`.webp` 用 `image/webp`。哪张封面给哪个平台，以 `films/DIRECTOR.md`"封面和标题"为准。
 
 ## 读取作者的选择
 
