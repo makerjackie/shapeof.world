@@ -6,7 +6,7 @@ import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { clone as skClone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { staticFile } from "remotion";
 
-export type Kit = "sub" | "com" | "ind" | "car" | "chr" | "nat";
+export type Kit = "sub" | "com" | "ind" | "car" | "chr" | "nat" | "fur";
 const cache = new Map<string, GLTF>();
 const loader = new GLTFLoader();
 
@@ -84,9 +84,9 @@ export function patch(m: THREE.MeshStandardMaterial, look: Look) {
 }
 
 // a fresh copy of a model with its own patched materials
-// nature-kit materials are flat colours (metallic 1 in the files); repaint them for a night palette
-const NAT: Record<string, string> = { leafsDark: "#2c5446", leafs: "#355e43", woodBarkDark: "#4a3428", woodBark: "#55392a", grass: "#2f4a38" };
-export function inst(kit: Kit, name: string, look: Look, opts: { shadow?: boolean } = {}) {
+// nature-kit materials are flat colours (metallic 1 in the files); repaint them in a soft daylight palette
+const NAT: Record<string, string> = { leafsDark: "#4f8a55", leafs: "#6a9a4c", woodBarkDark: "#6b4a33", woodBark: "#7a5537", grass: "#6f9a52" };
+export function inst(kit: Kit, name: string, look: Look, opts: { shadow?: boolean; paint?: string } = {}) {
   const g = cache.get(`${kit}/${name}`);
   if (!g) throw new Error(`model not loaded: ${kit}/${name}`);
   const o = kit === "chr" ? (skClone(g.scene) as THREE.Object3D) : g.scene.clone(true);
@@ -96,9 +96,16 @@ export function inst(kit: Kit, name: string, look: Look, opts: { shadow?: boolea
     mesh.castShadow = opts.shadow ?? true;
     mesh.receiveShadow = true;
     const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    // a few detail models have a texture but no UVs; sampling then reads garbage GPU memory under ANGLE (ghost glyphs
+    // of the page's own captions). Drop the map and paint them flat.
+    const noUv = !mesh.geometry.getAttribute("uv");
     const patched = mats.map((mm) => {
       const m = (mm as THREE.MeshStandardMaterial).clone();
-      if (kit === "nat") {
+      if (noUv && m.map) {
+        m.map = null;
+        if (opts.paint) m.color.set(opts.paint);
+      }
+      if (kit === "nat" || kit === "fur") {
         m.metalness = 0;
         m.roughness = 0.9;
         if (NAT[m.name]) m.color.set(NAT[m.name]);
