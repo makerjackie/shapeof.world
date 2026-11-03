@@ -2,7 +2,7 @@
 // The models load once (async); the first frame waits for them.
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { continueRender, delayRender } from "remotion";
-import { town, W, H } from "./world/engine";
+import { town, W, H } from "./town/engine";
 
 export const TownView: React.FC<{ t: number }> = ({ t }) => {
   const ref = useRef<HTMLDivElement>(null);
