@@ -40,10 +40,10 @@ const rng = (seed: number) => {
   };
 };
 const KIND_TONE: Record<string, "gold" | "red" | "ash" | "white"> = {
-  stat: "white", peak: "gold", grow: "gold", war: "red", crash: "red", plague: "ash", famine: "ash", split: "red", unite: "gold", move: "white", policy: "gold", note: "white", quote: "white",
+  stat: "white", peak: "gold", grow: "gold", war: "red", crash: "red", plague: "ash", famine: "ash", split: "red", unite: "gold", move: "white", policy: "gold", note: "white", quote: "white", turn: "white",
 };
 const KIND_LABEL: Record<string, string> = {
-  stat: "统计", peak: "盛世", grow: "增长", war: "战乱", crash: "崩塌", plague: "瘟疫", famine: "饥荒", split: "分裂", unite: "统一", move: "迁徙", policy: "政策", note: "", quote: "",
+  stat: "统计", peak: "增长", grow: "增长", war: "战乱", crash: "崩塌", plague: "瘟疫", famine: "饥荒", split: "分裂", unite: "统一", move: "迁徙", policy: "政策", note: "", quote: "", turn: "转折",
 };
 const toneCol = (tone: string) => (tone === "gold" ? GOLD : tone === "red" ? RED : tone === "ash" ? ASH : WHITE);
 
@@ -143,6 +143,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const FIRST = SER[0].y;
   const LAST = SER[SER.length - 1].y;
   const BEATS = S.music.beats;
+  const LAST_REAL = 2025;
 
   // ---------- series
   const segOf = (y: number) => {
@@ -167,6 +168,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   };
   const GAP = 25;
   const kindAt = (y: number) => {
+    if (y <= 2025.01 && y >= 1949) return "stat" as const;
     const i = segOf(y);
     return y >= SER[i + 1].y - 1e-6 ? SER[i + 1].kind : SER[i + 1].kind === "un" || SER[i].kind === "un" ? "un" : SER[i + 1].kind;
   };
@@ -206,16 +208,23 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     }
     return EV[EV.length - 1].y;
   };
-  const CUR = (t: number) => (t < B0 ? coldCur(t) : t >= END ? EV[EV.length - 1].y : bodyCur(t));
+  const [RW0, RW1] = S.cold.rewind;
+  const rewindCur = (t: number) => {
+    const k = clamp((t - RW0) / (RW1 - RW0));
+    const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    return LAST_REAL - (LAST_REAL - FIRST) * e;
+  };
+  const CUR = (t: number) => (t < RW0 ? coldCur(t) : t < RW1 ? rewindCur(t) : t < B0 ? FIRST : t >= END ? EV[EV.length - 1].y : bodyCur(t));
 
   // ---------- per-frame camera (cursor, x span, y range, layout), precomputed once
   const HX_BODY = 0.42 * W;
   const MAP_ON = (t: number) => {
-    if (t < B0 - 0.2 || t >= END) return 0;
+    if (t >= END) return 0;
+    if (t < B0) return clamp(t / 0.4);
     const y = CUR(t);
     return 1 - clamp((y - S.mapOff) / 6);
   };
-  type Cam = { c: number; cx: number; ppy: number; hxw: number; lo: number; hi: number; top: number; bot: number; lg: number; sp: number };
+  type Cam = { c: number; cx: number; ppy: number; hxw: number; lo: number; hi: number; top: number; bot: number; lg: number; sp: number; lgCold?: number };
   const CAM: Cam[] = [];
   {
     let span = 80;
@@ -230,17 +239,17 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const e = evAt(t);
       // span target
       let target = span;
-      if (t < S.cold.rewind[0]) target = 2150;
+      if (t < RW1) target = 2150;
       else if (t < B0) {
-        const k = clamp((t - S.cold.rewind[0]) / (S.cold.rewind[1] - S.cold.rewind[0]));
+        const k = ease(clamp((t - RW1) / (B0 - RW1)));
         target = Math.exp(Math.log(2150) * (1 - k) + Math.log(80) * k);
       } else {
         // the last span set by any event up to now
         for (let i = 0; i < EV.length && EV[i].t0 <= t; i++) if (EV[i].span) target = EV[i].span!;
       }
       span = t < B0 ? target : Math.exp(Math.log(span) + (Math.log(target) - Math.log(span)) * 0.09);
-      const cold = t < S.cold.rewind[0];
-      const rw = t >= S.cold.rewind[0] && t < B0 ? clamp((t - S.cold.rewind[0]) / (S.cold.rewind[1] - S.cold.rewind[0])) : t >= B0 ? 1 : 0;
+      const cold = t < RW1;
+      const rw = t >= RW1 && t < B0 ? clamp((t - RW1) / (B0 - RW1)) : t >= B0 ? 1 : 0;
       const cx = cold ? 2025 : c;
       const hxw = cold ? 1012 : 1012 + (HX_BODY - 1012) * ease(rw);
       const ppy = cold ? 952 / 2025 : (W * 0.5) / span;
@@ -275,11 +284,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         hi += (thi - hi) * (thi > hi ? 0.3 : 0.07);
       }
       mapK += (MAP_ON(t) - mapK) * 0.1;
-      lgK = f === 0 ? 1 : lgK + ((t >= END || t < S.cold.rewind[0] ? 1 : 0) - lgK) * 0.09;
+      lgK = t < RW1 ? 1 : t < B0 ? 1 - ease(clamp((t - RW1) / (B0 - RW1))) : lgK + ((t >= END ? 1 : 0) - lgK) * 0.09;
       const top = 610;
       const sp = Math.abs(c - prevC) * FPS * ppy;
       prevC = c;
-      CAM.push({ c, cx, ppy, hxw, lo, hi, top, bot: 1010 + 470 * (1 - mapK), lg: lgK, sp });
+      CAM.push({ c, cx, ppy, hxw, lo, hi, top, bot: 1010 + 470 * (1 - mapK), lg: lgK, sp, lgCold: t < B0 ? 1 : 0 });
     }
   }
   const camAt = (t: number) => CAM[clamp(Math.round(t * FPS), 0, CAM.length - 1)];
@@ -304,7 +313,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const yl = k.bot - ((v - k.lo) / (k.hi - k.lo)) * (k.bot - k.top);
     if (k.lg <= 0) return yl;
     const top = 640;
-    const bot = 1380;
+    const bot = k.lgCold ? 1030 : 1380;
     const yg = bot - ((Math.log10(Math.max(v, 1000)) - L0) / (L1 - L0)) * (bot - top);
     return yl + (yg - yl) * ease(k.lg);
   };
@@ -322,7 +331,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const shakeAt = (t: number) =>
     HITS.reduce((m, h) => {
       if (t < h.t - 0.05 || t > h.t + 1.5) return m;
-      const k = h.kind === "mile" ? 0.3 : h.kind === "crash" ? (h.big ? 1 : 0.6) : h.kind === "war" ? (h.big ? 0.8 : 0.4) : h.kind === "split" ? 0.5 : h.kind === "peak" || h.kind === "unite" ? 0.25 : 0.12;
+      const k = h.kind === "mile" ? 0.3 : h.kind === "crash" ? (h.big ? 1 : 0.6) : h.kind === "war" ? (h.big ? 0.8 : 0.4) : h.kind === "split" ? 0.5 : h.kind === "peak" || h.kind === "unite" ? (h.big ? 0.45 : 0.25) : h.kind === "turn" ? 0.2 : 0.12;
       return Math.max(m, k * env(t, h.t, 0.02, h.big ? 0.32 : 0.2));
     }, 0);
 
@@ -373,6 +382,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         cur = e.map;
       }
   }
+  const COLD_CUE: MapCue = { t: -100, key: "none", from: "none", e: null };
   const mapCueAt = (t: number) => {
     let c: MapCue | null = null;
     for (const m of MAPCUES) if (m.t <= t) c = m;
@@ -468,7 +478,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const k = camAt(t);
     const mk = clamp(MAP_ON(t) * 1.0);
     if (mk <= 0.01) return;
-    const cue = mapCueAt(t);
+    const cue = t < B0 ? COLD_CUE : mapCueAt(t);
     if (!cue) return;
     const fr = FRAMES[cue.key];
     const prev = FRAMES[cue.from];
@@ -534,7 +544,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         ratW = Math.min(ratW, before);
       }
       if (id !== 255 || KILLS.length) void 0;
-      if (hq > rat && (id !== 255 || rat < ratio)) {
+      if (hq > rat && (id !== 255 || rat < ratio || cue.key === "none")) {
         dead = true;
         const was = hq <= ratW;
         if (was) {
@@ -546,6 +556,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
           col = "#2a2f36";
           a = 0.5;
         }
+      } else if (hq > ratW && rat > ratW + 1e-4 && (id !== 255 || cue.key === "none")) {
+        // just born: a gold spark, then it settles
+        const k2 = clamp((hq - ratW) / Math.max(1e-3, rat - ratW));
+        col = k2 > 0.5 ? "#fff3c4" : GOLD;
+        a = 1;
       }
       void dead;
       // the switch flashes as it passes
@@ -850,12 +865,22 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (sp < 300 || t >= END) return;
     const h = headAt(t);
     const r = rng(Math.round(t * FPS) * 7 + 3);
-    const n = Math.min(60, Math.round(sp / 40));
+    const back = t >= RW0 && t < RW1;
+    const n = Math.min(70, Math.round(sp / (back ? 14 : 40)));
     const a = clamp(sp / 2200, 0, 0.7);
     ctx.save();
     for (let i = 0; i < n; i++) {
       const y = clamp(h.y + (r() - 0.5) * 560, 560, k.bot);
       const len = 120 + r() * Math.min(900, sp * 0.5);
+      if (back) {
+        const x = h.x + r() * 200;
+        const g = ctx.createLinearGradient(x, 0, x + len, 0);
+        g.addColorStop(0, `rgba(190,225,255,${Math.max(a, 0.5) * (0.3 + 0.7 * r())})`);
+        g.addColorStop(1, "rgba(190,225,255,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(x, y, len, 1.5 + r() * 2.5);
+        continue;
+      }
       const x = h.x - r() * 300;
       const g = ctx.createLinearGradient(x - len, 0, x, 0);
       g.addColorStop(0, "rgba(255,255,255,0)");
@@ -928,15 +953,29 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
           ctx.restore();
         }
       }
-      if (hit.kind === "peak" || hit.kind === "unite" || hit.kind === "mile") {
+      const grow = hit.kind === "peak" || hit.kind === "unite" || hit.kind === "grow";
+      if (grow && hit.big && d < 0.9) {
+        // gold shockwave
+        ctx.save();
+        ctx.globalAlpha = clamp(1 - d / 0.9) * 0.85;
+        ctx.strokeStyle = GOLD;
+        ctx.shadowColor = GOLD;
+        ctx.shadowBlur = 20;
+        ctx.lineWidth = 7 * (1 - d / 0.9) + 1;
+        ctx.beginPath();
+        ctx.arc(hc.x, hc.y, 24 + eo3(d / 0.9) * 300, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+      if (grow || hit.kind === "mile") {
         // sparks
         const r = rng(Math.round(hit.t * 100) + 9);
         ctx.save();
-        for (let i = 0; i < 46; i++) {
+        for (let i = 0; i < (grow && hit.big ? 110 : 46); i++) {
           const ang = r() * Math.PI * 2;
           const sp = 160 + r() * 520;
           const x = h.x + Math.cos(ang) * sp * d;
-          const y = h.y + Math.sin(ang) * sp * d + 420 * d * d;
+          const y = grow ? h.y - Math.abs(Math.sin(ang)) * sp * d * 1.2 + 260 * d * d : h.y + Math.sin(ang) * sp * d + 420 * d * d;
           const a = clamp(1 - d / (0.6 + r() * 0.7));
           if (a <= 0) continue;
           ctx.globalAlpha = a;
@@ -957,12 +996,35 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const a = d < life ? 1 : 1 - (d - life) / 0.2;
     const h = headAt(t);
     const s = 1 + 0.5 * env(t, e.t0, 0.01, 0.1);
-    const col = e.k === "crash" && e.y >= 1955 ? ASH : RED;
+    const up = e.pct.startsWith("+");
+    const col = up ? GOLD : e.k === "crash" || e.k === "war" ? RED : ASH;
     ctx.save();
     ctx.globalAlpha = clamp(a);
     const k = camAt(t);
-    text(ctx, e.pct, h.x - 34, clamp(h.y + 120, 760, k.bot + 40), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 60 });
+    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, k.bot + 40) : clamp(h.y + 120, 760, k.bot + 40), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 60 });
     ctx.restore();
+  };
+
+  // ---------- the title: big in the middle, then it flies into the header
+  const INTRO = [S.cold.crashes[S.cold.crashes.length - 1].at + 0.05, S.cold.crashes[S.cold.crashes.length - 1].at + 0.5];
+  const drawIntro = (ctx: CanvasRenderingContext2D, t: number, hx: number) => {
+    const k = ease(clamp((t - INTRO[0]) / (INTRO[1] - INTRO[0])));
+    const size = 116 + (30 - 116) * k;
+    ctx.font = `900 ${size}px ${SERIF}`;
+    const w = ctx.measureText(S.brand).width;
+    const x = W / 2 - w / 2 + (hx - (W / 2 - w / 2)) * k;
+    const y = 590 + (127 - 590) * k;
+    const pop = 1 + 0.12 * env(t, 0.05, 0.01, 0.25);
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(pop, pop);
+    text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: 2 + 8 * (1 - k), glow: "rgba(255,201,77,0.45)", glowBlur: 30 * (1 - k) });
+    ctx.restore();
+    if (k < 1) {
+      ctx.globalAlpha = 1 - k;
+      text(ctx, "公元 2 年 — 2100 年", W / 2, 655, 36, 700, SERIF, SOFT, { align: "center", ls: 4 });
+      ctx.globalAlpha = 1;
+    }
   };
 
   // ---------- header
@@ -977,7 +1039,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const w1 = text(ctx, "世界的形状", 114, 126, 28, 900, SANS, "#f3f4f7", { ls: 2 });
     ctx.fillStyle = "rgba(255,255,255,0.25)";
     ctx.fillRect(114 + w1 + 14, 104, 2, 26);
-    text(ctx, S.brand, 114 + w1 + 30, 127, 30, 900, SERIF, GOLD, { ls: 2 });
+    if (t >= INTRO[1]) text(ctx, S.brand, 114 + w1 + 30, 127, 30, 900, SERIF, GOLD, { ls: 2 });
+    else drawIntro(ctx, t, 114 + w1 + 30);
     const c = k.c;
     const rw = t >= S.cold.rewind[0] && t < B0;
     text(ctx, rw ? "回到两千年前……" : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 520 });
@@ -990,6 +1053,18 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     x += tabular(ctx, String(yNum), x, 300, 116, WHITE);
     ctx.filter = "none";
     text(ctx, "年", x + 6, 300, 46, 900, SERIF, WHITE);
+    if (c > LAST_REAL + 0.5 && t < END) {
+      // projection: say it loudly
+      const bx = x + 70;
+      ctx.font = `900 34px ${SERIF}`;
+      const bw = ctx.measureText("联合国预测").width + 30;
+      ctx.strokeStyle = GOLD;
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([8, 5]);
+      ctx.strokeRect(bx, 244, bw, 54);
+      ctx.setLineDash([]);
+      text(ctx, "联合国预测", bx + 15, 283, 34, 900, SERIF, GOLD);
+    }
     // population
     const v = val(c);
     const slope = val(c) - val(c - 0.6);
@@ -1171,7 +1246,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.globalAlpha = on(R.title);
     let tx = x0 + slide(R.title);
     y += 34;
-    const lab = KIND_LABEL[e.k];
+    const lab = e.y > LAST_REAL + 0.5 ? "预测" : KIND_LABEL[e.k];
     if (lab) {
       ctx.font = `900 24px ${SERIF}`;
       const cw = ctx.measureText(lab).width + 22;
@@ -1258,7 +1333,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   // ---------- red alarm frame (the biggest wars and crashes)
   const drawAlarm = (ctx: CanvasRenderingContext2D, t: number) => {
     const e = evAt(t);
-    if (!e || !e.big || !(e.k === "war" || e.k === "crash" || e.k === "split" || e.k === "plague")) return;
+    const gold = !!e && !!e.big && (e.k === "peak" || e.k === "unite" || e.k === "grow");
+    if (!e || !e.big || !(gold || e.k === "war" || e.k === "crash" || e.k === "split" || e.k === "plague")) return;
     const plague = e.k === "plague";
     if (e.k === "crash" && e.y >= 1955) return;
     const d = t - e.t0;
@@ -1267,11 +1343,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.3, W / 2, H / 2, H * 0.75);
     g.addColorStop(0, "rgba(120,0,0,0)");
-    g.addColorStop(1, plague ? `rgba(70,74,80,${0.6 * a})` : `rgba(150,8,4,${0.55 * a})`);
+    g.addColorStop(1, gold ? `rgba(150,105,10,${0.42 * a})` : plague ? `rgba(70,74,80,${0.6 * a})` : `rgba(150,8,4,${0.55 * a})`);
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
     ctx.globalAlpha = a;
-    ctx.strokeStyle = plague ? "rgba(210,215,220,0.85)" : "rgba(255,70,55,0.9)";
+    ctx.strokeStyle = gold ? "rgba(255,201,77,0.9)" : plague ? "rgba(210,215,220,0.85)" : "rgba(255,70,55,0.9)";
     ctx.lineWidth = 3;
     const FB = camAt(t).bot + 70;
     ctx.strokeRect(24, 540, W - 48, FB - 540);
@@ -1284,27 +1360,103 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.lineTo(x + sx * L, y);
       ctx.stroke();
     }
-    ctx.fillStyle = plague ? "rgba(210,215,220,0.95)" : "rgba(255,59,47,0.95)";
-    const lab = plague ? "瘟疫" : e.k === "crash" ? "人口崩塌" : "战乱";
+    ctx.fillStyle = gold ? "rgba(255,201,77,0.95)" : plague ? "rgba(210,215,220,0.95)" : "rgba(255,59,47,0.95)";
+    const lab = gold ? "人口激增" : plague ? "瘟疫" : e.k === "crash" ? "人口崩塌" : "战乱";
     ctx.font = `900 26px ${SERIF}`;
     const lw = ctx.measureText(lab).width + 44;
     ctx.fillRect(W / 2 - lw / 2, 522, lw, 38);
-    text(ctx, lab, W / 2, 550, 26, 900, SERIF, plague ? "#111" : "#fff", { align: "center" });
+    text(ctx, lab, W / 2, 550, 26, 900, SERIF, plague || gold ? "#111" : "#fff", { align: "center" });
     ctx.restore();
   };
   const drawFlash = (ctx: CanvasRenderingContext2D, t: number) => {
     for (const h of HITS) {
       const d = t - h.t;
       if (d < 0 || d > 0.25) continue;
-      if (!(h.kind === "crash" || (h.big && h.kind === "war"))) continue;
+      const gf = h.big && (h.kind === "peak" || h.kind === "unite" || h.kind === "grow");
+      if (!(gf || h.kind === "crash" || (h.big && h.kind === "war"))) continue;
       if (!h.e && !h.big) continue;
-      const a = d < 0.034 ? 0.55 : 0.55 * (1 - (d - 0.034) / 0.2);
+      const a = (gf ? 0.6 : 1) * (d < 0.034 ? 0.55 : 0.55 * (1 - (d - 0.034) / 0.2));
       ctx.save();
       ctx.globalAlpha = clamp(a);
-      ctx.fillStyle = h.big ? "#fff3f0" : "#ffffff";
+      ctx.fillStyle = gf ? "#ffe39a" : h.big ? "#fff3f0" : "#ffffff";
       ctx.fillRect(0, 0, W, H);
       ctx.restore();
     }
+  };
+
+  // ---------- the rewind: tape running backwards
+  const drawRewind = (ctx: CanvasRenderingContext2D, t: number) => {
+    if (t < RW0 - 0.05 || t > RW1 + 0.12) return;
+    const a = clamp((t - (RW0 - 0.05)) / 0.08) * clamp((RW1 + 0.12 - t) / 0.12);
+    const r = rng(Math.round(t * FPS) * 31 + 7);
+    ctx.save();
+    // scan bands
+    for (let i = 0; i < 7; i++) {
+      ctx.globalAlpha = a * (0.05 + 0.08 * r());
+      ctx.fillStyle = "#cfe6ff";
+      ctx.fillRect(0, r() * H, W, 3 + r() * 26);
+    }
+    ctx.globalAlpha = a;
+    const jx = (r() - 0.5) * 8;
+    // ◀◀
+    ctx.fillStyle = WHITE;
+    for (const ox of [0, 62]) {
+      ctx.beginPath();
+      ctx.moveTo(W / 2 - 160 + ox + jx, 455);
+      ctx.lineTo(W / 2 - 100 + ox + jx, 420);
+      ctx.lineTo(W / 2 - 100 + ox + jx, 490);
+      ctx.closePath();
+      ctx.fill();
+    }
+    text(ctx, "倒回", W / 2 + 10 + jx, 482, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
+    const yNow = Math.max(2, Math.floor(CUR(t)));
+    text(ctx, `公元 ${yNow} 年`, W / 2 + jx, 560, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+    ctx.restore();
+  };
+  const drawSource = (ctx: CanvasRenderingContext2D, t: number) => {
+    if (!S.src || t < B0 - 0.2 || t >= S.ending.card) return;
+    const c = camAt(t).c;
+    const e = evAt(t);
+    let line = "数据：" + S.src(t >= END ? LAST_REAL : c);
+    if (t >= END) line = "数据：正史户口、学者估算（葛剑雄、吴松弟、曹树基等）、国家统计局、联合国预测";
+    else if (e?.src) line += "　｜　" + e.src;
+    const a = clamp((t - (B0 - 0.2)) / 0.3);
+    ctx.save();
+    const g = ctx.createLinearGradient(0, 1800, 0, H);
+    g.addColorStop(0, "rgba(4,5,7,0)");
+    g.addColorStop(1, `rgba(4,5,7,${0.8 * a})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 1800, W, H - 1800);
+    ctx.globalAlpha = a * 0.75;
+    text(ctx, line, 40, 1872, 22, 500, SERIF, "#a7adb3", { maxW: W - 80 });
+    ctx.restore();
+  };
+  // actual | projection: a marker on the chart once the head passes the last count
+  const drawProjMark = (ctx: CanvasRenderingContext2D, t: number) => {
+    const k = camAt(t);
+    if (k.c <= LAST_REAL + 0.2 && t < END) return;
+    if (t >= S.ending.card) return;
+    const x = X(k, LAST_REAL);
+    if (x < 20 || x > W - 20) return;
+    const top = t >= END ? 600 : k.top - 20;
+    const bot = t >= END ? 1400 : k.bot;
+    ctx.save();
+    ctx.globalAlpha = 0.85 * (t >= END ? clamp((t - END) / 0.5) * (1 - clamp((t - (S.ending.card - 0.4)) / 0.4)) : 1);
+    if (t < END) {
+      ctx.fillStyle = "rgba(255,201,77,0.05)";
+      ctx.fillRect(x, top, Math.max(0, headAt(t).x - x), bot - top);
+    }
+    ctx.strokeStyle = "rgba(255,201,77,0.7)";
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 6]);
+    ctx.beginPath();
+    ctx.moveTo(x, top);
+    ctx.lineTo(x, bot);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    text(ctx, "实际", x - 12, top + 30, 26, 900, SERIF, SOFT, { align: "right" });
+    text(ctx, "预测", x + 12, top + 30, 26, 900, SERIF, GOLD);
+    ctx.restore();
   };
 
   // ---------- cold open
@@ -1314,7 +1466,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     // crash labels on the troughs
     for (const c of S.cold.crashes) {
-      if (t < c.at - 0.01 || t > S.cold.rewind[0]) continue;
+      if (t < c.at - 0.01 || t > RW0) continue;
       const v = val(c.y);
       const x = X(k, c.y);
       const y = Yv(k, v);
@@ -1325,7 +1477,9 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.beginPath();
       ctx.arc(x, y, 8 * s, 0, Math.PI * 2);
       ctx.fill();
-      text(ctx, c.t, x - (c.tone === "gold" ? 14 : 0), y + (c.tone === "gold" ? -22 : 44) * s, 26 * s, 900, SERIF, cc, { align: c.tone === "gold" ? "right" : "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      const dx = S.ending.troughs.find((q) => Math.abs(q.y - c.y) < 2)?.dx ?? 0;
+      text(ctx, c.t, x + dx, y + 44 * s, 26 * s, 900, SERIF, cc, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      if (c.p) text(ctx, c.p, x + dx, y + 80 * s, 28 * s, 900, SANS, cc, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     }
     // the lines
     for (const L of S.cold.lines) {
@@ -1335,16 +1489,16 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const col = toneCol(L.tone ?? "white");
       ctx.globalAlpha = clamp(d / 0.06) * clamp((L.t1 - t) / 0.1);
       ctx.save();
-      ctx.translate(W / 2, 560);
+      ctx.translate(W / 2, 545);
       ctx.scale(s, s);
-      text(ctx, L.a, 0, 0, 92, 900, SERIF, col, { align: "center", maxW: 960 / s, glow: "rgba(0,0,0,0.9)", glowBlur: 16 });
+      text(ctx, L.a, 0, 0, 84, 900, SERIF, col, { align: "center", maxW: 960 / s, glow: "rgba(0,0,0,0.9)", glowBlur: 16 });
       ctx.restore();
       if (L.b) {
         const tb = L.t0 + 2 * 0.4654;
         if (t >= tb) {
           const s2 = 1 + 0.25 * env(t, tb, 0.01, 0.1);
           ctx.save();
-          ctx.translate(W / 2, 650);
+          ctx.translate(W / 2, 618);
           ctx.scale(s2, s2);
           text(ctx, L.b, 0, 0, 52, 900, SERIF, WHITE, { align: "center", maxW: 960 / s2, glow: "rgba(0,0,0,0.9)", glowBlur: 12 });
           ctx.restore();
@@ -1385,6 +1539,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     void d;
     for (const L of S.ending.lines) {
       if (t < L.t0 || t > L.t1) continue;
+      if (L.brush && t >= S.ending.card) continue; // the end card carries it from here
       const dd = t - L.t0;
       const a = clamp(dd / 0.1) * clamp((L.t1 - t) / 0.2);
       const s = 1 + 0.25 * env(t, L.t0, 0.01, 0.12);
@@ -1424,7 +1579,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (t < S.ending.card || !L.brush) return;
     ctx.save();
     ctx.globalAlpha = 1;
-    text(ctx, L.text, W / 2, 560, 132, 400, BRUSH, GOLD, { align: "center", maxW: 1000, glow: GOLD + "88", glowBlur: 30 });
+    text(ctx, L.text, W / 2, 520, 132, 400, BRUSH, GOLD, { align: "center", maxW: 1000, glow: GOLD + "88", glowBlur: 30 });
     ctx.restore();
   };
 
@@ -1445,6 +1600,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     drawStreaks(b, t);
     drawHead(b, t, chartA);
     drawTicks(b, t);
+    drawProjMark(b, t);
     drawHits(b, t);
     drawCold(b, t);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1459,6 +1615,15 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.scale(z, z);
     ctx.drawImage(BUF, -W / 2, -H * 0.5);
     // ghost (RGB split feel) on hard hits
+    const rwg = t >= RW0 && t < RW1 ? 0.6 : 0;
+    if (rwg > 0) {
+      ctx.globalCompositeOperation = "lighter";
+      ctx.globalAlpha = 0.22;
+      ctx.drawImage(BUF, -W / 2 + 14, -H * 0.5);
+      ctx.drawImage(BUF, -W / 2 - 14, -H * 0.5 + 3);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = 1;
+    }
     if (sh > 0.35) {
       ctx.globalCompositeOperation = "lighter";
       ctx.globalAlpha = (sh - 0.35) * 0.28;
@@ -1479,6 +1644,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     drawQuote(ctx, t);
     drawEnding(ctx, t);
     drawEndingQuestion(ctx, t);
+    drawRewind(ctx, t);
+    drawSource(ctx, t);
     ctx.restore();
     drawFlash(ctx, t);
   };

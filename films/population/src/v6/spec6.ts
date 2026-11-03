@@ -13,7 +13,7 @@ export type Spec = {
   events: Placed[];
   cold: {
     keys: Key[]; // cursor keys of the cold open (film seconds)
-    crashes: { y: number; t: string; at: number; tone?: "gold" | "red" }[]; // labels popping on beats
+    crashes: { y: number; t: string; at: number; tone?: "gold" | "red"; p?: string }[]; // labels popping on beats
     lines: ColdLine[];
     rewind: [number, number];
   };
@@ -25,4 +25,5 @@ export type Spec = {
   map: { lon: number; lat: number; zoom: number }; // default map camera
   table?: (y: number) => { n: string; v: number; c: string }[]; // top-right table (world: regions)
   sfxGain?: number;
+  src?: (y: number) => string; // the source of the count the head last passed
 };

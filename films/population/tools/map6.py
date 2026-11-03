@@ -161,6 +161,18 @@ def layer(*masks):
     return ids
 
 TW = (clon > 119.9) & (clon < 122.2) & (clat > 21.8) & (clat < 25.4)
+# Ming: the dataset's 1500 outline has a ruler-straight north edge and a stray strip into the far northeast.
+# Inside China proper the north edge follows the Ming Great Wall instead (Jiayuguan .. Shanhaiguan .. the Liaodong wall).
+GREAT_WALL = line([(97.0, 39.9), (98.3, 39.8), (100.4, 38.9), (102.6, 38.0), (103.5, 37.4), (104.5, 37.4), (106.2, 38.6), (107.5, 38.1),
+                   (109.7, 38.6), (110.6, 39.2), (111.5, 39.6), (113.3, 40.3), (114.9, 40.9), (116.1, 40.6), (117.3, 40.8), (118.9, 40.3),
+                   (119.8, 40.1), (120.9, 41.3), (122.2, 42.5), (123.6, 42.9), (124.6, 42.1), (125.3, 40.9)])
+def ming_mask():
+    qing = mask_of("1783", ["Manchu Empire", "Qing Empire", "Manchu Empire (Qing)"])
+    if qing.sum() < 50:
+        qing = mask_of("1800", ["Manchu Empire", "Qing Empire"])
+    tib = mask_of("1500", ["Tibet", "Tibetan Empire", "Khoshut Khanate"])
+    proper = qing & (clon >= 97.0) & (clon <= 125.5) & (clat < GREAT_WALL(clon))
+    return proper | (tib & (clat < 36.6)) | TW
 def cn(snap, names, tibet_snap=None, taiwan=True):
     m = mask_of(snap, names)
     if tibet_snap:
@@ -233,7 +245,7 @@ if FILM == "china":
     frame("mengjin", [("南宋", "main", 113, 28), ("蒙古", "war", 112, 42)], layer((1, mong | jinm | xx), (0, sn)))
     yuan = cn("1279", ["Great Khanate"], "1279")
     frame("yuan", [("元", "main", 110, 38)], layer((0, yuan)))
-    ming = cn("1500", ["Ming Chinese Empire"], "1500")
+    ming = ming_mask()
     frame("ming", [("明", "main", 112, 31)], layer((0, ming)))
     ming6 = mask_of("1600", ["Ming Chinese Empire"])
     manchu = mask_of("1650", ["Manchu Empire"])
@@ -293,10 +305,10 @@ else:
     F("w1279", "1279", [(["Great Khanate"], "元", "war", 108, 38, TIB("1279") | TW), (["Khanate of the Golden Horde"], "金帐汗国", "split", 48, 51), (["Ilkhanate"], "伊尔汗国", "split", 52, 33),
                         (["Chagatai Khanate"], "察合台汗国", "split", 75, 43), (["Mamluke Sultanate"], "马穆鲁克", "split", 31, 27), (["Holy Roman Empire"], "神圣罗马", "split", 11, 49),
                         (["Sultanate of Delhi"], "德里", "split", 78, 26)])
-    F("w1400", "1400", [([], "明", "main", 112, 32, mask_of("1500", ["Ming Chinese Empire"]) | TIB("1500") | TW), (["Timurid Empire"], "帖木儿", "war", 62, 36), (["Ottoman Empire"], "奥斯曼", "split", 30, 40),
+    F("w1400", "1400", [([], "明", "main", 112, 32, ming_mask()), (["Timurid Empire"], "帖木儿", "war", 62, 36), (["Ottoman Empire"], "奥斯曼", "split", 30, 40),
                         (["Mamluke Sultanate"], "马穆鲁克", "split", 31, 27), (["Holy Roman Empire"], "神圣罗马", "split", 11, 49), (["Sultanate of Delhi"], "德里", "split", 78, 26),
                         (["White Horde", "Blue Horde"], "金帐汗国", "far", 55, 50)])
-    F("w1500", "1500", [(["Ming Chinese Empire"], "明", "main", 112, 32, TIB("1500") | TW), (["Ottoman Empire"], "奥斯曼", "split", 32, 40), (["Inca Empire"], "印加", "split", -72, -13),
+    F("w1500", "1500", [([], "明", "main", 112, 32, ming_mask()), (["Ottoman Empire"], "奥斯曼", "split", 32, 40), (["Inca Empire"], "印加", "split", -72, -13),
                         (["Aztec Empire", "Triple Alliance (Aztec)", "Aztec"], "阿兹特克", "split", -99, 19), (["Grand Duchy of Moscow"], "莫斯科", "split", 40, 57),
                         (["Mamluke Sultanate"], "马穆鲁克", "split", 31, 27), (["Holy Roman Empire"], "神圣罗马", "split", 11, 49)])
     F("w1600", "1600", [(["Ming Chinese Empire"], "明", "main", 112, 32, TIB("1600") | TW), (["Ottoman Empire"], "奥斯曼", "split", 34, 38), (["Mughal Empire"], "莫卧儿", "split", 78, 25),

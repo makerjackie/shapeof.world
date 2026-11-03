@@ -248,6 +248,13 @@ for e in CUES["events"]:
     elif k in ("peak", "unite"):
         put(bianzhong(587, 2.4, 0.6), at, 0.3)
         put(chime(), at + 0.02, 0.18)
+        if big:
+            put(impact(0.8), at, 0.32)
+            put(taiko(0.9), at, 0.3)
+            put(bianzhong(880, 2.0, 0.5), at + 0.02, 0.18)
+    elif k == "turn":
+        put(bell(98, 5.0), at, 0.35)
+        put(swish(0.8), at, 0.15)
     elif k in ("plague", "famine"):
         put(bell(110, 4.0), at, 0.3)
         put(ashwind(1.6), at, 0.25)
@@ -256,6 +263,8 @@ for e in CUES["events"]:
         put(ashwind(1.0, 0.6), at, 0.12)
     elif k in ("stat", "grow", "policy"):
         put(stamp(0.6), at, 0.18)
+        if k == "grow":
+            put(chime(), at + 0.02, 0.12)
     elif k == "quote":
         put(bianzhong(147, 4.0), at, 0.3)
     elif k == "note":

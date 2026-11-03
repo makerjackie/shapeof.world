@@ -58,7 +58,8 @@ export type Kind =
   | "move" // people on the move (arrows on the map)
   | "policy"
   | "note" // a line of explanation
-  | "quote"; // a line from the sources (brush)
+  | "quote" // a line from the sources (brush)
+  | "turn"; // a turning point that is not a disaster (calm, no lightning)
 export type Ev = {
   y: number; // the year the cursor reaches on this event's beat
   b: number; // beats until the next event (may be refitted to land the anchors)
@@ -78,6 +79,7 @@ export type Ev = {
   focus?: [number, number, number]; // map camera: lon, lat, zoom (1 = whole map)
   st?: string; // events with the same id stack up as one growing list
   kill?: [number, number, number, number, number]; // lon0, lat0, lon1, lat1, share: that share of the region's dots dies here
+  src?: string; // where this card's own number comes from (bottom-left source line)
 };
 export type Placed = Ev & { i: number; t0: number; t1: number; bi: number };
 
