@@ -24,6 +24,14 @@ const AVE_Z = 0.5 * P; // the avenue of the green wave
 const riverZ = (x: number) => 700 + 350 * Math.sin(x / 900) + 120 * Math.sin(x / 370 + 1.3);
 const riverW = (x: number) => 130 + 40 * Math.sin(x / 1300);
 const inRiver = (x: number, z: number, pad = 0) => Math.abs(z - riverZ(x)) < riverW(x) / 2 + pad;
+// the pylon line on the western outskirts runs down a cleared corridor (fields, no streets) into the city
+const corridorJS = (x: number, z: number) => {
+  const dx = 1650 / 1972.5, dz = -1080 / 1972.5;
+  const qx = x + 4200, qz = z - 1500;
+  const along = qx * dx + qz * dz;
+  const perp = Math.abs(qx * dz - qz * dx);
+  return perp < 420 && along < 1900;
+};
 const isBridge = (lineX: number) => (((Math.round(lineX / P - 0.5) % 4) + 4) % 4) === 0;
 
 export type CityState = {
@@ -42,6 +50,11 @@ export type CityState = {
 const MASK = /* glsl */ `
 float riverZ(float x){ return 700.0 + 350.0 * sin(x / 900.0) + 120.0 * sin(x / 370.0 + 1.3); }
 float riverW(float x){ return 130.0 + 40.0 * sin(x / 1300.0); }
+float corridor(vec2 p){
+  vec2 d = vec2(1650.0, -1080.0) / 1972.5; vec2 q = p - vec2(-4200.0, 1500.0);
+  float along = dot(q, d); float perp = abs(q.x * d.y - q.y * d.x);
+  return (1.0 - smoothstep(260.0, 420.0, perp)) * (1.0 - smoothstep(1650.0, 1900.0, along));
+}
 uniform float uOffR, uOnR, uBlink, uDusk;
 float district(vec2 p){ vec2 c = floor(p / 520.0); float d = length(c * 520.0 + 260.0); return d + h21(c * 1.7) * 260.0; }
 float lightsOn(vec2 p){
@@ -177,7 +190,8 @@ void main(){
     float inner = mix(0.75, 1.15, smoothstep(0.1, 0.95, fy));
     inner *= fy > 1.0 - blind ? 0.45 : 1.0;
     float fres = 0.04 + 0.96 * pow(1.0 - abs(dot(V, n)), 5.0);
-    vec3 glass = skyCol(reflect(V, n)) * (typ < 0.5 ? 0.15 + 0.85 * fres : 0.06 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
+    vec3 Rf = reflect(V, n);
+    vec3 glass = mix(vec3(0.007, 0.006, 0.006), skyCol(Rf), smoothstep(-0.06, 0.04, Rf.y)) * (typ < 0.5 ? 0.15 + 0.85 * fres : 0.06 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
     vec3 wall = skin * (0.85 + 0.3 * vnoise(vec2(hcoord, vW.y) * 0.2));
     if (typ < 0.5) wall = mix(wall, glass * 0.8, 0.55);
     // spandrel band between floors on the towers, darker
@@ -238,7 +252,8 @@ void main(){
   float rC = length(p);
   vec2 u = p / P; vec2 cell = floor(u + 0.5); vec2 f = u - cell; // block centre at integer
   vec2 dToStreet = (0.5 - abs(f)) * P; // metres to the nearest street centre line (x, z)
-  float inCity = step(rC, ${(EXT - 60).toFixed(1)});
+  float corr = corridor(p);
+  float inCity = step(rC, ${(EXT - 60).toFixed(1)}) * step(corr, 0.5);
   float park = step(0.93, h21(cell * 2.3)) * inCity;
   vec3 col;
   float streetX = step(dToStreet.x, HALF); float streetZ = step(dToStreet.y, HALF);
@@ -264,7 +279,7 @@ void main(){
     float town = smoothstep(0.40, 0.66, fbm(p * 0.00028 + 3.1));
     float spill = 1.0 - smoothstep(0.0, 3500.0, outR);
     float fade = 1.0 - smoothstep(${(CARPET * 0.55).toFixed(1)}, ${CARPET.toFixed(1)}, rC);
-    float dens = clamp(max(town, spill * 0.85), 0.0, 1.0) * fade * smoothstep(-200.0, 200.0, outR);
+    float dens = clamp(max(town, spill * 0.85), 0.0, 1.0) * fade * smoothstep(-200.0, 200.0, outR) * (1.0 - corr);
     float tex = 0.55 + 0.9 * fbm(p * 0.0021);
     float streets = lineGlow(p + 0.5 * P, P, 10.0);
     float arter = lineGlow(p + vec2(240.0, 610.0), 880.0, 16.0);
@@ -411,6 +426,7 @@ export const cityScene = (): SceneMod => {
         if (Math.hypot(cx - DC.x, cz - DC.z) < 330) continue;
         if (hash2(i * 5.1, j * 3.7) > 0.8) continue;
         if (inRiver(cx, cz, 50)) continue;
+        if (corridorJS(cx, cz)) continue;
         const lot = P - STREET - 6;
         if (rnd2() < 0.05) {
           const w = lot * (0.4 + 0.3 * rnd2());
@@ -431,6 +447,7 @@ export const cityScene = (): SceneMod => {
       if (Math.hypot(cx - DC.x, cz - DC.z) < 330) continue; // data centre campus
       if (hash2(i * 2.3, j * 2.3) > 0.93) continue; // parks
       if (inRiver(cx, cz, 50)) continue;
+      if (corridorJS(cx, cz)) continue;
       const core = hfun(cx, cz);
       const tall = core > 0.35 && rnd() < 0.75;
       const supertall = core > 0.72 && rnd() < 0.35;
@@ -863,6 +880,7 @@ export const cityScene = (): SceneMod => {
       const z = (j + 0.5) * P;
       if (Math.hypot(x, z) > EXT - 100) continue;
       if (inRiver(x, z, 14)) continue;
+      if (corridorJS(x, z)) continue;
       INTER.push({ x, z, ph: hash2(i, j) * 30 });
     }
   const AVI = blds.filter((b) => b.h > 110).map((b) => new THREE.Vector3(b.x, b.h + 2, b.z));
@@ -920,6 +938,7 @@ export const cityScene = (): SceneMod => {
       const dz = z - camP.z;
       if (dx * dx + dz * dz > far2) continue;
       if (inRiver(x, z, 4) && !(c.axis === 1 && isBridge(c.line))) continue;
+      if (x < -2300 && corridorJS(x, z)) continue;
       const b = st.hwBlink;
       pts.add(x + hx * 2.2, 0.8, z + hz * 2.2, 2.6 * b, 2.4 * b, 2.1 * b, 1.6);
       pts.add(x - hx * 2.2, 0.8, z - hz * 2.2, 1.9 * b, 0.12 * b, 0.06 * b, 1.4);
@@ -1015,10 +1034,12 @@ export const cityScene = (): SceneMod => {
           const f = (lt * 0.09 + q / 6 + hash1(w.length + q) * 0.05) % 1;
           const idx = Math.floor(f * (w.length - 1));
           const p = w[idx];
-          for (let tail = 0; tail < 10; tail++) {
-            const p2 = w[Math.max(0, idx - tail)];
-            const k = 1 - tail / 10;
-            pts.add(p2.x, p2.y, p2.z, 1.2 * k, 2.6 * k, 4.0 * k, 1.1 * k + 0.2);
+          // a short streak running along the wire, fading at its tail and dying with distance from the camera
+          for (let tail = 0; tail < 18; tail++) {
+            const p2 = w[Math.max(0, idx - Math.floor(tail / 2))];
+            const k = (1 - tail / 18) * 0.45;
+            const near = Math.exp(-p2.distanceTo(camP) / 700);
+            pts.add(p2.x, p2.y, p2.z, 1.2 * k * near, 2.6 * k * near, 4.0 * k * near, 0.7 * (1 - tail / 18) + 0.15);
           }
           void p;
         }

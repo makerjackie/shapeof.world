@@ -325,7 +325,7 @@ export const phoneScene = (): SceneMod => {
         chatFocus.set(0, PHONE_T, 0.03);
       } else {
         const k = clamp((lt - 25) / 12);
-        pos.set(lerp(0.024, 0.016, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
+        pos.set(lerp(0.011, 0.008, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
         tgt.set(0, 0, lerp(0.022, 0.03, k));
         fov = 30;
         aperture = 2.6;
