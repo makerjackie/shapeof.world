@@ -9,17 +9,18 @@ import { cursorFrom, Placed } from "./time6";
 import { revealOf } from "./reveal7";
 
 const W = 1080;
-const SAFE_R = 940; // Douyin/TikTok right rail starts here
+const SAFE_R = 1010; // design units: the Douyin right rail starts at frame x 940
 const H = 1920;
-// design units -> frame: design x 40..950 lands on 150..930, design y 88 on 200
-const LS = 780 / 910;
-const LX = 150 - 40 * LS;
+// design units -> frame. Safe area x 60..940, y 200..1440 (left 60, right 140, top 200, bottom 480):
+// design x 40 -> 60, SAFE_R 1010 -> 933, design y 88 -> 200, design y 1460 -> 1435
+const LS = 0.9;
+const LX = 60 - 40 * LS;
 const LY = 200 - 88 * LS;
 const VX0 = -LX / LS; // the whole frame, in design units
 const VX1 = (W - LX) / LS;
 const VY0 = -LY / LS;
 const VY1 = (H - LY) / LS;
-const CX = 495; // centre of the safe area, in design units
+const CX = 529; // centre of the safe area (frame x 500), in design units
 const FULL = [VX0 - 80, VY0 - 80, VX1 - VX0 + 160, VY1 - VY0 + 160] as const;
 const FPS = 30;
 
@@ -299,7 +300,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const top = 610;
       const sp = Math.abs(c - prevC) * FPS * ppy;
       prevC = c;
-      CAM.push({ c, cx, ppy, hxw, lo, hi, top, bot: 1010 + 470 * (1 - mapK), lg: lgK, sp, lgCold: t < B0 ? 1 : 0 });
+      CAM.push({ c, cx, ppy, hxw, lo, hi, top, bot: 1010 + 440 * (1 - mapK), lg: lgK, sp, lgCold: t < B0 ? 1 : 0 });
     }
   }
   const camAt = (t: number) => CAM[clamp(Math.round(t * FPS), 0, CAM.length - 1)];
@@ -317,14 +318,14 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const X = (k: Cam, y: number) => {
     const xb = k.hxw - (k.cx - y) * k.ppy;
     if (k.lg <= 0) return xb;
-    const xe = 70 + ((y - FIRST) / (LAST - FIRST)) * ((k.lgCold ? SAFE_R : SAFE_R - 60) - 70); // the ending leaves room for 预测
+    const xe = 70 + ((y - FIRST) / (LAST - FIRST)) * (SAFE_R - 50 - 70); // room for the labels at the end (预测, the last crash)
     return xb + (xe - xb) * ease(k.lg);
   };
   const Yv = (k: Cam, v: number) => {
     const yl = k.bot - ((v - k.lo) / (k.hi - k.lo)) * (k.bot - k.top);
     if (k.lg <= 0) return yl;
     const top = k.lgCold ? 660 : 640;
-    const bot = k.lgCold ? 1000 : 1380;
+    const bot = k.lgCold ? 1000 : 1255;
     const yg = bot - ((Math.log10(Math.max(v, 1000)) - L0) / (L1 - L0)) * (bot - top);
     return yl + (yg - yl) * ease(k.lg);
   };
@@ -446,7 +447,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const cl = Math.cos((S.map.lat * Math.PI) / 180);
     const wpx = (l1 - l0) * cl * KX0;
     const hpx = (a1 - a0) * KX0 * Math.cos(0.62);
-    FIT[key] = { lon: (l0 + l1) / 2, lat: (a0 + a1) / 2, z: clamp(Math.min(840 / wpx, 480 / hpx), 0.62, S.id === "world" ? 4 : 2.3) };
+    FIT[key] = { lon: (l0 + l1) / 2, lat: (a0 + a1) / 2, z: clamp(Math.min(900 / wpx, 370 / hpx), 0.5, S.id === "world" ? 4 : 2.3) };
   }
   const MAPCAM: { lon: number; lat: number; z: number }[] = [];
   {
@@ -518,7 +519,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (mk <= 0.01) return;
     {
       const g = t < RW1 ? 0 : t < B0 ? ease(clamp((t - RW1) / (B0 - RW1))) : 1;
-      MAP_CY = 1250 + 80 * g;
+      MAP_CY = 1250 - 10 * g;
       CLIP0 = 1060;
       CLIP1 = 1480 + (VY1 - 1480) * g;
     }
@@ -701,8 +702,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.globalAlpha = clamp(ap * mk * (p.r === "far" ? 0.7 : 1));
       ctx.font = `900 ${size}px ${SERIF}`;
       const hw = ctx.measureText(p.n).width / 2 + 6;
-      const lx = clamp(P.x + o[0], 40 + hw, 950 - hw);
-      const ly = clamp(P.y + o[1], 1090, 1580);
+      const lx = clamp(P.x + o[0], 40 + hw, SAFE_R - hw);
+      const ly = clamp(P.y + o[1], 1090, 1440);
       text(ctx, p.n, lx, ly, size, 900, SERIF, p.r === "far" ? "#aab3bd" : WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     });
     // migration streams
@@ -1050,7 +1051,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     ctx.globalAlpha = clamp(a);
     const k = camAt(t);
-    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, Math.min(k.bot + 40, 1470)) : clamp(h.y + 120, 760, Math.min(k.bot + 40, 1470)), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 100 });
+    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, Math.min(k.bot + 40, 1450)) : clamp(h.y + 120, 760, Math.min(k.bot + 40, 1450)), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 80 });
     ctx.restore();
   };
 
@@ -1058,7 +1059,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const INTRO = [S.cold.crashes[S.cold.crashes.length - 1].at + 0.05, S.cold.crashes[S.cold.crashes.length - 1].at + 0.5];
   const drawIntro = (ctx: CanvasRenderingContext2D, t: number, hx: number) => {
     const k = ease(clamp((t - INTRO[0]) / (INTRO[1] - INTRO[0])));
-    const size = 104 + (30 - 104) * k;
+    const size = 116 + (30 - 116) * k;
     ctx.font = `900 ${size}px ${SERIF}`;
     const w = ctx.measureText(S.brand).width;
     const x = CX - w / 2 + (hx - (CX - w / 2)) * k;
@@ -1236,6 +1237,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.stroke();
       ctx.globalAlpha = a;
       const lab = `${up ? "+" : "−"}${Math.round(Math.abs(ch) * 100)}%`;
+      ctx.globalAlpha = a * clamp((x - 12 - measure(ctx, lab, 30 * pop, 900, SANS) - 40) / 30); // gone before it leaves the safe area
       text(ctx, lab, x - 12, (y0 + y1) / 2 + 10, 30 * pop, 900, SANS, col, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
     }
     ctx.restore();
@@ -1265,7 +1267,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const maxW = SAFE_R - x0;
     const tone = KIND_TONE[e.k];
     const col = toneCol(tone);
-    const bottom = Math.min(k.bot + 40, 1470); // stay above the caption zone
+    const bottom = Math.min(k.bot + 40, 1450); // stay above the caption zone
     // stacked list (same st id): every line stays, newest bright and at the bottom
     if (e.st) {
       const grp = EV.filter((x) => x.st === e.st && x.i <= e.i);
@@ -1400,11 +1402,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.globalAlpha = a;
     ctx.strokeStyle = gold ? "rgba(255,201,77,0.9)" : plague ? "rgba(210,215,220,0.85)" : "rgba(255,70,55,0.9)";
     ctx.lineWidth = 3;
-    const FB = camAt(t).bot + 70;
-    ctx.strokeRect(44, 540, 902, FB - 540);
+    const FB = Math.min(camAt(t).bot + 70, 1460);
+    ctx.strokeRect(44, 540, SAFE_R - 48, FB - 540);
     ctx.lineWidth = 7;
     const L = 46;
-    for (const [x, y, sx, sy] of [[44, 540, 1, 1], [946, 540, -1, 1], [44, FB, 1, -1], [946, FB, -1, -1]] as const) {
+    for (const [x, y, sx, sy] of [[44, 540, 1, 1], [SAFE_R - 4, 540, -1, 1], [44, FB, 1, -1], [SAFE_R - 4, FB, -1, -1]] as const) {
       ctx.beginPath();
       ctx.moveTo(x, y + sy * L);
       ctx.lineTo(x, y);
@@ -1483,7 +1485,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.fillRect(0, 1800, W, H - 1800);
     ctx.restore();
     ctx.globalAlpha = a * 0.85;
-    text(ctx, line, 40, (1496 - LY) / LS, 25, 500, SERIF, "#b3b9bf", { maxW: 908, glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+    text(ctx, line, 40, (1430 - LY) / LS, 25, 500, SERIF, "#b3b9bf", { maxW: 960, glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
     ctx.restore();
   };
   // actual | projection: a marker on the chart once the head passes the last count
@@ -1494,7 +1496,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const x = X(k, LAST_REAL);
     if (x < 20 || x > W - 20) return;
     const top = t >= END ? 600 : k.top - 20;
-    const bot = t >= END ? 1400 : k.bot;
+    const bot = t >= END ? 1275 : k.bot;
     ctx.save();
     ctx.globalAlpha = 0.85 * (t >= END ? clamp((t - END) / 0.5) * (1 - clamp((t - (S.ending.card - 0.4)) / 0.4)) : 1);
     if (t < END) {
@@ -1728,7 +1730,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   };
 
   // ---------- the dynasties under the whole line: rise and fall at a glance
-  const RIB_Y = 1500;
+  const RIB_Y = 1340;
   const drawRibbon = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
     const k = camAt(t);
     const a = ease(k.lg) * alpha;
@@ -1864,18 +1866,6 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     drawProjMark(cb, t);
     drawHits(cb, t);
     drawCold(cb, t);
-    cb.setTransform(1, 0, 0, 1, 0, 0);
-    cb.globalAlpha = 1;
-    cb.globalCompositeOperation = "destination-out";
-    cb.fillStyle = "#000";
-    cb.fillRect(0, 0, 150, H);
-    cb.fillRect(930, 0, W - 930, H);
-    const eg = cb.createLinearGradient(150, 0, 200, 0);
-    eg.addColorStop(0, "rgba(0,0,0,1)");
-    eg.addColorStop(1, "rgba(0,0,0,0)");
-    cb.fillStyle = eg;
-    cb.fillRect(150, 0, 50, H);
-    cb.globalCompositeOperation = "source-over";
     b.setTransform(1, 0, 0, 1, 0, 0);
     b.globalAlpha = 1;
     b.drawImage(CBUF, 0, 0);
