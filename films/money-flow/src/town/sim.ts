@@ -110,3 +110,10 @@ export const circulation = (t: number) => {
   const m = monthAt(t);
   return m >= 12 ? 0 : Math.pow(1 - S_BAR, m) * 0.9 + 0.1;
 };
+
+// how much of the money passed through a household's hands over the year (all its income from the 1 亿, every round)
+export const passedOf = (h: House) => {
+  let sum = 0;
+  for (let m = 0; m < 12; m++) sum += moving(m);
+  return ((INC[h.g] * sum) / count[h.g]) * YI;
+};

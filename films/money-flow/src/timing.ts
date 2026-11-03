@@ -40,3 +40,7 @@ export const ramp = (t: number, a: number, b: number) => ss((t - a) / (b - a));
 // 0 → 1 over [a, a+fi], 1 → 0 over [b-fo, b]
 export const win = (t: number, a: number, b: number, fi = 0.6, fo = 0.6) => Math.min(ramp(t, a, a + fi), 1 - ramp(t, b - fo, b));
 export const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+
+// chapter 3: the camera visits the six households, lowest income first (hold ≈ 3.1 s each, 1 s to travel)
+export const VISIT = { rider: T.c3 + 2.6, worker: T.c3 + 6.7, coder: T.c3 + 10.8, landlord: T.c3 + 14.9, boss: T.c3 + 19.0, holder: T.c3 + 23.1 } as const;
+export const VISIT_HOLD = 3.1;

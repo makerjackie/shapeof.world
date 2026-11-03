@@ -1,7 +1,7 @@
 // Camera as a pure function of film time, shared by the WebGL engine and the screen-space overlays (labels).
 import * as THREE from "three";
-import { T, clamp } from "../timing";
-import { BANK, DEV, GOV, HOUSES, HUB, SHANTY, TOWER, YOU_RANK, tankTop } from "./layout";
+import { T, VISIT, VISIT_HOLD, clamp } from "../timing";
+import { BANK, CAST, DEV, GOV, HOUSES, HUB, Role, SHANTY, TOWER, YOU_RANK, byRank, tankTop } from "./layout";
 
 type V = [number, number, number];
 type Key = { t: number; p: V; l: V; fov?: number; hold?: number };
@@ -13,6 +13,18 @@ const top = (rank: number): V => {
 };
 const at = (v: THREE.Vector3, dy = 0): V => [v.x, v.y + dy, v.z];
 const off = (a: V, d: V): V => [a[0] + d[0], a[1] + d[1], a[2] + d[2]];
+
+// a portrait of one household: house, tank and the person in the yard, from the south-east (flows leave north-west)
+const portrait = (role: Role, push = 1): { p: V; l: V; fov: number } => {
+  const h = byRank(CAST[role]);
+  const k = { small: 1, house: 1.25, villa: 1.45, mansion: 2.2 }[h.kind] * push;
+  const l: V = [h.x - h.w * 0.05, h.y + h.h + 0.6, h.z + h.d * 0.3];
+  return { p: [l[0] + 6.5 * k, l[1] + 6.5 * k, l[2] + 11.5 * k], l, fov: 36 };
+};
+const visit = (role: Role): Key[] => [
+  { t: VISIT[role], ...portrait(role, 1.05) },
+  { t: VISIT[role] + VISIT_HOLD, ...portrait(role, 0.92) },
+];
 
 // Wide: the whole town from the south, a little to the west.
 const WIDE_P: V = [8, 58, 92];
@@ -35,13 +47,14 @@ export const KEYS: Key[] = [
   { t: T.c2 + 15.5, p: [-4, 28, 30], l: at(HUB, 2), fov: 40 },
   { t: T.c2 + 21, p: [14, 44, 58], l: [12, 0, -4], fov: 40 },
   { t: T.c2 + 30, p: WIDE_P, l: WIDE_L, fov: 38 },
-  // chapter 3: down to a small house at the front, across to a mansion, back up for the whole town
-  { t: T.c3 + 4, p: [24, 12, 40], l: [30, 1.5, 24.5], fov: 36 },
-  { t: T.c3 + 11, p: [18, 9, 36], l: [26, 2, 25], fov: 34 },
-  { t: T.c3 + 14.5, p: [42, 18, -2], l: top(2), fov: 34 },
-  { t: T.c3 + 18.5, p: [44, 16, -6], l: top(2), fov: 34 },
-  { t: T.c3 + 23, p: [10, 64, 86], l: [14, 0, -6], fov: 38 },
-  { t: T.c4 - 1, p: WIDE_P, l: WIDE_L, fov: 38 },
+  // chapter 3: one household after another, lowest income first, up to the hill; then the whole town
+  ...visit("rider"),
+  ...visit("worker"),
+  ...visit("coder"),
+  ...visit("landlord"),
+  ...visit("boss"),
+  ...visit("holder"),
+  { t: T.c4 - 0.6, p: WIDE_P, l: WIDE_L, fov: 38 },
   // chapter 4: reveal along the hill, the middle rows, the front rows
   { t: T.c4 + 3.0, p: [36, 26, 4], l: [36, 6, -31], fov: 40 },
   { t: T.c4 + 8.2, p: [36, 22, 6], l: [36, 4, -30], fov: 42 },
@@ -50,24 +63,24 @@ export const KEYS: Key[] = [
   { t: T.c4 + 21, p: [30, 50, 74], l: [30, 0, 4], fov: 40 },
   { t: T.c4 + 31, p: WIDE_P, l: WIDE_L, fov: 38 },
   // chapter 5: push into the richest house's tank
-  { t: T.c5 + 4, p: [28, 16, -14], l: top(2), fov: 30 },
-  { t: T.c5 + 13, p: [42, 12, -18], l: top(2), fov: 26 },
-  { t: T.c5 + 16.5, p: [43, 12.5, -17], l: top(2), fov: 26 },
+  { t: T.c5 + 4, p: off(top(CAST.holder), [-6, 6, 17]), l: top(CAST.holder), fov: 30 },
+  { t: T.c5 + 13, p: off(top(CAST.holder), [7, 2.5, 13]), l: top(CAST.holder), fov: 26 },
+  { t: T.c5 + 16.5, p: off(top(CAST.holder), [8, 3, 14]), l: top(CAST.holder), fov: 26 },
   { t: T.c5 + 21, p: [36, 24, 8], l: [36, 4, -30], fov: 40 },
   { t: T.c5 + 32, p: [36, 30, 16], l: [36, 4, -26], fov: 42 },
   // chapter 6: the hill, the bank, the front rows (loans out, interest back)
   { t: T.c6 + 3, p: [24, 26, 0], l: [26, 4, -31], fov: 40 },
   { t: T.c6 + 9, p: [24, 24, -2], l: [26, 4, -31], fov: 40 },
-  { t: T.c6 + 12.5, p: [2, 34, 26], l: [-8, 0, -14], fov: 42 },
-  { t: T.c6 + 16.5, p: [34, 26, 44], l: [32, 0, 4], fov: 40 },
+  { t: T.c6 + 12.5, p: [18, 44, 40], l: [12, 2, -18], fov: 42 },
+  { t: T.c6 + 16.5, p: [20, 42, 38], l: [14, 2, -18], fov: 42 },
   { t: T.c6 + 21, p: [30, 34, 50], l: [30, 1, -8], fov: 40 },
   { t: T.c6 + 27, p: [14, 52, 66], l: [14, 0, 0], fov: 40 },
   // chapter 7: the asset district rises
   { t: T.c7 + 3, p: [-12, 36, 22], l: at(DEV, 10), fov: 40 },
   { t: T.c7 + 15, p: [-16, 30, 16], l: at(DEV, 14), fov: 40 },
   // chapter 8: dim, a middle house (overlay carries the floor plan)
-  { t: T.c8 + 2, p: [30, 20, 20], l: top(20), fov: 34 },
-  { t: T.c8 + 24, p: [32, 18, 14], l: top(20), fov: 32 },
+  { t: T.c8 + 2, p: off(top(CAST.coder), [-9, 10, 30]), l: top(CAST.coder), fov: 34 },
+  { t: T.c8 + 24, p: off(top(CAST.coder), [-7, 8, 24]), l: top(CAST.coder), fov: 32 },
   // chapter 9: the US — the whole town again, then Wall Street (towers), then every door, then the shops
   { t: T.c9 + 3, p: WIDE_P, l: WIDE_L, fov: 38 },
   { t: T.c9 + 9, p: [-6, 40, 30], l: [-36, 10, -21], fov: 42 },
@@ -89,7 +102,7 @@ const ease = (x: number) => {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 };
 
-export type Pose = { pos: THREE.Vector3; look: THREE.Vector3; fov: number };
+export type Pose = { pos: THREE.Vector3; look: THREE.Vector3; fov: number; dist: number };
 
 export function poseAt(t: number): Pose {
   const k = KEYS;
@@ -101,7 +114,9 @@ export function poseAt(t: number): Pose {
   const lp = (x: V, y: V) => new THREE.Vector3(x[0] + (y[0] - x[0]) * u, x[1] + (y[1] - x[1]) * u, x[2] + (y[2] - x[2]) * u);
   // a slow breathing drift so held shots are never frozen
   const drift = new THREE.Vector3(Math.sin(t * 0.21) * 0.6, Math.sin(t * 0.17) * 0.35, Math.cos(t * 0.19) * 0.6);
-  return { pos: lp(a.p, b.p).add(drift), look: lp(a.l, b.l), fov: (a.fov ?? 38) + ((b.fov ?? 38) - (a.fov ?? 38)) * u };
+  const pos = lp(a.p, b.p).add(drift);
+  const look = lp(a.l, b.l);
+  return { pos, look, fov: (a.fov ?? 38) + ((b.fov ?? 38) - (a.fov ?? 38)) * u, dist: pos.distanceTo(look) };
 }
 
 export const W = 1920;

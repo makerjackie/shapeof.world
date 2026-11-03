@@ -5,11 +5,11 @@ import * as THREE from "three";
 import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
 import { BrandMark, EndCard, EO, Part, ramp, Say, Sources, SHADOW, Tag, useT, win } from "./kit";
 import { FONT, K, NUM } from "./theme";
-import { FPS, HIT, T, MONTHS } from "./timing";
+import { FPS, HIT, T, MONTHS, VISIT, VISIT_HOLD } from "./timing";
 import { TownView } from "./TownView";
 import { ANCHORS, project } from "./town/camera";
-import { HOUSES, HUB, tankBase } from "./town/layout";
-import { monthAt } from "./town/sim";
+import { CAST, HOUSES, HUB, ROLES, ROLE_NAME, Role, byRank, tankBase, tankTop, yardOf } from "./town/layout";
+import { finalOf, monthAt, passedOf } from "./town/sim";
 
 type Line = { p: Part[]; size?: number; color?: string; weight?: number };
 type Cap = { at: number; out: number; lines: Line[]; x: number; y: number; align?: "left" | "center" | "right" };
@@ -28,33 +28,35 @@ const CAPS: Cap[] = [
   { at: T.c1 + 0.4, out: T.c1 + 3.6, x: L, y: 300, lines: [{ p: ["这 1 个亿，是怎么印出来的？"], size: 62 }] },
   { at: T.c1 + 3.8, out: T.c1 + 7.4, x: L, y: 300, lines: [{ p: ["央行很少直接把钱发给谁"], size: 62 }] },
   { at: T.c1 + 7.6, out: T.c1 + 13.6, x: L, y: 300, lines: [{ p: ["钱，大多是", { t: "借出来的", mark: true }], size: 62 }, { p: ["银行放一笔贷款，世上就多一笔存款"], size: 44, color: K.sub }] },
-  { at: T.c1 + 13.8, out: T.c1 + 19, x: R, y: 300, align: "right", lines: [{ p: ["2015 到 2018 年，全国棚户区改造"], size: 52, color: K.sub }, { p: ["开工约 ", big("2400"), " 万套"], size: 62 }] },
-  { at: T.c1 + 19.2, out: T.c1 + 23.2, x: R, y: 300, align: "right", lines: [{ p: ["2016 年，近一半拆迁户拿的是", { t: "现金", mark: true }], size: 58 }] },
-  { at: T.c1 + 23.4, out: T.c2 - 0.1, x: R, y: 300, align: "right", lines: [{ p: ["钱从哪来？央行借给国开行"], size: 52, color: K.sub }, { p: ["到 2018 年底，借出约 ", big("3.4"), " 万亿"], size: 62 }] },
+  { at: T.c1 + 13.8, out: T.c1 + 19, x: R, y: 150, align: "right", lines: [{ p: ["2015 到 2018 年，全国棚户区改造"], size: 52, color: K.sub }, { p: ["开工约 ", big("2400"), " 万套"], size: 62 }] },
+  { at: T.c1 + 19.2, out: T.c1 + 23.2, x: R, y: 150, align: "right", lines: [{ p: ["2016 年，近一半拆迁户拿的是", { t: "现金", mark: true }], size: 58 }] },
+  { at: T.c1 + 23.4, out: T.c2 - 0.1, x: R, y: 150, align: "right", lines: [{ p: ["钱从哪来？央行借给国开行"], size: 52, color: K.sub }, { p: ["到 2018 年底，借出约 ", big("3.4"), " 万亿"], size: 62 }] },
   // 2 first split
   { at: T.c2 + 0.2, out: T.c2 + 4.6, x: 960, y: 260, align: "center", lines: [{ p: ["把它缩小成 1 个亿，跟着走一年"], size: 62 }] },
   { at: T.c2 + 4.8, out: T.c2 + 8.6, x: R, y: 280, align: "right", lines: [{ p: ["拿到钱，很多人转身买了新房"], size: 60 }] },
   { at: T.c2 + 8.8, out: T.c2 + 14.2, x: R, y: 280, align: "right", lines: [{ p: ["买房的钱，约", { t: "四成", mark: true }], size: 62 }, { p: ["成了地方政府的卖地钱"], size: 62 }] },
   { at: T.c2 + 14.4, out: T.c2 + 19.6, x: R, y: 280, align: "right", lines: [{ p: ["政府和开发商再把钱花出去"], size: 60 }, { p: ["工地、工厂、商店……"], size: 44, color: K.sub }] },
-  { at: T.c2 + 19.8, out: T.c2 + 26.6, x: 960, y: 150, align: "center", lines: [{ p: ["每生产 ", { t: "100", num: true }, " 元，这样分"], size: 62 }] },
-  { at: T.c2 + 26.8, out: T.c2 + 32.6, x: L, y: 250, lines: [{ p: ["大头不是被老板拿走了吗？"], size: 60 }, { p: ["单看这一步，", { t: "工资拿得最多", mark: true }], size: 60 }] },
-  { at: T.c2 + 32.8, out: T.c3 + 0.2, x: L, y: 250, lines: [{ p: ["差别，出在后面"], size: 66 }] },
-  // 3 a year
-  { at: T.c3 + 0.4, out: T.c3 + 4.4, x: L, y: 260, lines: [{ p: ["然后，钱在 100 户之间转起来"], size: 60 }] },
-  { at: T.c3 + 4.6, out: T.c3 + 9.6, x: L, y: 260, lines: [{ p: ["拿到钱，就得花"], size: 62 }, { p: ["房租、吃饭、学费、看病"], size: 46, color: K.sub }] },
-  { at: T.c3 + 9.8, out: T.c3 + 13.4, x: L, y: 260, lines: [{ p: ["挣得越少，越要", { t: "花光", mark: true }], size: 66 }] },
-  { at: T.c3 + 13.6, out: T.c3 + 17.2, x: L, y: 260, lines: [{ p: ["挣得越多，越", { t: "花不完", mark: true }], size: 66 }] },
-  { at: T.c3 + 17.4, out: T.c3 + 22, x: L, y: 260, lines: [{ p: ["每转一圈，就有一些钱停下来"], size: 60 }] },
+  { at: T.c2 + 19.8, out: T.c2 + 26.6, x: 960, y: 860, align: "center", lines: [{ p: ["每生产 ", { t: "100", num: true }, " 元，这样分"], size: 62 }] },
+  { at: T.c2 + 26.8, out: T.c2 + 32.6, x: 960, y: 800, align: "center", lines: [{ p: ["大头不是被老板拿走了吗？"], size: 60 }, { p: ["单看这一步，", { t: "工资拿得最多", mark: true }], size: 60 }] },
+  { at: T.c2 + 32.8, out: T.c3 + 0.2, x: 960, y: 840, align: "center", lines: [{ p: ["差别，出在后面"], size: 66 }] },
+  // 3 a year, six households
+  { at: T.c3 + 0.3, out: VISIT.rider - 0.2, x: L, y: 250, lines: [{ p: ["钱在 100 户之间转起来"], size: 60 }, { p: ["跟着其中 6 户看一年"], size: 44, color: K.sub }] },
+  { at: VISIT.rider + 0.15, out: VISIT.rider + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["外卖骑手：月入约 ", big("7000–9000", 1.15), " 元"], size: 60 }, { p: ["房租交给房东，吃饭交给小店"], size: 44, color: K.sub }] },
+  { at: VISIT.worker + 0.15, out: VISIT.worker + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["工厂工人：月入约 ", big("5000", 1.15), " 元"], size: 60 }, { p: ["吃住、寄回老家，能攒下一点"], size: 44, color: K.sub }] },
+  { at: VISIT.coder + 0.15, out: VISIT.coder + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["程序员：年薪约 ", big("24", 1.15), " 万"], size: 60 }, { p: ["工资进来，房贷出去，还能存下一些"], size: 44, color: K.sub }] },
+  { at: VISIT.landlord + 0.15, out: VISIT.landlord + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["房东：收房租"], size: 60 }, { p: ["租客的房租，流到这里"], size: 44, color: K.sub }] },
+  { at: VISIT.boss + 0.15, out: VISIT.boss + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["小老板：开店"], size: 60 }, { p: ["街坊的饭钱流进来，利润留下"], size: 44, color: K.sub }] },
+  { at: VISIT.holder + 0.15, out: VISIT.holder + VISIT_HOLD + 0.35, x: L, y: 250, lines: [{ p: ["大股东：拿分红"], size: 60 }, { p: ["工厂赚的钱，按股份流到这里"], size: 44, color: K.sub }] },
   // 4 reveal
   { at: T.c4 + 0.2, out: T.c4 + 2.9, x: 960, y: 260, align: "center", lines: [{ p: ["一年后，这 1 个亿在哪？"], size: 72 }] },
   { at: T.c4 + 3.0, out: T.c4 + 8.2, x: 960, y: 180, align: "center", lines: [{ p: ["收入最高的 5 户"], size: 56, color: K.sub }, { p: ["约 ", big("5000", 1.7), " 万"], size: 70 }] },
   { at: T.c4 + 8.33, out: T.c4 + 13.5, x: 960, y: 180, align: "center", lines: [{ p: ["接下来的 20 户"], size: 56, color: K.sub }, { p: ["约 ", big("2600", 1.7), " 万"], size: 70 }] },
-  { at: T.c4 + 13.67, out: T.c4 + 18.8, x: 960, y: 140, align: "center", lines: [{ p: ["剩下的 75 户，加起来"], size: 56, color: K.sub }, { p: ["约 ", big("2300", 1.7), " 万"], size: 70 }] },
-  { at: T.c4 + 19.0, out: T.c4 + 24.1, x: 960, y: 140, align: "center", lines: [{ p: ["其中约 ", { t: "40", num: true, c: K.red }, " 户，这一年", { t: "花的比挣的多", c: K.red }], size: 60 }] },
-  { at: T.c4 + 24.33, out: T.c4 + 26.8, x: 960, y: 420, align: "center", lines: [{ p: ["每一户，都摸到过这笔钱"], size: 66 }] },
-  { at: T.c4 + 27.0, out: T.c5 - 0.1, x: 960, y: 420, align: "center", lines: [{ p: ["可它只停在", { t: "花不完", mark: true }, "的人家里"], size: 76 }] },
+  { at: T.c4 + 13.67, out: T.c4 + 18.8, x: 960, y: 140, align: "center", lines: [{ p: ["剩下的 75 户，加起来约 ", big("2300", 1.4), " 万"], size: 60 }, { p: ["其中约 ", { t: "40", num: true, c: K.red }, " 户，这一年", { t: "花的比挣的多", c: K.red }], size: 52 }] },
+  { at: T.c4 + 19.0, out: T.c4 + 24.1, x: 960, y: 150, align: "center", lines: [{ p: ["换成真实的 3.4 万亿，按户算"], size: 50, color: K.sub }, { p: ["收入最高 5% 的家庭：每户约 ", big("7", 1.5), " 万元"], size: 60 }, { p: ["最低的 75% 家庭：平均约 ", { t: "2000", num: true }, " 元"], size: 60 }] },
+  { at: T.c4 + 24.33, out: T.c4 + 30.0, x: 960, y: 120, align: "center", lines: [{ p: ["每一户，都摸到过这笔钱"], size: 62 }] },
+  { at: T.c4 + 30.2, out: T.c5 - 0.1, x: 960, y: 420, align: "center", lines: [{ p: ["可它只停在", { t: "花不完", mark: true }, "的人家里"], size: 76 }] },
   // 5 where the rich get it
-  { at: T.c5 + 0.4, out: T.c5 + 4, x: L, y: 300, lines: [{ p: ["大宅里的钱，最初又是哪来的？"], size: 60 }] },
+  { at: T.c5 + 0.4, out: T.c5 + 4, x: L, y: 300, lines: [{ p: ["大股东的钱，最初又是哪来的？"], size: 60 }] },
   { at: T.c5 + 4.2, out: T.c5 + 12, x: L, y: 280, lines: [{ p: ["中国没有公开的数据，看看美国的税单："], size: 48, color: K.sub }, { p: ["年收入千万美元以上的人"], size: 56 }, { p: ["工资只占约 ", big("17%", 1.3)], size: 64 }] },
   { at: T.c5 + 12.2, out: T.c5 + 17, x: L, y: 300, lines: [{ p: ["大部分，是", { t: "钱生的钱", mark: true }], size: 64 }] },
   { at: T.c5 + 17.2, out: T.c5 + 23, x: L, y: 300, lines: [{ p: ["还有一大块，根本不算收入："], size: 54, color: K.sub }, { p: ["没卖的股票和房子，自己在涨"], size: 60 }] },
@@ -62,8 +64,8 @@ const CAPS: Cap[] = [
   // 6 spending, savings lent back
   { at: T.c6 + 0.4, out: T.c6 + 5.4, x: L, y: 300, lines: [{ p: ["他们花得也多：豪宅、游艇、酒店"], size: 56 }, { p: ["可还是", { t: "花不完", mark: true }], size: 62 }] },
   { at: T.c6 + 5.6, out: T.c6 + 11.4, x: L, y: 300, lines: [{ p: ["中国收入最高 5% 的家庭"], size: 54, color: K.sub }, { p: ["挣 100 元，存下约 ", big("72", 1.3), " 元"], size: 64 }] },
-  { at: T.c6 + 11.6, out: T.c6 + 16, x: L, y: 300, lines: [{ p: ["存下的钱进了银行"], size: 60 }, { p: ["又", { t: "借给了买房的人", c: K.loan }], size: 60 }] },
-  { at: T.c6 + 16.2, out: T.c6 + 21, x: L, y: 300, lines: [{ p: ["每个月的房贷利息"], size: 60 }, { p: ["又", { t: "流回了大宅", mark: true }], size: 60 }] },
+  { at: T.c6 + 11.6, out: T.c6 + 16, x: L, y: 300, lines: [{ p: ["存下的钱进了银行"], size: 60 }, { p: ["又", { t: "借给了买房的人", c: K.loan }, "，比如程序员"], size: 60 }] },
+  { at: T.c6 + 16.2, out: T.c6 + 21, x: L, y: 300, lines: [{ p: ["他每个月还的利息"], size: 60 }, { p: ["又", { t: "流回了大宅", mark: true }], size: 60 }] },
   { at: T.c6 + 21.2, out: T.c7 - 0.2, x: L, y: 300, lines: [{ p: ["美国的研究：富人多存下的钱"], size: 54, color: K.sub }, { p: ["大多变成了别人和政府的债"], size: 60 }] },
   // 7 assets
   { at: T.c7 + 0.4, out: T.c7 + 4.6, x: R, y: 300, align: "right", lines: [{ p: ["停下来的钱，还会去买房、买股票"], size: 58 }] },
@@ -71,7 +73,7 @@ const CAPS: Cap[] = [
   { at: T.c7 + 11.2, out: T.c8 - 0.2, x: R, y: 300, align: "right", lines: [{ p: ["同一时期，物价只涨了约 ", big("6%", 1.2)], size: 58 }] },
   // 8 your 500k
   { at: T.c8 + 0.4, out: T.c8 + 3.6, x: L, y: 260, lines: [{ p: ["这对普通人意味着什么？"], size: 62 }] },
-  { at: T.c8 + 3.8, out: T.c8 + 9, x: L, y: 260, lines: [{ p: ["2015 年，你存了 50 万准备买房"], size: 56 }, { p: ["能买约 ", big("74", 1.3), " ㎡"], size: 62 }] },
+  { at: T.c8 + 3.8, out: T.c8 + 9, x: L, y: 260, lines: [{ p: ["2015 年，程序员攒下 50 万"], size: 56 }, { p: ["能买约 ", big("74", 1.3), " ㎡"], size: 62 }] },
   { at: T.c8 + 9.2, out: T.c8 + 14.4, x: L, y: 260, lines: [{ p: ["三年后，连本带息约 52 万"], size: 56 }, { p: ["只够买约 ", big("60", 1.3), " ㎡"], size: 62 }] },
   { at: T.c8 + 14.6, out: T.c8 + 19, x: L, y: 260, lines: [{ p: ["存款一分没少"], size: 62 }, { p: ["房子少了", { t: "一间卧室", mark: true }], size: 62 }] },
   { at: T.c8 + 19.2, out: T.c9 - 0.2, x: L, y: 260, lines: [{ p: ["按物价算，钱几乎没贬值"], size: 58 }, { p: ["按房子算，", { t: "少买约两成", mark: true }], size: 58 }] },
@@ -100,8 +102,14 @@ const SRC: { a: number; b: number; text: string }[] = [
   { a: T.c1 + 7.6, b: T.c1 + 13.6, text: "来源：英格兰银行季报 2014《现代经济中的货币创造》" },
   { a: T.c1 + 13.8, b: T.c1 + 23.2, text: "来源：住房和城乡建设部；货币化安置比例按套数算（2016 年 48.5%）" },
   { a: T.c1 + 23.4, b: T.c2, text: "来源：人民银行，2018 年末抵押补充贷款（PSL）余额 33795 亿元" },
-  { a: T.c2 + 0.2, b: T.c4 + 4, text: "钱没有编号。这一年的流动，是按全国统计比例推算的模型" },
-  { a: T.c4 + 3.0, b: T.c4 + 24.1, text: "按中国家庭金融调查 2015（2014 年数据）的储蓄分布推算：收入前 5% 的家庭存下全国家庭储蓄的 50.6%，前 25% 存下 77.1%" },
+  { a: T.c2 + 0.2, b: VISIT.rider, text: "钱没有编号。这一年的流动，是按全国统计比例推算的模型" },
+  { a: VISIT.rider + 0.1, b: VISIT.worker, text: "来源：美团 2024 年披露，高频骑手月均收入 6650–9344 元（平台自报）" },
+  { a: VISIT.worker + 0.1, b: VISIT.coder, text: "来源：国家统计局《2024 年农民工监测调查报告》，制造业农民工月均收入 4978 元" },
+  { a: VISIT.coder + 0.1, b: VISIT.landlord, text: "来源：国家统计局，2024 年城镇非私营单位信息传输、软件和信息技术服务业平均工资 238966 元" },
+  { a: VISIT.landlord + 0.1, b: T.c4, text: "六户只是举例：调查数据按收入分组，不按职业。每户放在它的职业通常所在的收入组" },
+  { a: T.c4 + 3.0, b: T.c4 + 18.8, text: "按中国家庭金融调查 2015（2014 年数据）的储蓄分布推算：收入前 5% 的家庭存下全国家庭储蓄的 50.6%，前 25% 存下 77.1%" },
+  { a: T.c4 + 19.0, b: T.c4 + 24.1, text: "按同一分布换算：2018 年末 PSL 余额 33795 亿元，全国 4.94 亿户；简化模型，示意" },
+  { a: T.c4 + 24.33, b: T.c4 + 30.0, text: "模型里的 1 个亿：流过 = 一年里各轮收到的钱加起来；留下 = 年底还在手里的" },
   { a: T.c5 + 4.2, b: T.c5 + 17, text: "来源：美国国税局个人所得税统计，2023 税年，调整后总收入 1000 万美元以上（30382 份）" },
   { a: T.c5 + 23.2, b: T.c6, text: "来源：美联储家庭财富分布（DFA），2009 年一季度到 2026 年二季度，按财富分组" },
   { a: T.c6 + 5.6, b: T.c6 + 11.4, text: "来源：中国家庭金融调查 2015（2014 年数据）；储蓄 = 收入 − 消费" },
@@ -130,7 +138,9 @@ const SourceLine: React.FC<{ t: number }> = ({ t }) => (
 
 const Captions: React.FC<{ t: number }> = ({ t }) => (
   <>
-    {CAPS.map((c, i) => {
+    {CAPS.map((c0, i) => {
+      const next = CAPS.filter((x) => x.at > c0.at).reduce((m, x) => Math.min(m, x.at), Infinity);
+      const c = { ...c0, out: Math.min(c0.out, next - 0.3) };
       if (t < c.at - 0.1 || t > c.out + 0.3) return null;
       let delay = 0;
       return (
@@ -201,6 +211,79 @@ const Split: React.FC<{ t: number }> = ({ t }) => {
   );
 };
 
+// names over the six households, when the film is with them
+const CastTags: React.FC<{ t: number }> = ({ t }) => (
+  <>
+    {ROLES.map((r) => {
+      const v = VISIT[r];
+      const o = Math.max(
+        win(t, v - 0.3, v + VISIT_HOLD + 0.3, 0.4, 0.4),
+        r === "coder" || r === "holder" || r === "boss" ? win(t, T.c6 + 11.6, T.c7 - 0.2, 0.5, 0.5) : 0,
+        r === "coder" ? win(t, T.c8 + 1, T.c8 + 3.6, 0.4, 0.4) : 0,
+        r === "rider" ? win(t, T.c11 + 1.5, T.c11 + 7, 0.6, 0.6) : 0,
+      );
+      if (o <= 0) return null;
+      const h = byRank(CAST[r]);
+      const y = yardOf(h);
+      const p = project(t, new THREE.Vector3(y.x, y.y + (h.kind === "mansion" ? 3.2 : 2.6) * 0.75 + 0.4, y.z));
+      if (!p.vis) return null;
+      return (
+        <Tag key={r} x={p.x} y={p.y} o={o} line size={34} color={K.goldHi}>
+          {ROLE_NAME[r]}
+        </Tag>
+      );
+    })}
+  </>
+);
+
+// the reveal, person by person: how much of the 1 亿 passed through their hands, and how much stayed
+const sig2 = (v: number) => {
+  const w = v / 1e4;
+  if (w < 1) return "0";
+  const p = Math.pow(10, Math.floor(Math.log10(w)) - 1);
+  return String(Math.round(w / p) * p);
+};
+const LINEUP: Role[] = ["rider", "worker", "coder", "landlord", "boss", "holder"];
+const Lineup: React.FC<{ t: number }> = ({ t }) => {
+  const at = T.c4 + 24.5;
+  const o = win(t, at, T.c4 + 30.0, 0.5, 0.5);
+  if (o <= 0) return null;
+  const max = Math.max(...LINEUP.map((r) => passedOf(byRank(CAST[r]))));
+  const H0 = 360;
+  const colW = 230;
+  const x0 = 960 - (LINEUP.length * colW) / 2;
+  return (
+    <div style={{ position: "absolute", inset: 0, opacity: o }}>
+      <div style={{ position: "absolute", inset: 0, background: "rgba(4,6,12,0.7)" }} />
+      {LINEUP.map((r, i) => {
+        const h = byRank(CAST[r]);
+        const pass = passedOf(h);
+        const kept = finalOf(h);
+        const k = ramp(t, at + 0.3 + i * 0.22, at + 1.4 + i * 0.22, EO);
+        const k2 = ramp(t, at + 1.6 + i * 0.22, at + 2.6 + i * 0.22, EO);
+        const hp = (pass / max) * H0 * k;
+        const hk = (kept / max) * H0 * k2;
+        const cx = x0 + colW * (i + 0.5);
+        const base = 760;
+        return (
+          <div key={r}>
+            <div style={{ position: "absolute", left: cx - 44, top: base - hp, width: 88, height: hp, border: "3px solid rgba(243,238,228,0.8)", borderBottom: "none", borderRadius: "6px 6px 0 0", background: "rgba(243,238,228,0.16)" }} />
+            <div style={{ position: "absolute", left: cx - 44, top: base - hk, width: 88, height: hk, background: K.gold, borderRadius: hk > 6 ? "4px 4px 0 0" : 0, boxShadow: `0 0 24px ${K.gold}88` }} />
+            <div style={{ position: "absolute", left: cx, top: base - hp - 58, transform: "translateX(-50%)", fontFamily: FONT, fontWeight: 700, fontSize: 30, color: K.sub, whiteSpace: "nowrap", textShadow: SHADOW, opacity: k }}>
+              流过 <span style={{ fontFamily: NUM, fontSize: 38, color: K.fg }}>{sig2(pass)}</span> 万
+            </div>
+            <div style={{ position: "absolute", left: cx, top: base + 18, transform: "translateX(-50%)", fontFamily: FONT, fontWeight: 800, fontSize: 38, color: K.fg, whiteSpace: "nowrap", textShadow: SHADOW }}>{ROLE_NAME[r]}</div>
+            <div style={{ position: "absolute", left: cx, top: base + 72, transform: "translateX(-50%)", fontFamily: FONT, fontWeight: 800, fontSize: 32, color: K.gold, whiteSpace: "nowrap", textShadow: SHADOW, opacity: k2 }}>
+              留下 <span style={{ fontFamily: NUM, fontSize: 44 }}>{sig2(kept)}</span>{kept >= 1e4 ? " 万" : ""}
+            </div>
+          </div>
+        );
+      })}
+      <div style={{ position: "absolute", left: x0 - 20, top: 760, width: LINEUP.length * colW + 40, height: 2, background: "rgba(243,238,228,0.35)" }} />
+    </div>
+  );
+};
+
 // month clock during the year
 const Months: React.FC<{ t: number }> = ({ t }) => {
   const o = win(t, MONTHS.start - 0.5, T.c4 + 0.2, 0.5, 0.6);
@@ -225,7 +308,7 @@ const Months: React.FC<{ t: number }> = ({ t }) => {
 const Bands: React.FC<{ t: number }> = ({ t }) => {
   const o = win(t, T.c5 + 4.6, T.c5 + 17, 0.6, 0.5);
   if (o <= 0) return null;
-  const h = HOUSES.find((x) => x.rank === 2)!;
+  const h = byRank(CAST.holder);
   const b = tankBase(h);
   const lvl = 0.92;
   const rows: [number, string, string][] = [
@@ -325,13 +408,13 @@ const Plan: React.FC<{ t: number }> = ({ t }) => {
   const w = 760;
   const h = 540;
   const bed = w * 0.27; // the room that goes (≈ 14 m² of 74)
-  const x0 = 1000;
+  const x0 = 1080;
   const y0 = 250;
   const line = "rgba(243,238,228,0.9)";
   return (
     <div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, opacity: o }}>
-      <div style={{ position: "absolute", left: x0 - 50, top: y0 - 50, width: w + 100, height: h + 170, background: "rgba(7,10,18,0.9)", border: "1px solid rgba(243,238,228,0.14)", borderRadius: 18 }} />
-      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0 }}>
+      <div style={{ position: "absolute", left: x0 - 50, top: y0 - 50, width: w + 100, height: h + 170, background: "rgba(10,14,26,0.55)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,190,77,0.28)", borderRadius: 18, boxShadow: "0 30px 80px rgba(0,0,0,0.5)" }} />
+      <svg width={1920} height={1080} style={{ position: "absolute", left: 0, top: 0, filter: "drop-shadow(0 0 6px rgba(255,200,120,0.45))" }}>
         <rect x={x0} y={y0} width={w} height={h} fill="rgba(255,190,77,0.10)" stroke={line} strokeWidth={5} />
         <line x1={x0 + w * 0.42} y1={y0} x2={x0 + w * 0.42} y2={y0 + h * 0.55} stroke={line} strokeWidth={3} />
         <line x1={x0} y1={y0 + h * 0.55} x2={x0 + w - bed} y2={y0 + h * 0.55} stroke={line} strokeWidth={3} />
@@ -423,6 +506,8 @@ export const Film: React.FC = () => {
       <Split t={t} />
       <Bands t={t} />
       <Months t={t} />
+      <CastTags t={t} />
+      <Lineup t={t} />
       <Numbers t={t} />
       <Plan t={t} />
       <Wages t={t} />
