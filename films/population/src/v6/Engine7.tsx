@@ -1715,7 +1715,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       text(ctx, L.a, 0, 0, 84, 900, SERIF, col, { align: "center", maxW: 860 / s, glow: "rgba(0,0,0,0.9)", glowBlur: 16 });
       ctx.restore();
       if (L.b) {
-        const tb = L.t0 + 2 * 0.4654;
+        const tb = L.t0 + (L.bBeats ?? 2) * 0.4654;
         if (t >= tb) {
           const s2 = 1 + 0.25 * env(t, tb, 0.01, 0.1);
           ctx.save();

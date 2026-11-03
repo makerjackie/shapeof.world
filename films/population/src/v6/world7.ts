@@ -13,10 +13,12 @@ export const SERIES: Pt[] = [
   ...D.un.filter(([y]) => y > 2023).map(([y, v]) => ({ y, v, kind: "un" as const })),
 ];
 
-// ---------------- music: the same cut as the China film (section A to the war years, section B from 1950, its last hit for the ending)
+// ---------------- music: the China cut, minus 8 beats in the cold open (source 7.77-11.49) so the rewind sits on the
+// music's own rewind gesture (rising chirps 5.9-6.45, tape-stop to 7.6) and the build lands straight into the body
 export const MUSIC = makeMusic(
   [
-    [0, 135.286],
+    [0, 7.7664],
+    [11.4896, 135.286],
     [139.7515, 170.8915],
     [195.11, 201.3],
   ],
@@ -26,7 +28,7 @@ const F = MUSIC.F;
 const A = (n: number) => +(0.32 + n * 0.4654).toFixed(4);
 const H = 0.2327; // half a beat
 
-// ---------------- cold open: the whole line in four seconds, eight catastrophes on eight beats, then the question
+// ---------------- cold open: the whole line in four seconds, eight catastrophes on eight beats, one line, then the rewind
 const COLD_CRASHES = [
   { y: 165, t: "安东尼瘟疫", p: "死亡 500—1,000 万" },
   { y: 541, t: "查士丁尼瘟疫", p: "死亡上千万" },
@@ -41,8 +43,8 @@ const COLD_KEYS: Key[] = [
   { t: 0, y: 0, p: 1 },
   ...COLD_CRASHES.map((c) => ({ t: c.at, y: c.y, p: 1.4 })),
   { t: A(8), y: 2025, p: 1.4 },
-  { t: A(22), y: 2025, p: 1 },
-  { t: A(25), y: 0, p: 1.7 },
+  { t: A(12), y: 2025, p: 1 },
+  { t: A(16), y: 0, p: 1.7 },
 ];
 
 // ---------------- the body
@@ -169,24 +171,13 @@ export const WORLD: Spec = {
     keys: COLD_KEYS,
     crashes: COLD_CRASHES,
     lines: [
-      { t0: A(10), t1: A(14) - 0.05, a: "瘟疫、战争、饥荒", b: "一次次，把人口砍下去", tone: "red" },
-      { t0: A(14), t1: A(18) - 0.05, a: "公元 1 年，全世界 2.3 亿人", b: "1,800 年后，才到 10 亿", tone: "white" },
-      { t0: A(18), t1: A(22) - 0.05, a: "此后 218 年，涨到 80 亿", b: "前 1,800 年，为什么涨得这么慢？", tone: "gold" },
+      { t0: A(9), t1: A(12) - 0.05, a: "瘟疫、战争、饥荒", b: "一次次，把人口砍下去", bBeats: 1, tone: "red" },
     ],
-    rewind: [A(22), A(25)],
+    rewind: [A(12), A(16)],
     promise: "一条曲线，看尽人类兴衰",
     start: "公元 1 年",
     cam: { lon: 45, lat: 32, z: 1.15 },
     soloLabels: true,
-    rings: [
-      { y: 0, t0: A(14), t1: A(18) - 0.05, label: "", tone: "white" },
-      { y: 1804, t0: A(16), t1: A(22) - 0.05, label: "10 亿", tone: "white", dx: -10, dy: -40 },
-      { y: 2022, t0: A(18), t1: A(22) - 0.05, label: "80 亿", tone: "gold", dx: -40, dy: 12 },
-    ],
-    spans: [
-      { y0: 0, y1: 1804, t0: A(16), t1: A(22) - 0.05, label: "1,800 年", tone: "white" },
-      { y0: 1804, y1: 2022, t0: A(18), t1: A(22) - 0.05, label: "218 年", tone: "gold" },
-    ],
     // the empire of each catastrophe on its beat; the rewind runs them backwards
     maps: [
       [0, "w1"],
@@ -200,9 +191,6 @@ export const WORLD: Spec = {
       [A(5), "w1700", true],
       [A(6), "w1880", true],
       [A(7), "none", true],
-      [A(14), "w1"],
-      [A(16), "w1800"],
-      [A(18), "none"],
     ],
     mapYears: [
       [-300, "w1"], [150, "w200"], [250, "w300"], [350, "w400"], [450, "w500"], [600, "w700"], [750, "w800"], [1000, "w1100"],
@@ -233,6 +221,7 @@ export const WORLD: Spec = {
   era: (y) => (y < 476 ? "罗马与汉" : y < 1492 ? "中世纪" : y < 1800 ? "大航海时代" : y < 1945 ? "工业时代" : "现代"),
   kindLabel: { rec: "史料", est: "历史估算（HYDE）", stat: "联合国统计", un: "联合国预测" },
   noGapChip: true,
+  noRiser: true, // the music carries the rewind itself
   srcEnd: "数据：HYDE 3.3、Gapminder（Our World in Data）、联合国《世界人口展望 2024》",
   src: (y) => {
     let s = SRC_PTS[0][1];

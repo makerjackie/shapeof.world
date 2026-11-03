@@ -226,7 +226,8 @@ for i, at in enumerate(CUES["coldLines"]):
     else:
         put(boom(1.8), at, 0.35)
 r0, r1 = CUES["rewind"]
-put(riser(r1 - r0), r0, 0.3)
+if not CUES.get("noRiser"):
+    put(riser(r1 - r0), r0, 0.3)
 put(impact(1.0), CUES["body"][0], 0.35)
 for e in CUES["events"]:
     at, k, big = e["t"], e["k"], e["big"]

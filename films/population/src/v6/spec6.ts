@@ -3,7 +3,7 @@ import type { Key, Music, Placed } from "./time6";
 
 export type PtKind = "rec" | "est" | "stat" | "un";
 export type Pt = { y: number; v: number; kind: PtKind }; // v in 万人
-export type ColdLine = { t0: number; t1: number; a: string; b?: string; tone?: "gold" | "red" | "white" };
+export type ColdLine = { t0: number; t1: number; a: string; b?: string; bBeats?: number; tone?: "gold" | "red" | "white" };
 export type EndLine = { t0: number; t1: number; text: string; text2?: string; brush?: boolean; tone?: "gold" | "red" | "white" };
 export type Spec = {
   id: "china" | "world";
@@ -37,6 +37,7 @@ export type Spec = {
   map: { lon: number; lat: number; zoom: number }; // default map camera
   table?: (y: number) => { n: string; v: number; c: string }[]; // top-right table (world: regions)
   sfxGain?: number;
+  noRiser?: boolean; // no riser SFX under the rewind
   noGapChip?: boolean; // the header chip never says "两次统计相隔 N 年" (estimates, not counts)
   srcEnd?: string; // the source line under the ending
   src?: (y: number) => string; // the source of the count the head last passed

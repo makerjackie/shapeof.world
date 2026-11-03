@@ -16,6 +16,7 @@ const cues = {
   coldLines: S.cold.lines.map((l) => l.t0),
   coldTones: S.cold.lines.map((l) => l.tone ?? "white"),
   rewind: S.cold.rewind,
+  noRiser: !!S.noRiser,
   body: S.body,
   ending: S.ending.lines.map((l) => ({ t: l.t0, brush: !!l.brush })),
   card: S.ending.card,
