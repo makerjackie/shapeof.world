@@ -20,6 +20,11 @@ export type Spec = {
     counter?: string; // the cold-open counter label ("次人口大跌")
     mark?: { y: number; t0: number; t1: number; label?: string; tone?: "red" | "white" }; // a ring on one point
     ceiling?: { v: number; y0: number; y1: number; t0: number; peaks: [number, number][]; names: string[] }; // a dashed level the old peaks stay under
+    cam?: { lon: number; lat: number; z: number }; // the fixed map camera of the cold open
+    start?: string; // the label on the first point (default "公元 2 年")
+    soloLabels?: boolean; // only the newest catastrophe keeps its label (the rest stay as dots), kept inside the safe area
+    rings?: { y: number; t0: number; t1: number; label: string; tone?: "gold" | "white"; dx?: number; dy?: number }[]; // rings on points with a value
+    spans?: { y0: number; y1: number; t0: number; t1: number; label: string; tone?: "gold" | "white" }[]; // time brackets under the line
     maps?: [number, string, boolean?][]; // cold-open territory cues: film time, map key, split (jolt + cracks)
     mapYears?: [number, string][]; // era start year -> map key (the rewind runs these backwards)
   };
@@ -32,5 +37,7 @@ export type Spec = {
   map: { lon: number; lat: number; zoom: number }; // default map camera
   table?: (y: number) => { n: string; v: number; c: string }[]; // top-right table (world: regions)
   sfxGain?: number;
+  noGapChip?: boolean; // the header chip never says "两次统计相隔 N 年" (estimates, not counts)
+  srcEnd?: string; // the source line under the ending
   src?: (y: number) => string; // the source of the count the head last passed
 };

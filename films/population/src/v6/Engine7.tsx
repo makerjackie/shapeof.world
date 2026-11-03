@@ -449,7 +449,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const cue = mapCueAt(t);
       const fit = (cue && FIT[cue.key]) || { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom };
       const follow = S.id === "world" && e?.at ? { lon: e.at[0] * 0.75 + fit.lon * 0.25, lat: e.at[1] * 0.75 + fit.lat * 0.25, z: Math.max(fit.z, 2.7) } : null;
-      const tg = t < RW1 ? { lon: S.map.lon - 8, lat: S.map.lat, z: S.map.zoom * 0.66 } : e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
+      const tg = t < RW1 ? S.cold.cam ?? { lon: S.map.lon - 8, lat: S.map.lat, z: S.map.zoom * 0.66 } : e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
       if (f === 0) {
         lon = tg.lon;
         lat = tg.lat;
@@ -1111,7 +1111,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const nw = tabular(ctx, f.n, 58, 404, 86, col, { glow: col + "55" });
       text(ctx, `${f.u}人`, 58 + nw + 8, 404, 36, 900, SERIF, col);
       const g = gapAt(c);
-      const chip = g ? `两次统计相隔 ${g} 年` : S.kindLabel[kindAt(c)];
+      const chip = g && !S.noGapChip ? `两次统计相隔 ${g} 年` : S.kindLabel[kindAt(c)];
       ctx.font = `700 22px ${SERIF}`;
       const cw = ctx.measureText(chip).width + 24;
       ctx.strokeStyle = "rgba(200,205,210,0.45)";
@@ -1396,7 +1396,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.stroke();
     }
     ctx.fillStyle = gold ? "rgba(255,201,77,0.95)" : plague ? "rgba(210,215,220,0.95)" : "rgba(255,59,47,0.95)";
-    const lab = gold ? "人口激增" : plague ? "瘟疫" : e.k === "crash" ? "人口崩塌" : "战乱";
+    const small = S.id === "world" && !!e.pct && Math.abs(parseFloat(e.pct.replace("−", "-"))) < 10; // a few percent of the world is a fall, not a collapse
+    const lab = gold ? "人口激增" : plague ? "瘟疫" : e.k === "crash" ? (small ? "人口减少" : "人口崩塌") : "战乱";
     ctx.font = `900 26px ${SERIF}`;
     const lw = ctx.measureText(lab).width + 44;
     ctx.fillRect(W / 2 - lw / 2, 522, lw, 38);
@@ -1444,7 +1445,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.fill();
     }
     text(ctx, "倒回", W / 2 + 10 + jx, 482, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
-    const yNow = Math.max(2, Math.floor(CUR(t)));
+    const yNow = Math.max(Math.max(1, FIRST), Math.floor(CUR(t)));
     text(ctx, `公元 ${yNow} 年`, W / 2 + jx, 560, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     ctx.restore();
   };
@@ -1453,7 +1454,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const c = camAt(t).c;
     const e = evAt(t);
     let line = "数据：" + S.src(t >= END ? LAST_REAL : c);
-    if (t >= END) line = "数据：正史户口、学者估算（葛剑雄、吴松弟、曹树基等）、国家统计局、联合国预测";
+    if (t >= END) line = S.srcEnd ?? "数据：正史户口、学者估算（葛剑雄、吴松弟、曹树基等）、国家统计局、联合国预测";
     else if (e?.src) line += "　｜　" + e.src;
     const a = clamp((t - (B0 - 0.2)) / 0.3);
     ctx.save();
@@ -1534,8 +1535,16 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         ctx.stroke();
         ctx.restore();
       }
-      const dx = S.ending.troughs.find((q) => Math.abs(q.y - c.y) < 2)?.dx ?? 0;
+      let dx = S.ending.troughs.find((q) => Math.abs(q.y - c.y) < 2)?.dx ?? 0;
       const rs = s * (1 + 0.25 * roll);
+      if (S.cold.soloLabels) {
+        if (!isNew) return;
+        ctx.font = `900 ${28 * rs}px ${SERIF}`;
+        let hw = ctx.measureText(c.t).width / 2;
+        ctx.font = `900 ${30 * rs}px ${SANS}`;
+        if (c.p) hw = Math.max(hw, ctx.measureText(c.p).width / 2);
+        dx = clamp(x, 60 + hw, SAFE_R - hw) - x;
+      }
       text(ctx, c.t, x + dx, y + 44 * rs, 28 * rs, 900, SERIF, isNew ? WHITE : cc, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       if (c.p) text(ctx, c.p, x + dx, y + 80 * rs, 30 * rs, 900, SANS, cc, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
     });
@@ -1544,12 +1553,12 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const xs = X(k, FIRST);
       const ys = Yv(k, val(FIRST));
       ctx.globalAlpha = fadeOut;
-      text(ctx, "公元 2 年", xs - 4, ys - 74, 24, 700, SERIF, SOFT);
+      text(ctx, S.cold.start ?? "公元 2 年", xs - 4, ys - 74, 24, 700, SERIF, SOFT);
       const f0 = fmtPop(val(FIRST));
       text(ctx, `${f0.n} ${f0.u}`, xs - 4, ys - 34, 36, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       const tEnd = S.cold.crashes[S.cold.crashes.length - 1].at + P1;
       const mk = S.cold.mark;
-      const endTo = mk ? mk.t0 : RW0;
+      const endTo = mk ? mk.t0 : S.cold.rings?.length ? Math.min(...S.cold.rings.map((r) => r.t0)) : RW0;
       if (t >= tEnd - 0.01 && t < endTo) {
         const xe = X(k, LAST_REAL);
         const ye = Yv(k, val(LAST_REAL));
@@ -1611,6 +1620,48 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         ctx.stroke();
         text(ctx, cl.names[i], xp, yp - 34 * pop, 30 * pop, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       });
+    }
+    for (const r of S.cold.rings ?? []) {
+      if (t < r.t0 || t > r.t1 + 0.2 || t >= RW0) continue;
+      const xp = X(k, r.y);
+      const yp = Yv(k, val(r.y));
+      const pop = 1 + 0.5 * env(t, r.t0, 0.01, 0.12);
+      const col = r.tone === "gold" ? GOLD : WHITE;
+      ctx.globalAlpha = fadeOut * clamp((t - r.t0) / 0.08) * clamp((r.t1 + 0.2 - t) / 0.2);
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(xp, yp, 20 * pop, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(xp, yp, 8, 0, Math.PI * 2);
+      ctx.fill();
+      const dx = r.dx ?? 0;
+      const al: CanvasTextAlign = dx < 0 ? "right" : dx > 0 ? "left" : "center";
+      if (r.label) text(ctx, r.label, xp + dx * pop, yp + (r.dy ?? -40) * pop, 40 * pop, 900, SANS, col, { align: al, glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
+    }
+    for (const sp of S.cold.spans ?? []) {
+      if (t < sp.t0 || t > sp.t1 + 0.2 || t >= RW0) continue;
+      const xa = X(k, sp.y0);
+      const xb = X(k, sp.y1);
+      const grow = eo3((t - sp.t0) / 0.3);
+      const xg = xa + (xb - xa) * grow;
+      const yb = 1036;
+      const col = sp.tone === "gold" ? GOLD : WHITE;
+      ctx.globalAlpha = fadeOut * clamp((sp.t1 + 0.2 - t) / 0.2);
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(xa, yb - 12);
+      ctx.lineTo(xa, yb);
+      ctx.lineTo(xg, yb);
+      if (grow > 0.98) ctx.lineTo(xb, yb - 12);
+      ctx.stroke();
+      const s2 = 1 + 0.35 * env(t, sp.t0 + 0.3, 0.01, 0.12);
+      ctx.globalAlpha *= clamp((t - sp.t0 - 0.2) / 0.1);
+      const lx = clamp((xa + xb) / 2, 120, SAFE_R - 60);
+      text(ctx, sp.label, lx, yb + 44, 36 * s2, 900, SERIF, col, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
     }
     // the counter: one more fall on every hit
     if (S.cold.counter && newest >= 0 && t < L0t + 0.15) {
