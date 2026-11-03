@@ -1,6 +1,6 @@
 # 两千年中国人口 · 发布文案
 
-- 视频：`population-china.mp4`（1080×1920 竖屏，2:54，H.264 约 12 Mbps，AAC）
+- 视频：`population-china.mp4`（1080×1920 竖屏，2:54，H.264 约 8 Mbps，AAC，-12 LUFS）
 - 封面：`cover-3x4.png`（1200×1600，竖版主封面）、`cover-4x3.png`（1600×1200，横版：抖音/视频号横封面、B 站封面）
 - 账号：世界的形状（抖音「世界的形状 Shapeof.World」、B 站「世界的形状」、视频号「世界的形状Shapeof.World」）
 
