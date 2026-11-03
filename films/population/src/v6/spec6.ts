@@ -16,7 +16,11 @@ export type Spec = {
     crashes: { y: number; t: string; at: number; tone?: "gold" | "red"; p?: string }[]; // labels popping on beats
     lines: ColdLine[];
     rewind: [number, number];
+    promise?: string; // the line under the big title
+    counter?: string; // the cold-open counter label ("次人口大跌")
+    mark?: { y: number; t0: number; t1: number }; // a calm ring on one point (the turn now)
   };
+  dyn?: [number, number, string, 0 | 1 | 2][]; // dynasties under the whole line: 1 = one realm, 0 = split / chaos, 2 = modern
   body: [number, number]; // film seconds
   ending: { t0: number; lines: EndLine[]; troughs: { y: number; t: string; dx?: number }[]; card: number };
   era: (y: number) => string; // the small line under the brand (dynasty / era)

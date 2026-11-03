@@ -14,6 +14,7 @@ const cues = {
   events: S.events.map((e) => ({ t: e.t0, d: e.t1 - e.t0, k: e.k, big: !!e.big, st: e.st || null, y: e.y })),
   cold: S.cold.crashes.map((c) => c.at),
   coldLines: S.cold.lines.map((l) => l.t0),
+  coldTones: S.cold.lines.map((l) => l.tone ?? "white"),
   rewind: S.cold.rewind,
   body: S.body,
   ending: S.ending.lines.map((l) => ({ t: l.t0, brush: !!l.brush })),

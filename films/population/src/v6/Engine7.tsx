@@ -220,7 +220,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const HX_BODY = 0.42 * W;
   const MAP_ON = (t: number) => {
     if (t >= END) return 0;
-    if (t < B0) return clamp(t / 0.4);
+    if (t < B0) return t < RW1 ? 0 : ease(clamp((t - RW1) / (B0 - RW1)));
     const y = CUR(t);
     return 1 - clamp((y - S.mapOff) / 6);
   };
@@ -313,7 +313,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const yl = k.bot - ((v - k.lo) / (k.hi - k.lo)) * (k.bot - k.top);
     if (k.lg <= 0) return yl;
     const top = 640;
-    const bot = k.lgCold ? 1030 : 1380;
+    const bot = 1380;
     const yg = bot - ((Math.log10(Math.max(v, 1000)) - L0) / (L1 - L0)) * (bot - top);
     return yl + (yg - yl) * ease(k.lg);
   };
@@ -486,7 +486,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const mc = MAPCAM[clamp(Math.round(t * FPS), 0, MAPCAM.length - 1)];
     const origin = cue.e?.at ?? (fr.parts[0]?.l ?? [S.map.lon, S.map.lat]);
     const isSplit = cue.e?.k === "split" || cue.e?.k === "war";
-    const isUnite = cue.e?.k === "unite" || cue.e?.k === "peak" || cue.e?.k === "crash";
+    const isUnite = cue.e?.k === "unite" || cue.e?.k === "peak" || cue.e?.k === "crash" || cue === MAPCUES[0];
     const sweep = 0.5; // seconds for the change to cross the map
     const cellPx = KX * MJ.step * mc.z;
     // jolt: split pieces fly apart and settle
@@ -1013,7 +1013,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.font = `900 ${size}px ${SERIF}`;
     const w = ctx.measureText(S.brand).width;
     const x = W / 2 - w / 2 + (hx - (W / 2 - w / 2)) * k;
-    const y = 590 + (127 - 590) * k;
+    const y = 560 + (127 - 560) * k;
     const pop = 1 + 0.12 * env(t, 0.05, 0.01, 0.25);
     ctx.save();
     ctx.translate(x, y);
@@ -1022,7 +1022,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.restore();
     if (k < 1) {
       ctx.globalAlpha = 1 - k;
-      text(ctx, "公元 2 年 — 2100 年", W / 2, 655, 36, 700, SERIF, SOFT, { align: "center", ls: 4 });
+      text(ctx, S.cold.promise ?? "", W / 2, 630, 46, 900, SERIF, "#e8dcc0", { align: "center", ls: 6, glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
       ctx.globalAlpha = 1;
     }
   };
@@ -1464,22 +1464,105 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (t >= B0) return;
     const k = camAt(t);
     ctx.save();
-    // crash labels on the troughs
-    for (const c of S.cold.crashes) {
-      if (t < c.at - 0.01 || t > RW0) continue;
+    // crash labels on the troughs: the newest one big, the older ones settle small
+    const P1 = 0.4654;
+    const L0t = S.cold.lines[0]?.t0 ?? RW0;
+    let newest = -1;
+    S.cold.crashes.forEach((c, i) => {
+      if (t >= c.at - 0.01) newest = i;
+    });
+    const fadeOut = 1 - clamp((t - (RW0 - 0.3)) / 0.3);
+    S.cold.crashes.forEach((c, i) => {
+      if (t < c.at - 0.01 || t > RW0) return;
       const v = val(c.y);
       const x = X(k, c.y);
       const y = Yv(k, v);
-      const s = 1 + 0.6 * env(t, c.at, 0.01, 0.1);
-      ctx.globalAlpha = 1 - clamp((t - (S.cold.rewind[0] - 0.3)) / 0.3);
+      const isNew = i === newest && t < c.at + 0.9 && t < L0t;
+      const grow = isNew ? 1 + 0.45 * (1 - clamp((t - c.at - 0.45) / 0.3)) : 1;
+      const s = grow * (1 + 0.6 * env(t, c.at, 0.01, 0.1));
+      // roll call while the first line says "8 次"
+      const rc = L0t + (i * P1) / 2;
+      const roll = env(t, rc, 0.01, 0.25);
+      ctx.globalAlpha = fadeOut;
       const cc = c.tone === "gold" ? GOLD : RED;
       ctx.fillStyle = cc;
       ctx.beginPath();
       ctx.arc(x, y, 8 * s, 0, Math.PI * 2);
       ctx.fill();
+      if (roll > 0.02) {
+        ctx.save();
+        ctx.globalAlpha = fadeOut * roll;
+        ctx.strokeStyle = cc;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(x, y, 10 + 46 * (1 - roll), 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
       const dx = S.ending.troughs.find((q) => Math.abs(q.y - c.y) < 2)?.dx ?? 0;
-      text(ctx, c.t, x + dx, y + 44 * s, 26 * s, 900, SERIF, cc, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
-      if (c.p) text(ctx, c.p, x + dx, y + 80 * s, 28 * s, 900, SANS, cc, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      const rs = s * (1 + 0.25 * roll);
+      text(ctx, c.t, x + dx, y + 44 * rs, 28 * rs, 900, SERIF, isNew ? WHITE : cc, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      if (c.p) text(ctx, c.p, x + dx, y + 80 * rs, 30 * rs, 900, SANS, cc, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+    });
+    // where it starts and where it is now
+    {
+      const xs = X(k, FIRST);
+      const ys = Yv(k, val(FIRST));
+      ctx.globalAlpha = fadeOut;
+      text(ctx, "公元 2 年", xs - 4, ys - 74, 24, 700, SERIF, SOFT);
+      const f0 = fmtPop(val(FIRST));
+      text(ctx, `${f0.n} ${f0.u}`, xs - 4, ys - 34, 36, 900, SANS, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      const tEnd = S.cold.crashes[S.cold.crashes.length - 1].at + P1;
+      const mk = S.cold.mark;
+      const endTo = mk ? mk.t0 : RW0;
+      if (t >= tEnd - 0.01 && t < endTo) {
+        const xe = X(k, LAST_REAL);
+        const ye = Yv(k, val(LAST_REAL));
+        const s = 1 + 0.5 * env(t, tEnd, 0.01, 0.12);
+        ctx.globalAlpha = clamp((endTo - t) / 0.15);
+        ctx.save();
+        ctx.translate(xe + 36, ye + 70);
+        ctx.scale(s, s);
+        const fe = fmtPop(val(LAST_REAL));
+        text(ctx, `${fe.n} ${fe.u}`, 0, 0, 54, 900, SANS, GOLD, { align: "right", glow: "rgba(255,201,77,0.6)", glowBlur: 20 });
+        ctx.restore();
+        text(ctx, `${LAST_REAL} 年`, xe + 36, ye + 108, 26, 700, SERIF, SOFT, { align: "right" });
+      }
+      // the turn now: a calm white ring, no lightning
+      if (mk && t >= mk.t0 && t < mk.t1 + 0.2) {
+        const xm = X(k, mk.y);
+        const ym = Yv(k, val(mk.y));
+        const p = beatPulse(t);
+        ctx.globalAlpha = clamp((t - mk.t0) / 0.15) * clamp((mk.t1 + 0.2 - t) / 0.2) * fadeOut;
+        ctx.strokeStyle = WHITE;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(xm, ym, 22 + 8 * p, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fillStyle = WHITE;
+        ctx.beginPath();
+        ctx.arc(xm, ym, 9, 0, Math.PI * 2);
+        ctx.fill();
+        text(ctx, String(mk.y), xm + 30, ym + 70, 30, 900, SANS, WHITE, { align: "right", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      }
+    }
+    // the counter: one more fall on every hit
+    if (S.cold.counter && newest >= 0 && t < L0t + 0.15) {
+      const c = S.cold.crashes[newest];
+      const pop = 1 + 0.45 * env(t, c.at, 0.01, 0.13);
+      ctx.globalAlpha = clamp((L0t + 0.15 - t) / 0.15);
+      const num = String(newest + 1);
+      ctx.font = `900 210px ${SANS}`;
+      const wn = ctx.measureText(num).width;
+      ctx.font = `900 64px ${SERIF}`;
+      const wl = ctx.measureText(S.cold.counter).width;
+      const x0 = W / 2 - (wn + 24 + wl) / 2;
+      ctx.save();
+      ctx.translate(x0 + wn / 2, 1800);
+      ctx.scale(pop, pop);
+      text(ctx, num, -wn / 2, 0, 210, 900, SANS, RED, { glow: "rgba(255,59,47,0.7)", glowBlur: 30 });
+      ctx.restore();
+      text(ctx, S.cold.counter, x0 + wn + 24, 1790, 64, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     }
     // the lines
     for (const L of S.cold.lines) {
@@ -1505,6 +1588,36 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         }
       }
     }
+    ctx.restore();
+  };
+
+  // ---------- the dynasties under the whole line: rise and fall at a glance
+  const RIB_Y = 1560;
+  const drawRibbon = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
+    const k = camAt(t);
+    const a = ease(k.lg) * alpha;
+    if (!S.dyn || a <= 0.01) return;
+    const lit = t >= END ? LAST_REAL : k.c;
+    ctx.save();
+    S.dyn.forEach(([y0, y1, name, u], i) => {
+      const x0 = X(k, Math.max(FIRST, y0)) + 1;
+      const x1 = X(k, Math.min(LAST_REAL, y1)) - 1;
+      if (x1 <= x0) return;
+      const xl = X(k, Math.max(FIRST, Math.min(lit, y1)));
+      const col = u === 1 ? (i % 2 ? "255,214,120" : "255,190,60") : u === 0 ? "150,160,172" : "235,238,242";
+      ctx.globalAlpha = a * 0.22;
+      ctx.fillStyle = `rgb(${col})`;
+      ctx.fillRect(x0, RIB_Y, x1 - x0, 12);
+      if (xl > x0) {
+        ctx.globalAlpha = a * (u === 0 ? 0.75 : 0.95);
+        ctx.fillRect(x0, RIB_Y, Math.min(x1, xl) - x0, 12);
+      }
+      if (!name) return;
+      const on = lit >= y0;
+      const pop = on && t < END ? 1 + 0.35 * clamp(1 - (k.c - Math.max(y0, FIRST)) / 60) : 1;
+      ctx.globalAlpha = a * (on ? 1 : 0.3);
+      text(ctx, name, (x0 + x1) / 2, RIB_Y + 52, 32 * pop, 900, SERIF, u === 1 ? "#ffd987" : u === 0 ? "#aeb6bf" : WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+    });
     ctx.restore();
   };
 
@@ -1597,6 +1710,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     drawMap(b, t);
     const chartA = 1 - clamp((t - (S.ending.card - 0.2)) / 0.8);
     drawChart(b, t, chartA);
+    drawRibbon(b, t, chartA);
     drawStreaks(b, t);
     drawHead(b, t, chartA);
     drawTicks(b, t);

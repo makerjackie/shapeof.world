@@ -219,8 +219,12 @@ def duckat(at, depth, d):
 for i, at in enumerate(CUES["cold"]):
     put(taiko(1.0), at, 0.55 if i < 6 else 0.7)
     put(impact(0.6), at, 0.25)
-for at in CUES["coldLines"]:
-    put(boom(1.8), at, 0.35)
+for i, at in enumerate(CUES["coldLines"]):
+    tone = (CUES.get("coldTones") or ["red"] * 9)[i]
+    if tone == "white":
+        put(bell(98, 5.0), at + 0.02, 0.32)  # the calm ninth: no boom
+    else:
+        put(boom(1.8), at, 0.35)
 r0, r1 = CUES["rewind"]
 put(riser(r1 - r0), r0, 0.3)
 put(impact(1.0), CUES["body"][0], 0.35)
