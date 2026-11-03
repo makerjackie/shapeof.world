@@ -18,7 +18,9 @@ export type Spec = {
     rewind: [number, number];
     promise?: string; // the line under the big title
     counter?: string; // the cold-open counter label ("次人口大跌")
-    mark?: { y: number; t0: number; t1: number }; // a calm ring on one point (the turn now)
+    mark?: { y: number; t0: number; t1: number; label?: string; tone?: "red" | "white" }; // a ring on one point
+    maps?: [number, string, boolean?][]; // cold-open territory cues: film time, map key, split (jolt + cracks)
+    mapYears?: [number, string][]; // era start year -> map key (the rewind runs these backwards)
   };
   dyn?: [number, number, string, 0 | 1 | 2][]; // dynasties under the whole line: 1 = one realm, 0 = split / chaos, 2 = modern
   body: [number, number]; // film seconds

@@ -220,7 +220,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const HX_BODY = 0.42 * W;
   const MAP_ON = (t: number) => {
     if (t >= END) return 0;
-    if (t < B0) return t < RW1 ? 0 : ease(clamp((t - RW1) / (B0 - RW1)));
+    if (t < B0) return clamp(t / 0.3);
     const y = CUR(t);
     return 1 - clamp((y - S.mapOff) / 6);
   };
@@ -312,8 +312,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const Yv = (k: Cam, v: number) => {
     const yl = k.bot - ((v - k.lo) / (k.hi - k.lo)) * (k.bot - k.top);
     if (k.lg <= 0) return yl;
-    const top = 640;
-    const bot = 1380;
+    const top = k.lgCold ? 660 : 640;
+    const bot = k.lgCold ? 1000 : 1380;
     const yg = bot - ((Math.log10(Math.max(v, 1000)) - L0) / (L1 - L0)) * (bot - top);
     return yl + (yg - yl) * ease(k.lg);
   };
@@ -372,10 +372,34 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const KX0 = (W * 0.94) / (MJ.cols * MJ.step * Math.cos((S.map.lat * Math.PI) / 180));
   const KX = KX0;
   // map keyframe timeline from the events
-  type MapCue = { t: number; key: string; from: string; e: Placed | null };
-  const MAPCUES: MapCue[] = [];
+  type MapCue = { t: number; key: string; from: string; e: Placed | null; split?: boolean; cold?: boolean };
+  const COLDCUES: MapCue[] = [];
   {
     let cur = "none";
+    const add = (t: number, key: string, split = false) => {
+      if (!FRAMES[key] || key === cur) return;
+      COLDCUES.push({ t, key, from: cur, e: null, split, cold: true });
+      cur = key;
+    };
+    for (const [t, key, sp] of S.cold.maps ?? []) if (t < RW0) add(t, key, !!sp);
+    // the rewind runs the territories backwards
+    const YS = S.cold.mapYears ?? [];
+    let last = -1;
+    for (let f = Math.floor(RW0 * FPS); f <= Math.ceil(RW1 * FPS); f++) {
+      const t = f / FPS;
+      const y = CUR(t);
+      let key = YS.length ? YS[0][1] : "none";
+      for (const [y0, kk] of YS) if (y >= y0) key = kk;
+      if (key !== cur && t - last > 0.1) {
+        add(t, key);
+        last = t;
+      }
+    }
+    if (YS.length) add(RW1, YS[0][1]);
+  }
+  const MAPCUES: MapCue[] = [];
+  {
+    let cur = COLDCUES.length ? COLDCUES[COLDCUES.length - 1].key : "none";
     for (const e of EV)
       if (e.map && FRAMES[e.map] && e.map !== cur) {
         MAPCUES.push({ t: e.t0, key: e.map, from: cur, e });
@@ -385,8 +409,9 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const COLD_CUE: MapCue = { t: -100, key: "none", from: "none", e: null };
   const mapCueAt = (t: number) => {
     let c: MapCue | null = null;
-    for (const m of MAPCUES) if (m.t <= t) c = m;
-    return c;
+    for (const m of COLDCUES) if (m.t <= t) c = m;
+    if (t >= B0) for (const m of MAPCUES) if (m.t <= t) c = m;
+    return c ?? COLD_CUE;
   };
   // map camera: whole map by default, events can focus
   const FIT: Record<string, { lon: number; lat: number; z: number }> = {};
@@ -423,20 +448,22 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const cue = mapCueAt(t);
       const fit = (cue && FIT[cue.key]) || { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom };
       const follow = S.id === "world" && e?.at ? { lon: e.at[0] * 0.75 + fit.lon * 0.25, lat: e.at[1] * 0.75 + fit.lat * 0.25, z: Math.max(fit.z, 2.7) } : null;
-      const tg = e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
+      const tg = t < RW1 ? { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom } : e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
       if (f === 0) {
         lon = tg.lon;
         lat = tg.lat;
         z = tg.z;
       }
-      const kk = S.id === "world" ? 0.075 : 0.06;
+      const kk = t < B0 ? 0.12 : S.id === "world" ? 0.075 : 0.06;
       lon += (tg.lon - lon) * kk;
       lat += (tg.lat - lat) * kk;
       z += (tg.z - z) * kk;
       MAPCAM.push({ lon, lat, z });
     }
   }
-  const MAP_CY = 1440;
+  let MAP_CY = 1440;
+  let CLIP0 = 1060;
+  let CLIP1 = 1900;
   const TILT = 0.62; // radians
   const DIST = 2200;
 
@@ -478,16 +505,22 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const k = camAt(t);
     const mk = clamp(MAP_ON(t) * 1.0);
     if (mk <= 0.01) return;
-    const cue = t < B0 ? COLD_CUE : mapCueAt(t);
+    {
+      const g = t < RW1 ? 0 : t < B0 ? ease(clamp((t - RW1) / (B0 - RW1))) : 1;
+      MAP_CY = 1400 + 40 * g;
+      CLIP0 = 1070 - 10 * g;
+      CLIP1 = 1700 + 200 * g;
+    }
+    const cue = mapCueAt(t);
     if (!cue) return;
     const fr = FRAMES[cue.key];
     const prev = FRAMES[cue.from];
     const dt = t - cue.t;
     const mc = MAPCAM[clamp(Math.round(t * FPS), 0, MAPCAM.length - 1)];
     const origin = cue.e?.at ?? (fr.parts[0]?.l ?? [S.map.lon, S.map.lat]);
-    const isSplit = cue.e?.k === "split" || cue.e?.k === "war";
-    const isUnite = cue.e?.k === "unite" || cue.e?.k === "peak" || cue.e?.k === "crash" || cue === MAPCUES[0];
-    const sweep = 0.5; // seconds for the change to cross the map
+    const isSplit = cue.e ? cue.e.k === "split" || cue.e.k === "war" : !!cue.split;
+    const isUnite = cue.e?.k === "unite" || cue.e?.k === "peak" || cue.e?.k === "crash";
+    const sweep = cue.cold ? 0.14 : 0.5; // seconds for the change to cross the map
     const cellPx = KX * MJ.step * mc.z;
     // jolt: split pieces fly apart and settle
     const jolt = isSplit ? 16 * env(t, cue.t, 0.02, 0.35) : 0;
@@ -507,8 +540,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     for (let q = 0; q < N; q++) {
       const P = proj(mc, LON[q], LAT[q]);
-      if (P.x < -10 || P.x > W + 10 || P.y < 1060 || P.y > 1900) continue;
-      const edge = clamp((P.y - 1060) / 70) * clamp((1900 - P.y) / 120);
+      if (P.x < -10 || P.x > W + 10 || P.y < CLIP0 || P.y > CLIP1) continue;
+      const edge = clamp((P.y - CLIP0) / 70) * clamp((CLIP1 - P.y) / 120);
       const dist = Math.hypot((LON[q] - origin[0]) * Math.cos((LAT[q] * Math.PI) / 180), LAT[q] - origin[1]);
       const tq = cue.t + Math.min(sweep, (dist / 40) * sweep * (S.id === "world" ? 0.25 : 1));
       const useNew = !prev || t >= tq;
@@ -564,7 +597,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       }
       void dead;
       // the switch flashes as it passes
-      const fl = prev && cue.from !== "none" && Math.abs(t - tq) < 0.18 && (!prev || prev.id[q] !== fr.id[q]) ? 1 - Math.abs(t - tq) / 0.18 : 0;
+      const flw = cue.cold ? 0.07 : 0.18;
+      const fl = (prev && cue.from !== "none" && Math.abs(t - tq) < flw && (!prev || prev.id[q] !== fr.id[q]) ? 1 - Math.abs(t - tq) / flw : 0) * (cue.cold ? 0.45 : 1);
       // fx
       let fxCol: string | null = null;
       let fxA = 0;
@@ -1534,16 +1568,17 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         const ym = Yv(k, val(mk.y));
         const p = beatPulse(t);
         ctx.globalAlpha = clamp((t - mk.t0) / 0.15) * clamp((mk.t1 + 0.2 - t) / 0.2) * fadeOut;
-        ctx.strokeStyle = WHITE;
-        ctx.lineWidth = 3;
+        const mc = mk.tone === "red" ? RED : WHITE;
+        ctx.strokeStyle = mc;
+        ctx.lineWidth = 4;
         ctx.beginPath();
-        ctx.arc(xm, ym, 22 + 8 * p, 0, Math.PI * 2);
+        ctx.arc(xm, ym, 24 + 10 * p, 0, Math.PI * 2);
         ctx.stroke();
-        ctx.fillStyle = WHITE;
+        ctx.fillStyle = mc;
         ctx.beginPath();
         ctx.arc(xm, ym, 9, 0, Math.PI * 2);
         ctx.fill();
-        text(ctx, String(mk.y), xm + 30, ym + 70, 30, 900, SANS, WHITE, { align: "right", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+        if (mk.label) text(ctx, mk.label, xm + 30, ym + 70, 30, 900, SANS, WHITE, { align: "right", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       }
     }
     // the counter: one more fall on every hit
@@ -1557,12 +1592,20 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.font = `900 64px ${SERIF}`;
       const wl = ctx.measureText(S.cold.counter).width;
       const x0 = W / 2 - (wn + 24 + wl) / 2;
+      const gb = ctx.createLinearGradient(0, 1600, 0, 1720);
+      gb.addColorStop(0, "rgba(4,5,7,0)");
+      gb.addColorStop(1, "rgba(4,5,7,0.85)");
       ctx.save();
-      ctx.translate(x0 + wn / 2, 1800);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = gb;
+      ctx.fillRect(0, 1600, W, H - 1600);
+      ctx.restore();
+      ctx.save();
+      ctx.translate(x0 + wn / 2, 1830);
       ctx.scale(pop, pop);
       text(ctx, num, -wn / 2, 0, 210, 900, SANS, RED, { glow: "rgba(255,59,47,0.7)", glowBlur: 30 });
       ctx.restore();
-      text(ctx, S.cold.counter, x0 + wn + 24, 1790, 64, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+      text(ctx, S.cold.counter, x0 + wn + 24, 1820, 64, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     }
     // the lines
     for (const L of S.cold.lines) {
@@ -1596,7 +1639,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const drawRibbon = (ctx: CanvasRenderingContext2D, t: number, alpha: number) => {
     const k = camAt(t);
     const a = ease(k.lg) * alpha;
-    if (!S.dyn || a <= 0.01) return;
+    if (!S.dyn || a <= 0.01 || t < B0) return;
     const lit = t >= END ? LAST_REAL : k.c;
     ctx.save();
     S.dyn.forEach(([y0, y1, name, u], i) => {
