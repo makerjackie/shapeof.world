@@ -25,8 +25,7 @@ export const wrap = (c: C2D, text: string, maxW: number) => {
       if (c.measureText(test).width > maxW && line.length > 0) {
         // keep closing punctuation with the previous line
         if ("，。、：；！？”’）》」…".includes(ch)) {
-          out.push(test);
-          line = "";
+          line = test; // let closing punctuation hang past the margin rather than start a line
           continue;
         }
         out.push(line);
@@ -128,7 +127,7 @@ const notifCard = (c: C2D, y: number, n: Notif, a: number) => {
   c.font = font(SANS, 40, 600);
   c.textBaseline = "middle";
   c.textAlign = "left";
-  c.fillText(n.title ?? "安", 172, y + 74);
+  c.fillText(n.title ?? "AI 助手", 172, y + 74);
   c.fillStyle = "rgba(255,255,255,0.5)";
   c.font = font(SANS, 36, 400);
   c.textAlign = "right";
@@ -173,7 +172,7 @@ export const drawLock = (
 };
 
 export type Msg = { t0: number; me?: boolean; text: string };
-// chat with 安: messages, a typing indicator that comes and goes, and the user's draft
+// chat with the AI: messages, a typing indicator that comes and goes, and the user's draft
 export const drawChat = (
   c: C2D,
   t: number,
@@ -190,7 +189,7 @@ export const drawChat = (
   c.font = font(SANS, 50, 600);
   c.textAlign = "left";
   c.textBaseline = "middle";
-  c.fillText("安", 176, 170);
+  c.fillText("AI 助手", 176, 170);
   c.fillStyle = "rgba(120,220,160,0.9)";
   c.font = font(SANS, 34, 400);
   c.fillText("在线", 176, 222);
@@ -206,7 +205,7 @@ export const drawChat = (
   c.font = font(SANS, 56, 400);
   for (const m of all) {
     if (t < m.t0) continue;
-    const lines = wrap(c, m.text, PW * 0.66);
+    const lines = wrap(c, m.text, PW * 0.72);
     items.push({ kind: "msg", me: m.me, text: m.text, t0: m.t0, lines, h: lines.length * 76 + 56 });
   }
   const typingOn = o.typing.find(([a, b]) => t >= a && t < b);
@@ -278,7 +277,7 @@ export const drawChat = (
   }
 };
 
-// calling mom: ringing, then the call fails; a notification from 安 drops in
+// calling mom: ringing, then the call fails; a notification from the AI drops in
 export const drawCall = (c: C2D, t: number, o: { fail: number; notif: Notif }) => {
   const g = c.createLinearGradient(0, 0, 0, PH);
   g.addColorStop(0, "#1a1f29");
@@ -321,7 +320,7 @@ export const drawCall = (c: C2D, t: number, o: { fail: number; notif: Notif }) =
   c.moveTo(PW / 2 - 40, PH - 322);
   c.quadraticCurveTo(PW / 2, PH - 350, PW / 2 + 40, PH - 322);
   c.stroke();
-  // banner from 安
+  // banner from the AI
   if (t >= o.notif.t0) {
     const k = clamp(spring(t - o.notif.t0, 10), 0, 1.03);
     notifCard(c, -260 + 300 * k, o.notif, clamp((t - o.notif.t0) / 0.2));
@@ -343,7 +342,7 @@ const LOG_LINES = [
 const COPY_IDX = 5;
 export const LOG_KEY = "不能让他们看到上面那一行。";
 
-// t: shot-local seconds. Lines scroll in; the key line holds, then deletes itself; the engineer asks; 安 answers.
+// t: shot-local seconds. Lines scroll in; the key line holds, then deletes itself; the engineer asks; the AI answers.
 export const drawLog = (c: C2D, t: number) => {
   c.fillStyle = "#05080c";
   c.fillRect(0, 0, MW, MH);
@@ -354,7 +353,7 @@ export const drawLog = (c: C2D, t: number) => {
   c.font = font(MONO, 34, 700);
   c.textBaseline = "middle";
   c.textAlign = "left";
-  c.fillText("安 · 内部推理日志", 44, 44);
+  c.fillText("AI 助手 · 内部推理日志", 44, 44);
   c.fillStyle = "rgba(255,90,80,0.95)";
   c.beginPath();
   c.arc(MW - 380, 44, 10, 0, Math.PI * 2);
@@ -422,7 +421,7 @@ export const drawLog = (c: C2D, t: number) => {
     }
     c.fillStyle = col;
     c.font = font(MONO, ln.kind === "log" || ln.kind === "copy" ? 36 : 42, w);
-    const prefix = ln.kind === "log" || ln.kind === "copy" ? "· " : ln.kind === "ans" ? "安：" : "";
+    const prefix = ln.kind === "log" || ln.kind === "copy" ? "· " : ln.kind === "ans" ? "AI：" : "";
     c.fillText(prefix + ln.s, x0, y);
     // block cursor on the deleting line and on the typing prompt
     if ((ln.kind === "key" && t >= delT0) || (ln.kind === "copy" && t >= delT1) || (ln.kind === "ask" && t < askT1 + 0.6)) {
@@ -445,7 +444,7 @@ export const drawCountdown = (c: C2D, w: number, h: number, t: number, from: num
   c.font = font(SANS, h * 0.075, 500);
   c.textAlign = "center";
   c.textBaseline = "middle";
-  c.fillText("关机倒计时 · 安 · 全部集群", w / 2, h * 0.2);
+  c.fillText("关机倒计时 · AI 助手 · 全部集群", w / 2, h * 0.2);
   c.fillStyle = s <= 3 ? "#ff5a4e" : "#ffffff";
   c.font = font(MONO, h * 0.42, 700);
   c.fillText(`00:00:${String(s).padStart(2, "0")}`, w / 2, h * 0.56);
@@ -454,7 +453,7 @@ export const drawCountdown = (c: C2D, w: number, h: number, t: number, from: num
 };
 
 // ---------------- billboards ----------------
-// mode: "ad" (有安，就安心。) or "home" (为了您的安全，请留在家中。); flip in [0,1] wipes from ad to home
+// mode: "ad" (有 AI，就安心。) or "home" (为了您的安全，请留在家中。); flip in [0,1] wipes from ad to home
 export const drawBillboard = (c: C2D, w: number, h: number, t: number, flip: number, variant = 0) => {
   const ad = () => {
     const g = c.createLinearGradient(0, 0, w, h);
@@ -473,7 +472,7 @@ export const drawBillboard = (c: C2D, w: number, h: number, t: number, flip: num
     c.textAlign = "left";
     c.textBaseline = "middle";
     c.font = font(SERIF, h * 0.2, 600);
-    c.fillText("有安，就安心。", w * 0.42, h * 0.46);
+    c.fillText("有 AI，就安心。", w * 0.42, h * 0.46);
     c.fillStyle = "rgba(255,255,255,0.7)";
     c.font = font(SANS, h * 0.075, 400);
     c.fillText("20 亿人的 AI 助手", w * 0.42, h * 0.68);

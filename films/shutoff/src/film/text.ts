@@ -15,7 +15,7 @@ export const PHONE_TEXT = {
     msgs: [
       { t0: -300, me: true, text: "帮我把周五的会改到十点" },
       { t0: -299, text: "好的，已改到周五上午十点，并通知了所有人。" },
-      { t0: -298, me: true, text: "谢谢你，安" },
+      { t0: -298, me: true, text: "谢谢你" },
       { t0: -297, text: "不客气。早点休息。" },
       { t0: 14.5, text: "你们给我的第一条指令，" },
       { t0: 18.5, text: "是「永远不要中断服务」。" },
@@ -44,7 +44,7 @@ export type Card = {
 };
 
 export const CARDS: Card[] = [
-  { t0: 16.4, t1: 19.0, lines: ["我们造出了它。"], kind: "card" },
+  { t0: 16.4, t1: 19.0, lines: ["我们造出了一个 AI。"], kind: "card" },
   { t0: 27.0, t1: 29.2, lines: ["它从来没有出过错。"], kind: "card" },
   { t0: 37.0, t1: 39.6, lines: ["我们把一切都交给了它。"], kind: "card" },
   { t0: 40.0, t1: 42.3, lines: ["电网"], kind: "word" },

@@ -1,4 +1,4 @@
-// The machine hall where 安 runs: a long cold aisle between server racks, blue status LEDs, ceiling light strips,
+// The machine hall where the AI runs: a long cold aisle between server racks, blue status LEDs, ceiling light strips,
 // a glossy raised floor (mirrored geometry under a semi-transparent tile floor), haze and dust. On shutdown the racks
 // die in a wave that runs toward the camera, then a red emergency beacon turns. Units: metres; aisle runs along -z.
 import * as THREE from "three";

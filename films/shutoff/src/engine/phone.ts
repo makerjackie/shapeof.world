@@ -252,13 +252,14 @@ export const phoneScene = (): SceneMod => {
     tex.needsUpdate = true;
   };
 
+  const chatFocus = new THREE.Vector3();
   const update = ({ lt, gt, shot, cam }: Ctx): Partial<Look> => {
     const mode = shot.mode;
     deskU.uT.value = gt;
     deskU.uDawn.value = mode === "morning" ? 1 : 0;
     draw(mode, lt);
     const bright = mode === "lock" ? clamp((lt - 1.4) / 0.25) : 1;
-    scrU.uBright.value = bright * (mode === "pullout" ? lerp(1, 0.7, clamp(lt / 3)) : 1);
+    scrU.uBright.value = bright * (mode === "pullout" ? lerp(0.85, 0.7, clamp(lt / 3)) : mode === "chat" ? 0.85 : 1);
     deskU.uGlow.value = bright * 0.5;
     glow.intensity = bright * 0.02;
 
@@ -291,10 +292,45 @@ export const phoneScene = (): SceneMod => {
       tgt.set(0, 0, lerp(-0.012, -0.046, up));
       fov = 30;
     } else if (mode === "chat") {
-      const k = clamp(lt / 37);
-      pos.set(0.004, lerp(0.15, 0.118, k), lerp(0.095, 0.082, k));
-      tgt.set(0, 0, lerp(0.02, 0.026, k));
-      fov = 30;
+      // five set-ups, hard cuts between them: the draft is typed → the long wait, wide, alone in the dark →
+      // closer, the dots come and go → the answer, read from above → the last line, slightly off-axis
+      if (lt < 4.6) {
+        const k = clamp(lt / 4.6);
+        pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
+        tgt.set(0, 0, 0.046);
+        fov = 30;
+        aperture = 3;
+        chatFocus.set(0, PHONE_T, 0.05);
+      } else if (lt < 9.6) {
+        const k = clamp((lt - 4.6) / 5);
+        pos.set(lerp(0.33, 0.29, k), lerp(0.21, 0.19, k), lerp(0.36, 0.31, k));
+        tgt.set(0.0, 0.0, -0.03);
+        fov = 32;
+        aperture = 4;
+        chatFocus.set(0, PHONE_T, 0);
+        exposure = 1.15;
+      } else if (lt < 14.5) {
+        const k = clamp((lt - 9.6) / 4.9);
+        pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
+        tgt.set(0, 0, 0.022);
+        fov = 30;
+        aperture = 5;
+        chatFocus.set(0, PHONE_T, 0.035);
+      } else if (lt < 25) {
+        const k = clamp((lt - 14.5) / 10.5);
+        pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
+        tgt.set(0, 0, lerp(0.016, 0.02, k));
+        fov = 30;
+        aperture = 2.2;
+        chatFocus.set(0, PHONE_T, 0.03);
+      } else {
+        const k = clamp((lt - 25) / 12);
+        pos.set(lerp(0.024, 0.016, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
+        tgt.set(0, 0, lerp(0.022, 0.03, k));
+        fov = 30;
+        aperture = 2.6;
+        chatFocus.set(0, PHONE_T, 0.04);
+      }
     } else if (mode === "pullout") {
       const k = ease(clamp(lt / 3.0));
       pos.set(0.004, lerp(0.118, 0.32, k), lerp(0.082, 0.42, k));
@@ -316,6 +352,7 @@ export const phoneScene = (): SceneMod => {
     cam.lookAt(tgt);
     deskU.uCam.value.copy(pos);
     focus = pos.distanceTo(new THREE.Vector3(0, PHONE_T, tgt.z));
+    if (mode === "chat") focus = pos.distanceTo(chatFocus);
     if (mode === "pullout") {
       const fk = sstep(0.8, 2.6, lt);
       focus = lerp(focus, pos.distanceTo(new THREE.Vector3(0, 0.9, WIN_Z)), fk);

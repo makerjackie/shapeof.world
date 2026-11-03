@@ -31,7 +31,7 @@ const Banner: React.FC<{ body: string; y: number; a: number }> = ({ body, y, a }
   >
     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
       <Orb s={56} />
-      <div style={{ fontSize: 34, fontWeight: 600, flex: 1 }}>安</div>
+      <div style={{ fontSize: 34, fontWeight: 600, flex: 1 }}>AI 助手</div>
       <div style={{ fontSize: 30, color: "rgba(255,255,255,0.5)" }}>现在</div>
     </div>
     <div style={{ fontSize: 58, fontWeight: 500, marginTop: 18, letterSpacing: "0.02em" }}>{body}</div>
