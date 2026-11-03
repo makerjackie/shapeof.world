@@ -260,6 +260,16 @@ for e in CUES["events"]:
         put(bianzhong(147, 4.0), at, 0.3)
     elif k == "note":
         put(swish(0.7), at, 0.12)
+for r in CUES.get("reveals", []):
+    if r["w"] == "num":
+        if r["k"] in ("crash", "war", "famine", "plague"):
+            put(taiko(0.8), r["t"], 0.32)
+            put(stamp(0.7), r["t"], 0.22)
+        else:
+            put(stamp(0.7), r["t"], 0.24)
+            put(tick(1.0), r["t"], 0.16)
+    else:
+        put(tick(1.0), r["t"], 0.14)
 for L in CUES["ending"]:
     if L["brush"]:
         put(bell(98, 7.0), L["t"], 0.5)

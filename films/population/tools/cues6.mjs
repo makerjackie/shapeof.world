@@ -4,7 +4,8 @@ import fs from "node:fs";
 import path from "node:path";
 const film = process.argv[2] || "china";
 fs.mkdirSync("out", { recursive: true });
-buildSync({ entryPoints: [`src/v6/${film}6.ts`], bundle: true, platform: "node", format: "esm", outfile: `out/${film}6.mjs`, loader: { ".json": "json" }, logLevel: "error" });
+const entry = fs.existsSync(`src/v6/${film}.ts`) ? `src/v6/${film}.ts` : `src/v6/${film}6.ts`;
+buildSync({ entryPoints: [entry], bundle: true, platform: "node", format: "esm", outfile: `out/${film}6.mjs`, loader: { ".json": "json" }, logLevel: "error" });
 const m = await import(path.resolve(`out/${film}6.mjs`) + "?v=" + Date.now());
 const S = m.CHINA || m.WORLD;
 const cues = {
@@ -17,6 +18,7 @@ const cues = {
   body: S.body,
   ending: S.ending.lines.map((l) => ({ t: l.t0, brush: !!l.brush })),
   card: S.ending.card,
+  reveals: (m.REVEALS || []).flatMap((r) => [r.num > r.title + 0.01 ? { t: r.num, k: r.k, big: r.big, w: "num" } : null, r.sub > r.title + 0.01 && r.sub > r.num + 0.01 ? { t: r.sub, k: r.k, big: r.big, w: "sub" } : null]).filter(Boolean),
 };
 fs.writeFileSync(`out/cues6_${film}.json`, JSON.stringify(cues));
 console.log("cues6", film, "events", cues.events.length, "dur", cues.dur);
