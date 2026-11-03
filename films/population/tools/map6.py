@@ -284,8 +284,8 @@ else:
     F("w1", "bc1", [(["Han"], "汉", "main", 110, 33), (["Roman Empire"], "罗马", "split", 18, 42), (["Parthian Empire"], "安息", "split", 54, 33),
                     (["Xiongnu"], "匈奴", "far", 102, 46), (["Saka Kingdom", "Suren Kingdom"], "", "far", 70, 33)])
     F("w200", "200", [(["Han"], "东汉", "main", 110, 33), (["Roman Empire"], "罗马", "split", 18, 42), (["Parthian Empire"], "安息", "split", 54, 33)])
-    F("w300", "300", [(["Jin"], "西晋", "main", 112, 32), (["Rome (Maximian)"], "罗马 · 西", "split", 10, 44), (["Rome (Diocletianus)"], "罗马 · 东", "split", 38, 36),
-                      (["Rome (Constantinus)"], "罗马 · 高卢", "split", 2, 48), (["Rome (Galerius)"], "罗马 · 巴尔干", "split", 23, 44),
+    F("w300", "300", [(["Jin"], "西晋", "main", 112, 32), (["Rome (Maximian)"], "", "split", 10, 44), (["Rome (Diocletianus)"], "罗马 · 四帝共治", "split", 30, 38),
+                      (["Rome (Constantinus)"], "", "split", 2, 48), (["Rome (Galerius)"], "", "split", 23, 44),
                       (["Parthian Empire", "Persia", "Sasanian Empire"], "萨珊波斯", "split", 55, 32)])
     F("w400", "400", [(["Western Roman Empire"], "西罗马", "split", 5, 44), (["Eastern Roman Empire"], "东罗马", "split", 32, 38), (["Persia"], "萨珊波斯", "split", 55, 32),
                       (["Hunnic Empire"], "匈人", "war", 40, 49), (["Jin"], "东晋", "main", 114, 28), (["Sixteen Kingdoms", "Northern Liang"], "十六国", "split", 110, 37),

@@ -1281,7 +1281,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.globalAlpha = on(R.title);
     let tx = x0 + slide(R.title);
     y += 34;
-    const lab = e.y > LAST_REAL + 0.5 ? "预测" : KIND_LABEL[e.k];
+    const lab = e.y > LAST_REAL + 0.5 ? "预测" : e.k === "crash" && S.id === "world" && !!e.pct && Math.abs(parseFloat(e.pct.replace("−", "-"))) < 10 ? "减少" : KIND_LABEL[e.k];
     if (lab) {
       ctx.font = `900 24px ${SERIF}`;
       const cw = ctx.measureText(lab).width + 22;
