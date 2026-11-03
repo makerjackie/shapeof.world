@@ -1,10 +1,11 @@
 # 一个亿印出来以后，去了谁的口袋？（films/money-flow）
 
-约 5:40、1920×1080、30 fps，无旁白，Remotion + three.js 三维小镇，自己曲库的三首配乐。
+约 5:40、1920×1080、30 fps，无旁白，Remotion + three.js 三维小镇（Kenney CC0 模型），自己曲库的三首配乐。v2（2026-11-03）：作者看完 v1 说"太粗糙"，画面和数据重做，见私有 SCRIPT.md 的 v3 一节。
 
 - **问题**：新印出来的一个亿，一年后停在谁家？
 - **发现**：钱会流过每一户，但只停在花不完它的人家里。按中国家庭金融调查的储蓄分布推算，一年后约一半停在收入最高的 5 户（100 户里）。停下来的钱去买房、借给别人，利息又流回去；钱先流到哪里，哪里就先涨价（棚改 → 房价，美国 2008 → 股市，2020 → 物价）。但放水也保住了工作。
-- **一个世界**：全国 4.9 亿户家庭缩成 100 户的夜景小镇，每户房顶一个玻璃水箱，金色的钱在管道里流。央行、银行、政府、工厂和商店、新楼盘、棚户区在镇子西边。
+- **一个世界**：全国 4.9 亿户家庭缩成 100 户的蓝调时刻小镇，每户房顶一个玻璃水箱，金色的钱在管道里流。央行、银行、政府、工厂和商店、新楼盘、棚户区在镇子西边。
+- **六户人家**：外卖骑手、工厂工人、程序员、房东、小老板、大股东（`layout.ts` 的 `CAST`），第三段一户一个镜头，揭晓时并排比"流过 / 留下"。谁付钱给谁画成空中的金色弧线（`state.ts` 的 `arcsAt`）。
 - **落句**：这 1 个亿，你也摸到过。它只是，从你手里流过。
 
 作者原话：`BRIEF.md`（仓库外 `private/videos/money-flow/BRIEF.md`）；剧本和数字账本：`private/videos/money-flow/SCRIPT.md`、`LEDGER.md`。
@@ -43,6 +44,10 @@
 
 下载到 `public/music/`。音效在 `public/sfx/`，来自同一曲库（`https://music-cdn.shapeof.world/tracks/<id>/v1/master.wav`）。都不进 Git。
 
+## 模型
+
+Kenney CC0 模型（City Kit Suburban / Commercial / Industrial、Car Kit、Mini Characters 1、Nature Kit），`tools/assets.sh` 从本地解压目录拷到 `public/models/`，不进 Git。材质在 `src/town/assets.ts` 里改色、加夜窗。
+
 ## 字体
 
 本地文件，渲染不用联网（SIL OFL 1.1）：`public/fonts/NotoSansSC-VF.ttf`（同 `films/house/web/fonts/`，下载地址见 `films/README.md`）和 `public/fonts/NotoSerifSC.ttf`（<https://github.com/google/fonts/tree/main/ofl/notoserifsc>）。不进 Git。
@@ -51,9 +56,10 @@
 
 ```bash
 npm install
+bash tools/assets.sh                                       # 模型 → public/models
 ~/.venvs/shapeof-films/bin/python tools/music.py          # → public/score.wav
 node tools/lab.mjs out/s 300 3300 6000                     # 审片截图
 bash tools/review.sh                                       # 半尺寸审片 → out/review.mp4
 node tools/render.mjs out/video.mp4 3                      # 成片画面（无声）
-bash tools/master.sh                                       # 成片 + 母带 → out/money-flow.mp4
+COMP=Film node ...                                         # 母带见 tools/master.sh
 ```
