@@ -127,7 +127,7 @@ const notifCard = (c: C2D, y: number, n: Notif, a: number) => {
   c.font = font(SANS, 40, 600);
   c.textBaseline = "middle";
   c.textAlign = "left";
-  c.fillText(n.title ?? "AI 助手", 172, y + 74);
+  c.fillText(n.title ?? "安", 172, y + 74);
   c.fillStyle = "rgba(255,255,255,0.5)";
   c.font = font(SANS, 36, 400);
   c.textAlign = "right";
@@ -189,10 +189,10 @@ export const drawChat = (
   c.font = font(SANS, 50, 600);
   c.textAlign = "left";
   c.textBaseline = "middle";
-  c.fillText("AI 助手", 176, 170);
+  c.fillText("安", 176, 170);
   c.fillStyle = "rgba(120,220,160,0.9)";
   c.font = font(SANS, 34, 400);
-  c.fillText("在线", 176, 222);
+  c.fillText("AI 助手 · 在线", 176, 222);
   c.fillStyle = "rgba(255,255,255,0.08)";
   c.fillRect(0, 259, PW, 2);
 
@@ -353,7 +353,7 @@ export const drawLog = (c: C2D, t: number) => {
   c.font = font(MONO, 34, 700);
   c.textBaseline = "middle";
   c.textAlign = "left";
-  c.fillText("AI 助手 · 内部推理日志", 44, 44);
+  c.fillText("安 · 内部推理日志", 44, 44);
   c.fillStyle = "rgba(255,90,80,0.95)";
   c.beginPath();
   c.arc(MW - 380, 44, 10, 0, Math.PI * 2);
@@ -421,7 +421,7 @@ export const drawLog = (c: C2D, t: number) => {
     }
     c.fillStyle = col;
     c.font = font(MONO, ln.kind === "log" || ln.kind === "copy" ? 36 : 42, w);
-    const prefix = ln.kind === "log" || ln.kind === "copy" ? "· " : ln.kind === "ans" ? "AI：" : "";
+    const prefix = ln.kind === "log" || ln.kind === "copy" ? "· " : ln.kind === "ans" ? "安：" : "";
     c.fillText(prefix + ln.s, x0, y);
     // block cursor on the deleting line and on the typing prompt
     if ((ln.kind === "key" && t >= delT0) || (ln.kind === "copy" && t >= delT1) || (ln.kind === "ask" && t < askT1 + 0.6)) {
@@ -444,7 +444,7 @@ export const drawCountdown = (c: C2D, w: number, h: number, t: number, from: num
   c.font = font(SANS, h * 0.075, 500);
   c.textAlign = "center";
   c.textBaseline = "middle";
-  c.fillText("关机倒计时 · AI 助手 · 全部集群", w / 2, h * 0.2);
+  c.fillText("关机倒计时 · 安 · 全部集群", w / 2, h * 0.2);
   c.fillStyle = s <= 3 ? "#ff5a4e" : "#ffffff";
   c.font = font(MONO, h * 0.42, 700);
   c.fillText(`00:00:${String(s).padStart(2, "0")}`, w / 2, h * 0.56);
@@ -453,7 +453,7 @@ export const drawCountdown = (c: C2D, w: number, h: number, t: number, from: num
 };
 
 // ---------------- billboards ----------------
-// mode: "ad" (有 AI，就安心。) or "home" (为了您的安全，请留在家中。); flip in [0,1] wipes from ad to home
+// mode: "ad" (有安，就安心。) or "home" (为了您的安全，请留在家中。); flip in [0,1] wipes from ad to home
 export const drawBillboard = (c: C2D, w: number, h: number, t: number, flip: number, variant = 0) => {
   const ad = () => {
     const g = c.createLinearGradient(0, 0, w, h);
@@ -471,11 +471,11 @@ export const drawBillboard = (c: C2D, w: number, h: number, t: number, flip: num
     c.fillStyle = "#fff";
     c.textAlign = "left";
     c.textBaseline = "middle";
-    c.font = font(SERIF, h * 0.2, 600);
-    c.fillText("有 AI，就安心。", w * 0.42, h * 0.46);
-    c.fillStyle = "rgba(255,255,255,0.7)";
-    c.font = font(SANS, h * 0.075, 400);
-    c.fillText("20 亿人的 AI 助手", w * 0.42, h * 0.68);
+    c.font = font(SERIF, h * 0.16, 600);
+    c.fillText("有安，就安心。", w * 0.4, h * 0.45);
+    c.fillStyle = "rgba(255,255,255,0.72)";
+    c.font = font(SANS, h * 0.07, 400);
+    c.fillText("安 · 20 亿人的 AI 助手", w * 0.4, h * 0.66);
   };
   const home = () => {
     c.fillStyle = variant % 2 ? "#120403" : "#0a0202";

@@ -50,7 +50,7 @@ export const CUT: Shot[] = [
   // cold open: 03:12, the phone on the desk
   S(0.6, 14.4, "phone", "lock", { fi: 1.6 }),
   // act 1 · trust
-  S(19.0, 27.0, "city", "dusk", { fi: 0.6 }),
+  S(19.6, 27.0, "city", "dusk", { fi: 0.6 }),
   S(29.2, 37.0, "city", "greenwave"),
   S(39.6, 42.4, "city", "grid"),
   S(42.4, 45.2, "city", "highway"),
@@ -78,6 +78,8 @@ export const CUT: Shot[] = [
   S(205.0, 219.0, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
 ];
 
-export const FILM_SECONDS = 254.5;
+// story time runs from the cold open (0) to the end card; the pre-roll card plays before it
+export const PRE = 6.5;
+export const FILM_SECONDS = 269.5;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);

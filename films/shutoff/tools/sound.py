@@ -7,7 +7,8 @@ from scipy.signal import butter, sosfilt, fftconvolve
 from scipy.io import wavfile
 
 SR = 48000
-DUR = 254.5
+PRE = 6.5  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
+DUR = 269.5
 OUT = sys.argv[1] if len(sys.argv) > 1 else "public/mix.wav"
 rng = np.random.default_rng(1402)
 M = "public/music/"
@@ -59,10 +60,10 @@ def verb(x, irr, wet=0.35):
     out = np.zeros_like(y); out[: len(x)] += x * (1 - wet); out += y * wet
     return out
 
-BUF = np.zeros((int(DUR * SR) + SR * 8, 2))
+BUF = np.zeros((int((PRE + DUR) * SR) + SR * 8, 2))
 def put(t, sig, g=1.0, pan=0.0):
     sig = st(sig) * g
-    i = int(t * SR)
+    i = int((t + PRE) * SR)
     if i < 0: sig = sig[-i:]; i = 0
     n = min(len(sig), len(BUF) - i)
     l, r = np.cos((pan + 1) * np.pi / 4) * 1.414, np.sin((pan + 1) * np.pi / 4) * 1.414
@@ -277,6 +278,9 @@ def piano_note(f, length=6.0, g=1.0):
     return verb(st(s * 0.25), IR_HALL, 0.45) * g
 
 # ================= the mix =================
+# --- pre-roll (-6.5 – 0): a low tone under the leader card, one piano note on the main line ---
+put(-6.1, fade(drone(5.6, 41.2, 0.35), 1.5, 1.8))
+put(-4.8, piano_note(110.0, 5.0, 0.45))
 # --- cold open (0 – 16.4) ---
 bed(0.0, 14.4, "event-horizon.mp3", 0.0, 1.2, fi=2.0, fo=0.05)
 loopbed(0.0, 14.4, "ambience-rain-03.wav", 0.85, fi=1.5, fo=0.03)
@@ -383,10 +387,13 @@ put(218.6, rev_swell(1.0, 0.6))
 put(219.6, braam(5.0, 41.2, 0.8))
 put(225.0, drone(15.6, 36.7, 0.8))
 put(228.2, piano_note(220.0, 6.0, 0.6)); put(234.6, piano_note(207.65, 6.0, 0.6))
-put(242.6, vibrate(0.9)); put(242.6, ping(0.95))
-put(245.0, ping(0.95))
+# credits (241.4 – 256.6): the theme plays out to its own ending
+bed(241.0, 256.8, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
+# after the credits, from silence: the last notification
+put(257.6, vibrate(0.9)); put(257.6, ping(0.95))
+put(260.0, ping(0.95))
 
-y = BUF[: int(DUR * SR)]
+y = BUF[: int((PRE + DUR) * SR)]
 # glue: set the body of the mix to a working level, then saturate the hits softly instead of letting the
 # mastering limiter squash them (it was taking up to 15 dB off the braams)
 rms = np.sqrt(np.mean(y[np.abs(y).max(1) > 1e-4] ** 2))

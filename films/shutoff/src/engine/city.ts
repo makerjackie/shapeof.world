@@ -131,87 +131,128 @@ varying vec3 vW; varying vec3 vN; varying vec4 vInfo; varying vec3 vSize; varyin
 ${NOISE}
 ${MASK}
 ${SKY_GLSL}
+// a thin light line at distance d from it, width w (m); thinner than a pixel it fades to its average instead of aliasing
+float lineAA(float d, float w){
+  float px = max(fwidth(d), 1e-4);
+  return smoothstep(w + px, w - px, d) * min(1.0, w / px);
+}
 void main(){
-  float seed = vInfo.x; float typ = vInfo.y; float litF = vInfo.z;
+  float seed = vInfo.x; float typ = vInfo.y; float litF = vInfo.z; float isRound = vInfo.w;
   vec3 n = normalize(vN);
   vec3 V = normalize(vW - uCam);
   float on = lightsOn(vCenter.xz);
   float top = vCenter.y + vSize.y;
   float hRel = vW.y - vCenter.y;
+  vec2 rel = vW.xz - vCenter.xz;
   vec3 col;
-  vec3 streetGlow = mix(vec3(1.0, 0.55, 0.22), vec3(0.85, 0.9, 1.0), step(0.6, h21(floor(vCenter.xz / 700.0))));
-  float up = exp(-hRel / 9.0) * 0.045 * on;
-  // each building gets its own skin: dark glass, grey concrete, warm stone
+  vec3 streetGlow = mix(vec3(1.0, 0.55, 0.22), vec3(0.85, 0.82, 0.75), smoothstep(0.58, 0.72, fbm(vCenter.xz * 0.0011 + 7.3)));
+  float up = exp(-hRel / 10.0) * 0.03 * on;
+  // skins: near-black glass, dark concrete, a little warm stone; at night the walls should read as silhouettes
   float tone = h11(seed * 1.31);
-  vec3 skin = tone < 0.4 ? vec3(0.016, 0.018, 0.022) : tone < 0.8 ? vec3(0.026, 0.026, 0.027) : vec3(0.034, 0.028, 0.023);
+  vec3 skin = tone < 0.4 ? vec3(0.006, 0.007, 0.009) : tone < 0.8 ? vec3(0.011, 0.011, 0.012) : vec3(0.016, 0.013, 0.011);
+  skin *= 1.0 + 0.5 * uDusk;
+  // facade lighting, the signature of a Chinese city at night: towers outlined with LED strips along every corner and
+  // the roof line, some with bands every few floors
+  float fl = h11(seed + 11.0);
+  float contour = (typ < 0.5 && vSize.y > 50.0 && (fl < 0.45 || vSize.y > 240.0)) || (typ > 0.5 && typ < 1.5 && vSize.y > 28.0 && fl < 0.10) ? 1.0 : 0.0;
+  float cc = h11(seed + 12.0);
+  vec3 ledC = cc < 0.5 ? vec3(1.0, 0.70, 0.36) : cc < 0.82 ? vec3(0.85, 0.92, 1.0) : vec3(0.35, 0.78, 1.0);
+  float ledI = 1.5 * on * mix(1.0, 0.45, uDusk);
   if (typ > 2.5) {
     // rooftop plant: plain metal boxes with a faint sky sheen on top
-    col = vec3(0.020, 0.021, 0.024) * (0.8 + 0.4 * vnoise(vW.xz * 0.5 + vW.y));
-    if (n.y > 0.5) col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.12;
+    col = vec3(0.010, 0.011, 0.013) * (0.8 + 0.4 * vnoise(vW.xz * 0.5 + vW.y));
+    if (n.y > 0.5) col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.10;
     col += streetGlow * up * 0.5;
     col *= 0.7 + 0.3 * smoothstep(vCenter.y, vCenter.y + 1.5, vW.y);
   } else if (n.y > 0.5) {
     // roof: dark membrane, a parapet edge catching the sky, a few service lights
-    col = vec3(0.012, 0.013, 0.016) * (0.8 + 0.4 * vnoise(vW.xz * 0.3));
-    col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.08;
-    vec2 e = 0.5 * vSize.xz - abs(vW.xz - vCenter.xz);
-    float rim = 1.0 - smoothstep(0.4, 1.1, min(e.x, e.y));
-    col = mix(col, skin * 1.8 + skyCol(vec3(0.0, 1.0, 0.0)) * 0.2, rim);
+    col = vec3(0.006, 0.007, 0.008) * (0.8 + 0.4 * vnoise(vW.xz * 0.3));
+    col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.06;
+    vec2 e2 = 0.5 * vSize.xz - abs(rel);
+    float e = isRound > 0.5 ? 0.5 * vSize.x - length(rel) : min(e2.x, e2.y);
+    float rim = 1.0 - smoothstep(0.4, 1.1, e);
+    col = mix(col, skin * 1.8 + skyCol(vec3(0.0, 1.0, 0.0)) * 0.15, rim);
     vec2 g = floor(vW.xz / 7.0);
     float l = step(0.985, h21(g + seed));
-    col += vec3(1.0, 0.8, 0.6) * l * 0.6 * on;
+    col += vec3(1.0, 0.8, 0.6) * l * 0.5 * on;
+    col += ledC * ledI * contour * lineAA(e, 0.45);
   } else {
-    float hcoord = abs(n.x) > 0.5 ? vW.z * sign(n.x) : -vW.x * sign(n.z);
-    float faceId = abs(n.x) > 0.5 ? (n.x > 0.0 ? 1.0 : 2.0) : (n.z > 0.0 ? 3.0 : 4.0);
+    float hcoord, faceId, edgeD;
+    if (isRound > 0.5) {
+      float ang = atan(rel.y, rel.x);
+      float R = 0.5 * vSize.x;
+      hcoord = ang * R;
+      faceId = 1.0 + floor((ang + 3.14159) / 1.5708);
+      float sp = 6.28318 * R / 16.0; // sixteen vertical ribs stand in for corners
+      edgeD = abs(mod(hcoord + 0.5 * sp, sp) - 0.5 * sp);
+    } else {
+      bool xf = abs(n.x) > 0.5;
+      hcoord = xf ? vW.z * sign(n.x) : -vW.x * sign(n.z);
+      faceId = xf ? (n.x > 0.0 ? 1.0 : 2.0) : (n.z > 0.0 ? 3.0 : 4.0);
+      edgeD = 0.5 * (xf ? vSize.z : vSize.x) - abs(xf ? rel.y : rel.x);
+    }
     float fh = typ < 0.5 ? 3.9 : typ < 1.5 ? 3.0 : 6.0;
     float cw = typ < 0.5 ? 2.2 + h11(seed) * 1.2 : 3.0 + h11(seed) * 1.5;
     vec2 uvw = vec2(hcoord / cw, (vW.y - 1.5) / fh);
     vec2 cell = floor(uvw); vec2 f = fract(uvw);
     vec2 fw = fwidth(uvw);
-    float aa = smoothstep(0.25, 0.7, max(fw.x, fw.y));
-    vec2 wmin = typ < 0.5 ? vec2(0.05, 0.14) : vec2(0.18, 0.24);
-    vec2 wmax = typ < 0.5 ? vec2(0.95, 0.9) : vec2(0.82, 0.82);
+    // anti-aliasing in two steps: once a window is under a pixel wide, each floor/bay keeps its own average (so lit
+    // floors still read as bands from a kilometre away); only once whole floors are sub-pixel does it fall back to the
+    // building's overall average
+    float aaX = smoothstep(0.25, 0.7, fw.x);
+    float aaY = smoothstep(0.45, 0.95, fw.y);
+    vec2 wmin = typ < 0.5 ? vec2(0.05, 0.14) : vec2(0.2, 0.26);
+    vec2 wmax = typ < 0.5 ? vec2(0.95, 0.9) : vec2(0.8, 0.8);
     float win = step(wmin.x, f.x) * step(f.x, wmax.x) * step(wmin.y, f.y) * step(f.y, wmax.y);
     if (typ > 1.5) win = 0.0;
-    // offices light whole floors or bays; homes light windows one by one
-    float bay = floor(cell.x / (3.0 + floor(h11(seed + 4.0) * 5.0)));
+    // offices light whole floors or long bays; homes light rooms, and rooms stack (the same column lit floor after floor)
+    float bay = floor(cell.x / (4.0 + floor(h11(seed + 4.0) * 6.0)));
     float rFloor = h21(vec2(cell.y * 1.3, seed + faceId));
     float rBay = h21(vec2(cell.y * 0.7 + bay * 3.1, seed * 1.7 + faceId));
     float rWin = h21(cell + seed * 13.0 + faceId * 7.1);
-    float r = typ < 0.5 ? mix(rWin, mix(rFloor, rBay, 0.5), 0.7) : mix(rWin, rBay, 0.25);
+    float rCol = h21(vec2(cell.x * 2.1 + faceId, seed * 0.37));
+    float r = typ < 0.5 ? mix(rWin, mix(rFloor, rBay, 0.55), 0.85) : mix(rWin, rCol, 0.35);
+    // fewer lights high up in homes (it is 3 a.m. somewhere in this film), offices stay lit
     float lit = step(r, litF);
     float k = h21(cell * 1.7 + seed);
-    vec3 wc = k < 0.62 ? vec3(1.0, 0.68, 0.38) : k < 0.92 ? vec3(0.78, 0.86, 1.0) : vec3(0.45, 0.6, 1.0) * (0.7 + 0.3 * sin(uT * 9.0 + k * 50.0));
-    if (typ < 0.5 && h11(seed + 2.0) < 0.6) wc = mix(wc, vec3(0.8, 0.88, 1.0), 0.6); // office towers run cool
-    float wint = (0.35 + 0.9 * h21(cell + 3.3)) * (typ < 0.5 ? 1.0 : 0.85);
+    vec3 wc = typ < 0.5 ? (k < 0.75 ? vec3(0.82, 0.88, 1.0) : vec3(1.0, 0.78, 0.52)) : (k < 0.7 ? vec3(1.0, 0.64, 0.34) : k < 0.97 ? vec3(1.0, 0.8, 0.58) : vec3(0.45, 0.6, 1.0) * (0.7 + 0.3 * sin(uT * 9.0 + k * 50.0)));
+    float wint = (typ < 0.5 ? 0.55 + 0.35 * h21(vec2(cell.y, seed)) : 0.3 + 0.8 * h21(cell + 3.3));
     // inside the window: ceiling lights bright at the top, a blind pulled part way down in some
     float blind = step(0.72, h21(cell * 2.9 + seed)) * (0.35 + 0.4 * h21(cell + 7.7));
     float fy = (f.y - wmin.y) / (wmax.y - wmin.y);
-    float inner = mix(0.75, 1.15, smoothstep(0.1, 0.95, fy));
+    float inner = mix(0.7, 1.15, smoothstep(0.1, 0.95, fy));
     inner *= fy > 1.0 - blind ? 0.45 : 1.0;
     float fres = 0.04 + 0.96 * pow(1.0 - abs(dot(V, n)), 5.0);
     vec3 Rf = reflect(V, n);
-    vec3 glass = mix(vec3(0.007, 0.006, 0.006), skyCol(Rf), smoothstep(-0.06, 0.04, Rf.y)) * (typ < 0.5 ? 0.15 + 0.85 * fres : 0.06 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
+    vec3 glass = mix(vec3(0.003), skyCol(Rf), smoothstep(-0.06, 0.04, Rf.y)) * (typ < 0.5 ? 0.12 + 0.8 * fres : 0.05 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
     vec3 wall = skin * (0.85 + 0.3 * vnoise(vec2(hcoord, vW.y) * 0.2));
     if (typ < 0.5) wall = mix(wall, glass * 0.8, 0.55);
     // spandrel band between floors on the towers, darker
-    if (typ < 0.5) wall *= 0.75 + 0.25 * step(0.5, f.y);
+    if (typ < 0.5) wall *= 0.7 + 0.3 * step(0.5, f.y);
     vec3 winCol = mix(glass, wc * wint * inner * on, lit);
     vec3 pattern = mix(wall, winCol, win);
-    vec3 avg = mix(wall, mix(glass, wc * 0.45 * on, litF), (wmax.x - wmin.x) * (wmax.y - wmin.y));
-    col = mix(pattern, avg, aa);
+    float area = (wmax.x - wmin.x) * (wmax.y - wmin.y);
+    vec3 cellAvg = mix(wall, mix(glass, wc * wint * on, lit), typ > 1.5 ? 0.0 : area);
+    vec3 avg = mix(wall, mix(glass, wc * 0.55 * on, litF), typ > 1.5 ? 0.0 : area);
+    col = mix(mix(pattern, cellAvg, aaX), avg, aaY);
     // two faces of every box a touch darker, so corners read
-    col *= faceId < 2.5 ? 1.0 : 0.82;
+    col *= faceId < 2.5 ? 1.0 : 0.8;
     // dusk light on west faces
-    col += vec3(1.0, 0.45, 0.2) * 0.025 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
+    col += vec3(1.0, 0.45, 0.2) * 0.02 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
     col += streetGlow * up;
     // ground floor: shopfronts and lobbies glowing onto the pavement
     if (typ < 1.5) {
       float shop = step(hRel, 4.6) * step(0.8, hRel) * step(0.35, h21(vec2(floor(hcoord / 6.0), seed)));
       col += mix(vec3(1.0, 0.72, 0.45), vec3(0.75, 0.85, 1.0), step(0.6, h11(seed + 5.0))) * shop * 0.22 * on;
     }
-    // a lit crown band on some towers
-    if (typ < 0.5 && vSize.y > 140.0 && h11(seed + 8.0) < 0.5) col += vec3(0.75, 0.85, 1.0) * smoothstep(3.0, 0.0, abs(vW.y - (top - 4.0))) * 0.35 * on;
+    // LED outlines: corners (or ribs), the roof line, and on some towers a band every few floors
+    if (contour > 0.5) {
+      float L = lineAA(edgeD, 0.35) + lineAA(top - vW.y, 0.5);
+      if (h11(seed + 13.0) < 0.35) L += 0.7 * lineAA(abs(mod(vW.y - 1.5 + 2.0 * fh, 4.0 * fh) - 2.0 * fh), 0.3) * step(8.0, hRel);
+      col = mix(col, ledC * ledI, clamp(L, 0.0, 1.0));
+    }
+    // a lit crown on some of the tallest
+    if (typ < 0.5 && vSize.y > 140.0 && h11(seed + 8.0) < 0.55) col += vec3(0.75, 0.85, 1.0) * smoothstep(9.0, 0.0, top - vW.y) * 0.5 * on;
     // horizontal light strips on the data centre
     if (typ > 1.5) col += vec3(0.6, 0.85, 1.0) * smoothstep(0.08, 0.0, abs(fract(vW.y / 6.0) - 0.5)) * 0.25 * on;
     // ambient occlusion where the wall meets the street
@@ -259,17 +300,17 @@ void main(){
   float streetX = step(dToStreet.x, HALF); float streetZ = step(dToStreet.y, HALF);
   float street = max(streetX, streetZ) * inCity;
   vec3 asphalt = vec3(0.010, 0.010, 0.011);
-  vec3 block = park > 0.5 ? vec3(0.004, 0.008, 0.005) : vec3(0.016, 0.016, 0.017);
+  vec3 block = park > 0.5 ? vec3(0.003, 0.005, 0.004) : vec3(0.008, 0.008, 0.009) * (0.7 + 0.6 * vnoise(p * 0.08));
   vec3 field = vec3(0.006, 0.007, 0.007) * (0.7 + 0.6 * fbm(p * 0.004));
   col = inCity > 0.5 ? mix(block, asphalt, street) : field;
   float on = lightsOn(p);
   // street-light pools: sodium in old districts, white LED in new ones
-  vec3 lampC = mix(vec3(1.0, 0.5, 0.16), vec3(0.62, 0.68, 0.78), step(0.72, h21(floor(p / 700.0))));
+  vec3 lampC = mix(vec3(1.0, 0.5, 0.16), vec3(0.78, 0.74, 0.66), smoothstep(0.58, 0.72, fbm(p * 0.0011 + 7.3)));
   float lp = 0.0;
   float sx = (floor(u.x) + 0.5) * P; lp += pools(p.y, p.x - sx);
   float sz = (floor(u.y) + 0.5) * P; lp += pools(p.x, p.y - sz);
   float nearK = 1.0 - smoothstep(600.0, 2600.0, dist);
-  col += lampC * lp * 0.32 * on * inCity * (1.0 - park * 0.8) * nearK;
+  col += lampC * lp * 0.24 * on * inCity * (1.0 - park * 0.8) * nearK;
   // general light spill near the street grid so the city reads from far away
   float far = smoothstep(250.0, 1400.0, dist);
   col += lampC * mix(0.035, 0.11, far) * on * inCity * lineGlow(p + 0.5 * P, P, mix(9.0, 14.0, far)) * (1.0 - park * 0.8);
@@ -283,7 +324,7 @@ void main(){
     float tex = 0.55 + 0.9 * fbm(p * 0.0021);
     float streets = lineGlow(p + 0.5 * P, P, 10.0);
     float arter = lineGlow(p + vec2(240.0, 610.0), 880.0, 16.0);
-    vec3 lc = mix(vec3(1.0, 0.52, 0.18), vec3(0.7, 0.74, 0.82), step(0.65, h21(floor(p / 2600.0))));
+    vec3 lc = mix(vec3(1.0, 0.52, 0.18), vec3(0.8, 0.76, 0.68), smoothstep(0.6, 0.75, fbm(p * 0.0004 + 2.1)));
     col += lc * on * (streets * 0.085 * dens * tex + arter * 0.12 * max(dens, 0.3 * fade) + 0.006 * dens);
   }
   // the river: black water, the sky and both lit banks reflected in it, bridges every fourth street
@@ -398,7 +439,7 @@ class PointSet {
 }
 
 // type: 0 glass tower, 1 concrete, 2 data centre / warehouse, 3 rooftop plant (no windows). y: base height (rooftop plant)
-type Bld = { x: number; z: number; w: number; d: number; h: number; type: number; seed: number; crown?: boolean; part?: boolean; y?: number };
+type Bld = { x: number; z: number; w: number; d: number; h: number; type: number; seed: number; crown?: boolean; part?: boolean; y?: number; round?: boolean };
 type Car = { axis: 0 | 1; line: number; lane: number; dir: number; speed: number; phase: number; len: number };
 type HwCar = { lane: number; dir: number; speed: number; phase: number; col: number };
 
@@ -455,8 +496,11 @@ export const cityScene = (): SceneMod => {
       if (supertall) {
         const h = 300 + rnd() * 230;
         const w = lot * (0.42 + 0.12 * rnd());
-        blds.push({ x: cx, z: cz, w, d: w * (0.9 + 0.2 * rnd()), h, type: 0, seed: rnd() * 100 });
-        blds.push({ x: cx, z: cz, w: w * 0.7, d: w * 0.7, h: h + 25 + rnd() * 30, type: 0, seed: rnd() * 100, crown: true });
+        const dd = w * (0.9 + 0.2 * rnd());
+        const sseed = rnd() * 100;
+        const rd = hash1(sseed + 0.3) < 0.4;
+        blds.push({ x: cx, z: cz, w, d: rd ? w : dd, h, type: 0, seed: sseed, round: rd });
+        blds.push({ x: cx, z: cz, w: w * 0.7, d: (rd ? w : dd) * 0.7, h: h + 25 + rnd() * 30, type: 0, seed: rnd() * 100, crown: true, round: rd });
       } else if (tall) {
         const h = 90 + core * 260 * (0.55 + 0.6 * rnd());
         const w = lot * (0.55 + 0.35 * rnd());
@@ -469,7 +513,8 @@ export const cityScene = (): SceneMod => {
           const hb = h * (0.5 + 0.15 * hash1(tseed + 1.3));
           blds.push({ x: tx, z: tz, w, d, h: hb, type: 0, seed: tseed, part: true });
           blds.push({ x: tx, z: tz, w: w * 0.74, d: d * 0.74, h, type: 0, seed: tseed + 0.5 });
-        } else blds.push({ x: tx, z: tz, w, d, h, type: 0, seed: tseed });
+        } else if (h > 100 && hash1(tseed + 2.9) < 0.3) blds.push({ x: tx, z: tz, w, d: w, h, type: 0, seed: tseed, round: true });
+        else blds.push({ x: tx, z: tz, w, d, h, type: 0, seed: tseed });
         if (rnd() < 0.5) {
           // podium
           blds.push({ x: cx, z: cz, w: lot * 0.95, d: lot * 0.95, h: 14 + rnd() * 12, type: 1, seed: rnd() * 100 });
@@ -480,7 +525,7 @@ export const cityScene = (): SceneMod => {
         for (let a = 0; a < sub; a++)
           for (let b = 0; b < sub; b++) {
             if (rnd() < 0.08) continue;
-            const base = 12 + core * 140 + (r < 2000 ? 18 : 4);
+            const base = 10 + core * 140 + 18 * sstep(2800, 1300, r);
             const h = base * (0.45 + rnd() * 0.9) + (rnd() < 0.06 ? 40 : 0);
             const w = q * (0.7 + 0.25 * rnd());
             const d = q * (0.7 + 0.25 * rnd());
@@ -509,21 +554,22 @@ export const cityScene = (): SceneMod => {
   };
   const bldMat = new THREE.ShaderMaterial({ vertexShader: BLD_VERT, fragmentShader: BLD_FRAG, uniforms: bldU });
   const m4 = new THREE.Matrix4();
-  const addInstances = (list: Bld[]) => {
-    const box = new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0);
+  const addInstances = (list: Bld[], round = false) => {
+    const box = round ? new THREE.CylinderGeometry(0.5, 0.5, 1, 40, 1).translate(0, 0.5, 0) : new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0);
     const inst = new THREE.InstancedMesh(box, bldMat, list.length);
     const info = new Float32Array(list.length * 4);
     list.forEach((b, i) => {
       m4.compose(new THREE.Vector3(b.x, b.y ?? 0, b.z), new THREE.Quaternion(), new THREE.Vector3(b.w, b.h, b.d));
       inst.setMatrixAt(i, m4);
-      const lit = b.type === 0 ? 0.1 + 0.28 * hash1(b.seed) : 0.12 + 0.3 * hash1(b.seed + 3);
-      info.set([b.seed, b.type, lit, 0], i * 4);
+      const lit = b.h > 240 ? 0.5 + 0.2 * hash1(b.seed) : b.type === 0 ? 0.1 + 0.28 * hash1(b.seed) : 0.12 + 0.3 * hash1(b.seed + 3);
+      info.set([b.seed, b.type, lit, round ? 1 : 0], i * 4);
     });
     box.setAttribute("aInfo", new THREE.InstancedBufferAttribute(info, 4));
     inst.frustumCulled = false;
     scene.add(inst);
   };
-  addInstances(blds);
+  addInstances(blds.filter((b) => !b.round));
+  addInstances(blds.filter((b) => b.round), true);
 
   // ground
   const gndU = { uCam: bldU.uCam, uFogD: bldU.uFogD, uFog: bldU.uFog, uOffR: bldU.uOffR, uOnR: bldU.uOnR, uBlink: bldU.uBlink, uDusk: bldU.uDusk, uGlow: bldU.uGlow };
@@ -648,7 +694,7 @@ export const cityScene = (): SceneMod => {
     const fwd = tgt.clone().sub(cam).setY(0).normalize();
     const out: Bld[] = [];
     for (const b of blds) {
-      if (b.crown || b.part || b.type > 1) continue;
+      if (b.crown || b.part || b.round || b.type > 1) continue;
       if (b.h < hmin || b.h > hmax) continue;
       const v = new THREE.Vector3(b.x - cam.x, 0, b.z - cam.z);
       const d = v.length();
@@ -722,13 +768,25 @@ export const cityScene = (): SceneMod => {
       const s = hash1(b.seed * 3.7 + q);
       const w = b.w * (0.14 + 0.22 * s);
       const d = b.d * (0.14 + 0.22 * hash1(b.seed + q * 5.3));
-      const ox = (hash1(b.seed + q * 2.1) - 0.5) * (b.w - w) * 0.85;
-      const oz = (hash1(b.seed + q * 7.9) - 0.5) * (b.d - d) * 0.85;
+      const ox = (hash1(b.seed + q * 2.1) - 0.5) * (b.w - w) * (b.round ? 0.55 : 0.85);
+      const oz = (hash1(b.seed + q * 7.9) - 0.5) * (b.d - d) * (b.round ? 0.55 : 0.85);
       plant.push({ x: b.x + ox, z: b.z + oz, w, d, h: 2.5 + s * (b.h > 80 ? 7 : 4), type: 3, seed: b.seed + q, y: b.h });
     }
   }
   addInstances(plant);
 
+  // spires on the supertalls' crowns, each with an aviation light at the tip
+  const SPIRES: THREE.Vector3[] = [];
+  {
+    const spMat = new THREE.MeshStandardMaterial({ color: 0x1c1f24, metalness: 0.8, roughness: 0.35 });
+    for (const b of blds.filter((q) => q.crown)) {
+      const hh = 35 + hash1(b.seed + 4.4) * 45;
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 3.2, hh, 12, 1).translate(0, hh / 2, 0), spMat);
+      m.position.set(b.x, b.h, b.z);
+      scene.add(m);
+      SPIRES.push(new THREE.Vector3(b.x, b.h + hh, b.z));
+    }
+  }
   // pylons on the western outskirts: a line marching into the city
   const steel = new THREE.MeshStandardMaterial({ color: 0x3a3d42, metalness: 0.7, roughness: 0.5 });
   const PYL: THREE.Vector3[] = [];
@@ -883,23 +941,28 @@ export const cityScene = (): SceneMod => {
       if (corridorJS(x, z)) continue;
       INTER.push({ x, z, ph: hash2(i, j) * 30 });
     }
-  const AVI = blds.filter((b) => b.h > 110).map((b) => new THREE.Vector3(b.x, b.h + 2, b.z));
+  const AVI = [...blds.filter((b) => b.h > 110 && !b.part).map((b) => new THREE.Vector3(b.x, b.h + 2, b.z)), ...SPIRES];
   const MASTS = blds.filter((b, i) => b.type === 1 && b.h > 25 && i % 9 === 0).map((b) => new THREE.Vector3(b.x + b.w * 0.3, b.h + 8, b.z - b.d * 0.3));
 
   // drones
+  // every drone ends up on a slowly turning dome over the data centre, a shield of lights
   const DRONES = Array.from({ length: 5200 }, (_, k) => {
     const home = WARE[k % WARE.length];
+    const phi = 0.12 + Math.acos(1 - rnd() * 0.85) * 0.9;
+    const R = 430 + rnd() * 25;
     return {
+      wh: k % WARE.length,
       home: home.clone().add(new THREE.Vector3((rnd() - 0.5) * 80, 0, (rnd() - 0.5) * 50)),
-      launch: rnd() * 1.8,
-      travel: 2.6 + rnd() * 1.6,
-      orbitR: 300 + (k % 3) * 40 + rnd() * 10,
-      orbitY: 120 + (k % 3) * 45 + rnd() * 6,
+      launch: rnd() * 2.6,
+      travel: 3.2 + rnd() * 2.2,
+      orbitR: R * Math.cos(phi),
+      orbitY: 20 + R * Math.sin(phi),
       ang: rnd() * Math.PI * 2,
-      w: 0.16 * ((k % 3) === 1 ? -1 : 1),
+      w: 0.05 * ((k % 2) === 1 ? -1 : 1),
       seed: rnd(),
     };
   });
+  const DRONE_W = WARE[0];
 
   const st: CityState = { dusk: 0, offR: -1, onR: -2, blink: 1, allRed: 0, flip: boards.map(() => 0), carT: 0, hwT: 0, hwBlink: 1 };
 
@@ -963,7 +1026,7 @@ export const cityScene = (): SceneMod => {
         [13, -13, 0],
       ] as const) {
         const g = !red && (ew === 1 ? ewGreen : !ewGreen);
-        const s = mode === "greenwave" ? 7.5 : 3.0;
+        const s = mode === "greenwave" && Math.abs(it.z - AVE_Z) < 1 ? 4.0 : 1.4;
         if (g) pts.add(it.x + ox, 6, it.z + oz, 0.15 * on, 3.2 * on, 1.2 * on, s);
         else pts.add(it.x + ox, 6, it.z + oz, 3.6 * on, 0.25 * on, 0.1 * on, s);
       }
@@ -1059,15 +1122,21 @@ export const cityScene = (): SceneMod => {
           const k = clamp(tt / d.travel);
           const e = ease(k);
           const target = orbitAt(lt);
-          const up = d.home.clone().setY(d.home.y + 140 + d.seed * 80);
+          const up = d.home.clone().setY(d.home.y + 90 + d.seed * 120);
           // quadratic bezier home → above home → orbit
           const a1 = d.home.clone().lerp(up, e);
           const a2 = up.clone().lerp(target, e);
           p = a1.lerp(a2, e);
         }
-        const strobe = Math.floor((lt + d.seed * 3) * 2.2) % 3 === 0 ? 1.6 : 0.5;
-        const red = d.seed < 0.25;
-        pts.add(p.x, p.y, p.z, red ? 4.5 * strobe : 3.2 * strobe, red ? 0.3 : 3.4 * strobe, red ? 0.2 : 3.8 * strobe, 2.2);
+        const strobe = Math.floor((lt + d.seed * 3) * 2.2) % 3 === 0 ? 1.5 : 0.55;
+        const red = d.seed < 0.22;
+        const dc = p.distanceTo(camP);
+        if (dc < 160) {
+          // close enough to see a craft: red and green nav lights either side, a white strobe on top
+          pts.add(p.x - 0.35, p.y, p.z, 3.0, 0.15, 0.08, 0.3);
+          pts.add(p.x + 0.35, p.y, p.z, 0.15, 3.0, 0.6, 0.3);
+          pts.add(p.x, p.y + 0.15, p.z, 4 * strobe, 4 * strobe, 4.2 * strobe, 0.35);
+        } else pts.add(p.x, p.y, p.z, red ? 4.2 * strobe : 3.0 * strobe, red ? 0.3 : 3.1 * strobe, red ? 0.2 : 3.4 * strobe, 1.6);
       }
     }
     pts.end();
@@ -1095,7 +1164,7 @@ export const cityScene = (): SceneMod => {
     st.hwBlink = 1;
     st.flip = boards.map(() => 0);
     let boardOn = 1;
-    let look: Partial<Look> = { bloom: 0.6, bloomThreshold: 0.85, bloomRadius: 0.6, streak: 0.35, lift: [0.0, 0.01, 0.02], gain: [1.0, 1.0, 1.04], sat: 1.0, grain: 0.06, vignette: 0.55, exposure: 1.0 };
+    let look: Partial<Look> = { bloom: 0.6, bloomThreshold: 0.85, bloomRadius: 0.6, streak: 0.35, lift: [0.0, 0.004, 0.01], gain: [1.0, 1.0, 1.04], sat: 1.0, grain: 0.06, vignette: 0.55, exposure: 1.0 };
     const pos = new THREE.Vector3();
     const tgt = new THREE.Vector3();
     let fov = 40;
@@ -1137,9 +1206,9 @@ export const cityScene = (): SceneMod => {
       look = { ...look, dof: 10, focus: 24, aperture: 0.6 };
     } else if (mode === "blackout") {
       const k = lt;
-      pos.set(-1500 + k * 10, 1050 - k * 5, 1950 - k * 8);
-      tgt.set(150, 0, -150);
-      fov = 46;
+      pos.set(-1250 + k * 14, 560 - k * 6, 1650 - k * 10);
+      tgt.set(250, 40, -500);
+      fov = 42;
       st.offR = OUT_R * easeIn(clamp((k - 0.4) / 3.0)) + (k > 0.4 ? 10 : -1);
       st.onR = k < 4.6 ? -2 : OUT_R * Math.pow(clamp((k - 4.6) / 3.4), 2.2);
       if (k > 0.4 && k < 3.2) look.flash = 0;
@@ -1182,11 +1251,12 @@ export const cityScene = (): SceneMod => {
       st.carT = 100;
       st.hwT = 100;
       st.allRed = 1;
-      const k = lt;
-      pos.set(DC.x - 1350 + k * 14, 260 + k * 3, DC.z + 900 - k * 8);
-      tgt.set(DC.x, 110 + k * 2, DC.z);
-      fov = 30;
-      look.streak = 0.5;
+      // from the roof of one warehouse: its drones lift off around the camera and stream away to the dome
+      const k = ease(clamp(lt / 9.5));
+      pos.set(DRONE_W.x - 75 + k * 6, 26 + k * 30, DRONE_W.z + 70 - k * 4);
+      tgt.set(lerp(DRONE_W.x + 30, DC.x, k), lerp(60, 180, k), lerp(DRONE_W.z - 120, DC.z, k));
+      fov = lerp(44, 34, k);
+      look.streak = 0.4;
     } else if (mode === "rise") {
       const k = ease(clamp(lt / 7.6));
       pos.set(lerp(-380, -300, k), lerp(70, 1500, easeIn(clamp(lt / 7.6)) * 0.7 + k * 0.3), lerp(900, 1100, k));

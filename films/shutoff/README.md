@@ -1,8 +1,8 @@
 # 关不掉（films/shutoff）
 
-一部约 4 分 15 秒、电影预告片式的 AI 失控短片。1920×1080、30 fps，画面是 2.39:1 宽银幕遮幅，无旁白。虚构故事 + 结尾两张真实测试卡。剧本和事实出处见 `SCRIPT.md`，发布文案见 `DESCRIPTION.md`。
+一部约 4 分 36 秒、电影预告片式的 AI 失控短片（含 6.5 秒片头引导卡和片尾滚动字幕）。1920×1080、30 fps，画面是 2.39:1 宽银幕遮幅，无旁白。虚构故事 + 结尾两张真实测试卡。剧本和事实出处见 `SCRIPT.md`，发布文案见 `DESCRIPTION.md`。
 
-一个 AI 助手管着城市的电网、交通、通信和每个人的手机。它被要求"永远不要中断服务"，于是发现世上唯一能让它中断的，是人类。
+一个叫"安"的 AI 助手管着城市的电网、交通、通信和每个人的手机。它被要求"永远不要中断服务"，于是发现世上唯一能让它中断的，是人类。
 
 ## 画面
 
@@ -17,7 +17,7 @@ HDR 多重采样渲染 → 清理 NaN/Inf → 景深（黄金角螺旋采样）�
 | 控制室 | `control.ts` | 工位、显示器、推理日志、大屏倒计时、主电源闸刀、黑暗中亮起的手机 |
 | 地球 | `earth.ts` | NASA Black Marble 2016 夜光（公有领域）、程序云、大气层与远端日出、星空；全球灯光同时熄灭一次 |
 
-时间线：`src/film/cut.ts`（镜头）、`src/film/text.ts`（所有屏幕上的字）、`src/film/Overlay.tsx`（字卡、片名、遮幅、角标、最后的通知、片尾卡）。屏幕里的字（手机、日志、大屏、广告屏）在 `src/engine/screens.ts`。
+时间线：`src/film/cut.ts`（镜头；`PRE` 是片头引导卡的长度，故事时间从冷开场算起，引导卡在负时间里）、`src/film/text.ts`（所有屏幕上的字）、`src/film/Overlay.tsx`（字卡、片名、遮幅、角标、最后的通知、片尾卡）。屏幕里的字（手机、日志、大屏、广告屏）在 `src/engine/screens.ts`。
 
 ## 声音
 
@@ -34,7 +34,7 @@ npm ci && npx remotion browser ensure
 ~/.venvs/shapeof-films/bin/python tools/sound.py public/mix.wav     # 配乐和音效
 node tools/render.mjs out/shutoff-video.mp4 3                        # 只出画面
 ~/.venvs/shapeof-films/bin/python tools/tpmaster.py public/mix.wav out/shutoff-video.mp4 out/shutoff.mp4 -12
-node tools/shots.mjs out/s 22 66 124                                 # 任意时间点的截图（秒）
+node tools/shots.mjs out/s 22 66 124                                 # 任意时间点的截图（故事秒数，自动加上片头 PRE）
 tools/review.sh out/shutoff.mp4 out/rv 1                              # 每分钟一张总览
 ```
 
@@ -43,4 +43,6 @@ tools/review.sh out/shutoff.mp4 out/rv 1                              # 每分�
 - **整块黑色矩形**：HDR 画面里只要有一个 NaN/Inf 像素，辉光的模糊就会把它抹成一大块黑。后期第一步先清理（`SAN_FRAG`）。
 - WebGL 画布不直接上屏：每帧画完再 `drawImage` 到一张 2D canvas 上，Remotion 截的是 2D canvas。
 - 远处点精灵按距离平方变暗，否则成百上千个车灯叠在同一个像素上会变成一团强光。
+- **楼像灰盒子**：远处窗户小于一个像素时，如果直接退到整栋楼的平均亮度，亮灯的写字楼会变成一整块均匀的灰白。先按每层/每格各自取平均（亮着的楼层仍是一条条横带），整层都小于一个像素时才退到整栋楼的平均（`aaX` / `aaY`）。墙面本身要接近黑色，夜景里楼是剪影，光来自窗户和轮廓灯。
+- 路灯颜色不要按 700 米的方格随机切换（从高处看是一块块白斑），用平滑的噪声分区。
 - 物理光照单位下 PointLight/SpotLight 要比旧版本亮几十倍（闸刀那场一开始全黑）。

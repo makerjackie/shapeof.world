@@ -11,7 +11,7 @@ import { clamp, drift, ease, easeOut, lerp, mulberry, sstep } from "./util";
 
 const ROWS = [-1.6, 0.9, 3.4];
 const HERO_MON = new THREE.Vector3(0.0, 0.75, 0.9 - 0.18); // base of the log monitor on row 2
-const HERO_PHONE = new THREE.Vector3(0.55, 0.75, 3.4 + 0.12);
+const HERO_PHONE = new THREE.Vector3(1.05, 0.7555, 3.4 + 0.12);
 const BREAKER = new THREE.Vector3(7.85, 1.35, 1.8);
 const MAXP = 48;
 
@@ -22,7 +22,7 @@ varying vec3 vW; varying vec3 vN;
 ${NOISE}
 void main(){
   vec3 n = normalize(vN);
-  vec3 base = uBase * (0.85 + 0.3 * vnoise(vW.xz * 8.0));
+  vec3 base = uBase * (0.85 + 0.3 * vnoise(vW.xz * 8.0)) * (0.9 + 0.2 * vnoise(vec2(vW.x * 3.0, vW.z * 70.0)));
   vec3 c = base * (vec3(0.25, 0.32, 0.45) * uRoom * (0.4 + 0.6 * max(n.y, 0.0)) + vec3(0.02));
   // monitor glow on desk tops while the room is alive
   c += base * vec3(0.3, 0.5, 0.8) * uRoom * 0.6 * max(n.y, 0.0);
@@ -32,7 +32,7 @@ void main(){
     if (p.w <= 0.0) continue;
     vec3 d = vW - p.xyz;
     float r2 = dot(d, d);
-    c += base * vec3(0.55, 0.75, 1.0) * p.w * (0.012 / (r2 + 0.012) + 0.03 * exp(-r2 * 7.0)) * max(0.25, n.y);
+    c += base * vec3(0.55, 0.75, 1.0) * p.w * (0.0035 / (r2 + 0.004) + 0.03 * exp(-r2 * 7.0)) * max(0.25, n.y);
   }
   c += base * vec3(1.0, 0.05, 0.03) * uRed * 0.4 * pow(0.5 + 0.5 * sin(uT * 3.2 + vW.x * 0.4), 4.0);
   gl_FragColor = vec4(c, 1.0);
@@ -67,7 +67,7 @@ export const controlScene = (): SceneMod => {
 
   const deskU = {
     uCam: { value: new THREE.Vector3() }, uRoom: { value: 1 }, uRed: { value: 0 }, uT: { value: 0 },
-    uPh: { value: Array.from({ length: MAXP }, () => new THREE.Vector4(0, 0, 0, 0)) }, uBase: { value: new THREE.Color(0.32, 0.33, 0.35) },
+    uPh: { value: Array.from({ length: MAXP }, () => new THREE.Vector4(0, 0, 0, 0)) }, uBase: { value: new THREE.Color(0.13, 0.13, 0.14) },
   };
   const deskMat = new THREE.ShaderMaterial({ vertexShader: DESK_VERT, fragmentShader: DESK_FRAG, uniforms: deskU });
   const floorU = { ...deskU, uBase: { value: new THREE.Color(0.08, 0.085, 0.095) } };
@@ -117,6 +117,9 @@ export const controlScene = (): SceneMod => {
   const bezel = new THREE.MeshStandardMaterial({ color: 0x0c0d0f, roughness: 0.5, metalness: 0.3 });
   const chairMat = new THREE.MeshStandardMaterial({ color: 0x111215, roughness: 0.8 });
   const monitors: THREE.Mesh[] = [];
+  const monNeck = new THREE.BoxGeometry(0.05, 0.2, 0.03);
+  const monFoot = new THREE.BoxGeometry(0.22, 0.012, 0.16);
+  const chairLeg = new THREE.BoxGeometry(0.03, 0.025, 0.3).translate(0, 0, 0.15);
   const phoneSpots: THREE.Vector3[] = [];
   for (const z of ROWS) {
     for (const xs of [-1, 1]) {
@@ -135,21 +138,43 @@ export const controlScene = (): SceneMod => {
           mon.rotation.y = -m * 0.35;
           scene.add(mon);
           monitors.push(mon);
+          // stand and foot
+          const neck = new THREE.Mesh(monNeck, bezel);
+          neck.position.set(cx + m * 0.5, 0.86, z - 0.2 - 0.03);
+          neck.rotation.y = mon.rotation.y;
+          scene.add(neck);
+          const foot = new THREE.Mesh(monFoot, bezel);
+          foot.position.set(cx + m * 0.5, 0.762, z - 0.22);
+          foot.rotation.y = mon.rotation.y;
+          scene.add(foot);
         }
         const kb = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.02, 0.14), bezel);
         kb.position.set(cx, 0.765, z + 0.15);
         scene.add(kb);
         // chair pushed back, as if someone just stood up
         const chair = new THREE.Group();
-        const seat = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.5), chairMat);
+        const seat = new THREE.Mesh(new RoundedBoxGeometry(0.5, 0.08, 0.5, 2, 0.03), chairMat);
         seat.position.y = 0.48;
         chair.add(seat);
-        const backr = new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.62, 0.06), chairMat);
+        const backr = new THREE.Mesh(new RoundedBoxGeometry(0.46, 0.6, 0.06, 2, 0.025), chairMat);
         backr.position.set(0, 0.86, 0.24);
         chair.add(backr);
         const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.4, 8), chairMat);
         stem.position.y = 0.24;
         chair.add(stem);
+        // five-star base on castors
+        for (let q = 0; q < 5; q++) {
+          const legM = new THREE.Mesh(chairLeg, chairMat);
+          legM.rotation.y = (q / 5) * Math.PI * 2;
+          legM.position.y = 0.05;
+          chair.add(legM);
+        }
+        const arm = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.03, 0.3), chairMat);
+        arm.position.set(-0.27, 0.68, 0.02);
+        chair.add(arm);
+        const arm2 = arm.clone();
+        arm2.position.x = 0.27;
+        chair.add(arm2);
         chair.position.set(cx + (rnd() - 0.5) * 0.3, 0, z + 0.85 + rnd() * 0.5);
         chair.rotation.y = (rnd() - 0.5) * 0.9;
         scene.add(chair);
@@ -361,7 +386,7 @@ export const controlScene = (): SceneMod => {
       c.font = font(SANS, 84, 900);
       c.fillText("主电源", w / 2, 205);
       c.font = font(SANS, 30, 600);
-      c.fillText("AI 助手 · 计算集群 A", w / 2, 280);
+      c.fillText("安 · 计算集群 A", w / 2, 280);
       // ON / OFF marks either side of the lever's throw
       c.fillStyle = "#e9e6dc";
       c.font = font(SANS, 40, 700);
@@ -522,7 +547,8 @@ export const controlScene = (): SceneMod => {
         fov = 30;
         look.dof = 18;
         look.focus = pos.distanceTo(hp);
-        look.aperture = 5;
+        look.aperture = 1.0;
+        look.bloom = 0.35;
       } else {
         // hard cut: high in the corner, the whole dark room, every phone waking
         const k = clamp((lt - 4.6) / 4.8);
@@ -538,10 +564,10 @@ export const controlScene = (): SceneMod => {
         look.bloomThreshold = 0.8;
       }
       look.exposure = 1.0;
-      look.bloomThreshold = 0.95;
+      look.bloomThreshold = lt < 4.6 ? 1.6 : 0.95;
       look.streak = 0.12;
     }
-    (heroScr.material as THREE.MeshBasicMaterial).color.setScalar(mode === "phones" ? (lt < 4.6 ? 1.05 : 14) * clamp((lt - 1.3) / 0.2) : 0);
+    (heroScr.material as THREE.MeshBasicMaterial).color.setScalar(mode === "phones" ? (lt < 4.6 ? 1.7 : 14) * clamp((lt - 1.3) / 0.2) : 0);
     if (mode !== "breaker") {
       key.intensity = 0;
       fill.intensity = 0;
@@ -565,9 +591,9 @@ export const controlScene = (): SceneMod => {
     const arr = deskU.uPh.value;
     arr.forEach((v) => v.set(0, 0, 0, 0));
     if (mode === "phones") {
-      arr[0].set(HERO_PHONE.x, HERO_PHONE.y + 0.02, HERO_PHONE.z, clamp((lt - 1.3) / 0.2));
+      arr[0].set(HERO_PHONE.x, HERO_PHONE.y + 0.02, HERO_PHONE.z, clamp((lt - 1.3) / 0.2) * (lt < 4.6 ? 0.3 : 2.2));
       others.forEach((p, i) => {
-        if (i + 1 < MAXP) arr[i + 1].set(p.x, p.y + 0.02, p.z, sstep(aOn[i], aOn[i] + 0.15, lt));
+        if (i + 1 < MAXP) arr[i + 1].set(p.x, p.y + 0.02, p.z, 2.2 * sstep(aOn[i], aOn[i] + 0.15, lt));
       });
     }
     pos.x += drift(gt, 9, mode === "monitor" ? 0.003 : 0.008);

@@ -98,7 +98,7 @@ const badgeTexture = () => {
   cv.width = 540;
   cv.height = 856;
   const c = cv.getContext("2d") as CanvasRenderingContext2D;
-  c.fillStyle = "#e9ecef";
+  c.fillStyle = "#aeb3b8";
   rr(c, 0, 0, 540, 856, 30);
   c.fill();
   c.fillStyle = "#123a52";
@@ -271,26 +271,37 @@ export const phoneScene = (): SceneMod => {
     let aperture = 6;
     let zoom = 0;
     let exposure = 1;
+    // orbit helper: camera at distance d from target, elevation el, azimuth az (0 = from the phone's bottom edge)
+    const orbit = (t: THREE.Vector3, d: number, el: number, az: number) => pos.set(t.x + d * Math.sin(az) * Math.cos(el), t.y + d * Math.sin(el), t.z + d * Math.cos(az) * Math.cos(el));
     if (mode === "lock") {
-      const k = ease(clamp((lt - 1.2) / 3.4));
-      pos.set(lerp(0.03, 0.006, k), lerp(0.055, 0.135, k), lerp(0.36, 0.075, k));
-      tgt.set(0, lerp(0.02, 0.0, k), lerp(-0.06, -0.012, k));
-      // slow push through the stack of notifications
-      const push = clamp((lt - 4.6) / 9);
-      pos.y -= 0.022 * push;
-      pos.z -= 0.012 * push;
-      tgt.z += 0.004 * push;
-      fov = lerp(38, 30, k);
-      exposure = lerp(1.4, 1.0, k);
+      if (lt < 4.2) {
+        // the phone wakes on the dark desk; the first message is readable from here
+        const k = ease(clamp(lt / 4.2));
+        tgt.set(0, 0.006, -0.022);
+        orbit(tgt, lerp(0.215, 0.178, k), lerp(0.80, 0.88, k), lerp(0.22, 0.16, k));
+        fov = 30;
+        aperture = 0.45;
+        exposure = lerp(1.25, 1.05, k);
+      } else {
+        // insert: the clock and the newest messages, read from above as they stack up
+        const k = clamp((lt - 4.2) / 9.6);
+        tgt.set(0, PHONE_T, lerp(-0.025, -0.022, k));
+        orbit(tgt, lerp(0.168, 0.156, k), 1.24, lerp(0.07, 0.03, k));
+        fov = 32;
+        aperture = 1.0;
+      }
     } else if (mode === "morning") {
-      pos.set(-0.06 + lt * 0.004, 0.12, 0.08);
-      tgt.set(0, 0, -0.01);
+      const k = clamp(lt / 3.6);
+      tgt.set(0, PHONE_T, -0.02);
+      orbit(tgt, lerp(0.17, 0.158, k), 1.0, lerp(-0.38, -0.33, k));
       fov = 30;
+      aperture = 0.6;
     } else if (mode === "call") {
       const up = ease(clamp((lt - 3.7) / 0.7));
-      pos.set(0.004, 0.13 - lt * 0.003, lerp(0.078, 0.05, up) - lt * 0.002);
-      tgt.set(0, 0, lerp(-0.012, -0.046, up));
+      tgt.set(0, PHONE_T, lerp(-0.006, -0.044, up));
+      orbit(tgt, 0.15 - lt * 0.002, 1.28, 0.03);
       fov = 30;
+      aperture = 0.9;
     } else if (mode === "chat") {
       // five set-ups, hard cuts between them: the draft is typed → the long wait, wide, alone in the dark →
       // closer, the dots come and go → the answer, read from above → the last line, slightly off-axis
@@ -299,7 +310,7 @@ export const phoneScene = (): SceneMod => {
         pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
         tgt.set(0, 0, 0.046);
         fov = 30;
-        aperture = 3;
+        aperture = 1.4;
         chatFocus.set(0, PHONE_T, 0.05);
       } else if (lt < 9.6) {
         const k = clamp((lt - 4.6) / 5);
@@ -314,21 +325,21 @@ export const phoneScene = (): SceneMod => {
         pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
         tgt.set(0, 0, 0.022);
         fov = 30;
-        aperture = 5;
+        aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
       } else if (lt < 25) {
         const k = clamp((lt - 14.5) / 10.5);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
-        aperture = 2.2;
+        aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
       } else {
         const k = clamp((lt - 25) / 12);
         pos.set(lerp(0.011, 0.008, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
         tgt.set(0, 0, lerp(0.022, 0.03, k));
         fov = 30;
-        aperture = 2.6;
+        aperture = 1.3;
         chatFocus.set(0, PHONE_T, 0.04);
       }
     } else if (mode === "pullout") {
@@ -351,7 +362,7 @@ export const phoneScene = (): SceneMod => {
     cam.up.set(0, 1, 0);
     cam.lookAt(tgt);
     deskU.uCam.value.copy(pos);
-    focus = pos.distanceTo(new THREE.Vector3(0, PHONE_T, tgt.z));
+    focus = pos.distanceTo(new THREE.Vector3(tgt.x, PHONE_T, tgt.z));
     if (mode === "chat") focus = pos.distanceTo(chatFocus);
     if (mode === "pullout") {
       const fk = sstep(0.8, 2.6, lt);

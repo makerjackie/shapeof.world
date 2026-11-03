@@ -5,7 +5,7 @@ import React from "react";
 import { Img, staticFile } from "remotion";
 import { SANS, SERIF } from "../engine/fonts";
 import { clamp, easeOut, spring } from "../engine/util";
-import { CARDS, Card } from "./text";
+import { CARDS, CREDITS, Card } from "./text";
 
 const BAR = 138; // (1080 - 1920/2.39) / 2
 
@@ -31,7 +31,7 @@ const Banner: React.FC<{ body: string; y: number; a: number }> = ({ body, y, a }
   >
     <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
       <Orb s={56} />
-      <div style={{ fontSize: 34, fontWeight: 600, flex: 1 }}>AI 助手</div>
+      <div style={{ fontSize: 34, fontWeight: 600, flex: 1 }}>安</div>
       <div style={{ fontSize: 30, color: "rgba(255,255,255,0.5)" }}>现在</div>
     </div>
     <div style={{ fontSize: 58, fontWeight: 500, marginTop: 18, letterSpacing: "0.02em" }}>{body}</div>
@@ -45,6 +45,53 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
     return (
       <div style={{ ...center, background: "#000" }}>
         <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 66, letterSpacing: "0.14em", opacity: a, transform: `translateY(${(1 - easeOut((t - c.t0) / 1.2)) * 10}px)` }}>{c.lines[0]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "pre") {
+    // a festival-style leader: what this is, who made it, then black before the cold open
+    const a = clamp((c.t1 - t) / 0.6);
+    const l = (d: number, dur = 0.7) => clamp((t - c.t0 - d) / dur);
+    return (
+      <div style={{ ...center, background: "#000", opacity: a }}>
+        <div style={{ fontFamily: SANS, fontSize: 40, fontWeight: 400, letterSpacing: "0.32em", paddingLeft: "0.32em", color: "rgba(255,255,255,0.62)", opacity: l(0.2) }}>{c.lines[0]}</div>
+        <div style={{ width: 120 * easeOut(l(0.9, 1.0)), height: 2, background: "rgba(255,255,255,0.35)", margin: "40px 0" }} />
+        <div style={{ fontFamily: SERIF, fontSize: 72, fontWeight: 600, letterSpacing: "0.12em", paddingLeft: "0.12em", opacity: l(1.3), transform: `translateY(${(1 - easeOut(l(1.3, 1.4))) * 12}px)` }}>{c.lines[1]}</div>
+        <div style={{ fontFamily: SANS, fontSize: 34, fontWeight: 500, letterSpacing: "0.4em", paddingLeft: "0.4em", marginTop: 46, color: "rgba(255,255,255,0.55)", opacity: l(2.6) }}>{c.lines[2]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "name") {
+    const a = fadeIO(t, c, 0.4, 0.35);
+    const b = clamp((t - c.t0 - 1.05) / 0.5);
+    return (
+      <div style={{ ...center, background: "#000" }}>
+        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 62, letterSpacing: "0.14em", opacity: a, color: "rgba(255,255,255,0.88)" }}>{c.lines[0]}</div>
+        <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 92, letterSpacing: "0.2em", paddingLeft: "0.2em", marginTop: 34, opacity: a * b, transform: `translateY(${(1 - easeOut(b)) * 10}px)` }}>{c.lines[1]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "credits") {
+    // a slow roll, bottom to top, like the end of a film
+    const a = clamp((t - c.t0) / 0.8) * clamp((c.t1 - t) / 0.8);
+    const rowH = 80;
+    const total = CREDITS.length * rowH;
+    const k = clamp((t - c.t0 - 0.6) / (c.t1 - c.t0 - 1.6));
+    const y = 1080 - BAR + 20 - k * (total + (1080 - 2 * BAR) * 0.5 + 40);
+    return (
+      <div style={{ position: "absolute", inset: 0, background: "#000", opacity: a, overflow: "hidden" }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: 0, transform: `translateY(${y}px)` }}>
+          {CREDITS.map(([role, name], i) =>
+            role === "*" ? (
+              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 600, fontSize: i === 0 ? 64 : 38, letterSpacing: i === 0 ? "0.4em" : "0.12em", color: i === 0 ? "#fff" : "rgba(255,255,255,0.7)" }}>{name}</div>
+            ) : (
+              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", fontFamily: SANS, fontSize: 38 }}>
+                <div style={{ width: 920, paddingRight: 40, textAlign: "right", color: "rgba(255,255,255,0.5)", letterSpacing: "0.12em", boxSizing: "border-box" }}>{role}</div>
+                <div style={{ flex: 1, color: "rgba(255,255,255,0.92)", letterSpacing: "0.06em", fontSize: name.startsWith("《") ? 31 : 38 }}>{name}</div>
+              </div>
+            ),
+          )}
+        </div>
       </div>
     );
   }
