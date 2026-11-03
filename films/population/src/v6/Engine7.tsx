@@ -9,6 +9,7 @@ import { cursorFrom, Placed } from "./time6";
 import { revealOf } from "./reveal7";
 
 const W = 1080;
+const SAFE_R = 940; // Douyin/TikTok right rail starts here
 const H = 1920;
 const FPS = 30;
 
@@ -217,7 +218,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const CUR = (t: number) => (t < RW0 ? coldCur(t) : t < RW1 ? rewindCur(t) : t < B0 ? FIRST : t >= END ? EV[EV.length - 1].y : bodyCur(t));
 
   // ---------- per-frame camera (cursor, x span, y range, layout), precomputed once
-  const HX_BODY = 0.42 * W;
+  const HX_BODY = 0.4 * W;
   const MAP_ON = (t: number) => {
     if (t >= END) return 0;
     if (t < B0) return clamp(t / 0.3);
@@ -306,7 +307,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const X = (k: Cam, y: number) => {
     const xb = k.hxw - (k.cx - y) * k.ppy;
     if (k.lg <= 0) return xb;
-    const xe = 70 + ((y - FIRST) / (LAST - FIRST)) * (W - 140);
+    const xe = 70 + ((y - FIRST) / (LAST - FIRST)) * (SAFE_R - 70);
     return xb + (xe - xb) * ease(k.lg);
   };
   const Yv = (k: Cam, v: number) => {
@@ -448,7 +449,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const cue = mapCueAt(t);
       const fit = (cue && FIT[cue.key]) || { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom };
       const follow = S.id === "world" && e?.at ? { lon: e.at[0] * 0.75 + fit.lon * 0.25, lat: e.at[1] * 0.75 + fit.lat * 0.25, z: Math.max(fit.z, 2.7) } : null;
-      const tg = t < RW1 ? { lon: S.map.lon, lat: S.map.lat, z: S.map.zoom } : e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
+      const tg = t < RW1 ? { lon: S.map.lon - 8, lat: S.map.lat, z: S.map.zoom * 0.66 } : e?.focus ? { lon: e.focus[0], lat: e.focus[1], z: e.focus[2] } : follow ?? (S.id === "world" ? { ...fit, z: Math.max(fit.z, 2.0) } : fit);
       if (f === 0) {
         lon = tg.lon;
         lat = tg.lat;
@@ -507,9 +508,9 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (mk <= 0.01) return;
     {
       const g = t < RW1 ? 0 : t < B0 ? ease(clamp((t - RW1) / (B0 - RW1))) : 1;
-      MAP_CY = 1400 + 40 * g;
-      CLIP0 = 1070 - 10 * g;
-      CLIP1 = 1700 + 200 * g;
+      MAP_CY = 1250 + 190 * g;
+      CLIP0 = 1060;
+      CLIP1 = 1480 + 420 * g;
     }
     const cue = mapCueAt(t);
     if (!cue) return;
@@ -1035,7 +1036,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     ctx.globalAlpha = clamp(a);
     const k = camAt(t);
-    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, k.bot + 40) : clamp(h.y + 120, 760, k.bot + 40), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 60 });
+    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, Math.min(k.bot + 40, 1470)) : clamp(h.y + 120, 760, Math.min(k.bot + 40, 1470)), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 60 });
     ctx.restore();
   };
 
@@ -1138,7 +1139,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.fillRect(640, y - 26, 5, 32);
       const yr = x.tag ? x.tag.split(" · ")[0] : "";
       text(ctx, yr, 658, y, 22, 700, SANS, SOFT, { maxW: 150 });
-      text(ctx, x.t || x.n || "", 812, y, 26, 900, SERIF, i === 0 ? WHITE : "#c9ced3", { maxW: 228 });
+      text(ctx, x.t || x.n || "", 812, y, 26, 900, SERIF, i === 0 ? WHITE : "#c9ced3", { maxW: SAFE_R - 812 });
     });
     ctx.restore();
   };
@@ -1228,7 +1229,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
 
   // ---------- the card at the head: tag, title, number, sub; each line lands on its own beat
   const REV = new Map(EV.map((e) => [e.i, revealOf(e, BEATS)]));
-  const CX_OFF = 72;
+  const CX_OFF = 60;
   const wrap2 = (ctx: CanvasRenderingContext2D, s: string, size: number, maxW: number) => {
     if (measure(ctx, s, size, 900, SERIF) <= maxW) return [s];
     const cut = s.indexOf("，");
@@ -1247,10 +1248,10 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const h0 = headAt(e.t0 + 0.01);
     const hx = headAt(t).x;
     const x0 = hx + CX_OFF;
-    const maxW = W - 44 - x0;
+    const maxW = SAFE_R - x0;
     const tone = KIND_TONE[e.k];
     const col = toneCol(tone);
-    const bottom = k.bot + 40;
+    const bottom = Math.min(k.bot + 40, 1470); // stay above the caption zone
     // stacked list (same st id): every line stays, newest bright and at the bottom
     if (e.st) {
       const grp = EV.filter((x) => x.st === e.st && x.i <= e.i);
@@ -1358,9 +1359,9 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const tb = i === 0 ? e.t0 : (BEATS.find((b) => b.t > e.t0 + 0.05)?.t ?? e.t0);
       if (t < tb) return;
       ctx.globalAlpha = a * clamp((t - tb) / 0.08);
-      text(ctx, p + (i < parts.length - 1 ? "，" : ""), W / 2, 800 + i * 110, 96 * (i === 0 ? s : 1 + 0.15 * env(t, tb, 0.01, 0.12)), 400, BRUSH, WHITE, { align: "center", maxW: 980, glow: "rgba(0,0,0,0.9)" });
+      text(ctx, p + (i < parts.length - 1 ? "，" : ""), (60 + SAFE_R) / 2, 800 + i * 110, 96 * (i === 0 ? s : 1 + 0.15 * env(t, tb, 0.01, 0.12)), 400, BRUSH, WHITE, { align: "center", maxW: SAFE_R - 80, glow: "rgba(0,0,0,0.9)" });
     });
-    if (e.s) text(ctx, "—— " + e.s, W - 70, 1000, 30, 700, SERIF, SOFT, { align: "right" });
+    if (e.s) text(ctx, "—— " + e.s, SAFE_R - 10, 1000, 30, 700, SERIF, SOFT, { align: "right" });
     ctx.restore();
   };
 
@@ -1555,12 +1556,12 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         const s = 1 + 0.5 * env(t, tEnd, 0.01, 0.12);
         ctx.globalAlpha = clamp((endTo - t) / 0.15);
         ctx.save();
-        ctx.translate(xe + 36, ye + 70);
+        ctx.translate(Math.min(xe + 36, SAFE_R), ye + 70);
         ctx.scale(s, s);
         const fe = fmtPop(val(LAST_REAL));
         text(ctx, `${fe.n} ${fe.u}`, 0, 0, 54, 900, SANS, GOLD, { align: "right", glow: "rgba(255,201,77,0.6)", glowBlur: 20 });
         ctx.restore();
-        text(ctx, `${LAST_REAL} 年`, xe + 36, ye + 108, 26, 700, SERIF, SOFT, { align: "right" });
+        text(ctx, `${LAST_REAL} 年`, Math.min(xe + 36, SAFE_R), ye + 108, 26, 700, SERIF, SOFT, { align: "right" });
       }
       // the turn now: a calm white ring, no lightning
       if (mk && t >= mk.t0 && t < mk.t1 + 0.2) {
@@ -1581,6 +1582,36 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         if (mk.label) text(ctx, mk.label, xm + 30, ym + 70, 30, 900, SANS, WHITE, { align: "right", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       }
     }
+    const cl = S.cold.ceiling;
+    if (cl && t >= cl.t0 && t < RW0) {
+      const yv = Yv(k, cl.v);
+      const xa = X(k, cl.y0);
+      const xb = X(k, cl.y1);
+      const grow = eo3((t - cl.t0) / 0.35);
+      ctx.globalAlpha = fadeOut;
+      ctx.strokeStyle = WHITE;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([12, 9]);
+      ctx.beginPath();
+      ctx.moveTo(xa, yv);
+      ctx.lineTo(xa + (xb - xa) * grow, yv);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      cl.peaks.forEach(([py, pt], i) => {
+        if (t < pt) return;
+        const xp = X(k, py);
+        const yp = Yv(k, val(py));
+        const pa = clamp((t - pt) / 0.08);
+        const pop = 1 + 0.5 * env(t, pt, 0.01, 0.12);
+        ctx.globalAlpha = fadeOut * pa;
+        ctx.strokeStyle = GOLD;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(xp, yp, 20 * pop, 0, Math.PI * 2);
+        ctx.stroke();
+        text(ctx, cl.names[i], xp, yp - 34 * pop, 30 * pop, 900, SERIF, GOLD, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      });
+    }
     // the counter: one more fall on every hit
     if (S.cold.counter && newest >= 0 && t < L0t + 0.15) {
       const c = S.cold.crashes[newest];
@@ -1591,21 +1622,13 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const wn = ctx.measureText(num).width;
       ctx.font = `900 64px ${SERIF}`;
       const wl = ctx.measureText(S.cold.counter).width;
-      const x0 = W / 2 - (wn + 24 + wl) / 2;
-      const gb = ctx.createLinearGradient(0, 1600, 0, 1720);
-      gb.addColorStop(0, "rgba(4,5,7,0)");
-      gb.addColorStop(1, "rgba(4,5,7,0.85)");
+      const x0 = 60;
       ctx.save();
-      ctx.globalAlpha = 1;
-      ctx.fillStyle = gb;
-      ctx.fillRect(0, 1600, W, H - 1600);
-      ctx.restore();
-      ctx.save();
-      ctx.translate(x0 + wn / 2, 1830);
+      ctx.translate(x0 + wn / 2, 1440);
       ctx.scale(pop, pop);
       text(ctx, num, -wn / 2, 0, 210, 900, SANS, RED, { glow: "rgba(255,59,47,0.7)", glowBlur: 30 });
       ctx.restore();
-      text(ctx, S.cold.counter, x0 + wn + 24, 1820, 64, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+      text(ctx, S.cold.counter, x0 + wn + 24, 1430, 64, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     }
     // the lines
     for (const L of S.cold.lines) {

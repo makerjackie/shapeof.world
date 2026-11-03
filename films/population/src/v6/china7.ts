@@ -260,13 +260,13 @@ export const CHINA: Spec = {
     crashes: COLD_CRASHES,
     lines: [
       { t0: A(10), t1: A(14) - 0.05, a: "两千年，8 次人口大跌", b: "每一次，都伴着战乱、饥荒、瘟疫", tone: "red" },
-      { t0: A(14), t1: A(18) - 0.05, a: "赤壁之战", b: "曹操号称 80 万大军", tone: "red" },
-      { t0: A(18), t1: A(22) - 0.05, a: "可三国在册人口，只有 767 万", b: "人都去哪了？", tone: "gold" },
+      { t0: A(14), t1: A(18) - 0.05, a: "公元 2 年，在册 5,959 万人", b: "此后 1,000 多年，再没超过", tone: "white" },
+      { t0: A(18), t1: A(22) - 0.05, a: "汉、隋、唐的盛世，都没超过", b: "人都去哪了？", tone: "gold" },
     ],
     rewind: [A(22), A(25)],
     promise: "一条曲线，看尽王朝兴衰",
     counter: "次人口大跌",
-    mark: { y: 263, t0: A(14), t1: A(22) - 0.05, tone: "red" },
+    ceiling: { v: 5959.4, y0: 2, y1: 900, t0: A(14), peaks: [[157, A(18)], [609, A(18) + 0.2327], [755, A(19)]], names: ["东汉", "隋", "唐"] },
     // the territory on the beat: the realm before each fall on the lunge, the broken map on the hit
     maps: [
       [0, "xihan"],
@@ -283,7 +283,10 @@ export const CHINA: Spec = {
       [A(5) + 0.2327, "qing2"],
       [A(6), "taiping", true],
       [A(6) + 0.2327, "none"],
-      [A(14), "sanguo", true],
+      [A(14), "xihan"],
+      [A(18), "donghan"],
+      [A(18) + 0.2327, "sui"],
+      [A(19), "tang"],
     ],
     mapYears: [
       [-300, "xihan"], [25, "donghan"], [220, "sanguo"], [280, "jin"], [317, "shiliu"], [439, "nanbei"], [589, "sui"], [618, "tang"],

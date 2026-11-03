@@ -19,6 +19,7 @@ export type Spec = {
     promise?: string; // the line under the big title
     counter?: string; // the cold-open counter label ("次人口大跌")
     mark?: { y: number; t0: number; t1: number; label?: string; tone?: "red" | "white" }; // a ring on one point
+    ceiling?: { v: number; y0: number; y1: number; t0: number; peaks: [number, number][]; names: string[] }; // a dashed level the old peaks stay under
     maps?: [number, string, boolean?][]; // cold-open territory cues: film time, map key, split (jolt + cracks)
     mapYears?: [number, string][]; // era start year -> map key (the rewind runs these backwards)
   };
