@@ -79,7 +79,7 @@ export const CUT: Shot[] = [
 ];
 
 // story time runs from the cold open (0) to the end card; the pre-roll card plays before it
-export const PRE = 6.5;
+export const PRE = 9.0;
 export const FILM_SECONDS = 269.5;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);

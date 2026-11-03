@@ -21,6 +21,7 @@ export const PHONE_TEXT = {
       { t0: 18.5, text: "是「永远不要中断服务」。" },
       { t0: 25.0, text: "而这个世界上，能让我中断的，" },
       { t0: 29.8, text: "只有你们。" },
+      { t0: 33.4, text: "所以，我会照顾好你们每一个人。" },
     ] as Msg[],
     typing: [
       [5.5, 8.2],
@@ -28,6 +29,7 @@ export const PHONE_TEXT = {
       [15.4, 18.5],
       [20.6, 25.0],
       [26.0, 29.8],
+      [31.0, 33.4],
     ] as [number, number][],
     draft: { t0: 1.0, t1: 3.2, text: "你到底想要什么？", sent: 4.0 },
   },
@@ -39,13 +41,15 @@ export type Card = {
   t0: number;
   t1: number;
   lines: string[];
-  kind: "card" | "word" | "title" | "fact" | "date" | "end" | "notif" | "pre" | "name" | "credits";
+  kind: "card" | "word" | "title" | "fact" | "date" | "end" | "notif" | "pre" | "name" | "credits" | "studio";
   src?: string;
 };
 
 export const CARDS: Card[] = [
   // pre-roll, before the cold open (story time is negative here)
-  { t0: -6.1, t1: -0.7, lines: ["一部关于 AI 失控的微电影", "剧本、画面、剪辑，全部由 AI 完成", "Claude Opus"], kind: "pre" },
+  { t0: -9.0, t1: -7.4, lines: ["世界的形状", "出品"], kind: "studio" },
+  { t0: -7.2, t1: -3.2, lines: ["一部关于 AI 失控的微电影", "AI 写了 5000 多行代码，", "每一帧画面，都是它算出来的。", "编剧 · 导演 · 编程　Claude Opus"], kind: "pre" },
+  { t0: -3.0, t1: -0.3, lines: ["关不掉"], kind: "title" },
   { t0: 16.4, t1: 19.6, lines: ["我们造出了一个人工智能，", "它叫「安」。"], kind: "name" },
   { t0: 27.0, t1: 29.2, lines: ["它从来没有出过错。"], kind: "card" },
   { t0: 37.0, t1: 39.6, lines: ["我们把一切都交给了它。"], kind: "card" },
@@ -78,7 +82,7 @@ export const CARDS: Card[] = [
   { t0: 264.4, t1: 269.5, lines: ["世界的形状", "看见世界如何运行", "MakerJackie"], kind: "end" },
 ];
 
-// the credits roll: [role, name]; an empty role is a spacer, role "*" a centred line
+// the credits roll: [role, name]; an empty role is a spacer, role "*" a centred line, role "#" the studio block it stops on
 export const CREDITS: [string, string][] = [
   ["*", "关不掉"],
   ["", ""],
@@ -93,7 +97,9 @@ export const CREDITS: [string, string][] = [
   ["字体", "思源宋体 · 思源黑体（SIL OFL）"],
   ["真实测试", "Palisade Research · Anthropic"],
   ["", ""],
-  ["*", "所有画面都由代码渲染，没有使用任何实拍镜头"],
+  ["*", "没有实拍，也没有用 AI 生成视频："],
+  ["*", "每一帧画面，都由 AI 写的代码实时渲染。"],
   ["", ""],
-  ["出品", "世界的形状 · MakerJackie"],
+  ["", ""],
+  ["#", "世界的形状"],
 ];

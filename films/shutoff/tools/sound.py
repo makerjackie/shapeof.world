@@ -7,7 +7,7 @@ from scipy.signal import butter, sosfilt, fftconvolve
 from scipy.io import wavfile
 
 SR = 48000
-PRE = 6.5  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
+PRE = 9.0  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
 DUR = 269.5
 OUT = sys.argv[1] if len(sys.argv) > 1 else "public/mix.wav"
 rng = np.random.default_rng(1402)
@@ -278,9 +278,13 @@ def piano_note(f, length=6.0, g=1.0):
     return verb(st(s * 0.25), IR_HALL, 0.45) * g
 
 # ================= the mix =================
-# --- pre-roll (-6.5 – 0): a low tone under the leader card, one piano note on the main line ---
-put(-6.1, fade(drone(5.6, 41.2, 0.35), 1.5, 1.8))
-put(-4.8, piano_note(110.0, 5.0, 0.45))
+# --- pre-roll (-9 – 0): the studio card in near silence, the leader card on a low tone, the title stutters on ---
+put(-8.6, piano_note(146.83, 4.0, 0.35))
+put(-7.2, fade(drone(4.9, 41.2, 0.35), 1.2, 1.2))
+put(-5.6, piano_note(110.0, 4.0, 0.4))
+for k, tt in enumerate((0.0, 0.1, 0.2, 0.33)):
+    put(-3.0 + tt, glitch(0.06, 0.35 + 0.1 * k))
+put(-2.65, boom(2.5, 0.7)); put(-2.65, braam(2.6, 41.2, 0.45))
 # --- cold open (0 – 16.4) ---
 bed(0.0, 14.4, "event-horizon.mp3", 0.0, 1.2, fi=2.0, fo=0.05)
 loopbed(0.0, 14.4, "ambience-rain-03.wav", 0.85, fi=1.5, fo=0.03)
@@ -370,8 +374,9 @@ loopbed(157.5, 199.0, "ambience-rain-03.wav", 0.9, fi=3.0, fo=2.0)
 for k in range(8):
     put(158.5 + k * (2.2 / 8), tap(1.1))
 put(161.5, whoosh(0.35, 3000, 1200, 0.25))
-for tt in (172.0, 176.0, 182.5, 187.3):
+for tt in (172.0, 176.0, 182.5, 187.3, 190.9):
     put(tt, ping(0.5))
+put(190.9, piano_note(73.42, 6.0, 0.55))  # "所以，我会照顾好你们每一个人。"
 bed(165.0, 200.0, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
 put(187.3, boom(4.0, 0.9))
 put(187.3, drone(7.0, 32.7, 0.5))

@@ -87,17 +87,18 @@ function fract(x: number) {
 
 const SKY_GLSL = /* glsl */ `
 uniform float uGlow; // 1 = the city's light pollution lights the haze; drops during the blackout
+uniform vec2 uSun; // horizontal direction of the afterglow at dusk
 vec3 skyCol(vec3 d){
   float e = max(d.y, 0.0);
   vec3 nightTop = vec3(0.0025, 0.004, 0.009), nightMid = vec3(0.012, 0.014, 0.024);
   vec3 nightHor = mix(vec3(0.010, 0.012, 0.019), vec3(0.050, 0.034, 0.028), uGlow);
   vec3 duskTop = vec3(0.006, 0.014, 0.045), duskHor = vec3(0.40, 0.17, 0.07);
-  float west = 0.5 + 0.5 * dot(normalize(d.xz + 1e-4), normalize(vec2(-1.0, 0.35)));
+  float west = 0.5 + 0.5 * dot(normalize(d.xz + 1e-4), uSun);
   vec3 dHor = mix(vec3(0.035, 0.06, 0.13), duskHor, pow(west, 2.5));
   // night: a thin band of sodium haze on the horizon, quickly giving way to a deep blue-black
   vec3 night = mix(nightHor, nightMid, 1.0 - exp(-e * 9.0));
   night = mix(night, nightTop, smoothstep(0.08, 0.7, e));
-  vec3 dusk = mix(dHor, duskTop, pow(e, 0.32));
+  vec3 dusk = mix(dHor, duskTop, smoothstep(0.0, 0.45, pow(e, 0.6)));
   return mix(night, dusk, uDusk);
 }
 // aerial perspective: distant things melt into the colour of the sky right behind them
@@ -154,10 +155,10 @@ void main(){
   // facade lighting, the signature of a Chinese city at night: towers outlined with LED strips along every corner and
   // the roof line, some with bands every few floors
   float fl = h11(seed + 11.0);
-  float contour = (typ < 0.5 && vSize.y > 50.0 && (fl < 0.45 || vSize.y > 240.0)) || (typ > 0.5 && typ < 1.5 && vSize.y > 28.0 && fl < 0.10) ? 1.0 : 0.0;
+  float contour = typ < 0.5 && ((vSize.y > 150.0 && fl < 0.4) || vSize.y > 240.0) ? 1.0 : 0.0;
   float cc = h11(seed + 12.0);
   vec3 ledC = cc < 0.5 ? vec3(1.0, 0.70, 0.36) : cc < 0.82 ? vec3(0.85, 0.92, 1.0) : vec3(0.35, 0.78, 1.0);
-  float ledI = 1.5 * on * mix(1.0, 0.45, uDusk);
+  float ledI = 1.1 * on * mix(1.0, 0.45, uDusk);
   if (typ > 2.5) {
     // rooftop plant: plain metal boxes with a faint sky sheen on top
     col = vec3(0.010, 0.011, 0.013) * (0.8 + 0.4 * vnoise(vW.xz * 0.5 + vW.y));
@@ -166,15 +167,15 @@ void main(){
     col *= 0.7 + 0.3 * smoothstep(vCenter.y, vCenter.y + 1.5, vW.y);
   } else if (n.y > 0.5) {
     // roof: dark membrane, a parapet edge catching the sky, a few service lights
-    col = vec3(0.006, 0.007, 0.008) * (0.8 + 0.4 * vnoise(vW.xz * 0.3));
+    col = vec3(0.006, 0.007, 0.008) * (0.8 + 0.4 * vnoise(vW.xz * 0.3)) * (0.8 + 1.8 * h11(seed + 21.0));
     col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.06;
     vec2 e2 = 0.5 * vSize.xz - abs(rel);
     float e = isRound > 0.5 ? 0.5 * vSize.x - length(rel) : min(e2.x, e2.y);
     float rim = 1.0 - smoothstep(0.4, 1.1, e);
     col = mix(col, skin * 1.8 + skyCol(vec3(0.0, 1.0, 0.0)) * 0.15, rim);
     vec2 g = floor(vW.xz / 7.0);
-    float l = step(0.985, h21(g + seed));
-    col += vec3(1.0, 0.8, 0.6) * l * 0.5 * on;
+    float l = step(0.985, h21(g + seed)) * smoothstep(0.7, 0.3, length(fract(vW.xz / 7.0) - 0.5) * 7.0);
+    col += vec3(1.0, 0.8, 0.6) * l * 0.6 * on;
     col += ledC * ledI * contour * lineAA(e, 0.45);
   } else {
     float hcoord, faceId, edgeD;
@@ -191,32 +192,37 @@ void main(){
       faceId = xf ? (n.x > 0.0 ? 1.0 : 2.0) : (n.z > 0.0 ? 3.0 : 4.0);
       edgeD = 0.5 * (xf ? vSize.z : vSize.x) - abs(xf ? rel.y : rel.x);
     }
-    float fh = typ < 0.5 ? 3.9 : typ < 1.5 ? 3.0 : 6.0;
-    float cw = typ < 0.5 ? 2.2 + h11(seed) * 1.2 : 3.0 + h11(seed) * 1.5;
+    // real proportions: a 1.5 m curtain-wall module on offices, 1.3 m windows on 2.4 m bays in housing
+    float fh = typ < 0.5 ? 4.0 : typ < 1.5 ? 2.95 : 6.0;
+    float cw = typ < 0.5 ? 1.5 : 2.4;
     vec2 uvw = vec2(hcoord / cw, (vW.y - 1.5) / fh);
     vec2 cell = floor(uvw); vec2 f = fract(uvw);
     vec2 fw = fwidth(uvw);
+    float balcony = typ > 0.5 && typ < 1.5 && mod(cell.x, 3.0) < 0.5 ? 1.0 : 0.0;
     // anti-aliasing in two steps: once a window is under a pixel wide, each floor/bay keeps its own average (so lit
     // floors still read as bands from a kilometre away); only once whole floors are sub-pixel does it fall back to the
     // building's overall average
     float aaX = smoothstep(0.25, 0.7, fw.x);
     float aaY = smoothstep(0.45, 0.95, fw.y);
-    vec2 wmin = typ < 0.5 ? vec2(0.05, 0.14) : vec2(0.2, 0.26);
-    vec2 wmax = typ < 0.5 ? vec2(0.95, 0.9) : vec2(0.8, 0.8);
+    vec2 wmin = typ < 0.5 ? vec2(0.05, 0.10) : balcony > 0.5 ? vec2(0.08, 0.10) : vec2(0.23, 0.30);
+    vec2 wmax = typ < 0.5 ? vec2(0.95, 0.93) : balcony > 0.5 ? vec2(0.92, 0.80) : vec2(0.77, 0.80);
     float win = step(wmin.x, f.x) * step(f.x, wmax.x) * step(wmin.y, f.y) * step(f.y, wmax.y);
     if (typ > 1.5) win = 0.0;
     // offices light whole floors or long bays; homes light rooms, and rooms stack (the same column lit floor after floor)
-    float bay = floor(cell.x / (4.0 + floor(h11(seed + 4.0) * 6.0)));
+    float bay = floor(cell.x / (6.0 + floor(h11(seed + 4.0) * 10.0)));
+    float unit = floor(cell.x / 3.0);
     float rFloor = h21(vec2(cell.y * 1.3, seed + faceId));
     float rBay = h21(vec2(cell.y * 0.7 + bay * 3.1, seed * 1.7 + faceId));
     float rWin = h21(cell + seed * 13.0 + faceId * 7.1);
     float rCol = h21(vec2(cell.x * 2.1 + faceId, seed * 0.37));
-    float r = typ < 0.5 ? mix(rWin, mix(rFloor, rBay, 0.55), 0.85) : mix(rWin, rCol, 0.35);
+    float rUnit = h21(vec2(unit * 1.7 + faceId * 13.0, cell.y + seed * 3.3));
+    float r = typ < 0.5 ? mix(rFloor, rBay, 0.22) : mix(rWin, rUnit, 0.8);
     // fewer lights high up in homes (it is 3 a.m. somewhere in this film), offices stay lit
     float lit = step(r, litF);
     float k = h21(cell * 1.7 + seed);
-    vec3 wc = typ < 0.5 ? (k < 0.75 ? vec3(0.82, 0.88, 1.0) : vec3(1.0, 0.78, 0.52)) : (k < 0.7 ? vec3(1.0, 0.64, 0.34) : k < 0.97 ? vec3(1.0, 0.8, 0.58) : vec3(0.45, 0.6, 1.0) * (0.7 + 0.3 * sin(uT * 9.0 + k * 50.0)));
-    float wint = (typ < 0.5 ? 0.55 + 0.35 * h21(vec2(cell.y, seed)) : 0.3 + 0.8 * h21(cell + 3.3));
+    vec3 wc = typ < 0.5 ? (h11(seed + 6.0) < 0.6 ? vec3(0.95, 0.88, 0.76) : vec3(0.8, 0.87, 1.0)) : (k < 0.7 ? vec3(1.0, 0.64, 0.34) : k < 0.97 ? vec3(1.0, 0.8, 0.58) : vec3(0.45, 0.6, 1.0) * (0.7 + 0.3 * sin(uT * 9.0 + k * 50.0)));
+    float sp = h21(cell * 3.1 + seed * 7.0);
+    float wint = (typ < 0.5 ? (0.10 + 0.55 * sp * sp * sp) * (0.6 + 0.6 * h21(vec2(bay, cell.y))) : (0.12 + 0.8 * pow(h21(vec2(unit, cell.y) + 3.3), 2.0)) * (balcony > 0.5 ? 0.8 : 1.0));
     // inside the window: ceiling lights bright at the top, a blind pulled part way down in some
     float blind = step(0.72, h21(cell * 2.9 + seed)) * (0.35 + 0.4 * h21(cell + 7.7));
     float fy = (f.y - wmin.y) / (wmax.y - wmin.y);
@@ -227,8 +233,10 @@ void main(){
     vec3 glass = mix(vec3(0.003), skyCol(Rf), smoothstep(-0.06, 0.04, Rf.y)) * (typ < 0.5 ? 0.12 + 0.8 * fres : 0.05 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
     vec3 wall = skin * (0.85 + 0.3 * vnoise(vec2(hcoord, vW.y) * 0.2));
     if (typ < 0.5) wall = mix(wall, glass * 0.8, 0.55);
-    // spandrel band between floors on the towers, darker
+    // spandrel band between floors on the towers, darker; thin mullions catch a little light
     if (typ < 0.5) wall *= 0.7 + 0.3 * step(0.5, f.y);
+    // housing: the balcony slab edge at each floor line catches the street light
+    if (balcony > 0.5) wall += streetGlow * 0.012 * on * smoothstep(0.1, 0.0, f.y) * (1.0 - aaY);
     vec3 winCol = mix(glass, wc * wint * inner * on, lit);
     vec3 pattern = mix(wall, winCol, win);
     float area = (wmax.x - wmin.x) * (wmax.y - wmin.y);
@@ -248,7 +256,7 @@ void main(){
     // LED outlines: corners (or ribs), the roof line, and on some towers a band every few floors
     if (contour > 0.5) {
       float L = lineAA(edgeD, 0.35) + lineAA(top - vW.y, 0.5);
-      if (h11(seed + 13.0) < 0.35) L += 0.7 * lineAA(abs(mod(vW.y - 1.5 + 2.0 * fh, 4.0 * fh) - 2.0 * fh), 0.3) * step(8.0, hRel);
+      if (h11(seed + 13.0) < 0.0) L += 0.7 * lineAA(abs(mod(vW.y - 1.5 + 2.0 * fh, 4.0 * fh) - 2.0 * fh), 0.3) * step(8.0, hRel);
       col = mix(col, ledC * ledI, clamp(L, 0.0, 1.0));
     }
     // a lit crown on some of the tallest
@@ -275,7 +283,7 @@ float pools(float along, float across){
   // lamps every 32 m on both sides of a street, 10 m off its centre line
   float a = along - floor(along / 32.0 + 0.5) * 32.0;
   float d1 = across - 9.0; float d2 = across + 9.0;
-  return exp(-(a * a + d1 * d1) / 70.0) + exp(-(a * a + d2 * d2) / 70.0);
+  return 0.75 * (exp(-(a * a / 150.0 + d1 * d1 / 45.0)) + exp(-(a * a / 150.0 + d2 * d2 / 45.0))) + 0.3 * exp(-across * across / 140.0);
 }
 // glow around the lines of a grid of pitch q (half-width w metres), averaged out once the lines get thinner than a pixel
 float lineGlow(vec2 p, float q, float w){
@@ -455,7 +463,36 @@ export const cityScene = (): SceneMod => {
     const core = Math.max(Math.exp(-r / 520), 0.55 * Math.exp(-r2 / 380));
     return core;
   };
+  const WARE_XZ = Array.from({ length: 14 }, (_, k) => {
+    const a = (k / 14) * Math.PI * 2 + 0.3;
+    const rr = 1700 + (k % 3) * 260;
+    return [Math.cos(a) * rr, Math.sin(a) * rr];
+  });
+  const inYard = (x: number, z: number) => WARE_XZ.some(([wx, wz]) => Math.hypot(x - wx, z - wz) < 240);
   const rnd2 = mulberry(4242); // suburbs, setbacks and roof clutter draw from their own stream so the core stays as cut
+  // a residential estate (小区): rows of identical point towers, or now and then a low commercial block
+  const estate = (cx: number, cz: number, lot: number, r: number, R: () => number) => {
+    const k = R();
+    if (inYard(cx, cz)) return;
+    const far = sstep(1200, 3800, r); // 0 near the core .. 1 out in the suburbs
+    if (k < 0.18) {
+      blds.push({ x: cx, z: cz, w: lot * (0.75 + 0.2 * R()), d: lot * (0.55 + 0.35 * R()), h: 10 + R() * 14, type: 1, seed: R() * 100 });
+      return;
+    }
+    const hh = lerp(70 + R() * 40, 30 + R() * 30, far);
+    const nx = 2;
+    const nz = R() < 0.55 ? 3 : 2;
+    const tw = Math.min(24 + R() * 6, lot / nx - 12);
+    const td = Math.min(15 + R() * 4, lot / nz - 9);
+    const sd = R() * 100;
+    for (let a = 0; a < nx; a++)
+      for (let b = 0; b < nz; b++) {
+        if (R() < 0.08) continue;
+        const x = cx - lot / 2 + (lot / nx) * (a + 0.5);
+        const z = cz - lot / 2 + (lot / nz) * (b + 0.5);
+        blds.push({ x, z, w: tw, d: td, h: Math.round((hh * (0.9 + 0.2 * R())) / 2.95) * 2.95, type: 1, seed: sd + a * 1.3 + b * 2.9 });
+      }
+  };
   for (let i = -N; i <= N; i++)
     for (let j = -N; j <= N; j++) {
       const cx = i * P;
@@ -474,14 +511,7 @@ export const cityScene = (): SceneMod => {
           blds.push({ x: cx, z: cz, w, d: w * (0.8 + 0.4 * rnd2()), h: 35 + rnd2() * 45, type: 1, seed: rnd2() * 100 });
           continue;
         }
-        const sub = rnd2() < 0.6 ? 3 : 2;
-        const q = lot / sub;
-        for (let a = 0; a < sub; a++)
-          for (let b = 0; b < sub; b++) {
-            if (rnd2() < 0.15) continue;
-            const h = 6 + rnd2() * (r < CORE + 700 ? 26 : 16);
-            blds.push({ x: cx - lot / 2 + q * (a + 0.5), z: cz - lot / 2 + q * (b + 0.5), w: q * (0.6 + 0.3 * rnd2()), d: q * (0.6 + 0.3 * rnd2()), h, type: 1, seed: rnd2() * 100 });
-          }
+        estate(cx, cz, lot, r, rnd2);
         continue;
       }
       if (Math.abs(r - RING_R) < 70) continue; // the ring highway corridor
@@ -519,21 +549,12 @@ export const cityScene = (): SceneMod => {
           // podium
           blds.push({ x: cx, z: cz, w: lot * 0.95, d: lot * 0.95, h: 14 + rnd() * 12, type: 1, seed: rnd() * 100 });
         }
-      } else {
-        const sub = rnd() < 0.5 ? 2 : 1;
-        const q = lot / sub;
-        for (let a = 0; a < sub; a++)
-          for (let b = 0; b < sub; b++) {
-            if (rnd() < 0.08) continue;
-            const base = 10 + core * 140 + 18 * sstep(2800, 1300, r);
-            const h = base * (0.45 + rnd() * 0.9) + (rnd() < 0.06 ? 40 : 0);
-            const w = q * (0.7 + 0.25 * rnd());
-            const d = q * (0.7 + 0.25 * rnd());
-            const x = cx - lot / 2 + q * (a + 0.5);
-            const z = cz - lot / 2 + q * (b + 0.5);
-            blds.push({ x, z, w, d, h, type: core > 0.3 && rnd() < 0.5 ? 0 : 1, seed: rnd() * 100 });
-          }
-      }
+      } else if (core > 0.3 && rnd() < 0.5) {
+        // mid-rise offices around the core
+        const h = 40 + core * 120 * (0.5 + rnd());
+        blds.push({ x: cx, z: cz, w: lot * (0.55 + 0.3 * rnd()), d: lot * (0.5 + 0.3 * rnd()), h, type: 0, seed: rnd() * 100 });
+        blds.push({ x: cx, z: cz, w: lot * 0.95, d: lot * 0.95, h: 12 + rnd() * 10, type: 1, seed: rnd() * 100 });
+      } else estate(cx, cz, lot, r, rnd);
     }
   // data centre: long low halls
   for (let k = 0; k < 5; k++) blds.push({ x: DC.x - 160 + k * 80, z: DC.z, w: 52, d: 190, h: 16, type: 2, seed: k * 7.7 });
@@ -550,7 +571,7 @@ export const cityScene = (): SceneMod => {
 
   const bldU = {
     uCam: { value: new THREE.Vector3() }, uFogD: { value: 0.0003 }, uFog: { value: new THREE.Color() }, uT: { value: 0 },
-    uOffR: { value: -1 }, uOnR: { value: -2 }, uBlink: { value: 1 }, uDusk: { value: 0 }, uGlow: { value: 1 },
+    uOffR: { value: -1 }, uOnR: { value: -2 }, uBlink: { value: 1 }, uDusk: { value: 0 }, uGlow: { value: 1 }, uSun: { value: new THREE.Vector2(-0.94, 0.33) },
   };
   const bldMat = new THREE.ShaderMaterial({ vertexShader: BLD_VERT, fragmentShader: BLD_FRAG, uniforms: bldU });
   const m4 = new THREE.Matrix4();
@@ -561,7 +582,7 @@ export const cityScene = (): SceneMod => {
     list.forEach((b, i) => {
       m4.compose(new THREE.Vector3(b.x, b.y ?? 0, b.z), new THREE.Quaternion(), new THREE.Vector3(b.w, b.h, b.d));
       inst.setMatrixAt(i, m4);
-      const lit = b.h > 240 ? 0.5 + 0.2 * hash1(b.seed) : b.type === 0 ? 0.1 + 0.28 * hash1(b.seed) : 0.12 + 0.3 * hash1(b.seed + 3);
+      const lit = b.h > 240 ? 0.3 + 0.15 * hash1(b.seed) : b.type === 0 ? 0.1 + 0.28 * hash1(b.seed) : 0.12 + 0.3 * hash1(b.seed + 3);
       info.set([b.seed, b.type, lit, round ? 1 : 0], i * 4);
     });
     box.setAttribute("aInfo", new THREE.InstancedBufferAttribute(info, 4));
@@ -572,12 +593,68 @@ export const cityScene = (): SceneMod => {
   addInstances(blds.filter((b) => b.round), true);
 
   // ground
-  const gndU = { uCam: bldU.uCam, uFogD: bldU.uFogD, uFog: bldU.uFog, uOffR: bldU.uOffR, uOnR: bldU.uOnR, uBlink: bldU.uBlink, uDusk: bldU.uDusk, uGlow: bldU.uGlow };
+  const gndU = { uCam: bldU.uCam, uFogD: bldU.uFogD, uFog: bldU.uFog, uOffR: bldU.uOffR, uOnR: bldU.uOnR, uBlink: bldU.uBlink, uDusk: bldU.uDusk, uGlow: bldU.uGlow, uSun: bldU.uSun };
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(2 * CARPET + 6000, 2 * CARPET + 6000, 1, 1).rotateX(-Math.PI / 2), new THREE.ShaderMaterial({ vertexShader: GND_VERT, fragmentShader: GND_FRAG, uniforms: gndU }));
   scene.add(ground);
 
+  // street trees: dark canopies lit from below by the street lamps (the look of a Chinese street from above at night)
+  {
+    const TREE_VERT = /* glsl */ `varying vec3 vW; varying vec3 vN;
+      void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix * instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }`;
+    const TREE_FRAG = /* glsl */ `uniform vec3 uCam; uniform float uFogD; uniform vec3 uFog;
+      varying vec3 vW; varying vec3 vN;
+      ${NOISE}
+      ${MASK}
+      ${SKY_GLSL}
+      void main(){
+        vec3 n = normalize(vN);
+        float on = lightsOn(vW.xz);
+        vec3 lampC = mix(vec3(1.0, 0.5, 0.16), vec3(0.78, 0.74, 0.66), smoothstep(0.58, 0.72, fbm(vW.xz * 0.0011 + 7.3)));
+        float leaf = 0.6 + 0.8 * vnoise(vW.xz * 0.9 + vW.y * 1.3);
+        vec3 col = vec3(0.004, 0.007, 0.005) * leaf;
+        col += lampC * on * 0.012 * leaf * max(n.y, 0.0) * smoothstep(0.45, 0.8, vnoise(vW.xz * 0.35));
+        // lamp light from below and from the street side, brightest on the undersides
+        col += lampC * on * 0.05 * leaf * (0.4 + 0.6 * max(-n.y, 0.0) + 0.3 * (1.0 - abs(n.y))) * exp(-max(vW.y - 3.0, 0.0) / 5.0);
+        col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.05 * max(n.y, 0.0);
+        col = fogTo(col, vW, uCam, uFogD);
+        gl_FragColor = vec4(col, 1.0);
+      }`;
+    const pos: number[] = [];
+    const TR = 2300;
+    for (let k = -N; k < N; k++) {
+      const line = (k + 0.5) * P;
+      if (Math.abs(line) > TR) continue;
+      const len = Math.sqrt(TR * TR - line * line);
+      for (const side of [-13, 13])
+        for (let s = -len; s < len; s += 9) {
+          const along = ((s % P) + P) % P;
+          if (Math.abs(along - P / 2) < 18) continue; // keep the intersections clear
+          for (const axis of [0, 1]) {
+            const x = axis === 0 ? s : line + side;
+            const z = axis === 0 ? line + side : s;
+            if (Math.abs(Math.hypot(x, z) - RING_R) < 30) continue;
+            if (inRiver(x, z, 8) || corridorJS(x, z)) continue;
+            if (Math.hypot(x - DC.x, z - DC.z) < 330) continue;
+            if (hash2(x * 0.37, z * 0.53) < 0.3) continue;
+            pos.push(x + (hash2(x, z) - 0.5) * 4, z + (hash2(z, x) - 0.5) * 3, 0.55 + 0.75 * Math.pow(hash2(x * 1.7, z * 0.3), 1.5));
+          }
+        }
+    }
+    const n = pos.length / 3;
+    const geo = new THREE.IcosahedronGeometry(1, 1);
+    const trees = new THREE.InstancedMesh(geo, new THREE.ShaderMaterial({ vertexShader: TREE_VERT, fragmentShader: TREE_FRAG, uniforms: bldU }), n);
+    const tm = new THREE.Matrix4();
+    for (let i = 0; i < n; i++) {
+      const sc = pos[i * 3 + 2];
+      tm.compose(new THREE.Vector3(pos[i * 3], 5.5 * sc, pos[i * 3 + 1]), new THREE.Quaternion().setFromEuler(new THREE.Euler(i * 0.37, i * 1.7, i * 0.61)), new THREE.Vector3(3.8 * sc, 2.8 * sc, 3.3 * sc));
+      trees.setMatrixAt(i, tm);
+    }
+    trees.frustumCulled = false;
+    scene.add(trees);
+  }
+
   // sky
-  const skyU = { uOffR: bldU.uOffR, uOnR: bldU.uOnR, uBlink: bldU.uBlink, uDusk: bldU.uDusk, uGlow: bldU.uGlow };
+  const skyU = { uOffR: bldU.uOffR, uOnR: bldU.uOnR, uBlink: bldU.uBlink, uDusk: bldU.uDusk, uGlow: bldU.uGlow, uSun: bldU.uSun };
   const sky = new THREE.Mesh(new THREE.SphereGeometry(30000, 48, 24), new THREE.ShaderMaterial({ vertexShader: SKY_VERT, fragmentShader: SKY_FRAG, uniforms: skyU, side: THREE.BackSide, depthWrite: false }));
   scene.add(sky);
 
@@ -637,16 +714,16 @@ export const cityScene = (): SceneMod => {
   for (let lane = 0; lane < 8; lane++) {
     const dir = lane < 4 ? 1 : -1;
     const n = Math.round((2 * Math.PI * RING_R) / (13 + (lane % 4) * 2));
-    for (let k = 0; k < n; k++) HW.push({ lane, dir, speed: 24 + (lane % 4) * 3 + rnd() * 3, phase: (k / n) * Math.PI * 2 + rnd() * 0.004, col: rnd() });
+    for (let k = 0; k < n; k++) HW.push({ lane, dir, speed: 22 + (lane % 4) * 3.5, phase: (k / n) * Math.PI * 2 + rnd() * 0.0035, col: rnd() });
   }
   // car: a low body and a glass cabin set back from the nose
   const carGeo = mergeGeos([
     new RoundedBoxGeometry(4.5, 0.75, 1.85, 2, 0.2).translate(0, 0.62, 0),
     new RoundedBoxGeometry(2.3, 0.6, 1.62, 2, 0.22).translate(-0.35, 1.22, 0),
   ]);
-  const carBody = new THREE.InstancedMesh(carGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.55, roughness: 0.32 }), HW.length);
+  const carBody = new THREE.InstancedMesh(carGeo, new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 0.35, roughness: 0.4 }), HW.length);
   {
-    const paints = [0x0d0e10, 0x2a2c30, 0x6d7076, 0x8a8d92, 0x3a0b0a, 0x0e1a2c, 0x5a5d61];
+    const paints = [0x0b0c0e, 0x1d1f22, 0x4a4d52, 0x9a9da2, 0xb8bbbf, 0x2a0807, 0x0c1626, 0x3a3d41];
     const c = new THREE.Color();
     HW.forEach((h, k) => carBody.setColorAt(k, c.setHex(paints[Math.floor(h.col * paints.length) % paints.length])));
   }
@@ -684,12 +761,12 @@ export const cityScene = (): SceneMod => {
     gl_FragColor = vec4(mix(uFog, c, exp(-dist * uFogD)), 1.0);
   }`;
   const BB_VERT = /* glsl */ `varying vec2 vUv; varying vec3 vW; void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }`;
-  const boards: { mesh: THREE.Mesh; u: Record<string, THREE.IUniform>; x: number; z: number; set: "dusk" | "night" }[] = [];
+  const boards: { mesh: THREE.Mesh; u: Record<string, THREE.IUniform>; x: number; z: number; set: "dusk" | "night"; parts: THREE.Object3D[] }[] = [];
   // rooftop LED screens, each turned to face the camera of the shot it belongs to
   const BB_CAM = new THREE.Vector3(-380, 120, 950);
   const BB_TGT = new THREE.Vector3(-60, 90, 300);
-  const DUSK_CAM = new THREE.Vector3(-720, 175, 820);
-  const DUSK_TGT = new THREE.Vector3(-40, 140, 40);
+  const DUSK_CAM = new THREE.Vector3(-2600, 118, 2400);
+  const DUSK_TGT = new THREE.Vector3(-40, 150, 40);
   const pickBoards = (cam: THREE.Vector3, tgt: THREE.Vector3, n: number, dmin: number, dmax: number, hmin: number, hmax: number) => {
     const fwd = tgt.clone().sub(cam).setY(0).normalize();
     const out: Bld[] = [];
@@ -741,7 +818,7 @@ export const cityScene = (): SceneMod => {
     wash.rotation.y = mesh.rotation.y;
     wash.translateZ(10);
     scene.add(wash);
-    boards.push({ mesh, u, x: b.x, z: b.z, set });
+    boards.push({ mesh, u, x: b.x, z: b.z, set, parts: [mesh, frame, truss, wash] });
     boarded.add(b);
   };
   const trussMat = new THREE.MeshStandardMaterial({ color: 0x1a1c20, roughness: 0.7, metalness: 0.4 });
@@ -756,7 +833,46 @@ export const cityScene = (): SceneMod => {
     });
   const boarded = new Set<Bld>();
   pickBoards(BB_CAM, BB_TGT, 7, 170, 900, 25, 110).forEach((b, i) => addBoard(b, BB_CAM, "night", i));
-  pickBoards(DUSK_CAM, DUSK_TGT, 3, 300, 900, 40, 150).forEach((b, i) => addBoard(b, DUSK_CAM, "dusk", i + 20));
+  // facade media screens on two downtown towers, the face turned to the dusk camera: the city's own advert for 安
+  const addFacade = (b: Bld, cam: THREE.Vector3) => {
+    const vx = cam.x - b.x;
+    const vz = cam.z - b.z;
+    const alongX = Math.abs(vx) > Math.abs(vz);
+    const fw = (alongX ? b.d : b.w) * 0.96;
+    const fh = fw * 0.5;
+    const u = { tA: { value: adTex }, tB: { value: homeTex }, uFlip: { value: 0 }, uOn: { value: 1 }, uFogD: bldU.uFogD, uFog: bldU.uFog, uCam: bldU.uCam };
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(fw, fh), new THREE.ShaderMaterial({ vertexShader: BB_VERT, fragmentShader: BB_FRAG, uniforms: u }));
+    const y = Math.min(b.h * 0.6, b.h - fh * 0.6 - 6);
+    if (alongX) {
+      mesh.position.set(b.x + Math.sign(vx) * (b.w / 2 + 0.6), y, b.z);
+      mesh.rotation.y = Math.sign(vx) * Math.PI / 2;
+    } else {
+      mesh.position.set(b.x, y, b.z + Math.sign(vz) * (b.d / 2 + 0.6));
+      mesh.rotation.y = vz > 0 ? 0 : Math.PI;
+    }
+    scene.add(mesh);
+    boards.push({ mesh, u, x: b.x, z: b.z, set: "dusk", parts: [mesh] });
+  };
+  {
+    const cand = blds
+      .filter((b) => b.type === 0 && !b.crown && !b.part && !b.round && b.h > 110 && b.h < 320 && Math.hypot(b.x - DUSK_TGT.x, b.z - DUSK_TGT.z) < 650)
+      .filter((b) => {
+        // nothing taller standing between it and the camera
+        const d = new THREE.Vector3(DUSK_CAM.x - b.x, 0, DUSK_CAM.z - b.z);
+        const L = d.length();
+        d.normalize();
+        return !blds.some((o) => {
+          if (o === b || o.h < b.h * 0.6) return false;
+          const t = (o.x - b.x) * d.x + (o.z - b.z) * d.z;
+          if (t < 20 || t > Math.min(L, 900)) return false;
+          return Math.abs((o.x - b.x) * d.z - (o.z - b.z) * d.x) < Math.max(o.w, o.d) / 2 + 25;
+        });
+      })
+      .sort((a, b) => b.h - a.h);
+    const picked: Bld[] = [];
+    for (const b of cand) if (picked.length < 2 && picked.every((o) => Math.hypot(o.x - b.x, o.z - b.z) > 160)) picked.push(b);
+    picked.forEach((b) => addFacade(b, DUSK_CAM));
+  }
   void tallest;
 
   // rooftop plant: lift overruns, chillers, water tanks — breaks up the flat box tops against the sky
@@ -1026,7 +1142,7 @@ export const cityScene = (): SceneMod => {
         [13, -13, 0],
       ] as const) {
         const g = !red && (ew === 1 ? ewGreen : !ewGreen);
-        const s = mode === "greenwave" && Math.abs(it.z - AVE_Z) < 1 ? 4.0 : 1.4;
+        const s = mode === "greenwave" && Math.abs(it.z - AVE_Z) < 1 ? 1.6 : 1.4;
         if (g) pts.add(it.x + ox, 6, it.z + oz, 0.15 * on, 3.2 * on, 1.2 * on, s);
         else pts.add(it.x + ox, 6, it.z + oz, 3.6 * on, 0.25 * on, 0.1 * on, s);
       }
@@ -1034,8 +1150,9 @@ export const cityScene = (): SceneMod => {
     // ambulance strobe
     if (mode === "greenwave") {
       const blue = Math.floor(lt * 8) % 2 === 0;
-      pts.add(ambX, 3, AVE_Z - 3, blue ? 0.6 : 9, blue ? 1.2 : 0.6, blue ? 9 : 0.4, 9);
-      pts.add(ambX + 3, 1.2, AVE_Z - 3, 4, 4, 3.5, 3);
+      pts.add(ambX, 3, AVE_Z - 3, blue ? 0.6 : 9, blue ? 1.2 : 0.6, blue ? 9 : 0.4, 2.2);
+      pts.add(ambX + 3, 1.0, AVE_Z - 3.8, 4, 4, 3.5, 0.9);
+      pts.add(ambX + 3, 1.0, AVE_Z - 2.2, 4, 4, 3.5, 0.9);
     }
     // aviation lights, in sync (as they really are)
     const avOn = (Math.floor((lt + 100) * 1.0) % 2 === 0 ? 1 : 0.08) * st.blink;
@@ -1068,8 +1185,8 @@ export const cityScene = (): SceneMod => {
       carBody.setMatrixAt(k, m4);
       if (dx * dx + dz * dz > far2) continue;
       const b = st.hwBlink;
-      pts.add(x + tx * 2.3 + tz * 0.7, RING_Y + 0.7, z + tz * 2.3 - tx * 0.7, 3.2 * b, 3.0 * b, 2.6 * b, 0.7);
-      pts.add(x + tx * 2.3 - tz * 0.7, RING_Y + 0.7, z + tz * 2.3 + tx * 0.7, 3.2 * b, 3.0 * b, 2.6 * b, 0.7);
+      pts.add(x + tx * 2.3 + tz * 0.7, RING_Y + 0.7, z + tz * 2.3 - tx * 0.7, 3.2 * b, 3.0 * b, 2.6 * b, 0.5);
+      pts.add(x + tx * 2.3 - tz * 0.7, RING_Y + 0.7, z + tz * 2.3 + tx * 0.7, 3.2 * b, 3.0 * b, 2.6 * b, 0.5);
       pts.add(x - tx * 2.3 + tz * 0.7, RING_Y + 0.8, z - tz * 2.3 - tx * 0.7, 2.6 * b, 0.12 * b, 0.05 * b, 0.6);
       pts.add(x - tx * 2.3 - tz * 0.7, RING_Y + 0.8, z - tz * 2.3 + tx * 0.7, 2.6 * b, 0.12 * b, 0.05 * b, 0.6);
     }
@@ -1164,23 +1281,28 @@ export const cityScene = (): SceneMod => {
     st.hwBlink = 1;
     st.flip = boards.map(() => 0);
     let boardOn = 1;
+    bldU.uSun.value.set(-0.94, 0.33);
     let look: Partial<Look> = { bloom: 0.6, bloomThreshold: 0.85, bloomRadius: 0.6, streak: 0.35, lift: [0.0, 0.004, 0.01], gain: [1.0, 1.0, 1.04], sat: 1.0, grain: 0.06, vignette: 0.55, exposure: 1.0 };
     const pos = new THREE.Vector3();
     const tgt = new THREE.Vector3();
     let fov = 40;
     if (mode === "dusk") {
-      st.dusk = 1;
+      st.dusk = 0.75;
       const k = ease(clamp(lt / 8.6));
-      pos.set(lerp(-1350, -720, k), lerp(240, 175, k), lerp(1550, 820, k));
-      tgt.set(lerp(-120, -40, k), lerp(170, 140, k), lerp(120, 40, k));
-      fov = lerp(36, 40, k);
-      look = { ...look, exposure: 1.1, gain: [1.06, 1.0, 0.95], lift: [0.01, 0.008, 0.02] };
+      pos.set(lerp(-2600, -2380, k), lerp(118, 112, k), lerp(2400, 2180, k));
+      tgt.set(lerp(-90, -10, k), lerp(150, 160, k), lerp(60, 20, k));
+      fov = lerp(13, 12, k);
+      // the afterglow sits behind the skyline: towers stand dark against it
+      bldU.uSun.value.set(0.74, 0.67);
+      look = { ...look, exposure: 1.1, gain: [1.06, 1.0, 0.95], lift: [0.006, 0.004, 0.01], dof: 8, focus: pos.distanceTo(tgt), aperture: 0.25 };
     } else if (mode === "greenwave") {
       st.dusk = 0.55;
+      // overhead, almost straight down: the avenue runs across the frame, the lights turn green ahead of the strobe
       const ax = -1100 + 50 * lt;
-      pos.set(ax - 240, 290, AVE_Z + 250);
-      tgt.set(ax + 170, 0, AVE_Z - 20);
-      fov = 36;
+      pos.set(-120, 26, AVE_Z + 3);
+      tgt.set(-1000, 5, AVE_Z - 1);
+      fov = 6.5;
+      look = { ...look, dof: 10, focus: Math.max(200, -120 - ax), aperture: 0.35, streak: 0.5 };
     } else if (mode === "grid") {
       st.dusk = 1;
       const p0 = PYL[3];
@@ -1190,13 +1312,13 @@ export const cityScene = (): SceneMod => {
       look = { ...look, exposure: 1.15, gain: [1.06, 1.0, 0.94] };
     } else if (mode === "highway") {
       st.dusk = 0.85;
-      const a = 2.55 + lt * 0.004;
-      const r = RING_R + 95;
-      pos.set(Math.cos(a) * r, 46, Math.sin(a) * r);
-      const a2 = a - 0.09;
-      tgt.set(Math.cos(a2) * RING_R, RING_Y + 2, Math.sin(a2) * RING_R);
-      fov = 24;
-      look = { ...look, gain: [1.05, 1.0, 0.96] };
+      const a = 2.55 + lt * 0.003;
+      const r = RING_R + 6;
+      pos.set(Math.cos(a) * r, RING_Y + 15, Math.sin(a) * r);
+      const a2 = a - 0.34;
+      tgt.set(Math.cos(a2) * RING_R, RING_Y + 1, Math.sin(a2) * RING_R);
+      fov = 13;
+      look = { ...look, gain: [1.05, 1.0, 0.96], dof: 12, focus: pos.distanceTo(tgt), aperture: 0.5 };
     } else if (mode === "masts") {
       st.dusk = 0.75;
       const a = 0.6 + lt * 0.07;
@@ -1253,7 +1375,7 @@ export const cityScene = (): SceneMod => {
       st.allRed = 1;
       // from the roof of one warehouse: its drones lift off around the camera and stream away to the dome
       const k = ease(clamp(lt / 9.5));
-      pos.set(DRONE_W.x - 75 + k * 6, 26 + k * 30, DRONE_W.z + 70 - k * 4);
+      pos.set(DRONE_W.x - 150 + k * 10, 45 + k * 40, DRONE_W.z + 160 - k * 6);
       tgt.set(lerp(DRONE_W.x + 30, DC.x, k), lerp(60, 180, k), lerp(DRONE_W.z - 120, DC.z, k));
       fov = lerp(44, 34, k);
       look.streak = 0.4;
@@ -1280,7 +1402,8 @@ export const cityScene = (): SceneMod => {
     bldU.uOnR.value = st.onR;
     bldU.uBlink.value = st.blink;
     bldU.uDusk.value = st.dusk;
-    bldU.uFogD.value = lerp(0.00016, 0.00013, st.dusk);
+    bldU.uFogD.value = mode === "dusk" ? 0.00008 : lerp(0.00016, 0.00013, st.dusk);
+    for (const b of boards) b.parts.forEach((o) => (o.visible = !(mode === "dusk" && b.set === "night")));
     bldU.uFog.value.setRGB(lerp(0.013, 0.045, st.dusk), lerp(0.011, 0.04, st.dusk), lerp(0.013, 0.06, st.dusk));
     skyU.uGlow.value = st.offR > 0 && st.onR < st.offR ? lerp(1, 0.15, clamp(st.offR / 6000) - clamp(st.onR / 6000)) : 1;
     hemi.intensity = lerp(0.35, 0.9, st.dusk);

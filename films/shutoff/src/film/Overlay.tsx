@@ -4,7 +4,7 @@
 import React from "react";
 import { Img, staticFile } from "remotion";
 import { SANS, SERIF } from "../engine/fonts";
-import { clamp, easeOut, spring } from "../engine/util";
+import { clamp, ease, easeOut, lerp, spring } from "../engine/util";
 import { CARDS, CREDITS, Card } from "./text";
 
 const BAR = 138; // (1080 - 1920/2.39) / 2
@@ -48,16 +48,30 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
       </div>
     );
   }
-  if (c.kind === "pre") {
-    // a festival-style leader: what this is, who made it, then black before the cold open
-    const a = clamp((c.t1 - t) / 0.6);
-    const l = (d: number, dur = 0.7) => clamp((t - c.t0 - d) / dur);
+  if (c.kind === "studio") {
+    // the studio card, like the logo before a feature
+    const a = fadeIO(t, c, 0.6, 0.45);
     return (
       <div style={{ ...center, background: "#000", opacity: a }}>
-        <div style={{ fontFamily: SANS, fontSize: 40, fontWeight: 400, letterSpacing: "0.32em", paddingLeft: "0.32em", color: "rgba(255,255,255,0.62)", opacity: l(0.2) }}>{c.lines[0]}</div>
-        <div style={{ width: 120 * easeOut(l(0.9, 1.0)), height: 2, background: "rgba(255,255,255,0.35)", margin: "40px 0" }} />
-        <div style={{ fontFamily: SERIF, fontSize: 72, fontWeight: 600, letterSpacing: "0.12em", paddingLeft: "0.12em", opacity: l(1.3), transform: `translateY(${(1 - easeOut(l(1.3, 1.4))) * 12}px)` }}>{c.lines[1]}</div>
-        <div style={{ fontFamily: SANS, fontSize: 34, fontWeight: 500, letterSpacing: "0.4em", paddingLeft: "0.4em", marginTop: 46, color: "rgba(255,255,255,0.55)", opacity: l(2.6) }}>{c.lines[2]}</div>
+        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+          <Img src={staticFile("brand/mark-disc.png")} style={{ width: 104, height: 104 }} />
+          <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 84, letterSpacing: "0.12em" }}>{c.lines[0]}</div>
+        </div>
+        <div style={{ fontFamily: SANS, fontSize: 38, letterSpacing: "0.6em", paddingLeft: "0.6em", marginTop: 30, color: "rgba(255,255,255,0.7)", opacity: clamp((t - c.t0 - 0.5) / 0.5) }}>{c.lines[1]}</div>
+      </div>
+    );
+  }
+  if (c.kind === "pre") {
+    // what this is, and how it was made: written as code by an AI, every frame computed
+    const a = clamp((c.t1 - t) / 0.4);
+    const l = (d: number, dur = 0.6) => clamp((t - c.t0 - d) / dur);
+    return (
+      <div style={{ ...center, background: "#000", opacity: a }}>
+        <div style={{ fontFamily: SANS, fontSize: 38, fontWeight: 400, letterSpacing: "0.32em", paddingLeft: "0.32em", color: "rgba(255,255,255,0.62)", opacity: l(0.1) }}>{c.lines[0]}</div>
+        <div style={{ width: 120 * easeOut(l(0.5, 0.9)), height: 2, background: "rgba(255,255,255,0.35)", margin: "36px 0 40px" }} />
+        <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.1em", paddingLeft: "0.1em", opacity: l(0.6), transform: `translateY(${(1 - easeOut(l(0.6, 1.2))) * 12}px)` }}>{c.lines[1]}</div>
+        <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.1em", paddingLeft: "0.1em", marginTop: 18, opacity: l(1.25), transform: `translateY(${(1 - easeOut(l(1.25, 1.2))) * 12}px)` }}>{c.lines[2]}</div>
+        <div style={{ fontFamily: SANS, fontSize: 32, fontWeight: 500, letterSpacing: "0.3em", paddingLeft: "0.3em", marginTop: 48, color: "rgba(255,255,255,0.55)", opacity: l(2.0) }}>{c.lines[3]}</div>
       </div>
     );
   }
@@ -72,18 +86,30 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
     );
   }
   if (c.kind === "credits") {
-    // a slow roll, bottom to top, like the end of a film
+    // a slow roll, bottom to top, that comes to rest on the studio block in the middle of the frame
     const a = clamp((t - c.t0) / 0.8) * clamp((c.t1 - t) / 0.8);
     const rowH = 80;
-    const total = CREDITS.length * rowH;
-    const k = clamp((t - c.t0 - 0.6) / (c.t1 - c.t0 - 1.6));
-    const y = 1080 - BAR + 20 - k * (total + (1080 - 2 * BAR) * 0.5 + 40);
+    const blockH = 300;
+    const last = (CREDITS.length - 1) * rowH; // top of the studio block inside the list
+    const k = ease(clamp((t - c.t0 - 0.4) / (c.t1 - c.t0 - 3.4)));
+    const y0 = 1080 - BAR + 10;
+    const y1 = 540 - blockH / 2 - last;
+    const y = lerp(y0, y1, k);
     return (
       <div style={{ position: "absolute", inset: 0, background: "#000", opacity: a, overflow: "hidden" }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: 0, transform: `translateY(${y}px)` }}>
           {CREDITS.map(([role, name], i) =>
-            role === "*" ? (
-              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 600, fontSize: i === 0 ? 64 : 38, letterSpacing: i === 0 ? "0.4em" : "0.12em", color: i === 0 ? "#fff" : "rgba(255,255,255,0.7)" }}>{name}</div>
+            role === "#" ? (
+              <div key={i} style={{ height: blockH, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ fontFamily: SANS, fontSize: 34, letterSpacing: "0.6em", paddingLeft: "0.6em", color: "rgba(255,255,255,0.6)", marginBottom: 30 }}>出品</div>
+                <div style={{ display: "flex", alignItems: "center", gap: 26 }}>
+                  <Img src={staticFile("brand/mark-disc.png")} style={{ width: 96, height: 96 }} />
+                  <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 80, letterSpacing: "0.12em", color: "#fff" }}>{name}</div>
+                </div>
+                <div style={{ fontFamily: SANS, fontSize: 34, letterSpacing: "0.2em", marginTop: 28, color: "rgba(255,255,255,0.7)" }}>MakerJackie</div>
+              </div>
+            ) : role === "*" ? (
+              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 600, fontSize: i === 0 ? 64 : 38, letterSpacing: i === 0 ? "0.4em" : "0.12em", color: i === 0 ? "#fff" : "rgba(255,255,255,0.75)" }}>{name}</div>
             ) : (
               <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", fontFamily: SANS, fontSize: 38 }}>
                 <div style={{ width: 920, paddingRight: 40, textAlign: "right", color: "rgba(255,255,255,0.5)", letterSpacing: "0.12em", boxSizing: "border-box" }}>{role}</div>
@@ -176,7 +202,7 @@ export const Overlay: React.FC<{ t: number }> = ({ t }) => {
       ))}
       <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: BAR, background: "#000" }} />
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: BAR, background: "#000" }} />
-      {t < end.t0 && (
+      {t < end.t0 && t > -7.3 && (
         <div style={{ position: "absolute", left: 44, top: 40, display: "flex", alignItems: "center", gap: 14, opacity: 0.72 }}>
           <Img src={staticFile("brand/mark-disc.png")} style={{ width: 52, height: 52 }} />
           <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 32, letterSpacing: "0.1em", color: "#fff" }}>世界的形状</div>
