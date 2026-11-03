@@ -129,7 +129,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement) => {
     const ly = yv + (k > 0 ? 46 + (k - 1) * 72 : -40 + (k + 1) * 72);
     const name = c.t === "1960" ? "1960" : c.t;
     txt(name, lx, ly, l.lab, WHITE, { align: "center", font: c.t === "1960" ? SANS : SERIF });
-    txt(c.p, lx, ly + l.lab + 6, l.lab, RED, { align: "center", font: SANS });
+    txt(c.p ?? "", lx, ly + l.lab + 6, l.lab, RED, { align: "center", font: SANS });
   }
 
   // start and end
