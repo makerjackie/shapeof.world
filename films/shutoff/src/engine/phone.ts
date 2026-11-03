@@ -5,7 +5,8 @@ import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeom
 import { Ctx, Look, SceneMod } from "./engine";
 import { NOISE, WINDOW } from "./glsl";
 import { SANS, SERIF } from "./fonts";
-import { PH, PW, drawCall, drawChat, drawLock, font, rr } from "./screens";
+import { staticFile } from "remotion";
+import { PH, PW, VIDEO_THUMB, drawCall, drawChat, drawLock, font, rr, videoThumbRect } from "./screens";
 import { clamp, drift, ease, keys, lerp, sstep } from "./util";
 import { PHONE_TEXT } from "../film/text";
 
@@ -92,6 +93,45 @@ void main(){
   float fres = 0.04 + 0.6 * pow(1.0 - clamp(-V.y, 0.0, 1.0), 5.0);
   gl_FragColor = vec4(img + refl * fres * 0.6, 1.0);
 }`;
+
+// The reveal: the first set-up of the chat shot looks down on the whole phone while the frozen last frame of 安's film
+// shrinks into the video message on its screen. Overlay.tsx draws the shrinking frame with the same camera, so this
+// pose is a pure function of time.
+const PHONE_ROT = 0.06;
+export const revealPose = (lt: number, gt: number) => {
+  const k = ease(clamp(lt / 5.0));
+  const d = lerp(0.44, 0.31, k);
+  const el = 1.36;
+  const tgt = new THREE.Vector3(0, PHONE_T, lerp(-0.008, 0.006, k));
+  const pos = new THREE.Vector3(tgt.x, tgt.y + d * Math.sin(el), tgt.z + d * Math.cos(el));
+  pos.x += drift(gt, 1, 0.0018);
+  pos.y += drift(gt, 2, 0.0012);
+  return { pos, tgt, fov: 30 };
+};
+// screen-space corners (1920×1080 px; tl, tr, br, bl) of the video thumbnail on the phone at this moment
+export const revealQuad = (lt: number, gt: number): [number, number][] => {
+  const { pos, tgt, fov } = revealPose(lt, gt);
+  const cam = new THREE.PerspectiveCamera(fov, 1920 / 1080, 0.01, 20);
+  cam.position.copy(pos);
+  cam.up.set(0, 1, 0);
+  cam.lookAt(tgt);
+  cam.updateMatrixWorld();
+  cam.updateProjectionMatrix();
+  const r = videoThumbRect();
+  const c = Math.cos(PHONE_ROT);
+  const s = Math.sin(PHONE_ROT);
+  return [
+    [r.x, r.y],
+    [r.x + r.w, r.y],
+    [r.x + r.w, r.y + r.h],
+    [r.x, r.y + r.h],
+  ].map(([px, py]) => {
+    const x = (px / PW - 0.5) * SCR_W;
+    const z = (py / PH - 0.5) * SCR_L;
+    const v = new THREE.Vector3(x * c + z * s, PHONE_T + 0.00005, -x * s + z * c).project(cam);
+    return [((v.x + 1) / 2) * 1920, ((1 - v.y) / 2) * 1080] as [number, number];
+  });
+};
 
 const badgeTexture = () => {
   const cv = document.createElement("canvas");
@@ -188,7 +228,7 @@ export const phoneScene = (): SceneMod => {
   const screen = new THREE.Mesh(new THREE.PlaneGeometry(SCR_W, SCR_L).rotateX(-Math.PI / 2), new THREE.ShaderMaterial({ vertexShader: SCR_VERT, fragmentShader: SCR_FRAG, uniforms: scrU }));
   screen.position.y = PHONE_T + 0.00005;
   phone.add(screen);
-  phone.rotation.y = 0.06;
+  phone.rotation.y = PHONE_ROT;
   scene.add(phone);
 
   // props
@@ -247,8 +287,9 @@ export const phoneScene = (): SceneMod => {
     const P = PHONE_TEXT;
     if (mode === "lock") drawLock(ctx, lt, { time: "03:12", date: "3月14日 星期四", notifs: P.lock, wake: clamp((lt - 1.4) / 0.25), top: 600 });
     else if (mode === "morning") drawLock(ctx, lt, { time: "07:30", date: "3月11日 星期一", notifs: P.morning, mood: "dawn", top: 600 });
+    else if (mode === "morning9") drawLock(ctx, lt, { time: "09:01", date: "3月14日 星期四", notifs: P.morning9, mood: "dawn", top: 600 });
     else if (mode === "call") drawCall(ctx, lt, P.call);
-    else drawChat(ctx, mode === "pullout" ? 40 : lt, P.chat);
+    else drawChat(ctx, mode === "pullout" ? 45 : lt, P.chat);
     tex.needsUpdate = true;
   };
 
@@ -256,7 +297,7 @@ export const phoneScene = (): SceneMod => {
   const update = ({ lt, gt, shot, cam }: Ctx): Partial<Look> => {
     const mode = shot.mode;
     deskU.uT.value = gt;
-    deskU.uDawn.value = mode === "morning" ? 1 : 0;
+    deskU.uDawn.value = mode === "morning" || mode === "morning9" ? 1 : 0;
     draw(mode, lt);
     const bright = mode === "lock" ? clamp((lt - 1.4) / 0.25) : 1;
     scrU.uBright.value = bright * (mode === "pullout" ? lerp(0.85, 0.7, clamp(lt / 3)) : mode === "chat" ? 0.85 : 1);
@@ -296,6 +337,13 @@ export const phoneScene = (): SceneMod => {
       orbit(tgt, lerp(0.17, 0.158, k), 1.0, lerp(-0.38, -0.33, k));
       fov = 30;
       aperture = 0.6;
+    } else if (mode === "morning9") {
+      // the same set-up as that first morning, held longer
+      const k = clamp(lt / 5.8);
+      tgt.set(0, PHONE_T, -0.02);
+      orbit(tgt, lerp(0.172, 0.156, k), 1.0, lerp(-0.38, -0.34, k));
+      fov = 30;
+      aperture = 0.6;
     } else if (mode === "call") {
       const up = ease(clamp((lt - 3.7) / 0.7));
       tgt.set(0, PHONE_T, lerp(-0.006, -0.044, up));
@@ -305,37 +353,45 @@ export const phoneScene = (): SceneMod => {
     } else if (mode === "chat") {
       // five set-ups, hard cuts between them: the draft is typed → the long wait, wide, alone in the dark →
       // closer, the dots come and go → the answer, read from above → the last line, slightly off-axis
-      if (lt < 4.6) {
-        const k = clamp(lt / 4.6);
+      if (lt < 5.0) {
+        // the reveal: high over the whole phone while the film lands in it, then 安 asks if he watched it
+        const p = revealPose(lt, gt);
+        pos.copy(p.pos);
+        tgt.copy(p.tgt);
+        fov = p.fov;
+        aperture = 0.5;
+        chatFocus.set(0, PHONE_T, 0.01);
+      } else if (lt < 9.6) {
+        const k = clamp((lt - 5.0) / 4.6);
         pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
         tgt.set(0, 0, 0.046);
         fov = 30;
         aperture = 1.4;
         chatFocus.set(0, PHONE_T, 0.05);
-      } else if (lt < 9.6) {
-        const k = clamp((lt - 4.6) / 5);
+      } else if (lt < 14.6) {
+        const k = clamp((lt - 9.6) / 5);
         pos.set(lerp(0.33, 0.29, k), lerp(0.21, 0.19, k), lerp(0.36, 0.31, k));
         tgt.set(0.0, 0.0, -0.03);
         fov = 32;
         aperture = 4;
         chatFocus.set(0, PHONE_T, 0);
         exposure = 1.15;
-      } else if (lt < 14.5) {
-        const k = clamp((lt - 9.6) / 4.9);
+      } else if (lt < 19.5) {
+        const k = clamp((lt - 14.6) / 4.9);
         pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
         tgt.set(0, 0, 0.022);
         fov = 30;
         aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
-      } else if (lt < 25) {
-        const k = clamp((lt - 14.5) / 10.5);
+      } else if (lt < 30) {
+        const k = clamp((lt - 19.5) / 10.5);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
       } else {
-        const k = clamp((lt - 25) / 12);
+        const k = clamp((lt - 30) / 12);
         pos.set(lerp(0.011, 0.008, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
         tgt.set(0, 0, lerp(0.022, 0.03, k));
         fov = 30;
@@ -353,8 +409,10 @@ export const phoneScene = (): SceneMod => {
       zoom = push * 1.4;
       exposure = 1 + push * 2.5;
     }
-    pos.x += drift(gt, 1, 0.0018);
-    pos.y += drift(gt, 2, 0.0012);
+    if (!(mode === "chat" && lt < 5.0)) {
+      pos.x += drift(gt, 1, 0.0018);
+      pos.y += drift(gt, 2, 0.0012);
+    }
     cam.fov = fov;
     cam.near = 0.01;
     cam.far = 20;
@@ -372,10 +430,20 @@ export const phoneScene = (): SceneMod => {
     return {
       dof, focus, aperture, exposure, zoomBlur: zoom,
       bloom: 0.45, bloomThreshold: 1.05, bloomRadius: 0.6, streak: 0.12,
-      lift: [0.004, 0.012, 0.022], gain: mode === "morning" ? [0.98, 1.0, 1.04] : [0.96, 1.0, 1.06],
+      lift: [0.004, 0.012, 0.022], gain: mode === "morning" || mode === "morning9" ? [0.98, 1.0, 1.04] : [0.96, 1.0, 1.06],
       sat: 0.92, grain: 0.07, vignette: 0.6,
     };
   };
   void keys;
-  return { scene, ready: Promise.resolve(), update, init };
+  // the thumbnail of 安's film: the frame the picture freezes on (rendered by tools/reveal.sh)
+  const ready = new Promise<void>((res) => {
+    const img = new Image();
+    img.onload = () => {
+      VIDEO_THUMB.img = img;
+      res();
+    };
+    img.onerror = () => res();
+    img.src = staticFile("reveal.jpg");
+  });
+  return { scene, ready, update, init };
 };

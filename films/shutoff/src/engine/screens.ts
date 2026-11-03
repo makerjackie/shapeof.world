@@ -171,7 +171,16 @@ export const drawLock = (
   }
 };
 
-export type Msg = { t0: number; me?: boolean; text: string };
+export type Msg = { t0: number; me?: boolean; text: string; video?: { title: string; dur: string } };
+// the film 安 sent: a video message whose thumbnail is the frame the picture froze on (public/reveal.jpg)
+export const VIDEO_THUMB: { img: HTMLImageElement | null } = { img: null };
+export const VID = { x: 48, w: 720, th: 301, cap: 100 };
+// where the thumbnail sits on the chat canvas while the video message is the newest item (px, canvas space)
+export const videoThumbRect = () => {
+  const bottom = PH - 190 - 40;
+  const y = bottom - (VID.th + VID.cap + 22);
+  return { x: VID.x, y, w: VID.w, h: VID.th };
+};
 // chat with the AI: messages, a typing indicator that comes and goes, and the user's draft
 export const drawChat = (
   c: C2D,
@@ -180,7 +189,7 @@ export const drawChat = (
 ) => {
   c.fillStyle = "#07090d";
   c.fillRect(0, 0, PW, PH);
-  statusBar(c, "23:47");
+  statusBar(c, "03:15");
   // header
   c.fillStyle = "rgba(22,25,31,0.96)";
   c.fillRect(0, 110, PW, 150);
@@ -197,7 +206,7 @@ export const drawChat = (
   c.fillRect(0, 259, PW, 2);
 
   // build visible items bottom-up
-  type Item = { kind: "msg" | "typing"; me?: boolean; text?: string; t0: number; h: number; lines?: string[] };
+  type Item = { kind: "msg" | "typing" | "video"; me?: boolean; text?: string; t0: number; h: number; lines?: string[]; video?: Msg["video"] };
   const items: Item[] = [];
   const all: Msg[] = [...o.msgs];
   if (o.draft && t >= o.draft.sent) all.push({ t0: o.draft.sent, me: true, text: o.draft.text });
@@ -205,6 +214,10 @@ export const drawChat = (
   c.font = font(SANS, 56, 400);
   for (const m of all) {
     if (t < m.t0) continue;
+    if (m.video) {
+      items.push({ kind: "video", t0: m.t0, h: VID.th + VID.cap + 22, video: m.video });
+      continue;
+    }
     const lines = wrap(c, m.text, PW * 0.72);
     items.push({ kind: "msg", me: m.me, text: m.text, t0: m.t0, lines, h: lines.length * 76 + 56 });
   }
@@ -233,6 +246,46 @@ export const drawChat = (
         c.arc(48 + 56 + d * 40, y + (it.h - 22) / 2 - clamp(ph) * 6, 11, 0, Math.PI * 2);
         c.fill();
       }
+    } else if (it.kind === "video") {
+      // video message: the frozen frame, a full progress bar, a replay mark, the title and length underneath
+      const v = it.video as NonNullable<Msg["video"]>;
+      const h = it.h - 22;
+      c.save();
+      rr(c, VID.x, y, VID.w, h, 40);
+      c.clip();
+      c.fillStyle = "#23262d";
+      c.fillRect(VID.x, y, VID.w, h);
+      if (VIDEO_THUMB.img) c.drawImage(VIDEO_THUMB.img, VID.x, y, VID.w, VID.th);
+      c.fillStyle = "rgba(255,255,255,0.85)";
+      c.fillRect(VID.x, y + VID.th - 8, VID.w, 8);
+      c.restore();
+      c.fillStyle = "rgba(0,0,0,0.45)";
+      c.beginPath();
+      c.arc(VID.x + VID.w / 2, y + VID.th / 2, 58, 0, Math.PI * 2);
+      c.fill();
+      c.strokeStyle = "rgba(255,255,255,0.9)";
+      c.lineWidth = 7;
+      c.beginPath();
+      c.arc(VID.x + VID.w / 2, y + VID.th / 2, 26, -Math.PI * 0.35, Math.PI * 1.45);
+      c.stroke();
+      c.fillStyle = "rgba(255,255,255,0.9)";
+      c.beginPath();
+      const ax = VID.x + VID.w / 2 + 26 * Math.cos(-Math.PI * 0.35);
+      const ay = y + VID.th / 2 + 26 * Math.sin(-Math.PI * 0.35);
+      c.moveTo(ax + 14, ay - 4);
+      c.lineTo(ax - 10, ay - 14);
+      c.lineTo(ax - 4, ay + 12);
+      c.closePath();
+      c.fill();
+      c.fillStyle = "#fff";
+      c.font = font(SANS, 46, 500);
+      c.textAlign = "left";
+      c.textBaseline = "middle";
+      c.fillText(v.title, VID.x + 36, y + VID.th + VID.cap / 2);
+      c.fillStyle = "rgba(255,255,255,0.5)";
+      c.font = font(SANS, 38, 400);
+      c.textAlign = "right";
+      c.fillText(v.dur, VID.x + VID.w - 36, y + VID.th + VID.cap / 2);
     } else {
       c.font = font(SANS, 56, 400);
       const lw = Math.max(...(it.lines as string[]).map((l) => c.measureText(l).width));

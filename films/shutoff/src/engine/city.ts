@@ -598,6 +598,7 @@ export const cityScene = (): SceneMod => {
   scene.add(ground);
 
   // street trees: dark canopies lit from below by the street lamps (the look of a Chinese street from above at night)
+  let treeMesh: THREE.Object3D | null = null; // street trees: only near the ground; from the air they read as black dots
   {
     const TREE_VERT = /* glsl */ `varying vec3 vW; varying vec3 vN;
       void main(){ vec4 w = modelMatrix * instanceMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix * instanceMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }`;
@@ -651,6 +652,7 @@ export const cityScene = (): SceneMod => {
     }
     trees.frustumCulled = false;
     scene.add(trees);
+    treeMesh = trees;
   }
 
   // sky
@@ -1336,12 +1338,15 @@ export const cityScene = (): SceneMod => {
       if (k > 0.4 && k < 3.2) look.flash = 0;
       look.streak = 0.45;
     } else if (mode === "freeze") {
-      const a = 4.05 + lt * 0.0025;
-      const r = RING_R + 32;
-      pos.set(Math.cos(a) * r, 40, Math.sin(a) * r);
-      const a2 = a + 0.12;
-      tgt.set(Math.cos(a2) * RING_R, RING_Y, Math.sin(a2) * RING_R);
-      fov = 22;
+      // the elevated road of act 1 again, the same long lens along the traffic from another stretch: the river of
+      // lights stops dead, then every head- and tail-light on it blinks twice
+      const a = 1.3 + lt * 0.002;
+      pos.set(Math.cos(a) * (RING_R + 6), RING_Y + 16, Math.sin(a) * (RING_R + 6));
+      const a2 = a + 0.34;
+      tgt.set(Math.cos(a2) * RING_R, RING_Y + 1, Math.sin(a2) * RING_R);
+      fov = 11;
+      look = { ...look, gain: [1.05, 1.0, 0.96], dof: 12, focus: pos.distanceTo(tgt), aperture: 0.55 };
+      st.allRed = lt > 2.05 ? 1 : 0;
       // every car stops at once at lt = 2.0, then all headlights blink twice
       const tf = shot.t0 - (shot.o ?? 0) + 2.0;
       const stopT = (t: number) => (t < tf ? t : tf + 0.35 * (1 - Math.exp(-(t - tf) / 0.35)));
@@ -1350,7 +1355,6 @@ export const cityScene = (): SceneMod => {
       const b1 = lt > 3.4 && lt < 3.62;
       const b2 = lt > 4.0 && lt < 4.22;
       st.hwBlink = b1 || b2 ? 0.0 : 1;
-      look.streak = 0.5;
     } else if (mode === "redlights") {
       st.allRed = 1;
       st.carT = 100;
@@ -1416,6 +1420,9 @@ export const cityScene = (): SceneMod => {
     void boardOn;
     void easeOut;
     void sstep;
+    if (treeMesh) treeMesh.visible = cam.position.y < 120 && mode !== "highway" && mode !== "freeze";
+    // car bodies only in the close highway shots; from farther away they would hide their own lights
+    carBody.visible = mode === "highway" || mode === "freeze";
     fillPoints(mode, lt, cam);
     return look;
   };

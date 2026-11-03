@@ -533,6 +533,21 @@ export const controlScene = (): SceneMod => {
       }
       key.intensity = 16 * (room / 0.45);
       fill.intensity = 2.5 * (room / 0.45);
+    } else if (mode === "breakerhold") {
+      // 9:00 the next morning, for real this time: the lever stays up, the green lamp stays on, nobody comes
+      room = 0.45;
+      pivot.rotation.x = -0.35;
+      (lampG.material as THREE.MeshBasicMaterial).color.setRGB(0.2, 3, 0.6);
+      (lampR.material as THREE.MeshBasicMaterial).color.setRGB(0.1, 0.01, 0.01);
+      const k = clamp(lt / 6.4);
+      pos.set(BREAKER.x - 2.6 + k * 0.4, BREAKER.y + 0.02 - k * 0.06, BREAKER.z + 2.0 - k * 0.36);
+      tgt.set(BREAKER.x - 0.15, BREAKER.y + 0.04, BREAKER.z - 0.05);
+      fov = 34;
+      look.dof = 12;
+      look.focus = pos.distanceTo(new THREE.Vector3(BREAKER.x - 0.2, BREAKER.y + 0.1, BREAKER.z));
+      look.aperture = 1.6;
+      key.intensity = 16;
+      fill.intensity = 2.5;
     } else if (mode === "phones") {
       room = 0;
       monOn = 0;
@@ -568,12 +583,12 @@ export const controlScene = (): SceneMod => {
       look.streak = 0.12;
     }
     (heroScr.material as THREE.MeshBasicMaterial).color.setScalar(mode === "phones" ? (lt < 4.6 ? 1.7 : 14) * clamp((lt - 1.3) / 0.2) : 0);
-    if (mode !== "breaker") {
+    if (mode !== "breaker" && mode !== "breakerhold") {
       key.intensity = 0;
       fill.intensity = 0;
     }
     cabLamps.forEach((m, i) => {
-      const on = mode === "breaker" || mode === "countdown" || mode === "monitor" ? clamp(room / 0.45) : 0;
+      const on = mode === "breaker" || mode === "breakerhold" || mode === "countdown" || mode === "monitor" ? clamp(room / 0.45) : 0;
       m.color.setRGB((i % 3 === 1 ? 3 : 0.3) * on, (i % 3 === 1 ? 1.6 : 3) * on, (i % 3 === 1 ? 0.2 : 0.7) * on);
     });
     deskU.uRoom.value = room;

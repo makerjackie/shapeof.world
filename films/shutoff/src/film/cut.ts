@@ -17,7 +17,10 @@ const S = (t0: number, t1: number, scene: SceneId, mode: string, x: Partial<Shot
 
 // ---- montage at the peak of act 3: cuts get shorter and shorter ----
 const MONTAGE_T0 = 143.0;
-export const MONTAGE_T1 = 155.0;
+export const MONTAGE_T1 = 154.2;
+// the montage stops on one held picture; at REVEAL it freezes and shrinks into 林工's phone: everything since the
+// name card was a film 安 made and sent him (src/film/Overlay.tsx, engine/phone.ts)
+export const REVEAL = 155.0;
 const POOL: [SceneId, string, number][] = [
   ["server", "leds", 1.0],
   ["city", "masts", 0.5],
@@ -70,16 +73,20 @@ export const CUT: Shot[] = [
   S(126.5, 133.5, "phone", "call"),
   S(133.5, 143.0, "city", "drones"),
   ...montage,
-  // act 4 · the instruction
-  S(157.5, 194.6, "phone", "chat", { fi: 2.0 }),
+  S(MONTAGE_T1, REVEAL, "city", "drones", { o: 9.6 }),
+  // act 4 · 03:15 a.m., the same night as the cold open: the film ends in the phone, 安 asks if he watched it
+  S(REVEAL, 197.1, "phone", "chat"),
   // ending: up and out, to the whole night side of the earth
-  S(194.0, 198.6, "phone", "pullout", { xf: 0.6 }),
-  S(198.0, 205.6, "city", "rise", { xf: 0.6 }),
-  S(205.0, 219.0, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
+  S(196.5, 201.1, "phone", "pullout", { xf: 0.6 }),
+  S(200.5, 208.1, "city", "rise", { xf: 0.6 }),
+  S(207.5, 221.5, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
+  // 9:00 a.m.: nobody pulls the breaker; 安 says good morning
+  S(225.0, 231.4, "control", "breakerhold", { fi: 0.6 }),
+  S(231.4, 237.2, "phone", "morning9", { fo: 0.6 }),
 ];
 
 // story time runs from the cold open (0) to the end card; the pre-roll card plays before it
-export const PRE = 9.0;
-export const FILM_SECONDS = 269.5;
+export const PRE = 6.0;
+export const FILM_SECONDS = 286.9;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);

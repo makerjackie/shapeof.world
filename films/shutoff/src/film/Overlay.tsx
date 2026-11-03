@@ -5,6 +5,8 @@ import React from "react";
 import { Img, staticFile } from "remotion";
 import { SANS, SERIF } from "../engine/fonts";
 import { clamp, ease, easeOut, lerp, spring } from "../engine/util";
+import { revealQuad } from "../engine/phone";
+import { REVEAL } from "./cut";
 import { CARDS, CREDITS, Card } from "./text";
 
 const BAR = 138; // (1080 - 1920/2.39) / 2
@@ -48,30 +50,15 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
       </div>
     );
   }
-  if (c.kind === "studio") {
-    // the studio card, like the logo before a feature
-    const a = fadeIO(t, c, 0.6, 0.45);
-    return (
-      <div style={{ ...center, background: "#000", opacity: a }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          <Img src={staticFile("brand/mark-disc.png")} style={{ width: 104, height: 104 }} />
-          <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 84, letterSpacing: "0.12em" }}>{c.lines[0]}</div>
-        </div>
-        <div style={{ fontFamily: SANS, fontSize: 38, letterSpacing: "0.6em", paddingLeft: "0.6em", marginTop: 30, color: "rgba(255,255,255,0.7)", opacity: clamp((t - c.t0 - 0.5) / 0.5) }}>{c.lines[1]}</div>
-      </div>
-    );
-  }
   if (c.kind === "pre") {
-    // what this is, and how it was made: written as code by an AI, every frame computed
+    // one line on what this is: a film an AI made by writing code
     const a = clamp((c.t1 - t) / 0.4);
     const l = (d: number, dur = 0.6) => clamp((t - c.t0 - d) / dur);
     return (
       <div style={{ ...center, background: "#000", opacity: a }}>
-        <div style={{ fontFamily: SANS, fontSize: 38, fontWeight: 400, letterSpacing: "0.32em", paddingLeft: "0.32em", color: "rgba(255,255,255,0.62)", opacity: l(0.1) }}>{c.lines[0]}</div>
-        <div style={{ width: 120 * easeOut(l(0.5, 0.9)), height: 2, background: "rgba(255,255,255,0.35)", margin: "36px 0 40px" }} />
-        <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.1em", paddingLeft: "0.1em", opacity: l(0.6), transform: `translateY(${(1 - easeOut(l(0.6, 1.2))) * 12}px)` }}>{c.lines[1]}</div>
-        <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.1em", paddingLeft: "0.1em", marginTop: 18, opacity: l(1.25), transform: `translateY(${(1 - easeOut(l(1.25, 1.2))) * 12}px)` }}>{c.lines[2]}</div>
-        <div style={{ fontFamily: SANS, fontSize: 32, fontWeight: 500, letterSpacing: "0.3em", paddingLeft: "0.3em", marginTop: 48, color: "rgba(255,255,255,0.55)", opacity: l(2.0) }}>{c.lines[3]}</div>
+        <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.12em", paddingLeft: "0.12em", opacity: l(0.15, 0.7), transform: `translateY(${(1 - easeOut(l(0.15, 1.3))) * 12}px)` }}>{c.lines[0]}</div>
+        <div style={{ width: 120 * easeOut(l(0.6, 0.9)), height: 2, background: "rgba(255,255,255,0.35)", margin: "40px 0 36px" }} />
+        <div style={{ fontFamily: SANS, fontSize: 34, fontWeight: 500, letterSpacing: "0.3em", paddingLeft: "0.3em", color: "rgba(255,255,255,0.6)", opacity: l(0.9) }}>{c.lines[1]}</div>
       </div>
     );
   }
@@ -168,11 +155,12 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
     const k1 = clamp(spring(t - c.t0 - 0.2, 10), 0, 1.03);
     const t2 = c.t0 + 2.6;
     const k2 = clamp(spring(t - t2, 10), 0, 1.03);
-    const ya = -260 + (BAR + 70 + 260) * k1 + (t > t2 ? 300 * k2 : 0);
+    const two = c.lines.length > 1;
+    const ya = -260 + (BAR + 70 + 260) * k1 + (two && t > t2 ? 300 * k2 : 0);
     return (
       <div style={{ position: "absolute", inset: 0, background: "#000" }}>
         {t > c.t0 + 0.2 && <Banner body={c.lines[0]} y={ya} a={clamp((t - c.t0 - 0.2) / 0.2)} />}
-        {t > t2 && <Banner body={c.lines[1]} y={-260 + (BAR + 70 + 260) * k2} a={clamp((t - t2) / 0.2)} />}
+        {two && t > t2 && <Banner body={c.lines[1]} y={-260 + (BAR + 70 + 260) * k2} a={clamp((t - t2) / 0.2)} />}
       </div>
     );
   }
@@ -192,6 +180,48 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
   return null;
 };
 
+// projective transform taking the w×h rectangle to the quad d (tl, tr, br, bl), as a CSS matrix3d
+const homography = (w: number, h: number, d: [number, number][]) => {
+  const src = [[0, 0], [w, 0], [w, h], [0, h]];
+  const A: number[][] = [];
+  src.forEach(([x, y], i) => {
+    const [u, v] = d[i];
+    A.push([x, y, 1, 0, 0, 0, -u * x, -u * y, u]);
+    A.push([0, 0, 0, x, y, 1, -v * x, -v * y, v]);
+  });
+  for (let c = 0; c < 8; c++) {
+    let p = c;
+    for (let r = c + 1; r < 8; r++) if (Math.abs(A[r][c]) > Math.abs(A[p][c])) p = r;
+    [A[c], A[p]] = [A[p], A[c]];
+    for (let r = 0; r < 8; r++) {
+      if (r === c) continue;
+      const f = A[r][c] / A[c][c];
+      for (let k = c; k < 9; k++) A[r][k] -= f * A[c][k];
+    }
+  }
+  const [a, b, c, dd, e, f, g, hh] = A.map((r, i) => r[8] / r[i]);
+  return [a, dd, 0, g, b, e, 0, hh, 0, 0, 1, 0, c, f, 0, 1];
+};
+
+// the reveal: the frozen last frame of 安's film shrinks into the video message on 林工's phone
+const Reveal: React.FC<{ t: number }> = ({ t }) => {
+  const lt = t - REVEAL;
+  if (lt < 0 || lt >= 1.8) return null;
+  const p = ease(clamp((lt - 0.12) / 1.3));
+  const q = revealQuad(lt, t);
+  const H = 1080 - 2 * BAR;
+  const src: [number, number][] = [[0, BAR], [1920, BAR], [1920, 1080 - BAR], [0, 1080 - BAR]];
+  const pts = src.map((s0, i) => [lerp(s0[0], q[i][0], p), lerp(s0[1], q[i][1], p)] as [number, number]);
+  const m = homography(1920, H, pts);
+  const a = 1 - clamp((lt - 1.45) / 0.3);
+  return (
+    <Img
+      src={staticFile("reveal.jpg")}
+      style={{ position: "absolute", left: 0, top: 0, width: 1920, height: H, transformOrigin: "0 0", transform: `matrix3d(${m.join(",")})`, opacity: a, boxShadow: "0 0 80px rgba(0,0,0,0.7)" }}
+    />
+  );
+};
+
 export const Overlay: React.FC<{ t: number }> = ({ t }) => {
   const live = CARDS.filter((c) => t >= c.t0 && t < c.t1);
   const end = CARDS.find((c) => c.kind === "end") as Card;
@@ -200,9 +230,10 @@ export const Overlay: React.FC<{ t: number }> = ({ t }) => {
       {live.map((c, i) => (
         <CardView key={i} c={c} t={t} />
       ))}
+      <Reveal t={t} />
       <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: BAR, background: "#000" }} />
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: BAR, background: "#000" }} />
-      {t < end.t0 && t > -7.3 && (
+      {t < end.t0 && (
         <div style={{ position: "absolute", left: 44, top: 40, display: "flex", alignItems: "center", gap: 14, opacity: 0.72 }}>
           <Img src={staticFile("brand/mark-disc.png")} style={{ width: 52, height: 52 }} />
           <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 32, letterSpacing: "0.1em", color: "#fff" }}>世界的形状</div>
