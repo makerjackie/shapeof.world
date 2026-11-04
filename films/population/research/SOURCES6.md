@@ -71,3 +71,19 @@ Points are the same as Film5: 《汉书》《后汉书》《晋书》《隋书�
 | 80 亿 2022-11-15 | UN |
 | 印度超过中国 2023 | UN DESA |
 | 生育率 2.25 (2024)，1960 年代超过 5 | UN WPP 2024 |
+
+### World v6 additions (2026-11-04: growth events, the war-years reversal)
+| Claim | Source |
+|---|---|
+| 欧洲 1000→1300 年 3,634 万 → 8,329 万 | HYDE 3.3 regions (src/v6/world_data.json) |
+| 重犁、三圃制 | Standard account of the medieval agricultural revolution |
+| 北宋引进占城稻 | 《宋史·食货志》（大中祥符五年，1012） |
+| 1796 琴纳牛痘接种，天花第一次可以预防 | WHO, "Smallpox" fact sheet / history of vaccination |
+| 1854 伦敦宽街霍乱，病从脏水来 | John Snow, *On the Mode of Communication of Cholera* (2nd ed., 1855) |
+| 合成化肥养活约一半人口 | Erisman et al., *Nature Geoscience* 1, 636–639 (2008): ~48% of world population in 2008 |
+| 二战死亡 7,000 万—8,500 万 | Common range (e.g. National WWII Museum) |
+| 纳粹大屠杀 约 600 万犹太人遇难 | United States Holocaust Memorial Museum |
+| 1939→1945 世界人口 22.7 亿 → 23.9 亿（+1.1 亿） | Gapminder via OWID (world_data.json: 227,068 → 238,467 万) |
+| 人均寿命 1950 年 46.4 岁 → 2023 年 73.2 岁 | OWID life-expectancy (UN WPP 2024), fetched 2026-11-04 |
+| 5 岁前死亡率 1950 年 22.7% → 2023 年 3.6% | OWID child-mortality (UN IGME / WPP), fetched 2026-11-04 |
+| 1963 年出生 1.198 亿、死亡 0.469 亿 | OWID births-and-deaths (UN WPP 2024) |

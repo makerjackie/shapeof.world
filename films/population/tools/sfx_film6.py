@@ -292,6 +292,21 @@ for L in CUES["ending"]:
         put(swish(0.6), L["t"], 0.1)
 put(chime(), CUES["card"], 0.2)
 
+# hush (respect for the dead): the music sinks to a low, muffled bed and the SFX go quiet; one bell where it starts
+hw = np.zeros(N)
+for h0, h1 in CUES.get("hush", []):
+    a, b = int(h0 * SR), min(N, int(h1 * SR))
+    r_in, r_out = int(0.3 * SR), int(0.06 * SR)
+    hw[a:b] = 1.0
+    hw[a:a + r_in] = np.linspace(0, 1, len(hw[a:a + r_in]))
+    hw[b - r_out:b] = np.linspace(1, 0, len(hw[b - r_out:b]))
+if hw.any():
+    cc = np.exp(-2 * np.pi * 420 / SR)
+    lpm = lfilter([1 - cc], [1, -cc], lfilter([1 - cc], [1, -cc], music, axis=0), axis=0)
+    music = music * (1 - 0.9 * hw)[:, None] + lpm * (0.55 * hw)[:, None]
+    fx = fx * (1 - 0.8 * hw)[:, None]
+    for h0, h1 in CUES.get("hush", []):
+        put(bell(98, 6.0), h0 + 0.3, 0.42)
 mix = music * duck[:, None] + fx * 0.46
 peak = np.abs(mix).max()
 lvl = maximum_filter1d(np.abs(mix).max(axis=1), size=int(0.004 * SR), origin=-int(0.002 * SR))

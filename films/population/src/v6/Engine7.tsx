@@ -1165,7 +1165,16 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const rows = S.table(c);
     const was = S.table(c - 60);
     const tot = rows.reduce((s, r) => s + r.v, 0);
-    const a = clamp((t - (B0 - 0.3)) / 0.3) * (1 - clamp((t - (END - 0.4)) / 0.4));
+    let vis = 1;
+    if (S.tableOn) {
+      const e = evAt(t);
+      const on = (x: (typeof EV)[number] | null | undefined) => (x && S.tableOn!(x) ? 1 : 0);
+      const cur = on(e);
+      const prev = e && e.i > 0 ? on(EV[e.i - 1]) : 0;
+      vis = e ? prev + (cur - prev) * clamp((t - e.t0) / 0.25) : 0;
+    }
+    const a = clamp((t - (B0 - 0.3)) / 0.3) * (1 - clamp((t - (END - 0.4)) / 0.4)) * vis;
+    if (a <= 0.01) return;
     ctx.save();
     ctx.globalAlpha = a;
     text(ctx, "各大洲人口", 640, 168, 22, 700, SERIF, MUTED);

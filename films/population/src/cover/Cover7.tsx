@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AbsoluteFill, Composition, cancelRender, continueRender, delayRender, staticFile } from "remotion";
 import { SANS, SERIF, fontsReady } from "../v6/fonts6";
 import { CHINA, SERIES } from "../v6/china7";
+import { CHINA as CHINA_S } from "../v6/china7s"; // special internal version: 7 falls, no 1960
 
 const GOLD = "#ffc94d";
 const RED = "#ff3b2f";
@@ -39,7 +40,8 @@ const OFF: Record<number, [number, number]> = {
 
 const fmt = (v: number) => v.toLocaleString("en-US");
 
-const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement) => {
+const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement, sp = false) => {
+  const CH = sp ? CHINA_S : CHINA;
   const { W, H } = l;
   ctx.fillStyle = BG;
   ctx.fillRect(0, 0, W, H);
@@ -83,7 +85,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement) => {
   // sub: the red count, then the promise
   const [sx, sy, ss] = l.sub;
   ctx.font = `900 ${ss}px ${SERIF}`;
-  const a = "8";
+  const a = String(CH.cold.crashes.length);
   const b = " 次人口大跌，看尽王朝兴衰";
   const wa = ctx.measureText(a).width * 1.25;
   const wb = ctx.measureText(b).width;
@@ -113,7 +115,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement) => {
   }
 
   // the 8 falls: a red dot on each trough, name and size under it
-  for (const c of CHINA.cold.crashes) {
+  for (const c of CH.cold.crashes) {
     const xv = X(c.y);
     const yv = Y(val(c.y));
     ctx.save();
@@ -166,7 +168,7 @@ const draw = (ctx: CanvasRenderingContext2D, l: L, logo: HTMLImageElement) => {
   }
 };
 
-const Cover: React.FC<{ l: L }> = ({ l }) => {
+const Cover: React.FC<{ l: L; sp?: boolean }> = ({ l, sp }) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [handle] = useState(() => delayRender("cover fonts", { timeoutInMilliseconds: 60000 }));
   useEffect(() => {
@@ -179,12 +181,12 @@ const Cover: React.FC<{ l: L }> = ({ l }) => {
     Promise.all([fontsReady(), img]).then(
       () => {
         const ctx = ref.current!.getContext("2d")!;
-        draw(ctx, l, logo);
+        draw(ctx, l, logo, !!sp);
         continueRender(handle);
       },
       (e) => cancelRender(e),
     );
-  }, [handle, l]);
+  }, [handle, l, sp]);
   return (
     <AbsoluteFill style={{ background: BG }}>
       <canvas ref={ref} width={l.W} height={l.H} />
@@ -196,5 +198,7 @@ export const CoverRoot: React.FC = () => (
   <>
     <Composition id="Cover34" component={() => <Cover l={L34} />} durationInFrames={1} fps={30} width={L34.W} height={L34.H} />
     <Composition id="Cover43" component={() => <Cover l={L43} />} durationInFrames={1} fps={30} width={L43.W} height={L43.H} />
+    <Composition id="Cover34S" component={() => <Cover l={L34} sp />} durationInFrames={1} fps={30} width={L34.W} height={L34.H} />
+    <Composition id="Cover43S" component={() => <Cover l={L43} sp />} durationInFrames={1} fps={30} width={L43.W} height={L43.H} />
   </>
 );

@@ -38,6 +38,8 @@ export type Spec = {
   table?: (y: number) => { n: string; v: number; c: string }[]; // top-right table (world: regions)
   sfxGain?: number;
   noRiser?: boolean; // no riser SFX under the rewind
+  tableOn?: (e: { k: string; table?: boolean }) => boolean; // when the region table shows (default: always)
+  hush?: [number, number][]; // SOURCE seconds where the music sinks low and the SFX go quiet
   noGapChip?: boolean; // the header chip never says "两次统计相隔 N 年" (estimates, not counts)
   srcEnd?: string; // the source line under the ending
   src?: (y: number) => string; // the source of the count the head last passed

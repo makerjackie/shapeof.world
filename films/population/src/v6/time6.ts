@@ -80,6 +80,7 @@ export type Ev = {
   st?: string; // events with the same id stack up as one growing list
   kill?: [number, number, number, number, number]; // lon0, lat0, lon1, lat1, share: that share of the region's dots dies here
   src?: string; // where this card's own number comes from (bottom-left source line)
+  table?: boolean; // show the region table on this card (with tableOn)
 };
 export type Placed = Ev & { i: number; t0: number; t1: number; bi: number };
 
