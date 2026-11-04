@@ -18,10 +18,12 @@ const cues = {
   rewind: S.cold.rewind,
   noRiser: !!S.noRiser,
   hush: (S.hush || []).map(([a, b]) => [S.music.F(a), S.music.F(b)]),
+  solemnFrom: S.solemnFrom ?? null,
+  rests: (S.rests || []).map((y) => S.events.find((e) => e.y === y).t0),
   body: S.body,
   ending: S.ending.lines.map((l) => ({ t: l.t0, brush: !!l.brush })),
   card: S.ending.card,
-  reveals: (m.REVEALS || []).flatMap((r) => [r.num > r.title + 0.01 ? { t: r.num, k: r.k, big: r.big, w: "num" } : null, r.sub > r.title + 0.01 && r.sub > r.num + 0.01 ? { t: r.sub, k: r.k, big: r.big, w: "sub" } : null]).filter(Boolean),
+  reveals: (m.REVEALS || []).flatMap((r) => [r.num > r.title + 0.01 ? { t: r.num, k: r.k, big: r.big, y: r.y ?? 0, w: "num" } : null, r.sub > r.title + 0.01 && r.sub > r.num + 0.01 ? { t: r.sub, k: r.k, big: r.big, y: r.y ?? 0, w: "sub" } : null]).filter(Boolean),
 };
 fs.writeFileSync(`out/cues6_${film}.json`, JSON.stringify(cues));
 console.log("cues6", film, "events", cues.events.length, "dur", cues.dur);

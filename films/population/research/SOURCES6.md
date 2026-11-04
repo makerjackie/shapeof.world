@@ -87,3 +87,18 @@ Points are the same as Film5: 《汉书》《后汉书》《晋书》《隋书�
 | 人均寿命 1950 年 46.4 岁 → 2023 年 73.2 岁 | OWID life-expectancy (UN WPP 2024), fetched 2026-11-04 |
 | 5 岁前死亡率 1950 年 22.7% → 2023 年 3.6% | OWID child-mortality (UN IGME / WPP), fetched 2026-11-04 |
 | 1963 年出生 1.198 亿、死亡 0.469 亿 | OWID births-and-deaths (UN WPP 2024) |
+
+### World v7 additions (2026-11-04: causal chains)
+| Claim | Source |
+|---|---|
+| 166 年“大秦王安敦遣使”，安敦即马可·奥勒留·安东尼 | 《后汉书·西域传》（延熹九年） |
+| 171—185 年东汉大疫 5 次（171、173、179、182、185） | 《后汉书·灵帝纪》 |
+| 1346 年蒙古军围攻卡法，军中暴发鼠疫，商船带入地中海 | Gabriele de' Mussi; Wheelis, *Emerging Infectious Diseases* 2002 |
+| 查士丁尼瘟疫与黑死病同为鼠疫杆菌 | Wagner et al., *Lancet Infect Dis* 2014; Bos et al., *Nature* 2011 |
+| 17 世纪全球危机（小冰期） | Geoffrey Parker, *Global Crisis* (2013) |
+| 清朝人口 1741 年 1.43 亿 → 1851 年 4.32 亿 | 《清实录》、户部清册（china7.ts series） |
+| 爱尔兰大饥荒：马铃薯晚疫病 | Standard account |
+| 哈伯 1909 年合成氨；1915 年伊普尔主持氯气攻击 | Standard account (Nobel biography) |
+| 1918 流感随军队调动传播 | US CDC, "1918 Pandemic" history |
+| 1928 弗莱明发现青霉素；1943—44 年量产 | American Chemical Society landmark |
+| 绿色革命：良种加化肥 | Standard account (Borlaug, Nobel 1970) |

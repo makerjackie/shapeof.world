@@ -235,6 +235,9 @@ for e in CUES["events"]:
         put(taiko(0.7), at, 0.35)
         put(tick(1.0), at, 0.25)
         continue
+    if CUES.get("solemnFrom") is not None and k in ("war", "crash") and e["y"] >= CUES["solemnFrom"]:
+        put(bell(98, 5.0), at + 0.02, 0.3)  # respect: a bell, no drums
+        continue
     if k == "crash":
         put(impact(1.0), at, 0.55 if big else 0.4)
         put(taiko(1.0), at, 0.55)
@@ -275,6 +278,9 @@ for e in CUES["events"]:
     elif k == "note":
         put(swish(0.7), at, 0.12)
 for r in CUES.get("reveals", []):
+    if CUES.get("solemnFrom") is not None and r["k"] == "war" and r.get("y", 0) >= CUES["solemnFrom"]:
+        put(stamp(0.6), r["t"], 0.12)
+        continue
     if r["w"] == "num":
         if r["k"] in ("crash", "war", "famine", "plague"):
             put(taiko(0.8), r["t"], 0.32)
@@ -303,10 +309,23 @@ for h0, h1 in CUES.get("hush", []):
 if hw.any():
     cc = np.exp(-2 * np.pi * 420 / SR)
     lpm = lfilter([1 - cc], [1, -cc], lfilter([1 - cc], [1, -cc], music, axis=0), axis=0)
-    music = music * (1 - 0.93 * hw)[:, None] + lpm * (0.28 * hw)[:, None]
+    music = music * (1 - 0.97 * hw)[:, None] + lpm * (0.06 * hw)[:, None]
     fx = fx * (1 - 0.8 * hw)[:, None]
     for h0, h1 in CUES.get("hush", []):
         put(bell(98, 6.0), h0 + 0.3, 0.42)
+# one bar of silence on the great modern wars: the music drops at the card, comes back over the bar's last beat
+BEAT = 0.4654
+for at in CUES.get("rests", []):
+    a = int(at * SR)
+    b = min(N, int((at + 4 * BEAT) * SR))
+    w = np.ones(b - a)
+    k0 = int(0.04 * SR)
+    w[:k0] = np.linspace(0, 1, k0)
+    k1 = int(BEAT * SR)
+    w[-k1:] = np.linspace(1, 0, k1) ** 2
+    music[a:b] *= (1 - 0.96 * w)[:, None]
+    duck[a:b] = 1.0
+    put(bell(82, 6.0), at + 0.02, 0.5)
 mix = music * duck[:, None] + fx * 0.46
 peak = np.abs(mix).max()
 lvl = maximum_filter1d(np.abs(mix).max(axis=1), size=int(0.004 * SR), origin=-int(0.002 * SR))
