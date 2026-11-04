@@ -196,7 +196,7 @@ void main(){
     float area = (wmax.x - wmin.x) * (wmax.y - wmin.y);
     vec3 pattern = mix(wall, winCol, win);
     vec3 cellAvg = mix(wall, mix(mix(glass, wc * wint * on, lit), led, ledOn), area);
-    vec3 avg = mix(wall, mix(mix(glass, wc * 0.55 * on, litF), led, ledOn), area);
+    vec3 avg = mix(wall, mix(mix(glass, wc * (typ < 0.5 ? 0.26 : 0.55) * on, litF), led, ledOn), area);
     col = mix(mix(pattern, cellAvg, aaX), avg, aaY);
     col *= mod(faceId, 2.0) < 0.5 ? 1.0 : 0.82;
     col += vec3(1.0, 0.45, 0.2) * 0.02 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
@@ -398,7 +398,7 @@ const drawShow = (c: CanvasRenderingContext2D, w: number, h: number, t: number, 
       const x = ((t * 0.16 + k * 0.5) % 1) * w * 1.6 - w * 0.3;
       const wg = c.createLinearGradient(x - w * 0.12, 0, x + w * 0.12, 0);
       wg.addColorStop(0, "rgba(40,120,255,0)");
-      wg.addColorStop(0.5, "rgba(70,160,255,0.55)");
+      wg.addColorStop(0.5, "rgba(70,160,255,0.28)");
       wg.addColorStop(1, "rgba(40,120,255,0)");
       c.fillStyle = wg;
       c.fillRect(x - w * 0.12, 0, w * 0.24, h);
@@ -1444,15 +1444,17 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
     st.onR = lt < 4.6 ? -2 : 26000 * Math.pow(clamp((lt - 4.6) / 3.4), 2.2);
     return { pos: V3(-3600 + lt * 14, 900 - lt * 6, 3300 - lt * 10), tgt: V3(900, 30, -900), fov: 40, lit: 0.8, look: { streak: 0.45 } };
   },
-  // every car in the city stops at once: straight down on the Huanggang–Binhe interchange
+  // every car in the city stops at once: Shennan Boulevard again, where the green wave ran in act 1, a little higher;
+  // the whole river of lights stops dead, every signal red, then every head- and tail-light blinks twice
   freeze: (lt, { gt, shot, st }) => {
     st.allRed = lt > 2.05 ? 1 : 0;
     const tf = shot.t0 - (shot.o ?? 0) + 2.0;
     const stopT = (t: number) => (t < tf ? t : tf + 0.35 * (1 - Math.exp(-(t - tf) / 0.35)));
     st.carT = stopT(gt);
     st.carBlink = (lt > 3.4 && lt < 3.62) || (lt > 4.0 && lt < 4.22) ? 0 : 1;
-    const pos = V3(2380 - lt * 6, 250 - lt * 2, 1250 - lt * 4);
-    return { pos, tgt: V3(1350, 30, 380), fov: 32, lit: 0.85, bodies: true, look: { streak: 0.25, dof: 8, focus: pos.distanceTo(V3(1700, 0, 700)), aperture: 0.35 } };
+    const z = LOC.AVE_Z;
+    const pos = V3(2300 - lt * 3, 62, z - 4);
+    return { pos, tgt: V3(600, 4, z - 12), fov: 8.5, lit: 0.85, bodies: true, look: { streak: 0.4, dof: 10, focus: 1100, aperture: 0.4 } };
   },
   redlights: (lt, { st }) => {
     st.allRed = 1;

@@ -75,18 +75,20 @@ export const CUT: Shot[] = [
   ...montage,
   S(MONTAGE_T1, REVEAL, "city", "drones", { o: 9.6 }),
   // act 4 · 03:15 a.m., the same night as the cold open: the film ends in the phone, 安 asks if he watched it
-  S(REVEAL, 197.1, "phone", "chat"),
+  S(REVEAL, 204.5, "phone", "chat"),
   // ending: up and out, to the whole night side of the earth
-  S(196.5, 201.1, "phone", "pullout", { xf: 0.6 }),
-  S(200.5, 208.1, "city", "rise", { xf: 0.6 }),
-  S(207.5, 221.5, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
-  // 9:00 a.m.: nobody pulls the breaker; 安 says good morning
-  S(225.0, 231.4, "control", "breakerhold", { fi: 0.6 }),
-  S(231.4, 237.2, "phone", "morning9", { fo: 0.6 }),
+  S(203.9, 208.5, "phone", "pullout", { xf: 0.6 }),
+  S(207.9, 215.5, "city", "rise", { xf: 0.6 }),
+  S(214.9, 226.4, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
+  // 9:00 a.m.: the control room is full, every phone on every desk shows the film; nobody pulls the breaker;
+  // 安 says good morning
+  S(229.9, 234.9, "control", "phones9", { fi: 0.5 }),
+  S(234.9, 241.3, "control", "breakerhold"),
+  S(241.3, 247.1, "phone", "morning9", { fo: 0.6 }),
 ];
 
 // story time runs from the cold open (0) to the end card; the pre-roll card plays before it
 export const PRE = 6.0;
-export const FILM_SECONDS = 286.9;
+export const FILM_SECONDS = 304.3;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);

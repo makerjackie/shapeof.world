@@ -483,7 +483,7 @@ export const phoneScene = (): SceneMod => {
     else if (mode === "morning") drawLock(ctx, lt, { time: "07:30", date: "3月11日 星期一", notifs: P.morning, mood: "dawn", top: 600 });
     else if (mode === "morning9") drawLock(ctx, lt, { time: "09:01", date: "3月14日 星期四", notifs: P.morning9, mood: "dawn", top: 600 });
     else if (mode === "call") drawCall(ctx, lt, P.call);
-    else drawChat(ctx, mode === "pullout" ? 45 : lt, P.chat);
+    else drawChat(ctx, mode === "pullout" ? 55 : lt, P.chat);
     tex.needsUpdate = true;
   };
 
@@ -556,42 +556,60 @@ export const phoneScene = (): SceneMod => {
         fov = p.fov;
         aperture = 0.5;
         chatFocus.set(0, PHONE_T, 0.01);
-      } else if (lt < 9.6) {
-        const k = clamp((lt - 5.0) / 4.6);
+      } else if (lt < 10.3) {
+        // read from above: what the film was
+        const k = clamp((lt - 5.0) / 5.3);
+        pos.set(0.003, lerp(0.17, 0.158, k), lerp(0.07, 0.066, k));
+        tgt.set(0, 0, lerp(0.012, 0.016, k));
+        fov = 30;
+        aperture = 1.2;
+        chatFocus.set(0, PHONE_T, 0.025);
+      } else if (lt < 14.4) {
+        // the draft is typed
+        const k = clamp((lt - 10.3) / 4.1);
         pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
         tgt.set(0, 0, 0.046);
         fov = 30;
         aperture = 1.4;
         chatFocus.set(0, PHONE_T, 0.05);
-      } else if (lt < 14.6) {
-        const k = clamp((lt - 9.6) / 5);
+      } else if (lt < 18.0) {
+        // the long wait, wide, alone in the dark, the drawing beside the phone
+        const k = clamp((lt - 14.4) / 3.6);
         pos.set(lerp(0.33, 0.29, k), lerp(0.21, 0.19, k), lerp(0.36, 0.31, k));
-        tgt.set(0.0, 0.0, -0.03);
+        tgt.set(-0.03, 0.0, -0.02);
         fov = 32;
         aperture = 4;
         chatFocus.set(0, PHONE_T, 0);
         exposure = 1.15;
-      } else if (lt < 19.5) {
-        const k = clamp((lt - 14.6) / 4.9);
+      } else if (lt < 22.8) {
+        const k = clamp((lt - 18.0) / 4.8);
         pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
         tgt.set(0, 0, 0.022);
         fov = 30;
         aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
-      } else if (lt < 30) {
-        const k = clamp((lt - 19.5) / 10.5);
+      } else if (lt < 37.0) {
+        const k = clamp((lt - 22.8) / 14.2);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
-      } else {
-        const k = clamp((lt - 30) / 12);
-        pos.set(lerp(0.011, 0.008, k), lerp(0.155, 0.132, k), lerp(0.08, 0.072, k));
-        tgt.set(0, 0, lerp(0.022, 0.03, k));
+      } else if (lt < 41.0) {
+        const k = clamp((lt - 37.0) / 4.0);
+        pos.set(lerp(0.011, 0.009, k), lerp(0.155, 0.142, k), lerp(0.08, 0.076, k));
+        tgt.set(0, 0, lerp(0.022, 0.026, k));
         fov = 30;
         aperture = 1.3;
         chatFocus.set(0, PHONE_T, 0.04);
+      } else {
+        // over the daughter's drawing: it fills the soft foreground, the last two lines arrive on the phone beyond it
+        const k = clamp((lt - 41.0) / 8.5);
+        pos.set(lerp(-0.075, -0.07, k), lerp(0.175, 0.162, k), lerp(0.17, 0.158, k));
+        tgt.set(lerp(-0.035, -0.03, k), 0, lerp(0.012, 0.016, k));
+        fov = 32;
+        aperture = 1.6;
+        chatFocus.set(0.0, PHONE_T, 0.04);
       }
     } else if (mode === "pullout") {
       const k = ease(clamp(lt / 3.0));

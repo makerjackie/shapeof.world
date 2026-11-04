@@ -59,6 +59,7 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
         <div style={{ fontFamily: SERIF, fontSize: 66, fontWeight: 600, letterSpacing: "0.12em", paddingLeft: "0.12em", opacity: l(0.15, 0.7), transform: `translateY(${(1 - easeOut(l(0.15, 1.3))) * 12}px)` }}>{c.lines[0]}</div>
         <div style={{ width: 120 * easeOut(l(0.6, 0.9)), height: 2, background: "rgba(255,255,255,0.35)", margin: "40px 0 36px" }} />
         <div style={{ fontFamily: SANS, fontSize: 34, fontWeight: 500, letterSpacing: "0.3em", paddingLeft: "0.3em", color: "rgba(255,255,255,0.6)", opacity: l(0.9) }}>{c.lines[1]}</div>
+        {c.lines[2] && <div style={{ position: "absolute", bottom: BAR + 70, fontFamily: SANS, fontSize: 28, fontWeight: 400, letterSpacing: "0.16em", paddingLeft: "0.16em", color: "rgba(255,255,255,0.45)", opacity: l(1.25) }}>{c.lines[2]}</div>}
       </div>
     );
   }

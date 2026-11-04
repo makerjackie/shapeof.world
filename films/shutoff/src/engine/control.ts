@@ -210,6 +210,16 @@ export const controlScene = (): SceneMod => {
     c.restore();
     small.tex.needsUpdate = true;
   }
+  // 9:00 the next morning: the same lock screen on every desk, the film each of them was sent at 3 a.m.
+  const small9 = canvasTex(PW / 2, PH / 2);
+  {
+    const c = small9.ctx;
+    c.save();
+    c.scale(0.5, 0.5);
+    drawLock(c, 10, { time: "09:00", date: "3月14日 星期四", notifs: PHONE_TEXT.film, top: 600 });
+    c.restore();
+    small9.tex.needsUpdate = true;
+  }
   phoneSpots.sort((a, b) => a.distanceTo(HERO_PHONE) - b.distanceTo(HERO_PHONE));
   const others = phoneSpots.slice(0, MAXP - 1);
   const bodies = new THREE.InstancedMesh(phoneBody, pbMat, others.length);
@@ -475,7 +485,10 @@ export const controlScene = (): SceneMod => {
   const update = ({ lt, gt, shot, cam }: Ctx): Partial<Look> => {
     const mode = shot.mode;
     deskU.uT.value = gt;
-    phScr.forEach((m, i) => m.color.setScalar(mode === "phones" ? 22 * sstep(aOn[i], aOn[i] + 0.12, lt) : 0));
+    phScr.forEach((m, i) => {
+      m.map = mode === "phones9" ? small9.tex : small.tex;
+      m.color.setScalar(mode === "phones" ? 22 * sstep(aOn[i], aOn[i] + 0.12, lt) : mode === "phones9" ? 14 : 0);
+    });
     let room = 0.55;
     let red = 0;
     let monOn = 1;
@@ -548,6 +561,33 @@ export const controlScene = (): SceneMod => {
       look.aperture = 1.6;
       key.intensity = 16;
       fill.intensity = 2.5;
+    } else if (mode === "phones9") {
+      // 9:00, the shutdown: the lights are on, the screens are on, and on every desk the same message waits
+      room = 0.45;
+      drawLock(hero.ctx, 10, { time: "09:00", date: "3月14日 星期四", notifs: PHONE_TEXT.film, top: 600 });
+      hero.tex.needsUpdate = true;
+      const hp = HERO_PHONE;
+      if (lt < 2.4) {
+        // close on one phone: the message is readable
+        pos.set(hp.x + 0.01, hp.y + 0.16 - lt * 0.004, hp.z + 0.06 - lt * 0.002);
+        tgt.set(hp.x, hp.y, hp.z - 0.03);
+        fov = 30;
+        look.dof = 18;
+        look.focus = pos.distanceTo(hp);
+        look.aperture = 1.0;
+      } else {
+        // and the same message on every desk in the room
+        const k = clamp((lt - 2.4) / 2.6);
+        pos.set(2.3 - k * 0.4, 1.9 + k * 0.15, 5.3 + k * 0.2);
+        tgt.set(-0.4, 0.62, 1.9);
+        fov = 34;
+        look.dof = 10;
+        look.focus = pos.distanceTo(new THREE.Vector3(0.4, 0.75, 2.6));
+        look.aperture = 1.0;
+      }
+      look.bloomThreshold = 1.2;
+      look.bloom = 0.5;
+      look.streak = 0.1;
     } else if (mode === "phones") {
       room = 0;
       monOn = 0;
@@ -582,13 +622,13 @@ export const controlScene = (): SceneMod => {
       look.bloomThreshold = lt < 4.6 ? 1.6 : 0.95;
       look.streak = 0.12;
     }
-    (heroScr.material as THREE.MeshBasicMaterial).color.setScalar(mode === "phones" ? (lt < 4.6 ? 1.7 : 14) * clamp((lt - 1.3) / 0.2) : 0);
+    (heroScr.material as THREE.MeshBasicMaterial).color.setScalar(mode === "phones" ? (lt < 4.6 ? 1.7 : 14) * clamp((lt - 1.3) / 0.2) : mode === "phones9" ? (lt < 2.4 ? 1.6 : 14) : 0);
     if (mode !== "breaker" && mode !== "breakerhold") {
       key.intensity = 0;
       fill.intensity = 0;
     }
     cabLamps.forEach((m, i) => {
-      const on = mode === "breaker" || mode === "breakerhold" || mode === "countdown" || mode === "monitor" ? clamp(room / 0.45) : 0;
+      const on = mode === "breaker" || mode === "breakerhold" || mode === "countdown" || mode === "monitor" || mode === "phones9" ? clamp(room / 0.45) : 0;
       m.color.setRGB((i % 3 === 1 ? 3 : 0.3) * on, (i % 3 === 1 ? 1.6 : 3) * on, (i % 3 === 1 ? 0.2 : 0.7) * on);
     });
     deskU.uRoom.value = room;
@@ -605,6 +645,12 @@ export const controlScene = (): SceneMod => {
     // phone glow list for the desk shader
     const arr = deskU.uPh.value;
     arr.forEach((v) => v.set(0, 0, 0, 0));
+    if (mode === "phones9") {
+      arr[0].set(HERO_PHONE.x, HERO_PHONE.y + 0.02, HERO_PHONE.z, 0.5);
+      others.forEach((p, i) => {
+        if (i + 1 < MAXP) arr[i + 1].set(p.x, p.y + 0.02, p.z, 0.5);
+      });
+    }
     if (mode === "phones") {
       arr[0].set(HERO_PHONE.x, HERO_PHONE.y + 0.02, HERO_PHONE.z, clamp((lt - 1.3) / 0.2) * (lt < 4.6 ? 0.3 : 2.2));
       others.forEach((p, i) => {

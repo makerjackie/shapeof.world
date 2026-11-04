@@ -40,6 +40,10 @@ tools/review.sh out/shutoff.mp4 out/rv 1                              # 每分�
 
 ## 坑
 
+- **城市来自 OpenStreetMap**：`tools/city_build.py` 把 `data/osm/`（Overpass 下载，不进 Git）变成 `public/city/`（楼、路、地面栅格、地标表）；`tools/city_map.py` 出俯视图，用来定机位（坐标原点是平安金融中心，x 向东、z 向南）。OSM 里福田的楼只画了大约一半，空地沿真实街道补楼。地下车站和商场（福田站、连城新天地）也标成了 building，要按 `layer<0` / `location=underground` 去掉，不然会在深南大道上立起一堵墙。
+- 着色器里不能用 `half` 当变量名（GLSL 保留字），整段路面会不渲染。
+- 楼体灯光秀的底色要接近黑：整面亮蓝的楼看起来像一个个蓝盒子。能看清字的广告放在真正的大屏上（`drawAd`），楼体只跑光波和一个大"安"字。
+
 - **整块黑色矩形**：HDR 画面里只要有一个 NaN/Inf 像素，辉光的模糊就会把它抹成一大块黑。后期第一步先清理（`SAN_FRAG`）。
 - WebGL 画布不直接上屏：每帧画完再 `drawImage` 到一张 2D canvas 上，Remotion 截的是 2D canvas。
 - 远处点精灵按距离平方变暗，否则成百上千个车灯叠在同一个像素上会变成一团强光。

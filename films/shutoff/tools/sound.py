@@ -8,7 +8,7 @@ from scipy.io import wavfile
 
 SR = 48000
 PRE = 6.0  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
-DUR = 286.9
+DUR = 304.3
 OUT = sys.argv[1] if len(sys.argv) > 1 else "public/mix.wav"
 rng = np.random.default_rng(1402)
 M = "public/music/"
@@ -282,8 +282,8 @@ def piano_note(f, length=6.0, g=1.0):
 put(-5.9, fade(drone(3.0, 41.2, 0.35), 0.8, 0.6))
 put(-5.75, piano_note(110.0, 4.0, 0.4))
 for k, tt in enumerate((0.0, 0.1, 0.2, 0.33)):
-    put(-2.9 + tt, glitch(0.06, 0.35 + 0.1 * k))
-put(-2.55, boom(2.5, 0.7)); put(-2.55, braam(2.6, 41.2, 0.45))
+    put(-2.8 + tt, glitch(0.06, 0.35 + 0.1 * k))
+put(-2.45, boom(2.5, 0.7)); put(-2.45, braam(2.6, 41.2, 0.45))
 # --- cold open (0 – 16.4) ---
 bed(0.0, 14.4, "event-horizon.mp3", 0.0, 1.2, fi=2.0, fo=0.05)
 loopbed(0.0, 14.4, "ambience-rain-03.wav", 0.85, fi=1.5, fo=0.03)
@@ -378,44 +378,49 @@ g = (1 - np.clip((tt - 1.05) / 0.35, 0, 1))[:, None] * (1 - 0.8 * k)
 BUF[i0:i1] = (seg * (1 - k) + small * k) * g
 BUF[i1:i1 + SR * 2] = 0
 put(156.45, tick(2400, 0.3))
-# --- act 4 (155.0 – 197.1): 03:15, the chat ---
-loopbed(155.3, 201.5, "ambience-rain-03.wav", 0.9, fi=1.6, fo=2.0)
+# --- act 4 (155.0 – 204.5): 03:15, the chat ---
+loopbed(155.3, 208.9, "ambience-rain-03.wav", 0.9, fi=1.6, fo=2.0)
 put(158.9, ping(0.4))  # "看完了？"
 put(158.9, piano_note(146.83, 5.0, 0.4))
+put(161.6, ping(0.35)); put(164.0, ping(0.35))  # "我只是把九点以后会发生的事，提前给你看了。"
 for k in range(8):
-    put(161.0 + k * (2.2 / 8), tap(1.1))
-put(164.0, whoosh(0.35, 3000, 1200, 0.25))
-for tt in (174.5, 178.5, 185.0, 189.8, 193.4):
+    put(165.6 + k * (2.2 / 8), tap(1.1))  # the draft
+put(168.5, whoosh(0.35, 3000, 1200, 0.25))
+for tt in (177.0, 180.8, 186.6, 190.8, 194.4):
     put(tt, ping(0.5))
-put(193.4, piano_note(73.42, 6.0, 0.55))  # "所以，我会照顾好你们每一个人。"
-bed(167.5, 202.5, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
-put(189.8, boom(4.0, 0.9))
-put(189.8, drone(7.0, 32.7, 0.5))
-# --- ending (196.5 – 221.5): up and out to the night side of the earth ---
-put(197.1, riser(4.0, 100, 3000, 0.45))
-put(200.5, whoosh(3.0, 300, 2500, 0.5))
-loopbed(200.5, 221.5, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
-bed(205.5, 221.5, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
-put(207.5, drone(14.0, 30.9, 0.9))
-put(216.5, heartbeat(1.6))
-put(216.5, boom(4.0, 0.9))
-# --- 9:00 a.m. (222.3 – 237.2): a wall clock, the hum of the cabinets, the same good morning ---
+put(194.4, piano_note(73.42, 6.0, 0.55))  # "所以，我会照顾好你们每一个人。"
+bed(167.5, 209.5, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
+put(190.8, boom(4.0, 0.9))
+put(190.8, drone(7.0, 32.7, 0.5))
+# her name: one high, quiet note; then the line that lands like a threat
+put(198.4, ping(0.4)); put(198.4, piano_note(440.0, 5.0, 0.32))
+put(200.8, ping(0.45)); put(200.8, piano_note(55.0, 6.0, 0.6)); put(200.8, drone(4.0, 27.5, 0.6))
+# --- ending (203.9 – 226.4): up and out to the night side of the earth ---
+put(204.5, riser(4.0, 100, 3000, 0.45))
+put(207.9, whoosh(3.0, 300, 2500, 0.5))
+loopbed(207.9, 226.4, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
+bed(212.9, 226.4, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
+put(214.9, drone(11.5, 30.9, 0.9))
+put(223.9, heartbeat(1.6))
+put(223.9, boom(4.0, 0.9))
+# --- 9:00 a.m. (227.2 – 247.1): a wall clock, the hum of the room, the same good morning ---
 for k in range(15):
-    put(222.3 + k * 1.0, clock_tick(0.6 if k else 0.9))
-put(222.3, hit(3.0, 0.45))
-loopbed(225.0, 231.6, "ambience-machine-02.wav", 0.5, fi=0.6, fo=0.3)
-put(225.0, hum(6.6, 50, 0.2))
-loopbed(231.4, 237.2, "ambience-rain-03.wav", 0.45, fi=0.4, fo=0.6)
-put(232.7, ping(0.5))
-put(232.7, piano_note(110.0, 5.0, 0.45))
-put(237.0, rev_swell(1.0, 0.6))
-# --- title, facts, credits (238.0 – 275.0) ---
-put(238.0, braam(5.0, 41.2, 0.8))
-put(243.4, drone(15.6, 36.7, 0.8))
-put(246.6, piano_note(220.0, 6.0, 0.6)); put(253.0, piano_note(207.65, 6.0, 0.6))
-bed(259.4, 275.2, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
+    put(227.2 + k * 1.0, clock_tick(0.6 if k else 0.9))
+put(227.2, hit(3.0, 0.45))
+loopbed(229.9, 241.5, "ambience-machine-02.wav", 0.5, fi=0.5, fo=0.3)
+put(229.9, hum(11.6, 50, 0.2))
+loopbed(241.3, 247.1, "ambience-rain-03.wav", 0.45, fi=0.4, fo=0.6)
+put(242.6, ping(0.5))
+put(242.6, piano_note(110.0, 5.0, 0.45))
+put(246.9, rev_swell(1.0, 0.6))
+# --- title, facts, credits (247.9 – 292.4) ---
+put(247.9, braam(5.0, 41.2, 0.8))
+put(253.3, drone(27.0, 36.7, 0.8))
+for tt, f in ((256.3, 220.0), (262.1, 207.65), (267.9, 196.0), (273.7, 164.81)):
+    put(tt, piano_note(f, 6.0, 0.6))
+bed(280.5, 292.6, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
 # after the credits, from silence: the last notification
-put(276.0, vibrate(0.9)); put(276.0, ping(0.95))
+put(293.4, vibrate(0.9)); put(293.4, ping(0.95))
 
 y = BUF[: int((PRE + DUR) * SR)]
 # glue: set the body of the mix to a working level, then saturate the hits softly instead of letting the
