@@ -42,10 +42,22 @@ const Banner: React.FC<{ body: string; y: number; a: number }> = ({ body, y, a }
 
 const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
   const center: React.CSSProperties = { position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#fff", textAlign: "center" };
+  const shade = "radial-gradient(ellipse 60% 45% at 50% 50%, rgba(0,0,0,0.72), rgba(0,0,0,0.35) 60%, rgba(0,0,0,0) 100%)";
+  if (c.kind === "slogan") {
+    // 安's advert, as a tagline under the light show
+    const a = fadeIO(t, c, 0.6, 0.4);
+    const b = clamp((t - c.t0 - 0.7) / 0.6);
+    return (
+      <div style={{ ...center, top: BAR, bottom: BAR, justifyContent: "flex-end", paddingBottom: 64 }}>
+        <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 70, letterSpacing: "0.2em", paddingLeft: "0.2em", opacity: a, textShadow: "0 0 30px rgba(0,0,0,0.95), 0 0 10px rgba(0,0,0,0.9)" }}>{c.lines[0]}</div>
+        <div style={{ fontFamily: SANS, fontWeight: 500, fontSize: 30, letterSpacing: "0.4em", paddingLeft: "0.4em", marginTop: 18, color: "rgba(255,170,90,0.95)", opacity: a * b, textShadow: "0 0 16px rgba(0,0,0,0.95)" }}>{c.lines[1]}</div>
+      </div>
+    );
+  }
   if (c.kind === "card") {
     const a = fadeIO(t, c, 0.4, 0.3);
     return (
-      <div style={{ ...center, background: "#000" }}>
+      <div style={{ ...center, background: c.over ? shade : "#000", opacity: c.over ? a : 1 }}>
         <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 66, letterSpacing: "0.14em", opacity: a, transform: `translateY(${(1 - easeOut((t - c.t0) / 1.2)) * 10}px)` }}>{c.lines[0]}</div>
       </div>
     );
@@ -67,7 +79,7 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
     const a = fadeIO(t, c, 0.4, 0.35);
     const b = clamp((t - c.t0 - 1.05) / 0.5);
     return (
-      <div style={{ ...center, background: "#000" }}>
+      <div style={{ ...center, background: c.over ? shade : "#000" }}>
         <div style={{ fontFamily: SERIF, fontWeight: 600, fontSize: 62, letterSpacing: "0.14em", opacity: a, color: "rgba(255,255,255,0.88)" }}>{c.lines[0]}</div>
         <div style={{ fontFamily: SERIF, fontWeight: 700, fontSize: 92, letterSpacing: "0.2em", paddingLeft: "0.2em", marginTop: 34, opacity: a * b, transform: `translateY(${(1 - easeOut(b)) * 10}px)` }}>{c.lines[1]}</div>
       </div>

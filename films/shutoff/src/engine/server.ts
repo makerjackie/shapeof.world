@@ -61,7 +61,7 @@ void main(){
         vec2 c = vec2(0.50 + 0.025 * float(k), 0.5);
         float d = length((vec2(u, fu * U) - vec2(c.x, c.y * U)) / vec2(1.0, 1.0));
         float b = step(0.4, h21(vec2(floor(uT * (3.0 + 8.0 * h11(seed + ui)) + ui), seed + float(k))));
-        vec3 lc = k == 0 ? vec3(0.25, 0.65, 1.0) : vec3(0.3, 1.0, 0.5);
+        vec3 lc = k == 0 ? vec3(0.60, 0.76, 1.0) : vec3(1.0, 0.50, 0.15);
         led += lc * smoothstep(0.0035, 0.0012, d) * mix(0.15, 1.0, b);
       }
     } else if (span == 2.0) {
@@ -70,7 +70,7 @@ void main(){
       float bx = 0.03 + (bay + 0.5) * 0.045;
       float d = length(vec2(u - bx, (fu - 0.25) * U));
       float b = step(0.55, h21(vec2(floor(uT * 12.0 + bay * 3.0), seed + ui * 7.0 + bay)));
-      led += vec3(0.25, 0.6, 1.0) * smoothstep(0.003, 0.001, d) * mix(0.1, 1.2, b);
+      led += vec3(0.60, 0.76, 1.0) * smoothstep(0.003, 0.001, d) * mix(0.1, 1.2, b);
       face *= 0.75 + 0.25 * step(0.08, fract((u - 0.03) / 0.045));
     } else if (span == 3.0) {
       // switch ports: rows of tiny green/amber lights
@@ -78,12 +78,12 @@ void main(){
       float px = 0.06 + (port + 0.5) * 0.018;
       float d = length(vec2(u - px, (fu - 0.3) * U));
       float b = step(0.35, h21(vec2(floor(uT * 20.0 + port), seed + ui + port * 1.3)));
-      vec3 lc = h21(vec2(port, seed)) < 0.85 ? vec3(0.4, 1.0, 0.4) : vec3(1.0, 0.65, 0.2);
+      vec3 lc = h21(vec2(port, seed)) < 0.8 ? vec3(0.60, 0.76, 1.0) : vec3(1.0, 0.50, 0.15);
       led += lc * smoothstep(0.0022, 0.0008, d) * b * step(0.06, u) * step(u, 0.5);
     }
     // a light bar on some racks
     float bar = smoothstep(0.004, 0.0, abs(u - 0.3) - 0.24) * smoothstep(0.004, 0.0, abs(v - 2.05) - 0.006);
-    led += vec3(0.25, 0.55, 1.0) * bar * step(0.5, h11(seed * 3.0)) * 0.6;
+    led += vec3(1.0, 0.50, 0.15) * bar * step(0.5, h11(seed * 3.0)) * 0.6;
     col = mix(col, face, inside);
     // ceiling lights reflected in the faceplates
     col += vec3(0.6, 0.75, 1.0) * 0.03 * pow(clamp(dot(reflect(V, n), vec3(0.0, 1.0, 0.0)), 0.0, 1.0), 6.0) * on;

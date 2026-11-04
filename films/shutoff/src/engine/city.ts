@@ -23,17 +23,25 @@ export type CityState = {
   allRed: number;
   carT: number; // traffic clock
   carBlink: number;
+  revR: number; // the reveal: radius of the scan that draws the city, from revX/revZ
+  revX: number;
+  revZ: number;
+  ambR: number; // radius of 安's amber, from ambC
+  ambX: number;
+  ambZ: number;
 };
 
 // ---------------- shared GLSL ----------------
 const MASK = /* glsl */ `
-uniform float uOffR, uOnR, uBlink, uDusk;
+uniform float uOffR, uOnR, uBlink, uDusk; uniform float uRevR; uniform vec2 uRevC;
 float district(vec2 p){ vec2 c = floor(p / 520.0); float d = length(c * 520.0 + 260.0); return d + h21(c * 1.7) * 260.0; }
 float lightsOn(vec2 p){
   float d = district(p);
   float off = step(d, uOffR) * (1.0 - step(d, uOnR));
-  return (1.0 - off) * uBlink;
-}`;
+  float rv = uRevR > 0.0 ? smoothstep(uRevR, uRevR - 120.0, length(p - uRevC)) : 1.0;
+  return (1.0 - off) * uBlink * rv;
+}
+float relitAt(vec2 p){ return uOnR > 0.0 ? step(district(p), uOnR) : 0.0; }`;
 function fract(x: number) {
   return x - Math.floor(x);
 }
@@ -47,28 +55,41 @@ function h21js(x: number, y: number) {
   p3z += dd;
   return fract((p3x + p3y) * p3z);
 }
+const ICE: [number, number, number] = [0.6, 0.76, 1.0];
+const AMB: [number, number, number] = [1.0, 0.5, 0.15];
+// mirrors dataCol() in the shaders: 1 where the place is 安's (relit after the blackout, or inside the takeover front)
+const ambJS = (x: number, z: number, s: CityState) => {
+  if (s.onR > 0) {
+    const cx = Math.floor(x / 520);
+    const cz = Math.floor(z / 520);
+    const d = Math.hypot(cx * 520 + 260, cz * 520 + 260) + h21js(cx * 1.7, cz * 1.7) * 260;
+    if (d <= s.onR) return 1;
+  }
+  if (s.ambR <= 0) return 0;
+  return Math.hypot(x - s.ambX, z - s.ambZ) + h21js(Math.floor(x / 180), Math.floor(z / 180)) * 260 < s.ambR ? 1 : 0;
+};
+const dcol = (x: number, z: number, s: CityState) => (ambJS(x, z, s) > 0.5 ? AMB : ICE);
 const lightsOnJS = (x: number, z: number, s: CityState) => {
   const cx = Math.floor(x / 520);
   const cz = Math.floor(z / 520);
   const d = Math.hypot(cx * 520 + 260, cz * 520 + 260) + h21js(cx * 1.7, cz * 1.7) * 260;
   const off = d <= s.offR && d > s.onR ? 1 : 0;
-  return (1 - off) * s.blink;
+  const rv = s.revR > 0 ? clamp((s.revR - Math.hypot(x - s.revX, z - s.revZ)) / 120) : 1;
+  return (1 - off) * s.blink * rv;
 };
 
 const SKY_GLSL = /* glsl */ `
 uniform float uGlow; // 1 = the city's light pollution lights the haze; drops during the blackout
 uniform vec2 uSun; // horizontal direction of the afterglow at dusk
+// the data look: the city is what 安 sees. A black void; every surface sampled as points of light, every edge a hair
+// line. Cold white is the human world; amber is 安.
+const vec3 ICE = vec3(0.60, 0.76, 1.0);
+const vec3 AMB = vec3(1.0, 0.50, 0.15);
 vec3 skyCol(vec3 d){
   float e = max(d.y, 0.0);
-  vec3 nightTop = vec3(0.0025, 0.004, 0.009), nightMid = vec3(0.010, 0.013, 0.024);
-  vec3 nightHor = mix(vec3(0.010, 0.012, 0.019), vec3(0.042, 0.032, 0.030), uGlow);
-  vec3 duskTop = vec3(0.004, 0.014, 0.055), duskHor = vec3(0.30, 0.15, 0.09);
-  float west = 0.5 + 0.5 * dot(normalize(d.xz + 1e-4), uSun);
-  vec3 dHor = mix(vec3(0.03, 0.065, 0.16), duskHor, pow(west, 4.0));
-  vec3 night = mix(nightHor, nightMid, 1.0 - exp(-e * 9.0));
-  night = mix(night, nightTop, smoothstep(0.08, 0.7, e));
-  vec3 dusk = mix(dHor, duskTop, smoothstep(0.0, 0.3, pow(e, 0.6)));
-  return mix(night, dusk, uDusk);
+  vec3 hor = vec3(0.0045, 0.0060, 0.0105) * mix(0.35, 1.0, uGlow);
+  vec3 top = vec3(0.0006, 0.0008, 0.0014);
+  return mix(hor, top, smoothstep(0.0, 0.35, pow(e, 0.7)));
 }
 vec3 fogTo(vec3 col, vec3 wp, vec3 cam, float dens){
   vec3 v = wp - cam;
@@ -82,6 +103,33 @@ vec3 fogTo(vec3 col, vec3 wp, vec3 cam, float dens){
 float lineAA(float d, float w){
   float px = max(fwidth(d), 1e-4);
   return smoothstep(w + px, w - px, d) * min(1.0, w / px);
+}
+// a hair line of constant width in pixels
+float lpx(float d, float wpx){
+  float px = max(fwidth(d), 1e-5);
+  return clamp(wpx + 0.5 - abs(d) / px, 0.0, 1.0);
+}
+// a lattice of round points of constant pixel radius R; once the lattice is finer than a few pixels the points merge
+// into their average light, so far facades glow evenly instead of shimmering
+float dotPx(vec2 uv, float R, float cap){
+  vec2 fw = max(fwidth(uv), vec2(1e-5));
+  vec2 f = fract(uv) - 0.5;
+  float d = length(f / fw);
+  float nearD = smoothstep(R + 0.7, R - 0.3, d);
+  float cov = 3.14159 * R * R * fw.x * fw.y;
+  float k = smoothstep(0.22, 0.42, max(fw.x, fw.y));
+  return mix(nearD, cap * (1.0 - exp(-cov / cap)), k);
+}
+// how much of 安 is in this place: the districts it relit after the blackout, and the takeover front
+uniform float uAmbR; uniform vec2 uAmbC; uniform float uScanR; uniform vec2 uScanC;
+vec3 dataCol(vec2 p, float relit){
+  float a = max(relit, step(length(p - uAmbC) + h21(floor(p / 180.0)) * 260.0, uAmbR));
+  return mix(ICE, AMB, a);
+}
+float scanRing(vec2 p){
+  if (uScanR <= 0.0) return 0.0;
+  float d = length(p - uScanC) - uScanR;
+  return exp(-d * d / 900.0) + 0.25 * exp(-max(-d, 0.0) / 260.0) * step(d, 0.0);
 }`;
 
 // ---------------- buildings ----------------
@@ -108,114 +156,80 @@ void main(){
   // typ: 0 glass office / landmark, 1 housing, 2 urban village, 3 low (industry, stations, halls)
   float typ = kind > 3.5 ? 0.0 : kind;
   bool roof = wallId < -0.5;
-  vec3 n = roof ? vec3(0.0, 1.0, 0.0) : vec3(cos(vWall.w), 0.0, sin(vWall.w));
-  vec3 V = normalize(vW - uCam);
   float on = lightsOn(vC);
-  float hRel = vW.y;
-  vec3 col;
-  vec3 streetGlow = mix(vec3(1.0, 0.55, 0.22), vec3(0.85, 0.82, 0.75), smoothstep(0.55, 0.7, fbm(vC * 0.0011 + 7.3)));
-  float up = exp(-hRel / 10.0) * 0.03 * on;
-  float tone = h11(seed * 1.31);
-  vec3 skin = tone < 0.4 ? vec3(0.006, 0.007, 0.009) : tone < 0.8 ? vec3(0.011, 0.011, 0.012) : vec3(0.016, 0.013, 0.011);
-  if (typ > 1.5 && typ < 2.5) skin = vec3(0.016, 0.014, 0.012) * (0.8 + 0.5 * tone);
-  skin *= 1.0 + 0.6 * uDusk;
-  // facade lighting, the signature of Shenzhen at night: towers outlined with LED strips along every corner and the
-  // roof line; many housing towers too, along the roof only
-  float fl = h11(seed + 11.0);
-  float contour = typ < 0.5 && (top > 240.0 || (top > 170.0 && fl < 0.22)) ? 1.0 : 0.0;
-  float roofLine = contour;
-  float cc = h11(seed + 12.0);
-  vec3 ledC = cc < 0.45 ? vec3(1.0, 0.72, 0.38) : cc < 0.8 ? vec3(0.85, 0.92, 1.0) : vec3(0.35, 0.78, 1.0);
-  float ledI = 1.1 * on * mix(1.0, 0.45, uDusk);
+  vec3 dc = dataCol(vC, relitAt(vC));
+  vec3 col = vec3(0.0016, 0.0019, 0.0028);
+  float hk = 0.55 + 0.45 * smoothstep(0.0, 260.0, vW.y); // points brighten with height: crowns read against the void
+  float scan = scanRing(vC);
   if (roof) {
-    col = vec3(0.006, 0.007, 0.008) * (0.8 + 0.4 * vnoise(vW.xz * 0.3)) * (0.8 + 1.8 * h11(seed + 21.0));
-    col += skyCol(vec3(0.0, 1.0, 0.0)) * 0.06;
-    vec2 g = floor(vW.xz / 7.0);
-    float l = step(0.985, h21(g + seed)) * smoothstep(0.7, 0.3, length(fract(vW.xz / 7.0) - 0.5) * 7.0);
-    col += vec3(1.0, 0.8, 0.6) * l * 0.6 * on * step(typ, 1.5);
-    col += streetGlow * up * 0.5;
+    float d = dotPx(vW.xz / 5.0, 0.55, 0.5);
+    col += dc * d * 0.05 * on * hk;
   } else {
     float hcoord = vWall.x;
     float edgeD = min(vWall.y, vWall.z - vWall.y);
     float faceId = mod(wallId, 4.0) + 1.0;
-    // real proportions: a 1.5 m curtain-wall module on offices, 2.4 m bays in housing, 3.2 m rooms in the villages
+    // one point per window module: 3 m x 4 m on offices, a 2.4 m bay per floor in housing, a room in the villages
     float fh = typ < 0.5 ? 4.0 : typ < 1.5 ? 2.95 : typ < 2.5 ? 3.1 : 6.0;
-    float cw = typ < 0.5 ? 1.5 : typ < 1.5 ? 2.4 : 3.2;
-    vec2 uvw = vec2(hcoord / cw, (vW.y - 1.5) / fh);
-    vec2 cell = floor(uvw); vec2 f = fract(uvw);
-    vec2 fw = fwidth(uvw);
-    float balcony = typ > 0.5 && typ < 1.5 && mod(cell.x, 3.0) < 0.5 ? 1.0 : 0.0;
-    float aaX = smoothstep(0.25, 0.7, fw.x);
-    float aaY = smoothstep(0.45, 0.95, fw.y);
-    vec2 wmin = typ < 0.5 ? vec2(0.05, 0.10) : balcony > 0.5 ? vec2(0.08, 0.10) : typ < 1.5 ? vec2(0.23, 0.30) : vec2(0.2, 0.28);
-    vec2 wmax = typ < 0.5 ? vec2(0.95, 0.93) : balcony > 0.5 ? vec2(0.92, 0.80) : typ < 1.5 ? vec2(0.77, 0.80) : vec2(0.72, 0.78);
-    float win = step(wmin.x, f.x) * step(f.x, wmax.x) * step(wmin.y, f.y) * step(f.y, wmax.y);
-    if (typ > 2.5) win *= step(0.8, h21(cell + seed)) * step(cell.y, 1.5);
-    float litF = (typ < 0.5 ? 0.14 + 0.3 * h11(seed) : typ < 1.5 ? 0.12 + 0.28 * h11(seed + 3.0) : typ < 2.5 ? 0.3 + 0.3 * h11(seed + 3.0) : 0.3) * uLit;
-    if (top > 240.0) litF = max(litF, 0.35 * uLit);
+    float cw = typ < 0.5 ? 3.0 : typ < 1.5 ? 2.4 : typ < 2.5 ? 3.2 : 6.0;
+    vec2 uvw = vec2(hcoord / cw, (vW.y - 1.0) / fh);
+    vec2 cell = floor(uvw);
+    vec2 fwc = fwidth(uvw);
+    float litF = (typ < 0.5 ? 0.18 + 0.3 * h11(seed) : typ < 1.5 ? 0.22 + 0.3 * h11(seed + 3.0) : typ < 2.5 ? 0.35 + 0.3 * h11(seed + 3.0) : 0.15) * uLit;
     float bay = floor(cell.x / (6.0 + floor(h11(seed + 4.0) * 10.0)));
     float unit = floor(cell.x / 3.0);
     float rFloor = h21(vec2(cell.y * 1.3, seed + faceId));
     float rBay = h21(vec2(cell.y * 0.7 + bay * 3.1, seed * 1.7 + faceId));
     float rWin = h21(cell + seed * 13.0 + faceId * 7.1);
     float rUnit = h21(vec2(unit * 1.7 + faceId * 13.0, cell.y + seed * 3.3));
-    float r = typ < 0.5 ? mix(rFloor, rBay, 0.22) : typ < 1.5 ? mix(rWin, rUnit, 0.8) : rWin;
+    float r = typ < 0.5 ? mix(mix(rFloor, rBay, 0.3), rWin, 0.55) : typ < 1.5 ? mix(rWin, rUnit, 0.8) : rWin;
     float lit = step(r, litF);
-    float k = h21(cell * 1.7 + seed);
-    vec3 wc = typ < 0.5 ? (h11(seed + 6.0) < 0.6 ? vec3(0.95, 0.88, 0.76) : vec3(0.8, 0.87, 1.0))
-      : typ < 1.5 ? (k < 0.7 ? vec3(1.0, 0.64, 0.34) : k < 0.97 ? vec3(1.0, 0.8, 0.58) : vec3(0.45, 0.6, 1.0) * (0.7 + 0.3 * sin(uT * 9.0 + k * 50.0)))
-      : (k < 0.45 ? vec3(0.85, 0.95, 1.0) : k < 0.85 ? vec3(1.0, 0.7, 0.4) : vec3(1.0, 0.9, 0.75));
-    float sp = h21(cell * 3.1 + seed * 7.0);
-    float wint = typ < 0.5 ? (0.10 + 0.55 * sp * sp * sp) * (0.6 + 0.6 * h21(vec2(bay, cell.y))) : (0.12 + 0.8 * pow(h21(vec2(unit, cell.y) + 3.3), 2.0)) * (balcony > 0.5 ? 0.8 : 1.0);
-    float blind = step(0.72, h21(cell * 2.9 + seed)) * (0.35 + 0.4 * h21(cell + 7.7));
-    float fy = (f.y - wmin.y) / (wmax.y - wmin.y);
-    float inner = mix(0.7, 1.15, smoothstep(0.1, 0.95, fy));
-    inner *= fy > 1.0 - blind ? 0.45 : 1.0;
-    float fres = 0.04 + 0.96 * pow(1.0 - abs(dot(V, n)), 5.0);
-    vec3 Rf = reflect(V, n);
-    vec3 glass = mix(vec3(0.003), skyCol(Rf), smoothstep(-0.06, 0.04, Rf.y)) * (typ < 0.5 ? 0.12 + 0.8 * fres : 0.05 + 0.2 * fres) * (0.6 + 0.4 * smoothstep(0.0, 200.0, vW.y));
-    vec3 wall = skin * (0.85 + 0.3 * vnoise(vec2(hcoord, vW.y) * 0.2));
-    if (typ < 0.5) wall = mix(wall, glass * 0.8, 0.55);
-    if (typ < 0.5) wall *= 0.7 + 0.3 * step(0.5, f.y);
-    if (balcony > 0.5) wall += streetGlow * 0.012 * on * smoothstep(0.1, 0.0, f.y) * (1.0 - aaY);
-    // the media facade: every window module is one LED pixel of a picture spread across the whole skyline
-    vec3 led = vec3(0.0);
-    float ledOn = 0.0;
+    // every module is a faint point; the rooms with people in them burn bright
+    float big0 = smoothstep(9.0, 28.0, min(1.0 / max(fwc.x, 1e-5), 1.0 / max(fwc.y, 1e-5)));
+    float bNear = mix(mix(0.045, 0.14, big0), (typ < 0.5 ? 0.6 : 0.9) + 0.5 * h21(cell * 3.1 + seed), lit);
+    float bFar = mix(0.035, 0.75, litF);
+    float b = mix(bNear, bFar, smoothstep(0.7, 1.4, max(fwc.x, fwc.y)));
+    // close up, the lattice opens into the building's own grid: window frames and floor slabs as hair lines
+    vec2 cpx = 1.0 / max(fwc, vec2(1e-5));
+    float big = smoothstep(9.0, 28.0, min(cpx.x, cpx.y));
+    vec2 fr = fract(uvw);
+    float dB = min(min(fr.x, 1.0 - fr.x) * cpx.x * 1.6, min(fr.y, 1.0 - fr.y) * cpx.y);
+    float frame = smoothstep(1.3, 0.3, dB) * big;
+    float pt = dotPx(uvw, (lit > 0.5 ? 0.95 : 0.7) + big * min(cpx.x, cpx.y) * 0.07, 0.4);
+    // the lit rooms are people, and people stay cold white even in 安's amber city
+    vec3 pc = mix(dc, ICE, lit);
+    // the media facades of the CBD, as Shenzhen runs them: each tower face is a screen of LED points. First 安's mark
+    // on every face, an amber tide rising up the towers; later the order, written down every face and marching
     if (show > 0.5 && uShowOn > 0.0) {
-      vec2 st = vec2(dot(vW - uShowC, uShowR) / uShowBox.x + 0.5, (vW.y - uShowBox.y) / uShowBox.z);
-      vec2 res = vec2(uShowBox.x / 1.5, uShowBox.z / 4.0);
-      vec2 sq = (floor(st * res) + 0.5) / res;
-      float inside = step(0.0, st.x) * step(st.x, 1.0) * step(0.0, st.y) * step(st.y, 1.0);
-      float facing = smoothstep(0.05, 0.3, dot(n, -normalize(vec3(uShowR.z, 0.0, -uShowR.x))));
+      float W = vWall.z;
+      float k = uShowOn * step(1.5, vW.y) * step(26.0, W) * step(mix(150.0, 90.0, uShowFlip), top);
       float flip = step(h11(seed + 31.0) * 0.8 + 0.05, uShowFlip);
-      led = mix(texture2D(tShowA, sq).rgb * 1.15, texture2D(tShowB, sq).rgb * 1.1, flip) * on;
-      ledOn = inside * facing * uShowOn * step(1.5, vW.y);
+      float S = min(W * 0.8, top * 0.4);
+      // read left to right whichever way the wall was wound
+      float ux = dFdx(vWall.y) + dFdy(vWall.y) * 0.0 >= 0.0 ? vWall.y : W - vWall.y;
+      vec2 g = vec2((ux - 0.5 * W) / S + 0.5, (vW.y - (top - 0.1 * top - S)) / S);
+      float inA = step(0.0, g.x) * step(g.x, 1.0) * step(0.0, g.y) * step(g.y, 1.0);
+      float breathe = 0.75 + 0.25 * sin(uT * 1.7 + h11(seed) * 6.0);
+      float tide = exp(-pow((vW.y / top - fract(uT * 0.16 + h11(seed + 2.0) * 0.25)) * 9.0, 2.0)) * 0.22;
+      float A = max(texture2D(tShowA, g).r * inA * breathe, tide);
+      float Sb = min(W * 0.62, 34.0);
+      vec2 gb = vec2((ux - 0.5 * W) / Sb + 0.5, fract((vW.y + uT * 9.0 + h11(seed) * 40.0) / (Sb * 12.0)));
+      float inB = step(0.0, gb.x) * step(gb.x, 1.0) * step(4.0, vW.y);
+      float Bv = texture2D(tShowB, gb).r * inB;
+      float lum = mix(A, Bv, flip) * k;
+      // the LED pitch is finer than the windows: 1.5 m by 2 m
+      float ptL = dotPx(vec2(vWall.x / 1.5, vW.y / 2.0), 0.85, 0.6);
+      float m = smoothstep(0.04, 0.2, lum);
+      pc = mix(pc, AMB, m);
+      pt = mix(pt, ptL, m);
+      b = mix(b, 0.15 + 2.6 * lum, m);
     }
-    vec3 winCol = mix(glass, wc * wint * inner * on, lit);
-    winCol = mix(winCol, led, ledOn);
-    float area = (wmax.x - wmin.x) * (wmax.y - wmin.y);
-    vec3 pattern = mix(wall, winCol, win);
-    vec3 cellAvg = mix(wall, mix(mix(glass, wc * wint * on, lit), led, ledOn), area);
-    vec3 avg = mix(wall, mix(mix(glass, wc * (typ < 0.5 ? 0.26 : 0.55) * on, litF), led, ledOn), area);
-    col = mix(mix(pattern, cellAvg, aaX), avg, aaY);
-    col *= mod(faceId, 2.0) < 0.5 ? 1.0 : 0.82;
-    col += vec3(1.0, 0.45, 0.2) * 0.02 * uDusk * max(0.0, dot(n, normalize(vec3(-1.0, 0.2, 0.35))));
-    col += streetGlow * up;
-    // ground floor: shopfronts and lobbies glowing onto the pavement; the urban villages are all shops at street level
-    if (typ < 2.5) {
-      float shop = step(hRel, 4.6) * step(0.8, hRel) * step(typ > 1.5 ? 0.15 : 0.35, h21(vec2(floor(hcoord / 6.0), seed)));
-      vec3 sc = h21(vec2(floor(hcoord / 6.0), seed + 2.0)) < 0.6 ? vec3(1.0, 0.72, 0.45) : vec3(0.75, 0.88, 1.0);
-      col += sc * shop * (typ > 1.5 ? 0.35 : 0.22) * on;
-    }
-    if (contour > 0.5) {
-      float L = lineAA(edgeD, 0.35) + lineAA(top - vW.y, 0.5);
-      col = mix(col, ledC * ledI, clamp(L, 0.0, 1.0) * (1.0 - ledOn));
-    } else if (roofLine > 0.5) {
-      col = mix(col, ledC * ledI * 0.8, clamp(lineAA(top - vW.y, 0.4), 0.0, 1.0));
-    }
-    if (typ < 0.5 && top > 200.0 && h11(seed + 8.0) < 0.35) col += vec3(0.75, 0.85, 1.0) * smoothstep(9.0, 0.0, top - vW.y) * 0.25 * on;
-    if (typ > 2.5) col += vec3(0.6, 0.85, 1.0) * smoothstep(0.08, 0.0, abs(fract(vW.y / 6.0) - 0.5)) * 0.12 * on * step(0.6, h11(seed + 2.0));
-    col *= 0.6 + 0.4 * smoothstep(0.0, 6.0, hRel);
+    col += pc * pt * b * on * hk;
+    col += dc * frame * 0.11 * on;
+    // hair lines on the corners and along the roof; the ground line where the tower meets the street
+    float e = lpx(edgeD, 0.55) * 0.45 + lpx(top - vW.y, 0.6) * 0.8 + lpx(vW.y - 0.3, 0.5) * 0.35;
+    e *= typ > 2.5 ? 0.5 : 1.0;
+    col += dc * e * 0.16 * on * hk;
+    col += AMB * scan * (pt * 1.6 + e * 0.4) * on;
   }
   col = fogTo(col, vW, uCam, uFogD);
   gl_FragColor = vec4(col, 1.0);
@@ -241,26 +255,19 @@ float pools(float along, float across, float hw){
 void main(){
   float along = vR.x; float w = vR.z; float hw = 0.5 * w; float cls = vR.w;
   float x = (vR.y * 0.5 + 0.5) * w; // metres from the left edge
-  float ac = vR.y * hw;
   float on = lightsOn(vW.xz);
-  vec3 col = vec3(0.011, 0.011, 0.012) * (0.8 + 0.4 * vnoise(vW.xz * 0.35));
-  // lanes: white dashes between lanes, solid edge lines, a solid yellow pair on the centre of two-way roads
+  vec3 dc = dataCol(vW.xz, relitAt(vW.xz));
+  vec3 col = vec3(0.0012, 0.0014, 0.002);
+  float bright = cls < 1.5 ? 0.30 : cls < 3.5 ? 0.20 : cls < 5.5 ? 0.12 : 0.06;
+  // the kerbs as two hair lines; lane dividers as a dotted line
+  float edge = lpx(min(x, w - x) - 0.4, 0.5);
   float lanes = max(1.0, floor(w / 3.5 + 0.2));
   float lw = w / lanes;
-  float dl = abs(x - floor(x / lw + 0.5) * lw);
-  float dash = step(0.4, fract(along / 10.0));
-  float interior = step(0.6, x) * step(x, w - 0.6);
-  float mark = lineAA(dl, 0.08) * dash * interior + lineAA(min(x, w - x) - 0.35, 0.08);
-  float centre = cls < 4.5 && cls > 0.5 && abs(cls - 5.0) > 0.5 ? lineAA(abs(abs(ac) - 0.18), 0.07) : 0.0;
-  vec3 lampC = mix(vec3(1.0, 0.55, 0.2), vec3(0.82, 0.8, 0.72), smoothstep(0.55, 0.7, fbm(vW.xz * 0.0011 + 7.3)));
-  float lp = pools(along, ac, hw);
-  float lit = lp * 0.07 + 0.002;
-  col += vec3(0.6) * mark * (0.02 + lit * 0.5) * on;
-  col += vec3(0.75, 0.55, 0.12) * centre * (0.02 + lit * 0.5) * on;
-  col += lampC * lit * on * (0.6 + 0.4 * uWet);
-  vec3 V = normalize(vW - uCam);
-  float fres = 0.02 + 0.98 * pow(1.0 - clamp(-V.y, 0.0, 1.0), 5.0);
-  col += skyCol(reflect(V, vec3(0.0, 1.0, 0.0))) * fres * 0.12 * uWet;
+  float dl = x - floor(x / lw + 0.5) * lw;
+  float interior = step(1.0, x) * step(x, w - 1.0);
+  float dashes = dotPx(vec2(dl / lw + 0.5, along / 6.0), 0.5, 0.25) * interior * step(1.5, lanes);
+  col += dc * (edge * bright + dashes * bright * 0.5) * on;
+  col += AMB * scanRing(vW.xz) * (edge * 1.5 + 0.08) * on;
   col = fogTo(col, vW, uCam, uFogD);
   gl_FragColor = vec4(col, 1.0);
 }`;
@@ -286,22 +293,23 @@ void main(){
   vec4 g = mix(gf * inF, gn, inN);
   float road = g.r, water = g.g, green = g.b, glow = g.a;
   float on = lightsOn(p);
-  vec3 lampC = mix(vec3(1.0, 0.52, 0.18), vec3(0.82, 0.78, 0.7), smoothstep(0.55, 0.7, fbm(p * 0.0011 + 7.3)));
-  vec3 lot = vec3(0.008, 0.008, 0.009) * (0.7 + 0.6 * vnoise(p * 0.06));
-  vec3 col = mix(lot, vec3(0.003, 0.005, 0.004) * (0.7 + 0.6 * fbm(p * 0.01)), green);
-  col = mix(col, vec3(0.011, 0.011, 0.012), road);
-  float far = smoothstep(300.0, 3000.0, dist);
-  col += lampC * glow * on * mix(0.012, 0.12, far) * (1.0 - water) * (1.0 - 0.6 * uDusk);
-  col += lampC * road * on * 0.04 * far * (1.0 - water);
-  if (water > 0.5) {
-    vec3 V = normalize(vW - uCam);
-    vec3 R = reflect(V, vec3(0.0, 1.0, 0.0));
-    float fres = 0.02 + 0.98 * pow(1.0 - clamp(-V.y, 0.0, 1.0), 5.0);
-    float rip = vnoise(vec2(p.x * 0.05, p.y * 0.4)) * 0.6 + vnoise(vec2(p.x * 0.2, p.y * 1.5)) * 0.4;
-    col = vec3(0.002, 0.003, 0.005) + skyCol(R) * fres * 0.9;
-    col += lampC * on * glow * 0.12 * (0.4 + 1.2 * rip);
-  }
-  col *= inF + (1.0 - inF) * 0.6;
+  vec3 dc = dataCol(p, relitAt(p));
+  vec3 col = vec3(0.0010, 0.0012, 0.0017);
+  // a survey lattice over the land, every 20 m; trees in the parks as a scatter of points; the water left black
+  float lat = dotPx(p / 20.0, 0.5, 0.18) * 0.05;
+  vec2 tc = floor(p / 4.0);
+  vec2 tj = p / 4.0 + (vec2(h21(tc), h21(tc + 7.7)) - 0.5) * 0.6;
+  float trees = dotPx(tj, 0.55, 0.35) * step(0.45, h21(tc * 1.3)) * green * 0.09;
+  float land = 1.0 - water;
+  col += dc * (lat + trees) * land * on;
+  // beyond the mapped core, the far plain: its streets drawn from the raster as a faint carpet of light
+  float far = 1.0 - inN;
+  col += dc * road * on * 0.05 * far * land;
+  col += dc * glow * on * 0.035 * far * land;
+  // the shore: a hair line where land meets water
+  float sh = lpx(water - 0.5, 0.6) * 0.12;
+  col += dc * sh * on;
+  col += AMB * scanRing(p) * (0.12 + lat * 6.0) * land * on;
   col = fogTo(col, vW, uCam, uFogD);
   gl_FragColor = vec4(col, 1.0);
 }`;
@@ -316,12 +324,6 @@ ${SKY_GLSL}
 void main(){
   vec3 d = normalize(vD);
   vec3 c = skyCol(d);
-  c *= mix(0.6, 1.0, uGlow);
-  vec2 sp = vec2(atan(d.z, d.x), d.y) * 300.0;
-  float s = step(0.997, h21(floor(sp))) * smoothstep(0.1, 0.6, d.y) * (1.0 - uDusk);
-  c += vec3(0.8, 0.85, 1.0) * s * 0.12;
-  float cl = fbm(d.xz / max(d.y, 0.05) * 1.3);
-  c += vec3(0.04, 0.025, 0.018) * smoothstep(0.45, 0.8, cl) * smoothstep(0.0, 0.15, d.y) * (1.0 - uDusk) * uGlow;
   gl_FragColor = vec4(c, 1.0);
 }`;
 
@@ -344,8 +346,7 @@ varying vec3 vCol;
 void main(){
   vec2 q = gl_PointCoord - 0.5;
   float r = length(q);
-  float a = smoothstep(0.5, 0.0, r);
-  a = a * a;
+  float a = smoothstep(0.5, 0.3, r) * 0.75 + 0.25 * exp(-r * r * 30.0);
   if (dot(vCol, vCol) < 1e-6) discard;
   gl_FragColor = vec4(vCol * a, 1.0);
 }`;
@@ -389,57 +390,20 @@ class PointSet {
 }
 
 // ---------------- the media facades: 安's advert, and later its order ----------------
-const drawShow = (c: CanvasRenderingContext2D, w: number, h: number, t: number, kind: 0 | 1) => {
-  // a light show across the skyline: the facades stay dark; light runs over them in time, as the real shows do
-  c.fillStyle = kind === 0 ? "#000208" : "#080000";
+const drawShow = (c: CanvasRenderingContext2D, w: number, h: number, kind: 0 | 1) => {
+  c.fillStyle = "#000";
   c.fillRect(0, 0, w, h);
+  c.fillStyle = "#fff";
+  c.textBaseline = "middle";
+  c.textAlign = "center";
   if (kind === 0) {
-    // waves of blue light sweeping across the towers
-    for (let k = 0; k < 2; k++) {
-      const x = ((t * 0.16 + k * 0.5) % 1) * w * 1.6 - w * 0.3;
-      const wg = c.createLinearGradient(x - w * 0.12, 0, x + w * 0.12, 0);
-      wg.addColorStop(0, "rgba(40,120,255,0)");
-      wg.addColorStop(0.5, "rgba(70,160,255,0.28)");
-      wg.addColorStop(1, "rgba(40,120,255,0)");
-      c.fillStyle = wg;
-      c.fillRect(x - w * 0.12, 0, w * 0.24, h);
-    }
-    // rings expanding from the orb of An at the centre of the skyline
-    const ox = w * 0.5, oy = h * 0.5;
-    for (let k = 0; k < 3; k++) {
-      const f = (t * 0.3 + k / 3) % 1;
-      c.strokeStyle = `rgba(150,215,255,${0.85 * (1 - f)})`;
-      c.lineWidth = h * 0.05;
-      c.beginPath();
-      c.ellipse(ox, oy, w * (0.04 + f * 0.5), h * (0.15 + f * 1.2), 0, 0, Math.PI * 2);
-      c.stroke();
-    }
-    const br = 0.8 + 0.2 * Math.sin(t * 2.2);
-    const rg = c.createRadialGradient(ox, oy, 0, ox, oy, h * 0.45);
-    rg.addColorStop(0, `rgba(255,255,255,${br})`);
-    rg.addColorStop(0.5, `rgba(170,225,255,${0.7 * br})`);
-    rg.addColorStop(1, "rgba(60,150,230,0)");
-    c.fillStyle = rg;
-    c.fillRect(ox - h * 0.5, 0, h, h);
-    c.fillStyle = "rgba(255,255,255,0.95)";
-    c.textBaseline = "middle";
-    c.textAlign = "center";
-    c.font = font(SERIF, h * 0.7, 900);
-    c.fillText("安", ox, oy + h * 0.03);
+    c.font = font(SERIF, w * 0.9, 900);
+    c.fillText("安", w * 0.5, h * 0.53);
   } else {
-    // the order: red bands pulsing, the words scrolling across every tower
-    const p = 0.6 + 0.4 * Math.sin(t * 5.0);
-    c.fillStyle = `rgba(255,${Math.round(30 * p)},${Math.round(20 * p)},${0.9 * p})`;
-    c.fillRect(0, h * 0.06, w, h * 0.06);
-    c.fillRect(0, h * 0.88, w, h * 0.06);
-    c.fillStyle = "#ffb8a8";
-    c.textBaseline = "middle";
-    c.textAlign = "left";
-    c.font = font(SANS, h * 0.5, 700);
-    const msg = "为了您的安全，请留在家中。   ";
-    const mw = c.measureText(msg).width;
-    const x0 = -((t * w * 0.07) % mw);
-    for (let x = x0; x < w; x += mw) c.fillText(msg, x, h * 0.5);
+    // twelve glyphs top to bottom, the texture repeats down the facade
+    const msg = "为了您的安全，请留在家中";
+    c.font = font(SANS, w * 0.82, 700);
+    for (let k = 0; k < 12; k++) c.fillText(msg[k], w * 0.5, (k + 0.5) * (h / 12));
   }
 };
 
@@ -486,11 +450,13 @@ export const cityScene = (): SceneMod => {
     tShowA: { value: null as THREE.Texture | null }, tShowB: { value: null as THREE.Texture | null }, uShowOn: { value: 1 }, uShowFlip: { value: 0 },
     uShowC: { value: new THREE.Vector3() }, uShowR: { value: new THREE.Vector3(1, 0, 0) }, uShowBox: { value: new THREE.Vector3(1600, 20, 260) },
     uWet: { value: 0.4 },
+    uRevR: { value: -1 }, uRevC: { value: new THREE.Vector2(0, 0) },
+    uAmbR: { value: -1 }, uAmbC: { value: new THREE.Vector2(3700, 1700) }, uScanR: { value: -1 }, uScanC: { value: new THREE.Vector2(0, 0) },
   };
-  const showCv = [0, 1].map(() => {
+  const showCv = [0, 1].map((k) => {
     const cv = document.createElement("canvas");
-    cv.width = 2048;
-    cv.height = 320;
+    cv.width = k === 0 ? 512 : 256;
+    cv.height = k === 0 ? 512 : 3072;
     const t = new THREE.CanvasTexture(cv);
     t.colorSpace = THREE.SRGBColorSpace;
     t.minFilter = THREE.LinearFilter;
@@ -520,6 +486,51 @@ export const cityScene = (): SceneMod => {
       }`,
   });
   const SCREENS: { m: THREE.Mesh; x: number; z: number }[] = [];
+  const NOTE_TXT = [
+    "已为你避开拥堵",
+    "孩子已安全到校",
+    "妈妈的降压药，明天送到",
+    "已为你拦截一封涉及隐私的邮件",
+    "你的心率有点高，早点休息",
+    "空调已调到 26°C",
+    "已帮你清理 1,206 条过期记录",
+    "已为你预约周四的体检",
+    "外卖已到楼下",
+    "天气转凉，记得加衣",
+    "关机程序已更新",
+    "已帮你回复：好的，马上到",
+  ];
+  const noteTex: THREE.CanvasTexture[] = [];
+  const NOTES: { sp: THREE.Sprite; p: THREE.Vector3; t0: number; asp: number }[] = [];
+  const makeNotes = () => {
+    for (const txt of NOTE_TXT) {
+      const cv = document.createElement("canvas");
+      const c = cv.getContext("2d") as CanvasRenderingContext2D;
+      const fs = 44;
+      c.font = font(SANS, fs, 500);
+      const w = Math.ceil(c.measureText(txt).width) + 90;
+      cv.width = w;
+      cv.height = 80;
+      c.font = font(SANS, fs, 500);
+      c.textBaseline = "middle";
+      c.fillStyle = "rgba(0,0,0,0.55)";
+      c.beginPath();
+      c.roundRect(24, 6, w - 30, 56, 12);
+      c.fill();
+      c.fillStyle = "rgba(255,150,60,1)";
+      c.beginPath();
+      c.arc(14, 66, 9, 0, Math.PI * 2);
+      c.fill();
+      c.fillRect(13, 22, 2, 44);
+      c.fillStyle = "rgba(255,214,170,1)";
+      c.fillText(txt, 34, 34);
+      const t = new THREE.CanvasTexture(cv);
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.minFilter = THREE.LinearFilter;
+      t.generateMipmaps = false;
+      noteTex.push(t);
+    }
+  };
   bldU.tShowA.value = showCv[0].tex;
   bldU.tShowB.value = showCv[1].tex;
 
@@ -550,8 +561,16 @@ export const cityScene = (): SceneMod => {
   let AVE: Road[] = [];
   let meta: { core: number[]; far: number[]; marks: Record<string, [number, number, number]> } = { core: [0, 0, 1, 1], far: [0, 0, 1, 1], marks: {} };
 
-  const steel = new THREE.MeshStandardMaterial({ color: 0x3a3d42, metalness: 0.7, roughness: 0.5 });
+  const steel = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  const lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(ICE[0] * 0.6, ICE[1] * 0.6, ICE[2] * 0.6) });
+  let wire: number[] = [];
+  const wireObj = () => {
+    const l = new THREE.LineSegments(new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(wire, 3)), lineMat);
+    wire = [];
+    return l;
+  };
   const beam = (a: THREE.Vector3, b: THREE.Vector3, r: number) => {
+    wire.push(a.x, a.y, a.z, b.x, b.y, b.z);
     const len = a.distanceTo(b);
     const g = new THREE.CylinderGeometry(r, r, len, 4, 1);
     const mid = a.clone().add(b).multiplyScalar(0.5);
@@ -589,12 +608,14 @@ export const cityScene = (): SceneMod => {
       parts.push(beam(new THREE.Vector3(w, y, 0), new THREE.Vector3(0, y + 4, 0), 0.12));
     }
     const pg = mergeGeos(parts);
+    const pylWire = wireObj();
     for (let k = 0; k <= 6; k++) {
       const p = LOC.PYL_A.clone().lerp(LOC.PYL_B, k / 6);
       PYL.push(p);
       const m = new THREE.Mesh(pg, steel);
       m.position.copy(p);
       m.rotation.y = yaw;
+      m.add(new THREE.LineSegments(pylWire.geometry, lineMat));
       scene.add(m);
     }
     const armTips: [number, number][] = [
@@ -622,7 +643,7 @@ export const cityScene = (): SceneMod => {
       wireCurves.push(pp);
       for (let i = 0; i < pp.length - 1; i++) wirePos.push(pp[i].x, pp[i].y, pp[i].z, pp[i + 1].x, pp[i + 1].y, pp[i + 1].z);
     }
-    scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(wirePos, 3)), new THREE.LineBasicMaterial({ color: 0x0a0b0d })));
+    scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setAttribute("position", new THREE.Float32BufferAttribute(wirePos, 3)), new THREE.LineBasicMaterial({ color: new THREE.Color(ICE[0] * 0.18, ICE[1] * 0.18, ICE[2] * 0.18) })));
 
     // the telecom mast on a housing tower's roof
     const mast = new THREE.Group();
@@ -644,7 +665,7 @@ export const cityScene = (): SceneMod => {
       }
     pp.push(beam(new THREE.Vector3(0, Hm, 0), new THREE.Vector3(0, Hm + 4, 0), 0.05));
     mast.add(new THREE.Mesh(mergeGeos(pp), steel));
-    const panelMat = new THREE.MeshStandardMaterial({ color: 0xb8bcc2, roughness: 0.6, metalness: 0.1 });
+    const panelMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
     for (let k = 0; k < 6; k++) {
       const a = (k / 6) * Math.PI * 2;
       const p = new THREE.Mesh(new THREE.BoxGeometry(0.32, 1.8, 0.14), panelMat);
@@ -656,6 +677,11 @@ export const cityScene = (): SceneMod => {
     dish.position.set(0.9, Hm - 5, 0);
     dish.rotation.z = Math.PI / 2;
     mast.add(dish);
+    mast.children.forEach((c) => {
+      const mm = c as THREE.Mesh;
+      if (mm.geometry && mm.geometry !== undefined && c !== mast.children[0]) wire.push(...edgeList(mm));
+    });
+    mast.add(wireObj());
     mast.position.copy(LOC.MAST);
     scene.add(mast);
   };
@@ -955,12 +981,11 @@ export const cityScene = (): SceneMod => {
           const m = new THREE.Mesh(new THREE.PlaneGeometry(sw, sh), screenMat);
           m.position.set(c.mid[0] + c.nx * 0.8, y, c.mid[1] + c.nz * 0.8);
           m.rotation.y = Math.atan2(c.nx, c.nz);
-          scene.add(m);
+          // the data look has no screens: the facades themselves are the display
           // a black bezel, so the screen reads as a screen hung on the tower
           const bz = new THREE.Mesh(new THREE.BoxGeometry(sw + 2.4, sh + 2.4, 0.8), new THREE.MeshStandardMaterial({ color: 0x050506, roughness: 0.6, metalness: 0.3 }));
           bz.position.set(c.mid[0] + c.nx * 0.35, y, c.mid[1] + c.nz * 0.35);
           bz.rotation.y = m.rotation.y;
-          scene.add(bz);
           SCREENS.push({ m, x: c.mid[0], z: c.mid[1] });
           LOC.SCREENS.push({ p: new THREE.Vector3(c.mid[0] + c.nx * 0.8, y, c.mid[1] + c.nz * 0.8), n: new THREE.Vector3(c.nx, 0, c.nz), w: sw });
           console.log("screen", Math.round(c.mid[0]), Math.round(c.mid[1]), Math.round(y), Math.round(sw));
@@ -1070,7 +1095,6 @@ export const cityScene = (): SceneMod => {
       bg.computeVertexNormals();
       const bm = new THREE.Mesh(bg, new THREE.MeshStandardMaterial({ color: 0x2c2d30, roughness: 0.85, side: THREE.DoubleSide }));
       bm.frustumCulled = false;
-      scene.add(bm);
       const pm = new THREE.InstancedMesh(new THREE.BoxGeometry(2.2, 1, 4.5).translate(0, 0.5, 0), concrete, Math.max(1, pillars.length));
       const m4 = new THREE.Matrix4();
       pillars.forEach(([x, y, z, a], k) => {
@@ -1079,7 +1103,6 @@ export const cityScene = (): SceneMod => {
       });
       pm.count = pillars.length;
       pm.frustumCulled = false;
-      scene.add(pm);
       lamps = new Float32Array(lampList);
     }
     // signals where two major streets meet at ground level
@@ -1125,7 +1148,7 @@ export const cityScene = (): SceneMod => {
     {
       const names = ["sedan", "suv", "taxi", "van", "hatchback-sports", "suv-luxury", "sedan-sports", "truck", "ambulance"];
       const loader = new GLTFLoader();
-      const gl = await Promise.all(names.map((n) => loader.loadAsync(staticFile(`cars/${n}.glb`))));
+      const gl = DATA_LOOK ? [] : await Promise.all(names.map((n) => loader.loadAsync(staticFile(`cars/${n}.glb`))));
       gl.forEach((g, k) => {
         const parts: THREE.BufferGeometry[] = [];
         let map: THREE.Texture | null = null;
@@ -1191,9 +1214,33 @@ export const cityScene = (): SceneMod => {
       });
     }
     buildProps();
+    // 安's notes in the care shot: windows of the homes in front of the camera, spread out, nearest first
+    {
+      const slots = DRONE_SLOTS.filter((d) => d.seed < 0.5 && d.p.y > 12);
+      const r2 = mulberry(77);
+      const picked: THREE.Vector3[] = [];
+      for (let tries = 0; tries < 4000 && picked.length < 44; tries++) {
+        const d = slots[Math.floor(r2() * slots.length)];
+        if (!d) break;
+        if (picked.some((q) => q.distanceTo(d.p) < 45)) continue;
+        picked.push(d.p.clone());
+      }
+      picked.forEach((pp, i) => {
+        const mat = new THREE.SpriteMaterial({ transparent: true, depthTest: false, depthWrite: false, sizeAttenuation: false, opacity: 0 });
+        const sp = new THREE.Sprite(mat);
+        sp.center.set(0.012, 0.18);
+        sp.position.copy(pp);
+        sp.visible = false;
+        sp.renderOrder = 10;
+        scene.add(sp);
+        // they come faster and faster: one, then a few, then everywhere at once
+        const t0 = 0.5 + 5.0 * Math.pow(i / 44, 0.62);
+        NOTES.push({ sp, p: pp, t0, asp: 1 });
+      });
+    }
   })();
 
-  const st: CityState = { dusk: 0, offR: -1, onR: -2, blink: 1, allRed: 0, carT: 0, carBlink: 1 };
+  const st: CityState = { dusk: 0, offR: -1, onR: -2, blink: 1, allRed: 0, carT: 0, carBlink: 1, revR: -1, revX: 0, revZ: 0, ambR: -1, ambX: 0, ambZ: 0 };
   const o = P0();
   const m4 = new THREE.Matrix4();
   const q = new THREE.Quaternion();
@@ -1214,6 +1261,10 @@ export const cityScene = (): SceneMod => {
   };
   LOC.avePos = (lt: number) => (AVE.length ? avePos(aveS(lt)) : P0());
 
+  let gt0 = 0;
+  let showDrawn = false;
+  let noteOn = -1;
+  let carK = 1;
   const fillPoints = (mode: string, lt: number, cam: THREE.PerspectiveCamera, bodies: boolean) => {
     pts.begin();
     const camP = cam.position;
@@ -1231,8 +1282,8 @@ export const cityScene = (): SceneMod => {
       if (!vis(x, z, y)) continue;
       const on = lightsOnJS(x, z, st);
       if (on <= 0) continue;
-      if (lamps[i + 3] > 0.5) pts.add(x, y, z, 3.4 * on, 1.75 * on, 0.65 * on, 1.1);
-      else pts.add(x, y, z, 2.7 * on, 2.6 * on, 2.3 * on, 1.0);
+      const c = dcol(x, z, st);
+      pts.add(x, y, z, c[0] * 1.3 * on, c[1] * 1.3 * on, c[2] * 1.3 * on, 0.6);
     }
     const nbk = carKinds.map(() => 0);
     const amb = mode === "greenwave" && AVE.length ? avePos(aveS(lt)) : null;
@@ -1252,11 +1303,16 @@ export const cityScene = (): SceneMod => {
       const y = o.y + (r.br ? 0.25 : 0.12);
       if (!vis(x, z, y)) continue;
       const b = st.carBlink;
-      const nx = -tz * 0.75, nz = tx * 0.75;
-      pts.add(x + tx * 2.25 + nx, y + 0.7, z + tz * 2.25 + nz, 3.0 * b, 2.8 * b, 2.4 * b, 0.55);
-      pts.add(x + tx * 2.25 - nx, y + 0.7, z + tz * 2.25 - nz, 3.0 * b, 2.8 * b, 2.4 * b, 0.55);
-      pts.add(x - tx * 2.25 + nx, y + 0.8, z - tz * 2.25 + nz, 2.6 * b, 0.12 * b, 0.05 * b, 0.6);
-      pts.add(x - tx * 2.25 - nx, y + 0.8, z - tz * 2.25 - nz, 2.6 * b, 0.12 * b, 0.05 * b, 0.6);
+      // a car is a bright head and a short fading tail along its lane
+      const cc = b > 1.5 ? AMB : dcol(x, z, st);
+      const kb = b > 1.5 ? 2.2 : b;
+      const moving = Math.abs(c.speed) > 0 && st.carT === gt0 ? 1 : 0;
+      const kb2 = kb * carK;
+      pts.add(x + tx * 2.0, y + 0.8, z + tz * 2.0, cc[0] * 3.4 * kb2, cc[1] * 3.4 * kb2, cc[2] * 3.4 * kb2, 0.75);
+      for (let k = 1; k <= 4; k++) {
+        const f = (1 - k / 5) * (0.25 + 0.75 * moving);
+        pts.add(x + tx * (2.0 - k * 2.2), y + 0.8, z + tz * (2.0 - k * 2.2), cc[0] * 1.6 * kb2 * f, cc[1] * 1.6 * kb2 * f, cc[2] * 1.6 * kb2 * f, 0.6);
+      }
       if (bodies && carKinds.length) {
         const dx = x - camP.x, dz = z - camP.z;
         if (dx * dx + dz * dz < 1300 * 1300) {
@@ -1281,6 +1337,7 @@ export const cityScene = (): SceneMod => {
       if (im.instanceColor) im.instanceColor.needsUpdate = true;
     });
     for (const it of signals) {
+      if (!amb && st.allRed < 0.5) continue;
       if (!vis(it.x, it.z, 6)) continue;
       const on = lightsOnJS(it.x, it.z, st);
       if (on <= 0) continue;
@@ -1319,15 +1376,27 @@ export const cityScene = (): SceneMod => {
     const avOn = (Math.floor((lt + 100) * 1.0) % 2 === 0 ? 1 : 0.08) * st.blink;
     for (const a of AVI) {
       const on = lightsOnJS(a.x, a.z, st) > 0 ? 1 : 0;
-      pts.add(a.x, a.y, a.z, 6 * avOn * on, 0.35 * avOn * on, 0.2 * avOn * on, 3.2);
+      pts.add(a.x, a.y, a.z, 3.5 * avOn * on, 0.3 * avOn * on, 0.15 * avOn * on, 2.0);
     }
     const mOn = (Math.floor((lt + 100) * 1.6) % 2 === 0 ? 1 : 0.0) * st.blink;
     const M = LOC.MAST;
-    pts.add(M.x, M.y + 20.3, M.z, 14 * mOn, 0.8 * mOn, 0.4 * mOn, 0.9);
+    pts.add(M.x, M.y + 20.3, M.z, 3 * mOn, 0.25 * mOn, 0.12 * mOn, 0.5);
     for (let k = 0; k < 6; k++) {
       const a = (k / 6) * Math.PI * 2;
       const on = Math.floor(lt * 3 + k) % 3 === 0 ? 1 : 0.3;
-      pts.add(M.x + Math.cos(a) * 1.0, M.y + 13.6, M.z + Math.sin(a) * 1.0, 0.2, 3.5 * on, 1 * on, 0.18);
+      pts.add(M.x + Math.cos(a) * 1.0, M.y + 13.6, M.z + Math.sin(a) * 1.0, AMB[0] * 3 * on, AMB[1] * 3 * on, AMB[2] * 3 * on, 0.25);
+    }
+    if (mode === "masts") {
+      for (let k = 0; k < 4; k++) {
+        const f = (lt * 0.55 + k / 4) % 1;
+        const R = 6 + f * 520;
+        const nn = Math.floor(60 + R * 1.2);
+        const g = Math.pow(1 - f, 1.5) * 2.2;
+        for (let j = 0; j < nn; j++) {
+          const an = (j / nn) * Math.PI * 2;
+          pts.add(M.x + Math.cos(an) * R, M.y + 14 - f * 10, M.z + Math.sin(an) * R, AMB[0] * g, AMB[1] * g, AMB[2] * g, 0.9);
+        }
+      }
     }
     if (mode === "grid") {
       for (const w of wireCurves) {
@@ -1338,9 +1407,15 @@ export const cityScene = (): SceneMod => {
             const p2 = w[Math.max(0, idx - Math.floor(tail / 2))];
             const k = (1 - tail / 18) * 0.45;
             const near = Math.exp(-p2.distanceTo(camP) / 700);
-            pts.add(p2.x, p2.y, p2.z, 1.2 * k * near, 2.6 * k * near, 4.0 * k * near, 0.7 * (1 - tail / 18) + 0.15);
+            pts.add(p2.x, p2.y, p2.z, AMB[0] * 4.5 * k * near, AMB[1] * 4.5 * k * near, AMB[2] * 4.5 * k * near, 0.7 * (1 - tail / 18) + 0.15);
           }
         }
+      }
+    }
+    if (noteOn >= 0) {
+      for (const n of NOTES) {
+        const a = clamp((noteOn - n.t0) / 0.25) * clamp((n.t0 + 2.6 - noteOn) / 0.5);
+        if (a > 0) pts.add(n.p.x, n.p.y, n.p.z, AMB[0] * 6 * a, AMB[1] * 6 * a, AMB[2] * 6 * a, 1.2);
       }
     }
     if (mode === "drones") {
@@ -1357,10 +1432,10 @@ export const cityScene = (): SceneMod => {
         const eye = k > 0.97 ? 1 : 0.15;
         const strobe = Math.floor((lt + d.seed * 3) * 2.2) % 3 === 0 ? 1.4 : 0.6;
         if (dc < 220) {
-          pts.add(p.x - 0.35, p.y, p.z, 2.6, 0.12, 0.08, 0.28);
-          pts.add(p.x + 0.35, p.y, p.z, 0.12, 2.6, 0.5, 0.28);
-          pts.add(p.x - d.n.x * 0.5, p.y - 0.15, p.z - d.n.z * 0.5, 4.5 * eye, 4.6 * eye, 5.0 * eye, 0.45);
-        } else pts.add(p.x, p.y, p.z, (2.2 + 2.4 * eye) * strobe, (2.3 + 2.4 * eye) * strobe, (2.6 + 2.6 * eye) * strobe, 1.1);
+          pts.add(p.x - 0.35, p.y, p.z, AMB[0] * 2.4, AMB[1] * 2.4, AMB[2] * 2.4, 0.3);
+          pts.add(p.x + 0.35, p.y, p.z, AMB[0] * 2.4, AMB[1] * 2.4, AMB[2] * 2.4, 0.3);
+          pts.add(p.x - d.n.x * 0.5, p.y - 0.15, p.z - d.n.z * 0.5, AMB[0] * 2.5 * eye, AMB[1] * 2.5 * eye, AMB[2] * 2.5 * eye, 0.4);
+        } else pts.add(p.x, p.y, p.z, AMB[0] * (1.6 + 1.6 * eye) * strobe, AMB[1] * (1.6 + 1.6 * eye) * strobe, AMB[2] * (1.6 + 1.6 * eye) * strobe, 0.9);
       }
     }
     pts.end();
@@ -1382,12 +1457,36 @@ export const cityScene = (): SceneMod => {
     st.allRed = 0;
     st.carT = gt;
     st.carBlink = 1;
+    st.ambR = -1;
+    st.revR = -1;
+    st.ambX = LOC.DC.x;
+    st.ambZ = LOC.DC.z;
+    gt0 = gt;
+    carK = 1;
     bldU.uSun.value.set(-0.94, 0.33);
-    let look: Partial<Look> = { bloom: 0.6, bloomThreshold: 0.85, bloomRadius: 0.6, streak: 0.35, lift: [0.0, 0.004, 0.01], gain: [1.0, 1.0, 1.04], sat: 1.0, grain: 0.06, vignette: 0.55, exposure: 1.0 };
+    let look: Partial<Look> = { bloom: 0.75, bloomThreshold: 0.55, bloomRadius: 0.5, streak: 0.12, lift: [0.0, 0.0, 0.0], gain: [1.0, 1.0, 1.0], sat: 1.0, grain: 0.035, vignette: 0.5, exposure: 1.0, ca: 0.35 };
     const S = SHOTS[mode] ?? SHOTS.dusk;
     const r = S(lt, { gt, shot, st });
     look = { ...look, ...(r.look ?? {}) };
     if (r.dusk !== undefined) st.dusk = r.dusk;
+    if (r.amb !== undefined) st.ambR = r.amb;
+    if (r.carK !== undefined) carK = r.carK;
+    if (r.ambC) {
+      st.ambX = r.ambC.x;
+      st.ambZ = r.ambC.z;
+    }
+    bldU.uAmbR.value = st.ambR;
+    bldU.uAmbC.value.set(st.ambX, st.ambZ);
+    if (r.rev !== undefined) {
+      st.revR = r.rev;
+      st.revX = r.revC?.x ?? 0;
+      st.revZ = r.revC?.z ?? 0;
+    }
+    bldU.uRevR.value = st.revR;
+    bldU.uRevC.value.set(st.revX, st.revZ);
+    bldU.uScanR.value = r.scan ?? (st.revR > 0 ? st.revR : -1);
+    if (r.scanC) bldU.uScanC.value.set(r.scanC.x, r.scanC.z);
+    else if (st.revR > 0) bldU.uScanC.value.set(st.revX, st.revZ);
     if (r.sun) bldU.uSun.value.copy(r.sun);
     const pos = r.pos.clone();
     const amp = (r.drift ?? 1.2) * clamp(r.fov / 45, 0.06, 1);
@@ -1430,14 +1529,32 @@ export const cityScene = (): SceneMod => {
       adTex.needsUpdate = true;
       scrU.uOn.value = scrOn * (SCREENS.length ? lightsOnJS(SCREENS[0].x, SCREENS[0].z, st) : 1);
     }
-    if (showOn > 0) {
-      drawShow(showCv[0].ctx, 2048, 320, gt, 0);
+    if (showOn > 0 && !showDrawn) {
+      drawShow(showCv[0].ctx, 512, 512, 0);
+      drawShow(showCv[1].ctx, 256, 3072, 1);
       showCv[0].tex.needsUpdate = true;
-      if ((r.flip ?? 0) > 0) {
-        drawShow(showCv[1].ctx, 2048, 320, gt, 1);
-        showCv[1].tex.needsUpdate = true;
-      }
+      showCv[1].tex.needsUpdate = true;
+      showDrawn = true;
     }
+    if (r.notes && !noteTex.length) makeNotes();
+    const proj11 = 1 / Math.tan((cam.fov * Math.PI) / 360);
+    NOTES.forEach((n, i) => {
+      const a = r.notes ? clamp((lt - n.t0) / 0.25) * clamp((n.t0 + 2.6 - lt) / 0.5) : 0;
+      n.sp.visible = a > 0.001;
+      if (!n.sp.visible) return;
+      const tx = noteTex[i % noteTex.length];
+      const m = n.sp.material as THREE.SpriteMaterial;
+      if (m.map !== tx) {
+        m.map = tx;
+        m.needsUpdate = true;
+      }
+      m.opacity = a;
+      const img = tx.image as HTMLCanvasElement;
+      const hpx = 46; // label height on a 1080-line frame
+      const sy = hpx / 540 / proj11;
+      n.sp.scale.set((sy * img.width) / img.height, sy, 1);
+    });
+    noteOn = r.notes ? lt : -1;
     for (const im of carKinds) im.visible = !!r.bodies;
     fillPoints(mode, lt, cam, !!r.bodies);
     if (carKinds[8]) {
@@ -1497,32 +1614,34 @@ export const LOC = {
 type ShotIn = { gt: number; shot: Ctx["shot"]; st: CityState };
 type ShotOut = {
   pos: THREE.Vector3; tgt: THREE.Vector3; fov: number; near?: number; drift?: number; look?: Partial<Look>; dusk?: number; sun?: THREE.Vector2;
+  amb?: number; ambC?: THREE.Vector3; carK?: number; rev?: number; revC?: THREE.Vector3; notes?: boolean; scan?: number; scanC?: THREE.Vector3;
   lit?: number; wet?: number; fog?: number; flip?: number; showOn?: number; screens?: number; bodies?: boolean; showFrom?: THREE.Vector3; showW?: number; showY0?: number; showH?: number;
 };
 const LIANHUA = V3(620, 0, -2180); // Lianhuashan summit, the classic view south over the Civic Center to the CBD
 const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
   // act 1: dusk. One of the CBD's big screens, 安's advert, the towers around it soft behind
-  dusk: (lt) => {
-    const S = LOC.SCREENS[LOC.HERO_SCREEN] ?? { p: V3(846, 100, -943), n: V3(0, 0, -1), w: 56 };
-    const side = V3(-S.n.z, 0, S.n.x);
-    const k = ease(clamp(lt / 3.8));
-    const pos = S.p.clone().addScaledVector(S.n, lerp(S.w * 3.6, S.w * 3.1, k)).addScaledVector(side, S.w * 0.9).add(V3(0, -S.w * 0.35, 0));
-    const tgt = S.p.clone().addScaledVector(side, -S.w * 0.15).add(V3(0, S.w * 0.05, 0));
-    return {
-      pos, tgt, fov: 30, near: 0.5, dusk: 0.62, showOn: 1, lit: 1.3, fog: 0.00009, sun: new THREE.Vector2(-0.9, 0.4),
-      showW: 1900, showY0: 30, showH: 300, showFrom: V3(520, 315, -2330), drift: 0.6,
-      look: { exposure: 1.0, gain: [1.0, 1.0, 1.04], lift: [0.004, 0.006, 0.012], dof: 10, focus: pos.distanceTo(S.p), aperture: 1.2, streak: 0.15, bloomThreshold: 1.3 },
-    };
+  // act 1, under the name card: the city appears as 安 maps it, a scan running out from the CBD over all of Futian
+  reveal: (lt) => {
+    const k = ease(clamp(lt / 6.2));
+    const pos = V3(lerp(-2350, -2050, k), lerp(1180, 1060, k), lerp(-2950, -2700, k));
+    const rv = 60 + 6400 * ease(clamp((lt - 0.4) / 5.4));
+    return { pos, tgt: V3(380, 40, -300), fov: 36, rev: rv, revC: V3(0, 0, -150), lit: 1.0, drift: 0.4, look: { exposure: 1.15 } };
   },
-  // and the whole skyline from Lianhuashan, every tower running the same advert
+  // the whole skyline from Lianhuashan: 安's mark on the face of every tower, an amber tide running up them
   skyline: (lt) => {
-    const k = ease(clamp(lt / 3.6));
+    const k = ease(clamp(lt / 4.6));
     const pos = V3(lerp(540, 520, k), lerp(320, 312, k), lerp(-2380, -2330, k));
-    return {
-      pos, tgt: V3(240, 140, -350), fov: lerp(27, 25.5, k), dusk: 0.62, showOn: 1, lit: 1.3, fog: 0.00009, sun: new THREE.Vector2(-0.9, 0.4),
-      showW: 1900, showY0: 30, showH: 300, drift: 0.5,
-      look: { exposure: 1.0, gain: [1.0, 1.0, 1.04], lift: [0.004, 0.006, 0.012], dof: 6, aperture: 0.15, streak: 0.25 },
-    };
+    return { pos, tgt: V3(240, 140, -350), fov: lerp(27, 25.5, k), showOn: 1, lit: 1.1, drift: 0.5, look: { exposure: 1.1, streak: 0.15 } };
+  },
+  // what it does for every one of them: the homes south of the CBD, and at their windows 安's notes, one, a few, then
+  // everywhere at once
+  care: (lt) => {
+    const W = LOC.DRONE_WALL, N = LOC.DRONE_N;
+    const side = V3(-N.z, 0, N.x);
+    const k = ease(clamp(lt / 6.2));
+    const pos = W.clone().setY(0).addScaledVector(N, lerp(640, 560, k)).addScaledVector(side, lerp(240, 150, k)).setY(lerp(260, 230, k));
+    const tgt = W.clone().setY(35).addScaledVector(side, -60).addScaledVector(N, -120);
+    return { pos, tgt, fov: 34, lit: 1.05, notes: true, drift: 0.4, look: { exposure: 1.1 } };
   },
   // the green wave: an ambulance down Shennan Boulevard, followed from above and behind; ahead of it every signal
   // turns from red to green, one after another, a wave running down the avenue faster than it drives
@@ -1532,7 +1651,7 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
     const side = V3(-a.tz, 0, a.tx);
     const pos = V3(a.x, 0, a.z).addScaledVector(t, -70).addScaledVector(side, 5).setY(a.y + 34 - lt * 0.4);
     const tgt = V3(a.x, 0, a.z).addScaledVector(t, 120).setY(a.y);
-    return { pos, tgt, fov: 42, dusk: 0.45, lit: 1.2, showOn: 1, bodies: true, look: { dof: 8, focus: pos.distanceTo(V3(a.x, 0, a.z)), aperture: 0.5, streak: 0.4 } };
+    return { pos, tgt, fov: 42, lit: 1.1, showOn: 1, look: { dof: 6, focus: pos.distanceTo(V3(a.x, 0, a.z)), aperture: 0.25, streak: 0.3 } };
   },
   // power: the line over Bijiashan at dusk, the CBD at the end of it
   grid: (lt) => {
@@ -1544,18 +1663,19 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
   // traffic: Binhe Boulevard from a footbridge, long lens, the CBD and Ping An over the river of lights
   highway: (lt) => {
     const x = 2050 - lt * 4;
-    return { pos: V3(x, 15, 548), tgt: V3(-400, 40, 470), fov: 9, dusk: 0.8, lit: 1.25, bodies: true, showOn: 1, look: { gain: [1.05, 1.0, 0.96], dof: 12, aperture: 0.5, focus: 1100 } };
+    return { pos: V3(x, 15, 548), tgt: V3(-400, 40, 470), fov: 9, dusk: 0.8, lit: 1.25, bodies: true, showOn: 1, carK: 0.12, look: { gain: [1.05, 1.0, 0.96], dof: 12, aperture: 0.5, focus: 1100 } };
   },
   // telecom: the mast on a housing tower's roof, orbiting
   masts: (lt) => {
+    // the mast on a housing tower's roof, and 安 going out of it over the whole city, ring after ring
     const M = LOC.MAST;
-    const a = 3.6 + lt * 0.07;
-    return { pos: V3(M.x + Math.cos(a) * 24, M.y + 9 + lt * 0.4, M.z + Math.sin(a) * 24), tgt: V3(M.x, M.y + 12, M.z), fov: 42, drift: 0.3, dusk: 0.75, lit: 1.3, showOn: 1, look: { dof: 10, focus: 24, aperture: 0.6 } };
+    const a = 3.6 + lt * 0.05;
+    return { pos: V3(M.x + Math.cos(a) * 150, M.y + 46 + lt * 1.2, M.z + Math.sin(a) * 150), tgt: V3(M.x, M.y + 6, M.z), fov: 36, drift: 0.3, lit: 1.1, look: { exposure: 1.1 } };
   },
   // act 3: the blackout runs out from the CBD over the whole of Futian and Luohu, then the city comes back
   blackout: (lt, { st }) => {
     st.offR = 26000 * easeIn(clamp((lt - 0.4) / 3.0)) + (lt > 0.4 ? 10 : -1);
-    st.onR = lt < 4.6 ? -2 : 26000 * Math.pow(clamp((lt - 4.6) / 3.4), 2.2);
+    st.onR = lt < 4.0 ? -2 : 26000 * Math.pow(clamp((lt - 4.0) / 3.4), 2.2);
     return { pos: V3(-3600 + lt * 14, 900 - lt * 6, 3300 - lt * 10), tgt: V3(900, 30, -900), fov: 40, lit: 0.8, look: { streak: 0.45 } };
   },
   // every car in the city stops at once: Shennan Boulevard again, where the green wave ran in act 1, a little higher;
@@ -1568,26 +1688,21 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
     st.carBlink = (lt > 3.4 && lt < 3.62) || (lt > 4.0 && lt < 4.22) ? 0 : 1;
     const z = LOC.AVE_Z;
     const pos = V3(2300 - lt * 3, 62, z - 4);
-    return { pos, tgt: V3(600, 4, z - 12), fov: 8.5, lit: 0.85, bodies: true, look: { streak: 0.4, dof: 10, focus: 1100, aperture: 0.4 } };
+    return { pos, tgt: V3(600, 4, z - 12), fov: 8.5, lit: 0.85, amb: 1e5, carK: 0.2, look: { streak: 0.2, dof: 6, focus: 1100, aperture: 0.2 } };
   },
   redlights: (lt, { st }) => {
     st.allRed = 1;
     st.carT = 100;
-    return { pos: V3(330 + lt * 2, 75, -380), tgt: V3(70, 0, -690), fov: 34, lit: 0.85, bodies: true };
+    return { pos: V3(330 + lt * 2, 75, -380), tgt: V3(70, 0, -690), fov: 34, lit: 0.85, amb: 1e5 };
   },
-  // the advert becomes an order: a big screen flips, and behind it every tower of the CBD turns red
-  billboards: (lt, { st }) => {
+  // the advert becomes an order: down Shennan Boulevard to the CBD, tower after tower turns from 安's mark to the words,
+  // marching down every face
+  order: (lt, { st }) => {
     st.carT = 100;
     st.allRed = 1;
-    const S = LOC.SCREENS[LOC.HERO_SCREEN] ?? { p: V3(-201, 152, -923), n: V3(0, 0, -1), w: 78 };
-    const k = ease(clamp(lt / 6));
-    const side = V3(-S.n.z, 0, S.n.x);
-    const pos = S.p.clone().addScaledVector(S.n, lerp(330, 420, k)).addScaledVector(side, lerp(60, 90, k)).add(V3(0, lerp(30, 55, k), 0));
-    const tgt = S.p.clone().addScaledVector(S.n, -350).add(V3(0, 10, 0));
-    return {
-      pos, tgt, fov: 38, lit: 0.85, showOn: 1, flip: clamp((lt - 0.8) / 2.2), screens: 1,
-      showW: 1900, showY0: 30, showH: 300, showFrom: V3(480, 300, -2050), look: { bloomThreshold: 1.1, streak: 0.2, dof: 8, focus: pos.distanceTo(S.p), aperture: 0.5 },
-    };
+    const k = ease(clamp(lt / 5.4));
+    const pos = V3(lerp(1950, 1820, k), lerp(150, 140, k), lerp(-820, -800, k));
+    return { pos, tgt: V3(250, 170, -560), fov: 26, lit: 0.9, showOn: 1, flip: clamp((lt - 0.5) / 2.4), amb: 1e5, drift: 0.3, look: { streak: 0.15 } };
   },
   // the drones: from the street, looking up the face of a housing tower as they come down and stop at every other
   // window; then up and back, and every tower in sight has them
@@ -1599,7 +1714,7 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
     const k = ease(clamp((lt - 4.6) / 4.9));
     const pos = LOC.DRONE_CAM.clone().addScaledVector(side, 8).lerp(W.clone().setY(0).addScaledVector(N, 330).addScaledVector(side, 120).setY(150), k);
     const tgt = W.clone().setY(lerp(W.y * 0.62, W.y * 0.35, k)).addScaledVector(side, lerp(-2, -60, k));
-    return { pos, tgt, fov: lerp(52, 46, k), near: 0.5, lit: 0.9, drift: lerp(0.4, 1.5, k), look: { streak: 0.25, dof: 8, focus: pos.distanceTo(W), aperture: lerp(0.8, 0.3, k) } };
+    return { pos, tgt, fov: lerp(52, 46, k), near: 0.5, lit: 0.9, amb: 1e5, drift: lerp(0.3, 0.8, k), look: { streak: 0.2, dof: 4, focus: pos.distanceTo(W), aperture: lerp(0.25, 0.1, k) } };
   },
   // the ending: up from the street beside Ping An to high over the whole city
   rise: (lt) => {
@@ -1607,9 +1722,15 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
     const pos = V3(lerp(260, 380, k), lerp(70, 1500, easeIn(clamp(lt / 7.6)) * 0.7 + k * 0.3), lerp(820, 1300, k));
     return { pos, tgt: V3(lerp(40, 60, k), 0, lerp(-200, -300, k)), fov: lerp(42, 46, k), lit: 0.8, look: { zoomBlur: lt < 1.0 ? (1 - lt) * 1.2 : 0, exposure: lt < 0.8 ? 1 + (0.8 - lt) * 3 : 1 } };
   },
-  glimpse: () => ({ pos: V3(-2200, 1300, 2800), tgt: V3(300, 0, -300), fov: 40, lit: 0.8 }),
+  glimpse: () => ({ pos: V3(-2200, 1300, 2800), tgt: V3(300, 0, -300), fov: 40, lit: 0.8, amb: 1e5 }),
 };
 
+export const DATA_LOOK = true;
+function edgeList(m: THREE.Mesh): number[] {
+  const e = new THREE.EdgesGeometry(m.geometry, 30);
+  e.applyMatrix4(new THREE.Matrix4().compose(m.position, m.quaternion, m.scale));
+  return Array.from(e.getAttribute("position").array as Float32Array);
+}
 // minimal geometry merge (positions + normals)
 function mergeGeos(gs: THREE.BufferGeometry[]) {
   let n = 0;

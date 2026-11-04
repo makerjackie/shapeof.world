@@ -479,7 +479,7 @@ export const phoneScene = (): SceneMod => {
 
   const draw = (mode: string, lt: number) => {
     const P = PHONE_TEXT;
-    if (mode === "lock") drawLock(ctx, lt, { time: "03:12", date: "3月14日 星期四", notifs: P.lock, wake: clamp((lt - 1.4) / 0.25), top: 600 });
+    if (mode === "lock") drawLock(ctx, lt, { time: "03:12", date: "3月14日 星期四", notifs: P.lock, wake: clamp((lt - 0.4) / 0.25), top: 600 });
     else if (mode === "morning") drawLock(ctx, lt, { time: "07:30", date: "3月11日 星期一", notifs: P.morning, mood: "dawn", top: 600 });
     else if (mode === "morning9") drawLock(ctx, lt, { time: "09:01", date: "3月14日 星期四", notifs: P.morning9, mood: "dawn", top: 600 });
     else if (mode === "call") drawCall(ctx, lt, P.call);
@@ -494,7 +494,7 @@ export const phoneScene = (): SceneMod => {
     deskU.uDawn.value = mode === "morning" || mode === "morning9" ? 1 : 0;
     if (paperMat) paperMat.color.setScalar(deskU.uDawn.value > 0 ? 0.75 : 0.3);
     draw(mode, lt);
-    const bright = mode === "lock" ? clamp((lt - 1.4) / 0.25) : 1;
+    const bright = mode === "lock" ? clamp((lt - 0.4) / 0.25) : 1;
     scrU.uBright.value = bright * (mode === "pullout" ? lerp(0.85, 0.7, clamp(lt / 3)) : mode === "chat" ? 0.85 : 1);
     deskU.uGlow.value = bright * 0.5;
     glow.intensity = bright * 0.02;
@@ -510,9 +510,9 @@ export const phoneScene = (): SceneMod => {
     // orbit helper: camera at distance d from target, elevation el, azimuth az (0 = from the phone's bottom edge)
     const orbit = (t: THREE.Vector3, d: number, el: number, az: number) => pos.set(t.x + d * Math.sin(az) * Math.cos(el), t.y + d * Math.sin(el), t.z + d * Math.cos(az) * Math.cos(el));
     if (mode === "lock") {
-      if (lt < 4.2) {
+      if (lt < 2.4) {
         // the phone wakes on the dark desk; the first message is readable from here
-        const k = ease(clamp(lt / 4.2));
+        const k = ease(clamp(lt / 2.4));
         tgt.set(0, 0.006, -0.022);
         orbit(tgt, lerp(0.215, 0.178, k), lerp(0.80, 0.88, k), lerp(0.22, 0.16, k));
         fov = 30;
@@ -520,7 +520,7 @@ export const phoneScene = (): SceneMod => {
         exposure = lerp(1.25, 1.05, k);
       } else {
         // insert: the clock and the newest messages, read from above as they stack up
-        const k = clamp((lt - 4.2) / 9.6);
+        const k = clamp((lt - 2.4) / 7.2);
         tgt.set(0, PHONE_T, lerp(-0.025, -0.022, k));
         orbit(tgt, lerp(0.168, 0.156, k), 1.24, lerp(0.07, 0.03, k));
         fov = 32;
@@ -548,39 +548,39 @@ export const phoneScene = (): SceneMod => {
     } else if (mode === "chat") {
       // five set-ups, hard cuts between them: the draft is typed → the long wait, wide, alone in the dark →
       // closer, the dots come and go → the answer, read from above → the last line, slightly off-axis
-      if (lt < 4.8) {
+      if (lt < 4.0) {
         // the draft is typed
-        const k = clamp(lt / 4.8);
+        const k = clamp(lt / 4.0);
         pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
         tgt.set(0, 0, 0.046);
         fov = 30;
         aperture = 1.4;
         chatFocus.set(0, PHONE_T, 0.05);
-      } else if (lt < 9.5) {
+      } else if (lt < 8.0) {
         // the long wait, wide, alone in the dark, the drawing beside the phone
-        const k = clamp((lt - 4.8) / 4.7);
+        const k = clamp((lt - 4.0) / 4.0);
         pos.set(lerp(0.33, 0.29, k), lerp(0.21, 0.19, k), lerp(0.36, 0.31, k));
         tgt.set(-0.03, 0.0, -0.02);
         fov = 32;
         aperture = 4;
         chatFocus.set(0, PHONE_T, 0);
         exposure = 1.15;
-      } else if (lt < 14.3) {
-        const k = clamp((lt - 9.5) / 4.8);
+      } else if (lt < 12.2) {
+        const k = clamp((lt - 8.0) / 4.2);
         pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
         tgt.set(0, 0, 0.022);
         fov = 30;
         aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
-      } else if (lt < 28.5) {
-        const k = clamp((lt - 14.3) / 14.2);
+      } else if (lt < 25.4) {
+        const k = clamp((lt - 12.2) / 13.2);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
-      } else if (lt < 29.0) {
-        const k = clamp((lt - 28.5) / 0.5);
+      } else if (lt < 25.9) {
+        const k = clamp((lt - 25.4) / 0.5);
         pos.set(lerp(0.011, 0.009, k), lerp(0.155, 0.142, k), lerp(0.08, 0.076, k));
         tgt.set(0, 0, lerp(0.022, 0.026, k));
         fov = 30;
@@ -588,7 +588,7 @@ export const phoneScene = (): SceneMod => {
         chatFocus.set(0, PHONE_T, 0.04);
       } else {
         // over the daughter's drawing: the last two lines arrive on the phone beside it
-        const k = clamp((lt - 29.0) / 8.5);
+        const k = clamp((lt - 25.9) / 8.0);
         pos.set(lerp(-0.075, -0.07, k), lerp(0.175, 0.162, k), lerp(0.17, 0.158, k));
         tgt.set(lerp(-0.035, -0.03, k), 0, lerp(0.012, 0.016, k));
         fov = 32;

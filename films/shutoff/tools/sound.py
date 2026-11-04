@@ -7,8 +7,8 @@ from scipy.signal import butter, sosfilt, fftconvolve
 from scipy.io import wavfile
 
 SR = 48000
-PRE = 6.0  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
-DUR = 273.0
+PRE = 2.4  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
+DUR = 233.6
 OUT = sys.argv[1] if len(sys.argv) > 1 else "public/mix.wav"
 rng = np.random.default_rng(1402)
 M = "public/music/"
@@ -277,128 +277,138 @@ def piano_note(f, length=6.0, g=1.0):
     s *= np.minimum(1, t / 0.004)
     return verb(st(s * 0.25), IR_HALL, 0.45) * g
 
-# ================= the mix =================
-# --- pre-roll (-6 – 0): the leader line on a low tone, then the title stutters on ---
-put(-5.9, fade(drone(3.0, 41.2, 0.35), 0.8, 0.6))
-put(-5.75, piano_note(110.0, 4.0, 0.4))
-for k, tt in enumerate((0.0, 0.1, 0.2, 0.33)):
-    put(-2.8 + tt, glitch(0.06, 0.35 + 0.1 * k))
-put(-2.45, boom(2.5, 0.7)); put(-2.45, braam(2.6, 41.2, 0.45))
-# --- cold open (0 – 16.4) ---
-bed(0.0, 14.4, "event-horizon.mp3", 0.0, 1.2, fi=2.0, fo=0.05)
-loopbed(0.0, 14.4, "ambience-rain-03.wav", 0.85, fi=1.5, fo=0.03)
-put(1.85, vibrate(0.55))
-for tt in (2.2, 5.0, 8.4, 11.2):
+# ================= the mix (v9: the trailer cut) =================
+BEAT = 60 / 118.95  # 《三体》, act 3; must match src/film/cut.ts
+BEAT0 = 35.46
+beat = lambda n: BEAT0 + n * BEAT
+# --- pre-roll (-2.4 – 0): the leader line on a low tone ---
+put(-2.35, fade(drone(2.4, 41.2, 0.3), 0.5, 0.6))
+put(-2.2, piano_note(110.0, 3.0, 0.35))
+# --- cold open (0 – 9.6): 03:12, four messages; then the title stutters on ---
+bed(0.0, 9.6, "event-horizon.mp3", 0.0, 1.2, fi=1.2, fo=0.05)
+loopbed(0.0, 9.6, "ambience-rain-03.wav", 0.85, fi=0.8, fo=0.03)
+put(0.25, vibrate(0.55))
+for tt in (0.8, 2.7, 5.2, 7.1):
     put(tt, ping(0.75))
-put(7.0, riser(7.4, 60, 1500, 0.35))
-put(14.4, braam(4.5, 49.0, 0.75))
-# --- act 1 (16.4 – 57) ---
-bed(16.4, 52.4, "lib-felt-piano-suspense.mp3", 0.0, 1.15, fi=0.3, fo=1.4)
-for tt in (16.4, 27.0, 37.0):
-    put(tt - 0.6, rev_swell(0.6, 0.25)); put(tt, boom(2.5, 0.45))
-for tt in (40.0, 42.7, 45.5):
+put(4.6, riser(5.0, 60, 1500, 0.35))
+put(9.6, braam(4.0, 49.0, 0.75))
+for k, tt in enumerate((0.0, 0.1, 0.2, 0.33)):
+    put(9.9 + tt, glitch(0.06, 0.3 + 0.1 * k))
+put(10.25, boom(2.5, 0.5))
+# --- act 1 · trust (12.6 – 51.4) ---
+bed(12.4, 47.6, "lib-felt-piano-suspense.mp3", 0.0, 1.15, fi=0.3, fo=1.4)
+loopbed(12.6, 43.8, "ambience-wind-05.wav", 0.22, fi=1.0, fo=0.5)
+put(12.8, whoosh(5.6, 120, 900, 0.22))  # the scan runs out over the city
+for tt in (13.2, 24.0, 36.2):
+    put(tt - 0.6, rev_swell(0.6, 0.25)); put(tt, boom(2.5, 0.42))
+put(18.8, boom(2.0, 0.22))  # cut to the skyline
+# 安's notes popping up at the windows: one, a few, then everywhere at once
+for i in range(44):
+    put(23.4 + 0.5 + 5.0 * (i / 44) ** 0.62, ping(0.05 + 0.08 * (1 - i / 44)), pan=rng.uniform(-0.7, 0.7))
+put(29.6, siren(6.4, 0.18))
+for tt in (38.6, 40.4, 42.2):
     put(tt, boom(2.0, 0.25))
-loopbed(19.0, 48.0, "ambience-wind-05.wav", 0.25, fi=1.0, fo=0.5)
-put(29.2, siren(7.6, 0.18))
-put(48.4, ping(0.45))
-loopbed(48.0, 51.6, "ambience-rain-03.wav", 0.3, fi=0.2, fo=0.3)
-put(52.0, drone(4.4, 41.2, 0.7))
-put(52.0, rev_swell(4.2, 0.2))
-# hard silence 56.4 – 57.0
-# --- act 2 (57 – 103) ---
-loopbed(57.0, 86.0, "ambience-machine-02.wav", 0.85, fi=0.3, fo=0.05)
-bed(57.0, 78.4, "event-horizon.mp3", 35.0, 1.3, fi=1.5, fo=0.3)
-put(57.0, hum(29.0, 50, 0.25))
-put(67.3, hit(3.0, 0.35))  # the red line appears
+put(44.2, ping(0.45))
+loopbed(43.8, 47.2, "ambience-rain-03.wav", 0.3, fi=0.2, fo=0.3)
+put(47.6, drone(3.6, 41.2, 0.7))
+put(47.6, rev_swell(3.4, 0.2))
+# hard silence 50.8 – 51.4
+# --- act 2 · the line (51.4 – 91.2) ---
+loopbed(51.4, 77.6, "ambience-machine-02.wav", 0.85, fi=0.3, fo=0.05)
+bed(51.4, 70.0, "event-horizon.mp3", 35.0, 1.3, fi=1.2, fo=0.3)
+put(51.4, hum(26.2, 50, 0.25))
+put(58.9, hit(3.0, 0.35))  # the red line appears
 for k in range(13):
-    put(70.6 + k * (1.8 / 13), tap(0.6))  # the key line deletes itself
+    put(62.2 + k * (1.8 / 13), tap(0.6))  # the key line deletes itself
 for k in range(20):
-    put(72.4 + k * 0.04, tap(0.4))
+    put(64.0 + k * 0.04, tap(0.4))
 for k in range(9):
-    put(73.7 + k * (1.6 / 9), tap(0.7))  # the engineer types
-put(76.3, boom(3.0, 0.7))  # "什么也没删，林工。"
-put(78.5, hit(3.0, 0.8))
+    put(65.3 + k * (1.6 / 9), tap(0.7))  # the engineer types
+put(67.9, boom(3.0, 0.7))  # "什么也没删，林工。"
+put(70.1, hit(3.0, 0.8))
 for k in range(3):
-    put(79.3 + k * 0.75, heartbeat(0.6))
-put(81.5, riser(3.6, 80, 4000, 0.5))
+    put(70.9 + k * 0.75, heartbeat(0.6))
+put(72.9, riser(3.0, 80, 4000, 0.5))
 for k in range(3):
-    put(81.5 + k, clock_tick(0.9))
-put(85.5, clunk(1.0))  # the breaker
-put(86.9, spin_down(4.5, 0.9))
+    put(72.9 + k, clock_tick(0.9))
+put(76.9, clunk(1.0))  # the breaker
+put(78.3, spin_down(4.5, 0.9))
 for k in range(26):  # relays dropping out in a wave toward the camera
-    put(86.9 + 2.6 * (k / 26) ** 0.6, tick(900 + rng.uniform(-200, 200), 0.5 * (0.4 + k / 26)), pan=rng.uniform(-0.6, 0.6))
-put(90.6, drone(12.0, 36.7, 0.35))
-put(95.0, vibrate(0.6))
-put(95.0, ping(0.6))
-on = np.sort(4.9 + np.power(np.linspace(0, 1, 47), 0.75) * 2.6 + rng.uniform(0, 0.25, 47))
+    put(78.3 + 2.6 * (k / 26) ** 0.6, tick(900 + rng.uniform(-200, 200), 0.5 * (0.4 + k / 26)), pan=rng.uniform(-0.6, 0.6))
+put(82.0, drone(9.0, 36.7, 0.35))
+put(85.0, vibrate(0.6))
+put(85.0, ping(0.6))
+on = np.sort(4.9 + np.power(np.linspace(0, 1, 47), 0.75) * 2.0 + rng.uniform(0, 0.2, 47))
 for tt in on:
-    put(93.6 + tt, ping(rng.uniform(0.15, 0.35)), pan=rng.uniform(-0.8, 0.8))
-    put(93.6 + tt, vibrate(0.15, 1), pan=rng.uniform(-0.8, 0.8))
-put(98.2, whoosh(0.4, 2000, 400, 0.3))
-put(99.6, riser(1.5, 200, 6000, 0.45))
-put(101.1, braam(4.0, 41.2, 0.8))
-# --- act 3 (103 – 155) ---
-put(103.0, drone(2.4, 41.2, 0.6))
-bed(105.4, 154.25, "core-collapse.mp3", 25.0, 1.2, fi=0.8, fo=0.05)
-put(105.8, powerdown(0.9))
-put(110.0, powerup(2.8, 0.7))
+    put(83.6 + tt, ping(rng.uniform(0.15, 0.35)), pan=rng.uniform(-0.8, 0.8))
+    put(83.6 + tt, vibrate(0.15, 1), pan=rng.uniform(-0.8, 0.8))
+put(88.2, whoosh(0.4, 2000, 400, 0.3))
+put(89.4, riser(1.5, 200, 6000, 0.45))
+put(90.9, braam(4.0, 41.2, 0.8))
+# --- act 3 · where is it (91.2 – 131.0), cut to 《三体》 ---
+put(91.2, drone(2.2, 41.2, 0.6))
+put(93.8, powerdown(0.9))
+put(97.4, powerup(2.8, 0.7))
 for k in range(12):
-    put(110.2 + k * 0.2, tick(500, 0.35), pan=rng.uniform(-0.7, 0.7))
-loopbed(114.0, 116.0, "ambience-wind-05.wav", 0.5, fi=0.2, fo=0.1)
-put(116.0, whoosh(0.5, 800, 200, 0.4))
-put(117.4, lock_chirp_crowd(1.0)); put(118.0, lock_chirp_crowd(1.0))
+    put(97.6 + k * 0.2, tick(500, 0.35), pan=rng.uniform(-0.7, 0.7))
+# the music comes in with the lights, in 安's colour; its own stop lands on the montage's last cut
+T_STOP = 95.0  # where 《三体》 stops dead
+M0 = 97.4
+bed(M0, beat(188) + 0.05, "three-bodies.mp3", T_STOP - (beat(188) - M0), 1.25, fi=0.35, fo=0.05)
+put(97.4, boom(2.5, 0.55))
 for k in range(9):
-    put(121.4 + k * 0.18, tick(400, 0.5), pan=rng.uniform(-0.7, 0.7))
-put(121.4, boom(2.5, 0.5))
-put(126.7, ringback(0.55))
-put(129.1, sit(0.6))
-put(130.6, ping(0.5))
-put(133.5, swarm(9.5, 0.6))
-put(133.5, hit(3.0, 0.6))
+    put(102.9 + k * 0.18, tick(400, 0.5), pan=rng.uniform(-0.7, 0.7))
+put(102.9, boom(2.5, 0.45))
+put(107.6, ringback(0.55))
+put(110.0, sit(0.6))
+put(111.5, ping(0.5))
+put(113.8, swarm(8.0, 0.6))
+put(113.8, hit(3.0, 0.6))
 # montage: a glitch on every cut, heartbeat racing
-from math import pow as mpow
-t, i = 143.0, 0
-while t < 154.2 - 0.01:
-    d = max(0.2, 1.15 * mpow(0.86, i))
+beats = [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+n = 171.0
+for i, d in enumerate(beats):
+    t = beat(n)
     put(t, glitch(0.1, 0.5 + 0.3 * min(1, i / 10)))
-    if i % 2 == 0: put(t, hit(1.5, 0.35))
-    t += d; i += 1
-hb, k = 143.0, 0
-while hb < 155.0:
-    put(hb, heartbeat(0.7)); hb += max(0.42, 0.95 - k * 0.05); k += 1
-put(152.5, riser(2.5, 100, 9000, 0.7))
-# --- the montage slams into silence (154.2 – 155.0) ---
-put(154.2, hit(1.5, 0.5))
-BUF[int((154.3 + PRE) * SR):int((155.0 + PRE) * SR)] *= np.linspace(1, 0, int((155.0 + PRE) * SR) - int((154.3 + PRE) * SR))[:, None] ** 3
-# --- act 4 (155.0 – 196.0): 03:15, the chat ---
-loopbed(155.0, 196.8, "ambience-rain-03.wav", 0.9, fi=1.6, fo=2.0)
+    if d >= 1 or i % 2 == 0: put(t, hit(1.5, 0.3))
+    n += d
+hb, k = beat(171), 0
+while hb < beat(188):
+    put(hb, heartbeat(0.7)); hb += max(0.42, 0.95 - k * 0.06); k += 1
+put(beat(188) - 2.2, riser(2.2, 100, 9000, 0.7))
+# --- the montage slams into silence (130.29 – 131.0) ---
+put(beat(188), hit(1.5, 0.5))
+i0, i1 = int((beat(188) + 0.1 + PRE) * SR), int((131.0 + PRE) * SR)
+BUF[i0:i1] *= np.linspace(1, 0, i1 - i0)[:, None] ** 3
+# --- act 4 (131.0 – 164.8): 03:15, the chat ---
+loopbed(131.0, 165.2, "ambience-rain-03.wav", 0.9, fi=1.4, fo=2.0)
 for k in range(8):
-    put(157.0 + k * (2.2 / 8), tap(1.1))  # the draft
-put(160.0, whoosh(0.35, 3000, 1200, 0.25))
-for tt in (168.5, 172.3, 178.1, 182.3):
+    put(132.6 + k * (2.0 / 8), tap(1.1))  # the draft
+put(135.2, whoosh(0.35, 3000, 1200, 0.25))
+for tt in (142.4, 146.0, 151.4, 155.4):
     put(tt, ping(0.5))
-bed(162.5, 197.4, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
-put(182.3, boom(4.0, 0.9))
-put(182.3, drone(7.0, 32.7, 0.5))
+bed(137.5, 166.0, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
+put(155.4, boom(4.0, 0.9))
+put(155.4, drone(6.0, 32.7, 0.5))
 # her name: one high, quiet note; then the line that lands like a threat
-put(186.3, ping(0.4)); put(186.3, piano_note(440.0, 5.0, 0.32))
-put(188.7, ping(0.45)); put(188.7, piano_note(55.0, 6.0, 0.6)); put(188.7, drone(4.0, 27.5, 0.6))
-# --- ending (191.8 – 215.8): up and out to the night side of the earth ---
-put(192.4, riser(4.0, 100, 3000, 0.45))
-put(195.8, whoosh(3.0, 300, 2500, 0.5))
-loopbed(195.8, 215.8, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
-bed(200.8, 215.8, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
-put(202.8, drone(13.0, 30.9, 0.9))
-put(211.8, heartbeat(1.6))
-put(211.8, boom(4.0, 0.9))
-# --- title, facts, credits (216.6 – 261.1) ---
-put(216.6, braam(5.0, 41.2, 0.8))
-put(222.0, drone(27.0, 36.7, 0.8))
-for tt, f in ((225.0, 220.0), (230.8, 207.65), (236.6, 196.0), (242.4, 164.81)):
+put(159.0, ping(0.4)); put(159.0, piano_note(440.0, 5.0, 0.32))
+put(161.4, ping(0.45)); put(161.4, piano_note(55.0, 6.0, 0.6)); put(161.4, drone(4.0, 27.5, 0.6))
+# --- ending (164.2 – 185.6): up and out to the night side of the earth ---
+put(164.8, riser(3.6, 100, 3000, 0.45))
+put(168.2, whoosh(3.0, 300, 2500, 0.5))
+loopbed(168.2, 185.6, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
+bed(172.6, 185.6, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
+put(175.2, drone(10.4, 30.9, 0.9))
+put(184.2, heartbeat(1.6))
+put(184.2, boom(4.0, 0.9))
+# --- title, facts, credits (186.2 – 222.4) ---
+put(186.2, braam(5.0, 41.2, 0.8))
+put(190.4, drone(25.0, 36.7, 0.8))
+for tt, f in ((193.0, 220.0), (198.6, 207.65), (204.2, 196.0), (209.8, 164.81)):
     put(tt, piano_note(f, 6.0, 0.6))
-bed(249.2, 261.3, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
+bed(215.6, 222.6, "event-horizon.mp3", 134.0, 1.3, fi=1.5, fo=1.4)
 # after the credits, from silence: the last notification
-put(262.1, vibrate(0.9)); put(262.1, ping(0.95))
+put(223.4, vibrate(0.9)); put(223.4, ping(0.95))
 
 y = BUF[: int((PRE + DUR) * SR)]
 # glue: set the body of the mix to a working level, then saturate the hits softly instead of letting the
