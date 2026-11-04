@@ -5,6 +5,7 @@ import { AbsoluteFill, Composition, cancelRender, continueRender, delayRender, s
 import { SANS, SERIF, fontsReady } from "../v6/fonts6";
 import { CHINA, SERIES } from "../v6/china7";
 import { CHINA as CHINA_S } from "../v6/china7s"; // special internal version: 7 falls, no 1960
+import { WorldCovers } from "./CoverWorld";
 
 const GOLD = "#ffc94d";
 const RED = "#ff3b2f";
@@ -200,5 +201,6 @@ export const CoverRoot: React.FC = () => (
     <Composition id="Cover43" component={() => <Cover l={L43} />} durationInFrames={1} fps={30} width={L43.W} height={L43.H} />
     <Composition id="Cover34S" component={() => <Cover l={L34} sp />} durationInFrames={1} fps={30} width={L34.W} height={L34.H} />
     <Composition id="Cover43S" component={() => <Cover l={L43} sp />} durationInFrames={1} fps={30} width={L43.W} height={L43.H} />
+    <WorldCovers />
   </>
 );

@@ -1,7 +1,7 @@
 // 两千年世界人口 (Film7 world cut, on the China v10 engine): plagues, wars and famines cut the world down again and again,
 // so for 1,800 years it barely grew; then it exploded; the next fall will come from births.
-// Music (v9): public/score_world9.wav, a Lyria 3.5 track re-edited to this timeline (tools/score_world9.py); BARRETE! is gone
-// (copyright claim). Times are film seconds = score seconds; 130 BPM, the explosion (bars 72-82) sped up to 139 BPM.
+// Music: public/score_world8.wav, a Lyria 3.5 track re-edited to this timeline (tools/score_world8.py); BARRETE! is gone
+// (copyright claim). Times are film seconds = score seconds; strict 130 BPM throughout (v9's 139 BPM finale was too fast).
 // Sources: research/SOURCES6.md.
 import WD from "./world_data.json";
 import WC from "./world_countries_raw.json"; // research/countries.py
@@ -18,10 +18,10 @@ export const SERIES: Pt[] = [
 // ---------------- music: score bars (1.846 s): 0-2 cold open, 3 rewind (synthesised), 4 the drop (body), 58-70 the quiet war
 // section, 72 the big return (1950), 83 the outro, 89 the last hit (the brush line)
 const BEAT = 60 / 130;
-const UP = 139 / 130; // bars 72-82 (1950-2100) run faster, like the reference's second half
+const UP = 1; // bars 72-82 can run faster (score_world9: 139/130); the user found that too fast, so 1
 const A = (n: number) => +(0.05 + n * BEAT).toFixed(4); // beat n (cold open)
 const BAR = (k: number) => +(0.05 + 4 * BEAT * (Math.min(k, 72) + Math.max(0, Math.min(k, 83) - 72) / UP + Math.max(0, k - 83))).toFixed(4); // bar k
-const DUR = 169.47;
+const DUR = 170.78;
 export const MUSIC = makeMusic([[0, DUR]], 0.2, [
   { t0: 0, t1: BAR(72), P: BEAT, ph: 0.05, bar: 0 },
   { t0: BAR(72), t1: BAR(83), P: BEAT / UP, ph: 0, bar: 0 },
@@ -103,7 +103,7 @@ const EVS: Ev[] = [
   { y: 1804, b: 3, k: "peak", tag: "约 1804 年", t: "世界人口第一次", n: "10 亿", s: "用了 1,800 年", map: "w1800" },
   { y: 1851, b: 3, k: "war", tag: "1850—1864 年 · 中国", t: "太平天国战争", n: "2,000 万—7,000 万", s: "死亡人数（估计）", at: [117, 31], map: "w1880", src: "维基百科「战争死亡人数列表」" },
   { y: 1877, b: 3, k: "famine", tag: "1876—1879 年 · 中国北方", t: "丁戊奇荒", n: "900 万—1,300 万", s: "饿死（估计）；同一场大旱，印度饿死约 550 万", at: [112, 36], ats: [[78, 14]], focus: [95, 27, 2.6], src: "维基百科「饥荒列表」" },
-  { y: 1880, b: 3, k: "move", tag: "1815—1933 年", t: "欧洲人大批移民美洲", n: "约 6,500 万", s: "离开欧洲，大多去了美洲；到美国的约 3,200 万", at: [8, 50], to: [-82, 40], focus: [-38, 40, 2.4], src: "维基百科「欧洲移民」" },
+  { y: 1880, b: 3, k: "move", tag: "1815—1933 年", t: "欧洲人大批移民美洲", n: "约 6,500 万", s: "离开欧洲，大多去了美洲；到美国的约 3,200 万", at: [8, 50], to: [-82, 40], focus: [-50, 40, 2.4], src: "维基百科「欧洲移民」" },
   { y: 1894, b: 3, k: "plague", tag: "1855—1960 年", t: "鼠疫第三次大流行", n: "约 1,500 万", s: "死亡人数，印度约 1,000 万", at: [114.2, 22.3], ats: [[102.7, 25], [73, 19], [78, 26]], focus: [95, 25, 2.6], src: "维基百科「第三次鼠疫大流行」" },
   { y: 1900, b: 4, k: "stat", tag: "1900 年", t: "世界", n: "16.3 亿", anchor: BAR(58), map: "none", span: 60 },
   { y: 1914, b: 4, k: "war", tag: "1914—1918 年", t: "第一次世界大战", n: "1,500 万—2,200 万", s: "死亡人数（估计）", at: [3, 50], ats: [[24, 52], [13, 46], [26.4, 40.2], [44, 33], [36, -6]], anchor: BAR(59), focus: [22, 40, 2.4], src: "维基百科「战争死亡人数列表」" },
@@ -222,7 +222,7 @@ export const WORLD: Spec = {
       { t0: END_T + 0.1, t1: BAR(85) - 0.05, text: "两千年，世界人口只少过 2 次", text2: "都因为瘟疫和战争", tone: "white" },
       { t0: BAR(85), t1: BAR(87) - 0.05, text: "预测：2084 年后，第 3 次", text2: "这一次，没有灾难", tone: "white" },
       { t0: BAR(87), t1: BAR(89) - 0.05, text: "全球生育率，从 5 个孩子", text2: "降到 2.25 个", tone: "white" },
-      { t0: BAR(89), t1: MUSIC.dur, text: "下一次，由我们自己决定", brush: true, tone: "gold" },
+      { t0: BAR(89), t1: MUSIC.dur, text: "第一次，人类自己选择变少", brush: true, tone: "gold" },
     ],
     troughs: [
       { y: 300, t: "罗马危机 · 三国" },
@@ -235,7 +235,7 @@ export const WORLD: Spec = {
   kindLabel: { rec: "史料", est: "历史估算（HYDE）", stat: "联合国统计", un: "联合国预测" },
   noGapChip: true,
   noRiser: true, // the score carries the rewind itself (synthesised in tools/score_world8.py)
-  musicSrc: "score_world9.wav",
+  musicSrc: "score_world8.wav",
   // respect for the dead, one rule for every modern catastrophe (from 1850: war, famine, plague): no drums or hits, a low bell;
   // the great wars (Taiping, WWI, WWII) get one bar of silence when their card lands
   solemnFrom: 1850,
