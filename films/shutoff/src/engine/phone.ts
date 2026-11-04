@@ -85,6 +85,13 @@ void main(){
   float d = length(max(q, 0.0)) - 0.0062;
   if (d > 0.0) discard;
   vec3 img = texture2D(map, vUv).rgb * uBright * 1.15;
+  // the camera island: a black pill cut into the top of the display, with a faint glint on its glass
+  vec2 ip = p - vec2(0.0, uSize.y * 0.5 - 0.0072);
+  vec2 iq = abs(ip) - vec2(0.0082 - 0.0024, 0.0);
+  float id = length(max(iq, 0.0)) - 0.0024;
+  float isl = smoothstep(0.00012, -0.00012, id);
+  img = mix(img, vec3(0.0015), isl);
+  img += vec3(0.05, 0.06, 0.09) * isl * smoothstep(0.0012, 0.0, length(ip - vec2(0.0062, 0.0)));
   // glass: a faint reflection of the rainy window
   vec3 V = normalize(vW - uCam);
   vec3 R = reflect(V, vec3(0.0, 1.0, 0.0));
@@ -169,6 +176,139 @@ const badgeTexture = () => {
   return t;
 };
 
+
+// Duoduo's crayon drawing for her father: the two of them holding hands under a big sun, "爸爸早点回家！"
+const drawingTexture = () => {
+  const W = 1240, Hh = 1754; // A4 portrait
+  const cv = document.createElement("canvas");
+  cv.width = W;
+  cv.height = Hh;
+  const c = cv.getContext("2d") as CanvasRenderingContext2D;
+  let seed = 7;
+  const R = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  // paper: off-white with fibres and a fold
+  c.fillStyle = "#e9e4d8";
+  c.fillRect(0, 0, W, Hh);
+  for (let i = 0; i < 9000; i++) {
+    c.fillStyle = `rgba(${120 + R() * 60},${110 + R() * 60},${90 + R() * 50},${0.03 + R() * 0.05})`;
+    c.fillRect(R() * W, R() * Hh, 1 + R() * 3, 1 + R() * 2);
+  }
+  const fold = c.createLinearGradient(0, Hh * 0.5 - 30, 0, Hh * 0.5 + 30);
+  fold.addColorStop(0, "rgba(0,0,0,0)");
+  fold.addColorStop(0.5, "rgba(60,50,40,0.10)");
+  fold.addColorStop(1, "rgba(0,0,0,0)");
+  c.fillStyle = fold;
+  c.fillRect(0, Hh * 0.5 - 30, W, 60);
+  // crayon: a few jittery, semi-transparent passes along a path
+  const crayon = (pts: [number, number][], col: string, w: number, passes = 3) => {
+    c.lineCap = "round";
+    c.lineJoin = "round";
+    for (let p = 0; p < passes; p++) {
+      c.strokeStyle = col;
+      c.globalAlpha = 0.35 + R() * 0.25;
+      c.lineWidth = w * (0.7 + R() * 0.5);
+      c.beginPath();
+      pts.forEach(([x, y], i) => {
+        const jx = x + (R() - 0.5) * w * 0.6;
+        const jy = y + (R() - 0.5) * w * 0.6;
+        if (i === 0) c.moveTo(jx, jy);
+        else c.lineTo(jx, jy);
+      });
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+  };
+  const circle = (cx: number, cy: number, r: number, n = 40): [number, number][] =>
+    Array.from({ length: n + 3 }, (_, i) => {
+      const a = (i / n) * Math.PI * 2 + 0.3;
+      const rr = r * (1 + (R() - 0.5) * 0.08);
+      return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
+    });
+  const scribbleFill = (x0: number, y0: number, x1: number, y1: number, col: string, step = 16) => {
+    for (let y = y0; y < y1; y += step) crayon([[x0 + R() * 10, y], [x1 - R() * 10, y + step * 0.6]], col, 12, 1);
+  };
+  // sun with rays
+  const sx = 960, sy = 260;
+  for (let k = 0; k < 6; k++) scribbleFill(sx - 90, sy - 90 + k * 30, sx + 90, sy - 60 + k * 30, "#f2b81c", 14);
+  crayon(circle(sx, sy, 105), "#e8761e", 14);
+  for (let k = 0; k < 12; k++) {
+    const a = (k / 12) * Math.PI * 2;
+    crayon([[sx + Math.cos(a) * 135, sy + Math.sin(a) * 135], [sx + Math.cos(a) * 205, sy + Math.sin(a) * 205]], "#e8761e", 12);
+  }
+  // grass
+  for (let x = 30; x < W - 30; x += 22) crayon([[x, 1330], [x + 8 + R() * 10, 1255 - R() * 50]], "#3f9b3a", 10, 2);
+  crayon([[20, 1335], [W - 20, 1325]], "#3f9b3a", 16);
+  // house
+  crayon([[110, 1330], [110, 980], [430, 980], [430, 1330]], "#8a5a33", 14);
+  crayon([[80, 1000], [270, 800], [460, 1000], [80, 1000]], "#c9332b", 16);
+  scribbleFill(120, 860, 420, 990, "rgba(201,51,43,0.6)", 18);
+  crayon([[230, 1330], [230, 1180], [320, 1180], [320, 1330]], "#5b3a22", 12);
+  crayon([[150, 1050], [210, 1050], [210, 1110], [150, 1110], [150, 1050]], "#2f6fd1", 10);
+  // father: tall, blue shirt, glasses; the girl: small, pink dress, pigtails; holding hands
+  const fig = (x: number, top: number, h: number, body: string, dress: boolean) => {
+    const head = h * 0.13;
+    crayon(circle(x, top + head, head), "#3b2a20", 10);
+    crayon([[x - head * 0.4, top + head * 0.95], [x, top + head * 1.25], [x + head * 0.4, top + head * 0.95]], "#c9332b", 8, 2);
+    crayon([[x - head * 0.35, top + head * 0.7], [x - head * 0.3, top + head * 0.75]], "#222", 10, 2);
+    crayon([[x + head * 0.35, top + head * 0.7], [x + head * 0.3, top + head * 0.75]], "#222", 10, 2);
+    const nb = top + head * 2;
+    if (dress) {
+      crayon([[x, nb], [x - h * 0.2, nb + h * 0.42], [x + h * 0.2, nb + h * 0.42], [x, nb]], body, 14);
+      scribbleFill(x - h * 0.14, nb + h * 0.12, x + h * 0.14, nb + h * 0.4, body, 14);
+      crayon([[x - h * 0.07, nb + h * 0.42], [x - h * 0.09, top + h]], "#3b2a20", 10);
+      crayon([[x + h * 0.07, nb + h * 0.42], [x + h * 0.09, top + h]], "#3b2a20", 10);
+      crayon([[x - head, top + head * 0.6], [x - head * 1.6, top + head * 1.2]], "#3b2a20", 12);
+      crayon([[x + head, top + head * 0.6], [x + head * 1.6, top + head * 1.2]], "#3b2a20", 12);
+    } else {
+      crayon([[x - h * 0.11, nb], [x + h * 0.11, nb], [x + h * 0.11, nb + h * 0.42], [x - h * 0.11, nb + h * 0.42], [x - h * 0.11, nb]], body, 14);
+      scribbleFill(x - h * 0.1, nb + 8, x + h * 0.1, nb + h * 0.4, body, 15);
+      crayon([[x - h * 0.06, nb + h * 0.42], [x - h * 0.08, top + h]], "#2a2a33", 12);
+      crayon([[x + h * 0.06, nb + h * 0.42], [x + h * 0.08, top + h]], "#2a2a33", 12);
+      crayon(circle(x - head * 0.4, top + head * 0.75, head * 0.28, 16), "#222", 6, 1);
+      crayon(circle(x + head * 0.4, top + head * 0.75, head * 0.28, 16), "#222", 6, 1);
+    }
+    return nb + h * 0.12;
+  };
+  const dadX = 640, girlX = 860;
+  const ya = fig(dadX, 760, 560, "#2f6fd1", false);
+  const yb = fig(girlX, 1010, 300, "#ea6aa0", true);
+  crayon([[dadX + 60, ya + 40], [(dadX + girlX) / 2, (ya + yb) / 2 + 60], [girlX - 50, yb + 20]], "#3b2a20", 10);
+  crayon([[dadX - 60, ya + 40], [dadX - 130, ya + 160]], "#3b2a20", 10);
+  crayon([[girlX + 50, yb + 20], [girlX + 100, yb + 90]], "#3b2a20", 10);
+  const heart: [number, number][] = Array.from({ length: 30 }, (_, i) => {
+    const t = (i / 29) * Math.PI * 2;
+    return [1090 + 32 * Math.pow(Math.sin(t), 3), 640 - 2 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))];
+  });
+  crayon(heart, "#d8343a", 12);
+  // a child's handwriting: wobbly, uneven, each character its own size and tilt
+  const write = (txt: string, x: number, y: number, size: number, col: string) => {
+    let cx = x;
+    for (const ch of txt) {
+      const sz = size * (0.85 + R() * 0.35);
+      c.save();
+      c.translate(cx, y + (R() - 0.5) * size * 0.25);
+      c.rotate((R() - 0.5) * 0.28);
+      c.font = font(SANS, sz, 500);
+      c.textBaseline = "middle";
+      c.fillStyle = col;
+      for (let p = 0; p < 4; p++) {
+        c.globalAlpha = 0.28;
+        c.fillText(ch, (R() - 0.5) * 6, (R() - 0.5) * 6);
+      }
+      c.restore();
+      cx += sz * (0.95 + R() * 0.25);
+    }
+    c.globalAlpha = 1;
+  };
+  write("爸爸", dadX - 90, 700, 92, "#2f4fb1");
+  write("朵朵", girlX - 70, 950, 84, "#d0457f");
+  write("爸爸早点回家！", 150, 1540, 118, "#c9332b");
+  const t = new THREE.CanvasTexture(cv);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = 16;
+  return t;
+};
+
 export const phoneScene = (): SceneMod => {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
@@ -207,12 +347,49 @@ export const phoneScene = (): SceneMod => {
   scene.add(lights);
   scene.add(new THREE.AmbientLight(0x101826, 0.6));
 
-  // phone
+  // phone: a titanium frame with flat, softly rounded sides (an extruded rounded rectangle with a wide bevel), a black
+  // glass front with a thin border, the camera island cut into the display, side buttons
   const phone = new THREE.Group();
-  const bodyMat = new THREE.MeshStandardMaterial({ color: 0x1b1c1f, metalness: 0.85, roughness: 0.3 });
-  const body = new THREE.Mesh(new RoundedBoxGeometry(PHONE_W, PHONE_T, PHONE_L, 5, 0.0068), bodyMat);
-  body.position.y = PHONE_T / 2;
-  phone.add(body);
+  const frameMat = new THREE.MeshPhysicalMaterial({ color: 0x6a6c70, metalness: 1.0, roughness: 0.26, clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 3.0 });
+  const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x020203, metalness: 0.0, roughness: 0.04, clearcoat: 1.0, clearcoatRoughness: 0.02, reflectivity: 0.6 });
+  {
+    const rrShape = (w: number, l: number, r: number) => {
+      const sh = new THREE.Shape();
+      const x0 = -w / 2, y0 = -l / 2;
+      sh.moveTo(x0 + r, y0);
+      sh.lineTo(x0 + w - r, y0);
+      sh.absarc(x0 + w - r, y0 + r, r, -Math.PI / 2, 0, false);
+      sh.lineTo(x0 + w, y0 + l - r);
+      sh.absarc(x0 + w - r, y0 + l - r, r, 0, Math.PI / 2, false);
+      sh.lineTo(x0 + r, y0 + l);
+      sh.absarc(x0 + r, y0 + l - r, r, Math.PI / 2, Math.PI, false);
+      sh.lineTo(x0, y0 + r);
+      sh.absarc(x0 + r, y0 + r, r, Math.PI, Math.PI * 1.5, false);
+      return sh;
+    };
+    const bev = 0.0011;
+    const frameGeo = new THREE.ExtrudeGeometry(rrShape(PHONE_W - 2 * bev, PHONE_L - 2 * bev, 0.0098), {
+      depth: PHONE_T - 2 * bev, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 8, curveSegments: 24,
+    });
+    // extrude runs along +z: lay it flat (thickness along y), top face up
+    frameGeo.rotateX(-Math.PI / 2);
+    frameGeo.translate(0, bev, 0);
+    const frame = new THREE.Mesh(frameGeo, frameMat);
+    phone.add(frame);
+    const front = new THREE.Mesh(new THREE.ShapeGeometry(rrShape(PHONE_W - 0.0012, PHONE_L - 0.0012, 0.0093), 24).rotateX(-Math.PI / 2), glassMat);
+    front.position.y = PHONE_T + 0.00002;
+    phone.add(front);
+    // buttons: action + volume on the left edge, power on the right
+    const btn = (len: number, z: number, side: number) => {
+      const b = new THREE.Mesh(new RoundedBoxGeometry(0.0012, 0.0026, len, 2, 0.0005), frameMat);
+      b.position.set(side * (PHONE_W / 2 + 0.0002), PHONE_T * 0.52, z);
+      phone.add(b);
+    };
+    btn(0.0065, -0.047, -1);
+    btn(0.012, -0.03, -1);
+    btn(0.012, -0.014, -1);
+    btn(0.017, -0.026, 1);
+  }
   const cv = document.createElement("canvas");
   cv.width = PW;
   cv.height = PH;
@@ -226,7 +403,7 @@ export const phoneScene = (): SceneMod => {
     map: { value: tex }, uBright: { value: 1 }, uT: deskU.uT, uDawn: deskU.uDawn, uCam: deskU.uCam, uSize: { value: new THREE.Vector2(SCR_W, SCR_L) },
   };
   const screen = new THREE.Mesh(new THREE.PlaneGeometry(SCR_W, SCR_L).rotateX(-Math.PI / 2), new THREE.ShaderMaterial({ vertexShader: SCR_VERT, fragmentShader: SCR_FRAG, uniforms: scrU }));
-  screen.position.y = PHONE_T + 0.00005;
+  screen.position.y = PHONE_T + 0.00006;
   phone.add(screen);
   phone.rotation.y = PHONE_ROT;
   scene.add(phone);
@@ -255,23 +432,40 @@ export const phoneScene = (): SceneMod => {
     new THREE.BoxGeometry(0.054, 0.0009, 0.0856),
     [ceramic, ceramic, new THREE.MeshStandardMaterial({ map: badgeTexture(), roughness: 0.45 }), ceramic, ceramic, ceramic],
   );
-  badge.position.set(-0.115, 0.00045, 0.035);
+  badge.position.set(-0.115, 0.0025, 0.105);
   badge.rotation.y = 0.42;
   scene.add(badge);
   const strap = new THREE.Mesh(
     new THREE.TubeGeometry(
       new THREE.CatmullRomCurve3([
-        new THREE.Vector3(-0.13, 0.002, -0.01),
-        new THREE.Vector3(-0.17, 0.002, -0.07),
-        new THREE.Vector3(-0.26, 0.002, -0.08),
-        new THREE.Vector3(-0.33, 0.002, 0.02),
-        new THREE.Vector3(-0.42, 0.002, 0.09),
+        new THREE.Vector3(-0.128, 0.0032, 0.064),
+        new THREE.Vector3(-0.15, 0.0034, 0.02),
+        new THREE.Vector3(-0.2, 0.0034, 0.0),
+        new THREE.Vector3(-0.3, 0.003, 0.06),
+        new THREE.Vector3(-0.42, 0.002, 0.12),
       ]),
       64, 0.0022, 6,
     ),
     new THREE.MeshStandardMaterial({ color: 0x173a4c, roughness: 0.8 }),
   );
   scene.add(strap);
+  let paperMat: THREE.MeshStandardMaterial | null = null;
+  // the drawing lies to the left of the phone, a little crooked, the badge dropped on its corner
+  {
+    const g = new THREE.PlaneGeometry(0.21, 0.297, 24, 32).rotateX(-Math.PI / 2);
+    const pa = g.getAttribute("position") as THREE.BufferAttribute;
+    for (let i = 0; i < pa.count; i++) {
+      // the paper doesn't lie quite flat: it lifts along the old fold and at one corner
+      const x = pa.getX(i), z = pa.getZ(i);
+      pa.setY(i, 0.0004 + 0.0016 * Math.exp(-(z * z) / 0.0006) + 0.004 * Math.max(0, (x + z * 0.6 - 0.16) / 0.1) ** 2);
+    }
+    g.computeVertexNormals();
+    paperMat = new THREE.MeshStandardMaterial({ map: drawingTexture(), roughness: 0.9, metalness: 0 });
+    const paper = new THREE.Mesh(g, paperMat);
+    paper.position.set(-0.175, 0, 0.03);
+    paper.rotation.y = 0.17;
+    scene.add(paper);
+  }
   const book = new THREE.Mesh(new RoundedBoxGeometry(0.15, 0.013, 0.21, 2, 0.003), new THREE.MeshStandardMaterial({ color: 0x15161a, roughness: 0.7 }));
   book.position.set(-0.24, 0.0065, -0.2);
   book.rotation.y = -0.25;
@@ -298,6 +492,7 @@ export const phoneScene = (): SceneMod => {
     const mode = shot.mode;
     deskU.uT.value = gt;
     deskU.uDawn.value = mode === "morning" || mode === "morning9" ? 1 : 0;
+    if (paperMat) paperMat.color.setScalar(deskU.uDawn.value > 0 ? 0.75 : 0.3);
     draw(mode, lt);
     const bright = mode === "lock" ? clamp((lt - 1.4) / 0.25) : 1;
     scrU.uBright.value = bright * (mode === "pullout" ? lerp(0.85, 0.7, clamp(lt / 3)) : mode === "chat" ? 0.85 : 1);

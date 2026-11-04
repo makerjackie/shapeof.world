@@ -587,3 +587,110 @@ export const drawDash = (c: C2D, w: number, h: number, seed: number) => {
 
 export const easeTyping = easeOut;
 export { SERIF };
+
+// 安's advert on the city's big LED screens (16:9): a breathing orb, the slogan, a stream of the little things it does
+// for everyone; flip 0..1 wipes it top-down to the red order of act 3
+export const drawAd = (c: C2D, w: number, h: number, t: number, flip: number) => {
+  const ad = () => {
+    const g = c.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, "#040d1e");
+    g.addColorStop(0.6, "#08254a");
+    g.addColorStop(1, "#0c3a66");
+    c.fillStyle = g;
+    c.fillRect(0, 0, w, h);
+    // aurora drifting behind
+    for (let k = 0; k < 3; k++) {
+      const x = w * (0.3 + 0.5 * Math.sin(t * 0.21 + k * 2.1));
+      const y = h * (0.4 + 0.3 * Math.cos(t * 0.17 + k * 1.3));
+      const rg = c.createRadialGradient(x, y, 0, x, y, h * 0.8);
+      rg.addColorStop(0, k === 1 ? "rgba(60,220,255,0.22)" : "rgba(70,120,255,0.2)");
+      rg.addColorStop(1, "rgba(0,0,0,0)");
+      c.fillStyle = rg;
+      c.fillRect(0, 0, w, h);
+    }
+    // the orb and its rings
+    const ox = w * 0.22, oy = h * 0.5, R = h * 0.2 * (1 + 0.04 * Math.sin(t * 2.0));
+    for (let k = 0; k < 4; k++) {
+      const f = (t * 0.35 + k / 4) % 1;
+      c.strokeStyle = `rgba(150,220,255,${0.45 * (1 - f)})`;
+      c.lineWidth = h * 0.006;
+      c.beginPath();
+      c.arc(ox, oy, R * (1.1 + f * 1.6), 0, Math.PI * 2);
+      c.stroke();
+    }
+    const og = c.createRadialGradient(ox - R * 0.3, oy - R * 0.3, 0, ox, oy, R);
+    og.addColorStop(0, "#ffffff");
+    og.addColorStop(0.4, "#bfeaff");
+    og.addColorStop(1, "rgba(50,140,230,0.0)");
+    c.fillStyle = og;
+    c.beginPath();
+    c.arc(ox, oy, R * 1.25, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = "#0a2a52";
+    c.font = font(SERIF, R * 0.95, 900);
+    c.textAlign = "center";
+    c.textBaseline = "middle";
+    c.fillText("安", ox, oy + R * 0.04);
+    // slogan
+    c.textAlign = "left";
+    c.fillStyle = "#ffffff";
+    c.font = font(SERIF, h * 0.15, 900);
+    c.fillText("有安，就安心。", w * 0.43, h * 0.36);
+    c.fillStyle = "rgba(190,225,255,0.92)";
+    c.font = font(SANS, h * 0.062, 500);
+    c.fillText("20 亿人的 AI 助手", w * 0.435, h * 0.52);
+    // a stream of small kindnesses, one card sliding in after another
+    const cards = ["已为你避开拥堵，提前 12 分钟到家", "妈妈的降压药，明天就吃完了", "今天有雨，记得带伞", "孩子已安全到校", "你的心率有点快，早点休息"];
+    const per = 2.4;
+    const i = Math.floor(t / per);
+    const f = (t / per) % 1;
+    for (let k = 0; k < 2; k++) {
+      const txt = cards[(i + k) % cards.length];
+      const a = k === 0 ? clamp(1 - Math.max(0, (f - 0.8) / 0.2)) : clamp((f - 0.15) / 0.3);
+      const y = h * (0.66 + k * 0.13) + (1 - a) * h * 0.03;
+      c.globalAlpha = a;
+      c.fillStyle = "rgba(255,255,255,0.12)";
+      rr(c, w * 0.435, y, w * 0.44, h * 0.1, h * 0.03);
+      c.fill();
+      c.fillStyle = "#8fd6ff";
+      c.beginPath();
+      c.arc(w * 0.435 + h * 0.05, y + h * 0.05, h * 0.017, 0, Math.PI * 2);
+      c.fill();
+      c.fillStyle = "#ffffff";
+      c.font = font(SANS, h * 0.042, 500);
+      c.fillText(txt, w * 0.435 + h * 0.09, y + h * 0.05);
+      c.globalAlpha = 1;
+    }
+  };
+  const home = () => {
+    c.fillStyle = "#150201";
+    c.fillRect(0, 0, w, h);
+    const p = 0.7 + 0.3 * Math.sin(t * 5);
+    c.fillStyle = `rgba(220,${Math.round(30 * p)},${Math.round(20 * p)},1)`;
+    c.fillRect(0, 0, w, h * 0.13);
+    c.fillStyle = "#ffffff";
+    c.textAlign = "center";
+    c.textBaseline = "middle";
+    c.font = font(SANS, h * 0.06, 700);
+    c.fillText("城市安全通知", w / 2, h * 0.065);
+    c.font = font(SANS, h * 0.17, 700);
+    c.fillText("为了您的安全", w / 2, h * 0.42);
+    c.fillText("请留在家中", w / 2, h * 0.64);
+    c.fillStyle = "rgba(255,200,190,0.8)";
+    c.font = font(SANS, h * 0.045, 500);
+    c.fillText("安 · 正在照顾每一个人", w / 2, h * 0.86);
+  };
+  if (flip <= 0) ad();
+  else if (flip >= 1) home();
+  else {
+    ad();
+    c.save();
+    c.beginPath();
+    c.rect(0, 0, w, h * flip);
+    c.clip();
+    home();
+    c.restore();
+    c.fillStyle = "rgba(255,255,255,0.9)";
+    c.fillRect(0, h * flip - 4, w, 8);
+  }
+};
