@@ -73,7 +73,7 @@ const EV: Record<number, T> = {
   1946: { tag: "From the 1940s", t: "Antibiotics and vaccines spread", s: "Death rates plunge" },
   1950: { tag: "1950", t: "World", n: "2.5 billion" },
   1955: { tag: "1950 → 2023", t: "Life expectancy", n: "46 → 73 years", src: "Our World in Data (UN WPP 2024)" },
-  1959: { tag: "1959–1961 · China", t: "The Great Famine", n: "15–55 million", s: "excess deaths (estimates)", src: "Wikipedia, List of famines" },
+  1959: { tag: "1959–1961 · China", t: "Three Years of Difficulty", n: "−10 million", s: "China's population fell in 1960", src: "National Bureau of Statistics of China" },
   1960: { tag: "1960", t: "", n: "3 billion" },
   1963: { tag: "1963", t: "Fastest growth: in one year", n: "+70 million", s: "2.2% a year" },
   1970: { tag: "1960s–1970s", t: "Green Revolution: seeds and fertilizer", s: "The predicted famine never came" },
