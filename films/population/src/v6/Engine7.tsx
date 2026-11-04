@@ -488,16 +488,19 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   };
 
   // event effects on the map
-  type Fx = { t0: number; t1: number; kind: string; at: [number, number]; to?: [number, number]; r: number };
+  type Fx = { t0: number; t1: number; kind: string; at: [number, number]; to?: [number, number]; r: number; main: boolean };
   const R0 = S.id === "world" ? 9 : 3.2;
-  const FXS: Fx[] = EV.filter((e) => e.at).map((e) => ({
-    t0: e.t0,
-    t1: Math.max(e.t1, e.t0 + 1.2),
-    kind: e.k,
-    at: e.at!,
-    to: e.to,
-    r: R0 * (e.big ? 1.5 : 1) * (e.k === "plague" || e.k === "famine" ? 1.6 : 1),
-  }));
+  const FXS: Fx[] = EV.filter((e) => e.at).flatMap((e) =>
+    [e.at!, ...(e.ats ?? [])].map((at, j) => ({
+      t0: e.t0 + j * 0.07, // the other fronts catch fire one after another
+      t1: Math.max(e.t1, e.t0 + 1.2),
+      kind: e.k,
+      at,
+      to: j === 0 ? e.to : undefined,
+      main: j === 0, // only the first place gets the ring
+      r: R0 * (e.big ? 1.5 : 1) * (e.k === "plague" || e.k === "famine" ? 1.6 : 1),
+    })),
+  );
   // borders of every keyframe (cell pairs with different owners)
   const BORDERS: Record<string, Int32Array> = {};
   for (const [key, fr] of Object.entries(FRAMES)) {
@@ -739,7 +742,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     // fx rings at the spot
     for (const f of fxs) {
       const d = t - f.t0;
-      if (d < 0 || d > 0.9) continue;
+      if (!f.main || d < 0 || d > 0.9) continue;
       const P = proj(mc, f.at[0], f.at[1]);
       const col = f.kind === "plague" || f.kind === "famine" ? ASH_RGB : f.kind === "war" || f.kind === "crash" || f.kind === "split" ? RED_RGB : GOLD_RGB;
       ctx.globalAlpha = clamp((1 - d / 0.9) * mk);
@@ -1162,9 +1165,21 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const drawTable = (ctx: CanvasRenderingContext2D, t: number) => {
     if (!S.table || t < B0 - 0.3 || t >= END) return;
     const c = camAt(t).c;
-    const rows = S.table(c);
+    const rows = S.table(c).filter((r) => r.v > 0);
     const was = S.table(c - 60);
-    const tot = rows.reduce((s, r) => s + r.v, 0);
+    const NR = S.tableRows ?? rows.length;
+    // live rank: the true rank, averaged over the last 0.3 s, so two countries glide past each other and never overlap
+    const rankAt = (tt: number) => {
+      const m: Record<string, number> = {};
+      S.table!(camAt(Math.max(0, tt)).c)
+        .filter((r) => r.v > 0)
+        .sort((p, q) => q.v - p.v)
+        .forEach((r, i) => (m[r.n] = i));
+      return m;
+    };
+    const RK = Array.from({ length: 8 }, (_, k) => rankAt(t - k * 0.04));
+    const pos = rows.map((r) => RK.reduce((s, m) => s + (m[r.n] ?? NR + 1), 0) / RK.length);
+    const vmax = Math.max(...rows.map((r) => r.v));
     let vis = 1;
     if (S.tableOn) {
       const e = evAt(t);
@@ -1177,15 +1192,23 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (a <= 0.01) return;
     ctx.save();
     ctx.globalAlpha = a;
-    text(ctx, "各大洲人口", 640, 168, 22, 700, SERIF, MUTED);
+    text(ctx, S.tableTitle ?? "各大洲人口", 640, 168, 22, 700, SERIF, MUTED);
     rows.forEach((r, i) => {
-      const y = 214 + i * 50;
+      const p = pos[i];
+      if (p > NR - 0.02) return;
+      ctx.globalAlpha = a * clamp(NR - p); // the last row fades as it drops out
+      const y = 214 + p * 50;
       ctx.fillStyle = r.c;
       ctx.fillRect(640, y - 22, 6, 28);
       text(ctx, r.n, 656, y, 26, 900, SERIF, WHITE);
+      if (r.tag) {
+        ctx.font = `900 26px ${SERIF}`;
+        text(ctx, r.tag, 662 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
+      }
       const f = fmtPop(r.v);
       text(ctx, `${f.n}${f.u}`, 862, y, 25, 900, SANS, WHITE, { align: "right" });
-      const ch = r.v / Math.max(1, was[i].v) - 1;
+      const w0 = was.find((x) => x.n === r.n);
+      const ch = w0 ? r.v / Math.max(1, w0.v) - 1 : 0;
       if (Math.abs(ch) >= 0.005) {
         const down = ch < 0;
         text(ctx, `${down ? "▼" : "▲"}${Math.abs(ch * 100).toFixed(0)}%`, 946, y, 21, 900, SANS, down ? RED : GOLD, { align: "right" });
@@ -1193,7 +1216,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.fillStyle = "rgba(255,255,255,0.08)";
       ctx.fillRect(656, y + 9, 290, 4);
       ctx.fillStyle = r.c;
-      ctx.fillRect(656, y + 9, 290 * (r.v / tot), 4);
+      ctx.fillRect(656, y + 9, 290 * (r.v / vmax), 4);
     });
     ctx.restore();
   };

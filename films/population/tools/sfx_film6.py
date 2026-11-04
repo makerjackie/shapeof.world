@@ -235,7 +235,7 @@ for e in CUES["events"]:
         put(taiko(0.7), at, 0.35)
         put(tick(1.0), at, 0.25)
         continue
-    if CUES.get("solemnFrom") is not None and k in ("war", "crash") and e["y"] >= CUES["solemnFrom"]:
+    if CUES.get("solemnFrom") is not None and k in ("war", "crash", "famine", "plague") and e["y"] >= CUES["solemnFrom"]:
         put(bell(98, 5.0), at + 0.02, 0.3)  # respect: a bell, no drums
         continue
     if k == "crash":
@@ -278,7 +278,7 @@ for e in CUES["events"]:
     elif k == "note":
         put(swish(0.7), at, 0.12)
 for r in CUES.get("reveals", []):
-    if CUES.get("solemnFrom") is not None and r["k"] == "war" and r.get("y", 0) >= CUES["solemnFrom"]:
+    if CUES.get("solemnFrom") is not None and r["k"] in ("war", "crash", "famine", "plague") and r.get("y", 0) >= CUES["solemnFrom"]:
         put(stamp(0.6), r["t"], 0.12)
         continue
     if r["w"] == "num":

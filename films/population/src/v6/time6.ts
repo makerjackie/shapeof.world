@@ -69,6 +69,7 @@ export type Ev = {
   n?: string; // big number
   s?: string; // sub line
   at?: [number, number]; // where it happens (lon, lat): fire / plague / glow on the map
+  ats?: [number, number][]; // more places at once (a war on several fronts, a pandemic)
   to?: [number, number]; // for "move": where people went
   map?: string; // switch the territory map to this keyframe
   go?: "slam" | "glide"; // how the cursor arrives (slam = hold, then hit on the beat)

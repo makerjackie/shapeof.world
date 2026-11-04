@@ -35,7 +35,9 @@ export type Spec = {
   kindLabel: Record<PtKind, string>;
   mapOff: number; // year after which the territory map is gone (modern borders are never drawn)
   map: { lon: number; lat: number; zoom: number }; // default map camera
-  table?: (y: number) => { n: string; v: number; c: string }[]; // top-right table (world: regions)
+  table?: (y: number) => { n: string; v: number; c: string; tag?: string }[]; // top-right table (world: countries, ranked live)
+  tableTitle?: string;
+  tableRows?: number;
   sfxGain?: number;
   noRiser?: boolean; // no riser SFX under the rewind
   tableOn?: (e: { k: string; table?: boolean }) => boolean; // when the region table shows (default: always)
