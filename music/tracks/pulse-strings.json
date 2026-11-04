@@ -1,0 +1,101 @@
+{
+  "id": "pulse-strings",
+  "code": "PULSE-STRINGS",
+  "title": {
+    "en": "Pulse · Strings",
+    "zh": "脉搏 · 弦"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "flagship",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 111.6,
+  "key": "",
+  "instruments": [
+    "pizzicato strings",
+    "analog synth arpeggio",
+    "808 sub bass",
+    "trap drums",
+    "synth pad"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "A 3-minute instrumental track. Instrumental only, no vocals, no lyrics.\nGenre: modern orchestral trap, steady and flowing, made as background for knowledge and science videos. The energy stays high and even the whole way: no quiet breakdowns, no long silences, the beat almost never stops.\nTempo: exactly 112 BPM, 4/4, never changes. Key: F minor, the whole song stays in F minor.\nHarmony: one four-bar loop all song long: Fm | Fm | Db | Eb, one chord per bar; the Db bar is slightly softer, like a breath. In the final section the loop is Fm | Gb | Db | Eb.\nInstruments: pizzicato strings carries the main melody, a warm analog synth arpeggio answers it and doubles it in the bigger sections, warm synth pad, deep 808 sub bass on the roots, trap drum kit: kick on beat 1 and beat 3 with a pickup on the \"and\" of 1, crisp clap on beats 2 and 4, steady 16th-note hi-hats with short triplet rolls every 4 bars, soft risers into each section. Original melody in short 2-bar phrases that repeat and are easy to remember.\n\n[0:00 - 0:11] Intro: pizzicato strings melody with pad, 808 and a light version of the beat already playing at medium volume.\n[0:11 - 0:17] Pre-drop: 3 bars where the drums drop out, pizzicato strings and pad continue, a riser builds.\n[0:17 - 1:24] Main: full beat drops in on the downbeat, pizzicato strings melody, a warm analog synth arpeggio answers, steady and catchy.\n[1:24 - 1:44] Breather: the beat keeps going at almost the same volume, the melody instruments get softer and darker; the last bar is a short stop.\n[1:44 - 2:18] Main again: full beat, pizzicato strings and a warm analog synth arpeggio together.\n[2:18 - 2:48] Final peak: fuller and warmer, heavier 808 and wide low pads, pizzicato strings and a warm analog synth arpeggio in octaves, slightly louder but not brighter.\n[2:48 - 3:02] Ending: the beat thins, pizzicato strings plays the motif once more, ends on F minor.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "orchestral"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Jackie's pick: the default score for knowledge videos (take E6, sped up 1.5% to 111.6 BPM). Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "Jackie 精选：知识科普视频默认配乐（E6 版，提速 1.5% 到 111.6 BPM）。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "pending",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [
+    "jackie-picks"
+  ],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 175.394,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:55:43Z",
+  "generation": {
+    "generator": "Google Lyria 3.5 (edited)",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_ChdaRlhyYXVYWEhvSGFyZmNQMU5uZnVBWRIXWkZYcmF1WFhIb0hhcmZjUDFObmZ1QVk",
+    "sha256": "63476ec4c616adf22d61fda722ddd685d5dca11e5c499213c53c3e14cf812120"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-strings/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-strings/v1/master.wav",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-strings/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "47d6c9d288e9701f039d8137087dba03f5082cb5baafcb075f6021652cd81edb",
+      "bytes": 2456546,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "63476ec4c616adf22d61fda722ddd685d5dca11e5c499213c53c3e14cf812120",
+      "bytes": 30939568,
+      "mimeType": "audio/wav"
+    },
+    "waveform": {
+      "sha256": "f0a671023f8dacf5bad5e80e8092b8a3a3bc4893256beb02833f4c7f04b28fbf",
+      "bytes": 2804,
+      "mimeType": "application/json"
+    }
+  }
+}
