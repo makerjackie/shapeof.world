@@ -1,0 +1,104 @@
+{
+  "id": "pop-final-surge-d7",
+  "code": "POP-D7",
+  "title": {
+    "en": "Final Surge · D7",
+    "zh": "终局加速 · D7"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "epic",
+    "dark",
+    "driving",
+    "tense"
+  ],
+  "topics": [
+    "2,000 years of world population",
+    "empires, plagues and wars",
+    "fast-cut data film"
+  ],
+  "energy": 5,
+  "bpm": 130,
+  "key": "D minor",
+  "instruments": [
+    "drift-phonk cowbell",
+    "distorted 808 bass",
+    "trap drums",
+    "orchestral strings",
+    "brass stabs",
+    "taiko"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 170,
+  "prompt": "Instrumental only, no vocals, no voice, no lyrics. Total length: exactly 2 minutes 50 seconds.\nEpic dark phonk meets cinematic orchestral trailer music, scoring a fast-cut short film on 2,000 years of human population: empires rise and fall, plagues, wars, then the modern explosion of humanity.\nTempo: 130 BPM in 4/4, strict and steady, D minor; at 2:12 the tempo jumps up to 139 BPM for the finale and stays there. Every beat clear and on the grid (the film is cut to the beat).\nSound: drift-phonk cowbell lead melody, heavily distorted 808 bass, hard trap drums with crisp hi-hats, Memphis-style percussion, layered with epic orchestral strings, brass stabs, low choir and taiko.\nKeep it moving like a Douyin phonk edit: every 8 bars the beat drops out for one bar (only the 808 or a riser), then slams back in on the downbeat; the kick and snare are punchy and land squarely on the beats.\n\n[0:00 - 0:06] Intense opening, full volume from the first beat: a massive orchestral + 808 hit on every beat, cowbell riff above.\n[0:06 - 0:09] Rewind: reverse cymbal, tape-stop / vinyl rewind sweep with rising chirps, then one beat of silence.\n[0:09] THE DROP, full power.\n[0:09 - 1:08] Full drift phonk groove, cowbell lead melody, distorted 808, aggressive, with the one-bar drop-outs.\n[1:08 - 1:20] Breakdown: drums out, choir and 808 only, tension.\n[1:20 - 1:49] Back to full power, brass and taiko join, heavy and epic.\n[1:49 - 2:11] Solemn and clearly quieter: sparse drums, no cowbell, low strings, cello, distant choir, a slow tolling low bell.\n[2:11] Everything slams back in, faster (139 BPM).\n[2:11 - 2:32] The biggest, brightest, fastest section: full phonk drums, cowbell melody with the whole orchestra.\n[2:32 - 2:44] Breakdown: drums stop, reflective piano and soft strings.\n[2:44 - 2:50] One final huge cinematic hit, ringing out to silence.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "phonk",
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion",
+    "suspense"
+  ],
+  "description": {
+    "en": "Prompted to jump from 130 to 139 BPM at 2:12. Epic dark phonk meets cinematic orchestral trailer: drift-phonk cowbell lead, distorted 808 bass, hard trap drums, strings, brass stabs, low wordless choir and taiko. Prompted at 130 BPM, jumping to 139 BPM at 2:12 (not verified by listening). D minor.",
+    "zh": "史诗暗黑 Phonk 加电影预告片管弦：漂移 Phonk 牛铃主旋律、失真 808、硬核 Trap 鼓，叠弦乐、铜管重音、低沉无词合唱和太鼓。提示词要求 130 BPM，2:12 起提速到 139 BPM（未逐首核听），D 小调。"
+  },
+  "batch": "film-population-2026-11",
+  "status": "pending",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "foreground",
+    "tags": [
+      "phonk",
+      "epic",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 171.677,
+  "targetEnergy": 5,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T03:58:51Z",
+  "generation": {
+    "id": "v1_ChdXcTNxYXFDSEpfcmJyZmNQa0p5eGlRWRIXV3EzcWFxQ0hKX3JicmZjUGtKeXhpUVk",
+    "model": "lyria-3.5",
+    "generator": "Google Lyria 3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "completedAt": "2026-11-04T03:58:51Z",
+    "interactionId": "v1_ChdXcTNxYXFDSEpfcmJyZmNQa0p5eGlRWRIXV3EzcWFxQ0hKX3JicmZjUGtKeXhpUVk",
+    "sha256": "348ae600a43be04cde5fc232f82af8102ac13ae917710e9ba9a36f88253beef6"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, key, moods and energy are prompt intent (instrumental prompt; some prompts ask for a wordless choir); duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pop-final-surge-d7/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pop-final-surge-d7/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pop-final-surge-d7/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f866789d6ad32cf2062b987ec53f6f6983db221e3095c1b7fb20d49be1e0ad8a",
+      "bytes": 2404249,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "348ae600a43be04cde5fc232f82af8102ac13ae917710e9ba9a36f88253beef6",
+      "bytes": 4126367,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "c20f4a1d9196a2bab1c646f8802ac03017027e85916f6395b9528cd007d34974",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  }
+}

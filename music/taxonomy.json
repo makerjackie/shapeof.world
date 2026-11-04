@@ -199,6 +199,10 @@
     "ambience-texture": {
       "en": "Texture ambience",
       "zh": "抽象声纹"
+    },
+    "phonk": {
+      "en": "Phonk",
+      "zh": "Phonk 漂移"
     }
   },
   "scenarios": {

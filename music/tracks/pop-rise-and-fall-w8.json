@@ -1,0 +1,104 @@
+{
+  "id": "pop-rise-and-fall-w8",
+  "code": "POP-W8",
+  "title": {
+    "en": "Rise and Fall · W8",
+    "zh": "兴衰 · W8"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "epic",
+    "dark",
+    "driving",
+    "tense"
+  ],
+  "topics": [
+    "2,000 years of world population",
+    "empires, plagues and wars",
+    "fast-cut data film"
+  ],
+  "energy": 5,
+  "bpm": 130,
+  "key": "D minor",
+  "instruments": [
+    "drift-phonk cowbell",
+    "distorted 808 bass",
+    "trap drums",
+    "orchestral strings",
+    "brass stabs",
+    "taiko"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 170,
+  "prompt": "Instrumental only, no vocals, no voice, no lyrics. Total length: exactly 2 minutes 50 seconds.\nEpic dark phonk meets cinematic orchestral trailer music, scoring a short film on 2,000 years of human population: empires rise and fall, plagues, wars, then the modern explosion of humanity.\nTempo: strict, steady 130 BPM in 4/4 from the first second to the last, D minor. Every beat clear and on the grid (the film is cut to the beat). No tempo changes, no rubato, no fade-ins.\nSound: drift-phonk cowbell lead melody, heavily distorted 808 bass, hard trap drums with crisp hi-hats, Memphis-style percussion, layered with epic orchestral strings, brass stabs, low choir and taiko.\n\nFollow this timeline exactly:\n[0:00 - 0:06] Intense opening, full volume from the first beat: a massive orchestral + 808 hit on every beat, cowbell riff above.\n[0:06 - 0:09] Rewind: reverse cymbal, tape-stop / vinyl rewind sweep, rising chirps, then one beat of silence.\n[0:09] THE DROP, full power.\n[0:09 - 0:42] Full drift phonk groove, cowbell lead melody, distorted 808, aggressive.\n[0:42 - 1:23] Same groove, bigger and darker: low choir, brass, taiko; big impacts at 0:42, 1:02 and 1:14.\n[1:23 - 1:49] New theme: urgent string ostinato over the phonk beat, building.\n[1:49 - 2:11] Solemn and clearly quieter: drums drop out or play sparse half-time, no cowbell, low strings, cello, distant choir, a slow tolling low bell. Respectful.\n[2:11] Everything slams back in.\n[2:11 - 2:32] The biggest, brightest section: full phonk drums, cowbell melody with the whole orchestra, uplifting and epic.\n[2:32 - 2:44] Breakdown: drums stop, reflective piano and soft strings.\n[2:44 - 2:50] One final huge cinematic hit, ringing out to silence.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "phonk",
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion",
+    "suspense"
+  ],
+  "description": {
+    "en": "Epic dark phonk meets cinematic orchestral trailer: drift-phonk cowbell lead, distorted 808 bass, hard trap drums, strings, brass stabs, low wordless choir and taiko. Steady 130 BPM grid, D minor, made for beat-cut edits.",
+    "zh": "史诗暗黑 Phonk 加电影预告片管弦：漂移 Phonk 牛铃主旋律、失真 808 贝斯、硬核 Trap 鼓，叠弦乐、铜管重音、低沉无词合唱和太鼓。全曲稳定 130 BPM，D 小调，适合卡点剪辑。"
+  },
+  "batch": "film-population-2026-11",
+  "status": "pending",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "foreground",
+    "tags": [
+      "phonk",
+      "epic",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 167.419,
+  "targetEnergy": 5,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T03:20:23Z",
+  "generation": {
+    "id": "v1_ChdVYVRxYXNUOUNZZk1yZmNQek1mQm9BWRIXVWFUcWFzVDlDWWZNcmZjUHpNZkJvQVk",
+    "model": "lyria-3.5",
+    "generator": "Google Lyria 3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "completedAt": "2026-11-04T03:20:23Z",
+    "interactionId": "v1_ChdVYVRxYXNUOUNZZk1yZmNQek1mQm9BWRIXVWFUcWFzVDlDWWZNcmZjUHpNZkJvQVk",
+    "sha256": "b122b5d68042dcb2fc553362ae3daa7e7805f990d801a754dc08adb49225306a"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, key, moods and energy are prompt intent (instrumental prompt; some prompts ask for a wordless choir); duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pop-rise-and-fall-w8/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pop-rise-and-fall-w8/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pop-rise-and-fall-w8/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "9ea59a5056200ce23f0847a3d46152d49bc37d931609bf8aefb2148213736cff",
+      "bytes": 2344637,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "b122b5d68042dcb2fc553362ae3daa7e7805f990d801a754dc08adb49225306a",
+      "bytes": 4024176,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "1c7781089b224262090412a808ea626855b3d8dbe479863deb0b106877ecc24e",
+      "bytes": 2799,
+      "mimeType": "application/json"
+    }
+  }
+}
