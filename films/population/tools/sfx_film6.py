@@ -303,7 +303,7 @@ for h0, h1 in CUES.get("hush", []):
 if hw.any():
     cc = np.exp(-2 * np.pi * 420 / SR)
     lpm = lfilter([1 - cc], [1, -cc], lfilter([1 - cc], [1, -cc], music, axis=0), axis=0)
-    music = music * (1 - 0.9 * hw)[:, None] + lpm * (0.55 * hw)[:, None]
+    music = music * (1 - 0.93 * hw)[:, None] + lpm * (0.28 * hw)[:, None]
     fx = fx * (1 - 0.8 * hw)[:, None]
     for h0, h1 in CUES.get("hush", []):
         put(bell(98, 6.0), h0 + 0.3, 0.42)
