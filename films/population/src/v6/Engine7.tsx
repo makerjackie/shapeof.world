@@ -705,6 +705,10 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.globalAlpha = clamp(ap * mk * (p.r === "far" ? 0.7 : 1));
       ctx.font = `900 ${size}px ${SERIF}`;
       const hw = ctx.measureText(p.n).width / 2 + 6;
+      // a realm off screen fades out instead of piling up at the edge
+      const over = Math.max(0, 40 + hw - (P.x + o[0]), P.x + o[0] - (SAFE_R - hw));
+      if (over > 60) return;
+      ctx.globalAlpha *= clamp(1 - over / 60);
       const lx = clamp(P.x + o[0], 40 + hw, SAFE_R - hw);
       const ly = clamp(P.y + o[1], 1090, 1440);
       text(ctx, p.n, lx, ly, size, 900, SERIF, p.r === "far" ? "#aab3bd" : WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });

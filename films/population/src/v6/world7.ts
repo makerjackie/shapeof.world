@@ -1,7 +1,7 @@
 // 两千年世界人口 (Film7 world cut, on the China v10 engine): plagues, wars and famines cut the world down again and again,
 // so for 1,800 years it barely grew; then it exploded; the next fall will come from births.
-// Music (v8): public/score_world8.wav, a Lyria 3.5 track re-edited to this timeline (tools/score_world8.py); BARRETE! is gone
-// (copyright claim). Times are film seconds = score seconds; strict 130 BPM, beat k at 0.05 + k * 60/130, bars from beat 0.
+// Music (v9): public/score_world9.wav, a Lyria 3.5 track re-edited to this timeline (tools/score_world9.py); BARRETE! is gone
+// (copyright claim). Times are film seconds = score seconds; 130 BPM, the explosion (bars 72-82) sped up to 139 BPM.
 // Sources: research/SOURCES6.md.
 import WD from "./world_data.json";
 import WC from "./world_countries_raw.json"; // research/countries.py
@@ -18,9 +18,15 @@ export const SERIES: Pt[] = [
 // ---------------- music: score bars (1.846 s): 0-2 cold open, 3 rewind (synthesised), 4 the drop (body), 58-70 the quiet war
 // section, 72 the big return (1950), 83 the outro, 89 the last hit (the brush line)
 const BEAT = 60 / 130;
-export const MUSIC = makeMusic([[0, 170.78]], 0.2, [{ t0: 0, t1: 170.78, P: BEAT, ph: 0.05, bar: 0 }]);
-const A = (n: number) => +(0.05 + n * BEAT).toFixed(4); // beat n
-const BAR = (k: number) => A(4 * k); // bar k
+const UP = 139 / 130; // bars 72-82 (1950-2100) run faster, like the reference's second half
+const A = (n: number) => +(0.05 + n * BEAT).toFixed(4); // beat n (cold open)
+const BAR = (k: number) => +(0.05 + 4 * BEAT * (Math.min(k, 72) + Math.max(0, Math.min(k, 83) - 72) / UP + Math.max(0, k - 83))).toFixed(4); // bar k
+const DUR = 169.47;
+export const MUSIC = makeMusic([[0, DUR]], 0.2, [
+  { t0: 0, t1: BAR(72), P: BEAT, ph: 0.05, bar: 0 },
+  { t0: BAR(72), t1: BAR(83), P: BEAT / UP, ph: 0, bar: 0 },
+  { t0: BAR(83), t1: DUR, P: BEAT, ph: 0, bar: 0 },
+]);
 const H = BEAT / 2; // half a beat
 
 // ---------------- cold open: the whole line in four seconds, eight catastrophes on eight beats, one line, then the rewind
@@ -229,7 +235,7 @@ export const WORLD: Spec = {
   kindLabel: { rec: "史料", est: "历史估算（HYDE）", stat: "联合国统计", un: "联合国预测" },
   noGapChip: true,
   noRiser: true, // the score carries the rewind itself (synthesised in tools/score_world8.py)
-  musicSrc: "score_world8.wav",
+  musicSrc: "score_world9.wav",
   // respect for the dead, one rule for every modern catastrophe (from 1850: war, famine, plague): no drums or hits, a low bell;
   // the great wars (Taiping, WWI, WWII) get one bar of silence when their card lands
   solemnFrom: 1850,
