@@ -194,5 +194,6 @@ export const WORLD: Spec = {
   srcEnd: "Data: HYDE 3.3, Gapminder (Our World in Data), Maddison Project, UN World Population Prospects 2024",
   src: (y) => must(SRC, W0.src!(y), "source"),
   tableTitle: "Most populous countries · today's borders",
-  table: (y) => W0.table!(y).map((r) => ({ ...r, n: must(COUNTRY, r.n, "country"), tag: r.tag ? "reg." : undefined })),
+  tableNote: (y) => (y < 1600 ? "* India before 1600: no records, scholars' estimate" : undefined),
+  table: (y) => W0.table!(y).map((r) => ({ ...r, n: must(COUNTRY, r.n, "country"), tag: r.tag === "在册" ? "reg." : r.tag })),
 };

@@ -293,10 +293,12 @@ const build = (intl: boolean) => {
   map: { lon: 60, lat: 30, zoom: 1 },
   tableTitle: "人口最多的国家 · 今日国界",
   tableRows: 6,
+  tableNote: (y) => (y < 1600 ? "* 印度 1600 年以前没有人口记录，为学者推算" : undefined),
   table: (y) =>
     CTRY.flatMap((k) => {
       const a = ctryAt(k.p, Math.min(y, 2100));
-      return a ? [{ n: k.n, v: a.v, c: k.c, tag: a.rec ? "在册" : undefined }] : [];
+      // India has no count before 1600 (first census 1871): its row is starred and footnoted
+      return a ? [{ n: k.n, v: a.v, c: k.c, tag: a.rec ? "在册" : k.n === "印度" && y < 1600 ? "*" : undefined }] : [];
     }),
 };
   return { WORLD, REVEALS };

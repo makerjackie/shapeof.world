@@ -46,6 +46,7 @@ export type Spec = {
   table?: (y: number) => { n: string; v: number; c: string; tag?: string }[]; // top-right table (world: countries, ranked live)
   tableTitle?: string;
   tableRows?: number;
+  tableNote?: (y: number) => string | undefined; // footnote under the table (e.g. why a row is an estimate)
   sfxGain?: number;
   lang?: "en"; // the English cut: engine strings through i18n, English number units, no 公元/年
   i18n?: Record<string, string>; // engine strings and map labels: Chinese -> English

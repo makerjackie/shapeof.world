@@ -1223,7 +1223,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       text(ctx, r.n, 656, y, EN ? 23 : 26, 900, SERIF, WHITE, EN ? { maxW: 118 } : {});
       if (r.tag) {
         ctx.font = `900 26px ${SERIF}`;
-        text(ctx, r.tag, 662 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
+        if (r.tag === "*") text(ctx, "*", 660 + ctx.measureText(r.n).width, y + 2, 28, 900, SANS, GOLD);
+        else text(ctx, r.tag, 662 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
       }
       const f = fmtPop(r.v);
       text(ctx, f.s, 862, y, 25, 900, SANS, WHITE, { align: "right" });
@@ -1238,6 +1239,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.fillStyle = r.c;
       ctx.fillRect(656, y + 9, 290 * (r.v / vmax), 4);
     });
+    const note = S.tableNote?.(c);
+    if (note) {
+      ctx.globalAlpha = a;
+      text(ctx, note, 640, 214 + NR * 50 - 6, 17, 500, SANS, MUTED, { maxW: 306 });
+    }
     ctx.restore();
   };
 
