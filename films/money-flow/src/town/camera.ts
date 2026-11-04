@@ -1,7 +1,7 @@
 // Camera as a pure function of film time, shared by the WebGL engine and the screen-space overlays (labels).
 import * as THREE from "three";
-import { HOLD, RIVER, T, TECH, VISIT, WORLD, clamp } from "../timing";
-import { BANK, CAST, DEV, GOV, HOUSES, HUB, Role, TOWER, YOU_RANK, byRank, tankTop } from "./layout";
+import { BUYER21, HOLD, RIVER, T, VISIT, Y09, clamp } from "../timing";
+import { BANK, CAST, DEV, GOV, HOUSES, HUB, Role, YOU_RANK, byRank, tankTop } from "./layout";
 
 type V = [number, number, number];
 type Key = { t: number; p: V; l: V; fov?: number; hold?: number };
@@ -32,15 +32,17 @@ const WIDE_P: V = [8, 58, 92];
 const WIDE_L: V = [8, 0, -6];
 
 export const KEYS: Key[] = [
-  // hook: from high above the town, settle on the wide shot, then down toward the tower as the gold falls
-  { t: T.hook, p: [-4, 40, 30], l: [-30, 36, -15], fov: 44 },
-  { t: T.hook + 2.6, p: [-12, 30, 22], l: [-28, 18, -14], fov: 42 },
-  { t: T.hook + 6.4, p: [12, 64, 98], l: [6, 0, -8], fov: 36 },
-  { t: T.hook + 10.4, p: [-8, 44, 66], l: [-16, 12, -12], fov: 36 },
-  // chapter 1: the tower, the bank, then the market (the factory the first loan goes to)
-  { t: T.c1 + 3, p: [-14, 30, 24], l: at(TOWER, 13), fov: 38 },
-  { t: T.c1 + 9, p: [-6, 22, 12], l: at(BANK, 3), fov: 38 },
-  { t: T.c1 + 15, p: [-1, 27, 30], l: [-16, 2, -8], fov: 40 },
+  // hook: gold falls into the bank; the camera skims low over the roofs to the front rows, then rises for the town
+  { t: T.hook, p: [4, 30, 16], l: [BANK.x, 12, BANK.z], fov: 46 },
+  { t: T.hook + 2.8, p: [8, 16, 22], l: [-10, 5, -10], fov: 46 },
+  { t: T.hook + 6.0, p: [44, 15, 40], l: [24, 2, 2], fov: 44 },
+  { t: T.hook + 8.4, p: [46, 18, 44], l: [24, 1, 4], fov: 44 },
+  { t: T.c1 + 0.2, p: [16, 52, 82], l: [8, 0, -6], fov: 38 },
+  { t: T.c1 + 3.4, p: [12, 50, 78], l: [6, 0, -6], fov: 38 },
+  // chapter 1: the bank lends to the factory; the debt stays with the factory
+  { t: T.c1 + 6.0, p: [2, 24, 20], l: [-15, 3, -8], fov: 42 },
+  { t: T.c1 + 10.5, p: [-2, 19, 24], l: at(HUB, 2), fov: 40 },
+  { t: T.c1 + 16, p: [0, 20, 26], l: at(HUB, 2), fov: 40 },
   { t: T.c2 - 0.5, p: [0, 25, 31], l: [-16, 2, -6], fov: 40 },
   // chapter 2: the factory, then the split into the town
   { t: T.c2 + 4, p: [-2, 20, 26], l: at(HUB, 2), fov: 40 },
@@ -66,34 +68,23 @@ export const KEYS: Key[] = [
   { t: T.c4 + 14.6, p: [36, 38, 52], l: [34, 0, 10], fov: 42 },
   { t: T.c4 + 21, p: [30, 50, 74], l: [30, 0, 4], fov: 40 },
   { t: T.c4 + 31, p: WIDE_P, l: WIDE_L, fov: 38 },
-  // chapter 5: push into the richest house's tank
-  { t: T.c5 + 4, p: off(top(CAST.holder), [-6, 6, 17]), l: top(CAST.holder), fov: 30 },
-  { t: T.c5 + 13, p: off(top(CAST.holder), [7, 2.5, 13]), l: top(CAST.holder), fov: 26 },
-  { t: T.c5 + 16.5, p: off(top(CAST.holder), [8, 3, 14]), l: top(CAST.holder), fov: 26 },
-  { t: T.c5 + 21, p: [36, 24, 8], l: [36, 4, -30], fov: 40 },
-  { t: T.c5 + 23, p: [36, 30, 16], l: [36, 4, -26], fov: 42 },
-  { t: T.c5 + 26, p: [30, 36, 58], l: [32, 0, 8], fov: 40 },
-  { t: T.c5 + 31.6, p: [28, 37, 60], l: [30, 0, 8], fov: 40 },
-  // chapter 6: the hill, the bank, the front rows (loans out, interest back)
-  { t: T.c6 + 3, p: [24, 26, 0], l: [26, 4, -31], fov: 40 },
-  { t: T.c6 + 9, p: [24, 24, -2], l: [26, 4, -31], fov: 40 },
-  { t: T.c6 + 12.5, p: [18, 44, 40], l: [12, 2, -18], fov: 42 },
-  { t: T.c6 + 16.5, p: [20, 42, 38], l: [14, 2, -18], fov: 42 },
-  { t: T.c6 + 21, p: [30, 34, 50], l: [30, 1, -8], fov: 40 },
-  { t: T.c6 + 26.5, ...portraitOf(CAST.coder, 1.2) },
-  // chapter 7: the housing wave: the town and the developer's district, then the 2021 buyer
-  { t: T.c7 + 3, p: [-6, 44, 76], l: [-18, 4, 0], fov: 44 },
+  // chapter 5: the hill (the savers), the bank, the front rows (loans out, interest back), the young buyer
+  { t: T.c5 + 2, p: [24, 26, 0], l: [26, 4, -31], fov: 40 },
+  { t: T.c5 + 9, p: [22, 24, -2], l: [26, 4, -31], fov: 40 },
+  { t: T.c5 + 12.5, p: [18, 44, 40], l: [12, 2, -18], fov: 42 },
+  { t: T.c5 + 16.5, p: [20, 42, 38], l: [14, 2, -18], fov: 42 },
+  { t: T.c5 + 21, p: [30, 34, 50], l: [30, 1, -8], fov: 40 },
+  { t: T.c5 + 26.5, ...portraitOf(CAST.coder, 1.2) },
+  { t: T.c7 - 0.4, ...portraitOf(CAST.coder, 1.05) },
+  // chapter 7: 2009 at the developer's district and the land office; then the wave over the town; then the 2021 buyer
+  { t: T.c7 + 2.6, p: [-36, 30, 44], l: [-54, 3, -6], fov: 44 },
+  { t: Y09.b, p: [-40, 28, 40], l: [-56, 3, -6], fov: 44 },
+  { t: RIVER.a + 1, p: [-6, 44, 76], l: [-18, 4, 0], fov: 44 },
   { t: RIVER.peak, p: [-20, 40, 66], l: [-30, 6, 0], fov: 44 },
   { t: RIVER.hold, p: [-28, 28, 48], l: [-42, 9, 2], fov: 42 },
-  { t: T.c7 + 33, p: [-30, 27, 46], l: [-43, 9, 2], fov: 42 },
-  { t: T.c7 + 35, p: off(top(CAST.coder), [-9, 10, 30]), l: top(CAST.coder), fov: 34 },
-  { t: T.c9 - 0.2, p: off(top(CAST.coder), [-7, 8, 24]), l: top(CAST.coder), fov: 32 },
-  // chapter 9: the hill and the horizon behind it, where the next waves rise; then the whole town for the world
-  { t: T.c9 + 3.5, p: [34, 34, 22], l: [36, 8, -40], fov: 44 },
-  { t: TECH.a + 1, p: [36, 30, 14], l: [38, 12, -50], fov: 44 },
-  { t: TECH.b - 0.5, p: [38, 32, 18], l: [38, 12, -48], fov: 44 },
-  { t: WORLD.a + 2.5, p: [14, 60, 92], l: [14, 0, -8], fov: 38 },
-  { t: WORLD.b, p: [16, 58, 88], l: [16, 0, -8], fov: 38 },
+  { t: BUYER21 - 1.6, p: [-30, 27, 46], l: [-43, 9, 2], fov: 42 },
+  { t: BUYER21 + 0.6, p: off(top(CAST.coder), [-9, 10, 30]), l: top(CAST.coder), fov: 34 },
+  { t: T.c10 - 0.2, p: off(top(CAST.coder), [-7, 8, 24]), l: top(CAST.coder), fov: 32 },
   // chapter 10: slow drift over the town
   { t: T.c10 + 3, p: [62, 14, 40], l: [26, 1, 8], fov: 46 },
   { t: T.c10 + 11.6, p: [58, 15, 43], l: [24, 1, 8], fov: 46 },
@@ -146,9 +137,9 @@ export function project(t: number, v: THREE.Vector3): { x: number; y: number; vi
   return { x: (q.x * 0.5 + 0.5) * W, y: (-q.y * 0.5 + 0.5) * H, vis: q.z < 1 && q.z > -1 };
 }
 export const ANCHORS = {
-  tower: new THREE.Vector3(TOWER.x, 30, TOWER.z),
   bank: new THREE.Vector3(BANK.x, 8.5, BANK.z),
   gov: new THREE.Vector3(GOV.x, 7.5, GOV.z),
   hub: new THREE.Vector3(HUB.x, 7.5, HUB.z),
   dev: new THREE.Vector3(DEV.x - 2, 27, DEV.z),
+  land: new THREE.Vector3(DEV.x - 3, 6.5, DEV.z + 2),
 };

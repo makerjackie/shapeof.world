@@ -7,14 +7,13 @@ with real silences where the story needs them. The layout must match src/timing.
 2 世界的形状 hidden-shapes (C major, half-time 65/130 BPM) from track 12 s (groove already locked) at film 61.8: the
   year of flowing has a pulse that keeps walking. Fades over 102.0–103.6, so the reveal question (103.95) is asked in
   silence and the impact at HIT (106.75) lands on nothing.
-3 活着的蓝 living-blue (D major, 56 BPM) from track 0 at HIT: quiet piano thirds under the numbers, pads under the
-  rich, low strings tilting to minor under the interest. Fades over 195.4–197.6.
-4 同步闪光 sync-flash (G major, 102 BPM) from track 70 s (fireflies already flashing together) at film 197.0, swelling
-  with the housing wave, and cut away in 0.35 s as the wave ebbs ("浪潮，也会退", 223.3): the 2021 buyer stands in
-  silence for three seconds, then 活着的蓝's low strings (track 84 s) return quietly under the 2021 buyer. It comes back from its own first bar at film 238.1 for the next waves: scattered notes that find each
-  other through the tech waves and the world. Fades over 282.6–285.2.
-5 安静的账本 quiet-ledger (F major) from track 101.6 s at film 285 (2.5 s fade in): its full silence (track
-  131–132.5 s) sits just before the last line (316.4); at 322 it crossfades into its own opening bars for the sources
+3 活着的蓝 living-blue (D major, 56 BPM) from track 0 at HIT: quiet piano thirds under the reveal, pads under the
+  savers, low strings under the interest. Fades over 166.4–168.6.
+4 同步闪光 sync-flash (G major, 102 BPM) from track 70 s (fireflies already flashing together) at film 167.6: 2009 and the
+  housing wave swell with it; it is cut away in 0.35 s as the wave ebbs ("浪潮，也会退", 199.3). Three seconds of silence,
+  then 活着的蓝's low strings (track 84 s) return quietly under the 2021 buyer and the debt that stays.
+5 安静的账本 quiet-ledger (F major) from track 101.6 s at film 216 (c10, 2.5 s fade in): its full silence (track
+  131–132.5 s) sits just before the last line (247.4); at 253 it crossfades into its own opening bars for the sources
   and end card.
 
 usage: ~/.venvs/shapeof-films/bin/python tools/music.py
@@ -28,7 +27,7 @@ from scipy.io import wavfile
 FF = "/opt/homebrew/bin/ffmpeg"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SR = 48000
-END = 342.0  # T.end
+END = 273.0  # T.end
 HIT = 0.08 + 40 * 240 / 90  # 106.75, src/timing.ts
 
 
@@ -62,16 +61,15 @@ def ramp(x, a, b, lo, hi):
 place(load("first-opening.mp3"), 0.0, 0.0, 62.6, fade_out=2.6, gain=1.15, env=lambda x: ramp(x, 0.0, 30.0, 1.45, 1.0))
 place(load("hidden-shapes.mp3"), 12.0, 61.8, 103.6, fade_in=1.2, fade_out=1.6, gain=0.95)
 blue = load("living-blue.mp3")
-place(blue, 0.0, HIT, 197.6, fade_in=0.05, fade_out=2.2, gain=1.05)
-# after the ebb: three seconds of nothing, then its low strings come back quietly under the 2021 buyer
-place(blue, 84.0, 226.8, 239.6, fade_in=2.5, fade_out=2.0, gain=0.8)
+place(blue, 0.0, HIT, 168.6, fade_in=0.05, fade_out=2.2, gain=1.05)
 sync = load("sync-flash.mp3")
-# the housing wave: rises from 197 to its 2021 peak (215.1), holds, then is pulled out from under the ebb (223.3)
-place(sync, 70.0, 197.0, 223.65, fade_in=1.6, fade_out=0.35, env=lambda x: ramp(x, 198.0, 215.0, 0.55, 1.08))
-place(sync, 0.0, 238.1, 285.2, fade_in=0.3, fade_out=2.6, env=lambda x: ramp(x, 238.1, 262.0, 1.25, 1.0))
+# 2009 and the housing wave: rises to its 2021 peak (193.1), holds, then is pulled out from under the ebb (199.3)
+place(sync, 70.0, 167.6, 199.65, fade_in=1.6, fade_out=0.35, env=lambda x: ramp(x, 169.0, 193.0, 0.5, 1.08))
+# after the ebb: three seconds of nothing, then its low strings come back quietly under the 2021 buyer
+place(blue, 84.0, 202.6, 217.4, fade_in=2.5, fade_out=2.0, gain=0.8)
 C = load("quiet-ledger.mp3")
-place(C, 101.6, 285.0, 323.5, fade_in=2.5, fade_out=1.5)
-place(C, 0.0, 322.0, END, fade_in=1.5, fade_out=3.0, gain=0.9)
+place(C, 101.6, 216.0, 254.5, fade_in=2.5, fade_out=1.5)
+place(C, 0.0, 253.0, END, fade_in=1.5, fade_out=3.0, gain=0.9)
 
 out = out[: int(END * SR)]
 out *= 10 ** (-2.0 / 20)  # tools/tpmaster.py sets the final level

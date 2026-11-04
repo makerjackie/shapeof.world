@@ -29,6 +29,7 @@ import { Pt, scene as sceneAt, SceneState } from "./state";
 const GOLD = new THREE.Color("#ffb53d");
 const GOLD_HI = new THREE.Color("#ffe2a0");
 const RED = new THREE.Color("#ff3b2f");
+const BANK_TOP = 7.2; // roof of the bank (building-n × 3.4), where the new money lands
 
 // ---------------------------------------------------------------- shaders
 const flowMat = (radius: number, len: number) =>
@@ -601,11 +602,9 @@ class Town {
       S.add(tb.mesh);
     }
 
-    // ---------- central bank tower: the tallest skyscraper, a gold crown
-    const towerLook = newLook({ lit: 0.4, roof: "#3c4250", win: 0.6 });
-    this.add(inst("com", "building-skyscraper-d", towerLook), TOWER.x, 0, TOWER.z, 5.0);
-    const crown = new THREE.Mesh(new THREE.CylinderGeometry(3.6, 3.6, 1.2, 40, 1, true), new THREE.MeshBasicMaterial({ color: GOLD, side: THREE.DoubleSide, transparent: true }));
-    crown.position.set(TOWER.x, 5.47 * 5 + 1.0, TOWER.z);
+    // (v6: no central-bank tower; new money appears at the bank, where loans are made)
+    const crown = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.6, 0.5, 40, 1, true), new THREE.MeshBasicMaterial({ color: GOLD, side: THREE.DoubleSide, transparent: true }));
+    crown.position.set(BANK.x, BANK_TOP + 0.3, BANK.z);
     S.add(crown);
     this.towerCrown = crown;
     // bank, government
@@ -689,9 +688,9 @@ class Town {
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
       geo.setAttribute("seed", new THREE.BufferAttribute(seed, 3));
-      const top = 5.47 * 5 + 1.0;
+      const top = BANK_TOP;
       const mat = new THREE.ShaderMaterial({
-        uniforms: { uT: { value: 0 }, uK: { value: 0 }, uC: { value: new THREE.Vector3(TOWER.x, top, TOWER.z) } },
+        uniforms: { uT: { value: 0 }, uK: { value: 0 }, uC: { value: new THREE.Vector3(BANK.x, top, BANK.z) } },
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
@@ -726,7 +725,7 @@ class Town {
               gl_FragColor = vec4(vec3(1.0, 0.6, 0.18) * uK * edge * s * fade * 0.42, 1.0); }`,
         }),
       );
-      col.position.set(TOWER.x, top + 35, TOWER.z);
+      col.position.set(BANK.x, top + 35, BANK.z);
       S.add(col);
       this.column = col;
       this.torrent = new THREE.Points(geo, mat);
@@ -845,6 +844,11 @@ class Town {
       o.scale.y = Math.max(0.02, hgt) * o.scale.x * 0.5;
       this.devLooks[i].uWin.value = 0.4 + 1.0 * st.built * (1 - st.devDim);
       this.devLooks[i].uDim.value = 0.75 * st.devDim;
+    });
+    // 2009: the land under the old sheds lights up as the new loans bid for it
+    this.shantyGold.forEach((g, i) => {
+      (g.material as THREE.MeshBasicMaterial).opacity = 0.9 * st.land * (0.75 + 0.25 * Math.sin(t * 3 + i));
+      g.scale.setScalar(0.6 + 0.9 * st.land);
     });
     // the old sheds sink away as the towers go up
     this.shacks.forEach((sh, i) => {
