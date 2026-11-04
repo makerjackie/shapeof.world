@@ -46,8 +46,9 @@ export const KEYS: Key[] = [
   { t: T.c2 + 4, p: [-2, 20, 26], l: at(HUB, 2), fov: 40 },
   { t: T.c2 + 9, p: [4, 28, 34], l: [-8, 0, 0], fov: 40 },
   { t: T.c2 + 13, p: [14, 44, 58], l: [12, 0, -4], fov: 40 },
-  { t: T.c2 + 21, p: WIDE_P, l: WIDE_L, fov: 38 },
-  { t: T.c2 + 30, p: [10, 56, 88], l: [8, 0, -6], fov: 38 },
+  // down among the front rows, where wages are spent and become someone else's wages
+  { t: T.c2 + 21, p: [46, 19, 46], l: [24, 1, 6], fov: 42 },
+  { t: T.c2 + 30, p: [40, 21, 50], l: [21, 1, 4], fov: 42 },
   // chapter 3: one household after another, lowest income first, up to the hill; then the whole town
   ...visit("rider"),
   ...visit("worker"),
@@ -79,7 +80,7 @@ export const KEYS: Key[] = [
   { t: T.c6 + 12.5, p: [18, 44, 40], l: [12, 2, -18], fov: 42 },
   { t: T.c6 + 16.5, p: [20, 42, 38], l: [14, 2, -18], fov: 42 },
   { t: T.c6 + 21, p: [30, 34, 50], l: [30, 1, -8], fov: 40 },
-  { t: T.c6 + 27, p: [14, 52, 66], l: [14, 0, 0], fov: 40 },
+  { t: T.c6 + 26.5, ...portraitOf(CAST.coder, 1.2) },
   // chapter 7: the housing wave: the town and the developer's district, then the 2021 buyer
   { t: T.c7 + 3, p: [-6, 44, 76], l: [-18, 4, 0], fov: 44 },
   { t: RIVER.peak, p: [-20, 40, 66], l: [-30, 6, 0], fov: 44 },
@@ -94,11 +95,11 @@ export const KEYS: Key[] = [
   { t: WORLD.a + 2.5, p: [14, 60, 92], l: [14, 0, -8], fov: 38 },
   { t: WORLD.b, p: [16, 58, 88], l: [16, 0, -8], fov: 38 },
   // chapter 10: slow drift over the town
-  { t: T.c10 + 3, p: [22, 54, 80], l: [16, 0, -6], fov: 38 },
-  { t: T.c10 + 11.6, p: [24, 52, 78], l: [16, 0, -6], fov: 38 },
+  { t: T.c10 + 3, p: [62, 14, 40], l: [26, 1, 8], fov: 46 },
+  { t: T.c10 + 11.6, p: [58, 15, 43], l: [24, 1, 8], fov: 46 },
   { t: T.c10 + 13.6, ...portraitOf(CAST.boss, 1.0) },
   { t: T.c10 + 18.2, ...portraitOf(CAST.boss, 0.92) },
-  { t: T.c10 + 22, p: [24, 54, 80], l: [16, 0, -6], fov: 38 },
+  { t: T.c10 + 22, p: [30, 34, 60], l: [24, 0, 4], fov: 40 },
   // chapter 11: down to one ordinary house, then all the way out
   { t: T.c11 + 2, p: [24, 30, 50], l: [24, 0, 10], fov: 38 },
   { t: T.c11 + 7, p: off(top(YOU_RANK), [1, 5.5, 9]), l: top(YOU_RANK), fov: 34 },

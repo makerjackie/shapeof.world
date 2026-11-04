@@ -1,12 +1,18 @@
 # 一个亿印出来以后，去了谁的口袋？（films/money-flow）
 
-5:42、1920×1080、30 fps，无旁白，Remotion + three.js 三维小镇（Kenney CC0 模型），自己曲库的三首配乐。
+5:42、1920×1080、30 fps，无旁白，Remotion + three.js 三维小镇（Kenney CC0 模型），自己曲库的五首配乐。
 
 v4（2026-11-03）回到 v2 的悬念和画面。v3 改成跟着一张 100 块走，作者觉得"不如原来的有意思"，只有饭馆拆账那段被点名有意思，所以这段并进了 v4。v2 被指出的几处问题都在 v4 里改了：
 - 2015–2018 房价的例子删了，改成"浪潮"，涨和退都讲；
 - 管道和弧线不再闪；
 - 每一笔流动都标上它是什么钱；
 - 美国那部分只留一条数据。
+
+v5（2026-11-04）内容和数字不动，改声音和画面。作者看 v4 觉得"配乐加上这个画面，看不太下去"：
+- 配乐：v4 前 2 分 49 秒是同一首拉长，中段垫的是一首写超新星的紧张曲子。v5 每一段换一首，揭晓前、浪潮退去时留出真正的安静；
+- 光线：从午后的暖光开始，揭晓时日落，讲富人和浪潮时入暮，结尾入夜（`timing.ts` 的 `nightAt`）；
+- 镜头：几处大全景换成贴近前排人家的中近景；
+- 字幕：删掉和画面标签重复的小字，约少三分之一。
 
 决定和理由见私有 `SCRIPT-v4.md`。
 
@@ -39,7 +45,7 @@ v4（2026-11-03）回到 v2 的悬念和画面。v3 改成跟着一张 100 块�
 | 7 | 3:17–3:58 | 浪潮：买新房的钱 2500 亿 → 18.2 万亿 → 8.4 万亿；2021 年买房的人 |
 | 9 | 3:58–4:45 | 胡润榜；手机、互联网、电池、芯片；全世界 75% / 2% |
 | 10 | 4:45–5:09 | 但是：不印失业更多；小老板最先赔钱 |
-| 11 | 5:09–5:26 | 你的那户水箱；信息来源；片尾卡 |
+| 11 | 5:09–5:42 | 你的那户水箱；信息来源；片尾卡 |
 
 代码在 `src/town/` 下：
 - `layout.ts`：小镇布局
@@ -61,13 +67,15 @@ v4（2026-11-03）回到 v2 的悬念和画面。v3 改成跟着一张 100 块�
 
 ## 声音
 
-`tools/music.py` 从三首曲库原曲（CC0）拼出 `public/score.wav`，接点和对齐见脚本开头：
+`tools/music.py` 从五首曲库原曲（CC0）拼出 `public/score.wav`，一段一首，接点见脚本开头：
 
-- 信用火花：<https://music-cdn.shapeof.world/tracks/credit-spark/v1/master.mp3>
-- 核心坍缩：<https://music-cdn.shapeof.world/tracks/core-collapse/v1/master.mp3>
-- 安静的账本：<https://music-cdn.shapeof.world/tracks/quiet-ledger/v1/master.mp3>
+- 0:00–1:02 初次打开：<https://music-cdn.shapeof.world/tracks/first-opening/v1/master.mp3>
+- 1:02–1:44 世界的形状：<https://music-cdn.shapeof.world/tracks/hidden-shapes/v1/master.mp3>
+- 1:47–3:17 活着的蓝：<https://music-cdn.shapeof.world/tracks/living-blue/v1/master.mp3>
+- 3:17–3:44、3:58–4:45 同步闪光：<https://music-cdn.shapeof.world/tracks/sync-flash/v1/master.mp3>
+- 4:45–5:42 安静的账本：<https://music-cdn.shapeof.world/tracks/quiet-ledger/v1/master.mp3>
 
-这三首下载到 `public/music/`。音效在 `public/sfx/`，来自同一曲库（`https://music-cdn.shapeof.world/tracks/<id>/v1/master.wav`）。都不进 Git。
+这几首下载到 `public/music/`。音效在 `public/sfx/`，来自同一曲库（`https://music-cdn.shapeof.world/tracks/<id>/v1/master.wav`）。都不进 Git。
 
 ## 模型
 

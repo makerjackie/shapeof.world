@@ -2,11 +2,8 @@
 // retimed to the music by editing this one table.
 export const FPS = 30;
 
-// Score (tools/music.py): A 信用火花 (90 BPM, bar 2.6667 s, phase 0.08) from film 0 with two 8-bar repeats inserted
-// (bars 0–16, 9–21, 14–end), so its one silence (track 62.2–64.0 s) falls on the reveal question and the downbeat of
-// track bar 24 (film 106.75) on "约 5000 万". B 核心坍缩 from track 15.6 s at film 168.08: its pause (track 82–86 s)
-// ends on the bridge into the next waves (film 238.5). C 安静的账本 from track 101.6 s at film 285: its silence
-// (track 131–132.5 s) sits before the last line (film 316.4).
+// Score (tools/music.py): one library track per movement, cut on these scene starts. The bar grid below is kept from
+// the first cut (信用火花, 90 BPM); HIT (106.75) is the impact under "约 5000 万", where 活着的蓝 begins in silence.
 export const A_BAR = 240 / 90;
 export const A_FILM = (trackBar: number) => 0.08 + (trackBar + 16) * A_BAR; // for track bars ≥ 22
 export const HIT = A_FILM(24); // 106.75
@@ -26,6 +23,18 @@ export const T = {
   sources: 326,
   card: 334,
   end: 342,
+};
+
+// Light through the film: late golden afternoon while the money flows, sunset at the reveal, dusk for the rich and
+// the waves, night for the ending (0 = golden, 0.6 = the blue hour of v4, 1 = night).
+const NIGHT_KEYS: [number, number][] = [[0, 0], [100, 0.05], [136, 0.32], [197, 0.5], [238, 0.62], [285, 0.8], [312, 1]];
+export const nightAt = (t: number) => {
+  let i = 0;
+  while (i < NIGHT_KEYS.length - 1 && t > NIGHT_KEYS[i + 1][0]) i++;
+  const [a, x] = NIGHT_KEYS[i];
+  const [b, y] = NIGHT_KEYS[Math.min(i + 1, NIGHT_KEYS.length - 1)];
+  const u = b === a ? 1 : Math.min(1, Math.max(0, (t - a) / (b - a)));
+  return x + (y - x) * u * u * (3 - 2 * u);
 };
 
 export const MONTHS = { start: T.c3 + 2, end: T.c4 - 2 }; // 12 monthly cycles
