@@ -176,6 +176,54 @@ for e in bj:
         if h > 250: kind = KIND_LANDMARK if kind == KIND_OFFICE or h > 300 else kind
         blds.append(dict(P=P, h=h, kind=kind, seed=float(rng.random() * 100), name=name, osm=True))
 print("osm buildings", len(blds))
+outline_polys = [b["P"] for b in blds]
+# building parts: where OSM models a tower as stacked volumes (podium, shaft, setbacks, crown), use them instead of the
+# outline extruded to the full height
+if os.path.exists(D + "parts.json") and os.path.getsize(D + "parts.json") > 1000:
+    from shapely.strtree import STRtree
+    from shapely.geometry import Point
+    pj = json.load(open(D + "parts.json"))["elements"]
+    parts = []
+    for e in pj:
+        t = e.get("tags", {})
+        h = num(t.get("height"))
+        lv = num(t.get("building:levels"))
+        if h is None and lv is not None: h = lv * 3.4 + 1
+        if h is None: continue
+        mh = num(t.get("min_height"))
+        mlv = num(t.get("building:min_level"))
+        if mh is None and mlv is not None: mh = mlv * 3.4
+        mh = mh or 0.0
+        if h - mh < 1.5: continue
+        for ring in rings_of(e):
+            if len(ring) < 4: continue
+            try:
+                Pp = Polygon(ring)
+                if not Pp.is_valid: Pp = Pp.buffer(0)
+                if Pp.geom_type != "Polygon": Pp = max(Pp.geoms, key=lambda g: g.area)
+            except Exception:
+                continue
+            if Pp.area < 12: continue
+            parts.append((orient(Pp.simplify(0.3, preserve_topology=True), 1.0), float(mh), float(min(h, 620))))
+    tree = STRtree([b["P"] for b in blds])
+    owner = {}
+    for k, (Pp, mh, h) in enumerate(parts):
+        c = Pp.representative_point()
+        for j in tree.query(c):
+            if blds[j]["P"].contains(c):
+                owner.setdefault(int(j), []).append(k)
+                break
+    newb, used = [], 0
+    for j, b in enumerate(blds):
+        if j in owner:
+            for k in owner[j]:
+                Pp, mh, h = parts[k]
+                newb.append(dict(P=Pp, h=h, base=mh, kind=b["kind"] if h < 250 else KIND_LANDMARK if b["kind"] in (KIND_OFFICE, KIND_LANDMARK) else b["kind"], seed=b["seed"], name=b["name"], osm=True))
+            used += 1
+        else:
+            newb.append(b)
+    print("parts", len(parts), "replaced outlines", used)
+    blds = newb
 
 # ---------------- fill the gaps ----------------
 PX = 2.0
@@ -187,7 +235,7 @@ blocked = draw_mask(CORE, PX, lines=road_lines + svc_lines)
 blocked |= draw_mask(CORE, PX, polys=water + green)
 blocked |= draw_mask(CORE, PX, lines=[(r, 40) for r in rivers])
 blocked |= sea_mask(CORE, PX)
-bmask = draw_mask(CORE, PX, polys=[list(b["P"].exterior.coords) for b in blds])
+bmask = draw_mask(CORE, PX, polys=[list(P.exterior.coords) for P in outline_polys])
 blocked |= ndimage.binary_dilation(bmask, iterations=4)
 # only fill where there is city: within reach of the street grid (no filling of hills and open land)
 roadm = draw_mask(CORE, PX, lines=[(r["pts"], r["w"]) for r in roads if r["c"] <= 7 and in_box(r["pts"], CORE, 50)])
@@ -254,13 +302,13 @@ def write_bld(path, L):
         ring = list(b["P"].exterior.coords)[:-1]
         if len(ring) < 3: continue
         c = b["P"].centroid
-        info += [b["h"], b["kind"], b["seed"], 1.0 if b["osm"] else 0.0, c.x, c.y]
+        info += [b["h"], b["kind"], b["seed"], 1.0 if b["osm"] else 0.0, c.x, c.y, b.get("base", 0.0)]
         for p in ring: pts += [p[0], p[1]]
         offs.append(len(pts) // 2)
     with open(path, "wb") as f:
         f.write(struct.pack("<II", len(offs) - 1, len(pts) // 2))
         f.write(np.array(info, np.float32).tobytes()); f.write(np.array(offs, np.uint32).tobytes()); f.write(np.array(pts, np.float32).tobytes())
-    return len(offs) - 1
+    return len(offs) - 1  # info stride 7: height, kind, seed, osm, cx, cz, base
 nb = write_bld(OUT + "bld.bin", allb)
 
 def write_roads(path, L):
@@ -295,7 +343,7 @@ ground(FAR, 4096, 2560, OUT + "far.png", 10.0)
 # landmarks and road names for framing the shots
 marks = {}
 for b in blds:
-    if b["name"] and b["h"] > 150: marks[b["name"]] = [round(b["P"].centroid.x, 1), round(b["P"].centroid.y, 1), round(b["h"], 1)]
+    if b["name"] and b["h"] > 150 and b.get("base", 0) < 1: marks[b["name"]] = [round(b["P"].centroid.x, 1), round(b["P"].centroid.y, 1), round(b["h"], 1)]
 named = {}
 for r in core_roads:
     if r["name"] and r["c"] <= 3:

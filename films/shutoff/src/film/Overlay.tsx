@@ -6,7 +6,7 @@ import { Img, staticFile } from "remotion";
 import { SANS, SERIF } from "../engine/fonts";
 import { clamp, ease, easeOut, lerp, spring } from "../engine/util";
 import { revealQuad } from "../engine/phone";
-import { REVEAL } from "./cut";
+import { CHAT_T0 } from "./cut";
 import { CARDS, CREDITS, Card } from "./text";
 
 const BAR = 138; // (1080 - 1920/2.39) / 2
@@ -206,7 +206,7 @@ const homography = (w: number, h: number, d: [number, number][]) => {
 
 // the reveal: the frozen last frame of 安's film shrinks into the video message on 林工's phone
 const Reveal: React.FC<{ t: number }> = ({ t }) => {
-  const lt = t - REVEAL;
+  const lt = t - CHAT_T0;
   if (lt < 0 || lt >= 1.8) return null;
   const p = ease(clamp((lt - 0.12) / 1.3));
   const q = revealQuad(lt, t);
@@ -231,7 +231,6 @@ export const Overlay: React.FC<{ t: number }> = ({ t }) => {
       {live.map((c, i) => (
         <CardView key={i} c={c} t={t} />
       ))}
-      <Reveal t={t} />
       <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: BAR, background: "#000" }} />
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: BAR, background: "#000" }} />
       {t < end.t0 && (

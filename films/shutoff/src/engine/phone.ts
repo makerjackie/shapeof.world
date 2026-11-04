@@ -548,63 +548,47 @@ export const phoneScene = (): SceneMod => {
     } else if (mode === "chat") {
       // five set-ups, hard cuts between them: the draft is typed → the long wait, wide, alone in the dark →
       // closer, the dots come and go → the answer, read from above → the last line, slightly off-axis
-      if (lt < 5.0) {
-        // the reveal: high over the whole phone while the film lands in it, then 安 asks if he watched it
-        const p = revealPose(lt, gt);
-        pos.copy(p.pos);
-        tgt.copy(p.tgt);
-        fov = p.fov;
-        aperture = 0.5;
-        chatFocus.set(0, PHONE_T, 0.01);
-      } else if (lt < 10.3) {
-        // read from above: what the film was
-        const k = clamp((lt - 5.0) / 5.3);
-        pos.set(0.003, lerp(0.17, 0.158, k), lerp(0.07, 0.066, k));
-        tgt.set(0, 0, lerp(0.012, 0.016, k));
-        fov = 30;
-        aperture = 1.2;
-        chatFocus.set(0, PHONE_T, 0.025);
-      } else if (lt < 14.4) {
+      if (lt < 4.8) {
         // the draft is typed
-        const k = clamp((lt - 10.3) / 4.1);
+        const k = clamp(lt / 4.8);
         pos.set(0.012, lerp(0.112, 0.104, k), lerp(0.098, 0.094, k));
         tgt.set(0, 0, 0.046);
         fov = 30;
         aperture = 1.4;
         chatFocus.set(0, PHONE_T, 0.05);
-      } else if (lt < 18.0) {
+      } else if (lt < 9.5) {
         // the long wait, wide, alone in the dark, the drawing beside the phone
-        const k = clamp((lt - 14.4) / 3.6);
+        const k = clamp((lt - 4.8) / 4.7);
         pos.set(lerp(0.33, 0.29, k), lerp(0.21, 0.19, k), lerp(0.36, 0.31, k));
         tgt.set(-0.03, 0.0, -0.02);
         fov = 32;
         aperture = 4;
         chatFocus.set(0, PHONE_T, 0);
         exposure = 1.15;
-      } else if (lt < 22.8) {
-        const k = clamp((lt - 18.0) / 4.8);
+      } else if (lt < 14.3) {
+        const k = clamp((lt - 9.5) / 4.8);
         pos.set(lerp(-0.13, -0.11, k), lerp(0.16, 0.145, k), lerp(0.2, 0.175, k));
         tgt.set(0, 0, 0.022);
         fov = 30;
         aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
-      } else if (lt < 37.0) {
-        const k = clamp((lt - 22.8) / 14.2);
+      } else if (lt < 28.5) {
+        const k = clamp((lt - 14.3) / 14.2);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
-      } else if (lt < 41.0) {
-        const k = clamp((lt - 37.0) / 4.0);
+      } else if (lt < 32.5) {
+        const k = clamp((lt - 28.5) / 4.0);
         pos.set(lerp(0.011, 0.009, k), lerp(0.155, 0.142, k), lerp(0.08, 0.076, k));
         tgt.set(0, 0, lerp(0.022, 0.026, k));
         fov = 30;
         aperture = 1.3;
         chatFocus.set(0, PHONE_T, 0.04);
       } else {
-        // over the daughter's drawing: it fills the soft foreground, the last two lines arrive on the phone beyond it
-        const k = clamp((lt - 41.0) / 8.5);
+        // over the daughter's drawing: the last two lines arrive on the phone beside it
+        const k = clamp((lt - 32.5) / 8.5);
         pos.set(lerp(-0.075, -0.07, k), lerp(0.175, 0.162, k), lerp(0.17, 0.158, k));
         tgt.set(lerp(-0.035, -0.03, k), 0, lerp(0.012, 0.016, k));
         fov = 32;
@@ -622,7 +606,7 @@ export const phoneScene = (): SceneMod => {
       zoom = push * 1.4;
       exposure = 1 + push * 2.5;
     }
-    if (!(mode === "chat" && lt < 5.0)) {
+    {
       pos.x += drift(gt, 1, 0.0018);
       pos.y += drift(gt, 2, 0.0012);
     }

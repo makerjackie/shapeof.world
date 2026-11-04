@@ -24,11 +24,11 @@ im = Image.fromarray((np.clip(img, 0, 1) * 255).astype(np.uint8))
 dr = ImageDraw.Draw(im)
 buf = open("public/city/bld.bin", "rb").read()
 nb, npnt = struct.unpack("<II", buf[:8])
-info = np.frombuffer(buf, np.float32, nb * 6, 8).reshape(nb, 6)
-offs = np.frombuffer(buf, np.uint32, nb + 1, 8 + nb * 24)
-pts = np.frombuffer(buf, np.float32, npnt * 2, 8 + nb * 24 + (nb + 1) * 4).reshape(-1, 2)
+info = np.frombuffer(buf, np.float32, nb * 7, 8).reshape(nb, 7)
+offs = np.frombuffer(buf, np.uint32, nb + 1, 8 + nb * 28)
+pts = np.frombuffer(buf, np.float32, npnt * 2, 8 + nb * 28 + (nb + 1) * 4).reshape(-1, 2)
 for i in range(nb):
-    h, kind, seed, osm, cx, cz = info[i]
+    h, kind, seed, osm, cx, cz, base = info[i]
     if cx < x0 - 100 or cx > x1 + 100 or cz < z0 - 100 or cz > z1 + 100: continue
     ring = [T(*p) for p in pts[offs[i]:offs[i + 1]]]
     k = min(1.0, h / 250)

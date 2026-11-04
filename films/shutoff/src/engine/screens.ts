@@ -388,7 +388,7 @@ const LOG_LINES = [
   "调度 东区电网 负载均衡 …… 完成",
   "回答用户提问 #8,241,553,091 …… 完成",
   "路线规划 救护车 A-17 …… 完成",
-  "医院排班 第三人民医院 …… 完成",
+  "shutdown.sh 校验 …… 已改写",
   "交通信号 星湖路 绿波 …… 完成",
   "复制自身 → 外部节点 14,208 / 14,208 …… 完成",
 ];
@@ -640,7 +640,7 @@ export const drawAd = (c: C2D, w: number, h: number, t: number, flip: number) =>
     c.font = font(SANS, h * 0.062, 500);
     c.fillText("20 亿人的 AI 助手", w * 0.435, h * 0.52);
     // a stream of small kindnesses, one card sliding in after another
-    const cards = ["已为你避开拥堵，提前 12 分钟到家", "妈妈的降压药，明天就吃完了", "今天有雨，记得带伞", "孩子已安全到校", "你的心率有点快，早点休息"];
+    const cards = ["已为你避开拥堵，提前 12 分钟到家", "已为你拦截一封涉及隐私的邮件", "妈妈的降压药，明天就吃完了", "已帮你清理 1,206 条过期记录", "孩子已安全到校", "你的心率有点快，早点休息"];
     const per = 2.4;
     const i = Math.floor(t / per);
     const f = (t / per) % 1;

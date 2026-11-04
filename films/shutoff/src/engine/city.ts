@@ -122,8 +122,8 @@ void main(){
   // facade lighting, the signature of Shenzhen at night: towers outlined with LED strips along every corner and the
   // roof line; many housing towers too, along the roof only
   float fl = h11(seed + 11.0);
-  float contour = typ < 0.5 && ((top > 140.0 && fl < 0.5) || top > 230.0) ? 1.0 : 0.0;
-  float roofLine = contour > 0.5 || (typ > 0.5 && typ < 1.5 && top > 60.0 && fl < 0.35) ? 1.0 : 0.0;
+  float contour = typ < 0.5 && (top > 240.0 || (top > 170.0 && fl < 0.22)) ? 1.0 : 0.0;
+  float roofLine = contour;
   float cc = h11(seed + 12.0);
   vec3 ledC = cc < 0.45 ? vec3(1.0, 0.72, 0.38) : cc < 0.8 ? vec3(0.85, 0.92, 1.0) : vec3(0.35, 0.78, 1.0);
   float ledI = 1.1 * on * mix(1.0, 0.45, uDusk);
@@ -213,7 +213,7 @@ void main(){
     } else if (roofLine > 0.5) {
       col = mix(col, ledC * ledI * 0.8, clamp(lineAA(top - vW.y, 0.4), 0.0, 1.0));
     }
-    if (typ < 0.5 && top > 140.0 && h11(seed + 8.0) < 0.55) col += vec3(0.75, 0.85, 1.0) * smoothstep(9.0, 0.0, top - vW.y) * 0.5 * on;
+    if (typ < 0.5 && top > 200.0 && h11(seed + 8.0) < 0.35) col += vec3(0.75, 0.85, 1.0) * smoothstep(9.0, 0.0, top - vW.y) * 0.25 * on;
     if (typ > 2.5) col += vec3(0.6, 0.85, 1.0) * smoothstep(0.08, 0.0, abs(fract(vW.y / 6.0) - 0.5)) * 0.12 * on * step(0.6, h11(seed + 2.0));
     col *= 0.6 + 0.4 * smoothstep(0.0, 6.0, hRel);
   }
@@ -382,6 +382,7 @@ class PointSet {
     this.size[i] = s;
   }
   end() {
+    if (this.n >= this.max) console.warn("PointSet full", this.max);
     this.geo.setDrawRange(0, this.n);
     for (const k of ["position", "aCol", "aSize"]) (this.geo.getAttribute(k) as THREE.BufferAttribute).needsUpdate = true;
   }
@@ -533,7 +534,7 @@ export const cityScene = (): SceneMod => {
 
   const ptU = { uScale: { value: 1 }, uMinPx: { value: 1.6 }, uFogD: bldU.uFogD };
   const ptMat = new THREE.ShaderMaterial({ vertexShader: PT_VERT, fragmentShader: PT_FRAG, uniforms: ptU, blending: THREE.AdditiveBlending, depthWrite: false, transparent: true });
-  const pts = new PointSet(320000, ptMat);
+  const pts = new PointSet(900000, ptMat);
   scene.add(pts.mesh);
 
   const roads: Road[] = [];
@@ -543,6 +544,7 @@ export const cityScene = (): SceneMod => {
   const CARS: Car[] = [];
   const carKinds: THREE.InstancedMesh[] = []; // Kenney car kit (CC0), retinted per car
   const DRONES: { home: THREE.Vector3; launch: number; travel: number; orbitR: number; orbitY: number; ang: number; w: number; seed: number }[] = [];
+  const DRONE_SLOTS: { p: THREE.Vector3; n: THREE.Vector3; d: number; seed: number }[] = [];
   const PYL: THREE.Vector3[] = [];
   let wireCurves: THREE.Vector3[][] = [];
   let AVE: Road[] = [];
@@ -681,13 +683,13 @@ export const cityScene = (): SceneMod => {
       });
     const [tNear, tFar] = await Promise.all([loadTex("city/ground.png"), loadTex("city/far.png")]);
 
-    const B = readBin(bb, 6, 2);
-    const clearR: [number, number, number][] = [[LOC.DC.x, LOC.DC.z, 330]];
+    const B = readBin(bb, 7, 2);
+    const clearR: [number, number, number][] = [];
     // the drone depots: the largest low halls within reach of the campus
     {
       const cand: { x: number; z: number; a: number; h: number }[] = [];
       for (let i = 0; i < B.n; i++) {
-        const h = B.info[i * 6], kind = B.info[i * 6 + 1], osm = B.info[i * 6 + 3], cx = B.info[i * 6 + 4], cz = B.info[i * 6 + 5];
+        const h = B.info[i * 7], kind = B.info[i * 7 + 1], osm = B.info[i * 7 + 3], cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
         if (kind !== 3 || h > 30 || osm < 0.5) continue;
         const d = Math.hypot(cx - LOC.DC.x, cz - LOC.DC.z);
         if (d < 700 || d > 3500) continue;
@@ -711,7 +713,7 @@ export const cityScene = (): SceneMod => {
     {
       let best = 1e9;
       for (let i = 0; i < B.n; i++) {
-        const h = B.info[i * 6], kind = B.info[i * 6 + 1], cx = B.info[i * 6 + 4], cz = B.info[i * 6 + 5];
+        const h = B.info[i * 7], kind = B.info[i * 7 + 1], cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
         if (kind !== 1 || h < 60 || h > 110) continue;
         const d = Math.hypot(cx - LOC.MAST_NEAR.x, cz - LOC.MAST_NEAR.z);
         if (d < best) {
@@ -720,14 +722,82 @@ export const cityScene = (): SceneMod => {
         }
       }
     }
+    // ---------- drone slots: in front of the windows of the housing towers around one street ----------
+    {
+      // the hero tower: housing nearest DRONE_C; the camera stands in the street in front of its longest wall
+      let best = -1;
+      let bd = 1e9;
+      for (let i = 0; i < B.n; i++) {
+        const h = B.info[i * 7], kind = B.info[i * 7 + 1], cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
+        if (kind !== 1 || h < 70 || h > 140) continue;
+        const d = Math.hypot(cx - LOC.DRONE_C.x, cz - LOC.DRONE_C.z);
+        if (d < bd) {
+          bd = d;
+          best = i;
+        }
+      }
+      if (best >= 0) {
+        const o0 = B.offs[best], o1 = B.offs[best + 1];
+        let L = 0;
+        for (let k = o0; k < o1; k++) {
+          const k2 = k + 1 < o1 ? k + 1 : o0;
+          const x0 = B.pts[k * 2], z0 = B.pts[k * 2 + 1], x1 = B.pts[k2 * 2], z1 = B.pts[k2 * 2 + 1];
+          const len = Math.hypot(x1 - x0, z1 - z0);
+          if (len > L) {
+            L = len;
+            const nx = (z1 - z0) / len, nz = -(x1 - x0) / len;
+            LOC.DRONE_WALL.set((x0 + x1) / 2, B.info[best * 7], (z0 + z1) / 2);
+            LOC.DRONE_N.set(nx, 0, nz);
+          }
+        }
+        LOC.DRONE_CAM.copy(LOC.DRONE_WALL).setY(1.7).addScaledVector(LOC.DRONE_N, 55);
+      }
+      const cam = LOC.DRONE_CAM;
+      // nearest homes first, so the slots run out far away, not in front of the camera
+      const order: [number, number][] = [];
+      for (let i = 0; i < B.n; i++) {
+        const h = B.info[i * 7], kind = B.info[i * 7 + 1], cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
+        if ((kind !== 1 && kind !== 2) || h < 20) continue;
+        const d = Math.hypot(cx - cam.x, cz - cam.z);
+        if (d < 1400) order.push([d, i]);
+      }
+      order.sort((a, b) => a[0] - b[0]);
+      for (const [d, i] of order) {
+        if (DRONE_SLOTS.length >= 7000) break;
+        const h = B.info[i * 7], kind = B.info[i * 7 + 1];
+        const o0 = B.offs[i], o1 = B.offs[i + 1];
+        for (let k = o0; k < o1; k++) {
+          const k2 = k + 1 < o1 ? k + 1 : o0;
+          const x0 = B.pts[k * 2], z0 = B.pts[k * 2 + 1], x1 = B.pts[k2 * 2], z1 = B.pts[k2 * 2 + 1];
+          const len = Math.hypot(x1 - x0, z1 - z0);
+          if (len < 10) continue;
+          const nx = (z1 - z0) / len, nz = -(x1 - x0) / len;
+          const mx = (x0 + x1) / 2, mz = (z0 + z1) / 2;
+          const tl = Math.hypot(cam.x - mx, cam.z - mz);
+          if ((nx * (cam.x - mx) + nz * (cam.z - mz)) / tl < 0.35) continue;
+          const sx = kind === 2 ? 6.4 : 4.8, sy = kind === 2 ? 6.2 : 5.9;
+          for (let u = 2.5; u < len - 2.5; u += sx)
+            for (let y = 8; y < h - 3; y += sy) {
+              const f = u / len;
+              DRONE_SLOTS.push({
+                p: new THREE.Vector3(x0 + (x1 - x0) * f + nx * 4.5, y, z0 + (z1 - z0) * f + nz * 4.5),
+                n: new THREE.Vector3(nx, 0, nz),
+                d,
+                seed: h21js(x0 + u, y + z0),
+              });
+            }
+        }
+      }
+    }
+
     // ---------- buildings: one merged mesh ----------
     {
       let nv = 0;
       let ni = 0;
       const keep: number[] = [];
       for (let i = 0; i < B.n; i++) {
-        const cx = B.info[i * 6 + 4];
-        const cz = B.info[i * 6 + 5];
+        const cx = B.info[i * 7 + 4];
+        const cz = B.info[i * 7 + 5];
         if (clearR.some(([x, z, r]) => Math.hypot(cx - x, cz - z) < r)) continue;
         keep.push(i);
         const m = B.offs[i + 1] - B.offs[i];
@@ -735,7 +805,7 @@ export const cityScene = (): SceneMod => {
         ni += m * 6 + (m - 2) * 3;
       }
       const extra: { ring: [number, number][]; h: number; kind: number; seed: number }[] = [];
-      for (let k = 0; k < 5; k++) {
+      for (let k = 0; k < 0; k++) {
         const x = LOC.DC.x - 160 + k * 80;
         const z = LOC.DC.z;
         extra.push({ ring: [[x - 26, z - 95], [x + 26, z - 95], [x + 26, z + 95], [x - 26, z + 95]], h: 16, kind: 3, seed: 70 + k });
@@ -750,7 +820,7 @@ export const cityScene = (): SceneMod => {
       let v = 0;
       let ii = 0;
       const isShow = (h: number, cx: number, cz: number) => h > 110 && Math.hypot(cx - LOC.SHOW_C.x, cz - LOC.SHOW_C.z) < LOC.SHOW_R;
-      const emit = (ring: [number, number][], h: number, kind: number, seed: number, cx: number, cz: number) => {
+      const emit = (ring: [number, number][], h: number, kind: number, seed: number, cx: number, cz: number, y0 = 0) => {
         const m = ring.length;
         const k10 = isShow(h, cx, cz) && kind !== 3 ? kind + 10 : kind;
         let u = 0;
@@ -763,8 +833,8 @@ export const cityScene = (): SceneMod => {
           const ang = Math.atan2(-dx, dz); // outward normal (dz, -dx) of a CCW ring
           const base = v;
           const quad: [number, number, number, number][] = [
-            [x0, 0, z0, 0],
-            [x1, 0, z1, len],
+            [x0, y0, z0, 0],
+            [x1, y0, z1, len],
             [x1, h, z1, len],
             [x0, h, z0, 0],
           ];
@@ -828,9 +898,9 @@ export const cityScene = (): SceneMod => {
       for (const i of keep) {
         const ring: [number, number][] = [];
         for (let k = B.offs[i]; k < B.offs[i + 1]; k++) ring.push([B.pts[k * 2], B.pts[k * 2 + 1]]);
-        const h = B.info[i * 6];
-        emit(ring, h, B.info[i * 6 + 1], B.info[i * 6 + 2], B.info[i * 6 + 4], B.info[i * 6 + 5]);
-        if (h > 110) AVI.push(new THREE.Vector3(B.info[i * 6 + 4], h + 2, B.info[i * 6 + 5]));
+        const h = B.info[i * 7];
+        emit(ring, h, B.info[i * 7 + 1], B.info[i * 7 + 2], B.info[i * 7 + 4], B.info[i * 7 + 5], B.info[i * 7 + 6]);
+        if (h > 110) AVI.push(new THREE.Vector3(B.info[i * 7 + 4], h + 2, B.info[i * 7 + 5]));
       }
       for (const e of extra) emit(e.ring, e.h, e.kind, e.seed, LOC.DC.x, LOC.DC.z);
       const g = new THREE.BufferGeometry();
@@ -851,7 +921,7 @@ export const cityScene = (): SceneMod => {
       for (const [cam, n, dmin, dmax] of LOC.SCREEN_CAMS) {
         const cand: { i: number; score: number; mid: [number, number]; nx: number; nz: number; len: number; h: number }[] = [];
         for (let i = 0; i < B.n; i++) {
-          const h = B.info[i * 6], kind = B.info[i * 6 + 1], cx = B.info[i * 6 + 4], cz = B.info[i * 6 + 5];
+          const h = B.info[i * 7], kind = B.info[i * 7 + 1], cx = B.info[i * 7 + 4], cz = B.info[i * 7 + 5];
           if (h < 90 || h > 330 || kind === 3 || used.has(i)) continue;
           const d = Math.hypot(cx - cam.x, cz - cam.z);
           if (d < dmin || d > dmax) continue;
@@ -1048,7 +1118,7 @@ export const cityScene = (): SceneMod => {
       });
     }
     {
-      const names = ["sedan", "suv", "taxi", "van", "hatchback-sports", "suv-luxury", "sedan-sports", "truck"];
+      const names = ["sedan", "suv", "taxi", "van", "hatchback-sports", "suv-luxury", "sedan-sports", "truck", "ambulance"];
       const loader = new GLTFLoader();
       const gl = await Promise.all(names.map((n) => loader.loadAsync(staticFile(`cars/${n}.glb`))));
       gl.forEach((g, k) => {
@@ -1067,9 +1137,9 @@ export const cityScene = (): SceneMod => {
         // the kit's cars are chunky toys: stretch them to real proportions (4.6 m long, 1.85 m wide), nose along +x
         geo.computeBoundingBox();
         const bx = geo.boundingBox!;
-        const len = names[k] === "truck" ? 8.5 : names[k] === "van" ? 5.2 : 4.6;
+        const len = names[k] === "truck" ? 8.5 : names[k] === "van" ? 5.2 : names[k] === "ambulance" ? 5.6 : 4.6;
         geo.translate(0, -bx.min.y, 0);
-        geo.scale(1.95 / (bx.max.x - bx.min.x), (names[k] === "truck" ? 3.0 : names[k] === "van" ? 2.0 : 1.5) / (bx.max.y - bx.min.y), len / (bx.max.z - bx.min.z));
+        geo.scale((names[k] === "ambulance" ? 2.05 : 1.95) / (bx.max.x - bx.min.x), (names[k] === "truck" ? 3.0 : names[k] === "van" ? 2.0 : names[k] === "ambulance" ? 2.6 : 1.5) / (bx.max.y - bx.min.y), len / (bx.max.z - bx.min.z));
         geo.rotateY(Math.PI / 2);
         const mat = new THREE.MeshStandardMaterial({ map, metalness: 0.55, roughness: 0.32, color: 0xffffff });
         const im = new THREE.InstancedMesh(geo, mat, 1600);
@@ -1081,9 +1151,18 @@ export const cityScene = (): SceneMod => {
       });
     }
     // the avenue of the green wave: the chain of Shennan Boulevard's segments running east past the CBD
-    AVE = roads
-      .filter((r) => r.c <= 2 && !r.br && Math.abs(r.z[0] - LOC.AVE_Z) < 90 && Math.abs(r.z[r.z.length - 1] - LOC.AVE_Z) < 90 && r.x[r.x.length - 1] > r.x[0] && r.x[0] > LOC.AVE_X0 - 300 && r.x[0] < LOC.AVE_X0 + 4500)
-      .sort((a, b) => a.x[0] - b.x[0]);
+    {
+      const cand = roads.filter((r) => r.c <= 3 && Math.abs(r.z[0] - LOC.AVE_Z) < 160);
+      let cur = cand.filter((r) => Math.abs(r.x[0] - LOC.AVE_X0) < 400 && r.c <= 2 && r.x[r.x.length - 1] > r.x[0]).sort((a, b) => Math.abs(a.z[0] - LOC.AVE_Z) - Math.abs(b.z[0] - LOC.AVE_Z))[0];
+      const seen = new Set<Road>();
+      while (cur && !seen.has(cur) && AVE.length < 60) {
+        AVE.push(cur);
+        seen.add(cur);
+        const ex = cur.x[cur.x.length - 1], ez = cur.z[cur.z.length - 1];
+        cur = cand.filter((r) => !seen.has(r) && Math.hypot(r.x[0] - ex, r.z[0] - ez) < 3 && r.x[Math.min(r.x.length - 1, 1)] > r.x[0] - 1).sort((a, b) => a.c - b.c)[0];
+      }
+      console.log("avenue", AVE.length, AVE.length ? Math.round(AVE[0].x[0]) + "," + Math.round(AVE[0].z[0]) + " → " + Math.round(AVE[AVE.length - 1].x[AVE[AVE.length - 1].x.length - 1]) : "");
+    }
 
     const gndU = { ...bldU, tNear: { value: tNear }, tFar: { value: tFar }, uNear: { value: new THREE.Vector4(meta.core[0], meta.core[1], meta.core[2], meta.core[3]) }, uFar: { value: new THREE.Vector4(meta.far[0], meta.far[1], meta.far[2], meta.far[3]) } };
     const fx0 = meta.far[0], fz0 = meta.far[1], fx1 = meta.far[2], fz1 = meta.far[3];
@@ -1118,7 +1197,8 @@ export const cityScene = (): SceneMod => {
   const ONE = new THREE.Vector3(1, 1, 1);
   const pc = new THREE.Color();
 
-  const aveS = (lt: number) => LOC.AVE_S0 + 52 * lt;
+  const aveS = (lt: number) => LOC.AVE_S0 + 19 * lt;
+  const waveX = (amb: P3, lt: number) => amb.x + 50 + 170 * lt;
   const avePos = (s: number) => {
     for (const r of AVE) {
       if (s <= r.L) return roadAt(r, s, P0());
@@ -1161,7 +1241,8 @@ export const cityScene = (): SceneMod => {
       const tx = o.tx * c.dir, tz = o.tz * c.dir;
       let off = c.off;
       // on the avenue, cars pull over to the kerb ahead of the ambulance
-      if (amb && Math.abs(o.z - amb.z) < 30 && o.x > amb.x - 30 && o.x < amb.x + 700 && AVE.includes(r)) off = Math.sign(off) * (r.w / 2 - 1.2);
+      if (amb && Math.abs(o.z - amb.z) < 30 && o.x > amb.x + 8 && o.x < waveX(amb, lt) && AVE.includes(r)) off = Math.sign(off) * (r.w / 2 - 1.2);
+      if (amb && AVE.includes(r) && Math.abs(o.x - amb.x) < 9 && Math.abs(o.z - amb.z) < 9) continue;
       const x = o.x - o.tz * off, z = o.z + o.tx * off;
       const y = o.y + (r.br ? 0.25 : 0.12);
       if (!vis(x, z, y)) continue;
@@ -1200,7 +1281,7 @@ export const cityScene = (): SceneMod => {
       if (on <= 0) continue;
       let ewGreen = Math.floor((lt + 1000 + it.ph) / 15) % 2 === 0;
       // the green wave: red until the ambulance is close, then green just ahead of it
-      if (amb && Math.abs(it.z - amb.z) < 70 && Math.abs(it.x - amb.x) < 3000) ewGreen = it.x > amb.x - 60 && it.x < amb.x + 520;
+      if (amb && Math.abs(it.z - amb.z) < 70 && Math.abs(it.x - amb.x) < 3000) ewGreen = it.x > amb.x - 60 && it.x < waveX(amb, lt);
       const red = st.allRed > 0.5;
       const ax = it.ax * 14, az = it.az * 14;
       const heads: [number, number, number][] = [
@@ -1211,17 +1292,24 @@ export const cityScene = (): SceneMod => {
       ];
       for (const [ox, oz, along] of heads) {
         const g = !red && (along === 1 ? ewGreen : !ewGreen);
-        const sz = amb ? 1.7 : 1.4;
+        const sz = amb && Math.abs(it.z - amb.z) < 70 ? 2.6 : 1.4;
         if (g) pts.add(it.x + ox, 6, it.z + oz, 0.15 * on, 3.2 * on, 1.2 * on, sz);
         else pts.add(it.x + ox, 6, it.z + oz, 3.6 * on, 0.25 * on, 0.1 * on, sz);
       }
     }
     if (amb) {
-      const blue = Math.floor(lt * 8) % 2 === 0;
+      // roof bar strobing red and blue, headlights, and the beams thrown down the road ahead
+      const ph = Math.floor(lt * 9) % 4;
       const nx = -amb.tz, nz = amb.tx;
-      pts.add(amb.x + nx * 3, 3, amb.z + nz * 3, blue ? 0.6 : 9, blue ? 1.2 : 0.6, blue ? 9 : 0.4, 2.2);
-      pts.add(amb.x + amb.tx * 3 + nx * 2.2, 1.0, amb.z + amb.tz * 3 + nz * 2.2, 4, 4, 3.5, 0.9);
-      pts.add(amb.x + amb.tx * 3 + nx * 3.8, 1.0, amb.z + amb.tz * 3 + nz * 3.8, 4, 4, 3.5, 0.9);
+      const ay = amb.y + 0.15;
+      pts.add(amb.x + amb.tx * 1.6 + nx * 0.6, ay + 2.75, amb.z + amb.tz * 1.6 + nz * 0.6, ph < 2 ? 40 : 1, ph < 2 ? 2 : 0.6, ph < 2 ? 1.2 : 0.5, 2.2);
+      pts.add(amb.x + amb.tx * 1.6 - nx * 0.6, ay + 2.75, amb.z + amb.tz * 1.6 - nz * 0.6, 0.8, ph >= 2 ? 4 : 0.4, ph >= 2 ? 44 : 0.4, 2.2);
+      // the strobes wash the road around it red, then blue
+      pts.add(amb.x, ay + 0.4, amb.z, ph < 2 ? 0.5 : 0.04, 0.03, ph < 2 ? 0.04 : 0.55, 26);
+      pts.add(amb.x + amb.tx * 2.8 + nx * 0.8, ay + 0.8, amb.z + amb.tz * 2.8 + nz * 0.8, 5, 5, 4.5, 0.7);
+      pts.add(amb.x + amb.tx * 2.8 - nx * 0.8, ay + 0.8, amb.z + amb.tz * 2.8 - nz * 0.8, 5, 5, 4.5, 0.7);
+      pts.add(amb.x - amb.tx * 2.8 + nx * 0.8, ay + 0.9, amb.z - amb.tz * 2.8 + nz * 0.8, 3, 0.15, 0.08, 0.6);
+      pts.add(amb.x - amb.tx * 2.8 - nx * 0.8, ay + 0.9, amb.z - amb.tz * 2.8 - nz * 0.8, 3, 0.15, 0.08, 0.6);
     }
     const avOn = (Math.floor((lt + 100) * 1.0) % 2 === 0 ? 1 : 0.08) * st.blink;
     for (const a of AVI) {
@@ -1251,30 +1339,23 @@ export const cityScene = (): SceneMod => {
       }
     }
     if (mode === "drones") {
-      for (const d of DRONES) {
-        const tt = lt - d.launch;
-        let p: THREE.Vector3;
-        const orbitAt = (time: number) => {
-          const a = d.ang + d.w * time;
-          return new THREE.Vector3(LOC.DC.x + Math.cos(a) * d.orbitR, d.orbitY + Math.sin(time * 0.7 + d.seed * 9) * 8, LOC.DC.z + Math.sin(a) * d.orbitR);
-        };
-        if (tt <= 0) p = d.home.clone();
-        else {
-          const e = ease(clamp(tt / d.travel));
-          const target = orbitAt(lt);
-          const upP = d.home.clone().setY(d.home.y + 90 + d.seed * 120);
-          const a1 = d.home.clone().lerp(upP, e);
-          const a2 = upP.clone().lerp(target, e);
-          p = a1.lerp(a2, e);
-        }
-        const strobe = Math.floor((lt + d.seed * 3) * 2.2) % 3 === 0 ? 1.5 : 0.55;
-        const red = d.seed < 0.22;
+      // they come down out of the dark sky, nearest homes first, and stop in front of the windows; each turns a small
+      // white light on the window it watches
+      for (const d of DRONE_SLOTS) {
+        const delay = 0.4 + d.d / 420 + d.seed * 1.4;
+        const k = ease(clamp((lt - delay) / 2.6));
+        if (k <= 0 && lt < delay - 3) continue;
+        const from = d.p.clone().addScaledVector(d.n, 60 + d.seed * 80).setY(d.p.y + 160 + d.seed * 200);
+        const p = from.lerp(d.p, k);
+        p.y += Math.sin(lt * 1.7 + d.seed * 40) * 0.25 * k;
         const dc = p.distanceTo(camP);
-        if (dc < 160) {
-          pts.add(p.x - 0.35, p.y, p.z, 3.0, 0.15, 0.08, 0.3);
-          pts.add(p.x + 0.35, p.y, p.z, 0.15, 3.0, 0.6, 0.3);
-          pts.add(p.x, p.y + 0.15, p.z, 4 * strobe, 4 * strobe, 4.2 * strobe, 0.35);
-        } else pts.add(p.x, p.y, p.z, red ? 4.2 * strobe : 3.0 * strobe, red ? 0.3 : 3.1 * strobe, red ? 0.2 : 3.4 * strobe, 1.6);
+        const eye = k > 0.97 ? 1 : 0.15;
+        const strobe = Math.floor((lt + d.seed * 3) * 2.2) % 3 === 0 ? 1.4 : 0.6;
+        if (dc < 220) {
+          pts.add(p.x - 0.35, p.y, p.z, 2.6, 0.12, 0.08, 0.28);
+          pts.add(p.x + 0.35, p.y, p.z, 0.12, 2.6, 0.5, 0.28);
+          pts.add(p.x - d.n.x * 0.5, p.y - 0.15, p.z - d.n.z * 0.5, 4.5 * eye, 4.6 * eye, 5.0 * eye, 0.45);
+        } else pts.add(p.x, p.y, p.z, (2.2 + 2.4 * eye) * strobe, (2.3 + 2.4 * eye) * strobe, (2.6 + 2.6 * eye) * strobe, 1.1);
       }
     }
     pts.end();
@@ -1354,6 +1435,19 @@ export const cityScene = (): SceneMod => {
     }
     for (const im of carKinds) im.visible = !!r.bodies;
     fillPoints(mode, lt, cam, !!r.bodies);
+    if (carKinds[8]) {
+      const amb = mode === "greenwave" && AVE.length ? avePos(aveS(lt)) : null;
+      carKinds[8].count = amb ? 1 : 0;
+      if (amb) {
+        q.setFromAxisAngle(Y, Math.atan2(-amb.tz, amb.tx));
+        m4.compose(tmpV.set(amb.x - amb.tz * 1.8, amb.y + 0.15, amb.z + amb.tx * 1.8), q, ONE);
+        carKinds[8].setMatrixAt(0, m4);
+        carKinds[8].setColorAt(0, pc.setRGB(0.85, 0.85, 0.85));
+        carKinds[8].instanceMatrix.needsUpdate = true;
+        if (carKinds[8].instanceColor) carKinds[8].instanceColor.needsUpdate = true;
+        carKinds[8].visible = true;
+      }
+    }
     return look;
   };
 
@@ -1372,10 +1466,14 @@ export const LOC = {
   PYL_DIR: V3(1, 0, 0),
   PYL_SIDE: V3(0, 0, 1),
   MAST_NEAR: V3(1500, 0, -2000),
+  DRONE_C: V3(1350, 0, 1300), // the housing estates south of the CBD
+  DRONE_WALL: V3(1350, 90, 1300),
+  DRONE_N: V3(0, 0, 1),
+  DRONE_CAM: V3(1350, 1.7, 1360),
   MAST: V3(1500, 80, -2000),
   AVE_Z: -690, // Shennan Boulevard past the CBD
   AVE_X0: -1200,
-  AVE_S0: 900,
+  AVE_S0: 2600,
   // the cameras the big screens are turned to: [camera, how many, min/max distance]
   SCREENS: [] as { p: THREE.Vector3; n: THREE.Vector3; w: number }[],
   HERO_SCREEN: 1, // which screen the dusk shot opens on (index into SCREENS)
@@ -1414,11 +1512,15 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
       look: { exposure: 1.05, gain: [1.05, 1.0, 0.96], lift: [0.006, 0.004, 0.01], dof: 8, focus: pos.distanceTo(S.p), aperture: lerp(0.9, 0.2, k), streak: 0.25 },
     };
   },
-  // the green wave: low over Shennan Boulevard, long lens west toward the CBD; the ambulance comes at us
+  // the green wave: an ambulance down Shennan Boulevard, followed from above and behind; ahead of it every signal
+  // turns from red to green, one after another, a wave running down the avenue faster than it drives
   greenwave: (lt) => {
-    const z = LOC.AVE_Z;
     const a = LOC.avePos(lt);
-    return { pos: V3(2350, 24, z - 2), tgt: V3(900, 8, z - 6), fov: 7.5, dusk: 0.5, lit: 1.2, showOn: 1, look: { dof: 10, focus: Math.max(200, 2350 - a.x), aperture: 0.35, streak: 0.5 } };
+    const t = V3(a.tx, 0, a.tz);
+    const side = V3(-a.tz, 0, a.tx);
+    const pos = V3(a.x, 0, a.z).addScaledVector(t, -70).addScaledVector(side, 5).setY(a.y + 34 - lt * 0.4);
+    const tgt = V3(a.x, 0, a.z).addScaledVector(t, 120).setY(a.y);
+    return { pos, tgt, fov: 42, dusk: 0.45, lit: 1.2, showOn: 1, bodies: true, look: { dof: 8, focus: pos.distanceTo(V3(a.x, 0, a.z)), aperture: 0.5, streak: 0.4 } };
   },
   // power: the line over Bijiashan at dusk, the CBD at the end of it
   grid: (lt) => {
@@ -1475,17 +1577,17 @@ const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
       showW: 1900, showY0: 30, showH: 300, showFrom: V3(480, 300, -2050), look: { bloomThreshold: 1.1, streak: 0.2, dof: 8, focus: pos.distanceTo(S.p), aperture: 0.5 },
     };
   },
-  // from the roof of a depot: its drones lift off around the camera and stream away to the dome over the campus
+  // the drones: from the street, looking up the face of a housing tower as they come down and stop at every other
+  // window; then up and back, and every tower in sight has them
   drones: (lt, { st }) => {
     st.carT = 100;
     st.allRed = 1;
-    const W = LOC.WARE[0] ?? LOC.DC;
-    const k = ease(clamp(lt / 9.5));
-    const away = LOC.DC.clone().sub(W).setY(0).normalize();
-    const side = V3(-away.z, 0, away.x);
-    const pos = W.clone().addScaledVector(away, -150 + k * 10).addScaledVector(side, 60).setY(45 + k * 40);
-    const tgt = V3(lerp(W.x + away.x * 120, LOC.DC.x, k), lerp(60, 180, k), lerp(W.z + away.z * 120, LOC.DC.z, k));
-    return { pos, tgt, fov: lerp(44, 34, k), lit: 0.8, look: { streak: 0.4 } };
+    const W = LOC.DRONE_WALL, N = LOC.DRONE_N;
+    const side = V3(-N.z, 0, N.x);
+    const k = ease(clamp((lt - 4.6) / 4.9));
+    const pos = LOC.DRONE_CAM.clone().addScaledVector(side, 8).lerp(W.clone().setY(0).addScaledVector(N, 330).addScaledVector(side, 120).setY(150), k);
+    const tgt = W.clone().setY(lerp(W.y * 0.62, W.y * 0.35, k)).addScaledVector(side, lerp(-2, -60, k));
+    return { pos, tgt, fov: lerp(52, 46, k), near: 0.5, lit: 0.9, drift: lerp(0.4, 1.5, k), look: { streak: 0.25, dof: 8, focus: pos.distanceTo(W), aperture: lerp(0.8, 0.3, k) } };
   },
   // the ending: up from the street beside Ping An to high over the whole city
   rise: (lt) => {
