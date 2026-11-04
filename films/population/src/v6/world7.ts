@@ -174,12 +174,12 @@ const CN_SRC: Record<number, string> = {
 const CREDITS = [
   "世界人口：HYDE 3.3、Gapminder",
   "联合国《世界人口展望 2024》",
-  "各国人口：麦迪逊项目 2020",
+  "各国人口：HYDE 3.3、麦迪逊项目",
   "中国古代：正史户口，葛剑雄主编《中国人口史》",
   "死亡人数：已发表的各家估计，给出范围",
   "配乐：原创，AI 生成（Google Lyria）",
 ];
-// the most populous countries (today's borders): Maddison 2020 (1, 1000, 1500, 1600), HYDE 1700-1790, Gapminder 1800-1949,
+// the most populous countries (today's borders): HYDE 3.3 every century to 1600 (the Americas: Maddison 2020), HYDE 1700-1790, Gapminder 1800-1949,
 // UN 1950-2023 and its medium projection to 2100; China to 1949 is the China film's own series (records marked 在册)
 type CP = [number, number, string];
 const CN: Record<string, [string, string]> = {
@@ -283,7 +283,7 @@ const build = (intl: boolean) => {
   // the great wars (Taiping, WWI, WWII) get one bar of silence when their card lands
   solemnFrom: 1850,
   rests: [1851, 1914, 1939],
-  srcEnd: "数据：HYDE 3.3、Gapminder（Our World in Data）、麦迪逊项目 2020、联合国《世界人口展望 2024》",
+  srcEnd: "数据：HYDE 3.3、Gapminder（Our World in Data）、麦迪逊项目、联合国《世界人口展望 2024》",
   src: (y) => {
     let s = SRC_PTS[0][1];
     for (const [a, t] of SRC_PTS) if (y >= a - 1e-6) s = t;

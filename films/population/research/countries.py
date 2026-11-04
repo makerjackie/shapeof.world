@@ -1,5 +1,5 @@
 # Build src/v6/world_countries.json: population by country (today's borders) for the top-right table of the World film.
-# Sources: Maddison Project Database 2020 (years 1, 1000, 1500, 1600), HYDE 3.3 (1700-1790) and Gapminder (1800-1949)
+# Sources: HYDE 3.3 (AD 1-1790, every century then decade; the Americas before 1700: Maddison Project Database 2020) and Gapminder (1800-1949)
 # via Our World in Data, UN World Population Prospects 2024 (1950-2023 estimates, 2024-2100 medium projection).
 # Downloads (research/data/, not committed): ourworldindata.org/grapher/population.csv and population-with-un-projections.csv
 # (csvType=full), rug.nl/ggdc/historicaldevelopment/maddison/data/mpd2020.xlsx (sheet "Full data" -> mpd2020_full.csv).
@@ -21,6 +21,7 @@ for r in csv.DictReader(open(D + "owid_pop_proj.csv")):
     v = r["population__sex_all__age_all__variant_estimates"] or r["population__sex_all__age_all__variant_medium__projected"]
     if v:
         un[r["entity"]][int(r["year"])] = float(v)
+AMERICAS = {"United States", "Mexico", "Brazil"}
 MAD_NAME = {"Iran": "Iran (Islamic Republic of)"}
 CHINA = [(2, 5959.4, "rec"), (57, 2100.8, "rec"), (75, 3412.5, "rec"), (88, 4335.6, "rec"), (105, 5325.6, "rec"), (125, 4869.1, "rec"),
          (140, 4915.0, "rec"), (144, 4973.1, "rec"), (146, 4756.7, "rec"), (157, 5648.7, "rec"), (263, 766.7, "rec"), (280, 1616.4, "rec"),
@@ -34,8 +35,11 @@ def series(c):
         pts = [[y, v, k] for y, v, k in CHINA]
         pts += [[y, round(hist[c][y] / 1e4, 1), "est"] for y in range(1920, 1950, 10)]  # Gapminder between the 1912 survey and 1950
     else:
-        m = mad.get(MAD_NAME.get(c, c), {})
-        pts = [[y, round(m[y] / 1e4, 1), "est"] for y in (1, 1000, 1500, 1600) if y in m]
+        if c in AMERICAS:  # HYDE's pre-contact counts run high (Brazil 19M in 1500): Maddison's four points
+            m = mad.get(MAD_NAME.get(c, c), {})
+            pts = [[y, round(m[y] / 1e4, 1), "est"] for y in (1, 1000, 1500, 1600) if y in m]
+        else:  # HYDE 3.3 every century, the same source as the world curve (Maddison holds India at 75M from AD 1 to 1000)
+            pts = [[max(y, 1), round(hist[c][y] / 1e4, 1), "est"] for y in sorted(hist[c]) if 0 <= y < 1700 and y % 100 == 0]
         pts += [[y, round(hist[c][y] / 1e4, 1), "est"] for y in sorted(hist[c]) if 1700 <= y < 1800 and y % 10 == 0]
         pts += [[y, round(hist[c][y] / 1e4, 1), "est"] for y in sorted(hist[c]) if 1800 <= y < 1950 and y % 5 == 0]
     pts += [[y, round(un[c][y] / 1e4, 1), "un" if y > 2023 else "stat"] for y in sorted(un[c]) if 1950 <= y <= 2100 and (y % 5 == 0 or y in (2023, 2024))]

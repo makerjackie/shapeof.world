@@ -134,7 +134,7 @@ figure is poorly sourced.
 | UN 2100 | China 633 M, Nigeria 477 M | UN WPP 2024 medium (OWID population-with-un-projections) |
 
 Country table (top right, top 6, today's borders, ranks glide): research/countries.py →
-src/v6/world_countries_raw.json. Maddison Project Database 2020 (years 1, 1000, 1500, 1600), HYDE 3.3 decadal 1700–1790
+src/v6/world_countries_raw.json. HYDE 3.3 every century AD 1–1600 (fix 11-03: Maddison held India flat at 75M from AD 1 to 1000; the Americas keep Maddison's 1, 1000, 1500, 1600 since HYDE's pre-contact counts run high), HYDE 3.3 decadal 1700–1790
 and Gapminder 1800–1949 (Our World in Data), UN WPP 2024 1950–2023 and medium projection to 2100. China up to 1949 is the
 China film's own series (records marked 在册, scholars' estimates otherwise) so it never contradicts the China cards.
 HYDE country values before 1700 are not used (e.g. Brazil 19 M in 1500 is far above other estimates).

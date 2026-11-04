@@ -181,7 +181,7 @@ export const WORLD: Spec = {
       lines: [
         "World population: HYDE 3.3, Gapminder",
         "UN World Population Prospects 2024",
-        "Countries: Maddison Project 2020",
+        "Countries: HYDE 3.3, Maddison Project",
         "Ancient China: registers; Ge Jianxiong (ed.)",
         "Death tolls: published estimates, as ranges",
         "Music: original, AI-generated (Google Lyria)",
@@ -191,7 +191,7 @@ export const WORLD: Spec = {
   },
   era: (y) => must(ERA, W0.era(y), "act"),
   kindLabel: { rec: "Records", est: "Estimate (HYDE)", stat: "UN statistics", un: "UN projection" },
-  srcEnd: "Data: HYDE 3.3, Gapminder (Our World in Data), Maddison Project 2020, UN World Population Prospects 2024",
+  srcEnd: "Data: HYDE 3.3, Gapminder (Our World in Data), Maddison Project, UN World Population Prospects 2024",
   src: (y) => must(SRC, W0.src!(y), "source"),
   tableTitle: "Most populous countries · today's borders",
   table: (y) => W0.table!(y).map((r) => ({ ...r, n: must(COUNTRY, r.n, "country"), tag: r.tag ? "reg." : undefined })),
