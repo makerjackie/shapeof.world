@@ -711,7 +711,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     });
     // migration streams
     for (const f of fxs) {
-      if (f.kind !== "move" || !f.to || t > f.t1 + 0.4) continue;
+      if (!f.to || t > f.t1 + 0.4) continue; // any card with a destination: people (move) or crops (grow)
       const A = proj(mc, f.at[0], f.at[1]);
       const B = proj(mc, f.to[0], f.to[1]);
       const mx = (A.x + B.x) / 2;
