@@ -86,19 +86,20 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
     );
   }
   if (c.kind === "credits") {
-    // a slow roll, bottom to top, that comes to rest on the studio block in the middle of the frame
-    const a = clamp((t - c.t0) / 0.8) * clamp((c.t1 - t) / 0.8);
-    const rowH = 80;
+    // two still pages, long enough to read, each fading in and out on black
+    const rowH = 68;
     const blockH = 300;
-    const last = (CREDITS.length - 1) * rowH; // top of the studio block inside the list
-    const k = ease(clamp((t - c.t0 - 0.4) / (c.t1 - c.t0 - 3.4)));
-    const y0 = 1080 - BAR + 10;
-    const y1 = 540 - blockH / 2 - last;
-    const y = lerp(y0, y1, k);
+    const brk = CREDITS.findIndex(([r]) => r === "/");
+    const pages = [CREDITS.slice(0, brk), CREDITS.slice(brk + 1)];
+    const half = (c.t1 - c.t0) / 2;
+    const pg = t < c.t0 + half ? 0 : 1;
+    const p0 = c.t0 + pg * half;
+    const a = clamp((t - p0) / 0.5) * clamp((p0 + half - t) / 0.5);
+    const rows = pages[pg];
     return (
-      <div style={{ position: "absolute", inset: 0, background: "#000", opacity: a, overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: 0, right: 0, top: 0, transform: `translateY(${y}px)` }}>
-          {CREDITS.map(([role, name], i) =>
+      <div style={{ position: "absolute", inset: 0, background: "#000", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "center", opacity: a }}>
+          {rows.map(([role, name], i) =>
             role === "#" ? (
               <div key={i} style={{ height: blockH, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                 <div style={{ fontFamily: SANS, fontSize: 34, letterSpacing: "0.6em", paddingLeft: "0.6em", color: "rgba(255,255,255,0.6)", marginBottom: 30 }}>出品</div>
@@ -109,7 +110,7 @@ const CardView: React.FC<{ c: Card; t: number }> = ({ c, t }) => {
                 <div style={{ fontFamily: SANS, fontSize: 34, letterSpacing: "0.2em", marginTop: 28, color: "rgba(255,255,255,0.7)" }}>MakerJackie</div>
               </div>
             ) : role === "*" ? (
-              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 600, fontSize: i === 0 ? 64 : 38, letterSpacing: i === 0 ? "0.4em" : "0.12em", color: i === 0 ? "#fff" : "rgba(255,255,255,0.75)" }}>{name}</div>
+              <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: SERIF, fontWeight: 600, fontSize: (pg === 0 && i === 0) ? 64 : 38, letterSpacing: (pg === 0 && i === 0) ? "0.4em" : "0.12em", color: (pg === 0 && i === 0) ? "#fff" : "rgba(255,255,255,0.75)" }}>{name}</div>
             ) : (
               <div key={i} style={{ height: rowH, display: "flex", alignItems: "center", fontFamily: SANS, fontSize: 38 }}>
                 <div style={{ width: 920, paddingRight: 40, textAlign: "right", color: "rgba(255,255,255,0.5)", letterSpacing: "0.12em", boxSizing: "border-box" }}>{role}</div>

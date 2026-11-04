@@ -572,23 +572,23 @@ export const phoneScene = (): SceneMod => {
         fov = 30;
         aperture = 2.2;
         chatFocus.set(0, PHONE_T, 0.035);
-      } else if (lt < 25.4) {
-        const k = clamp((lt - 12.2) / 13.2);
+      } else if (lt < 23.6) {
+        const k = clamp((lt - 12.2) / 11.4);
         pos.set(0.003, lerp(0.168, 0.15, k), lerp(0.072, 0.064, k));
         tgt.set(0, 0, lerp(0.016, 0.02, k));
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
-      } else if (lt < 25.9) {
-        const k = clamp((lt - 25.4) / 0.5);
+      } else if (lt < 24.1) {
+        const k = clamp((lt - 23.6) / 0.5);
         pos.set(lerp(0.011, 0.009, k), lerp(0.155, 0.142, k), lerp(0.08, 0.076, k));
         tgt.set(0, 0, lerp(0.022, 0.026, k));
         fov = 30;
         aperture = 1.3;
         chatFocus.set(0, PHONE_T, 0.04);
       } else {
-        // over the daughter's drawing: the last two lines arrive on the phone beside it
-        const k = clamp((lt - 25.9) / 8.0);
+        // over the daughter's drawing: the last line arrives on the phone beside it
+        const k = clamp((lt - 24.1) / 5.0);
         pos.set(lerp(-0.075, -0.07, k), lerp(0.175, 0.162, k), lerp(0.17, 0.158, k));
         tgt.set(lerp(-0.035, -0.03, k), 0, lerp(0.012, 0.016, k));
         fov = 32;

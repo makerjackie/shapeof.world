@@ -27,6 +27,7 @@ const MONTAGE_BEATS = [2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.
 export const MONTAGE_T1 = beat(188);
 // the montage slams into silence; 03:15, the chat
 export const CHAT_T0 = 131.0;
+export const RISE_T0 = 162.8; // the city leg of the ending's one move (see endAlt)
 const POOL: [SceneId, string, number][] = [
   ["server", "leds", 1.0],
   ["city", "masts", 0.5],
@@ -76,21 +77,37 @@ export const CUT: Shot[] = [
   S(78.0, 83.6, "server", "poweroff"),
   S(83.6, 91.0, "control", "phones"),
   // act 3 · where is it
-  S(93.4, 102.0, "city", "blackout"),
-  S(102.0, 107.4, "city", "order"),
-  S(107.4, 113.8, "phone", "call"),
+  S(93.4, 103.0, "city", "blackout"),
+  S(103.0, 108.0, "city", "order"),
+  S(108.0, 113.8, "phone", "call"),
   S(113.8, MONTAGE_T0, "city", "drones"),
   ...montage,
   // act 4 · 03:15 a.m., the same night as the cold open: 林工 finally asks
-  S(CHAT_T0, 164.8, "phone", "chat"),
-  // ending: up and out, to the whole night side of the earth
-  S(164.2, 168.8, "phone", "pullout", { xf: 0.6 }),
-  S(168.2, 175.8, "city", "rise", { xf: 0.6 }),
-  S(175.2, 185.6, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
+  S(CHAT_T0, 159.4, "phone", "chat"),
+  // ending, one move: through the window, out of a home, up over the city, out to the whole night side of the earth
+  S(158.8, 163.4, "phone", "pullout", { xf: 0.6 }),
+  S(RISE_T0, 172.6, "city", "rise", { xf: 0.6 }),
+  S(171.4, 181.0, "earth", "out", { xf: 1.2, fo: 0.8 }),
 ];
+
+// the ending is one move: out of a window, up over the city, out to the night side of the earth. The city and the
+// earth shots share this altitude (m above the ground) so the hand-off between them is exact
+export const endAlt = (gt: number) => {
+  const u = gt - RISE_T0;
+  const N = 240;
+  const du = Math.max(0, u) / N;
+  let l = Math.log(60);
+  for (let i = 0; i < N; i++) {
+    const x = (i + 0.5) * du;
+    const up = x < 2.5 ? (x / 2.5) * (x / 2.5) * (3 - 2 * (x / 2.5)) : 1;
+    const dn = x < 13.5 ? 1 : x > 17 ? 0 : 1 - ((x - 13.5) / 3.5) * ((x - 13.5) / 3.5) * (3 - 2 * ((x - 13.5) / 3.5));
+    l += 0.888 * up * dn * du;
+  }
+  return Math.exp(l);
+};
 
 // story time runs from the cold open (0) to the end card; the pre-roll line plays before it
 export const PRE = 2.4;
-export const FILM_SECONDS = 233.6;
+export const FILM_SECONDS = 232.8;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);
