@@ -85,16 +85,17 @@ export function houseAt(h: House, t: number): HouseState {
 }
 
 // what the 1 亿 is doing in the machinery before the year starts (0–1 intensities per named pipe)
+// v7: the machinery pipes run under the lift (spending → the market → the town) and the peak (everything at once)
 export function machineryAt(t: number) {
-  const k = (a: number, b: number) => win(t, a, b, 0.8, 1.2);
+  const k = (a: number, b: number) => win(t, a, b, 0.5, 0.8);
+  const peak = k(T.peak, T.c11 + 2);
   return {
-    // new money appears where loans are made: gold falls into the bank through the hook
-    torrent: win(t, T.hook - 1, T.c1 + 2.5, 0.5, 1.5),
+    torrent: 0,
     towerBank: 0,
-    bankHub: k(T.c1 + 4.2, T.c2 + 12),
-    hubSpine: k(T.c2 + 5, T.c3 + 30),
-    hubGov: k(T.c2 + 10.4, T.c3 + 30),
-    split: win(t, T.c2 + 10.4, T.c3 + 2, 0.8, 1.0),
+    bankHub: Math.max(k(T.c7 + 10.5, T.c7 + 15), peak * 0.8),
+    hubSpine: Math.max(k(T.c3, T.c3 + 13), peak),
+    hubGov: Math.max(k(T.c3 + 4, T.c3 + 13), peak * 0.8),
+    split: 0,
   };
 }
 

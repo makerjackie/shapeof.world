@@ -114,8 +114,8 @@ export const ROLE_NAME: Record<Role, string> = { holder: "大股东", boss: "小
 }
 export const HOUSES = houses;
 export const byRank = (r: number) => houses.find((h) => h.rank === r)!;
-// the household the ending comes down to ("你"): the rider's
-export const YOU_RANK = CAST.rider;
+// the household the film follows ("你"): the factory worker on 5,000 a month
+export const YOU_RANK = CAST.worker;
 
 // street rows (z) and their extent
 export const STREETS = Array.from(new Set(houses.map((h) => +h.street.toFixed(2)))).sort((a, b) => a - b);

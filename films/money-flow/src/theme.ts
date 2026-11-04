@@ -33,4 +33,5 @@ export const K = {
   loan: "#8fc4ff",
   red: "#ff5a4a",
   want: "#ffbe4d",
+  pub: "#9fe0c0", // public money: pensions, schools, hospitals
 };

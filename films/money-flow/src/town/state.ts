@@ -1,84 +1,91 @@
-// Scene-level values per film time, and per-house overrides on top of the year model (sim.ts):
-// who pays whom through the air (with a word for what the money is), the reveal, savings into the bank, loans out and
-// interest back, the housing wave, the next waves, the world, the ending.
+// v7 scene state per film time: who pays whom through the air (each flow carries a word for what the money is), and
+// per-house overrides (tank level, glow, red) on top of the CHFS-calibrated end-of-year split (sim.ts finalOf).
 import * as THREE from "three";
-import { CAST, House, Pt, YOU_RANK } from "./layout";
-import { finalOf, capOf, HouseState, machineryAt } from "./sim";
-import { BUYER21, HOLD, RIVER, SALES, T, VISIT, Y09, clamp, ramp, salesAt, win, yearAt } from "../timing";
+import { CAST, House, HOUSES, Pt, YOU_RANK } from "./layout";
+import { finalOf, capOf, HouseState } from "./sim";
+import { B, T, clamp, ramp, win } from "../timing";
 
 const GOLD = new THREE.Color("#ffb53d");
 const LOAN = new THREE.Color("#8fc4ff");
+const PUB = new THREE.Color("#9fe0c0"); // public money: pensions, services
 
 export type HouseView = { level: number; hi: number; red: number; flow: number; dir: number; flowCol: THREE.Color; coins: number; coinDir: number; dimHouse: number };
-// a flow through the air from one place to another (wages, rent, the restaurant's takings, dividends, loans, interest)
 export type ArcFlow = { from: Pt; to: Pt; k: number; col?: THREE.Color; n?: number; lift?: number; speed?: number; label?: string };
 export type { Pt };
 
-// households that buy new homes in the housing wave, and buy the new things in the next waves
-const BUYERS = [12, 18, 21, 27, 33, 41, 48, 55, 62, 70, 78, 86];
-export const STAFF = [61, 71]; // the restaurant's cook and waiter
-export const river = (t: number) => (t < RIVER.a - 0.5 || t > RIVER.end ? 0 : win(t, RIVER.a - 0.5, RIVER.end, 0.8, 1.5) * (0.15 + 0.85 * (salesAt(yearAt(t)) / 181930)));
-const CUM = SALES.map((_, i) => SALES.slice(0, i + 1).reduce((a, [, v]) => a + v, 0));
-// the developer's towers: how much has been built, as a share of everything sold 1998–2025
-export const builtAt = (t: number) => {
-  if (t < RIVER.a) return 0;
-  const y = yearAt(t);
-  const i = Math.min(SALES.length - 1, Math.floor(y - 1998));
-  const f = y - Math.floor(y);
-  const c = CUM[i] + (i + 1 < SALES.length ? SALES[i + 1][1] * f : 0);
-  return clamp(c / CUM[CUM.length - 1]);
-};
-export const techStart = (i: number) => 9000 + i;
+const YOU = YOU_RANK;
+// today's retirees (illustrative): the employer's pension share is paid out to them the same month
+export const RETIREES = [33, 44, 66, 82, 93];
+// a few other ordinary households that spend at the market and are paid wages from it
+const FRONT = [26, 38, 52, 63, 71, 80, 88, 97];
+const BUYERS = [CAST.coder, 18, 27, 41, 49];
 
-// who pays whom, in the air above the streets
+// a flow that is bright in its own bar and stays on, dimmer, until `until`
+const step = (t: number, a: number, until: number, rest = 0.35) => {
+  const on = win(t, a - 0.05, until, 0.25, 0.5);
+  return on * (t < a + BAR_ ? 1 : rest + (1 - rest) * (1 - ramp(t, a + BAR_, a + BAR_ + 0.6)));
+};
+const BAR_ = B(1) - B(0);
+
 function arcsAt(t: number): ArcFlow[] {
-  const v = (k: keyof typeof VISIT, d0 = 0, d1 = 0) => win(t, VISIT[k] - 0.6 + d0, VISIT[k] + HOLD[k] + 0.4 + d1, 0.6, 0.6);
   const c = CAST;
   const out: ArcFlow[] = [];
   const add = (from: Pt, to: Pt, k: number, o: Partial<ArcFlow> = {}) => {
     if (k > 0.01) out.push({ from, to, k, ...o });
   };
-  // chapter 3 visits
-  add("hub", c.rider, v("rider"), { n: 14, label: "工资" });
-  add(c.rider, c.landlord, v("rider"), { lift: 9, label: "房租" });
-  add(c.rider, c.boss, v("rider"), { lift: 8, n: 12, label: "吃饭" });
-  add("hub", c.worker, v("worker"), { n: 14, label: "工资" });
-  add(c.worker, "hub", v("worker"), { n: 16, label: "吃住、日用" });
-  add("hub", c.coder, v("coder"), { n: 22, label: "工资" });
-  add(c.coder, "bank", v("coder"), { n: 16, col: LOAN, label: "房贷" });
-  for (const r of [c.rider, c.worker, 66, 71, 38]) add(r, c.landlord, v("landlord"), { lift: 9, n: 14, label: r === c.rider ? "房租" : undefined });
-  // the restaurant: takings come in, then the receipt splits them, row by row
-  const b = VISIT.boss;
-  const bIn = win(t, b - 0.6, b + HOLD.boss + 0.4, 0.6, 0.6);
-  for (const r of [c.rider, c.worker, c.coder, 52, 63, 80]) add(r, c.boss, bIn * (1 - 0.55 * ramp(t, b + 1.0, b + 2.0)), { lift: 6, n: 10, label: r === c.rider ? "饭钱" : undefined });
-  const row = (d: number) => win(t, b + d, b + HOLD.boss + 0.4, 0.6, 0.6);
-  add(c.boss, "hub", row(1.2), { n: 22, lift: 7, label: "食材 42.1" });
-  add(c.boss, STAFF[0], row(2.4), { n: 12, lift: 5, label: "人工 22.2" });
-  add(c.boss, STAFF[1], row(2.4), { n: 10, lift: 5 });
-  add(c.boss, c.landlord, row(3.6), { n: 10, lift: 5, label: "房租 9.7" });
-  add(c.boss, "gov", row(6.2), { n: 6, lift: 13, label: "税费 1.8" });
-  add("hub", c.holder, v("holder"), { n: 40, lift: 10, speed: 11, label: "分红" });
-  // chapter 5: savings into the bank, a loan to the coder, interest back up the hill
-  const save = win(t, T.c5 + 10.5, T.c5 + 16.5, 0.8, 1.2);
-  const loan = win(t, T.c5 + 11.5, T.c5 + 18, 1, 1.5);
-  const interest = win(t, T.c5 + 16, T.c5 + 31.6, 0.8, 1.2);
-  add(c.holder, "bank", save, { n: 30, lift: 10, label: "存款" });
-  add(c.boss, "bank", save, { n: 30, lift: 10 });
-  add(c.landlord, "bank", save * 0.7, { n: 18, lift: 8 });
-  add("bank", c.coder, loan, { n: 30, lift: 8, col: LOAN, label: "房贷" });
-  add("bank", c.rider, loan * 0.6, { n: 16, lift: 8, col: LOAN });
-  add(c.coder, "bank", interest, { n: 18, lift: 6, label: "利息" });
-  add(c.rider, "bank", interest * 0.7, { n: 12, lift: 6 });
-  add("bank", c.holder, interest, { n: 26, lift: 10, label: "利息" });
-  add("bank", c.boss, interest * 0.8, { n: 20, lift: 10 });
-  // chapter 7, 2009: the new loans go first to the builders, who bid for land; the land sellers are paid
-  const y09 = win(t, Y09.a + 0.6, Y09.b + 0.6, 0.8, 1.0);
-  add("bank", "dev", y09, { n: 30, lift: 9, col: LOAN, speed: 9, label: "新贷款" });
-  add("dev", "gov", win(t, Y09.a + 4.4, Y09.b + 0.6, 0.8, 1.0), { n: 22, lift: 8, label: "买地" });
-  // chapter 7: the river of money into new homes, and from the developer to the land sellers
-  const rv = river(t);
-  BUYERS.forEach((r, i) => add(r, "dev", rv * (0.55 + 0.45 * ((i * 7) % 5) / 4), { n: 8, lift: 10 + (i % 3) * 2, speed: 8, label: i === 4 ? "买房" : undefined }));
-  add("dev", "gov", win(t, RIVER.peak - 6, RIVER.hold + 1, 1, 1.2), { n: 22, lift: 9, label: "卖地" });
+  // DROP: the employer (the factory at the market) pays the 2,570 out, one item per bar
+  const end1 = B(16);
+  add("hub", "bank", step(t, B(8), end1), { n: 22, lift: 9, label: "公积金 800" });
+  add("hub", "gov", step(t, B(9), end1), { n: 14, lift: 7, label: "养老·个人 400" });
+  add("hub", "gov", step(t, B(10), end1), { n: 22, lift: 11, label: "养老·单位 800" });
+  RETIREES.forEach((r, i) => add("gov", r, win(t, B(10) + 0.5 + i * 0.12, end1, 0.3, 0.5) * (t < B(11) ? 1 : 0.4), { n: 10, lift: 9, col: PUB, label: i === 2 ? "养老金" : undefined }));
+  add("hub", "gov", step(t, B(11), end1), { n: 16, lift: 14, label: "医保 500" });
+  add("hub", "gov", step(t, B(12), end1), { n: 6, lift: 5, label: "失业、工伤 70" });
+  add("hub", YOU, win(t, B(13), B(16), 0.3, 0.5), { n: 30, lift: 8, label: "到手 4,075" });
+  // the 4,075 is spent: rent, food and the rest; the shop passes VAT on to the government
+  add(YOU, c.landlord, win(t, B(16), B(20), 0.3, 0.5), { n: 14, lift: 9, label: "房租" });
+  add(YOU, "hub", win(t, B(16) + 0.3, B(20), 0.3, 0.5), { n: 18, lift: 7, label: "吃穿用" });
+  add("hub", "gov", win(t, B(17) + 0.6, B(20), 0.3, 0.5), { n: 18, lift: 9, label: "增值税" });
+  // lift: everyone's spending is someone's wage; the market's takings split three ways
+  const lift = win(t, B(20), B(32), 0.6, 0.6);
+  FRONT.forEach((r, i) => {
+    add(r, "hub", lift * (0.55 + 0.45 * ((i * 5) % 3) / 2), { n: 8, lift: 7 + (i % 3), label: i === 3 ? "花钱" : undefined });
+    add("hub", r, lift * 0.6 * win(t, B(21), B(32), 0.5, 0.6), { n: 6, lift: 5 + (i % 2), label: i === 6 ? "工资" : undefined });
+  });
+  add("hub", "gov", win(t, B(21) + 0.5, B(26), 0.4, 0.6), { n: 16, lift: 10, label: "税" });
+  add("hub", c.holder, win(t, B(22), B(27), 0.4, 0.6), { n: 30, lift: 12, speed: 10, label: "利润" });
+  add("hub", c.boss, win(t, B(22) + 0.3, B(27), 0.4, 0.6), { n: 16, lift: 10 });
+  add("hub", c.holder, win(t, B(24), B(27), 0.3, 0.6), { n: 36, lift: 14, speed: 11, label: "分红" });
+  add("hub", "gov", win(t, B(26), B(27), 0.3, 0.4), { n: 20, lift: 13, label: "国企利润" });
+  // savings → the bank → the young buyers; interest back up the hill
+  add(c.holder, "bank", win(t, B(36), B(42), 0.4, 0.6), { n: 30, lift: 10, label: "存款" });
+  add(c.boss, "bank", win(t, B(36) + 0.2, B(42), 0.4, 0.6), { n: 20, lift: 10 });
+  add(c.landlord, "bank", win(t, B(36) + 0.4, B(42), 0.4, 0.6), { n: 16, lift: 8 });
+  BUYERS.forEach((r, i) => add("bank", r, win(t, B(38) + i * 0.15, B(42), 0.4, 0.6), { n: i ? 12 : 28, lift: 8, col: LOAN, label: i ? undefined : "房贷" }));
+  add(c.coder, "bank", win(t, B(40), B(47), 0.4, 0.6), { n: 18, lift: 6, label: "利息" });
+  add("bank", c.holder, win(t, B(40) + 0.4, B(47), 0.4, 0.6), { n: 24, lift: 10, label: "利息" });
+  // breather: wages to you; rent, interest and dividends up the hill; new loans to the builders first
+  add("hub", YOU, win(t, B(48), B(50), 0.3, 0.5), { n: 20, lift: 7, label: "工资" });
+  add(c.coder, c.holder, win(t, B(48) + 0.4, B(50), 0.3, 0.5), { n: 14, lift: 11, label: "房租" });
+  add("bank", c.holder, win(t, B(48) + 0.6, B(50), 0.3, 0.5), { n: 14, lift: 11, label: "利息" });
+  add("hub", c.holder, win(t, B(48) + 0.8, B(50), 0.3, 0.5), { n: 18, lift: 13, label: "分红" });
+  add("bank", "dev", win(t, B(53), B(55.5), 0.3, 0.6), { n: 30, lift: 9, col: LOAN, speed: 9, label: "新贷款" });
+  add("bank", "hub", win(t, B(53) + 0.3, B(55.5), 0.3, 0.6), { n: 24, lift: 9, col: LOAN, speed: 9 });
+  // PEAK: the whole circulation, switched on two bars at a time
+  const P = (n: number) => win(t, B(n) - 0.05, T.c11 + BAR_ * 2, 0.25, 1.2);
+  const fullOn = (n: number) => P(n) * (t < B(n) + BAR_ * 2 ? 1 : 0.55);
+  [YOU, ...FRONT].forEach((r, i) => {
+    add("hub", r, fullOn(57) * (i ? 0.7 : 1), { n: i ? 6 : 16, lift: 6 + (i % 3), label: i ? undefined : "工资" });
+    add(r, "hub", fullOn(57) * 0.6, { n: 6, lift: 8 + (i % 2) });
+  });
+  [YOU, 38, 63, 80].forEach((r, i) => add(r, c.landlord, fullOn(59) * 0.8, { n: 8, lift: 10 + i, label: i ? undefined : "房租" }));
+  add(c.coder, "bank", fullOn(59), { n: 14, lift: 7, label: "利息" });
+  add("bank", c.holder, fullOn(59), { n: 22, lift: 11 });
+  add("hub", c.holder, fullOn(59), { n: 30, lift: 14, speed: 11, label: "分红" });
+  add("hub", "gov", fullOn(61), { n: 20, lift: 10, label: "税" });
+  [...RETIREES, ...FRONT.slice(0, 4)].forEach((r, i) => add("gov", r, fullOn(61) * 0.75 * win(t, B(62), T.c11 + BAR_ * 2, 0.3, 1.2), { n: 7, lift: 8 + (i % 3), col: PUB, label: i === 1 ? "学校·医院·养老金" : undefined }));
+  add("bank", "dev", fullOn(63), { n: 26, lift: 9, col: LOAN, label: "新贷款" });
+  add("bank", "hub", fullOn(63) * 0.8, { n: 20, lift: 9, col: LOAN });
   return out;
 }
 
@@ -87,154 +94,100 @@ export type SceneState = {
   dim: number;
   glow: number;
   towerHi: number;
-  built: number; // developer towers 0..1
+  built: number;
   devDim: number;
-  tech: number[]; // the four new towers 0..1
+  tech: number[];
   savingsToBank: number;
   loans: number;
   interest: number;
   bands: number;
   grow: number;
   world: number;
-  land: number; // 2009: the land the new loans bid for lights up
+  land: number;
   house: (h: House, s: HouseState) => HouseView;
 };
 
+// screen-filling cards dim the town under them
+export const CARD_DIM = (t: number) =>
+  Math.max(
+    win(t, B(0), B(8), 0.01, 0.05) * 0.55, // payslip
+    win(t, B(32) + BAR_ * 0.25, B(33), 0.15, 0.25) * 0.55, // 那钱，停在了哪？
+    win(t, B(47) + BAR_ * 0.25, B(48), 0.1, 0.25) * 0.85, // why do the rich get richer?
+    win(t, B(50), B(53), 0.3, 0.4) * 0.5, // the tax table
+    win(t, B(18), B(20), 0.2, 0.3) * 0.55, // the tax bar
+    win(t, B(40), B(45), 0.25, 0.3) * 0.4, // rates, thirty years of interest
+    win(t, B(55), B(57), 0.4, 0.05) * 0.45, // 所以…
+  );
+
 export function scene(t: number): SceneState {
-  const mc = machineryAt(t);
-  const world = 0;
+  const reveal = ramp(t, B(33), B(34)); // the tanks fill to where the year's saving stops
   const s: SceneState = {
     arcs: arcsAt(t),
-    dim: Math.max(win(t, Y09.a + 0.2, Y09.b, 1, 1) * 0.1, ramp(t, T.sources - 1, T.sources + 1)),
-    glow: ramp(t, T.c11 + 12.5, T.c11 + 16.5),
-    towerHi: win(t, T.hook, T.c1 + 6, 1, 2),
-    built: builtAt(t),
-    devDim: ramp(t, RIVER.hold, RIVER.b) * (1 - 0.5 * ramp(t, T.c10 + 2, T.c10 + 6)),
+    dim: Math.max(CARD_DIM(t), ramp(t, T.sources - 1, T.sources + 1)),
+    glow: win(t, T.peak, T.c11 + 4, 0.2, 2),
+    towerHi: 0,
+    built: 0.55,
+    devDim: 0,
     tech: [0, 0, 0, 0],
-    savingsToBank: win(t, T.c5 + 11, T.c5 + 28, 1, 2),
-    loans: win(t, T.c5 + 11.5, T.c5 + 18, 1, 1.5),
-    interest: win(t, T.c5 + 16, T.c5 + 31.6, 0.8, 1.2),
-    grow: 0,
+    savingsToBank: win(t, B(36), B(42), 0.5, 0.8),
+    loans: win(t, B(38), B(42), 0.5, 0.8),
+    interest: win(t, B(40), B(47), 0.5, 0.8),
     bands: 0,
-    world,
-    land: win(t, Y09.a + 4.4, Y09.b + 0.8, 0.8, 1.0),
+    grow: 0.6 * win(t, B(65), B(69), 0.6, 1.0),
+    world: 0,
+    land: win(t, B(53) + 0.6, B(55.5), 0.5, 0.6),
     house: () => null as unknown as HouseView,
   };
 
   s.house = (h, hs) => {
     const fin = finalOf(h) / capOf(h);
-    const v: HouseView = { level: hs.level, hi: 0, red: hs.red, flow: hs.flow, dir: hs.dir, flowCol: GOLD, coins: 0, coinDir: 1, dimHouse: 0 };
-    // chapter 3: the household the camera is with glows a little
-    if (t >= T.c3 && t < T.c4) {
-      for (const [r, at] of Object.entries(VISIT)) if (CAST[r as keyof typeof CAST] === h.rank) v.hi = 0.5 * win(t, at - 0.4, at + HOLD[r as keyof typeof HOLD] + 0.4, 0.5, 0.5);
-    }
-    // chapter 2's turn: a year on, most of the new deposits sit in households: every tank lights up for a moment
-    if (t >= T.c2 + 27.5 && t < T.c3 + 2) v.hi = Math.max(v.hi, 0.42 * win(t, T.c2 + 28.4, T.c3 + 1.6, 0.6, 0.8));
-    // first split (chapter 2): wages run out to every house
-    if (t < T.c3 + 3 && mc.split > 0) {
-      v.flow = mc.split * (h.g === 0 ? 0.9 : 0.55);
-      v.dir = -1;
-      v.coins = mc.split * (h.g === 0 ? 0.9 : 0.35);
-      v.coinDir = -1;
-    }
-    if (t >= T.c4 - 2) {
-      v.level = fin;
-      v.red = h.red ? 1 : 0;
-    }
-    // reveal: the top five, the next twenty, the other seventy-five, then the red ones
-    if (t >= T.c4 && t < T.c5 + 1) {
-      const g0 = win(t, T.c4 + 2.8, T.c4 + 8.6, 0.5, 0.8);
-      const g12 = win(t, T.c4 + 8.1, T.c4 + 13.9, 0.6, 0.8);
-      const g34 = win(t, T.c4 + 13.4, T.c4 + 19.4, 0.6, 0.8);
-      const mine = h.g === 0 ? g0 : h.g <= 2 ? g12 : g34;
-      const any = Math.max(g0, g12, g34);
-      v.hi = mine;
-      v.dimHouse = any * (1 - mine) * 0.9;
-      if (h.red) v.red = 0.25 + 0.75 * Math.max(win(t, T.c4 + 13.6, T.c4 + 19.6, 0.4, 0.8), 1 - any);
-      // years of this: wealth. The top ten glow.
-      const w = win(t, T.c4 + 19.2, T.c4 + 24.2, 0.6, 0.6);
-      if (w > 0) {
-        v.hi = Math.max(v.hi, h.g <= 1 ? w : 0);
-        v.dimHouse = Math.max(v.dimHouse, h.g <= 1 ? 0 : 0.55 * w);
-      }
-    }
-    // chapter 5: savings flow out of the hill into the bank, loans go to the front rows, interest comes back up
-    if (t >= T.c5 && t < T.c7 + 1) {
-      const out = win(t, T.c5 + 10.5, T.c5 + 16.5, 0.8, 1.2);
-      const interest = s.interest;
-      if (h.g === 0) {
-        v.flow = Math.max(out, interest);
-        v.dir = out > interest ? 1 : -1;
+    // before the reveal every tank sits low (a little everywhere); from the reveal on, the saved split
+    const low = 0.06 + 0.05 * h.seed;
+    const v: HouseView = { level: low + (fin - low) * reveal, hi: 0, red: 0, flow: hs.flow, dir: hs.dir, flowCol: GOLD, coins: 0, coinDir: 1, dimHouse: 0 };
+    // the worker ("你"): payday fills the tank, the month empties it
+    if (h.rank === YOU) {
+      const paid = ramp(t, B(13) + 0.6, B(14) + 0.4);
+      const spent = ramp(t, B(16), B(20)) * 0.7 + ramp(t, B(30), B(31.5)) * 0.3;
+      v.level = clamp(0.04 + 0.55 * paid * (1 - spent) + (t > B(48) ? 0.25 * win(t, B(48), B(50), 0.4, 0.8) : 0) + (t > T.peak ? 0.22 * (0.5 + 0.5 * Math.sin((t - T.peak) * 2.9)) * win(t, T.peak, T.sources, 0.5, 1) : 0));
+      v.hi = Math.max(0.6 * win(t, B(13), B(16.5), 0.3, 0.5), 0.6 * win(t, B(30), B(32), 0.3, 0.5), 0.5 * win(t, T.c11 - 1, T.sources, 0.5, 1));
+      v.red = win(t, B(30.6), B(32.5), 0.4, 0.5);
+      if (t > T.peak) {
+        v.flow = 0.7 * win(t, T.peak, T.sources, 0.4, 1);
+        v.dir = Math.sin((t - T.peak) * 2.9) > 0 ? -1 : 1;
         v.coins = v.flow;
         v.coinDir = v.dir;
-        v.level = fin * (1 - 0.06 * out) + 0.06 * fin * interest;
-      } else if (h.g >= 3) {
-        const loan = s.loans * (h.red ? 1 : 0.6);
-        if (loan > interest) {
-          v.flow = loan * 0.8;
-          v.dir = -1;
-          v.flowCol = LOAN;
-          v.coins = loan * 0.6;
-          v.coinDir = -1;
-        } else {
-          v.flow = interest * 0.7;
-          v.dir = 1;
-          v.coins = interest * 0.55;
-          v.coinDir = 1;
-        }
-      }
-      // the savers on the hill first, then the young buyer
-      if (h.g === 0) v.hi = Math.max(v.hi, 0.5 * win(t, T.c5 + 4.8, T.c5 + 11, 0.6, 0.8));
-      if (h.rank === CAST.coder) v.hi = Math.max(v.hi, 0.5 * win(t, T.c5 + 11.5, T.c7 - 0.2, 0.8, 0.8));
-    }
-    // chapter 7: the buyers glow while the river runs; at the end, the 2021 buyer's tank turns red
-    if (t >= T.c7 && t < T.c10) {
-      v.red = h.red ? 1 - ramp(t, T.c7, T.c7 + 2) : 0;
-      if (BUYERS.includes(h.rank)) v.hi = 0.45 * river(t);
-      if (h.rank === CAST.coder) {
-        const r21 = win(t, BUYER21, T.c10 + 0.4, 0.6, 0.8);
-        v.red = Math.max(v.red, r21);
-        v.hi = Math.max(v.hi, 0.6 * r21);
-        v.level = fin * (1 - 0.7 * r21);
       }
     }
-    // chapter 10: settle back; without the new money, a third of the ordinary houses go dark for a moment; then the
-    // small boss, who is paid last and loses first
-    if (t >= T.c10 && t < T.c11) {
-      v.red = 0;
-      v.dimHouse = 0.2;
-      const off = win(t, T.c10 + 5.2, T.c10 + 12.2, 0.6, 0.9);
-      if (h.g >= 3 && h.seed < 0.38) v.dimHouse = Math.max(v.dimHouse, 0.95 * off);
-      const boss = win(t, T.c10 + 12.4, T.c10 + 18.6, 0.6, 0.8);
-      if (h.rank === CAST.boss) {
-        v.red = Math.max(v.red, boss);
-        v.hi = 0.5 * boss;
-        v.level = fin * (1 - 0.5 * boss);
-        v.flow = boss * 0.8;
-        v.dir = 1;
-        v.coins = boss * 0.7;
-      }
+    // today's retirees glow while their pension arrives
+    if (RETIREES.includes(h.rank)) v.hi = Math.max(v.hi, 0.5 * win(t, B(10) + 0.4, B(11.5), 0.3, 0.5));
+    // month end: about four in ten households spent more than they earned
+    if (h.red) v.red = Math.max(v.red, 0.85 * win(t, B(30.8), B(32.6), 0.4, 0.5), t >= B(33) && t < B(36) ? 0.4 + 0.6 * win(t, B(34.5), B(36), 0.3, 0.5) : 0);
+    // who holds the shares: the hill glows, the rest dims
+    const shares = win(t, B(27), B(30), 0.5, 0.6);
+    if (shares > 0) {
+      v.hi = Math.max(v.hi, h.g <= 1 ? shares : 0);
+      v.dimHouse = Math.max(v.dimHouse, h.g <= 1 ? 0 : 0.5 * shares);
     }
-    // ending: one ordinary house; a little gold in its tank runs away to the rest of the town
-    if (t >= T.c11) {
-      v.red = h.red ? 0.15 * (1 - ramp(t, T.c11, T.c11 + 3)) : 0;
-      const k = win(t, T.c11 + 2, T.sources + 2, 1.5, 1);
-      if (h.rank === YOU_RANK) {
-        v.hi = 0.5 * k;
-        v.level = 0.22 * (1 - ramp(t, T.c11 + 7, T.c11 + 14)) + 0.02;
-        v.flow = 0.6 * k;
-        v.dir = 1;
-        v.coins = 0.7 * k;
-        v.coinDir = 1;
-      } else {
-        v.dimHouse = 0.35 * k * (1 - s.glow);
-        v.flow = 0.7 * s.glow;
-        v.coins = 0.5 * s.glow;
-        v.coinDir = h.g === 0 ? -1 : 1;
-        v.dir = h.g === 0 ? -1 : 1;
-      }
+    // reveal: the top five, then the next twenty, then the rest (red ones flagged)
+    if (t >= B(33) && t < B(36)) {
+      const g0 = win(t, B(33), B(34.5), 0.3, 0.4);
+      const g12 = win(t, B(34.5), B(36), 0.3, 0.4);
+      const mine = h.g === 0 ? g0 : h.g <= 2 ? g12 : 0;
+      v.hi = Math.max(v.hi, mine);
+      v.dimHouse = Math.max(g0, g12) * (1 - mine) * 0.7;
+    }
+    // savers on the hill, then the young buyers
+    if (h.g === 0) v.hi = Math.max(v.hi, 0.45 * win(t, B(36), B(38), 0.3, 0.4));
+    if (BUYERS.includes(h.rank)) v.hi = Math.max(v.hi, 0.55 * win(t, B(38), B(47), 0.4, 0.5));
+    // peak: the top ten grow and glow
+    if (t >= B(65) && t < B(69)) {
+      const w = win(t, B(65), B(69), 0.5, 0.8);
+      v.hi = Math.max(v.hi, h.g <= 1 ? w : 0);
+      v.dimHouse = Math.max(v.dimHouse, h.g <= 1 ? 0 : 0.45 * w);
     }
     return v;
   };
   return s;
 }
+
+export { HOUSES };
