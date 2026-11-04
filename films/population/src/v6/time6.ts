@@ -22,8 +22,22 @@ export const SRC_BEATS: SrcBeat[] = (() => {
 export const snap = (s: number) => SRC_BEATS.reduce((b, x) => (Math.abs(x.s - s) < Math.abs(b - s) ? x.s : b), SRC_BEATS[0].s);
 
 export type Beat = { t: number; s: number; down: boolean };
-export type Music = { edl: [number, number][]; F: (src: number) => number; beats: Beat[]; dur: number };
-export const makeMusic = (edl: [number, number][], tail: number): Music => {
+export type Grid = { t0: number; t1: number; P: number; ph: number; bar: number };
+const beatsOf = (grids: Grid[]): SrcBeat[] => {
+  const out: SrcBeat[] = [];
+  for (const g of grids)
+    for (let n = 0; ; n++) {
+      const s = g.t0 + g.ph + n * g.P;
+      if (s >= g.t1) break;
+      out.push({ s: +s.toFixed(4), down: n % 4 === g.bar });
+    }
+  return out;
+};
+export type Music = { edl: [number, number][]; F: (src: number) => number; beats: Beat[]; dur: number; snap: (s: number) => number };
+// grids: the strict beat grid of the source track (default: public/ref_full.wav)
+export const makeMusic = (edl: [number, number][], tail: number, grids?: Grid[]): Music => {
+  const SB = grids ? beatsOf(grids) : SRC_BEATS;
+  const snapM = (s: number) => SB.reduce((b, x) => (Math.abs(x.s - s) < Math.abs(b - s) ? x.s : b), SB[0].s);
   const starts: number[] = [];
   let acc = 0;
   for (const [a, b] of edl) {
@@ -39,9 +53,9 @@ export const makeMusic = (edl: [number, number][], tail: number): Music => {
   };
   const beats: Beat[] = [];
   edl.forEach(([a, b], i) => {
-    for (const x of SRC_BEATS) if (x.s >= a - 1e-4 && x.s < b - 0.06) beats.push({ t: +(starts[i] + x.s - a).toFixed(4), s: x.s, down: x.down });
+    for (const x of SB) if (x.s >= a - 1e-4 && x.s < b - 0.06) beats.push({ t: +(starts[i] + x.s - a).toFixed(4), s: x.s, down: x.down });
   });
-  return { edl, F, beats, dur: +(acc + tail).toFixed(3) };
+  return { edl, F, beats, dur: +(acc + tail).toFixed(3), snap: snapM };
 };
 
 // ---------------- events
@@ -87,7 +101,7 @@ export type Placed = Ev & { i: number; t0: number; t1: number; bi: number };
 
 export const schedule = (evs: Ev[], m: Music, startSrc: number, endSrc: number): Placed[] => {
   const nearestIdx = (src: number) => {
-    const ft = m.F(snap(src));
+    const ft = m.F(m.snap(src));
     let bi = 0;
     for (let i = 0; i < m.beats.length; i++) if (Math.abs(m.beats[i].t - ft) < Math.abs(m.beats[bi].t - ft)) bi = i;
     return bi;

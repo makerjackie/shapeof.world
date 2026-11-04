@@ -39,6 +39,7 @@ export type Spec = {
   tableTitle?: string;
   tableRows?: number;
   sfxGain?: number;
+  musicSrc?: string; // the music file in public/ (default ref_full.wav)
   noRiser?: boolean; // no riser SFX under the rewind
   tableOn?: (e: { k: string; table?: boolean }) => boolean; // when the region table shows (default: always)
   hush?: [number, number][]; // SOURCE seconds where the music sinks low and the SFX go quiet

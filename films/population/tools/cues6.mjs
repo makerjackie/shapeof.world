@@ -10,6 +10,7 @@ const m = await import(path.resolve(`out/${film}6.mjs`) + "?v=" + Date.now());
 const S = m.CHINA || m.WORLD;
 const cues = {
   edl: S.music.edl,
+  musicSrc: S.musicSrc ?? "ref_full.wav",
   dur: S.music.dur,
   events: S.events.map((e) => ({ t: e.t0, d: e.t1 - e.t0, k: e.k, big: !!e.big, st: e.st || null, y: e.y })),
   cold: S.cold.crashes.map((c) => c.at),

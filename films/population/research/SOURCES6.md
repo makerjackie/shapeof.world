@@ -102,3 +102,43 @@ Points are the same as Film5: 《汉书》《后汉书》《晋书》《隋书�
 | 1918 流感随军队调动传播 | US CDC, "1918 Pandemic" history |
 | 1928 弗莱明发现青霉素；1943—44 年量产 | American Chemical Society landmark |
 | 绿色革命：良种加化肥 | Standard account (Borlaug, Nobel 1970) |
+
+## World v8 additions (2026-11-04)
+
+Rule (user, after v7): show only the great death tolls, the same way for every one of them. Every catastrophe on the
+scale of about 10 million deaths or more is on screen; smaller ones are dropped (Baghdad 1258, Hiroshima/Nagasaki,
+Irish famine, Bengal 1943, Plague of Cyprian). The Wikipedia "Chinese famine of 1906–1907" (20–25 M) is left out: the
+figure is poorly sourced.
+
+| Card | Figure | Source |
+|---|---|---|
+| Justinian plague 541–549 | 15 M – 100 M | Wikipedia, List of epidemics and pandemics |
+| Black Death 1346–1353 | 25 M – 50 M | same |
+| Mexico smallpox 1519–1520 | 5 M – 8 M | same |
+| An Lushan 755–763 | 13 M | Wikipedia, List of wars by death toll |
+| Mongol conquests 1206–1368 | 20 M – 60 M | same |
+| Timurid conquests 1369–1405 | 7 M – 17 M | same |
+| Ming–Qing transition 1618–1683 | 25 M | same |
+| Taiping 1850–1864 | 20 M – 70 M | same |
+| WWI | 15 M – 22 M | same |
+| WWII | 70 M – 85 M; about 3% of the 1940 world (2.3 bn) | Wikipedia, World War II / World War II casualties |
+| China in WWII (1937–45) | 14 M – 20 M deaths; 35 M casualties (official Chinese claim) | Wikipedia, World War II casualties; Second Sino-Japanese War infobox |
+| USSR in WWII | 20 M – 27 M | Wikipedia, World War II casualties |
+| Atlantic slave trade 1501–1866 | 12.5 M embarked, about 1.8 M died at sea (10.7 M landed) | SlaveVoyages (Trans-Atlantic Slave Trade Database) |
+| India: Bengal 1770, Chalisa 1783, Doji bara 1789 | about 10 M, 11 M, 11 M | Wikipedia, List of famines |
+| Northern Chinese famine 1876–79 (丁戊奇荒) | 9 M – 13 M; India 1876–78 5.5 M | same |
+| Third plague pandemic 1855–1960 | about 15 M; India 10–12 M | Wikipedia, Third plague pandemic |
+| Great Chinese Famine 1959–61 | 15 M – 55 M | Wikipedia, List of famines |
+| HIV/AIDS since 1981 | 42.3 M deaths to end 2023 | UNAIDS 2024 fact sheet |
+| China 1110 "first over 100 M" | about 125 M | 葛剑雄主编《中国人口史》 (replaces "世界人口最多的国家") |
+| UN 2100 | China 633 M, Nigeria 477 M | UN WPP 2024 medium (OWID population-with-un-projections) |
+
+Country table (top right, top 6, today's borders, ranks glide): research/countries.py →
+src/v6/world_countries_raw.json. Maddison Project Database 2020 (years 1, 1000, 1500, 1600), HYDE 3.3 decadal 1700–1790
+and Gapminder 1800–1949 (Our World in Data), UN WPP 2024 1950–2023 and medium projection to 2100. China up to 1949 is the
+China film's own series (records marked 在册, scholars' estimates otherwise) so it never contradicts the China cards.
+HYDE country values before 1700 are not used (e.g. Brazil 19 M in 1500 is far above other estimates).
+
+Music (v8): BARRETE! (public/ref_full.wav) drew a YouTube copyright block on the China film. The World score is now
+public/score_world8.wav: Lyria 3.5 (Gemini API, Interactions endpoint), prompt research/score_world_prompt2.txt, take
+research/score/lyria_world_w7.mp3 (strict 130 BPM), re-edited on bar lines by tools/score_world8.py, rewind synthesised.

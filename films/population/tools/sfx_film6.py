@@ -169,7 +169,7 @@ def tick(g=1.0):
 
 FILM = sys.argv[1] if len(sys.argv) > 1 else "china"
 CUES = json.load(open(os.path.join(ROOT, "out", f"cues6_{FILM}.json")))
-full = load(os.path.join(ROOT, "public", "ref_full.wav"))
+full = load(os.path.join(ROOT, "public", CUES.get("musicSrc", "ref_full.wav")))
 N = int(round(CUES["dur"] * SR))
 music = np.zeros((N, 2))
 fs = 0
