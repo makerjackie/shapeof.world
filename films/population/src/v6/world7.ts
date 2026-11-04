@@ -121,7 +121,7 @@ const EVS: Ev[] = [
   // 第五幕 · 爆炸与转折
   { y: 1950, b: 3, k: "stat", tag: "1950 年", t: "世界", n: "25 亿", anchor: BAR(72), span: 30 },
   { y: 1955, b: 3, k: "grow", tag: "1950 → 2023 年", t: "人均寿命", n: "46 岁 → 73 岁", src: "Our World in Data（联合国《世界人口展望 2024》）" },
-  { y: 1959, b: 3, k: "famine", tag: "1959—1961 年 · 中国", t: "三年困难时期", n: "−1,000 万", s: "1960 年中国总人口减少", src: "国家统计局" } // same official figure as the China film,
+  { y: 1959, b: 3, k: "famine", tag: "1959—1961 年 · 中国", t: "三年困难时期", n: "−1,000 万", s: "1960 年中国总人口减少", src: "国家统计局" }, // same official figure as the China film
   { y: 1960, b: 1, k: "stat", tag: "1960 年", t: "", n: "30 亿" },
   { y: 1963, b: 3, k: "peak", tag: "1963 年", t: "增长最快：一年多了", n: "7,000 万人", s: "增速 2.2%" },
   { y: 1970, b: 3, k: "policy", tag: "1960—1970 年代", t: "绿色革命：良种加化肥", s: "《人口炸弹》预言的数亿人饿死，没有发生" },
