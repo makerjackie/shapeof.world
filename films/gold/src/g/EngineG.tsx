@@ -1534,7 +1534,7 @@ export const createFilm = (S: Spec) => {
       else text(ctx, L.text, 0, 0, 72, 900, SERIF, col, { align: "center", maxW: 900, glow: "rgba(0,0,0,0.9)", glowBlur: 14 });
       ctx.restore();
       if (L.text2) {
-        const t2 = L.t0 + 4 * 0.4325;
+        const t2 = L.t0 + 4 * (60 / 130); // one bar later, on the score's 130 BPM grid
         if (t >= t2) {
           ctx.globalAlpha = a * clamp((t - t2) / 0.1);
           text(ctx, L.text2, CX, 560, 50, 900, SERIF, SOFT, { align: "center", maxW: 900 });

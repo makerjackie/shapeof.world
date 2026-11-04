@@ -167,10 +167,9 @@ export const GOLD: Spec = {
   ending: {
     t0: END_T,
     lines: [
-      { t0: END_T + 0.1, t1: BAR(85) - 0.05, text: "两百多年，1 盎司黄金", text2: "从 19 美元，到 4,000 美元", tone: "white" },
-      { t0: BAR(85), t1: BAR(87) - 0.05, text: "黄金，还是那 1 盎司", text2: "1971 年的 1 美元，今天只值约 12 美分", tone: "white" },
-      { t0: BAR(87), t1: BAR(89) - 0.05, text: "人们不再相信钱，金价就涨", text2: "又信了一点，它就跌", tone: "white" },
-      { t0: BAR(89), t1: CRED_T - 0.05, text: "黄金不变，变的是钱", brush: true, tone: "gold" },
+      { t0: END_T + 0.1, t1: BAR(85.5) - 0.05, text: "两百多年，1 盎司黄金", text2: "从 19 美元，到 4,000 美元", tone: "white" },
+      { t0: BAR(85.5), t1: BAR(88) - 0.05, text: "1971 年的 1 美元", text2: "今天只值约 12 美分", tone: "white" },
+      { t0: BAR(88), t1: CRED_T - 0.05, text: "人们不再相信钱，金价就涨", text2: "又信了一点，它就跌", tone: "gold" },
     ],
     troughs: [
       { y: 1864.5, t: "南北战争", tone: "gold" },
