@@ -22,7 +22,7 @@ const UP = 1; // bars 72-82 can run faster (score_world9: 139/130); the user fou
 const A = (n: number) => +(0.05 + n * BEAT).toFixed(4); // beat n (cold open)
 const BAR = (k: number) => +(0.05 + 4 * BEAT * (Math.min(k, 72) + Math.max(0, Math.min(k, 83) - 72) / UP + Math.max(0, k - 83))).toFixed(4); // bar k
 const DUR = 170.78;
-export const MUSIC = makeMusic([[0, DUR]], 0.2, [
+export const MUSIC = makeMusic([[0, DUR]], 2.9, [
   { t0: 0, t1: BAR(72), P: BEAT, ph: 0.05, bar: 0 },
   { t0: BAR(72), t1: BAR(83), P: BEAT / UP, ph: 0, bar: 0 },
   { t0: BAR(83), t1: DUR, P: BEAT, ph: 0, bar: 0 },
@@ -146,9 +146,39 @@ const SRC_PTS: [number, string][] = [
   [1950, "联合国《世界人口展望 2024》"],
   [2025.5, "联合国《世界人口展望 2024》中方案 · 预测"],
 ];
-const placed = schedule(EVS, MUSIC, BAR(4), BAR(83));
-export const REVEALS = placed.map((e) => ({ k: e.k, big: !!e.big, y: e.y, ...revealOf(e, MUSIC.beats) }));
 const END_T = BAR(83);
+const CRED_T = BAR(91); // the sources page
+const CARD_T = BAR(91) + 3.0; // the brand card
+// Two cuts. Domestic (Chinese platforms, World7): no 1959-61 famine card, and the on-screen source names the kind of
+// source instead of Wikipedia (blocked in China). Overseas (World7O): everything. Sources are names only, never web addresses.
+const INTL_ONLY = new Set([1959]);
+const CN_SRC: Record<number, string> = {
+  541: "死亡人数为学界估计范围；日死万人：普罗科匹厄斯《战争史》",
+  755: "死亡人数为学界估计；在册：《通典》",
+  1300: "死亡人数为学界估计范围",
+  1347: "死亡人数为学界估计范围",
+  1350: "死亡比例为学界估计",
+  1520: "死亡人数为学界估计范围",
+  1644: "死亡人数为学界估计",
+  1775: "饿死人数为历史估计",
+  1851: "死亡人数为学界估计范围",
+  1877: "饿死人数为学界估计范围",
+  1880: "移民人数为历史统计",
+  1894: "死亡人数为学界估计",
+  1914: "死亡人数为学界估计范围",
+  1937: "死亡人数为学界估计；3,500 万：中国官方数字",
+  1939: "死亡人数为学界估计范围",
+  1941: "死亡人数为学界估计范围",
+  1945: "按约 7,000 万死亡、1940 年世界人口约 23 亿估算",
+};
+const CREDITS = [
+  "世界人口：HYDE 3.3、Gapminder",
+  "联合国《世界人口展望 2024》",
+  "各国人口：麦迪逊项目 2020",
+  "中国古代：正史户口，葛剑雄主编《中国人口史》",
+  "死亡人数：已发表的各家估计，给出范围",
+  "配乐：原创，AI 生成（Google Lyria）",
+];
 // the most populous countries (today's borders): Maddison 2020 (1, 1000, 1500, 1600), HYDE 1700-1790, Gapminder 1800-1949,
 // UN 1950-2023 and its medium projection to 2100; China to 1949 is the China film's own series (records marked 在册)
 type CP = [number, number, string];
@@ -173,7 +203,17 @@ const ctryAt = (p: CP[], y: number): { v: number; rec: boolean } | null => {
   return { v: p[p.length - 1][1], rec: false };
 };
 
-export const WORLD: Spec = {
+const build = (intl: boolean) => {
+  const evs = intl
+    ? EVS
+    : EVS.filter((e) => !INTL_ONLY.has(e.y)).map((e) => {
+        if (CN_SRC[e.y] !== undefined) return { ...e, src: CN_SRC[e.y] };
+        if (e.src?.includes("维基百科")) throw new Error(`domestic cut: no CN_SRC for ${e.y}`);
+        return e;
+      });
+  const placed = schedule(evs, MUSIC, BAR(4), BAR(83));
+  const REVEALS = placed.map((e) => ({ k: e.k, big: !!e.big, y: e.y, ...revealOf(e, MUSIC.beats) }));
+  const WORLD: Spec = {
   id: "world",
   brand: "两千年世界人口",
   series: SERIES,
@@ -222,13 +262,16 @@ export const WORLD: Spec = {
       { t0: END_T + 0.1, t1: BAR(85) - 0.05, text: "两千年，世界人口只少过 2 次", text2: "都因为瘟疫和战争", tone: "white" },
       { t0: BAR(85), t1: BAR(87) - 0.05, text: "预测：2084 年后，第 3 次", text2: "这一次，没有灾难", tone: "white" },
       { t0: BAR(87), t1: BAR(89) - 0.05, text: "全球生育率，从 5 个孩子", text2: "降到 2.25 个", tone: "white" },
-      { t0: BAR(89), t1: MUSIC.dur, text: "第一次，人类自己选择变少", brush: true, tone: "gold" },
+      { t0: BAR(89), t1: CRED_T - 0.05, text: "第一次，人类自己选择变少", brush: true, tone: "gold" },
     ],
     troughs: [
       { y: 300, t: "罗马危机 · 三国" },
       { y: 1400, t: "黑死病" },
     ],
-    card: BAR(90),
+    card: CARD_T,
+    credits: { t0: CRED_T, title: "信息来源", lines: CREDITS },
+    slogan: "看见世界如何运行",
+    maker: "MakerJackie",
   },
   // five acts of the rise and fall: the label above the year
   era: (y) => (y < 520 ? "第一幕 · 帝国与瘟疫" : y < 1450 ? "第二幕 · 草原与黑死病" : y < 1800 ? "第三幕 · 一条航线" : y < 1949.5 ? "第四幕 · 机器与战争" : "第五幕 · 爆炸与转折"),
@@ -256,3 +299,7 @@ export const WORLD: Spec = {
       return a ? [{ n: k.n, v: a.v, c: k.c, tag: a.rec ? "在册" : undefined }] : [];
     }),
 };
+  return { WORLD, REVEALS };
+};
+export const { WORLD, REVEALS } = build(false); // domestic cut (Chinese platforms)
+export const WORLD_INTL = build(true); // overseas cut

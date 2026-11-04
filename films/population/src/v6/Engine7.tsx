@@ -151,6 +151,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const EV = S.events;
   const [B0, B1] = S.body;
   const END = S.ending.t0;
+  const OUT = S.ending.credits?.t0 ?? S.ending.card; // where the chart and the source line leave
   const SER = S.series;
   const FIRST = SER[0].y;
   const LAST = SER[SER.length - 1].y;
@@ -1504,7 +1505,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.restore();
   };
   const drawSource = (ctx: CanvasRenderingContext2D, t: number) => {
-    if (!S.src || t < B0 - 0.2 || t >= S.ending.card) return;
+    if (!S.src || t < B0 - 0.2 || t >= OUT) return;
     const c = camAt(t).c;
     const e = evAt(t);
     let line = "数据：" + S.src(t >= END ? LAST_REAL : c);
@@ -1528,7 +1529,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const drawProjMark = (ctx: CanvasRenderingContext2D, t: number) => {
     const k = camAt(t);
     if (k.c <= LAST_REAL + 0.2 && t < END) return;
-    if (t >= S.ending.card) return;
+    if (t >= OUT) return;
     const x = X(k, LAST_REAL);
     if (x < 20 || x > W - 20) return;
     const top = t >= END ? 600 : k.top - 20;
@@ -1801,8 +1802,10 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const k = camAt(t);
     const d = t - END;
     const cardA = clamp((t - S.ending.card) / 0.6);
+    const CR = S.ending.credits;
+    const credA = CR ? clamp((t - CR.t0) / 0.5) : 0;
     ctx.save();
-    ctx.globalAlpha = 1 - cardA;
+    ctx.globalAlpha = 1 - Math.max(cardA, credA);
     S.ending.troughs.forEach((tr, i) => {
       const ta = END + 0.3 + i * 0.4654;
       if (t < ta) return;
@@ -1847,23 +1850,37 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       }
     }
     ctx.restore();
+    // sources page (names only)
+    if (CR && credA > 0 && cardA < 1) {
+      ctx.save();
+      ctx.globalAlpha = credA * (1 - cardA);
+      ctx.fillStyle = "rgba(5,6,8,0.92)";
+      ctx.fillRect(...FULL);
+      text(ctx, CR.title ?? "信息来源", CX, 640, 44, 900, SERIF, GOLD, { align: "center", ls: 6 });
+      CR.lines.forEach((ln, i) => text(ctx, ln, CX, 740 + i * 64, 33, 700, SERIF, SOFT, { align: "center", maxW: 880 }));
+      ctx.restore();
+    }
     // end card
     if (cardA > 0) {
       ctx.save();
       ctx.globalAlpha = cardA;
-      ctx.fillStyle = "rgba(5,6,8,0.85)";
+      ctx.fillStyle = S.ending.slogan ? "rgba(5,6,8,1)" : "rgba(5,6,8,0.85)";
       ctx.fillRect(...FULL);
       const logo = IMGS["mark-disc.png"];
       if (logo) ctx.drawImage(logo, CX - 70, 760, 140, 140);
       text(ctx, "世界的形状", CX, 990, 64, 900, SANS, WHITE, { align: "center", ls: 6 });
-      text(ctx, S.brand, CX, 1066, 40, 900, SERIF, GOLD, { align: "center", ls: 4 });
+      if (S.ending.slogan) {
+        // the standard card (films/DIRECTOR.md): mark, name, slogan, maker at the bottom
+        text(ctx, S.ending.slogan, CX, 1066, 40, 700, SERIF, SOFT, { align: "center", ls: 8 });
+        if (S.ending.maker) text(ctx, S.ending.maker, CX, (1400 - LY) / LS, 30, 700, SANS, MUTED, { align: "center", ls: 2 });
+      } else text(ctx, S.brand, CX, 1066, 40, 900, SERIF, GOLD, { align: "center", ls: 4 });
       ctx.restore();
     }
   };
   const drawEndingQuestion = (ctx: CanvasRenderingContext2D, t: number) => {
     // the final question stays over the end card
     const L = S.ending.lines[S.ending.lines.length - 1];
-    if (t < S.ending.card || !L.brush) return;
+    if (t < S.ending.card || !L.brush || S.ending.credits) return; // with a sources page the line has already left
     ctx.save();
     ctx.globalAlpha = 1;
     text(ctx, L.text, CX, 520, 132, 400, BRUSH, GOLD, { align: "center", maxW: 900, glow: GOLD + "88", glowBlur: 30 });
@@ -1893,7 +1910,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     cb.setTransform(1, 0, 0, 1, 0, 0);
     cb.clearRect(0, 0, W, H);
     cb.setTransform(LS, 0, 0, LS, LX, LY);
-    const chartA = 1 - clamp((t - (S.ending.card - 0.2)) / 0.8);
+    const chartA = 1 - clamp((t - (OUT - 0.2)) / 0.8);
     drawChart(cb, t, chartA);
     drawRibbon(cb, t, chartA);
     drawStreaks(cb, t);

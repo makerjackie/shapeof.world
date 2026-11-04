@@ -30,7 +30,15 @@ export type Spec = {
   };
   dyn?: [number, number, string, 0 | 1 | 2][]; // dynasties under the whole line: 1 = one realm, 0 = split / chaos, 2 = modern
   body: [number, number]; // film seconds
-  ending: { t0: number; lines: EndLine[]; troughs: { y: number; t: string; dx?: number }[]; card: number };
+  ending: {
+    t0: number;
+    lines: EndLine[];
+    troughs: { y: number; t: string; dx?: number }[];
+    card: number;
+    credits?: { t0: number; title?: string; lines: string[] }; // a sources page before the card (names only, no web addresses)
+    slogan?: string; // the standard brand card: mark, 世界的形状, slogan, maker (films/DIRECTOR.md)
+    maker?: string;
+  };
   era: (y: number) => string; // the small line under the brand (dynasty / era)
   kindLabel: Record<PtKind, string>;
   mapOff: number; // year after which the territory map is gone (modern borders are never drawn)
