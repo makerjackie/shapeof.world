@@ -117,7 +117,7 @@ const tabular = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number,
   ctx.globalAlpha = a0;
   return cx - x;
 };
-const fmtPop = (v: number) => (v >= 10000 ? { n: (v / 10000).toFixed(2), u: "亿" } : { n: Math.round(v).toLocaleString("en-US"), u: "万" });
+const fmtPopZh = (v: number) => (v >= 10000 ? { n: (v / 10000).toFixed(2), u: "亿" } : { n: Math.round(v).toLocaleString("en-US"), u: "万" });
 
 // ---------------- images
 const IMGS: Record<string, HTMLImageElement> = {};
@@ -146,6 +146,19 @@ const b64 = (s: string) => {
 };
 
 export const createFilm = (S: Spec, MJ: MapJ) => {
+  // language: the English cut translates engine strings and map labels, and counts in millions / billions
+  const EN = S.lang === "en";
+  const tr = (s: string) => S.i18n?.[s] ?? s;
+  const fmtPop = (v: number): { n: string; u: string; s: string } => {
+    if (!EN) {
+      const z = fmtPopZh(v);
+      return { ...z, s: z.n + z.u };
+    }
+    // s: the short form for the table and the axis (75M, 1.19B)
+    if (v >= 100000) return { n: (v / 100000).toFixed(2), u: "billion", s: `${(v / 100000).toFixed(2)}B` };
+    if (v >= 1000) return { n: Math.round(v / 100).toLocaleString("en-US"), u: "million", s: `${Math.round(v / 100)}M` };
+    return { n: (v / 100).toFixed(1), u: "million", s: `${(v / 100).toFixed(1)}M` };
+  };
   const DUR = S.music.dur;
   const NF = Math.ceil(DUR * FPS) + 2;
   const EV = S.events;
@@ -705,14 +718,15 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const o = partOff[i];
       ctx.globalAlpha = clamp(ap * mk * (p.r === "far" ? 0.7 : 1));
       ctx.font = `900 ${size}px ${SERIF}`;
-      const hw = ctx.measureText(p.n).width / 2 + 6;
+      const pn = tr(p.n);
+      const hw = ctx.measureText(pn).width / 2 + 6;
       // a realm off screen fades out instead of piling up at the edge
       const over = Math.max(0, 40 + hw - (P.x + o[0]), P.x + o[0] - (SAFE_R - hw));
       if (over > 60) return;
       ctx.globalAlpha *= clamp(1 - over / 60);
       const lx = clamp(P.x + o[0], 40 + hw, SAFE_R - hw);
       const ly = clamp(P.y + o[1], 1090, 1440);
-      text(ctx, p.n, lx, ly, size, 900, SERIF, p.r === "far" ? "#aab3bd" : WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+      text(ctx, pn, lx, ly, size, 900, SERIF, p.r === "far" ? "#aab3bd" : WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     });
     // migration streams
     for (const f of fxs) {
@@ -765,7 +779,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     }
     // map tag (schematic)
     ctx.globalAlpha = 0.55 * mk;
-    text(ctx, "疆域示意", SAFE_R, 1090, 20, 500, SERIF, MUTED, { align: "right" });
+    text(ctx, tr("疆域示意"), SAFE_R, 1090, 20, 500, SERIF, MUTED, { align: "right" });
     ctx.restore();
   };
 
@@ -805,7 +819,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         ctx.lineTo(W - 40, y);
         ctx.stroke();
         const f = fmtPop(v);
-        text(ctx, `${f.n}${f.u}`, 44, y - 6, 19, 500, SANS, "rgba(255,255,255,0.3)");
+        text(ctx, f.s, 44, y - 6, 19, 500, SANS, "rgba(255,255,255,0.3)");
       }
     }
     // bars at every count (the texture)
@@ -1067,7 +1081,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
   const INTRO = [S.cold.crashes[S.cold.crashes.length - 1].at + 0.05, S.cold.crashes[S.cold.crashes.length - 1].at + 0.5];
   const drawIntro = (ctx: CanvasRenderingContext2D, t: number, hx: number) => {
     const k = ease(clamp((t - INTRO[0]) / (INTRO[1] - INTRO[0])));
-    const size = 116 + (30 - 116) * k;
+    const big = EN ? 54 : 116; // the English title is long
+    const size = big + (30 - big) * k;
     ctx.font = `900 ${size}px ${SERIF}`;
     const w = ctx.measureText(S.brand).width;
     const x = CX - w / 2 + (hx - (CX - w / 2)) * k;
@@ -1076,11 +1091,11 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.save();
     ctx.translate(x, y);
     ctx.scale(pop, pop);
-    text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: 2 + 8 * (1 - k), glow: "rgba(255,201,77,0.45)", glowBlur: 30 * (1 - k) });
+    text(ctx, S.brand, 0, 0, size, 900, SERIF, GOLD, { ls: EN ? 1 : 2 + 8 * (1 - k), glow: "rgba(255,201,77,0.45)", glowBlur: 30 * (1 - k) });
     ctx.restore();
     if (k < 1) {
       ctx.globalAlpha = 1 - k;
-      text(ctx, S.cold.promise ?? "", CX, 630, 46, 900, SERIF, "#e8dcc0", { align: "center", ls: 6, glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+      text(ctx, S.cold.promise ?? "", CX, 630, EN ? 40 : 46, 900, SERIF, "#e8dcc0", { align: "center", ls: EN ? 1 : 6, maxW: 900, glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
       ctx.globalAlpha = 1;
     }
   };
@@ -1094,34 +1109,34 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.globalAlpha = fade;
     const logo = IMGS["mark-disc.png"];
     if (logo) ctx.drawImage(logo, 56, 92, 46, 46);
-    const w1 = text(ctx, "世界的形状", 114, 126, 28, 900, SANS, "#f3f4f7", { ls: 2 });
+    const w1 = text(ctx, tr("世界的形状"), 114, 126, 28, 900, SANS, "#f3f4f7", { ls: 2 });
     ctx.fillStyle = "rgba(255,255,255,0.25)";
     ctx.fillRect(114 + w1 + 14, 104, 2, 26);
     if (t >= INTRO[1]) text(ctx, S.brand, 114 + w1 + 30, 127, 30, 900, SERIF, GOLD, { ls: 2 });
     else drawIntro(ctx, t, 114 + w1 + 30);
     const c = k.c;
     const rw = t >= S.cold.rewind[0] && t < B0;
-    text(ctx, rw ? "回到两千年前……" : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 520 });
+    text(ctx, rw ? tr("回到两千年前……") : S.era(c), 58, 186, 30, 700, SERIF, SOFT, { maxW: 520 });
     // year
     const yNum = Math.max(1, Math.floor(c + 1e-6));
     let x = 56;
-    if (yNum < 1000) x += text(ctx, "公元", 58, 300, 48, 900, SERIF, WHITE) + 8;
+    if (yNum < 1000) x += text(ctx, tr("公元"), 58, 300, 48, 900, SERIF, WHITE) + 8;
     const blur = Math.min(4, k.sp / 500);
     if (blur > 0.4) ctx.filter = `blur(${blur.toFixed(1)}px)`;
     x += tabular(ctx, String(yNum), x, 300, 116, WHITE);
     ctx.filter = "none";
-    text(ctx, "年", x + 6, 300, 46, 900, SERIF, WHITE);
+    if (!EN) text(ctx, "年", x + 6, 300, 46, 900, SERIF, WHITE);
     if (c > LAST_REAL + 0.5 && t < END) {
       // projection: say it loudly
       const bx = x + 70;
       ctx.font = `900 34px ${SERIF}`;
-      const bw = ctx.measureText("联合国预测").width + 30;
+      const bw = ctx.measureText(tr("联合国预测")).width + 30;
       ctx.strokeStyle = GOLD;
       ctx.lineWidth = 2.5;
       ctx.setLineDash([8, 5]);
       ctx.strokeRect(bx, 244, bw, 54);
       ctx.setLineDash([]);
-      text(ctx, "联合国预测", bx + 15, 283, 34, 900, SERIF, GOLD);
+      text(ctx, tr("联合国预测"), bx + 15, 283, 34, 900, SERIF, GOLD);
     }
     // population
     const v = val(c);
@@ -1132,7 +1147,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     const f = fmtPop(v);
     if (!rw) {
       const nw = tabular(ctx, f.n, 58, 404, 86, col, { glow: col + "55" });
-      text(ctx, `${f.u}人`, 58 + nw + 8, 404, 36, 900, SERIF, col);
+      text(ctx, EN ? f.u : `${f.u}人`, 58 + nw + 8, 404, 36, 900, SERIF, col);
       const g = gapAt(c);
       const chip = g && !S.noGapChip ? `两次统计相隔 ${g} 年` : S.kindLabel[kindAt(c)];
       ctx.font = `700 22px ${SERIF}`;
@@ -1205,13 +1220,13 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       const y = 214 + p * 50;
       ctx.fillStyle = r.c;
       ctx.fillRect(640, y - 22, 6, 28);
-      text(ctx, r.n, 656, y, 26, 900, SERIF, WHITE);
+      text(ctx, r.n, 656, y, EN ? 23 : 26, 900, SERIF, WHITE, EN ? { maxW: 118 } : {});
       if (r.tag) {
         ctx.font = `900 26px ${SERIF}`;
         text(ctx, r.tag, 662 + ctx.measureText(r.n).width, y - 2, 16, 700, SANS, MUTED);
       }
       const f = fmtPop(r.v);
-      text(ctx, `${f.n}${f.u}`, 862, y, 25, 900, SANS, WHITE, { align: "right" });
+      text(ctx, f.s, 862, y, 25, 900, SANS, WHITE, { align: "right" });
       const w0 = was.find((x) => x.n === r.n);
       const ch = w0 ? r.v / Math.max(1, w0.v) - 1 : 0;
       if (Math.abs(ch) >= 0.005) {
@@ -1287,6 +1302,12 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     if (measure(ctx, s, size, 900, SERIF) <= maxW) return [s];
     const cut = s.indexOf("，");
     if (cut > 0 && cut < s.length - 1) return [s.slice(0, cut + 1), s.slice(cut + 1)];
+    if (EN) {
+      // English: break at the space nearest the middle
+      let best = -1;
+      for (let i = 0; i < s.length; i++) if (s[i] === " " && (best < 0 || Math.abs(i - s.length / 2) < Math.abs(best - s.length / 2))) best = i;
+      if (best > 0) return [s.slice(0, best), s.slice(best + 1)];
+    }
     return [s];
   };
   const cardBox = (ctx: CanvasRenderingContext2D, e: Placed, maxW: number) => {
@@ -1334,7 +1355,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.globalAlpha = on(R.title);
     let tx = x0 + slide(R.title);
     y += 34;
-    const lab = e.y > LAST_REAL + 0.5 ? "预测" : e.k === "crash" && S.id === "world" && !!e.pct && Math.abs(parseFloat(e.pct.replace("−", "-"))) < 10 ? "减少" : KIND_LABEL[e.k];
+    const lab = tr(e.y > LAST_REAL + 0.5 ? "预测" : e.k === "crash" && S.id === "world" && !!e.pct && Math.abs(parseFloat(e.pct.replace("−", "-"))) < 10 ? "减少" : KIND_LABEL[e.k]);
     if (lab) {
       ctx.font = `900 24px ${SERIF}`;
       const cw = ctx.measureText(lab).width + 22;
@@ -1452,7 +1473,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     }
     ctx.fillStyle = gold ? "rgba(255,201,77,0.95)" : plague ? "rgba(210,215,220,0.95)" : "rgba(255,59,47,0.95)";
     const small = S.id === "world" && !!e.pct && Math.abs(parseFloat(e.pct.replace("−", "-"))) < 10; // a few percent of the world is a fall, not a collapse
-    const lab = gold ? "人口激增" : plague ? "瘟疫" : e.k === "crash" ? (small ? "人口减少" : "人口崩塌") : "战乱";
+    const lab = tr(gold ? "人口激增" : plague ? "瘟疫" : e.k === "crash" ? (small ? "人口减少" : "人口崩塌") : "战乱");
     ctx.font = `900 26px ${SERIF}`;
     const lw = ctx.measureText(lab).width + 44;
     ctx.fillRect(CX - lw / 2, 522, lw, 38);
@@ -1499,16 +1520,16 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.closePath();
       ctx.fill();
     }
-    text(ctx, "倒回", CX + 10 + jx, 482, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
+    text(ctx, tr("倒回"), CX + 10 + jx, 482, 72, 900, SERIF, WHITE, { glow: "rgba(150,200,255,0.8)", glowBlur: 20 });
     const yNow = Math.max(Math.max(1, FIRST), Math.floor(CUR(t)));
-    text(ctx, `公元 ${yNow} 年`, CX + jx, 560, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
+    text(ctx, EN ? `AD ${yNow}` : `公元 ${yNow} 年`, CX + jx, 560, 44, 900, SANS, "#cfe6ff", { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 10 });
     ctx.restore();
   };
   const drawSource = (ctx: CanvasRenderingContext2D, t: number) => {
     if (!S.src || t < B0 - 0.2 || t >= OUT) return;
     const c = camAt(t).c;
     const e = evAt(t);
-    let line = "数据：" + S.src(t >= END ? LAST_REAL : c);
+    let line = tr("数据：") + S.src(t >= END ? LAST_REAL : c);
     if (t >= END) line = S.srcEnd ?? "数据：正史户口、学者估算（葛剑雄、吴松弟、曹树基等）、国家统计局、联合国预测";
     else if (e?.src) line += "　｜　" + e.src;
     const a = clamp((t - (B0 - 0.2)) / 0.3);
@@ -1548,8 +1569,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
     ctx.lineTo(x, bot);
     ctx.stroke();
     ctx.setLineDash([]);
-    text(ctx, "实际", x - 12, top + 30, 26, 900, SERIF, SOFT, { align: "right" });
-    text(ctx, "预测", x + 12, top + 30, 26, 900, SERIF, GOLD);
+    text(ctx, tr("实际"), x - 12, top + 30, 26, 900, SERIF, SOFT, { align: "right" });
+    text(ctx, tr("预测"), x + 12, top + 30, 26, 900, SERIF, GOLD);
     ctx.restore();
   };
 
@@ -1628,7 +1649,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
         const fe = fmtPop(val(LAST_REAL));
         text(ctx, `${fe.n} ${fe.u}`, 0, 0, 54, 900, SANS, GOLD, { align: "right", glow: "rgba(255,201,77,0.6)", glowBlur: 20 });
         ctx.restore();
-        text(ctx, `${LAST_REAL} 年`, Math.min(xe + 36, SAFE_R), ye + 108, 26, 700, SERIF, SOFT, { align: "right" });
+        text(ctx, EN ? `${LAST_REAL}` : `${LAST_REAL} 年`, Math.min(xe + 36, SAFE_R), ye + 108, 26, 700, SERIF, SOFT, { align: "right" });
       }
       // the turn now: a calm white ring, no lightning
       if (mk && t >= mk.t0 && t < mk.t1 + 0.2) {
@@ -1838,7 +1859,8 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.save();
       ctx.translate(CX, L.brush ? 520 : 470);
       ctx.scale(s, s);
-      if (L.brush) text(ctx, L.text, 0, 0, 132, 400, BRUSH, col, { align: "center", maxW: 900, glow: col + "88", glowBlur: 30 });
+      if (L.brush && EN) L.text.split("\n").forEach((ln, i, all) => text(ctx, ln, 0, (i - (all.length - 1) / 2) * 92, 78, 900, SERIF, col, { align: "center", maxW: 900, glow: col + "88", glowBlur: 26 }));
+      else if (L.brush) text(ctx, L.text, 0, 0, 132, 400, BRUSH, col, { align: "center", maxW: 900, glow: col + "88", glowBlur: 30 });
       else text(ctx, L.text, 0, 0, 72, 900, SERIF, col, { align: "center", maxW: 900, glow: "rgba(0,0,0,0.9)", glowBlur: 14 });
       ctx.restore();
       if (L.text2) {
@@ -1868,7 +1890,7 @@ export const createFilm = (S: Spec, MJ: MapJ) => {
       ctx.fillRect(...FULL);
       const logo = IMGS["mark-disc.png"];
       if (logo) ctx.drawImage(logo, CX - 70, 760, 140, 140);
-      text(ctx, "世界的形状", CX, 990, 64, 900, SANS, WHITE, { align: "center", ls: 6 });
+      text(ctx, tr("世界的形状"), CX, 990, 64, 900, SANS, WHITE, { align: "center", ls: 6 });
       if (S.ending.slogan) {
         // the standard card (films/DIRECTOR.md): mark, name, slogan, maker at the bottom
         text(ctx, S.ending.slogan, CX, 1066, 40, 700, SERIF, SOFT, { align: "center", ls: 8 });

@@ -47,6 +47,8 @@ export type Spec = {
   tableTitle?: string;
   tableRows?: number;
   sfxGain?: number;
+  lang?: "en"; // the English cut: engine strings through i18n, English number units, no 公元/年
+  i18n?: Record<string, string>; // engine strings and map labels: Chinese -> English
   musicSrc?: string; // the music file in public/ (default ref_full.wav)
   noRiser?: boolean; // no riser SFX under the rewind
   tableOn?: (e: { k: string; table?: boolean }) => boolean; // when the region table shows (default: always)
