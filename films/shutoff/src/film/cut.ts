@@ -52,7 +52,8 @@ export const CUT: Shot[] = [
   // cold open: 03:12, the phone on the desk
   S(0.6, 14.4, "phone", "lock", { fi: 1.6 }),
   // act 1 · trust
-  S(19.6, 27.0, "city", "dusk", { fi: 0.6 }),
+  S(19.6, 23.4, "city", "dusk", { fi: 0.6 }),
+  S(23.4, 27.0, "city", "skyline"),
   S(29.2, 37.0, "city", "greenwave"),
   S(39.6, 42.4, "city", "grid"),
   S(42.4, 45.2, "city", "highway"),
@@ -73,15 +74,15 @@ export const CUT: Shot[] = [
   S(133.5, 143.0, "city", "drones"),
   ...montage,
   // act 4 · 03:15 a.m., the same night as the cold open: 林工 finally asks
-  S(CHAT_T0, 196.0, "phone", "chat"),
+  S(CHAT_T0, 192.4, "phone", "chat"),
   // ending: up and out, to the whole night side of the earth
-  S(195.4, 200.0, "phone", "pullout", { xf: 0.6 }),
-  S(199.4, 207.0, "city", "rise", { xf: 0.6 }),
-  S(206.4, 219.4, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
+  S(191.8, 196.4, "phone", "pullout", { xf: 0.6 }),
+  S(195.8, 203.4, "city", "rise", { xf: 0.6 }),
+  S(202.8, 215.8, "earth", "orbit", { xf: 0.6, fo: 0.8 }),
 ];
 
 // story time runs from the cold open (0) to the end card; the pre-roll card plays before it
 export const PRE = 6.0;
-export const FILM_SECONDS = 276.6;
+export const FILM_SECONDS = 273.0;
 
 export const shotsAt = (t: number) => CUT.filter((s) => t >= s.t0 && t < s.t1).sort((a, b) => a.t0 - b.t0).slice(-2);

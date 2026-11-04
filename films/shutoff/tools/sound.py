@@ -8,7 +8,7 @@ from scipy.io import wavfile
 
 SR = 48000
 PRE = 6.0  # pre-roll before the cold open; every time below is story time (src/film/cut.ts)
-DUR = 276.6
+DUR = 273.0
 OUT = sys.argv[1] if len(sys.argv) > 1 else "public/mix.wav"
 rng = np.random.default_rng(1402)
 M = "public/music/"
@@ -371,35 +371,34 @@ put(152.5, riser(2.5, 100, 9000, 0.7))
 put(154.2, hit(1.5, 0.5))
 BUF[int((154.3 + PRE) * SR):int((155.0 + PRE) * SR)] *= np.linspace(1, 0, int((155.0 + PRE) * SR) - int((154.3 + PRE) * SR))[:, None] ** 3
 # --- act 4 (155.0 – 196.0): 03:15, the chat ---
-loopbed(155.0, 200.4, "ambience-rain-03.wav", 0.9, fi=1.6, fo=2.0)
+loopbed(155.0, 196.8, "ambience-rain-03.wav", 0.9, fi=1.6, fo=2.0)
 for k in range(8):
     put(157.0 + k * (2.2 / 8), tap(1.1))  # the draft
 put(160.0, whoosh(0.35, 3000, 1200, 0.25))
-for tt in (168.5, 172.3, 178.1, 182.3, 185.9):
+for tt in (168.5, 172.3, 178.1, 182.3):
     put(tt, ping(0.5))
-put(185.9, piano_note(73.42, 6.0, 0.55))  # "所以，我会照顾好你们每一个人。"
-bed(162.5, 201.0, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
+bed(162.5, 197.4, "event-horizon.mp3", 70.0, 1.7, fi=3.0, fo=3.0)
 put(182.3, boom(4.0, 0.9))
 put(182.3, drone(7.0, 32.7, 0.5))
 # her name: one high, quiet note; then the line that lands like a threat
-put(189.9, ping(0.4)); put(189.9, piano_note(440.0, 5.0, 0.32))
-put(192.3, ping(0.45)); put(192.3, piano_note(55.0, 6.0, 0.6)); put(192.3, drone(4.0, 27.5, 0.6))
-# --- ending (195.4 – 219.4): up and out to the night side of the earth ---
-put(196.0, riser(4.0, 100, 3000, 0.45))
-put(199.4, whoosh(3.0, 300, 2500, 0.5))
-loopbed(199.4, 219.4, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
-bed(204.4, 219.4, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
-put(206.4, drone(13.0, 30.9, 0.9))
-put(215.4, heartbeat(1.6))
-put(215.4, boom(4.0, 0.9))
-# --- title, facts, credits (220.2 – 264.7) ---
-put(220.2, braam(5.0, 41.2, 0.8))
-put(225.6, drone(27.0, 36.7, 0.8))
-for tt, f in ((228.6, 220.0), (234.4, 207.65), (240.2, 196.0), (246.0, 164.81)):
+put(186.3, ping(0.4)); put(186.3, piano_note(440.0, 5.0, 0.32))
+put(188.7, ping(0.45)); put(188.7, piano_note(55.0, 6.0, 0.6)); put(188.7, drone(4.0, 27.5, 0.6))
+# --- ending (191.8 – 215.8): up and out to the night side of the earth ---
+put(192.4, riser(4.0, 100, 3000, 0.45))
+put(195.8, whoosh(3.0, 300, 2500, 0.5))
+loopbed(195.8, 215.8, "ambience-wind-05.wav", 0.5, fi=1.0, fo=2.0)
+bed(200.8, 215.8, "event-horizon.mp3", 112.0, 1.5, fi=2.0, fo=1.0)
+put(202.8, drone(13.0, 30.9, 0.9))
+put(211.8, heartbeat(1.6))
+put(211.8, boom(4.0, 0.9))
+# --- title, facts, credits (216.6 – 261.1) ---
+put(216.6, braam(5.0, 41.2, 0.8))
+put(222.0, drone(27.0, 36.7, 0.8))
+for tt, f in ((225.0, 220.0), (230.8, 207.65), (236.6, 196.0), (242.4, 164.81)):
     put(tt, piano_note(f, 6.0, 0.6))
-bed(252.8, 264.9, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
+bed(249.2, 261.3, "event-horizon.mp3", 130.6, 1.3, fi=2.0, fo=1.6)
 # after the credits, from silence: the last notification
-put(265.7, vibrate(0.9)); put(265.7, ping(0.95))
+put(262.1, vibrate(0.9)); put(262.1, ping(0.95))
 
 y = BUF[: int((PRE + DUR) * SR)]
 # glue: set the body of the mix to a working level, then saturate the hits softly instead of letting the

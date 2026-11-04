@@ -592,75 +592,54 @@ export { SERIF };
 // for everyone; flip 0..1 wipes it top-down to the red order of act 3
 export const drawAd = (c: C2D, w: number, h: number, t: number, flip: number) => {
   const ad = () => {
-    const g = c.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0, "#040d1e");
-    g.addColorStop(0.6, "#08254a");
-    g.addColorStop(1, "#0c3a66");
-    c.fillStyle = g;
+    c.fillStyle = "#020509";
     c.fillRect(0, 0, w, h);
-    // aurora drifting behind
-    for (let k = 0; k < 3; k++) {
-      const x = w * (0.3 + 0.5 * Math.sin(t * 0.21 + k * 2.1));
-      const y = h * (0.4 + 0.3 * Math.cos(t * 0.17 + k * 1.3));
-      const rg = c.createRadialGradient(x, y, 0, x, y, h * 0.8);
-      rg.addColorStop(0, k === 1 ? "rgba(60,220,255,0.22)" : "rgba(70,120,255,0.2)");
-      rg.addColorStop(1, "rgba(0,0,0,0)");
-      c.fillStyle = rg;
-      c.fillRect(0, 0, w, h);
-    }
-    // the orb and its rings
-    const ox = w * 0.22, oy = h * 0.5, R = h * 0.2 * (1 + 0.04 * Math.sin(t * 2.0));
-    for (let k = 0; k < 4; k++) {
-      const f = (t * 0.35 + k / 4) % 1;
-      c.strokeStyle = `rgba(150,220,255,${0.45 * (1 - f)})`;
-      c.lineWidth = h * 0.006;
-      c.beginPath();
-      c.arc(ox, oy, R * (1.1 + f * 1.6), 0, Math.PI * 2);
-      c.stroke();
-    }
-    const og = c.createRadialGradient(ox - R * 0.3, oy - R * 0.3, 0, ox, oy, R);
-    og.addColorStop(0, "#ffffff");
-    og.addColorStop(0.4, "#bfeaff");
-    og.addColorStop(1, "rgba(50,140,230,0.0)");
-    c.fillStyle = og;
+    // the orb: a soft sphere of light on the right, breathing, its halo spilling over the dark
+    const ox = w * 0.72, oy = h * 0.5, R = h * 0.26 * (1 + 0.025 * Math.sin(t * 1.6));
+    const halo = c.createRadialGradient(ox, oy, R * 0.6, ox, oy, R * 3.2);
+    halo.addColorStop(0, "rgba(70,150,255,0.35)");
+    halo.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = halo;
+    c.fillRect(0, 0, w, h);
+    const g = c.createRadialGradient(ox - R * 0.35, oy - R * 0.4, R * 0.05, ox, oy, R);
+    g.addColorStop(0, "#ffffff");
+    g.addColorStop(0.35, "#b9e2ff");
+    g.addColorStop(0.75, "#3b8ee8");
+    g.addColorStop(1, "#0b2a5a");
+    c.fillStyle = g;
     c.beginPath();
-    c.arc(ox, oy, R * 1.25, 0, Math.PI * 2);
+    c.arc(ox, oy, R, 0, Math.PI * 2);
     c.fill();
-    c.fillStyle = "#0a2a52";
-    c.font = font(SERIF, R * 0.95, 900);
-    c.textAlign = "center";
+    // a slow ring of light orbiting it
+    c.strokeStyle = "rgba(180,220,255,0.5)";
+    c.lineWidth = h * 0.004;
+    c.beginPath();
+    c.ellipse(ox, oy, R * 1.7, R * 0.42, -0.35 + 0.08 * Math.sin(t * 0.5), 0, Math.PI * 2);
+    c.stroke();
+    // the brand and the slogan
     c.textBaseline = "middle";
-    c.fillText("安", ox, oy + R * 0.04);
-    // slogan
     c.textAlign = "left";
+    c.fillStyle = "rgba(255,255,255,0.6)";
+    c.font = font(SANS, h * 0.045, 500);
+    c.fillText("安  AN", w * 0.08, h * 0.24);
     c.fillStyle = "#ffffff";
-    c.font = font(SERIF, h * 0.15, 900);
-    c.fillText("有安，就安心。", w * 0.43, h * 0.36);
-    c.fillStyle = "rgba(190,225,255,0.92)";
-    c.font = font(SANS, h * 0.062, 500);
-    c.fillText("20 亿人的 AI 助手", w * 0.435, h * 0.52);
-    // a stream of small kindnesses, one card sliding in after another
+    c.font = font(SERIF, h * 0.13, 600);
+    c.fillText("有安，就安心。", w * 0.08, h * 0.44);
+    c.fillStyle = "rgba(255,255,255,0.35)";
+    c.fillRect(w * 0.08, h * 0.545, w * 0.06, h * 0.004);
+    c.fillStyle = "rgba(210,230,255,0.85)";
+    c.font = font(SANS, h * 0.05, 400);
+    c.fillText("20 亿人的 AI 助手", w * 0.08, h * 0.62);
+    // one line of small print at the bottom: the little things it did for you today
     const cards = ["已为你避开拥堵，提前 12 分钟到家", "已为你拦截一封涉及隐私的邮件", "妈妈的降压药，明天就吃完了", "已帮你清理 1,206 条过期记录", "孩子已安全到校", "你的心率有点快，早点休息"];
-    const per = 2.4;
+    const per = 1.6;
     const i = Math.floor(t / per);
     const f = (t / per) % 1;
-    for (let k = 0; k < 2; k++) {
-      const txt = cards[(i + k) % cards.length];
-      const a = k === 0 ? clamp(1 - Math.max(0, (f - 0.8) / 0.2)) : clamp((f - 0.15) / 0.3);
-      const y = h * (0.66 + k * 0.13) + (1 - a) * h * 0.03;
-      c.globalAlpha = a;
-      c.fillStyle = "rgba(255,255,255,0.12)";
-      rr(c, w * 0.435, y, w * 0.44, h * 0.1, h * 0.03);
-      c.fill();
-      c.fillStyle = "#8fd6ff";
-      c.beginPath();
-      c.arc(w * 0.435 + h * 0.05, y + h * 0.05, h * 0.017, 0, Math.PI * 2);
-      c.fill();
-      c.fillStyle = "#ffffff";
-      c.font = font(SANS, h * 0.042, 500);
-      c.fillText(txt, w * 0.435 + h * 0.09, y + h * 0.05);
-      c.globalAlpha = 1;
-    }
+    c.globalAlpha = clamp(f / 0.15) * clamp((1 - f) / 0.15);
+    c.fillStyle = "rgba(160,200,240,0.9)";
+    c.font = font(SANS, h * 0.038, 400);
+    c.fillText("· " + cards[i % cards.length], w * 0.08, h * 0.82);
+    c.globalAlpha = 1;
   };
   const home = () => {
     c.fillStyle = "#150201";

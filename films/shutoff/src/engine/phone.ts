@@ -579,8 +579,8 @@ export const phoneScene = (): SceneMod => {
         fov = 30;
         aperture = 1.2;
         chatFocus.set(0, PHONE_T, 0.03);
-      } else if (lt < 32.5) {
-        const k = clamp((lt - 28.5) / 4.0);
+      } else if (lt < 29.0) {
+        const k = clamp((lt - 28.5) / 0.5);
         pos.set(lerp(0.011, 0.009, k), lerp(0.155, 0.142, k), lerp(0.08, 0.076, k));
         tgt.set(0, 0, lerp(0.022, 0.026, k));
         fov = 30;
@@ -588,7 +588,7 @@ export const phoneScene = (): SceneMod => {
         chatFocus.set(0, PHONE_T, 0.04);
       } else {
         // over the daughter's drawing: the last two lines arrive on the phone beside it
-        const k = clamp((lt - 32.5) / 8.5);
+        const k = clamp((lt - 29.0) / 8.5);
         pos.set(lerp(-0.075, -0.07, k), lerp(0.175, 0.162, k), lerp(0.17, 0.158, k));
         tgt.set(lerp(-0.035, -0.03, k), 0, lerp(0.012, 0.016, k));
         fov = 32;
@@ -607,8 +607,8 @@ export const phoneScene = (): SceneMod => {
       exposure = 1 + push * 2.5;
     }
     {
-      pos.x += drift(gt, 1, 0.0018);
-      pos.y += drift(gt, 2, 0.0012);
+      pos.x += drift(gt, 1, 0.0006);
+      pos.y += drift(gt, 2, 0.0004);
     }
     cam.fov = fov;
     cam.near = 0.01;

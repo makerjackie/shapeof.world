@@ -62,12 +62,12 @@ vec3 skyCol(vec3 d){
   float e = max(d.y, 0.0);
   vec3 nightTop = vec3(0.0025, 0.004, 0.009), nightMid = vec3(0.010, 0.013, 0.024);
   vec3 nightHor = mix(vec3(0.010, 0.012, 0.019), vec3(0.042, 0.032, 0.030), uGlow);
-  vec3 duskTop = vec3(0.006, 0.016, 0.05), duskHor = vec3(0.42, 0.19, 0.08);
+  vec3 duskTop = vec3(0.004, 0.014, 0.055), duskHor = vec3(0.30, 0.15, 0.09);
   float west = 0.5 + 0.5 * dot(normalize(d.xz + 1e-4), uSun);
-  vec3 dHor = mix(vec3(0.04, 0.07, 0.15), duskHor, pow(west, 2.5));
+  vec3 dHor = mix(vec3(0.03, 0.065, 0.16), duskHor, pow(west, 4.0));
   vec3 night = mix(nightHor, nightMid, 1.0 - exp(-e * 9.0));
   night = mix(night, nightTop, smoothstep(0.08, 0.7, e));
-  vec3 dusk = mix(dHor, duskTop, smoothstep(0.0, 0.45, pow(e, 0.6)));
+  vec3 dusk = mix(dHor, duskTop, smoothstep(0.0, 0.3, pow(e, 0.6)));
   return mix(night, dusk, uDusk);
 }
 vec3 fogTo(vec3 col, vec3 wp, vec3 cam, float dens){
@@ -188,7 +188,7 @@ void main(){
       float inside = step(0.0, st.x) * step(st.x, 1.0) * step(0.0, st.y) * step(st.y, 1.0);
       float facing = smoothstep(0.05, 0.3, dot(n, -normalize(vec3(uShowR.z, 0.0, -uShowR.x))));
       float flip = step(h11(seed + 31.0) * 0.8 + 0.05, uShowFlip);
-      led = mix(texture2D(tShowA, sq).rgb * 1.8, texture2D(tShowB, sq).rgb * 1.1, flip) * on;
+      led = mix(texture2D(tShowA, sq).rgb * 1.15, texture2D(tShowB, sq).rgb * 1.1, flip) * on;
       ledOn = inside * facing * uShowOn * step(1.5, vW.y);
     }
     vec3 winCol = mix(glass, wc * wint * inner * on, lit);
@@ -291,7 +291,7 @@ void main(){
   vec3 col = mix(lot, vec3(0.003, 0.005, 0.004) * (0.7 + 0.6 * fbm(p * 0.01)), green);
   col = mix(col, vec3(0.011, 0.011, 0.012), road);
   float far = smoothstep(300.0, 3000.0, dist);
-  col += lampC * glow * on * mix(0.012, 0.15, far) * (1.0 - water);
+  col += lampC * glow * on * mix(0.012, 0.12, far) * (1.0 - water) * (1.0 - 0.6 * uDusk);
   col += lampC * road * on * 0.04 * far * (1.0 - water);
   if (water > 0.5) {
     vec3 V = normalize(vW - uCam);
@@ -513,8 +513,8 @@ export const cityScene = (): SceneMod => {
         vec3 c = texture2D(tAd, vUv).rgb;
         vec2 g = fract(vUv * vec2(320.0, 180.0));
         vec2 fw = fwidth(vUv * vec2(320.0, 180.0));
-        float grid = mix(0.72 + 0.28 * step(0.22, g.x) * step(0.22, g.y), 0.9, smoothstep(0.3, 0.8, max(fw.x, fw.y)));
-        c = c * grid * 0.85 * uOn;
+        float grid = mix(0.9 + 0.1 * step(0.15, g.x) * step(0.15, g.y), 0.97, smoothstep(0.3, 0.8, max(fw.x, fw.y)));
+        c = c * grid * 0.8 * uOn;
         float f = exp(-length(vW - uCam) * uFogD);
         gl_FragColor = vec4(mix(vec3(0.02, 0.02, 0.03), c, f), 1.0);
       }`,
@@ -956,6 +956,11 @@ export const cityScene = (): SceneMod => {
           m.position.set(c.mid[0] + c.nx * 0.8, y, c.mid[1] + c.nz * 0.8);
           m.rotation.y = Math.atan2(c.nx, c.nz);
           scene.add(m);
+          // a black bezel, so the screen reads as a screen hung on the tower
+          const bz = new THREE.Mesh(new THREE.BoxGeometry(sw + 2.4, sh + 2.4, 0.8), new THREE.MeshStandardMaterial({ color: 0x050506, roughness: 0.6, metalness: 0.3 }));
+          bz.position.set(c.mid[0] + c.nx * 0.35, y, c.mid[1] + c.nz * 0.35);
+          bz.rotation.y = m.rotation.y;
+          scene.add(bz);
           SCREENS.push({ m, x: c.mid[0], z: c.mid[1] });
           LOC.SCREENS.push({ p: new THREE.Vector3(c.mid[0] + c.nx * 0.8, y, c.mid[1] + c.nz * 0.8), n: new THREE.Vector3(c.nx, 0, c.nz), w: sw });
           console.log("screen", Math.round(c.mid[0]), Math.round(c.mid[1]), Math.round(y), Math.round(sw));
@@ -1385,7 +1390,7 @@ export const cityScene = (): SceneMod => {
     if (r.dusk !== undefined) st.dusk = r.dusk;
     if (r.sun) bldU.uSun.value.copy(r.sun);
     const pos = r.pos.clone();
-    const amp = r.drift ?? 2.0;
+    const amp = (r.drift ?? 1.2) * clamp(r.fov / 45, 0.06, 1);
     pos.x += drift(gt, 3, amp);
     pos.y += drift(gt, 4, amp * 0.75);
     if (look.dof && look.focus === undefined) look.focus = pos.distanceTo(r.tgt);
@@ -1496,20 +1501,27 @@ type ShotOut = {
 };
 const LIANHUA = V3(620, 0, -2180); // Lianhuashan summit, the classic view south over the Civic Center to the CBD
 const SHOTS: Record<string, (lt: number, i: ShotIn) => ShotOut> = {
-  // act 1: dusk. Close on one of the CBD's big screens (安's advert), then up and back to Lianhuashan: the whole
-  // skyline is running the same advert
+  // act 1: dusk. One of the CBD's big screens, 安's advert, the towers around it soft behind
   dusk: (lt) => {
     const S = LOC.SCREENS[LOC.HERO_SCREEN] ?? { p: V3(846, 100, -943), n: V3(0, 0, -1), w: 56 };
-    const near = S.p.clone().addScaledVector(S.n, S.w * 1.35).add(V3(0, -S.w * 0.08, 0));
-    const far = V3(520, 315, -2330);
-    const k = ease(clamp((lt - 2.2) / 6.4));
-    const pos = near.clone().lerp(far, k);
-    pos.y = lerp(near.y, far.y, Math.pow(k, 0.8));
-    const tgt = S.p.clone().lerp(V3(230, 140, -350), ease(clamp((lt - 2.0) / 5.5)));
+    const side = V3(-S.n.z, 0, S.n.x);
+    const k = ease(clamp(lt / 3.8));
+    const pos = S.p.clone().addScaledVector(S.n, lerp(S.w * 3.6, S.w * 3.1, k)).addScaledVector(side, S.w * 0.9).add(V3(0, -S.w * 0.35, 0));
+    const tgt = S.p.clone().addScaledVector(side, -S.w * 0.15).add(V3(0, S.w * 0.05, 0));
     return {
-      pos, tgt, fov: lerp(40, 25, k), near: 0.5, dusk: 0.72, showOn: 1, lit: 1.3, fog: 0.00009, sun: new THREE.Vector2(-0.9, 0.4),
-      showW: 1900, showY0: 30, showH: 300, showFrom: far,
-      look: { exposure: 1.05, gain: [1.05, 1.0, 0.96], lift: [0.006, 0.004, 0.01], dof: 8, focus: pos.distanceTo(S.p), aperture: lerp(0.9, 0.2, k), streak: 0.25 },
+      pos, tgt, fov: 30, near: 0.5, dusk: 0.62, showOn: 1, lit: 1.3, fog: 0.00009, sun: new THREE.Vector2(-0.9, 0.4),
+      showW: 1900, showY0: 30, showH: 300, showFrom: V3(520, 315, -2330), drift: 0.6,
+      look: { exposure: 1.0, gain: [1.0, 1.0, 1.04], lift: [0.004, 0.006, 0.012], dof: 10, focus: pos.distanceTo(S.p), aperture: 1.2, streak: 0.15, bloomThreshold: 1.3 },
+    };
+  },
+  // and the whole skyline from Lianhuashan, every tower running the same advert
+  skyline: (lt) => {
+    const k = ease(clamp(lt / 3.6));
+    const pos = V3(lerp(540, 520, k), lerp(320, 312, k), lerp(-2380, -2330, k));
+    return {
+      pos, tgt: V3(240, 140, -350), fov: lerp(27, 25.5, k), dusk: 0.62, showOn: 1, lit: 1.3, fog: 0.00009, sun: new THREE.Vector2(-0.9, 0.4),
+      showW: 1900, showY0: 30, showH: 300, drift: 0.5,
+      look: { exposure: 1.0, gain: [1.0, 1.0, 1.04], lift: [0.004, 0.006, 0.012], dof: 6, aperture: 0.15, streak: 0.25 },
     };
   },
   // the green wave: an ambulance down Shennan Boulevard, followed from above and behind; ahead of it every signal
