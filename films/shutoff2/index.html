@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:,">
+<title>关不掉 — workbench</title>
+<style>
+  html, body { margin: 0; background: #0b0a10; color: #e9e2d4; font: 13px/1.4 system-ui, sans-serif; }
+  #wrap { position: fixed; inset: 0 0 44px 0; display: flex; align-items: center; justify-content: center; }
+  canvas { max-width: 100%; max-height: 100%; aspect-ratio: 1080 / 1920; background: #000; }
+  #ui { position: fixed; left: 0; right: 0; bottom: 0; height: 44px; display: flex; gap: 10px; align-items: center; padding: 0 12px; background: #15131c; }
+  #ui input[type=range] { flex: 1; }
+  #ui button { background: #2a2636; color: inherit; border: 1px solid #3c3650; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  body.headless #ui { display: none; } body.headless #wrap { inset: 0; }
+</style>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }</script>
+</head>
+<body>
+<div id="wrap"><canvas id="c" width="1080" height="1920"></canvas></div>
+<div id="ui"><button id="play">Play</button><input id="scrub" type="range" min="0" max="1" value="0"><span id="lbl">0</span></div>
+<script>if (new URLSearchParams(location.search).get('headless') === '1') document.body.classList.add('headless');</script>
+<script type="module">
+  import './src/main.js';
+  const F = window.FILM;
+  const scrub = document.getElementById('scrub'), lbl = document.getElementById('lbl'), play = document.getElementById('play');
+  scrub.max = F.FRAMES - 1;
+  const show = (n) => { F.renderFrame(n); const st = F.ctx.lastState; lbl.textContent = `${n}  ${(n / F.FPS).toFixed(2)}s  ${st.sid} ${st.shot}`; };
+  document.addEventListener('film-ready', (e) => { scrub.value = e.detail.frame; show(e.detail.frame); });
+  scrub.addEventListener('input', () => show(+scrub.value));
+  let playing = false;
+  play.onclick = () => { playing = !playing; play.textContent = playing ? 'Pause' : 'Play'; if (playing) tick(); };
+  function tick() { if (!playing) return; scrub.value = (+scrub.value + 1) % F.FRAMES; show(+scrub.value); requestAnimationFrame(tick); }
+  addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { scrub.value = +scrub.value + (e.shiftKey ? 30 : 1); show(+scrub.value); }
+    if (e.key === 'ArrowLeft') { scrub.value = +scrub.value - (e.shiftKey ? 30 : 1); show(+scrub.value); }
+    if (e.key === ' ') play.onclick();
+  });
+</script>
+</body>
+</html>

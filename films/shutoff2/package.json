@@ -1,0 +1,8 @@
+{
+  "name": "shutoff2",
+  "version": "1.0.0",
+  "description": "关不掉 v11 — a vertical anime short rendered in code (three.js). Engine derived from LEVIATHAN (MIT).",
+  "private": true,
+  "type": "module",
+  "devDependencies": { "puppeteer-core": "23.11.1", "three": "0.170.0" }
+}
