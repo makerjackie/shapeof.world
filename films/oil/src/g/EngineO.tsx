@@ -416,6 +416,95 @@ const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: num
     ctx.closePath();
     ctx.fill();
     ctx.restore();
+  } else if (name === "pumpjack") {
+    // a nodding pumpjack
+    const ang = 0.22 * Math.sin(p * 9);
+    line([[-40, 36], [42, 36]]);
+    line([[-12, 34], [0, -14], [12, 34]]);
+    ctx.save();
+    ctx.translate(0, -14);
+    ctx.rotate(ang);
+    line([[-38, 0], [26, 0]]);
+    ctx.beginPath();
+    ctx.moveTo(24, -6);
+    ctx.quadraticCurveTo(40, -2, 38, 18);
+    ctx.stroke();
+    ctx.restore();
+    line([[-34, -14 - 34 * Math.sin(ang)], [-30, 20]]);
+    ctx.beginPath();
+    ctx.arc(-30, 20, 8, 0, Math.PI * 2);
+    ctx.fill();
+    line([[36, 6], [36, 34]]);
+  } else if (name === "tanker") {
+    // an oil tanker on the water
+    ctx.beginPath();
+    ctx.moveTo(-46, 4);
+    ctx.lineTo(46, 4);
+    ctx.lineTo(36, 22);
+    ctx.lineTo(-40, 22);
+    ctx.closePath();
+    ctx.stroke();
+    rrect(ctx, -40, -14, 18, 18, 3);
+    ctx.stroke();
+    line([[-34, -14], [-34, -26]]);
+    for (const x of [-12, 6, 24]) {
+      ctx.beginPath();
+      ctx.arc(x, 0, 5, Math.PI, 0);
+      ctx.stroke();
+    }
+    ctx.lineWidth = 3;
+    const w = Math.sin(p * 8) * 3;
+    line([[-46, 32 + w], [-24, 30 - w], [0, 32 + w], [24, 30 - w], [46, 32 + w]]);
+  } else if (name === "refinery") {
+    // a refinery: two columns, a tank, a flare
+    line([[-44, 36], [44, 36]]);
+    rrect(ctx, -34, -30, 14, 66, 4);
+    ctx.stroke();
+    rrect(ctx, -12, -14, 14, 50, 4);
+    ctx.stroke();
+    rrect(ctx, 12, 8, 28, 28, 4);
+    ctx.stroke();
+    line([[-27, -30], [-27, -40]]);
+    const fl = 1 + 0.25 * Math.sin(p * 30);
+    ctx.beginPath();
+    ctx.moveTo(-27, -40);
+    ctx.quadraticCurveTo(-36, -50 * fl, -27, -58 * fl);
+    ctx.quadraticCurveTo(-18, -50 * fl, -27, -40);
+    ctx.fill();
+  } else if (name === "barrel") {
+    // a steel oil drum
+    rrect(ctx, -26, -34, 52, 70, 8);
+    ctx.stroke();
+    line([[-26, -12], [26, -12]]);
+    line([[-26, 12], [26, 12]]);
+    ctx.beginPath();
+    ctx.arc(10, -26, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(-8, 0);
+    ctx.quadraticCurveTo(0, -10, 8, 0);
+    ctx.quadraticCurveTo(0, 8, -8, 0);
+    ctx.stroke();
+  } else if (name === "pipeline") {
+    // a pipeline with a valve wheel
+    line([[-48, 8], [-10, 8]]);
+    line([[-48, 24], [-10, 24]]);
+    line([[10, 8], [48, 8]]);
+    line([[10, 24], [48, 24]]);
+    rrect(ctx, -12, 0, 24, 32, 4);
+    ctx.stroke();
+    line([[0, 0], [0, -16]]);
+    const spin = p * 6;
+    ctx.save();
+    ctx.translate(0, -24);
+    ctx.rotate(spin);
+    ctx.beginPath();
+    ctx.arc(0, 0, 13, 0, Math.PI * 2);
+    ctx.stroke();
+    line([[-13, 0], [13, 0]]);
+    line([[0, -13], [0, 13]]);
+    ctx.restore();
   }
   ctx.restore();
 };
@@ -719,13 +808,13 @@ export const createFilm5 = (S: Spec) => {
   }
   const gradeAt = (t: number) => GR[clamp(Math.round(t * FPS), 0, NF - 1)];
 
-  // ---------- the floor: a dot map of the world's oil. Each producer glows by its share of world output (the table's
-  // data), the top three named; every event pings where it happened; tankers run out of the Gulf through Hormuz.
-  // In 2026 the map pushes in to the Gulf, the strait is crossed out and the tankers stop until June.
-  const FM = { x0: 40, x1: SAFE_R, y0: 1075, y1: 1420 };
-  const MS = Math.min((FM.x1 - FM.x0) / 285, (FM.y1 - FM.y0) / 114);
-  const MCX = (FM.x0 + FM.x1) / 2;
-  const MCY = (FM.y0 + FM.y1) / 2;
+  // ---------- the map: a dot map of the world under the whole picture (faint behind the chart, full below it).
+  // Producers glow by their share of world output; the camera flies to each event's place and pins it with an oil
+  // symbol and the place name; price-only beats pull back to the world. Tankers run out of the Gulf through Hormuz,
+  // stopping while the strait is shut in 2026. In the cold open an oil field of pumpjacks stands where the map will be.
+  const MS = 3.5;
+  const FXc = 540;
+  const FYc = 1235;
   const LAND = (() => {
     const b64 = (s: string) => {
       const bin = atob(s);
@@ -736,14 +825,9 @@ export const createFilm5 = (S: Spec) => {
     const CI = b64(MAPJ.i);
     const CJ = b64(MAPJ.j);
     const out: [number, number][] = [];
-    for (let q = 0; q < CI.length; q++) {
-      const lon = MAPJ.lon0 + CI[q] * MAPJ.step;
-      const lat = MAPJ.lat0 + CJ[q] * MAPJ.step;
-      if (lat > -44 && lat < 74 && lon > -140 && lon < 155) out.push([lon, lat]);
-    }
+    for (let q = 0; q < CI.length; q++) out.push([MAPJ.lon0 + CI[q] * MAPJ.step, MAPJ.lat0 + CJ[q] * MAPJ.step]);
     return out;
   })();
-  // where each producer's oil mostly comes from (the US moves from Pennsylvania to Texas, Russia from Baku to Siberia)
   const PLACE: Record<string, [number, number]> = {
     沙特: [49.5, 25.5], 伊朗: [49.5, 31.5], 伊拉克: [46.5, 31.5], 委内瑞拉: [-71.5, 10.5], 墨西哥: [-93, 19], 科威特: [47.8, 29.2],
     阿联酋: [54, 24], 加拿大: [-113, 56.5], 中国: [122, 46], 挪威: [3, 60], 英国: [1, 57.5], 罗马尼亚: [25.5, 45], 印尼: [101, 1],
@@ -763,7 +847,7 @@ export const createFilm5 = (S: Spec) => {
   };
   const HORMUZ: [number, number] = [56.3, 26.6];
   const ROUTE: [number, number][] = [[48.6, 28.9], [50.6, 27.6], [52.6, 26.6], [54.6, 26.2], [55.8, 26.6], [56.6, 26.3], [57.4, 25.4], [58.8, 24.2], [61.5, 22.2], [66, 19.5], [72, 15.5]];
-  const RS = 4; // the strait sits at ROUTE[4..5]
+  const RS = 4;
   const routeLen = (() => {
     const L = [0];
     for (let q = 1; q < ROUTE.length; q++) L.push(L[q - 1] + Math.hypot(ROUTE[q][0] - ROUTE[q - 1][0], ROUTE[q][1] - ROUTE[q - 1][1]));
@@ -777,24 +861,41 @@ export const createFilm5 = (S: Spec) => {
     return [ROUTE[q - 1][0] + (ROUTE[q][0] - ROUTE[q - 1][0]) * k, ROUTE[q - 1][1] + (ROUTE[q][1] - ROUTE[q - 1][1]) * k];
   };
   const U_STRAIT = (routeLen[RS] + 0.5 * (routeLen[RS + 1] - routeLen[RS])) / routeLen[routeLen.length - 1];
-  const zoomAt = (t: number) => {
-    const zi = ease(clamp((t - (MAPFX.zIn - 0.4)) / 0.9));
-    const zo = ease(clamp((t - MAPFX.zOut) / 1.0));
-    return zi * (1 - zo);
-  };
+  // the map camera, per frame: fly to the event's place (out a little on long hops), back to the world otherwise
+  const WORLD = { lon: 7.5, lat: 15, z: 1 };
+  const MCAM: { lon: number; lat: number; z: number }[] = [];
+  {
+    let cur = { ...WORLD };
+    for (let f = 0; f < NF; f++) {
+      const t = f / FPS;
+      const e = t >= B0 && t < END ? evAt(t) : null;
+      let tg = e && e.geo ? { lon: e.geo[0], lat: e.geo[1], z: e.mz ?? 3 } : WORLD;
+      const dist = Math.hypot(tg.lon - cur.lon, tg.lat - cur.lat);
+      const zt = dist > 25 ? Math.min(tg.z, 1.25) : tg.z;
+      const k = f === 0 ? 1 : 0.075;
+      cur = {
+        lon: cur.lon + (tg.lon - cur.lon) * k * 1.1,
+        lat: cur.lat + (tg.lat - cur.lat) * k * 1.1,
+        z: Math.exp(Math.log(cur.z) + (Math.log(zt) - Math.log(cur.z)) * k),
+      };
+      MCAM.push(cur);
+      void tg;
+      tg = WORLD;
+    }
+  }
+  const mcamAt = (t: number) => MCAM[clamp(Math.round(t * FPS), 0, NF - 1)];
   const mapProj = (t: number) => {
-    const zk = zoomAt(t);
-    const z = 1 + (MAPFX.z - 1) * zk;
-    const clon = 7.5 + (MAPFX.lon - 7.5) * zk;
-    const clat = 15 + (MAPFX.lat - 15) * zk;
+    const m = mcamAt(t);
     return (lon: number, lat: number): [number, number] => {
-      const x = MCX + (lon - clon) * MS * z;
-      const y = MCY + (clat - lat) * MS * z;
-      // a slight tilt: the far (top) edge narrower
-      const v = clamp((y - FM.y0) / (FM.y1 - FM.y0));
-      return [MCX + (x - MCX) * (0.84 + 0.16 * v), y];
+      const x = FXc + (lon - m.lon) * MS * m.z;
+      const y = FYc + (m.lat - lat) * MS * m.z;
+      const v = clamp((y - 700) / 740);
+      return [FXc + (x - FXc) * (0.86 + 0.14 * v), y];
     };
   };
+  // how much of the map shows at a point: faint behind the chart, full under it, soft at every edge
+  const maskAt = (x: number, y: number) =>
+    clamp((y - 660) / 320) * (0.38 + 0.62 * clamp((y - 975) / 130)) * clamp((1495 - y) / 90) * clamp((x + 20) / 90) * clamp((1100 - x) / 90);
   const floorOn = (t: number) => (t < B0 - 0.5 ? 0 : t >= END ? 1 - clamp((t - END) / 0.5) : clamp((t - (B0 - 0.5)) / 0.5));
   const beatPulse = (t: number) => {
     let m = 0;
@@ -804,61 +905,174 @@ export const createFilm5 = (S: Spec) => {
     }
     return m;
   };
+  // a pumpjack in silhouette with a warm rim; ang = the walking beam's tilt
+  const pumpjack = (ctx: CanvasRenderingContext2D, x: number, y: number, s: number, ang: number, a: number) => {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    ctx.globalAlpha = a;
+    const body = "#0a0806";
+    const rim = "rgba(255,196,110,0.95)";
+    ctx.lineJoin = "round";
+    ctx.lineCap = "round";
+    // skid
+    ctx.fillStyle = body;
+    ctx.fillRect(-120, -10, 250, 10);
+    // samson post (an A-frame)
+    ctx.strokeStyle = body;
+    ctx.lineWidth = 9;
+    ctx.beginPath();
+    ctx.moveTo(-30, -6);
+    ctx.lineTo(0, -128);
+    ctx.lineTo(28, -6);
+    ctx.stroke();
+    // crank and counterweight at the back, turning with the beam
+    const ph = Math.asin(clamp(ang / 0.24, -1, 1));
+    ctx.save();
+    ctx.translate(-88, -42);
+    ctx.rotate(ph * 2);
+    ctx.fillStyle = body;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, 30, -0.6, 0.6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+    // the beam with the horsehead, pivoting on the post
+    ctx.save();
+    ctx.translate(0, -128);
+    ctx.rotate(ang);
+    ctx.fillStyle = body;
+    ctx.fillRect(-108, -7, 200, 14);
+    ctx.beginPath();
+    ctx.moveTo(88, -14);
+    ctx.quadraticCurveTo(122, -6, 120, 44);
+    ctx.lineTo(104, 44);
+    ctx.quadraticCurveTo(104, 4, 84, 8);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = rim;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-108, -7);
+    ctx.lineTo(88, -7);
+    ctx.quadraticCurveTo(122, -6, 120, 44);
+    ctx.stroke();
+    ctx.restore();
+    // pitman arm from the beam's tail to the crank, the polished rod from the horsehead down to the well
+    const tx = -100 * Math.cos(ang);
+    const ty = -128 - 100 * Math.sin(ang);
+    ctx.strokeStyle = body;
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(tx, ty);
+    ctx.lineTo(-88, -42);
+    ctx.stroke();
+    const hx = 116 * Math.cos(ang) - 30 * Math.sin(ang);
+    const hy = -128 + 116 * Math.sin(ang) + 30 * Math.cos(ang);
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(hx, hy + 14);
+    ctx.lineTo(112, -14);
+    ctx.stroke();
+    ctx.fillStyle = body;
+    ctx.fillRect(100, -18, 24, 18);
+    // rim light on the post
+    ctx.strokeStyle = rim;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, -128);
+    ctx.lineTo(28, -6);
+    ctx.stroke();
+    ctx.restore();
+  };
+  const drawField = (ctx: CanvasRenderingContext2D, t: number) => {
+    const a = t < RW0 ? 1 : 1 - clamp((t - RW0) / 0.45);
+    if (a <= 0.01) return;
+    ctx.save();
+    // a low amber sky on the horizon, the ground below it
+    const HZ = 1462;
+    const g = ctx.createLinearGradient(0, HZ - 260, 0, HZ + 20);
+    g.addColorStop(0, "rgba(255,150,50,0)");
+    g.addColorStop(0.75, `rgba(255,150,50,${0.16 * a})`);
+    g.addColorStop(1, `rgba(255,190,90,${0.3 * a})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(FULL[0], HZ - 260, FULL[2], 280);
+    ctx.fillStyle = `rgba(6,5,4,${0.96 * a})`;
+    ctx.fillRect(FULL[0], HZ, FULL[2], 200);
+    ctx.fillStyle = `rgba(255,190,90,${0.5 * a})`;
+    ctx.fillRect(FULL[0], HZ, FULL[2], 2);
+    // pumpjacks nodding on the beat (one stroke every two beats)
+    const JACKS: [number, number, number][] = [
+      [110, 1.15, 0],
+      [600, 2.1, 1.7],
+      [905, 1.45, 3.1],
+    ];
+    for (const [x, s, ph] of JACKS) {
+      const ang = 0.24 * Math.sin((2 * Math.PI * (t - 0.05)) / (2 * BEAT_S) + ph);
+      pumpjack(ctx, x, HZ, s, ang, a);
+    }
+    ctx.restore();
+  };
   const drawFloor = (ctx: CanvasRenderingContext2D, t: number) => {
+    drawField(ctx, t);
     const a = floorOn(t);
     if (a <= 0.01) return;
     const c = camAt(t).c;
     const P = mapProj(t);
-    const zk = zoomAt(t);
-    const z = 1 + (MAPFX.z - 1) * zk;
+    const m = mcamAt(t);
+    const z = m.z;
     ctx.save();
-    ctx.beginPath();
-    ctx.rect(FM.x0 - 10, FM.y0 - 10, FM.x1 - FM.x0 + 20, FM.y1 - FM.y0 + 20);
-    ctx.clip();
     // land
-    ctx.globalAlpha = a;
-    ctx.fillStyle = "rgba(205,212,220,0.24)";
     const ds = 2.4 * Math.sqrt(z);
+    ctx.fillStyle = "rgb(205,212,220)";
     for (const [lon, lat] of LAND) {
       const [x, y] = P(lon, lat);
-      if (x < FM.x0 - 8 || x > FM.x1 + 8 || y < FM.y0 - 8 || y > FM.y1 + 8) continue;
+      if (x < -30 || x > 1110 || y < 640 || y > 1500) continue;
+      const mk = maskAt(x, y);
+      if (mk <= 0.01) continue;
+      ctx.globalAlpha = a * 0.26 * mk;
       ctx.fillRect(x - ds / 2, y - ds / 2, ds, ds);
     }
-    // producers: a glow per country, by share of world output
+    // producers glow by share of world output
     const rows = S.table ? S.table(c).filter((r) => r.v > 0.6).sort((p, q) => q.v - p.v) : [];
     ctx.globalCompositeOperation = "lighter";
     rows.forEach((r) => {
       const [x, y] = P(...placeOf(r.n, c));
-      const R = (14 + 70 * Math.sqrt(r.v / 60)) * (0.75 + 0.25 * Math.sqrt(z));
+      const mk = maskAt(x, y);
+      if (mk <= 0.01) return;
+      const R = (16 + 74 * Math.sqrt(r.v / 60)) * (0.7 + 0.3 * Math.sqrt(z));
       const g = ctx.createRadialGradient(x, y, 0, x, y, R);
       g.addColorStop(0, r.c + "cc");
       g.addColorStop(0.35, r.c + "55");
       g.addColorStop(1, r.c + "00");
-      ctx.globalAlpha = a * (zk > 0.5 ? 0.45 : 1);
+      ctx.globalAlpha = a * mk * (z > 2 ? 0.55 : 1);
       ctx.fillStyle = g;
       ctx.fillRect(x - R, y - R, 2 * R, 2 * R);
       ctx.fillStyle = "#ffffff";
-      ctx.globalAlpha = a * 0.8;
+      ctx.globalAlpha = a * mk * 0.8;
       ctx.beginPath();
       ctx.arc(x, y, 2.5 + 4 * Math.sqrt(r.v / 60), 0, Math.PI * 2);
       ctx.fill();
     });
     ctx.globalCompositeOperation = "source-over";
-    if (zk < 0.3)
+    const wz = clamp((1.7 - z) / 0.5);
+    if (wz > 0.01)
       rows.slice(0, 3).forEach((r, i) => {
         const [x, y] = P(...placeOf(r.n, c));
-        ctx.globalAlpha = a * (1 - zk / 0.3) * (i === 0 ? 1 : 0.85);
+        ctx.globalAlpha = a * wz * maskAt(x, y) * (i === 0 ? 1 : 0.85);
         text(ctx, r.n, x + 12, y - 12, i === 0 ? 26 : 22, 900, SERIF, i === 0 ? WHITE : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
       });
-    // the Gulf's way out: tankers through Hormuz (from the 1950s), stopped while the strait is shut
+    // tankers out of the Gulf through Hormuz (from the 1950s); stopped while the strait is shut
     const ra = clamp((c - 1950) / 8);
     if (ra > 0) {
       const closed = c >= MAPFX.closeY && c < MAPFX.openY;
       const tShut = t >= MAPFX.close && t < MAPFX.open ? t - MAPFX.close : -1;
       const te = t < MAPFX.close ? t : t < MAPFX.open ? MAPFX.close : t - (MAPFX.open - MAPFX.close);
-      ctx.globalAlpha = a * ra * (0.35 + 0.4 * zk);
+      const near = clamp((z - 2) / 2);
+      ctx.globalAlpha = a * ra * (0.3 + 0.5 * near);
       ctx.strokeStyle = closed ? "rgba(255,90,70,0.8)" : "rgba(255,214,140,0.7)";
-      ctx.lineWidth = 1.5 + zk;
+      ctx.lineWidth = 1.5 + 1.5 * near;
       ctx.setLineDash([4, 6]);
       ctx.beginPath();
       ROUTE.forEach((p, i) => {
@@ -873,32 +1087,31 @@ export const createFilm5 = (S: Spec) => {
         let u = (((te * 0.07 + q / NT) % 1) + 1) % 1;
         let al = 1;
         if (tShut >= 0 && u > U_STRAIT) {
-          // ships already through keep going and leave; nothing follows them
           u = Math.min(1, u + tShut * 0.07);
           al = 1 - clamp((u - U_STRAIT) / (1 - U_STRAIT) + tShut * 0.4);
         }
         const [x, y] = P(...routeAt(u));
-        ctx.globalAlpha = a * ra * al * (0.55 + 0.45 * zk);
+        ctx.globalAlpha = a * ra * al * maskAt(x, y) * (0.55 + 0.45 * near);
         ctx.fillStyle = closed ? RED : "#ffd98a";
         ctx.beginPath();
-        ctx.arc(x, y, 2.6 + 2.2 * zk, 0, Math.PI * 2);
+        ctx.arc(x, y, 2.6 + 3 * near, 0, Math.PI * 2);
         ctx.fill();
       }
-      // the strait, named when the map is in; a red cross while it is shut
       const [hx, hy] = P(...HORMUZ);
-      if (zk > 0.05) {
-        ctx.globalAlpha = a * zk;
-        text(ctx, tr("霍尔木兹海峡"), hx + 26, hy - 34, 28, 900, SERIF, closed ? RED : WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
-        text(ctx, tr("最窄处约 33 公里"), hx + 26, hy - 4, 20, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
-        text(ctx, tr("波斯湾"), P(50.5, 27.4)[0], P(50.5, 27.4)[1] + 6, 22, 700, SERIF, MUTED, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
+      const hz = near * clamp(1 - Math.hypot(m.lon - HORMUZ[0], m.lat - HORMUZ[1]) / 20);
+      if (hz > 0.05) {
+        ctx.globalAlpha = a * hz;
+        text(ctx, tr("最窄处约 33 公里"), hx + 30, hy + 46, 22, 700, SERIF, SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+        const [px, py] = P(50.5, 27.4);
+        text(ctx, tr("波斯湾"), px, py + 6, 24, 700, SERIF, MUTED, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
       }
       if (closed) {
         const d = t - MAPFX.close;
         const s = 1 + 0.8 * (1 - eo3(d / 0.18));
-        const L = (14 + 10 * zk) * s;
+        const L = (14 + 4 * z) * s;
         ctx.globalAlpha = a * clamp(d / 0.05) * (0.8 + 0.2 * Math.sin(t * 10));
         ctx.strokeStyle = RED;
-        ctx.lineWidth = 5 + 2 * zk;
+        ctx.lineWidth = 5 + 1.2 * z;
         ctx.shadowColor = RED;
         ctx.shadowBlur = 14;
         ctx.beginPath();
@@ -910,36 +1123,49 @@ export const createFilm5 = (S: Spec) => {
         ctx.shadowBlur = 0;
       }
     }
-    // the event: a ping where it happened
+    // the event's pin: rings where it happened, an oil symbol on a stem, the place name
     const e = evAt(t);
     if (e && e.geo) {
       const [x, y] = P(e.geo[0], e.geo[1]);
       const col = toneCol(KIND_TONE[e.k]);
       const d = t - e.t0;
-      for (const k0 of [0, 0.45]) {
+      for (const k0 of [0, 0.45, 0.9]) {
         const u = (d - k0) / 0.9;
         if (u < 0 || u > 1) continue;
         ctx.globalAlpha = a * (1 - u);
         ctx.strokeStyle = col;
         ctx.lineWidth = 3;
         ctx.beginPath();
-        ctx.arc(x, y, 6 + 54 * eo3(u), 0, Math.PI * 2);
+        ctx.ellipse(x, y, 6 + 60 * eo3(u), (6 + 60 * eo3(u)) * 0.55, 0, 0, Math.PI * 2);
         ctx.stroke();
       }
-      ctx.globalAlpha = a * clamp(d / 0.08);
+      const up = 84 * eo3(d / 0.25);
+      ctx.globalAlpha = a;
+      ctx.strokeStyle = col;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x, y - up);
+      ctx.stroke();
       ctx.fillStyle = col;
       ctx.shadowColor = col;
       ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.arc(x, y, 6 + 2 * beatPulse(t), 0, Math.PI * 2);
+      ctx.ellipse(x, y, 7, 4, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.shadowBlur = 0;
+      if (e.pic) {
+        ctx.save();
+        ctx.globalAlpha = a;
+        drawIcon(ctx, e.pic, x, y - up - 6, 0.62, (t - e.t0) / 0.6, col, tr("关税"));
+        ctx.restore();
+      }
+      if (e.place && d > 0.12) {
+        ctx.globalAlpha = a * clamp((d - 0.12) / 0.1);
+        const right = x < 760;
+        text(ctx, e.place, x + (right ? 48 : -48), y - up + 4, 30, 900, SERIF, WHITE, { align: right ? "left" : "right", glow: "rgba(0,0,0,0.95)", glowBlur: 12 });
+      }
     }
-    ctx.restore();
-    // caption
-    ctx.save();
-    ctx.globalAlpha = a * 0.85;
-    text(ctx, zk > 0.5 ? tr("全世界约五分之一的石油，从这里运出") : tr("产油地图 · 越亮，产量占全世界越多"), FM.x0 + 4, FM.y0 + 18, 20, 700, SERIF, MUTED, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
     ctx.restore();
   };
 
@@ -1092,7 +1318,7 @@ export const createFilm5 = (S: Spec) => {
           ctx.setLineDash([]);
           text(ctx, "$" + v.toLocaleString("en-US"), 44, y - 8, 21, 600, SANS, "rgba(255,255,255,0.4)");
         }
-        for (const yy of [2018, 2020, 2022, 2024, 2026]) {
+        for (const yy of [] as number[]) {
           const x = X(k, yy);
           ctx.fillStyle = "rgba(255,255,255,0.3)";
           ctx.fillRect(x - 0.5, CWB + 8, 1, 12);
@@ -1179,8 +1405,9 @@ export const createFilm5 = (S: Spec) => {
     if (P.length > 1) {
       const base = t < B0 || k.lg > 0.5 ? (k.cw > 0.5 ? CWB : Yv(k, S.log[0])) : k.bot;
       const g = ctx.createLinearGradient(0, k.cw > 0.5 ? CWT : k.top, 0, base);
-      g.addColorStop(0, `rgba(255,190,60,${0.2 * la})`);
-      g.addColorStop(1, "rgba(255,190,60,0.0)");
+      g.addColorStop(0, `rgba(26,18,9,${0.8 * la})`);
+      g.addColorStop(0.5, `rgba(18,12,6,${0.5 * la})`);
+      g.addColorStop(1, "rgba(12,9,5,0)");
       ctx.fillStyle = g;
       ctx.beginPath();
       ctx.moveTo(P[0].x, base);
@@ -1188,6 +1415,18 @@ export const createFilm5 = (S: Spec) => {
       ctx.lineTo(P[P.length - 1].x, base);
       ctx.closePath();
       ctx.fill();
+      // the rainbow film on crude, a little under the line, drifting
+      const ir = ctx.createLinearGradient(P[0].x, 0, P[P.length - 1].x + 1, 0);
+      for (let q = 0; q <= 8; q++) ir.addColorStop(q / 8, `hsla(${(q * 47 + t * 50) % 360},85%,62%,0.55)`);
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.32 * la;
+      ctx.strokeStyle = ir;
+      ctx.lineWidth = 5;
+      ctx.translate(0, 11);
+      ctx.beginPath();
+      P.forEach((q, i) => (i ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y)));
+      ctx.stroke();
+      ctx.restore();
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       let s = 0;
@@ -1556,88 +1795,103 @@ export const createFilm5 = (S: Spec) => {
     }
   };
 
-  // ---------- fireworks on new highs: a rocket from the head, then bursts that fall and twinkle
+  // ---------- crude oil instead of fireworks: on new highs a gusher shoots from the head; on crashes oil drips off it
   const FW = HITS.filter((h) => h.fw).map((h) => ({ t0: h.t, big: !!h.big || !!h.e?.fx?.includes("fwBig") }));
-  const FW_OFF = [
-    [-150, -250],
-    [170, -330],
-    [-340, -140],
-  ];
-  const FW_COL = [
-    ["#ffd66b", "#fff3c8"],
-    ["#ffffff", "#ffc94d"],
-    ["#ffae42", "#ffe39a"],
-  ];
+  const drop = (ctx: CanvasRenderingContext2D, x: number, y: number, vx: number, vy: number, s: number, a: number) => {
+    // a streak of crude along its motion: dark brown body, amber glow, a lit edge; gone at the ground
+    if (y > 1462) return;
+    const k = 0.028;
+    const x0 = x - vx * k;
+    const y0 = y - vy * k;
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#3a230c";
+    ctx.shadowColor = "rgba(255,160,50,0.85)";
+    ctx.shadowBlur = 9;
+    ctx.lineWidth = 2 * s;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+    ctx.strokeStyle = "rgba(255,210,140,0.85)";
+    ctx.lineWidth = Math.max(1, s * 0.5);
+    ctx.beginPath();
+    ctx.moveTo(x0 - s * 0.4, y0 - s * 0.4);
+    ctx.lineTo(x - s * 0.4, y - s * 0.4);
+    ctx.stroke();
+    ctx.restore();
+  };
+  const gusher = (ctx: CanvasRenderingContext2D, t: number, tb: number, x0: number, y0: number, seed: number, big: boolean, up = 1) => {
+    const tau = t - tb;
+    if (tau < 0 || tau > 1.7) return;
+    const r = rng(seed);
+    // the jet: a dark column with a lit edge, for the first moments
+    if (tau < 0.42) {
+      const hgt = (big ? 380 : 280) * eo3(tau / 0.16) * up;
+      const w = (big ? 30 : 22) * (1 - tau / 0.42);
+      const g = ctx.createLinearGradient(x0, y0, x0, y0 - hgt);
+      g.addColorStop(0, "rgba(30,20,8,0.95)");
+      g.addColorStop(0.7, "rgba(60,38,12,0.8)");
+      g.addColorStop(1, "rgba(60,38,12,0)");
+      ctx.save();
+      ctx.shadowColor = "rgba(255,170,60,0.9)";
+      ctx.shadowBlur = 18;
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(x0 - w, y0);
+      ctx.quadraticCurveTo(x0 - w * 0.4, y0 - hgt * 0.6, x0, y0 - hgt);
+      ctx.quadraticCurveTo(x0 + w * 0.4, y0 - hgt * 0.6, x0 + w, y0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+    const n = big ? 90 : 56;
+    for (let i = 0; i < n; i++) {
+      const a0 = -Math.PI / 2 + (r() - 0.5) * (big ? 1.3 : 1.0);
+      const sp = (big ? 1300 : 1050) * (0.45 + 0.7 * r());
+      const delay = r() * 0.25;
+      const s = 2.5 + r() * (big ? 6 : 4.5);
+      const q = tau - delay;
+      if (q < 0) continue;
+      const vx = Math.cos(a0) * sp;
+      const vy = Math.sin(a0) * sp * up;
+      const g = 2600;
+      const x = x0 + vx * q;
+      const y = y0 + vy * q + 0.5 * g * q * q;
+      const life = 1.15 + 0.4 * r();
+      if (q > life) continue;
+      drop(ctx, x, y, vx, vy + g * q, s, clamp(1 - Math.pow(q / life, 3)));
+    }
+  };
   const drawFireworks = (ctx: CanvasRenderingContext2D, t: number) => {
     for (const fw of FW) {
       const bursts = fwBursts(fw.t0, fw.big);
-      if (t < fw.t0 - 0.02 || t > bursts[bursts.length - 1] + 1.6) continue;
-      const h0 = headAt(fw.t0 + 0.01);
+      if (t < fw.t0 - 0.02 || t > bursts[bursts.length - 1] + 1.8) continue;
       bursts.forEach((tb, bi) => {
-        const [ox, oy] = FW_OFF[bi % 3];
-        const cx = clamp(h0.x + ox, 150, 920);
-        const cold = fw.t0 < B0;
-        const cy = cold ? clamp(h0.y + oy * 0.75, 200, h0.y - 60) : clamp(h0.y + oy, 520, Math.max(540, h0.y - 80));
-        const r = rng(Math.round(fw.t0 * 1000) + bi * 77);
-        const launch = tb - 0.16;
-        ctx.save();
-        if (t >= launch && t < tb) {
-          // the rocket
-          const u = (t - launch) / (tb - launch);
-          const x = h0.x + (cx - h0.x) * eo3(u);
-          const y = h0.y + (cy - h0.y) * eo3(u);
-          const g = ctx.createLinearGradient(h0.x, h0.y, x, y);
-          g.addColorStop(0, "rgba(255,220,140,0)");
-          g.addColorStop(1, "rgba(255,240,200,0.95)");
-          ctx.strokeStyle = g;
-          ctx.lineWidth = 4;
-          ctx.beginPath();
-          ctx.moveTo(h0.x + (x - h0.x) * 0.4, h0.y + (y - h0.y) * 0.4);
-          ctx.lineTo(x, y);
-          ctx.stroke();
-        }
-        const tau = t - tb;
-        if (tau >= 0 && tau < 1.6) {
-          // flash at the centre
-          if (tau < 0.2) {
-            const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 160);
-            g.addColorStop(0, `rgba(255,245,210,${0.85 * (1 - tau / 0.2)})`);
-            g.addColorStop(1, "rgba(255,245,210,0)");
-            ctx.fillStyle = g;
-            ctx.fillRect(cx - 160, cy - 160, 320, 320);
-          }
-          const n = fw.big ? 84 : 64;
-          const cols = FW_COL[bi % 3];
-          ctx.lineCap = "round";
-          for (let i = 0; i < n; i++) {
-            const ang = (i / n) * Math.PI * 2 + (r() - 0.5) * 0.12;
-            const sp = (fw.big ? 360 : 300) * (0.7 + 0.45 * r());
-            const tw = r() * 6.28;
-            const ci = r() < 0.35 ? 1 : 0;
-            const pos = (q: number) => {
-              const dd = (1 - Math.exp(-q * 2.4)) / 2.4;
-              return [cx + Math.cos(ang) * sp * dd, cy + Math.sin(ang) * sp * dd + 150 * q * q] as const;
-            };
-            const life = 1.1 + 0.45 * r();
-            if (tau > life) continue;
-            let a = Math.pow(1 - tau / life, 1.1);
-            if (tau > 0.55) a *= 0.55 + 0.45 * Math.sin(tau * 38 + tw);
-            const [x1, y1] = pos(tau);
-            const [x0, y0] = pos(Math.max(0, tau - 0.08));
-            ctx.globalAlpha = clamp(a);
-            ctx.strokeStyle = cols[ci];
-            ctx.shadowColor = cols[0];
-            ctx.shadowBlur = 8;
-            ctx.lineWidth = 3.2;
-            ctx.beginPath();
-            ctx.moveTo(x0, y0);
-            ctx.lineTo(x1, y1);
-            ctx.stroke();
-          }
-          ctx.shadowBlur = 0;
-        }
-        ctx.restore();
+        const h = headAt(tb - 0.14);
+        gusher(ctx, t, tb - 0.14, h.x + (bi - 1) * 26 * (fw.big ? 1 : 0), h.y, Math.round(fw.t0 * 1000) + bi * 77, fw.big);
       });
+    }
+    // the cold open: oil splashes up where the line breaks through zero
+    {
+      const k = camAt(COLD5.floor.at);
+      gusher(ctx, t, COLD5.floor.at, X(k, COLD5.floor.y), Yv(k, 0), 9191, true, 0.75);
+    }
+    // crashes: drops fall off the head while the price slides
+    const e = evAt(t);
+    if (e && e.k === "crash" && t >= B0) {
+      const r = rng(e.i * 131 + 7);
+      for (let q = 0; q < 7; q++) {
+        const td = e.t0 + 0.08 + q * 0.32 + r() * 0.12;
+        const d = t - td;
+        if (d < 0 || d > 1.1) continue;
+        const h = headAt(td);
+        const vx = (r() - 0.5) * 60;
+        const y = h.y + 10 + 0.5 * 2200 * d * d;
+        drop(ctx, h.x + vx * d, y, vx, 2200 * d + 40, 3.5 + r() * 3, clamp(1 - d / 1.1));
+      }
     }
   };
 
