@@ -363,6 +363,15 @@ for c in CUES.get("fx", []):
         put(swish(0.8), at, 0.14)
     elif f == "bw":
         put(ashwind(1.4, 0.8), at, 0.2)
+    elif f == "ceil":
+        put(glass(0.8), at, 0.32)
+        put(crack(0.8), at, 0.22)
+    elif f == "coin":
+        put(bianzhong(1046, 2.4, 0.6), at + 0.05, 0.16)
+        put(bianzhong(1568, 1.6, 0.5), at + 0.09, 0.08)
+    elif f == "sweep":
+        put(swish(0.7), at, 0.12)
+        put(bianzhong(523, 3.0, 0.6), at + 0.1, 0.12)
 
 # hush (respect for the dead): the music sinks to a low, muffled bed and the SFX go quiet; one bell where it starts
 hw = np.zeros(N)

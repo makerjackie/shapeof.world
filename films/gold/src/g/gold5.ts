@@ -4,6 +4,7 @@
 // big views pull out with the old high drawn across, every event lands on a half-bar of 「兴衰」 and has its own effect.
 // Sources: research/SOURCES.md; data: research/golddata.py -> gold_data.json, gold4data.py -> gold5_ohlc.json.
 import GD from "./gold_data.json";
+import CPI_RAW from "./gold5_cpi.json";
 import type { Pt, Spec, TableRow } from "./specG";
 import { Ev, makeMusic, Music, Placed } from "./time6";
 import { revealOf } from "./reveal7";
@@ -67,7 +68,7 @@ const EVS: Ev5[] = [
   { y: DY(2004, 11, 18), b: 6, k: "policy", tag: "2004 年 11 月", t: "第一只黄金 ETF 在美国上市", s: "买黄金，像买股票一样容易", icon: "etf" },
   { y: DY(2006, 6, 14), b: 4, k: "crash", tag: "2006 年 5 → 6 月", t: "一个月，金价跌了", n: "22%", s: "720 → 562 美元", fx: ["bolt"], span: 4 },
   { y: DY(2007, 8, 9), b: 4, k: "war", tag: "2007 年 8 月 · 美国", t: "次贷危机爆发", s: "买房的人还不起贷款，银行开始出事", lab: "危机", span: 7 },
-  { y: DY(2008, 1, 2), b: 6, k: "peak", tag: "2008 年 1 月 2 日 · 857 美元", t: "1980 年最高点买的人，终于回本", s: "等了近 28 年", lab: "解套", anchor: BAR(37), span: 10, fx: ["solve"], fit: 850 },
+  { y: DY(2008, 1, 2), b: 6, k: "peak", tag: "2008 年 1 月 2 日 · 857 美元", t: "1980 年最高点买的人，终于回本", s: "等了近 28 年，但这还没扣掉通胀", lab: "解套", anchor: BAR(37), span: 10, fx: ["solve"], fit: 850 },
   { y: DY(2008, 3, 17), b: 6, k: "peak", tag: "2008 年 3 月 17 日 · 贝尔斯登倒下", t: "金价第一次突破", n: "1,000 美元", fx: ["fw"], span: 3 },
   { y: DY(2008, 7, 11), b: 6, k: "note", tag: "2008 年 7 月", t: "油价冲到 147 美元", s: "然后，油价、金价一起往下掉", icon: "oil", span: 1.2 },
   { y: DY(2008, 9, 7), b: 6, k: "war", tag: "2008 年 9 月 7 日", t: "房利美、房地美被政府接管", s: "美国近一半的房贷，在它们手里", lab: "危机", span: 0.5 },
@@ -98,7 +99,7 @@ const EVS: Ev5[] = [
   { y: 2024.5, b: 4, k: "peak", tag: "2024 年", t: "金价创新高", n: "45 次", s: "全年涨了 27%", big: true, anchor: BAR(72), span: 5, fx: ["fwBig"], src: "COMEX 收盘新高次数" },
   { y: DY(2025, 3, 13), b: 4, k: "peak", tag: "2025 年 3 月", t: "突破", n: "3,000 美元", s: "从 2,000 到 3,000：4 年半", span: 3, fx: ["fw"] },
   { y: 2025.45, b: 4, k: "note", tag: "2025 年 6 月 · 欧洲央行", t: "各国央行手里，黄金超过了欧元", s: "成为第二大储备资产，仅次于美元", span: 3, src: "欧洲央行《欧元的国际地位》2025" },
-  { y: 2025.67, b: 4, k: "peak", tag: "2025 年 9 月", t: "按购买力，终于超过 1980 年", s: "1980 年的 850 美元 ≈ 今天 3,680 美元", span: 3, src: "按美国 CPI 换算" },
+  { y: DY(2025, 9, 2), b: 6, k: "peak", tag: "2025 年 9 月 2 日 · 3,592 美元", t: "扣掉通胀，1980 年最高点买的人才真正回本", s: "等了 45 年 7 个月", lab: "真解套", span: 3, fx: ["solve"], fit: 3600, src: "按美国劳工统计局 CPI 换算：1980 年的 850 美元 ≈ 2025 年的 3,550 美元" },
   { y: DY(2025, 10, 6), b: 4, k: "peak", tag: "2025 年 10 月", t: "突破", n: "4,000 美元", s: "从 3,000 到 4,000：7 个月", span: 2, fx: ["fw"] },
   { y: 2026.01, b: 4, k: "peak", tag: "2026 年 1 月 6 日 · 上海", t: "上海金交所金价突破", n: "1,000 元/克", s: "金店首饰金，已标到约 1,390 元/克", span: 1, src: "上海黄金交易所 Au99.99；当日金店牌价" },
   { y: DY(2026, 1, 29), b: 4, k: "peak", tag: "2026 年 1 月 29 日", t: "历史最高", n: "5,318 美元", s: "从 4,000 到 5,000：只用了 3 个半月", big: true, span: 0.2, fx: ["fwBig"], src: "收盘价；盘中最高约 5,595 美元" },
@@ -170,7 +171,8 @@ const schedule2 = (evs: Ev5[], m: Music, startSrc: number, endSrc: number): P5[]
 export const COLD5 = {
   title: [A(2), A(2) + 0.42] as [number, number], // big until, in the header by
   win: [2000.62, 2026.2] as [number, number],
-  vmax: 6000,
+  vmax: 4000, // the window tops out at $4,000: the line breaks through it
+  ceil: 4000,
   keys: [
     [A(0), 2001.1233],
     [A(2), DY(2008, 3, 17)],
@@ -192,6 +194,15 @@ export const COLD5 = {
   crash: { y: DY(2026, 1, 30), at: A(8), a: "第二天", b: "−11%" },
   times: "25 年，×21",
 };
+// one ounce, held up while the question is asked
+export const COIN = { t0: A(9), t1: A(12) - 0.05 };
+// the old high in today's money: 850 dollars of January 1980, carried forward by the US CPI
+export const CPI = CPI_RAW as [number, number][];
+export const REAL = { v0: 850, y0: 1980.055, name: "1980 年最高 850 美元" };
+// the two rates the ending sets side by side
+export const RATES = { t0: BAR(83) + 0.1 + 4 * BEAT, t1: BAR(88), split: 1971.62, a: ["前 179 年", "年均 +0.3%"], b: ["后 55 年", "年均 +9%"] };
+export const NEXT = { a: "下一集 · 石油", b: "1 盎司黄金，能换几桶油？" };
+export const SWEEP = { t0: BAR(88), dur: 1.3 };
 const COLD_LINES = [{ t0: A(9), t1: A(12) - 0.05, a: "1792 年，1 盎司黄金只要 19 美元", b: "金子没变，金价凭什么涨？", bBeats: 1, tone: "white" as const }];
 
 const ERA_SRC: [number, string][] = [
@@ -235,6 +246,9 @@ export const fwBursts = (t0: number, big: boolean) => (big ? [t0 + 0.16, t0 + 0.
 export const FXCUES: { t: number; fx: string }[] = [
   ...fwBursts(COLD5.marks[5].at, true).map((t) => ({ t, fx: "pop" })),
   { t: COLD5.crash.at, fx: "bolt" },
+  { t: COLD5.marks[4].at, fx: "ceil" },
+  { t: A(9), fx: "coin" },
+  { t: BAR(88), fx: "sweep" },
   ...PLACED.flatMap((e) => [
     ...(e.fx ?? []).flatMap((f) =>
       f === "fw" || f === "fwBig" ? fwBursts(e.t0, f === "fwBig").map((t) => ({ t, fx: "pop" })) : [{ t: e.t0, fx: f as string }],

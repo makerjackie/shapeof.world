@@ -14,7 +14,7 @@ import { BRUSH, SANS, SERIF, fontsReady } from "./fonts6";
 import type { Pt, Spec } from "./specG";
 import { revealOf } from "./reveal7";
 import OHLC_RAW from "./gold5_ohlc.json";
-import { BW_UNTIL, COLD5, PEGS, WIRES, fwBursts } from "./gold5";
+import { BW_UNTIL, COIN, COLD5, CPI, NEXT, PEGS, RATES, REAL, SWEEP, WIRES, fwBursts } from "./gold5";
 import type { Icon, P5 } from "./gold5";
 
 const OH = OHLC_RAW as unknown as [number, number, number, number, number][]; // year, open, high, low, close
@@ -138,6 +138,7 @@ const tabular = (ctx: CanvasRenderingContext2D, s: string, x: number, y: number,
   ctx.globalAlpha = a0;
   return cx - x;
 };
+const hitsBox = (o: number[], b: number[]) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
 const rrect = (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) => {
   ctx.beginPath();
   ctx.moveTo(x + r, y);
@@ -773,6 +774,76 @@ export const createFilm5 = (S: Spec) => {
     }
     ctx.restore();
   };
+  // the cold window's ceiling ($4,000): solid until the price breaks through it, then two bent halves and flying chips
+  const CEIL_T = COLD5.marks[4].at;
+  const drawCeil = (ctx: CanvasRenderingContext2D, t: number, k: Cam) => {
+    const y = Yv(k, COLD5.ceil);
+    const a0 = ctx.globalAlpha;
+    const lab = "$" + COLD5.ceil.toLocaleString("en-US");
+    if (t < CEIL_T) {
+      ctx.strokeStyle = "rgba(255,255,255,0.5)";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(40, y);
+      ctx.lineTo(SAFE_R, y);
+      ctx.stroke();
+      text(ctx, lab, 44, y - 10, 24, 700, SANS, "rgba(255,255,255,0.6)");
+      return;
+    }
+    const d = t - CEIL_T;
+    const bx = X(k, COLD5.marks[4].y);
+    const gap = 20 + 16 * eo3(d / 0.2);
+    const kink = 0.5 * eo3(d / 0.22);
+    const KL = 120;
+    ctx.strokeStyle = "rgba(255,255,255,0.55)";
+    ctx.lineWidth = 3;
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    // left half: flat, then its last piece snaps up; right half the same, mirrored
+    const lx1 = bx - gap;
+    ctx.moveTo(40, y);
+    ctx.lineTo(lx1 - KL, y);
+    ctx.lineTo(lx1 - KL + KL * Math.cos(kink), y - KL * Math.sin(kink));
+    const rx0 = bx + gap;
+    if (rx0 + KL < SAFE_R) {
+      ctx.moveTo(SAFE_R, y);
+      ctx.lineTo(rx0 + KL, y);
+      ctx.lineTo(rx0 + KL - KL * Math.cos(kink), y - KL * Math.sin(kink));
+    } else {
+      const L2 = Math.max(0, SAFE_R - rx0);
+      ctx.moveTo(SAFE_R, y);
+      ctx.lineTo(SAFE_R - L2 * Math.cos(kink), y - L2 * Math.sin(kink));
+    }
+    ctx.stroke();
+    text(ctx, lab, 44, y - 10, 24, 700, SANS, "rgba(255,255,255,0.6)");
+    // chips of the ceiling fly up and fall
+    if (d < 1.4) {
+      const r = rng(4242);
+      ctx.fillStyle = "rgba(240,244,248,0.9)";
+      for (let i = 0; i < 16; i++) {
+        const vx = (r() - 0.5) * 520;
+        const vy = -260 - r() * 520;
+        const sz = 4 + r() * 8;
+        const x = bx + vx * d;
+        const yy = y + vy * d + 0.5 * 1500 * d * d;
+        ctx.globalAlpha = a0 * clamp(1 - d / 1.4);
+        ctx.save();
+        ctx.translate(x, yy);
+        ctx.rotate(d * (r() - 0.5) * 14);
+        ctx.fillRect(-sz / 2, -sz / 4, sz, sz / 2);
+        ctx.restore();
+      }
+      if (d < 0.25) {
+        const g = ctx.createRadialGradient(bx, y, 0, bx, y, 180);
+        g.addColorStop(0, `rgba(255,250,230,${0.9 * (1 - d / 0.25)})`);
+        g.addColorStop(1, "rgba(255,250,230,0)");
+        ctx.globalAlpha = a0;
+        ctx.fillStyle = g;
+        ctx.fillRect(bx - 180, y - 180, 360, 360);
+      }
+      ctx.globalAlpha = a0;
+    }
+  };
   const drawChart = (ctx: CanvasRenderingContext2D, t: number, alpha: number, lineOnly = false) => {
     if (alpha <= 0.01) return;
     const k = camAt(t);
@@ -786,7 +857,7 @@ export const createFilm5 = (S: Spec) => {
       if (k.cw > 0.5) {
         // the cold window: round dollars and years
         ctx.globalAlpha = alpha * clamp((k.cw - 0.5) * 2);
-        for (const v of [1000, 2000, 3000, 4000, 5000]) {
+        for (const v of [1000, 2000, 3000]) {
           const y = Yv(k, v);
           ctx.strokeStyle = "rgba(255,255,255,0.09)";
           ctx.lineWidth = 1;
@@ -804,8 +875,13 @@ export const createFilm5 = (S: Spec) => {
           ctx.fillRect(x - 0.5, CWB + 8, 1, 12);
           text(ctx, String(yy), x, CWB + 46, 22, 600, SANS, "rgba(255,255,255,0.45)", { align: "center" });
         }
-        // the whole 25 years, faint, before the line runs over it
+        drawCeil(ctx, t, k);
+        // the whole 25 years, faint, before the line runs over it (only up to the ceiling: the break is a surprise)
         if (t < RW0 + 0.3) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(0, Yv(k, COLD5.ceil) + 2, W, H);
+          ctx.clip();
           ctx.globalAlpha = alpha * 0.24 * clamp((k.cw - 0.5) * 2);
           ctx.strokeStyle = GOLD;
           ctx.lineWidth = 3;
@@ -822,6 +898,7 @@ export const createFilm5 = (S: Spec) => {
             first = false;
           }
           ctx.stroke();
+          ctx.restore();
         }
         ctx.globalAlpha = alpha;
       } else if (k.lg < 0.5) {
@@ -1047,10 +1124,13 @@ export const createFilm5 = (S: Spec) => {
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(-4, -13, 4, 1.5);
         ctx.restore();
-        if (!labelled && fly < 0) {
+        const plab = `法律钉死：${pg.v.toFixed(2)} 美元`;
+        const pb = pctLayout(ctx, t)?.box;
+        const clash = pb && hitsBox(pb, [x - 6, ny - 52, x + measure(ctx, plab, 25, 900, SERIF), ny - 18]);
+        if (!labelled && fly < 0 && !clash) {
           labelled = true;
           ctx.globalAlpha = clamp((xb - x - 40) / 80);
-          text(ctx, `法律钉死：${pg.v.toFixed(2)} 美元`, x - 6, ny - 26, 25, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+          text(ctx, plab, x - 6, ny - 26, 25, 900, SERIF, WHITE, { glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
         }
       }
     });
@@ -1060,12 +1140,55 @@ export const createFilm5 = (S: Spec) => {
   // ---------- old highs across the chart, with the gap and the days; the day it is beaten: 解套
   const solveT = (v: number) => EV.find((e) => e.fx?.includes("solve") && e.fit === v)?.t0 ?? Infinity;
   const fmtN = (n: number) => Math.round(n).toLocaleString("en-US");
+  // the 1980 high in each later year's money (US CPI), and the day a close finally clears it
+  const cpiAt = (y: number) => {
+    if (y <= CPI[0][0]) return CPI[0][1];
+    for (let i = 1; i < CPI.length; i++) if (y <= CPI[i][0]) return CPI[i - 1][1] + ((CPI[i][1] - CPI[i - 1][1]) * (y - CPI[i - 1][0])) / (CPI[i][0] - CPI[i - 1][0]);
+    return CPI[CPI.length - 1][1];
+  };
+  const C80 = cpiAt(1980 + 0.5 / 12);
+  const realV = (y: number) => (REAL.v0 * cpiAt(Math.max(y, REAL.y0))) / C80;
+  const REAL_EV = EV.find((e) => e.lab === "真解套")!;
+  const REAL_SHOW = solveT(REAL.v0) + 1.1;
+  const SILVER = "#d3dae2";
+  // label boxes already on the chart this frame (the swing ticks keep clear of them)
+  let OCC: [number, number, number, number][] = [];
+  const hitsOcc = (b: [number, number, number, number]) => OCC.some((o) => hitsBox(o, b));
+  // the light along a cleared line, and the stamp
+  const solvedFx = (ctx: CanvasRenderingContext2D, xa: number, xb: number, wy: number, sxStamp: number, d: number, on: number, label: string) => {
+    const sx = xa + (xb - xa) * eo3(d / 0.45);
+    const g = ctx.createLinearGradient(sx - 120, 0, sx + 20, 0);
+    g.addColorStop(0, "rgba(255,255,255,0)");
+    g.addColorStop(1, "rgba(255,255,255,0.95)");
+    ctx.fillStyle = g;
+    ctx.globalAlpha = on * clamp(1 - d / 0.6);
+    ctx.fillRect(sx - 120, wy - 4, 140, 8);
+    const s = 1 + 0.7 * (1 - eo3(d / 0.18));
+    ctx.globalAlpha = on * clamp(d / 0.05);
+    ctx.save();
+    ctx.translate(sxStamp, wy - 70);
+    ctx.rotate(-0.1);
+    ctx.scale(s, s);
+    const bw = measure(ctx, label, 58, 900, SERIF) + 70;
+    ctx.fillStyle = "rgba(20,14,4,0.85)";
+    rrect(ctx, -bw / 2, -50, bw, 76, 8);
+    ctx.fill();
+    ctx.strokeStyle = GOLD;
+    ctx.lineWidth = 4;
+    rrect(ctx, -bw / 2, -50, bw, 76, 8);
+    ctx.stroke();
+    text(ctx, label, 0, 10, 58, 900, SERIF, GOLD, { align: "center", glow: "rgba(255,201,77,0.7)", glowBlur: 18 });
+    ctx.restore();
+  };
   const drawWires = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t < B0 || t >= END) return;
     const k = camAt(t);
     if (k.lg > 0.05) return;
     const c = k.c;
     const h = headAt(t);
+    let npin = 0;
+    // reminders at the top step aside while the head (and its card) is up there
+    const pinA = clamp((h.y - (k.top + 70)) / 90);
     ctx.save();
     for (const w of WIRES) {
       const ts = solveT(w.v);
@@ -1080,8 +1203,10 @@ export const createFilm5 = (S: Spec) => {
       const pinned = wy < k.top - 24;
       if (pinned && !solved) {
         // the old high is above the frame: a reminder at the top
-        ctx.globalAlpha = on * 0.9;
-        text(ctx, `▲ ${w.name} · 较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`, 52, k.top - 10, 24, 700, SANS, "#d6b6b0", { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 880 });
+        ctx.globalAlpha = on * 0.9 * pinA;
+        const py = k.top - 10 - 34 * npin++;
+        text(ctx, `▲ ${w.name} · 较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`, 52, py, 24, 700, SANS, "#d6b6b0", { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 880 });
+        OCC.push([40, py - 26, SAFE_R, py + 6]);
         continue;
       }
       const xa = clamp(X(k, w.y0), 40, SAFE_R);
@@ -1106,6 +1231,7 @@ export const createFilm5 = (S: Spec) => {
         ctx.fill();
       }
       text(ctx, w.name, xa + 10, wy - 14, 24, 700, SANS, solved ? GOLD : SOFT, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+      OCC.push([xa, wy - 40, xa + 20 + measure(ctx, w.name, 24, 700, SANS), wy - 8]);
       if (!solved) {
         // the drop from the old high to the head, and how far and how long
         const dcol = gap < -0.2 ? RED : ASH;
@@ -1120,31 +1246,50 @@ export const createFilm5 = (S: Spec) => {
         const lab = `较前高 ${gap < 0 ? "−" : "+"}${Math.round(Math.abs(gap) * 100)}%，${fmtN(days)} 天`;
         const ly = clamp(wy + 46, k.top + 30, h.y - 30);
         text(ctx, lab, h.x - 14, ly, 32, 900, SANS, dcol, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10, maxW: h.x - 60 });
-      } else {
-        // a light runs along the line, the stamp lands
-        const d = t - ts;
-        const sx = xa + (xb - xa) * eo3(d / 0.45);
-        const g = ctx.createLinearGradient(sx - 120, 0, sx + 20, 0);
-        g.addColorStop(0, "rgba(255,255,255,0)");
-        g.addColorStop(1, "rgba(255,255,255,0.95)");
-        ctx.fillStyle = g;
-        ctx.globalAlpha = on * clamp(1 - d / 0.6);
-        ctx.fillRect(sx - 120, wy - 4, 140, 8);
-        const s = 1 + 0.7 * (1 - eo3(d / 0.18));
-        ctx.globalAlpha = on * clamp(d / 0.05);
-        ctx.save();
-        ctx.translate(clamp(h.x - 150, 140, 700), wy - 70);
-        ctx.rotate(-0.1);
-        ctx.scale(s, s);
-        ctx.fillStyle = "rgba(20,14,4,0.85)";
-        rrect(ctx, -92, -50, 184, 76, 8);
-        ctx.fill();
-        ctx.strokeStyle = GOLD;
-        ctx.lineWidth = 4;
-        rrect(ctx, -92, -50, 184, 76, 8);
+        OCC.push([Math.max(40, h.x - 14 - measure(ctx, lab, 32, 900, SANS)), ly - 34, h.x - 6, ly + 8]);
+      } else solvedFx(ctx, xa, xb, wy, clamp(h.x - 150, 140, 700), t - ts, on, "解套");
+    }
+    // the same 1980 high in later money: a silver line that climbs with prices, cleared only in 2025
+    const tsR = REAL_EV.t0;
+    if (t >= REAL_SHOW && t <= tsR + 1.5) {
+      const on = clamp((t - REAL_SHOW) / 0.4) * (t > tsR + 0.9 ? 1 - (t - tsR - 0.9) / 0.6 : 1);
+      const solved = t >= tsR;
+      const rv = realV(c);
+      const wy = Yv(k, rv);
+      const gap = 1 - val(c) / rv;
+      const dim = 1 - 0.35 * k.ca;
+      if (wy < k.top - 24 && !solved) {
+        ctx.globalAlpha = on * 0.9 * dim * pinA;
+        const py = k.top - 10 - 34 * npin++;
+        text(ctx, `▲ ${REAL.name}，扣掉通胀 ≈ ${fmtN(rv)} 美元 · 还差 ${Math.round(gap * 100)}%`, 52, py, 24, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 900 });
+        OCC.push([40, py - 26, SAFE_R, py + 6]);
+      } else if (on > 0.01) {
+        const yL = Math.max(REAL.y0, k.cx - k.hxw / k.ppy - 0.5);
+        const yR = k.cx + (SAFE_R - k.hxw) / k.ppy;
+        const n = Math.max(2, Math.ceil((yR - yL) * k.ppy / 4));
+        ctx.globalAlpha = on * dim;
+        ctx.strokeStyle = solved ? GOLD : SILVER;
+        ctx.lineWidth = solved ? 4 : 2.8;
+        ctx.shadowColor = solved ? GOLD : "rgba(220,230,240,0.6)";
+        ctx.shadowBlur = solved ? 18 : 8;
+        ctx.setLineDash(solved ? [] : [14, 10]);
+        ctx.beginPath();
+        for (let i = 0; i <= n; i++) {
+          const y = yL + ((yR - yL) * i) / n;
+          const x = X(k, y);
+          const yy = Yv(k, realV(y));
+          if (i) ctx.lineTo(x, yy);
+          else ctx.moveTo(x, yy);
+        }
         ctx.stroke();
-        text(ctx, "解套", 0, 10, 58, 900, SERIF, GOLD, { align: "center", glow: "rgba(255,201,77,0.7)", glowBlur: 18 });
-        ctx.restore();
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
+        const xa = clamp(X(k, yL), 40, SAFE_R);
+        const ya = Yv(k, realV(yL));
+        const lab = `${REAL.name}，扣掉通胀 ≈ ${fmtN(rv)} 美元 · 还差 ${Math.max(0, Math.round(gap * 100))}%`;
+        if (!solved) text(ctx, lab, xa + 10, ya - 14, 24, 700, SANS, solved ? GOLD : SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 900 });
+        OCC.push([xa, ya - 40, xa + 20 + measure(ctx, lab, 24, 700, SANS), ya - 8]);
+        if (solved) solvedFx(ctx, xa, SAFE_R, wy, clamp(h.x - 150, 160, 700), t - tsR, on, "真解套");
       }
     }
     ctx.restore();
@@ -1270,7 +1415,8 @@ export const createFilm5 = (S: Spec) => {
       bursts.forEach((tb, bi) => {
         const [ox, oy] = FW_OFF[bi % 3];
         const cx = clamp(h0.x + ox, 150, 920);
-        const cy = clamp(h0.y + oy, 520, Math.max(540, h0.y - 80));
+        const cold = fw.t0 < B0;
+        const cy = cold ? clamp(h0.y + oy * 0.75, 200, h0.y - 60) : clamp(h0.y + oy, 520, Math.max(540, h0.y - 80));
         const r = rng(Math.round(fw.t0 * 1000) + bi * 77);
         const launch = tb - 0.16;
         ctx.save();
@@ -1381,21 +1527,29 @@ export const createFilm5 = (S: Spec) => {
   };
 
   // the change shown big next to the head
-  const drawPct = (ctx: CanvasRenderingContext2D, t: number) => {
+  const pctLayout = (ctx: CanvasRenderingContext2D, t: number) => {
     const e = evAt(t);
-    if (!e || !e.pct) return;
+    if (!e || !e.pct) return null;
     const d = t - e.t0;
     const life = Math.min(e.t1 - e.t0, 2.6);
-    if (d > life + 0.2) return;
+    if (d > life + 0.2) return null;
     const a = d < life ? 1 : 1 - (d - life) / 0.2;
     const h = headAt(t);
     const s = 1 + 0.5 * env(t, e.t0, 0.01, 0.1);
     const up = e.pct.startsWith("+") || e.pct.startsWith("×");
     const col = up ? GOLD : e.k === "crash" || e.k === "war" ? RED : ASH;
-    ctx.save();
-    ctx.globalAlpha = clamp(a);
     const k = camAt(t);
-    text(ctx, e.pct, h.x - 34, up ? clamp(h.y - 20, 760, Math.min(k.bot + 40, 1450)) : clamp(h.y + 120, 760, Math.min(k.bot + 40, 1450)), 156 * s, 900, SANS, col, { align: "right", glow: col + "aa", glowBlur: 30, maxW: h.x - 80 });
+    const y = up ? clamp(h.y - 20, 760, Math.min(k.bot + 40, 1450)) : clamp(h.y + 120, 760, Math.min(k.bot + 40, 1450));
+    const w = Math.min(measure(ctx, e.pct, 156 * 1.5, 900, SANS), h.x - 80);
+    return { e, a, x: h.x - 34, y, s, col, box: [h.x - 34 - w - 10, y - 150, h.x - 24, y + 14] as [number, number, number, number] };
+  };
+  const drawPct = (ctx: CanvasRenderingContext2D, t: number) => {
+    const L = pctLayout(ctx, t);
+    if (!L) return;
+    const h = headAt(t);
+    ctx.save();
+    ctx.globalAlpha = clamp(L.a);
+    text(ctx, L.e.pct!, L.x, L.y, 156 * L.s, 900, SANS, L.col, { align: "right", glow: L.col + "aa", glowBlur: 30, maxW: h.x - 80 });
     ctx.restore();
   };
 
@@ -1462,15 +1616,23 @@ export const createFilm5 = (S: Spec) => {
       const chips = [S.kindLabel[kindAt(c)]];
       if (rate > 0) chips.unshift(`≈ ${Math.round((v * rate) / 31.1035).toLocaleString("en-US")} 元/克`);
       let cx0 = 60;
+      // the price in yuan per gram (what a Chinese buyer reads) gets a real chip; the data kind a quiet one
       chips.forEach((chip, i) => {
         const hot = i === 0 && chips.length > 1;
-        ctx.font = `${hot ? 900 : 700} ${hot ? 26 : 22}px ${hot ? SANS : SERIF}`;
-        const cw = ctx.measureText(chip).width + 24;
-        ctx.strokeStyle = hot ? "rgba(255,201,77,0.7)" : "rgba(200,205,210,0.45)";
-        ctx.lineWidth = hot ? 1.6 : 1;
-        ctx.strokeRect(cx0, 424, cw, 36);
-        text(ctx, chip, cx0 + 12, 451, hot ? 26 : 22, hot ? 900 : 700, hot ? SANS : SERIF, hot ? GOLD : "#aeb4ba");
-        cx0 += cw + 10;
+        const fs = hot ? 38 : 22;
+        ctx.font = `${hot ? 900 : 700} ${fs}px ${hot ? SANS : SERIF}`;
+        const cw = ctx.measureText(chip).width + (hot ? 32 : 24);
+        const ch = hot ? 54 : 36;
+        const cy0 = hot ? 422 : 431;
+        if (hot) {
+          ctx.fillStyle = "rgba(255,201,77,0.1)";
+          ctx.fillRect(cx0, cy0, cw, ch);
+        }
+        ctx.strokeStyle = hot ? "rgba(255,201,77,0.8)" : "rgba(200,205,210,0.45)";
+        ctx.lineWidth = hot ? 2 : 1;
+        ctx.strokeRect(cx0, cy0, cw, ch);
+        text(ctx, chip, cx0 + (hot ? 16 : 12), cy0 + (hot ? 41 : 27), fs, hot ? 900 : 700, hot ? SANS : SERIF, hot ? GOLD : "#aeb4ba");
+        cx0 += cw + 12;
       });
     }
     ctx.restore();
@@ -1541,6 +1703,8 @@ export const createFilm5 = (S: Spec) => {
     if (k.lg > 0.05 || k.ca > 0.3) return;
     const c = k.c;
     ctx.save();
+    const pb = pctLayout(ctx, t)?.box;
+    if (pb) OCC.push(pb);
     let lastX = 1e9;
     for (let q = PIV.length - 1; q >= 1; q--) {
       const i = PIV[q];
@@ -1578,8 +1742,12 @@ export const createFilm5 = (S: Spec) => {
       ctx.lineTo(x, y1);
       ctx.stroke();
       const lab = `${up ? "+" : "−"}${Math.round(Math.abs(ch) * 100)}%`;
-      ctx.globalAlpha = a * clamp((x - 12 - measure(ctx, lab, 30 * pop, 900, SANS) - 40) / 30);
-      text(ctx, lab, x - 12, (y0 + y1) / 2 + 10, 30 * pop, 900, SANS, col, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      const lw = measure(ctx, lab, 30 * pop, 900, SANS);
+      const ly = (y0 + y1) / 2 + 10;
+      // keep clear of the big number and the wire labels
+      if (hitsOcc([x - 18 - lw, ly - 30, x - 6, ly + 8])) continue;
+      ctx.globalAlpha = a * clamp((x - 12 - lw - 40) / 30);
+      text(ctx, lab, x - 12, ly, 30 * pop, 900, SANS, col, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
     }
     ctx.restore();
   };
@@ -1785,6 +1953,91 @@ export const createFilm5 = (S: Spec) => {
   };
   const k_ca = (t: number) => camAt(t).ca;
 
+  // ---------- one ounce of gold, held up while the question is asked (a plain bullion coin, no real design)
+  const drawCoin = (ctx: CanvasRenderingContext2D, t: number) => {
+    const d = t - COIN.t0;
+    const R = 220;
+    const cx = CX;
+    const cy = 1010;
+    const sx = Math.max(0.02, Math.abs(Math.cos((1 - eo3(d / 0.32)) * Math.PI * 0.5)));
+    const a = clamp(d / 0.08) * clamp((COIN.t1 + 0.12 - t) / 0.12);
+    const lift = 30 * (1 - eo3(d / 0.32));
+    ctx.save();
+    ctx.globalAlpha = a;
+    // a dark pool so the coin reads against the chart
+    const pool = ctx.createRadialGradient(cx, cy, R * 0.8, cx, cy, R * 1.9);
+    pool.addColorStop(0, "rgba(6,5,4,0.85)");
+    pool.addColorStop(1, "rgba(6,5,4,0)");
+    ctx.fillStyle = pool;
+    ctx.fillRect(cx - R * 2, cy - R * 2, R * 4, R * 4);
+    const glow = ctx.createRadialGradient(cx, cy, R * 0.9, cx, cy, R * 1.45);
+    glow.addColorStop(0, "rgba(255,201,77,0.35)");
+    glow.addColorStop(1, "rgba(255,201,77,0)");
+    ctx.fillStyle = glow;
+    ctx.fillRect(cx - R * 1.5, cy - R * 1.5, R * 3, R * 3);
+    ctx.translate(cx, cy + lift);
+    ctx.scale(sx, 1);
+    // rim
+    const rim = ctx.createLinearGradient(-R, -R, R, R);
+    rim.addColorStop(0, "#fff0b0");
+    rim.addColorStop(0.45, "#e2a524");
+    rim.addColorStop(1, "#7a4c06");
+    ctx.fillStyle = rim;
+    ctx.beginPath();
+    ctx.arc(0, 0, R, 0, Math.PI * 2);
+    ctx.fill();
+    // reeded edge
+    ctx.strokeStyle = "rgba(90,56,4,0.55)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i < 150; i++) {
+      const an = (i / 150) * Math.PI * 2;
+      ctx.moveTo(Math.cos(an) * (R - 2), Math.sin(an) * (R - 2));
+      ctx.lineTo(Math.cos(an) * (R - 13), Math.sin(an) * (R - 13));
+    }
+    ctx.stroke();
+    // field
+    const field = ctx.createRadialGradient(-R * 0.3, -R * 0.35, 10, 0, 0, R * 0.85);
+    field.addColorStop(0, "#ffe9a0");
+    field.addColorStop(0.6, "#f0b73a");
+    field.addColorStop(1, "#b97c10");
+    ctx.fillStyle = field;
+    ctx.beginPath();
+    ctx.arc(0, 0, R * 0.86, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(120,76,6,0.7)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(0, 0, R * 0.78, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = "rgba(255,246,210,0.6)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(1.5, 1.5, R * 0.78, 0, Math.PI * 2);
+    ctx.stroke();
+    // struck lettering: a light edge under a dark face
+    for (const [s0, y0, size, fam] of [["1 盎司", 22, 104, SERIF], ["31.1 克", 104, 40, SANS], ["纯金", -92, 34, SERIF]] as [string, number, number, string][]) {
+      text(ctx, s0, 2, y0 + 2, size, 900, fam, "rgba(255,248,215,0.75)", { align: "center" });
+      text(ctx, s0, 0, y0, size, 900, fam, "#6e4504", { align: "center" });
+    }
+    // a glint across the face once it has turned
+    const gp = clamp((d - 0.3) / 0.5);
+    if (gp > 0 && gp < 1) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(0, 0, R, 0, Math.PI * 2);
+      ctx.clip();
+      const gx = -R * 1.4 + gp * R * 2.8;
+      const g = ctx.createLinearGradient(gx - 70, -R, gx + 70, R);
+      g.addColorStop(0, "rgba(255,255,255,0)");
+      g.addColorStop(0.5, "rgba(255,255,255,0.55)");
+      g.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(-R, -R, 2 * R, 2 * R);
+      ctx.restore();
+    }
+    ctx.restore();
+  };
   // ---------- cold open: the highs named on the beats, ×21, the crash, the question
   const drawCold = (ctx: CanvasRenderingContext2D, t: number) => {
     if (t >= RW0 + 0.1) return;
@@ -1811,7 +2064,9 @@ export const createFilm5 = (S: Spec) => {
       const y = Yv(k, val(m.y));
       const isNew = i === newest && t < COLD5.crash.at;
       const pop = 1 + 0.5 * env(t, m.at, 0.01, 0.12);
-      ctx.globalAlpha = fadeOut * (isNew ? 1 : 0.8) * quiet;
+      // at the crash only the top keeps its label
+      const gone = m.top ? 0 : clamp((t - COLD5.crash.at) / 0.12);
+      ctx.globalAlpha = fadeOut * (isNew ? 1 : 0.8) * quiet * (1 - 0.85 * gone);
       ctx.fillStyle = GOLD;
       ctx.beginPath();
       ctx.arc(x, y, 8 * pop, 0, Math.PI * 2);
@@ -1819,6 +2074,8 @@ export const createFilm5 = (S: Spec) => {
       const sb = isNew ? (m.top ? 50 : 42) : 30;
       const sa = isNew ? 26 : 21;
       const lx = Math.min(x - 22, SAFE_R - 60);
+      if (gone >= 1) return;
+      ctx.globalAlpha = fadeOut * (isNew ? 1 : 0.8) * quiet * (1 - gone);
       ctx.save();
       ctx.translate(lx, y - 24);
       ctx.scale(pop, pop);
@@ -1831,9 +2088,9 @@ export const createFilm5 = (S: Spec) => {
     if (t >= top.at) {
       const s = 1 + 0.4 * env(t, top.at, 0.01, 0.14);
       ctx.globalAlpha = fadeOut * clamp((t - top.at) / 0.08) * (1 - clamp((t - COLD5.crash.at) / 0.12));
-      text(ctx, "2001 → 2026", 84, 820, 30, 700, SANS, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+      text(ctx, "2001 → 2026", 84, 712, 30, 700, SANS, SOFT, { glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
       ctx.save();
-      ctx.translate(76, 985);
+      ctx.translate(76, 877);
       ctx.scale(s, s);
       text(ctx, "×21", 0, 0, 170, 900, SANS, GOLD, { glow: "rgba(255,201,77,0.6)", glowBlur: 30 });
       ctx.restore();
@@ -1842,14 +2099,15 @@ export const createFilm5 = (S: Spec) => {
     const cr = COLD5.crash;
     if (t >= cr.at) {
       const s = 1 + 0.45 * env(t, cr.at, 0.01, 0.12);
-      ctx.globalAlpha = fadeOut * clamp((t - cr.at) / 0.05) * (1 - 0.8 * clamp((t - L.t0) / 0.2));
-      text(ctx, "2026 年 1 月 30 日，一天", CX + 70, 812, 32, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
+      ctx.globalAlpha = fadeOut * clamp((t - cr.at) / 0.05) * (1 - clamp((t - L.t0) / 0.2));
+      text(ctx, "2026 年 1 月 30 日，一天", CX + 40, 712, 32, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.95)", glowBlur: 10 });
       ctx.save();
-      ctx.translate(CX + 70, 960);
+      ctx.translate(CX + 40, 868);
       ctx.scale(s, s);
       text(ctx, cr.b, 0, 0, 160, 900, SANS, RED, { align: "center", glow: "rgba(255,59,47,0.7)", glowBlur: 30 });
       ctx.restore();
     }
+    if (t >= COIN.t0 && t <= COIN.t1 + 0.12) drawCoin(ctx, t);
     // the question
     if (t >= L.t0 && t <= L.t1) {
       const d = t - L.t0;
@@ -1931,6 +2189,70 @@ export const createFilm5 = (S: Spec) => {
       ctx.fill();
       text(ctx, tr2.t, x + (tr2.dx ?? 0), y + (tr2.dy ?? (tr2.tone === "gold" ? -24 : 46)), 28 * s, 900, SERIF, WHITE, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
     });
+    // two rates side by side: 179 years nailed down, 55 years free
+    if (t >= RATES.t0 && t < RATES.t1 + 0.3) {
+      const ra = clamp((t - RATES.t0) / 0.25) * clamp((RATES.t1 + 0.3 - t) / 0.3);
+      const xs = X(k, RATES.split);
+      const parts: [number, number, string[], string, number][] = [
+        [X(k, FIRST), xs - 5, RATES.a, ASH, 0],
+        [xs + 5, X(k, LAST_REAL), RATES.b, GOLD, 2 * (60 / 130)],
+      ];
+      const by = 1232;
+      for (const [x0, x1, lab, col, delay] of parts) {
+        const u = clamp((t - RATES.t0 - delay) / 0.3);
+        if (u <= 0) continue;
+        const s = 1 + 0.25 * env(t, RATES.t0 + delay, 0.01, 0.1);
+        ctx.globalAlpha = ra * u;
+        ctx.strokeStyle = col;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(x0, by - 14);
+        ctx.lineTo(x0, by);
+        ctx.lineTo(x0 + (x1 - x0) * eo3(u), by);
+        if (u >= 1) ctx.lineTo(x1, by - 14);
+        ctx.stroke();
+        const mx = (x0 + x1) / 2;
+        text(ctx, lab[0], mx, by + 38, 26, 700, SERIF, SOFT, { align: "center", glow: "rgba(0,0,0,0.9)", glowBlur: 8 });
+        ctx.save();
+        ctx.translate(mx, by + 84);
+        ctx.scale(s, s);
+        text(ctx, lab[1], 0, 0, 40, 900, SANS, col, { align: "center", maxW: Math.max(200, x1 - x0) / s, glow: col === GOLD ? "rgba(255,201,77,0.5)" : "rgba(0,0,0,0.9)", glowBlur: 14 });
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1 - Math.max(cardA, credA);
+    }
+    // a light runs along the whole line, 1792 to now, under the last line
+    if (t >= SWEEP.t0 && t < SWEEP.t0 + SWEEP.dur + 0.4) {
+      const u = (t - SWEEP.t0) / SWEEP.dur;
+      const sy = FIRST + (LAST_REAL - FIRST) * (u < 1 ? 1 - Math.pow(1 - u, 2) : 1);
+      const tail = 40;
+      const fade = clamp((SWEEP.t0 + SWEEP.dur + 0.4 - t) / 0.4);
+      ctx.save();
+      ctx.lineCap = "round";
+      ctx.shadowColor = GOLD;
+      ctx.shadowBlur = 22;
+      ctx.strokeStyle = "#fff6d8";
+      ctx.lineWidth = 6;
+      const step = 0.6;
+      for (let y = Math.max(FIRST, sy - tail); y < sy; y += step) {
+        const y2 = Math.min(sy, y + step);
+        ctx.globalAlpha = (1 - Math.max(cardA, credA)) * fade * Math.pow(1 - (sy - y2) / tail, 2);
+        ctx.beginPath();
+        ctx.moveTo(X(k, y), Yv(k, val(y)));
+        ctx.lineTo(X(k, y2), Yv(k, val(y2)));
+        ctx.stroke();
+      }
+      const hx = X(k, sy);
+      const hy = Yv(k, val(sy));
+      const g = ctx.createRadialGradient(hx, hy, 0, hx, hy, 60);
+      g.addColorStop(0, "rgba(255,250,230,0.95)");
+      g.addColorStop(1, "rgba(255,250,230,0)");
+      ctx.globalAlpha = (1 - Math.max(cardA, credA)) * fade;
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = g;
+      ctx.fillRect(hx - 60, hy - 60, 120, 120);
+      ctx.restore();
+    }
     const xe = X(k, LAST_REAL);
     const ye = Yv(k, val(LAST_REAL));
     ctx.fillStyle = WHITE;
@@ -1980,6 +2302,15 @@ export const createFilm5 = (S: Spec) => {
         text(ctx, S.ending.slogan, CX, 1066, 40, 700, SERIF, SOFT, { align: "center", ls: 8 });
         if (S.ending.maker) text(ctx, S.ending.maker, CX, (1400 - LY) / LS, 30, 700, SANS, MUTED, { align: "center", ls: 2 });
       }
+      // the next episode
+      const na = clamp((t - S.ending.card - 0.5) / 0.4);
+      if (na > 0) {
+        ctx.globalAlpha = cardA * na;
+        ctx.fillStyle = "rgba(255,201,77,0.5)";
+        ctx.fillRect(CX - 40, 1150, 80, 2);
+        text(ctx, NEXT.a, CX, 1214, 32, 700, SERIF, SOFT, { align: "center", ls: 4 });
+        text(ctx, NEXT.b, CX, 1280, 46, 900, SERIF, GOLD, { align: "center", glow: "rgba(255,201,77,0.4)", glowBlur: 16 });
+      }
       ctx.restore();
     }
   };
@@ -2017,8 +2348,12 @@ export const createFilm5 = (S: Spec) => {
     const len = ang.map(() => 3 + Math.floor(r() * 4)); // how many rings each ray crosses
     const cells: { i: number; j: number; fall: boolean; delay: number; spin: number; vx: number }[] = [];
     for (let i = 0; i < NR; i++)
-      for (let j = 1; j < RADII.length - 1; j++) cells.push({ i, j, fall: j <= 4 && r() < 0.52, delay: 0.14 + 0.22 * r() + 0.04 * j, spin: (r() - 0.5) * 3.2, vx: (r() - 0.5) * 160 });
-    return { t0: e.t0, ang, rad, len, cells, NR };
+      for (let j = 1; j < RADII.length - 1; j++) cells.push({ i, j, fall: j <= 3 && r() < (j === 1 ? 0.6 : 0.4), delay: 0.14 + 0.22 * r() + 0.04 * j, spin: (r() - 0.5) * 3.2, vx: (r() - 0.5) * 160 });
+    // a crack wanders: two kinks per segment, and some rays fork
+    const jag = RADII.map(() => ang.map(() => [(r() - 0.5) * 0.5, (r() - 0.5) * 0.5]));
+    const fork = ang.map(() => (r() < 0.45 ? { j: 1 + Math.floor(r() * 3), da: (r() < 0.5 ? -1 : 1) * (0.12 + 0.18 * r()), l: 0.5 + 0.7 * r() } : null));
+    const fallen = new Set(cells.filter((q) => q.fall).map((q) => q.i * 10 + q.j));
+    return { t0: e.t0, ang, rad, len, cells, NR, jag, fork, fallen };
   });
   const drawShatter = (ctx: CanvasRenderingContext2D, t: number, src: HTMLCanvasElement) => {
     for (const sh of SHATTER) {
@@ -2075,10 +2410,21 @@ export const createFilm5 = (S: Spec) => {
         ctx.stroke();
         ctx.restore();
       }
-      // the cracks
+      // the cracks: wandering rays from the impact (some fork), and short ring pieces only where glass fell out
       const ca = d < 1.2 ? 1 : clamp(1 - (d - 1.2) / 1.0);
       ctx.globalAlpha = ca;
       ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      const seg = (x0: number, y0: number, x1: number, y1: number, ja: number, jb: number, o: number) => {
+        const dx = x1 - x0;
+        const dy = y1 - y0;
+        const nx = -dy * 0.12;
+        const ny = dx * 0.12;
+        ctx.moveTo(x0 + o, y0 + o);
+        ctx.lineTo(x0 + dx * 0.33 + nx * ja + o, y0 + dy * 0.33 + ny * ja + o);
+        ctx.lineTo(x0 + dx * 0.66 + nx * jb + o, y0 + dy * 0.66 + ny * jb + o);
+        ctx.lineTo(x1 + o, y1 + o);
+      };
       for (const pass of [0, 1]) {
         ctx.strokeStyle = pass ? "rgba(240,248,255,0.95)" : "rgba(0,0,0,0.55)";
         ctx.lineWidth = pass ? 2.2 : 3.4;
@@ -2091,17 +2437,23 @@ export const createFilm5 = (S: Spec) => {
             const R0 = sh.rad[j][i];
             if (R0 > grow) break;
             const [x1, y1] = pt(i, j);
-            ctx.moveTo(x0 + pass, y0 + pass);
-            ctx.lineTo(x1 + pass, y1 + pass);
+            seg(x0, y0, x1, y1, sh.jag[j][i][0], sh.jag[j][i][1], pass);
             [x0, y0] = [x1, y1];
+          }
+          const fk = sh.fork[i];
+          if (fk && fk.j < sh.len[i] && sh.rad[fk.j][i] < grow) {
+            const [xs, ys] = pt(i, fk.j);
+            const R1 = sh.rad[fk.j][i] * (1 + fk.l);
+            const an = sh.ang[i] + fk.da;
+            seg(xs, ys, px + Math.cos(an) * R1, py + Math.sin(an) * R1, sh.jag[fk.j][i][1], sh.jag[fk.j][i][0], pass);
           }
           for (let j = 1; j < 5; j++) {
             if (j >= sh.len[i] || j >= sh.len[(i + 1) % sh.NR]) continue;
             if (sh.rad[j][i] > grow) continue;
+            if (!(sh.fallen.has(i * 10 + j) || sh.fallen.has(i * 10 + j - 1))) continue;
             const [xa, ya] = pt(i, j);
             const [xb, yb] = pt(i + 1, j);
-            ctx.moveTo(xa + pass, ya + pass);
-            ctx.lineTo(xb + pass, yb + pass);
+            seg(xa, ya, xb, yb, sh.jag[j][i][1] * 0.6, sh.jag[j][i][0] * 0.6, pass);
           }
         }
         ctx.stroke();
@@ -2158,6 +2510,7 @@ export const createFilm5 = (S: Spec) => {
     CBUF ??= mk();
     FBUF ??= mk();
     LBUF ??= mk();
+    OCC = [];
     const b = BUF.getContext("2d")!;
     b.setTransform(1, 0, 0, 1, 0, 0);
     b.clearRect(0, 0, W, H);
