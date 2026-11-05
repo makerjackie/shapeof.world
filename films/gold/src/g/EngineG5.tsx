@@ -284,7 +284,47 @@ const drawIcon = (ctx: CanvasRenderingContext2D, name: Icon, cx: number, cy: num
       ctx.stroke();
     };
     bar(18, 38);
-    bar(-10, 26);
+    bar(-10, 26);  } else if (name === "tariff") {
+    // a crate with a tax stamp across it
+    rrect(ctx, -40, -26, 80, 56, 6);
+    ctx.stroke();
+    line([[-40, -8], [40, -8]]);
+    const slam = 1 + 0.8 * (1 - eo3((p - 0.2) / 0.2));
+    if (p > 0.2) {
+      ctx.save();
+      ctx.translate(6, 10);
+      ctx.rotate(-0.25);
+      ctx.scale(slam, slam);
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = "rgba(12,12,14,0.9)";
+      rrect(ctx, -30, -17, 60, 34, 4);
+      ctx.fill();
+      ctx.lineWidth = 3;
+      rrect(ctx, -30, -17, 60, 34, 4);
+      ctx.stroke();
+      text(ctx, "关税", 0, 10, 24, 900, SANS, col, { align: "center" });
+      ctx.restore();
+    }
+  } else if (name === "gavel") {
+    // a judge's gavel coming down on its block
+    const sw = -0.7 * (1 - eo3((p - 0.15) / 0.2));
+    line([[-40, 34], [10, 34]]);
+    ctx.lineWidth = 4;
+    rrect(ctx, -32, 22, 34, 10, 3);
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(30, 30);
+    ctx.rotate(sw);
+    ctx.translate(-30, -30);
+    ctx.lineWidth = 6;
+    line([[30, 30], [-6, -6]]);
+    ctx.save();
+    ctx.translate(-12, -12);
+    ctx.rotate(-Math.PI / 4);
+    rrect(ctx, -22, -12, 44, 24, 5);
+    ctx.fill();
+    ctx.restore();
+    ctx.restore();
   }
   ctx.restore();
 };
@@ -1286,9 +1326,16 @@ export const createFilm5 = (S: Spec) => {
         ctx.shadowBlur = 0;
         const xa = clamp(X(k, yL), 40, SAFE_R);
         const ya = Yv(k, realV(yL));
-        const lab = `${REAL.name}，扣掉通胀 ≈ ${fmtN(rv)} 美元 · 还差 ${Math.max(0, Math.round(gap * 100))}%`;
-        if (!solved) text(ctx, lab, xa + 10, ya - 14, 24, 700, SANS, solved ? GOLD : SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8, maxW: 900 });
-        OCC.push([xa, ya - 40, xa + 20 + measure(ctx, lab, 24, 700, SANS), ya - 8]);
+        // two short lines at the left, clear of the card at the head
+        const l1 = "1980 年高点，扣掉通胀";
+        const l2 = `≈ ${fmtN(rv)} 美元 · 还差 ${Math.max(0, Math.round(gap * 100))}%`;
+        const lb: [number, number, number, number] = [xa, ya - 68, xa + 20 + Math.max(measure(ctx, l1, 22, 700, SANS), measure(ctx, l2, 22, 700, SANS)), ya - 8];
+        const pb = pctLayout(ctx, t)?.box;
+        if (!solved && !(pb && hitsBox(pb, lb))) {
+          text(ctx, l1, xa + 10, ya - 44, 22, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+          text(ctx, l2, xa + 10, ya - 14, 22, 700, SANS, SILVER, { glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
+          OCC.push([xa, ya - 68, xa + 20 + Math.max(measure(ctx, l1, 22, 700, SANS), measure(ctx, l2, 22, 700, SANS)), ya - 8]);
+        }
         if (solved) solvedFx(ctx, xa, SAFE_R, wy, clamp(h.x - 150, 160, 700), t - tsR, on, "真解套");
       }
     }
