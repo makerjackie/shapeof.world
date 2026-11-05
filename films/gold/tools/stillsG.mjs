@@ -5,7 +5,7 @@ import { bundle } from "@remotion/bundler";
 import { renderStill, selectComposition } from "@remotion/renderer";
 const secs = process.argv.slice(2).map(Number);
 const serveUrl = await bundle({ entryPoint: path.resolve("src/indexG.ts") });
-const composition = await selectComposition({ serveUrl, id: "Gold" });
+const composition = await selectComposition({ serveUrl, id: process.env.COMP || "Gold" });
 const outs = [];
 for (const s of secs) {
   const out = `out/st_${String(s).replace(".", "_")}.png`;
