@@ -104,6 +104,10 @@
       "en": "Instrumental Synthwave",
       "zh": "合成器浪潮"
     },
+    "trap": {
+      "en": "Explainer Trap",
+      "zh": "科普 Trap 律动"
+    },
     "house": {
       "en": "Deep Instrumental House",
       "zh": "浩室"
@@ -199,6 +203,10 @@
     "ambience-texture": {
       "en": "Texture ambience",
       "zh": "抽象声纹"
+    },
+    "phonk": {
+      "en": "Phonk",
+      "zh": "Phonk 漂移"
     }
   },
   "scenarios": {

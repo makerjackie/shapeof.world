@@ -4,7 +4,7 @@
 import * as THREE from "three";
 import { CAST, House, Pt, YOU_RANK } from "./layout";
 import { finalOf, capOf, HouseState, machineryAt } from "./sim";
-import { HOLD, RIVER, SALES, T, TECH, VISIT, WORLD, clamp, ramp, salesAt, win, yearAt } from "../timing";
+import { BUYER21, HOLD, RIVER, SALES, T, VISIT, Y09, clamp, ramp, salesAt, win, yearAt } from "../timing";
 
 const GOLD = new THREE.Color("#ffb53d");
 const LOAN = new THREE.Color("#8fc4ff");
@@ -16,7 +16,6 @@ export type { Pt };
 
 // households that buy new homes in the housing wave, and buy the new things in the next waves
 const BUYERS = [12, 18, 21, 27, 33, 41, 48, 55, 62, 70, 78, 86];
-const TECH_BUYERS = [15, 22, 30, 44, 52, 66, 75, 90];
 export const STAFF = [61, 71]; // the restaurant's cook and waiter
 export const river = (t: number) => (t < RIVER.a - 0.5 || t > RIVER.end ? 0 : win(t, RIVER.a - 0.5, RIVER.end, 0.8, 1.5) * (0.15 + 0.85 * (salesAt(yearAt(t)) / 181930)));
 const CUM = SALES.map((_, i) => SALES.slice(0, i + 1).reduce((a, [, v]) => a + v, 0));
@@ -29,7 +28,7 @@ export const builtAt = (t: number) => {
   const c = CUM[i] + (i + 1 < SALES.length ? SALES[i + 1][1] * f : 0);
   return clamp(c / CUM[CUM.length - 1]);
 };
-export const techStart = (i: number) => TECH.a + 0.6 + i * 1.7;
+export const techStart = (i: number) => 9000 + i;
 
 // who pays whom, in the air above the streets
 function arcsAt(t: number): ArcFlow[] {
@@ -59,10 +58,10 @@ function arcsAt(t: number): ArcFlow[] {
   add(c.boss, c.landlord, row(3.6), { n: 10, lift: 5, label: "房租 9.7" });
   add(c.boss, "gov", row(6.2), { n: 6, lift: 13, label: "税费 1.8" });
   add("hub", c.holder, v("holder"), { n: 40, lift: 10, speed: 11, label: "分红" });
-  // chapter 6: savings into the bank, a loan to the coder, interest back up the hill
-  const save = win(t, T.c6 + 10.5, T.c6 + 16.5, 0.8, 1.2);
-  const loan = win(t, T.c6 + 12.5, T.c6 + 18, 1, 1.5);
-  const interest = win(t, T.c6 + 16, T.c6 + 28.4, 0.8, 1.2);
+  // chapter 5: savings into the bank, a loan to the coder, interest back up the hill
+  const save = win(t, T.c5 + 10.5, T.c5 + 16.5, 0.8, 1.2);
+  const loan = win(t, T.c5 + 11.5, T.c5 + 18, 1, 1.5);
+  const interest = win(t, T.c5 + 16, T.c5 + 31.6, 0.8, 1.2);
   add(c.holder, "bank", save, { n: 30, lift: 10, label: "存款" });
   add(c.boss, "bank", save, { n: 30, lift: 10 });
   add(c.landlord, "bank", save * 0.7, { n: 18, lift: 8 });
@@ -72,19 +71,14 @@ function arcsAt(t: number): ArcFlow[] {
   add(c.rider, "bank", interest * 0.7, { n: 12, lift: 6 });
   add("bank", c.holder, interest, { n: 26, lift: 10, label: "利息" });
   add("bank", c.boss, interest * 0.8, { n: 20, lift: 10 });
+  // chapter 7, 2009: the new loans go first to the builders, who bid for land; the land sellers are paid
+  const y09 = win(t, Y09.a + 0.6, Y09.b + 0.6, 0.8, 1.0);
+  add("bank", "dev", y09, { n: 30, lift: 9, col: LOAN, speed: 9, label: "新贷款" });
+  add("dev", "gov", win(t, Y09.a + 4.4, Y09.b + 0.6, 0.8, 1.0), { n: 22, lift: 8, label: "买地" });
   // chapter 7: the river of money into new homes, and from the developer to the land sellers
   const rv = river(t);
   BUYERS.forEach((r, i) => add(r, "dev", rv * (0.55 + 0.45 * ((i * 7) % 5) / 4), { n: 8, lift: 10 + (i % 3) * 2, speed: 8, label: i === 4 ? "买房" : undefined }));
   add("dev", "gov", win(t, RIVER.peak - 6, RIVER.hold + 1, 1, 1.2), { n: 22, lift: 9, label: "卖地" });
-  // chapter 9: the next waves: everyone buys the new thing; the profit goes up the hill to the owners
-  for (let i = 0; i < 4; i++) {
-    const s = techStart(i);
-    const k = win(t, s, TECH.b, 0.8, 1.2);
-    TECH_BUYERS.forEach((r, j) => {
-      if ((j + i) % 2 === 0) add(r, `t${i}` as Pt, k * 0.8, { n: 6, lift: 8, speed: 8 });
-    });
-    add(`t${i}` as Pt, i % 2 === 0 ? 1 : 2, win(t, s + 2.2, TECH.b, 0.8, 1.2), { n: 18, lift: 6, label: i === 1 ? "利润" : undefined });
-  }
   return out;
 }
 
@@ -102,26 +96,28 @@ export type SceneState = {
   bands: number;
   grow: number;
   world: number;
+  land: number; // 2009: the land the new loans bid for lights up
   house: (h: House, s: HouseState) => HouseView;
 };
 
 export function scene(t: number): SceneState {
   const mc = machineryAt(t);
-  const world = win(t, WORLD.a + 2.6, WORLD.b, 1.2, 1.5);
+  const world = 0;
   const s: SceneState = {
     arcs: arcsAt(t),
-    dim: Math.max(win(t, T.c5 + 1, T.c6, 1, 1) * 0.25, ramp(t, T.sources - 1, T.sources + 1)),
+    dim: Math.max(win(t, Y09.a + 0.2, Y09.b, 1, 1) * 0.1, ramp(t, T.sources - 1, T.sources + 1)),
     glow: ramp(t, T.c11 + 12.5, T.c11 + 16.5),
-    towerHi: win(t, T.c1 + 1, T.c1 + 12, 1, 2),
+    towerHi: win(t, T.hook, T.c1 + 6, 1, 2),
     built: builtAt(t),
-    devDim: ramp(t, RIVER.hold, RIVER.b) * (1 - 0.5 * ramp(t, T.c9 + 2, T.c9 + 6)),
-    tech: [0, 1, 2, 3].map((i) => ramp(t, techStart(i), techStart(i) + 3.2)),
-    savingsToBank: win(t, T.c6 + 11, T.c6 + 28, 1, 2),
-    loans: win(t, T.c6 + 12.5, T.c6 + 18, 1, 1.5),
-    interest: win(t, T.c6 + 16, T.c6 + 28.4, 0.8, 1.2),
-    grow: ramp(t, T.c5 + 18.5, T.c5 + 30) * (1 - ramp(t, T.c6 + 2, T.c6 + 5)),
-    bands: ramp(t, T.c5 + 4.5, T.c5 + 6.5) * (1 - ramp(t, T.c5 + 17, T.c5 + 18.5)),
+    devDim: ramp(t, RIVER.hold, RIVER.b) * (1 - 0.5 * ramp(t, T.c10 + 2, T.c10 + 6)),
+    tech: [0, 0, 0, 0],
+    savingsToBank: win(t, T.c5 + 11, T.c5 + 28, 1, 2),
+    loans: win(t, T.c5 + 11.5, T.c5 + 18, 1, 1.5),
+    interest: win(t, T.c5 + 16, T.c5 + 31.6, 0.8, 1.2),
+    grow: 0,
+    bands: 0,
     world,
+    land: win(t, Y09.a + 4.4, Y09.b + 0.8, 0.8, 1.0),
     house: () => null as unknown as HouseView,
   };
 
@@ -132,6 +128,8 @@ export function scene(t: number): SceneState {
     if (t >= T.c3 && t < T.c4) {
       for (const [r, at] of Object.entries(VISIT)) if (CAST[r as keyof typeof CAST] === h.rank) v.hi = 0.5 * win(t, at - 0.4, at + HOLD[r as keyof typeof HOLD] + 0.4, 0.5, 0.5);
     }
+    // chapter 2's turn: a year on, most of the new deposits sit in households: every tank lights up for a moment
+    if (t >= T.c2 + 27.5 && t < T.c3 + 2) v.hi = Math.max(v.hi, 0.42 * win(t, T.c2 + 28.4, T.c3 + 1.6, 0.6, 0.8));
     // first split (chapter 2): wages run out to every house
     if (t < T.c3 + 3 && mc.split > 0) {
       v.flow = mc.split * (h.g === 0 ? 0.9 : 0.55);
@@ -160,18 +158,9 @@ export function scene(t: number): SceneState {
         v.dimHouse = Math.max(v.dimHouse, h.g <= 1 ? 0 : 0.55 * w);
       }
     }
-    // chapter 5: the richest house in focus
-    if (t >= T.c5 && t < T.c6 + 1) {
-      const k = win(t, T.c5 + 1, T.c5 + 23, 1, 1);
-      v.hi = h.rank === CAST.holder ? 0.6 * k : 0;
-      v.dimHouse = h.rank === CAST.holder ? 0 : 0.6 * k;
-      // ordinary households: their income is mostly wages
-      const o = win(t, T.c5 + 23.2, T.c6 + 0.4, 0.8, 0.8);
-      if (o > 0 && h.g >= 3) v.hi = 0.4 * o;
-    }
-    // chapter 6: savings flow out of the hill into the bank, loans go to the front rows, interest comes back up
-    if (t >= T.c6 && t < T.c7 + 1) {
-      const out = win(t, T.c6 + 10.5, T.c6 + 16.5, 0.8, 1.2);
+    // chapter 5: savings flow out of the hill into the bank, loans go to the front rows, interest comes back up
+    if (t >= T.c5 && t < T.c7 + 1) {
+      const out = win(t, T.c5 + 10.5, T.c5 + 16.5, 0.8, 1.2);
       const interest = s.interest;
       if (h.g === 0) {
         v.flow = Math.max(out, interest);
@@ -194,29 +183,20 @@ export function scene(t: number): SceneState {
           v.coinDir = 1;
         }
       }
-      if (h.rank === CAST.coder) v.hi = 0.5 * win(t, T.c6 + 21, T.c7 - 0.2, 0.8, 0.8);
+      // the savers on the hill first, then the young buyer
+      if (h.g === 0) v.hi = Math.max(v.hi, 0.5 * win(t, T.c5 + 4.8, T.c5 + 11, 0.6, 0.8));
+      if (h.rank === CAST.coder) v.hi = Math.max(v.hi, 0.5 * win(t, T.c5 + 11.5, T.c7 - 0.2, 0.8, 0.8));
     }
     // chapter 7: the buyers glow while the river runs; at the end, the 2021 buyer's tank turns red
-    if (t >= T.c7 && t < T.c9) {
+    if (t >= T.c7 && t < T.c10) {
       v.red = h.red ? 1 - ramp(t, T.c7, T.c7 + 2) : 0;
       if (BUYERS.includes(h.rank)) v.hi = 0.45 * river(t);
       if (h.rank === CAST.coder) {
-        const r21 = win(t, T.c7 + 34.2, T.c9 + 0.4, 0.6, 0.8);
+        const r21 = win(t, BUYER21, T.c10 + 0.4, 0.6, 0.8);
         v.red = Math.max(v.red, r21);
         v.hi = Math.max(v.hi, 0.6 * r21);
         v.level = fin * (1 - 0.7 * r21);
       }
-    }
-    // chapter 9: the world. The richest ten tanks brim, the lower half almost empty.
-    if (t >= T.c9 && t < T.c10 + 1) {
-      if (h.g <= 1) {
-        v.hi = Math.max(v.hi, world);
-        v.level = fin + (1.0 - fin) * world * 0.9;
-      } else if (h.rank >= 50) {
-        v.dimHouse = 0.55 * world;
-        v.level = fin * (1 - 0.85 * world);
-      } else v.dimHouse = 0.25 * world;
-      v.red = 0;
     }
     // chapter 10: settle back; without the new money, a third of the ordinary houses go dark for a moment; then the
     // small boss, who is paid last and loses first

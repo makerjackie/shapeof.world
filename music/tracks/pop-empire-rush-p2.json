@@ -1,0 +1,104 @@
+{
+  "id": "pop-empire-rush-p2",
+  "code": "POP-P2",
+  "title": {
+    "en": "Empire Rush · P2",
+    "zh": "帝国狂飙 · P2"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "epic",
+    "dark",
+    "driving",
+    "tense"
+  ],
+  "topics": [
+    "2,000 years of world population",
+    "empires, plagues and wars",
+    "fast-cut data film"
+  ],
+  "energy": 5,
+  "bpm": 130,
+  "key": "D minor",
+  "instruments": [
+    "cowbell melody",
+    "distorted 808 slides",
+    "punchy kicks",
+    "orchestral stabs",
+    "brass hits"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 170,
+  "prompt": "Instrumental only, no vocals, no voice, no lyrics. Length: 2 minutes 50 seconds.\nAggressive Brazilian phonk meets epic orchestral trailer music, scoring a fast-cut short film about 2,000 years of human history: empires rise and fall, plagues, wars, then the explosion of humanity.\nStrict steady grid: 130 BPM, 4/4, D minor, every beat sharp and clear; the picture cuts on every beat.\nMake it hit HARD and often: punchy kicks, distorted 808 slides, a catchy cowbell melody, orchestral stabs and brass hits that land on the beats, big impacts on the first beat of every 4 bars, short drum fills and risers before each new section, call-and-response between cowbell and strings. Lots of accents, never a flat loop.\n\nEnergy arc:\n[0:00 - 0:06] Explosive opening: a huge hit on every beat.\n[0:06 - 0:09] A vinyl rewind / tape-stop, rising chirps, one beat of silence.\n[0:09 - 0:45] Dark and mysterious but punchy: tense cowbell motif, low choir, heavy 808.\n[0:45 - 1:48] Aggressive and driving: full phonk drums, brass and taiko hits, impacts every 4 bars, two short breakdowns that slam back in.\n[1:48 - 2:12] Solemn: drums stop, low strings, cello, a slow tolling bell, quiet and respectful.\n[2:12 - 2:32] Triumphant and faster: double-time hi-hats, the whole orchestra with the cowbell melody, the most exciting part.\n[2:32 - 2:44] Reflective piano and soft strings.\n[2:44 - 2:50] One final huge hit, ringing out.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "phonk",
+    "orchestral"
+  ],
+  "scenarios": [
+    "motion",
+    "suspense"
+  ],
+  "description": {
+    "en": "Aggressive Brazilian phonk meets epic orchestral trailer: punchy kicks, distorted 808 slides, a catchy cowbell melody, orchestral stabs and brass hits on the beats, fills and risers before each section. 130 BPM, D minor.",
+    "zh": "激进巴西 Phonk 加史诗管弦：重底鼓、失真 808 滑音、抓耳的牛铃旋律，管弦和铜管重音打在拍点上，每段之前有加花和上扬。130 BPM，D 小调。"
+  },
+  "batch": "film-population-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "usage": {
+    "narrationFriendly": false,
+    "placement": "foreground",
+    "tags": [
+      "phonk",
+      "epic",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 170.893,
+  "targetEnergy": 5,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T03:38:52Z",
+  "generation": {
+    "id": "v1_ChdxS2pxYW9Lc0xkcWUwLWtQcHVYWTBBYxIXcUtqcWFvS3NMZHFlMC1rUHB1WFkwQWM",
+    "model": "lyria-3.5",
+    "generator": "Google Lyria 3.5",
+    "api": "Gemini API Interactions",
+    "endpoint": "https://generativelanguage.googleapis.com/v1beta/interactions",
+    "completedAt": "2026-11-04T03:38:52Z",
+    "interactionId": "v1_ChdxS2pxYW9Lc0xkcWUwLWtQcHVYWTBBYxIXcUtqcWFvS3NMZHFlMC1rUHB1WFkwQWM",
+    "sha256": "691837558a783e326b08204303c427f27806c4aa66e3892a930bd4f3447e3a97"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, key, moods and energy are prompt intent (instrumental prompt; some prompts ask for a wordless choir); duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pop-empire-rush-p2/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pop-empire-rush-p2/v1/master.mp3",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pop-empire-rush-p2/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "7d42211d2a7443c7c4c8f28731c290d56b2208edf131ff49f89c6507bccae2a6",
+      "bytes": 2393277,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "691837558a783e326b08204303c427f27806c4aa66e3892a930bd4f3447e3a97",
+      "bytes": 4107559,
+      "mimeType": "audio/mpeg"
+    },
+    "waveform": {
+      "sha256": "d71ef2f087ae69f8a9d9edf251502b4bd56c265d87c25690e3478614c64e3166",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:13:53.974234+00:00"
+}

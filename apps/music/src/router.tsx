@@ -128,6 +128,7 @@ const indexRoute = createRoute({
 const soundsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/sounds', component: () => <HomePage key="sfx" kind="sfx" />, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? '音效 — 世界的形状' : 'Sound effects — Shape of the World', '/sounds'),links:[{rel:'canonical',href:SITE+'/sounds'}]}) })
 const ambienceRoute = createRoute({ getParentRoute: () => rootRoute, path: '/ambience', component: () => <HomePage key="ambience" kind="ambience" />, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? '环境声 — 世界的形状' : 'Ambience — Shape of the World', '/ambience'),links:[{rel:'canonical',href:SITE+'/ambience'}]}) })
 const gamesRoute = createRoute({ getParentRoute: () => rootRoute, path: '/games', component: () => <HomePage key="games" games />, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? '游戏配乐 — 世界的形状' : 'Game music — Shape of the World', '/games'),links:[{rel:'canonical',href:SITE+'/games'}]}) })
+const picksRoute = createRoute({ getParentRoute: () => rootRoute, path: '/picks', component: () => <HomePage key="picks" picks />, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? 'Jackie 精选 — 世界的形状' : "Jackie's picks — Shape of the World", '/picks'),links:[{rel:'canonical',href:SITE+'/picks'}]}) })
 const rightsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/rights', component: RightsPage, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? '音频使用说明 — 世界的形状' : 'Audio permissions — Shape of the World', '/rights'),links:[{rel:'canonical',href:SITE+'/rights'}]}) })
 const packsRoute = createRoute({ getParentRoute: () => rootRoute, path: '/packs', component: PacksPage, head: () => ({meta:seoMeta(resolveLocale(), resolveLocale() === 'zh' ? '场景套件 — 世界的形状' : 'Scene kits — Shape of the World', '/packs'),links:[{rel:'canonical',href:SITE+'/packs'}]}) })
 
@@ -189,7 +190,7 @@ const handoffRoute = createRoute({
   },
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, soundsRoute, ambienceRoute, gamesRoute, rightsRoute, packsRoute, shortsRoute, albumRoute, trackRoute, handoffRoute])
+const routeTree = rootRoute.addChildren([indexRoute, soundsRoute, ambienceRoute, gamesRoute, picksRoute, rightsRoute, packsRoute, shortsRoute, albumRoute, trackRoute, handoffRoute])
 
 export const router = createRouter({
   routeTree,

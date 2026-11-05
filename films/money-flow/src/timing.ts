@@ -2,30 +2,37 @@
 // retimed to the music by editing this one table.
 export const FPS = 30;
 
-// Score (tools/music.py): A 信用火花 (90 BPM, bar 2.6667 s, phase 0.08) from film 0 with two 8-bar repeats inserted
-// (bars 0–16, 9–21, 14–end), so its one silence (track 62.2–64.0 s) falls on the reveal question and the downbeat of
-// track bar 24 (film 106.75) on "约 5000 万". B 核心坍缩 from track 15.6 s at film 168.08: its pause (track 82–86 s)
-// ends on the bridge into the next waves (film 238.5). C 安静的账本 from track 101.6 s at film 285: its silence
-// (track 131–132.5 s) sits before the last line (film 316.4).
+// Score (tools/music.py): one library track per movement, cut on these scene starts. The bar grid below is kept from
+// the first cut (信用火花, 90 BPM); HIT (106.75) is the impact under the reveal, where 活着的蓝 begins in silence.
 export const A_BAR = 240 / 90;
 export const A_FILM = (trackBar: number) => 0.08 + (trackBar + 16) * A_BAR; // for track bars ≥ 22
 export const HIT = A_FILM(24); // 106.75
 
 export const T = {
-  hook: 0,
-  c1: 11, // where the money comes from: loans
-  c2: 31, // first stop: a factory; the split 53 / 8 / 39
-  c3: 62, // a year of flowing (12 months), six households
-  c4: HIT - 3, // reveal (103.75)
-  c5: A_FILM(35), // where the rich get their money (136.08)
-  c6: 168.08, // how they spend; savings lent back, interest flows back
-  c7: 197.08, // the housing wave: rise and ebb
-  c9: 238.08, // the next waves; the world
-  c10: 285, // but…
-  c11: 309, // ending
-  sources: 326,
-  card: 334,
-  end: 342,
+  hook: 0, // 18 万亿 of new money, prices up 0.2%: where did it go?
+  c1: 10.5, // one 亿, lent to a factory: a deposit and a debt are born together
+  c2: 34, // the factory pays it out (53 / 8 / 39); a year on, 八成 of the new deposits sit with households
+  c3: 62, // spending only moves money: a year of flowing (12 months), six households
+  c4: HIT - 3, // reveal (103.75): who saved it
+  c5: A_FILM(35), // the savers' money is lent to young buyers; interest flows back (136.08)
+  c7: 168.08, // new money lifts what it reaches first: 2009, then the housing wave and its ebb
+  c10: 216, // but…
+  c11: 240, // ending
+  sources: 257,
+  card: 265,
+  end: 273,
+};
+
+// Light through the film: late golden afternoon while the money flows, sunset at the reveal, dusk for the savers and
+// the wave, night for the ending (0 = golden, 0.6 = the blue hour of v4, 1 = night).
+const NIGHT_KEYS: [number, number][] = [[0, 0], [100, 0.05], [136, 0.3], [168, 0.45], [200, 0.6], [216, 0.8], [243, 1]];
+export const nightAt = (t: number) => {
+  let i = 0;
+  while (i < NIGHT_KEYS.length - 1 && t > NIGHT_KEYS[i + 1][0]) i++;
+  const [a, x] = NIGHT_KEYS[i];
+  const [b, y] = NIGHT_KEYS[Math.min(i + 1, NIGHT_KEYS.length - 1)];
+  const u = b === a ? 1 : Math.min(1, Math.max(0, (t - a) / (b - a)));
+  return x + (y - x) * u * u * (3 - 2 * u);
 };
 
 export const MONTHS = { start: T.c3 + 2, end: T.c4 - 2 }; // 12 monthly cycles
@@ -53,7 +60,11 @@ export const SALES: [number, number][] = [
   [2023, 116622], [2024, 96750], [2025, 83937],
 ];
 // the river's clock: 1998 at RIVER.a, 2021 at RIVER.peak (held until RIVER.hold), 2025 at RIVER.b
-export const RIVER = { a: T.c7 + 6.6, peak: T.c7 + 18.0, hold: T.c7 + 26.0, b: T.c7 + 32.0, end: T.c7 + 40.6 };
+export const RIVER = { a: T.c7 + 15.2, peak: T.c7 + 25.0, hold: T.c7 + 31.0, b: T.c7 + 35.6, end: T.c7 + 42.0 };
+// chapter 7 opens on 2009: loans nearly doubled, prices fell, land prices doubled where the new money went first
+export const Y09 = { a: T.c7 + 3.4, b: T.c7 + 14.8 };
+// the 2021 buyer: the money has run off, the debt has not
+export const BUYER21 = T.c7 + 37.6;
 export const yearAt = (t: number) => {
   if (t <= RIVER.peak) return 1998 + (23 * Math.max(0, t - RIVER.a)) / (RIVER.peak - RIVER.a);
   if (t <= RIVER.hold) return 2021;
@@ -64,6 +75,6 @@ export const salesAt = (y: number) => {
   const k = Math.max(0, Math.min(1, y - SALES[i][0]));
   return SALES[i][1] + (SALES[i + 1][1] - SALES[i][1]) * k;
 };
-// chapter 9: the next waves (phones, internet, batteries, chips), then the world
-export const TECH = { a: T.c9 + 7.2, b: T.c9 + 24.2 };
-export const WORLD = { a: T.c9 + 24.4, b: T.c10 - 0.2 };
+// v5's next waves and world are cut; kept past the end so nothing fires
+export const TECH = { a: 9000, b: 9001 };
+export const WORLD = { a: 9000, b: 9001 };

@@ -1,0 +1,102 @@
+{
+  "id": "pulse-zheng",
+  "code": "PULSE-ZHENG",
+  "title": {
+    "en": "Pulse · Zheng",
+    "zh": "脉搏 · 筝"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "flagship",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 111.6,
+  "key": "",
+  "instruments": [
+    "guzheng",
+    "dizi bamboo flute",
+    "808 sub bass",
+    "trap drums",
+    "synth pad"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "A 3-minute instrumental track. Instrumental only, no vocals, no lyrics.\nGenre: modern Chinese guofeng trap / Asian-fusion trap, cinematic and steady, made as background for knowledge and science videos.\nTempo: exactly 112 BPM, 4/4, the tempo never changes. Key: F minor.\nHarmony: one four-bar loop repeated through the whole song: Fm | Fm | Db | Eb (one chord per bar). In the peak section the loop becomes Fm | Gb | Db | Eb.\nInstruments: guzheng carries the main melody (bright plucked phrases with slides and tremolo), a dizi bamboo flute answers it and doubles the melody in the bigger sections, warm synth pad underneath, deep 808 sub bass on the chord roots, trap drum kit: punchy kick on beat 1 and the \"and\" of beat 2, crisp snare/clap on beats 2 and 4, constant 16th-note hi-hats with triplet hi-hat rolls at the end of every 4 bars, soft reverse-cymbal risers into each new section. Original melody, short 2-bar phrases that repeat and are easy to remember.\nThe groove stays steady and driving for the whole song; changes come from adding and removing layers, not from changing tempo.\n\n[0:00 - 0:17] Intro (8 bars): guzheng melody over the pad with soft filtered drums and sub; in bars 6-8 the drums drop out, only guzheng and pad, a riser builds.\n[0:17 - 1:24] Main section (32 bars): full beat drops in on the downbeat with 808, hats and clap; guzheng melody, dizi answers; every 8 bars a small new layer.\n[1:24 - 1:44] Breather (8 bars): melody instruments become softer and darker, drums keep a lighter groove, the last bar is a one-bar stop with a riser.\n[1:44 - 2:18] Main section again (16 bars): full beat returns, guzheng and dizi together, brighter.\n[2:18 - 2:48] Peak (14 bars): the biggest and fullest part: heavier 808, wider pads, dizi and guzheng in unison an octave apart, louder drums, same tempo.\n[2:48 - 3:02] Outro (6 bars): drums stop, guzheng plays the motif one last time over the pad, ending on F minor.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "guzheng"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Jackie's pick: the Chinese-colour alternative to Pulse · Strings (take C1, sped up 1.5% to 111.6 BPM). Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "Jackie 精选：「脉搏 · 弦」的国风备选（C1 版，提速 1.5% 到 111.6 BPM）。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [
+    "jackie-picks"
+  ],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 174.982,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:40:51Z",
+  "generation": {
+    "generator": "Google Lyria 3.5 (edited)",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_ChczMUhyYXRPS0ZxNkEycm9QdHRPVzJRRRIXMzFIcmF0T0tGcTZBMnJvUHR0T1cyUUU",
+    "sha256": "4d65bccc0b0f00ee67c8cc49a011d6caaec6debcae2f9beabe9e67f22421a55e"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-zheng/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-zheng/v1/master.wav",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-zheng/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "f29fe69ab936166d920350a5aaab6eaf34f09abe34d0a99a317918d541d1e4fe",
+      "bytes": 2450694,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "4d65bccc0b0f00ee67c8cc49a011d6caaec6debcae2f9beabe9e67f22421a55e",
+      "bytes": 30866900,
+      "mimeType": "audio/wav"
+    },
+    "waveform": {
+      "sha256": "6f683f80b13475972310b68262815f1a8f9a255da869a7db96e3c582506652d4",
+      "bytes": 2809,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:17:01.946341+00:00"
+}

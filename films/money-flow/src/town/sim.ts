@@ -88,9 +88,10 @@ export function houseAt(h: House, t: number): HouseState {
 export function machineryAt(t: number) {
   const k = (a: number, b: number) => win(t, a, b, 0.8, 1.2);
   return {
-    torrent: win(t, T.hook - 1, T.c1 + 4, 0.5, 1.5),
-    towerBank: k(T.c1 + 3.8, T.c2 + 8),
-    bankHub: k(T.c1 + 13.8, T.c2 + 12),
+    // new money appears where loans are made: gold falls into the bank through the hook
+    torrent: win(t, T.hook - 1, T.c1 + 2.5, 0.5, 1.5),
+    towerBank: 0,
+    bankHub: k(T.c1 + 4.2, T.c2 + 12),
     hubSpine: k(T.c2 + 5, T.c3 + 30),
     hubGov: k(T.c2 + 10.4, T.c3 + 30),
     split: win(t, T.c2 + 10.4, T.c3 + 2, 0.8, 1.0),

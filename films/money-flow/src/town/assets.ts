@@ -40,11 +40,15 @@ export const newLook = (o: Partial<{ win: number; lit: number; roof: string; roo
   uTint: { value: new THREE.Color(o.tint ?? "#ffffff") },
 });
 
+// 0 = late golden afternoon, 1 = night; set per frame by the engine (timing.ts nightAt)
+export const NIGHT = { value: 1 };
+
 export function patch(m: THREE.MeshStandardMaterial, look: Look) {
   m.roughness = 0.85;
   m.metalness = 0.0;
   m.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, look);
+    sh.uniforms.uNight = NIGHT;
     sh.vertexShader = sh.vertexShader
       .replace("#include <common>", "#include <common>\nvarying vec3 vWP;")
       .replace("#include <project_vertex>", "#include <project_vertex>\nvWP = (modelMatrix * vec4(transformed, 1.0)).xyz;");
@@ -52,7 +56,7 @@ export function patch(m: THREE.MeshStandardMaterial, look: Look) {
       .replace(
         "#include <common>",
         `#include <common>
-        varying vec3 vWP; uniform float uWin, uLit, uRoofK, uDim; uniform vec3 uRoof, uTint; float kWin;
+        varying vec3 vWP; uniform float uWin, uLit, uRoofK, uDim, uNight; uniform vec3 uRoof, uTint; float kWin;
         float h13(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }`,
       )
       .replace(
@@ -64,7 +68,7 @@ export function patch(m: THREE.MeshStandardMaterial, look: Look) {
           float green = smoothstep(0.02, 0.08, kc.g - kc.r) * smoothstep(0.0, 0.05, kc.g - kc.b);
           diffuseColor.rgb = mix(kc, uRoof * (0.45 + 1.4 * lum), green * uRoofK);
           kWin = step(0.08, kc.g - kc.r) * smoothstep(0.06, 0.14, kc.b - kc.g) * smoothstep(0.35, 0.6, kc.b) * (1.0 - green);
-          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.03, 0.045, 0.07), kWin * 0.85);
+          diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(0.22, 0.26, 0.32), vec3(0.03, 0.045, 0.07), uNight), kWin * 0.85);
           diffuseColor.rgb *= uTint * (1.0 - 0.75 * uDim);
         }`,
       )
@@ -75,7 +79,7 @@ export function patch(m: THREE.MeshStandardMaterial, look: Look) {
           float on = step(1.0 - uLit, h13(floor(vWP * vec3(1.7, 2.1, 1.7)) + 0.31));
           float var = 0.55 + 0.45 * h13(floor(vWP * vec3(1.7, 2.1, 1.7)) + 7.0);
           vec3 warm = mix(vec3(1.0, 0.6, 0.28), vec3(1.0, 0.82, 0.55), h13(floor(vWP * 1.7) + 3.0));
-          totalEmissiveRadiance += kWin * on * var * uWin * (1.0 - uDim) * warm * 1.5;
+          totalEmissiveRadiance += kWin * on * var * uWin * (1.0 - uDim) * warm * 1.5 * mix(0.3, 1.0, uNight);
         }`,
       );
   };

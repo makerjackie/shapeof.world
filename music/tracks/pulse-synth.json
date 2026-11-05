@@ -1,0 +1,99 @@
+{
+  "id": "pulse-synth",
+  "code": "PULSE-SYNTH",
+  "title": {
+    "en": "Pulse · Synth",
+    "zh": "脉搏 · 合成器"
+  },
+  "category": "global",
+  "archetype": "library",
+  "role": "library",
+  "kind": "music",
+  "moods": [
+    "curious",
+    "driving",
+    "steady"
+  ],
+  "topics": [
+    "knowledge explainer",
+    "science video",
+    "beat-cut edit"
+  ],
+  "energy": 4,
+  "bpm": 111.6,
+  "key": "",
+  "instruments": [
+    "plucked synth",
+    "felt piano",
+    "808 sub bass",
+    "trap drums"
+  ],
+  "instrumental": true,
+  "model": "lyria-3.5",
+  "targetDuration": 180,
+  "prompt": "A 3-minute instrumental track. Instrumental only, no vocals, no lyrics.\nGenre: modern cinematic trap / chill electronic, steady and flowing, made as background for knowledge and science videos. The energy stays high and even the whole way: no quiet breakdowns, no long silences, the beat almost never stops.\nTempo: exactly 112 BPM, 4/4, never changes. Key: F minor, the whole song stays in F minor.\nHarmony: one four-bar loop all song long: Fm | Fm | Db | Eb, one chord per bar; the Db bar is slightly softer, like a breath. In the final section the loop is Fm | Gb | Db | Eb.\nInstruments: a bright plucked synth carries the main melody, a felt piano answers it and doubles it in the bigger sections, warm synth pad, deep 808 sub bass on the roots, trap drum kit: kick on beat 1 and beat 3 with a pickup on the \"and\" of 1, crisp clap on beats 2 and 4, steady 16th-note hi-hats with short triplet rolls every 4 bars, soft risers into each section. Original melody in short 2-bar phrases that repeat and are easy to remember.\n\n[0:00 - 0:11] Intro: a bright plucked synth melody with pad, 808 and a light version of the beat already playing at medium volume.\n[0:11 - 0:17] Pre-drop: 3 bars where the drums drop out, a bright plucked synth and pad continue, a riser builds.\n[0:17 - 1:24] Main: full beat drops in on the downbeat, a bright plucked synth melody, a felt piano answers, steady and catchy.\n[1:24 - 1:44] Breather: the beat keeps going at almost the same volume, the melody instruments get softer and darker; the last bar is a short stop.\n[1:44 - 2:18] Main again: full beat, a bright plucked synth and a felt piano together.\n[2:18 - 2:48] Final peak: fuller and warmer, heavier 808 and wide low pads, a bright plucked synth and a felt piano in octaves, slightly louder but not brighter.\n[2:48 - 3:02] Ending: the beat thins, a bright plucked synth plays the motif once more, ends on F minor.\n",
+  "recommendedWorldIds": [],
+  "styles": [
+    "trap"
+  ],
+  "scenarios": [
+    "explain",
+    "motion"
+  ],
+  "description": {
+    "en": "Take E2, sped up to 111.6 BPM. Steady trap groove for explainers: kick and clap backbeat, 16th hi-hats with rolls, 808 sub, a four-bar minor loop, section changes every 8-16 bars.",
+    "zh": "E2 版，提速到 111.6 BPM。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
+  },
+  "batch": "pulse-2026-11",
+  "status": "published",
+  "rightsProfile": "lyria-gemini-api-2026-11",
+  "collections": [],
+  "usage": {
+    "narrationFriendly": true,
+    "placement": "background",
+    "tags": [
+      "explainer",
+      "trap",
+      "beat-synced edits"
+    ]
+  },
+  "duration": 174.416,
+  "targetEnergy": 4,
+  "energyBasis": "prompt-intent",
+  "generatedAt": "2026-11-04T15:55:48Z",
+  "generation": {
+    "generator": "Google Lyria 3.5 (edited)",
+    "model": "lyria-3.5",
+    "api": "Gemini API Interactions",
+    "interactionId": "v1_ChdaRlhyYXV2ZUk3RzMwLWtQbmVyNW1BNBIXWkZYcmF1dmVJN0czMC1rUG5lcjVtQTQ",
+    "sha256": "104317c05b2f575024ac42a438237592a2ed627560706c946737189a568663bc"
+  },
+  "loop": {
+    "seamless": false,
+    "basis": "not seam-tested"
+  },
+  "metadataBasis": "description, style, tempo, moods and energy are prompt intent; tempo of edited takes measured by beat-grid fit; duration is measured; no automated audio review",
+  "assets": {
+    "preview": "https://music-cdn.shapeof.world/tracks/pulse-synth/v1/preview.mp3",
+    "master": "https://music-cdn.shapeof.world/tracks/pulse-synth/v1/master.wav",
+    "waveform": "https://music-cdn.shapeof.world/tracks/pulse-synth/v1/waveform.json"
+  },
+  "assetIntegrity": {
+    "preview": {
+      "sha256": "2a4d0979ec84ee1d490f16bc731a01bf59799edff47065986a28ad84e7bed69c",
+      "bytes": 2442649,
+      "mimeType": "audio/mpeg"
+    },
+    "master": {
+      "sha256": "104317c05b2f575024ac42a438237592a2ed627560706c946737189a568663bc",
+      "bytes": 30766976,
+      "mimeType": "audio/wav"
+    },
+    "waveform": {
+      "sha256": "d27b5316876611d16fc0ddb98aa3bc72a54769ec1c7c0385611a3af726598b74",
+      "bytes": 2801,
+      "mimeType": "application/json"
+    }
+  },
+  "verifiedAt": "2026-11-05T03:17:40.310844+00:00"
+}

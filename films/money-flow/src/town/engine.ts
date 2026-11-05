@@ -8,18 +8,28 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { applyPose, H, poseAt, W } from "./camera";
-import { animations, inst, Kit, loadModels, Look, newLook } from "./assets";
+import { animations, inst, Kit, loadModels, Look, newLook, NIGHT } from "./assets";
 import {
   BANK, CAST, DEV, DEV_TOWERS, GOV, HOUSES, House, HUB, PIPES, ROLES, Role, SHACKS, SHANTY, SPINE_X, STREETS, TERRACES, TERRACE_X, TOWER, TRUNKS,
   byRank, groundY, housePath, rnd, ROW_END_X, tankBase, tankTop, yardOf, TECH_TOWERS, TECH_SCALE, ptOf,
 } from "./layout";
-import { T } from "../timing";
+import { nightAt, T } from "../timing";
+
+const C_HEMI_DAY = new THREE.Color("#ece2d0");
+const C_GROUND_DAY = new THREE.Color("#6a5a48");
+const C_SUN_DAY = new THREE.Color("#ffc48c");
+const C_FOG_DAY = new THREE.Color("#c2a98c");
+const C_FOG_NIGHT = new THREE.Color("#0e1528");
+const C_GROUND_M = new THREE.Color("#4d5444");
+const C_TERR_M = new THREE.Color("#4f6a45");
+const C_ROAD_M = new THREE.Color("#3a3c42");
 import { circulation, houseAt, machineryAt } from "./sim";
 import { Pt, scene as sceneAt, SceneState } from "./state";
 
 const GOLD = new THREE.Color("#ffb53d");
 const GOLD_HI = new THREE.Color("#ffe2a0");
 const RED = new THREE.Color("#ff3b2f");
+const BANK_TOP = 7.2; // roof of the bank (building-n × 3.4), where the new money lands
 
 // ---------------------------------------------------------------- shaders
 const flowMat = (radius: number, len: number) =>
@@ -272,6 +282,13 @@ class Town {
   isReady = false;
   ready: Promise<void>;
   lastT = 0;
+  hemi!: THREE.HemisphereLight;
+  sun!: THREE.DirectionalLight;
+  moon!: THREE.DirectionalLight;
+  skyMat!: THREE.ShaderMaterial;
+  groundM!: THREE.MeshStandardMaterial;
+  terrM!: THREE.MeshStandardMaterial;
+  roadM!: THREE.MeshStandardMaterial;
 
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -316,8 +333,9 @@ class Town {
   build() {
     const S = this.scene;
     // ---------- light: blue hour. Low warm sun from the west-southwest, cool sky, a cool moon fill from the east.
-    S.add(new THREE.HemisphereLight("#8ea6dc", "#2c3040", 1.7));
-    const sun = new THREE.DirectionalLight("#ffb07a", 2.1);
+    this.hemi = new THREE.HemisphereLight("#8ea6dc", "#2c3040", 1.7);
+    S.add(this.hemi);
+    const sun = (this.sun = new THREE.DirectionalLight("#ffb07a", 2.1));
     sun.position.set(-150, 70, 70);
     sun.target.position.set(15, 0, -10);
     sun.castShadow = true;
@@ -333,7 +351,7 @@ class Town {
     sun.shadow.normalBias = 0.03;
     sun.shadow.radius = 3;
     S.add(sun, sun.target);
-    const moon = new THREE.DirectionalLight("#9fb6ff", 0.55);
+    const moon = (this.moon = new THREE.DirectionalLight("#9fb6ff", 0.55));
     moon.position.set(90, 60, 40);
     S.add(moon);
     const warm = new THREE.PointLight("#ffb35a", 80, 60, 1.6);
@@ -342,37 +360,41 @@ class Town {
 
     // ---------- sky: deep blue overhead, an ember band low in the west, a few stars
     {
-      const sky = new THREE.Mesh(
-        new THREE.SphereGeometry(700, 48, 24),
-        new THREE.ShaderMaterial({
+      this.skyMat = new THREE.ShaderMaterial({
+          uniforms: { uN: { value: 0.6 } },
           side: THREE.BackSide,
           depthWrite: false,
           fog: false,
           vertexShader: `varying vec3 vP; void main(){ vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
           fragmentShader: /* glsl */ `
-            varying vec3 vP;
+            varying vec3 vP; uniform float uN;
             float h(vec3 p){ return fract(sin(dot(p, vec3(12.9898, 78.233, 37.719))) * 43758.5453); }
             void main(){
               vec3 d = normalize(vP);
               float y = clamp(d.y, -0.2, 1.0);
-              vec3 zen = vec3(0.025, 0.045, 0.12), mid = vec3(0.09, 0.15, 0.32), hor = vec3(0.32, 0.36, 0.55);
+              // uN: 0 golden afternoon, 0.6 blue hour, 1 night
+              float gd = smoothstep(0.6, 0.0, uN), nt = smoothstep(0.6, 1.0, uN);
+              vec3 zen = mix(mix(vec3(0.025, 0.045, 0.12), vec3(0.2, 0.34, 0.62), gd), vec3(0.008, 0.014, 0.04), nt);
+              vec3 mid = mix(mix(vec3(0.09, 0.15, 0.32), vec3(0.5, 0.58, 0.74), gd), vec3(0.025, 0.04, 0.1), nt);
+              vec3 hor = mix(mix(vec3(0.32, 0.36, 0.55), vec3(1.0, 0.78, 0.56), gd), vec3(0.08, 0.1, 0.19), nt);
               vec3 c = mix(hor, mid, smoothstep(0.0, 0.18, y));
               c = mix(c, zen, smoothstep(0.15, 0.7, y));
               float w = pow(max(0.0, dot(normalize(vec2(d.x, d.z)), normalize(vec2(-1.0, 0.25)))), 3.0);
-              c += vec3(1.0, 0.45, 0.18) * w * exp(-max(y, 0.0) * 14.0) * 0.9;
-              c += vec3(0.9, 0.5, 0.35) * w * exp(-max(y, 0.0) * 4.0) * 0.18;
+              float emb = (1.0 + 0.4 * gd) * (1.0 - 0.85 * nt);
+              c += vec3(1.0, 0.45, 0.18) * w * exp(-max(y, 0.0) * 14.0) * 0.9 * emb;
+              c += vec3(0.9, 0.5, 0.35) * w * exp(-max(y, 0.0) * 4.0) * (0.18 + 0.35 * gd) * emb;
               vec3 cell = floor(d * 260.0);
               float st = step(0.9975, h(cell)) * smoothstep(0.2, 0.6, y);
-              c += vec3(0.8, 0.85, 1.0) * st * 0.9;
+              c += vec3(0.8, 0.85, 1.0) * st * 0.9 * smoothstep(0.35, 0.8, uN);
               gl_FragColor = vec4(c, 1.0);
             }`,
-        }),
-      );
+        });
+      const sky = new THREE.Mesh(new THREE.SphereGeometry(700, 48, 24), this.skyMat);
       S.add(sky);
     }
 
     // ---------- ground, terraces, roads, lawns
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), new THREE.MeshStandardMaterial({ color: "#232b3a", roughness: 1 }));
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), (this.groundM = new THREE.MeshStandardMaterial({ color: "#232b3a", roughness: 1 })));
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     S.add(ground);
@@ -382,7 +404,7 @@ class Town {
       m.receiveShadow = true;
       return m;
     };
-    const terrM = new THREE.MeshStandardMaterial({ color: "#2e3d35", roughness: 1 });
+    const terrM = (this.terrM = new THREE.MeshStandardMaterial({ color: "#2e3d35", roughness: 1 }));
     const wallM = new THREE.MeshStandardMaterial({ color: "#3a3d45", roughness: 0.95 });
     for (const t of TERRACES) {
       const w = TERRACE_X[1] - TERRACE_X[0];
@@ -397,7 +419,7 @@ class Town {
     lawn.position.set((TERRACE_X[0] + TERRACE_X[1]) / 2, 0.01, -7 + 20);
     S.add(lawn);
     // roads: each street row, the spine, the machinery district
-    const roadM = new THREE.MeshStandardMaterial({ color: "#1d2028", roughness: 0.75 });
+    const roadM = (this.roadM = new THREE.MeshStandardMaterial({ color: "#1d2028", roughness: 0.75 }));
     const markM = new THREE.MeshBasicMaterial({ color: "#6b6450" });
     const road = (x0: number, z0: number, x1: number, z1: number, y: number, w = 2.4) => {
       const len = Math.hypot(x1 - x0, z1 - z0);
@@ -580,11 +602,9 @@ class Town {
       S.add(tb.mesh);
     }
 
-    // ---------- central bank tower: the tallest skyscraper, a gold crown
-    const towerLook = newLook({ lit: 0.4, roof: "#3c4250", win: 0.6 });
-    this.add(inst("com", "building-skyscraper-d", towerLook), TOWER.x, 0, TOWER.z, 5.0);
-    const crown = new THREE.Mesh(new THREE.CylinderGeometry(3.6, 3.6, 1.2, 40, 1, true), new THREE.MeshBasicMaterial({ color: GOLD, side: THREE.DoubleSide, transparent: true }));
-    crown.position.set(TOWER.x, 5.47 * 5 + 1.0, TOWER.z);
+    // (v6: no central-bank tower; new money appears at the bank, where loans are made)
+    const crown = new THREE.Mesh(new THREE.CylinderGeometry(2.6, 2.6, 0.5, 40, 1, true), new THREE.MeshBasicMaterial({ color: GOLD, side: THREE.DoubleSide, transparent: true }));
+    crown.position.set(BANK.x, BANK_TOP + 0.3, BANK.z);
     S.add(crown);
     this.towerCrown = crown;
     // bank, government
@@ -668,9 +688,9 @@ class Town {
       const geo = new THREE.BufferGeometry();
       geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(N * 3), 3));
       geo.setAttribute("seed", new THREE.BufferAttribute(seed, 3));
-      const top = 5.47 * 5 + 1.0;
+      const top = BANK_TOP;
       const mat = new THREE.ShaderMaterial({
-        uniforms: { uT: { value: 0 }, uK: { value: 0 }, uC: { value: new THREE.Vector3(TOWER.x, top, TOWER.z) } },
+        uniforms: { uT: { value: 0 }, uK: { value: 0 }, uC: { value: new THREE.Vector3(BANK.x, top, BANK.z) } },
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
@@ -705,7 +725,7 @@ class Town {
               gl_FragColor = vec4(vec3(1.0, 0.6, 0.18) * uK * edge * s * fade * 0.42, 1.0); }`,
         }),
       );
-      col.position.set(TOWER.x, top + 35, TOWER.z);
+      col.position.set(BANK.x, top + 35, BANK.z);
       S.add(col);
       this.column = col;
       this.torrent = new THREE.Points(geo, mat);
@@ -779,8 +799,25 @@ class Town {
     applyPose(this.camera, pose);
     const mc = machineryAt(t);
 
-    this.renderer.toneMappingExposure = 1.0 - 0.45 * st.dim;
-    this.bloom.strength = 0.38 + 0.3 * st.glow;
+    // light: golden afternoon → blue hour → night (timing.ts nightAt)
+    const n = nightAt(t);
+    const g0 = 1 - THREE.MathUtils.clamp(n / 0.6, 0, 1); // 1 golden … 0 blue hour
+    const n1 = THREE.MathUtils.clamp((n - 0.6) / 0.4, 0, 1); // 0 blue hour … 1 night
+    NIGHT.value = n;
+    this.skyMat.uniforms.uN.value = n;
+    this.hemi.intensity = (1.7 + 1.9 * g0) * (1 - 0.35 * n1);
+    this.hemi.color.set("#8ea6dc").lerp(C_HEMI_DAY, g0);
+    this.hemi.groundColor.set("#2c3040").lerp(C_GROUND_DAY, g0);
+    this.sun.intensity = (2.1 + 3.2 * g0) * (1 - 0.7 * n1);
+    this.sun.color.set("#ffb07a").lerp(C_SUN_DAY, g0);
+    this.moon.intensity = 0.55 - 0.3 * g0 + 0.25 * n1;
+    (this.scene.fog as THREE.FogExp2).density = 0.0042 - 0.0016 * g0;
+    (this.scene.fog as THREE.FogExp2).color.set("#22304f").lerp(C_FOG_DAY, g0).lerp(C_FOG_NIGHT, n1);
+    this.groundM.color.set("#232b3a").lerp(C_GROUND_M, g0);
+    this.terrM.color.set("#2e3d35").lerp(C_TERR_M, g0);
+    this.roadM.color.set("#1d2028").lerp(C_ROAD_M, g0);
+    this.renderer.toneMappingExposure = (1.0 + 0.18 * g0 - 0.06 * n1) * (1.0 - 0.45 * st.dim);
+    this.bloom.strength = 0.38 + 0.3 * st.glow - 0.1 * g0;
     // tilt-shift: stronger when the camera is close
     const close = THREE.MathUtils.clamp(1 - (pose.dist - 14) / 70, 0, 1);
     for (const p of [this.tsH, this.tsV]) {
@@ -807,6 +844,11 @@ class Town {
       o.scale.y = Math.max(0.02, hgt) * o.scale.x * 0.5;
       this.devLooks[i].uWin.value = 0.4 + 1.0 * st.built * (1 - st.devDim);
       this.devLooks[i].uDim.value = 0.75 * st.devDim;
+    });
+    // 2009: the land under the old sheds lights up as the new loans bid for it
+    this.shantyGold.forEach((g, i) => {
+      (g.material as THREE.MeshBasicMaterial).opacity = 0.9 * st.land * (0.75 + 0.25 * Math.sin(t * 3 + i));
+      g.scale.setScalar(0.6 + 0.9 * st.land);
     });
     // the old sheds sink away as the towers go up
     this.shacks.forEach((sh, i) => {
