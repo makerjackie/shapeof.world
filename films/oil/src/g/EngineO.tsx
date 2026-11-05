@@ -939,7 +939,7 @@ export const createFilm5 = (S: Spec) => {
     // caption
     ctx.save();
     ctx.globalAlpha = a * 0.85;
-    text(ctx, zk > 0.5 ? tr("全世界约五分之一的石油，从这里运出") : tr("产油地图 · 越亮，产量占全世界越多"), FM.x0 + 4, FM.y1 + 24, 20, 700, SERIF, MUTED, { glow: "rgba(0,0,0,0.9)", glowBlur: 6 });
+    text(ctx, zk > 0.5 ? tr("全世界约五分之一的石油，从这里运出") : tr("产油地图 · 越亮，产量占全世界越多"), FM.x1 - 4, FM.y0 + 18, 20, 700, SERIF, MUTED, { align: "right", glow: "rgba(0,0,0,0.95)", glowBlur: 8 });
     ctx.restore();
   };
 
