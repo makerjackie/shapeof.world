@@ -48,7 +48,7 @@
     "zh": "史诗混合预告片配乐加漂移 Phonk 鼓：Braam 低音号角、太鼓群、断奏弦乐和铜管、暗色牛铃主旋律、失真 808；重拍上有打击，每 8 拍一次轰鸣。130 BPM，C 小调。"
   },
   "batch": "film-population-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "usage": {
     "narrationFriendly": false,
@@ -99,5 +99,6 @@
       "bytes": 2797,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:14:11.274065+00:00"
 }

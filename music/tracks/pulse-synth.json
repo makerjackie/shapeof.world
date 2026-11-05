@@ -45,7 +45,7 @@
     "zh": "E2 版，提速到 111.6 BPM。为知识科普视频做的稳定 Trap 律动：底鼓加二四拍拍手、16 分音符踩镲和滚奏、808 低音、四小节小调循环，每 8 到 16 小节换一层。"
   },
   "batch": "pulse-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "collections": [],
   "usage": {
@@ -94,5 +94,6 @@
       "bytes": 2801,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:17:40.310844+00:00"
 }

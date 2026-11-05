@@ -48,7 +48,7 @@
     "zh": "激进巴西 Phonk 加史诗管弦：重底鼓、失真 808 滑音、抓耳的牛铃旋律，管弦和铜管重音打在拍点上，每段之前有加花和上扬。130 BPM，D 小调。"
   },
   "batch": "film-population-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "usage": {
     "narrationFriendly": false,
@@ -99,5 +99,6 @@
       "bytes": 2801,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:13:53.974234+00:00"
 }

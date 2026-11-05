@@ -49,7 +49,7 @@
     "zh": "史诗暗黑 Phonk 加电影预告片管弦：漂移 Phonk 牛铃主旋律、失真 808 贝斯、硬核 Trap 鼓，叠弦乐、铜管重音、低沉无词合唱和太鼓。全曲稳定 130 BPM，D 小调，适合卡点剪辑。"
   },
   "batch": "film-population-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "usage": {
     "narrationFriendly": false,
@@ -100,5 +100,6 @@
       "bytes": 2799,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:12:54.264803+00:00"
 }

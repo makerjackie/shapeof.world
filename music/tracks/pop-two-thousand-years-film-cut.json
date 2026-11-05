@@ -49,7 +49,7 @@
     "zh": "《两千年世界人口》成片配乐：「兴衰 · W7」按小节重新剪辑到 2:51（开场、倒回、五幕、结尾）。史诗暗黑 Phonk 加电影预告片管弦：漂移 Phonk 牛铃主旋律、失真 808 贝斯、硬核 Trap 鼓，叠弦乐、铜管重音、低沉无词合唱和太鼓。全曲稳定 130 BPM，D 小调，适合卡点剪辑。"
   },
   "batch": "film-population-2026-11",
-  "status": "pending",
+  "status": "published",
   "rightsProfile": "lyria-gemini-api-2026-11",
   "usage": {
     "narrationFriendly": false,
@@ -96,5 +96,6 @@
       "bytes": 2798,
       "mimeType": "application/json"
     }
-  }
+  },
+  "verifiedAt": "2026-11-05T03:16:34.358517+00:00"
 }
