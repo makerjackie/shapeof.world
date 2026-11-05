@@ -12,6 +12,7 @@ def _num(s): return float(s)
 CUES = {k: _num(v) for k, v in re.findall(r"(\w+):\s*([\d.]+),?(?:\s*//[^\n]*)?", src.split("export const CUES")[1].split("};")[0])}
 SHOTS = {m[1]: (float(m[2]), float(m[3])) for m in re.findall(r"id: '(s\d+)', name: '(\w+)'.*?start: ([\d.]+), end: ([\d.]+)", src)}
 STAMPS = [(int(a), float(b), float(c)) for a, b, c in re.findall(r"n: (\d), t0: ([\d.]+), t1: ([\d.]+)", src)]
+L.DUR = float(re.search(r"DURATION = ([\d.]+)", src)[1])     # the buffer in sound_lib has 8 s of headroom
 S = lambda name: SHOTS[name][0]
 E = lambda name: SHOTS[name][1]
 print("cues", len(CUES), "shots", len(SHOTS), "stamps", STAMPS)

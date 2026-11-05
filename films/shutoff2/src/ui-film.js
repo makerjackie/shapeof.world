@@ -12,6 +12,8 @@ const W = 1080, H = 1920;
 
 // ---------------------------------------------------------------- title 「关掉」 → 「关不掉」
 // u: seconds into the card; typeAt/insertAt: seconds (relative) when 关掉 is typed / 不 is inserted
+// title keystroke times relative to the card (shared with events())
+export function titleBeats(o) { return { t1: o.typeAt, t2: o.typeAt + 0.2, back: o.insertAt - 0.34, tBu: o.insertAt + 0.1 }; }
 export function titleCard(g, u, o) {
   g.fillStyle = '#050608'; g.fillRect(0, 0, W, H);
   // a very faint cold light falloff so the black isn't dead
@@ -20,11 +22,11 @@ export function titleCard(g, u, o) {
   g.fillStyle = bg; g.fillRect(0, 0, W, H);
   const font = f(900, 250, 'serif');
   const cy = 940;
-  const t1 = o.typeAt, t2 = o.typeAt + 0.2, ti = o.insertAt;
-  const back = ti - 0.34;                    // the cursor starts to move back
+  const ti = o.insertAt;
+  const { t1, t2, back } = titleBeats(o);    // back: the cursor starts to move back
   const has1 = u >= t1, has2 = u >= t2, hasBu = u >= ti;
   const ins = hasBu ? easeOut(clamp((u - ti) / 0.12), 2) : 0;   // 掉 slides open first
-  const tBu = ti + 0.1;                      // then 不 drops into the gap
+  const tBu = titleBeats(o).tBu;             // then 不 drops into the gap
   const wGuan = tw(g, '关', font), wBu = tw(g, '不', font), wDiao = tw(g, '掉', font);
   const gap = 26;
   const total2 = wGuan + gap + wDiao;
@@ -36,8 +38,7 @@ export function titleCard(g, u, o) {
   const glyph = (ch, x, w, t, color, glow) => {
     const s = pop(t);
     g.save(); g.translate(x + w / 2, cy); g.scale(s, s);
-    if (glow) { g.shadowColor = glow; g.shadowBlur = 50; }
-    txt(g, ch, 0, 0, { font, color, align: 'center', base: 'middle' });
+    txt(g, ch, 0, 0, { font, color, align: 'center', base: 'middle', shadow: glow ? [glow, 50] : null });
     g.restore();
   };
   const white = '#f3efe6';
@@ -79,8 +80,6 @@ export function timestamp(g, label, time, a, dur, o = {}) {
   g.fillStyle = sc; g.fillRect(0, cy - 620, W, 1240);
   g.save();
   g.globalAlpha = k;
-  const blur = (1 - kin) * 10;
-  if (blur > 0.3) g.filter = `blur(${blur.toFixed(1)}px)`;
   const drift = (1 - kin) * 18 - (1 - kout) * 10;
   if (label) txt(g, label, 540, cy - 210 + drift, { font: f(300, 50), color: 'rgba(235,240,250,0.85)', align: 'center', ls: 22 + 18 * (1 - kin) });
   if (label) { g.fillStyle = 'rgba(235,240,250,0.5)'; g.fillRect(540 - 36, cy - 180 + drift, 72, 2); }
@@ -156,6 +155,7 @@ export function drawStamp(g, stamp) {
   const out = smooth((t - (dur - 0.16)) / 0.16);
   a *= 1 - out; s *= 1 + 0.03 * out;
   const c = stampCanvas(n);
+  if (a < 0.015) return;
   g.save();
   g.translate(cx, cy); g.rotate(r * Math.PI / 180);
   // pressure shadow at the moment of impact
@@ -167,8 +167,7 @@ export function drawStamp(g, stamp) {
   g.scale(s * 0.94, s * 0.94);
   g.globalAlpha = a;
   // a soft dark backing so the ink reads over any picture
-  g.save(); g.shadowColor = 'rgba(0,0,0,0.6)'; g.shadowBlur = 50;
-  rr(g, -SW / 2 + 16, -SH / 2 + 16, SW - 32, SH - 32, 30); g.fillStyle = 'rgba(12,10,10,0.64)'; g.fill(); g.restore();
+  shadowed(g, 'rgba(0,0,0,0.6)', 50, 0, () => { rr(g, -SW / 2 + 16, -SH / 2 + 16, SW - 32, SH - 32, 30); g.fillStyle = 'rgba(12,10,10,0.64)'; g.fill(); });
   g.drawImage(c, -SW / 2, -SH / 2);
   g.restore();
 }
@@ -187,7 +186,8 @@ export function subtitle(g, lines, a, dur, y, o = {}) {
 
 // ---------------------------------------------------------------- CCTV HUD (s12)
 let _scan = null;
-export const CCTV_BOX = { x: 540, y: 940, w: 420, h: 520 };    // the seated man, near the centre of the frame
+export const CCTV_BOX = { x: 600, y: 950, w: 380, h: 400 };    // framed on the Room dept's s12 render (林工 at x 460–740, y 810–1100)
+export const CCTV_APPEAR = 0.15;   // the recognition box appears this long after the cut    // the seated man, near the centre of the frame
 export function cctvHud(g, st, cues) {
   const tr = st.tr;
   if (!_scan) {
@@ -207,19 +207,19 @@ export function cctvHud(g, st, cues) {
   }
   g.restore();
   const mono = (px, w = 500) => f(w, px, 'mono');
-  if (blink(tr, 1.0)) disc(g, 122, 266, 13, '#ff3b30');
-  txt(g, 'REC', 148, 280, { font: mono(40, 600), color: '#ffffff', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  txt(g, 'CAM 03 · 书房', 110, 334, { font: mono(32), color: 'rgba(255,255,255,0.85)', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  const secs = 9 + Math.floor(Math.max(0, st.t - storyTime(48.4)));
-  txt(g, '2026-11-05', 930, 280, { font: mono(34), color: 'rgba(255,255,255,0.85)', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
-  txt(g, `02:41:${String(secs).padStart(2, '0')}`, 930, 334, { font: mono(40, 600), color: '#ffffff', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
+  if (blink(tr, 1.0)) disc(g, 122, 296, 13, '#ff3b30');
+  txt(g, 'REC', 148, 310, { font: mono(40, 600), color: '#ffffff', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
+  txt(g, 'CAM 03 · 书房', 110, 364, { font: mono(32), color: 'rgba(255,255,255,0.85)', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
+  const secs = 9 + Math.floor(Math.max(0, st.lt));
+  txt(g, '2026-11-05', 930, 310, { font: mono(34), color: 'rgba(255,255,255,0.85)', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
+  txt(g, `02:41:${String(secs).padStart(2, '0')}`, 930, 364, { font: mono(40, 600), color: '#ffffff', align: 'right', shadow: ['rgba(0,0,0,0.6)', 8, 0] });
   // recognition box
   const look = tr - cues.lookUp;
   const lock = look > 0 ? easeOut(clamp(look / 0.35), 3) : 0;
   const B = CCTV_BOX;
   const inset = 18 * lock;
   const bx = B.x - B.w / 2 + inset, by = B.y - B.h / 2 + inset, bw = B.w - 2 * inset, bh = B.h - 2 * inset;
-  const appear = smooth((st.ltr - 0.15) / 0.25);
+  const appear = smooth((st.ltr - CCTV_APPEAR) / 0.25);
   g.save(); g.globalAlpha = appear;
   g.strokeStyle = 'rgba(255,181,71,0.9)'; g.lineWidth = 3; g.strokeRect(bx, by, bw, bh);
   g.lineWidth = 9; g.lineCap = 'square';
@@ -308,8 +308,7 @@ export function endCard(g, a, dur, mark) {
   g.save(); g.globalAlpha = k;
   if (mark) {
     const s = 230;
-    g.save(); g.shadowColor = 'rgba(255,190,120,0.25)'; g.shadowBlur = 60;
-    g.drawImage(mark, 540 - s / 2, 600 - s / 2, s, s); g.restore();
+    shadowed(g, 'rgba(255,190,120,0.25)', 60, 0, () => g.drawImage(mark, 540 - s / 2, 600 - s / 2, s, s));
   }
   txt(g, '世界的形状', 540, 860, { font: f(600, 92), color: '#f3efe6', align: 'center', ls: 18 });
   txt(g, '看见世界如何运行', 540, 940, { font: f(300, 42), color: 'rgba(230,230,230,0.7)', align: 'center', ls: 14 });

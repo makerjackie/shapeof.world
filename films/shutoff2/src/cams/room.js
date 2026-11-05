@@ -23,12 +23,10 @@ export const CAMS = {
   },
 };
 
-const DBG = typeof location !== 'undefined' && new URLSearchParams(location.search).get('roomdbg') === '1';
-const DBG_LOOK = { preset: 'morning', sunElev: 40, sunAz: 140, ambient: '#303540', exposure: 1.0 };
 export const LOOKS = {
-  s05: () => DBG ? DBG_LOOK : NIGHT({
+  s05: () => NIGHT({
     lights: [phoneLight(0.85), { pos: rw(0, 1.5, -2.8), r: 4.2, color: '#3c4aa8', i: 0.45 }],
-    rainHaze: 0.7, rainBlur: 22,
+    rainHaze: 0.7, rainBlur: 22, rainFall: 0.45,
   }),
   // infrared fill from the camera itself: the room reads flat and grey, his face stays a dark void
   s12: () => NIGHT({

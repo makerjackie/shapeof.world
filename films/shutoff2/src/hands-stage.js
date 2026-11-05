@@ -82,7 +82,7 @@ export const STAGES = {
       return o;
     },
     pale: () => 0.1,
-    phone: { pos: [-0.05, ROOM.desk.top, -1.6], yaw: -8, canvas: 'phone-lin', glow: (lt, d, st) => 0.25 + 0.75 * smooth(invLerp(st.cues.pulse - 0.05, st.cues.pulse + 0.25, st.tr)) },
+    phone: { pos: [-0.05, ROOM.desk.top, -1.56], yaw: -8, canvas: 'phone-lin', glow: (lt, d, st) => smooth(invLerp(st.cues.pulse - 0.05, st.cues.pulse + 0.2, st.tr)) },
   },
   // s18: the watch rolls 03:12 → 08:59 (same pose as s15, a still hand)
   s18: {
@@ -90,7 +90,7 @@ export const STAGES = {
     matrix() { return STAGES.s15.matrix(); },
     over() { return STAGES.s15.over(0); },
     pale: () => 0.1,
-    phone: { pos: [-0.05, ROOM.desk.top, -1.6], yaw: -8, canvas: 'phone-lin', glow: (lt, d) => 0.25 * (1 - smooth(invLerp(0.2, 1.4, lt))) },
+    phone: { pos: [-0.05, ROOM.desk.top, -1.56], yaw: -8, canvas: 'phone-lin', glow: () => 0 },
   },
   // s21: 「……没有。」 He grips the table edge: palm over the edge, fingers clawing the top, thumb hooked under, knuckles white.
   s21: {

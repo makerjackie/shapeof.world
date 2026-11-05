@@ -83,10 +83,12 @@ float depthAt(vec2 uv){ return texture(uSceneData, uv).b; }
 vec3 blurBehind(vec2 uv, float radPx, float gd){
   vec2 px = 1.0 / uRes;
   vec3 acc = vec3(0.0); float w = 0.0;
-  for(int i = 0; i < 32; i++){
+  float jit = h12(floor(gl_FragCoord.xy)) * 6.2831853;
+  float jr = h12(floor(gl_FragCoord.xy) + 17.0);
+  for(int i = 0; i < 40; i++){
     float fi = float(i);
-    float a = fi * 2.39996323;
-    float rr = sqrt((fi + 0.5) / 32.0) * radPx;
+    float a = fi * 2.39996323 + jit;
+    float rr = sqrt((fi + jr) / 40.0) * radPx;
     vec2 q = uv + vec2(cos(a), sin(a)) * rr * px;
     float dq = depthAt(q);
     float ok = step(gd + 0.05, dq);
@@ -293,7 +295,7 @@ export function createHalo(ctx) {
       }`,
   });
   const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
-  m.frustumCulled = false; m.visible = false; m.renderOrder = 900;
+  m.frustumCulled = false; m.visible = false; m.renderOrder = 1100;
   ctx.overlay.add(m);
   return {
     set(pos, i, size = 0.5) { m.visible = i > 0; m.position.copy(pos); u.uI.value = i; u.uSize.value = size; },

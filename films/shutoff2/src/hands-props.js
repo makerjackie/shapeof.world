@@ -93,7 +93,7 @@ export function makePhone(o = {}) {
   const SH = 0.1436, SW = SH * 720 / 1560;
   const smat = screenMaterial({ id: (o.id ?? 61) + 5, gain: o.gain ?? 1.0 });
   const screen = new THREE.Mesh(screenGeo(SW, SH, 0.0092), smat);
-  screen.position.y = T + 0.00005; root.add(screen);
+  screen.position.y = T + 0.00025; root.add(screen);
   let tex = null, lastCanvas = null;
   return {
     root, screen, size: [W, T, H],
@@ -121,12 +121,12 @@ export function makeWatch(o = {}) {
   const y0 = b + 0.0012;
   const kase = new THREE.Mesh(slab(CW, CH, 0.0098, CT, 0.0024, y0, 14), caseM); root.add(kase);
   // black glass dome
-  const glass = new THREE.Mesh(slab(CW - 0.0016, CH - 0.0016, 0.0091, 0.0016, 0.0007, y0 + CT - 0.001, 14), toonMaterial({ color: '#06070a', id: (o.id ?? 66) + 1, spec: 1 }));
+  const glass = new THREE.Mesh(slab(CW - 0.0016, CH - 0.0016, 0.0091, 0.0016, 0.0007, y0 + CT - 0.001, 14), toonMaterial({ color: '#06070a', id: (o.id ?? 66) + 1 }));
   root.add(glass);
   const DH = 0.0362, DW = DH * 400 / 480;
   const smat = screenMaterial({ id: (o.id ?? 66) + 2, gain: o.gain ?? 1.0, sheen: 0.1 });
   const disp = new THREE.Mesh(screenGeo(DW, DH, 0.0068), smat);
-  disp.position.y = y0 + CT + 0.0006 + 0.00003; root.add(disp);
+  disp.position.y = y0 + CT + 0.0006 + 0.0003; root.add(disp);
   // digital crown + side button on the +x side
   const crownM = toonMaterial({ color: '#a9aeb8', id: (o.id ?? 66) + 3, spec: 1 });
   const crown = new THREE.Mesh(new THREE.CylinderGeometry(0.0034, 0.0034, 0.0028, 20), crownM);

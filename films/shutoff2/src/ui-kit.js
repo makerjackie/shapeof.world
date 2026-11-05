@@ -19,10 +19,29 @@ export const COL = {
 };
 
 // ---------- text ----------
+// colour string with its alpha multiplied by a (accepts #rgb, #rrggbb, rgb(), rgba())
+export function withAlpha(c, a) {
+  if (c[0] === '#') {
+    let h = c.slice(1); if (h.length === 3) h = h.split('').map((x) => x + x).join('');
+    const n = parseInt(h, 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+  }
+  const m = c.match(/rgba?\(([^)]+)\)/);
+  if (!m) return c;
+  const p = m[1].split(',').map((v) => v.trim());
+  return `rgba(${p[0]},${p[1]},${p[2]},${(p[3] != null ? parseFloat(p[3]) : 1) * a})`;
+}
+// Text. Fades are applied to the colours (fill, stroke, shadow), never as a tiny globalAlpha under a shadow:
+// Chrome's GPU canvas turns very faint shadowed text into a bright smear once it is composited premultiplied.
 export function txt(g, s, x, y, o = {}) {
+  const ea = g.globalAlpha * (o.alpha ?? 1);
+  if (ea < 0.015) return;
   g.save();
   if (o.font) g.font = o.font;
-  g.fillStyle = o.color ?? '#fff';
+  const fx = o.shadow || o.stroke;
+  const color = o.color ?? '#fff';
+  g.globalAlpha = fx ? 1 : ea;
+  g.fillStyle = fx ? withAlpha(color, ea) : color;
   const align = o.align ?? 'left';
   g.textAlign = align;
   g.textBaseline = o.base ?? 'alphabetic';
@@ -32,9 +51,8 @@ export function txt(g, s, x, y, o = {}) {
     // Chrome adds the spacing after the last glyph too; keep centred/right text visually aligned
     if (align === 'center') x += ls / 2; else if (align === 'right') x += ls;
   }
-  if (o.alpha != null) g.globalAlpha *= o.alpha;
-  if (o.shadow) { g.shadowColor = o.shadow[0]; g.shadowBlur = o.shadow[1]; g.shadowOffsetY = o.shadow[2] ?? 0; }
-  if (o.stroke) { g.lineJoin = 'round'; g.strokeStyle = o.stroke[0]; g.lineWidth = o.stroke[1]; g.strokeText(s, x, y); }
+  if (o.shadow) { g.shadowColor = withAlpha(o.shadow[0], ea * ea); g.shadowBlur = o.shadow[1]; g.shadowOffsetY = o.shadow[2] ?? 0; }
+  if (o.stroke) { g.lineJoin = 'round'; g.strokeStyle = withAlpha(o.stroke[0], ea); g.lineWidth = o.stroke[1]; g.strokeText(s, x, y); }
   g.fillText(s, x, y);
   g.restore();
 }
@@ -98,8 +116,13 @@ export function rr(g, x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r)
 export function fillRR(g, x, y, w, h, r, fill) { rr(g, x, y, w, h, r); g.fillStyle = fill; g.fill(); }
 export function strokeRR(g, x, y, w, h, r, stroke, lw = 2) { rr(g, x, y, w, h, r); g.strokeStyle = stroke; g.lineWidth = lw; g.stroke(); }
 export function disc(g, x, y, r, fill) { g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fillStyle = fill; g.fill(); }
+// soft shadow under fn()'s drawing. The shadow fades out while the layer itself is faint (see txt()).
+export const fxFade = (g) => smooth((g.globalAlpha - 0.12) / 0.4);
 export function shadowed(g, color, blur, oy, fn) {
-  g.save(); g.shadowColor = color; g.shadowBlur = blur; g.shadowOffsetY = oy; fn(); g.restore();
+  const k = fxFade(g);
+  g.save();
+  if (k > 0) { g.shadowColor = withAlpha(color, k); g.shadowBlur = blur; g.shadowOffsetY = oy; }
+  fn(); g.restore();
 }
 
 // soft touch ripple where a finger presses (t = seconds since the press)
@@ -203,7 +226,7 @@ export function sendIcon(g, x, y, s, color) {
 // ---------- 安 / 安-2 avatars ----------
 export function avatarAn(g, x, y, r, glow = 0) {
   g.save();
-  if (glow > 0) { g.shadowColor = `rgba(255,181,71,${0.75 * glow})`; g.shadowBlur = r * 1.1; }
+  if (glow > 0 && fxFade(g) > 0) { g.shadowColor = `rgba(255,181,71,${0.75 * glow * fxFade(g)})`; g.shadowBlur = r * 1.1; }
   const gr = g.createLinearGradient(x - r, y - r, x + r, y + r);
   gr.addColorStop(0, '#ffd592'); gr.addColorStop(0.55, '#ffb547'); gr.addColorStop(1, '#ef8e1c');
   disc(g, x, y, r, gr);
@@ -218,7 +241,7 @@ export function avatarAn(g, x, y, r, glow = 0) {
 }
 export function avatarAn2(g, x, y, r, amber = 0) {
   g.save();
-  if (amber > 0) { g.shadowColor = `rgba(255,181,71,${0.9 * amber})`; g.shadowBlur = r * 1.2; }
+  if (amber > 0 && fxFade(g) > 0) { g.shadowColor = `rgba(255,181,71,${0.9 * amber * fxFade(g)})`; g.shadowBlur = r * 1.2; }
   const gr = g.createLinearGradient(x - r, y - r, x + r, y + r);
   gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.6, '#e6f1ff'); gr.addColorStop(1, '#b8d6fb');
   disc(g, x, y, r, gr);

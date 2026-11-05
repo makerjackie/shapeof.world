@@ -23,7 +23,7 @@ export function buildSet(parent) {
     curtain: toonMaterial({ color: '#56607a', id: 5 }),
     curtainIn: toonMaterial({ color: '#3d4558', id: 5 }),
     rail: toonMaterial({ color: '#2b2f38', id: 8 }),
-    deskTop: toonMaterial({ color: '#9c8670', id: 10, spec: 0.35 }),
+    deskTop: toonMaterial({ color: '#d8c8b8', map: floorTex(), id: 10 }),
     deskEdge: toonMaterial({ color: '#6e5c4c', id: 9 }),
     black: toonMaterial({ color: '#1d2028', id: 11, spec: 0.5 }),
     monitor: toonMaterial({ color: '#16181e', id: 12, spec: 0.7 }),

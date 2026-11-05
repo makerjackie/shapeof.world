@@ -105,6 +105,7 @@ export function makeFigure() {
     ell(rig, 'chest', [0.04, 0.955, -0.945], [0.148, 0.11, 0.07], { ...lean }),
     ell(rig, 'chest', [0.04, 1.02, -1.04], [0.15, 0.045, 0.08], { ...lean }),
   ];
+  const collar = [seg(rig, 'neck', [0.04, 1.005, -1.015], [0.04, 1.065, -1.07], 0.064, 0.058)];
   const neck = [];
   const arm = (s) => {
     const sh = 'sh' + s, el = 'el' + s, wr = 'wr' + s;
@@ -129,7 +130,7 @@ export function makeFigure() {
     ];
   };
   const groups = [
-    { p: torso, k: 0.05 },
+    { p: torso, k: 0.05 }, { p: collar, k: 0.012 },
     { p: arm('R'), k: 0.05 }, { p: arm('L'), k: 0.05 }, { p: leg('R') }, { p: leg('L') },
   ];
   for (const g of groups) B.push(...g.p);
@@ -212,7 +213,7 @@ export function makeFigure() {
     lock(Math.PI * 0.5 * sd + 0.55 * sd, 0.9, Math.PI * 0.5 * sd + 0.75 * sd, -0.15, 0.024, 0.004, 1.07);
     lock(Math.PI * 0.5 * sd, 0.85, Math.PI * 0.5 * sd + 0.12 * sd, -0.32, 0.024, 0.004, 1.06);
   }
-  for (const [i, a] of [-0.75, -0.25, 0.25, 0.75].entries()) lock(a * 0.6, 0.95, a * 0.9, -0.62 - (i % 2) * 0.1, 0.028, 0.005, 1.08);
+  for (const [i, a] of [-0.95, -0.62, -0.3, 0.02, 0.33, 0.64, 0.95].entries()) lock(a * 0.55, 0.9 + (i % 2) * 0.12, a * 0.85 + (i % 3 - 1) * 0.05, -0.5 - ((i * 37) % 5) * 0.045, 0.02, 0.004, 1.07, 1.04);
   lock(0.3, 1.25, 0.6, 0.95, 0.018, 0.003, 1.16, 1.12);
   lock(-0.2, 1.3, -0.5, 1.05, 0.016, 0.003, 1.15, 1.12);
   const hairN = V([0, -0.6, -0.8]).normalize();
@@ -222,7 +223,7 @@ export function makeFigure() {
     cap.local3(x, y, z, tmp);   // cap-local = head-local relative to the cap centre
     const hl = [tmp[0] + CC[0], tmp[1] + CC[1], tmp[2] + CC[2]];
     let d = smax(cap.d(x, y, z), hairN.x * hl[0] + hairN.y * hl[1] + hairN.z * hl[2] - 0.035, 0.012);
-    for (const p of locks) d = smin(d, p.d(x, y, z), 0.008);
+    for (const p of locks) d = smin(d, p.d(x, y, z), 0.014);
     return d;
   };
   const headF = (x, y, z) => smin(skullF(x, y, z), hairF(x, y, z), 0.003);

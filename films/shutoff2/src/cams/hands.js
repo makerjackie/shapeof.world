@@ -26,7 +26,7 @@ export const CAMS = {
     const w = watchFrame('s02');
     const k = smoother(lt / d);
     const dist = lerp(1.0, 0.9, k);
-    const tgt = add(w.c, [w.fwd, 0.075], [w.top, 0.045]);
+    const tgt = add(w.c, [w.fwd, 0.06], [w.top, 0.0]);
     const pos = [tgt.x + 0.03 * dist, tgt.y + 0.36 * dist, tgt.z + 0.25 * dist];
     return { pos, look: A(tgt), fov: 40, up: [0.12, 0, -1], near: 0.01, far: 9000 };
   },
@@ -58,7 +58,7 @@ export const CAMS = {
 const phoneLight = (sid, st, i) => {
   const p = STAGES[sid].phone;
   const g = p.glow(st.lt, st.dur, st);
-  return { pos: rw(p.pos[0], p.pos[1] + 0.06, p.pos[2]), r: 0.55, color: '#a9c0ff', i: i * g };
+  return { pos: rw(p.pos[0], p.pos[1] + 0.06, p.pos[2]), r: 0.42, color: '#a9c0ff', i: i * g };
 };
 
 export const LOOKS = {

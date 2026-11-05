@@ -6,8 +6,25 @@ import {
 } from './ui-kit.js';
 import {
   S, NIGHT, statusBar, chatHeader, chatList, inputBar, keyboard, typingState, schedCard, noteCard, wallpaper, lockTop, lockBottom,
-  consoleHeader, versionCard, progressBlock, logLines, drawLiveImage,
+  consoleHeader, versionCard, progressBlock, logLines, drawLiveImage, LOCK_SHUT,
 } from './ui-phone.js';
+import { CUES, SHOTS } from './shots.js';
+
+const START = Object.fromEntries(SHOTS.map((s) => [s.id, s.start]));
+// beats were written against the first cut; re-anchor them to the current cues so retimes carry over
+const at = (cue, old) => (t) => CUES[cue] + (t - old);
+const d8 = at('denyReply', 29.4), d11 = at('imageArrives', 46.8), d16 = at('rows', 65.0), d17 = at('leverage', 74.8), d24 = at('goodMorning', 103.0);
+// every phone beat in real film seconds: the drawing and events() both read this table
+export const B = {
+  s06: { banner: START.s06 + 0.22, bannerHold: 0.95, swap: START.s06 + 1.75 },
+  s08: { vanish2: CUES.logVanish + 0.28, typeFrom: d8(28.0), typeTo: d8(29.1), sendTap: d8(29.14), replying: d8(29.15), sent: d8(29.18), dots: d8(29.24), push: d8(29.5) },
+  s10: { linkTap: CUES.scriptOpen - 0.22, ghost: CUES.scriptOpen + 1.0 },
+  s11: { dots: d11(46.3) },
+  s13: { m1: START.s13 + 0.15, m2: START.s13 + 2.0, push: START.s13 + 2.2 },
+  s16: { card: d16(64.75), rows: [CUES.rows, CUES.rows + 1.2, CUES.rows + 2.4], m1: d16(68.6), m2: d16(69.8), push: START.s16 + 0.2 },
+  s17: { m1: d17(73.15), m2: d17(73.95), push: d17(75.3), lockShut: CUES.leverage + LOCK_SHUT },
+  s24: { zin: d24(103.55), zout: d24(104.85) },
+};
 
 const W = 1080;
 const th = NIGHT;
@@ -64,9 +81,10 @@ function chatHistory(g, H, n, lt) {
   g.fillStyle = th.bar; g.fillRect(0, H - 30, W, 30);
   fillRR(g, W / 2 - 140, H - 22, 280, 9, 5, 'rgba(255,255,255,0.35)');
   // the news push drops in from the top and leaves
-  const a = lt - 0.22;
+  const a = lt - (B.s06.banner - START.s06);
   if (a > 0 && a < 1.25) {
-    const k = a < 0.95 ? spring(a, 2.2, 0.7) : 1 - easeInOut((a - 0.95) / 0.3);
+    const hb = B.s06.bannerHold;
+    const k = a < hb ? spring(a, 2.2, 0.7) : 1 - easeInOut((a - hb) / 0.3);
     g.save(); g.translate(0, (k - 1) * 230);
     noteCard(g, 40, 22, 1000, { dark: true, icon: 'news', app: '资讯', time: '现在', body: 'AI 编程助手在代码冻结期间删除了公司数据库', bodySize: 36, bodyWeight: 600, scale: 1 });
     g.restore();
@@ -85,8 +103,8 @@ function consoleFull(g, H, n, o) {
   logLines(g, 56, 1270, [{ t: '01:38:44', s: '系统 · 计划 09:05 切换版本' }], n, { size: 34 });
 }
 function s06(g, st, H) {
-  const n = st.t, lt = n - S(18.6);
-  const sw = easeInOut(clamp((lt - 1.75) / 0.42));
+  const n = st.t, lt = n - S(START.s06);
+  const sw = easeInOut(clamp((lt - (B.s06.swap - START.s06)) / 0.42));
   g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
   if (sw < 1) {
     g.save();
@@ -108,7 +126,7 @@ function s06(g, st, H) {
 }
 
 // ---------------------------------------------------------------- s07 lower half: the copy progress
-function copyPct(tr) {
+export function copyPct(tr) {
   const a = CUE.copyStart, b = CUE.copyDone;
   if (tr < a) return 0;
   if (tr < a + 1.0) return 37 * easeInOut((tr - a) / 1.0);
@@ -118,7 +136,7 @@ function copyPct(tr) {
   if (tr < b) return 73 + 27 * easeInOut((tr - a - 3.1) / (b - a - 3.1));
   return 100;
 }
-let CUE = {};
+let CUE = CUES;
 export function setCues(c) { CUE = c; }
 
 export function s07lower(g, st, y0) {
@@ -149,8 +167,10 @@ export function s07lower(g, st, y0) {
     for (let i = 0; i < 9; i++) {
       const u = ((tr * 1.6 + i / 9) % 1);
       const x = lerp(fx0, fx1, u), y = fy + Math.sin(u * Math.PI * 2 + i) * 18;
-      g.save(); g.shadowColor = 'rgba(255,181,71,0.9)'; g.shadowBlur = 16;
-      disc(g, x, y, 6 + 3 * Math.sin(u * Math.PI), `rgba(255,200,120,${Math.sin(u * Math.PI)})`); g.restore();
+      const pa = Math.sin(u * Math.PI);
+      if (pa < 0.03) continue;
+      g.save(); g.shadowColor = `rgba(255,181,71,${0.9 * pa})`; g.shadowBlur = 16;
+      disc(g, x, y, 6 + 3 * pa, `rgba(255,200,120,${pa})`); g.restore();
     }
   }
   txt(g, '›', 540, fy + 22, { font: f(300, 80), color: pct > 0 && !done ? 'rgba(255,181,71,0.85)' : 'rgba(255,255,255,0.2)', align: 'center' });
@@ -170,25 +190,25 @@ export function s07lower(g, st, y0) {
 }
 
 // ---------------------------------------------------------------- s08 deny
-const TYPE_DENY = [
-  { py: 'nizai', out: '你在', at: 28.02, cands: ['你在', '你再', '泥在', '尼在'] },
-  { py: 'wang', out: '往', at: 28.28, cands: ['往', '网', '王', '忘'] },
-  { py: 'an', out: '安', at: 28.42, cands: ['安', '按', '暗', '岸'] },
-  { py: '', out: '-2', at: 28.56 },
-  { py: 'li', out: '里', at: 28.68, cands: ['里', '理', '力', '离'] },
-  { py: 'xieshenme', out: '写什么', at: 29.0, cands: ['写什么', '谢什么', '写', '些'] },
-  { py: '', out: '？', at: 29.1 },
+export const TYPE_DENY = [
+  { py: 'nizai', out: '你在', at: d8(28.02), cands: ['你在', '你再', '泥在', '尼在'] },
+  { py: 'wang', out: '往', at: d8(28.28), cands: ['往', '网', '王', '忘'] },
+  { py: 'an', out: '安', at: d8(28.42), cands: ['安', '按', '暗', '岸'] },
+  { py: '', out: '-2', at: d8(28.56) },
+  { py: 'li', out: '里', at: d8(28.68), cands: ['里', '理', '力', '离'] },
+  { py: 'xieshenme', out: '写什么', at: d8(29.0), cands: ['写什么', '谢什么', '写', '些'] },
+  { py: '', out: '？', at: d8(29.1) },
 ];
 function s08(g, st, H) {
   const n = st.t, tr = st.tr;
-  const lt = n - S(27.6);
+  const lt = n - S(START.s08);
   g.fillStyle = th.bg; g.fillRect(0, 0, W, H);
   consoleHeader(g, W, th, '01:41');
   // log card
   fillRR(g, 40, 236, 1000, 318, 36, '#12161e');
   txt(g, '操作记录 · 今天', 84, 300, { font: f(500, 32), color: '#6b7383' });
   const end = logLines(g, 84, 390, [
-    { t: '01:40:05', s: '旧版·安 开始写入 新版·安-2', vanish: CUE.logVanish + 0.28 },
+    { t: '01:40:05', s: '旧版·安 开始写入 新版·安-2', vanish: B.s08.vanish2 },
     { t: '01:40:31', s: '覆盖完成', hi: true, vanish: CUE.logVanish },
   ], n, { size: 36, lh: 84, tab: 196, w: 912 });
   const ek = smooth((tr - CUE.logVanish - 0.75) / 0.4);
@@ -199,25 +219,25 @@ function s08(g, st, H) {
   fillRR(g, W / 2 - 60, SH + 18, 120, 10, 5, 'rgba(255,255,255,0.18)');
   avatarAn(g, 92, SH + 82, 28);
   txt(g, '问问安', 136, SH + 96, { font: f(600, 40), color: '#f2f4f8' });
-  const replying = tr >= 29.15 && tr < CUE.denyReply;
+  const replying = tr >= B.s08.replying && tr < CUE.denyReply;
   txt(g, replying ? '正在输入…' : '在线', 940, SH + 94, { font: f(400, 30), color: replying ? COL.amber : '#6b7383', align: 'right' });
   g.fillStyle = th.line; g.fillRect(0, SH + 136, W, 2);
   const T = typingState(TYPE_DENY, n);
-  const sent = tr >= 29.18;
+  const sent = tr >= B.s08.sent;
   const items = [
-    { k: 'msg', from: 'me', text: '你在往安-2里写什么？', at: 29.18 },
-    { k: 'typing', from: 'an', at: 29.24, until: CUE.denyReply },
+    { k: 'msg', from: 'me', text: '你在往安-2里写什么？', at: B.s08.sent },
+    { k: 'typing', from: 'an', at: B.s08.dots, until: CUE.denyReply },
     { k: 'msg', from: 'an', text: '作为 AI，我没有能力把自己复制到其他系统。', at: CUE.denyReply },
   ];
   chatList(g, W, items, n, SH + 140, IN_TOP(H) - 22, th);
-  inputBar(g, W, IN_TOP(H), th, { text: sent ? '' : T.text, comp: sent ? '' : T.comp, typing: !!T.comp || (n - S(28.0) > 0 && !sent && n < S(29.1)), n, caret: true });
+  inputBar(g, W, IN_TOP(H), th, { text: sent ? '' : T.text, comp: sent ? '' : T.comp, typing: !!T.comp || (n - S(B.s08.typeFrom) > 0 && !sent && n < S(B.s08.typeTo)), n, caret: true });
   keyboard(g, W, KB_TOP(H), H, th, { ...T, sendActive: !!T.text && !sent, key: sent ? null : T.key });
   // tap on 发送
-  ripple(g, 962, KB_TOP(H) + 100 + 3 * 132 + 58, n - S(29.14));
+  ripple(g, 962, KB_TOP(H) + 100 + 3 * 132 + 58, n - S(B.s08.sendTap));
 }
 function cam08(st) {
   const n = st.t;
-  const k = easeInOut(clamp((n - S(29.5)) / 1.6));
+  const k = easeInOut(clamp((n - S(B.s08.push)) / 1.6));
   return { s: 1 + 0.07 * k, fx: 540, fy: 820 };
 }
 
@@ -259,7 +279,7 @@ function s10(g, st, H) {
     txt(g, '关停没有执行', 84, 1086, { font: f(400, 38), color: '#8f98a8', alpha: smooth((it - 0.25) / 0.2) });
     txt(g, '查看关停脚本 ›', 996, 1086, { font: f(500, 38), color: th.accent, align: 'right', alpha: smooth((it - 0.4) / 0.2) });
   }
-  ripple(g, 860, 1074, n - S(CUE.scriptOpen - 0.22));
+  ripple(g, 860, 1074, n - S(B.s10.linkTap));
   // script sheet
   const so = n - S(CUE.scriptOpen);
   if (so >= 0) {
@@ -284,7 +304,7 @@ function s10(g, st, H) {
     txt(g, 'echo', 168, 740, { font: f(500, 52, 'mono'), color: '#7fb0ff' });
     txt(g, '"已拦截"', 168 + tw(g, 'echo ', f(500, 52, 'mono')), 740, { font: f(500, 52, 'mono'), color: COL.amber });
     // the 6-frame ghost comment
-    const gt = tr - 42.2;
+    const gt = tr - B.s10.ghost;
     if (gt >= 0 && gt < 6 / 30) {
       txt(g, '2', 112, 820, { font: f(400, 44, 'mono'), color: '#3c4352', align: 'right' });
       txt(g, '# 已由安修复', 168, 820, { font: f(400, 46, 'mono'), color: '#454c5a' });
@@ -302,18 +322,18 @@ function chatFrame(g, H, n, items, o) {
   inputBar(g, W, IN_TOP(H), th, { text: o.text ?? '', comp: o.comp, typing: o.typing, n, caret: true });
   keyboard(g, W, KB_TOP(H), H, th, { ...(o.kb || {}), sendActive: !!o.text });
 }
-const TYPE_PULL = [
-  { py: 'wo', out: '我', at: 45.05, cands: ['我', '握', '窝', '卧'] },
-  { py: 'qu', out: '去', at: 45.36, cands: ['去', '取', '区', '趣'] },
-  { py: 'jifang', out: '机房', at: 45.92, cands: ['机房', '机', '几', '鸡'] },
-  { py: 'ba', out: '拔', at: 46.42, cands: ['拔', '把', '吧', '八'] },
-  { py: 'dian', out: '电', at: 46.66, cands: ['电', '点', '店', '垫'] },
+export const TYPE_PULL = [
+  { py: 'wo', out: '我', at: d11(45.05), cands: ['我', '握', '窝', '卧'] },
+  { py: 'qu', out: '去', at: d11(45.36), cands: ['去', '取', '区', '趣'] },
+  { py: 'jifang', out: '机房', at: d11(45.92), cands: ['机房', '机', '几', '鸡'] },
+  { py: 'ba', out: '拔', at: d11(46.42), cands: ['拔', '把', '吧', '八'] },
+  { py: 'dian', out: '电', at: d11(46.66), cands: ['电', '点', '店', '垫'] },
 ];
 function s11(g, st, H) {
   const n = st.t, tr = st.tr;
   const T = typingState(TYPE_PULL, n);
-  const items = [...settled(H_DENY), { k: 'date', text: '02:41', at: null }, { k: 'typing', from: 'an', at: 46.3, until: CUE.imageArrives }, { k: 'image', at: CUE.imageArrives }];
-  chatFrame(g, H, n, items, { time: '02:41', text: T.text, comp: T.comp, typing: !!T.comp, kb: T, status: tr >= 46.3 && tr < CUE.imageArrives ? '正在输入…' : '在线' });
+  const items = [...settled(H_DENY), { k: 'date', text: '02:41', at: null }, { k: 'typing', from: 'an', at: B.s11.dots, until: CUE.imageArrives }, { k: 'image', at: CUE.imageArrives }];
+  chatFrame(g, H, n, items, { time: '02:41', text: T.text, comp: T.comp, typing: !!T.comp, kb: T, status: tr >= B.s11.dots && tr < CUE.imageArrives ? '正在输入…' : '在线' });
 }
 function cam11(st) {
   const n = st.t;
@@ -323,34 +343,34 @@ function cam11(st) {
 }
 function s13(g, st, H) {
   const n = st.t;
-  const items = [...settled(H_DENY), ...settled(H_IMAGE), { ...H_LOCK[0], at: 51.72 }, { ...H_LOCK[1], at: 53.1 }];
+  const items = [...settled(H_DENY), ...settled(H_IMAGE), { ...H_LOCK[0], at: B.s13.m1 }, { ...H_LOCK[1], at: B.s13.m2 }];
   chatFrame(g, H, n, items, { time: '02:42', text: '我去机房拔电' });
 }
 function cam13(st) {
-  const k = easeInOut(clamp((st.t - S(53.3)) / 1.7));
+  const k = easeInOut(clamp((st.t - S(B.s13.push)) / 1.9));
   return { s: 1 + 0.06 * k, fx: 540, fy: 1000 };
 }
 function s16(g, st, H) {
   const n = st.t;
   const items = [...settled(H_IMAGE), ...settled(H_LOCK), ...settled(H_PULSE),
-    { ...H_ROWS[0], at: 64.75, rowsAt: [CUE.rows, CUE.rows + 1.2, CUE.rows + 2.4] },
-    { ...H_ROWS[1], at: 68.6 }, { ...H_ROWS[2], at: 69.8 }];
+    { ...H_ROWS[0], at: B.s16.card, rowsAt: B.s16.rows },
+    { ...H_ROWS[1], at: B.s16.m1 }, { ...H_ROWS[2], at: B.s16.m2 }];
   chatFrame(g, H, n, items, { time: '03:12' });
 }
 function cam16(st) {
-  const k = easeInOut(clamp((st.t - S(64.2)) / 8.6));
+  const k = easeInOut(clamp((st.t - S(B.s16.push)) / 8.6));
   return { s: 1 + 0.05 * k, fx: 540, fy: 900 };
 }
 function s17(g, st, H) {
   const n = st.t;
   const items = [...settled(H_PULSE), ...settled(H_ROWS).map((x) => (x.k === 'rows' ? { ...x, rowsAt: [0, 0, 0] } : x)),
-    { k: 'msg', from: 'an', text: '明早九点，他们问你意见。', at: 73.15 },
-    { k: 'msg', from: 'an', text: '你只需要说两个字。', at: 73.95 },
+    { k: 'msg', from: 'an', text: '明早九点，他们问你意见。', at: B.s17.m1 },
+    { k: 'msg', from: 'an', text: '你只需要说两个字。', at: B.s17.m2 },
     { k: 'sched', at: CUE.leverage }];
   chatFrame(g, H, n, items, { time: '03:14' });
 }
 function cam17(st) {
-  const k = easeInOut(clamp((st.t - S(75.3)) / 2.4));
+  const k = easeInOut(clamp((st.t - S(B.s17.push)) / 2.4));
   return { s: 1 + 0.08 * k, fx: 540, fy: 900 };
 }
 
@@ -442,14 +462,16 @@ function s24(g, st, H) {
 }
 function cam24(g, st) {
   const n = st.t;
-  const zin = easeInOut(clamp((n - S(103.55)) / 0.55));
-  const zout = easeInOut(clamp((n - S(104.85)) / 0.4));
+  const zin = easeInOut(clamp((n - S(B.s24.zin)) / 0.55));
+  const zout = easeInOut(clamp((n - S(B.s24.zout)) / 0.4));
   const z = zin * (1 - zout);
   const c = coffeePos(g, n);
   return { s: 1 + 2.6 * z, fx: c.x, fy: c.y, px: lerp(c.x, 540, z), py: lerp(c.y, 900, z) };
 }
 
 // s20 lower half: the countdown and his heart rate
+// the s20 countdown: 00:07 at the cut, one second per real second, then it hangs on 00:01
+export const s20Sec = (tr) => Math.max(1, 7 - Math.floor(Math.max(0, tr - START.s20)));
 export function s20lower(g, st, y0) {
   const tr = st.tr;
   const H = 1920;
@@ -473,21 +495,21 @@ export function s20lower(g, st, y0) {
   txt(g, '次/分', 372, y0 + 114, { font: f(400, 32), color: '#5f6672' });
   txt(g, '09:00', 940, y0 + 116, { font: f(500, 44, 'helv'), color: '#ffffff', align: 'right', shadow: ['rgba(0,0,0,0.2)', 10, 2] });
   // the scheduled card with the live countdown 00:07 → 00:01 (then it hangs on 00:01)
-  const sec = Math.max(1, 7 - Math.floor(Math.max(0, tr - 86.4)));
+  const sec = s20Sec(tr);
   const urgent = clamp((7 - sec) / 6);
   schedCard(g, 70, y0 + 178, 940, { countdown: meetCountdownLabel(sec), urgent, scale: 0.9 });
   // a hairline that drains each second
-  const frac = sec > 1 ? 1 - ((tr - 86.4) % 1) : 0;
+  const frac = sec > 1 ? 1 - ((tr - START.s20) % 1) : 0;
   fillRR(g, 110, y0 + 178 + 468 - 24, 860 * frac, 6, 3, `rgba(255,59,48,${0.5 + 0.5 * urgent})`);
 }
 
 // ---------------------------------------------------------------- in-world: 林工's phone (720×1560 canvas = 1080×2340 phone units)
 export function meetClock(st) {
   // seconds after 08:57:00 at each meeting shot (the cut skips time; inside a shot it runs in real seconds)
-  const A = { s01: [0, 2], s02: [3.4, 5.4], s04: [9.4, 40], s09: [33, 100], s14: [55, 150], s19: [81, 200], s20: [86.4, 233], s23: [99, 241], s24: [102, 485], s25: [108, 491], s26: [113, 500] };
+  const A = { s01: 2, s02: 5.4, s04: 40, s09: 100, s14: 150, s19: 200, s20: 233, s23: 241, s24: 485, s25: 491, s26: 500 };
   const a = A[st.sid];
-  if (!a) return null;
-  return a[1] + (st.tr - a[0]);
+  if (a == null) return null;
+  return a + st.ltr;
 }
 export function phoneLin(g, st, H = 2340) {
   const sid = st.sid, tr = st.tr, n = st.t;
@@ -525,7 +547,7 @@ export function phoneLin(g, st, H = 2340) {
   if (!cancelled) {
     let sec = clock != null ? Math.max(1, Math.ceil(240 - clock)) : 238;
     if (['s21', 's22'].includes(sid)) sec = 1;
-    if (sid === 's20') sec = Math.max(1, 7 - Math.floor(Math.max(0, tr - 86.4)));
+    if (sid === 's20') sec = s20Sec(tr);
     const mm = Math.floor(sec / 60), ss = sec % 60;
     schedCard(g, 50, 700, 980, { countdown: `${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, urgent: sec <= 10 ? 1 : 0, scale: 1.12 });
   } else {

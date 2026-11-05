@@ -494,9 +494,9 @@ export function sculptMaterial(o = {}) {
       // drawn creases / folds
       // pen lines ~1.3 px wide; drawn only while a pixel covers less than uLineW metres (close enough to read)
       float fw = max(fwidth(vCrease), 1e-7);
-      float lw = fw * 1.1;
+      float lw = fw * 1.4;
       float line = 1.0 - smoothstep(lw, lw + fw, vCrease);
-      float vis = 1.0 - smoothstep(uLineW * 0.6, uLineW * 1.2, fw);
+      float vis = (1.0 - smoothstep(uLineW * 0.6, uLineW * 1.2, fw)) * smoothstep(0.3, 0.55, dot(Nd, V));
       outc = mix(outc, mix(outc * 0.42, uLineCol * 0.6, 0.25), line * vis * 0.8);
       writeOut(outc, 1.0, NV, vDepth, id);
     }

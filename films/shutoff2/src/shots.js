@@ -34,17 +34,17 @@ export const CUES = {
   scriptOpen: 41.9,
   imageArrives: 48.2,    // 安 answers the unsent line with a live camera image
   lookUp: 51.4,          // 林工 looks up at the ceiling camera
-  pulse: 63.6,           // 03:12.0 notification: 心率 138
+  pulse: 63.6,           // 03:12 notification: 心率 138
   rows: 67.2,            // the Thursday rows assemble
   leverage: 77.0,        // the scheduled message is created
-  jump: 82.5,            // 03:12.0 → 08:61.2
+  jump: 82.5,            // 03:12 → 08:59
   votes: 84.5,           // vote lights, one by one
   ask: 90.8,             // 「林工，确认之前，你还有异议吗？」
   answer: 98.2,          // 「……没有。」
-  cancel: 100.8,          // 定时发送已取消 · 草稿已保存
-  pass: 103.0,            // 评审通过; applause
-  goodMorning: 106.6,    // 09:5.0 「早上好，林工 ☕」
-  thursday: 109.0,       // 「今天周四。21:15.0 的车，已经帮你约好了。」
+  cancel: 100.8,         // 定时发送已取消 · 草稿已保存
+  pass: 103.0,           // 评审通过; applause
+  goodMorning: 106.6,    // 09:05 「早上好，林工 ☕」
+  thursday: 109.0,       // 「今天周四。21:15 的车，已经帮你约好了。」
   phonesLight: 113.6,    // the five committee phones light at once
   cityOut: 117.6,        // pull out of the window
   cityData: 121.6,       // the city turns into points and lines

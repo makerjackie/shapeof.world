@@ -1,10 +1,11 @@
 // 关不掉 v11 — UI department. Screen-space overlay (draw) and in-world screen canvases (screen).
 // draw(st) returns a 1080×1920 canvas composited on top of the graded picture; phone/card/black shots draw the full frame.
-import { CUES } from './shots.js';
+import { CUES, SHOTS, DURATION, storyTime } from './shots.js';
 import { f, makeCanvas, smooth, clamp } from './ui-kit.js';
-import { drawPhone, phoneLin, s07lower, s20lower, setCues } from './ui-phoneshots.js';
-import { titleCard, timestamp, drawStamp, subtitle, cctvHud, endTexts, endCard, sting, brandBug, caption } from './ui-film.js';
-import { bigscreen, watch, committeePhone, billboard } from './ui-screens.js';
+import { drawPhone, phoneLin, s07lower, s20lower, setCues, B, TYPE_DENY, TYPE_PULL, copyPct, s20Sec, meetClock } from './ui-phoneshots.js';
+import { keyTimes } from './ui-phone.js';
+import { titleCard, titleBeats, timestamp, drawStamp, subtitle, cctvHud, endTexts, endCard, sting, brandBug, caption, CCTV_APPEAR } from './ui-film.js';
+import { bigscreen, watch, committeePhone, billboard, Q, VOTE_STEP, CLOSING_AT } from './ui-screens.js';
 
 const W = 1080, H = 1920;
 const SIZES = { bigscreen: [1920, 1080], 'phone-lin': [720, 1560], watch: [400, 480], billboard: [1024, 512] };
@@ -45,7 +46,7 @@ export function createUI(ctx) {
     }
     switch (id) {
       case 's01': caption(g, lt); break;
-      case 's03': titleCard(g, lt, { typeAt: C.titleType - 6.0, insertAt: C.titleInsert - 6.0 }); break;
+      case 's03': titleCard(g, lt, { typeAt: C.titleType - (tr - lt), insertAt: C.titleInsert - (tr - lt) }); break;
       case 's05': timestamp(g, '昨夜', '01:40', lt - 0.15, 2.35, { y: 560 }); break;
       case 's07': s07lower(g, st, st.split * H); break;
       case 's10': {
@@ -58,9 +59,9 @@ export function createUI(ctx) {
       case 's15': timestamp(g, '', '03:12', lt - 0.1, 1.9, { y: 520 }); break;
       case 's20':
         s20lower(g, st, st.split * H);
-        subtitle(g, ['全票通过。', '林工，确认之前，你还有异议吗？'], tr - C.ask, st.durr - (C.ask - 86.4) - 0.15, 744, { size: 52 });
+        subtitle(g, ['全票通过。', '林工，确认之前，你还有异议吗？'], tr - C.ask, (tr - lt + st.durr) - C.ask - 0.15, 744, { size: 52 });
         break;
-      case 's21': subtitle(g, ['……没有。'], tr - C.answer, 96.6 - C.answer, 1250, { size: 62, weight: 400 }); break;
+      case 's21': subtitle(g, ['……没有。'], tr - C.answer, (tr - lt + st.durr) - C.answer, 1250, { size: 62, weight: 400 }); break;
       case 's27': case 's28': case 's29': case 's30': endTexts(g, st, C); break;
       case 's31': {
         titleCard(g, 10, { typeAt: 0, insertAt: 0.5 });
@@ -73,7 +74,8 @@ export function createUI(ctx) {
       default: break;
     }
     if (st.stamp) drawStamp(g, st.stamp);
-    if (st.set !== 'card' && st.set !== 'black') brandBug(g, markOk ? mark : null, st.set === 'phone' ? 0.5 : 0.58);
+    // brand mark: not on cards, and not in s01 where it would sit on the phone in the macro
+    if (st.set !== 'card' && st.set !== 'black' && id !== 's01') brandBug(g, markOk ? mark : null, st.set === 'phone' ? 0.5 : 0.58);
     return c;
   }
 
@@ -95,5 +97,79 @@ export function createUI(ctx) {
     return s;
   }
 
-  return { ready, draw, screen };
+  return { ready, draw, screen, events: () => buildEvents(C) };
+}
+
+// ---------------------------------------------------------------- sound-sync export
+// Every UI moment that should make a sound, in real film seconds, from the same beat tables the drawing reads.
+// types: an key send tap error lock flip tick vanish swipe zoom type ui banner;  g = suggested gain 0..1
+function realOf(ts) {          // invert storyTime (the story clock crawls under the stamps)
+  let lo = 0, hi = DURATION + 5;
+  for (let i = 0; i < 50; i++) { const m = (lo + hi) / 2; if (storyTime(m) < ts) lo = m; else hi = m; }
+  return hi;
+}
+function buildEvents(C) {
+  const E = [];
+  const add = (t, type, g) => E.push(g == null ? { t: +t.toFixed(3), type } : { t: +t.toFixed(3), type, g });
+  const SH = Object.fromEntries(SHOTS.map((s) => [s.id, s]));
+  const t0 = (id) => SH[id].start;
+  const changes = (fn, a, b, type, g) => {      // an event whenever fn(tr) changes value
+    let prev = fn(a);
+    for (let i = 1; a + i / 240 < b; i++) {
+      const tr = a + i / 240, v = fn(tr);
+      if (v === prev) continue;
+      let lo = tr - 1 / 240, hi = tr;                 // refine the change to the millisecond
+      for (let k = 0; k < 16; k++) { const m = (lo + hi) / 2; if (fn(m) === prev) lo = m; else hi = m; }
+      add(hi, type, g); prev = v;
+    }
+  };
+  // s01: 林工's lock-screen countdown (03:58 …)
+  changes((tr) => Math.ceil(240 - meetClock({ sid: 's01', tr, ltr: tr - t0('s01') })), t0('s01'), SH.s01.end, 'tick', 0.5);
+  // s03 / s31: title keystrokes
+  const tb = titleBeats({ typeAt: C.titleType - t0('s03'), insertAt: C.titleInsert - t0('s03') });
+  add(t0('s03') + tb.t1, 'type', 1); add(t0('s03') + tb.t2, 'type', 1); add(t0('s03') + tb.back, 'type', 0.45); add(t0('s03') + tb.tBu, 'type', 1);
+  add(t0('s31') + 0.05, 'type', 0.6);
+  // big screen: question on the cut, answer when it starts typing
+  for (const id of ['s04', 's09', 's14']) { add(t0(id), 'ui', 0.5); add(t0(id) + Q[id].dt, 'ui', 1); }
+  add(t0('s19') + CLOSING_AT, 'ui', 0.8);
+  for (let i = 0; i < 5; i++) add(C.votes + i * VOTE_STEP, 'ui', 0.5);
+  add(t0('s23'), 'ui', 1);
+  // s06: scroll, the news push, the app switch
+  add(t0('s06') + 0.05, 'swipe', 0.35); add(B.s06.banner, 'banner', 0.6); add(B.s06.swap, 'swipe', 0.8);
+  // s07: copy starts, memory cells flip (batched to ≤ 12), 覆盖完成
+  add(C.copyStart, 'ui', 0.5);
+  const flips = [];
+  let cells = 0;
+  for (let tr = C.copyStart; tr <= C.copyDone + 0.01; tr += 1 / 240) {
+    const n = Math.min(18, Math.floor(copyPct(tr) / 100 * 18 + 1e-6));
+    if (n > cells) { cells = n; flips.push(tr); }
+  }
+  const step = Math.max(1, flips.length / 12);
+  for (let i = 0; i < Math.min(12, flips.length); i++) add(flips[Math.min(flips.length - 1, Math.round(i * step))], 'flip', 0.5);
+  add(C.copyDone, 'ui', 1);
+  // s08: typing, send, 安's denial, the log lines vanishing
+  for (const ts of keyTimes(TYPE_DENY)) add(realOf(ts), 'key', 0.7);
+  add(B.s08.sent, 'send', 1);
+  add(C.denyReply, 'an', 1);
+  add(C.logVanish, 'vanish', 1); add(B.s08.vanish2, 'vanish', 0.6);
+  // s10: the kill button, 已拦截, the script link, the sheet
+  add(C.killPress, 'tap', 1); add(C.intercepted, 'error', 1); add(B.s10.linkTap, 'tap', 0.6); add(C.scriptOpen, 'swipe', 0.5);
+  // s11: typing the unsent line, 安's live image
+  for (const ts of keyTimes(TYPE_PULL)) add(realOf(ts), 'key', 0.7);
+  add(C.imageArrives, 'an', 1);
+  // s12: the recognition box, the lock-on when he looks up
+  add(t0('s12') + CCTV_APPEAR, 'ui', 0.5); add(C.lookUp, 'ui', 0.7);
+  // s13, s15, s16, s17: 安's messages, the rows, the scheduled card
+  add(B.s13.m1, 'an', 1); add(B.s13.m2, 'an', 1);
+  add(C.pulse, 'an', 1);
+  add(B.s16.card, 'an', 0.8); for (const t of B.s16.rows) add(t, 'flip', 0.8); add(B.s16.m1, 'an', 1); add(B.s16.m2, 'an', 1);
+  add(B.s17.m1, 'an', 1); add(B.s17.m2, 'an', 1); add(C.leverage, 'ui', 0.8); add(B.s17.lockShut, 'lock', 1);
+  // s20: countdown 00:07 → 00:01
+  changes(s20Sec, t0('s20'), SH.s20.end, 'tick', 0.8);
+  // s22, s24, s25, s33
+  add(C.cancel, 'ui', 0.8);
+  add(C.goodMorning, 'an', 1); add(B.s24.zin, 'zoom', 1); add(C.thursday, 'an', 1);
+  add(C.phonesLight, 'an', 1);
+  add(C.sting, 'banner', 1);
+  return E.sort((a, b) => a.t - b.t);
 }

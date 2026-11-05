@@ -5,7 +5,7 @@ import {
   rr, fillRR, strokeRR, disc, shadowed, ripple, lockIcon, heartIcon, checkIcon, chevron, chatIcon, carIcon, trashIcon,
   signalIcon, batteryIcon, sendIcon, avatarAn, avatarAn2, makeCanvas, noiseCanvas,
 } from './ui-kit.js';
-import { storyTime } from './shots.js';
+import { storyTime, CUES } from './shots.js';
 
 export const S = (tr) => storyTime(tr);   // real cue time → story time (phone UI runs on story time, so it crawls during stamps)
 
@@ -196,6 +196,7 @@ function drawRowsCard(g, x, y, w, it, n) {
 }
 
 // ---- s17: the scheduled message, created in the chat (the same card as the opening)
+export const LOCK_SHUT = 0.45;   // seconds after the card appears until its lock snaps shut
 function drawSchedCreate(g, y, it, n, a) {
   const k = easeOut(clamp(a / 0.5), 3);
   const sp = spring(a, 2.0, 0.6);
@@ -203,7 +204,7 @@ function drawSchedCreate(g, y, it, n, a) {
   g.translate(540, y + 260); const s = 0.9 + 0.1 * sp; g.scale(s, s); g.translate(-540, -(y + 260));
   const remain = Math.max(0, Math.round((9 * 3600 + 60) - (3 * 3600 + 14 * 60 + 8) - (n - S(it.at))));
   const hh = Math.floor(remain / 3600), mm = Math.floor(remain / 60) % 60, ss = remain % 60;
-  schedCard(g, 108, y, 864, { dark: true, countdown: `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, scale: 1, lockClose: clamp(a / 0.45) });
+  schedCard(g, 108, y, 864, { dark: true, countdown: `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`, scale: 1, lockClose: clamp(a / LOCK_SHUT) });
   // creation sweep: an amber scan line runs down the card once
   if (a < 0.7) {
     const sy = y + 520 * easeInOut(clamp(a / 0.6));
@@ -256,11 +257,30 @@ function keyPos(ch, W, y0) {
   return null;
 }
 // typing script: [{py, out, at, cands}] → state at story time n
+const KEY_DT = 0.048, KEY_LEAD = 0.05;
+// story times of every keystroke of a typing script: each pinyin letter, then the candidate/symbol commit
+// per group (story time): commit time, first letter, letter spacing — letters never start before the previous commit
+function keySchedule(groups) {
+  let prev = -1e9;
+  return groups.map((gr) => {
+    const at = S(gr.at), L = gr.py ? gr.py.length : 0;
+    let dt = KEY_DT, start = at - L * dt - KEY_LEAD;
+    if (L && start < prev + 0.03) { start = prev + 0.03; dt = Math.max(0.02, (at - KEY_LEAD - start) / L); }
+    prev = at;
+    return { gr, at, L, start, dt };
+  });
+}
+export function keyTimes(groups) {
+  const out = [];
+  for (const { at, L, start, dt } of keySchedule(groups)) {
+    for (let k = 0; k < L; k++) out.push(start + k * dt);
+    out.push(at);
+  }
+  return out;
+}
 export function typingState(groups, n) {
   let text = '', comp = '', cands = null, key = null, keyT = 9;
-  const dt = 0.048;
-  for (const gr of groups) {
-    const at = S(gr.at), L = gr.py ? gr.py.length : 0, start = at - L * dt - 0.05;
+  for (const { gr, at, L, start, dt } of keySchedule(groups)) {
     if (n >= at) { text += gr.out; if (n - at < 0.1) { key = L ? 'space' : 'sym'; keyT = n - at; } continue; }
     if (L && n >= start) {
       const k = Math.min(L, Math.floor((n - start) / dt) + 1);
@@ -435,7 +455,7 @@ export function drawLiveImage(g, x, y, w, h, n, opt = {}) {
   fillRR(g, x + 20, y + 20, 214, 46, 23, 'rgba(0,0,0,0.55)');
   disc(g, x + 44, y + 43, 8, blink(n, 1) ? '#ff453a' : 'rgba(255,69,58,0.35)');
   txt(g, '实时 · 书房', x + 62, y + 53, { font: f(500, 27), color: '#fff' });
-  const secs = 7 + Math.floor(Math.max(0, n - S(46.8)));
+  const secs = 7 + Math.floor(Math.max(0, n - S(CUES.imageArrives)));
   txt(g, `02:41:${String(secs).padStart(2, '0')}`, x + w - 22, y + h - 22, { font: f(500, 26, 'mono'), color: 'rgba(255,255,255,0.85)', align: 'right' });
   g.restore();
 }

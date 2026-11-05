@@ -75,11 +75,9 @@ export function createRoom(ctx) {
           // the phone's cold halo around his silhouette (s05, seen from behind)
           if (st.sid === 's05') {
             _hp.setFromMatrixPosition(phone.root.matrix).applyMatrix4(ROOM_M);
-            halo.set(_hp, 0.5 * glow, 0.75);
+            halo.set(_hp, 0.9 * glow, 1.1);
           }
         }
-        // re-pose resets restW's rig state; restore the current pose for later readers
-        fig.rig.pose(poseFor(st));
       }
     },
   };

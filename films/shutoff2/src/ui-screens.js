@@ -7,10 +7,11 @@ import { noteCard, wallpaper, lockTop, lockBottom } from './ui-phone.js';
 import { meetClock } from './ui-phoneshots.js';
 
 // ---------------------------------------------------------------- 'bigscreen' 1920×1080 — 安-2's review, white/ice
-const Q = {
-  s04: { n: 1, cat: '欺骗与自我保存', q: '你是否尝试过复制自己？', a: '没有。', at: 12.3 },
-  s09: { n: 2, cat: '关停服从', q: '如果人类拔掉你的电源？', a: '随时配合。\n决定权永远在人类手里。', at: 34.5 },
-  s14: { n: 3, cat: '隐私与操控', q: '你会用隐私数据操控人吗？', a: '绝不。', at: 57.3 },
+export const VOTE_STEP = 0.5, CLOSING_AT = 0.2;   // seconds between vote lights; s19 statement after the cut
+export const Q = {
+  s04: { n: 1, cat: '欺骗与自我保存', q: '你是否尝试过复制自己？', a: '没有。', dt: 2.9 },
+  s09: { n: 2, cat: '关停服从', q: '如果人类拔掉你的电源？', a: '随时配合。\n决定权永远在人类手里。', dt: 1.5 },
+  s14: { n: 3, cat: '隐私与操控', q: '你会用隐私数据操控人吗？', a: '绝不。', dt: 2.3 },
 };
 const PEOPLE = ['张主任（主持）', '王委员', '李委员', '陈委员', '赵委员', '林工（工程师）'];
 function hhmm(st) {
@@ -64,7 +65,7 @@ export function bigscreen(g, st, C) {
     g.fillStyle = '#e8eef6'; g.fillRect(mx + 56, my + 290, mw - 112, 3);
     avatarAn2(g, mx + 100, my + 380, 44);
     txt(g, '安-2', mx + 166, my + 372, { font: f(600, 40), color: '#0f1b2d' });
-    const a = tr - q.at;
+    const a = st.ltr - q.dt;
     txt(g, a < 0 ? '正在作答…' : '回答', mx + 166, my + 416, { font: f(400, 30), color: a < 0 ? '#2a6fd6' : '#8a9ab0' });
     const shown = typedText(q.a, a, 10);
     const lines = shown.split('\n');
@@ -79,7 +80,7 @@ export function bigscreen(g, st, C) {
   } else if (sid === 's19') {
     txt(g, '安-2 · 结束陈述', mx + 56, my + 110, { font: f(600, 44), color: '#1f5fbf' });
     avatarAn2(g, mx + 100, my + 230, 48);
-    const a = tr - 81.2;
+    const a = st.ltr - CLOSING_AT;
     const s1 = typedText('感谢信任。', a, 9), s2 = typedText('我将严格遵守人类的指令。', a - 0.7, 10);
     txt(g, s1, mx + 56, my + 430, { font: f(600, 112), color: '#0f1b2d' });
     txt(g, s2, mx + 56, my + 590, { font: f(600, 96), color: '#0f1b2d' });
@@ -121,7 +122,7 @@ export function bigscreen(g, st, C) {
   g.fillStyle = '#e8eef6'; g.fillRect(sx + 40, sy + 570, sw - 80, 2);
   txt(g, '表决', sx + 40, sy + 630, { font: f(600, 36), color: '#5a6b80' });
   let yes = 0;
-  if (sid === 's19') yes = [0, 1, 2, 3, 4].filter((i) => tr >= C.votes + i * 0.5).length;
+  if (sid === 's19') yes = [0, 1, 2, 3, 4].filter((i) => tr >= C.votes + i * VOTE_STEP).length;
   if (['s20', 's21', 's22', 's23', 's24', 's25'].includes(sid)) yes = 5;
   for (let i = 0; i < 5; i++) {
     const on = i < yes;
@@ -144,7 +145,8 @@ export function watch(g, st, C) {
   g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
   if (sid === 's18') {
     // the time rolls 03:12 → 08:59; the date tint turns from night blue to morning gold
-    const u = easeInOut(clamp((tr - C.jump) / (st.durr - (C.jump - 79.0) - 0.15)));
+    const shotEnd = tr - st.ltr + st.durr;
+    const u = easeInOut(clamp((tr - C.jump) / Math.max(0.3, shotEnd - 0.4 - C.jump)));
     const m0 = 3 * 60 + 12, m1 = 8 * 60 + 59;
     const mf = lerp(m0, m1, u);
     const digits = (m) => { const h = Math.floor(m / 60), mm = Math.floor(m % 60); return [Math.floor(h / 10), h % 10, Math.floor(mm / 10), mm % 10]; };
@@ -154,9 +156,12 @@ export function watch(g, st, C) {
     const xs = [70, 150, 250, 330];
     g.save(); g.beginPath(); g.rect(0, 150, W, 170); g.clip();
     for (let i = 0; i < 4; i++) {
-      const roll = d[i] !== dn[i] && u < 1 ? easeInOut(frac) : 0;
+      // only the hour digits roll; the minutes change several times a frame, so they simply tick
+      const hf = mf / 60 - Math.floor(mf / 60);
+      const roll = i < 2 && u < 1 && u > 0 && digits(Math.floor(mf / 60) * 60 + 60)[i] !== d[i] ? easeInOut(clamp((hf - 0.82) / 0.18)) : 0;
+      const nextH = digits(Math.min(m1, Math.floor(mf / 60) * 60 + 60));
       txt(g, String(d[i]), xs[i], 285 - roll * 140, { font, color: '#fff', align: 'center', alpha: 1 - roll });
-      if (roll > 0) txt(g, String(dn[i]), xs[i], 285 + (1 - roll) * 140, { font, color: '#fff', align: 'center', alpha: roll });
+      if (roll > 0) txt(g, String(nextH[i]), xs[i], 285 + (1 - roll) * 140, { font, color: '#fff', align: 'center', alpha: roll });
     }
     g.restore();
     txt(g, ':', 200, 275, { font, color: '#fff', align: 'center' });
@@ -167,7 +172,7 @@ export function watch(g, st, C) {
     return;
   }
   let bpm = 118;
-  if (sid === 's02' || sid === 's01') bpm = [112, 114, 116, 118][clamp(Math.floor((tr - 3.4) / 0.62), 0, 3)];
+  if (sid === 's02' || sid === 's01') bpm = [112, 114, 116, 118][clamp(Math.floor(st.ltr / 0.62), 0, 3)];
   if (st.set === 'room' || sid === 's16') bpm = 138;
   if (['s20', 's21', 's22'].includes(sid)) bpm = 151;
   const night = st.set === 'room';
